@@ -17,8 +17,10 @@ package com.liferay.exportimport.messaging;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.BaseMessageStatusMessageListener;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
@@ -34,8 +36,13 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
 
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.component.ComponentContext;
 
 /**
  * @author Levente Hudák
@@ -43,12 +50,31 @@ import java.util.Map;
 public abstract class BasePublisherMessageListener
 	extends BaseMessageStatusMessageListener {
 
-	public BasePublisherMessageListener(String destinationName) {
+	protected void initialize(ComponentContext componentContext) {
+		BundleContext bundleContext = componentContext.getBundleContext();
+
+		Dictionary<String, Object> properties =
+			componentContext.getProperties();
+
+		String statusDestinationName = (String)properties.get(
+			"status.destination.name");
+
 		SingleDestinationMessageSender singleDestinationMessageSender =
 			SingleDestinationMessageSenderFactoryUtil.
-				createSingleDestinationMessageSender(destinationName);
+				createSingleDestinationMessageSender(statusDestinationName);
 
 		setStatusSender(singleDestinationMessageSender);
+
+		SchedulerEventMessageListenerWrapper
+			schedulerEventMessageListenerWrapper =
+				new SchedulerEventMessageListenerWrapper();
+
+		schedulerEventMessageListenerWrapper.setMessageListener(this);
+		schedulerEventMessageListenerWrapper.afterPropertiesSet();
+
+		serviceRegistration = bundleContext.registerService(
+			MessageListener.class, schedulerEventMessageListenerWrapper,
+			properties);
 	}
 
 	protected void initThreadLocals(
@@ -106,5 +132,7 @@ public abstract class BasePublisherMessageListener
 		PrincipalThreadLocal.setName(null);
 		ServiceContextThreadLocal.popServiceContext();
 	}
+
+	protected ServiceRegistration<MessageListener> serviceRegistration;
 
 }

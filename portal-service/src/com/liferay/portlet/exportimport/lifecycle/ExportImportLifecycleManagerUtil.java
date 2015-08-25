@@ -14,14 +14,24 @@
 
 package com.liferay.portlet.exportimport.lifecycle;
 
+import com.liferay.portal.kernel.util.ProxyFactory;
+
 import java.io.Serializable;
 
 /**
- * @author Daniel Kocsis
+ * @author Michael C. Han
  */
-public interface ExportImportLifecycleManager {
+public class ExportImportLifecycleManagerUtil {
 
-	public void fireExportImportLifecycleEvent(
-		int code, int processFlag, Serializable... arguments);
+	public static void fireExportImportLifecycleEvent(
+		int code, int processFlag, Serializable... arguments) {
+
+		_exportImportLifecycleManager.fireExportImportLifecycleEvent(
+			code, processFlag, arguments);
+	}
+
+	private static final ExportImportLifecycleManager
+		_exportImportLifecycleManager = ProxyFactory.newServiceTrackedInstance(
+			ExportImportLifecycleManager.class);
 
 }

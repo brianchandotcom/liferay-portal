@@ -147,16 +147,20 @@ public class DefaultDestinationFactory implements DestinationFactory {
 
 	@Deactivate
 	protected void deactivate() {
-		for (ServiceRegistration<Destination>
+		synchronized(_serviceRegistrations) {
+			for (ServiceRegistration<Destination>
 				destinationServiceRegistration :
-					_serviceRegistrations.values()) {
+				_serviceRegistrations.values()) {
 
-			destinationServiceRegistration.unregister();
+				destinationServiceRegistration.unregister();
+			}
+
+			_serviceRegistrations.clear();
 		}
 
-		_serviceRegistrations.clear();
-
-		_destinationPrototypes.clear();
+		synchronized (_destinationPrototypes) {
+			_destinationPrototypes.clear();
+		}
 
 		_bundleContext = null;
 	}
@@ -169,7 +173,7 @@ public class DefaultDestinationFactory implements DestinationFactory {
 					destinationConfiguration.getDestinationName())) {
 
 				ServiceRegistration<Destination> serviceRegistration =
-					_serviceRegistrations.get(
+					_serviceRegistrations.remove(
 						destinationConfiguration.getDestinationName());
 
 				serviceRegistration.unregister();

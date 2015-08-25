@@ -26,10 +26,13 @@ import com.liferay.portal.kernel.messaging.MessageBusEventListener;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.nio.intraband.messaging.IntrabandBridgeDestination;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -101,12 +104,29 @@ public class DefaultMessageBus implements MessageBus {
 
 		Destination destination = _destinations.get(destinationName);
 
-		if (destination == null) {
-			throw new IllegalStateException(
-				"Destination " + destinationName + " is not configured");
+		if (destination != null) {
+			return destination.register(messageListener);
 		}
 
-		return destination.register(messageListener);
+		List<MessageListener> queuedMessageListeners =
+			_queuedMessageListeners.get(destinationName);
+
+		if (queuedMessageListeners == null) {
+			queuedMessageListeners = new ArrayList<>();
+
+			_queuedMessageListeners.put(
+				destinationName, queuedMessageListeners);
+		}
+
+		queuedMessageListeners.add(messageListener);
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Destination " + destinationName + " is not configured, " +
+					"queuing MessageListener until destination is added.");
+		}
+
+		return false;
 	}
 
 	@Override
@@ -240,6 +260,24 @@ public class DefaultMessageBus implements MessageBus {
 				_messageBusEventListeners) {
 
 			messageBusEventListener.destinationAdded(destination);
+		}
+
+		List<MessageListener> messageListeners = _queuedMessageListeners.remove(
+			destination.getName());
+
+		if (ListUtil.isEmpty(messageListeners)) {
+			return;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Registering " + messageListeners.size() +
+					" queued MessageListeners for " +
+					destination.getName());
+		}
+
+		for (MessageListener messageListener : messageListeners) {
+			destination.register(messageListener);
 		}
 	}
 
@@ -391,5 +429,7 @@ public class DefaultMessageBus implements MessageBus {
 	private final Map<String, Destination> _destinations = new HashMap<>();
 	private final Set<MessageBusEventListener> _messageBusEventListeners =
 		new ConcurrentHashSet<>();
+	private final Map<String, List<MessageListener>> _queuedMessageListeners =
+		new HashMap<>();
 
 }

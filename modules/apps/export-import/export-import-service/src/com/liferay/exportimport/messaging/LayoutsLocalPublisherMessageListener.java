@@ -15,6 +15,8 @@
 package com.liferay.exportimport.messaging;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -27,16 +29,38 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Bruno Farache
  * @author Raymond Augé
  * @author Daniel Kocsis
  */
+@Component(
+	immediate = true,
+	property = {
+		"destination.name=" + DestinationNames.LAYOUTS_LOCAL_PUBLISHER,
+		"status.destination.name=" + DestinationNames.MESSAGE_BUS_MESSAGE_STATUS
+	},
+	service = LayoutsLocalPublisherMessageListener.class
+)
 public class LayoutsLocalPublisherMessageListener
 	extends BasePublisherMessageListener {
 
-	public LayoutsLocalPublisherMessageListener() {
-		super("liferay/message_bus/message_status");
+	@Activate
+	protected void activate(ComponentContext componentContext) {
+		initialize(componentContext);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Override
@@ -75,6 +99,13 @@ public class LayoutsLocalPublisherMessageListener
 		finally {
 			resetThreadLocals();
 		}
+	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.LAYOUTS_LOCAL_PUBLISHER + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
 	}
 
 }

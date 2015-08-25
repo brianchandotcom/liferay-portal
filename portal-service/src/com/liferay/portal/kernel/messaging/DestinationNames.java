@@ -107,6 +107,9 @@ public interface DestinationNames {
 	public static final String MESSAGE_BUS_DEFAULT_RESPONSE =
 		"liferay/message_bus/default_response";
 
+	public static final String MESSAGE_BUS_MESSAGE_STATUS =
+		"liferay/message_bus/message_status";
+
 	public static final String MONITORING = "liferay/monitoring";
 
 	public static final String POLLER = "liferay/poller";

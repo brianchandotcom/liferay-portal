@@ -344,9 +344,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 					String title = dlFileEntry.getTitle();
 
 					if (!DLValidatorUtil.isValidName(title)) {
-
 						try {
-
 							dlFileEntry = renameTitle(
 											dlFileEntry,
 											DLValidatorUtil.fixName(title));

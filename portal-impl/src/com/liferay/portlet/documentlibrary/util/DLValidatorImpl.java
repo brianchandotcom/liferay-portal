@@ -41,6 +41,9 @@ public final class DLValidatorImpl implements DLValidator {
 
 	@Override
 	public String fixName(String name) {
+		if (Validator.isNull(name)) {
+			return StringPool.UNDERLINE;
+		}
 
 		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
 			name = name.replace(blacklistChar, StringPool.UNDERLINE);

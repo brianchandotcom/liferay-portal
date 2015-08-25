@@ -2,20 +2,10 @@
 
 #set ($portlet_id = $htmlUtil.escapeAttribute($portlet_display.getId()))
 #set ($portlet_title = $htmlUtil.escape($portlet_display.getTitle()))
-#set ($portlet_title_icon_css_class = "")
 #set ($portlet_description = $portlet_display.getDescription())
-#set ($portlet_description_css_class = "alert alert-info lfr-control-panel-help-content lfr-message-content")
 #set ($portlet_back_url = $htmlUtil.escapeHREF($portlet_display.getURLBack()))
-#set ($enable_portlet_descriptions = $sessionClicks.get($request, "enable-portlet-descriptions", "1"))
 #set ($show_portlet_title = $portlet_display.getControlPanelCategory().startsWith("site_administration."))
-#set ($show_portlet_description = $enable_portlet_descriptions == "1" && $sessionClicks.get($request, "show-portlet-description-$portlet_id", "1") == "1")
 #set ($valid_portlet_description = $validator.isNotNull($portlet_description) && $portlet_description.indexOf('javax.portlet.description') == -1)
-
-#if ($show_portlet_description)
-	#set ($portlet_title_icon_css_class = "hide")
-#else
-	#set ($portlet_description_css_class = "${portlet_description_css_class} hide")
-#end
 
 #set ($portlet_topper_css_class = "portlet-topper")
 

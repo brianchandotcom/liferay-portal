@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.shopping.upgrade.v1_0_0.UpgradeSharding;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeShopping;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeShoppingPreferences;
 
@@ -36,7 +37,8 @@ public class ShoppingServiceUpgrade implements UpgradeStepRegistrator {
 		registry.register(
 			"com.liferay.shopping.service", "0.0.1", "1.0.0",
 			new UpgradePortletId(), new UpgradeClassNames(),
-			new UpgradeShopping(), new UpgradeShoppingPreferences());
+			new UpgradeShopping(), new UpgradeShoppingPreferences(),
+			new UpgradeSharding());
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

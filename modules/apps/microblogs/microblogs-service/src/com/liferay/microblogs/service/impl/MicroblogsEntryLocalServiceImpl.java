@@ -19,6 +19,7 @@ import com.liferay.microblogs.exception.UnsupportedMicroblogsEntryException;
 import com.liferay.microblogs.microblogs.social.MicroblogsActivityKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
+import com.liferay.microblogs.notifications.MicroblogsUserNotificationDefinition;
 import com.liferay.microblogs.service.base.MicroblogsEntryLocalServiceBaseImpl;
 import com.liferay.microblogs.util.MicroblogsUtil;
 import com.liferay.microblogs.util.comparator.EntryCreateDateComparator;
@@ -595,7 +596,7 @@ public class MicroblogsEntryLocalServiceImpl
 						UserNotificationDeliveryConstants.TYPE_PUSH);
 
 					if (notificationType !=
-							MicroblogsEntryConstants.
+							MicroblogsUserNotificationDefinition.
 								NOTIFICATION_TYPE_UNKNOWN) {
 
 						notificationEventJSONObject.put(
@@ -614,7 +615,7 @@ public class MicroblogsEntryLocalServiceImpl
 						UserNotificationDeliveryConstants.TYPE_WEBSITE);
 
 					if (notificationType !=
-							MicroblogsEntryConstants.
+							MicroblogsUserNotificationDefinition.
 								NOTIFICATION_TYPE_UNKNOWN) {
 
 						notificationEventJSONObject.put(

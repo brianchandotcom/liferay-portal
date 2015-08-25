@@ -218,7 +218,7 @@ public class MBMessageServiceTest {
 	private class AddMessageThread extends DoAsUserThread {
 
 		public AddMessageThread(long userId, String subject) {
-			super(userId, 5);
+			super(userId, ServiceTestUtil.RETRY_COUNT);
 
 			_subject = subject;
 		}

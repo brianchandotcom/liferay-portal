@@ -99,6 +99,9 @@ public class UIItemsBuilder {
 		PortletURL portletURL = _getActionURL(
 			"/document_library/edit_file_entry", Constants.CANCEL_CHECKOUT);
 
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, "icon-remove",
 			DLUIItemKeys.CANCEL_CHECKOUT, "cancel-checkout[document]",
@@ -131,6 +134,9 @@ public class UIItemsBuilder {
 		PortletURL portletURL = _getActionURL(
 			"/document_library/edit_file_entry", Constants.CHECKIN);
 
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, "icon-lock", DLUIItemKeys.CHECKIN,
 			"checkin", portletURL.toString());
@@ -160,6 +166,9 @@ public class UIItemsBuilder {
 
 		PortletURL portletURL = _getActionURL(
 			"/document_library/edit_file_entry", Constants.CHECKOUT);
+
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, "icon-unlock", DLUIItemKeys.CHECKOUT,
@@ -193,6 +202,9 @@ public class UIItemsBuilder {
 			PortletURL portletURL = _getActionURL(
 				"/document_library/edit_file_entry", Constants.DELETE);
 
+			portletURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
 			deleteMenuItem.setURL(portletURL.toString());
 
 			menuItems.add(deleteMenuItem);
@@ -205,6 +217,9 @@ public class UIItemsBuilder {
 
 			PortletURL portletURL = _getActionURL(
 				"/document_library/edit_file_entry", Constants.MOVE_TO_TRASH);
+
+			portletURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
 			deleteMenuItem.setURL(portletURL.toString());
 
@@ -678,8 +693,6 @@ public class UIItemsBuilder {
 		portletURL.setParameter("javax.portlet.action", mvcActionCommandName);
 		portletURL.setParameter(Constants.CMD, cmd);
 		portletURL.setParameter("redirect", _getCurrentURL());
-		portletURL.setParameter(
-			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
 		return portletURL;
 	}

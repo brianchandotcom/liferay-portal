@@ -1,22 +1,17 @@
+@import "bourbon";
+
 .lfr-ddm-form-container {
 	.lfr-ddm-form-field-container {
 		position: relative;
 
+		@include keyframes(spin) {
+			100% {
+				transform: rotate(359deg);
+			}
+		}
+
 		.icon-spinner {
-			-webkit-animation: spin 1000ms infinite linear;
-			animation: spin 1000ms infinite linear;
-		}
-
-		@-webkit-keyframes spin {
-			100% {
-				transform: rotate(359deg);
-			}
-		}
-
-		@keyframes spin {
-			100% {
-				transform: rotate(359deg);
-			}
+			@include animation(spin 1000ms infinite linear);
 		}
 
 		.lfr-ddm-form-field-repeatable-add-button {

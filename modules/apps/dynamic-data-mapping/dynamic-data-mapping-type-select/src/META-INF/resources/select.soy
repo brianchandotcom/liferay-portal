@@ -23,7 +23,7 @@
 				{/if}
 			</label>
 
-			<select id="{$name}" class="form-control" dir="{$dir}" name="{$name}" {$multiple}>
+			<select class="form-control" dir="{$dir}" id="{$name}" name="{$name}" {$multiple}>
 				{foreach $option in $options}
 					<option dir="{$dir}" {$option.status} value="{$option.value}">
 						{$option.label}

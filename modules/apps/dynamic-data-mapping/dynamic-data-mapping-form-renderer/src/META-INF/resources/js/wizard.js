@@ -5,9 +5,9 @@ AUI.add(
 		var Lang = A.Lang;
 
 		var TPL_WIZARD_ITEM = '<li class="{state}">' +
-			'<div class="progress-bar-title">{title}</div>' +
-			'<div class="divider"></div>' +
-			'<div class="progress-bar-step">{number}</div>' +
+				'<div class="progress-bar-title">{title}</div>' +
+				'<div class="divider"></div>' +
+				'<div class="progress-bar-step">{number}</div>' +
 			'</li>';
 
 		var Wizard = A.Component.create(
@@ -47,6 +47,7 @@ AUI.add(
 
 						return items;
 					},
+
 					itemsNodeList: function(boundingBox) {
 						var instance = this;
 
@@ -83,8 +84,7 @@ AUI.add(
 						var instance = this;
 
 						return new A.NodeList(
-							AArray.map(
-								items,
+							items.map(
 								function(item, index) {
 									return A.Node.create(
 										Lang.sub(

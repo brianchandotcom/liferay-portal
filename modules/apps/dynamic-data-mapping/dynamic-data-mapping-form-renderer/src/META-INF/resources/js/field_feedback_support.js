@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_FEEDBACK = '<span class="form-control-feedback" aria-hidden="true"><span class="icon-{icon}"></span></span>';
+		var TPL_FEEDBACK = '<span aria-hidden="true" class="form-control-feedback"><span class="icon-{icon}"></span></span>';
 
 		var TPL_VALIDATION_MESSAGE = '<div class="validation-message">{message}</div>';
 

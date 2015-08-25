@@ -34,7 +34,7 @@
  * @param values
  */
 {template .form_renderer_js}
-	<link rel="stylesheet" type="text/css" href="/o/ddm-form-renderer/css/main.css">
+	<link href="/o/ddm-form-renderer/css/main.css" rel="stylesheet" type="text/css" />
 	<script src="/o/ddm-form-renderer/js/modules.js"></script>
 
 	<script type="text/javascript">
@@ -121,9 +121,10 @@
 				{/foreach}
 			</ul>
 		</div>
+
 		<div class="lfr-ddm-form-pages">
 			{foreach $page in $pages}
-				<div class="lfr-ddm-form-page {if isFirst($page)}active{/if}">
+				<div class="{if isFirst($page)}active{/if} lfr-ddm-form-page">
 					{if isNonnull($page.title)}
 						<h3>{$page.title|noAutoescape}</h3>
 					{/if}

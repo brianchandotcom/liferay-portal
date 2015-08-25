@@ -13,11 +13,11 @@ AUI.add(
 			'success-field'
 		];
 
-		var TPL_ADD_BUTTON = '<button type="button" class="add-row btn-content btn btn-icon-only toolbar-first toolbar-item" title="">' +
+		var TPL_ADD_BUTTON = '<button class="add-row btn btn-content btn-icon-only toolbar-first toolbar-item" title="" type="button">' +
 				'<span class="btn-icon icon icon-plus"></span>' +
 			'</button>';
 
-		var TPL_DELETE_BUTTON = '<button type="button" class="delete-row btn-content btn btn-icon-only toolbar-last toolbar-item" title="">' +
+		var TPL_DELETE_BUTTON = '<button class="btn btn-content btn-icon-only delete-row toolbar-item toolbar-last" title="" type="button">' +
 				'<span class="btn-icon icon icon-minus"></span>' +
 			'</button>';
 

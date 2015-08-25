@@ -102,7 +102,6 @@ AUI.add(
 						event.preventDefault();
 
 						var currentPage = instance.getCurrentPage();
-
 						var pagesTotal = instance.getPagesTotal();
 
 						if (pagesTotal > 1 && currentPage < pagesTotal) {

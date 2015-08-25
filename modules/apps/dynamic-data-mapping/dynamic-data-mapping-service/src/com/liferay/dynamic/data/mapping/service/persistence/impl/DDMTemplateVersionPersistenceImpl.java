@@ -1676,8 +1676,9 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 			DDMTemplateVersionImpl.class, ddmTemplateVersion.getPrimaryKey(),
 			ddmTemplateVersion, false);
 
-		clearUniqueFindersCache(ddmTemplateVersion);
-		cacheUniqueFindersCache(ddmTemplateVersion, isNew);
+		clearUniqueFindersCache((DDMTemplateVersion)ddmTemplateVersionModelImpl);
+		cacheUniqueFindersCache((DDMTemplateVersion)ddmTemplateVersionModelImpl,
+			isNew);
 
 		ddmTemplateVersion.resetOriginalValues();
 

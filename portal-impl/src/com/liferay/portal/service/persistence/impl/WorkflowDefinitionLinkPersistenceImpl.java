@@ -2478,8 +2478,9 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 			workflowDefinitionLink.getPrimaryKey(), workflowDefinitionLink,
 			false);
 
-		clearUniqueFindersCache(workflowDefinitionLink);
-		cacheUniqueFindersCache(workflowDefinitionLink, isNew);
+		clearUniqueFindersCache((WorkflowDefinitionLink)workflowDefinitionLinkModelImpl);
+		cacheUniqueFindersCache((WorkflowDefinitionLink)workflowDefinitionLinkModelImpl,
+			isNew);
 
 		workflowDefinitionLink.resetOriginalValues();
 

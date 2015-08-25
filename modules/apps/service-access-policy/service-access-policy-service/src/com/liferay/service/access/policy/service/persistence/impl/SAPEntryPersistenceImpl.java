@@ -3435,8 +3435,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		EntityCacheUtil.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SAPEntryImpl.class, sapEntry.getPrimaryKey(), sapEntry, false);
 
-		clearUniqueFindersCache(sapEntry);
-		cacheUniqueFindersCache(sapEntry, isNew);
+		clearUniqueFindersCache((SAPEntry)sapEntryModelImpl);
+		cacheUniqueFindersCache((SAPEntry)sapEntryModelImpl, isNew);
 
 		sapEntry.resetOriginalValues();
 

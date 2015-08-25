@@ -5899,8 +5899,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			SocialRelationImpl.class, socialRelation.getPrimaryKey(),
 			socialRelation, false);
 
-		clearUniqueFindersCache(socialRelation);
-		cacheUniqueFindersCache(socialRelation, isNew);
+		clearUniqueFindersCache((SocialRelation)socialRelationModelImpl);
+		cacheUniqueFindersCache((SocialRelation)socialRelationModelImpl, isNew);
 
 		socialRelation.resetOriginalValues();
 

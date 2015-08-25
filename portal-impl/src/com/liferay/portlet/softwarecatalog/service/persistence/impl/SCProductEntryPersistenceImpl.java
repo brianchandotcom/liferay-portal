@@ -2981,8 +2981,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 			SCProductEntryImpl.class, scProductEntry.getPrimaryKey(),
 			scProductEntry, false);
 
-		clearUniqueFindersCache(scProductEntry);
-		cacheUniqueFindersCache(scProductEntry, isNew);
+		clearUniqueFindersCache((SCProductEntry)scProductEntryModelImpl);
+		cacheUniqueFindersCache((SCProductEntry)scProductEntryModelImpl, isNew);
 
 		scProductEntry.resetOriginalValues();
 

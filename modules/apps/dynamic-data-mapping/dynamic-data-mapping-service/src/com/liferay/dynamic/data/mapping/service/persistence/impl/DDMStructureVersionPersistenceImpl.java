@@ -1683,8 +1683,9 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 			DDMStructureVersionImpl.class, ddmStructureVersion.getPrimaryKey(),
 			ddmStructureVersion, false);
 
-		clearUniqueFindersCache(ddmStructureVersion);
-		cacheUniqueFindersCache(ddmStructureVersion, isNew);
+		clearUniqueFindersCache((DDMStructureVersion)ddmStructureVersionModelImpl);
+		cacheUniqueFindersCache((DDMStructureVersion)ddmStructureVersionModelImpl,
+			isNew);
 
 		ddmStructureVersion.resetOriginalValues();
 

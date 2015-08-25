@@ -1161,8 +1161,9 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 			SCProductVersionImpl.class, scProductVersion.getPrimaryKey(),
 			scProductVersion, false);
 
-		clearUniqueFindersCache(scProductVersion);
-		cacheUniqueFindersCache(scProductVersion, isNew);
+		clearUniqueFindersCache((SCProductVersion)scProductVersionModelImpl);
+		cacheUniqueFindersCache((SCProductVersion)scProductVersionModelImpl,
+			isNew);
 
 		scProductVersion.resetOriginalValues();
 

@@ -2179,8 +2179,9 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			DLFileEntryMetadataImpl.class, dlFileEntryMetadata.getPrimaryKey(),
 			dlFileEntryMetadata, false);
 
-		clearUniqueFindersCache(dlFileEntryMetadata);
-		cacheUniqueFindersCache(dlFileEntryMetadata, isNew);
+		clearUniqueFindersCache((DLFileEntryMetadata)dlFileEntryMetadataModelImpl);
+		cacheUniqueFindersCache((DLFileEntryMetadata)dlFileEntryMetadataModelImpl,
+			isNew);
 
 		dlFileEntryMetadata.resetOriginalValues();
 

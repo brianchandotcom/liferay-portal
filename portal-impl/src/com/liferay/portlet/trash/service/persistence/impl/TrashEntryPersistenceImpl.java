@@ -2650,8 +2650,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		EntityCacheUtil.putResult(TrashEntryModelImpl.ENTITY_CACHE_ENABLED,
 			TrashEntryImpl.class, trashEntry.getPrimaryKey(), trashEntry, false);
 
-		clearUniqueFindersCache(trashEntry);
-		cacheUniqueFindersCache(trashEntry, isNew);
+		clearUniqueFindersCache((TrashEntry)trashEntryModelImpl);
+		cacheUniqueFindersCache((TrashEntry)trashEntryModelImpl, isNew);
 
 		trashEntry.resetOriginalValues();
 

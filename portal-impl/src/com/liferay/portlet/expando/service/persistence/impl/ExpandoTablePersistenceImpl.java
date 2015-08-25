@@ -1186,8 +1186,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			ExpandoTableImpl.class, expandoTable.getPrimaryKey(), expandoTable,
 			false);
 
-		clearUniqueFindersCache(expandoTable);
-		cacheUniqueFindersCache(expandoTable, isNew);
+		clearUniqueFindersCache((ExpandoTable)expandoTableModelImpl);
+		cacheUniqueFindersCache((ExpandoTable)expandoTableModelImpl, isNew);
 
 		expandoTable.resetOriginalValues();
 

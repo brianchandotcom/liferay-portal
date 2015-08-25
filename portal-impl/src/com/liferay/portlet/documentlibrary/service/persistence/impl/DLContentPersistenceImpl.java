@@ -2459,8 +2459,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		EntityCacheUtil.putResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentImpl.class, dlContent.getPrimaryKey(), dlContent, false);
 
-		clearUniqueFindersCache(dlContent);
-		cacheUniqueFindersCache(dlContent, isNew);
+		clearUniqueFindersCache((DLContent)dlContentModelImpl);
+		cacheUniqueFindersCache((DLContent)dlContentModelImpl, isNew);
 
 		dlContent.resetOriginalValues();
 

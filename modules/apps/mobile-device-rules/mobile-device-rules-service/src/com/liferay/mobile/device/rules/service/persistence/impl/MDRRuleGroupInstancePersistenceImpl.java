@@ -5002,8 +5002,9 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			MDRRuleGroupInstanceImpl.class,
 			mdrRuleGroupInstance.getPrimaryKey(), mdrRuleGroupInstance, false);
 
-		clearUniqueFindersCache(mdrRuleGroupInstance);
-		cacheUniqueFindersCache(mdrRuleGroupInstance, isNew);
+		clearUniqueFindersCache((MDRRuleGroupInstance)mdrRuleGroupInstanceModelImpl);
+		cacheUniqueFindersCache((MDRRuleGroupInstance)mdrRuleGroupInstanceModelImpl,
+			isNew);
 
 		mdrRuleGroupInstance.resetOriginalValues();
 

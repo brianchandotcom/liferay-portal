@@ -2293,8 +2293,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 			ShoppingItemImpl.class, shoppingItem.getPrimaryKey(), shoppingItem,
 			false);
 
-		clearUniqueFindersCache(shoppingItem);
-		cacheUniqueFindersCache(shoppingItem, isNew);
+		clearUniqueFindersCache((ShoppingItem)shoppingItemModelImpl);
+		cacheUniqueFindersCache((ShoppingItem)shoppingItemModelImpl, isNew);
 
 		shoppingItem.resetOriginalValues();
 

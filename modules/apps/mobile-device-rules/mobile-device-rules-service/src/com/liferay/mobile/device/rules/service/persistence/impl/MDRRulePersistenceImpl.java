@@ -2254,8 +2254,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		EntityCacheUtil.putResult(MDRRuleModelImpl.ENTITY_CACHE_ENABLED,
 			MDRRuleImpl.class, mdrRule.getPrimaryKey(), mdrRule, false);
 
-		clearUniqueFindersCache(mdrRule);
-		cacheUniqueFindersCache(mdrRule, isNew);
+		clearUniqueFindersCache((MDRRule)mdrRuleModelImpl);
+		cacheUniqueFindersCache((MDRRule)mdrRuleModelImpl, isNew);
 
 		mdrRule.resetOriginalValues();
 

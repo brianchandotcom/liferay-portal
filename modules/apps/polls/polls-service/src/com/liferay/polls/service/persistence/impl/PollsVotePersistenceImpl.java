@@ -3020,8 +3020,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		EntityCacheUtil.putResult(PollsVoteModelImpl.ENTITY_CACHE_ENABLED,
 			PollsVoteImpl.class, pollsVote.getPrimaryKey(), pollsVote, false);
 
-		clearUniqueFindersCache(pollsVote);
-		cacheUniqueFindersCache(pollsVote, isNew);
+		clearUniqueFindersCache((PollsVote)pollsVoteModelImpl);
+		cacheUniqueFindersCache((PollsVote)pollsVoteModelImpl, isNew);
 
 		pollsVote.resetOriginalValues();
 

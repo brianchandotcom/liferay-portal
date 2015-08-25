@@ -5967,8 +5967,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			DLFileVersionImpl.class, dlFileVersion.getPrimaryKey(),
 			dlFileVersion, false);
 
-		clearUniqueFindersCache(dlFileVersion);
-		cacheUniqueFindersCache(dlFileVersion, isNew);
+		clearUniqueFindersCache((DLFileVersion)dlFileVersionModelImpl);
+		cacheUniqueFindersCache((DLFileVersion)dlFileVersionModelImpl, isNew);
 
 		dlFileVersion.resetOriginalValues();
 

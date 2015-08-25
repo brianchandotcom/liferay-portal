@@ -10852,8 +10852,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			AssetCategoryImpl.class, assetCategory.getPrimaryKey(),
 			assetCategory, false);
 
-		clearUniqueFindersCache(assetCategory);
-		cacheUniqueFindersCache(assetCategory, isNew);
+		clearUniqueFindersCache((AssetCategory)assetCategoryModelImpl);
+		cacheUniqueFindersCache((AssetCategory)assetCategoryModelImpl, isNew);
 
 		assetCategory.resetOriginalValues();
 

@@ -1183,8 +1183,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		EntityCacheUtil.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeImpl.class, listType.getPrimaryKey(), listType, false);
 
-		clearUniqueFindersCache(listType);
-		cacheUniqueFindersCache(listType, isNew);
+		clearUniqueFindersCache((ListType)listTypeModelImpl);
+		cacheUniqueFindersCache((ListType)listTypeModelImpl, isNew);
 
 		listType.resetOriginalValues();
 

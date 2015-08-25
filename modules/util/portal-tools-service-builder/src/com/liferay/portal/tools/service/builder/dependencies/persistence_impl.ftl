@@ -539,6 +539,12 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			</#list>
 		</#if>
 
+		<#assign uniqueFinderList = entity.getUniqueFinderList()>
+
+		<#if uniqueFinderList?size &gt; 0>
+			<#assign castEntityModelImpl = true>
+		</#if>
+
 		<#if entity.hasColumn("createDate", "Date") && entity.hasColumn("modifiedDate", "Date")>
 			<#assign castEntityModelImpl = true>
 		</#if>
@@ -769,11 +775,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 		EntityCacheUtil.putResult(${entity.name}ModelImpl.ENTITY_CACHE_ENABLED, ${entity.name}Impl.class, ${entity.varName}.getPrimaryKey(), ${entity.varName}, false);
 
-		<#assign uniqueFinderList = entity.getUniqueFinderList()>
-
 		<#if uniqueFinderList?size &gt; 0>
-			clearUniqueFindersCache(${entity.varName});
-			cacheUniqueFindersCache(${entity.varName}, isNew);
+			clearUniqueFindersCache((${entity.name})${entity.varName}ModelImpl);
+			cacheUniqueFindersCache((${entity.name})${entity.varName}ModelImpl, isNew);
 		</#if>
 
 		${entity.varName}.resetOriginalValues();

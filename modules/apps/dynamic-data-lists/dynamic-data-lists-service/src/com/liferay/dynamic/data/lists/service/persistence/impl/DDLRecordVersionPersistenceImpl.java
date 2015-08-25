@@ -1664,8 +1664,9 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 			DDLRecordVersionImpl.class, ddlRecordVersion.getPrimaryKey(),
 			ddlRecordVersion, false);
 
-		clearUniqueFindersCache(ddlRecordVersion);
-		cacheUniqueFindersCache(ddlRecordVersion, isNew);
+		clearUniqueFindersCache((DDLRecordVersion)ddlRecordVersionModelImpl);
+		cacheUniqueFindersCache((DDLRecordVersion)ddlRecordVersionModelImpl,
+			isNew);
 
 		ddlRecordVersion.resetOriginalValues();
 

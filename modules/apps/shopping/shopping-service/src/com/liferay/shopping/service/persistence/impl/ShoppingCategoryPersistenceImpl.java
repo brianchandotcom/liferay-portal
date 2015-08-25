@@ -2440,8 +2440,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			ShoppingCategoryImpl.class, shoppingCategory.getPrimaryKey(),
 			shoppingCategory, false);
 
-		clearUniqueFindersCache(shoppingCategory);
-		cacheUniqueFindersCache(shoppingCategory, isNew);
+		clearUniqueFindersCache((ShoppingCategory)shoppingCategoryModelImpl);
+		cacheUniqueFindersCache((ShoppingCategory)shoppingCategoryModelImpl,
+			isNew);
 
 		shoppingCategory.resetOriginalValues();
 

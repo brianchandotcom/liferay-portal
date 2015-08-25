@@ -1600,8 +1600,8 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		EntityCacheUtil.putResult(CountryModelImpl.ENTITY_CACHE_ENABLED,
 			CountryImpl.class, country.getPrimaryKey(), country, false);
 
-		clearUniqueFindersCache(country);
-		cacheUniqueFindersCache(country, isNew);
+		clearUniqueFindersCache((Country)countryModelImpl);
+		cacheUniqueFindersCache((Country)countryModelImpl, isNew);
 
 		country.resetOriginalValues();
 

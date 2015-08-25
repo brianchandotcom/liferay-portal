@@ -1134,8 +1134,9 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			AnnouncementsDeliveryImpl.class,
 			announcementsDelivery.getPrimaryKey(), announcementsDelivery, false);
 
-		clearUniqueFindersCache(announcementsDelivery);
-		cacheUniqueFindersCache(announcementsDelivery, isNew);
+		clearUniqueFindersCache((AnnouncementsDelivery)announcementsDeliveryModelImpl);
+		cacheUniqueFindersCache((AnnouncementsDelivery)announcementsDeliveryModelImpl,
+			isNew);
 
 		announcementsDelivery.resetOriginalValues();
 

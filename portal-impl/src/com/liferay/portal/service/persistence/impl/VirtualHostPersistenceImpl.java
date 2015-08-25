@@ -822,6 +822,8 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 
 		boolean isNew = virtualHost.isNew();
 
+		VirtualHostModelImpl virtualHostModelImpl = (VirtualHostModelImpl)virtualHost;
+
 		Session session = null;
 
 		try {
@@ -853,8 +855,8 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 			VirtualHostImpl.class, virtualHost.getPrimaryKey(), virtualHost,
 			false);
 
-		clearUniqueFindersCache(virtualHost);
-		cacheUniqueFindersCache(virtualHost, isNew);
+		clearUniqueFindersCache((VirtualHost)virtualHostModelImpl);
+		cacheUniqueFindersCache((VirtualHost)virtualHostModelImpl, isNew);
 
 		virtualHost.resetOriginalValues();
 

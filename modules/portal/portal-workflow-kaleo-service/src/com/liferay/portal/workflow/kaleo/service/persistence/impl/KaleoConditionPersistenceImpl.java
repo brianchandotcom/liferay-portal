@@ -1609,8 +1609,8 @@ public class KaleoConditionPersistenceImpl extends BasePersistenceImpl<KaleoCond
 			KaleoConditionImpl.class, kaleoCondition.getPrimaryKey(),
 			kaleoCondition, false);
 
-		clearUniqueFindersCache(kaleoCondition);
-		cacheUniqueFindersCache(kaleoCondition, isNew);
+		clearUniqueFindersCache((KaleoCondition)kaleoConditionModelImpl);
+		cacheUniqueFindersCache((KaleoCondition)kaleoConditionModelImpl, isNew);
 
 		kaleoCondition.resetOriginalValues();
 

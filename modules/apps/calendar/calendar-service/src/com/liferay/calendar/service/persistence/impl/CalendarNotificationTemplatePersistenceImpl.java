@@ -2743,8 +2743,9 @@ public class CalendarNotificationTemplatePersistenceImpl
 			calendarNotificationTemplate.getPrimaryKey(),
 			calendarNotificationTemplate, false);
 
-		clearUniqueFindersCache(calendarNotificationTemplate);
-		cacheUniqueFindersCache(calendarNotificationTemplate, isNew);
+		clearUniqueFindersCache((CalendarNotificationTemplate)calendarNotificationTemplateModelImpl);
+		cacheUniqueFindersCache((CalendarNotificationTemplate)calendarNotificationTemplateModelImpl,
+			isNew);
 
 		calendarNotificationTemplate.resetOriginalValues();
 

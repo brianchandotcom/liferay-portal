@@ -7541,8 +7541,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			JournalFolderImpl.class, journalFolder.getPrimaryKey(),
 			journalFolder, false);
 
-		clearUniqueFindersCache(journalFolder);
-		cacheUniqueFindersCache(journalFolder, isNew);
+		clearUniqueFindersCache((JournalFolder)journalFolderModelImpl);
+		cacheUniqueFindersCache((JournalFolder)journalFolderModelImpl, isNew);
 
 		journalFolder.resetOriginalValues();
 

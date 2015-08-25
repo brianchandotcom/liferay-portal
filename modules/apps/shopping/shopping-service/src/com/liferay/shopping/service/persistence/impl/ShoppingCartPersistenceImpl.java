@@ -1598,8 +1598,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			ShoppingCartImpl.class, shoppingCart.getPrimaryKey(), shoppingCart,
 			false);
 
-		clearUniqueFindersCache(shoppingCart);
-		cacheUniqueFindersCache(shoppingCart, isNew);
+		clearUniqueFindersCache((ShoppingCart)shoppingCartModelImpl);
+		cacheUniqueFindersCache((ShoppingCart)shoppingCartModelImpl, isNew);
 
 		shoppingCart.resetOriginalValues();
 

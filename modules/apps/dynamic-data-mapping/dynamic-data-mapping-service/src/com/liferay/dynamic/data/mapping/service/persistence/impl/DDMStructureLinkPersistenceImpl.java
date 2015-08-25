@@ -2174,8 +2174,9 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey(),
 			ddmStructureLink, false);
 
-		clearUniqueFindersCache(ddmStructureLink);
-		cacheUniqueFindersCache(ddmStructureLink, isNew);
+		clearUniqueFindersCache((DDMStructureLink)ddmStructureLinkModelImpl);
+		cacheUniqueFindersCache((DDMStructureLink)ddmStructureLinkModelImpl,
+			isNew);
 
 		ddmStructureLink.resetOriginalValues();
 

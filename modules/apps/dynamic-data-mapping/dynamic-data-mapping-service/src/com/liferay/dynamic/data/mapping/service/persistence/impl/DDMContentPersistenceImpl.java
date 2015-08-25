@@ -2759,8 +2759,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		EntityCacheUtil.putResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
 			DDMContentImpl.class, ddmContent.getPrimaryKey(), ddmContent, false);
 
-		clearUniqueFindersCache(ddmContent);
-		cacheUniqueFindersCache(ddmContent, isNew);
+		clearUniqueFindersCache((DDMContent)ddmContentModelImpl);
+		cacheUniqueFindersCache((DDMContent)ddmContentModelImpl, isNew);
 
 		ddmContent.resetOriginalValues();
 

@@ -1567,8 +1567,8 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		EntityCacheUtil.putResult(ExpandoRowModelImpl.ENTITY_CACHE_ENABLED,
 			ExpandoRowImpl.class, expandoRow.getPrimaryKey(), expandoRow, false);
 
-		clearUniqueFindersCache(expandoRow);
-		cacheUniqueFindersCache(expandoRow, isNew);
+		clearUniqueFindersCache((ExpandoRow)expandoRowModelImpl);
+		cacheUniqueFindersCache((ExpandoRow)expandoRowModelImpl, isNew);
 
 		expandoRow.resetOriginalValues();
 

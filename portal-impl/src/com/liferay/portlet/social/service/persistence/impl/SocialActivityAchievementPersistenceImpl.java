@@ -3450,8 +3450,9 @@ public class SocialActivityAchievementPersistenceImpl
 			socialActivityAchievement.getPrimaryKey(),
 			socialActivityAchievement, false);
 
-		clearUniqueFindersCache(socialActivityAchievement);
-		cacheUniqueFindersCache(socialActivityAchievement, isNew);
+		clearUniqueFindersCache((SocialActivityAchievement)socialActivityAchievementModelImpl);
+		cacheUniqueFindersCache((SocialActivityAchievement)socialActivityAchievementModelImpl,
+			isNew);
 
 		socialActivityAchievement.resetOriginalValues();
 

@@ -2301,8 +2301,9 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 			SocialActivityLimitImpl.class, socialActivityLimit.getPrimaryKey(),
 			socialActivityLimit, false);
 
-		clearUniqueFindersCache(socialActivityLimit);
-		cacheUniqueFindersCache(socialActivityLimit, isNew);
+		clearUniqueFindersCache((SocialActivityLimit)socialActivityLimitModelImpl);
+		cacheUniqueFindersCache((SocialActivityLimit)socialActivityLimitModelImpl,
+			isNew);
 
 		socialActivityLimit.resetOriginalValues();
 

@@ -2623,8 +2623,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		EntityCacheUtil.putResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
 			RepositoryImpl.class, repository.getPrimaryKey(), repository, false);
 
-		clearUniqueFindersCache(repository);
-		cacheUniqueFindersCache(repository, isNew);
+		clearUniqueFindersCache((Repository)repositoryModelImpl);
+		cacheUniqueFindersCache((Repository)repositoryModelImpl, isNew);
 
 		repository.resetOriginalValues();
 

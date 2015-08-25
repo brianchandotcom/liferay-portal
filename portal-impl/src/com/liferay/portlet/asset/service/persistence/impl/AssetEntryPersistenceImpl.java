@@ -4026,8 +4026,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		EntityCacheUtil.putResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryImpl.class, assetEntry.getPrimaryKey(), assetEntry, false);
 
-		clearUniqueFindersCache(assetEntry);
-		cacheUniqueFindersCache(assetEntry, isNew);
+		clearUniqueFindersCache((AssetEntry)assetEntryModelImpl);
+		cacheUniqueFindersCache((AssetEntry)assetEntryModelImpl, isNew);
 
 		assetEntry.resetOriginalValues();
 

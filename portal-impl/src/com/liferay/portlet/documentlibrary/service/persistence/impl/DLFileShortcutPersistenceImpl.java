@@ -6226,8 +6226,8 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			DLFileShortcutImpl.class, dlFileShortcut.getPrimaryKey(),
 			dlFileShortcut, false);
 
-		clearUniqueFindersCache(dlFileShortcut);
-		cacheUniqueFindersCache(dlFileShortcut, isNew);
+		clearUniqueFindersCache((DLFileShortcut)dlFileShortcutModelImpl);
+		cacheUniqueFindersCache((DLFileShortcut)dlFileShortcutModelImpl, isNew);
 
 		dlFileShortcut.resetOriginalValues();
 

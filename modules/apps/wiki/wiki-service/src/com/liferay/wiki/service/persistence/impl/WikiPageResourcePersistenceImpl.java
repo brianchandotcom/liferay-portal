@@ -1478,8 +1478,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey(),
 			wikiPageResource, false);
 
-		clearUniqueFindersCache(wikiPageResource);
-		cacheUniqueFindersCache(wikiPageResource, isNew);
+		clearUniqueFindersCache((WikiPageResource)wikiPageResourceModelImpl);
+		cacheUniqueFindersCache((WikiPageResource)wikiPageResourceModelImpl,
+			isNew);
 
 		wikiPageResource.resetOriginalValues();
 

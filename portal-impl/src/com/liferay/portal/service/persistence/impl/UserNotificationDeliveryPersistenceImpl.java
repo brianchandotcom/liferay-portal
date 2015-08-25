@@ -1237,8 +1237,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			userNotificationDelivery.getPrimaryKey(), userNotificationDelivery,
 			false);
 
-		clearUniqueFindersCache(userNotificationDelivery);
-		cacheUniqueFindersCache(userNotificationDelivery, isNew);
+		clearUniqueFindersCache((UserNotificationDelivery)userNotificationDeliveryModelImpl);
+		cacheUniqueFindersCache((UserNotificationDelivery)userNotificationDeliveryModelImpl,
+			isNew);
 
 		userNotificationDelivery.resetOriginalValues();
 

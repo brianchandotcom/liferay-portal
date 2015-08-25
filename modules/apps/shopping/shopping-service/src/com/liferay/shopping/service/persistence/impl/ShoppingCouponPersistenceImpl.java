@@ -1114,8 +1114,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			ShoppingCouponImpl.class, shoppingCoupon.getPrimaryKey(),
 			shoppingCoupon, false);
 
-		clearUniqueFindersCache(shoppingCoupon);
-		cacheUniqueFindersCache(shoppingCoupon, isNew);
+		clearUniqueFindersCache((ShoppingCoupon)shoppingCouponModelImpl);
+		cacheUniqueFindersCache((ShoppingCoupon)shoppingCouponModelImpl, isNew);
 
 		shoppingCoupon.resetOriginalValues();
 

@@ -2942,8 +2942,8 @@ public class KaleoDefinitionPersistenceImpl extends BasePersistenceImpl<KaleoDef
 			KaleoDefinitionImpl.class, kaleoDefinition.getPrimaryKey(),
 			kaleoDefinition, false);
 
-		clearUniqueFindersCache(kaleoDefinition);
-		cacheUniqueFindersCache(kaleoDefinition, isNew);
+		clearUniqueFindersCache((KaleoDefinition)kaleoDefinitionModelImpl);
+		cacheUniqueFindersCache((KaleoDefinition)kaleoDefinitionModelImpl, isNew);
 
 		kaleoDefinition.resetOriginalValues();
 

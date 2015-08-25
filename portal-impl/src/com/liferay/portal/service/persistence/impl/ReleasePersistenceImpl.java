@@ -618,8 +618,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		EntityCacheUtil.putResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 			ReleaseImpl.class, release.getPrimaryKey(), release, false);
 
-		clearUniqueFindersCache(release);
-		cacheUniqueFindersCache(release, isNew);
+		clearUniqueFindersCache((Release)releaseModelImpl);
+		cacheUniqueFindersCache((Release)releaseModelImpl, isNew);
 
 		release.resetOriginalValues();
 

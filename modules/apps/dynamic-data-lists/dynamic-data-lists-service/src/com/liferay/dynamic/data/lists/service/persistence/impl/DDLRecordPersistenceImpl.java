@@ -3299,8 +3299,8 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		EntityCacheUtil.putResult(DDLRecordModelImpl.ENTITY_CACHE_ENABLED,
 			DDLRecordImpl.class, ddlRecord.getPrimaryKey(), ddlRecord, false);
 
-		clearUniqueFindersCache(ddlRecord);
-		cacheUniqueFindersCache(ddlRecord, isNew);
+		clearUniqueFindersCache((DDLRecord)ddlRecordModelImpl);
+		cacheUniqueFindersCache((DDLRecord)ddlRecordModelImpl, isNew);
 
 		ddlRecord.resetOriginalValues();
 

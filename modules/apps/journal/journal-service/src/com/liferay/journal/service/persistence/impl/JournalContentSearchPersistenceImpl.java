@@ -4895,8 +4895,9 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			JournalContentSearchImpl.class,
 			journalContentSearch.getPrimaryKey(), journalContentSearch, false);
 
-		clearUniqueFindersCache(journalContentSearch);
-		cacheUniqueFindersCache(journalContentSearch, isNew);
+		clearUniqueFindersCache((JournalContentSearch)journalContentSearchModelImpl);
+		cacheUniqueFindersCache((JournalContentSearch)journalContentSearchModelImpl,
+			isNew);
 
 		journalContentSearch.resetOriginalValues();
 

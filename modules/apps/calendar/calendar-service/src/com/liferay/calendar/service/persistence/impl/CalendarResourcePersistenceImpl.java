@@ -6761,8 +6761,9 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			CalendarResourceImpl.class, calendarResource.getPrimaryKey(),
 			calendarResource, false);
 
-		clearUniqueFindersCache(calendarResource);
-		cacheUniqueFindersCache(calendarResource, isNew);
+		clearUniqueFindersCache((CalendarResource)calendarResourceModelImpl);
+		cacheUniqueFindersCache((CalendarResource)calendarResourceModelImpl,
+			isNew);
 
 		calendarResource.resetOriginalValues();
 

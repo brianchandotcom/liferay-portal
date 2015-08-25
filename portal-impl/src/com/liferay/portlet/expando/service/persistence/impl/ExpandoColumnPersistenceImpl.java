@@ -1972,8 +1972,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			ExpandoColumnImpl.class, expandoColumn.getPrimaryKey(),
 			expandoColumn, false);
 
-		clearUniqueFindersCache(expandoColumn);
-		cacheUniqueFindersCache(expandoColumn, isNew);
+		clearUniqueFindersCache((ExpandoColumn)expandoColumnModelImpl);
+		cacheUniqueFindersCache((ExpandoColumn)expandoColumnModelImpl, isNew);
 
 		expandoColumn.resetOriginalValues();
 

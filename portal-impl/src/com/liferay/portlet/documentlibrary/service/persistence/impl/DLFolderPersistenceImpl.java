@@ -11348,8 +11348,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		EntityCacheUtil.putResult(DLFolderModelImpl.ENTITY_CACHE_ENABLED,
 			DLFolderImpl.class, dlFolder.getPrimaryKey(), dlFolder, false);
 
-		clearUniqueFindersCache(dlFolder);
-		cacheUniqueFindersCache(dlFolder, isNew);
+		clearUniqueFindersCache((DLFolder)dlFolderModelImpl);
+		cacheUniqueFindersCache((DLFolder)dlFolderModelImpl, isNew);
 
 		dlFolder.resetOriginalValues();
 

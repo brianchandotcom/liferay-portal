@@ -1616,8 +1616,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 			TrashVersionImpl.class, trashVersion.getPrimaryKey(), trashVersion,
 			false);
 
-		clearUniqueFindersCache(trashVersion);
-		cacheUniqueFindersCache(trashVersion, isNew);
+		clearUniqueFindersCache((TrashVersion)trashVersionModelImpl);
+		cacheUniqueFindersCache((TrashVersion)trashVersionModelImpl, isNew);
 
 		trashVersion.resetOriginalValues();
 

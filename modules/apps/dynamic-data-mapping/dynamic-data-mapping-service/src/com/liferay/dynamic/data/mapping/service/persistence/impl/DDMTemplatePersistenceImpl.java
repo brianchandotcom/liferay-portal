@@ -12103,8 +12103,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 			DDMTemplateImpl.class, ddmTemplate.getPrimaryKey(), ddmTemplate,
 			false);
 
-		clearUniqueFindersCache(ddmTemplate);
-		cacheUniqueFindersCache(ddmTemplate, isNew);
+		clearUniqueFindersCache((DDMTemplate)ddmTemplateModelImpl);
+		cacheUniqueFindersCache((DDMTemplate)ddmTemplateModelImpl, isNew);
 
 		ddmTemplate.resetOriginalValues();
 

@@ -29,14 +29,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -56,12 +54,10 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.StagedGroupedModel;
@@ -69,7 +65,6 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -77,10 +72,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
@@ -110,7 +102,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -1180,29 +1171,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		dynamicQuery.add(createDateProperty.le(endDate));
 	}
 
-	protected void deleteTimestampParameters(StringBuilder sb, int beginPos) {
-		beginPos = sb.indexOf(StringPool.CLOSE_BRACKET, beginPos);
-
-		if ((beginPos == -1) || (beginPos == (sb.length() - 1)) ||
-			(sb.charAt(beginPos + 1) != CharPool.QUESTION)) {
-
-			return;
-		}
-
-		int endPos = StringUtil.indexOfAny(
-			sb.toString(), _DL_REFERENCE_LEGACY_STOP_CHARS, beginPos + 2);
-
-		if (endPos == -1) {
-			return;
-		}
-
-		String urlParams = sb.substring(beginPos + 1, endPos);
-
-		urlParams = HttpUtil.removeParameter(urlParams, "t");
-
-		sb.replace(beginPos + 1, endPos, urlParams);
-	}
-
 	protected void doAddCriteria(
 		PortletDataContext portletDataContext, StagedModelType stagedModelType,
 		DynamicQuery dynamicQuery) {
@@ -1237,82 +1205,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		dynamicQuery.add(typeProperty.eq(SystemEventConstants.TYPE_DELETE));
 
 		addCreateDateProperty(portletDataContext, dynamicQuery);
-	}
-
-	protected Map<String, String[]> getDLReferenceParameters(
-		PortletDataContext portletDataContext, String content, int beginPos,
-		int endPos) {
-
-		boolean legacyURL = true;
-		char[] stopChars = _DL_REFERENCE_LEGACY_STOP_CHARS;
-
-		if (content.startsWith("/documents/", beginPos)) {
-			legacyURL = false;
-			stopChars = _DL_REFERENCE_STOP_CHARS;
-		}
-
-		endPos = StringUtil.indexOfAny(content, stopChars, beginPos, endPos);
-
-		if (endPos == -1) {
-			return null;
-		}
-
-		Map<String, String[]> map = new HashMap<>();
-
-		String dlReference = content.substring(beginPos, endPos);
-
-		while (dlReference.contains(StringPool.AMPERSAND_ENCODED)) {
-			dlReference = dlReference.replace(
-				StringPool.AMPERSAND_ENCODED, StringPool.AMPERSAND);
-		}
-
-		if (!legacyURL) {
-			String[] pathArray = dlReference.split(StringPool.SLASH);
-
-			if (pathArray.length < 3) {
-				return map;
-			}
-
-			map.put("groupId", new String[] {pathArray[2]});
-
-			if (pathArray.length == 4) {
-				map.put("uuid", new String[] {pathArray[3]});
-			}
-			else if (pathArray.length == 5) {
-				map.put("folderId", new String[] {pathArray[3]});
-				map.put(
-					"title", new String[] {HttpUtil.decodeURL(pathArray[4])});
-			}
-			else if (pathArray.length > 5) {
-				map.put("uuid", new String[] {pathArray[5]});
-			}
-		}
-		else {
-			dlReference = dlReference.substring(
-				dlReference.indexOf(CharPool.QUESTION) + 1);
-
-			map = HttpUtil.parameterMapFromString(dlReference);
-
-			if (map.containsKey("img_id")) {
-				map.put("image_id", map.get("img_id"));
-			}
-			else if (map.containsKey("i_id")) {
-				map.put("image_id", map.get("i_id"));
-			}
-		}
-
-		map.put("endPos", new String[] {String.valueOf(endPos)});
-
-		String groupIdString = MapUtil.getString(map, "groupId");
-
-		if (groupIdString.equals("@group_id@")) {
-			groupIdString = String.valueOf(
-				portletDataContext.getScopeGroupId());
-
-			map.put("groupId", new String[] {groupIdString});
-		}
-
-		return map;
 	}
 
 	protected boolean getExportPortletData(
@@ -1437,66 +1329,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			exportCurPortletUserPreferences);
 
 		return exportPortletSetupControlsMap;
-	}
-
-	protected FileEntry getFileEntry(Map<String, String[]> map) {
-		if (MapUtil.isEmpty(map)) {
-			return null;
-		}
-
-		FileEntry fileEntry = null;
-
-		try {
-			String uuid = MapUtil.getString(map, "uuid");
-			long groupId = MapUtil.getLong(map, "groupId");
-
-			if (Validator.isNotNull(uuid)) {
-				fileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-					uuid, groupId);
-			}
-			else {
-				if (map.containsKey("folderId")) {
-					long folderId = MapUtil.getLong(map, "folderId");
-					String name = MapUtil.getString(map, "name");
-					String title = MapUtil.getString(map, "title");
-
-					if (Validator.isNotNull(title)) {
-						fileEntry = DLAppLocalServiceUtil.getFileEntry(
-							groupId, folderId, title);
-					}
-					else {
-						DLFileEntry dlFileEntry =
-							DLFileEntryLocalServiceUtil.fetchFileEntryByName(
-								groupId, folderId, name);
-
-						if (dlFileEntry != null) {
-							fileEntry = DLAppLocalServiceUtil.getFileEntry(
-								dlFileEntry.getFileEntryId());
-						}
-					}
-				}
-				else if (map.containsKey("image_id")) {
-					DLFileEntry dlFileEntry =
-						DLFileEntryLocalServiceUtil.fetchFileEntryByAnyImageId(
-							MapUtil.getLong(map, "image_id"));
-
-					if (dlFileEntry != null) {
-						fileEntry = DLAppLocalServiceUtil.getFileEntry(
-							dlFileEntry.getFileEntryId());
-					}
-				}
-			}
-		}
-		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn(e.getMessage());
-			}
-		}
-
-		return fileEntry;
 	}
 
 	protected boolean getImportPortletData(
@@ -1699,100 +1531,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return false;
 	}
 
-	protected String replaceExportHostname(
-			PortletDataContext portletDataContext, String url,
-			StringBundler urlSB)
-		throws PortalException {
-
-		if (!HttpUtil.hasProtocol(url)) {
-			return url;
-		}
-
-		boolean secure = HttpUtil.isSecure(url);
-
-		int serverPort = PortalUtil.getPortalServerPort(secure);
-
-		if (serverPort == -1) {
-			return url;
-		}
-
-		Group group = GroupLocalServiceUtil.getGroup(
-			portletDataContext.getScopeGroupId());
-
-		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
-
-		String publicLayoutSetVirtualHostname =
-			publicLayoutSet.getVirtualHostname();
-
-		String portalUrl = StringPool.BLANK;
-
-		if (Validator.isNotNull(publicLayoutSetVirtualHostname)) {
-			portalUrl = PortalUtil.getPortalURL(
-				publicLayoutSetVirtualHostname, serverPort, secure);
-
-			if (url.startsWith(portalUrl)) {
-				if (secure) {
-					urlSB.append(DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL);
-				}
-				else {
-					urlSB.append(DATA_HANDLER_PUBLIC_LAYOUT_SET_URL);
-				}
-
-				return url.substring(portalUrl.length());
-			}
-		}
-
-		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
-
-		String privateLayoutSetVirtualHostname =
-			privateLayoutSet.getVirtualHostname();
-
-		if (Validator.isNotNull(privateLayoutSetVirtualHostname)) {
-			portalUrl = PortalUtil.getPortalURL(
-				privateLayoutSetVirtualHostname, serverPort, secure);
-
-			if (url.startsWith(portalUrl)) {
-				if (secure) {
-					urlSB.append(DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL);
-				}
-				else {
-					urlSB.append(DATA_HANDLER_PRIVATE_LAYOUT_SET_URL);
-				}
-
-				return url.substring(portalUrl.length());
-			}
-		}
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			group.getCompanyId());
-
-		String companyVirtualHostname = company.getVirtualHostname();
-
-		if (Validator.isNotNull(companyVirtualHostname)) {
-			portalUrl = PortalUtil.getPortalURL(
-				companyVirtualHostname, serverPort, secure);
-
-			if (url.startsWith(portalUrl)) {
-				if (secure) {
-					urlSB.append(DATA_HANDLER_COMPANY_SECURE_URL);
-				}
-				else {
-					urlSB.append(DATA_HANDLER_COMPANY_URL);
-				}
-
-				return url.substring(portalUrl.length());
-			}
-		}
-
-		portalUrl = PortalUtil.getPortalURL("localhost", serverPort, secure);
-
-		if (url.startsWith(portalUrl)) {
-			return url.substring(portalUrl.length());
-		}
-
-		return url;
-	}
-
 	protected MissingReference validateMissingReference(
 		PortletDataContext portletDataContext, Element element) {
 
@@ -1823,43 +1561,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return null;
 	}
 
-	private static final char[] _DL_REFERENCE_LEGACY_STOP_CHARS = {
-		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
-		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
-		CharPool.PIPE, CharPool.QUOTE, CharPool.SPACE
-	};
-
-	private static final char[] _DL_REFERENCE_STOP_CHARS = {
-		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
-		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
-		CharPool.PIPE, CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE
-	};
-
-	private static final char[] _LAYOUT_REFERENCE_STOP_CHARS = {
-		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,
-		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
-		CharPool.PIPE, CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE
-	};
-
-	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
-		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
-			StringPool.SLASH;
-
-	private static final String _PRIVATE_USER_SERVLET_MAPPING =
-		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
-			StringPool.SLASH;
-
-	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
-		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-			StringPool.SLASH;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportHelperImpl.class);
-
-	private final Pattern _exportLinksToLayoutPattern = Pattern.compile(
-		"\\[([\\d]+)@(private(-group|-user)?|public)(@([\\d]+))?\\]");
-	private final Pattern _importLinksToLayoutPattern = Pattern.compile(
-		"\\[([\\d]+)@(private(-group|-user)?|public)@([\\d]+)(@([\\d]+))?\\]");
 
 	private class ManifestSummaryElementProcessor implements ElementProcessor {
 

@@ -365,15 +365,6 @@ public class S3Store extends BaseStore {
 
 		_amazonS3 = getAmazonS3(_awsCredentialsProvider);
 
-		int tempDirCleanUpExpunge =
-			_s3StoreConfiguration.tempDirCleanUpExpunge();
-
-		int tempDirCleanUpFrequency =
-			_s3StoreConfiguration.tempDirCleanUpFrequency();
-
-		_s3FileCache = new S3FileCacheImpl(
-			_s3KeyTransformer, tempDirCleanUpExpunge, tempDirCleanUpFrequency);
-
 		try {
 			if (Validator.isNull(_s3StoreConfiguration.s3StorageClass())) {
 				_storageClass = StorageClass.Standard;
@@ -660,6 +651,11 @@ public class S3Store extends BaseStore {
 
 			_amazonS3.deleteObject(deleteOldObjectRequest);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setS3FileCache(S3FileCache s3FileCache) {
+		_s3FileCache = s3FileCache;
 	}
 
 	@Reference(unbind = "-")

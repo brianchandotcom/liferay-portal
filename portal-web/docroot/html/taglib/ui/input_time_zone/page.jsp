@@ -44,16 +44,14 @@ numberFormat.setMinimumIntegerDigits(2);
 		timeZones.add(curTimeZone);
 	}
 
+	long currentTime = System.currentTimeMillis();
+
 	for (TimeZone curTimeZone : timeZones) {
 		String offset = StringPool.BLANK;
 
 		boolean inDaylightTime = curTimeZone.inDaylightTime(new Date());
 
-		int totalOffset = curTimeZone.getRawOffset();
-
-		if (inDaylightTime) {
-			totalOffset = totalOffset + curTimeZone.getDSTSavings();
-		}
+		int totalOffset = curTimeZone.getOffset(currentTime);
 
 		if (totalOffset != 0) {
 			String offsetHour = numberFormat.format(totalOffset / Time.HOUR);

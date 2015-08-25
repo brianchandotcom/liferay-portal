@@ -281,6 +281,11 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						/>
 					</c:when>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
+
+						<%
+						row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+						%>
+
 						<liferay-ui:search-container-column-text>
 
 							<%
@@ -407,6 +412,11 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						/>
 					</c:when>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
+
+						<%
+						row.setCssClass("col-md-3 col-sm-4 col-xs-12");
+						%>
+
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 							<liferay-frontend:card
 								actionJsp="/folder_action.jsp"

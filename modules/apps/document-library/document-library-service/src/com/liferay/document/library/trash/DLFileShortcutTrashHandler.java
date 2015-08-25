@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -45,6 +47,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Implements trash handling for the file shortcut entity.
@@ -130,6 +133,11 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
 		return dlFileShortcut.getTrashEntry();
+	}
+
+	@Override
+	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
+		return _trashRendererFactory.getTrashRenderer(classPK);
 	}
 
 	@Override
@@ -297,7 +305,19 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.portlet.documentlibrary.model.DLFileShortcut)",
+		unbind = "-"
+	)
+	protected void setTrashRendererFactory(
+		TrashRendererFactory trashRendererFactory) {
+
+		_trashRendererFactory = trashRendererFactory;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileShortcutTrashHandler.class);
+
+	private TrashRendererFactory _trashRendererFactory;
 
 }

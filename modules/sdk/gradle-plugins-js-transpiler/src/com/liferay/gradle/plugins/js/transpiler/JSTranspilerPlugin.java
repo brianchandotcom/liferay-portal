@@ -14,20 +14,14 @@
 
 package com.liferay.gradle.plugins.js.transpiler;
 
+import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.util.GradleUtil;
-
-import com.moowork.gradle.node.NodeExtension;
-import com.moowork.gradle.node.NodePlugin;
-import com.moowork.gradle.node.task.NpmSetupTask;
-import com.moowork.gradle.node.task.NpmTask;
 
 import java.io.File;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -35,8 +29,6 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
-import org.gradle.api.tasks.TaskInputs;
-import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -56,64 +48,78 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
-		final JSTranspilerExtension jsTranspilerExtension =
-			GradleUtil.addExtension(
-				project, EXTENSION_NAME, JSTranspilerExtension.class);
+		JSTranspilerExtension jsTranspilerExtension = GradleUtil.addExtension(
+			project, EXTENSION_NAME, JSTranspilerExtension.class);
 
-		final NpmTask downloadBabelTask = addTaskDownloadModule(
-			project, DOWNLOAD_BABEL_TASK_NAME);
-		final NpmTask downloadLfrAmdLoaderTask = addTaskDownloadModule(
-			project, DOWNLOAD_LFR_AMD_LOADER_TASK_NAME);
-
-		final TranspileJSTask transpileJSTask = addTaskTranspileJS(project);
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					configureTaskDownloadModule(
-						downloadBabelTask, "babel",
-						jsTranspilerExtension.getBabelVersion());
-					configureTaskDownloadModule(
-						downloadLfrAmdLoaderTask, "lfr-amd-loader",
-						jsTranspilerExtension.getLfrAmdLoaderVersion());
-
-					configureTaskTranspileJS(transpileJSTask);
-				}
-
-			});
+		addTaskDownloadBabel(project, jsTranspilerExtension);
+		addTaskDownloadLfrAmdLoader(project, jsTranspilerExtension);
+		addTaskTranspileJS(project);
 	}
 
-	protected NpmTask addTaskDownloadModule(
-		final Project project, String taskName) {
+	protected DownloadNodeModuleTask addTaskDownloadBabel(
+		Project project, final JSTranspilerExtension jsTranspilerExtension) {
 
-		NpmTask npmTask = GradleUtil.addTask(project, taskName, NpmTask.class);
+		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
+			project, DOWNLOAD_BABEL_TASK_NAME, DownloadNodeModuleTask.class);
 
-		npmTask.dependsOn(NpmSetupTask.NAME);
+		downloadNodeModuleTask.setModuleName("babel");
 
-		npmTask.setWorkingDir(
-			new Callable<File>() {
+		downloadNodeModuleTask.setModuleVersion(
+			new Callable<String>() {
 
 				@Override
-				public File call() throws Exception {
-					NodeExtension nodeExtension = GradleUtil.getExtension(
-						project, NodeExtension.class);
-
-					return nodeExtension.getNodeModulesDir();
+				public String call() throws Exception {
+					return jsTranspilerExtension.getBabelVersion();
 				}
 
 			});
 
-		return npmTask;
+		return downloadNodeModuleTask;
 	}
 
-	protected TranspileJSTask addTaskTranspileJS(Project project) {
+	protected DownloadNodeModuleTask addTaskDownloadLfrAmdLoader(
+		Project project, final JSTranspilerExtension jsTranspilerExtension) {
+
+		DownloadNodeModuleTask downloadNodeModuleTask = GradleUtil.addTask(
+			project, DOWNLOAD_LFR_AMD_LOADER_TASK_NAME,
+			DownloadNodeModuleTask.class);
+
+		downloadNodeModuleTask.setModuleName("lfr-amd-loader");
+
+		downloadNodeModuleTask.setModuleVersion(
+			new Callable<String>() {
+
+				@Override
+				public String call() throws Exception {
+					return jsTranspilerExtension.getLfrAmdLoaderVersion();
+				}
+
+			});
+
+		return downloadNodeModuleTask;
+	}
+
+	protected TranspileJSTask addTaskTranspileJS(final Project project) {
 		TranspileJSTask transpileJSTask = GradleUtil.addTask(
 			project, TRANSPILE_JS_TASK_NAME, TranspileJSTask.class);
 
 		transpileJSTask.setDescription("Transpiles JS files.");
 		transpileJSTask.setGroup(BasePlugin.BUILD_GROUP);
+
+		transpileJSTask.setOutputDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+					return sourceSetOutput.getResourcesDir();
+				}
+
+			});
 
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
@@ -121,54 +127,6 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 		classesTask.dependsOn(transpileJSTask);
 
 		return transpileJSTask;
-	}
-
-	protected void configureTaskDownloadModule(
-		NpmTask npmTask, String moduleName, String moduleVersion) {
-
-		Project project = npmTask.getProject();
-
-		NodeExtension nodeExtension = GradleUtil.getExtension(
-			project, NodeExtension.class);
-
-		List<String> args = new ArrayList<>();
-
-		args.add("install");
-		args.add(moduleName + "@" + moduleVersion);
-
-		npmTask.setArgs(args);
-
-		npmTask.setWorkingDir(nodeExtension.getNodeModulesDir());
-
-		TaskInputs taskInputs = npmTask.getInputs();
-
-		taskInputs.property("version", moduleVersion);
-
-		TaskOutputs taskOutputs = npmTask.getOutputs();
-
-		File moduleDir = new File(
-			nodeExtension.getNodeModulesDir(), "node_modules/" + moduleName);
-
-		taskOutputs.dir(moduleDir);
-	}
-
-	protected void configureTaskTranspileJS(TranspileJSTask transpileJSTask) {
-		configureTaskTranspileJSOutputDir(transpileJSTask);
-	}
-
-	protected void configureTaskTranspileJSOutputDir(
-		TranspileJSTask transpileJSTask) {
-
-		if (transpileJSTask.getOutputDir() != null) {
-			return;
-		}
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			transpileJSTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-		transpileJSTask.setOutputDir(sourceSetOutput.getResourcesDir());
 	}
 
 }

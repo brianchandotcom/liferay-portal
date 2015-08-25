@@ -14,20 +14,14 @@
 
 package com.liferay.gradle.plugins.js.module.config.generator;
 
+import com.liferay.gradle.plugins.node.NodePlugin;
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask;
 import com.liferay.gradle.util.GradleUtil;
-
-import com.moowork.gradle.node.NodeExtension;
-import com.moowork.gradle.node.NodePlugin;
-import com.moowork.gradle.node.task.NpmSetupTask;
-import com.moowork.gradle.node.task.NpmTask;
 
 import java.io.File;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Callable;
 
-import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -35,8 +29,6 @@ import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
-import org.gradle.api.tasks.TaskInputs;
-import org.gradle.api.tasks.TaskOutputs;
 
 /**
  * @author Andrea Di Giorgi
@@ -54,35 +46,19 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 	public void apply(Project project) {
 		GradleUtil.applyPlugin(project, NodePlugin.class);
 
-		final JSModuleConfigGeneratorExtension
-			jsModuleConfigGeneratorExtension = GradleUtil.addExtension(
+		JSModuleConfigGeneratorExtension jsModuleConfigGeneratorExtension =
+			GradleUtil.addExtension(
 				project, EXTENSION_NAME,
 				JSModuleConfigGeneratorExtension.class);
 
-		final NpmTask downloadLfrModuleConfigGeneratorTask =
-			addTaskDownloadModule(
-				project, DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME);
-
-		final ConfigJSModulesTask configJSModulesTask = addTaskConfigJSModules(
-			project);
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					configureTaskDownloadModule(
-						downloadLfrModuleConfigGeneratorTask,
-						"lfr-module-config-generator",
-						jsModuleConfigGeneratorExtension.getVersion());
-
-					configureTaskConfigJSModules(configJSModulesTask);
-				}
-
-			});
+		addTaskDownloadLfrModuleConfigGenerator(
+			project, jsModuleConfigGeneratorExtension);
+		addTaskConfigJSModules(project);
 	}
 
-	protected ConfigJSModulesTask addTaskConfigJSModules(Project project) {
+	protected ConfigJSModulesTask addTaskConfigJSModules(
+		final Project project) {
+
 		ConfigJSModulesTask configJSModulesTask = GradleUtil.addTask(
 			project, CONFIG_JS_MODULES_TASK_NAME, ConfigJSModulesTask.class);
 
@@ -92,6 +68,23 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		configJSModulesTask.setGroup(BasePlugin.BUILD_GROUP);
 		configJSModulesTask.setModuleConfigFile(project.file("bower.json"));
 
+		configJSModulesTask.setOutputFile(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+					return new File(
+						sourceSetOutput.getResourcesDir(),
+						"META-INF/config.json");
+				}
+
+			});
+
 		Task classesTask = GradleUtil.getTask(
 			project, JavaPlugin.CLASSES_TASK_NAME);
 
@@ -100,80 +93,29 @@ public class JSModuleConfigGeneratorPlugin implements Plugin<Project> {
 		return configJSModulesTask;
 	}
 
-	protected NpmTask addTaskDownloadModule(
-		final Project project, String taskName) {
+	protected DownloadNodeModuleTask addTaskDownloadLfrModuleConfigGenerator(
+		Project project, final JSModuleConfigGeneratorExtension
+			jsModuleConfigGeneratorExtension) {
 
-		NpmTask npmTask = GradleUtil.addTask(project, taskName, NpmTask.class);
+		DownloadNodeModuleTask downloadLfrModuleConfigGeneratorTask =
+			GradleUtil.addTask(
+				project, DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME,
+				DownloadNodeModuleTask.class);
 
-		npmTask.dependsOn(NpmSetupTask.NAME);
+		downloadLfrModuleConfigGeneratorTask.setModuleName(
+			"lfr-module-config-generator");
 
-		npmTask.setWorkingDir(
-			new Callable<File>() {
+		downloadLfrModuleConfigGeneratorTask.setModuleVersion(
+			new Callable<String>() {
 
 				@Override
-				public File call() throws Exception {
-					NodeExtension nodeExtension = GradleUtil.getExtension(
-						project, NodeExtension.class);
-
-					return nodeExtension.getNodeModulesDir();
+				public String call() throws Exception {
+					return jsModuleConfigGeneratorExtension.getVersion();
 				}
 
 			});
 
-		return npmTask;
-	}
-
-	protected void configureTaskConfigJSModules(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		configureTaskConfigJSModulesOutputFile(configJSModulesTask);
-	}
-
-	protected void configureTaskConfigJSModulesOutputFile(
-		ConfigJSModulesTask configJSModulesTask) {
-
-		if (configJSModulesTask.getOutputFile() != null) {
-			return;
-		}
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			configJSModulesTask.getProject(), SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-		File outputFile = new File(
-			sourceSetOutput.getResourcesDir(), "META-INF/config.json");
-
-		configJSModulesTask.setOutputFile(outputFile);
-	}
-
-	protected void configureTaskDownloadModule(
-		NpmTask npmTask, String moduleName, String moduleVersion) {
-
-		Project project = npmTask.getProject();
-
-		NodeExtension nodeExtension = GradleUtil.getExtension(
-			project, NodeExtension.class);
-
-		List<String> args = new ArrayList<>();
-
-		args.add("install");
-		args.add(moduleName + "@" + moduleVersion);
-
-		npmTask.setArgs(args);
-
-		npmTask.setWorkingDir(nodeExtension.getNodeModulesDir());
-
-		TaskInputs taskInputs = npmTask.getInputs();
-
-		taskInputs.property("version", moduleVersion);
-
-		TaskOutputs taskOutputs = npmTask.getOutputs();
-
-		File moduleDir = new File(
-			nodeExtension.getNodeModulesDir(), "node_modules/" + moduleName);
-
-		taskOutputs.dir(moduleDir);
+		return downloadLfrModuleConfigGeneratorTask;
 	}
 
 }

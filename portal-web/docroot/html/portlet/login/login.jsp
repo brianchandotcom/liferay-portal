@@ -49,7 +49,7 @@
 
 		<portlet:actionURL name="/login/login" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="loginURL" />
 
-		<aui:form action="<%= loginURL %>" autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>' cssClass="sign-in-form" method="post" name="fm">
+		<aui:form action="<%= loginURL %>" autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>' cssClass="sign-in-form" method="post" name="fm" onSubmit="event.preventDefault();">
 			<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="doActionAfterLogin" type="hidden" value="<%= portletName.equals(PortletKeys.FAST_LOGIN) ? true : false %>" />
@@ -152,12 +152,20 @@
 		<liferay-util:include page="/html/portlet/login/navigation.jsp" />
 
 		<aui:script>
-			AUI.$('#<portlet:namespace/>fm').on(
+			var form = AUI.$('#<portlet:namespace/>fm');
+
+			form.on(
 				'submit',
 				function(event) {
 					var redirect = AUI.$('#<portlet:namespace/>redirect');
 
-					redirect.val(redirect.val() + window.location.hash);
+					if (redirect) {
+						var redirectVal = redirect.val();
+
+						redirect.val(redirectVal + window.location.hash);
+					}
+
+					submitForm(form);
 				}
 			);
 

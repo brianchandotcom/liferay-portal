@@ -344,7 +344,7 @@
 	</command>
 
 	<command name="addTranslationPGViaWCD">
-		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Translation#ADD_MENULIST_LANGUAGE" value1="Add Translation" />
+		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Translation#ADD" value1="Add Translation" />
 
 		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
 

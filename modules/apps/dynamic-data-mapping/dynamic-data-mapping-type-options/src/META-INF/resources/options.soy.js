@@ -5,7 +5,7 @@ if (typeof ddm == 'undefined') { var ddm = {}; }
 
 
 ddm.options = function(opt_data, opt_ignored) {
-var output = '\t<div class="form-group' + soy.$$escapeHtml(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtml(opt_data.name) + '"><span class="control-label">' + soy.$$escapeHtml(opt_data.label) + ((opt_data.required) ? '<b>&nbsp;*</b>' : '') + '</span><input name="' + soy.$$escapeHtml(opt_data.name) + '" type="hidden" /><div class="auto-fields">';
+var output = '\t<div class="form-group' + soy.$$escapeHtml(opt_data.visible ? '' : ' hide') + '" data-fieldname="' + soy.$$escapeHtml(opt_data.name) + '"><span class="control-label">' + soy.$$escapeHtml(opt_data.label) + ((opt_data.required) ? '<b>*</b>' : '') + '</span><input name="' + soy.$$escapeHtml(opt_data.name) + '" type="hidden" /><div class="auto-fields">';
 if (opt_data.value.length == 0) {
 	output += ddm.option(soy.$$augmentMap(opt_data, {label: '', value: ''}));
 } else {

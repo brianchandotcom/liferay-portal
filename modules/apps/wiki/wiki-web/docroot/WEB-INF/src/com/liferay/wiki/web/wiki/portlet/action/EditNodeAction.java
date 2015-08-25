@@ -176,11 +176,12 @@ public class EditNodeAction extends PortletAction {
 		WikiCacheThreadLocal.setClearCache(true);
 
 		WikiPortletInstanceOverriddenConfiguration
-			wikiPortletInstanceConfiguration = getWikiPortletInstanceSettings(
-				actionRequest);
+			wikiPortletInstanceOverriddenConfiguration =
+				getWikiPortletInstanceOverriddenConfiguration(actionRequest);
 
 		updateSettings(
-			wikiPortletInstanceConfiguration, oldName, StringPool.BLANK);
+			wikiPortletInstanceOverriddenConfiguration, oldName,
+			StringPool.BLANK);
 
 		if (moveToTrash && (trashWikiNode != null)) {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashWikiNode);
@@ -190,7 +191,8 @@ public class EditNodeAction extends PortletAction {
 	}
 
 	protected WikiPortletInstanceOverriddenConfiguration
-			getWikiPortletInstanceSettings(ActionRequest actionRequest)
+		getWikiPortletInstanceOverriddenConfiguration(
+			ActionRequest actionRequest)
 		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -199,13 +201,13 @@ public class EditNodeAction extends PortletAction {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		WikiPortletInstanceOverriddenConfiguration
-			wikiPortletInstanceConfiguration =
+			wikiPortletInstanceOverriddenConfiguration =
 				ConfigurationFactoryUtil.getConfiguration(
 					WikiPortletInstanceOverriddenConfiguration.class,
 					new PortletInstanceSettingsLocator(
 						themeDisplay.getLayout(), portletDisplay.getId()));
 
-		return wikiPortletInstanceConfiguration;
+		return wikiPortletInstanceOverriddenConfiguration;
 	}
 
 	protected void restoreTrashEntries(ActionRequest actionRequest)
@@ -260,32 +262,37 @@ public class EditNodeAction extends PortletAction {
 				nodeId, name, description, serviceContext);
 
 			WikiPortletInstanceOverriddenConfiguration
-				wikiPortletInstanceConfiguration =
-					getWikiPortletInstanceSettings(actionRequest);
+				wikiPortletInstanceOverriddenConfiguration =
+					getWikiPortletInstanceOverriddenConfiguration(
+						actionRequest);
 
-			updateSettings(wikiPortletInstanceConfiguration, oldName, name);
+			updateSettings(
+				wikiPortletInstanceOverriddenConfiguration, oldName, name);
 		}
 	}
 
 	protected void updateSettings(
 			WikiPortletInstanceOverriddenConfiguration
-				wikiPortletInstanceConfiguration,
+				wikiPortletInstanceOverriddenConfiguration,
 			String oldName, String newName)
 		throws Exception {
 
-		String[] hiddenNodes = wikiPortletInstanceConfiguration.hiddenNodes();
+		String[] hiddenNodes =
+			wikiPortletInstanceOverriddenConfiguration.hiddenNodes();
 
 		ArrayUtil.replace(hiddenNodes, oldName, newName);
 
-		wikiPortletInstanceConfiguration.setHiddenNodes(hiddenNodes);
+		wikiPortletInstanceOverriddenConfiguration.setHiddenNodes(hiddenNodes);
 
-		String[] visibleNodes = wikiPortletInstanceConfiguration.visibleNodes();
+		String[] visibleNodes =
+			wikiPortletInstanceOverriddenConfiguration.visibleNodes();
 
 		ArrayUtil.replace(visibleNodes, oldName, newName);
 
-		wikiPortletInstanceConfiguration.setVisibleNodes(visibleNodes);
+		wikiPortletInstanceOverriddenConfiguration.setVisibleNodes(
+			visibleNodes);
 
-		wikiPortletInstanceConfiguration.store();
+		wikiPortletInstanceOverriddenConfiguration.store();
 	}
 
 }

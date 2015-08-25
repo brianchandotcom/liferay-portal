@@ -74,18 +74,20 @@ public class ActionUtil {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		WikiPortletInstanceOverriddenConfiguration
-			wikiPortletInstanceConfiguration =
+			wikiPortletInstanceOverriddenConfiguration =
 				ConfigurationFactoryUtil.getConfiguration(
 					WikiPortletInstanceOverriddenConfiguration.class,
 					new PortletInstanceSettingsLocator(
 						themeDisplay.getLayout(), portletDisplay.getId()));
 
 		String[] visibleNodeNames =
-			wikiPortletInstanceConfiguration.visibleNodes();
+			wikiPortletInstanceOverriddenConfiguration.visibleNodes();
 
 		nodes = WikiUtil.orderNodes(nodes, visibleNodeNames);
 
-		String[] hiddenNodes = wikiPortletInstanceConfiguration.hiddenNodes();
+		String[] hiddenNodes =
+			wikiPortletInstanceOverriddenConfiguration.hiddenNodes();
+
 		Arrays.sort(hiddenNodes);
 
 		for (WikiNode node : nodes) {

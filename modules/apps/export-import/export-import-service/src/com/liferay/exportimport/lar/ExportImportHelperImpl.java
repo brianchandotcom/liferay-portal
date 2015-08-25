@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -62,7 +61,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
@@ -73,7 +71,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -81,16 +78,13 @@ import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportHelper;
-import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
 import com.liferay.portlet.exportimport.lar.MissingReference;
@@ -101,7 +95,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 
@@ -116,9 +109,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.portlet.PortletPreferences;
@@ -808,9 +799,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		return replaceExportContentReferences(
-			portletDataContext, entityStagedModel, content,
-			exportReferencedContent);
+		return content;
 	}
 
 	@Override
@@ -820,9 +809,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			boolean exportReferencedContent)
 		throws Exception {
 
-		return replaceExportContentReferences(
-			portletDataContext, entityStagedModel, content,
-			exportReferencedContent, true);
+		return content;
 	}
 
 	@Override
@@ -831,19 +818,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			StagedModel entityStagedModel, String content,
 			boolean exportReferencedContent, boolean escapeContent)
 		throws Exception {
-
-		content = replaceExportDLReferences(
-			portletDataContext, entityStagedModel, content,
-			exportReferencedContent);
-
-		content = replaceExportLayoutReferences(portletDataContext, content);
-		content = replaceExportLinksToLayouts(
-			portletDataContext, entityStagedModel, content);
-
-		if (escapeContent) {
-			content = StringUtil.replace(
-				content, StringPool.AMPERSAND_ENCODED, StringPool.AMPERSAND);
-		}
 
 		return content;
 	}
@@ -861,9 +835,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		return replaceExportDLReferences(
-			portletDataContext, entityStagedModel, content,
-			exportReferencedContent);
+		return content;
 	}
 
 	@Override
@@ -873,89 +845,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			boolean exportReferencedContent)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			portletDataContext.getGroupId());
-
-		if (group.isStagingGroup()) {
-			group = group.getLiveGroup();
-		}
-
-		if (group.isStaged() && !group.isStagedRemotely() &&
-			!group.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY)) {
-
-			return content;
-		}
-
-		StringBuilder sb = new StringBuilder(content);
-
-		String contextPath = PortalUtil.getPathContext();
-
-		String[] patterns = {
-			contextPath.concat("/c/document_library/get_file?"),
-			contextPath.concat("/documents/"),
-			contextPath.concat("/image/image_gallery?")
-		};
-
-		int beginPos = -1;
-		int endPos = content.length();
-
-		while (true) {
-			beginPos = StringUtil.lastIndexOfAny(content, patterns, endPos);
-
-			if (beginPos == -1) {
-				break;
-			}
-
-			Map<String, String[]> dlReferenceParameters =
-				getDLReferenceParameters(
-					portletDataContext, content,
-					beginPos + contextPath.length(), endPos);
-
-			FileEntry fileEntry = getFileEntry(dlReferenceParameters);
-
-			if (fileEntry == null) {
-				endPos = beginPos - 1;
-
-				continue;
-			}
-
-			endPos = MapUtil.getInteger(dlReferenceParameters, "endPos");
-
-			try {
-				if (exportReferencedContent) {
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, entityStagedModel, fileEntry,
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-				}
-				else {
-					Element entityElement =
-						portletDataContext.getExportDataElement(
-							entityStagedModel);
-
-					portletDataContext.addReferenceElement(
-						entityStagedModel, entityElement, fileEntry,
-						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-				}
-
-				String path = ExportImportPathUtil.getModelPath(fileEntry);
-
-				sb.replace(beginPos, endPos, "[$dl-reference=" + path + "$]");
-
-				deleteTimestampParameters(sb, beginPos);
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
-				}
-			}
-
-			endPos = beginPos - 1;
-		}
-
-		return sb.toString();
+		return content;
 	}
 
 	@Override
@@ -963,200 +853,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			portletDataContext.getScopeGroupId());
-
-		StringBuilder sb = new StringBuilder(content);
-
-		String[] patterns = {"href=", "[["};
-
-		int beginPos = -1;
-		int endPos = content.length();
-		int offset = 0;
-
-		while (true) {
-			if (beginPos > -1) {
-				endPos = beginPos - 1;
-			}
-
-			beginPos = StringUtil.lastIndexOfAny(content, patterns, endPos);
-
-			if (beginPos == -1) {
-				break;
-			}
-
-			if (content.startsWith("href=", beginPos)) {
-				offset = 5;
-
-				char c = content.charAt(beginPos + offset);
-
-				if ((c == CharPool.APOSTROPHE) || (c == CharPool.QUOTE)) {
-					offset++;
-				}
-			}
-			else if (content.charAt(beginPos) == CharPool.OPEN_BRACKET) {
-				offset = 2;
-			}
-
-			endPos = StringUtil.indexOfAny(
-				content, _LAYOUT_REFERENCE_STOP_CHARS, beginPos + offset,
-				endPos);
-
-			if (endPos == -1) {
-				continue;
-			}
-
-			String url = content.substring(beginPos + offset, endPos);
-
-			StringBundler urlSB = new StringBundler(5);
-
-			try {
-				url = replaceExportHostname(portletDataContext, url, urlSB);
-
-				if (!url.startsWith(StringPool.SLASH)) {
-					continue;
-				}
-
-				String pathContext = PortalUtil.getPathContext();
-
-				if (pathContext.length() > 1) {
-					if (!url.startsWith(pathContext)) {
-						continue;
-					}
-
-					urlSB.append(DATA_HANDLER_PATH_CONTEXT);
-
-					url = url.substring(pathContext.length());
-				}
-
-				if (!url.startsWith(StringPool.SLASH)) {
-					continue;
-				}
-
-				int pos = url.indexOf(StringPool.SLASH, 1);
-
-				String localePath = StringPool.BLANK;
-
-				Locale locale = null;
-
-				if (pos != -1) {
-					localePath = url.substring(0, pos);
-
-					locale = LocaleUtil.fromLanguageId(
-						localePath.substring(1), true, false);
-				}
-
-				if (locale != null) {
-					String urlWithoutLocale = url.substring(
-						localePath.length());
-
-					if (urlWithoutLocale.startsWith(
-							_PRIVATE_GROUP_SERVLET_MAPPING) ||
-						urlWithoutLocale.startsWith(
-							_PRIVATE_USER_SERVLET_MAPPING) ||
-						urlWithoutLocale.startsWith(
-							_PUBLIC_GROUP_SERVLET_MAPPING)) {
-
-						urlSB.append(localePath);
-
-						url = urlWithoutLocale;
-					}
-				}
-
-				if (url.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING)) {
-					urlSB.append(DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
-
-					url = url.substring(
-						_PRIVATE_GROUP_SERVLET_MAPPING.length() - 1);
-				}
-				else if (url.startsWith(_PRIVATE_USER_SERVLET_MAPPING)) {
-					urlSB.append(DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
-
-					url = url.substring(
-						_PRIVATE_USER_SERVLET_MAPPING.length() - 1);
-				}
-				else if (url.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING)) {
-					urlSB.append(DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
-
-					url = url.substring(
-						_PUBLIC_GROUP_SERVLET_MAPPING.length() - 1);
-				}
-				else {
-					String urlSBString = urlSB.toString();
-
-					LayoutSet layoutSet = null;
-
-					if (urlSBString.contains(
-							DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL) ||
-						urlSBString.contains(
-							DATA_HANDLER_PUBLIC_LAYOUT_SET_URL)) {
-
-						layoutSet = group.getPublicLayoutSet();
-					}
-					else if (urlSBString.contains(
-								DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
-							 urlSBString.contains(
-								 DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
-
-						layoutSet = group.getPrivateLayoutSet();
-					}
-
-					if (layoutSet == null) {
-						continue;
-					}
-
-					boolean privateLayout = layoutSet.isPrivateLayout();
-
-					LayoutFriendlyURL layoutFriendlyUrl =
-						LayoutFriendlyURLLocalServiceUtil.
-							fetchFirstLayoutFriendlyURL(
-								group.getGroupId(), privateLayout, url);
-
-					if (layoutFriendlyUrl == null) {
-						continue;
-					}
-
-					if (privateLayout) {
-						if (group.isUser()) {
-							urlSB.append(
-								DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
-						}
-						else {
-							urlSB.append(
-								DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
-						}
-					}
-					else {
-						urlSB.append(DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
-					}
-
-					urlSB.append(DATA_HANDLER_GROUP_FRIENDLY_URL);
-
-					continue;
-				}
-
-				String groupFriendlyURL = group.getFriendlyURL();
-
-				if (url.equals(groupFriendlyURL) ||
-					url.startsWith(groupFriendlyURL + StringPool.SLASH)) {
-
-					urlSB.append(DATA_HANDLER_GROUP_FRIENDLY_URL);
-
-					url = url.substring(groupFriendlyURL.length());
-				}
-			}
-			finally {
-				if (urlSB.length() > 0) {
-					urlSB.append(url);
-
-					url = urlSB.toString();
-				}
-
-				sb.replace(beginPos + offset, endPos, url);
-			}
-		}
-
-		return sb.toString();
+		return content;
 	}
 
 	/**
@@ -1170,7 +867,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			boolean exportReferencedContent)
 		throws Exception {
 
-		return replaceExportLayoutReferences(portletDataContext, content);
+		return content;
 	}
 
 	/**
@@ -1186,8 +883,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			String content, boolean exportReferencedContent)
 		throws Exception {
 
-		return replaceExportLinksToLayouts(
-			portletDataContext, entityStagedModel, content);
+		return content;
 	}
 
 	@Override
@@ -1195,64 +891,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, String content)
 		throws Exception {
-
-		List<String> oldLinksToLayout = new ArrayList<>();
-		List<String> newLinksToLayout = new ArrayList<>();
-
-		Matcher matcher = _exportLinksToLayoutPattern.matcher(content);
-
-		while (matcher.find()) {
-			long layoutId = GetterUtil.getLong(matcher.group(1));
-
-			String type = matcher.group(2);
-
-			boolean privateLayout = type.startsWith("private");
-
-			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(
-					portletDataContext.getScopeGroupId(), privateLayout,
-					layoutId);
-
-				String oldLinkToLayout = matcher.group(0);
-
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(type);
-				sb.append(StringPool.AT);
-				sb.append(layout.getPlid());
-
-				String newLinkToLayout = StringUtil.replace(
-					oldLinkToLayout, type, sb.toString());
-
-				oldLinksToLayout.add(oldLinkToLayout);
-				newLinksToLayout.add(newLinkToLayout);
-
-				Element entityElement = portletDataContext.getExportDataElement(
-					entityStagedModel);
-
-				portletDataContext.addReferenceElement(
-					entityStagedModel, entityElement, layout,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {
-					String message =
-						"Unable to get layout with ID " + layoutId +
-							" in group " + portletDataContext.getScopeGroupId();
-
-					if (_log.isDebugEnabled()) {
-						_log.debug(message, e);
-					}
-					else {
-						_log.warn(message);
-					}
-				}
-			}
-		}
-
-		content = StringUtil.replace(
-			content, ArrayUtil.toStringArray(oldLinksToLayout.toArray()),
-			ArrayUtil.toStringArray(newLinksToLayout.toArray()));
 
 		return content;
 	}
@@ -1278,12 +916,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			StagedModel entityStagedModel, String content)
 		throws Exception {
 
-		content = replaceImportDLReferences(
-			portletDataContext, entityStagedModel, content);
-
-		content = replaceImportLayoutReferences(portletDataContext, content);
-		content = replaceImportLinksToLayouts(portletDataContext, content);
-
 		return content;
 	}
 
@@ -1308,75 +940,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			StagedModel entityStagedModel, String content)
 		throws Exception {
 
-		List<Element> referenceElements =
-			portletDataContext.getReferenceElements(
-				entityStagedModel, DLFileEntry.class);
-
-		for (Element referenceElement : referenceElements) {
-			long classPK = GetterUtil.getLong(
-				referenceElement.attributeValue("class-pk"));
-
-			Element referenceDataElement =
-				portletDataContext.getReferenceDataElement(
-					entityStagedModel, DLFileEntry.class, classPK);
-
-			String path = null;
-
-			if (referenceDataElement != null) {
-				path = referenceDataElement.attributeValue("path");
-			}
-
-			long groupId = GetterUtil.getLong(
-				referenceElement.attributeValue("group-id"));
-
-			if (Validator.isNull(path)) {
-				String className = referenceElement.attributeValue(
-					"class-name");
-
-				path = ExportImportPathUtil.getModelPath(
-					groupId, className, classPK);
-			}
-
-			if (!content.contains("[$dl-reference=" + path + "$]")) {
-				continue;
-			}
-
-			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, entityStagedModel, DLFileEntry.class,
-				classPK);
-
-			Map<Long, Long> dlFileEntryIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					DLFileEntry.class);
-
-			long fileEntryId = MapUtil.getLong(
-				dlFileEntryIds, classPK, classPK);
-
-			FileEntry importedFileEntry = null;
-
-			try {
-				importedFileEntry = DLAppLocalServiceUtil.getFileEntry(
-					fileEntryId);
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-				else if (_log.isWarnEnabled()) {
-					_log.warn(pe.getMessage());
-				}
-
-				continue;
-			}
-
-			String url = DLUtil.getPreviewURL(
-				importedFileEntry, importedFileEntry.getFileVersion(), null,
-				StringPool.BLANK, false, false);
-
-			content = StringUtil.replace(
-				content, "[$dl-reference=" + path + "$]", url);
-		}
-
 		return content;
 	}
 
@@ -1384,93 +947,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	public String replaceImportLayoutReferences(
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
-
-		String companyPortalURL = StringPool.BLANK;
-		String privateLayoutSetPortalURL = StringPool.BLANK;
-		String publicLayoutSetPortalURL = StringPool.BLANK;
-
-		Group group = GroupLocalServiceUtil.getGroup(
-			portletDataContext.getScopeGroupId());
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			group.getCompanyId());
-
-		LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
-		LayoutSet publicLayoutSet = group.getPublicLayoutSet();
-
-		int serverPort = PortalUtil.getPortalServerPort(false);
-
-		if (serverPort != -1) {
-			if (Validator.isNotNull(company.getVirtualHostname())) {
-				companyPortalURL = PortalUtil.getPortalURL(
-					company.getVirtualHostname(), serverPort, false);
-			}
-
-			if (Validator.isNotNull(privateLayoutSet.getVirtualHostname())) {
-				privateLayoutSetPortalURL = PortalUtil.getPortalURL(
-					privateLayoutSet.getVirtualHostname(), serverPort, false);
-			}
-
-			if (Validator.isNotNull(publicLayoutSet.getVirtualHostname())) {
-				publicLayoutSetPortalURL = PortalUtil.getPortalURL(
-					publicLayoutSet.getVirtualHostname(), serverPort, false);
-			}
-		}
-
-		int secureSecurePort = PortalUtil.getPortalServerPort(true);
-
-		String companySecurePortalURL = StringPool.BLANK;
-		String privateLayoutSetSecurePortalURL = StringPool.BLANK;
-		String publicLayoutSetSecurePortalURL = StringPool.BLANK;
-
-		if (secureSecurePort != -1) {
-			if (Validator.isNotNull(company.getVirtualHostname())) {
-				companySecurePortalURL = PortalUtil.getPortalURL(
-					company.getVirtualHostname(), secureSecurePort, true);
-			}
-
-			if (Validator.isNotNull(privateLayoutSet.getVirtualHostname())) {
-				privateLayoutSetSecurePortalURL = PortalUtil.getPortalURL(
-					privateLayoutSet.getVirtualHostname(), secureSecurePort,
-					true);
-			}
-
-			if (Validator.isNotNull(publicLayoutSet.getVirtualHostname())) {
-				publicLayoutSetSecurePortalURL = PortalUtil.getPortalURL(
-					publicLayoutSet.getVirtualHostname(), secureSecurePort,
-					true);
-			}
-		}
-
-		content = StringUtil.replace(
-			content, DATA_HANDLER_COMPANY_SECURE_URL, companySecurePortalURL);
-		content = StringUtil.replace(
-			content, DATA_HANDLER_COMPANY_URL, companyPortalURL);
-		content = StringUtil.replace(
-			content, DATA_HANDLER_GROUP_FRIENDLY_URL, group.getFriendlyURL());
-		content = StringUtil.replace(
-			content, DATA_HANDLER_PATH_CONTEXT, PortalUtil.getPathContext());
-		content = StringUtil.replace(
-			content, DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING,
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
-		content = StringUtil.replace(
-			content, DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL,
-			privateLayoutSetSecurePortalURL);
-		content = StringUtil.replace(
-			content, DATA_HANDLER_PRIVATE_LAYOUT_SET_URL,
-			privateLayoutSetPortalURL);
-		content = StringUtil.replace(
-			content, DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING,
-			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
-		content = StringUtil.replace(
-			content, DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL,
-			publicLayoutSetSecurePortalURL);
-		content = StringUtil.replace(
-			content, DATA_HANDLER_PUBLIC_LAYOUT_SET_URL,
-			publicLayoutSetPortalURL);
-		content = StringUtil.replace(
-			content, DATA_HANDLER_PUBLIC_SERVLET_MAPPING,
-			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
 
 		return content;
 	}
@@ -1486,82 +962,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			boolean importReferencedContent)
 		throws Exception {
 
-		return replaceImportLayoutReferences(portletDataContext, content);
+		return content;
 	}
 
 	@Override
 	public String replaceImportLinksToLayouts(
 			PortletDataContext portletDataContext, String content)
 		throws Exception {
-
-		List<String> oldLinksToLayout = new ArrayList<>();
-		List<String> newLinksToLayout = new ArrayList<>();
-
-		Matcher matcher = _importLinksToLayoutPattern.matcher(content);
-
-		Map<Long, Long> layoutPlids =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Layout.class);
-
-		String layoutsImportMode = MapUtil.getString(
-			portletDataContext.getParameterMap(),
-			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE,
-			PortletDataHandlerKeys.LAYOUTS_IMPORT_MODE_MERGE_BY_LAYOUT_UUID);
-
-		while (matcher.find()) {
-			long oldPlid = GetterUtil.getLong(matcher.group(4));
-
-			Long newPlid = MapUtil.getLong(layoutPlids, oldPlid);
-
-			long oldGroupId = GetterUtil.getLong(matcher.group(6));
-
-			long newGroupId = oldGroupId;
-
-			long oldLayoutId = GetterUtil.getLong(matcher.group(1));
-
-			long newLayoutId = oldLayoutId;
-
-			Layout layout = LayoutLocalServiceUtil.fetchLayout(newPlid);
-
-			if (layout != null) {
-				newGroupId = layout.getGroupId();
-				newLayoutId = layout.getLayoutId();
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get layout with plid " + oldPlid);
-			}
-
-			String oldLinkToLayout = matcher.group(0);
-
-			String newLinkToLayout = StringUtil.replaceFirst(
-				oldLinkToLayout,
-				new String[] {
-					StringPool.AT + oldPlid, String.valueOf(oldLayoutId)
-				},
-				new String[] {StringPool.BLANK, String.valueOf(newLayoutId)});
-
-			if ((layout != null) && layout.isPublicLayout() &&
-				layoutsImportMode.equals(
-					PortletDataHandlerKeys.
-						LAYOUTS_IMPORT_MODE_CREATED_FROM_PROTOTYPE)) {
-
-				newLinkToLayout = StringUtil.replace(
-					newLinkToLayout, "private-group", "public");
-			}
-
-			if ((oldGroupId != 0) && (oldGroupId != newGroupId)) {
-				newLinkToLayout = StringUtil.replaceLast(
-					newLinkToLayout, String.valueOf(oldGroupId),
-					String.valueOf(newGroupId));
-			}
-
-			oldLinksToLayout.add(oldLinkToLayout);
-			newLinksToLayout.add(newLinkToLayout);
-		}
-
-		content = StringUtil.replace(
-			content, ArrayUtil.toStringArray(oldLinksToLayout.toArray()),
-			ArrayUtil.toStringArray(newLinksToLayout.toArray()));
 
 		return content;
 	}
@@ -1577,7 +984,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			boolean importReferencedContent)
 		throws Exception {
 
-		return replaceImportLinksToLayouts(portletDataContext, content);
+		return content;
 	}
 
 	/**

@@ -16,7 +16,7 @@ package com.liferay.site.navigation.breadcrumb.web.context;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationBreadcrumbDisplayContext {
 
 	public SiteNavigationBreadcrumbDisplayContext(HttpServletRequest request)
-		throws SettingsException {
+		throws ConfigurationException {
 
 		_request = request;
 

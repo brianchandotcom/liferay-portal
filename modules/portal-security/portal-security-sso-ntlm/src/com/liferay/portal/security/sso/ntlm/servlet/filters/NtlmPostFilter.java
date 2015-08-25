@@ -16,15 +16,15 @@ package com.liferay.portal.security.sso.ntlm.servlet.filters;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration;
 import com.liferay.portal.security.sso.ntlm.constants.NtlmConstants;
+import com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration;
 import com.liferay.portal.util.PortalInstances;
 
 import javax.servlet.Filter;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.ntlm.configuration.NtlmConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.ntlm.module.configuration.NtlmConfiguration",
 	immediate = true,
 	property = {
 		"servlet-context-name=", "servlet-filter-name=SSO Ntlm Post Filter",
@@ -67,10 +67,11 @@ public class NtlmPostFilter extends BaseFilter {
 
 		long companyId = PortalInstances.getCompanyId(request);
 
-		NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
-			NtlmConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId, NtlmConstants.SERVICE_NAME));
+		NtlmConfiguration ntlmConfiguration =
+			_configurationFactory.getConfiguration(
+				NtlmConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, NtlmConstants.SERVICE_NAME));
 
 		if (ntlmConfiguration.enabled() && BrowserSnifferUtil.isIe(request) &&
 			request.getMethod().equals(HttpMethods.POST)) {
@@ -103,13 +104,15 @@ public class NtlmPostFilter extends BaseFilter {
 		processFilter(NtlmPostFilter.class, request, response, filterChain);
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(NtlmPostFilter.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

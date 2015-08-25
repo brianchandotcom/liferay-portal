@@ -109,7 +109,7 @@ BookmarksUtil.addPortletBreadcrumbEntries(entry, request, renderResponse);
 			</div>
 		</div>
 
-		<c:if test="<%= bookmarksGroupServiceSettings.enableRelatedAssets() %>">
+		<c:if test="<%= bookmarksGroupServiceConfiguration.enableRelatedAssets() %>">
 			<div class="entry-links">
 				<liferay-ui:asset-links
 					assetEntryId="<%= layoutAssetEntry.getEntryId() %>"

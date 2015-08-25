@@ -17,21 +17,20 @@ package com.liferay.shopping.web.portlet.action;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.shopping.configuration.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.exception.NoSuchOrderException;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
-import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
 import com.liferay.shopping.util.ShoppingUtil;
-import com.liferay.shopping.web.util.ShoppingWebComponentProvider;
 
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -157,24 +156,19 @@ public class PayPalNotificationAction extends Action {
 
 		ShoppingOrder order = ShoppingOrderLocalServiceUtil.getOrder(ppInvoice);
 
-		ShoppingWebComponentProvider shoppingWebComponentProvider =
-			ShoppingWebComponentProvider.getShoppingWebComponentProvider();
-
-		SettingsFactory settingsFactory =
-			shoppingWebComponentProvider.getSettingsFactory();
-
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			settingsFactory.getSettings(
-				ShoppingGroupServiceSettings.class,
-				new GroupServiceSettingsLocator(
-					order.getGroupId(), ShoppingConstants.SERVICE_NAME));
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration =
+				ConfigurationFactoryUtil.getConfiguration(
+					ShoppingGroupServiceOverriddenConfiguration.class,
+					new GroupServiceSettingsLocator(
+						order.getGroupId(), ShoppingConstants.SERVICE_NAME));
 
 		// Receiver email address
 
 		String ppReceiverEmail = ParamUtil.getString(request, "receiver_email");
 
 		String payPalEmailAddress =
-			shoppingGroupServiceSettings.getPayPalEmailAddress();
+			shoppingGroupServiceOverriddenConfiguration.getPayPalEmailAddress();
 
 		if (!payPalEmailAddress.equals(ppReceiverEmail)) {
 			return false;
@@ -194,7 +188,8 @@ public class PayPalNotificationAction extends Action {
 
 		String ppCurrency = ParamUtil.getString(request, "mc_currency");
 
-		String currencyId = shoppingGroupServiceSettings.getCurrencyId();
+		String currencyId =
+			shoppingGroupServiceOverriddenConfiguration.getCurrencyId();
 
 		if (!currencyId.equals(ppCurrency)) {
 			return false;

@@ -14,9 +14,9 @@
 
 package com.liferay.shopping.web.portlet.action;
 
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,6 +26,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
+import com.liferay.shopping.configuration.ShoppingGroupServiceOverriddenConfiguration;
 import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.exception.BillingCityException;
 import com.liferay.shopping.exception.BillingCountryException;
@@ -53,9 +54,7 @@ import com.liferay.shopping.exception.ShippingZipException;
 import com.liferay.shopping.model.ShoppingCart;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
-import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
 import com.liferay.shopping.util.ShoppingUtil;
-import com.liferay.shopping.web.util.ShoppingWebComponentProvider;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -164,31 +163,26 @@ public class CheckoutAction extends CartAction {
 
 		ShoppingCart cart = ShoppingUtil.getCart(actionRequest);
 
-		ShoppingWebComponentProvider shoppingWebComponentProvider =
-			ShoppingWebComponentProvider.getShoppingWebComponentProvider();
-
-		SettingsFactory settingsFactory =
-			shoppingWebComponentProvider.getSettingsFactory();
-
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			settingsFactory.getSettings(
-				ShoppingGroupServiceSettings.class,
-				new GroupServiceSettingsLocator(
-					themeDisplay.getScopeGroupId(),
-					ShoppingConstants.SERVICE_NAME));
+		ShoppingGroupServiceOverriddenConfiguration
+			shoppingGroupServiceOverriddenConfiguration =
+				ConfigurationFactoryUtil.getConfiguration(
+					ShoppingGroupServiceOverriddenConfiguration.class,
+					new GroupServiceSettingsLocator(
+						themeDisplay.getScopeGroupId(),
+						ShoppingConstants.SERVICE_NAME));
 
 		String returnURL = ShoppingUtil.getPayPalReturnURL(
 			((ActionResponseImpl)actionResponse).createActionURL(), order);
 		String notifyURL = ShoppingUtil.getPayPalNotifyURL(themeDisplay);
 
-		if (shoppingGroupServiceSettings.usePayPal()) {
+		if (shoppingGroupServiceOverriddenConfiguration.usePayPal()) {
 			double total = ShoppingUtil.calculateTotal(
 				cart.getItems(), order.getBillingState(), cart.getCoupon(),
 				cart.getAltShipping(), cart.isInsure());
 
 			String redirectURL = ShoppingUtil.getPayPalRedirectURL(
-				shoppingGroupServiceSettings, order, total, returnURL,
-				notifyURL);
+				shoppingGroupServiceOverriddenConfiguration, order, total,
+				returnURL, notifyURL);
 
 			actionResponse.sendRedirect(redirectURL);
 		}

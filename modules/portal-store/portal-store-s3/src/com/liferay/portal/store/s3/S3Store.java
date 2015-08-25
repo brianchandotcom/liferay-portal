@@ -604,13 +604,22 @@ public class S3Store extends BaseStore {
 			List<S3ObjectSummary> s3ObjectSummaries = new ArrayList<>(
 				objectListing.getMaxKeys());
 
-			do {
+			boolean hasMore = true;
+
+			while (hasMore) {
 				List<S3ObjectSummary> batchS3ObjectSummaries =
 					objectListing.getObjectSummaries();
 
 				s3ObjectSummaries.addAll(batchS3ObjectSummaries);
+
+				if (objectListing.isTruncated()) {
+					objectListing = _amazonS3.listNextBatchOfObjects(
+						objectListing);
+				}
+				else {
+					hasMore = false;
+				}
 			}
-			while (objectListing.isTruncated());
 
 			return s3ObjectSummaries;
 		}

@@ -1,9 +1,7 @@
-alter table JournalFolder add restrictionType INTEGER;
+alter table ShoppingItemField add companyId LONG;
 
-create table JournalFolders_DDMStructures (
-	structureId LONG not null,
-	folderId LONG not null,
-	primary key (structureId, folderId)
-);
+alter table ShoppingItemPrice add companyId LONG;
+
+alter table ShoppingOrderItem add companyId LONG;
 
 COMMIT_TRANSACTION;

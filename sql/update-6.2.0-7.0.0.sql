@@ -154,13 +154,6 @@ create index IX_2EE8A074 on SCLicenses_SCProductEntries (companyId);
 
 alter table ServiceComponent add companyId LONG;
 
-alter table ShoppingItemField add companyId LONG;
-
-alter table ShoppingItemPrice add companyId LONG;
-
-alter table ShoppingOrderItem add companyId LONG;
-
-
 alter table Subscription add groupId LONG;
 
 alter table Team add uuid_ VARCHAR(75);

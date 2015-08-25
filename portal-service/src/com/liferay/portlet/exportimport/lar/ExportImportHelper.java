@@ -42,36 +42,80 @@ import javax.portlet.PortletRequest;
 @ProviderType
 public interface ExportImportHelper {
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_COMPANY_SECURE_URL =
 		"@data_handler_company_secure_url@";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_COMPANY_URL =
 		"@data_handler_company_url@";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_GROUP_FRIENDLY_URL =
 		"@data_handler_group_friendly_url@";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_PATH_CONTEXT =
 		"@data_handler_path_context@";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING =
 		"@data_handler_private_group_servlet_mapping@";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL =
 		"@data_handler_private_layout_set_secure_url@";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_PRIVATE_LAYOUT_SET_URL =
 		"@data_handler_private_layout_set_url@";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING =
 		"@data_handler_private_user_servlet_mapping@";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL =
 		"@data_handler_public_layout_set_secure_url@";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_PUBLIC_LAYOUT_SET_URL =
 		"@data_handler_public_layout_set_url@";
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static final String DATA_HANDLER_PUBLIC_SERVLET_MAPPING =
 		"@data_handler_public_servlet_mapping@";
 
@@ -240,9 +284,10 @@ public interface ExportImportHelper {
 		PortletDataContext portletDataContext, StagedModel stagedModel);
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceExportContentReferences(PortletDataContext,
-	 *             StagedModel, String, boolean)}
+	 * @deprecated As of 7.0.0, replaced by
+	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceExportContentReferences(
+	 *             PortletDataContext, StagedModel, String, boolean, boolean) in
+	 *             the export-import-api module
 	 */
 	@Deprecated
 	public String replaceExportContentReferences(
@@ -251,12 +296,26 @@ public interface ExportImportHelper {
 			String content, boolean exportReferencedContent)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceExportContentReferences(
+	 *             PortletDataContext, StagedModel, String, boolean, boolean) in
+	 *             the export-import-api module
+	 */
+	@Deprecated
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, String content,
 			boolean exportReferencedContent)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 *             com.liferay.exportimport.api.ExportImportContentProcessorr#replaceExportContentReferences(
+	 *             PortletDataContext, StagedModel, String, boolean, boolean) in
+	 *             the export-import-api module
+	 */
+	@Deprecated
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, String content,
@@ -264,9 +323,7 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceExportDLReferences(PortletDataContext, StagedModel,
-	 *             String, boolean)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public String replaceExportDLReferences(
@@ -275,19 +332,26 @@ public interface ExportImportHelper {
 			String content, boolean exportReferencedContent)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String replaceExportDLReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, String content,
 			boolean exportReferencedContent)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String replaceExportLayoutReferences(
 			PortletDataContext portletDataContext, String content)
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceExportLayoutReferences(PortletDataContext, String)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public String replaceExportLayoutReferences(
@@ -296,9 +360,7 @@ public interface ExportImportHelper {
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceExportLinksToLayouts(PortletDataContext, StagedModel,
-	 *             String)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public String replaceExportLinksToLayouts(
@@ -307,15 +369,20 @@ public interface ExportImportHelper {
 			String content, boolean exportReferencedContent)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String replaceExportLinksToLayouts(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, String content)
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceImportContentReferences(PortletDataContext,
-	 *             StagedModel, String)}
+	 * @deprecated As of 7.0.0, replaced by
+	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceImportContentReferences(
+	 *             PortletDataContext, StagedModel, String) in the
+	 *             export-import-api module
 	 */
 	@Deprecated
 	public String replaceImportContentReferences(
@@ -323,15 +390,20 @@ public interface ExportImportHelper {
 			String content, boolean importReferencedContent)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceImportContentReferences(
+	 *             PortletDataContext, StagedModel, String) in the
+	 *             export-import-api module
+	 */
+	@Deprecated
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, String content)
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceImportDLReferences(PortletDataContext, StagedModel,
-	 *             String)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public String replaceImportDLReferences(
@@ -339,18 +411,25 @@ public interface ExportImportHelper {
 			String content, boolean importReferencedContent)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String replaceImportDLReferences(
 			PortletDataContext portletDataContext,
 			StagedModel entityStagedModel, String content)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String replaceImportLayoutReferences(
 			PortletDataContext portletDataContext, String content)
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceImportLayoutReferences(PortletDataContext, String)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public String replaceImportLayoutReferences(
@@ -358,13 +437,16 @@ public interface ExportImportHelper {
 			boolean importReferencedContent)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String replaceImportLinksToLayouts(
 			PortletDataContext portletDataContext, String content)
 		throws Exception;
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #replaceImportLinksToLayouts(PortletDataContext, String)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	public String replaceImportLinksToLayouts(

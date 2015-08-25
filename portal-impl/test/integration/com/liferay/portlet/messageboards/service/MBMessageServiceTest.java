@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -163,7 +164,7 @@ public class MBMessageServiceTest {
 				Assert.assertTrue(
 					message.startsWith(
 						"Unable to process message {destinationName=" +
-							"liferay/async_service")
+							DestinationNames.ASYNC_SERVICE)
 					);
 			}
 

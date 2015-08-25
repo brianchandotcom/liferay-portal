@@ -826,11 +826,7 @@ AUI.add(
 												persistId = header.getData('persist-id');
 											}
 
-											Liferay.Store(
-												{
-													'com.liferay.exportimport.web_backgroundTaskIds': persistId
-												}
-											);
+											Liferay.Store('com.liferay.exportimport.web_backgroundTaskIds', persistId);
 										}
 									},
 									transition: {

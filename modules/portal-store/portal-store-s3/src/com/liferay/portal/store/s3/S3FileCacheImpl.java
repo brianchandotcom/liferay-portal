@@ -14,9 +14,13 @@
 
 package com.liferay.portal.store.s3;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.S3Object;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -24,6 +28,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,26 +37,31 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.Date;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward C. Han
  */
+@Component(
+	configurationPid = "com.liferay.portal.store.s3.configuration.S3StoreConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
+	service = S3FileCache.class
+)
 public class S3FileCacheImpl implements S3FileCache {
-
-	public S3FileCacheImpl(
-		S3KeyTransformer s3KeyTransformer, int tempDirCleanUpExpunge,
-		int tempDirCleanUpFrequency) {
-
-		_s3KeyTransformer = s3KeyTransformer;
-		_tempDirCleanUpExpunge = tempDirCleanUpExpunge;
-		_tempDirCleanUpFrequency = tempDirCleanUpFrequency;
-	}
 
 	@Override
 	public void cleanUpTempFiles() {
 		_calledGetFileCount++;
 
-		if (_calledGetFileCount < _tempDirCleanUpFrequency) {
+		if (_calledGetFileCount < _tempDirCleanUpFrequency.intValue()) {
 			return;
 		}
 
@@ -62,14 +72,13 @@ public class S3FileCacheImpl implements S3FileCache {
 
 			_calledGetFileCount = 0;
 
-			String tempDirName = SystemProperties.get(
-				SystemProperties.TMP_DIR) + _TEMP_DIR_NAME;
+			String tempDirName = getTempDirName();
 
 			File tempDir = new File(tempDirName);
 
 			long lastModified = System.currentTimeMillis();
 
-			lastModified -= (_tempDirCleanUpExpunge * Time.DAY);
+			lastModified -= (_tempDirCleanUpExpunge.intValue() * Time.DAY);
 
 			cleanUpTempFiles(tempDir, lastModified);
 		}
@@ -111,8 +120,7 @@ public class S3FileCacheImpl implements S3FileCache {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
-		sb.append(_TEMP_DIR_NAME);
+		sb.append(getTempDirName());
 		sb.append(
 				DateUtil.getCurrentDate(
 					_TEMP_DIR_PATTERN, LocaleUtil.getDefault()));
@@ -157,13 +165,52 @@ public class S3FileCacheImpl implements S3FileCache {
 		return tempFile;
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_s3StoreConfiguration = Configurable.createConfigurable(
+			S3StoreConfiguration.class, properties);
+
+		_tempDirCleanUpExpunge = new AtomicInteger(
+			_s3StoreConfiguration.tempDirCleanUpExpunge());
+
+		_tempDirCleanUpFrequency = new AtomicInteger(
+			_s3StoreConfiguration.tempDirCleanUpFrequency());
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		File tempDir = new File(getTempDirName());
+
+		boolean deleted = tempDir.delete();
+
+		if (!deleted) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to delete: " + getTempDirName());
+			}
+		}
+	}
+
+	protected String getTempDirName() {
+		return SystemProperties.get(SystemProperties.TMP_DIR) + _TEMP_DIR_NAME;
+	}
+
+	@Reference(unbind = "-")
+	protected void setS3KeyTransformer(S3KeyTransformer s3KeyTransformer) {
+		_s3KeyTransformer = s3KeyTransformer;
+	}
+
 	private static final String _TEMP_DIR_NAME = "/liferay/s3";
 
 	private static final String _TEMP_DIR_PATTERN = "/yyyy/MM/dd/HH/";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		S3FileCacheImpl.class);
+
 	private int _calledGetFileCount;
-	private final S3KeyTransformer _s3KeyTransformer;
-	private final int _tempDirCleanUpExpunge;
-	private final int _tempDirCleanUpFrequency;
+	private S3KeyTransformer _s3KeyTransformer;
+	private volatile S3StoreConfiguration _s3StoreConfiguration;
+	private AtomicInteger _tempDirCleanUpExpunge;
+	private AtomicInteger _tempDirCleanUpFrequency;
 
 }

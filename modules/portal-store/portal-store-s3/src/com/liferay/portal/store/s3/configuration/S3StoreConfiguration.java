@@ -38,8 +38,8 @@ public interface S3StoreConfiguration {
 	@Meta.AD(required = true)
 	public String bucketName();
 
-	@Meta.AD(deflt = "50", required = false, type = Meta.Type.Integer)
-	public String httpClientMaxConnections();
+	@Meta.AD(deflt = "50", required = false)
+	public int httpClientMaxConnections();
 
 	@Meta.AD(
 		deflt = "us-east-1",
@@ -52,6 +52,7 @@ public interface S3StoreConfiguration {
 
 	@Meta.AD(
 		deflt = "STANDARD", description = "AWS S3 storage class",
+		optionValues = {"REDUCED_REDUNDANCY", "STANDARD"},
 		required = false
 	)
 	public String s3StorageClass();
@@ -66,10 +67,10 @@ public interface S3StoreConfiguration {
 	)
 	public String secretKey();
 
-	@Meta.AD(deflt = "7", required = false, type = Meta.Type.Integer)
-	public String tempDirCleanUpExpunge();
+	@Meta.AD(deflt = "7", required = false)
+	public int tempDirCleanUpExpunge();
 
-	@Meta.AD(deflt = "100", required = false, type = Meta.Type.Integer)
-	public String tempDirCleanUpFrequency();
+	@Meta.AD(deflt = "100", required = false)
+	public int tempDirCleanUpFrequency();
 
 }

@@ -160,6 +160,14 @@
 			<var name="columnId" value="1" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="PageCustomizations#viewCustomizablePagePG" />
+
 		<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
 
 		<execute macro="Portlet#addPG">

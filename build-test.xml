@@ -5261,18 +5261,12 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-selenium-required-properties">
-		<echo file="${test.ext.properties.file}" append="true">
-			selenium.executable.dir=${basedir.unix}/tools/selenium/
-		</echo>
-
-		<echo file="${test.ext.properties.file}" append="true">
-			test.class.command.name=${test.class}
-		</echo>
-
 		<get-test-url />
 
 		<echo file="${test.ext.properties.file}" append="true">
 			portal.url=${test.url}
+			selenium.executable.dir=${basedir.unix}/tools/selenium/
+			test.class.command.name=${test.class}
 		</echo>
 	</target>
 

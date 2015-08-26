@@ -33,12 +33,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -199,12 +197,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
@@ -475,12 +471,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
@@ -563,12 +557,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
@@ -582,12 +574,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
@@ -692,12 +682,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />
@@ -787,12 +775,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
@@ -1075,12 +1061,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
@@ -1174,12 +1158,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC Folder WebContent Content" />
@@ -1193,12 +1175,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent" value="WC WebContent Content" />
@@ -1325,12 +1305,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="Page#gotoMyAccount">
 			<var name="portletName" value="My Workflow Tasks" />

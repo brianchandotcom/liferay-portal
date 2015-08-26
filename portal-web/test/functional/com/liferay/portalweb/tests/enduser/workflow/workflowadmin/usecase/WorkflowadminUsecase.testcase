@@ -628,12 +628,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
@@ -709,12 +707,10 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
+		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent"><![CDATA[&lt;script&gt;alert("web content article")&lt;/script&gt;]]></var>
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
-
-		<execute macro="WebContent#submitForPublication" />
 
 		<execute macro="WebContent#viewWithWorkflowCP">
 			<var name="webContentContent"><![CDATA[<script>alert("web content article")</script>]]></var>

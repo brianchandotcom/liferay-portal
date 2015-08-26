@@ -4,23 +4,19 @@
 		max-width: 25px;
 	}
 
-	.sidebar-footer {
-		.user-icon img {
-			display: block;
-			width: 100%;
-		}
+	.sidebar-footer .user-icon img {
+		display: block;
+		width: 100%;
 	}
 }
 
 .product-menu {
-	.lfr-icon-menu {
-		.btn-default {
-			background-color: transparent;
+	.lfr-icon-menu .btn-default {
+		background-color: transparent;
 
-			&:active {
-				box-shadow: none;
-				color: $product-menu-nav-link-color;
-			}
+		&:active {
+			box-shadow: none;
+			color: $product-menu-nav-link-color;
 		}
 	}
 }
@@ -31,30 +27,24 @@
 	}
 
 	.nav-equal-height {
-		.nav > .active,
-		> .active {
+		.nav > .active, > .active {
 			border-left: 2px solid $product-menu-nav-link-active-color;
 		}
 
-		> .active > a,
-		.nav > .active > a {
-			&,
-			&:focus,
-			&:hover {
+		> .active > a, .nav > .active > a {
+			&, &:focus, &:hover {
 				color: $product-menu-nav-link-active-color;
 			}
 		}
 
-		> .active,
-		.nav > .active {
+		> .active, .nav > .active {
 			border-left-color: $product-menu-nav-link-active-color;
 		}
 	}
 
 	.nav-equal-height-heading {
 		.collapse-icon {
-			&:after,
-			&.collapsed:after {
+			&:after, &.collapsed:after {
 				background-color: $product-menu-collapse-icon-bg;
 				height: 12px;
 			}
@@ -106,9 +96,7 @@
 			font-size: 14px;
 			font-weight: 500;
 
-			&,
-			&:focus,
-			&:hover {
+			&, &:focus, &:hover {
 				color: $product-menu-header-color;
 			}
 		}
@@ -122,8 +110,7 @@
 		a {
 			color: $product-menu-header-link-color;
 
-			&:focus,
-			&:hover {
+			&:focus, &:hover {
 				color: $product-menu-header-link-hover-color;
 			}
 		}
@@ -131,7 +118,7 @@
 
 	.sidebar-header-logo {
 		background-color: $product-menu-header-logo-bg;
-		border-radius: 4px;
+		border-radius: $product-menu-header-logo-border-radius;
 	}
 }
 
@@ -160,8 +147,7 @@
 
 	.list-group-heading,
 	.list-group-heading.collapsed {
-		&:focus,
-		&:hover {
+		&:focus, &:hover {
 			background-color: $product-menu-list-group-heading-hover-bg;
 
 			&:after {
@@ -170,8 +156,7 @@
 		}
 	}
 
-	.collapse,
-	.collapsing {
+	.collapse, .collapsing {
 		> .list-group-item {
 			background-color: $product-menu-list-group-item-bg;
 		}
@@ -191,9 +176,7 @@
 
 .product-menu-tabs {
 	> li.active > a {
-		&,
-		&:focus,
-		&:hover {
+		&, &:focus, &:hover {
 			background-color: $product-menu-tabs-active-bg;
 			border-color: $product-menu-tabs-active-border;
 			color: $product-menu-tabs-active-color;
@@ -213,8 +196,7 @@
 			background-color: transparent;
 		}
 
-		&:focus,
-		&:hover {
+		&:focus, &:hover {
 			background-color: $product-menu-tabs-hover-bg;
 			border-color: $product-menu-tabs-hover-border;
 			color: $product-menu-tabs-hover-color;

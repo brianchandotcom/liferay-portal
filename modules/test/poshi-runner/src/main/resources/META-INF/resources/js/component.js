@@ -663,52 +663,36 @@ YUI.add(
 							else {
 								var buffer = [];
 
-								if (scopeType === 'macro') {
-									var parameters = currentScope.all('> .line-container .child-container .name');
-									var parameterSize = parameters.size();
+								if (scopeType === 'macro' || scopeType === 'function') {
+									var increment = 2;
+									var paramCollection = parameters;
+									var start = 0;
+									var valueIncrement = 1;
 
-									for (var i = 0; i < parameterSize; i += 2) {
-										buffer.push(
-											A.Lang.sub(
-												TPL_PARAMETER,
-												{
-													cssClass: 'parameter-name',
-													parameter: parameters.item(i).html()
-												}
-											)
-										);
+									var limit = paramCollection.size() - 1;
 
-										buffer.push(
-											A.Lang.sub(
-												TPL_PARAMETER,
-												{
-													cssClass: 'parameter-value',
-													parameter: parameters.item(i + 1).html()
-												}
-											)
-										);
+									if (scopeType === 'function') {
+										increment = 1;
+										paramCollection = scopeNames;
+										start = 1;
+										valueIncrement = 0;
 									}
-								}
-								else if (scopeType === 'function') {
-									var parameterCount = scopeNames.size() - 1;
 
-									for (var j = 1; j <= parameterCount; j++) {
+									for (var i = start; i <= limit; i += increment) {
 										buffer.push(
 											A.Lang.sub(
 												TPL_PARAMETER,
 												{
 													cssClass: 'parameter-name',
-													parameter: scopeTypes.item(j).html()
+													parameter: scopeTypes.item(i).html()
 												}
-											)
-										);
+											),
 
-										buffer.push(
 											A.Lang.sub(
 												TPL_PARAMETER,
 												{
 													cssClass: 'parameter-value',
-													parameter: scopeNames.item(j).html()
+													parameter: scopeNames.item(i + valueIncrement).html()
 												}
 											)
 										);

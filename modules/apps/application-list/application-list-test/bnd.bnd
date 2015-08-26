@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Application List Test
+Bundle-SymbolicName: com.liferay.application.list.test
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	test-classes/integration/,\
+	../../../../portal-impl/test/test-portal-impl.properties

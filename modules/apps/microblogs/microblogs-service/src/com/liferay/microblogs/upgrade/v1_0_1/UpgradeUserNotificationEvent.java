@@ -92,8 +92,8 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 
 				payloadJSONObject.put(
 					"notificationType",
-					MicroblogsUserNotificationDefinition
-						.NOTIFICATION_TYPE_REPLY);
+					MicroblogsUserNotificationDefinition.
+						NOTIFICATION_TYPE_REPLY);
 
 				updateNotification(userNotificationEventId, payloadJSONObject);
 			}

@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+		<meta content="Tue, 01 Jan 1980 1:00:00 GMT" http-equiv="expires" />
+		<link href="https://cdn.lfrs.sl/alloyui.com/3.0.1/aui-css/css/bootstrap.min.css" rel="stylesheet">
+		<script src="https://cdn.lfrs.sl/alloyui.com/3.0.1/aui/aui-min.js"></script>
+
+		<script>
+			YUI().use(
+				'aui-tabview','aui-toggler',
+				function(Y) {
+					new Y.TabView(
+						{
+							srcNode: '#summaries'
+						}
+					).render();
+
+			        new Y.TogglerDelegate(
+						{
+							animated: true,
+							container: '#summaries',
+							content: '.content',
+							expanded: false,
+							header: '.header'
+						}
+				    );
+				}
+			);
+		</script>
+
+		<style>
+			.btn {
+				left: 12;
+				padding: 0px 6px;
+				position: absolute;
+			}
+
+			.major-steps > li {
+				list-style-type: none;
+				padding: 3px;
+			}
+
+			.minor-steps > li {
+				left: -20px;
+				position: relative;
+			}
+		</style>
+	</head>
+	<body>
+		<h3 id="summaryTestName"></h3>
+		<p id="summaryTestDescription"></p>
+		<div id="summaries">
+			<ul id="summaryTitleContainer"></ul>
+			<div id="summaryContentContainer"></div>
+		</div>
+	</body>
+</html>

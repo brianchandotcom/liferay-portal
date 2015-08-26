@@ -52,34 +52,36 @@ public final class SummaryLoggerHandler {
 		}
 	}
 
-	public static String getSummaryLogText() {
-		LoggerElement summaryLogLoggerElement = _summaryLogLoggerElement.copy();
+	public static String getSummary() throws Exception {
+		String summaryHTMLContent = _readResource(
+			"META-INF/resources/html/summary.html");
 
-		LoggerElement stepsLoggerElement =
-			summaryLogLoggerElement.loggerElement("div");
+		summaryHTMLContent = StringUtil.replace(
+			summaryHTMLContent, "<ul id=\"summaryTitleContainer\"></ul>",
+			_summaryTitleContainerLoggerElement.toString());
 
-		LoggerElement majorStepsLoggerElement =
-			stepsLoggerElement.loggerElement("ul");
+		_summaryContentWrapperLoggerElement.addChildLoggerElement(
+			_getSummaryContentLoggerElement());
 
-		List<LoggerElement> majorStepLoggerElements =
-			majorStepsLoggerElement.loggerElements("li");
+		summaryHTMLContent = StringUtil.replace(
+			summaryHTMLContent, "<div id=\"summaryContentContainer\"></div>",
+			_summaryContentContainerLoggerElement.toString());
 
-		for (int i = 0; i < majorStepLoggerElements.size(); i++) {
-			LoggerElement majorStepLoggerElement = majorStepLoggerElements.get(
-				i);
+		LoggerElement summaryTestNameLoggerElement =
+			_getSummaryTestNameLoggerElement();
 
-			String className = majorStepLoggerElement.getClassName();
+		summaryHTMLContent = StringUtil.replace(
+			summaryHTMLContent, "<h3 id=\"summaryTestName\"></h3>",
+			summaryTestNameLoggerElement.toString());
 
-			if (className.contains("summary-failure") ||
-				className.contains("summary-warning")) {
+		LoggerElement summaryTestDescriptionLoggerElement =
+			_getSummaryTestDescriptionLoggerElement();
 
-				continue;
-			}
+		summaryHTMLContent = StringUtil.replace(
+			summaryHTMLContent, "<p id=\"summaryTestDescription\"></p>",
+			summaryTestDescriptionLoggerElement.toString());
 
-			majorStepLoggerElement.removeChildLoggerElements("ul");
-		}
-
-		return summaryLogLoggerElement.toString();
+		return summaryHTMLContent;
 	}
 
 	public static LoggerElement getSummarySnapshotLoggerElement() {
@@ -184,6 +186,14 @@ public final class SummaryLoggerHandler {
 			_warnStepLoggerElement(_minorStepLoggerElement);
 
 			_containsMinorStepWarning = true;
+
+			_warningCount++;
+
+			_summaryContentContainerLoggerElement.addChildLoggerElement(
+				_getSummaryContentLoggerElement());
+
+			_summaryTitleContainerLoggerElement.addChildLoggerElement(
+				_getSummaryTitleLoggerElement("WARNING #" + _warningCount));
 
 			_stopMinorStep();
 		}
@@ -684,6 +694,23 @@ public final class SummaryLoggerHandler {
 	private static LoggerElement _minorStepLoggerElement;
 	private static LoggerElement _minorStepsLoggerElement;
 	private static final Pattern _pattern = Pattern.compile("\\$\\{([^}]*)\\}");
+	private static final LoggerElement _summaryContentContainerLoggerElement =
+		new LoggerElement("summaryContentContainer");
+	private static final LoggerElement _summaryContentWrapperLoggerElement =
+		new LoggerElement("summaryContentWrapper");
 	private static LoggerElement _summaryLogLoggerElement;
+	private static final LoggerElement _summaryTitleContainerLoggerElement =
+		new LoggerElement("summaryTitleContainer");
+	private static int _warningCount = 0;
+
+	static {
+		_summaryContentContainerLoggerElement.addChildLoggerElement(
+			_summaryContentWrapperLoggerElement);
+		_summaryContentContainerLoggerElement.setID("summaryContentContainer");
+
+		_summaryTitleContainerLoggerElement.addChildLoggerElement(
+			_getSummaryTitleLoggerElement("SUMMARY"));
+		_summaryTitleContainerLoggerElement.setName("ul");
+	}
 
 }

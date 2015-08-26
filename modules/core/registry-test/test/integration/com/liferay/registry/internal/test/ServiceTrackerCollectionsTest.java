@@ -46,7 +46,7 @@ import org.osgi.framework.BundleException;
  * @author Carlos Sierra Andrés
  */
 @RunWith(Arquillian.class)
-public class ServiceTrackerCollectionTest {
+public class ServiceTrackerCollectionsTest {
 
 	@Before
 	public void setUp() throws BundleException {

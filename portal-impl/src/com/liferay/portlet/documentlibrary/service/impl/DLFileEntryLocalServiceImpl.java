@@ -2144,12 +2144,18 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setStatusDate(dlFileEntry.getModifiedDate());
 
 		DLFileVersion latestFileVersion =
-				dlFileVersionLocalService.getLatestFileVersion(
+				dlFileVersionLocalService.fetchLatestFileVersion(
 					dlFileEntry.getFileEntryId(), false);
 
-		ExpandoBridgeUtil.setExpandoBridgeAttributes(
-			latestFileVersion.getExpandoBridge(),
-			dlFileVersion.getExpandoBridge(), serviceContext);
+		if (Validator.isNotNull(latestFileVersion)) {
+			ExpandoBridgeUtil.setExpandoBridgeAttributes(
+				latestFileVersion.getExpandoBridge(),
+				dlFileVersion.getExpandoBridge(), serviceContext);
+		}
+		else {
+			ExpandoBridgeUtil.setExpandoBridgeAttributes(
+				dlFileVersion.getExpandoBridge(), serviceContext);
+		}
 
 		dlFileVersionPersistence.update(dlFileVersion);
 

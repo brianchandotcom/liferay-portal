@@ -397,17 +397,17 @@
 <!--PAGE_CUSTOMIZATION-->
 <tr>
 	<td>PAGE_CUSTOMIZATION_MESSAGE_INFO</td>
-	<td>//div[@class='page-customization-bar']//span[contains(@class,'page-customization-bar-message')]</td>
+	<td>//div[@class='customizable-layout']/span[contains(.,'You can customize this page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE</td>
-	<td>//div[contains(@class,'page-customization-bar-form')]/span[contains(.,'View Default Page')]/a/span</td>
+	<td>//div[@class='customizable-layout']//span[contains(.,'View Default Page')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS</td>
-	<td>//div[contains(@class,'page-customization-bar-form')]/span[contains(.,'Reset My Customizations')]/a/span</td>
+	<td>//div[@class='customizable-layout']//span[contains(.,'Reset My Customizations')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

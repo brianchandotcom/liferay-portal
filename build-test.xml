@@ -5878,12 +5878,15 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-case-method-names">
+		<delete file="portal-web/poshi-runner-ext.properties" failonerror="false" />
+
+		<antcall target="prepare-selenium-poshi-runner-properties" inheritall="false">
+			<param name="test.ext.properties.file" value="portal-web/poshi-runner-ext.properties" />
+		</antcall>
+
 		<gradle-execute failonerror="false" task="writePoshiProperties">
 			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-PcomponentNames=${component.names}" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PproductNames=${product.names}" />
-			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
 		</gradle-execute>
 
 		<move file="portal-web/test.case.method.names.properties" tofile="test.case.method.names.properties" />
@@ -5896,15 +5899,15 @@ if (ppstate.equals("normal")) {
 	<target name="record-test-generated-properties">
 		<fail message="Please set the property ${test.class}." unless="test.class" />
 
-		<get-poshi-test-name />
+		<delete file="portal-web/poshi-runner-ext.properties" failonerror="false" />
+
+		<antcall target="prepare-selenium-poshi-runner-properties" inheritall="false">
+			<param name="test.ext.properties.file" value="portal-web/poshi-runner-ext.properties" />
+		</antcall>
 
 		<gradle-execute failonerror="false" task="writePoshiProperties">
 			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-PcomponentNames=${component.names}" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiTestName=${poshi.test.name}" />
-			<arg value="-PproductNames=${product.names}" />
-			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
 		</gradle-execute>
 
 		<move file="portal-web/test.generated.properties" tofile="test.generated.properties" />
@@ -6141,35 +6144,24 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="run-poshi-runner">
-		<get-poshi-test-name />
-
-		<tstamp>
-			<format property="current.date" pattern="yyyy-MM-dd" timezone="GMT" />
-		</tstamp>
-
 		<property name="test.console.log.file.name" value="${liferay.home}/logs/liferay.${current.date}.xml" />
 
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-PignoreErrorsFileName=${project.dir}/portal-web/test-ignorable-error-lines.xml" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PportalProjectDir=${project.dir}" />
-			<arg value="-PposhiTestName=${poshi.test.name}" />
-			<arg value="-PsaveScreenshot=${test.save.screenshot}" />
-			<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
-			<arg value="-PtestBaseDirName=${project.dir}/portal-web/test/functional" />
-			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
-			<arg value="-PtestConsoleLogFileName=${test.console.log.file.name}" />
-			<arg value="-PtestPoshiWarningsFileName=${project.dir}/poshi-warnings.xml" />
-			<arg value="-PtestSkipTearDown=${test.skip.tear.down}" />
 		</gradle-execute>
 	</target>
 
 	<target name="run-poshi-validation">
+		<delete file="portal-web/poshi-runner-ext.properties" failonerror="false" />
+
+		<antcall target="prepare-selenium-poshi-runner-properties" inheritall="false">
+			<param name="test.ext.properties.file" value="portal-web/poshi-runner-ext.properties" />
+		</antcall>
+
 		<gradle-execute failonerror="false" task="validatePoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
 		</gradle-execute>
 	</target>
 

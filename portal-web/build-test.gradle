@@ -29,60 +29,6 @@ poshiRunner {
 		setPoshiProperties testProperties
 	}
 
-	if (project.hasProperty("componentNames")) {
-		poshiProperty "component.names", project.properties["componentNames"]
-	}
-
-	if (project.hasProperty("ignoreErrorsFileName")) {
-		poshiProperty "ignore.errors.file.name", project.properties["ignoreErrorsFileName"]
-	}
-
-	if (project.hasProperty("portalProjectDir")) {
-		poshiProperty "project.dir", project.properties["portalProjectDir"]
-	}
-
-	if (project.hasProperty("poshiTestName")) {
-		poshiProperty "test.name", project.properties["poshiTestName"]
-	}
-
-	if (project.hasProperty("productNames")) {
-		poshiProperty "product.names", project.properties["productNames"]
-	}
-
-	if (project.hasProperty("saveScreenshot")) {
-		poshiProperty "save.screenshot", project.properties["saveScreenshot"]
-	}
-
-	if (project.hasProperty("seleniumLoggerEnabled")) {
-		poshiProperty "selenium.logger.enabled", project.properties["seleniumLoggerEnabled"]
-	}
-
-	if (project.hasProperty("testBaseDirName")) {
-		poshiProperty "test.base.dir.name", project.properties["testBaseDirName"]
-	}
-
-	if (project.hasProperty("testCaseAvailablePropertyNames")) {
-		poshiProperty "test.case.available.property.names", project.properties["testCaseAvailablePropertyNames"]
-	}
-
-	if (project.hasProperty("testConsoleLogFileName")) {
-		poshiProperty "test.console.log.file.name", project.properties["testConsoleLogFileName"]
-	}
-
-	if (project.hasProperty("testConsoleShutDownFileName")) {
-		poshiProperty "test.console.shut.down.file.name", project.properties["testConsoleShutDownFileName"]
-	}
-
-	poshiProperty "test.dependencies.dir.name", "com/liferay/portalweb/dependencies"
-
-	if (project.hasProperty("testSkipTearDown")) {
-		poshiProperty "test.skip.tear.down", project.properties["testSkipTearDown"]
-	}
-
-	if (project.hasProperty("testPoshiWarningsFileName")) {
-		poshiProperty "test.poshi.warnings.file.name", project.properties["testPoshiWarningsFileName"]
-	}
-
 	version = "1.0.12"
 }
 

@@ -29,8 +29,6 @@
 				<execute function="AssertClick" locator1="ControlMenuEditPanel#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
 			</then>
 		</if>
-
-		<execute function="AssertClick" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" value1="Show Customizable Sections" />
 	</command>
 
 	<command name="viewCustomizablePagePG">

@@ -1,3 +1,5 @@
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
+
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }
@@ -11,26 +13,19 @@ liferay {
 }
 
 task buildBabelCore(type: Copy)
-task downloadBabelCore(type: NpmTask)
+task downloadBabelCore(type: DownloadNodeModuleTask)
 
 buildBabelCore {
 	dependsOn downloadBabelCore
-	from new File(node.nodeModulesDir, "node_modules/babel-core/browser-polyfill.min.js")
+	from new File(node.nodeDir, "node_modules/babel-core/browser-polyfill.min.js")
 	into "classes/META-INF/resources"
-}
-
-downloadBabelCore {
-	args = ["install", "babel-core@${babelCoreVersion}"]
-
-	onlyIf {
-		File dir = new File(node.nodeModulesDir, "node_modules/babel-core")
-
-		!dir.exists()
-	}
-
-	workingDir = node.nodeModulesDir
 }
 
 classes {
 	dependsOn buildBabelCore
+}
+
+downloadBabelCore {
+	moduleName = "babel-core"
+	moduleVersion = babelCoreVersion
 }

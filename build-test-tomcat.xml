@@ -22,12 +22,13 @@
 		<antcall target="revert-test-properties" />
 
 		<if>
-			<not>
-				<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-			</not>
+			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 			<then>
-				<ant dir="portal-impl" target="build-selenium-test-case" />
+				<antcall target="record-test-generated-properties" />
 			</then>
+			<else>
+				<ant dir="portal-impl" target="build-selenium-test-case" />
+			</else>
 		</if>
 
 		<if>

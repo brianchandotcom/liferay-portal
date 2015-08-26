@@ -24,8 +24,6 @@ String deltaFolder = ParamUtil.getString(request, "deltaFolder");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
-long ddmStructureId = 0;
-
 String ddmStructureName = LanguageUtil.get(request, "basic-web-content");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
@@ -74,8 +72,6 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)articleSearchContainer.g
 	DDMStructure ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getDDMStructureKey(), true);
 
 	if (ddmStructure != null) {
-		ddmStructureId = ddmStructure.getStructureId();
-
 		ddmStructureName = ddmStructure.getName(locale);
 	}
 	%>
@@ -188,85 +184,6 @@ request.setAttribute("view.jsp-total", String.valueOf(total));
 request.setAttribute("view_entries.jsp-entryStart", String.valueOf(articleSearchContainer.getStart()));
 request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchContainer.getEnd()));
 %>
-
-<div class="subscribe-action">
-	<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && JournalUtil.getEmailArticleAnyEventEnabled(journalGroupServiceConfiguration) %>">
-
-		<%
-		boolean subscribed = false;
-		boolean unsubscribable = true;
-
-		if (Validator.isNull(displayTerms.getDDMStructureKey())) {
-			subscribed = JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId);
-
-			if (subscribed) {
-				if (!JournalUtil.isSubscribedToFolder(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), folderId, false)) {
-					unsubscribable = false;
-				}
-			}
-		}
-		else {
-			subscribed = JournalUtil.isSubscribedToStructure(themeDisplay.getCompanyId(), scopeGroupId, user.getUserId(), ddmStructureId);
-		}
-		%>
-
-		<c:choose>
-			<c:when test="<%= subscribed %>">
-				<c:choose>
-					<c:when test="<%= unsubscribable %>">
-						<portlet:actionURL name='<%= Validator.isNull(displayTerms.getDDMStructureKey()) ? "unsubscribeFolder" : "unsubscribeStructure" %>' var="unsubscribeURL">
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-
-							<c:choose>
-								<c:when test="<%= Validator.isNull(displayTerms.getDDMStructureKey()) %>">
-									<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-								</c:when>
-								<c:otherwise>
-									<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" />
-								</c:otherwise>
-							</c:choose>
-						</portlet:actionURL>
-
-						<liferay-ui:icon
-							iconCssClass="icon-remove-sign"
-							label="<%= true %>"
-							message="unsubscribe"
-							url="<%= unsubscribeURL %>"
-						/>
-					</c:when>
-					<c:otherwise>
-						<liferay-ui:icon
-							iconCssClass="icon-remove-sign"
-							label="<%= true %>"
-							message="subscribed-to-a-parent-folder"
-						/>
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<portlet:actionURL name='<%= Validator.isNull(displayTerms.getDDMStructureKey()) ? "subscribeFolder" : "subscribeStructure" %>' var="subscribeURL">
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-
-					<c:choose>
-						<c:when test="<%= Validator.isNull(displayTerms.getDDMStructureKey()) %>">
-							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-						</c:when>
-						<c:otherwise>
-							<portlet:param name="ddmStructureId" value="<%= String.valueOf(ddmStructureId) %>" />
-						</c:otherwise>
-					</c:choose>
-				</portlet:actionURL>
-
-				<liferay-ui:icon
-					iconCssClass="icon-ok-sign"
-					label="<%= true %>"
-					message="subscribe"
-					url="<%= subscribeURL %>"
-				/>
-			</c:otherwise>
-		</c:choose>
-	</c:if>
-</div>
 
 <c:if test="<%= results.isEmpty() %>">
 	<div class="alert alert-info entries-empty">

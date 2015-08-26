@@ -137,7 +137,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertViewPermissionsViaCPAndPG" priority="4">
+	<command known-issues="LPS-57664" name="AssertViewPermissionsViaCPAndPG" priority="4">
 		<var name="roleType1" value="Regular" />
 		<var name="roleType2" value="Regular" />
 

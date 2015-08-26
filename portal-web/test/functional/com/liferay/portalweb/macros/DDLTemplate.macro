@@ -352,4 +352,8 @@
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
+
+	<command name="viewWithNoPermissions">
+		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
+	</command>
 </definition>

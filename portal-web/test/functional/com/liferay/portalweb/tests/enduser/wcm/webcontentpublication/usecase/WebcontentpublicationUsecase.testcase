@@ -443,7 +443,7 @@
 		</execute>
 	</command>
 
-	<command name="AssetPublisherCategoriesNavigation" priority="3">
+	<command known-issues="LPS-56754" name="AssetPublisherCategoriesNavigation" priority="3">
 		<var name="siteName" value="Liferay" />
 
 		<execute macro="Page#gotoContentCP">
@@ -994,7 +994,7 @@
 		</execute>
 	</command>
 
-	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
+	<command known-issues="LPS-56754" name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1108,7 +1108,7 @@
 		</execute>
 	</command>
 
-	<command name="AssetPublisherTogglingBetweenSites" priority="4">
+	<command known-issues="LPS-56754" name="AssetPublisherTogglingBetweenSites" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1490,7 +1490,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
+	<command known-issues="LPS-56754" name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

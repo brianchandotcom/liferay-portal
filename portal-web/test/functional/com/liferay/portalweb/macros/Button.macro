@@ -1,0 +1,21 @@
+<definition>
+	<command name="clickCancel">
+		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
+	</command>
+
+	<command name="clickPublish">
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+	</command>
+
+	<command name="clickSave">
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+	</command>
+
+	<command name="clickSaveAsDraft">
+		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
+	</command>
+
+	<command name="clickSubmitForPublication">
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
+	</command>
+</definition>

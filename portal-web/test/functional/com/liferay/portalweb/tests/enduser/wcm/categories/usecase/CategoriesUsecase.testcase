@@ -22,7 +22,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddCategorywithLocalization" priority="4">
+	<command known-issues="LPS-58038" name="AddCategorywithLocalization" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

@@ -17,10 +17,10 @@
 		<if>
 			<equals arg1="${enabled}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="PGWikidisplayConfigurationSharing#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
+				<execute function="Check" locator1="WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
 			</then>
 			<else>
-				<execute function="Uncheck" locator1="PGWikidisplayConfigurationSharing#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
+				<execute function="Uncheck" locator1="WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
 			</else>
 		</if>
 
@@ -78,10 +78,10 @@
 		<if>
 			<equals arg1="${enabled}" arg2="true" />
 			<then>
-				<execute function="AssertChecked" locator1="PGWikidisplayConfigurationSharing#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
+				<execute function="AssertChecked" locator1="WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
 			</then>
 			<else>
-				<execute function="AssertNotChecked" locator1="PGWikidisplayConfigurationSharing#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
+				<execute function="AssertNotChecked" locator1="WikiConfiguration#ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX" />
 			</else>
 		</if>
 

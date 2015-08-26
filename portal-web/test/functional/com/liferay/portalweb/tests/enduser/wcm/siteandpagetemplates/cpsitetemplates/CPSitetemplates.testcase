@@ -145,7 +145,7 @@
 		<execute macro="SiteTemplates#viewDefaultCP" />
 	</command>
 
-	<command name="ResetPageChanges" priority="4">
+	<command known-issues="LPS-58054" name="ResetPageChanges" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

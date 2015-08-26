@@ -112,7 +112,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 		<execute function="Type#typeWaitForCKEditor" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME" value1="${webContentContent}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD_LOCALIZED" value1="${webContentContent}" />
 
 		<if>
 			<equals arg1="${saveAsDraft}" arg2="true" />
@@ -344,7 +344,7 @@
 	</command>
 
 	<command name="addTranslationPGViaWCD">
-		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Translation#ADD_MENULIST_LANGUAGE" value1="Add Translation" />
+		<execute function="AssertClick#assertTextClickAtCKEditor" locator1="Translation#ADD" value1="Add Translation" />
 
 		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
 
@@ -614,11 +614,14 @@
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="Type#typeCKEditor" locator1="CKEditor#IFRAME" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="Button#clickSubmitForPublication" />
+
+		<execute macro="Alert#viewSuccess" />
 	</command>
 
 	<command name="addWithWorkflowPGViaAP">

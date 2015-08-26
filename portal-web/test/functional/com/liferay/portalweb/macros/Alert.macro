@@ -1,0 +1,5 @@
+<definition>
+	<command name="viewSuccess">
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+</definition>

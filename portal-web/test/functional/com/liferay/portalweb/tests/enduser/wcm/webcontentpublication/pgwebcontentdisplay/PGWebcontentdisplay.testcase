@@ -73,7 +73,7 @@
 		</execute>
 	</command>
 
-	<command name="AddPortletWCDSite" priority="4">
+	<command known-issues="LPS-56754" name="AddPortletWCDSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

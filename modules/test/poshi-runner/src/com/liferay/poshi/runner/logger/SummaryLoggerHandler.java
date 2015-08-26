@@ -381,6 +381,55 @@ public final class SummaryLoggerHandler {
 		return null;
 	}
 
+	private static LoggerElement _getSummaryContentLoggerElement() {
+		LoggerElement loggerElement = _summaryLogLoggerElement.copy();
+
+		LoggerElement stepsLoggerElement = loggerElement.loggerElement("div");
+
+		LoggerElement majorStepsLoggerElement =
+			stepsLoggerElement.loggerElement("ul");
+
+		List<LoggerElement> majorStepLoggerElements =
+			majorStepsLoggerElement.loggerElements("li");
+
+		for (int i = 0; i < majorStepLoggerElements.size(); i++) {
+			LoggerElement majorStepLoggerElement = majorStepLoggerElements.get(
+				i);
+
+			boolean lastMajorStep = (i >= (majorStepLoggerElements.size() - 1));
+
+			if (_containsMinorStepWarning && lastMajorStep) {
+				_warnStepLoggerElement(majorStepLoggerElement);
+			}
+
+			String togglerClassNameSuffix = "collapsed";
+
+			String majorStepClassName = majorStepLoggerElement.getClassName();
+
+			if (lastMajorStep) {
+				if (majorStepClassName.contains("summary-failure") ||
+					majorStepClassName.contains("summary-warning")) {
+
+					togglerClassNameSuffix = "expanded";
+				}
+			}
+
+			LoggerElement buttonLoggerElement =
+				majorStepLoggerElement.loggerElement("button");
+
+			buttonLoggerElement.addClassName(
+				"toggler-header-" + togglerClassNameSuffix);
+
+			LoggerElement minorStepsLoggerElement =
+				majorStepLoggerElement.loggerElement("ul");
+
+			minorStepsLoggerElement.addClassName(
+				"toggler-content-" + togglerClassNameSuffix);
+		}
+
+		return loggerElement;
+	}
+
 	private static LoggerElement _getSummaryLogLoggerElement() {
 		LoggerElement loggerElement = new LoggerElement();
 

@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.exportimport.api.ExportImportContentProcessor;
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
@@ -29,18 +31,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portlet.exportimport.lar.ExportImportHelper;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -165,48 +159,11 @@ public class JournalFeedStagedModelDataHandler
 			}
 		}
 
-		Group group = _groupLocalService.getGroup(
-			portletDataContext.getScopeGroupId());
+		ExportImportContentProcessor exportImportContentProcessor =
+			getExportImportContentProcessor(JournalFeed.class);
 
-		String newGroupFriendlyURL = group.getFriendlyURL().substring(1);
-
-		String[] friendlyURLParts = StringUtil.split(
-			feed.getTargetLayoutFriendlyUrl(), '/');
-
-		String oldGroupFriendlyURL = friendlyURLParts[2];
-
-		if (newGroupFriendlyURL.equals(oldGroupFriendlyURL)) {
-			String targetLayoutFriendlyUrl = StringUtil.replaceFirst(
-				feed.getTargetLayoutFriendlyUrl(),
-				StringPool.SLASH + newGroupFriendlyURL + StringPool.SLASH,
-				StringPool.SLASH +
-					ExportImportHelper.DATA_HANDLER_GROUP_FRIENDLY_URL +
-						StringPool.SLASH);
-
-			feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
-		}
-
-		Group targetLayoutGroup = _groupLocalService.fetchFriendlyURLGroup(
-			portletDataContext.getCompanyId(),
-			StringPool.SLASH + oldGroupFriendlyURL);
-
-		boolean privateLayout = false;
-
-		if (!PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING.equals(
-				StringPool.SLASH + friendlyURLParts[1])) {
-
-			privateLayout = true;
-		}
-
-		String targetLayoutFriendlyURL = StringPool.SLASH + friendlyURLParts[3];
-
-		Layout targetLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
-			targetLayoutGroup.getGroupId(), privateLayout,
-			targetLayoutFriendlyURL);
-
-		portletDataContext.addReferenceElement(
-			feed, feedElement, targetLayout,
-			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+		exportImportContentProcessor.replaceExportContentReferences(
+			portletDataContext, feed, StringPool.BLANK, true, true);
 
 		portletDataContext.addClassedModel(
 			feedElement, ExportImportPathUtil.getModelPath(feed), feed);
@@ -229,25 +186,11 @@ public class JournalFeedStagedModelDataHandler
 			userId = authorId;
 		}
 
-		Group group = _groupLocalService.getGroup(
-			portletDataContext.getScopeGroupId());
+		ExportImportContentProcessor exportImportContentProcessor =
+			getExportImportContentProcessor(JournalFeed.class);
 
-		String newGroupFriendlyURL = group.getFriendlyURL().substring(1);
-
-		String[] friendlyURLParts = StringUtil.split(
-			feed.getTargetLayoutFriendlyUrl(), '/');
-
-		String oldGroupFriendlyURL = friendlyURLParts[2];
-
-		if (oldGroupFriendlyURL.equals(
-				ExportImportHelper.DATA_HANDLER_GROUP_FRIENDLY_URL)) {
-
-			feed.setTargetLayoutFriendlyUrl(
-				StringUtil.replace(
-					feed.getTargetLayoutFriendlyUrl(),
-					ExportImportHelper.DATA_HANDLER_GROUP_FRIENDLY_URL,
-					newGroupFriendlyURL));
-		}
+		exportImportContentProcessor.replaceImportContentReferences(
+			portletDataContext, feed, StringPool.BLANK);
 
 		String feedId = feed.getFeedId();
 
@@ -387,22 +330,10 @@ public class JournalFeedStagedModelDataHandler
 	}
 
 	@Reference
-	protected void setGroupLocalService(GroupLocalService groupLocalService) {
-		_groupLocalService = groupLocalService;
-	}
-
-	@Reference
 	protected void setJournalFeedLocalService(
 		JournalFeedLocalService journalFeedLocalService) {
 
 		_journalFeedLocalService = journalFeedLocalService;
-	}
-
-	@Reference
-	protected void setLayoutLocalService(
-		LayoutLocalService layoutLocalService) {
-
-		_layoutLocalService = layoutLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -410,8 +341,6 @@ public class JournalFeedStagedModelDataHandler
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-	private GroupLocalService _groupLocalService;
 	private JournalFeedLocalService _journalFeedLocalService;
-	private LayoutLocalService _layoutLocalService;
 
 }

@@ -26,6 +26,7 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.LayoutTemplateLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletRequestImpl;
 
 import java.io.Writer;
@@ -41,7 +42,7 @@ public class PanelAppContentHelper {
 	public PanelAppContentHelper(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		_request = request;
+		_request = PortalUtil.getOriginalServletRequest(request);
 		_response = response;
 	}
 

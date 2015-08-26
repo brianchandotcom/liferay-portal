@@ -111,7 +111,8 @@ public class AutoLoginFilter extends BasePortalFilter {
 		}
 		else {
 			session.setAttribute(
-				"j_password", PasswordEncryptorUtil.encrypt(jPassword));
+				"j_password",
+				PasswordEncryptorUtil.encrypt(jPassword, user.getPassword()));
 
 			if (PropsValues.SESSION_STORE_PASSWORD) {
 				session.setAttribute(WebKeys.USER_PASSWORD, jPassword);

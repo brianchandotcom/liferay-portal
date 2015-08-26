@@ -9,7 +9,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="Smoke" priority="5">
+	<command description="Ensure that the super admin can add pages, add portlets, and navigate to the product menu." name="Smoke" priority="5">
 		<execute macro="Smoke#viewWelcomePage" />
 
 		<execute macro="Smoke#runSmoke" />

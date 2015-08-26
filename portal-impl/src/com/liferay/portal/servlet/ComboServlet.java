@@ -14,6 +14,7 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.ModulePathSetException;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -145,11 +146,7 @@ public class ComboServlet extends HttpServlet {
 		}
 
 		if (modulePathsSet.isEmpty()) {
-			response.sendError(
-				HttpServletResponse.SC_BAD_REQUEST,
-				"Modules paths set is empty");
-
-			return;
+			throw new ModulePathSetException("Modules paths set is empty");
 		}
 
 		String[] modulePaths = modulePathsSet.toArray(

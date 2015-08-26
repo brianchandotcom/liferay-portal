@@ -51,4 +51,11 @@ public class ExpandoBridgeUtil {
 		newExpandoBridge.setAttributes(expandoBridgeAttributes, false);
 	}
 
+	public static void setExpandoBridgeAttributes(
+		ExpandoBridge expandoBridge, ServiceContext serviceContext) {
+
+		setExpandoBridgeAttributes(expandoBridge, expandoBridge,
+			serviceContext);
+	}
+
 }

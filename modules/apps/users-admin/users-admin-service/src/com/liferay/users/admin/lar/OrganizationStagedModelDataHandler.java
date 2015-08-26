@@ -14,6 +14,7 @@
 
 package com.liferay.users.admin.lar;
 
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -37,7 +38,6 @@ import com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil;
 import com.liferay.portal.service.PhoneLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;

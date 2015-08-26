@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.lar;
 
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -39,7 +40,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;

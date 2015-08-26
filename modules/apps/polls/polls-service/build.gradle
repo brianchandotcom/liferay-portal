@@ -8,6 +8,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
 	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:polls:polls-api")
 }
 

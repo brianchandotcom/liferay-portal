@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.exportimport.api.ExportImportContentProcessor;
-import com.liferay.exportimport.api.ExportImportContentProcessorRegistryUtil;
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleImage;
@@ -51,7 +51,6 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -340,7 +339,7 @@ public class JournalArticleStagedModelDataHandler
 		}
 
 		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor();
+			getExportImportContentProcessor(JournalArticle.class);
 
 		if (article.isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.fetchImage(
@@ -459,7 +458,7 @@ public class JournalArticleStagedModelDataHandler
 		String content = article.getContent();
 
 		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor();
+			getExportImportContentProcessor(JournalArticle.class);
 
 		content = exportImportContentProcessor.replaceImportContentReferences(
 			portletDataContext, article, content);
@@ -899,14 +898,6 @@ public class JournalArticleStagedModelDataHandler
 
 		return _journalArticleLocalService.fetchArticle(
 			groupId, articleId, version);
-	}
-
-	protected ExportImportContentProcessor getExportImportContentProcessor() {
-		ExportImportContentProcessor exportImportContentProcessor =
-			ExportImportContentProcessorRegistryUtil.
-				getExportImportContentProcessor(JournalArticle.class.getName());
-
-		return exportImportContentProcessor;
 	}
 
 	@Reference

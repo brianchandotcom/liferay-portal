@@ -1,5 +1,6 @@
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:users-admin:users-admin-web")
 }
 

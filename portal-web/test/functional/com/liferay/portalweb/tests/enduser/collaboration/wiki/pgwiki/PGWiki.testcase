@@ -55,6 +55,10 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
+		<execute macro="WikiPage#viewViewCount">
+			<var name="viewCountNumber" value="3" />
+		</execute>
+
 		<execute macro="WikiPage#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>

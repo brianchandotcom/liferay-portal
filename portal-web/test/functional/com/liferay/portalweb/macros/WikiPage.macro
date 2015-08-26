@@ -1670,4 +1670,22 @@
 
 		<execute function="AssertElementPresent" locator1="AssetCategorization#TAG" value1="${tagName}" />
 	</command>
+
+	<command name="viewViewCount">
+		<if>
+			<equals arg1="${viewCountNumber}" arg2="1" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Wiki#VIEW_COUNT" value1="${viewCountNumber} View" />
+			</then>
+			<elseif>
+				<equals arg1="${viewCountNumber}" arg2="0" />
+				<then>
+					<execute function="AssertTextEquals" locator1="Wiki#VIEW_COUNT" value1="" />
+				</then>
+			</elseif>
+			<else>
+				<execute function="AssertTextEquals" locator1="Wiki#VIEW_COUNT" value1="${viewCountNumber} Views" />
+			</else>
+		</if>
+	</command>
 </definition>

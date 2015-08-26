@@ -8,6 +8,11 @@
 <tr><td rowspan="1" colspan="3">WikiConfiguration</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>ALLOW_USERS_TO_ADD_WIKI_TO_ANY_WEBSITE_CHECKBOX</td>
+	<td>//input[contains(@id,'widgetShowAddAppLink')]</td>
+	<td></td>
+</tr>
 <!--COMMUNICATION-->
 <tr>
 	<td>COMMUNICATION_SELECT_NODE_ID</td>

@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.exportimport.api.ExportImportContentProcessor;
-import com.liferay.exportimport.api.ExportImportContentProcessorRegistryUtil;
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -35,7 +35,6 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -237,7 +236,7 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor();
+			getExportImportContentProcessor(DDMTemplate.class);
 
 		if (template.isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.fetchImage(
@@ -310,7 +309,7 @@ public class DDMTemplateStagedModelDataHandler
 
 		try {
 			ExportImportContentProcessor exportImportContentProcessor =
-				getExportImportContentProcessor();
+				getExportImportContentProcessor(DDMTemplate.class);
 
 			if (template.isSmallImage()) {
 				Element element =
@@ -436,14 +435,6 @@ public class DDMTemplateStagedModelDataHandler
 		}
 
 		return existingTemplate;
-	}
-
-	protected ExportImportContentProcessor getExportImportContentProcessor() {
-		ExportImportContentProcessor exportImportContentProcessor =
-			ExportImportContentProcessorRegistryUtil.
-				getExportImportContentProcessor(DDMTemplate.class.getName());
-
-		return exportImportContentProcessor;
 	}
 
 }

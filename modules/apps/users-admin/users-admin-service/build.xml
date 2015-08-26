@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="users-admin-web" />
+	<property name="import.shared" value="users-admin-web,../export-import/export-import-service" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

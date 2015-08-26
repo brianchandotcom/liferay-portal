@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="mobile-device-rules-api" />
+	<property name="import.shared" value="mobile-device-rules-api,../export-import/export-import-service" />
 	<property name="osgi.ide.dependencies" value="spring-context.jar" />
 	<property name="service.input.file" value="service.xml" />
 

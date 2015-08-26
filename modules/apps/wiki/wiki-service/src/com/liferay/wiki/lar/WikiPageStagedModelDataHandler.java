@@ -15,7 +15,7 @@
 package com.liferay.wiki.lar;
 
 import com.liferay.exportimport.api.ExportImportContentProcessor;
-import com.liferay.exportimport.api.ExportImportContentProcessorRegistryUtil;
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -32,7 +32,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -120,7 +119,7 @@ public class WikiPageStagedModelDataHandler
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 
 		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor();
+			getExportImportContentProcessor(WikiPage.class);
 
 		String content =
 			exportImportContentProcessor.replaceExportContentReferences(
@@ -175,7 +174,7 @@ public class WikiPageStagedModelDataHandler
 			portletDataContext.getImportDataStagedModelElement(page);
 
 		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor();
+			getExportImportContentProcessor(WikiPage.class);
 
 		String content =
 			exportImportContentProcessor.replaceImportContentReferences(
@@ -327,14 +326,6 @@ public class WikiPageStagedModelDataHandler
 			trashHandler.restoreTrashEntry(
 				userId, existingPage.getResourcePrimKey());
 		}
-	}
-
-	protected ExportImportContentProcessor getExportImportContentProcessor() {
-		ExportImportContentProcessor exportImportContentProcessor =
-			ExportImportContentProcessorRegistryUtil.
-				getExportImportContentProcessor(WikiPage.class.getName());
-
-		return exportImportContentProcessor;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -15,7 +15,8 @@ AUI.add(
 
 					selectedType: {
 						getter: '_getSelectedType',
-						setter: '_setSelectedType'
+						setter: '_setSelectedType',
+						value: 'text'
 					},
 
 					selectedValidation: {

@@ -1,7 +1,6 @@
-Bundle-Name: Liferay Frontend Themes Web
-Bundle-SymbolicName: com.liferay.frontend.themes.web
+Bundle-Name: Liferay Frontend Themes Styled
+Bundle-SymbolicName: com.liferay.frontend.themes.styled
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources
-Web-ContextPath: /frontend-themes-web

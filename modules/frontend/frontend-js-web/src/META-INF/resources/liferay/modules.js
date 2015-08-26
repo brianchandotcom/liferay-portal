@@ -629,6 +629,7 @@
 							}
 						},
 						requires: [
+							'event-mouseenter',
 							'node-focusmanager',
 							'plugin'
 						]

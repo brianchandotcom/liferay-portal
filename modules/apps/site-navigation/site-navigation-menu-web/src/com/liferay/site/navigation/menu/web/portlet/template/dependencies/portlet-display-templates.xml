@@ -66,6 +66,14 @@
 		<cacheable>false</cacheable>
 	</template>
 	<template>
+		<template-key>default-classic-navigation-menu-ftl</template-key>
+		<name>portlet-display-template-name-default-classic-navigation-menu</name>
+		<description>portlet-display-template-description-default-classic-navigation-menu</description>
+		<language>ftl</language>
+		<script-file>com/liferay/site/navigation/menu/web/portlet/template/dependencies/portlet_display_template_default_classic_navigation_menu.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+	<template>
 		<template-key>from-level-0-ftl</template-key>
 		<name>portlet-display-template-name-from-level-0</name>
 		<description>portlet-display-template-description-from-level-0</description>

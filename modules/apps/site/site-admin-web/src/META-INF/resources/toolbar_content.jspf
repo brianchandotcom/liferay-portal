@@ -63,13 +63,17 @@
 					<aui:nav-item cssClass="divider" />
 
 					<%
+					Map<String, String> anchorData = new HashMap<>();
+
+					anchorData.put("navigation", Boolean.TRUE.toString());
+
 					PortletURL manageSiteTemplateURL = PortletProviderUtil.getPortletURL(request, LayoutSetPrototype.class.getName(), PortletProvider.Action.VIEW);
 
 					manageSiteTemplateURL.setParameter("redirect", viewSitesURL);
 					manageSiteTemplateURL.setParameter("backURL", viewSitesURL);
 					%>
 
-					<aui:nav-item href="<%= manageSiteTemplateURL.toString() %>" label="manage-site-template" />
+					<aui:nav-item anchorData="<%= anchorData %>" href="<%= manageSiteTemplateURL.toString() %>" label="manage-site-template" />
 				</c:if>
 			</aui:nav-item>
 		</c:otherwise>

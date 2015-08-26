@@ -300,6 +300,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			SchedulerEngineHelper.class,
 			SingleDestinationMessageSenderFactory.class);
 
+		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+
+		ClassLoaderPool.register(_portalServletContextName, portalClassLoader);
+
 		PortalContextLoaderLifecycleThreadLocal.setInitializing(true);
 
 		try {
@@ -335,10 +339,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			SingleVMPoolUtil.clear();
 			WebCachePoolUtil.clear();
 		}
-
-		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		ClassLoaderPool.register(_portalServletContextName, portalClassLoader);
 
 		ServletContextPool.put(_portalServletContextName, servletContext);
 

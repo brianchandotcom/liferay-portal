@@ -24,6 +24,9 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface FreeMarkerEngineConfiguration {
 
+	@Meta.AD(required = false)
+	public String[] allowedClasses();
+
 	@Meta.AD(deflt = "false", required = false)
 	public boolean localizedLookup();
 

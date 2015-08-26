@@ -17,6 +17,8 @@ package com.liferay.portal.template.freemarker;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 
 import freemarker.core.Environment;
@@ -79,13 +81,45 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			}
 		}
 
-		try {
-			return Class.forName(
-				className, true, ClassLoaderUtil.getContextClassLoader());
+		boolean allowed = false;
+
+		String[] allowedClasses = GetterUtil.getStringValues(
+			_freemarkerEngineConfiguration.allowedClasses());
+
+		for (String allowedClassName : allowedClasses) {
+			if (allowedClassName.equals(StringPool.STAR)) {
+				allowed = true;
+				break;
+			}
+			else if (allowedClassName.endsWith(StringPool.STAR)) {
+				allowedClassName = allowedClassName.substring(
+					0, allowedClassName.length() - 1);
+
+				if (className.startsWith(allowedClassName)) {
+					allowed = true;
+					break;
+				}
+			}
+			else if (allowedClassName.equals(className)) {
+				allowed = true;
+				break;
+			}
 		}
-		catch (Exception e) {
-			throw new TemplateException(e, environment);
+
+		if (allowed) {
+			try {
+				return Class.forName(
+					className, true, ClassLoaderUtil.getContextClassLoader());
+			}
+			catch (Exception e) {
+				throw new TemplateException(e, environment);
+			}
 		}
+
+		throw new TemplateException(
+			"Instantiating " + className + " is not allowed in the template " +
+				"for security reasons",
+			environment);
 	}
 
 	@Activate

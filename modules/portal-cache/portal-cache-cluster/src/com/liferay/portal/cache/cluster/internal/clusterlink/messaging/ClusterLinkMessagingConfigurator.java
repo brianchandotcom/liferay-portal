@@ -14,20 +14,15 @@
 
 package com.liferay.portal.cache.cluster.internal.clusterlink.messaging;
 
-import aQute.bnd.annotation.metatype.Configurable;
+import com.liferay.portal.cache.cluster.internal.DestinationNames;
+import com.liferay.portal.kernel.messaging.DestinationConfiguration;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
-import com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration;
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.ParallelDestination;
-import com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator;
-
-import java.util.Collections;
-
-import org.osgi.service.component.ComponentContext;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Tina Tian
@@ -39,36 +34,26 @@ import org.osgi.service.component.annotations.Modified;
 public class ClusterLinkMessagingConfigurator {
 
 	@Activate
-	@Modified
-	protected void activate(ComponentContext componentContext) {
-		PortalCacheClusterConfiguration portalCacheClusterConfiguration =
-			Configurable.createConfigurable(
-				PortalCacheClusterConfiguration.class,
-				componentContext.getProperties());
+	protected void activate(BundleContext bundleContext) throws Exception {
+		DestinationConfiguration destinationConfiguration =
+			new DestinationConfiguration(
+				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+				DestinationNames.CACHE_REPLICATION);
 
-		String destinationName =
-			portalCacheClusterConfiguration.destinationName();
-
-		ParallelDestination parallelDestination = new ParallelDestination();
-
-		parallelDestination.setName(destinationName);
-
-		parallelDestination.afterPropertiesSet();
-
-		MessageListener messageListener =
-			new ClusterLinkPortalCacheClusterListener();
-
-		DefaultMessagingConfigurator defaultMessagingConfigurator =
-			new DefaultMessagingConfigurator();
-
-		defaultMessagingConfigurator.setDestinations(
-			Collections.singletonList((Destination)parallelDestination));
-
-		defaultMessagingConfigurator.setMessageListeners(
-			Collections.singletonMap(
-				destinationName, Collections.singletonList(messageListener)));
-
-		defaultMessagingConfigurator.afterPropertiesSet();
+		_serviceRegistration = bundleContext.registerService(
+			DestinationConfiguration.class, destinationConfiguration,
+			new HashMapDictionary<String, Object>());
 	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
+
+		_serviceRegistration = null;
+	}
+
+	private ServiceRegistration<DestinationConfiguration> _serviceRegistration;
 
 }

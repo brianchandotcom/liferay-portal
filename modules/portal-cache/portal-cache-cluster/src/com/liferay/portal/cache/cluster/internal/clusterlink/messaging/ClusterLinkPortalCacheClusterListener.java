@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.cluster.internal.clusterlink.messaging;
 
+import com.liferay.portal.cache.cluster.internal.DestinationNames;
 import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEvent;
 import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEventType;
 import com.liferay.portal.kernel.cache.PortalCache;
@@ -23,14 +24,24 @@ import com.liferay.portal.kernel.cache.PortalCacheManagerProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.util.SerializableUtil;
 
 import java.io.Serializable;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Shuyang Zhou
  */
+@Component(
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.CACHE_REPLICATION},
+	service = MessageListener.class
+)
 public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 
 	@Override
@@ -96,6 +107,13 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 			PortalCacheHelperUtil.removeWithoutReplicator(
 				portalCache, portalCacheClusterEvent.getElementKey());
 		}
+	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.CACHE_REPLICATION + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

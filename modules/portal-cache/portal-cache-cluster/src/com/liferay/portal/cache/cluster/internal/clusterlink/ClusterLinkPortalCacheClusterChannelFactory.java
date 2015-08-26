@@ -17,6 +17,7 @@ package com.liferay.portal.cache.cluster.internal.clusterlink;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration;
+import com.liferay.portal.cache.cluster.internal.DestinationNames;
 import com.liferay.portal.cache.cluster.internal.PortalCacheClusterException;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
@@ -51,7 +52,8 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 		}
 
 		return new ClusterLinkPortalCacheClusterChannel(
-			_clusterLink, _destinationName, _priorities[count]);
+			_clusterLink, DestinationNames.CACHE_REPLICATION,
+			_priorities[count]);
 	}
 
 	@Activate
@@ -62,7 +64,6 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 				PortalCacheClusterConfiguration.class,
 				componentContext.getProperties());
 
-		_destinationName = portalCacheClusterConfiguration.destinationName();
 		_priorities = portalCacheClusterConfiguration.priorities();
 	}
 
@@ -73,7 +74,6 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 
 	private ClusterLink _clusterLink;
 	private final AtomicInteger _counter = new AtomicInteger(0);
-	private volatile String _destinationName;
 	private volatile Priority[] _priorities;
 
 }

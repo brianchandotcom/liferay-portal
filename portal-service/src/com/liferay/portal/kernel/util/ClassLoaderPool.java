@@ -30,12 +30,8 @@ public class ClassLoaderPool {
 	 * Returns the class loader associated with the context name.
 	 *
 	 * <p>
-	 * If no class loader is found for the context name, this method checks for
-	 * an initialized portal class loader to return. In cases where this method
-	 * is invoked from outside of a running portal, such as from a unit test or
-	 * from an external tool, no portal class loader will be found. If no portal
-	 * class loader is found, the thread's context class loader is returned as a
-	 * fallback.
+	 * If no class loader is found for the context name, the thread's context
+	 * class loader is returned as a fallback.
 	 * </p>
 	 *
 	 * @param  contextName the servlet context's name
@@ -48,10 +44,6 @@ public class ClassLoaderPool {
 
 		if ((contextName != null) && !contextName.equals(StringPool.IS_NULL)) {
 			classLoader = _classLoaders.get(contextName);
-		}
-
-		if (classLoader == null) {
-			classLoader = PortalClassLoaderUtil.getClassLoader();
 		}
 
 		if (classLoader == null) {

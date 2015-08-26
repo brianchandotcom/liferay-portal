@@ -197,6 +197,16 @@ public final class SummaryLoggerHandler {
 		lineContainerLoggerElement.setName("strong");
 	}
 
+	private static LoggerElement _getButtonLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("btn header");
+		loggerElement.setName("button");
+		loggerElement.setText("+");
+
+		return loggerElement;
+	}
+
 	private static LoggerElement _getCauseBodyLoggerElement() {
 		LoggerElement loggerElement = new LoggerElement();
 
@@ -373,6 +383,55 @@ public final class SummaryLoggerHandler {
 
 		loggerElement.addChildLoggerElement(_getStepsLoggerElement());
 		loggerElement.addChildLoggerElement(_getCauseLoggerElement());
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getSummaryTestDescriptionLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement(
+			"summaryTestDescription");
+
+		String testCaseDescription = PoshiRunnerContext.getTestCaseDescription(
+			PoshiRunnerContext.getTestCaseCommandName());
+
+		if (Validator.isNull(testCaseDescription)) {
+			testCaseDescription = "";
+		}
+
+		loggerElement.setName("p");
+		loggerElement.setText(testCaseDescription);
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getSummaryTestNameLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement("summaryTestName");
+
+		loggerElement.setName("h3");
+		loggerElement.setText(PoshiRunnerContext.getTestCaseCommandName());
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getSummaryTitleLinkLoggerElement(
+		String title) {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setAttribute("href", "#");
+		loggerElement.setName("a");
+		loggerElement.setText(title);
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getSummaryTitleLoggerElement(String title) {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setName("li");
+
+		loggerElement.addChildLoggerElement(
+			_getSummaryTitleLinkLoggerElement(title));
 
 		return loggerElement;
 	}

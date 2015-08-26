@@ -48,6 +48,7 @@ page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.Layout" %><%@
 page import="com.liferay.portal.model.LayoutConstants" %><%@
 page import="com.liferay.portal.model.LayoutSet" %><%@
+page import="com.liferay.portal.model.LayoutTypeController" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.model.PortletApp" %><%@
 page import="com.liferay.portal.model.PortletCategory" %><%@

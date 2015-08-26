@@ -19,7 +19,7 @@
 <%
 OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)request.getAttribute("liferay-ui:organization-search-container-results:searchTerms");
 LinkedHashMap<String, Object> organizationParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:organization-search-container-results:organizationParams");
-long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
+long parentOrganizationId = GetterUtil.getLong(request.getAttribute("liferay-ui:organization-search-container-results:parentOrganizationId"));
 %>
 
 <liferay-ui:search-container searchContainer='<%= (SearchContainer)request.getAttribute("liferay-ui:organization-search-container-results:searchContainer") %>'>

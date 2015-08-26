@@ -54,7 +54,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	}
 	%>
 
-	<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" />
+	<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= parentOrganizationId %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.Organization"

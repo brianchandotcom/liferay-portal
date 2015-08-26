@@ -1360,6 +1360,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		expandoRowLocalService.deleteRows(dlFolder.getFolderId());
 
+		// Ratings
+
+		ratingsStatsLocalService.deleteStats(
+			DLFolder.class.getName(), dlFolder.getFolderId());
+
 		// Folder
 
 		dlFolderPersistence.remove(dlFolder);

@@ -205,6 +205,11 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		assetEntryLocalService.deleteEntry(
 			DDLRecord.class.getName(), record.getRecordId());
 
+		// Ratings
+
+		ratingsStatsLocalService.deleteStats(
+			DDLRecord.class.getName(), record.getRecordId());
+
 		return record;
 	}
 

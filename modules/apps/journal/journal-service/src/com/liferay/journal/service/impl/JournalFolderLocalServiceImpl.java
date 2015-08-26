@@ -180,6 +180,11 @@ public class JournalFolderLocalServiceImpl
 		expandoValueLocalService.deleteValues(
 			JournalFolder.class.getName(), folder.getFolderId());
 
+		// Ratings
+
+		ratingsStatsLocalService.deleteStats(
+			JournalFolder.class.getName(), folder.getFolderId());
+
 		// Trash
 
 		if (folder.isInTrashExplicitly()) {

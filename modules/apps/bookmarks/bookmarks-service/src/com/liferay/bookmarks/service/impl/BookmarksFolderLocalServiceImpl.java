@@ -159,6 +159,11 @@ public class BookmarksFolderLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(folder.getFolderId());
 
+		// Ratings
+
+		ratingsStatsLocalService.deleteStats(
+			BookmarksFolder.class.getName(), folder.getFolderId());
+
 		// Subscriptions
 
 		subscriptionLocalService.deleteSubscriptions(

@@ -1864,6 +1864,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		membershipRequestLocalService.deleteMembershipRequestsByUserId(
 			user.getUserId());
 
+		// Ratings
+
+		ratingsStatsLocalService.deleteStats(
+			User.class.getName(), user.getUserId());
+
 		// Social
 
 		socialActivityLocalService.deleteUserActivities(user.getUserId());

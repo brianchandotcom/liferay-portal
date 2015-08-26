@@ -195,6 +195,11 @@ public class BookmarksEntryLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(entry.getEntryId());
 
+		// Ratings
+
+		ratingsStatsLocalService.deleteStats(
+			BookmarksEntry.class.getName(), entry.getEntryId());
+
 		// Subscriptions
 
 		subscriptionLocalService.deleteSubscriptions(

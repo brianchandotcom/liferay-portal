@@ -814,6 +814,11 @@ public class DLFileEntryLocalServiceImpl
 
 		expandoRowLocalService.deleteRows(dlFileEntry.getFileEntryId());
 
+		// Ratings
+
+		ratingsStatsLocalService.deleteStats(
+			DLFileEntry.class.getName(), dlFileEntry.getFileEntryId());
+
 		// Lock
 
 		unlockFileEntry(dlFileEntry.getFileEntryId());

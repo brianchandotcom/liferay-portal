@@ -669,6 +669,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		expandoRowLocalService.deleteRows(page.getPrimaryKey());
 
+		// Ratings
+
+		ratingsStatsLocalService.deleteStats(
+			WikiPage.class.getName(), page.getResourcePrimKey());
+
 		// Trash
 
 		if (page.isInTrash()) {

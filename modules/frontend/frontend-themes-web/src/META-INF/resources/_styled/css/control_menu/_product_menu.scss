@@ -19,7 +19,7 @@
 	.nav-equal-height {
 		.nav > .active,
 		> .active {
-			border-left: 2px solid $product-menu-nav-active-link-color;
+			border-left: 2px solid $product-menu-nav-link-active-color;
 		}
 
 		> .active > a,
@@ -27,13 +27,13 @@
 			&,
 			&:focus,
 			&:hover {
-				color: $product-menu-nav-active-link-color;
+				color: $product-menu-nav-link-active-color;
 			}
 		}
 
 		> .active,
 		.nav > .active {
-			border-left-color: $product-menu-nav-active-link-color;
+			border-left-color: $product-menu-nav-link-active-color;
 		}
 	}
 
@@ -65,10 +65,10 @@
 			border-left: 1px dotted $product-menu-nav-link-color;
 
 			&.active {
-				border-left: 1px solid $product-menu-nav-active-link-color;
+				border-left: 1px solid $product-menu-nav-link-active-color;
 
 				> a {
-					color: $product-menu-nav-active-link-color;
+					color: $product-menu-nav-link-active-color;
 				}
 			}
 		}

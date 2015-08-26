@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-ddm-form-renderer-wizard',
 	function(A) {
-		var AArray = A.Array;
 		var Lang = A.Lang;
 
 		var TPL_WIZARD_ITEM = '<li class="{state}">' +

@@ -19,3 +19,7 @@ dependencies {
 liferay {
 	deployDir = file("${liferayHome}/osgi/portal")
 }
+
+test {
+    systemProperty "portal.search.test.unit.solr.started", System.getProperty("portal.search.test.unit.solr.started")
+}

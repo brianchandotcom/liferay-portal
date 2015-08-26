@@ -152,7 +152,7 @@ AUI.add(
 						var target = event.target;
 
 						if (target === host.getChildren()[0]) {
-							Liferay.Store('com.liferay.frontend.js.web_' + treeId + 'rootNode', expanded);
+							Liferay.Store('com.liferay.frontend.js.web_' + treeId + 'RootNode', expanded);
 						}
 						else {
 							var layoutId = host.extractLayoutId(target);

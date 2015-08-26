@@ -145,7 +145,13 @@ public class PoshiRunnerContext {
 		return _rootElements.get("macro#" + className);
 	}
 
-	public static String getPathLocator(String pathLocatorKey) {
+	public static String getPathLocator(String pathLocatorKey)
+		throws Exception {
+
+		if (!_pathLocators.containsKey(pathLocatorKey)) {
+			throw new Exception("No such locator key " + pathLocatorKey);
+		}
+
 		return _pathLocators.get(pathLocatorKey);
 	}
 

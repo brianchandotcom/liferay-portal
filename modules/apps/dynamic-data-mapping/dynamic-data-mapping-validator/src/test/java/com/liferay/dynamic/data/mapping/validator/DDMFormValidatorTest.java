@@ -178,32 +178,6 @@ public class DDMFormValidatorTest {
 	}
 
 	@Test
-	public void testRegisteredTextFieldType() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
-
-		DDMFormField ddmFormField = new DDMFormField(
-			"Text", DDMFormFieldType.TEXT);
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		_ddmFormValidator.validate(ddmForm);
-	}
-
-	@Test(expected = DDMFormValidationException.class)
-	public void testUnregisteredFieldType() throws Exception {
-		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
-
-		DDMFormField ddmFormField = new DDMFormField(
-			"Name", "Unregistered Type");
-
-		ddmForm.addDDMFormField(ddmFormField);
-
-		_ddmFormValidator.validate(ddmForm);
-	}
-
-	@Test
 	public void testValidFieldName() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			createAvailableLocales(LocaleUtil.US), LocaleUtil.US);

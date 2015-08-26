@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -144,10 +145,8 @@ public class DDLRecordAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		DDLRecord record = DDLRecordLocalServiceUtil.getRecord(classPK);
-
-		return DDLRecordSetPermission.contains(
-			permissionChecker, record.getRecordSet(), actionId);
+		return DDLRecordPermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Reference(

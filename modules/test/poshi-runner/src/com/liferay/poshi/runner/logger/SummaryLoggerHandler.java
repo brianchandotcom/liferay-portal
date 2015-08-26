@@ -48,36 +48,6 @@ public final class SummaryLoggerHandler {
 		}
 	}
 
-	public static LoggerElement getSummaryLogLoggerElement() {
-		LoggerElement summaryLogLoggerElement = _summaryLogLoggerElement.copy();
-
-		LoggerElement stepsLoggerElement =
-			summaryLogLoggerElement.loggerElement("div");
-
-		LoggerElement majorStepsLoggerElement =
-			stepsLoggerElement.loggerElement("ul");
-
-		List<LoggerElement> majorStepLoggerElements =
-			majorStepsLoggerElement.loggerElements("li");
-
-		for (int i = 0; i < majorStepLoggerElements.size(); i++) {
-			LoggerElement majorStepLoggerElement = majorStepLoggerElements.get(
-				i);
-
-			if (i < (majorStepLoggerElements.size() - 1)) {
-				majorStepLoggerElement.removeChildLoggerElements("ul");
-			}
-			else if (_containsMinorStepWarning) {
-				_warnStepLoggerElement(majorStepLoggerElement);
-			}
-			else {
-				_failStepLoggerElement(majorStepLoggerElement);
-			}
-		}
-
-		return summaryLogLoggerElement;
-	}
-
 	public static String getSummaryLogText() {
 		LoggerElement summaryLogLoggerElement = _summaryLogLoggerElement.copy();
 
@@ -106,6 +76,41 @@ public final class SummaryLoggerHandler {
 		}
 
 		return summaryLogLoggerElement.toString();
+	}
+
+	public static LoggerElement getSummarySnapshotLoggerElement() {
+		LoggerElement loggerElement = _summaryLogLoggerElement.copy();
+
+		LoggerElement stepsLoggerElement = loggerElement.loggerElement("div");
+
+		LoggerElement majorStepsLoggerElement =
+			stepsLoggerElement.loggerElement("ul");
+
+		List<LoggerElement> majorStepLoggerElements =
+			majorStepsLoggerElement.loggerElements("li");
+
+		for (int i = 0; i < majorStepLoggerElements.size(); i++) {
+			LoggerElement majorStepLoggerElement = majorStepLoggerElements.get(
+				i);
+
+			boolean lastMajorStep = (i >= (majorStepLoggerElements.size() - 1));
+
+			majorStepLoggerElement.removeChildLoggerElements("button");
+
+			if (lastMajorStep) {
+				if (_containsMinorStepWarning) {
+					_warnStepLoggerElement(majorStepLoggerElement);
+				}
+				else {
+					_failStepLoggerElement(majorStepLoggerElement);
+				}
+			}
+			else {
+				majorStepLoggerElement.removeChildLoggerElements("ul");
+			}
+		}
+
+		return loggerElement;
 	}
 
 	public static void passSummary(Element element) {

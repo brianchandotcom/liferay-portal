@@ -164,7 +164,7 @@ public final class CommandLoggerHandler {
 		loggerElement.setClassName("console errorPanel toggle");
 
 		loggerElement.addChildLoggerElement(
-			SummaryLoggerHandler.getSummaryLogLoggerElement());
+			SummaryLoggerHandler.getSummarySnapshotLoggerElement());
 
 		return loggerElement;
 	}

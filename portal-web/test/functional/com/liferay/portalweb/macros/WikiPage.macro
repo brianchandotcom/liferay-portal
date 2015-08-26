@@ -1566,14 +1566,11 @@
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_3" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_4" />
 		<execute function="AssertElementNotPresent" locator1="Ratings#YOUR_RATING_STAR_5" />
-		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_EMPTY_5" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_1" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_2" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_3" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_4" />
 		<execute function="AssertElementNotPresent" locator1="Ratings#AVERAGE_STAR_5" />
-		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_STAR_EMPTY_5" />
-
 		<execute function="AssertTextEquals" locator1="Ratings#AVERAGE_LABEL" value1="Average (1 Vote)" />
 	</command>
 

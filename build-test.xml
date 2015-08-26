@@ -4655,9 +4655,19 @@ module.framework.properties.osgi.console=11312</echo>
 				</echo>
 			</then>
 			<else>
-				<echo file="${test.ext.properties.file}" append="true">
-					test.base.dir.name=${basedir.unix}/portal-web
-				</echo>
+				<if>
+					<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+					<then>
+						<echo file="${test.ext.properties.file}" append="true">
+							test.base.dir.name=${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/
+						</echo>
+					</then>
+					<else>
+						<echo file="${test.ext.properties.file}" append="true">
+							test.base.dir.name=${basedir.unix}/portal-web
+						</echo>
+					</else>
+				</if>
 			</else>
 		</if>
 
@@ -5255,6 +5265,35 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.password.5=${marketplace.email.password.5}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-poshi-runner-properties">
+		<tstamp>
+			<format property="current.date" pattern="yyyy-MM-dd" timezone="GMT" />
+		</tstamp>
+
+		<echo file="${test.ext.properties.file}" append="true">
+			component.names=${component.names}
+			ignore.errors.file.name=${project.dir}/portal-web/test-ignorable-error-lines.xml
+			product.names=${product.names}
+			project.dir=${project.dir}
+			test.case.available.property.names=${test.case.available.property.names}
+			test.console.log.file.name=${liferay.home}/logs/liferay.${current.date}.xml
+			test.console.shut.down.file.name=${project.dir}/console-shut-down
+			test.dependencies.dir.name=com/liferay/portalweb/dependencies
+			test.poshi.warnings.file.name=${project.dir}/poshi-warnings.xml
+		</echo>
+
+		<if>
+			<isset property="test.class" />
+			<then>
+				<get-poshi-test-name />
+
+				<echo file="${test.ext.properties.file}" append="true">
+					test.name=${poshi.test.name}
 				</echo>
 			</then>
 		</if>

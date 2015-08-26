@@ -1479,7 +1479,7 @@ AUI.add(
 
 						Scheduler.superclass._afterActiveViewChange.apply(this, arguments);
 
-						Liferay.Store('calendar-portlet-default-view', event.newVal.get('name'));
+						Liferay.Store('com.liferay.calendar.web_defaultView', event.newVal.get('name'));
 
 						instance.load();
 					},

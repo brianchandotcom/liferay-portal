@@ -417,7 +417,7 @@
 					Liferay._editControlsState = 'visible';
 				</c:when>
 				<c:otherwise>
-					Liferay._editControlsState = '<%= HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", "visible"), "visible")) %>';
+					Liferay._editControlsState = '<%= HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(request, "com.liferay.frontend.js.web_toggleControls", "visible"), "visible")) %>';
 				</c:otherwise>
 			</c:choose>
 		</c:if>

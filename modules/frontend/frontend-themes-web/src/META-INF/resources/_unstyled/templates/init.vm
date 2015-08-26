@@ -9,11 +9,11 @@
 #set ($root_css_class = $languageUtil.get($locale, "lang.dir"))
 #set ($css_class = $htmlUtil.escape($theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam")
 
-#set ($liferay_product_menu_state = $sessionClicks.get($request, "liferay_product_menu_state", "closed"))
+#set ($liferay_product_menu_state = $sessionClicks.get($request, "com.liferay.control.menu.web_productMenuState", "closed"))
 
 #set ($css_class = $css_class + " " + $liferay_product_menu_state)
 
-#set ($liferay_toggle_controls = $sessionClicks.get($request, "liferay_toggle_controls", "visible"))
+#set ($liferay_toggle_controls = $sessionClicks.get($request, "com.liferay.frontend.js.web_toggleControls", "visible"))
 
 #if ($layout)
 	#set ($page_group = $layout.getGroup())
@@ -31,16 +31,10 @@
 	#end
 #end
 
-#set ($liferay_dockbar_pinned = $getterUtil.getBoolean($sessionClicks.get($request, "liferay_dockbar_pinned", ""), false))
-
 #if ($liferay_toggle_controls == "visible")
 	#set ($css_class = $css_class + " controls-visible")
 #else
 	#set ($css_class = $css_class + " controls-hidden")
-#end
-
-#if ($liferay_dockbar_pinned)
-	#set ($css_class = $css_class + " lfr-dockbar-pinned")
 #end
 
 #if ($layoutTypePortlet.hasStateMax())

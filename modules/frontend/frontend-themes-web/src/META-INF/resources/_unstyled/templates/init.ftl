@@ -9,11 +9,11 @@
 <#assign root_css_class = languageUtil.get(locale, "lang.dir") />
 <#assign css_class = htmlUtil.escape(theme_display.getColorScheme().getCssClass()) + " yui3-skin-sam" />
 
-<#assign liferay_product_menu_state = sessionClicks.get(request, "liferay_product_menu_state", "closed") />
+<#assign liferay_product_menu_state = sessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed") />
 
 <#assign css_class = css_class + " " + liferay_product_menu_state />
 
-<#assign liferay_toggle_controls = sessionClicks.get(request, "liferay_toggle_controls", "visible") />
+<#assign liferay_toggle_controls = sessionClicks.get(request, "com.liferay.frontend.js.web_toggleControls", "visible") />
 
 <#if layout??>
 	<#assign page_group = layout.getGroup() />
@@ -31,16 +31,10 @@
 	</#if>
 </#if>
 
-<#assign liferay_dockbar_pinned = getterUtil.getBoolean(sessionClicks.get(request, "liferay_dockbar_pinned", ""), false) />
-
 <#if liferay_toggle_controls = "visible">
 	<#assign css_class = css_class + " controls-visible" />
 <#else>
 	<#assign css_class = css_class + " controls-hidden" />
-</#if>
-
-<#if liferay_dockbar_pinned>
-	<#assign css_class = css_class + " lfr-dockbar-pinned" />
 </#if>
 
 <#if layoutTypePortlet.hasStateMax()>

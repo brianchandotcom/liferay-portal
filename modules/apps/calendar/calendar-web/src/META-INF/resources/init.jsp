@@ -149,7 +149,7 @@ String timeZoneId = portletPreferences.getValue("timeZoneId", user.getTimeZoneId
 boolean usePortalTimeZone = GetterUtil.getBoolean(portletPreferences.getValue("usePortalTimeZone", Boolean.TRUE.toString()));
 int weekStartsOn = GetterUtil.getInteger(portletPreferences.getValue("weekStartsOn", null), 0);
 
-String sessionClicksDefaultView = SessionClicks.get(request, "calendar-portlet-default-view", defaultView);
+String sessionClicksDefaultView = SessionClicks.get(request, "com.liferay.calendar.web_defaultView", defaultView);
 
 if (usePortalTimeZone) {
 	timeZoneId = user.getTimeZoneId();

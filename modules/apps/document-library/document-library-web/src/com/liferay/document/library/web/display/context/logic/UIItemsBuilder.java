@@ -96,12 +96,16 @@ public class UIItemsBuilder {
 			return;
 		}
 
+		PortletURL portletURL = _getActionURL(
+			"/document_library/edit_file_entry", Constants.CANCEL_CHECKOUT);
+
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, "icon-remove",
 			DLUIItemKeys.CANCEL_CHECKOUT, "cancel-checkout[document]",
-			_getActionURL(
-				"/document_library/edit_file_entry",
-				Constants.CANCEL_CHECKOUT));
+			portletURL.toString());
 	}
 
 	public void addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
@@ -127,11 +131,15 @@ public class UIItemsBuilder {
 			return;
 		}
 
+		PortletURL portletURL = _getActionURL(
+			"/document_library/edit_file_entry", Constants.CHECKIN);
+
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, "icon-lock", DLUIItemKeys.CHECKIN,
-			"checkin",
-			_getActionURL(
-				"/document_library/edit_file_entry", Constants.CHECKIN));
+			"checkin", portletURL.toString());
 	}
 
 	public void addCheckinToolbarItem(List<ToolbarItem> toolbarItems)
@@ -156,11 +164,15 @@ public class UIItemsBuilder {
 			return;
 		}
 
+		PortletURL portletURL = _getActionURL(
+			"/document_library/edit_file_entry", Constants.CHECKOUT);
+
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
 		_addURLUIItem(
 			new URLMenuItem(), menuItems, "icon-unlock", DLUIItemKeys.CHECKOUT,
-			"checkout[document]",
-			_getActionURL(
-				"/document_library/edit_file_entry", Constants.CHECKOUT));
+			"checkout[document]", portletURL.toString());
 	}
 
 	public void addCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
@@ -182,28 +194,41 @@ public class UIItemsBuilder {
 	public void addDeleteMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (isDeleteActionAvailable()) {
-			DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
+		String cmd = _getDeleteCommand();
 
-			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
-			deleteMenuItem.setURL(
-				_getActionURL(
-					"/document_library/edit_file_entry", Constants.DELETE));
-
-			menuItems.add(deleteMenuItem);
+		if (cmd == null) {
+			return;
 		}
-		else if (isMoveToTheRecycleBinActionAvailable()) {
-			DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
 
-			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
+		DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
+
+		deleteMenuItem.setKey(DLUIItemKeys.DELETE);
+
+		if (Constants.MOVE_TO_TRASH.equals(cmd)) {
 			deleteMenuItem.setTrash(true);
-			deleteMenuItem.setURL(
-				_getActionURL(
-					"/document_library/edit_file_entry",
-					Constants.MOVE_TO_TRASH));
-
-			menuItems.add(deleteMenuItem);
 		}
+
+		String mvcActionCommandName = "/document_library/edit_file_entry";
+
+		if (_fileShortcut != null) {
+			mvcActionCommandName = "/document_library/edit_file_shortcut";
+		}
+
+		PortletURL portletURL = _getActionURL(mvcActionCommandName, cmd);
+
+		if (_fileShortcut == null) {
+			portletURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+		}
+		else {
+			portletURL.setParameter(
+				"fileShortcutId",
+				String.valueOf(_fileShortcut.getFileShortcutId()));
+		}
+
+		deleteMenuItem.setURL(portletURL.toString());
+
+		menuItems.add(deleteMenuItem);
 	}
 
 	public void addDeleteToolbarItem(List<ToolbarItem> toolbarItems)
@@ -533,6 +558,18 @@ public class UIItemsBuilder {
 			portletURL.toString());
 	}
 
+	protected String _getDeleteCommand() throws PortalException {
+		if (isDeleteActionAvailable()) {
+			return Constants.DELETE;
+		}
+
+		if (isMoveToTheRecycleBinActionAvailable()) {
+			return Constants.MOVE_TO_TRASH;
+		}
+
+		return null;
+	}
+
 	protected String getNamespace() {
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
@@ -663,7 +700,7 @@ public class UIItemsBuilder {
 		return urlUIItem;
 	}
 
-	private String _getActionURL(String mvcActionCommandName, String cmd) {
+	private PortletURL _getActionURL(String mvcActionCommandName, String cmd) {
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
@@ -672,10 +709,8 @@ public class UIItemsBuilder {
 		portletURL.setParameter("javax.portlet.action", mvcActionCommandName);
 		portletURL.setParameter(Constants.CMD, cmd);
 		portletURL.setParameter("redirect", _getCurrentURL());
-		portletURL.setParameter(
-			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
-		return portletURL.toString();
+		return portletURL;
 	}
 
 	private String _getCurrentURL() {

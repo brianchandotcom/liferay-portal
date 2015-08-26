@@ -16,6 +16,8 @@ package com.liferay.portal.cache.io;
 
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -68,29 +70,65 @@ public class SerializableObjectWrapper implements Serializable {
 	private void readObject(ObjectInputStream objectInputStream)
 		throws ClassNotFoundException, IOException {
 
-		int size = objectInputStream.readInt();
+		Thread currentThread = Thread.currentThread();
 
-		byte[] data = new byte[size];
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		objectInputStream.readFully(data);
+		ClassLoaderUtil.setContextClassLoader(_CLASS_LOADER);
 
-		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
+		try {
+			int size = objectInputStream.readInt();
 
-		_serializable = deserializer.readObject();
+			byte[] data = new byte[size];
+
+			objectInputStream.readFully(data);
+
+			Deserializer deserializer = new Deserializer(ByteBuffer.wrap(data));
+
+			_serializable = deserializer.readObject();
+		}
+		finally {
+			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	private void writeObject(ObjectOutputStream objectOutputStream)
 		throws IOException {
 
-		Serializer serializer = new Serializer();
+		Thread currentThread = Thread.currentThread();
 
-		serializer.writeObject(_serializable);
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ByteBuffer byteBuffer = serializer.toByteBuffer();
+		ClassLoaderUtil.setContextClassLoader(_CLASS_LOADER);
 
-		objectOutputStream.writeInt(byteBuffer.remaining());
-		objectOutputStream.write(
-			byteBuffer.array(), byteBuffer.position(), byteBuffer.remaining());
+		try {
+			Serializer serializer = new Serializer();
+
+			serializer.writeObject(_serializable);
+
+			ByteBuffer byteBuffer = serializer.toByteBuffer();
+
+			objectOutputStream.writeInt(byteBuffer.remaining());
+			objectOutputStream.write(
+				byteBuffer.array(), byteBuffer.position(),
+				byteBuffer.remaining());
+		}
+		finally {
+			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+		}
+	}
+
+	private static final ClassLoader _CLASS_LOADER;
+
+	static {
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		Class<?> clazz = SerializableObjectWrapper.class;
+
+		_CLASS_LOADER = AggregateClassLoader.getAggregateClassLoader(
+			contextClassLoader, clazz.getClassLoader());
 	}
 
 	private Serializable _serializable;

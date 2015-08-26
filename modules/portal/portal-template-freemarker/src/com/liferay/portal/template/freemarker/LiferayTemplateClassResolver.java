@@ -59,21 +59,27 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 				environment);
 		}
 
-		for (String restrictedClassName :
-				_freemarkerEngineConfiguration.restrictedClasses()) {
+		String[] restrictedClasses = GetterUtil.getStringValues(
+			_freemarkerEngineConfiguration.restrictedClasses());
 
-			if (className.equals(restrictedClassName)) {
+		for (String restrictedClassName : restrictedClasses) {
+			if (restrictedClassName.equals(StringPool.STAR)) {
 				throw new TemplateException(
 					"Instantiating " + className + " is not allowed in the " +
 						"template for security reasons",
 					environment);
 			}
-		}
+			else if (restrictedClassName.endsWith(StringPool.STAR)) {
+				restrictedClassName = restrictedClassName.substring(
+					0, restrictedClassName.length() -1);
 
-		for (String restrictedPackageName :
-				_freemarkerEngineConfiguration.restrictedPackages()) {
-
-			if (className.startsWith(restrictedPackageName)) {
+				if (className.startsWith(restrictedClassName)) {
+					throw new TemplateException(
+						"Instantiating " + className + " is not allowed in " +
+							"the template for security reasons",
+						environment);
+				}
+			} else if (className.equals(restrictedClassName)) {
 				throw new TemplateException(
 					"Instantiating " + className + " is not allowed in the " +
 						"template for security reasons",

@@ -767,7 +767,6 @@ AUI.add(
 							recurrence: schedulerEvent.get('recurrence'),
 							secondReminder: schedulerEvent.get('secondReminder'),
 							secondReminderType: schedulerEvent.get('secondReminderType'),
-							status: schedulerEvent.get('status'),
 							titleMap: instance.getLocalizationMap(LString.unescapeHTML(schedulerEvent.get('content')))
 						}
 					},
@@ -830,7 +829,6 @@ AUI.add(
 							startTimeMinute: startDate.getMinutes(),
 							startTimeMonth: startDate.getMonth(),
 							startTimeYear: startDate.getFullYear(),
-							status: schedulerEvent.get('status'),
 							timeZoneId: instance.USER_TIME_ZONE,
 							titleMap: instance.getLocalizationMap(LString.unescapeHTML(schedulerEvent.get('content')))
 						}
@@ -1145,6 +1143,7 @@ AUI.add(
 						var node = instance.get('node');
 
 						node.toggleClass('calendar-portlet-event-approved', val === CalendarWorkflow.STATUS_APPROVED);
+						node.toggleClass('calendar-portlet-event-draft', val === CalendarWorkflow.STATUS_DRAFT);
 						node.toggleClass('calendar-portlet-event-maybe', val === CalendarWorkflow.STATUS_MAYBE);
 						node.toggleClass('calendar-portlet-event-pending', val === CalendarWorkflow.STATUS_PENDING);
 					}
@@ -1310,7 +1309,7 @@ AUI.add(
 					CalendarUtil.getEvents(
 						instance.getLoadStartDate(activeView),
 						instance.getLoadEndDate(activeView),
-						[CalendarWorkflow.STATUS_APPROVED, CalendarWorkflow.STATUS_MAYBE, CalendarWorkflow.STATUS_PENDING],
+						[CalendarWorkflow.STATUS_APPROVED, CalendarWorkflow.STATUS_DRAFT, CalendarWorkflow.STATUS_MAYBE, CalendarWorkflow.STATUS_PENDING],
 						function(calendarBookings) {
 							if (filterCalendarBookings) {
 								calendarBookings = calendarBookings.filter(filterCalendarBookings);

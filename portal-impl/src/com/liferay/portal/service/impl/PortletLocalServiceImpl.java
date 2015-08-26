@@ -1222,8 +1222,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	private void _readLiferayPortletXML(
 		String servletContextName, ServletContext servletContext,
 		Set<String> liferayPortletIds, Map<String, String> roleMappers,
-		Element portletElement,
-		Map<String, Portlet> portletsMap) {
+		Element portletElement, Map<String, Portlet> portletsMap) {
 
 		String portletId = portletElement.elementText("portlet-name");
 
@@ -1812,8 +1811,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 	private Set<String> _readLiferayPortletXML(
 			String servletContextName, ServletContext servletContext,
-			String xml,
-			Map<String, Portlet> portletsMap)
+			String xml, Map<String, Portlet> portletsMap)
 		throws Exception {
 
 		Set<String> liferayPortletIds = new HashSet<>();

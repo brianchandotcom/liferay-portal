@@ -248,17 +248,110 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 				row.setData(rowData);
 
 				row.setPrimaryKey(HtmlUtil.escape(curArticle.getArticleId()));
+
+				PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+				rowURL.setParameter("mvcPath", "/edit_article.jsp");
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("backURL", currentURL);
+				rowURL.setParameter("referringPortletResource", referringPortletResource);
+				rowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
+				rowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
+				rowURL.setParameter("articleId", curArticle.getArticleId());
+				rowURL.setParameter("version", String.valueOf(curArticle.getVersion()));
+				rowURL.setParameter("displayStyle", displayStyle);
+
+				request.setAttribute("view_entries.jsp-rowURL", rowURL);
 				%>
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<%@ include file="/article_columns_descriptive.jspf" %>
+						<liferay-ui:search-container-column-image
+							src='<%= Validator.isNotNull(curArticle.getArticleImageURL(themeDisplay)) ? curArticle.getArticleImageURL(themeDisplay) : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+							toggleRowChecker="<%= true %>"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							colspan="2"
+							path="/view_article_descriptive.jsp"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							path="/article_action.jsp"
+						/>
 					</c:when>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
-						<%@ include file="/article_columns_icon.jspf" %>
+						<liferay-ui:search-container-column-text>
+
+							<%
+							String articleImageURL = curArticle.getArticleImageURL(themeDisplay);
+
+							User userDisplay = UserLocalServiceUtil.fetchUserById(curArticle.getUserId());
+							%>
+
+							<liferay-util:buffer var="statusHtml">
+								<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" view="lexicon" />
+							</liferay-util:buffer>
+
+							<liferay-frontend:card
+								actionJsp="/article_action.jsp"
+								actionJspServletContext="<%= application %>"
+								cssClass="entry-display-style"
+								footer="<%= statusHtml %>"
+								header='<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - curArticle.getModifiedDate().getTime(), true), HtmlUtil.escape(curArticle.getUserName())}, false) %>'
+								imageUrl='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+								resultRow="<%= row %>"
+								rowChecker="<%= entriesChecker %>"
+								smallImageCSSClass="user-icon user-icon-lg"
+								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+								title="<%= HtmlUtil.escape(curArticle.getTitle(locale)) %>"
+								url="<%= rowURL.toString() %>"
+							/>
+						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
-						<%@ include file="/article_columns_list.jspf" %>
+						<liferay-ui:search-container-column-text
+							name="id"
+							value="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							name="title"
+							path="/article_title.jsp"
+						/>
+
+						<liferay-ui:search-container-column-status
+							name="status"
+						/>
+
+						<liferay-ui:search-container-column-date
+							name="modified-date"
+							value="<%= curArticle.getModifiedDate() %>"
+						/>
+
+						<liferay-ui:search-container-column-date
+							name="display-date"
+							value="<%= curArticle.getDisplayDate() %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="author"
+							value="<%= PortalUtil.getUserName(curArticle) %>"
+						/>
+
+						<%
+						DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, PortalUtil.getClassNameId(JournalArticle.class), curArticle.getDDMStructureKey(), true);
+						%>
+
+						<liferay-ui:search-container-column-text
+							name="type"
+							value="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action"
+							path="/article_action.jsp"
+						/>
 					</c:otherwise>
 				</c:choose>
 			</c:when>
@@ -274,17 +367,113 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 				row.setData(rowData);
 				row.setPrimaryKey(String.valueOf(curFolder.getPrimaryKey()));
+
+				PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("groupId", String.valueOf(curFolder.getGroupId()));
+				rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
+				rowURL.setParameter("displayStyle", displayStyle);
 				%>
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<%@ include file="/folder_columns_descriptive.jspf" %>
+						<liferay-ui:search-container-column-icon
+							icon="icon-folder-close"
+							toggleRowChecker="<%= true %>"
+						/>
+
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<liferay-ui:app-view-entry
+								actionJsp="/folder_action.jsp"
+								actionJspServletContext="<%= application %>"
+								author="<%= curFolder.getUserName() %>"
+								createDate="<%= curFolder.getCreateDate() %>"
+								description="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
+								displayStyle="descriptive"
+								folder="<%= true %>"
+								modifiedDate="<%= curFolder.getModifiedDate() %>"
+								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
+								rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
+								showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
+								title="<%= HtmlUtil.escape(curFolder.getName()) %>"
+								url="<%= rowURL.toString() %>"
+								view="lexicon"
+							/>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-jsp
+							path="/folder_action.jsp"
+						/>
 					</c:when>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
-						<%@ include file="/folder_columns_icon.jspf" %>
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<liferay-frontend:card
+								actionJsp="/folder_action.jsp"
+								actionJspServletContext="<%= application %>"
+								horizontal="<%= true %>"
+								imageCSSClass="icon-monospaced"
+								imageUrl="icon-folder-close-alt"
+								resultRow="<%= row %>"
+								rowChecker="<%= entriesChecker %>"
+								title="<%= HtmlUtil.escape(curFolder.getName()) %>"
+								url="<%= rowURL.toString() %>"
+							/>
+						</liferay-ui:search-container-column-text>
 					</c:when>
 					<c:otherwise>
-						<%@ include file="/folder_columns_list.jspf" %>
+						<liferay-ui:search-container-column-text
+							name="id"
+							value="<%= String.valueOf(curFolder.getFolderId()) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="title"
+						>
+
+							<%
+							AssetRendererFactory<JournalFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalFolder.class);
+
+							AssetRenderer<JournalFolder> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
+							%>
+
+							<liferay-ui:icon
+								iconCssClass="<%= assetRenderer.getIconCssClass() %>"
+								label="<%= true %>"
+								message="<%= HtmlUtil.escape(curFolder.getName()) %>"
+								url="<%= rowURL.toString() %>"
+							/>
+						</liferay-ui:search-container-column-text>
+
+						<liferay-ui:search-container-column-text
+							name="status"
+							value="--"
+						/>
+
+						<liferay-ui:search-container-column-date
+							name="modified-date"
+							value="<%= curFolder.getModifiedDate() %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="display-date"
+							value="--"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="author"
+							value="<%= PortalUtil.getUserName(curFolder) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="type"
+							value="--"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							cssClass="entry-action"
+							path="/folder_action.jsp"
+						/>
 					</c:otherwise>
 				</c:choose>
 			</c:when>

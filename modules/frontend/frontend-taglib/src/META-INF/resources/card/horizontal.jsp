@@ -19,11 +19,16 @@
 <div class="<%= cssClass %>">
 	<div class="card-horizontal">
 		<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
-			<c:if test="<%= showCheckbox %>">
-				<div class="card-col-field">
-					<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(title)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
-				</div>
-			</c:if>
+			<div class="card-col-field">
+				<c:choose>
+					<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
+						<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>
+					</c:when>
+					<c:when test="<%= showCheckbox %>">
+						<aui:input checked="<%= checkboxChecked %>" cssClass="<%= checkboxCSSClass %>" data="<%= checkboxData %>" disabled="<%= checkboxDisabled %>" id="<%= checkboxId %>" label="" name="<%= checkboxName %>" title='<%= LanguageUtil.format(request, "select-x", new Object[] {HtmlUtil.escape(title)}) %>' type="checkbox" useNamespace="<%= false %>" value="<%= checkboxValue %>" wrappedField="<%= true %>" />
+					</c:when>
+				</c:choose>
+			</div>
 
 			<div class="card-col-field">
 				<span class="<%= imageCSSClass %> <%= imageUrl %>"></span>

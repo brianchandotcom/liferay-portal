@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.microblogs.model;
+package com.liferay.microblogs.web.portlet.action;
+
+import com.liferay.microblogs.constants.MicroblogsPortletKeys;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Jonathan Lee
+ * @author Adolfo Pérez
  */
-public class MicroblogsEntryConstants {
-
-	public static final int TYPE_EVERYONE = 0;
-
-	public static final int TYPE_REPLY = 1;
-
-	public static final int TYPE_REPOST = 2;
-
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + MicroblogsPortletKeys.MICROBLOGS_STATUS_UPDATE},
+	service = ConfigurationAction.class
+)
+public class MicroblogsStatusUpdateConfigurationAction
+	extends DefaultConfigurationAction {
 }

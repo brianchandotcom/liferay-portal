@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,18 +12,12 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.microblogs.model;
+<%@ include file="/init.jsp" %>
 
-/**
- * @author Jonathan Lee
- */
-public class MicroblogsEntryConstants {
+<%
+MicroblogsEntry microblogsEntry = (MicroblogsEntry)request.getAttribute(WebKeys.MICROBLOGS_ENTRY);
+%>
 
-	public static final int TYPE_EVERYONE = 0;
-
-	public static final int TYPE_REPLY = 1;
-
-	public static final int TYPE_REPOST = 2;
-
-}
+<%= HtmlUtil.stripHtml(microblogsEntry.getContent()) %>

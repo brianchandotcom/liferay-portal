@@ -47,6 +47,6 @@ public class ClusterLinkPortalCacheReplicatorFactory
 		_portalCacheClusterLink = portalCacheClusterLink;
 	}
 
-	private volatile PortalCacheClusterLink _portalCacheClusterLink;
+	private PortalCacheClusterLink _portalCacheClusterLink;
 
 }

@@ -534,13 +534,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		String expectedFieldsString = jsonSerializer.serializeDeep(fields);
 
-		long classPK = create(_jsonStorageAdapater, ddmStructureId, fields);
+		long classPK = create(_jsonStorageAdapter, ddmStructureId, fields);
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructureId);
 
 		DDMFormValues actualDDMFormValues =
-			_jsonStorageAdapater.getDDMFormValues(classPK);
+			_jsonStorageAdapter.getDDMFormValues(classPK);
 
 		Fields actualFields = DDMFormValuesToFieldsConverterUtil.convert(
 			ddmStructure, actualDDMFormValues);
@@ -554,7 +554,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	private static Locale _enLocale;
 	private static Locale _ptLocale;
 
-	private final StorageAdapter _jsonStorageAdapater =
+	private final StorageAdapter _jsonStorageAdapter =
 		new JSONStorageAdapter();
 
 }

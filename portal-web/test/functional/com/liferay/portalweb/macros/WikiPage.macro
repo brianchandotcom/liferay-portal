@@ -1141,6 +1141,12 @@
 		<execute function="AssertClick" locator1="Button#CHANGE_NODE" value1="Change Node" />
 	</command>
 
+	<command name="selectNewParent">
+		<execute function="Select" locator1="Select#NEW_PARENT" value1="- ${wikiParentName}" />
+
+		<execute function="AssertClick" locator1="Button#CHANGE_PARENT" value1="Change Parent" />
+	</command>
+
 	<command name="submitForPublication">
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 

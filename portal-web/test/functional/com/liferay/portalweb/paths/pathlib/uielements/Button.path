@@ -129,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CHANGE_PARENT</td>
+	<td>//button[contains(.,'Change Parent')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CHECKIN</td>
 	<td>//button[contains(.,'Checkin')]</td>
 	<td></td>

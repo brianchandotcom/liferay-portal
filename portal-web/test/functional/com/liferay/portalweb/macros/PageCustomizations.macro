@@ -17,10 +17,6 @@
 
 		<execute function="Check" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX" value1="Customizable" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#SAVE" value1="Save" />
-
-		<execute function="AssertTextEquals" locator1="Home#PAGE_CUSTOMIZATION_MESSAGE_INFO" value1="You can customize this page." />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
 	</command>
 
 	<command name="gotoCustomizationSettingsPG">
@@ -35,5 +31,13 @@
 		</if>
 
 		<execute function="AssertClick" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" value1="Show Customizable Sections" />
+	</command>
+
+	<command name="viewCustomizablePagePG">
+		<execute function="Click" locator1="Dockbar#PAGE_INFO_MESSAGE_ICON" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Home#PAGE_CUSTOMIZATION_MESSAGE_INFO" value1="You can customize this page." />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
 	</command>
 </definition>

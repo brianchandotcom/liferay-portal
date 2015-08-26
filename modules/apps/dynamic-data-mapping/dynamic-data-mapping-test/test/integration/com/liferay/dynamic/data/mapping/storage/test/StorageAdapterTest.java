@@ -137,13 +137,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValues ddmFormValues =
-			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		_jsonStorageAdapter.create(
 			TestPropsValues.getCompanyId(), structure.getStructureId(),
-			ddmFormValues, ServiceContextTestUtil.getServiceContext(
-				group.getGroupId()));
+			ddmFormValues,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	@Test
@@ -515,8 +515,8 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		DDMFormValues ddmFormValues =
-			DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
 
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
@@ -526,14 +526,14 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		long classPK = _jsonStorageAdapter.create(
 			TestPropsValues.getCompanyId(), structure.getStructureId(),
-			ddmFormValues, ServiceContextTestUtil.getServiceContext(
-				group.getGroupId()));
+			ddmFormValues,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
 
 		_jsonStorageAdapter.update(
-			classPK, ddmFormValues, ServiceContextTestUtil.getServiceContext(
-				group.getGroupId()));
+			classPK, ddmFormValues,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	protected long create(
@@ -614,7 +614,6 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	private static Locale _enLocale;
 	private static Locale _ptLocale;
 
-	private final StorageAdapter _jsonStorageAdapter =
-		new JSONStorageAdapter();
+	private final StorageAdapter _jsonStorageAdapter = new JSONStorageAdapter();
 
 }

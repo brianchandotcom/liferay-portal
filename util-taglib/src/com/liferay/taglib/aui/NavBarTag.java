@@ -15,6 +15,7 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseNavBarTag;
 
 import javax.servlet.jsp.JspException;
@@ -45,6 +46,17 @@ public class NavBarTag extends BaseNavBarTag implements BodyTag {
 		super.cleanUp();
 
 		_responsiveButtonsSB.setIndex(0);
+	}
+
+	@Override
+	protected String getPage() {
+		String view = getView();
+
+		if (Validator.isNotNull(view)) {
+			return "/html/taglib/aui/nav_bar/" + view + "/page.jsp";
+		}
+
+		return "/html/taglib/aui/nav_bar/page.jsp";
 	}
 
 	@Override

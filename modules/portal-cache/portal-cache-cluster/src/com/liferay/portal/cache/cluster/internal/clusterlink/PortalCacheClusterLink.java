@@ -18,6 +18,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration;
 import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEvent;
+import com.liferay.portal.kernel.cluster.Priority;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,14 +78,16 @@ public class PortalCacheClusterLink {
 				PortalCacheClusterConfiguration.class,
 				componentContext.getProperties());
 
-		_channelNumber = portalCacheClusterConfiguration.channelNumber();
+		Priority[] priorities = portalCacheClusterConfiguration.priorities();
 
-		_portalCacheClusterChannels = new ArrayList<>(_channelNumber);
+		_portalCacheClusterChannels = new ArrayList<>(priorities.length);
 
-		for (int i = 0; i < _channelNumber; i++) {
-			_portalCacheClusterChannels.add(
+		for (Priority priority : priorities) {
+			PortalCacheClusterChannel portalCacheClusterChannel =
 				_portalCacheClusterChannelFactory.
-					createPortalCacheClusterChannel());
+					createPortalCacheClusterChannel(priority);
+
+			_portalCacheClusterChannels.add(portalCacheClusterChannel);
 		}
 
 		if (_portalCacheClusterChannelSelector == null) {
@@ -110,7 +113,6 @@ public class PortalCacheClusterLink {
 		PortalCacheClusterChannelSelector portalCacheClusterChannelSelector) {
 	}
 
-	private volatile int _channelNumber;
 	private PortalCacheClusterChannelFactory _portalCacheClusterChannelFactory;
 	private volatile List<PortalCacheClusterChannel>
 		_portalCacheClusterChannels;

@@ -15,13 +15,15 @@
 package com.liferay.portal.cache.cluster.internal.clusterlink;
 
 import com.liferay.portal.cache.cluster.internal.PortalCacheClusterException;
+import com.liferay.portal.kernel.cluster.Priority;
 
 /**
  * @author Shuyang Zhou
  */
 public interface PortalCacheClusterChannelFactory {
 
-	public PortalCacheClusterChannel createPortalCacheClusterChannel()
+	public PortalCacheClusterChannel createPortalCacheClusterChannel(
+			Priority priority)
 		throws PortalCacheClusterException;
 
 }

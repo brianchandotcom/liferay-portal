@@ -26,12 +26,6 @@ import com.liferay.portal.kernel.cluster.Priority;
 )
 public interface PortalCacheClusterConfiguration {
 
-	@Meta.AD(deflt = "2", required = false)
-	public int channelNumber();
-
-	@Meta.AD(deflt = "liferay/ehcache_cluster", required = false)
-	public String destinationName();
-
 	@Meta.AD(deflt = "LEVEL1|LEVEL2", required = false)
 	public Priority[] priorities();
 

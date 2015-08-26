@@ -14,57 +14,28 @@
 
 package com.liferay.portal.cache.cluster.internal.clusterlink;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
-import com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration;
 import com.liferay.portal.cache.cluster.internal.DestinationNames;
 import com.liferay.portal.cache.cluster.internal.PortalCacheClusterException;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
-import org.osgi.service.component.ComponentContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shuyang Zhou
  */
-@Component(
-	configurationPid = "com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration",
-	immediate = true, service = PortalCacheClusterChannelFactory.class
-)
+@Component(immediate = true, service = PortalCacheClusterChannelFactory.class)
 public class ClusterLinkPortalCacheClusterChannelFactory
 	implements PortalCacheClusterChannelFactory {
 
 	@Override
-	public PortalCacheClusterChannel createPortalCacheClusterChannel()
+	public PortalCacheClusterChannel createPortalCacheClusterChannel(
+			Priority priority)
 		throws PortalCacheClusterException {
 
-		int count = _counter.getAndIncrement();
-
-		if (count >= _priorities.length) {
-			throw new IllegalStateException(
-				"Cannot create more than " + _priorities.length + " channels");
-		}
-
 		return new ClusterLinkPortalCacheClusterChannel(
-			_clusterLink, DestinationNames.CACHE_REPLICATION,
-			_priorities[count]);
-	}
-
-	@Activate
-	@Modified
-	protected void activate(ComponentContext componentContext) {
-		PortalCacheClusterConfiguration portalCacheClusterConfiguration =
-			Configurable.createConfigurable(
-				PortalCacheClusterConfiguration.class,
-				componentContext.getProperties());
-
-		_priorities = portalCacheClusterConfiguration.priorities();
+			_clusterLink, DestinationNames.CACHE_REPLICATION, priority);
 	}
 
 	@Reference(unbind = "-")
@@ -73,7 +44,5 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 	}
 
 	private ClusterLink _clusterLink;
-	private final AtomicInteger _counter = new AtomicInteger(0);
-	private volatile Priority[] _priorities;
 
 }

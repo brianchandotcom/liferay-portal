@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.io;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -331,16 +332,52 @@ public class DeserializerTest {
 	}
 
 	@Test
-	public void testReadObjectClass() throws Exception {
+	public void testReadObjectClassWithBlankContextName() throws Exception {
+		Class<?> clazz = getClass();
+
+		ClassLoaderPool.register(StringPool.BLANK, clazz.getClassLoader());
+
+		try {
+			String className = clazz.getName();
+
+			ByteBuffer byteBuffer = ByteBuffer.allocate(
+				className.length() + 11);
+
+			byteBuffer.put(SerializationConstants.TC_CLASS);
+			byteBuffer.put((byte)1);
+			byteBuffer.putInt(0);
+			byteBuffer.put((byte)1);
+			byteBuffer.putInt(className.length());
+			byteBuffer.put(className.getBytes(StringPool.UTF8));
+
+			byteBuffer.flip();
+
+			Deserializer deserializer = new Deserializer(byteBuffer);
+
+			Class<?> readClass = deserializer.readObject();
+
+			Assert.assertSame(clazz, readClass);
+		}
+		finally {
+			ClassLoaderPool.unregister(clazz.getClassLoader());
+		}
+	}
+
+	@Test
+	public void testReadObjectClassWithNullContextName() throws Exception {
 		Class<?> clazz = getClass();
 
 		String className = clazz.getName();
 
-		ByteBuffer byteBuffer = ByteBuffer.allocate(className.length() + 11);
+		String isNull = StringPool.IS_NULL;
+
+		ByteBuffer byteBuffer = ByteBuffer.allocate(
+			className.length() + isNull.length() + 11);
 
 		byteBuffer.put(SerializationConstants.TC_CLASS);
 		byteBuffer.put((byte)1);
-		byteBuffer.putInt(0);
+		byteBuffer.putInt(isNull.length());
+		byteBuffer.put(isNull.getBytes(StringPool.UTF8));
 		byteBuffer.put((byte)1);
 		byteBuffer.putInt(className.length());
 		byteBuffer.put(className.getBytes(StringPool.UTF8));

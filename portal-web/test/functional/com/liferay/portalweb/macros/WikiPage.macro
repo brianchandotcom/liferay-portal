@@ -998,7 +998,7 @@
 	<command name="rate4StarsPG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="Click" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
+		<execute function="Click#clickNoMouseOver" locator1="Ratings#YOUR_RATING_STAR_EMPTY_4" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_STAR_4" />
 	</command>
 

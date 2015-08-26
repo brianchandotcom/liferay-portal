@@ -326,8 +326,6 @@
 			<equals arg1="${viewableBy}" arg2="Anyone (Guest Role)" />
 			<then>
 				<execute function="AssertChecked" locator1="AssetPermissions#GUEST_VIEW_CHECKBOX" />
-				<execute function="AssertChecked" locator1="AssetPermissions#OWNER_VIEW_CHECKBOX" />
-				<execute function="AssertChecked" locator1="AssetPermissions#SITE_MEMBER_VIEW_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${viewableBy}" arg2="Owner" />

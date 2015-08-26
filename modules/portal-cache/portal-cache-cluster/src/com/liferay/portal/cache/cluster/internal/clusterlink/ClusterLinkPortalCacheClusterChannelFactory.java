@@ -71,7 +71,7 @@ public class ClusterLinkPortalCacheClusterChannelFactory
 		_clusterLink = clusterLink;
 	}
 
-	private volatile ClusterLink _clusterLink;
+	private ClusterLink _clusterLink;
 	private final AtomicInteger _counter = new AtomicInteger(0);
 	private volatile String _destinationName;
 	private volatile Priority[] _priorities;

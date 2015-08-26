@@ -100,6 +100,10 @@ public class PortalCacheClusterLink {
 
 			portalCacheClusterChannel.destroy();
 		}
+
+		_portalCacheClusterChannels.clear();
+
+		_portalCacheClusterChannels = null;
 	}
 
 	protected void unsetPortalCacheClusterChannelSelector(
@@ -107,8 +111,7 @@ public class PortalCacheClusterLink {
 	}
 
 	private volatile int _channelNumber;
-	private volatile PortalCacheClusterChannelFactory
-		_portalCacheClusterChannelFactory;
+	private PortalCacheClusterChannelFactory _portalCacheClusterChannelFactory;
 	private volatile List<PortalCacheClusterChannel>
 		_portalCacheClusterChannels;
 	private volatile PortalCacheClusterChannelSelector

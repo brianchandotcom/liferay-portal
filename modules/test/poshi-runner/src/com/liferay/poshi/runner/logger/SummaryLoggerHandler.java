@@ -240,9 +240,15 @@ public final class SummaryLoggerHandler {
 	private static LoggerElement _getMajorStepLoggerElement(Element element)
 		throws Exception {
 
-		LoggerElement loggerElement = _getStepLoggerElement(element);
+		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.setClassName("major-step");
+		loggerElement.setName("li");
+
+		loggerElement.addChildLoggerElement(_getButtonLoggerElement());
+
+		loggerElement.addChildLoggerElement(
+			_getStepDescriptionLoggerElement(element));
 
 		return loggerElement;
 	}
@@ -259,9 +265,13 @@ public final class SummaryLoggerHandler {
 	private static LoggerElement _getMinorStepLoggerElement(Element element)
 		throws Exception {
 
-		LoggerElement loggerElement = _getStepLoggerElement(element);
+		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.setClassName("minor-step");
+		loggerElement.setName("li");
+
+		loggerElement.addChildLoggerElement(
+			_getStepDescriptionLoggerElement(element));
 
 		return loggerElement;
 	}
@@ -269,7 +279,7 @@ public final class SummaryLoggerHandler {
 	private static LoggerElement _getMinorStepsLoggerElement() {
 		LoggerElement loggerElement = new LoggerElement();
 
-		loggerElement.setClassName("minor-steps");
+		loggerElement.setClassName("content minor-steps");
 		loggerElement.setName("ul");
 
 		return loggerElement;
@@ -294,19 +304,6 @@ public final class SummaryLoggerHandler {
 
 		loggerElement.setClassName("step-description");
 		loggerElement.setText(_getSummary(element));
-
-		return loggerElement;
-	}
-
-	private static LoggerElement _getStepLoggerElement(Element element)
-		throws Exception {
-
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setName("li");
-
-		loggerElement.addChildLoggerElement(
-			_getStepDescriptionLoggerElement(element));
 
 		return loggerElement;
 	}

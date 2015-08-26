@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:artifact="antlib:org.apache.maven.artifact.ant">
 	<import file="build-common.xml" />
 
 	<macrodef name="setup-jrebel">
@@ -324,6 +324,10 @@
 			</then>
 		</if>
 
+		<ant dir="portal-web" target="war" inheritAll="false" />
+
+		<antcall target="install-portal-snapshots" />
+
 		<stopwatch name="modules.stopwatch" />
 
 		<ant dir="${project.dir}/modules/core/registry-api" target="deploy" inheritAll="false" />
@@ -539,6 +543,16 @@
 		>
 			<include name="liferay-*${lp.version.dtd}.dtd" />
 		</DTDDoc>
+	</target>
+
+	<target name="install-portal-snapshots">
+		<install-portal-snapshot artifact.name="portal-impl" />
+		<install-portal-snapshot artifact.name="portal-service" />
+		<install-portal-snapshot artifact.name="portal-web" />
+		<install-portal-snapshot artifact.name="util-bridges" />
+		<install-portal-snapshot artifact.name="util-java" />
+		<install-portal-snapshot artifact.name="util-slf4j" />
+		<install-portal-snapshot artifact.name="util-taglib" />
 	</target>
 
 	<target name="jar">

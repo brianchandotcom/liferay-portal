@@ -11,3 +11,241 @@
 		}
 	}
 }
+
+.product-menu {
+	.lfr-icon-menu {
+		.btn-default {
+			background-color: transparent;
+
+			&:active {
+				box-shadow: none;
+				color: $product-menu-nav-link-color;
+			}
+		}
+	}
+}
+
+.product-menu {
+	.nav a {
+		color: $product-menu-nav-link-color;
+	}
+
+	.nav-equal-height {
+		.nav > .active,
+		> .active {
+			border-left: 2px solid $product-menu-nav-link-active-color;
+		}
+
+		> .active > a,
+		.nav > .active > a {
+			&,
+			&:focus,
+			&:hover {
+				color: $product-menu-nav-link-active-color;
+			}
+		}
+
+		> .active,
+		.nav > .active {
+			border-left-color: $product-menu-nav-link-active-color;
+		}
+	}
+
+	.nav-equal-height-heading {
+		.collapse-icon {
+			&:after,
+			&.collapsed:after {
+				background-color: $product-menu-collapse-icon-bg;
+				height: 12px;
+			}
+
+			&:before {
+				color: $product-menu-nav-link-color;
+				content: $product-menu-nav-equal-height-heading-open-collapse-icon;
+				font-size: 15px;
+				left: -8px;
+			}
+
+			&.collapsed:before {
+				content: $product-menu-nav-equal-height-heading-closed-collapse-icon;
+			}
+		}
+	}
+
+	.nav-nested-margins > li .nav > li {
+		border-left: 2px solid $product-menu-nav-link-color;
+
+		.nav > li {
+			border-left: 1px dotted $product-menu-nav-link-color;
+
+			&.active {
+				border-left: 1px solid $product-menu-nav-link-active-color;
+
+				> a {
+					color: $product-menu-nav-link-active-color;
+				}
+			}
+		}
+	}
+}
+
+.product-menu {
+	.user-heading {
+		font-size: 19px;
+		font-weight: 500;
+	}
+
+	.user-signout {
+		background-color: $product-menu-user-signout-bg;
+		border-radius: $product-menu-user-signout-border-radius;
+		color: $product-menu-user-signout-icon-color;
+	}
+
+	.user-subheading {
+		a {
+			font-size: 14px;
+			font-weight: 500;
+
+			&,
+			&:focus,
+			&:hover {
+				color: $product-menu-header-color;
+			}
+		}
+	}
+}
+
+.product-menu {
+	.sidebar-header {
+		background-color: $product-menu-header-bg;
+
+		a {
+			color: $product-menu-header-link-color;
+
+			&:focus,
+			&:hover {
+				color: $product-menu-header-link-hover-color;
+			}
+		}
+	}
+
+	.sidebar-header-logo {
+		background-color: $product-menu-header-logo-bg;
+		border-radius: 4px;
+	}
+}
+
+.product-menu {
+	.list-group {
+		box-shadow: none;
+	}
+
+	.list-group-heading {
+		background-color: $product-menu-list-group-heading-bg;
+
+		&:after {
+			background-color: $product-menu-list-group-heading-border;
+			height: $product-menu-list-group-heading-border-width;
+		}
+	}
+
+	.list-group-heading.collapsed {
+		background-color: $product-menu-list-group-heading-collapsed-bg;
+
+		&:after {
+			background-color: $product-menu-list-group-heading-collapsed-border;
+			height: $product-menu-list-group-heading-collapsed-border-width;
+		}
+	}
+
+	.list-group-heading,
+	.list-group-heading.collapsed {
+		&:focus,
+		&:hover {
+			background-color: $product-menu-list-group-heading-hover-bg;
+
+			&:after {
+				background-color: $product-menu-list-group-heading-hover-border;
+			}
+		}
+	}
+
+	.collapse,
+	.collapsing {
+		> .list-group-item {
+			background-color: $product-menu-list-group-item-bg;
+		}
+	}
+}
+
+.product-menu-tab-icon {
+	@include sm() {
+		background-color: $product-menu-tabs-bg;
+		border-radius: $product-menu-tabs-border-radius;
+	}
+}
+
+.product-menu-tab-text {
+	font-size: 11px;
+}
+
+.product-menu-tabs {
+	> li.active > a {
+		&,
+		&:focus,
+		&:hover {
+			background-color: $product-menu-tabs-active-bg;
+			border-color: $product-menu-tabs-active-border;
+			color: $product-menu-tabs-active-color;
+
+			@include sm() {
+				background-color: transparent;
+			}
+		}
+	}
+
+	> li > a {
+		background-color: $product-menu-tabs-bg;
+		border-radius: $product-menu-tabs-border-radius;
+		color: $product-menu-tabs-color;
+
+		@include sm() {
+			background-color: transparent;
+		}
+
+		&:focus,
+		&:hover {
+			background-color: $product-menu-tabs-hover-bg;
+			border-color: $product-menu-tabs-hover-border;
+			color: $product-menu-tabs-hover-color;
+
+			@include sm() {
+				background-color: transparent;
+			}
+		}
+	}
+
+	> .active .product-menu-tab-icon {
+		@include sm() {
+			background-color: $product-menu-tabs-active-bg;
+		}
+	}
+}
+
+.product-menu {
+	.site-administration-toolbar {
+		a {
+			color: $product-menu-site-administration-link-color;
+		}
+
+		.active a {
+			background-color: $product-menu-site-administration-link-active-bg;
+			border-radius: $product-menu-site-administration-link-active-border-radius;
+			color: $product-menu-site-administration-link-active-color;
+		}
+
+		.site-administration-title {
+			color: $product-menu-site-administration-color;
+		}
+	}
+}

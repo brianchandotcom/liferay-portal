@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -198,12 +197,19 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	protected void validateDDMFormFieldType(DDMFormField ddmFormField)
 		throws DDMFormValidationException {
 
-		Set<String> fieldTypeNames =
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldTypeNames();
+		if ((ddmFormField.getType() == null) ||
+			(ddmFormField.getType().trim().length() == 0)) {
+				throw new DDMFormValidationException(
+					"The field type was never set for DDM form field");
+		}
 
-		if (!fieldTypeNames.contains(ddmFormField.getType())) {
+		Matcher matcher = _ddmFormFieldTypePattern.matcher(
+			ddmFormField.getType());
+
+		if (!matcher.matches()) {
 			throw new DDMFormValidationException(
-				"Invalid type set for field " + ddmFormField.getName());
+				"Invalid characters were defined for field type " +
+					ddmFormField.getType());
 		}
 	}
 
@@ -244,5 +250,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	};
 	private final Pattern _ddmFormFieldNamePattern = Pattern.compile(
 		"(\\w|_)+");
+	private final Pattern _ddmFormFieldTypePattern = Pattern.compile(
+		"(\\w|-|_)+");
 
 }

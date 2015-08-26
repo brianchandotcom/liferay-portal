@@ -19,6 +19,10 @@ import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -517,6 +521,30 @@ public final class SummaryLoggerHandler {
 
 		lineContainerLoggerElement.addChildLoggerElement(
 			_getStatusLoggerElement("PASSED"));
+	}
+
+	private static String _readResource(String path) throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		ClassLoader classLoader = SummaryLoggerHandler.class.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(path);
+
+		InputStreamReader inputStreamReader = new InputStreamReader(
+			inputStream);
+
+		BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+		String line = null;
+
+		while ((line = bufferedReader.readLine()) != null) {
+			sb.append(line);
+			sb.append("\n");
+		}
+
+		bufferedReader.close();
+
+		return sb.toString();
 	}
 
 	private static String _replaceCommandVars(String token, Element element)

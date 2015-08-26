@@ -30,7 +30,7 @@ BlogsGroupServiceSettings blogsGroupServiceSettings = BlogsGroupServiceSettings.
 
 BlogsPortletInstanceConfiguration blogsPortletInstanceConfiguration = ConfigurationFactoryUtil.getConfiguration(BlogsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
 BlogsPortletInstanceSettingsHelper blogsPortletInstanceSettingsHelper = new BlogsPortletInstanceSettingsHelper(request, blogsPortletInstanceConfiguration);
-BlogsGroupServiceConfiguration rssBlogsGroupServiceConfiguration = ConfigurationFactoryUtil.getConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME));
+BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguration = ConfigurationFactoryUtil.getConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME));
 
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
 %>

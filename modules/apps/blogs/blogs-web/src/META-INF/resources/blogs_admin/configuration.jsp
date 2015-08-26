@@ -19,7 +19,7 @@
 <%
 blogsGroupServiceSettings = BlogsGroupServiceSettings.getInstance(scopeGroupId, request.getParameterMap());
 
-BlogsGroupServiceConfiguration rssBlogsGroupServiceConfiguration = ConfigurationFactoryUtil.getConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME)));
+BlogsGroupServiceOverriddenConfiguration blogsGroupServiceOverriddenConfiguration = ConfigurationFactoryUtil.getConfiguration(BlogsGroupServiceOverriddenConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(themeDisplay.getSiteGroupId(), BlogsConstants.SERVICE_NAME)));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
@@ -110,10 +110,10 @@ BlogsGroupServiceConfiguration rssBlogsGroupServiceConfiguration = Configuration
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 			<liferay-ui:section>
 				<liferay-ui:rss-settings
-					delta="<%= GetterUtil.getInteger(rssBlogsGroupServiceConfiguration.rssDelta()) %>"
-					displayStyle="<%= rssBlogsGroupServiceConfiguration.rssDisplayStyle() %>"
-					enabled="<%= rssBlogsGroupServiceConfiguration.enableRss() %>"
-					feedType="<%= rssBlogsGroupServiceConfiguration.rssFeedType() %>"
+					delta="<%= GetterUtil.getInteger(blogsGroupServiceOverriddenConfiguration.rssDelta()) %>"
+					displayStyle="<%= blogsGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
+					enabled="<%= blogsGroupServiceOverriddenConfiguration.enableRss() %>"
+					feedType="<%= blogsGroupServiceOverriddenConfiguration.rssFeedType() %>"
 				/>
 			</liferay-ui:section>
 		</c:if>

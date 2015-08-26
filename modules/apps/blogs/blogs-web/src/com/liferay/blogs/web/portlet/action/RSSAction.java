@@ -119,14 +119,14 @@ public class RSSAction extends BaseRSSStrutsAction {
 			WebKeys.THEME_DISPLAY);
 
 		BlogsGroupServiceOverriddenConfiguration
-			rssBlogsGroupServiceConfiguration =
+			blogsGroupServiceOverridenConfiguration =
 				ConfigurationFactoryUtil.getConfiguration(
 					BlogsGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						themeDisplay.getSiteGroupId(),
 						BlogsConstants.SERVICE_NAME));
 
-		return rssBlogsGroupServiceConfiguration.enableRss();
+		return blogsGroupServiceOverridenConfiguration.enableRss();
 	}
 
 }

@@ -35,8 +35,8 @@ public class WikiPortletInstanceSettingsHelper {
 
 		_wikiRequestHelper = wikiRequestHelper;
 
-		_wikiPortletInstanceConfiguration =
-			_wikiRequestHelper.getWikiPortletInstanceConfiguration();
+		_wikiPortletInstanceOverridenConfiguration =
+			_wikiRequestHelper.getWikiPortletInstanceOverridenConfiguration();
 	}
 
 	public List<String> getAllNodeNames() throws PortalException {
@@ -58,7 +58,8 @@ public class WikiPortletInstanceSettingsHelper {
 	public List<WikiNode> getAllPermittedNodes() throws PortalException {
 		if (_allPermittedNodes == null) {
 			_allPermittedNodes = WikiUtil.getNodes(
-				getAllNodes(), _wikiPortletInstanceConfiguration.hiddenNodes(),
+				getAllNodes(),
+				_wikiPortletInstanceOverridenConfiguration.hiddenNodes(),
 				_wikiRequestHelper.getPermissionChecker());
 		}
 
@@ -70,7 +71,8 @@ public class WikiPortletInstanceSettingsHelper {
 			return _displayStyle;
 		}
 
-		_displayStyle = _wikiPortletInstanceConfiguration.displayStyle();
+		_displayStyle =
+			_wikiPortletInstanceOverridenConfiguration.displayStyle();
 
 		return _displayStyle;
 	}
@@ -81,7 +83,7 @@ public class WikiPortletInstanceSettingsHelper {
 		}
 
 		_displayStyleGroupId =
-			_wikiPortletInstanceConfiguration.displayStyleGroupId();
+			_wikiPortletInstanceOverridenConfiguration.displayStyleGroupId();
 
 		if (_displayStyleGroupId <= 0) {
 			ThemeDisplay themeDisplay = _wikiRequestHelper.getThemeDisplay();
@@ -97,7 +99,7 @@ public class WikiPortletInstanceSettingsHelper {
 			return _hiddenNodes;
 		}
 
-		_hiddenNodes = _wikiPortletInstanceConfiguration.hiddenNodes();
+		_hiddenNodes = _wikiPortletInstanceOverridenConfiguration.hiddenNodes();
 
 		return _hiddenNodes;
 	}
@@ -116,7 +118,7 @@ public class WikiPortletInstanceSettingsHelper {
 		}
 
 		_enableCommentRatings =
-			_wikiPortletInstanceConfiguration.enableCommentRatings();
+			_wikiPortletInstanceOverridenConfiguration.enableCommentRatings();
 
 		return _enableCommentRatings;
 	}
@@ -126,7 +128,8 @@ public class WikiPortletInstanceSettingsHelper {
 			return _enableComments;
 		}
 
-		_enableComments = _wikiPortletInstanceConfiguration.enableComments();
+		_enableComments =
+			_wikiPortletInstanceOverridenConfiguration.enableComments();
 
 		return _enableComments;
 	}
@@ -137,7 +140,7 @@ public class WikiPortletInstanceSettingsHelper {
 		}
 
 		_enablePageRatings =
-			_wikiPortletInstanceConfiguration.enablePageRatings();
+			_wikiPortletInstanceOverridenConfiguration.enablePageRatings();
 
 		return _enablePageRatings;
 	}
@@ -148,7 +151,7 @@ public class WikiPortletInstanceSettingsHelper {
 		}
 
 		_enableRelatedAssets =
-			_wikiPortletInstanceConfiguration.enableRelatedAssets();
+			_wikiPortletInstanceOverridenConfiguration.enableRelatedAssets();
 
 		return _enableRelatedAssets;
 	}
@@ -159,7 +162,8 @@ public class WikiPortletInstanceSettingsHelper {
 
 		_allNodeNames = WikiUtil.getNodeNames(_allNodes);
 
-		_visibleNodeNames = _wikiPortletInstanceConfiguration.visibleNodes();
+		_visibleNodeNames =
+			_wikiPortletInstanceOverridenConfiguration.visibleNodes();
 
 		if (ArrayUtil.isNotEmpty(_visibleNodeNames)) {
 			_allNodes = WikiUtil.orderNodes(_allNodes, _visibleNodeNames);
@@ -182,7 +186,7 @@ public class WikiPortletInstanceSettingsHelper {
 	private String[] _hiddenNodes;
 	private String[] _visibleNodeNames;
 	private final WikiPortletInstanceOverriddenConfiguration
-		_wikiPortletInstanceConfiguration;
+		_wikiPortletInstanceOverridenConfiguration;
 	private final WikiRequestHelper _wikiRequestHelper;
 
 }

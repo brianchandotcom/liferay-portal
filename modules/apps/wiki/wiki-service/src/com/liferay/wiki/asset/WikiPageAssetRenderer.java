@@ -29,7 +29,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
 import com.liferay.portlet.trash.util.TrashUtil;
-import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -75,7 +74,7 @@ public class WikiPageAssetRenderer
 	public WikiPageAssetRenderer(WikiPage page) throws PortalException {
 		_page = page;
 
-		_wikiGroupServiceConfiguration =
+		_wikiGroupServiceOverriddenConfiguration =
 			ConfigurationFactoryUtil.getConfiguration(
 				WikiGroupServiceOverriddenConfiguration.class,
 			new GroupServiceSettingsLocator(
@@ -99,7 +98,7 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public String getDiscussionPath() {
-		if (_wikiGroupServiceConfiguration.pageCommentsEnabled()) {
+		if (_wikiGroupServiceOverriddenConfiguration.pageCommentsEnabled()) {
 			return "edit_page_discussion";
 		}
 		else {
@@ -333,6 +332,7 @@ public class WikiPageAssetRenderer
 	}
 
 	private final WikiPage _page;
-	private final WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
+	private final WikiGroupServiceOverriddenConfiguration
+		_wikiGroupServiceOverriddenConfiguration;
 
 }

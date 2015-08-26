@@ -343,7 +343,7 @@ public class DefaultWikiListPagesDisplayContext
 				ActionKeys.SUBSCRIBE) ||
 			(!wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() &&
 			 !wikiGroupServiceOverriddenConfiguration.
-				emailPageUpdatedEnabled())) {
+				 emailPageUpdatedEnabled())) {
 
 			return;
 		}

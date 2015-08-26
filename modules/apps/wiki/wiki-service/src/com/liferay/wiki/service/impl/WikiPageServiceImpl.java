@@ -35,7 +35,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.RSSUtil;
-import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -865,16 +864,18 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			else {
 				String value = null;
 
-				WikiGroupServiceConfiguration wikiGroupServiceConfiguration =
-					configurationFactory.getConfiguration(
-						WikiGroupServiceOverriddenConfiguration.class,
-						new GroupServiceSettingsLocator(
-							page.getGroupId(), WikiConstants.SERVICE_NAME));
+				WikiGroupServiceOverriddenConfiguration
+					wikiGroupServiceOverriddenConfiguration =
+						configurationFactory.getConfiguration(
+							WikiGroupServiceOverriddenConfiguration.class,
+							new GroupServiceSettingsLocator(
+								page.getGroupId(), WikiConstants.SERVICE_NAME));
 
 				if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_ABSTRACT)) {
 					value = StringUtil.shorten(
 						HtmlUtil.extractText(page.getContent()),
-						wikiGroupServiceConfiguration.rssAbstractLength(),
+						wikiGroupServiceOverriddenConfiguration.
+							rssAbstractLength(),
 						StringPool.BLANK);
 				}
 				else if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {

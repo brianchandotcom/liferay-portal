@@ -729,16 +729,18 @@ public class BookmarksEntryLocalServiceImpl
 		}
 
 		BookmarksGroupServiceOverriddenConfiguration
-			bookmarksGroupServiceConfiguration =
+			bookmarksGroupServiceOverriddenConfiguration =
 				configurationFactory.getConfiguration(
 					BookmarksGroupServiceOverriddenConfiguration.class,
 					new GroupServiceSettingsLocator(
 						entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
 
 		if ((serviceContext.isCommandAdd() &&
-			 !bookmarksGroupServiceConfiguration.emailEntryAddedEnabled()) ||
+			 !bookmarksGroupServiceOverriddenConfiguration.
+				 emailEntryAddedEnabled()) ||
 			(serviceContext.isCommandUpdate() &&
-			 !bookmarksGroupServiceConfiguration.emailEntryUpdatedEnabled())) {
+			 !bookmarksGroupServiceOverriddenConfiguration.
+				 emailEntryUpdatedEnabled())) {
 
 			return;
 		}
@@ -760,24 +762,29 @@ public class BookmarksEntryLocalServiceImpl
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
 				StringPool.SLASH + entry.getEntryId();
 
-		String fromName = bookmarksGroupServiceConfiguration.emailFromName();
+		String fromName =
+			bookmarksGroupServiceOverriddenConfiguration.emailFromName();
 		String fromAddress =
-			bookmarksGroupServiceConfiguration.emailFromAddress();
+			bookmarksGroupServiceOverriddenConfiguration.emailFromAddress();
 
 		LocalizedValuesMap subjectLocalizedValuesMap = null;
 		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =
-				bookmarksGroupServiceConfiguration.emailEntryUpdatedSubject();
+				bookmarksGroupServiceOverriddenConfiguration.
+					emailEntryUpdatedSubject();
 			bodyLocalizedValuesMap =
-				bookmarksGroupServiceConfiguration.emailEntryUpdatedBody();
+				bookmarksGroupServiceOverriddenConfiguration.
+					emailEntryUpdatedBody();
 		}
 		else {
 			subjectLocalizedValuesMap =
-				bookmarksGroupServiceConfiguration.emailEntryAddedSubject();
+				bookmarksGroupServiceOverriddenConfiguration.
+					emailEntryAddedSubject();
 			bodyLocalizedValuesMap =
-				bookmarksGroupServiceConfiguration.emailEntryAddedBody();
+				bookmarksGroupServiceOverriddenConfiguration.
+					emailEntryAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender =

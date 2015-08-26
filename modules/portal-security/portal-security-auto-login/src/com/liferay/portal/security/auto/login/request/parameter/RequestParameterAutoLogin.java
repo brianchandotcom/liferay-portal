@@ -162,8 +162,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		}
 		catch (ConfigurationException ce) {
 			_log.error(
-				"Unable to get request parameter auto login configuration",
-				ce);
+				"Unable to get request parameter auto login configuration", ce);
 		}
 
 		return null;

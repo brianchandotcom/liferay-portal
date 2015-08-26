@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,6 +38,7 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eduardo Lundgren
@@ -368,7 +370,7 @@ public class CalendarResourceFinderImpl
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					sb, "CalendarResource.", orderByComparator);
+					sb, "CalendarResource.", orderByComparator, true);
 			}
 
 			sql = StringUtil.replace(sql, "[$ORDER_BY$]", sb.toString());
@@ -400,6 +402,11 @@ public class CalendarResourceFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	@Override
+	protected Set<String> getBadColumnNames() {
+		return _badColumnNames;
 	}
 
 	protected String getClassNameIds(long[] classNameIds) {
@@ -450,5 +457,8 @@ public class CalendarResourceFinderImpl
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CalendarResourceModelImpl.TABLE_COLUMNS_MAP;
 	}
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid", "code", "active"});
 
 }

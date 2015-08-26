@@ -65,31 +65,6 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 
 				<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
-
-				<c:if test="<%= !user.isDefaultUser() %>">
-					<aui:nav-item dropdown="<%= true %>" label="manage">
-
-						<%
-						String taglibURL = "javascript:" + renderResponse.getNamespace() + "openStructuresView()";
-						%>
-
-						<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-th-large" label="structures" />
-
-						<%
-						taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";
-						%>
-
-						<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-list-alt" label="templates" />
-
-						<%
-						taglibURL = "javascript:" + renderResponse.getNamespace() + "openFeedsView()";
-						%>
-
-						<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-							<aui:nav-item href="<%= taglibURL %>" iconCssClass="icon-rss" label="feeds" />
-						</c:if>
-					</aui:nav-item>
-				</c:if>
 			</c:if>
 		</aui:nav>
 
@@ -100,22 +75,6 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 </aui:form>
 
 <aui:script>
-	<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-		function <portlet:namespace />openFeedsView() {
-			Liferay.Util.openWindow(
-				{
-					id: '<portlet:namespace />openFeedsView',
-					title: '<%= UnicodeLanguageUtil.get(request, "feeds") %>',
-					uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/view_feeds.jsp" /></liferay-portlet:renderURL>'
-				}
-			);
-		}
-	</c:if>
-
-	<%
-	Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-	%>
-
 	function <portlet:namespace />deleteEntries() {
 		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			Liferay.fire(
@@ -125,49 +84,5 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				}
 			);
 		}
-	}
-
-	function <portlet:namespace />openStructuresView() {
-		Liferay.Util.openDDMPortlet(
-			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-				dialog: {
-					destroyOnHide: true,
-					on: {
-						visibleChange: function(event) {
-							if (!event.newVal) {
-								Liferay.Portlet.refresh('#p_p_id_' + '<%= portletDisplay.getId() %>' + '_');
-							}
-						}
-					}
-				},
-				groupId: <%= scopeGroupId %>,
-				refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
-				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
-				showAncestorScopes: true,
-				showManageTemplates: true,
-				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
-			}
-		);
-	}
-
-	function <portlet:namespace />openTemplatesView() {
-		Liferay.Util.openDDMPortlet(
-			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMTemplate.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-				classNameId: '<%= PortalUtil.getClassNameId(DDMStructure.class) %>',
-				dialog: {
-					destroyOnHide: true
-				},
-				groupId: <%= scopeGroupId %>,
-				mvcPath: '/view_template.jsp',
-				refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
-				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
-				showAncestorScopes: true,
-				showHeader: false,
-				resourceClassNameId: '<%= PortalUtil.getClassNameId(JournalArticle.class) %>',
-				title: '<%= UnicodeLanguageUtil.get(request, "templates") %>'
-			}
-		);
 	}
 </aui:script>

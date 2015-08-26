@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.configuration.icon.netvibes;
 
+import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIconFactory;
 import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconFactory;
 
@@ -26,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = PortletConfigurationIconFactory.class)
 public class NetvibesPortletConfigurationIconFactory
-	implements PortletConfigurationIconFactory {
+	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(final HttpServletRequest request) {

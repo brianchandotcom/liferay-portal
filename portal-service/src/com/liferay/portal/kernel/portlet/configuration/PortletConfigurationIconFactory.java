@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.portlet.configuration;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -24,5 +27,9 @@ public interface PortletConfigurationIconFactory {
 	public PortletConfigurationIcon create(HttpServletRequest request);
 
 	public double getWeight();
+
+	public boolean include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
 
 }

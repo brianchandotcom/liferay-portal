@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.cluster;
 
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.Priority;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 
 import org.osgi.framework.Constants;
@@ -40,7 +41,7 @@ public class ConfigurationSynchronousConfigurationListener
 
 		Message message = new Message();
 
-		message.setDestinationName("liferay/configuration");
+		message.setDestinationName(DestinationNames.CONFIGURATION);
 
 		String factoryPid = configurationEvent.getFactoryPid();
 
@@ -57,13 +58,15 @@ public class ConfigurationSynchronousConfigurationListener
 	}
 
 	@Reference
-	protected void setClusterDestination(
-		ConfigurationDestination clusterDestination) {
-	}
-
-	@Reference
 	protected void setClusterLink(ClusterLink clusterLink) {
 		_clusterLink = clusterLink;
+	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.CONFIGURATION + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
 	}
 
 	private ClusterLink _clusterLink;

@@ -18,6 +18,8 @@ import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.marketplace.service.ModuleLocalService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,7 +38,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Joan Kim
  */
 @Component(
-	immediate = true, property = {"destination.name=liferay/marketplace"},
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.MARKETPLACE},
 	service = MessageListener.class
 )
 public class MarketplaceMessageListener extends BaseMessageListener {
@@ -98,6 +101,13 @@ public class MarketplaceMessageListener extends BaseMessageListener {
 	@Reference(unbind = "-")
 	protected void setAppLocalService(AppLocalService appLocalService) {
 		_appLocalService = appLocalService;
+	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.MARKETPLACE + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
 	}
 
 	@Reference(unbind = "-")

@@ -434,21 +434,13 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		registerDestinationConfig(
+			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+			DestinationNames.BACKGROUND_TASK);
 
-		ServiceRegistration<DestinationConfiguration>
-			backgroundTaskServiceRegistration = registerDestinationConfig(
-				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				DestinationNames.BACKGROUND_TASK);
-
-		_serviceRegistrations.add(backgroundTaskServiceRegistration);
-
-		ServiceRegistration<DestinationConfiguration>
-			backgroundTaskStatusServiceRegistration = registerDestinationConfig(
-				DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
-				DestinationNames.BACKGROUND_TASK_STATUS);
-
-		_serviceRegistrations.add(backgroundTaskStatusServiceRegistration);
+		registerDestinationConfig(
+			bundleContext, DestinationConfiguration.DESTINATION_TYPE_PARALLEL,
+			DestinationNames.BACKGROUND_TASK_STATUS);
 	}
 
 	@Deactivate
@@ -458,20 +450,24 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 
 			serviceRegistration.unregister();
 		}
-
-		_bundleContext = null;
 	}
 
 	protected ServiceRegistration<DestinationConfiguration>
 		registerDestinationConfig(
-			String destinationType, String destinationName) {
+			BundleContext bundleContext, String destinationType,
+			String destinationName) {
 
 		DestinationConfiguration destinationConfiguration =
 			new DestinationConfiguration(destinationType, destinationName);
 
-		return _bundleContext.registerService(
-			DestinationConfiguration.class, destinationConfiguration,
-			new HashMapDictionary<String, Object>());
+		ServiceRegistration<DestinationConfiguration> serviceRegistration =
+			bundleContext.registerService(
+				DestinationConfiguration.class, destinationConfiguration,
+				new HashMapDictionary<String, Object>());
+
+		_serviceRegistrations.add(serviceRegistration);
+
+		return serviceRegistration;
 	}
 
 	@Reference(unbind = "-")
@@ -526,7 +522,6 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	private BackgroundTaskLocalService _backgroundTaskLocalService;
-	private BundleContext _bundleContext;
 	private final Set<ServiceRegistration<DestinationConfiguration>>
 		_serviceRegistrations = new HashSet<>();
 

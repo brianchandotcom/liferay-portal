@@ -16,6 +16,7 @@ package com.liferay.portal.configuration.cluster;
 
 import com.liferay.portal.configuration.persistence.ReloadablePersitenceManager;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -31,7 +32,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true, property = {"destination.name=liferay/configuration"},
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.CONFIGURATION},
 	service = MessageListener.class
 )
 public class ConfigurationMessageListener extends BaseMessageListener {
@@ -101,6 +103,13 @@ public class ConfigurationMessageListener extends BaseMessageListener {
 		ConfigurationAdmin configurationAdmin) {
 
 		_configurationAdmin = configurationAdmin;
+	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.CONFIGURATION + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
 	}
 
 	private ConfigurationAdmin _configurationAdmin;

@@ -15,6 +15,7 @@
 package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
@@ -43,7 +44,7 @@ public class QuartzSchedulerEngineConfigurator {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
 		service = Destination.class,
-		target = "(destination.name=liferay/scheduler_engine)"
+		target = "(destination.name=" + DestinationNames.SCHEDULER_ENGINE + ")"
 	)
 	protected void setDestination(Destination destination) {
 		destination.register(_proxyMessageListener);

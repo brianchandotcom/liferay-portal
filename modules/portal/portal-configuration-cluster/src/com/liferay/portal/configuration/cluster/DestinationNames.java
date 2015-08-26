@@ -14,17 +14,11 @@
 
 package com.liferay.portal.configuration.cluster;
 
-import com.liferay.portal.kernel.messaging.Destination;
-import com.liferay.portal.kernel.messaging.ParallelDestination;
-
-import org.osgi.service.component.annotations.Component;
-
 /**
- * @author Raymond Augé
+ * @author Michael C. Han
  */
-@Component(
-	immediate = true, property = {"destination.name=liferay/configuration"},
-	service = {ConfigurationDestination.class, Destination.class}
-)
-public class ConfigurationDestination extends ParallelDestination {
+public class DestinationNames {
+
+	public static final String CONFIGURATION = "liferay/configuration";
+
 }

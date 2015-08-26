@@ -24,6 +24,7 @@ import freemarker.core.TemplateClassResolver;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.utility.Execute;
 import freemarker.template.utility.ObjectConstructor;
 
 import java.util.Map;
@@ -47,7 +48,9 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 			String className, Environment environment, Template template)
 		throws TemplateException {
 
-		if (className.equals(ObjectConstructor.class.getName())) {
+		if (className.equals(ObjectConstructor.class.getName()) ||
+			className.equals(Execute.class.getName())) {
+
 			throw new TemplateException(
 				"Instantiating " + className + " is not allowed in the " +
 					"template for security reasons",

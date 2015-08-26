@@ -173,6 +173,10 @@ public class PoshiRunnerContext {
 		return _testClassCommandName;
 	}
 
+	public static String getTestCaseDescription(String classCommandName) {
+		return _testCaseDescriptions.get(classCommandName);
+	}
+
 	public static String getTestCaseName() {
 		return _testClassName;
 	}
@@ -524,6 +528,15 @@ public class PoshiRunnerContext {
 						classType + "#" + classCommandName,
 						_getCommandSummary(
 							classCommandName, classType, commandElement));
+
+					if (Validator.equals(classType, "test-case") &&
+						Validator.isNotNull(
+							commandElement.attributeValue("description"))) {
+
+						_testCaseDescriptions.put(
+							classCommandName,
+							commandElement.attributeValue("description"));
+					}
 				}
 
 				if (classType.equals("function")) {
@@ -715,6 +728,8 @@ public class PoshiRunnerContext {
 	private static final Map<String, Set<String>> _testCaseClassCommandNames =
 		new TreeMap<>();
 	private static final List<String> _testCaseClassNames = new ArrayList<>();
+	private static final Map<String, String> _testCaseDescriptions =
+		new HashMap<>();
 	private static final List<String> _testCaseRequiredPropertyNames =
 		new ArrayList<>();
 	private static String _testClassCommandName;

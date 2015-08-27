@@ -872,6 +872,34 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="install-portal-snapshot">
+		<attribute name="artifact.name" />
+
+		<sequential>
+			<artifact:pom
+				artifactId="@{artifact.name}"
+				groupId="com.liferay.portal"
+				id="prepare-@{artifact.name}"
+				name="@{artifact.name}"
+				version="${lp.version}-SNAPSHOT"
+			/>
+
+			<artifact:writepom pomRefId="prepare-@{artifact.name}" file="@{artifact.name}/pom.xml" />
+
+			<artifact:pom file="@{artifact.name}/pom.xml" id="@{artifact.name}" />
+
+			<if>
+				<equals arg1="@{artifact.name}" arg2="portal-web" />
+				<then>
+					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.name}/@{artifact.name}.war" />
+				</then>
+				<else>
+					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.name}/@{artifact.name}.jar" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="junit-cmd">
 		<attribute name="forkmode" />
 		<attribute name="test.type" />

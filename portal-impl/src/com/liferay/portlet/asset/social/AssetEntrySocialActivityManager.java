@@ -25,7 +25,7 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
  * @author Adolfo Pérez
  */
 @OSGiBeanProperties(
-	property = "model.className=com.liferay.portlet.asset.model.AssetEntry",
+	property = "model.class.name=com.liferay.portlet.asset.model.AssetEntry",
 	service = SocialActivityManager.class
 )
 public class AssetEntrySocialActivityManager

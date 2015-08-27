@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "model.className=com.liferay.portlet.messageboards.model.MBThread",
+	property = "model.class.name=com.liferay.portlet.messageboards.model.MBThread",
 	service = SocialActivityManager.class
 )
 public class MBThreadSocialActivityManager

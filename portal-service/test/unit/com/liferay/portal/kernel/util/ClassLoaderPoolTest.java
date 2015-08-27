@@ -64,28 +64,15 @@ public class ClassLoaderPoolTest {
 
 		ClassLoaderPool.register(_CONTEXT_NAME, classLoader);
 
-		Class<?> clazz = getClass();
-
-		Assert.assertSame(
-			clazz.getClassLoader(),
-			ClassLoaderPool.getClassLoader(StringPool.BLANK));
-	}
-
-	@Test
-	public void testGetClassLoaderWithInvalidContextNamePortalContextNotSet() {
-		ClassLoader classLoader = new URLClassLoader(new URL[0]);
-
-		ClassLoaderPool.register(_CONTEXT_NAME, classLoader);
-
-		PortalClassLoaderUtil.setClassLoader(null);
-
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
 		Assert.assertSame(
 			contextClassLoader,
-			ClassLoaderPool.getClassLoader(StringPool.BLANK));
+			ClassLoaderPool.getClassLoader(StringPool.NULL));
+		Assert.assertSame(
+			contextClassLoader, ClassLoaderPool.getClassLoader(null));
 	}
 
 	@Test
@@ -105,18 +92,10 @@ public class ClassLoaderPoolTest {
 		ClassLoaderPool.register(_CONTEXT_NAME, classLoader);
 
 		Assert.assertEquals(
-			StringPool.BLANK,
+			StringPool.NULL,
 			ClassLoaderPool.getContextName(new URLClassLoader(new URL[0])));
-	}
-
-	@Test
-	public void testGetContextNameWithNullClassLoader() {
-		ClassLoader classLoader = new URLClassLoader(new URL[0]);
-
-		ClassLoaderPool.register(_CONTEXT_NAME, classLoader);
-
 		Assert.assertEquals(
-			StringPool.BLANK, ClassLoaderPool.getContextName(null));
+			StringPool.NULL, ClassLoaderPool.getContextName(null));
 	}
 
 	@Test

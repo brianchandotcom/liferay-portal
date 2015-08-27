@@ -14,8 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
+import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Bruno Basto
@@ -81,6 +84,13 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 	}
 
 	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
+	}
+
+	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
@@ -89,11 +99,6 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_entries = null;
-	}
-
-	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
 	}
 
 	@Override
@@ -112,9 +117,8 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:template-renderer:";
 
-	private static final String _END_PAGE = "/template_renderer/end.jsp";
-
-	private static final String _START_PAGE = "/template_renderer/start.jsp";
+	private static final String _START_PAGE =
+		"/template_renderer/start.jsp";
 
 	private java.lang.String _className = null;
 	private java.util.Map<java.lang.String, java.lang.Object> _contextObjects = null;

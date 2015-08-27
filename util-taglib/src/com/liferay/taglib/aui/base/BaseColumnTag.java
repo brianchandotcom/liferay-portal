@@ -95,11 +95,6 @@ public abstract class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 	}
 
 	@Override
-	protected String getEndPage() {
-		return _END_PAGE;
-	}
-
-	@Override
 	protected String getStartPage() {
 		return _START_PAGE;
 	}
@@ -114,9 +109,6 @@ public abstract class BaseColumnTag extends com.liferay.taglib.util.IncludeTag {
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:column:";
-
-	private static final String _END_PAGE =
-		"/html/taglib/aui/column/end.jsp";
 
 	private static final String _START_PAGE =
 		"/html/taglib/aui/column/start.jsp";

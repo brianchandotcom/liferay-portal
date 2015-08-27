@@ -165,7 +165,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Button" alloyComponent="false" bodyContent="true">
+	<component name="Button" alloyComponent="false" bodyContent="true" writeStartJSP="false">
 		<description>Creates a fully configurable button that offers portlet namespacing and custom icons.</description>
 		<attributes>
 			<attribute>
@@ -259,7 +259,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="ButtonRow" bodyContent="true" alloyComponent="false">
+	<component name="ButtonRow" alloyComponent="false" bodyContent="true" writeEndJSP="false">
 		<description>Creates a button row <![CDATA[<code>&lt;div&gt;</code>]]> tag to wrap <![CDATA[<code>&lt;aui:button&gt;</code>]]> components and offer additional styling.</description>
 		<attributes>
 			<attribute>
@@ -326,7 +326,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Column" bodyContent="true">
+	<component name="Column" bodyContent="true" writeEndJSP="false">
 		<description>Deprecated as of 6.2, replaced by <![CDATA[<code>aui:col</code>]]>.</description>
 		<attributes>
 			<attribute>
@@ -515,7 +515,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Fieldset" bodyContent="true">
+	<component name="Fieldset" bodyContent="true" writeEndJSP="false">
 		<description>Creates a <![CDATA[<code>&lt;div&gt;</code>]]> tag to group related form elements and offer additional styling.</description>
 		<attributes>
 			<attribute>
@@ -960,7 +960,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Layout" bodyContent="true">
+	<component name="Layout" bodyContent="true" writeEndJSP="false">
 		<description>Deprecated as of 6.2, with no replacement.</description>
 		<attributes>
 			<attribute>
@@ -1096,7 +1096,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="NavItem" bodyContent="true">
+	<component name="NavItem" bodyContent="true" writeStartJSP="false">
 		<description>Creates a navigation item for using in an <![CDATA[<code>&lt;aui:nav&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>
@@ -1233,7 +1233,7 @@
 			</attribute>
 		</attributes>
 	</component>
-	<component name="Option" bodyContent="true">
+	<component name="Option" bodyContent="true" writeEndJSP="false">
 		<description>Creates an option component for using in an <![CDATA[<code>&lt;aui:select&gt;</code>]]> component.</description>
 		<attributes>
 			<attribute>

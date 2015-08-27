@@ -52,21 +52,21 @@ public class JSLoaderModulesPortalWebResources {
 	}
 
 	@Reference
-	protected void setJsBundleConfigTracker(
+	protected void setJSBundleConfigTracker(
 		JSBundleConfigTracker jsBundleConfigTracker) {
 
 		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
 	@Reference
-	protected void setJsLoaderModulesServlet(
+	protected void setJSLoaderModulesServlet(
 		JSLoaderModulesServlet jsLoaderModulesServlet) {
 
 		_jsLoaderModulesServlet = jsLoaderModulesServlet;
 	}
 
 	@Reference
-	protected void setJsLoaderModulesTracker(
+	protected void setJSLoaderModulesTracker(
 		JSLoaderModulesTracker jsLoaderModulesTracker) {
 
 		_jsLoaderModulesTracker = jsLoaderModulesTracker;

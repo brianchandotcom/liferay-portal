@@ -1054,6 +1054,8 @@
 		<echo file="create-header.sql">use master
 dump transaction master with no_log
 go
+alter database master on master=232
+go
 drop database lportal
 go
 exec sp_configure 'lock scheme', 0, datarows

@@ -61,7 +61,7 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid definition." />
 	</command>
 
-	<command name="AddNestedDataDefinitionAndAssertFieldNamesNotDuplicated" priority="3">
+	<command name="ViewCannotSaveWithDuplicateFieldNames" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>

@@ -149,6 +149,14 @@
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 	</command>
 
+	<command name="editFieldLabelNested">
+		<execute macro="DynamicDataMapping#editFieldSettingsNested" />
+
+		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" />
+		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldFieldLabelNested}" />
+		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+	</command>
+
 	<command name="editFieldLocalizable">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
@@ -196,6 +204,14 @@
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD_ALERT" value1="Please enter only alphanumeric characters." />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
+	</command>
+
+	<command name="editFieldNameNested">
+		<execute macro="DynamicDataMapping#editFieldSettingsNested" />
+
+		<execute function="DoubleClick" locator1="DDMEditStructure#SETTINGS_NAME" />
+		<execute function="Type" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD" value1="${fieldName}" />
+		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
 	</command>
 
 	<command name="editFieldNestedWithDuplicateName">
@@ -354,6 +370,11 @@
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
 		<execute function="DoubleClick" locator1="DDMEditStructure#FORM_FIELD" />
+		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_LINK" value1="Settings" />
+	</command>
+
+	<command name="editFieldSettingsNested">
+		<execute function="DoubleClick" locator1="DDMEditStructure#FORM_FIELD_2" />
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_LINK" value1="Settings" />
 	</command>
 

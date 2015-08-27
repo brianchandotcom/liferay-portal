@@ -432,9 +432,17 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 
 		mockServletContext.setContextPath("/loader");
 
+		jsLoaderModulesServlet.init(new MockServletConfig(mockServletContext));
 		jsLoaderModulesServlet.setDetails(
 			Converter.cnv(Details.class, properties));
-		jsLoaderModulesServlet.init(new MockServletConfig(mockServletContext));
+
+		JSBundleConfigTracker jsBundleConfigTracker =
+			new JSBundleConfigTracker();
+
+		jsBundleConfigTracker.setDetails(
+			Converter.cnv(Details.class, properties));
+
+		jsLoaderModulesServlet.setJsBundleConfigTracker(jsBundleConfigTracker);
 
 		JSLoaderModulesTracker jsLoaderModulesTracker =
 			new JSLoaderModulesTracker();
@@ -444,14 +452,6 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 
 		jsLoaderModulesServlet.setJsLoaderModulesTracker(
 			jsLoaderModulesTracker);
-
-		JSBundleConfigTracker jsBundleConfigTracker =
-			new JSBundleConfigTracker();
-
-		jsBundleConfigTracker.setDetails(
-			Converter.cnv(Details.class, properties));
-
-		jsLoaderModulesServlet.setJsBundleConfigTracker(jsBundleConfigTracker);
 
 		return jsLoaderModulesServlet;
 	}

@@ -198,6 +198,22 @@
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
+	<command name="editFieldNestedWithDuplicateName">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<execute macro="DynamicDataMapping#editFieldNameNested">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#assertFieldNameErrorMessage" />
+
+		<execute macro="DynamicDataMapping#editFieldNameNested">
+			<var name="fieldName" value="${fieldNameEdit}" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
+	</command>
+
 	<command name="editFieldOptions">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 

@@ -17,7 +17,6 @@ package com.liferay.portal.cache.io;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -74,7 +73,7 @@ public class SerializableObjectWrapper implements Serializable {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassLoaderUtil.setContextClassLoader(_CLASS_LOADER);
+		currentThread.setContextClassLoader(_CLASS_LOADER);
 
 		try {
 			int size = objectInputStream.readInt();
@@ -88,7 +87,7 @@ public class SerializableObjectWrapper implements Serializable {
 			_serializable = deserializer.readObject();
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -99,7 +98,7 @@ public class SerializableObjectWrapper implements Serializable {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassLoaderUtil.setContextClassLoader(_CLASS_LOADER);
+		currentThread.setContextClassLoader(_CLASS_LOADER);
 
 		try {
 			Serializer serializer = new Serializer();
@@ -114,7 +113,7 @@ public class SerializableObjectWrapper implements Serializable {
 				byteBuffer.remaining());
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 
@@ -123,12 +122,9 @@ public class SerializableObjectWrapper implements Serializable {
 	static {
 		Thread currentThread = Thread.currentThread();
 
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		Class<?> clazz = SerializableObjectWrapper.class;
-
 		_CLASS_LOADER = AggregateClassLoader.getAggregateClassLoader(
-			contextClassLoader, clazz.getClassLoader());
+			currentThread.getContextClassLoader(),
+			SerializableObjectWrapper.class.getClassLoader());
 	}
 
 	private Serializable _serializable;

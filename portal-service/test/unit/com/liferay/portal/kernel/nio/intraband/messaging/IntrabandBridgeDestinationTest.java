@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.Registry;
@@ -198,7 +197,7 @@ public class IntrabandBridgeDestinationTest {
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-		ClassLoaderUtil.setContextClassLoader(
+		currentThread.setContextClassLoader(
 			new ClassLoader() {
 
 				@Override
@@ -227,7 +226,7 @@ public class IntrabandBridgeDestinationTest {
 				ClassNotFoundException.class, throwable.getClass());
 		}
 		finally {
-			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 
 		// Throw runtime exception

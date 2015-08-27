@@ -101,7 +101,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 
 	<div class="well">
 		<c:choose>
-			<c:when test="<%= shoppingGroupServiceSettings.usePayPal() %>">
+			<c:when test="<%= shoppingGroupServiceOverriddenConfiguration.usePayPal() %>">
 				<aui:model-context bean="<%= order %>" model="<%= ShoppingOrder.class %>" />
 
 				<aui:fieldset label="PayPal">
@@ -131,7 +131,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 						<aui:field-wrapper label="paypal-order">
 
 							<%
-							String payPalLinkOpen = "<a href=\"" + ShoppingUtil.getPayPalRedirectURL(shoppingGroupServiceSettings, order, ShoppingUtil.calculateTotal(order), ShoppingUtil.getPayPalReturnURL(renderResponse.createActionURL(), order), ShoppingUtil.getPayPalNotifyURL(themeDisplay)) + "\"><strong><u>";
+							String payPalLinkOpen = "<a href=\"" + ShoppingUtil.getPayPalRedirectURL(shoppingGroupServiceOverriddenConfiguration, order, ShoppingUtil.calculateTotal(order), ShoppingUtil.getPayPalReturnURL(renderResponse.createActionURL(), order), ShoppingUtil.getPayPalNotifyURL(themeDisplay)) + "\"><strong><u>";
 							String payPalLinkClose = "</u></strong></a>";
 							%>
 
@@ -355,7 +355,7 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 
 	<c:if test="<%= !windowState.equals(LiferayWindowState.POP_UP) %>">
 		<aui:button-row>
-			<c:if test="<%= shoppingGroupServiceSettings.usePayPal() %>">
+			<c:if test="<%= shoppingGroupServiceOverriddenConfiguration.usePayPal() %>">
 				<aui:button onClick='<%= renderResponse.getNamespace() + "saveOrder();" %>' value="save" />
 			</c:if>
 

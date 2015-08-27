@@ -28,10 +28,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator" %><%@
-page import="com.liferay.portal.kernel.settings.SettingsFactory" %><%@
-page import="com.liferay.portal.kernel.settings.SettingsFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -60,9 +59,7 @@ page import="java.util.Map" %>
 <liferay-theme:defineObjects />
 
 <%
-SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
-
-SocialUserStatisticsPortletInstanceConfiguration socialUserStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(SocialUserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
+SocialUserStatisticsPortletInstanceConfiguration socialUserStatisticsPortletInstanceConfiguration = ConfigurationFactoryUtil.getConfiguration(SocialUserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
 %>
 
 <%@ include file="/init-ext.jsp" %>

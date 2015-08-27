@@ -52,9 +52,9 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 
 		<liferay-ui:section>
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= wikiGroupServiceSettings.emailFromName() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="name" name="preferences--emailFromName--" value="<%= wikiGroupServiceOverriddenConfiguration.emailFromName() %>" />
 
-				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= wikiGroupServiceSettings.emailFromAddress() %>" />
+				<aui:input cssClass="lfr-input-text-container" label="address" name="preferences--emailFromAddress--" value="<%= wikiGroupServiceOverriddenConfiguration.emailFromAddress() %>" />
 			</aui:fieldset>
 
 			<aui:fieldset cssClass="definition-of-terms">
@@ -91,31 +91,31 @@ MailTemplatesHelper mailTemplatesHelper = new MailTemplatesHelper(wikiRequestHel
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= wikiGroupServiceSettings.emailPageAddedBodyXml() %>"
+				emailBody="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedBodyXml() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
-				emailEnabled="<%= wikiGroupServiceSettings.emailPageAddedEnabled() %>"
+				emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() %>"
 				emailParam="emailPageAdded"
-				emailSubject="<%= wikiGroupServiceSettings.emailPageAddedSubjectXml() %>"
+				emailSubject="<%= wikiGroupServiceOverriddenConfiguration.emailPageAddedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<liferay-ui:section>
 			<liferay-ui:email-notification-settings
-				emailBody="<%= wikiGroupServiceSettings.emailPageUpdatedBodyXml() %>"
+				emailBody="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedBodyXml() %>"
 				emailDefinitionTerms="<%= definitionTerms %>"
-				emailEnabled="<%= wikiGroupServiceSettings.emailPageUpdatedEnabled() %>"
+				emailEnabled="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled() %>"
 				emailParam="emailPageUpdated"
-				emailSubject="<%= wikiGroupServiceSettings.emailPageUpdatedSubjectXml() %>"
+				emailSubject="<%= wikiGroupServiceOverriddenConfiguration.emailPageUpdatedSubjectXml() %>"
 			/>
 		</liferay-ui:section>
 
 		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
 			<liferay-ui:section>
 				<liferay-ui:rss-settings
-					delta="<%= GetterUtil.getInteger(wikiGroupServiceSettings.rssDelta()) %>"
-					displayStyle="<%= wikiGroupServiceSettings.rssDisplayStyle() %>"
-					enabled="<%= wikiGroupServiceSettings.enableRss() %>"
-					feedType="<%= wikiGroupServiceSettings.rssFeedType() %>"
+					delta="<%= GetterUtil.getInteger(wikiGroupServiceOverriddenConfiguration.rssDelta()) %>"
+					displayStyle="<%= wikiGroupServiceOverriddenConfiguration.rssDisplayStyle() %>"
+					enabled="<%= wikiGroupServiceOverriddenConfiguration.enableRss() %>"
+					feedType="<%= wikiGroupServiceOverriddenConfiguration.rssFeedType() %>"
 				/>
 			</liferay-ui:section>
 		</c:if>

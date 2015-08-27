@@ -66,7 +66,7 @@ public class SettingsFactoryUtil {
 		FallbackKeys fallbackKeys) {
 
 		getSettingsFactory().registerSettingsMetadata(
-			settingsClass, null, fallbackKeys);
+			settingsClass, configurationBean, fallbackKeys);
 	}
 
 	private static final ServiceTrackerList<SettingsFactory>

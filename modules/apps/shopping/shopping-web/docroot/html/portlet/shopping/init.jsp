@@ -31,11 +31,11 @@ page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
 page import="com.liferay.portal.kernel.settings.GroupServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
-page import="com.liferay.portal.kernel.settings.SettingsFactory" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarUtil" %><%@
@@ -70,6 +70,7 @@ page import="com.liferay.portal.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portlet.PortalPreferences" %><%@
 page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
+page import="com.liferay.shopping.configuration.ShoppingGroupServiceOverriddenConfiguration" %><%@
 page import="com.liferay.shopping.constants.ShoppingConstants" %><%@
 page import="com.liferay.shopping.exception.BillingCityException" %><%@
 page import="com.liferay.shopping.exception.BillingCountryException" %><%@
@@ -148,14 +149,12 @@ page import="com.liferay.shopping.service.permission.ShoppingCategoryPermission"
 page import="com.liferay.shopping.service.permission.ShoppingItemPermission" %><%@
 page import="com.liferay.shopping.service.permission.ShoppingOrderPermission" %><%@
 page import="com.liferay.shopping.service.permission.ShoppingPermission" %><%@
-page import="com.liferay.shopping.settings.ShoppingGroupServiceSettings" %><%@
 page import="com.liferay.shopping.util.ShoppingUtil" %><%@
 page import="com.liferay.shopping.web.search.CouponDisplayTerms" %><%@
 page import="com.liferay.shopping.web.search.CouponSearch" %><%@
 page import="com.liferay.shopping.web.search.OrderDisplayTerms" %><%@
 page import="com.liferay.shopping.web.search.OrderSearch" %><%@
 page import="com.liferay.shopping.web.search.OrderSearchTerms" %><%@
-page import="com.liferay.shopping.web.util.ShoppingWebComponentProvider" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.CreditCard" %><%@
 page import="com.liferay.util.StateUtil" %>
@@ -188,13 +187,9 @@ String currentURL = currentURLObj.toString();
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-ShoppingWebComponentProvider shoppingWebComponentProvider = ShoppingWebComponentProvider.getShoppingWebComponentProvider();
+ShoppingGroupServiceOverriddenConfiguration shoppingGroupServiceOverriddenConfiguration = ConfigurationFactoryUtil.getConfiguration(ShoppingGroupServiceOverriddenConfiguration.class, new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME));
 
-SettingsFactory settingsFactory = shoppingWebComponentProvider.getSettingsFactory();
-
-ShoppingGroupServiceSettings shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceSettings.class, new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME));
-
-Currency currency = Currency.getInstance(shoppingGroupServiceSettings.getCurrencyId());
+Currency currency = Currency.getInstance(shoppingGroupServiceOverriddenConfiguration.getCurrencyId());
 
 NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(locale);
 

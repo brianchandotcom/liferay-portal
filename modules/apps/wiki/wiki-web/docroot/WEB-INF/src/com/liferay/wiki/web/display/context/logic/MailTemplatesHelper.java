@@ -17,7 +17,7 @@ package com.liferay.wiki.web.display.context.logic;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.model.Company;
-import com.liferay.wiki.settings.WikiGroupServiceSettings;
+import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 import java.util.LinkedHashMap;
@@ -31,8 +31,8 @@ public class MailTemplatesHelper {
 	public MailTemplatesHelper(WikiRequestHelper wikiRequestHelper) {
 		_wikiRequestHelper = wikiRequestHelper;
 
-		_wikiGroupServiceSettings =
-			wikiRequestHelper.getWikiGroupServiceSettings();
+		_wikiGroupServiceOverriddenConfiguration =
+			wikiRequestHelper.getWikiGroupServiceOverriddenConfiguration();
 	}
 
 	public Map<String, String> getEmailFromDefinitionTerms() {
@@ -102,10 +102,12 @@ public class MailTemplatesHelper {
 					"previous-version"));
 		definitionTerms.put(
 			"[$FROM_ADDRESS$]",
-			HtmlUtil.escape(_wikiGroupServiceSettings.emailFromAddress()));
+			HtmlUtil.escape(
+				_wikiGroupServiceOverriddenConfiguration.emailFromAddress()));
 		definitionTerms.put(
 			"[$FROM_NAME$]",
-			HtmlUtil.escape(_wikiGroupServiceSettings.emailFromName()));
+			HtmlUtil.escape(
+				_wikiGroupServiceOverriddenConfiguration.emailFromName()));
 		definitionTerms.put(
 			"[$NODE_NAME$]",
 			LanguageUtil.get(
@@ -175,7 +177,8 @@ public class MailTemplatesHelper {
 		return definitionTerms;
 	}
 
-	private final WikiGroupServiceSettings _wikiGroupServiceSettings;
+	private final WikiGroupServiceOverriddenConfiguration
+		_wikiGroupServiceOverriddenConfiguration;
 	private final WikiRequestHelper _wikiRequestHelper;
 
 }

@@ -609,6 +609,17 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="viewFieldNameNested">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<execute macro="DynamicDataMapping#editFieldSettingsNested" />
+
+		<execute function="AssertTextNotEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${fieldName}" />
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${fieldNameNested}" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
+	</command>
+
 	<command name="viewFieldOptionsCmd">
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 		<var name="key_fieldName" value="${fieldName}" />

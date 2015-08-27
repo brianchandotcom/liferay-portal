@@ -135,7 +135,8 @@ CKEDITOR.plugins.link = {
 	}
 };
 
-CKEDITOR.unlinkCommand = function() {};
+CKEDITOR.unlinkCommand = function() {
+};
 
 CKEDITOR.unlinkCommand.prototype = {
 	startDisabled: true,

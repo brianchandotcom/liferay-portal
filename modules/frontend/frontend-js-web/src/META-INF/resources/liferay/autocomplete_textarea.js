@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-autocomplete-textarea',
 	function(A) {
-		var AArray = A.Array;
 		var KeyMap = A.Event.KeyMap;
 		var Lang = A.Lang;
 
@@ -13,7 +12,8 @@ AUI.add(
 
 		var STR_SPACE = ' ';
 
-		var AutoCompleteTextarea = function() {};
+		var AutoCompleteTextarea = function() {
+		};
 
 		AutoCompleteTextarea.prototype = {
 			initializer: function() {

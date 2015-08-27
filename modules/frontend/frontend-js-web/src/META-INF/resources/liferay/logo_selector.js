@@ -18,7 +18,8 @@ AUI.add(
 
 					editLogoFn: {
 						setter: function(value) {
-							var fn = function() {};
+							var fn = function() {
+							};
 
 							if (Lang.isFunction(window[value])) {
 								fn = window[value] || fn;

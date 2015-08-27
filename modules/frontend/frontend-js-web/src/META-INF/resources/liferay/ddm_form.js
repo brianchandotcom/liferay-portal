@@ -27,7 +27,8 @@ AUI.add(
 			return node && (node._node || node.nodeType);
 		};
 
-		var DDMPortletSupport = function() {};
+		var DDMPortletSupport = function() {
+		};
 
 		DDMPortletSupport.ATTRS = {
 			doAsGroupId: {
@@ -43,7 +44,8 @@ AUI.add(
 			}
 		};
 
-		var FieldsSupport = function() {};
+		var FieldsSupport = function() {
+		};
 
 		FieldsSupport.ATTRS = {
 			container: {

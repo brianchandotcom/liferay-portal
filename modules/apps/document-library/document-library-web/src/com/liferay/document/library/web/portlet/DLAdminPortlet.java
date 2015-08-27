@@ -31,7 +31,6 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-document-library",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.footer-portlet-javascript=/document_library/js/modules.js",
 		"com.liferay.portlet.header-portlet-css=/document_library/css/main.css",
 		"com.liferay.portlet.icon=/document_library/icons/document_library.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",

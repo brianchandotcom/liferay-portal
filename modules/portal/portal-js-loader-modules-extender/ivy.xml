@@ -18,6 +18,7 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="json" org="org.json" rev="20140107" />
+		<dependency name="org.apache.felix.utils" org="org.apache.felix" rev="1.6.0" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="6.0.0" />
 	</dependencies>

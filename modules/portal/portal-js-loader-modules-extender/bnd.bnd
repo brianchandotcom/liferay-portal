@@ -7,5 +7,6 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	@lib/json.jar,\
+	@lib/org.apache.felix.utils.jar!/org/apache/felix/utils/log/*,\
 	@../../../lib/portal/bnd.jar!/aQute/lib/base64/*,\
 	@../../../lib/portal/bnd.jar!/aQute/lib/converter/*

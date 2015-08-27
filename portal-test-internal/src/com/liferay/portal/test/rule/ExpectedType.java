@@ -19,6 +19,6 @@ package com.liferay.portal.test.rule;
  */
 public enum ExpectedType {
 
-	EXACT, POSTFIX, PREFIX
+	CONTAINS, EXACT, POSTFIX, PREFIX
 
 }

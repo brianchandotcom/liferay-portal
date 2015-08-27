@@ -194,7 +194,12 @@ public class LogAssertionTestCallback
 
 			ExpectedType expectedType = expectedLog.expectedType();
 
-			if (expectedType == ExpectedType.EXACT) {
+			if (expectedType == ExpectedType.CONTAINS) {
+				if (renderedMessage.contains(expectedLog.expectedLog())) {
+					return true;
+				}
+			}
+			else if (expectedType == ExpectedType.EXACT) {
 				if (renderedMessage.equals(expectedLog.expectedLog())) {
 					return true;
 				}

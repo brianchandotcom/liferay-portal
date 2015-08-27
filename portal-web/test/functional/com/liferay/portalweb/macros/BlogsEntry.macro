@@ -193,9 +193,9 @@
 	</command>
 
 	<command name="addCustomAbstract">
-		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB_CUSTOM_ABSTRACT_RADIO" />
+		<execute function="Click" locator1="Radio#CUSTOM_ABSTRACT" />
 
-		<execute function="Type#typeAlloyEditor" locator1="BlogsEditEntry#SETTINGS_TAB_CUSTOM_ABSTRACT_FIELD" value1="${entryAbstractDescription}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${entryAbstractDescription}" />
 	</command>
 
 	<command name="addDefaultAbstract">

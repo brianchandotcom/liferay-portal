@@ -85,14 +85,14 @@
 		<if>
 			<equals arg1="${markAsQuestion}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="MessageBoardsEditMessage#MARK_AS_A_QUESTION_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#MARK_AS_A_QUESTION" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="MessageBoardsEditMessage#ANONYMOUS_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#ANONYMOUS" />
 			</then>
 		</if>
 
@@ -640,7 +640,7 @@
 		<if>
 			<equals arg1="${anonymous}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="MessageBoardsEditMessage#ANONYMOUS_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#ANONYMOUS" />
 			</then>
 		</if>
 
@@ -785,7 +785,7 @@
 	<command name="viewAnonymousPostingCheckboxCP">
 		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute function="AssertElementPresent" locator1="MessageBoardsEditMessage#ANONYMOUS_CHECKBOX" />
+		<execute function="AssertElementPresent" locator1="Checkbox#ANONYMOUS" />
 	</command>
 
 	<command name="viewAnswerCP">
@@ -872,21 +872,21 @@
 	<command name="viewMarkAsQuestionCheckedCP">
 		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute function="AssertChecked" locator1="MessageBoardsEditMessage#MARK_AS_A_QUESTION_CHECKBOX" />
+		<execute function="AssertChecked" locator1="Checkbox#MARK_AS_A_QUESTION" />
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 	</command>
 
 	<command name="viewMarkAsQuestionNotCheckedCP">
 		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute function="AssertNotChecked" locator1="MessageBoardsEditMessage#MARK_AS_A_QUESTION_CHECKBOX" />
+		<execute function="AssertNotChecked" locator1="Checkbox#MARK_AS_A_QUESTION" />
 		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
 	</command>
 
 	<command name="viewNoAnonymousPostingCheckboxCP">
 		<execute function="AssertClick" locator1="MessageBoards#POST_NEW_THREAD_BUTTON" value1="Post New Thread" />
 
-		<execute function="AssertElementNotPresent" locator1="MessageBoardsEditMessage#ANONYMOUS_CHECKBOX" />
+		<execute function="AssertElementNotPresent" locator1="Checkbox#ANONYMOUS" />
 	</command>
 
 	<command name="viewNoPG">

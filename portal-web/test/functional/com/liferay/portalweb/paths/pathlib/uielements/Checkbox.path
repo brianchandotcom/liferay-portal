@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANONYMOUS</td>
+	<td>//input[contains(@id,'anonymous')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLOGS_ENTRY</td>
 	<td>//input[contains(@id,'BlogsEntry')]</td>
 	<td></td>
@@ -186,6 +191,11 @@
 <tr>
 	<td>MAILING</td>
 	<td>//label[contains(.,'Mailing')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MARK_AS_A_QUESTION</td>
+	<td>//label[contains(.,'Mark as a Question')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

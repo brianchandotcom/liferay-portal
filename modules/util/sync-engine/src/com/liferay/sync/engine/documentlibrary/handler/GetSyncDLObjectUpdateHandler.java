@@ -18,6 +18,7 @@ import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
 import com.liferay.sync.engine.documentlibrary.model.SyncDLObjectUpdate;
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
+import com.liferay.sync.engine.documentlibrary.util.comparator.SyncFileComparator;
 import com.liferay.sync.engine.filesystem.Watcher;
 import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
 import com.liferay.sync.engine.model.SyncAccount;
@@ -47,6 +48,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -176,8 +178,16 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				response, SyncDLObjectUpdate.class);
 		}
 
-		for (SyncFile targetSyncFile : _syncDLObjectUpdate.getSyncDLObjects()) {
-			processSyncFile(targetSyncFile);
+		List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncDLObjects();
+
+		if (syncFiles.isEmpty()) {
+			return;
+		}
+
+		Collections.sort(syncFiles, _syncFileComparator);
+
+		for (SyncFile syncFile : syncFiles) {
+			processSyncFile(syncFile);
 		}
 
 		if (getParameterValue("parentFolderId") == null) {
@@ -665,6 +675,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		new HashMap<>();
 	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(5);
+	private static final Comparator<SyncFile> _syncFileComparator =
+		new SyncFileComparator();
 
 	private final ScheduledFuture<?> _scheduledFuture;
 	private SyncDLObjectUpdate _syncDLObjectUpdate;

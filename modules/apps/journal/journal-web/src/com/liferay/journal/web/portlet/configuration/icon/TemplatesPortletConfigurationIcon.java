@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.web.portlet.configuration;
+package com.liferay.journal.web.portlet.configuration.icon;
 
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.model.User;
 import com.liferay.portal.theme.PortletDisplay;
 

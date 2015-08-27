@@ -13,7 +13,8 @@ AUI.add(
 
 		var STR_SPACE = ' ';
 
-		var AutoCompleteTextarea = function() {};
+		var AutoCompleteTextarea = function() {
+		};
 
 		AutoCompleteTextarea.prototype = {
 			initializer: function() {

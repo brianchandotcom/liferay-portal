@@ -32,7 +32,8 @@ AUI.add(
 				'<span class="icon icon-loading lfr-tree-loading-icon"></span>' +
 			'</div>';
 
-		var LayoutsTreeBase = function() {};
+		var LayoutsTreeBase = function() {
+		};
 
 		LayoutsTreeBase.ATTRS = {
 			incomplete: {

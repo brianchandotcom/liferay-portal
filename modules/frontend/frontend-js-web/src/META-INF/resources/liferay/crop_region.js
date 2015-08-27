@@ -3,7 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var CropRegion = function() {};
+		var CropRegion = function() {
+		};
 
 		CropRegion.prototype = {
 			_getCropRegion: function(imagePreview, region) {

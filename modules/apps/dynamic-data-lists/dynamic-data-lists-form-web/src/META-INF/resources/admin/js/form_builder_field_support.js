@@ -17,7 +17,8 @@ AUI.add(
 
 		var TPL_SETTINGS_FORM = '<form action="javascript:;"><button class="hide" type="submit" /></form>';
 
-		var FormBuilderFieldSupport = function() {};
+		var FormBuilderFieldSupport = function() {
+		};
 
 		FormBuilderFieldSupport.ATTRS = {
 			builder: {

@@ -7,7 +7,8 @@ AUI.add(
 
 		var STR_SUFFIX_KB = 'suffixKB';
 
-		var StorageFormatter = function() {};
+		var StorageFormatter = function() {
+		};
 
 		StorageFormatter.NAME = 'storageformatter';
 

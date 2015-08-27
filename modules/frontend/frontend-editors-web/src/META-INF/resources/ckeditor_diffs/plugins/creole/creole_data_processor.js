@@ -47,7 +47,8 @@
 
 	var attachmentURLPrefix;
 
-	var CreoleDataProcessor = function() {};
+	var CreoleDataProcessor = function() {
+	};
 
 	CreoleDataProcessor.prototype = {
 		constructor: CreoleDataProcessor,

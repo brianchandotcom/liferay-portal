@@ -1,7 +1,8 @@
 (function() {
 	var A = AUI().use('oop');
 
-	var emptyFn = function() {};
+	var emptyFn = function() {
+	};
 
 	var usedModules = {};
 

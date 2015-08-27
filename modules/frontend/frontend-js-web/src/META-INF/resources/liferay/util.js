@@ -36,7 +36,8 @@
 				}
 			);
 
-			Util.addInputCancel = function() {};
+			Util.addInputCancel = function() {
+			};
 		},
 
 		addParams: function(params, url) {

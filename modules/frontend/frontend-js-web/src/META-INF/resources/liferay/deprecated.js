@@ -112,7 +112,8 @@
 			}
 		);
 
-		Util.addInputFocus = function() {};
+		Util.addInputFocus = function() {
+		};
 	};
 
 	Util.addInputType = function(el) {

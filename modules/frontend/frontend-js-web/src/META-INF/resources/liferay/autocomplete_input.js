@@ -20,7 +20,8 @@ AUI.add(
 			resultHighlighter: STR_PHRASE_MATCH
 		};
 
-		var AutoCompleteInputBase = function() {};
+		var AutoCompleteInputBase = function() {
+		};
 
 		AutoCompleteInputBase.ATTRS = {
 			caretAtTerm: {

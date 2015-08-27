@@ -49,7 +49,8 @@ AUI.add(
 			}
 		);
 
-		var ReadOnlyFormBuilderSupport = function() {};
+		var ReadOnlyFormBuilderSupport = function() {
+		};
 
 		ReadOnlyFormBuilderSupport.ATTRS = {
 			readOnly: {

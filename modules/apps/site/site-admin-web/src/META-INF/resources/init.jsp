@@ -123,6 +123,7 @@ page import="com.liferay.site.admin.web.constants.SiteAdminPortletKeys" %><%@
 page import="com.liferay.util.PKParser" %>
 
 <%@ page import="java.util.ArrayList" %><%@
+page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@

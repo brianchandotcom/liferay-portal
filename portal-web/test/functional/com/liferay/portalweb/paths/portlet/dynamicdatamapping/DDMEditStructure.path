@@ -318,6 +318,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_2</td>
+	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div/label)[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_BOOLEAN_FIELD_1</td>
 	<td>xpath=(//div[contains(@class,'form-builder-checkbox-field-content')])[1]</td>
 	<td></td>

@@ -55,7 +55,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = {JSLoaderModulesServlet.class, Servlet.class}
 )
-public class JSLoaderModulesServlet extends HttpServlet implements Servlet {
+public class JSLoaderModulesServlet extends HttpServlet {
 
 	@Activate
 	@Modified

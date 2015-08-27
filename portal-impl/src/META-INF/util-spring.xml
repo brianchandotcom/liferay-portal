@@ -195,7 +195,7 @@
 			<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPool" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconTracker" class="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconTracker" />
+	<bean id="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker" class="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker" />
 	<bean id="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" class="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" />
 	<bean id="com.liferay.portal.kernel.portlet.PortletContainerUtil" class="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />

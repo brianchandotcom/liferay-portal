@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet.configuration;
+package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

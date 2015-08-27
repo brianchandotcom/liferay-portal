@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.configuration.icon.close;
 
-import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.theme.PortletDisplay;
 
 import javax.servlet.http.HttpServletRequest;

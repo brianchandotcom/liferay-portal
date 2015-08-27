@@ -916,7 +916,7 @@
 						<run-build-selenium />
 
 						<if>
-							<equals arg1="${TEST_PORTAL_WEB}" arg2="true" />
+							<equals arg1="${env.TEST_PORTAL_WEB}" arg2="true" />
 							<then>
 								<run-source-formatter />
 							</then>

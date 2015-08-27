@@ -99,7 +99,7 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 
 		HotDeployEvent hotDeployEvent = getHotDeployEvent(
 			"classpath:/com/liferay/application/list/deploy/hot/test" +
-				"/dependencies/no-control-panel-entry-liferay-portlet.xml");
+				"/dependencies/control-panel-entry-liferay-portlet.xml");
 
 		_hotDeployListener.invokeDeploy(hotDeployEvent);
 
@@ -115,7 +115,7 @@ public class LegacyPortletPanelAppHotDeployListenerTest {
 
 		HotDeployEvent hotDeployEvent = getHotDeployEvent(
 			"classpath:/com/liferay/application/list/deploy/hot/test" +
-				"/dependencies/control-panel-entry-liferay-portlet.xml");
+				"/dependencies/no-control-panel-entry-liferay-portlet.xml");
 
 		_hotDeployListener.invokeDeploy(hotDeployEvent);
 

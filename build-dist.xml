@@ -2060,10 +2060,10 @@ rerun this task.
 		/>
 
 		<if>
-			<equals arg1="${app.server.weblogic.version.build}" arg2="1212" />
+			<equals arg1="${app.server.weblogic.version.build}" arg2="1213" />
 			<then>
 				<move todir="${app.server.weblogic.dir}">
-					<fileset dir="${app.server.weblogic.dir}/wls12120" />
+					<fileset dir="${app.server.weblogic.dir}/wls12130" />
 				</move>
 
 				<property name="app.server.weblogic.configure.silent" value="-silent" />

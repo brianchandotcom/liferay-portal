@@ -198,4 +198,46 @@
 			<var name="webContentTranslationLanguage" value="español (España)" />
 		</execute>
 	</command>
+
+	<command name="MoveCurrentLanguagesToAvailable" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="LanguagePortlet#moveLanguagesToAvailable" />
+
+		<execute macro="LanguagePortlet#moveLanguagesToCurrent">
+			<var name="currentLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewLanguagesAbsent">
+			<var name="missingLanguages" value="ARABIC,CHINESE,FRENCH,HUNGARIAN,JAPANESE,PORTUGUESE" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewLanguagesPresent">
+			<var name="currentLanguages" value="ENGLISH,GERMAN,SPANISH" />
+		</execute>
+	</command>
 </definition>

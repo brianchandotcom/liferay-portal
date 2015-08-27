@@ -19,17 +19,17 @@ buildscript {
 apply plugin: "com.liferay.poshi.runner"
 
 poshiRunner {
-	File poshiRunnerExtProperties = new File("portal-web/poshi-runner-ext.properties")
+	File poshiRunnerExtProperties = new File(project.properties["poshiRunnerExtProperties"])
 
 	if (poshiRunnerExtProperties.exists()) {
 		project.ext.testProperties = new Properties()
 
-		testProperties.load(new FileInputStream("portal-web/poshi-runner-ext.properties"))
+		testProperties.load(new FileInputStream(project.properties["poshiRunnerExtProperties"]))
 
 		setPoshiProperties testProperties
 	}
 
-	version = "1.0.12"
+	version = "1.0.14"
 }
 
 repositories {

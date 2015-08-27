@@ -5878,15 +5878,14 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-case-method-names">
-		<delete file="portal-web/poshi-runner-ext.properties" failonerror="false" />
+		<delete file="${test.ext.properties.file}" failonerror="false" />
 
-		<antcall target="prepare-poshi-runner-properties" inheritall="false">
-			<param name="test.ext.properties.file" value="portal-web/poshi-runner-ext.properties" />
-		</antcall>
+		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
 
 		<gradle-execute failonerror="false" task="writePoshiProperties">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
+			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 		</gradle-execute>
 
 		<move file="portal-web/test.case.method.names.properties" tofile="test.case.method.names.properties" />
@@ -5899,15 +5898,14 @@ if (ppstate.equals("normal")) {
 	<target name="record-test-generated-properties">
 		<fail message="Please set the property ${test.class}." unless="test.class" />
 
-		<delete file="portal-web/poshi-runner-ext.properties" failonerror="false" />
+		<delete file="${test.ext.properties.file}" failonerror="false" />
 
-		<antcall target="prepare-poshi-runner-properties" inheritall="false">
-			<param name="test.ext.properties.file" value="portal-web/poshi-runner-ext.properties" />
-		</antcall>
+		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
 
 		<gradle-execute failonerror="false" task="writePoshiProperties">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
+			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 		</gradle-execute>
 
 		<move file="portal-web/test.generated.properties" tofile="test.generated.properties" />
@@ -6149,19 +6147,19 @@ if (ppstate.equals("normal")) {
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
+			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 		</gradle-execute>
 	</target>
 
 	<target name="run-poshi-validation">
-		<delete file="portal-web/poshi-runner-ext.properties" failonerror="false" />
+		<delete file="${test.ext.properties.file}" failonerror="false" />
 
-		<antcall target="prepare-poshi-runner-properties" inheritall="false">
-			<param name="test.ext.properties.file" value="portal-web/poshi-runner-ext.properties" />
-		</antcall>
+		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
 
 		<gradle-execute failonerror="false" task="validatePoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
+			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 		</gradle-execute>
 	</target>
 

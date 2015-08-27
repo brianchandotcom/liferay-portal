@@ -378,7 +378,7 @@
 	</command>
 
 	<command name="editFieldSettingsNested">
-		<execute function="DoubleClick" locator1="DDMEditStructure#FORM_FIELD_2" />
+		<execute function="DoubleClick" locator1="DDMEditStructure#FORM_FIELD_NESTED" />
 		<execute function="AssertClick" locator1="DDMEditStructure#SETTINGS_LINK" value1="Settings" />
 	</command>
 

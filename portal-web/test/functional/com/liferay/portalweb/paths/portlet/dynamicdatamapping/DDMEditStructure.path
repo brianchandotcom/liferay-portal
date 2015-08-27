@@ -323,6 +323,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELD_NESTED</td>
+	<td>//div[contains(@class,'form-builder-drop-zone')]//div/label</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_BOOLEAN_FIELD_1</td>
 	<td>xpath=(//div[contains(@class,'form-builder-checkbox-field-content')])[1]</td>
 	<td></td>

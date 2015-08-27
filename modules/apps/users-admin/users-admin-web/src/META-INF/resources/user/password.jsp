@@ -65,7 +65,7 @@ else {
 
 <liferay-ui:error exception="<%= UserPasswordException.MustMatch.class %>" message="the-passwords-you-entered-do-not-match" />
 <liferay-ui:error exception="<%= UserPasswordException.MustMatchCurrentPassword.class %>" message="the-password-you-entered-for-the-current-password-does-not-match-your-current-password" />
-<liferay-ui:error exception="<%= UserPasswordException.MustNotBeChanged.class %>" message="your-password-cannot-be-changed" />
+<liferay-ui:error exception="<%= UserPasswordException.MustNotBeChanged.class %>" message="passwords-are-not-allowed-to-be-changed-under-the-current-password-policy" />
 
 <liferay-ui:error exception="<%= UserPasswordException.MustNotBeChangedYet.class %>">
 

@@ -23,14 +23,14 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 public interface ExportImportContentProcessor {
 
 	public String replaceExportContentReferences(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content,
-			boolean exportReferencedContent, boolean escapeContent)
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			String content, boolean exportReferencedContent,
+			boolean escapeContent)
 		throws Exception;
 
 	public String replaceImportContentReferences(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content)
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			String content)
 		throws Exception;
 
 }

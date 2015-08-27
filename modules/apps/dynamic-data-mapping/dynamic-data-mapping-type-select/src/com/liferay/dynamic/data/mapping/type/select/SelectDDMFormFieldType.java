@@ -36,22 +36,20 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Renato Rego
  */
-@Component(immediate = true, service = DDMFormFieldType.class)
+@Component(
+	immediate = true, 
+	property = {
+		"ddm.form.field.type.icon=icon-list",
+		"ddm.form.field.type.js.class=Liferay.DDM.Field.Select",
+		"ddm.form.field.type.js.module=liferay-ddm-form-field-select"
+	}, 
+	service = DDMFormFieldType.class
+)
 public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public DDMFormFieldRenderer getDDMFormFieldRenderer() {
 		return _ddmFormFieldRenderer;
-	}
-
-	@Override
-	public String getDDMFormFieldTypeJavaScriptClass() {
-		return "Liferay.DDM.Field.Select";
-	}
-
-	@Override
-	public String getDDMFormFieldTypeJavaScriptModule() {
-		return "liferay-ddm-form-field-select";
 	}
 
 	@Override
@@ -96,11 +94,6 @@ public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 
 		return new SelectDDMFormFieldValueRendererAccessor(
 			getDDMFormFieldValueAccessor(locale));
-	}
-
-	@Override
-	public String getIcon() {
-		return "icon-list";
 	}
 
 	@Override

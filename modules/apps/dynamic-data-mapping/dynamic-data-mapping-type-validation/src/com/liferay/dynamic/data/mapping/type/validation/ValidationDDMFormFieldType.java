@@ -29,22 +29,20 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Bruno Basto
  */
-@Component(immediate = true, service = DDMFormFieldType.class)
+@Component(
+	immediate = true, 
+	property = {
+		"ddm.form.field.type.js.class=Liferay.DDM.Field.Validation",
+		"ddm.form.field.type.js.module=liferay-ddm-form-field-validation",
+		"ddm.form.field.type.system=true"
+	}, 
+	service = DDMFormFieldType.class
+)
 public class ValidationDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public DDMFormFieldRenderer getDDMFormFieldRenderer() {
 		return _ddmFormFieldRenderer;
-	}
-
-	@Override
-	public String getDDMFormFieldTypeJavaScriptClass() {
-		return "Liferay.DDM.Field.Validation";
-	}
-
-	@Override
-	public String getDDMFormFieldTypeJavaScriptModule() {
-		return "liferay-ddm-form-field-validation";
 	}
 
 	@Override
@@ -71,11 +69,6 @@ public class ValidationDDMFormFieldType extends BaseDDMFormFieldType {
 	@Override
 	public String getName() {
 		return "validation";
-	}
-
-	@Override
-	public boolean isSystem() {
-		return true;
 	}
 
 	@Reference(service = ValidationDDMFormFieldRenderer.class, unbind = "-")

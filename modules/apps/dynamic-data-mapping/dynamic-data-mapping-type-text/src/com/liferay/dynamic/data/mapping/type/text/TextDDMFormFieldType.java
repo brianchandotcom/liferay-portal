@@ -30,7 +30,13 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormFieldType.class)
+@Component(
+	immediate = true, 
+	property = {
+		"ddm.form.field.type.icon=icon-font"
+	}, 
+	service = DDMFormFieldType.class
+)
 public class TextDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
@@ -58,11 +64,6 @@ public class TextDDMFormFieldType extends BaseDDMFormFieldType {
 
 		return new TextDDMFormFieldValueRendererAccessor(
 			getDDMFormFieldValueAccessor(locale));
-	}
-
-	@Override
-	public String getIcon() {
-		return "icon-font";
 	}
 
 	@Override

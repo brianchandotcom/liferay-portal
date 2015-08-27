@@ -31,22 +31,20 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Renato Rego
  */
-@Component(immediate = true, service = DDMFormFieldType.class)
+@Component(
+	immediate = true, 
+	property = {
+		"ddm.form.field.type.icon=icon-check",
+		"ddm.form.field.type.js.class=Liferay.DDM.Field.Checkbox",
+		"ddm.form.field.type.js.module=liferay-ddm-form-field-checkbox"
+	}, 
+	service = DDMFormFieldType.class
+)
 public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public DDMFormFieldRenderer getDDMFormFieldRenderer() {
 		return _ddmFormFieldRenderer;
-	}
-
-	@Override
-	public String getDDMFormFieldTypeJavaScriptClass() {
-		return "Liferay.DDM.Field.Checkbox";
-	}
-
-	@Override
-	public String getDDMFormFieldTypeJavaScriptModule() {
-		return "liferay-ddm-form-field-checkbox";
 	}
 
 	@Override
@@ -76,11 +74,6 @@ public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
 
 		return new CheckboxDDMFormFieldValueRendererAccessor(
 			getDDMFormFieldValueAccessor(locale));
-	}
-
-	@Override
-	public String getIcon() {
-		return "icon-check";
 	}
 
 	@Override

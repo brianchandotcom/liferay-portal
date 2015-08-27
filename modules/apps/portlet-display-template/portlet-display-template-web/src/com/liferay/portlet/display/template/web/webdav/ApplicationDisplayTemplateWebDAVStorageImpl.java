@@ -34,7 +34,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE},
+	property = {
+		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE,
+		"token=application_display_template"
+	},
 	service = WebDAVStorage.class
 )
 public class ApplicationDisplayTemplateWebDAVStorageImpl

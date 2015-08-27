@@ -1925,8 +1925,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 			ResourceBlockImpl.class, resourceBlock.getPrimaryKey(),
 			resourceBlock, false);
 
-		clearUniqueFindersCache((ResourceBlock)resourceBlockModelImpl);
-		cacheUniqueFindersCache((ResourceBlock)resourceBlockModelImpl, isNew);
+		clearUniqueFindersCache(resourceBlock);
+		cacheUniqueFindersCache(resourceBlock, isNew);
 
 		resourceBlock.resetOriginalValues();
 

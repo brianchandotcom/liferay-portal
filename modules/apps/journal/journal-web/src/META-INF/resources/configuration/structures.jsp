@@ -49,7 +49,7 @@ String taglibOnClick = renderResponse.getNamespace() + "openStructuresView()";
 				},
 				groupId: <%= scopeGroupId %>,
 				refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
-				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
+				refererWebDAVToken: '<%= WebDAVUtil.getStorageToken(portlet) %>',
 				showAncestorScopes: true,
 				showManageTemplates: true,
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'

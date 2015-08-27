@@ -8324,8 +8324,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		EntityCacheUtil.putResult(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupImpl.class, group.getPrimaryKey(), group, false);
 
-		clearUniqueFindersCache((Group)groupModelImpl);
-		cacheUniqueFindersCache((Group)groupModelImpl, isNew);
+		clearUniqueFindersCache(group);
+		cacheUniqueFindersCache(group, isNew);
 
 		group.resetOriginalValues();
 

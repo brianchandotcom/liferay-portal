@@ -2272,8 +2272,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			LayoutBranchImpl.class, layoutBranch.getPrimaryKey(), layoutBranch,
 			false);
 
-		clearUniqueFindersCache((LayoutBranch)layoutBranchModelImpl);
-		cacheUniqueFindersCache((LayoutBranch)layoutBranchModelImpl, isNew);
+		clearUniqueFindersCache(layoutBranch);
+		cacheUniqueFindersCache(layoutBranch, isNew);
 
 		layoutBranch.resetOriginalValues();
 

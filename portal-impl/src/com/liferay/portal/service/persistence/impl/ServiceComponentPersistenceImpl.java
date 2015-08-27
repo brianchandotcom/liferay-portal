@@ -1191,9 +1191,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			ServiceComponentImpl.class, serviceComponent.getPrimaryKey(),
 			serviceComponent, false);
 
-		clearUniqueFindersCache((ServiceComponent)serviceComponentModelImpl);
-		cacheUniqueFindersCache((ServiceComponent)serviceComponentModelImpl,
-			isNew);
+		clearUniqueFindersCache(serviceComponent);
+		cacheUniqueFindersCache(serviceComponent, isNew);
 
 		serviceComponent.resetOriginalValues();
 

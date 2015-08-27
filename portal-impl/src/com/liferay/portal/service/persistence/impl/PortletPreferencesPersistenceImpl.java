@@ -4751,9 +4751,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 			PortletPreferencesImpl.class, portletPreferences.getPrimaryKey(),
 			portletPreferences, false);
 
-		clearUniqueFindersCache((PortletPreferences)portletPreferencesModelImpl);
-		cacheUniqueFindersCache((PortletPreferences)portletPreferencesModelImpl,
-			isNew);
+		clearUniqueFindersCache(portletPreferences);
+		cacheUniqueFindersCache(portletPreferences, isNew);
 
 		portletPreferences.resetOriginalValues();
 

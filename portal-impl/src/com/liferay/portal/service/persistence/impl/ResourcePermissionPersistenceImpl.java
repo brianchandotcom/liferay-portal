@@ -5409,9 +5409,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 			ResourcePermissionImpl.class, resourcePermission.getPrimaryKey(),
 			resourcePermission, false);
 
-		clearUniqueFindersCache((ResourcePermission)resourcePermissionModelImpl);
-		cacheUniqueFindersCache((ResourcePermission)resourcePermissionModelImpl,
-			isNew);
+		clearUniqueFindersCache(resourcePermission);
+		cacheUniqueFindersCache(resourcePermission, isNew);
 
 		resourcePermission.resetOriginalValues();
 

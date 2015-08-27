@@ -44,7 +44,7 @@ String taglibOnClick = renderResponse.getNamespace() + "openTemplatesView()";
 				groupId: <%= scopeGroupId %>,
 				mvcPath: '/view_template.jsp',
 				refererPortletName: '<%= JournalPortletKeys.JOURNAL %>',
-				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
+				refererWebDAVToken: '<%= WebDAVUtil.getStorageToken(portlet) %>',
 				showAncestorScopes: true,
 				showHeader: false,
 				resourceClassNameId: '<%= PortalUtil.getClassNameId(JournalArticle.class) %>',

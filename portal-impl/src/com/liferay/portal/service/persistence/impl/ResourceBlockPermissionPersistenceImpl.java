@@ -1626,9 +1626,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			resourceBlockPermission.getPrimaryKey(), resourceBlockPermission,
 			false);
 
-		clearUniqueFindersCache((ResourceBlockPermission)resourceBlockPermissionModelImpl);
-		cacheUniqueFindersCache((ResourceBlockPermission)resourceBlockPermissionModelImpl,
-			isNew);
+		clearUniqueFindersCache(resourceBlockPermission);
+		cacheUniqueFindersCache(resourceBlockPermission, isNew);
 
 		resourceBlockPermission.resetOriginalValues();
 

@@ -2592,8 +2592,8 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 			RepositoryEntryImpl.class, repositoryEntry.getPrimaryKey(),
 			repositoryEntry, false);
 
-		clearUniqueFindersCache((RepositoryEntry)repositoryEntryModelImpl);
-		cacheUniqueFindersCache((RepositoryEntry)repositoryEntryModelImpl, isNew);
+		clearUniqueFindersCache(repositoryEntry);
+		cacheUniqueFindersCache(repositoryEntry, isNew);
 
 		repositoryEntry.resetOriginalValues();
 

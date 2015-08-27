@@ -1190,8 +1190,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			PluginSettingImpl.class, pluginSetting.getPrimaryKey(),
 			pluginSetting, false);
 
-		clearUniqueFindersCache((PluginSetting)pluginSettingModelImpl);
-		cacheUniqueFindersCache((PluginSetting)pluginSettingModelImpl, isNew);
+		clearUniqueFindersCache(pluginSetting);
+		cacheUniqueFindersCache(pluginSetting, isNew);
 
 		pluginSetting.resetOriginalValues();
 

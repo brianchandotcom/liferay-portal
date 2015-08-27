@@ -148,7 +148,10 @@ AUI.add(
 
 						var imageValue = {
 							fileEntryId: imageData.file.fileEntryId,
-							url: imageUrl
+							groupId: imageData.file.groupId,
+							title: imageData.file.title,
+							url: imageUrl,
+							uuid: imageData.file.uuid
 						};
 
 						link.setData('value', JSON.stringify(imageValue));

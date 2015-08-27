@@ -167,8 +167,10 @@ public abstract class BaseUploadHandler implements UploadHandler {
 				getServiceContext(uploadPortletRequest));
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-
+			imageJSONObject.put("groupId", fileEntry.getGroupId());
+			imageJSONObject.put("title", fileEntry.getTitle());
 			imageJSONObject.put("url", getURL(fileEntry, themeDisplay));
+			imageJSONObject.put("uuid", fileEntry.getUuid());
 
 			return imageJSONObject;
 		}

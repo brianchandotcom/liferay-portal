@@ -1531,6 +1531,9 @@ public class WebDriverToSeleniumBridge
 			if (specialChar.equals("-")) {
 				webElement.sendKeys(Keys.SUBTRACT);
 			}
+			else if (specialChar.equals("\t")) {
+				webElement.sendKeys(Keys.TAB);
+			}
 			else {
 				webElement.sendKeys(
 					Keys.SHIFT, _keysSpecialChars.get(specialChar));
@@ -1653,6 +1656,12 @@ public class WebDriverToSeleniumBridge
 			specialCharIndexes.add(value.indexOf("-"));
 
 			value = StringUtil.replaceFirst(value, "-", " ");
+		}
+
+		while (value.contains("\t")) {
+			specialCharIndexes.add(value.indexOf("\t"));
+
+			value = StringUtil.replaceFirst(value, "\t", " ");
 		}
 
 		for (String specialChar : _keysSpecialChars.keySet()) {

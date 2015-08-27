@@ -960,7 +960,9 @@
 
 				<ant dir="modules/util/portal-tools-service-builder" target="deploy" />
 
-				<ant dir="portal-impl" target="build-services" />
+				<exec dir="portal-impl" executable="ant" failonerror="true">
+					<arg value="build-services" />
+				</exec>
 			</test-action>
 
 			<test-set-up>

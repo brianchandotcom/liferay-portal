@@ -418,7 +418,7 @@
 			<var name="tagNameList" value="first tag" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
+		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
 

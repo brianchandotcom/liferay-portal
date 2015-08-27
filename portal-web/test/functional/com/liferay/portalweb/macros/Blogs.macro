@@ -121,27 +121,42 @@
 
 		<execute function="Click" locator1="Button#COG" />
 
-		<if>
-			<isset var="entryAbstractDescription" />
-			<then>
-				<execute macro="BlogsEntry#addCustomAbstract">
-					<var name="entryAbstractDescription" value="${entryAbstractDescription}" />
-				</execute>
-			</then>
-		</if>
+		<execute function="Click" locator1="Radio#CUSTOM_ABSTRACT" />
 
-		<if>
-			<isset var="dmDocumentFile" />
-			<then>
-				<execute macro="BlogsEntry#addAbstractImage">
-					<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
-					<var name="dmDocumentFile" value="${dmDocumentFile}" />
-					<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-				</execute>
-			</then>
-		</if>
+		<execute function="Click" locator1="AlloyEditor#DESCRIPTION_FIELD" />
+
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${entryAbstractDescription}" />
 
 		<execute macro="BlogsEntry#publish" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addWithCustomAbstractImage">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute function="Click" locator1="Button#COG" />
+
+		<execute function="Click" locator1="Radio#CUSTOM_ABSTRACT" />
+
+		<execute function="Click" locator1="Button#SELECT" />
+
+		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
+
+		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
+
+		<execute function="Type" locator1="TextInput#TITLE" value1="${dmDocumentTitle}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${dmDocumentDescription}" />
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addWithInvalidContent">

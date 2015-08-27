@@ -20,8 +20,10 @@ package com.liferay.microblogs.constants;
  */
 public class MicroblogsPortletKeys {
 
-	public static final String MICROBLOGS = "1_WAR_microblogsweb";
+	public static final String MICROBLOGS =
+		"com_liferay_microblogs_web_portlet_MicroblogsPortlet";
 
-	public static final String MICROBLOGS_STATUS_UPDATE = "2_WAR_microblogsweb";
+	public static final String MICROBLOGS_STATUS_UPDATE =
+		"com_liferay_microblogs_web_portlet_MicroblogsStatusUpdatePortlet";
 
 }

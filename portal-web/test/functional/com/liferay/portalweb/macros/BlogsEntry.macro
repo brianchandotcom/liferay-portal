@@ -1387,6 +1387,15 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="viewAbstractDisplay">
+		<var name="key_entryAbstractDescription" value="${entryAbstractDescription}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="${entryAbstractDescription}" />
+		<execute function="AssertTextNotEquals" locator1="BlogsEntry#CONTENT_GENERIC" value1="${entryContent}" />
+	</command>
+
 	<command name="viewAbstractEntryViaAPPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 

@@ -23,6 +23,7 @@
 /*/*/*/*/*/portal/bootstrap.css
 /*/*/*/*/.js-cache
 /*/*/*/*/bin
+/*/*/*/*/bower_components
 /*/*/*/*/classes
 /*/*/*/*/docroot/WEB-INF/classes
 /*/*/*/*/docroot/WEB-INF/lib
@@ -30,12 +31,14 @@
 /*/*/*/*/ivy.xml.MD5
 /*/*/*/*/javadoc
 /*/*/*/*/lib
+/*/*/*/*/node_modules
 /*/*/*/*/test-classes
 /*/*/*/*/test-coverage
 /*/*/*/*/test-results
 /*/*/*/*/tmp
 /*/*/*/.js-cache
 /*/*/*/bin
+/*/*/*/bower_components
 /*/*/*/build
 /*/*/*/classes
 /*/*/*/docroot/WEB-INF/classes
@@ -44,12 +47,14 @@
 /*/*/*/ivy.xml.MD5
 /*/*/*/javadoc
 /*/*/*/lib
+/*/*/*/node_modules
 /*/*/*/test-classes
 /*/*/*/test-coverage
 /*/*/*/test-results
 /*/*/*/tmp
 /*/*/.js-cache
 /*/*/bin
+/*/*/bower_components
 /*/*/build
 /*/*/classes
 /*/*/docroot/WEB-INF/classes
@@ -58,6 +63,7 @@
 /*/*/ivy.xml.MD5
 /*/*/javadoc
 /*/*/lib
+/*/*/node_modules
 /*/*/test-classes
 /*/*/test-coverage
 /*/*/test-results

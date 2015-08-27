@@ -1,0 +1,13 @@
+{
+	"devDependencies": {
+		"del": "^1.2.0",
+		"gulp": "^3.8.11",
+		"gulp-metal": "^0.2.4",
+		"path": "^0.11.14",
+		"run-sequence": "^1.1.1"
+	},
+	"engines": {
+		"node": ">=0.12.0"
+	},
+	"name": "liferay-frontend-js-metal"
+}

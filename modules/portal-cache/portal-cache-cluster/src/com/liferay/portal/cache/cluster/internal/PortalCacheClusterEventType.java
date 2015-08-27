@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.cluster;
+package com.liferay.portal.cache.cluster.internal;
 
 /**
  * @author Shuyang Zhou

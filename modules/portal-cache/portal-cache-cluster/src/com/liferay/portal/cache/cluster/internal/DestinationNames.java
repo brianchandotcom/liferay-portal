@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.cluster;
+package com.liferay.portal.cache.cluster.internal;
 
 /**
- * @author Shuyang Zhou
+ * @author Michael C. Han
  */
-public interface PortalCacheClusterChannelFactory {
+public class DestinationNames {
 
-	public PortalCacheClusterChannel createPortalCacheClusterChannel()
-		throws PortalCacheClusterException;
+	public static final String CACHE_REPLICATION = "liferay/cache_replication";
 
 }

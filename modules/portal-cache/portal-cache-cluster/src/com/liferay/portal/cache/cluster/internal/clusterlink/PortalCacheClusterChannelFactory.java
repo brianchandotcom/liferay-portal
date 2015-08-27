@@ -12,21 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.cluster;
+package com.liferay.portal.cache.cluster.internal.clusterlink;
+
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterException;
+import com.liferay.portal.kernel.cluster.Priority;
 
 /**
  * @author Shuyang Zhou
  */
-public interface PortalCacheClusterChannel {
+public interface PortalCacheClusterChannelFactory {
 
-	public void destroy();
-
-	public long getCoalescedEventNumber();
-
-	public int getPendingEventNumber();
-
-	public long getSentEventNumber();
-
-	public void sendEvent(PortalCacheClusterEvent portalCacheClusterEvent);
+	public PortalCacheClusterChannel createPortalCacheClusterChannel(
+			Priority priority)
+		throws PortalCacheClusterException;
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.bootstrap;
+package com.liferay.portal.cache.cluster.internal.bootstrap;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -59,10 +59,14 @@ import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Shuyang Zhou
  * @author Sherry Yang
  */
+@Component(immediate = true)
 public class ClusterLinkBootstrapLoaderHelperUtil {
 
 	public static SocketAddress createServerSocketFromCluster(
@@ -262,7 +266,8 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 		}
 	}
 
-	public static synchronized void start() {
+	@Activate
+	protected void activate() {
 		if (!_started) {
 			_started = true;
 		}

@@ -12,26 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.cluster;
+package com.liferay.portal.cache.cluster.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.kernel.cluster.Priority;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
-public class PortalCacheClusterException extends RuntimeException {
+@Meta.OCD(
+	id = "com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration"
+)
+public interface PortalCacheClusterConfiguration {
 
-	public PortalCacheClusterException() {
-	}
-
-	public PortalCacheClusterException(String msg) {
-		super(msg);
-	}
-
-	public PortalCacheClusterException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public PortalCacheClusterException(Throwable cause) {
-		super(cause);
-	}
+	@Meta.AD(deflt = "LEVEL1|LEVEL2", required = false)
+	public Priority[] priorities();
 
 }

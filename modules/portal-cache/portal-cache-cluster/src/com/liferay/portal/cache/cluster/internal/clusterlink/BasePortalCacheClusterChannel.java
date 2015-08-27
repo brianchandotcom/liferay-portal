@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.cache.cluster;
+package com.liferay.portal.cache.cluster.internal.clusterlink;
 
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEvent;
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEventCoalesceComparator;
 import com.liferay.portal.kernel.concurrent.CoalescedPipe;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

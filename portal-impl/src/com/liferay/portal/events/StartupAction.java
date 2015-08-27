@@ -18,7 +18,6 @@ import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.jericho.CachedLoggerProvider;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
-import com.liferay.portal.kernel.cache.bootstrap.ClusterLinkBootstrapLoaderHelperUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.events.ActionException;
@@ -137,10 +136,6 @@ public class StartupAction extends SimpleAction {
 		}
 
 		DBUpgrader.upgrade();
-
-		// Ehache bootstrap
-
-		ClusterLinkBootstrapLoaderHelperUtil.start();
 
 		// Scheduler
 

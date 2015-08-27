@@ -12,26 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.cache.cluster;
+package com.liferay.portal.cache.cluster.internal.clusterlink;
 
-import com.liferay.portal.kernel.util.InitialThreadLocal;
+import com.liferay.portal.cache.cluster.internal.PortalCacheClusterEvent;
+
+import java.util.List;
 
 /**
  * @author Shuyang Zhou
  */
-public class ClusterReplicationThreadLocal {
+public interface PortalCacheClusterChannelSelector {
 
-	public static boolean isReplicate() {
-		return _replicateThreadLocal.get();
-	}
+	public long getSelectedNumber();
 
-	public static void setReplicate(boolean replicate) {
-		_replicateThreadLocal.set(replicate);
-	}
-
-	private static final ThreadLocal<Boolean> _replicateThreadLocal =
-		new InitialThreadLocal<Boolean>(
-			ClusterReplicationThreadLocal.class + "._replicateThreadLocal",
-			Boolean.TRUE);
+	public PortalCacheClusterChannel select(
+		List<PortalCacheClusterChannel> portalCacheClusterChannels,
+		PortalCacheClusterEvent portalCacheClusterEvent);
 
 }

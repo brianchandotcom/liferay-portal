@@ -2,6 +2,7 @@ AUI.add(
 	'liferay-ddm-form-renderer-types',
 	function(A) {
 		var AArray = A.Array;
+		var ALang = A.Lang;
 
 		var _fieldTypes = [];
 
@@ -17,10 +18,23 @@ AUI.add(
 				);
 			},
 
-			getAll: function() {
+			getAll: function(includeSystem) {
 				var instance = this;
 
-				return _fieldTypes;
+				if (!ALang.isBoolean(includeSystem)) {
+					includeSystem = false;
+				}
+
+				return AArray.filter(
+					_fieldTypes,
+					function(item) {
+						if (item.get('system') && !includeSystem) {
+							return false;
+						}
+
+						return true
+					}
+				);
 			},
 
 			register: function(fieldTypes) {
@@ -46,6 +60,7 @@ AUI.add(
 				fieldType.set('className', config.javaScriptClass);
 				fieldType.set('name', config.name);
 				fieldType.set('settings', config.settings);
+				fieldType.set('system', config.system);
 				fieldType.set('templateNamespace', config.templateNamespace);
 
 				return fieldType;

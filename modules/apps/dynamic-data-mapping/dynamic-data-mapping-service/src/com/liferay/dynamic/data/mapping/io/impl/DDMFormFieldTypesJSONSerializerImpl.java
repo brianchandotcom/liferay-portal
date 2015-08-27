@@ -78,6 +78,7 @@ public class DDMFormFieldTypesJSONSerializerImpl
 		jsonObject.put(
 			"settings",
 			toJSONObject(ddmFormFieldType.getDDMFormFieldTypeSettings()));
+		jsonObject.put("system", ddmFormFieldType.isSystem());
 
 		DDMFormFieldRenderer ddmFormFieldRenderer =
 			ddmFormFieldType.getDDMFormFieldRenderer();

@@ -4557,10 +4557,10 @@ module.framework.properties.osgi.console=11312</echo>
 
 	<target name="prepare-poshi-runner-properties">
 		<tstamp>
-			<format property="current.date" pattern="yyyy-MM-dd" timezone="GMT" />
+			<format pattern="yyyy-MM-dd" property="current.date" timezone="GMT" />
 		</tstamp>
 
-		<echo file="${test.ext.properties.file}" append="true">
+		<echo append="true" file="${test.ext.properties.file}">
 			component.names=${component.names}
 			ignore.errors.file.name=${project.dir}/portal-web/test-ignorable-error-lines.xml
 			product.names=${product.names}
@@ -4577,7 +4577,7 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<get-poshi-test-name />
 
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					test.name=${poshi.test.name}
 				</echo>
 			</then>
@@ -4605,7 +4605,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="legacy.theme.ids" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					theme.ids=${legacy.theme.ids}
 				</echo>
 			</then>
@@ -4614,7 +4614,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="liferay.portal.branch" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					liferay.portal.branch=${liferay.portal.branch}
 				</echo>
 			</then>
@@ -4623,7 +4623,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="liferay.portal.bundle" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					liferay.portal.bundle=${liferay.portal.bundle}
 				</echo>
 			</then>
@@ -4632,7 +4632,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="mobile.android.home" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					mobile.android.home=${mobile.android.home}
 				</echo>
 			</then>
@@ -4641,7 +4641,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="osb.lcs.portlet.host.name" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					osb.lcs.portlet.host.name=${osb.lcs.portlet.host.name}
 				</echo>
 			</then>
@@ -4650,7 +4650,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="selenium.output.dir" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					output.dir=${selenium.output.dir}
 				</echo>
 			</then>
@@ -4659,7 +4659,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${tcat.enabled}" arg2="true" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					tcat.admin.repository=${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}
 					tcat.enabled=true
 				</echo>
@@ -4669,7 +4669,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${tear.down.before.test}" arg2="true" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					tear.down.before.test=true
 				</echo>
 			</then>
@@ -4678,7 +4678,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.assert.liferay.errors}" arg2="false" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					test.assert.liferay.errors=false
 				</echo>
 			</then>
@@ -4687,7 +4687,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="test.base.dir.name" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					test.base.dir.name=${test.base.dir.name}
 				</echo>
 			</then>
@@ -4695,12 +4695,12 @@ module.framework.properties.osgi.console=11312</echo>
 				<if>
 					<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 					<then>
-						<echo file="${test.ext.properties.file}" append="true">
+						<echo append="true" file="${test.ext.properties.file}">
 							test.base.dir.name=${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/
 						</echo>
 					</then>
 					<else>
-						<echo file="${test.ext.properties.file}" append="true">
+						<echo append="true" file="${test.ext.properties.file}">
 							test.base.dir.name=${basedir.unix}/portal-web
 						</echo>
 					</else>
@@ -4711,7 +4711,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					testing.class.method=true
 				</echo>
 			</then>
@@ -4720,7 +4720,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.save.screenshot}" arg2="true" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					save.screenshot=true
 				</echo>
 			</then>
@@ -4729,7 +4729,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					selenium.implementation=com.thoughtworks.selenium.Selenium
 				</echo>
 			</then>
@@ -4738,7 +4738,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.selenium.logger.enabled}" arg2="false" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					selenium.logger.enabled=false
 				</echo>
 			</then>
@@ -4747,7 +4747,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.skip.tear.down}" arg2="true" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					test.skip.tear.down=true
 				</echo>
 			</then>
@@ -4758,7 +4758,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="app.server.type" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					app.server.type=${app.server.type}
 				</echo>
 			</then>
@@ -4792,14 +4792,14 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${browser.type}" arg2="firefox" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					browser.type=*chrome
 				</echo>
 			</then>
 			<elseif>
 				<equals arg1="${browser.type}" arg2="googlechrome" />
 				<then>
-					<echo file="${test.ext.properties.file}" append="true">
+					<echo append="true" file="${test.ext.properties.file}">
 						browser.type=*googlechrome
 						selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
 					</echo>
@@ -4808,7 +4808,7 @@ module.framework.properties.osgi.console=11312</echo>
 			<elseif>
 				<equals arg1="${browser.type}" arg2="ie" />
 				<then>
-					<echo file="${test.ext.properties.file}" append="true">
+					<echo append="true" file="${test.ext.properties.file}">
 						browser.type=*iehta
 						selenium.ie.driver.executable=${selenium.ie.driver.executable}
 					</echo>
@@ -4821,7 +4821,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.db2.driver" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.db2.driver=${database.db2.driver}
 				</echo>
 			</then>
@@ -4830,7 +4830,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.db2.password" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.db2.password=${database.db2.password}
 				</echo>
 			</then>
@@ -4839,7 +4839,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.db2.url" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.db2.url=${database.db2.url}
 				</echo>
 			</then>
@@ -4848,7 +4848,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.db2.username" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.db2.username=${database.db2.username}
 				</echo>
 			</then>
@@ -4857,7 +4857,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.hsql.driver" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.hsql.driver=${database.hsql.driver}
 				</echo>
 			</then>
@@ -4866,7 +4866,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.hsql.password" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.hsql.password=${database.hsql.password}
 				</echo>
 			</then>
@@ -4875,7 +4875,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.hsql.url" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.hsql.url=${database.hsql.url}
 				</echo>
 			</then>
@@ -4884,7 +4884,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.hsql.username" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.hsql.username=${database.hsql.username}
 				</echo>
 			</then>
@@ -4893,7 +4893,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.mysql.driver" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.mysql.driver=${database.mysql.driver}
 				</echo>
 			</then>
@@ -4902,7 +4902,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.mysql.password" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.mysql.password=${database.mysql.password}
 				</echo>
 			</then>
@@ -4911,7 +4911,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.mysql.url" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.mysql.url=${database.mysql.url}
 				</echo>
 			</then>
@@ -4920,7 +4920,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.mysql.username" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.mysql.username=${database.mysql.username}
 				</echo>
 			</then>
@@ -4929,7 +4929,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.oracle.driver" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.oracle.driver=${database.oracle.driver}
 				</echo>
 			</then>
@@ -4938,7 +4938,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.oracle.password" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.oracle.password=${database.oracle.password}
 				</echo>
 			</then>
@@ -4947,7 +4947,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.oracle.url" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.oracle.url=${database.oracle.url}
 				</echo>
 			</then>
@@ -4956,7 +4956,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.oracle.username" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.oracle.username=${database.oracle.username}
 				</echo>
 			</then>
@@ -4965,7 +4965,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.postgresql.driver" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.postgresql.driver=${database.postgresql.driver}
 				</echo>
 			</then>
@@ -4974,7 +4974,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.postgresql.password" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.postgresql.password=${database.postgresql.password}
 				</echo>
 			</then>
@@ -4983,7 +4983,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.postgresql.url" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.postgresql.url=${database.postgresql.url}
 				</echo>
 			</then>
@@ -4992,7 +4992,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.postgresql.username" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.postgresql.username=${database.postgresql.username}
 				</echo>
 			</then>
@@ -5001,7 +5001,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.sybase.driver" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.sybase.driver=${database.sybase.driver}
 				</echo>
 			</then>
@@ -5010,7 +5010,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.sybase.password" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.sybase.password=${database.sybase.password}
 				</echo>
 			</then>
@@ -5019,7 +5019,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.sybase.url" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.sybase.url=${database.sybase.url}
 				</echo>
 			</then>
@@ -5028,7 +5028,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.sybase.username" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.sybase.username=${database.sybase.username}
 				</echo>
 			</then>
@@ -5037,7 +5037,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.type" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					database.type=${database.type}
 				</echo>
 			</then>
@@ -5048,7 +5048,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.address.1" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					email.address.1=${email.address.1}
 				</echo>
 			</then>
@@ -5057,7 +5057,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.address.2" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					email.address.2=${email.address.2}
 				</echo>
 			</then>
@@ -5066,7 +5066,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.address.3" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					email.address.3=${email.address.3}
 				</echo>
 			</then>
@@ -5075,7 +5075,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.address.4" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					email.address.4=${email.address.4}
 				</echo>
 			</then>
@@ -5084,7 +5084,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.address.5" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					email.address.5=${email.address.5}
 				</echo>
 			</then>
@@ -5093,7 +5093,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.password.1" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					email.password.1=${email.password.1}
 				</echo>
 			</then>
@@ -5102,7 +5102,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.password.2" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					email.password.2=${email.password.2}
 				</echo>
 			</then>
@@ -5111,7 +5111,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.password.3" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					email.password.3=${email.password.3}
 				</echo>
 			</then>
@@ -5120,7 +5120,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.password.4" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					email.password.4=${email.password.4}
 				</echo>
 			</then>
@@ -5129,7 +5129,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.password.5" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					email.password.5=${email.password.5}
 				</echo>
 			</then>
@@ -5138,7 +5138,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.address.1" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					lcs.email.address.1=${lcs.email.address.1}
 				</echo>
 			</then>
@@ -5147,7 +5147,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.address.2" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					lcs.email.address.2=${lcs.email.address.2}
 				</echo>
 			</then>
@@ -5156,7 +5156,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.address.3" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					lcs.email.address.3=${lcs.email.address.3}
 				</echo>
 			</then>
@@ -5165,7 +5165,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.id.1" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					lcs.email.id.1=${lcs.email.id.1}
 				</echo>
 			</then>
@@ -5174,7 +5174,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.id.2" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					lcs.email.id.2=${lcs.email.id.2}
 				</echo>
 			</then>
@@ -5183,7 +5183,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.id.3" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					lcs.email.id.3=${lcs.email.id.3}
 				</echo>
 			</then>
@@ -5192,7 +5192,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.password.1" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					lcs.email.password.1=${lcs.email.password.1}
 				</echo>
 			</then>
@@ -5201,7 +5201,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.password.2" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					lcs.email.password.2=${lcs.email.password.2}
 				</echo>
 			</then>
@@ -5210,7 +5210,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.password.3" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					lcs.email.password.3=${lcs.email.password.3}
 				</echo>
 			</then>
@@ -5219,7 +5219,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.address.1" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.address.1=${marketplace.email.address.1}
 				</echo>
 			</then>
@@ -5228,7 +5228,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.address.2" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.address.2=${marketplace.email.address.2}
 				</echo>
 			</then>
@@ -5237,7 +5237,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.address.3" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.address.3=${marketplace.email.address.3}
 				</echo>
 			</then>
@@ -5246,7 +5246,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.address.4" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.address.4=${marketplace.email.address.4}
 				</echo>
 			</then>
@@ -5255,7 +5255,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.address.5" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.address.5=${marketplace.email.address.5}
 				</echo>
 			</then>
@@ -5264,7 +5264,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.password.1" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.1=${marketplace.email.password.1}
 				</echo>
 			</then>
@@ -5273,7 +5273,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.password.2" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.2=${marketplace.email.password.2}
 				</echo>
 			</then>
@@ -5282,7 +5282,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.password.3" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.3=${marketplace.email.password.3}
 				</echo>
 			</then>
@@ -5291,7 +5291,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.password.4" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.4=${marketplace.email.password.4}
 				</echo>
 			</then>
@@ -5300,7 +5300,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.password.5" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.5=${marketplace.email.password.5}
 				</echo>
 			</then>
@@ -5310,7 +5310,7 @@ module.framework.properties.osgi.console=11312</echo>
 	<target name="prepare-selenium-required-properties">
 		<get-test-url />
 
-		<echo file="${test.ext.properties.file}" append="true">
+		<echo append="true" file="${test.ext.properties.file}">
 			portal.url=${test.url}
 			selenium.executable.dir=${basedir.unix}/tools/selenium/
 			test.class.command.name=${test.class}
@@ -5323,7 +5323,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="ignore.errors" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					ignore.errors=${ignore.errors}
 				</echo>
 			</then>
@@ -5334,7 +5334,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="ignore.errors.delimiter" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					ignore.errors.delimiter=${ignore.errors.delimiter}
 				</echo>
 			</then>
@@ -5345,7 +5345,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					mobile.device.enabled=${mobile.device.enabled}
 				</echo>
 			</then>
@@ -5359,7 +5359,7 @@ module.framework.properties.osgi.console=11312</echo>
 				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
 			</or>
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					cmis.repository.vm.host.name=${cmis.repository.vm.host.name}
 				</echo>
 			</then>
@@ -5370,7 +5370,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.assert.javascript.errors}" arg2="false" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					test.assert.javascript.errors=false
 				</echo>
 			</then>
@@ -5381,7 +5381,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="timeout.explicit.wait" />
 			<then>
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					timeout.explicit.wait=${timeout.explicit.wait}
 				</echo>
 			</then>
@@ -5629,7 +5629,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					portal.url=www.${virtual.host.name}.com:8080
 				</echo>
 
-				<echo file="${test.ext.properties.file}" append="true">
+				<echo append="true" file="${test.ext.properties.file}">
 					portal.url=www.${virtual.host.name}.com:8080
 				</echo>
 			</then>
@@ -5878,9 +5878,9 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-case-method-names">
-		<delete file="${test.ext.properties.file}" failonerror="false" />
+		<delete failonerror="false" file="${test.ext.properties.file}" />
 
-		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
+		<antcall inheritAll="false" target="prepare-poshi-runner-properties" />
 
 		<gradle-execute failonerror="false" task="writePoshiProperties">
 			<arg value="--build-file=portal-web/build-test.gradle" />
@@ -5898,9 +5898,9 @@ if (ppstate.equals("normal")) {
 	<target name="record-test-generated-properties">
 		<fail message="Please set the property ${test.class}." unless="test.class" />
 
-		<delete file="${test.ext.properties.file}" failonerror="false" />
+		<delete failonerror="false" file="${test.ext.properties.file}" />
 
-		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
+		<antcall inheritAll="false" target="prepare-poshi-runner-properties" />
 
 		<gradle-execute failonerror="false" task="writePoshiProperties">
 			<arg value="--build-file=portal-web/build-test.gradle" />
@@ -6152,9 +6152,9 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="run-poshi-validation">
-		<delete file="${test.ext.properties.file}" failonerror="false" />
+		<delete failonerror="false" file="${test.ext.properties.file}" />
 
-		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
+		<antcall inheritAll="false" target="prepare-poshi-runner-properties" />
 
 		<gradle-execute failonerror="false" task="validatePoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />

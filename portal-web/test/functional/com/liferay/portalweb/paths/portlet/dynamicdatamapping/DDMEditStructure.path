@@ -278,6 +278,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_BUILDER_PARENT_FIELD</td>
+	<td>//div[contains(@class,'form-builder-field')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD</td>
 	<td>//div[contains(@class,'component form-builder-field')]/div/label[.='${key_fieldFieldLabel}']</td>
 	<td></td>

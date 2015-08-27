@@ -290,10 +290,6 @@ public class WebDAVUtil {
 		return getInstance()._getStorage(token);
 	}
 
-	public static Collection<String> getStorageTokens() {
-		return getInstance()._getStorageTokens();
-	}
-
 	public static String getStorageToken(Portlet portlet) {
 		WebDAVStorage webDAVStorageInstance =
 			portlet.getWebDAVStorageInstance();
@@ -303,6 +299,10 @@ public class WebDAVUtil {
 		}
 
 		return webDAVStorageInstance.getToken();
+	}
+
+	public static Collection<String> getStorageTokens() {
+		return getInstance()._getStorageTokens();
 	}
 
 	public static long getTimeout(HttpServletRequest request) {

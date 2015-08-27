@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.StagedModel;
 
 import java.io.Serializable;
 
@@ -39,20 +40,17 @@ import java.util.Set;
 /**
  * @author Mate Thurzo
  * @author Zsolt Berentey
+ * @author Daniel Kocsis
  */
 @ProviderType
 public class ManifestSummary implements Serializable {
 
 	public static String getManifestSummaryKey(
-		String modelName, String referrerModelName) {
+		StagedModelType stagedModelType) {
 
-		if (Validator.isNull(referrerModelName) ||
-			modelName.equals(referrerModelName)) {
-
-			return modelName;
-		}
-
-		return modelName.concat(StringPool.POUND).concat(referrerModelName);
+		return getManifestSummaryKey(
+			stagedModelType.getClassName(),
+			stagedModelType.getReferrerClassName());
 	}
 
 	public void addDataPortlet(
@@ -84,7 +82,7 @@ public class ManifestSummary implements Serializable {
 	public void addModelAdditionCount(
 		StagedModelType stagedModelType, long count) {
 
-		addModelAdditionCount(stagedModelType.toString(), count);
+		addModelAdditionCount(getManifestSummaryKey(stagedModelType), count);
 	}
 
 	public void addModelAdditionCount(String manifestSummaryKey, long count) {
@@ -101,6 +99,12 @@ public class ManifestSummary implements Serializable {
 		modelAdditionCounter.setValue(count);
 
 		_manifestSummaryKeys.add(manifestSummaryKey);
+	}
+
+	public void addModelDeletionCount(
+		StagedModelType stagedModelType, long count) {
+
+		addModelDeletionCount(getManifestSummaryKey(stagedModelType), count);
 	}
 
 	public void addModelDeletionCount(String manifestSummaryKey, long count) {
@@ -143,83 +147,7 @@ public class ManifestSummary implements Serializable {
 		return manifestSummary;
 	}
 
-	public String[] getConfigurationPortletOptions(String rootPortletId) {
-		return _configurationPortletOptions.get(rootPortletId);
-	}
-
-	public List<Portlet> getDataPortlets() {
-		return _dataPortlets;
-	}
-
-	public Date getExportDate() {
-		return _exportDate;
-	}
-
-	public List<Portlet> getLayoutPortlets() {
-		return _layoutPortlets;
-	}
-
-	public Collection<String> getManifestSummaryKeys() {
-		return _manifestSummaryKeys;
-	}
-
-	public long getModelAdditionCount(Class<? extends ClassedModel> clazz) {
-		return getModelAdditionCount(clazz, clazz);
-	}
-
-	public long getModelAdditionCount(
-		Class<? extends ClassedModel> clazz,
-		Class<? extends ClassedModel> referrerClass) {
-
-		return getModelAdditionCount(clazz.getName(), referrerClass.getName());
-	}
-
-	public long getModelAdditionCount(String manifestSummaryKey) {
-		if (!_modelAdditionCounters.containsKey(manifestSummaryKey)) {
-			return -1;
-		}
-
-		LongWrapper modelAdditionCounter = _modelAdditionCounters.get(
-			manifestSummaryKey);
-
-		return modelAdditionCounter.getValue();
-	}
-
-	public long getModelAdditionCount(
-		String className, String referrerClassName) {
-
-		if (Validator.isNull(referrerClassName) ||
-			!referrerClassName.equals(
-				StagedModelType.REFERRER_CLASS_NAME_ALL)) {
-
-			String manifestSummaryKey = getManifestSummaryKey(
-				className, referrerClassName);
-
-			return getModelAdditionCount(manifestSummaryKey);
-		}
-
-		long modelAdditionCount = 0;
-
-		for (String key : _modelAdditionCounters.keySet()) {
-			if (!key.startsWith(className)) {
-				continue;
-			}
-
-			long count = getModelAdditionCount(key);
-
-			if (count > 0) {
-				modelAdditionCount += count;
-			}
-		}
-
-		return modelAdditionCount;
-	}
-
-	public Map<String, LongWrapper> getModelAdditionCounters() {
-		return _modelAdditionCounters;
-	}
-
-	public long getModelDeletionCount() {
+	public long getAllModelDeletionCounts() {
 		long modelDeletionCount = -1;
 
 		for (String manifestSummaryKey : _manifestSummaryKeys) {
@@ -241,8 +169,98 @@ public class ManifestSummary implements Serializable {
 		return modelDeletionCount;
 	}
 
+	public String[] getConfigurationPortletOptions(String rootPortletId) {
+		return _configurationPortletOptions.get(rootPortletId);
+	}
+
+	public List<Portlet> getDataPortlets() {
+		return _dataPortlets;
+	}
+
+	public Date getExportDate() {
+		return _exportDate;
+	}
+
+	public List<Portlet> getLayoutPortlets() {
+		return _layoutPortlets;
+	}
+
+	public Collection<String> getManifestSummaryKeys() {
+		return _manifestSummaryKeys;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getModelAdditionCount(StagedModel)}
+	 */
+	@Deprecated
+	public long getModelAdditionCount(Class<? extends ClassedModel> clazz) {
+		return getModelAdditionCount(new StagedModelType(clazz));
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getModelAdditionCount(StagedModelType)}
+	 */
+	@Deprecated
+	public long getModelAdditionCount(
+		Class<? extends ClassedModel> clazz,
+		Class<? extends ClassedModel> referrerClass) {
+
+		return getModelAdditionCount(clazz.getName(), referrerClass.getName());
+	}
+
+	public long getModelAdditionCount(StagedModel stagedModel) {
+		return getModelAdditionCount(stagedModel.getStagedModelType());
+	}
+
+	public long getModelAdditionCount(StagedModelType stagedModelType) {
+		return getModelAdditionCount(
+			stagedModelType.getClassName(),
+			stagedModelType.getReferrerClassName());
+	}
+
+	public long getModelAdditionCount(String manifestSummaryKey) {
+		if (!_modelAdditionCounters.containsKey(manifestSummaryKey)) {
+			return -1;
+		}
+
+		LongWrapper modelAdditionCounter = _modelAdditionCounters.get(
+			manifestSummaryKey);
+
+		return modelAdditionCounter.getValue();
+	}
+
+	public Map<String, LongWrapper> getModelAdditionCounters() {
+		return _modelAdditionCounters;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getAllModelDeletionCounts()}
+	 */
+	@Deprecated
+	public long getModelDeletionCount() {
+		return getAllModelDeletionCounts();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getModelDeletionCount(StagedModel)}
+	 */
+	@Deprecated
 	public long getModelDeletionCount(Class<? extends ClassedModel> clazz) {
-		return getModelDeletionCount(clazz.getName());
+		return getModelDeletionCount(new StagedModelType(clazz));
+	}
+
+	public long getModelDeletionCount(StagedModel stagedModel) {
+		return getModelDeletionCount(stagedModel.getStagedModelType());
+	}
+
+	public long getModelDeletionCount(StagedModelType stagedModelType) {
+		return getModelDeletionCount(
+			stagedModelType.getClassName(),
+			stagedModelType.getReferrerClassName());
 	}
 
 	public long getModelDeletionCount(StagedModelType[] stagedModelTypes) {
@@ -254,7 +272,7 @@ public class ManifestSummary implements Serializable {
 
 		for (StagedModelType stagedModelType : stagedModelTypes) {
 			long stagedModelTypeModelDeletionCount = getModelDeletionCount(
-				stagedModelType.toString());
+				stagedModelType);
 
 			if (stagedModelTypeModelDeletionCount == -1) {
 				continue;
@@ -271,13 +289,13 @@ public class ManifestSummary implements Serializable {
 		return modelDeletionCount;
 	}
 
-	public long getModelDeletionCount(String modelName) {
-		if (!_modelDeletionCounters.containsKey(modelName)) {
+	public long getModelDeletionCount(String manifestSummaryKey) {
+		if (!_modelDeletionCounters.containsKey(manifestSummaryKey)) {
 			return -1;
 		}
 
 		LongWrapper modelDeletionCounter = _modelDeletionCounters.get(
-			modelName);
+			manifestSummaryKey);
 
 		return modelDeletionCounter.getValue();
 	}
@@ -287,7 +305,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	public void incrementModelAdditionCount(StagedModelType stagedModelType) {
-		String manifestSummaryKey = stagedModelType.toString();
+		String manifestSummaryKey = getManifestSummaryKey(stagedModelType);
 
 		if (!_modelAdditionCounters.containsKey(manifestSummaryKey)) {
 			_modelAdditionCounters.put(manifestSummaryKey, new LongWrapper(1));
@@ -304,7 +322,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	public void incrementModelDeletionCount(StagedModelType stagedModelType) {
-		String manifestSummaryKey = stagedModelType.toString();
+		String manifestSummaryKey = getManifestSummaryKey(stagedModelType);
 
 		if (!_modelDeletionCounters.containsKey(manifestSummaryKey)) {
 			_modelDeletionCounters.put(manifestSummaryKey, new LongWrapper(1));
@@ -342,6 +360,98 @@ public class ManifestSummary implements Serializable {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	protected static String getManifestSummaryKey(
+		String modelName, String referrerModelName) {
+
+		if (Validator.isNull(referrerModelName)) {
+			return modelName;
+		}
+
+		return modelName.concat(StringPool.POUND).concat(referrerModelName);
+	}
+
+	protected long getModelAdditionCount(
+		String className, String referrerClassName) {
+
+		if (Validator.isNull(referrerClassName) ||
+			(!referrerClassName.equals(
+				StagedModelType.REFERRER_CLASS_NAME_ANY) &&
+			 !referrerClassName.equals(
+				 StagedModelType.REFERRER_CLASS_NAME_ALL))) {
+
+			String manifestSummaryKey = getManifestSummaryKey(
+				className, referrerClassName);
+
+			return getModelAdditionCount(manifestSummaryKey);
+		}
+
+		long modelAdditionCount = -1;
+
+		for (String key : _modelAdditionCounters.keySet()) {
+			if (!key.startsWith(className.concat(StringPool.POUND)) &&
+				(!key.equals(className) ||
+				 !referrerClassName.equals(
+					 StagedModelType.REFERRER_CLASS_NAME_ALL))) {
+
+				continue;
+			}
+
+			long count = getModelAdditionCount(key);
+
+			if (count >= 0) {
+				if (modelAdditionCount < 0) {
+					modelAdditionCount = count;
+				}
+				else {
+					modelAdditionCount += count;
+				}
+			}
+		}
+
+		return modelAdditionCount;
+	}
+
+	protected long getModelDeletionCount(
+		String className, String referrerClassName) {
+
+		if (Validator.isNull(referrerClassName) ||
+			(!referrerClassName.equals(
+				StagedModelType.REFERRER_CLASS_NAME_ANY) &&
+			 !referrerClassName.equals(
+				 StagedModelType.REFERRER_CLASS_NAME_ALL))) {
+
+			String manifestSummaryKey = getManifestSummaryKey(
+				className, referrerClassName);
+
+			return getModelDeletionCount(manifestSummaryKey);
+		}
+
+		long modelDeletionCount = -1;
+
+		for (String key : _modelDeletionCounters.keySet()) {
+			if (!key.startsWith(className.concat(StringPool.POUND)) &&
+				(!key.equals(className) ||
+				 !referrerClassName.equals(
+					 StagedModelType.REFERRER_CLASS_NAME_ALL))) {
+
+				continue;
+			}
+
+			long count = getModelDeletionCount(key);
+
+			if (count >= 0) {
+				if (modelDeletionCount < 0) {
+					modelDeletionCount = count;
+				}
+				else {
+					modelDeletionCount += count;
+				}
+			}
+		}
+
+		return modelDeletionCount;
 	}
 
 	private Map<String, String[]> _configurationPortletOptions =

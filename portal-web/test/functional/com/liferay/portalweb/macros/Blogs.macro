@@ -119,7 +119,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoSettingsTab" />
+		<execute function="Click" locator1="Button#COG" />
 
 		<if>
 			<isset var="entryAbstractDescription" />

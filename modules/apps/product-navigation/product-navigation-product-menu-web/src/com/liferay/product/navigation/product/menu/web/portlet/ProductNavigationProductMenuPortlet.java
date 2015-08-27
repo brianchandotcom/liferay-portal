@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.product.menu.web.portlet;
+package com.liferay.product.navigation.product.menu.web.portlet;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.product.menu.web.constants.ProductMenuPortletKeys;
+import com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuPortletKeys;
 
 import java.io.IOException;
 
@@ -42,12 +42,12 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.init-param.view-template=/portlet/view.jsp",
-		"javax.portlet.name=" + ProductMenuPortletKeys.PRODUCT_MENU,
+		"javax.portlet.name=" + ProductNavigationProductMenuPortletKeys.PRODUCT_MENU,
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class ProductMenuPortlet extends MVCPortlet {
+public class ProductNavigationProductMenuPortlet extends MVCPortlet {
 
 	@Override
 	protected void doDispatch(

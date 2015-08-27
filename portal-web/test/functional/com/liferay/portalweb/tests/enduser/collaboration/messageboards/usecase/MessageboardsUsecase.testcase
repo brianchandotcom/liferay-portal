@@ -1278,6 +1278,7 @@
 		</execute>
 
 		<execute macro="MessageboardsCategory#addPG">
+			<var name="categoryName" value="${categoryName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>

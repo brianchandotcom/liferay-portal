@@ -51,8 +51,8 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
+		<execute macro="Page#gotoPublishingtools">
+			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Staging Site Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>

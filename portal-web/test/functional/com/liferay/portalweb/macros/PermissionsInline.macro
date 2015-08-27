@@ -264,7 +264,7 @@
 			</then>
 		</if>
 
-		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
+		<execute function="Click" locator1="ControlMenu#EDIT_COG" />
 
 		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
 

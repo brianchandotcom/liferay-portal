@@ -24,6 +24,11 @@
 	<td>Admin Drop Down Button</td>
 </tr>
 <tr>
+	<td>EDIT_COG</td>
+	<td>//a[contains(@class,'control-menu') and i[contains(@class,'icon-cog')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_LOCALIZED</td>
 	<td>//li[@id='_145_adminLinks']/a</td>
 	<td>Admin Drop Down Button</td>

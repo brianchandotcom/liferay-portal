@@ -264,6 +264,6 @@
 		<execute function="AssertElementNotPresent" locator1="Breadcrumb#BREADCRUMB_PAGE_LINK" />
 
 		<var name="key_URL" value="/web/guest" />
-		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_PAGE_LINK" value1="Liferay" />
+		<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_PAGE_LINK" value1="LIFERAY" />
 	</command>
 </definition>

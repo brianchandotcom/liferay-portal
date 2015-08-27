@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>EMAIL_NOTIFICATIONS_ACCOUNT_CREATED_NOTIFICATION_BODY_WITH_PASSWORD</td>
-	<td>//div[contains(@class,'cke_contents')]/iframe</td>
+	<td>//div[contains(@id,'cke')]</td>
 	<td></td>
 </tr>
 <tr>

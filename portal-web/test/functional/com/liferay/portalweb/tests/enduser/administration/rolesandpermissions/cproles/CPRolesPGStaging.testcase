@@ -38,8 +38,8 @@
 	<command name="AccessStaging" priority="4">
 		<var name="siteName" value="Site Name" />
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
+		<execute macro="Page#gotoPublishingtools">
+			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -320,8 +320,8 @@
 			<var name="userScreenName" value="usersna" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
+		<execute macro="Page#gotoPublishingtools">
+			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>

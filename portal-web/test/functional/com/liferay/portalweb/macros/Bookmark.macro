@@ -8,7 +8,7 @@
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_FOLDER" />
 
-		<var name="key_bookmarkFolderName" value="${bookmarkFolderName}" />
+		<var name="key_folderName" value="${bookmarkFolderName}" />
 
 		<execute function="AssertClick" locator1="BookmarksSelectFolder#FOLDER_TABLE_CHOOSE" value1="Choose" />
 

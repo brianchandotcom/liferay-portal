@@ -260,7 +260,7 @@
 </tr>
 <tr>
 	<td>NAME</td>
-	<td>//div[label[contains(.,'Name')]]//input[@type='text'] | //input[contains(@id,'name')] | //input[contains(@id,'Name')]</td>
+	<td>//div[label[contains(.,'Name')]]//input[@type='text'] | //input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>

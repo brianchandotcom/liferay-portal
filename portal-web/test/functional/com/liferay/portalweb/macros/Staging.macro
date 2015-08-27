@@ -1,7 +1,8 @@
 <definition>
 	<command name="activateStagingCP">
-		<execute function="AssertClick" locator1="NavListItem#STAGING" value1="Staging" />
-		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_SELECTOR" value1="${siteName}" />
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${siteName}" />
 
 		<if>
 			<equals arg1="${remoteStaging}" arg2="true" />
@@ -627,8 +628,8 @@
 
 		<execute function="Copy" locator1="SitesEditSite#SITE_ID" value1="siteID" />
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
+		<execute macro="Page#gotoPublishingtools">
+			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="${siteName}" />
 		</execute>
 

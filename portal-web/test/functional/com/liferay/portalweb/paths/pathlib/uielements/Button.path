@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>CANCEL</td>
-	<td>//a[contains(@id,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')]</td>
+	<td>//a[contains(@class,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -525,7 +525,7 @@
 </tr>
 <tr>
 	<td>VIEW_HISTORY</td>
-	<td>//button[contains(.,'View History')]</td>
+	<td>//a[contains(.,'View History')]</td>
 	<td></td>
 </tr>
 <tr>

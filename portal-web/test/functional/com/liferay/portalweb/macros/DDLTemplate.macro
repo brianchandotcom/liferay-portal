@@ -231,7 +231,7 @@
 	<command name="saveFormTemplateCP">
 		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 

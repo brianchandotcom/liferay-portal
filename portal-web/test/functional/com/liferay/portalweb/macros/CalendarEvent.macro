@@ -1146,11 +1146,11 @@
 				<isset var="month" />
 			</and>
 			<then>
-				<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${frequency} On The ${position} ${weekday} Of ${month}" />
+				<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_DIALOG_SUMMARY" value1="${frequency}, On The ${position} ${weekday} Of ${month}" />
 
 				<execute function="AssertClick" locator1="CalendarEditEvent#REPEAT_DONE_BUTTON" value1="Done" />
 
-				<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="${frequency} On The ${position} ${weekday} Of ${month}" />
+				<execute function="AssertTextEquals" locator1="CalendarEditEvent#REPEAT_SUMMARY" value1="${frequency}, On The ${position} ${weekday} Of ${month}" />
 			</then>
 			<elseif>
 				<and>

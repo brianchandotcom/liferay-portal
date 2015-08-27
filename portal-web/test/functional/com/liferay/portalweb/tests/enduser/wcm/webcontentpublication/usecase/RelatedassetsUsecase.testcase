@@ -24,8 +24,8 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
+		<execute macro="Page#gotoPublishingtools">
+			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>

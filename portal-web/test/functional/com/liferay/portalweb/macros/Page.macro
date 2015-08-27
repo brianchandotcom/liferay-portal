@@ -612,11 +612,16 @@
 
 		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_MY_SPACE_NAVIGATION" value1="My Space" />
 
-		<var name="key_portletCategoryName" value="My Account" />
-
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MY_SPACE_PANEL_TITLE" value1="My Account" />
-
 		<var name="key_portletName" value="${portletName}" />
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" />
+			<then>
+				<var name="key_portletCategoryName" value="My Account" />
+
+				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MY_SPACE_PANEL_TITLE" value1="My Account" />
+			</then>
+		</if>
 
 		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
 	</command>
@@ -738,6 +743,25 @@
 				</execute>
 			</else>
 		</if>
+	</command>
+
+	<command name="gotoPublishingtools">
+		<description message="Navigate to Site Administration > Publishing tools > ${portletName}." />
+
+		<execute macro="Page#gotoCmdCP">
+			<var name="friendlyURL" value="${friendlyURL}" />
+			<var name="nodePort" value="${nodePort}" />
+			<var name="pageAccess" value="${pageAccess}" />
+			<var name="pageStaging" value="${pageStaging}" />
+			<var name="portletCategoryName" value="Publishing tools" />
+			<var name="portletName" value="${portletName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameURL" value="${siteNameURL}" />
+			<var name="siteScopeName" value="${siteScopeName}" />
+			<var name="siteURL" value="${siteURL}" />
+			<var name="specificURL" value="${specificURL}" />
+			<var name="virtualHostsURL" value="${virtualHostsURL}" />
+		</execute>
 	</command>
 
 	<command name="gotoSALocalizedCP">

@@ -1,19 +1,8 @@
 <definition>
-	<command name="_showDetails">
-		<if>
-			<condition function="IsElementNotPresent#isNotVisible" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
-			<then>
-				<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS" value1="Details" />
-			</then>
-		</if>
-
-		<execute function="AssertVisible" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
-	</command>
-
-	<command name="addCmd">
+	<command name="_add">
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 		<execute function="AssertClick" locator1="DDMSelectStructure#TOOLBAR_ADD" value1="Add" />
-		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlDataDefinitionName}" />
+		<execute function="Type#clickAtSendKeys" locator1="DDMEditStructure#NAME_FIELD" value1="${ddlDataDefinitionName}" />
 
 		<execute macro="DDLDataDefinition#_showDetails" />
 
@@ -27,17 +16,36 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="_select">
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertClick#assertTextClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
+	</command>
+
+	<command name="_showDetails">
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
+			<then>
+				<execute function="AssertClick" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS" value1="Details" />
+			</then>
+		</if>
+
+		<execute function="AssertVisible" locator1="CPDynamicdatalistsDatadefinitionsAdd#DETAILS_DESCRIPTION_FIELD" />
+	</command>
+
 	<command name="addCP">
 		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
-		<execute macro="DDLDataDefinition#addCmd">
+		<execute macro="DDLDataDefinition#_add">
 			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 	</command>
 
 	<command name="addViaDDLDisplayPG">
-		<execute macro="DDLDataDefinition#addCmd">
+		<execute macro="DDLDataDefinition#_add">
 			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
@@ -151,33 +159,30 @@
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 	</command>
 
-	<command name="saveCmd">
+	<command name="save">
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 
 		<execute function="AssertClick" locator1="DDMEditStructure#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
+	<command name="saveCP">
+		<execute macro="DDLDataDefinition#save" />
+
+		<execute macro="Alert#viewSuccess" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="saveCP">
-		<execute macro="DDLDataDefinition#saveCmd" />
-	</command>
-
 	<command name="saveViaDDLDisplayPG">
-		<execute macro="DDLDataDefinition#saveCmd" />
-	</command>
+		<execute macro="DDLDataDefinition#save" />
 
-	<command name="selectCmd">
-		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1" value1="${ddlDataDefinitionName}" />
-		<execute function="AssertClick#assertTextClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
+		<execute macro="Alert#viewSuccess" />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="selectCP">
-		<execute macro="DDLDataDefinition#selectCmd">
+		<execute macro="DDLDataDefinition#_select">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
@@ -187,13 +192,13 @@
 	</command>
 
 	<command name="selectViaDDLDisplayPG">
-		<execute macro="DDLDataDefinition#selectCmd">
+		<execute macro="DDLDataDefinition#_select">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="PGDynamicdatalistsAddlist#IFRAME" />
 
-		<execute function="AssertTextEquals#assertValue" locator1="TextInput#NAME" value1="${ddlDataDefinitionName}" />
+		<execute function="AssertTextEquals#assertValue" locator1="TextInput#DATA_DEFINITION" value1="${ddlDataDefinitionName}" />
 	</command>
 
 	<command name="setupUseCase">

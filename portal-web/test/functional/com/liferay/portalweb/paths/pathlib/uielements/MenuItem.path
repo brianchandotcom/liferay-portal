@@ -235,7 +235,12 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>xpath=(//a[@role='menuitem' and contains(.,'Edit')])[2] | //a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_2</td>
+	<td>xpath=(//a[@role='menuitem' and contains(.,'Edit')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -385,7 +390,12 @@
 </tr>
 <tr>
 	<td>MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>xpath=(//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')])[2] | //a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_TO_THE_RECYCLE_BIN_2</td>
+	<td>xpath=(//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')])[2]</td>
 	<td></td>
 </tr>
 <tr>

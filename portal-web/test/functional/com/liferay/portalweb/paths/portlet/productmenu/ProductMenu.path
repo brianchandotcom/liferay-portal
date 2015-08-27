@@ -87,12 +87,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_MENU_ITEM</td>
-	<td>//div[contains(@class,'collapse in')]//a[contains(.,'${key_portletName}')]</td>
+	<td>//div[contains(@class,'collapse in')]//a[.='${key_portletName}']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME</td>
-	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${siteName}')]</td>
+	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

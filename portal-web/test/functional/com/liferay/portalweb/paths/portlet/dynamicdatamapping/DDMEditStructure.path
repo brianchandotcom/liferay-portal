@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAME_FIELD</td>
+	<td>//input[contains(@id,'DDMPortlet_name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_FIELD_ALERT</td>
 	<td>//div[@class='required']</td>
 	<td></td>

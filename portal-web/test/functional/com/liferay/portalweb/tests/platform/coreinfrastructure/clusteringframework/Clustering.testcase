@@ -262,8 +262,8 @@
 			<var name="nodePort" value="8080" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
+		<execute macro="Page#gotoPublishingtools">
+			<var name="portletName" value="Staging Configuration" />
 			<var name="siteURL" value="true" />
 		</execute>
 

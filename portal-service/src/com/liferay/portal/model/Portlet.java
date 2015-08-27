@@ -1119,7 +1119,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @return the name of the WebDAV storage class of the portlet
 	* @deprecated As of 7.0.0 replaced by 'getWebDAVStorageInstance().getClass().getName()'
 	*/
-	@Deprecated
+	@java.lang.Deprecated()
 	public java.lang.String getWebDAVStorageClass();
 
 	/**
@@ -1137,10 +1137,9 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* WebDAVStorage when it is implemented as an OSGi service.
 	*
 	* @return the name of the WebDAV storage token of the portlet
-	* @deprecated As of 7.0.0 replaced by 'getWebDAVStorageInstance().getToken()'
-	*
+	* @deprecated As of 7.0.0 replaced by 'WebDAVUtil.getStorageToken(Portlet)'
 	*/
-	@Deprecated
+	@java.lang.Deprecated()
 	public java.lang.String getWebDAVStorageToken();
 
 	/**

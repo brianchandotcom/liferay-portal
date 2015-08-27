@@ -567,8 +567,6 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 
 		boolean isNew = portalPreferences.isNew();
 
-		PortalPreferencesModelImpl portalPreferencesModelImpl = (PortalPreferencesModelImpl)portalPreferences;
-
 		Session session = null;
 
 		try {
@@ -600,9 +598,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			PortalPreferencesImpl.class, portalPreferences.getPrimaryKey(),
 			portalPreferences, false);
 
-		clearUniqueFindersCache((PortalPreferences)portalPreferencesModelImpl);
-		cacheUniqueFindersCache((PortalPreferences)portalPreferencesModelImpl,
-			isNew);
+		clearUniqueFindersCache(portalPreferences);
+		cacheUniqueFindersCache(portalPreferences, isNew);
 
 		portalPreferences.resetOriginalValues();
 

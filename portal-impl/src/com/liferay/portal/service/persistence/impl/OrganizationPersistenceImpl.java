@@ -6802,8 +6802,8 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			OrganizationImpl.class, organization.getPrimaryKey(), organization,
 			false);
 
-		clearUniqueFindersCache((Organization)organizationModelImpl);
-		cacheUniqueFindersCache((Organization)organizationModelImpl, isNew);
+		clearUniqueFindersCache(organization);
+		cacheUniqueFindersCache(organization, isNew);
 
 		organization.resetOriginalValues();
 

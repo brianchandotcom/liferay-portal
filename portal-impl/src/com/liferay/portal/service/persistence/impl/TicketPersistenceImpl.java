@@ -1161,8 +1161,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		EntityCacheUtil.putResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
 			TicketImpl.class, ticket.getPrimaryKey(), ticket, false);
 
-		clearUniqueFindersCache((Ticket)ticketModelImpl);
-		cacheUniqueFindersCache((Ticket)ticketModelImpl, isNew);
+		clearUniqueFindersCache(ticket);
+		cacheUniqueFindersCache(ticket, isNew);
 
 		ticket.resetOriginalValues();
 

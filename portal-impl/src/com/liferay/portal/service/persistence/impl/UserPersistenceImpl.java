@@ -7543,8 +7543,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		EntityCacheUtil.putResult(UserModelImpl.ENTITY_CACHE_ENABLED,
 			UserImpl.class, user.getPrimaryKey(), user, false);
 
-		clearUniqueFindersCache((User)userModelImpl);
-		cacheUniqueFindersCache((User)userModelImpl, isNew);
+		clearUniqueFindersCache(user);
+		cacheUniqueFindersCache(user, isNew);
 
 		user.resetOriginalValues();
 

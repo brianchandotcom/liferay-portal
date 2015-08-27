@@ -3162,8 +3162,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			SubscriptionImpl.class, subscription.getPrimaryKey(), subscription,
 			false);
 
-		clearUniqueFindersCache((Subscription)subscriptionModelImpl);
-		cacheUniqueFindersCache((Subscription)subscriptionModelImpl, isNew);
+		clearUniqueFindersCache(subscription);
+		cacheUniqueFindersCache(subscription, isNew);
 
 		subscription.resetOriginalValues();
 

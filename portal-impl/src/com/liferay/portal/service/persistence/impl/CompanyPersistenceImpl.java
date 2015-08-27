@@ -1585,8 +1585,8 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		EntityCacheUtil.putResult(CompanyModelImpl.ENTITY_CACHE_ENABLED,
 			CompanyImpl.class, company.getPrimaryKey(), company, false);
 
-		clearUniqueFindersCache((Company)companyModelImpl);
-		cacheUniqueFindersCache((Company)companyModelImpl, isNew);
+		clearUniqueFindersCache(company);
+		cacheUniqueFindersCache(company, isNew);
 
 		company.resetOriginalValues();
 

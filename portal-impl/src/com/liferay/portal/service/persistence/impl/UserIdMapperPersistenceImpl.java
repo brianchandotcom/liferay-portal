@@ -1445,8 +1445,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			UserIdMapperImpl.class, userIdMapper.getPrimaryKey(), userIdMapper,
 			false);
 
-		clearUniqueFindersCache((UserIdMapper)userIdMapperModelImpl);
-		cacheUniqueFindersCache((UserIdMapper)userIdMapperModelImpl, isNew);
+		clearUniqueFindersCache(userIdMapper);
+		cacheUniqueFindersCache(userIdMapper, isNew);
 
 		userIdMapper.resetOriginalValues();
 

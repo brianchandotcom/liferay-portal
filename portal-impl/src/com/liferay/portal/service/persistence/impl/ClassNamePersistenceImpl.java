@@ -549,8 +549,6 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 
 		boolean isNew = className.isNew();
 
-		ClassNameModelImpl classNameModelImpl = (ClassNameModelImpl)className;
-
 		Session session = null;
 
 		try {
@@ -581,8 +579,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		EntityCacheUtil.putResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 			ClassNameImpl.class, className.getPrimaryKey(), className, false);
 
-		clearUniqueFindersCache((ClassName)classNameModelImpl);
-		cacheUniqueFindersCache((ClassName)classNameModelImpl, isNew);
+		clearUniqueFindersCache(className);
+		cacheUniqueFindersCache(className, isNew);
 
 		className.resetOriginalValues();
 

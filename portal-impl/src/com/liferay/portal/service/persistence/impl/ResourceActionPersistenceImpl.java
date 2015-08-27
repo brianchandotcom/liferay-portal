@@ -1191,8 +1191,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			ResourceActionImpl.class, resourceAction.getPrimaryKey(),
 			resourceAction, false);
 
-		clearUniqueFindersCache((ResourceAction)resourceActionModelImpl);
-		cacheUniqueFindersCache((ResourceAction)resourceActionModelImpl, isNew);
+		clearUniqueFindersCache(resourceAction);
+		cacheUniqueFindersCache(resourceAction, isNew);
 
 		resourceAction.resetOriginalValues();
 

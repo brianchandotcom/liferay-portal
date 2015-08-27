@@ -523,8 +523,6 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 		boolean isNew = browserTracker.isNew();
 
-		BrowserTrackerModelImpl browserTrackerModelImpl = (BrowserTrackerModelImpl)browserTracker;
-
 		Session session = null;
 
 		try {
@@ -556,8 +554,8 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 			BrowserTrackerImpl.class, browserTracker.getPrimaryKey(),
 			browserTracker, false);
 
-		clearUniqueFindersCache((BrowserTracker)browserTrackerModelImpl);
-		cacheUniqueFindersCache((BrowserTracker)browserTrackerModelImpl, isNew);
+		clearUniqueFindersCache(browserTracker);
+		cacheUniqueFindersCache(browserTracker, isNew);
 
 		browserTracker.resetOriginalValues();
 

@@ -6083,8 +6083,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 			LayoutRevisionImpl.class, layoutRevision.getPrimaryKey(),
 			layoutRevision, false);
 
-		clearUniqueFindersCache((LayoutRevision)layoutRevisionModelImpl);
-		cacheUniqueFindersCache((LayoutRevision)layoutRevisionModelImpl, isNew);
+		clearUniqueFindersCache(layoutRevision);
+		cacheUniqueFindersCache(layoutRevision, isNew);
 
 		layoutRevision.resetOriginalValues();
 

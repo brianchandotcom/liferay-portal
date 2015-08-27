@@ -609,8 +609,8 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			WebDAVPropsImpl.class, webDAVProps.getPrimaryKey(), webDAVProps,
 			false);
 
-		clearUniqueFindersCache((WebDAVProps)webDAVPropsModelImpl);
-		cacheUniqueFindersCache((WebDAVProps)webDAVPropsModelImpl, isNew);
+		clearUniqueFindersCache(webDAVProps);
+		cacheUniqueFindersCache(webDAVProps, isNew);
 
 		webDAVProps.resetOriginalValues();
 

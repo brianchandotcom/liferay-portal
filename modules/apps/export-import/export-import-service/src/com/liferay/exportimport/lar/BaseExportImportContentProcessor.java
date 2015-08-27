@@ -68,6 +68,7 @@ import java.util.regex.Pattern;
 public class BaseExportImportContentProcessor
 	implements ExportImportContentProcessor {
 
+	@Override
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			String content, boolean exportReferencedContent,
@@ -90,6 +91,7 @@ public class BaseExportImportContentProcessor
 		return content;
 	}
 
+	@Override
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext, StagedModel stagedModel,
 			String content)

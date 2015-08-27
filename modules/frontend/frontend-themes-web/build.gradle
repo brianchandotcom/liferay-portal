@@ -18,7 +18,7 @@ ext {
 }
 
 liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
+	deployDir = file("${liferayHome}/osgi/modules")
 }
 
 File themesDestinationDir = file("src/META-INF/resources");

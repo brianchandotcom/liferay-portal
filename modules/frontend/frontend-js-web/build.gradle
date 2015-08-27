@@ -17,7 +17,7 @@ ext {
 }
 
 liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
+	deployDir = file("${liferayHome}/osgi/modules")
 }
 
 File jsDestinationDir = file("tmp/META-INF/resources")

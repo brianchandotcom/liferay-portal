@@ -430,7 +430,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_CELL_EDITOR_FIELD_ALERT</td>
-	<td>//div[@class='structureFieldName' and @role='alert']</td>
+	<td>//div[contains(@class,'FieldName') and (@role='alert')]</td>
 	<td></td>
 </tr>
 <tr>

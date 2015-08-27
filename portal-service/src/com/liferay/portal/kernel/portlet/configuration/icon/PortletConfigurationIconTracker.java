@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet.configuration;
+package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.journal.web.portlet.configuration;
+package com.liferay.journal.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.BaseJSPPortletConfigurationIconFactory;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = PortletConfigurationIconFactory.class)
-public class TemplatesPortletConfigurationIconFactory
+public class StructuresPortletConfigurationIconFactory
 	extends BaseJSPPortletConfigurationIconFactory {
 
 	@Override
@@ -38,12 +38,12 @@ public class TemplatesPortletConfigurationIconFactory
 
 	@Override
 	public String getJspPath() {
-		return "/configuration/templates.jsp";
+		return "/configuration/icon/structures.jsp";
 	}
 
 	@Override
 	public double getWeight() {
-		return 101;
+		return 102;
 	}
 
 	@Override

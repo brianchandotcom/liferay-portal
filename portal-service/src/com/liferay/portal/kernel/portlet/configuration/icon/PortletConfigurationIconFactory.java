@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.portlet.configuration;
+package com.liferay.portal.kernel.portlet.configuration.icon;
 
 import java.io.IOException;
 
@@ -22,28 +22,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Eudaldo Alonso
  */
-public class BasePortletConfigurationIconFactory
-	implements PortletConfigurationIconFactory {
+public interface PortletConfigurationIconFactory {
 
-	@Override
-	public PortletConfigurationIcon create(HttpServletRequest request) {
-		return null;
-	}
+	public PortletConfigurationIcon create(HttpServletRequest request);
 
-	@Override
-	public double getWeight() {
-		return 0;
-	}
+	public double getWeight();
 
-	/**
-	 * @throws IOException
-	 */
-	@Override
 	public boolean include(
 			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		return false;
-	}
+		throws IOException;
 
 }

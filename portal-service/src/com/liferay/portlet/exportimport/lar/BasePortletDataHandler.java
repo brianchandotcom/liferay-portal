@@ -571,9 +571,12 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			ManifestSummary manifestSummary =
 				portletDataContext.getManifestSummary();
 
-			String manifestSummaryKey = ManifestSummary.getManifestSummaryKey(
+			StagedModelType stagedModelType = new StagedModelType(
 				portletDataHandlerControl.getClassName(),
 				portletDataHandlerBoolean.getReferrerClassName());
+
+			String manifestSummaryKey = ManifestSummary.getManifestSummaryKey(
+				stagedModelType);
 
 			manifestSummary.addModelAdditionCount(manifestSummaryKey, 0);
 		}
@@ -657,9 +660,12 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		for (PortletDataHandlerControl portletDataHandlerControl :
 				portletDataHandlerControls) {
 
-			long modelCount = manifestSummary.getModelAdditionCount(
+			StagedModelType stagedModelType = new StagedModelType(
 				portletDataHandlerControl.getClassName(),
 				portletDataHandlerControl.getReferrerClassName());
+
+			long modelAdditionCount = manifestSummary.getModelAdditionCount(
+				stagedModelType);
 
 			if (portletDataHandlerControl
 					instanceof PortletDataHandlerBoolean) {
@@ -675,25 +681,25 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 						manifestSummary, childPortletDataHandlerControls);
 
 					if (childModelCount != -1) {
-						if (modelCount == -1) {
-							modelCount = childModelCount;
+						if (modelAdditionCount == -1) {
+							modelAdditionCount = childModelCount;
 						}
 						else {
-							modelCount += childModelCount;
+							modelAdditionCount += childModelCount;
 						}
 					}
 				}
 			}
 
-			if (modelCount == -1) {
+			if (modelAdditionCount == -1) {
 				continue;
 			}
 
 			if (totalModelCount == -1) {
-				totalModelCount = modelCount;
+				totalModelCount = modelAdditionCount;
 			}
 			else {
-				totalModelCount += modelCount;
+				totalModelCount += modelAdditionCount;
 			}
 		}
 

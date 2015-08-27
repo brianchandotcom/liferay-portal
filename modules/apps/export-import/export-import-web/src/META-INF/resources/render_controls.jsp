@@ -42,7 +42,9 @@ for (int i = 0; i < controls.length; i++) {
 				String className = controls[i].getClassName();
 
 				if (Validator.isNotNull(className) && (manifestSummary != null)) {
-					long modelAdditionCount = manifestSummary.getModelAdditionCount(className, controls[i].getReferrerClassName());
+					StagedModelType stagedModelType = new StagedModelType(className, controls[i].getReferrerClassName());
+
+					long modelAdditionCount = manifestSummary.getModelAdditionCount(stagedModelType);
 
 					if (modelAdditionCount != 0) {
 						controlLabel += modelAdditionCount > 0 ? " (" + modelAdditionCount + ")" : StringPool.BLANK;

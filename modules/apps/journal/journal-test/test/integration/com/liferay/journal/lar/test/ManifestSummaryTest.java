@@ -32,6 +32,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.util.Date;
 import java.util.List;
@@ -79,15 +80,19 @@ public class ManifestSummaryTest
 		Assert.assertEquals(
 			1,
 			manifestSummary.getModelAdditionCount(
-				DDMStructure.class, JournalArticle.class));
+				new StagedModelType(DDMStructure.class, JournalArticle.class)));
 		Assert.assertEquals(
 			1,
 			manifestSummary.getModelAdditionCount(
-				DDMTemplate.class, DDMStructure.class));
+				new StagedModelType(DDMTemplate.class, DDMStructure.class)));
 		Assert.assertEquals(
-			1, manifestSummary.getModelAdditionCount(JournalArticle.class));
+			1,
+			manifestSummary.getModelAdditionCount(
+				new StagedModelType(JournalArticle.class)));
 		Assert.assertEquals(
-			1, manifestSummary.getModelAdditionCount(JournalFolder.class));
+			1,
+			manifestSummary.getModelAdditionCount(
+				new StagedModelType(JournalFolder.class)));
 
 		Document document = SAXReaderUtil.createDocument();
 
@@ -121,15 +126,19 @@ public class ManifestSummaryTest
 		Assert.assertEquals(
 			1,
 			manifestSummary.getModelAdditionCount(
-				DDMStructure.class, JournalArticle.class));
+				new StagedModelType(DDMStructure.class, JournalArticle.class)));
 		Assert.assertEquals(
 			1,
 			manifestSummary.getModelAdditionCount(
-				DDMTemplate.class, DDMStructure.class));
+				new StagedModelType(DDMTemplate.class, DDMStructure.class)));
 		Assert.assertEquals(
-			1, manifestSummary.getModelAdditionCount(JournalArticle.class));
+			1,
+			manifestSummary.getModelAdditionCount(
+				new StagedModelType(JournalArticle.class)));
 		Assert.assertEquals(
-			1, manifestSummary.getModelAdditionCount(JournalFolder.class));
+			1,
+			manifestSummary.getModelAdditionCount(
+				new StagedModelType(JournalFolder.class)));
 		Assert.assertTrue(
 			DateUtil.equals(
 				_exportDate, manifestSummary.getExportDate(), true));

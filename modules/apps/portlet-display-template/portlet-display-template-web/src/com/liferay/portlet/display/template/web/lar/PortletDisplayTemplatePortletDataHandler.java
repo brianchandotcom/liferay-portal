@@ -68,8 +68,7 @@ public class PortletDisplayTemplatePortletDataHandler
 
 		for (StagedModelType stagedModelType : getStagedModelTypes()) {
 			long modelCount = manifestSummary.getModelAdditionCount(
-				stagedModelType.getClassName(),
-				stagedModelType.getReferrerClassName());
+				stagedModelType);
 
 			if (modelCount == -1) {
 				continue;

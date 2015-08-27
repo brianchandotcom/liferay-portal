@@ -141,6 +141,7 @@ page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean" %><
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerChoice" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerControl" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@
+page import="com.liferay.portlet.exportimport.lar.StagedModelType" %><%@
 page import="com.liferay.portlet.exportimport.lar.UserIdStrategy" %><%@
 page import="com.liferay.portlet.exportimport.model.ExportImportConfiguration" %><%@
 page import="com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil" %><%@

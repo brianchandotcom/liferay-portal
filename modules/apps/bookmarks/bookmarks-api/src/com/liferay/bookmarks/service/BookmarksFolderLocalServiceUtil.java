@@ -415,6 +415,11 @@ public class BookmarksFolderLocalServiceUtil {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
 	}
 
+	public static void mergeFolders(long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().mergeFolders(folderId, parentFolderId);
+	}
+
 	public static com.liferay.bookmarks.model.BookmarksFolder moveFolder(
 		long folderId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -492,6 +497,12 @@ public class BookmarksFolderLocalServiceUtil {
 		return getService().updateBookmarksFolder(bookmarksFolder);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	long, String, String, ServiceContext)} and {@link
+	#mergeFolders(long, long)}
+	*/
+	@Deprecated
 	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
@@ -500,6 +511,16 @@ public class BookmarksFolderLocalServiceUtil {
 		return getService()
 				   .updateFolder(userId, folderId, parentFolderId, name,
 			description, mergeWithParentFolder, serviceContext);
+	}
+
+	public static com.liferay.bookmarks.model.BookmarksFolder updateFolder(
+		long userId, long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateFolder(userId, folderId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	public static com.liferay.bookmarks.model.BookmarksFolder updateStatus(

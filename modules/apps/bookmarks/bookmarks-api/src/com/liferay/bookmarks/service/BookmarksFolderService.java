@@ -133,6 +133,9 @@ public interface BookmarksFolderService extends BaseService {
 	public java.util.List<java.lang.Long> getSubfolderIds(long groupId,
 		long folderId, boolean recurse);
 
+	public void mergeFolders(long folderId, long parentFolderId)
+		throws PortalException;
+
 	public com.liferay.bookmarks.model.BookmarksFolder moveFolder(
 		long folderId, long parentFolderId) throws PortalException;
 
@@ -157,9 +160,21 @@ public interface BookmarksFolderService extends BaseService {
 	public void unsubscribeFolder(long groupId, long folderId)
 		throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	String, String, ServiceContext)} and {@link #mergeFolders(
+	long, long)}
+	*/
+	@java.lang.Deprecated
 	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws PortalException;
+
+	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -351,6 +351,9 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId);
 
+	public void mergeFolders(long folderId, long parentFolderId)
+		throws PortalException;
+
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.bookmarks.model.BookmarksFolder moveFolder(
 		long folderId, long parentFolderId) throws PortalException;
@@ -401,10 +404,23 @@ public interface BookmarksFolderLocalService extends BaseLocalService,
 	public com.liferay.bookmarks.model.BookmarksFolder updateBookmarksFolder(
 		com.liferay.bookmarks.model.BookmarksFolder bookmarksFolder);
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	long, String, String, ServiceContext)} and {@link
+	#mergeFolders(long, long)}
+	*/
+	@java.lang.Deprecated
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 		long userId, long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws PortalException;
+
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
+	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
+		long userId, long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 

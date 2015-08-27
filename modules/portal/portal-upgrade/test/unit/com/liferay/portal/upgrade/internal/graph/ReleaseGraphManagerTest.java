@@ -14,7 +14,9 @@
 
 package com.liferay.portal.upgrade.internal.graph;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.DatabaseProcessContext;
+import com.liferay.portal.Upgrade;
+import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.upgrade.internal.UpgradeInfo;
 
 import java.util.Arrays;
@@ -208,7 +210,7 @@ public class ReleaseGraphManagerTest {
 			from, to, new TestUpgradeProcess(from + " -> " + to));
 	}
 
-	private static class TestUpgradeProcess extends UpgradeProcess {
+	private static class TestUpgradeProcess implements Upgrade {
 
 		public TestUpgradeProcess(String name) {
 			_name = name;
@@ -239,7 +241,8 @@ public class ReleaseGraphManagerTest {
 		}
 
 		@Override
-		public void upgrade() {
+		public void upgrade(DatabaseProcessContext databaseContext)
+			throws UpgradeException {
 		}
 
 		private final String _name;

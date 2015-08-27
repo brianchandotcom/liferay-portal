@@ -25,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 
 import java.nio.channels.FileChannel;
 
@@ -181,6 +182,21 @@ public class StreamUtil {
 			}
 
 		};
+	}
+
+	public static void withStdOut(
+		OutputStream outputStream, Runnable runnable) {
+
+		PrintStream out = System.out;
+
+		System.setOut(new PrintStream(outputStream));
+
+		try {
+			runnable.run();
+		}
+		finally {
+			System.setOut(out);
+		}
 	}
 
 	protected static void transferByteArray(

@@ -57,6 +57,11 @@ public class ReleaseLocalServiceUtil {
 		return getService().addRelease(servletContextName, buildNumber);
 	}
 
+	public static com.liferay.portal.model.Release addRelease(
+		java.lang.String servletContextName, java.lang.String version) {
+		return getService().addRelease(servletContextName, version);
+	}
+
 	/**
 	* Creates a new release with the primary key. Does not add the release to the database.
 	*
@@ -295,6 +300,12 @@ public class ReleaseLocalServiceUtil {
 		getService()
 			.updateRelease(servletContextName, upgradeProcesses,
 			unfilteredPortalProperties);
+	}
+
+	public static void updateRelease(java.lang.String servletContextName,
+		java.lang.String version, java.lang.String previousVersion)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateRelease(servletContextName, version, previousVersion);
 	}
 
 	public static ReleaseLocalService getService() {

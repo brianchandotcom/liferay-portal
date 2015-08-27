@@ -447,6 +447,16 @@ public class ListUtil {
 		return list;
 	}
 
+	public static <F, T> List<T> toList(List<F> list, Function<F, T> function) {
+		final List<T> result = new ArrayList<>(list.size());
+
+		for (F f : list) {
+			result.add(function.apply(f));
+		}
+
+		return result;
+	}
+
 	public static <T, A> List<A> toList(List<T> list, Accessor<T, A> accessor) {
 		List<A> aList = new ArrayList<>(list.size());
 

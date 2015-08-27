@@ -69,20 +69,18 @@ public class BaseExportImportContentProcessor
 	implements ExportImportContentProcessor {
 
 	public String replaceExportContentReferences(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content,
-			boolean exportReferencedContent, boolean escapeContent)
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			String content, boolean exportReferencedContent,
+			boolean escapeContent)
 		throws Exception {
 
 		content = replaceExportDLReferences(
-			portletDataContext, entityStagedModel, content,
-			exportReferencedContent);
+			portletDataContext, stagedModel, content, exportReferencedContent);
 
-		content = replaceExportLayoutReferences(
-			portletDataContext, entityStagedModel, content);
+		content = replaceExportLayoutReferences(portletDataContext, content);
 
 		content = replaceExportLinksToLayouts(
-			portletDataContext, entityStagedModel, content);
+			portletDataContext, stagedModel, content);
 
 		if (escapeContent) {
 			content = StringUtil.replace(
@@ -93,12 +91,12 @@ public class BaseExportImportContentProcessor
 	}
 
 	public String replaceImportContentReferences(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content)
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			String content)
 		throws Exception {
 
 		content = replaceImportDLReferences(
-			portletDataContext, entityStagedModel, content);
+			portletDataContext, stagedModel, content);
 
 		content = replaceImportLayoutReferences(portletDataContext, content);
 		content = replaceImportLinksToLayouts(portletDataContext, content);
@@ -451,8 +449,7 @@ public class BaseExportImportContentProcessor
 	}
 
 	protected String replaceExportLayoutReferences(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content)
+			PortletDataContext portletDataContext, String content)
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.getGroup(
@@ -652,8 +649,8 @@ public class BaseExportImportContentProcessor
 	}
 
 	protected String replaceExportLinksToLayouts(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content)
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			String content)
 		throws Exception {
 
 		List<String> oldLinksToLayout = new ArrayList<>();
@@ -688,10 +685,10 @@ public class BaseExportImportContentProcessor
 				newLinksToLayout.add(newLinkToLayout);
 
 				Element entityElement = portletDataContext.getExportDataElement(
-					entityStagedModel);
+					stagedModel);
 
 				portletDataContext.addReferenceElement(
-					entityStagedModel, entityElement, layout,
+					stagedModel, entityElement, layout,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
 			catch (Exception e) {
@@ -718,13 +715,13 @@ public class BaseExportImportContentProcessor
 	}
 
 	protected String replaceImportDLReferences(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content)
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			String content)
 		throws Exception {
 
 		List<Element> referenceElements =
 			portletDataContext.getReferenceElements(
-				entityStagedModel, DLFileEntry.class);
+				stagedModel, DLFileEntry.class);
 
 		for (Element referenceElement : referenceElements) {
 			long classPK = GetterUtil.getLong(
@@ -732,7 +729,7 @@ public class BaseExportImportContentProcessor
 
 			Element referenceDataElement =
 				portletDataContext.getReferenceDataElement(
-					entityStagedModel, DLFileEntry.class, classPK);
+					stagedModel, DLFileEntry.class, classPK);
 
 			String path = null;
 
@@ -756,8 +753,7 @@ public class BaseExportImportContentProcessor
 			}
 
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
-				portletDataContext, entityStagedModel, DLFileEntry.class,
-				classPK);
+				portletDataContext, stagedModel, DLFileEntry.class, classPK);
 
 			Map<Long, Long> dlFileEntryIds =
 				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

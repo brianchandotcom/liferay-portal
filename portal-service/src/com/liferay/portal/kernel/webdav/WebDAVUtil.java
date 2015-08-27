@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.xml.Namespace;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -291,6 +292,17 @@ public class WebDAVUtil {
 
 	public static Collection<String> getStorageTokens() {
 		return getInstance()._getStorageTokens();
+	}
+
+	public static String getStorageToken(Portlet portlet) {
+		WebDAVStorage webDAVStorageInstance =
+			portlet.getWebDAVStorageInstance();
+
+		if (webDAVStorageInstance == null) {
+			return null;
+		}
+
+		return webDAVStorageInstance.getToken();
 	}
 
 	public static long getTimeout(HttpServletRequest request) {

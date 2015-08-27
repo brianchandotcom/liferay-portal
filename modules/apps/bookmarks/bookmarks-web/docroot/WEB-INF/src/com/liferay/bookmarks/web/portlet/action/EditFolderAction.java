@@ -213,9 +213,6 @@ public class EditFolderAction extends PortletAction {
 			BookmarksFolder.class.getName(), actionRequest);
 
 		if (folderId <= 0) {
-
-			// Add folder
-
 			BookmarksFolderServiceUtil.addFolder(
 				parentFolderId, name, description, serviceContext);
 		}
@@ -223,9 +220,6 @@ public class EditFolderAction extends PortletAction {
 			BookmarksFolderServiceUtil.mergeFolders(folderId, parentFolderId);
 		}
 		else {
-
-			// Update folder
-
 			BookmarksFolderServiceUtil.updateFolder(
 				folderId, parentFolderId, name, description, serviceContext);
 		}

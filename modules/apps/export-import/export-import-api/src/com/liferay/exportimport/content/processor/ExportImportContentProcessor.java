@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.api;
+package com.liferay.exportimport.content.processor;
 
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;

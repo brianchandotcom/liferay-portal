@@ -285,7 +285,7 @@ public interface ExportImportHelper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by
-	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceExportContentReferences(
+	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean) in
 	 *             the export-import-api module
 	 */
@@ -298,7 +298,7 @@ public interface ExportImportHelper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by
-	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceExportContentReferences(
+	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean) in
 	 *             the export-import-api module
 	 */
@@ -311,7 +311,7 @@ public interface ExportImportHelper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by
-	 *             com.liferay.exportimport.api.ExportImportContentProcessorr#replaceExportContentReferences(
+	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessorr#replaceExportContentReferences(
 	 *             PortletDataContext, StagedModel, String, boolean, boolean) in
 	 *             the export-import-api module
 	 */
@@ -380,7 +380,7 @@ public interface ExportImportHelper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by
-	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceImportContentReferences(
+	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceImportContentReferences(
 	 *             PortletDataContext, StagedModel, String) in the
 	 *             export-import-api module
 	 */
@@ -392,7 +392,7 @@ public interface ExportImportHelper {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by
-	 *             com.liferay.exportimport.api.ExportImportContentProcessor#replaceImportContentReferences(
+	 *             com.liferay.exportimport.content.processor.ExportImportContentProcessor#replaceImportContentReferences(
 	 *             PortletDataContext, StagedModel, String) in the
 	 *             export-import-api module
 	 */

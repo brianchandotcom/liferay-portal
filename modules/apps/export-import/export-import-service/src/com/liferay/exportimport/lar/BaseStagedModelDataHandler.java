@@ -14,8 +14,8 @@
 
 package com.liferay.exportimport.lar;
 
-import com.liferay.exportimport.api.ExportImportContentProcessor;
-import com.liferay.exportimport.api.ExportImportContentProcessorRegistryUtil;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
 import com.liferay.portal.model.StagedModel;
 
 /**

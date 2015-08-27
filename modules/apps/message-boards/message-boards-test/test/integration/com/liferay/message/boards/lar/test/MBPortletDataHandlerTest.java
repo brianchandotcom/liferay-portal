@@ -35,6 +35,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -153,7 +154,7 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		Map<String, LongWrapper> expectedModelAdditionCounters) {
 
 		String manifestSummaryKey = ManifestSummary.getManifestSummaryKey(
-			MBThread.class.getName(), null);
+			new StagedModelType(MBThread.class.getName()));
 
 		expectedModelAdditionCounters.remove(manifestSummaryKey);
 

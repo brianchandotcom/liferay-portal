@@ -29,6 +29,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_ABSTRACT</td>
+	<td>//label[contains(.,'Custom Abstract')]/input[contains(@id,'customAbstract')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIRST_400_ABSTRACT</td>
+	<td>//label[contains(.,'first 400 characters')]/input[contains(@id,'customAbstract')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>KEEP</td>
 	<td>//label[contains(.,'Keep')]/input[@type='radio']</td>
 	<td></td>

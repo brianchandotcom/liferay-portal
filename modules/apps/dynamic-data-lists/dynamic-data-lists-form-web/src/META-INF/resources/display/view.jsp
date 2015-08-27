@@ -40,10 +40,6 @@ DDLRecordSet recordSet = ddlFormDisplayContext.getRecordSet();
 			<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 			<%= request.getAttribute(DDMWebKeys.DYNAMIC_DATA_MAPPING_FORM_HTML) %>
-
-			<aui:button-row>
-				<aui:button type="submit" value="send" />
-			</aui:button-row>
 		</aui:form>
 	</c:otherwise>
 </c:choose>

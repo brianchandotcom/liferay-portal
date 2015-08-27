@@ -41,6 +41,7 @@ public class DDMFormLayoutJSONSerializerImpl
 
 		addDefaultLanguageId(jsonObject, ddmFormLayout.getDefaultLocale());
 		addPages(jsonObject, ddmFormLayout.getDDMFormLayoutPages());
+		addPaginationMode(jsonObject, ddmFormLayout.getPaginationMode());
 
 		return jsonObject.toString();
 	}
@@ -168,6 +169,12 @@ public class DDMFormLayoutJSONSerializerImpl
 		addColumns(jsonObject, ddmFormLayoutRow.getDDMFormLayoutColumns());
 
 		return jsonObject;
+	}
+
+	private void addPaginationMode(
+		JSONObject jsonObject, String paginationMode) {
+
+		jsonObject.put("paginationMode", paginationMode);
 	}
 
 }

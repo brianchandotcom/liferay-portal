@@ -10,12 +10,12 @@
  * @param visible
  */
 {template .options}
-	<div class="form-group field-wrapper{$visible ? '' : ' hide'}" data-fieldname="{$name}">
+	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<span class="control-label">
 			{$label}
 
 			{if $required}
-				<b>&nbsp;*</b>
+				<b>*</b>
 			{/if}
 		</span>
 
@@ -51,9 +51,11 @@
 			<div class="col-md-4">
 				<label>Label</label>
 			</div>
+
 			<div class="col-md-4">
 				<label>Value</label>
 			</div>
+
 			<div class="col-md-4"></div>
 		</div>
 
@@ -61,9 +63,11 @@
 			<div class="col-md-4">
 				<input class="ddm-options-field-label" name="label" type="text" value="{$label}" />
 			</div>
+
 			<div class="col-md-4">
 				<input class="ddm-options-field-value" name="value" type="text" value="{$value}" />
 			</div>
+
 			<div class="col-md-4"></div>
 		</div>
 	</div>

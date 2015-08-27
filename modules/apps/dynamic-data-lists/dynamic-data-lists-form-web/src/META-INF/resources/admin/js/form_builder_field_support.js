@@ -9,9 +9,13 @@ AUI.add(
 
 		var CSS_FIELD_REPEATABLE_TOOLBAR = A.getClassName('lfr', 'ddm', 'form', 'field', 'repeatable', 'toolbar');
 
+		var CSS_FIELD_SETTINGS_CANCEL = A.getClassName('form', 'builder', 'field', 'settings', 'cancel');
+
 		var CSS_FIELD_TOOLBAR_CONTAINER = A.getClassName('form', 'builder', 'field', 'toolbar', 'container');
 
-		var CSS_FIELD_WRAPPER = A.getClassName('field', 'wrapper');
+		var CSS_FORM_GROUP = A.getClassName('form', 'group');
+
+		var TPL_SETTINGS_FORM = '<form action="javascript:;"><button class="hide" type="submit" /></form>';
 
 		var FormBuilderFieldSupport = function() {};
 
@@ -37,6 +41,8 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
+				instance.settingsLoader = A.Node.create('<div class="hide loading-animation"></div>');
+
 				instance._eventHandlers.push(
 					instance.after(instance._renderFormBuilderField, instance, 'render')
 				);
@@ -57,7 +63,7 @@ AUI.add(
 
 				var fieldSettingsJSON = settingsForm.toJSON();
 
-				fieldSettingsJSON.fields.forEach(
+				fieldSettingsJSON.fieldValues.forEach(
 					function(item) {
 						settings[item.name] = item.value;
 					}
@@ -65,19 +71,40 @@ AUI.add(
 
 				settings.type = instance.get('type');
 
-				settings.visibilityExpression = 'true';
-
 				return settings;
 			},
 
-			renderSettingsPanel: function(bodyNode) {
+			getSettingsModal: function() {
 				var instance = this;
+
+				var builder = instance.get('builder');
+
+				return builder._fieldSettingsModal;
+			},
+
+			hideSettingsLoader: function() {
+				var instance = this;
+
+				instance.settingsLoader.hide();
+			},
+
+			renderSettingsPanel: function() {
+				var instance = this;
+
+				var footerNode = instance._getModalStdModeNode(A.WidgetStdMod.FOOTER);
+
+				var cancelButton = footerNode.one('.' + CSS_FIELD_SETTINGS_CANCEL);
+
+				cancelButton.insert(instance.settingsLoader, 'after');
+
+				instance._renderFormNode();
+
+				instance._updateSettingsFormValues();
 
 				var settingsForm = instance.get('settingsForm');
 
-				settingsForm.set('container', bodyNode);
-
-				instance._updateSettingsFormValues();
+				settingsForm.clearValidationMessages();
+				settingsForm.clearValidationStatus();
 			},
 
 			saveSettings: function() {
@@ -95,7 +122,28 @@ AUI.add(
 				);
 			},
 
-			validateSettings: function() {
+			showSettingsLoader: function() {
+				var instance = this;
+
+				instance.settingsLoader.show();
+			},
+
+			validateSettings: function(callback) {
+				var instance = this;
+
+				var settingsForm = instance.get('settingsForm');
+
+				instance.showSettingsLoader();
+
+				settingsForm.clearValidationMessages();
+				settingsForm.clearValidationStatus();
+
+				settingsForm.validate(A.bind('_afterValidateSettingsForm', instance, callback));
+
+				return false;
+			},
+
+			_afterValidateSettingsForm: function(callback, hasErrors) {
 				var instance = this;
 
 				var builder = instance.get('builder');
@@ -106,11 +154,43 @@ AUI.add(
 
 				var field = builder.getField(nameSettingsField.getValue());
 
-				var hasField = !!field && field !== instance;
+				if (!!field && field !== instance) {
+					nameSettingsField.addValidationMessage('Field name already in use.');
+					nameSettingsField.showValidationStatus();
 
-				nameSettingsField.get('container').toggleClass('has-error', hasField);
+					nameSettingsField.focus();
 
-				return !hasField;
+					hasErrors = true;
+				}
+
+				if (!hasErrors) {
+					var settingsModal = instance.getSettingsModal();
+
+					instance.saveSettings();
+
+					settingsModal.fire(
+						'save',
+						{
+							field: instance
+						}
+					);
+
+					settingsModal.hide();
+				}
+
+				instance.hideSettingsLoader();
+
+				if (callback) {
+					callback.call(instance, hasErrors);
+				}
+			},
+
+			_getModalStdModeNode: function(mode) {
+				var instance = this;
+
+				var settingsModal = instance.getSettingsModal();
+
+				return settingsModal._modal.getStdModNode(mode);
 			},
 
 			_renderFormBuilderField: function() {
@@ -122,7 +202,7 @@ AUI.add(
 
 				container.setData('field-instance', instance);
 
-				var wrapper = container.one('.' + CSS_FIELD_WRAPPER);
+				var wrapper = container.one('.' + CSS_FORM_GROUP);
 
 				wrapper.append('<div class="' + CSS_FIELD_TOOLBAR_CONTAINER + '"></div>');
 
@@ -131,8 +211,39 @@ AUI.add(
 				if (instance.get('repeatable')) {
 					var toolbar = container.one('.' + CSS_FIELD_REPEATABLE_TOOLBAR);
 
-					toolbar.hide();
+					if (toolbar) {
+						toolbar.hide();
+					}
 				}
+			},
+
+			_renderFormNode: function() {
+				var instance = this;
+
+				var settingsFormNode = A.Node.create(TPL_SETTINGS_FORM);
+
+				var settingsForm = instance.get('settingsForm');
+
+				settingsForm.set('container', settingsFormNode);
+
+				var bodyNode = instance._getModalStdModeNode(A.WidgetStdMod.BODY);
+
+				settingsFormNode.appendTo(bodyNode);
+
+				var formName = A.guid();
+
+				settingsFormNode.attr('id', formName);
+				settingsFormNode.attr('name', formName);
+
+				Liferay.Form.register(
+					{
+						id: formName
+					}
+				);
+
+				var settingsModal = instance.getSettingsModal();
+
+				settingsFormNode.on('submit', A.bind('_save', settingsModal));
 			},
 
 			_updateSettingsFormValues: function() {

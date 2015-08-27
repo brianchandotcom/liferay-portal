@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-ddm-form-renderer-field-types',
+	'liferay-ddm-form-renderer-types',
 	function(A) {
 		var AArray = A.Array;
 
@@ -32,16 +32,11 @@ AUI.add(
 			_getFieldType: function(config) {
 				var instance = this;
 
-				var defaultConfig = A.merge(
-					config.settings,
-					{
-						type: config.name
-					}
-				);
-
 				var fieldType = new A.FormBuilderFieldType(
 					{
-						defaultConfig: defaultConfig,
+						defaultConfig: {
+							type: config.name
+						},
 						fieldClass: Liferay.DDM.Renderer.Field,
 						icon: config.icon,
 						label: config.name

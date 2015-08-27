@@ -30,6 +30,7 @@ public class DDMFormLayout implements Serializable {
 
 	public DDMFormLayout(DDMFormLayout ddmFormLayout) {
 		_defaultLocale = ddmFormLayout._defaultLocale;
+		_paginationMode = ddmFormLayout._paginationMode;
 
 		for (DDMFormLayoutPage ddmFormLayoutPage :
 				ddmFormLayout._ddmFormLayoutPages) {
@@ -54,6 +55,10 @@ public class DDMFormLayout implements Serializable {
 		return _defaultLocale;
 	}
 
+	public String getPaginationMode() {
+		return _paginationMode;
+	}
+
 	public void setDDMFormLayoutPages(
 		List<DDMFormLayoutPage> ddmFormLayoutPages) {
 
@@ -64,7 +69,12 @@ public class DDMFormLayout implements Serializable {
 		_defaultLocale = defaultLocale;
 	}
 
+	public void setPaginationMode(String paginationMode) {
+		_paginationMode = paginationMode;
+	}
+
 	private List<DDMFormLayoutPage> _ddmFormLayoutPages = new ArrayList<>();
 	private Locale _defaultLocale;
+	private String _paginationMode;
 
 }

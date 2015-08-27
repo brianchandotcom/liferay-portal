@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="dynamic-data-lists-api,dynamic-data-lists-service,../application-list/application-list-api,../dynamic-data-mapping/dynamic-data-mapping-form-renderer,../dynamic-data-mapping/dynamic-data-mapping-form-values-factory" />
+	<property name="import.shared" value="dynamic-data-lists-api,dynamic-data-lists-service,../dynamic-data-mapping/dynamic-data-mapping-form-renderer,../dynamic-data-mapping/dynamic-data-mapping-form-values-factory,../application-list/application-list-api" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

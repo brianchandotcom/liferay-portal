@@ -6,12 +6,16 @@ AUI.add(
 
 		var Util = Renderer.Util;
 
-		var DefinitionSupport = function() {
+		var FormDefinitionSupport = function() {
 		};
 
-		DefinitionSupport.ATTRS = {
+		FormDefinitionSupport.ATTRS = {
 			definition: {
 				value: {}
+			},
+
+			fields: {
+				valueFn: '_valueFields'
 			},
 
 			values: {
@@ -19,26 +23,14 @@ AUI.add(
 			}
 		};
 
-		DefinitionSupport.prototype = {
+		FormDefinitionSupport.prototype = {
 			initializer: function() {
 				var instance = this;
 
-				var definition = instance.get('definition');
-
-				var fields = instance.get('fields');
-				var values = instance.get('values');
-
-				if (values.fieldValues) {
-					fields = instance._createFieldsFromValues(values);
-				}
-				else if (definition.fields) {
-					fields = instance._createFieldsFromDefinition(definition);
-				}
-
-				instance.set('fields', fields);
-
-				instance.after('definitionChange', instance._afterDefinitionChange);
-				instance.after('valuesChange', instance._afterValuesChange);
+				instance._eventHandlers.push(
+					instance.after('definitionChange', instance._afterDefinitionChange),
+					instance.after('valuesChange', instance._afterValuesChange)
+				);
 			},
 
 			_afterDefinitionChange: function(event) {
@@ -105,13 +97,29 @@ AUI.add(
 						return new fieldClass(A.merge(config, item));
 					}
 				);
+			},
+
+			_valueFields: function(val) {
+				var instance = this;
+
+				var definition = instance.get('definition');
+				var values = instance.get('values');
+
+				if (values.fieldValues) {
+					val = instance._createFieldsFromValues(values);
+				}
+				else if (definition.fields) {
+					val = instance._createFieldsFromDefinition(definition);
+				}
+
+				return val;
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').DefinitionSupport = DefinitionSupport;
+		Liferay.namespace('DDM.Renderer').FormDefinitionSupport = FormDefinitionSupport;
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-field-types', 'liferay-ddm-form-renderer-util']
+		requires: ['liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
 	}
 );

@@ -1,11 +1,8 @@
 AUI.add(
 	'liferay-auto-fields',
 	function(A) {
-		var AArray = A.Array;
 		var AObject = A.Object;
 		var Lang = A.Lang;
-
-		var CSS_AUTOROW_CONTROLS = 'lfr-autorow-controls';
 
 		var CSS_ICON_LOADING = 'loading-animation';
 
@@ -16,11 +13,11 @@ AUI.add(
 			'success-field'
 		];
 
-		var TPL_ADD_BUTTON = '<button type="button" class="add-row btn-content btn btn-icon-only toolbar-first toolbar-item" title="">' +
+		var TPL_ADD_BUTTON = '<button class="add-row btn btn-content btn-icon-only toolbar-first toolbar-item" title="" type="button">' +
 				'<span class="btn-icon icon icon-plus"></span>' +
 			'</button>';
 
-		var TPL_DELETE_BUTTON = '<button type="button" class="delete-row btn-content btn btn-icon-only toolbar-last toolbar-item" title="">' +
+		var TPL_DELETE_BUTTON = '<button class="btn btn-content btn-icon-only delete-row toolbar-item toolbar-last" title="" type="button">' +
 				'<span class="btn-icon icon icon-minus"></span>' +
 			'</button>';
 
@@ -571,6 +568,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-data-set-deprecated', 'aui-io-request', 'aui-parse-content', 'base', 'liferay-portlet-base', 'liferay-undo-manager', 'sortable']
+		requires: ['aui-base', 'aui-data-set-deprecated', 'aui-io-request', 'aui-parse-content', 'base', 'liferay-form', 'liferay-portlet-base', 'liferay-undo-manager', 'sortable']
 	}
 );

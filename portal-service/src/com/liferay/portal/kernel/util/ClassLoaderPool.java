@@ -30,12 +30,8 @@ public class ClassLoaderPool {
 	 * Returns the class loader associated with the context name.
 	 *
 	 * <p>
-	 * If no class loader is found for the context name, this method checks for
-	 * an initialized portal class loader to return. In cases where this method
-	 * is invoked from outside of a running portal, such as from a unit test or
-	 * from an external tool, no portal class loader will be found. If no portal
-	 * class loader is found, the thread's context class loader is returned as a
-	 * fallback.
+	 * If no class loader is found for the context name, the thread's context
+	 * class loader is returned as a fallback.
 	 * </p>
 	 *
 	 * @param  contextName the servlet context's name
@@ -44,10 +40,10 @@ public class ClassLoaderPool {
 	public static ClassLoader getClassLoader(String contextName) {
 		PortalRuntimePermission.checkGetBeanProperty(ClassLoaderPool.class);
 
-		ClassLoader classLoader = _classLoaders.get(contextName);
+		ClassLoader classLoader = null;
 
-		if (classLoader == null) {
-			classLoader = PortalClassLoaderUtil.getClassLoader();
+		if ((contextName != null) && !contextName.equals(StringPool.NULL)) {
+			classLoader = _classLoaders.get(contextName);
 		}
 
 		if (classLoader == null) {
@@ -65,7 +61,7 @@ public class ClassLoaderPool {
 	 * <p>
 	 * If the class loader is <code>null</code> or if no context name is
 	 * associated with the class loader, {@link
-	 * com.liferay.portal.kernel.util.StringPool#BLANK} is returned.
+	 * com.liferay.portal.kernel.util.StringPool#NULL} is returned.
 	 * </p>
 	 *
 	 * @param  classLoader the class loader
@@ -73,13 +69,13 @@ public class ClassLoaderPool {
 	 */
 	public static String getContextName(ClassLoader classLoader) {
 		if (classLoader == null) {
-			return StringPool.BLANK;
+			return StringPool.NULL;
 		}
 
 		String contextName = _contextNames.get(classLoader);
 
 		if (contextName == null) {
-			contextName = StringPool.BLANK;
+			contextName = StringPool.NULL;
 		}
 
 		return contextName;

@@ -1640,19 +1640,14 @@ public class WebDriverToSeleniumBridge
 	protected Set<Integer> getSpecialCharIndexes(String value) {
 		Set<Integer> specialCharIndexes = new TreeSet<>();
 
-		while (value.contains("-")) {
-			specialCharIndexes.add(value.indexOf("-"));
+		Set<String> specialChars = new TreeSet<>();
 
-			value = StringUtil.replaceFirst(value, "-", " ");
-		}
+		specialChars.addAll(_keysSpecialChars.keySet());
 
-		while (value.contains("\t")) {
-			specialCharIndexes.add(value.indexOf("\t"));
+		specialChars.add("-");
+		specialChars.add("\t");
 
-			value = StringUtil.replaceFirst(value, "\t", " ");
-		}
-
-		for (String specialChar : _keysSpecialChars.keySet()) {
+		for (String specialChar : specialChars) {
 			while (value.contains(specialChar)) {
 				specialCharIndexes.add(value.indexOf(specialChar));
 

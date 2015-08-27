@@ -45,6 +45,11 @@ public class MicroblogsEntryAssetRendererFactory
 
 	public static final String TYPE = "microblogs";
 
+	public MicroblogsEntryAssetRendererFactory() {
+		setClassName(CLASS_NAME);
+		setPortletId(MicroblogsPortletKeys.MICROBLOGS);
+	}
+
 	@Override
 	public AssetRenderer<MicroblogsEntry> getAssetRenderer(
 			long classPK, int type)
@@ -59,11 +64,6 @@ public class MicroblogsEntryAssetRendererFactory
 		microblogsEntryAssetRenderer.setServletContext(_servletContext);
 
 		return microblogsEntryAssetRenderer;
-	}
-
-	@Override
-	public String getClassName() {
-		return CLASS_NAME;
 	}
 
 	@Override

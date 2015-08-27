@@ -466,8 +466,8 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					try {
 						DirectoryScanner directoryScanner = new DirectoryScanner();
 
-						if (project.getProperty("test.basedir") != null) {
-							directoryScanner.setBasedir(project.getProperty("test.basedir"));
+						if (project.getProperty("test.base.dir.name") != null) {
+							directoryScanner.setBasedir(project.getProperty("test.base.dir.name"));
 						}
 						else {
 							directoryScanner.setBasedir(project.getBaseDir());
@@ -4555,20 +4555,57 @@ module.framework.properties.osgi.console=11312</echo>
 		</replace>
 	</target>
 
+	<target name="prepare-poshi-runner-properties">
+		<tstamp>
+			<format property="current.date" pattern="yyyy-MM-dd" timezone="GMT" />
+		</tstamp>
+
+		<echo file="${test.ext.properties.file}" append="true">
+			component.names=${component.names}
+			ignore.errors.file.name=${project.dir}/portal-web/test-ignorable-error-lines.xml
+			product.names=${product.names}
+			project.dir=${project.dir}
+			test.case.available.property.names=${test.case.available.property.names}
+			test.console.log.file.name=${liferay.home}/logs/liferay.${current.date}.xml
+			test.console.shut.down.file.name=${project.dir}/console-shut-down
+			test.dependencies.dir.name=com/liferay/portalweb/dependencies
+			test.poshi.warnings.file.name=${project.dir}/poshi-warnings.xml
+		</echo>
+
+		<if>
+			<isset property="test.class" />
+			<then>
+				<get-poshi-test-name />
+
+				<echo file="${test.ext.properties.file}" append="true">
+					test.name=${poshi.test.name}
+				</echo>
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-selenium">
-		<delete file="portal-web/test/test-portal-web-ext.properties" />
+		<delete file="${test.ext.properties.file}" />
 
 		<antcall target="prepare-selenium-app-server-properties" />
 		<antcall target="prepare-selenium-browser-properties" />
 		<antcall target="prepare-selenium-database-properties" />
 		<antcall target="prepare-selenium-email-properties" />
+
+		<if>
+			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+			<then>
+				<antcall target="prepare-poshi-runner-properties" />
+			</then>
+		</if>
+
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
 		<if>
 			<isset property="legacy.theme.ids" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					theme.ids=${legacy.theme.ids}
 				</echo>
 			</then>
@@ -4577,7 +4614,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="liferay.portal.branch" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					liferay.portal.branch=${liferay.portal.branch}
 				</echo>
 			</then>
@@ -4586,7 +4623,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="liferay.portal.bundle" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					liferay.portal.bundle=${liferay.portal.bundle}
 				</echo>
 			</then>
@@ -4595,7 +4632,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="mobile.android.home" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					mobile.android.home=${mobile.android.home}
 				</echo>
 			</then>
@@ -4604,7 +4641,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="osb.lcs.portlet.host.name" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					osb.lcs.portlet.host.name=${osb.lcs.portlet.host.name}
 				</echo>
 			</then>
@@ -4613,7 +4650,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="selenium.output.dir" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					output.dir=${selenium.output.dir}
 				</echo>
 			</then>
@@ -4622,7 +4659,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${tcat.enabled}" arg2="true" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					tcat.admin.repository=${app.server.tcat.admin.dir}/tcat_init/webapps/${lp.version.dtd}
 					tcat.enabled=true
 				</echo>
@@ -4632,7 +4669,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${tear.down.before.test}" arg2="true" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					tear.down.before.test=true
 				</echo>
 			</then>
@@ -4641,30 +4678,40 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.assert.liferay.errors}" arg2="false" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					test.assert.liferay.errors=false
 				</echo>
 			</then>
 		</if>
 
 		<if>
-			<isset property="test.basedir" />
+			<isset property="test.base.dir.name" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					test.basedir=${test.basedir}
+				<echo file="${test.ext.properties.file}" append="true">
+					test.base.dir.name=${test.base.dir.name}
 				</echo>
 			</then>
 			<else>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					test.basedir=${basedir.unix}/portal-web
-				</echo>
+				<if>
+					<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+					<then>
+						<echo file="${test.ext.properties.file}" append="true">
+							test.base.dir.name=${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/
+						</echo>
+					</then>
+					<else>
+						<echo file="${test.ext.properties.file}" append="true">
+							test.base.dir.name=${basedir.unix}/portal-web
+						</echo>
+					</else>
+				</if>
 			</else>
 		</if>
 
 		<if>
 			<contains string="${test.class}" substring="#" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					testing.class.method=true
 				</echo>
 			</then>
@@ -4673,7 +4720,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.save.screenshot}" arg2="true" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					save.screenshot=true
 				</echo>
 			</then>
@@ -4682,7 +4729,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.selenium.implementation}" arg2="selenium" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					selenium.implementation=com.thoughtworks.selenium.Selenium
 				</echo>
 			</then>
@@ -4691,7 +4738,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.selenium.logger.enabled}" arg2="false" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					selenium.logger.enabled=false
 				</echo>
 			</then>
@@ -4700,7 +4747,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.skip.tear.down}" arg2="true" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					test.skip.tear.down=true
 				</echo>
 			</then>
@@ -4711,7 +4758,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="app.server.type" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					app.server.type=${app.server.type}
 				</echo>
 			</then>
@@ -4745,14 +4792,14 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${browser.type}" arg2="firefox" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					browser.type=*chrome
 				</echo>
 			</then>
 			<elseif>
 				<equals arg1="${browser.type}" arg2="googlechrome" />
 				<then>
-					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					<echo file="${test.ext.properties.file}" append="true">
 						browser.type=*googlechrome
 						selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
 					</echo>
@@ -4761,7 +4808,7 @@ module.framework.properties.osgi.console=11312</echo>
 			<elseif>
 				<equals arg1="${browser.type}" arg2="ie" />
 				<then>
-					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					<echo file="${test.ext.properties.file}" append="true">
 						browser.type=*iehta
 						selenium.ie.driver.executable=${selenium.ie.driver.executable}
 					</echo>
@@ -4774,7 +4821,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.db2.driver" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.db2.driver=${database.db2.driver}
 				</echo>
 			</then>
@@ -4783,7 +4830,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.db2.password" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.db2.password=${database.db2.password}
 				</echo>
 			</then>
@@ -4792,7 +4839,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.db2.url" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.db2.url=${database.db2.url}
 				</echo>
 			</then>
@@ -4801,7 +4848,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.db2.username" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.db2.username=${database.db2.username}
 				</echo>
 			</then>
@@ -4810,7 +4857,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.hsql.driver" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.hsql.driver=${database.hsql.driver}
 				</echo>
 			</then>
@@ -4819,7 +4866,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.hsql.password" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.hsql.password=${database.hsql.password}
 				</echo>
 			</then>
@@ -4828,7 +4875,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.hsql.url" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.hsql.url=${database.hsql.url}
 				</echo>
 			</then>
@@ -4837,7 +4884,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.hsql.username" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.hsql.username=${database.hsql.username}
 				</echo>
 			</then>
@@ -4846,7 +4893,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.mysql.driver" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.mysql.driver=${database.mysql.driver}
 				</echo>
 			</then>
@@ -4855,7 +4902,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.mysql.password" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.mysql.password=${database.mysql.password}
 				</echo>
 			</then>
@@ -4864,7 +4911,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.mysql.url" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.mysql.url=${database.mysql.url}
 				</echo>
 			</then>
@@ -4873,7 +4920,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.mysql.username" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.mysql.username=${database.mysql.username}
 				</echo>
 			</then>
@@ -4882,7 +4929,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.oracle.driver" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.oracle.driver=${database.oracle.driver}
 				</echo>
 			</then>
@@ -4891,7 +4938,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.oracle.password" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.oracle.password=${database.oracle.password}
 				</echo>
 			</then>
@@ -4900,7 +4947,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.oracle.url" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.oracle.url=${database.oracle.url}
 				</echo>
 			</then>
@@ -4909,7 +4956,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.oracle.username" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.oracle.username=${database.oracle.username}
 				</echo>
 			</then>
@@ -4918,7 +4965,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.postgresql.driver" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.postgresql.driver=${database.postgresql.driver}
 				</echo>
 			</then>
@@ -4927,7 +4974,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.postgresql.password" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.postgresql.password=${database.postgresql.password}
 				</echo>
 			</then>
@@ -4936,7 +4983,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.postgresql.url" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.postgresql.url=${database.postgresql.url}
 				</echo>
 			</then>
@@ -4945,7 +4992,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.postgresql.username" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.postgresql.username=${database.postgresql.username}
 				</echo>
 			</then>
@@ -4954,7 +5001,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.sybase.driver" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.sybase.driver=${database.sybase.driver}
 				</echo>
 			</then>
@@ -4963,7 +5010,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.sybase.password" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.sybase.password=${database.sybase.password}
 				</echo>
 			</then>
@@ -4972,7 +5019,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.sybase.url" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.sybase.url=${database.sybase.url}
 				</echo>
 			</then>
@@ -4981,7 +5028,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.sybase.username" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.sybase.username=${database.sybase.username}
 				</echo>
 			</then>
@@ -4990,7 +5037,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="database.type" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					database.type=${database.type}
 				</echo>
 			</then>
@@ -5001,7 +5048,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.address.1" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					email.address.1=${email.address.1}
 				</echo>
 			</then>
@@ -5010,7 +5057,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.address.2" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					email.address.2=${email.address.2}
 				</echo>
 			</then>
@@ -5019,7 +5066,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.address.3" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					email.address.3=${email.address.3}
 				</echo>
 			</then>
@@ -5028,7 +5075,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.address.4" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					email.address.4=${email.address.4}
 				</echo>
 			</then>
@@ -5037,7 +5084,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.address.5" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					email.address.5=${email.address.5}
 				</echo>
 			</then>
@@ -5046,7 +5093,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.password.1" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					email.password.1=${email.password.1}
 				</echo>
 			</then>
@@ -5055,7 +5102,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.password.2" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					email.password.2=${email.password.2}
 				</echo>
 			</then>
@@ -5064,7 +5111,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.password.3" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					email.password.3=${email.password.3}
 				</echo>
 			</then>
@@ -5073,7 +5120,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.password.4" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					email.password.4=${email.password.4}
 				</echo>
 			</then>
@@ -5082,7 +5129,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="email.password.5" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					email.password.5=${email.password.5}
 				</echo>
 			</then>
@@ -5091,7 +5138,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.address.1" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					lcs.email.address.1=${lcs.email.address.1}
 				</echo>
 			</then>
@@ -5100,7 +5147,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.address.2" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					lcs.email.address.2=${lcs.email.address.2}
 				</echo>
 			</then>
@@ -5109,7 +5156,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.address.3" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					lcs.email.address.3=${lcs.email.address.3}
 				</echo>
 			</then>
@@ -5118,7 +5165,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.id.1" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					lcs.email.id.1=${lcs.email.id.1}
 				</echo>
 			</then>
@@ -5127,7 +5174,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.id.2" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					lcs.email.id.2=${lcs.email.id.2}
 				</echo>
 			</then>
@@ -5136,7 +5183,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.id.3" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					lcs.email.id.3=${lcs.email.id.3}
 				</echo>
 			</then>
@@ -5145,7 +5192,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.password.1" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					lcs.email.password.1=${lcs.email.password.1}
 				</echo>
 			</then>
@@ -5154,7 +5201,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.password.2" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					lcs.email.password.2=${lcs.email.password.2}
 				</echo>
 			</then>
@@ -5163,7 +5210,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="lcs.email.password.3" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					lcs.email.password.3=${lcs.email.password.3}
 				</echo>
 			</then>
@@ -5172,7 +5219,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.address.1" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.address.1=${marketplace.email.address.1}
 				</echo>
 			</then>
@@ -5181,7 +5228,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.address.2" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.address.2=${marketplace.email.address.2}
 				</echo>
 			</then>
@@ -5190,7 +5237,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.address.3" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.address.3=${marketplace.email.address.3}
 				</echo>
 			</then>
@@ -5199,7 +5246,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.address.4" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.address.4=${marketplace.email.address.4}
 				</echo>
 			</then>
@@ -5208,7 +5255,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.address.5" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.address.5=${marketplace.email.address.5}
 				</echo>
 			</then>
@@ -5217,7 +5264,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.password.1" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.password.1=${marketplace.email.password.1}
 				</echo>
 			</then>
@@ -5226,7 +5273,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.password.2" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.password.2=${marketplace.email.password.2}
 				</echo>
 			</then>
@@ -5235,7 +5282,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.password.3" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.password.3=${marketplace.email.password.3}
 				</echo>
 			</then>
@@ -5244,7 +5291,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.password.4" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.password.4=${marketplace.email.password.4}
 				</echo>
 			</then>
@@ -5253,7 +5300,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="marketplace.email.password.5" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					marketplace.email.password.5=${marketplace.email.password.5}
 				</echo>
 			</then>
@@ -5261,18 +5308,12 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-selenium-required-properties">
-		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-			selenium.executable.dir=${basedir.unix}/tools/selenium/
-		</echo>
-
-		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-			test.class.command.name=${test.class}
-		</echo>
-
 		<get-test-url />
 
-		<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+		<echo file="${test.ext.properties.file}" append="true">
 			portal.url=${test.url}
+			selenium.executable.dir=${basedir.unix}/tools/selenium/
+			test.class.command.name=${test.class}
 		</echo>
 	</target>
 
@@ -5282,7 +5323,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="ignore.errors" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					ignore.errors=${ignore.errors}
 				</echo>
 			</then>
@@ -5293,7 +5334,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="ignore.errors.delimiter" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					ignore.errors.delimiter=${ignore.errors.delimiter}
 				</echo>
 			</then>
@@ -5304,7 +5345,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${mobile.device.enabled}" arg2="true" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					mobile.device.enabled=${mobile.device.enabled}
 				</echo>
 			</then>
@@ -5318,7 +5359,7 @@ module.framework.properties.osgi.console=11312</echo>
 				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
 			</or>
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					cmis.repository.vm.host.name=${cmis.repository.vm.host.name}
 				</echo>
 			</then>
@@ -5329,7 +5370,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<equals arg1="${test.assert.javascript.errors}" arg2="false" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					test.assert.javascript.errors=false
 				</echo>
 			</then>
@@ -5340,7 +5381,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<isset property="timeout.explicit.wait" />
 			<then>
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					timeout.explicit.wait=${timeout.explicit.wait}
 				</echo>
 			</then>
@@ -5588,7 +5629,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					portal.url=www.${virtual.host.name}.com:8080
 				</echo>
 
-				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+				<echo file="${test.ext.properties.file}" append="true">
 					portal.url=www.${virtual.host.name}.com:8080
 				</echo>
 			</then>
@@ -5837,12 +5878,14 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-case-method-names">
+		<delete file="${test.ext.properties.file}" failonerror="false" />
+
+		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
+
 		<gradle-execute failonerror="false" task="writePoshiProperties">
 			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-PcomponentNames=${component.names}" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PproductNames=${product.names}" />
-			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 		</gradle-execute>
 
 		<move file="portal-web/test.case.method.names.properties" tofile="test.case.method.names.properties" />
@@ -5855,15 +5898,14 @@ if (ppstate.equals("normal")) {
 	<target name="record-test-generated-properties">
 		<fail message="Please set the property ${test.class}." unless="test.class" />
 
-		<get-poshi-test-name />
+		<delete file="${test.ext.properties.file}" failonerror="false" />
+
+		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
 
 		<gradle-execute failonerror="false" task="writePoshiProperties">
 			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-PcomponentNames=${component.names}" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PposhiTestName=${poshi.test.name}" />
-			<arg value="-PproductNames=${product.names}" />
-			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 		</gradle-execute>
 
 		<move file="portal-web/test.generated.properties" tofile="test.generated.properties" />
@@ -6100,35 +6142,24 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="run-poshi-runner">
-		<get-poshi-test-name />
-
-		<tstamp>
-			<format property="current.date" pattern="yyyy-MM-dd" timezone="GMT" />
-		</tstamp>
-
 		<property name="test.console.log.file.name" value="${liferay.home}/logs/liferay.${current.date}.xml" />
 
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
-			<arg value="-PignoreErrorsFileName=${project.dir}/portal-web/test-ignorable-error-lines.xml" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PportalProjectDir=${project.dir}" />
-			<arg value="-PposhiTestName=${poshi.test.name}" />
-			<arg value="-PsaveScreenshot=${test.save.screenshot}" />
-			<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
-			<arg value="-PtestBaseDirName=${project.dir}/portal-web/test/functional" />
-			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
-			<arg value="-PtestConsoleLogFileName=${test.console.log.file.name}" />
-			<arg value="-PtestPoshiWarningsFileName=${project.dir}/poshi-warnings.xml" />
-			<arg value="-PtestSkipTearDown=${test.skip.tear.down}" />
+			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 		</gradle-execute>
 	</target>
 
 	<target name="run-poshi-validation">
+		<delete file="${test.ext.properties.file}" failonerror="false" />
+
+		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
+
 		<gradle-execute failonerror="false" task="validatePoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />
-			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+			<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 		</gradle-execute>
 	</target>
 
@@ -6555,7 +6586,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<equals arg1="${cmis.repository.type}" arg2="sharepoint2010" />
 			</or>
 			<then>
-				<property file="${project.dir}/portal-web/test/test-portal-web-ext.properties" />
+				<property file="${project.dir}/${test.ext.properties.file}" />
 
 				<if>
 					<os family="unix" />

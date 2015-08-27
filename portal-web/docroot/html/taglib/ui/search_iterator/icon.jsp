@@ -84,7 +84,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 		Map<String, Object> data = row.getData();
 	%>
 
-		<li class="col-lg-4 <%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>"  <%= AUIUtil.buildData(data) %>>
+		<li class="<%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %>"  <%= AUIUtil.buildData(data) %>>
 
 			<%
 			for (int j = 0; j < entries.size(); j++) {

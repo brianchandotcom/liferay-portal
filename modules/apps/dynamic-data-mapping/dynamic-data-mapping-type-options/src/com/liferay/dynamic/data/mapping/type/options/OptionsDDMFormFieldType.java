@@ -73,6 +73,11 @@ public class OptionsDDMFormFieldType extends BaseDDMFormFieldType {
 		return "options";
 	}
 
+	@Override
+	public boolean isSystem() {
+		return true;
+	}
+
 	@Reference(service = OptionsDDMFormFieldRenderer.class, unbind = "-")
 	protected void setDDMFormFieldRenderer(
 		DDMFormFieldRenderer ddmFormFieldRenderer) {

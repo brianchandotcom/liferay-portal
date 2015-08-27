@@ -73,6 +73,11 @@ public class ValidationDDMFormFieldType extends BaseDDMFormFieldType {
 		return "validation";
 	}
 
+	@Override
+	public boolean isSystem() {
+		return true;
+	}
+
 	@Reference(service = ValidationDDMFormFieldRenderer.class, unbind = "-")
 	protected void setDDMFormFieldRenderer(
 		DDMFormFieldRenderer ddmFormFieldRenderer) {

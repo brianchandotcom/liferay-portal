@@ -16,6 +16,8 @@ package com.liferay.portal.js.loader.modules.extender;
 
 import aQute.lib.converter.Converter;
 
+import com.liferay.portal.kernel.util.StreamUtil;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
@@ -33,8 +35,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import org.apache.felix.utils.log.Logger;
 
 import org.osgi.service.component.ComponentContext;
@@ -66,6 +66,14 @@ public class JSLoaderModulesServlet extends HttpServlet implements Servlet {
 		_logger = new Logger(componentContext.getBundleContext());
 
 		setDetails(Converter.cnv(Details.class, properties));
+	}
+
+	protected JSBundleConfigTracker getJsBundleConfigTracker() {
+		return _jsBundleConfigTracker;
+	}
+
+	protected JSLoaderModulesTracker getJsLoaderModulesTracker() {
+		return _jsLoaderModulesTracker;
 	}
 
 	@Override

@@ -67,9 +67,9 @@ public class JSBundleConfigTracker
 
 		Bundle bundle = serviceReference.getBundle();
 
-		Dictionary<String, String> dictionary = bundle.getHeaders();
+		Dictionary<String, String> headers = bundle.getHeaders();
 
-		String jsConfig = dictionary.get("JS-Config");
+		String jsConfig = headers.get("JS-Config");
 
 		if (jsConfig != null) {
 			URL url = bundle.getEntry(jsConfig);

@@ -198,12 +198,6 @@
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${entryAbstractDescription}" />
 	</command>
 
-	<command name="addDefaultAbstract">
-		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB_USE_THE_FIRST_400_CHARACTERS_ABSTRACT_RADIO" />
-
-		<execute function="AssertTextEquals" locator1="BlogsEditEntry#SETTINGS_TAB_CUSTOM_ABSTRACT_FIELD" value1="${entryContent}" />
-	</command>
-
 	<command name="addDraftAutoCP">
 		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
 

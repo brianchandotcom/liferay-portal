@@ -89,9 +89,8 @@ public class JSLoaderModulesPortalWebResources {
 
 		@Override
 		public long getLastModified() {
-			return
-				_jsLoaderModulesTracker.getTrackingCount() +
-					_jsBundleConfigTracker.getTrackingCount();
+			return _jsLoaderModulesTracker.getTrackingCount() +
+				_jsBundleConfigTracker.getTrackingCount();
 		}
 
 		@Override

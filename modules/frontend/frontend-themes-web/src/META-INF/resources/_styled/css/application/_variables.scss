@@ -22,33 +22,31 @@ $label-entry-padding: 0 0 0 12px;
 
 $product-menu-collapse-icon-bg: #1A2126 !default;
 
-$product-menu-nav-link-active-color: #FFF !default;
-$product-menu-nav-link-color: #869CAD !default;
-
 $product-menu-header-bg: #1B2228 !default;
 $product-menu-header-color: #869CAD !default;
-
 $product-menu-header-link-color: #FFF !default;
 $product-menu-header-link-hover-color: $product-menu-header-link-color !default;
-
 $product-menu-header-logo-bg: #65B6F0 !default;
 $product-menu-header-logo-border-radius: 4px !default;
 
 $product-menu-list-group-heading-bg: transparent !default;
-$product-menu-list-group-heading-border: transparent !default;
 $product-menu-list-group-heading-border-width: 2px !default;
+$product-menu-list-group-heading-border: transparent !default;
+
+$product-menu-list-group-heading-collapsed-bg: transparent !default;
+$product-menu-list-group-heading-collapsed-border-width: 1px !default;
+$product-menu-list-group-heading-collapsed-border: transparent !default;
 
 $product-menu-list-group-heading-hover-bg: $product-menu-list-group-heading-bg !default;
 $product-menu-list-group-heading-hover-border: $product-menu-list-group-heading-border !default;
-
-$product-menu-list-group-heading-collapsed-bg: transparent !default;
-$product-menu-list-group-heading-collapsed-border: transparent !default;
-$product-menu-list-group-heading-collapsed-border-width: 1px !default;
 
 $product-menu-list-group-item-bg: #1A2126 !default;
 
 $product-menu-nav-equal-height-heading-closed-collapse-icon: '\f0fe' !default;
 $product-menu-nav-equal-height-heading-open-collapse-icon: '\f146' !default;
+
+$product-menu-nav-link-active-color: #FFF !default;
+$product-menu-nav-link-color: #869CAD !default;
 
 $product-menu-site-administration-color: #FFF !default;
 $product-menu-site-administration-link-active-bg: #3A4D5A !default;
@@ -56,14 +54,12 @@ $product-menu-site-administration-link-active-border-radius: 4px !default;
 $product-menu-site-administration-link-active-color: #88C37C !default;
 $product-menu-site-administration-link-color: $product-menu-nav-link-color !default;
 
-$product-menu-tabs-bg: #1C252C !default;
-$product-menu-tabs-border-radius: 4px !default;
-$product-menu-tabs-color: $product-menu-tabs-bg !default;
-
 $product-menu-tabs-active-bg: #3A4D5A !default;
 $product-menu-tabs-active-border: transparent !default;
 $product-menu-tabs-active-color: #FFF !default;
-
+$product-menu-tabs-bg: #1C252C !default;
+$product-menu-tabs-border-radius: 4px !default;
+$product-menu-tabs-color: $product-menu-tabs-bg !default;
 $product-menu-tabs-hover-bg: #1C252C !default;
 $product-menu-tabs-hover-border: transparent !default;
 $product-menu-tabs-hover-color: #869CAD !default;

@@ -79,11 +79,9 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 		for (Map.Entry<String, Serializable> entry :
 				attributeValues.entrySet()) {
 
-			if (entry.getValue() != null) {
-				addValue(
-					companyId, className, tableName, entry.getKey(), classPK,
-					entry.getValue());
-			}
+			addValue(
+				companyId, className, tableName, entry.getKey(), classPK,
+				entry.getValue());
 		}
 	}
 

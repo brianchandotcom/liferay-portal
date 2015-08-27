@@ -17,8 +17,8 @@ package com.liferay.portal.js.loader.modules.extender;
 import aQute.lib.converter.Converter;
 
 import java.net.URL;
-
 import java.util.Collection;
+import java.util.Dictionary;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
@@ -69,14 +69,16 @@ public class JSBundleConfigTracker
 		ServiceReference<ServletContext> serviceReference) {
 
 		Bundle bundle = serviceReference.getBundle();
+		
+		Dictionary<String, String> dictionary = bundle.getHeaders();
 
-		String jsConfig = bundle.getHeaders().get("JS-Config");
+ 		String jsConfig = dictionary.get("JS-Config");
 
 		if (jsConfig != null) {
-			URL jsConfigUrl = bundle.getEntry(jsConfig);
+			URL url = bundle.getEntry(jsConfig);
 
-			if (jsConfigUrl != null) {
-				_jsConfigURLs.put(serviceReference, jsConfigUrl);
+			if (url != null) {
+				_jsConfigURLs.put(serviceReference, url);
 
 				return serviceReference;
 			}
@@ -85,7 +87,7 @@ public class JSBundleConfigTracker
 		return null;
 	}
 
-	public Collection<URL> getJsConfigURLs() {
+	public Collection<URL> getJSConfigURLs() {
 		return _jsConfigURLs.values();
 	}
 

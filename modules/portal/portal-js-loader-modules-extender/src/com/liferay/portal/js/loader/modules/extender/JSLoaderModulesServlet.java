@@ -193,7 +193,7 @@ public class JSLoaderModulesServlet extends HttpServlet implements Servlet {
 		printWriter.println("\n};");
 		printWriter.println("}());");
 
-		Collection<URL> jsConfigURLs = _jsBundleConfigTracker.getJsConfigURLs();
+		Collection<URL> jsConfigURLs = _jsBundleConfigTracker.getJSConfigURLs();
 
 		if (jsConfigURLs.size() > 0) {
 			printWriter.println("(function() {");

@@ -37,8 +37,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true, service = JSLoaderModulesTracker.class)
 public class JSLoaderModulesTracker
-	implements
-	ServiceTrackerCustomizer<ServletContext, ServiceReference<ServletContext>> {
+	implements ServiceTrackerCustomizer
+		<ServletContext, ServiceReference<ServletContext>> {
 
 	@Activate
 	public void activate(

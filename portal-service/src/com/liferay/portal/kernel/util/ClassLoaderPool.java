@@ -42,7 +42,7 @@ public class ClassLoaderPool {
 
 		ClassLoader classLoader = null;
 
-		if ((contextName != null) && !contextName.equals(StringPool.IS_NULL)) {
+		if ((contextName != null) && !contextName.equals(StringPool.NULL)) {
 			classLoader = _classLoaders.get(contextName);
 		}
 
@@ -61,7 +61,7 @@ public class ClassLoaderPool {
 	 * <p>
 	 * If the class loader is <code>null</code> or if no context name is
 	 * associated with the class loader, {@link
-	 * com.liferay.portal.kernel.util.StringPool#IS_NULL} is returned.
+	 * com.liferay.portal.kernel.util.StringPool#NULL} is returned.
 	 * </p>
 	 *
 	 * @param  classLoader the class loader
@@ -69,13 +69,13 @@ public class ClassLoaderPool {
 	 */
 	public static String getContextName(ClassLoader classLoader) {
 		if (classLoader == null) {
-			return StringPool.IS_NULL;
+			return StringPool.NULL;
 		}
 
 		String contextName = _contextNames.get(classLoader);
 
 		if (contextName == null) {
-			contextName = StringPool.IS_NULL;
+			contextName = StringPool.NULL;
 		}
 
 		return contextName;

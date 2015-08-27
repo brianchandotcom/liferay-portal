@@ -276,11 +276,11 @@
 
 		<var method="StringUtil#upperCase('${parentcategory1}')" name="parentcategory1" />
 
-		<execute function="AssertTextPresent" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_1" value1="${parentcategory1}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_1" value1="${parentcategory1}" />
 
 		<var method="StringUtil#upperCase('${parentcategory2}')" name="parentcategory2" />
 
-		<execute function="AssertTextPresent" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_2" value1="${parentcategory2}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_2" value1="${parentcategory2}" />
 
 		<var method="StringUtil#upperCase('${subscribedThread}')" name="subscribedThread" />
 

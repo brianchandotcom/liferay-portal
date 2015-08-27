@@ -121,8 +121,6 @@
 
 		if (Liferay.Browser.isIe() && Liferay.Browser.getMajorVersion() < 7) {
 			Util.addInputType = function(el) {
-				var item;
-
 				if (el) {
 					el = A.one(el);
 				}
@@ -167,8 +165,6 @@
 	};
 
 	Util.escapeHTML = function(str, preventDoubleEscape, entities) {
-		var result;
-
 		var regex = REGEX_HTML_ESCAPE;
 
 		var entitiesList = [];
@@ -235,7 +231,6 @@
 
 	Util.textareaTabs = function(event) {
 		var el = event.currentTarget.getDOM();
-		var pressedKey = event.keyCode;
 
 		if (event.isKey('TAB')) {
 			event.halt();

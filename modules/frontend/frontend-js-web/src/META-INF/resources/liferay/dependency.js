@@ -1,9 +1,6 @@
 (function() {
 	var A = AUI().use('oop');
 
-	var emptyFn = function() {
-	};
-
 	var usedModules = {};
 
 	var Dependency = {

@@ -4,8 +4,6 @@ AUI.add(
 		var AArray = A.Array;
 		var Lang = A.Lang;
 
-		var AC_ATTRS_WHITELIST = [''];
-
 		var REGEX_TRIGGER = /trigger/g;
 
 		var STR_PHRASE_MATCH = 'phraseMatch';

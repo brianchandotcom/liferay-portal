@@ -52,18 +52,18 @@ AUI.add(
 
 				var denominator = instance.get('denominator');
 
-				size = size / denominator;
+				size /= denominator;
 
 				if (size >= denominator) {
 					suffix = instance.get('suffixMB');
 
-					size = size / denominator;
+					size /= denominator;
 				}
 
 				if (size >= denominator) {
 					suffix = instance.get('suffixGB');
 
-					size = size / denominator;
+					size /= denominator;
 				}
 
 				return A.Number.format(

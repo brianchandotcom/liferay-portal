@@ -12,8 +12,8 @@ AUI.add(
 
 				var naturalSize = instance._getImgNaturalSize(imagePreview);
 
-				var scaleY = naturalSize.height / imagePreview.height();
 				var scaleX = naturalSize.width / imagePreview.width();
+				var scaleY = naturalSize.height / imagePreview.height();
 
 				var regionHeight = region.height ? (region.height * scaleY) : naturalSize.height;
 				var regionWidth = region.width ? (region.width * scaleX) : naturalSize.width;

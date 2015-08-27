@@ -169,7 +169,7 @@ if (ddmStructureId > 0) {
 				%>
 
 				refererPortletName: '<%= portlet.getPortletName() %>',
-				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
+				refererWebDAVToken: '<%= WebDAVUtil.getStorageToken(portlet) %>',
 				showAncestorScopes: true,
 				title: '<%= UnicodeLanguageUtil.get(request, "data-definitions") %>'
 			},

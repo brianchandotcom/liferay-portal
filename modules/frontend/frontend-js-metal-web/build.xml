@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+	<property name="nodejs.modules.version[bower]" value="1.5.2" />
+	<property name="nodejs.modules.version[gulp]" value="3.9.0" />
+
+	<target name="compile">
+		<download-node-module
+			node.module.name="bower"
+			node.module.version="${nodejs.modules.version[bower]}"
+		/>
+
+		<download-node-module
+			node.module.name="gulp"
+			node.module.version="${nodejs.modules.version[gulp]}"
+		/>
+
+		<node-execute
+			node.args="install"
+			node.command="npm"
+			node.working.dir="${basedir}"
+		/>
+
+		<node-execute
+			node.command="node"
+			node.command.args="${sdk.tools.dir}/node-v${nodejs.version}/node_modules/bower/bin/bower install"
+			node.working.dir="${basedir}"
+		/>
+
+		<node-execute
+			node.command="node"
+			node.command.args="${sdk.tools.dir}/node-v${nodejs.version}/node_modules/gulp/bin/gulp.js"
+			node.working.dir="${basedir}"
+		/>
+
+		<compile
+			module.dir="${basedir}"
+		/>
+	</target>
+</project>

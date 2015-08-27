@@ -79,8 +79,8 @@ public class WikiPageRatingsTest extends BaseRatingsTestCase {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return WikiNodeLocalServiceUtil.addNode(
-			TestPropsValues.getUserId(), "Name", RandomTestUtil.randomString(),
-			serviceContext);
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

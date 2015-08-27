@@ -52,8 +52,8 @@ public class JournalArticleRatingsTest extends BaseRatingsTestCase {
 		JournalFolder folder = (JournalFolder)parentBaseModel;
 
 		return JournalTestUtil.addArticleWithWorkflow(
-			serviceContext.getScopeGroupId(), folder.getFolderId(), "Title",
-			"Content", true);
+			serviceContext.getScopeGroupId(), folder.getFolderId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true);
 	}
 
 	@Override

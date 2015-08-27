@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.ratings;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
@@ -45,7 +46,8 @@ public class BlogsEntryRatingsTest extends BaseRatingsTestCase {
 		throws Exception {
 
 		return BlogsTestUtil.addEntryWithWorkflow(
-			TestPropsValues.getUserId(), "Title", false, serviceContext);
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(), false,
+			serviceContext);
 	}
 
 	@Override

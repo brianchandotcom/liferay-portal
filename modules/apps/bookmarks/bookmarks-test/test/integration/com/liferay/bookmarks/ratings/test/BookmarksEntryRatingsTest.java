@@ -21,6 +21,7 @@ import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.Group;
@@ -52,8 +53,8 @@ public class BookmarksEntryRatingsTest extends BaseRatingsTestCase {
 
 		return BookmarksEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			folder.getFolderId(), "Name", "http://www.google.com", null,
-			serviceContext);
+			folder.getFolderId(), RandomTestUtil.randomString(),
+			"http://www.liferay.com", null, serviceContext);
 	}
 
 	@Override
@@ -77,8 +78,8 @@ public class BookmarksEntryRatingsTest extends BaseRatingsTestCase {
 
 		return BookmarksFolderLocalServiceUtil.addFolder(
 			TestPropsValues.getUserId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Folder", null,
-			serviceContext);
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), null, serviceContext);
 	}
 
 }

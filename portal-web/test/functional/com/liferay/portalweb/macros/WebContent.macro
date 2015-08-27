@@ -601,7 +601,7 @@
 
 	<command name="addWithTagCP">
 		<execute function="Type" locator1="TextInput#TITLE" value1="${webContentTitle}" />
-		<execute function="Type#typeCKEditor" locator1="CKEditor#BODY_FIELD" value1="${webContentContent}" />
+		<execute function="Type#typeCKEditor" locator1="CKEditor#IFRAME" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="WCEditWebContent#MENU_CATEGORIZATION" value1="Categorization" />
 
 		<for list="${tagNameList}" param="tagName">

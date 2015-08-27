@@ -752,4 +752,15 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
+
+	<command name="ViewErrorMessageForNullCustomAbstract" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#addWithNullCustomAbstract">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
 </definition>

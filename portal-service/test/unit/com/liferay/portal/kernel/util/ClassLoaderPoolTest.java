@@ -70,8 +70,7 @@ public class ClassLoaderPoolTest {
 
 		Assert.assertSame(
 			contextClassLoader,
-			ClassLoaderPool.getClassLoader(StringPool.IS_NULL));
-
+			ClassLoaderPool.getClassLoader(StringPool.NULL));
 		Assert.assertSame(
 			contextClassLoader, ClassLoaderPool.getClassLoader(null));
 	}
@@ -93,11 +92,10 @@ public class ClassLoaderPoolTest {
 		ClassLoaderPool.register(_CONTEXT_NAME, classLoader);
 
 		Assert.assertEquals(
-			StringPool.IS_NULL,
+			StringPool.NULL,
 			ClassLoaderPool.getContextName(new URLClassLoader(new URL[0])));
-
 		Assert.assertEquals(
-			StringPool.IS_NULL, ClassLoaderPool.getContextName(null));
+			StringPool.NULL, ClassLoaderPool.getContextName(null));
 	}
 
 	@Test

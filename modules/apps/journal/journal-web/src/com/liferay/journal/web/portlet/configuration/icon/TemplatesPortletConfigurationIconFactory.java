@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.journal.web.portlet.configuration;
+package com.liferay.journal.web.portlet.configuration.icon;
 
-import com.liferay.portal.kernel.portlet.configuration.BaseJSPPortletConfigurationIconFactory;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.BaseJSPPortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;

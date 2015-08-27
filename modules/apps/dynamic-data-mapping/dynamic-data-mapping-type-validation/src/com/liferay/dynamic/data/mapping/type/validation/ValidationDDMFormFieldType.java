@@ -34,6 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"ddm.form.field.type.js.class=Liferay.DDM.Field.Validation",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-validation",
+		"ddm.form.field.type.name=validation",
 		"ddm.form.field.type.system=true"
 	}, 
 	service = DDMFormFieldType.class

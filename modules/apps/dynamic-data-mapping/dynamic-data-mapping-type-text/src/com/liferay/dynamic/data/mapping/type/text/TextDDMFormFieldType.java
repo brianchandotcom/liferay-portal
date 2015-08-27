@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true, 
 	property = {
-		"ddm.form.field.type.icon=icon-font"
+		"ddm.form.field.type.icon=icon-font",
+		"ddm.form.field.type.name=text"
 	}, 
 	service = DDMFormFieldType.class
 )

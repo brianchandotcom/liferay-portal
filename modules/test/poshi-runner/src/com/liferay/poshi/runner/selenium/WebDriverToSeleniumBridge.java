@@ -1524,8 +1524,6 @@ public class WebDriverToSeleniumBridge
 		for (int specialCharIndex : specialCharIndexes) {
 			webElement.sendKeys(value.substring(i, specialCharIndex));
 
-			webElement.sendKeys(Keys.ESCAPE);
-
 			String specialChar = String.valueOf(value.charAt(specialCharIndex));
 
 			if (specialChar.equals("-")) {

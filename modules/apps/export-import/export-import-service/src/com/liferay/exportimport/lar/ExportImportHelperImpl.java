@@ -1191,13 +1191,24 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		dynamicQuery.add(
 			classNameIdProperty.eq(stagedModelType.getClassNameId()));
 
-		if (stagedModelType.getReferrerClassNameId() >= 0) {
-			Property referrerClassNameIdProperty = PropertyFactoryUtil.forName(
-				"referrerClassNameId");
+		long referrerClassNameId = stagedModelType.getReferrerClassNameId();
+
+		Property referrerClassNameIdProperty = PropertyFactoryUtil.forName(
+			"referrerClassNameId");
+
+		if ((referrerClassNameId
+				!= StagedModelType.REFERRER_CLASS_NAME_ID_ALL) &&
+			(referrerClassNameId
+				!= StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
 
 			dynamicQuery.add(
 				referrerClassNameIdProperty.eq(
 					stagedModelType.getReferrerClassNameId()));
+		}
+		else if (referrerClassNameId ==
+					StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
+
+			dynamicQuery.add(referrerClassNameIdProperty.isNotNull());
 		}
 
 		Property typeProperty = PropertyFactoryUtil.forName("type");
@@ -1627,6 +1638,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			else if (elementName.equals("staged-model")) {
 				String manifestSummaryKey = element.attributeValue(
 					"manifest-summary-key");
+
+				if (Validator.isNull(manifestSummaryKey)) {
+					return;
+				}
 
 				long modelAdditionCount = GetterUtil.getLong(
 					element.attributeValue("addition-count"));

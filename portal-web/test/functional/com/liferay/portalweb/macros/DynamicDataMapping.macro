@@ -80,6 +80,10 @@
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
+	<command name="assertFieldNameErrorMessage">
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD_ALERT" value1="Please enter a unique field name." />"
+	</command>
+
 	<command name="deleteField">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 

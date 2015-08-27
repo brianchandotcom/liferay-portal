@@ -14,8 +14,6 @@
 
 package com.liferay.portal.js.loader.modules.extender;
 
-import aQute.lib.converter.Converter;
-
 import java.net.URL;
 
 import java.util.Collection;
@@ -52,8 +50,6 @@ public class JSBundleConfigTracker
 		if (_serviceTracker != null) {
 			_serviceTracker.close();
 		}
-
-		setDetails(Converter.cnv(Details.class, properties));
 
 		Filter filter = FrameworkUtil.createFilter(
 			"(&(objectClass=" + ServletContext.class.getName() +
@@ -121,11 +117,6 @@ public class JSBundleConfigTracker
 		_serviceTracker = null;
 	}
 
-	protected void setDetails(Details details) {
-		_details = details;
-	}
-
-	private volatile Details _details;
 	private final Map<ServiceReference<ServletContext>, URL>
 		_jsConfigURLs = new ConcurrentSkipListMap<>();
 	private ServiceTracker<ServletContext, ServiceReference<ServletContext>>

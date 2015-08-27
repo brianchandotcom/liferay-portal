@@ -95,7 +95,7 @@ public class JSLoaderModulesServlet extends HttpServlet implements Servlet {
 		Set<String> processedNames = new HashSet<>();
 
 		Collection<JSLoaderModule> jsLoaderModules =
-			_jsLoaderModulesTracker.getJsLoaderModules();
+			_jsLoaderModulesTracker.getJSLoaderModules();
 
 		for (JSLoaderModule jsLoaderModule : jsLoaderModules) {
 			printWriter.write(delimiter);

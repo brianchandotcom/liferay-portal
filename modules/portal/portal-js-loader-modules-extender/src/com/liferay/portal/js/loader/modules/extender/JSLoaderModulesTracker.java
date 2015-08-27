@@ -77,7 +77,7 @@ public class JSLoaderModulesTracker
 		return serviceReference;
 	}
 
-	public Collection<JSLoaderModule> getJsLoaderModules() {
+	public Collection<JSLoaderModule> getJSLoaderModules() {
 		return _jsLoaderModules.values();
 	}
 

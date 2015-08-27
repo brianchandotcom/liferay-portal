@@ -43,4 +43,6 @@ public interface DDMFormFieldType {
 
 	public String getName();
 
+	public boolean isSystem();
+
 }

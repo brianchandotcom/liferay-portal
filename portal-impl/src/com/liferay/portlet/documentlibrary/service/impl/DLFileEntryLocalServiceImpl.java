@@ -2154,6 +2154,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 		else {
 			ExpandoBridgeUtil.setExpandoBridgeAttributes(
+				dlFileVersion.getExpandoBridge(),
 				dlFileVersion.getExpandoBridge(), serviceContext);
 		}
 
@@ -2787,7 +2788,8 @@ public class DLFileEntryLocalServiceImpl
 		dlFileVersion.setStatusDate(statusDate);
 
 		ExpandoBridgeUtil.setExpandoBridgeAttributes(
-			dlFileVersion.getExpandoBridge(), serviceContext);
+			dlFileVersion.getExpandoBridge(), dlFileVersion.getExpandoBridge(),
+			serviceContext);
 
 		dlFileVersion = dlFileVersionPersistence.update(dlFileVersion);
 

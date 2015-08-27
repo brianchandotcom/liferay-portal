@@ -62,6 +62,8 @@
 	</command>
 
 	<command name="ViewCannotSaveWithDuplicateFieldNames" priority="3">
+		<description message="This is a use case for LPS-52865." />
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>

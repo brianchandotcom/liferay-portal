@@ -3,5 +3,7 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>1</portlet-name>
+		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
+		<control-panel-entry-weight>1.0</control-panel-entry-weight>
 	</portlet>
 </liferay-portlet-app>

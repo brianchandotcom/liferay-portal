@@ -643,6 +643,8 @@
 				<finally>
 					<property name="job.failure.message" value="" />
 
+					<echo>${job.failure.message}</echo>
+
 					<if>
 						<isset property="testray.results.dir" />
 						<then>

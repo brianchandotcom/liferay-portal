@@ -27,7 +27,19 @@
 
 		<node-execute
 			node.command="node"
-			node.command.args="${sdk.tools.dir}/node-v${nodejs.version}/node_modules/bower/bin/bower install"
+			node.command.args="scripts/install.js"
+			node.working.dir="${basedir}/node_modules/gulp-metal/node_modules/gulp-sass/node_modules/node-sass"
+		/>
+
+		<node-execute
+			node.command="node"
+			node.command.args="scripts/build.js"
+			node.working.dir="${basedir}/node_modules/gulp-metal/node_modules/gulp-sass/node_modules/node-sass"
+		/>
+
+		<node-execute
+			node.command="node"
+			node.command.args="${sdk.tools.dir}/node-v${nodejs.version}/node_modules/bower/bin/bower install --allow-root"
 			node.working.dir="${basedir}"
 		/>
 

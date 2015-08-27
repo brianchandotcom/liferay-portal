@@ -897,6 +897,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.name}/@{artifact.name}.jar" />
 				</else>
 			</if>
+
+			<delete file="@{artifact.name}/pom.xml" />
 		</sequential>
 	</macrodef>
 

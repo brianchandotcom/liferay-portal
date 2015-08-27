@@ -17,6 +17,7 @@ package com.liferay.portal.js.loader.modules.extender;
 import aQute.lib.converter.Converter;
 
 import java.net.URL;
+
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Map;
@@ -69,10 +70,10 @@ public class JSBundleConfigTracker
 		ServiceReference<ServletContext> serviceReference) {
 
 		Bundle bundle = serviceReference.getBundle();
-		
+
 		Dictionary<String, String> dictionary = bundle.getHeaders();
 
- 		String jsConfig = dictionary.get("JS-Config");
+		String jsConfig = dictionary.get("JS-Config");
 
 		if (jsConfig != null) {
 			URL url = bundle.getEntry(jsConfig);

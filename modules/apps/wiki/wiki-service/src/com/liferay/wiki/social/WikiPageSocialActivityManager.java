@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.className=com.liferay.wiki.model.WikiPage",
+	property = "model.class.name=com.liferay.wiki.model.WikiPage",
 	service = SocialActivityManager.class
 )
 public class WikiPageSocialActivityManager

@@ -119,7 +119,7 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
 			(Class<SocialActivityManager<T>>)(Class<?>)
 				SocialActivityManager.class,
-			"(model.className=*)",
+			"(model.class.name=*)",
 			new ServiceReferenceMapper<String, SocialActivityManager<T>>() {
 
 				@Override
@@ -128,7 +128,8 @@ public class SocialActivityManagerImpl<T extends ClassedModel & GroupedModel>
 					Emitter<String> emitter) {
 
 					String modelClassName =
-						(String)serviceReference.getProperty("model.className");
+						(String)serviceReference.getProperty(
+							"model.class.name");
 
 					emitter.emit(modelClassName);
 				}

@@ -330,6 +330,20 @@ public class BookmarksFolderLocalServiceImpl
 		}
 	}
 
+	@Override
+	public void mergeFolders(long folderId, long parentFolderId)
+		throws PortalException {
+
+		BookmarksFolder folder = bookmarksFolderPersistence.findByPrimaryKey(
+			folderId);
+
+		parentFolderId = getParentFolderId(folder, parentFolderId);
+
+		if (folderId != parentFolderId) {
+			mergeFolders(folder, parentFolderId);
+		}
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
@@ -589,6 +603,12 @@ public class BookmarksFolderLocalServiceImpl
 			AssetLinkConstants.TYPE_RELATED);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	 *             long, String, String, ServiceContext)} and {@link
+	 *             #mergeFolders(long, long)}
+	 */
+	@Deprecated
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BookmarksFolder updateFolder(
@@ -611,6 +631,23 @@ public class BookmarksFolderLocalServiceImpl
 		}
 
 		// Folder
+
+		return updateFolder(
+			userId, folderId, parentFolderId, name, description,
+			serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public BookmarksFolder updateFolder(
+			long userId, long folderId, long parentFolderId, String name,
+			String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		BookmarksFolder folder = bookmarksFolderPersistence.findByPrimaryKey(
+			folderId);
+
+		parentFolderId = getParentFolderId(folder, parentFolderId);
 
 		validate(name);
 

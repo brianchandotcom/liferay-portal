@@ -233,6 +233,19 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	@Override
+	public void mergeFolders(long folderId, long parentFolderId)
+		throws PortalException {
+
+		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
+			folderId);
+
+		BookmarksFolderPermissionChecker.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		bookmarksFolderLocalService.mergeFolders(folderId, parentFolderId);
+	}
+
+	@Override
 	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
 		throws PortalException {
 
@@ -308,6 +321,12 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 			getUserId(), groupId, folderId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	 *             String, String, ServiceContext)} and {@link #mergeFolders(
+	 *             long, long)}
+	 */
+	@Deprecated
 	@Override
 	public BookmarksFolder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
@@ -323,6 +342,23 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		return bookmarksFolderLocalService.updateFolder(
 			getUserId(), folderId, parentFolderId, name, description,
 			mergeWithParentFolder, serviceContext);
+	}
+
+	@Override
+	public BookmarksFolder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
+			folderId);
+
+		BookmarksFolderPermissionChecker.check(
+			getPermissionChecker(), folder, ActionKeys.UPDATE);
+
+		return bookmarksFolderLocalService.updateFolder(
+			getUserId(), folderId, parentFolderId, name, description,
+			serviceContext);
 	}
 
 }

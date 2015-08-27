@@ -335,28 +335,25 @@ public class DeserializerTest {
 	public void testReadObjectClassWithBlankContextName() throws Exception {
 		Class<?> clazz = getClass();
 
+		String className = clazz.getName();
+
+		ByteBuffer byteBuffer = ByteBuffer.allocate(className.length() + 11);
+
+		byteBuffer.put(SerializationConstants.TC_CLASS);
+		byteBuffer.put((byte)1);
+		byteBuffer.putInt(0);
+		byteBuffer.put((byte)1);
+		byteBuffer.putInt(className.length());
+		byteBuffer.put(className.getBytes(StringPool.UTF8));
+
+		byteBuffer.flip();
+
+		Deserializer deserializer = new Deserializer(byteBuffer);
+
 		ClassLoaderPool.register(StringPool.BLANK, clazz.getClassLoader());
 
 		try {
-			String className = clazz.getName();
-
-			ByteBuffer byteBuffer = ByteBuffer.allocate(
-				className.length() + 11);
-
-			byteBuffer.put(SerializationConstants.TC_CLASS);
-			byteBuffer.put((byte)1);
-			byteBuffer.putInt(0);
-			byteBuffer.put((byte)1);
-			byteBuffer.putInt(className.length());
-			byteBuffer.put(className.getBytes(StringPool.UTF8));
-
-			byteBuffer.flip();
-
-			Deserializer deserializer = new Deserializer(byteBuffer);
-
-			Class<?> readClass = deserializer.readObject();
-
-			Assert.assertSame(clazz, readClass);
+			Assert.assertSame(clazz, deserializer.readObject());
 		}
 		finally {
 			ClassLoaderPool.unregister(clazz.getClassLoader());
@@ -369,15 +366,15 @@ public class DeserializerTest {
 
 		String className = clazz.getName();
 
-		String isNull = StringPool.IS_NULL;
+		String servletContextName = StringPool.NULL;
 
 		ByteBuffer byteBuffer = ByteBuffer.allocate(
-			className.length() + isNull.length() + 11);
+			className.length() + servletContextName.length() + 11);
 
 		byteBuffer.put(SerializationConstants.TC_CLASS);
 		byteBuffer.put((byte)1);
-		byteBuffer.putInt(isNull.length());
-		byteBuffer.put(isNull.getBytes(StringPool.UTF8));
+		byteBuffer.putInt(servletContextName.length());
+		byteBuffer.put(servletContextName.getBytes(StringPool.UTF8));
 		byteBuffer.put((byte)1);
 		byteBuffer.putInt(className.length());
 		byteBuffer.put(className.getBytes(StringPool.UTF8));

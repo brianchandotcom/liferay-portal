@@ -612,35 +612,34 @@ public class SerializerTest {
 	public void testWriteObjectClassWithBlankContextName()
 		throws UnsupportedEncodingException {
 
+		Serializer serializer = new Serializer();
+
 		Class<?> clazz = getClass();
 
 		ClassLoaderPool.register(StringPool.BLANK, clazz.getClassLoader());
 
 		try {
-			Serializer serializer = new Serializer();
-
 			serializer.writeObject(clazz);
-
-			ByteBuffer byteBuffer = serializer.toByteBuffer();
-
-			String className = clazz.getName();
-
-			Assert.assertEquals(className.length() + 11, byteBuffer.limit());
-			Assert.assertEquals(
-				SerializationConstants.TC_CLASS, byteBuffer.get());
-			Assert.assertEquals(1, byteBuffer.get());
-			Assert.assertEquals(0, byteBuffer.getInt());
-			Assert.assertEquals(1, byteBuffer.get());
-			Assert.assertEquals(className.length(), byteBuffer.getInt());
-			Assert.assertEquals(
-				className,
-				new String(
-					byteBuffer.array(), byteBuffer.position(),
-					byteBuffer.remaining(), StringPool.UTF8));
 		}
 		finally {
 			ClassLoaderPool.unregister(clazz.getClassLoader());
 		}
+
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
+
+		String className = clazz.getName();
+
+		Assert.assertEquals(className.length() + 11, byteBuffer.limit());
+		Assert.assertEquals( SerializationConstants.TC_CLASS, byteBuffer.get());
+		Assert.assertEquals(1, byteBuffer.get());
+		Assert.assertEquals(0, byteBuffer.getInt());
+		Assert.assertEquals(1, byteBuffer.get());
+		Assert.assertEquals(className.length(), byteBuffer.getInt());
+		Assert.assertEquals(
+			className,
+			new String(
+				byteBuffer.array(), byteBuffer.position(),
+				byteBuffer.remaining(), StringPool.UTF8));
 	}
 
 	@Test
@@ -656,20 +655,25 @@ public class SerializerTest {
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
 		String className = clazz.getName();
-		String isNull = StringPool.IS_NULL;
-		byte[] isNullBytes = isNull.getBytes(StringPool.UTF8);
+		String servletContextName = StringPool.NULL;
+		byte[] servletContextNameBytes = servletContextName.getBytes(
+			StringPool.UTF8);
 
 		Assert.assertEquals(
-			className.length() + isNull.length() + 11, byteBuffer.limit());
+			className.length() + servletContextName.length() + 11,
+			byteBuffer.limit());
 		Assert.assertEquals(SerializationConstants.TC_CLASS, byteBuffer.get());
 		Assert.assertEquals(1, byteBuffer.get());
-		Assert.assertEquals(isNull.length(), byteBuffer.getInt());
+		Assert.assertEquals(servletContextName.length(), byteBuffer.getInt());
 		Assert.assertEquals(
-			isNull,
+			servletContextName,
 			new String(
-				byteBuffer.array(), byteBuffer.position(), isNullBytes.length,
-				StringPool.UTF8));
-		byteBuffer.position(byteBuffer.position() + isNullBytes.length);
+				byteBuffer.array(), byteBuffer.position(),
+				servletContextNameBytes.length, StringPool.UTF8));
+
+		byteBuffer.position(
+			byteBuffer.position() + servletContextNameBytes.length);
+
 		Assert.assertEquals(1, byteBuffer.get());
 		Assert.assertEquals(className.length(), byteBuffer.getInt());
 		Assert.assertEquals(

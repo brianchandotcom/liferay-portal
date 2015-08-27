@@ -85,7 +85,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				getResource("dependencies/config1.js"));
 
 		JSLoaderModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJsLoaderModulesTracker();
+			jsLoaderModulesServlet.getJSLoaderModulesTracker();
 
 		jsLoaderModulesTracker.addingService(serviceReference);
 
@@ -139,7 +139,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				getResource("dependencies/config1.js"));
 
 		JSLoaderModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJsLoaderModulesTracker();
+			jsLoaderModulesServlet.getJSLoaderModulesTracker();
 
 		jsLoaderModulesTracker.addingService(serviceReference);
 
@@ -191,7 +191,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				getResource("dependencies/config1.js"));
 
 		JSLoaderModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJsLoaderModulesTracker();
+			jsLoaderModulesServlet.getJSLoaderModulesTracker();
 
 		jsLoaderModulesTracker.addingService(serviceReference);
 
@@ -233,7 +233,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				getResource("dependencies/empty.js"));
 
 		JSLoaderModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJsLoaderModulesTracker();
+			jsLoaderModulesServlet.getJSLoaderModulesTracker();
 
 		jsLoaderModulesTracker.addingService(serviceReference);
 	}
@@ -249,7 +249,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				getResource("dependencies/config1.js"));
 
 		JSLoaderModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJsLoaderModulesTracker();
+			jsLoaderModulesServlet.getJSLoaderModulesTracker();
 
 		jsLoaderModulesTracker.addingService(serviceReference);
 		jsLoaderModulesTracker.addingService(serviceReference);
@@ -354,7 +354,7 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 				getResource("dependencies/config1.js"));
 
 		JSLoaderModulesTracker jsLoaderModulesTracker =
-			jsLoaderModulesServlet.getJsLoaderModulesTracker();
+			jsLoaderModulesServlet.getJSLoaderModulesTracker();
 
 		jsLoaderModulesServlet.setJsLoaderModulesTracker(
 			jsLoaderModulesTracker);

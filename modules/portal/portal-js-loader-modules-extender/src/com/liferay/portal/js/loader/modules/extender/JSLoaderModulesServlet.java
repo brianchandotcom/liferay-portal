@@ -68,11 +68,11 @@ public class JSLoaderModulesServlet extends HttpServlet implements Servlet {
 		setDetails(Converter.cnv(Details.class, properties));
 	}
 
-	protected JSBundleConfigTracker getJsBundleConfigTracker() {
+	protected JSBundleConfigTracker getJSBundleConfigTracker() {
 		return _jsBundleConfigTracker;
 	}
 
-	protected JSLoaderModulesTracker getJsLoaderModulesTracker() {
+	protected JSLoaderModulesTracker getJSLoaderModulesTracker() {
 		return _jsLoaderModulesTracker;
 	}
 

@@ -1494,7 +1494,15 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void type(String locator, String value) {
-		WebDriverHelper.type(this, locator, value);
+		WebElement webElement = getWebElement(locator);
+
+		if (!webElement.isEnabled()) {
+			return;
+		}
+
+		webElement.clear();
+
+		typeKeys(locator, value);
 	}
 
 	@Override

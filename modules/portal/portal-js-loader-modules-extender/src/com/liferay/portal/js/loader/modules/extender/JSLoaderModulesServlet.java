@@ -83,9 +83,9 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 		response.setContentType(Details.CONTENT_TYPE);
 
-		ServletOutputStream outputStream = response.getOutputStream();
+		ServletOutputStream servletOutputStream = response.getOutputStream();
 
-		PrintWriter printWriter = new PrintWriter(outputStream, true);
+		PrintWriter printWriter = new PrintWriter(servletOutputStream, true);
 
 		printWriter.println("(function() {");
 		printWriter.print(_details.globalJSVariable());
@@ -195,21 +195,21 @@ public class JSLoaderModulesServlet extends HttpServlet {
 
 		Collection<URL> jsConfigURLs = _jsBundleConfigTracker.getJSConfigURLs();
 
-		if (jsConfigURLs.size() > 0) {
+		if (!jsConfigURLs.isEmpty()) {
 			printWriter.println("(function() {");
 
 			for (URL jsConfigURL : jsConfigURLs) {
 				try (InputStream inputStream = jsConfigURL.openStream()) {
-					outputStream.println("try {");
+					servletOutputStream.println("try {");
 
-					StreamUtil.transfer(inputStream, outputStream, false);
+					StreamUtil.transfer(inputStream, servletOutputStream, false);
 
-					outputStream.println("} catch (error) {");
-					outputStream.println("console.error(error);");
-					outputStream.println("}");
+					servletOutputStream.println("} catch (error) {");
+					servletOutputStream.println("console.error(error);");
+					servletOutputStream.println("}");
 				}
 				catch (Exception e) {
-					_logger.log(Logger.LOG_ERROR, "Could not open resource", e);
+					_logger.log(Logger.LOG_ERROR, "Unable to open resource", e);
 				}
 			}
 
@@ -224,14 +224,14 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	}
 
 	@Reference
-	protected void setJsBundleConfigTracker(
+	protected void setJSBundleConfigTracker(
 		JSBundleConfigTracker jsBundleConfigTracker) {
 
 		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
 	@Reference
-	protected void setJsLoaderModulesTracker(
+	protected void setJSLoaderModulesTracker(
 		JSLoaderModulesTracker jsLoaderModulesTracker) {
 
 		_jsLoaderModulesTracker = jsLoaderModulesTracker;

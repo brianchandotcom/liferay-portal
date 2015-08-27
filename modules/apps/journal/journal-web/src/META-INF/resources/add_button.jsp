@@ -27,48 +27,42 @@ if (folder != null) {
 	restrictionType = folder.getRestrictionType();
 }
 
+List<AddMenuItem> addMenuItems = new ArrayList<>();
+
+if (JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER)) {
+	PortletURL addFolderURL = renderResponse.createRenderURL();
+
+	addFolderURL.setParameter("mvcPath", "/edit_folder.jsp");
+	addFolderURL.setParameter("redirect", currentURL);
+	addFolderURL.setParameter("groupId", String.valueOf(scopeGroupId));
+	addFolderURL.setParameter("parentFolderId", String.valueOf(folderId));
+
+	String label = (folder != null) ? "subfolder" : "folder";
+
+	addMenuItems.add(new AddMenuItem(LanguageUtil.get(request, label), addFolderURL.toString()));
+}
+
 List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, restrictionType);
+
+if (JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ARTICLE)) {
+	for (DDMStructure ddmStructure : ddmStructures) {
+		PortletURL addArticleURL = renderResponse.createRenderURL();
+
+		addArticleURL.setParameter("mvcPath", "/edit_article.jsp");
+		addArticleURL.setParameter("redirect", currentURL);
+		addArticleURL.setParameter("groupId", String.valueOf(scopeGroupId));
+		addArticleURL.setParameter("folderId", String.valueOf(folderId));
+		addArticleURL.setParameter("ddmStructureKey", ddmStructure.getStructureKey());
+
+		addArticleURL.setWindowState(LiferayWindowState.MAXIMIZED);
+
+		addMenuItems.add(new AddMenuItem(HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale)), addArticleURL.toString()));
+	}
+}
 %>
 
-<aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">
-	<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
-		<portlet:renderURL var="addFolderURL">
-			<portlet:param name="mvcPath" value="/edit_folder.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
-		</portlet:renderURL>
-
-		<%
-		AssetRendererFactory<JournalFolder> assetRendererFactory = (AssetRendererFactory<JournalFolder>)AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
-		%>
-
-		<aui:nav-item href="<%= addFolderURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
-	</c:if>
-
-	<c:if test="<%= JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ARTICLE) %>">
-
-		<%
-		for (DDMStructure ddmStructure : ddmStructures) {
-		%>
-
-			<liferay-portlet:renderURL var="addArticleURL" windowState="<%= LiferayWindowState.MAXIMIZED.toString() %>">
-				<portlet:param name="mvcPath" value="/edit_article.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-				<portlet:param name="ddmStructureKey" value="<%= ddmStructure.getStructureKey() %>" />
-			</liferay-portlet:renderURL>
-
-			<%
-			AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
-			%>
-
-			<aui:nav-item href="<%= addArticleURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label="<%= HtmlUtil.escape(ddmStructure.getUnambiguousName(ddmStructures, themeDisplay.getScopeGroupId(), locale)) %>" localizeLabel="<%= false %>" />
-
-		<%
-		}
-		%>
-
-	</c:if>
-</aui:nav-item>
+<c:if test="<%= !addMenuItems.isEmpty() %>">
+	<liferay-frontend:add-menu
+		addMenuItems="<%= addMenuItems %>"
+	/>
+</c:if>

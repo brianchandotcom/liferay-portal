@@ -546,13 +546,13 @@
 	</target>
 
 	<target name="install-portal-snapshots">
-		<install-portal-snapshot artifact.name="portal-impl" />
-		<install-portal-snapshot artifact.name="portal-service" />
-		<install-portal-snapshot artifact.name="portal-web" />
-		<install-portal-snapshot artifact.name="util-bridges" />
-		<install-portal-snapshot artifact.name="util-java" />
-		<install-portal-snapshot artifact.name="util-slf4j" />
-		<install-portal-snapshot artifact.name="util-taglib" />
+		<install-portal-snapshot artifact.dir="portal-impl" artifact.name="portal-impl" />
+		<install-portal-snapshot artifact.dir="portal-service" artifact.name="portal-service" />
+		<install-portal-snapshot artifact.dir="portal-web" artifact.name="portal-web" />
+		<install-portal-snapshot artifact.dir="util-bridges" artifact.name="util-bridges" />
+		<install-portal-snapshot artifact.dir="util-java" artifact.name="util-java" />
+		<install-portal-snapshot artifact.dir="util-slf4j" artifact.name="util-slf4j" />
+		<install-portal-snapshot artifact.dir="util-taglib" artifact.name="util-taglib" />
 	</target>
 
 	<target name="jar">

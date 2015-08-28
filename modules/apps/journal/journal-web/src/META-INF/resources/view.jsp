@@ -58,52 +58,62 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 />
 
 <div id="<portlet:namespace />journalContainer">
-	<aui:row cssClass="lfr-app-column-view">
-		<aui:col cssClass="navigation-pane" width="<%= 25 %>">
-			<liferay-util:include page="/view_folders.jsp" servletContext="<%= application %>" />
-		</aui:col>
-
-		<aui:col cssClass="context-pane" last="<%= true %>" width="<%= 75 %>">
-			<liferay-ui:app-view-toolbar
-				includeDisplayStyle="<%= true %>"
-				includeSelectAll="<%= showSelectAll %>"
-			>
-				<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
-			</liferay-ui:app-view-toolbar>
-
-			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
-				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
-					<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
-				</c:if>
+	<div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<div class="sidenav-menu-slider">
+			<div class="sidebar sidebar-default sidenav-menu">
+				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
 			</div>
+		</div>
 
-			<%
-			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+		<div class="sidenav-content">
+			<aui:row cssClass="lfr-app-column-view">
+				<aui:col cssClass="navigation-pane" width="<%= 25 %>">
+					<liferay-util:include page="/view_folders.jsp" servletContext="<%= application %>" />
+				</aui:col>
 
-			portletURL.setParameter("folderId", String.valueOf(folderId));
-			%>
+				<aui:col cssClass="context-pane" last="<%= true %>" width="<%= 75 %>">
+					<liferay-ui:app-view-toolbar
+						includeDisplayStyle="<%= true %>"
+						includeSelectAll="<%= showSelectAll %>"
+					>
+						<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
+					</liferay-ui:app-view-toolbar>
 
-			<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
-				<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
-				<aui:input name="folderIds" type="hidden" />
-				<aui:input name="articleIds" type="hidden" />
-				<aui:input name="newFolderId" type="hidden" />
+					<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
+						<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
+							<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
+						</c:if>
+					</div>
 
-				<div class="journal-container" id="<portlet:namespace />entriesContainer">
-					<c:choose>
-						<c:when test="<%= search %>">
-							<liferay-util:include page="/search_resources.jsp" servletContext="<%= application %>" />
-						</c:when>
-						<c:otherwise>
-							<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</aui:form>
-		</aui:col>
-	</aui:row>
+					<%
+					PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+					portletURL.setParameter("folderId", String.valueOf(folderId));
+					%>
+
+					<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
+						<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
+						<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+						<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
+						<aui:input name="folderIds" type="hidden" />
+						<aui:input name="articleIds" type="hidden" />
+						<aui:input name="newFolderId" type="hidden" />
+
+						<div class="journal-container" id="<portlet:namespace />entriesContainer">
+							<c:choose>
+								<c:when test="<%= search %>">
+									<liferay-util:include page="/search_resources.jsp" servletContext="<%= application %>" />
+								</c:when>
+								<c:otherwise>
+									<liferay-util:include page="/view_entries.jsp" servletContext="<%= application %>" />
+								</c:otherwise>
+							</c:choose>
+						</div>
+					</aui:form>
+				</aui:col>
+			</aui:row>
+		</div>
+	</div>
 </div>
 
 <c:if test="<%= !search %>">
@@ -111,6 +121,17 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 </c:if>
 
 <aui:script>
+	$('#<portlet:namespace />infoPanelId').sideNavigation(
+		{
+			gutter: 15,
+			position: 'right',
+			toggler: '#<portlet:namespace />infoPanelTogglerId',
+			typeMobile: 'fixed',
+			type: 'relative',
+			width: 320
+		}
+	);
+
 	function <portlet:namespace />toggleActionsButton() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 

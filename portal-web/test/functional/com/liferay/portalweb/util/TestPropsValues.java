@@ -272,7 +272,7 @@ public class TestPropsValues
 		GetterUtil.getBoolean(TestPropsUtil.get("test.assert.liferay.errors"));
 
 	public static final String TEST_BASE_DIR_NAME = TestPropsUtil.get(
-		"test.basedir");
+		"test.base.dir.name");
 
 	public static final String TEST_CLASS_COMMAND_NAME = TestPropsUtil.get(
 		"test.class.command.name");

@@ -3,7 +3,11 @@
 		margin-bottom: 20px;
 
 		h4 {
-			line-height: 30px;
+			font-size: 32px;
+			font-weight: 300;
+			line-height: 45px;
+			margin-top: 35px;
+			text-align: center;
 		}
 	}
 
@@ -12,9 +16,11 @@
 
 		h1 {
 			font-weight: bold;
+			text-align: center;
 		}
 
 		p {
+			line-height: 27px;
 			margin-bottom: 30px;
 
 			&:last-child {

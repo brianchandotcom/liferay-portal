@@ -2,6 +2,8 @@
 <!DOCTYPE project>
 
 <project>
+	<property name="import.shared" value="../export-import/export-import-api,../export-import/export-import-service" />
+
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />

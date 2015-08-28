@@ -14,6 +14,7 @@
 
 package com.liferay.mobile.device.rules.lar;
 
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;

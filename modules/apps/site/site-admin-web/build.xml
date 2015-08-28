@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../application-list/application-list-api" />
+	<property name="import.shared" value="../application-list/application-list-api,../export-import/export-import-service" />
 	<property name="osgi.ide.dependencies" value="spring-tx.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />

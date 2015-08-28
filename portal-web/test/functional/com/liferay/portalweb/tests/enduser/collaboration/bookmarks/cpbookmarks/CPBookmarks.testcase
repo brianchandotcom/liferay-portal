@@ -146,7 +146,9 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
-		<execute macro="BookmarksFolder#addNullSubfolderCP" />
+		<execute macro="BookmarksFolder#addNullSubfolderCP">
+			<var name="folderName" value="${folderName}" />
+		</execute>
 	</command>
 
 	<command name="AddNullTitleBookmark" priority="4">

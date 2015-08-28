@@ -614,7 +614,6 @@
 
 		<execute macro="DynamicDataMapping#editFieldSettingsNested" />
 
-		<execute function="AssertTextNotEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${fieldName}" />
 		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_NAME" value1="${fieldNameNested}" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />

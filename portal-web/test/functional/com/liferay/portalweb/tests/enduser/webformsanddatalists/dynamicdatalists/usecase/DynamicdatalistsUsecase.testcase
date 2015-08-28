@@ -87,7 +87,6 @@
 		</execute>	
 
 		<execute macro="DynamicDataMapping#viewFieldNameNested">
-			<var name="fieldName" value="Text" />
 			<var name="fieldNameNested" value="Text2" />
 		</execute>
 	</command>

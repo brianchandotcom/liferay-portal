@@ -75,7 +75,7 @@
 
 		<var name="key_field" value="${field}" />
 
-		<execute function="DragAndDrop" locator1="DDMEditStructure#FIELDS_FIELD" locator2="DDMEditStructure#FORM_BUILDER_PARENT_FIELD" value1="${field}" />
+		<execute function="DragAndDrop" locator1="DDMEditStructure#FIELDS_FIELD" locator2="DDMEditStructure#FORM_BUILDER_FIELD" value1="${field}" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>

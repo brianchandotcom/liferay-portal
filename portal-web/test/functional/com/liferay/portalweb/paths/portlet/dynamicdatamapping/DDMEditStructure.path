@@ -278,6 +278,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_BUILDER_FIELD</td>
+	<td>//div[contains(@class,'form-builder-field')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_BUILDER_PARENT_FIELD</td>
 	<td>//div[contains(@class,'form-builder-drop-zone')]/div/../../div[contains(@class,'form-builder-field')]</td>
 	<td></td>

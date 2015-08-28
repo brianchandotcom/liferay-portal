@@ -242,7 +242,7 @@
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#NAME" />
 			<then>
-				<execute function="AssertClick" locator1="ControlMenuEditPanel#DETAILS_PANEL_TOGGLE" value1="Details" />
+				<execute function="AssertClick" locator1="SitePagesEditPage#DETAILS_PANEL_TOGGLE" value1="Details" />
 			</then>
 		</if>
 
@@ -1044,7 +1044,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SitePagesEditPage#FRIENDLY_URL_TITLE" />
 			<then>
-				<execute function="Click" locator1="ControlMenuEditPanel#DETAILS_PANEL_TOGGLE" />
+				<execute function="Click" locator1="SitePagesEditPage#DETAILS_PANEL_TOGGLE" />
 			</then>
 		</if>
 

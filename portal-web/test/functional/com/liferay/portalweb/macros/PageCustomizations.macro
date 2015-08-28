@@ -21,12 +21,12 @@
 
 	<command name="gotoCustomizationSettingsPG">
 		<execute function="Click" locator1="DockbarEditpanel#EDIT" />
-		<execute function="AssertTextEquals" locator1="ControlMenuEditPanel#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
+		<execute function="AssertTextEquals" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
 
 		<if>
 			<condition function="IsElementNotPresent" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" />
 			<then>
-				<execute function="AssertClick" locator1="ControlMenuEditPanel#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
+				<execute function="AssertClick" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
 			</then>
 		</if>
 	</command>

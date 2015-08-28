@@ -38,7 +38,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {"model.class.name=com.liferay.journal.model.JournalFeed"},
-	service = ExportImportContentProcessor.class
+	service = {
+		ExportImportContentProcessor.class,
+		JournalFeedExportImportContentProcessor.class
+	}
 )
 public class JournalFeedExportImportContentProcessor
 	extends BaseExportImportContentProcessor {

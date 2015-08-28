@@ -15,13 +15,13 @@
 package com.liferay.calendar.lar;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
+import com.liferay.calendar.exportimport.content.processor.CalendarNotificationTemplateExportImportContentProcessor;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil;
-import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Andrea Di Giorgi
@@ -109,16 +110,14 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 			portletDataContext, calendarNotificationTemplate, calendar,
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
-		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor(CalendarNotificationTemplate.class);
-
 		String body =
-			exportImportContentProcessor.replaceExportContentReferences(
-				portletDataContext, calendarNotificationTemplate,
-				calendarNotificationTemplate.getBody(),
-				portletDataContext.getBooleanParameter(
-					"calendar", "referenced-content"),
-				true);
+			_calendarNotificationTemplateExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, calendarNotificationTemplate,
+					calendarNotificationTemplate.getBody(),
+					portletDataContext.getBooleanParameter(
+						"calendar", "referenced-content"),
+					true);
 
 		calendarNotificationTemplate.setBody(body);
 
@@ -161,13 +160,11 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 		CalendarNotificationTemplate importedCalendarNotificationTemplate =
 			null;
 
-		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor(CalendarNotificationTemplate.class);
-
 		String body =
-			exportImportContentProcessor.replaceImportContentReferences(
-				portletDataContext, calendarNotificationTemplate,
-				calendarNotificationTemplate.getBody());
+			_calendarNotificationTemplateExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, calendarNotificationTemplate,
+					calendarNotificationTemplate.getBody());
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			CalendarNotificationTemplate existingCalendarNotificationTemplate =
@@ -215,5 +212,17 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 		portletDataContext.importClassedModel(
 			calendarNotificationTemplate, importedCalendarNotificationTemplate);
 	}
+
+	@Reference(unbind = "-")
+	protected void setCalendarNotificationTemplateExportImportContentProcessor(
+		CalendarNotificationTemplateExportImportContentProcessor
+			calendarNotificationTemplateExportImportContentProcessor) {
+
+		_calendarNotificationTemplateExportImportContentProcessor =
+			calendarNotificationTemplateExportImportContentProcessor;
+	}
+
+	private CalendarNotificationTemplateExportImportContentProcessor
+		_calendarNotificationTemplateExportImportContentProcessor;
 
 }

@@ -18,9 +18,9 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
-import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.exception.FeedTargetLayoutFriendlyUrlException;
+import com.liferay.journal.exportimport.content.processor.JournalFeedExportImportContentProcessor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;
@@ -159,10 +159,7 @@ public class JournalFeedStagedModelDataHandler
 			}
 		}
 
-		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor(JournalFeed.class);
-
-		exportImportContentProcessor.replaceExportContentReferences(
+		_journalFeedExportImportContentProcessor.replaceExportContentReferences(
 			portletDataContext, feed, StringPool.BLANK, true, true);
 
 		portletDataContext.addClassedModel(
@@ -186,10 +183,7 @@ public class JournalFeedStagedModelDataHandler
 			userId = authorId;
 		}
 
-		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor(JournalFeed.class);
-
-		exportImportContentProcessor.replaceImportContentReferences(
+		_journalFeedExportImportContentProcessor.replaceImportContentReferences(
 			portletDataContext, feed, StringPool.BLANK);
 
 		String feedId = feed.getFeedId();
@@ -329,6 +323,15 @@ public class JournalFeedStagedModelDataHandler
 		_ddmTemplateLocalService = ddmTemplateLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setJournalFeedExportImportContentProcessor(
+		JournalFeedExportImportContentProcessor
+			journalFeedExportImportContentProcessor) {
+
+		_journalFeedExportImportContentProcessor =
+			journalFeedExportImportContentProcessor;
+	}
+
 	@Reference
 	protected void setJournalFeedLocalService(
 		JournalFeedLocalService journalFeedLocalService) {
@@ -341,6 +344,8 @@ public class JournalFeedStagedModelDataHandler
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+	private JournalFeedExportImportContentProcessor
+		_journalFeedExportImportContentProcessor;
 	private JournalFeedLocalService _journalFeedLocalService;
 
 }

@@ -26,7 +26,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
-	service = ExportImportContentProcessor.class
+	service = {
+		BlogsEntryExportImportContentProcessor.class,
+		ExportImportContentProcessor.class
+	}
 )
 public class BlogsEntryExportImportContentProcessor
 	extends BaseExportImportContentProcessor {

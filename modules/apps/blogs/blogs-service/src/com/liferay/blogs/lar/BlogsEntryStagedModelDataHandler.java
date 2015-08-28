@@ -14,7 +14,7 @@
 
 package com.liferay.blogs.lar;
 
-import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
+import com.liferay.blogs.exportimport.content.processor.BlogsEntryExportImportContentProcessor;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -51,6 +51,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
@@ -112,19 +113,17 @@ public class BlogsEntryStagedModelDataHandler
 
 		Element entryElement = portletDataContext.getExportDataElement(entry);
 
-		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor(BlogsEntry.class);
-
 		if (entry.isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.fetchImage(
 				entry.getSmallImageId());
 
 			if (Validator.isNotNull(entry.getSmallImageURL())) {
 				String smallImageURL =
-					exportImportContentProcessor.replaceExportContentReferences(
-						portletDataContext, entry,
-						entry.getSmallImageURL() + StringPool.SPACE, true,
-						true);
+					_blogsEntryExportImportContentProcessor.
+						replaceExportContentReferences(
+							portletDataContext, entry,
+							entry.getSmallImageURL() + StringPool.SPACE, true,
+							true);
 
 				entry.setSmallImageURL(smallImageURL);
 			}
@@ -153,11 +152,12 @@ public class BlogsEntryStagedModelDataHandler
 		}
 
 		String content =
-			exportImportContentProcessor.replaceExportContentReferences(
-				portletDataContext, entry, entry.getContent(),
-				portletDataContext.getBooleanParameter(
-					"blogs", "referenced-content"),
-				true);
+			_blogsEntryExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, entry, entry.getContent(),
+					portletDataContext.getBooleanParameter(
+						"blogs", "referenced-content"),
+					true);
 
 		entry.setContent(content);
 
@@ -175,12 +175,10 @@ public class BlogsEntryStagedModelDataHandler
 		Element entryElement =
 			portletDataContext.getImportDataStagedModelElement(entry);
 
-		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor(BlogsEntry.class);
-
 		String content =
-			exportImportContentProcessor.replaceImportContentReferences(
-				portletDataContext, entry, entry.getContent());
+			_blogsEntryExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, entry, entry.getContent());
 
 		entry.setContent(content);
 
@@ -213,8 +211,10 @@ public class BlogsEntryStagedModelDataHandler
 
 			if (Validator.isNotNull(entry.getSmallImageURL())) {
 				String smallImageURL =
-					exportImportContentProcessor.replaceImportContentReferences(
-						portletDataContext, entry, entry.getSmallImageURL());
+					_blogsEntryExportImportContentProcessor.
+						replaceImportContentReferences(
+							portletDataContext, entry,
+							entry.getSmallImageURL());
 
 				entry.setSmallImageURL(smallImageURL);
 			}
@@ -387,7 +387,19 @@ public class BlogsEntryStagedModelDataHandler
 		return inputStream;
 	}
 
+	@Reference(unbind = "-")
+	protected void setBlogsEntryExportImportContentProcessor(
+		BlogsEntryExportImportContentProcessor
+			blogsEntryExportImportContentProcessor) {
+
+		_blogsEntryExportImportContentProcessor =
+			blogsEntryExportImportContentProcessor;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryStagedModelDataHandler.class);
+
+	private BlogsEntryExportImportContentProcessor
+		_blogsEntryExportImportContentProcessor;
 
 }

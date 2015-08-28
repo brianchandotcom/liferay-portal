@@ -15,6 +15,8 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Order;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -74,6 +76,8 @@ public class DynamicQueryTest {
 	@Test
 	public void testLowerUpperBound() throws Exception {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
+
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 
 		dynamicQuery.setLimit(
 			_existingClassNames.size(),

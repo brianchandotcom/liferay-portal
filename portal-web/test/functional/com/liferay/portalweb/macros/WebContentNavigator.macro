@@ -1,13 +1,13 @@
 <definition>
 	<command name="gotoAddCP">
-		<execute function="AssertClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 	</command>
 
 	<command name="gotoAddWithStructureCP">
 		<var name="key_structureName" value="${structureName}" />
 
-		<execute function="AssertClick" locator1="Toolbar#ADD" value1="Add"  />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#STRUCTURE_NAME" value1="${structureName}" />
 	</command>
 

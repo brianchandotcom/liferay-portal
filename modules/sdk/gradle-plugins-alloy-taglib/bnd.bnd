@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Gradle Plugins Alloy Taglib
+Bundle-SymbolicName: com.liferay.gradle.plugins.alloy.taglib
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.gradle.plugins.alloy.taglib
+Include-Resource: classes

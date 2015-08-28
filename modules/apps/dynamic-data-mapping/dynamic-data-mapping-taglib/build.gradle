@@ -1,3 +1,14 @@
+import com.liferay.gradle.plugins.alloy.taglib.BuildTaglibsTask
+
+task buildTaglibs(type: BuildTaglibsTask)
+
+buildTaglibs {
+	classpath = configurations.alloyTaglib
+	componentsXmlFiles "liferay-ddm.xml"
+	javaDir = "src/com/liferay/dynamic/data/mapping/taglib/servlet"
+	javaPackage = "com.liferay.dynamic.data.mapping.taglib.servlet"
+}
+
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")

@@ -22,6 +22,7 @@
 	<classpathentry kind="lib" path="lib/biz.aQute.bnd.jar" />
 	<classpathentry kind="lib" path="lib/bndlib.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.ant.bnd.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.alloy.taglib.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.css.builder.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.jasper.jspc.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.javadoc.formatter.jar" />

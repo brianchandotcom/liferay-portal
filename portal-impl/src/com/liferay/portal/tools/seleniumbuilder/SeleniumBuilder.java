@@ -357,7 +357,10 @@ public class SeleniumBuilder {
 				if (knownIssues != null) {
 					String knownIssuesComponent = "portal-known-issues";
 
-					if (componentName.startsWith("marketplace")) {
+					if (componentName.startsWith("extra-apps")) {
+						knownIssuesComponent = "extra-apps-known-issues";
+					}
+					else if (componentName.startsWith("marketplace")) {
 						knownIssuesComponent = "marketplace-known-issues";
 					}
 					else if (componentName.startsWith("social-office")) {

@@ -106,7 +106,7 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
 		%>
 
-		<div class="<%= (entry != null) ? "entry-body " : StringPool.BLANK %>">
+		<div class="<%= (entry != null) ? "entry-body " : StringPool.BLANK %> row">
 			<div id="<portlet:namespace />editSection">
 				<portlet:actionURL name="/blogs/upload_temp_image" var="uploadTempImageURL" />
 
@@ -116,7 +116,7 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 
 				<aui:input name="coverImageCaption" type="hidden" />
 
-				<div class="cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %> row">
+				<div class="cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
 					<small>
 						<liferay-ui:input-editor contents="<%= coverImageCaption %>" editorName="alloyeditor" name="coverImageCaptionEditor" placeholder="caption" showSource="<%= false %>" />
 					</small>

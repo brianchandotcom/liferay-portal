@@ -19,6 +19,8 @@
 <%
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EDIT);
 
+String fileTitleErrorId = "fileTitleError";
+
 String redirect = ParamUtil.getString(request, "redirect");
 String uploadExceptionRedirect = ParamUtil.getString(request, "uploadExceptionRedirect", currentURL);
 
@@ -319,15 +321,13 @@ else {
 			</c:if>
 		</div>
 
+		<div class="alert alert-error helper-hidden" id="<portlet:namespace /><%= fileTitleErrorId %>">
+			<liferay-ui:message key="you-must-specify-a-file-or-a-title" />
+		</div>
+
 		<%@ include file="/document_library/edit_file_entry_picker.jspf" %>
 
-		<aui:input name="title">
-			<aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">
-				function(val, fieldNode, ruleValue) {
-					return ((val != '') || A.one('#<portlet:namespace />file').val() != '');
-				}
-			</aui:validator>
-		</aui:input>
+		<aui:input name="title" />
 
 		<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 			<aui:input name="description" />
@@ -523,15 +523,29 @@ else {
 	}
 
 	function <portlet:namespace />saveFileEntry(draft) {
-		<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
+		var fileTitleErrorNode = AUI().use('aui-node').one('#<portlet:namespace /><%= HtmlUtil.escape(fileTitleErrorId) %>');
 
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>';
+		fileTitleErrorNode.addClass('helper-hidden');
 
-		if (draft) {
-			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
+		var fileValue = document.<portlet:namespace />fm.<portlet:namespace />file.value;
+		var titleValue = document.<portlet:namespace />fm.<portlet:namespace />title.value;
+
+		var fileOrTileValid = !!fileValue || !!titleValue;
+
+		if (fileOrTileValid) {
+			<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
+
+			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>';
+
+			if (draft) {
+				document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
+			}
+
+			submitForm(document.<portlet:namespace />fm);
 		}
-
-		submitForm(document.<portlet:namespace />fm);
+		else {
+			fileTitleErrorNode.removeClass('helper-hidden');
+		}
 	}
 
 	function <portlet:namespace />validateTitle() {

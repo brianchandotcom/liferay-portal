@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.lar;
+package com.liferay.dynamic.data.mapping.web.exportimport.content.processor;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.base.BaseExportImportContentProcessor;
@@ -25,13 +25,14 @@ import org.osgi.service.component.annotations.Component;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.journal.model.JournalArticle"},
+	property =
+		{"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"},
 	service = ExportImportContentProcessor.class
 )
-public class JournalArticleExportImportContentProcessor
+public class DDMTemplateExportImportContentProcessor
 	extends BaseExportImportContentProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		JournalArticleExportImportContentProcessor.class);
+		DDMTemplateExportImportContentProcessor.class);
 
 }

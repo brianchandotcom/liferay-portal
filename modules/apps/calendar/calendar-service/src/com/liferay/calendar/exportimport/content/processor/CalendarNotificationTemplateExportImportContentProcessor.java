@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.lar;
+package com.liferay.calendar.exportimport.content.processor;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.base.BaseExportImportContentProcessor;
@@ -25,13 +25,16 @@ import org.osgi.service.component.annotations.Component;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	property =
+		{"model.class.name=com.liferay.calendar.model." +
+			"CalendarNotificationTemplate"
+		},
 	service = ExportImportContentProcessor.class
 )
-public class BlogsEntryExportImportContentProcessor
+public class CalendarNotificationTemplateExportImportContentProcessor
 	extends BaseExportImportContentProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BlogsEntryExportImportContentProcessor.class);
+		CalendarNotificationTemplateExportImportContentProcessor.class);
 
 }

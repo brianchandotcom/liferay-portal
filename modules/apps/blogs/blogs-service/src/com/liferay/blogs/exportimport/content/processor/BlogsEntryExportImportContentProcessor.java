@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.web.lar;
+package com.liferay.blogs.exportimport.content.processor;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.base.BaseExportImportContentProcessor;
@@ -25,14 +25,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Gergely Mathe
  */
 @Component(
-	property =
-		{"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"},
+	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
 	service = ExportImportContentProcessor.class
 )
-public class DDMTemplateExportImportContentProcessor
+public class BlogsEntryExportImportContentProcessor
 	extends BaseExportImportContentProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DDMTemplateExportImportContentProcessor.class);
+		BlogsEntryExportImportContentProcessor.class);
 
 }

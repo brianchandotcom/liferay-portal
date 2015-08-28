@@ -61,38 +61,6 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid definition." />
 	</command>
 
-	<command name="ViewCannotSaveWithDuplicateFieldNames" priority="3">
-		<description message="This is a use case for LPS-52865." />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
-			<var name="ddlDataDefinitionName" value="Data Definition Name" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="Text" />
-			<var name="fieldFieldLabel" value="Text" />
-			<var name="fieldName" value="Text" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addFieldNested">
-			<var name="field" value="Text" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#editFieldNestedWithDuplicateName">
-			<var name="fieldName" value="Text" />
-			<var name="fieldNameEdit" value="Text2" />
-		</execute>	
-
-		<execute macro="DynamicDataMapping#viewFieldNameNested">
-			<var name="fieldNameNested" value="Text2" />
-		</execute>
-	</command>
-
 	<command name="AddRecord" priority="4">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
@@ -1896,6 +1864,38 @@
 		</execute>
 
 		<execute macro="DDLTemplate#saveFormTemplateCP" />
+	</command>
+
+	<command name="ViewCannotSaveWithDuplicateFieldNames" priority="3">
+		<description message="This is a use case for LPS-52865." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addFieldNested">
+			<var name="field" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldNestedWithDuplicateName">
+			<var name="fieldName" value="Text" />
+			<var name="fieldNameEdit" value="Text2" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#viewFieldNameNested">
+			<var name="fieldNameNested" value="Text2" />
+		</execute>
 	</command>
 
 	<command name="ViewFormTemplateFieldsAfterBackNavigation" priority="3">

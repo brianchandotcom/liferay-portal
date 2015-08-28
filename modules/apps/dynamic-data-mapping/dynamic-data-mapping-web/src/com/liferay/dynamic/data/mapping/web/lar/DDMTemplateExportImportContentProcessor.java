@@ -15,7 +15,7 @@
 package com.liferay.dynamic.data.mapping.web.lar;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
-import com.liferay.exportimport.lar.BaseExportImportContentProcessor;
+import com.liferay.exportimport.content.processor.base.BaseExportImportContentProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

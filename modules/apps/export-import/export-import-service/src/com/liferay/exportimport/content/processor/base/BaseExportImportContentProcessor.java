@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.lar;
+package com.liferay.exportimport.content.processor.base;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.portal.kernel.exception.PortalException;

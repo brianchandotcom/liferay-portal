@@ -50,24 +50,6 @@ import javax.sql.DataSource;
 import org.apache.felix.cm.NotCachablePersistenceManager;
 import org.apache.felix.cm.PersistenceManager;
 import org.apache.felix.cm.file.ConfigurationHandler;
-
-import org.osgi.framework.Constants;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
-/**
- * @author Raymond Augé
- */
-@Component(
-	immediate = true,
-	property = {
-		Constants.SERVICE_RANKING + ":Integer=" + (Integer.MAX_VALUE - 1000
-)
-	},
-	service = {PersistenceManager.class, ReloadablePersitenceManager.class}
-)
 public class ConfigurationPersistenceManager
 	implements NotCachablePersistenceManager, PersistenceManager,
 			   ReloadablePersitenceManager {
@@ -159,6 +141,37 @@ public class ConfigurationPersistenceManager
 		}
 	}
 
+	public void start() {
+		Lock readLock = _readWriteLock.readLock();
+		Lock writeLock = _readWriteLock.writeLock();
+
+		try {
+			readLock.lock();
+
+			if (!hasConfigurationTable()) {
+				readLock.unlock();
+				writeLock.lock();
+
+				try {
+					createConfigurationTable();
+				}
+				finally {
+					readLock.lock();
+					writeLock.unlock();
+				}
+			}
+
+			populateDictionaries();
+		}
+		finally {
+			readLock.unlock();
+		}
+	}
+
+	public void stop() {
+		_dictionaries.clear();
+	}
+
 	@Override
 	public void store(
 			final String pid,
@@ -185,34 +198,6 @@ public class ConfigurationPersistenceManager
 		}
 		else {
 			doStore(pid, dictionary);
-		}
-	}
-
-	@Activate
-	protected void activate() {
-		Lock readLock = _readWriteLock.readLock();
-		Lock writeLock = _readWriteLock.writeLock();
-
-		try {
-			readLock.lock();
-
-			if (!hasConfigurationTable()) {
-				readLock.unlock();
-				writeLock.lock();
-
-				try {
-					createConfigurationTable();
-				}
-				finally {
-					readLock.lock();
-					writeLock.unlock();
-				}
-			}
-
-			populateDictionaries();
-		}
-		finally {
-			readLock.unlock();
 		}
 	}
 
@@ -276,11 +261,6 @@ public class ConfigurationPersistenceManager
 		finally {
 			cleanUp(connection, statement, resultSet);
 		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_dictionaries.clear();
 	}
 
 	protected void deleteFromDatabase(String pid) throws IOException {
@@ -480,7 +460,6 @@ public class ConfigurationPersistenceManager
 		return connection.prepareStatement(buildSQL(sql));
 	}
 
-	@Reference(target = "(bean.id=liferayDataSource)")
 	protected void setDataSource(DataSource dataSource) {
 		_dataSource = dataSource;
 	}

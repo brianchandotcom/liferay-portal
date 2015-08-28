@@ -32,6 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-blogs",
 		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.full-page-displayable=true",
 		"com.liferay.portlet.header-portlet-css=/blogs/css/main.css",
 		"com.liferay.portlet.icon=/blogs/icons/blogs.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",

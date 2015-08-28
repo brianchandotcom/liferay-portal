@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface LayoutTypeController extends Serializable {
 
+	public String getBaseLayoutType();
+
 	public String[] getConfigurationActionDelete();
 
 	public String[] getConfigurationActionUpdate();
@@ -43,6 +45,8 @@ public interface LayoutTypeController extends Serializable {
 	public boolean isBrowsable();
 
 	public boolean isFirstPageable();
+
+	public boolean isFullPageDisplayable();
 
 	public boolean isParentable();
 

@@ -34,6 +34,7 @@ page import="com.liferay.document.library.web.display.context.logic.DLVisualizat
 page import="com.liferay.document.library.web.display.context.util.DLDisplayRequestHelper" %><%@
 page import="com.liferay.document.library.web.display.context.util.DLRequestHelper" %><%@
 page import="com.liferay.document.library.web.display.context.util.IGRequestHelper" %><%@
+page import="com.liferay.document.library.web.portlet.action.EditFileEntryMVCActionCommand" %><%@
 page import="com.liferay.document.library.web.search.EntriesChecker" %><%@
 page import="com.liferay.document.library.web.settings.internal.DLPortletInstanceSettings" %><%@
 page import="com.liferay.document.library.web.util.DLBreadcrumbUtil" %><%@

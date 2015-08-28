@@ -1,5 +1,3 @@
-<%@ page
-		import="com.liferay.document.library.web.portlet.action.EditFileEntryMVCActionCommand" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.

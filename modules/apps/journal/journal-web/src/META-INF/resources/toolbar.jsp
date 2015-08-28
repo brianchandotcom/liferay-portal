@@ -65,10 +65,6 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
 			</c:if>
 		</aui:nav>
-
-		<aui:nav-bar-search>
-			<liferay-util:include page="/article_search.jsp" servletContext="<%= application %>" />
-		</aui:nav-bar-search>
 	</aui:nav-bar>
 </aui:form>
 

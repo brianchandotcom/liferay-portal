@@ -19,6 +19,6 @@ package com.liferay.portal.security.permission;
  */
 public interface PermissionUpdateHandler {
 
-	public void updatePermission(String primKey);
+	public void updatedPermission(String primKey);
 
 }

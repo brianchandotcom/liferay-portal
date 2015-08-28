@@ -14,7 +14,7 @@ buildscript {
 	}
 
 	dependencies {
-		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.17"
+		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.18"
 	}
 }
 
@@ -250,9 +250,5 @@ if (testClassGroupIndex) {
 
 		jvmArgs "-Dtest.class.group.index=" + testClassGroupIndex
 		jvmArgs "-Dtest.class.groups=" + testClassGroups
-	}
-
-	if (testClassGroupIndex == "0") {
-		test.finalizedBy compileJSP
 	}
 }

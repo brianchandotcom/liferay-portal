@@ -1,0 +1,35 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Liferay Journal Content Asset Addon Entry Conversions
+Bundle-SymbolicName: com.liferay.journal.content.asset.addon.entry.conve
+ rsions
+Bundle-Vendor: Liferay, Inc.
+Bundle-Version: 1.0.0
+Created-By: 1.7.0_80 (Oracle Corporation)
+Git-Descriptor: 75f8eb2
+Git-SHA: 75f8eb2e183b6bb046a9eb2ec0f818826cce372b
+Import-Package: com.liferay.journal.content.asset.addon.entry.common,com
+ .liferay.journal.model,com.liferay.portal.kernel.language,com.liferay.p
+ ortal.kernel.servlet.taglib.ui,com.liferay.portal.kernel.util,com.lifer
+ ay.portal.util,com.liferay.portlet.documentlibrary.util,javax.servlet,j
+ avax.servlet.http
+Include-Resource: classes,META-INF/resources=src/META-INF/resources
+Javac-Debug: on
+Javac-Deprecation: off
+Javac-Encoding: UTF-8
+Private-Package: com.liferay.journal.content.asset.addon.entry.conversio
+ ns,content
+Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(
+ uri=http://java.sun.com/portlet_2_0))",osgi.extender;filter:="(&(osgi.e
+ xtender=jsp.taglib)(uri=http://liferay.com/tld/theme))",osgi.extender;f
+ ilter:="(&(osgi.extender=jsp.taglib)(uri=http://liferay.com/tld/ui))",o
+ sgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.7))"
+Service-Component: OSGI-INF/com.liferay.journal.content.asset.addon.entr
+ y.conversions.DOCConvertionUserToolAssetAddonEntry.xml,OSGI-INF/com.lif
+ eray.journal.content.asset.addon.entry.conversions.ODTConvertionUserToo
+ lAssetAddonEntry.xml,OSGI-INF/com.liferay.journal.content.asset.addon.e
+ ntry.conversions.PDFConvertionUserToolAssetAddonEntry.xml,OSGI-INF/com.
+ liferay.journal.content.asset.addon.entry.conversions.TXTConvertionUser
+ ToolAssetAddonEntry.xml
+Tool: Bnd-2.4.1.201501161927
+Web-ContextPath: /journal-content-asset-addon-entry-conversions

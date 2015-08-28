@@ -33,6 +33,7 @@ dependencies {
 	portalTools group: "com.liferay", name: "com.liferay.jasper.jspc", version: "default"
 	portalTools group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "default"
 	portalTools group: "com.liferay", name: "com.liferay.whip", version: "default"
+	portalTools group: "org.codehaus.sonar-plugins", name: "sonar-ant-task", version: "2.1"
 }
 
 repositories {

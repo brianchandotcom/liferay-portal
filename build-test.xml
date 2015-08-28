@@ -1426,7 +1426,9 @@ tell application "Safari" to quit
 
 							<ant dir="portal-impl" target="deploy" inheritAll="false" />
 
-							<ant dir="${project.dir}/modules/core" target="deploy" inheritAll="false" />
+							<gradle-execute dir="${project.dir}/modules/core" task="deploy">
+								<arg value="-Dportal.build=true" />
+							</gradle-execute>
 						</then>
 						<else>
 							<ant antfile="build-dist.xml" target="build-dist-tomcat" inheritAll="false" />

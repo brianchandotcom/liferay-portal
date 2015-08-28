@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Liferay Journal Content Asset Addon Entry Common
+Bundle-SymbolicName: com.liferay.journal.content.asset.addon.entry.commo
+ n
+Bundle-Vendor: Liferay, Inc.
+Bundle-Version: 1.0.0
+Created-By: 1.7.0_80 (Oracle Corporation)
+Export-Package: com.liferay.journal.content.asset.addon.entry.common;use
+ s:="com.liferay.portal.kernel.servlet.taglib.ui";version="1.0.0"
+Git-Descriptor: 75f8eb2
+Git-SHA: 75f8eb2e183b6bb046a9eb2ec0f818826cce372b
+Import-Package: com.liferay.portal.kernel.servlet.taglib.ui
+Javac-Debug: on
+Javac-Deprecation: off
+Javac-Encoding: UTF-8
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.7))"
+Service-Component: OSGI-INF/com.liferay.journal.content.asset.addon.entr
+ y.common.ContentMetadataAssetAddonEntryTracker.xml,OSGI-INF/com.liferay
+ .journal.content.asset.addon.entry.common.UserToolAssetAddonEntryTracke
+ r.xml
+Tool: Bnd-2.4.1.201501161927

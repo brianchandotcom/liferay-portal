@@ -2,15 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="../../../tools/sdk/dependencies/${plugin.name}/lib" />
-
-	<target name="deploy">
-		<deploy
-			module.dir="${basedir}"
-		/>
-
-		<copy file="${plugin.file}" tofile="../../../lib/development/${plugin.name}.jar" />
-	</target>
+	<import file="../../build-module.xml" />
 </project>

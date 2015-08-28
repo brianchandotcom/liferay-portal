@@ -2,9 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="osgi.runtime.dependencies" value="*.jar" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/static" />
+	<import file="../../build-module.xml" />
 </project>

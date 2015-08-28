@@ -2,9 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="osgi.ide.dependencies" value="hibernate-core.jar,spring-aop.jar,spring-beans.jar,spring-context.jar,spring-core.jar,spring-orm.jar,spring-tx.jar" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+	<import file="../../build-module.xml" />
 </project>

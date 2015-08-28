@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+<<<<<<< 5281493fbceac37a498d82c8b955a8d554cda8af
+	<path id="plugins.includes.path">
+		<dirset dir="amazon-rankings" includes="*" />
+		<dirset dir="announcements" includes="*" />
+		<dirset dir="asset" includes="*" />
+		<dirset dir="application-list" includes="*" />
+		<dirset dir="blogs" includes="*" />
+		<dirset dir="bookmarks" includes="*" />
+		<dirset dir="calendar" includes="*" />
+		<dirset dir="comment" includes="*" />
+		<dirset dir="configuration-admin" includes="*" />
+		<dirset dir="control-menu" includes="*" />
+		<dirset dir="currency-converter" includes="*" />
+		<dirset dir="dictionary" includes="*" />
+		<dirset dir="document-library" includes="*" />
+		<dirset dir="dynamic-data-lists" includes="*" />
+		<dirset dir="dynamic-data-mapping" includes="*" />
+		<dirset dir="expando" includes="*" />
+		<dirset dir="export-import" includes="*" />
+		<dirset dir="flags" includes="*" />
+		<dirset dir="hello-velocity" includes="*" />
+		<dirset dir="iframe" includes="*" />
+		<dirset dir="invitation" includes="*" />
+		<dirset dir="item-selector" includes="*" />
+		<dirset dir="journal" excludes="journal-content-asset-addon-entry" includes="*" />
+		<dirset dir="journal/journal-content-asset-addon-entry" includes="*" />
+		<dirset dir="layout" includes="*" />
+		<dirset dir="loan-calculator" includes="*" />
+		<dirset dir="marketplace" includes="*" />
+		<dirset dir="mentions" excludes="mentions-editor-config" includes="*" />
+		<dirset dir="message-boards" includes="*" />
+		<dirset dir="microblogs" includes="*" />
+		<dirset dir="mobile-device-rules" includes="*" />
+		<dirset dir="my-account" includes="*" />
+		<dirset dir="nested-portlets" includes="*" />
+		<dirset dir="network-utilities" includes="*" />
+		<dirset dir="password-generator" includes="*" />
+		<dirset dir="password-policies-admin" includes="*" />
+		<dirset dir="plugins-admin" includes="*" />
+		<dirset dir="polls" includes="*" />
+		<dirset dir="portal-instances" includes="*" />
+		<dirset dir="portlet-configuration" includes="*" />
+		<dirset dir="portlet-css" includes="*" />
+		<dirset dir="portlet-display-template" includes="*" />
+		<dirset dir="product-navigation" includes="*" />
+		<dirset dir="quick-note" includes="*" />
+		<dirset dir="ratings" includes="*" />
+		<dirset dir="roles" includes="*" />
+		<dirset dir="rss" includes="*" />
+		<dirset dir="search" includes="*" />
+		<dirset dir="service-access-policy" includes="*" />
+		<dirset dir="shopping" includes="*" />
+		<dirset dir="site" includes="*" />
+		<dirset dir="site-navigation" includes="*" />
+		<dirset dir="social" includes="*" />
+		<dirset dir="social-office" includes="*" />
+		<dirset dir="staging" includes="*" />
+		<dirset dir="translator" includes="*" />
+		<dirset dir="trash" includes="*" />
+		<dirset dir="unit-converter" includes="*" />
+		<dirset dir="user-groups-admin" includes="*" />
+		<dirset dir="user-personal-bar" includes="*" />
+		<dirset dir="users-admin" includes="*" />
+		<dirset dir="web-proxy" includes="*" />
+		<dirset dir="wiki" includes="*" />
+		<dirset dir="workflow" includes="*" />
+		<dirset dir="xsl-content" includes="*" />
+	</path>
+
+	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />
+
+	<import file="../../tools/sdk/build-common-plugins.xml" />
+=======
+	<import file="../build-module.xml" />
+>>>>>>> LPS-51081 Replace modules' Ant files with Gradle alternatives
+</project>

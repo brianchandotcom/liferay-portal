@@ -2,18 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="dynamic-data-mapping-api,dynamic-data-mapping-service,../portlet-display-template/portlet-display-template" />
-	<property name="portal.project.dir" value="../../../.." />
-
-	<import file="${portal.project.dir}/tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-
-	<target name="build-taglibs">
-		<build-taglibs
-			tagbuilder.components.xml="liferay-ddm.xml"
-			tagbuilder.java.dir="src/com/liferay/dynamic/data/mapping/taglib/servlet/"
-			tagbuilder.java.package="com.liferay.dynamic.data.mapping.taglib.servlet"
-		/>
-	</target>
+	<import file="../../../build-module.xml" />
 </project>

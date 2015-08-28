@@ -2,32 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="css.dir" value="src/META-INF/resources" />
-	<property name="third.party.dir" value="../../../portal-web/third-party" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-
-	<macrodef name="clean-css">
-		<sequential>
-			<delete includeemptydirs="true">
-				<fileset dir="${css.dir}" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
-			</delete>
-		</sequential>
-	</macrodef>
-
-	<target name="clean">
-		<clean-css />
-
-		<clean
-			module.dir="${basedir}"
-		/>
-	</target>
-
-	<target name="compile">
-		<compile
-			module.dir="${basedir}"
-		/>
-	</target>
+	<import file="../../build-module.xml" />
 </project>

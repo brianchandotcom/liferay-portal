@@ -2,22 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="microblogs-api" />
-	<property name="osgi.ide.dependencies" value="spring-context.jar" />
-	<property name="service.input.file" value="service.xml" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-
-	<target name="build-service">
-		<build-service
-			service.api.dir="../microblogs-api/src"
-			service.auto.namespace.tables="true"
-			service.hbm.file.name="module-hbm.xml"
-			service.spring.file.name="spring/module-spring.xml"
-			service.sql.dir="src/META-INF/sql"
-			service.test.dir="../microblogs-test/test/integration"
-		/>
-	</target>
+	<import file="../../../build-module.xml" />
 </project>

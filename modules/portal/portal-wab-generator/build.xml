@@ -2,44 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="osgi.ide.dependencies" value="ant.jar,asm-debug-all.jar,spring-beans.jar,spring-context.jar,spring-core.jar,spring-web.jar" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
-
-	<target name="compile">
-		<property name="dependency.visitor.dir" value="org/objectweb/asm/depend" />
-
-		<if>
-			<not>
-				<available file="src/${dependency.visitor.dir}/DependencyVisitor.java" />
-			</not>
-			<then>
-				<mkdir dir="${dependency.visitor.dir}" />
-
-				<property name="dependency.visitor.svn.url" value="svn://svn.forge.objectweb.org/svnroot/asm/tags/ASM_5_0_1/examples/dependencies/src/org/objectweb/asm/depend/DependencyVisitor.java" />
-
-				<if>
-					<os family="unix" />
-					<then>
-						<exec dir="src" executable="/bin/sh" failonerror="true">
-							<arg line="-c &quot;svn export ${dependency.visitor.svn.url} ${dependency.visitor.dir}&quot;" />
-						</exec>
-					</then>
-					<else>
-						<exec dir="src" executable="cmd.exe" failonerror="true">
-							<arg line="/c &quot;svn export ${dependency.visitor.svn.url} ${dependency.visitor.dir}&quot;" />
-						</exec>
-					</else>
-				</if>
-
-				<patch dir="src" patchfile="patches/LPS-47293.patch" strip="1" />
-			</then>
-		</if>
-
-		<compile
-			module.dir="${basedir}"
-		/>
-	</target>
+	<import file="../../build-module.xml" />
 </project>

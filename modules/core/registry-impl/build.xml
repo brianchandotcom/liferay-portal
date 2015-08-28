@@ -2,10 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="osgi-service-tracker-map,registry-api" />
-	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.service.tracker.map.jar,org.eclipse.osgi.jar" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/core" />
+	<import file="../../build-module.xml" />
 </project>

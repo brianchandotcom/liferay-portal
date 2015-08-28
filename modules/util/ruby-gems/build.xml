@@ -2,54 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<target name="compile">
-		<if>
-			<not>
-				<available file="classes/gems" />
-			</not>
-			<then>
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<mkdir dir="${tstamp.value}/compass" />
-
-				<mirrors-get
-					dest="${tstamp.value}/compass/compass-1.0.1.gem"
-					src="http://rubygems.org/gems/compass-1.0.1.gem"
-				/>
-
-				<java
-					fork="true"
-					jar="../../../lib/portal/jruby.jar"
-				>
-					<arg line="-S gem install -i ./classes ${tstamp.value}/compass/compass-1.0.1.gem --no-rdoc --no-ri" />
-				</java>
-
-				<if>
-					<os family="windows" />
-					<then>
-						<replace dir="classes/bin/">
-							<replacetoken><![CDATA[#! jruby]]></replacetoken>
-							<replacevalue><![CDATA[#!/usr/bin/env jruby]]></replacevalue>
-						</replace>
-					</then>
-				</if>
-
-				<delete dir="${tstamp.value}" />
-
-                <dirset dir="classes/gems" id="gems.dirset" includes="*" />
-
-                <pathconvert pathsep="${line.separator}" property="gems.path" refid="gems.dirset">
-                    <mapper>
-                        <flattenmapper />
-                    </mapper>
-                </pathconvert>
-
-                <echo file="readme.txt">Included gems:${line.separator}${line.separator}${gems.path}</echo>
-			</then>
-		</if>
-	</target>
+	<import file="../../build-module.xml" />
 </project>

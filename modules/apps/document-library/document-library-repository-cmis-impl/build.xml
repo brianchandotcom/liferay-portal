@@ -2,10 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="osgi.ide.dependencies" value="chemistry-opencmis-client-api.jar,chemistry-opencmis-client-bindings.jar,chemistry-opencmis-client-impl.jar,chemistry-opencmis-commons-api.jar,chemistry-opencmis-commons-impl.jar" />
-	<property name="import.shared" value="document-library-repository-cmis-api" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+	<import file="../../../build-module.xml" />
 </project>

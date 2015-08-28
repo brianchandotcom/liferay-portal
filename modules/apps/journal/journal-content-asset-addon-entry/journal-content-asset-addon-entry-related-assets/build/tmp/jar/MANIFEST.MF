@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Liferay Journal Content Asset Addon Entry Related Assets
+Bundle-SymbolicName: com.liferay.journal.content.asset.addon.entry.relat
+ ed.assets
+Bundle-Vendor: Liferay, Inc.
+Bundle-Version: 1.0.0
+Created-By: 1.7.0_80 (Oracle Corporation)
+Git-Descriptor: 75f8eb2
+Git-SHA: 75f8eb2e183b6bb046a9eb2ec0f818826cce372b
+Import-Package: com.liferay.journal.content.asset.addon.entry.common,com
+ .liferay.journal.model,com.liferay.portal.kernel.language,com.liferay.p
+ ortal.kernel.servlet.taglib.ui,com.liferay.portal.kernel.util,javax.ser
+ vlet,javax.servlet.http
+Include-Resource: classes,META-INF/resources=src/META-INF/resources
+Javac-Debug: on
+Javac-Deprecation: off
+Javac-Encoding: UTF-8
+Private-Package: com.liferay.journal.content.asset.addon.entry.related.a
+ ssets
+Require-Capability: osgi.extender;filter:="(&(osgi.extender=jsp.taglib)(
+ uri=http://liferay.com/tld/ui))",osgi.ee;filter:="(&(osgi.ee=JavaSE)(ve
+ rsion=1.7))"
+Service-Component: OSGI-INF/com.liferay.journal.content.asset.addon.entr
+ y.related.assets.RelatedAssetsContentMetadataAssetAddonEntry.xml
+Tool: Bnd-2.4.1.201501161927
+Web-ContextPath: /journal-content-asset-addon-entry-related-assets

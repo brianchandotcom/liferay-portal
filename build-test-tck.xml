@@ -151,7 +151,7 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 		<echo file="${liferay.home}/osgi/modules/com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration.cfg">handShakeServerPort=${portlet.tck.bridge.handshake.port}
 servletContextNames=${tck.servlet.context.names}</echo>
 
-		<ant dir="modules/test/portlet-tck-bridge" target="deploy" />
+		<gradle-execute dir="modules/test/portlet-tck-bridge" task="deploy" />
 	</target>
 
 	<target name="record-test-tck-package-names">

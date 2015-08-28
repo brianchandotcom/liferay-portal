@@ -2,8 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="shopping-service" />
-	<property name="osgi.ide.dependencies" value="antlr3-runtime.jar" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
+	<import file="../../../build-module.xml" />
 </project>

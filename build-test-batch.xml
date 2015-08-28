@@ -775,10 +775,10 @@
 
 							<antcall target="prepare-system-ext-properties" inheritAll="false" />
 
-							<ant dir="modules" target="test-class-group" inheritAll="false">
-								<property name="test.class.group.index" value="${axis.variable}" />
-								<property name="test.type" value="integration" />
-							</ant>
+							<gradle-execute dir="modules" task="testIntegration">
+								<arg value="-Dportal.build=true" />
+								<arg value="-Dtest.class.group.index=${axis.variable}" />
+							</gradle-execute>
 
 							<ant dir="portal-service" target="test-class" inheritAll="false">
 								<property name="test.class" value="PortalLogAssertorTest" />
@@ -897,10 +897,19 @@
 
 		<run-batch-test>
 			<test-action>
-				<ant dir="modules" target="test-class-group" inheritAll="false">
-					<property name="test.class.group.index" value="${axis.variable}" />
-					<property name="test.type" value="unit" />
-				</ant>
+				<gradle-execute dir="modules" task="test">
+					<arg value="-Dportal.build=true" />
+					<arg value="-Dtest.class.group.index=${axis.variable}" />
+				</gradle-execute>
+
+				<if>
+					<equals arg1="${axis.variable}" arg2="0" />
+					<then>
+						<gradle-execute dir="modules" task="compileJSP">
+							<arg value="-Dportal.build=true" />
+						</gradle-execute>
+					</then>
+				</if>
 			</test-action>
 
 			<test-set-up>
@@ -958,9 +967,9 @@
 
 		<run-batch-test>
 			<test-action>
-				<ant dir="modules/util/portal-tools-service-builder" target="clean" />
-
-				<ant dir="modules/util/portal-tools-service-builder" target="deploy" />
+				<gradle-execute dir="modules/util/portal-tools-service-builder" task="deploy">
+					<arg value="clean" />
+				</gradle-execute>
 
 				<exec dir="portal-impl" executable="ant" failonerror="true">
 					<arg value="build-services" />

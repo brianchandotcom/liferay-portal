@@ -31,6 +31,8 @@ if (Validator.isNull(displayStyle)) {
 
 String keywords = ParamUtil.getString(request, "keywords");
 
+int deltaEntry = ParamUtil.getInteger(request, "deltaEntry");
+
 PortletURL displayStyleURL = renderResponse.createRenderURL();
 
 displayStyleURL.setParameter("mvcRenderCommandName", Validator.isNull(keywords) ? "/document_library/view" : "/document_library/search");
@@ -39,6 +41,10 @@ displayStyleURL.setParameter("folderId", String.valueOf(folderId));
 
 if (fileEntryTypeId != -1) {
 	displayStyleURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
+}
+
+if (deltaEntry > 0) {
+	displayStyleURL.setParameter("deltaEntry", String.valueOf(deltaEntry));
 }
 %>
 

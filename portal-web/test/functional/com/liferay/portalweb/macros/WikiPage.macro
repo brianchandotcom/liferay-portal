@@ -1278,7 +1278,7 @@
 		<var name="key_commentBody" value="${commentBody}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#REPLY_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 	</command>
 
 	<command name="viewCommentRatingBad">

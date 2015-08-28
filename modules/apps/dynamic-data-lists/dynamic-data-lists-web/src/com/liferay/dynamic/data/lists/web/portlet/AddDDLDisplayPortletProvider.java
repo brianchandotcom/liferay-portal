@@ -1,0 +1,95 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.dynamic.data.lists.web.portlet;
+
+import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.web.asset.DDLRecordAssetRenderer;
+import com.liferay.dynamic.data.lists.web.asset.DDLRecordAssetRendererFactory;
+import com.liferay.portal.kernel.portlet.AddPortletProvider;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalService;
+
+import javax.portlet.PortletPreferences;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Rafael Praxedes
+ */
+@Component(
+	immediate = true,
+	property = {"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord"},
+	service = AddPortletProvider.class
+)
+public class AddDDLDisplayPortletProvider
+	extends BasePortletProvider implements AddPortletProvider {
+
+	@Override
+	public String getPortletId() {
+		return DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY;
+	}
+
+	@Override
+	public void updatePortletPreferences(
+			PortletPreferences portletPreferences, String portletId,
+			String className, long classPK, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
+			className, classPK);
+
+		DDLRecordAssetRendererFactory ddlRecordAssetRendererFactory =
+			(DDLRecordAssetRendererFactory)
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						DDLRecord.class.getName());
+
+		DDLRecordAssetRenderer ddlRecordAssetRenderer =
+			(DDLRecordAssetRenderer)ddlRecordAssetRendererFactory.
+				getAssetRenderer(assetEntry.getClassPK());
+
+		DDLRecordSet ddlRecordSet = ddlRecordAssetRenderer.getDDLRecordSet();
+
+		portletPreferences.setValue(
+			"recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));
+	}
+
+	@Override
+	protected long getPlid(ThemeDisplay themeDisplay) {
+		return themeDisplay.getPlid();
+	}
+
+	@Reference
+	protected void setAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = assetEntryLocalService;
+	}
+
+	protected void unsetAssetEntryLocalService(
+		AssetEntryLocalService assetEntryLocalService) {
+
+		_assetEntryLocalService = null;
+	}
+
+	private AssetEntryLocalService _assetEntryLocalService;
+
+}

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Product Navigation User Service
+Bundle-SymbolicName: com.liferay.product.navigation.user.service
+Bundle-Version: 1.0.0
+Include-Resource: classes

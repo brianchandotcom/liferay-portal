@@ -41,6 +41,16 @@
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
+		<a class="sidenav-toggler" data-content="body" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" href="#controlPanelSidenavSliderId" id="controlPanelSidenavToggleId">
+			<span class="icon-align-justify icon-monospaced"></span> <liferay-ui:message key="control-panel" />
+		</a>
+
+		<aui:script>
+			AUI.$('#controlPanelSidenavToggleId').sideNavigation();
+
+			var sidenavSlider = AUI.$('#controlPanelSidenavSliderId');
+		</aui:script>
+
 		<aui:nav-item anchorCssClass="user-avatar-link" cssClass='<%= "portlet-user-personal-bar " + (themeDisplay.isImpersonated() ? "user-avatar impersonating-user" : "user-avatar") %>' dropdown="<%= true %>" id="userAvatar" label="<%= userName %>" toggleTouch="<%= false %>">
 			<c:if test="<%= themeDisplay.isImpersonated() %>">
 

@@ -14,7 +14,6 @@
 
 package com.liferay.wiki.lar;
 
-import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,6 +36,7 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
+import com.liferay.wiki.exportimport.content.processor.WikiPageExportImportContentProcessor;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
@@ -118,15 +119,13 @@ public class WikiPageStagedModelDataHandler
 			portletDataContext, page, page.getNode(),
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 
-		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor(WikiPage.class);
-
 		String content =
-			exportImportContentProcessor.replaceExportContentReferences(
-				portletDataContext, page, page.getContent(),
-				portletDataContext.getBooleanParameter(
-					WikiPortletDataHandler.NAMESPACE, "referenced-content"),
-				true);
+			_wikiPageExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, page, page.getContent(),
+					portletDataContext.getBooleanParameter(
+						WikiPortletDataHandler.NAMESPACE, "referenced-content"),
+					true);
 
 		page.setContent(content);
 
@@ -173,12 +172,10 @@ public class WikiPageStagedModelDataHandler
 		Element pageElement =
 			portletDataContext.getImportDataStagedModelElement(page);
 
-		ExportImportContentProcessor exportImportContentProcessor =
-			getExportImportContentProcessor(WikiPage.class);
-
 		String content =
-			exportImportContentProcessor.replaceImportContentReferences(
-				portletDataContext, page, page.getContent());
+			_wikiPageExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, page, page.getContent());
 
 		page.setContent(content);
 
@@ -328,7 +325,19 @@ public class WikiPageStagedModelDataHandler
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageExportImportContentProcessor(
+		WikiPageExportImportContentProcessor
+			wikiPageExportImportContentProcessor) {
+
+		_wikiPageExportImportContentProcessor =
+			wikiPageExportImportContentProcessor;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageStagedModelDataHandler.class);
+
+	private WikiPageExportImportContentProcessor
+		_wikiPageExportImportContentProcessor;
 
 }

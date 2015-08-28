@@ -26,7 +26,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {"model.class.name=com.liferay.wiki.model.WikiPage"},
-	service = ExportImportContentProcessor.class
+	service = {
+		ExportImportContentProcessor.class,
+		WikiPageExportImportContentProcessor.class
+	}
 )
 public class WikiPageExportImportContentProcessor
 	extends BaseExportImportContentProcessor {

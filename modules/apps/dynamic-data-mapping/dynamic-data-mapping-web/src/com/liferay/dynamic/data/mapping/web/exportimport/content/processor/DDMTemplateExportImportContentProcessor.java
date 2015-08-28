@@ -27,7 +27,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property =
 		{"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"},
-	service = ExportImportContentProcessor.class
+	service = {
+		DDMTemplateExportImportContentProcessor.class,
+		ExportImportContentProcessor.class
+	}
 )
 public class DDMTemplateExportImportContentProcessor
 	extends BaseExportImportContentProcessor {

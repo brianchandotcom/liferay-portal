@@ -79,7 +79,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 								method: Liferay.Service.bind('/dlapp/get-temp-file-names'),
 								params: {
 									folderId: <%= folderId %>,
-									folderName: 'com.liferay.portlet.documentlibrary.action.EditFileEntryAction',
+									folderName: '<%= EditFileEntryMVCActionCommand.TEMP_FOLDER_NAME %>',
 									groupId: <%= scopeGroupId %>
 								}
 							},

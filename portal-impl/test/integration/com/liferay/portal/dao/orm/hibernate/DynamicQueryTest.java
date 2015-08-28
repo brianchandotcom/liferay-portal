@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -53,7 +54,8 @@ public class DynamicQueryTest {
 
 		for (int i = 0; i < _BATCH_SIZE; i++) {
 			ClassName className = ClassNameLocalServiceUtil.addClassName(
-				RandomTestUtil.randomString());
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE));
 
 			_newClassNames.add(className);
 		}

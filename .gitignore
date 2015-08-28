@@ -1,5 +1,6 @@
 !/sql/update-*.sql
 **/.gradle
+**/.settings
 **/.sonar
 **/pmd-reports
 *.bak
@@ -23,7 +24,6 @@
 /.idea
 /.ivy/cache/com.liferay-*.xml
 /.ivy/cache/resolved-*
-/.settings
 /.sonar
 /.xmlcatalog
 /ActiveMQ

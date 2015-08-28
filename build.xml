@@ -746,13 +746,9 @@
 	</target>
 
 	<target name="sort-xml-attributes">
-		<path id="source.formatter.classpath">
-			<fileset dir="${sdk.dir}/dependencies/com.liferay.source.formatter/lib" includes="*.jar" />
-		</path>
-
 		<java
 			classname="com.liferay.portal.tools.source.formatter.XMLAttributesSorter"
-			classpathref="source.formatter.classpath"
+			classpathref="portal.tools.classpath"
 			fork="true"
 			newenvironment="true"
 		>

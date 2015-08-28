@@ -31,7 +31,13 @@ configurations {
 dependencies {
 	portalTools group: "com.liferay", name: "com.liferay.css.builder", version: "default"
 	portalTools group: "com.liferay", name: "com.liferay.jasper.jspc", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.lang.builder", version: "default"
 	portalTools group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
 	portalTools group: "com.liferay", name: "com.liferay.whip", version: "default"
 	portalTools group: "org.codehaus.sonar-plugins", name: "sonar-ant-task", version: "2.1"
 }

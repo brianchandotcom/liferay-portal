@@ -51,7 +51,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" />
+		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_FOLDER_CHECKBOX" />
@@ -93,7 +93,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" />
+		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
 	</command>
 
 	<command name="AddStructureSiteRole" priority="4">
@@ -288,7 +288,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" />
+		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ADD_WEB_CONTENT_CHECKBOX" />
@@ -338,7 +338,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="Toolbar#ADD" />
+		<execute function="AssertElementNotPresent" locator1="Button#PLUS" />
 	</command>
 
 	<command name="ViewWebContentPortletRegRole" priority="4">

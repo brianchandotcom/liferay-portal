@@ -152,6 +152,34 @@ public class WebDriverHelper {
 		}
 	}
 
+	public static void executeJavaScriptMouseEvent(
+		WebDriver webDriver, String locator, String event) {
+
+		WebElement webElement = getWebElement(webDriver, locator);
+
+		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
+
+		JavascriptExecutor javascriptExecutor =
+			(JavascriptExecutor)wrappedWebDriver;
+
+		if (!webElement.isDisplayed()) {
+			scrollWebElementIntoView(webDriver, webElement);
+		}
+
+		StringBuilder sb = new StringBuilder(6);
+
+		sb.append("var element = arguments[0];");
+		sb.append("var event = document.createEvent('MouseEvents');");
+		sb.append("event.initEvent('");
+		sb.append(event);
+		sb.append("', true, false);");
+		sb.append("element.dispatchEvent(event);");
+
+		javascriptExecutor.executeScript(sb.toString(), webElement);
+	}
+
 	public static String getAttribute(
 		WebDriver webDriver, String attributeLocator) {
 

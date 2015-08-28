@@ -307,6 +307,18 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
+	public static void mergeFolders(long folderId, long parentFolderId)
+		throws RemoteException {
+		try {
+			BookmarksFolderServiceUtil.mergeFolders(folderId, parentFolderId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap moveFolder(
 		long folderId, long parentFolderId) throws RemoteException {
 		try {
@@ -387,6 +399,30 @@ public class BookmarksFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.bookmarks.model.BookmarksFolderSoap updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.bookmarks.model.BookmarksFolder returnValue = BookmarksFolderServiceUtil.updateFolder(folderId,
+					parentFolderId, name, description, serviceContext);
+
+			return com.liferay.bookmarks.model.BookmarksFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	String, String, ServiceContext)} and {@link #mergeFolders(
+	long, long)}
+	*/
+	@Deprecated
 	public static com.liferay.bookmarks.model.BookmarksFolderSoap updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
 		java.lang.String description, boolean mergeWithParentFolder,

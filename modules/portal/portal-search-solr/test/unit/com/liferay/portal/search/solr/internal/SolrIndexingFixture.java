@@ -35,6 +35,7 @@ import com.liferay.portal.search.solr.internal.filter.RangeTermFilterTranslatorI
 import com.liferay.portal.search.solr.internal.filter.SolrFilterTranslator;
 import com.liferay.portal.search.solr.internal.filter.TermFilterTranslatorImpl;
 import com.liferay.portal.search.solr.internal.filter.TermsFilterTranslatorImpl;
+import com.liferay.portal.search.solr.internal.groupby.DefaultGroupByTranslator;
 import com.liferay.portal.search.solr.internal.query.BooleanQueryTranslatorImpl;
 import com.liferay.portal.search.solr.internal.query.DisMaxQueryTranslatorImpl;
 import com.liferay.portal.search.solr.internal.query.FuzzyQueryTranslatorImpl;
@@ -147,6 +148,7 @@ public class SolrIndexingFixture implements IndexingFixture {
 			{
 				setFacetProcessor(new DateRangeFacetProcessor());
 				setFilterTranslator(createSolrFilterTranslator());
+				setGroupByTranslator(new DefaultGroupByTranslator());
 				setQueryTranslator(createSolrQueryTranslator());
 				setSolrClientManager(solrClientManager);
 				setStatsTranslator(new DefaultStatsTranslator());

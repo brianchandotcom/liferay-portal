@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.lar;
+package com.liferay.wiki.exportimport.content.processor;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.base.BaseExportImportContentProcessor;

@@ -184,4 +184,9 @@
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarButtonsTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
+	<tag>
+		<name>management-bar-filters</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarFiltersTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
 </taglib>

@@ -17,11 +17,9 @@ package com.liferay.message.boards.layout.set.prototype.action;
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
@@ -36,7 +34,6 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -71,19 +68,14 @@ public class AddLayoutSetPrototypeAction {
 			List<LayoutSetPrototype> layoutSetPrototypes)
 		throws Exception {
 
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content.Language", LocaleUtil.getDefault());
+		Class<?> clazz = AddLayoutSetPrototypeAction.class;
 
 		LayoutSet layoutSet =
 			DefaultLayoutSetPrototypesUtil.addLayoutSetPrototype(
 				companyId, defaultUserId,
-				LanguageUtil.get(
-					resourceBundle,
-					"layout-set-prototype-community-site-title"),
-				LanguageUtil.get(
-					resourceBundle,
-					"layout-set-prototype-community-site-description"),
-				layoutSetPrototypes);
+				"layout-set-prototype-community-site-title",
+				"layout-set-prototype-community-site-description",
+				layoutSetPrototypes, clazz.getClassLoader());
 
 		if (layoutSet == null) {
 			return;

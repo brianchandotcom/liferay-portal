@@ -85,7 +85,7 @@ numberFormat.setMinimumIntegerDigits(2);
 
 			String genericLocation = tzFormatter.format(TimeZoneFormat.Style.GENERIC_LOCATION, tz, date.getTime());
 
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append(StringPool.SPACE);
 			sb.append(StringPool.OPEN_PARENTHESIS);

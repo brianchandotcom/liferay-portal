@@ -116,32 +116,34 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 
 				<aui:input name="coverImageCaption" type="hidden" />
 
-				<div class="cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
+				<div class="cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %> row">
 					<small>
 						<liferay-ui:input-editor contents="<%= coverImageCaption %>" editorName="alloyeditor" name="coverImageCaptionEditor" placeholder="caption" showSource="<%= false %>" />
 					</small>
 				</div>
 
-				<div class="entry-title">
-					<h2><liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h2>
+				<div class="col-md-offset-2 col-md-8">
+					<div class="entry-title">
+						<h1><liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
+					</div>
+
+					<aui:input name="title" type="hidden" />
+
+					<div class="entry-subtitle">
+						<h4><liferay-ui:input-editor contents="<%= HtmlUtil.escape(subtitle) %>" editorName="alloyeditor" name="subtitleEditor" placeholder="subtitle" showSource="<%= false %>" /> </h4>
+					</div>
+
+					<aui:input name="subtitle" type="hidden" />
+
+					<div class="entry-content">
+						<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>' name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
+					</div>
+
+					<aui:input name="content" type="hidden" />
 				</div>
-
-				<aui:input name="title" type="hidden" />
-
-				<div class="entry-subtitle">
-					<liferay-ui:input-editor contents="<%= HtmlUtil.escape(subtitle) %>" editorName="alloyeditor" name="subtitleEditor" placeholder="subtitle" showSource="<%= false %>" />
-				</div>
-
-				<aui:input name="subtitle" type="hidden" />
-
-				<div class="entry-content">
-					<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>' name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
-				</div>
-
-				<aui:input name="content" type="hidden" />
 			</div>
 
-			<div class="hide" id="<portlet:namespace />settingsSection">
+			<div class="col-md-offset-2 col-md-8 hide" id="<portlet:namespace />settingsSection">
 				<div class="display-date-wrapper">
 					<h3><liferay-ui:message key="display-date" /></h3>
 
@@ -295,7 +297,7 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 			</div>
 		</div>
 
-		<aui:fieldset cssClass="entry-footer">
+		<aui:fieldset cssClass="col-md-offset-2 col-md-8 entry-footer">
 
 			<%
 			boolean pending = false;

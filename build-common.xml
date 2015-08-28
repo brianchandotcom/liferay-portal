@@ -428,7 +428,7 @@ Error-Prone was automatically installed. Please rerun your task.
 .
 
 Please set the environment variable ANT_OPTS to the recommended value of
-"-Xmx1024m -XX:MaxPermSize=512m".
+"-Xmx2048m -XX:MaxPermSize=512m".
 			</fail>
 		</then>
 	</if>

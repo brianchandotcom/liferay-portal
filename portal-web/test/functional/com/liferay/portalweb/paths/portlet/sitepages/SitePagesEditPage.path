@@ -149,6 +149,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CATEGORIZATION-->
+<tr>
+	<td>CATEGORIZATION_PANEL_TOGGLE</td>
+	<td>//a[contains(@id,'categorization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SEO-->
 <tr>
 	<td>SEO_PANEL_LINK</td>

@@ -28,11 +28,6 @@ public interface PanelCategoryKeys {
 
 	public static final String CONTROL_PANEL_USERS = "control_panel.users";
 
-	public static final String MY_SPACE = "my_space";
-
-	public static final String MY_SPACE_PRODUCTIVITY_CENTER =
-		"my_space.productivity_center";
-
 	public static final String ROOT = "root";
 
 	public static final String SITE_ADMINISTRATION = "site_administration";
@@ -61,5 +56,9 @@ public interface PanelCategoryKeys {
 		"sites_administration.sites";
 
 	public static final String SITES_ALL_SITES = "sites_all_sites";
+
+	public static final String USER = "user";
+
+	public static final String USER_MY_ACCOUNT = "user.my_account";
 
 }

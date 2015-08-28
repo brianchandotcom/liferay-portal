@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Product Navigation Control Panel Service
+Bundle-SymbolicName: com.liferay.product.navigation.control.panel.service
+Bundle-Version: 1.0.0
+Include-Resource: classes

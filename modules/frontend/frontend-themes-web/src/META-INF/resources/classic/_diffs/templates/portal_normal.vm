@@ -20,6 +20,14 @@ $theme.include($body_top_include)
 
 #product_menu_sidebar($liferay_product_menu_state)
 
+#if ($is_setup_complete && $is_signed_in)
+	<div class="$liferay_product_menu_state sidenav-right sidenav-fixed sidenav-menu-slider" id="controlPanelSidenavSliderId">
+		<div class="sidebar sidebar-default">
+			$theme.runtime("com.liferay.portlet.admin.util.PortalControlPanelMenuApplicationType$ControlPanelMenu", $portletProviderAction.VIEW)
+		</div>
+	</div>
+#end
+
 <div id="wrapper">
 	<header class="container-fluid-1280" id="banner" role="banner">
 		<div class="row">

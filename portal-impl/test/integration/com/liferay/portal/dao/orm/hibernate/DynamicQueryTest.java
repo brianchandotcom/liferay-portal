@@ -48,7 +48,7 @@ public class DynamicQueryTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_existingClassNames = ClassNameLocalServiceUtil.getClassNames(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -62,7 +62,7 @@ public class DynamicQueryTest {
 	}
 
 	@Test
-	public void testLowerBound() throws Exception {
+	public void testLowerBound() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(_existingClassNames.size(), QueryUtil.ALL_POS);
@@ -76,7 +76,7 @@ public class DynamicQueryTest {
 	}
 
 	@Test
-	public void testLowerUpperBound() throws Exception {
+	public void testLowerUpperBound() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
@@ -100,7 +100,7 @@ public class DynamicQueryTest {
 	}
 
 	@Test
-	public void testNegativeBoundaries() throws Exception {
+	public void testNegativeBoundaries() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(-1985, -625);
@@ -113,7 +113,7 @@ public class DynamicQueryTest {
 	}
 
 	@Test
-	public void testNegativeLowerBound() throws Exception {
+	public void testNegativeLowerBound() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(-50, QueryUtil.ALL_POS);
@@ -128,7 +128,7 @@ public class DynamicQueryTest {
 	}
 
 	@Test
-	public void testNegativeUpperBound() throws Exception {
+	public void testNegativeUpperBound() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(QueryUtil.ALL_POS, -50);
@@ -141,7 +141,7 @@ public class DynamicQueryTest {
 	}
 
 	@Test
-	public void testNoLimit() throws Exception {
+	public void testNoLimit() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		List<ClassName> dynamicQueryClassNames =
@@ -154,7 +154,7 @@ public class DynamicQueryTest {
 	}
 
 	@Test
-	public void testNoResults() throws Exception {
+	public void testNoResults() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(10, 10);
@@ -167,7 +167,7 @@ public class DynamicQueryTest {
 	}
 
 	@Test
-	public void testSingleResult() throws Exception {
+	public void testSingleResult() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(10, 11);
@@ -180,7 +180,7 @@ public class DynamicQueryTest {
 	}
 
 	@Test
-	public void testStartHigherThanEnd() throws Exception {
+	public void testStartHigherThanEnd() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(1984, 309);
@@ -193,7 +193,7 @@ public class DynamicQueryTest {
 	}
 
 	@Test
-	public void testUpperBound() throws Exception {
+	public void testUpperBound() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(QueryUtil.ALL_POS, _BATCH_SIZE);

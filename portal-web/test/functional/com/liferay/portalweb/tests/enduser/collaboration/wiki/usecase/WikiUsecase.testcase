@@ -260,7 +260,7 @@
 		</execute>
 
 		<execute macro="WikiPage#viewCommentPG">
-			<var name="commentBody" value="Wiki Page Comment Edited" />
+			<var name="entryComment" value="Wiki Page Comment Edited" />
 			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 

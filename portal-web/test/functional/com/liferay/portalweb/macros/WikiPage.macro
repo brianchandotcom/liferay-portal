@@ -51,9 +51,13 @@
 	</command>
 
 	<command name="addComment">
+		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
+
 		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
 
 		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS_1" value1="Your request processed successfully." />
 	</command>
 
 	<command name="addCommentPG">
@@ -1275,10 +1279,10 @@
 	</command>
 
 	<command name="viewCommentPG">
-		<var name="key_commentBody" value="${commentBody}" />
+		<var name="key_entryComment" value="${entryComment}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryComment}" />
 	</command>
 
 	<command name="viewCommentRatingBad">

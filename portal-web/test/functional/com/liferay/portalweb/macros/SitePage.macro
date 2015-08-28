@@ -685,11 +685,11 @@
 	</command>
 
 	<command name="viewPageTemplatePG">
-		<execute function="Click" locator1="Message#CUSTOMIZED_PAGE_INFO" />
+		<execute function="Click" locator1="ControlMenu#PAGE_INFO_MESSAGE_ICON" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#CUSTOMIZED_PAGE_INFO" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
 
-		<execute function="Click#clickAt" locator1="Icon#EDIT" />
+		<execute function="Click#clickAt" locator1="ControlMenu#EDIT_COG" />
 
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_LABEL_GENERIC" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute function="AssertChecked" locator1="SitePagesEditPage#PAGE_TYPE_TEMPLATE_AUTOMATICALLY_APPLY_CHANGES_CHECKBOX_GENERIC" />

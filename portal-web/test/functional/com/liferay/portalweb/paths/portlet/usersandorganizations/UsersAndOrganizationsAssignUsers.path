@@ -29,16 +29,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SEARCH_FIELD</td>
-	<td>//input[contains(@name,'keywords')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_BUTTON</td>
-	<td>//button[contains(.,'Search')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADVANCED_SEARCH_ICON</td>
 	<td>//span[@id='toggle_id_users_admin_user_searchtoggleAdvanced']</td>
 	<td></td>

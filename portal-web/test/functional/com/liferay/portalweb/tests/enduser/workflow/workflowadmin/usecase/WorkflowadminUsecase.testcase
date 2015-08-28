@@ -599,7 +599,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="ViewTaskCount" priority="3">
+	<command name="ViewTaskCount" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -692,7 +692,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="XSSScriptWebContent" priority="4">
+	<command name="XSSScriptWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

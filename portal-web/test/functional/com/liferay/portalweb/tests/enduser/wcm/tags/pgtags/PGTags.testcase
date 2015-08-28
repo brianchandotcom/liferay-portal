@@ -563,7 +563,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="DisplayWebContentTagViaAP" priority="4">
+	<command name="DisplayWebContentTagViaAP" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>

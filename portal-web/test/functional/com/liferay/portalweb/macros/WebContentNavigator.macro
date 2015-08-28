@@ -12,7 +12,15 @@
 	</command>
 
 	<command name="gotoEditCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
+		<if>
+			<isset var="webContentTitleEscapeCharacter" />
+			<then>
+				<var name="key_webContentTitle" value="${webContentTitleEscapeCharacter}" />
+			</then>
+			<else>
+				<var name="key_webContentTitle" value="${webContentTitle}" />
+			</else>
+		</if>
 
 		<execute function="Click" locator1="Toolbar#DISPLAY_STYLE_BUTTON" />
 
@@ -32,7 +40,7 @@
 	</command>
 
 	<command name="gotoManageStructures">
-		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#STRUCTURES" value1="Structures" />
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />

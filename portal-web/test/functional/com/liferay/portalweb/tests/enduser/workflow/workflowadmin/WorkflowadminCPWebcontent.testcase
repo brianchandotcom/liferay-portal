@@ -19,7 +19,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command known-issues="LPS-51687" name="AddWebContentCP" priority="4">
+	<command name="AddWebContentCP" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -66,7 +66,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="AddWebContentDraftCP" priority="4">
+	<command name="AddWebContentDraftCP" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -153,7 +153,7 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
-	<command known-issues="LPS-51687" name="ApproveInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="4">
+	<command name="ApproveInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="4">
 		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
@@ -427,7 +427,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="ApproveInWebContentFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
+	<command name="ApproveInWebContentFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
 		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="No Workflow" />
 		</execute>
@@ -531,7 +531,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="ApproveInWebContentFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
+	<command name="ApproveInWebContentFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
 		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
@@ -668,7 +668,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="ApproveWebContentCP" priority="4">
+	<command name="ApproveWebContentCP" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -731,7 +731,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="RejectInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="4">
+	<command name="RejectInWebContentFolderNoWorkflowWithHomeFolderSingleApproverWorkflowCP" priority="4">
 		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
@@ -836,7 +836,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="RejectInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
+	<command name="RejectInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">
@@ -1017,7 +1017,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="RejectInWebContentFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
+	<command name="RejectInWebContentFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
 		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="No Workflow" />
 		</execute>
@@ -1132,7 +1132,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="RejectInWebContentFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
+	<command name="RejectInWebContentFolderWithParentFolderSingleApproverWorkflowCP" priority="4">
 		<execute macro="Workflow#configureWebContentWorkflow">
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 		</execute>
@@ -1291,7 +1291,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="RejectWebContentCP" priority="4">
+	<command name="RejectWebContentCP" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 

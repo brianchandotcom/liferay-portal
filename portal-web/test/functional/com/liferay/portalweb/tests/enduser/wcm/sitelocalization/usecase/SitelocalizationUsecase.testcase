@@ -502,7 +502,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56473,LPS-56754" name="SiteTemplateLocalization" priority="5">
+	<command known-issues="LPS-56754" name="SiteTemplateLocalization" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>

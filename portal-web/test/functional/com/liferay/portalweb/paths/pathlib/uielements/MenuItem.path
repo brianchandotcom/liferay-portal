@@ -160,7 +160,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION</td>
-	<td>//a[@role='menuitem' and contains(.,'Configuration')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Configuration')] | //a[@role='menuitem' and contains(.,'Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -260,7 +260,7 @@
 </tr>
 <tr>
 	<td>FEEDS</td>
-	<td>//a[@role='menuitem' and @title='Feeds']</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Feeds')] | //a[@role='menuitem' and contains(.,'Feeds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -565,7 +565,7 @@
 </tr>
 <tr>
 	<td>STRUCTURES</td>
-	<td>//a[@role='menuitem' and contains(.,'Structures')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Structures')] | //a[@role='menuitem' and contains(.,'Structures')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -585,7 +585,7 @@
 </tr>
 <tr>
 	<td>TEMPLATES</td>
-	<td>//a[@role='menuitem' and contains(.,'Templates')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Templates')] | //a[@role='menuitem' and contains(.,'Templates')]</td>
 	<td></td>
 </tr>
 <tr>

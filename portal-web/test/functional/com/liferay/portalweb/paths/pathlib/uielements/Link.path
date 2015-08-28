@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS</td>
+	<td>//a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Edit')]</td>
 	<td></td>

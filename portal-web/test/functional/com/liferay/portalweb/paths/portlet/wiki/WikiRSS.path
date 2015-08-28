@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>WikiRSS</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WikiRSS</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>FEED_TITLE</td>
+	<td>//*[@id='feedTitleText']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FEED_SUBTITLE</td>
+	<td>//*[@id='feedSubtitleText']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TITLE</td>
+	<td>//*[@class='entry']/*/*</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT</td>
+	<td>//*[@class='feedEntryContent']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

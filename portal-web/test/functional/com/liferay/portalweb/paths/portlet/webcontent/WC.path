@@ -26,7 +26,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FILTER_REMOVE_BUTTON</td>
-	<td>//div[@id='_15_entriesContainer']//a[contains(.,'Remove')]</td>
+	<td>//span[contains(@class,'close-search')]//i[contains(@class,'icon-remove')]</td>
 	<td></td>
 </tr>
 <tr>

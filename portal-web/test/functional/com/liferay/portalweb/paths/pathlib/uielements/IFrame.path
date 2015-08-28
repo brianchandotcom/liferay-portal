@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+    <td>MANAGE_SITE_PAGES</td>
+    <td>//iframe[contains(@id,'iframe') and contains(@class,'dialog-iframe-node')]</td>
+    <td></td>
+</tr>
+<tr>
 	<td>SELECT_ORGANIZATION</td>
 	<td>//iframe[contains(@id,'selectOrganization_iframe')]</td>
 	<td></td>

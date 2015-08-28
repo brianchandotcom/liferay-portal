@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
@@ -136,7 +136,7 @@
 	</command>
 
 	<command name="addNullCP">
-		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
@@ -152,12 +152,12 @@
 	</command>
 
 	<command name="advancedSearchCP">
-		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
-		<var name="key_templateName" value="${templateName}" />
+		<var name="key_ddlTemplateName" value="${templateName}" />
 
 		<execute function="AssertTextEquals" locator1="DDMSelectTemplate#TEMPLATE_TABLE_NAME" value1="${templateName}" />
 		<execute function="Click" locator1="DDMSelectTemplate#TOOLBAR_ADVANCED_SEARCH_ICON" />
@@ -172,7 +172,7 @@
 		<if>
 			<isset var="templateDescription" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${templateDescription}" />
+				<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${templateDescription}" />
 			</then>
 		</if>
 
@@ -182,7 +182,7 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<var name="key_templateName" value="${templateName}" />
@@ -211,7 +211,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
@@ -246,7 +246,7 @@
 	</command>
 
 	<command name="viewCP">
-		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />

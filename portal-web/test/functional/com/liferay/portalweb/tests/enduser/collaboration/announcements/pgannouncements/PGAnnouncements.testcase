@@ -81,7 +81,7 @@
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${entryTitle}" />
 		<execute function="Type" locator1="TextInput#URL" value1="${entryURL}" />
-		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#IFRAME" value1="${entryContent}" />
+		<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD" value1="${entryContent}" />
 
 		<execute function="Uncheck" locator1="AnnouncementsEditEntry#DISPLAY_IMMEDIATELY_CHECKBOX" />
 

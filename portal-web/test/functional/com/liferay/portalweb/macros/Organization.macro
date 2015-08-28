@@ -135,8 +135,8 @@
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_USERS" value1="Assign Users" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignUsers#AVAILABLE_TAB" value1="Available" />
-		<execute function="Type" locator1="UsersAndOrganizationsAssignUsers#SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignUsers#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -307,7 +307,7 @@
 			<equals arg1="${orgAdvancedSearch}" arg2="Name" />
 			<then>
 				<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_NAME_FIELD" value1="${orgName}" />
-				<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+				<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 				<var name="key_orgName" value="${orgName}" />
 
@@ -318,7 +318,7 @@
 				<equals arg1="${orgAdvancedSearch}" arg2="Street" />
 				<then>
 					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_STREET_FIELD" value1="${orgAddressStreet}" />
-					<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+					<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 					<var name="key_orgName" value="${orgName}" />
 
@@ -333,7 +333,7 @@
 				<equals arg1="${orgAdvancedSearch}" arg2="City" />
 				<then>
 					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_CITY_FIELD" value1="${orgAddressCity}" />
-					<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+					<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 					<var name="key_orgName" value="${orgName}" />
 
@@ -348,7 +348,7 @@
 				<equals arg1="${orgAdvancedSearch}" arg2="Postal" />
 				<then>
 					<execute function="Type" locator1="UsersAndOrganizations#ADVANCED_SEARCH_POSTAL_CODE_FIELD" value1="${orgAddressPostal}" />
-					<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+					<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 					<var name="key_orgName" value="${orgName}" />
 
@@ -379,8 +379,8 @@
 		<execute function="Click" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignOrganizationalRoles#AVAILABLE_TAB" value1="Available" />
-		<execute function="Type" locator1="UsersAndOrganizationsAssignOrganizationalRoles#SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignOrganizationalRoles#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -395,8 +395,8 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute function="Type" locator1="UsersAndOrganizations#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${orgName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -423,8 +423,8 @@
 	</command>
 
 	<command name="gotoActionsCmd">
-		<execute function="Type" locator1="UsersAndOrganizations#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${orgName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -433,8 +433,8 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute function="Type" locator1="UsersAndOrganizations#SEARCH_FIELD" value1="${searchToken}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${searchToken}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -482,8 +482,8 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignUsers#CURRENT_TAB" value1="Current" />
-		<execute function="Type" locator1="UsersAndOrganizationsAssignUsers#SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizationsAssignUsers#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute function="Uncheck" locator1="UsersAndOrganizationsAssignUsers#USER_TABLE_CHECKBOX" />
 		<execute function="AssertClick" locator1="Button#UPDATE_ASSOCIATIONS" value1="Update Associations" />
@@ -494,16 +494,16 @@
 	<command name="searchCP">
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="Type" locator1="UsersAndOrganizations#SEARCH_FIELD" value1="${searchTerm}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${searchTerm}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 	</command>
 
 	<command name="selectParentOrganizationCP">
 		<var name="key_orgName" value="${orgName}" />
 
-		<execute function="Type" locator1="UsersAndOrganizations#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${orgName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute function="Click" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_ACTIONS" />
@@ -595,8 +595,8 @@
 	</command>
 
 	<command name="viewCP">
-		<execute function="Type" locator1="UsersAndOrganizations#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${orgName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -614,8 +614,8 @@
 	</command>
 
 	<command name="viewEditSiteCP">
-		<execute function="Type" locator1="UsersAndOrganizations#SEARCH_FIELD" value1="${orgNameEdit}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${orgNameEdit}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<var name="key_orgName" value="${orgNameEdit}" />
 
@@ -670,8 +670,8 @@
 	</command>
 
 	<command name="viewRemoveMemberCP">
-		<execute function="Type" locator1="UsersAndOrganizations#SEARCH_FIELD" value1="${orgName}" />
-		<execute function="AssertClick" locator1="UsersAndOrganizations#SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${orgName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<var name="key_orgName" value="${orgName}" />
 

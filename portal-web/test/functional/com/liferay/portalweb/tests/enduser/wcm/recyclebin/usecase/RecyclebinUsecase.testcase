@@ -1230,7 +1230,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="RestoreWebContentFromFolderCP" priority="4">
+	<command name="RestoreWebContentFromFolderCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />

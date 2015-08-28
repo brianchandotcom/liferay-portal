@@ -405,7 +405,7 @@
 </tr>
 <tr>
 	<td>SAVE_AND_CHECKIN</td>
-	<td>//button[contains(.,'Save and Checkin')]</td>
+	<td>//button[contains(.,'Save and Check In')]</td>
 	<td></td>
 </tr>
 <tr>

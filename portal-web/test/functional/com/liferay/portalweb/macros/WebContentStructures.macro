@@ -240,7 +240,7 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute function="AssertClick" locator1="Toolbar#MANAGE" value1="Manage" />
+		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#STRUCTURES" value1="Structures" />
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />

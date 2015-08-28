@@ -221,7 +221,7 @@
 	</command>
 
 	<command name="deleteLivePG">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#EDIT_COG" />
 		<execute function="ClickNoError" locator1="ControlMenu#EDIT_LIVE_DELETE" />
 
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete the selected page?" />
@@ -237,7 +237,7 @@
 	</command>
 
 	<command name="editPageLayoutColumn">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#EDIT_COG" />
 
 		<if>
 			<condition function="IsElementNotPresent#isNotVisible" locator1="TextInput#NAME" />
@@ -586,7 +586,7 @@
 	</command>
 
 	<command name="gotoEdit">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#EDIT_COG" />
 	</command>
 
 	<command name="gotoMyAccount">
@@ -1039,7 +1039,7 @@
 	</command>
 
 	<command name="viewFriendlyURLLanguageOptionsPG">
-		<execute function="Click#clickAt" locator1="Icon#EDIT" />
+		<execute function="Click#clickAt" locator1="ControlMenu#EDIT_COG" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="SitePagesEditPage#FRIENDLY_URL_TITLE" />
@@ -1069,7 +1069,7 @@
 	</command>
 
 	<command name="viewPageFriendURLPG">
-		<execute function="Click#clickAtSidebarClickAt" locator1="Icon#EDIT" />
+		<execute function="Click#clickAtSidebarClickAt" locator1="ControlMenu#EDIT_COG" />
 
 		<execute function="AssertTextNotPresent" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="${pageName}" />
 		<execute function="AssertTextEquals" locator1="SitePagesEditPage#FRIENDLY_URL_FIELD" value1="/2" />
@@ -1087,7 +1087,7 @@
 			</then>
 		</if>
 
-		<execute function="Click#clickAt" locator1="Icon#EDIT" />
+		<execute function="Click#clickAt" locator1="ControlMenu#EDIT_COG" />
 
 		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
 

@@ -93,7 +93,7 @@
 		<if>
 			<isset var="webContentContent" />
 			<then>
-				<execute function="AssertTextEquals#assertCKEditorText" locator1="CKEditor#BODY_FIELD" value1="${webContentContent}" />
+				<execute function="AssertTextEquals#assertCKEditorText" locator1="CKEditor#BODY_FIELD_IFRAME" value1="${webContentContent}" />
 			</then>
 		</if>
 	</command>
@@ -907,7 +907,15 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
-		<var name="key_webContentTitle" value="${webContentTitle}" />
+		<if>
+			<isset var="webContentTitleEscapeCharacter" />
+			<then>
+				<var name="key_webContentTitle" value="${webContentTitleEscapeCharacter}" />
+			</then>
+			<else>
+				<var name="key_webContentTitle" value="${webContentTitle}" />
+			</else>
+		</if>
 
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN_2" value1="Move to the Recycle Bin" />
@@ -1006,10 +1014,10 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${searchQuery}" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute function="AssertTextEquals" locator1="WC#SEARCH_NONE" value1="No web content was found that matched the keywords: ${searchQuery}." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No web content was found that matched the keywords: ${searchQuery}." />
 		<execute function="AssertTextNotPresent" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
 		<execute function="AssertTextNotPresent" locator1="WC#SEARCH_BODY" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="WC#SEARCH_FILTER_REMOVE_BUTTON" value1="Remove" />
+		<execute function="Click" locator1="WC#SEARCH_FILTER_REMOVE_BUTTON" />
 		<execute function="AssertTextPresent" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
 	</command>
 
@@ -1419,7 +1427,15 @@
 	</command>
 
 	<command name="viewTitle">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
+		<if>
+			<isset var="webContentTitleEscapeCharacter" />
+			<then>
+				<var name="key_webContentTitle" value="${webContentTitleEscapeCharacter}" />
+			</then>
+			<else>
+				<var name="key_webContentTitle" value="${webContentTitle}" />
+			</else>
+		</if>
 
 		<execute function="Click" locator1="Toolbar#DISPLAY_STYLE_BUTTON" />
 		<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_DESCRIPTIVE" value1="Descriptive" />

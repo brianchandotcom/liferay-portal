@@ -596,7 +596,7 @@
 					</then>
 				</if>
 
-				<execute function="AssertClick" locator1="Button#SAVE_AND_CHECKIN" value1="Save and Checkin" />
+				<execute function="AssertClick" locator1="Button#SAVE_AND_CHECKIN" value1="Save and Check In" />
 			</then>
 		</if>
 
@@ -1019,7 +1019,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="Button#SAVE_AND_CHECKIN" value1="Save and Checkin" />
+		<execute function="AssertClick" locator1="Button#SAVE_AND_CHECKIN" value1="Save and Check In" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>

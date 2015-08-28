@@ -938,7 +938,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51156" name="ViewNoAddPageTabViaPageTemplatesCP" priority="4">
+	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>

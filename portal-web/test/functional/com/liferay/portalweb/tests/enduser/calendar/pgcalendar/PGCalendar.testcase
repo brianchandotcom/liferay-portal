@@ -1261,7 +1261,7 @@
 			<var name="weekday" value="Tuesday" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1483,7 +1483,7 @@
 			<var name="unavailableCalendarList" value="Test Test,Liferay" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1818,7 +1818,7 @@
 			<var name="startDateTime" value="01:00 PM" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2112,7 +2112,7 @@
 			<var name="numberOfOccurrences" value="2" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2235,7 +2235,7 @@
 			<var name="startDateTime" value="11:58 PM" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2290,7 +2290,7 @@
 			<var name="startDateTime" value="11:58 PM" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -3216,7 +3216,7 @@
 			<var name="calendarName" value="Liferay" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -3236,7 +3236,7 @@
 			<var name="resourceNameList" value="Liferay" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="userea@liferay.com" />
@@ -3257,13 +3257,13 @@
 			<var name="calendarName" value="userfn userln" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="CalendarEvent#inviteResource">
 			<var name="resourceNameList" value="Liferay" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -3814,7 +3814,7 @@
 			<var name="startDateTime" value="09:00 PM" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -4063,7 +4063,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#setAllDay" />
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -4137,7 +4137,7 @@
 			<var name="calendarName" value="Liferay" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -4153,7 +4153,7 @@
 			<var name="calendarName" value="Test Test" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -4312,7 +4312,7 @@
 			<var name="calendarName" value="Test Test" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -4358,7 +4358,7 @@
 			<var name="calendarName" value="userfn userln" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -4629,7 +4629,7 @@
 			<var name="startDateTime" value="11:58 PM" />
 		</execute>
 
-		<execute macro="CalendarEvent#save" />
+		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

@@ -84,7 +84,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 		%>
 
 		<c:if test="<%= (previousEntry != null) || (nextEntry != null) %>">
-			<aui:container cssClass="col-md-offset-2 col-md-8 entry-navigation">
+			<aui:container cssClass="col-md-8 col-md-offset-2 entry-navigation">
 				<h2><strong><liferay-ui:message key="more-blog-entries" /></strong></h2>
 
 				<aui:row>
@@ -174,7 +174,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	Discussion discussion = CommentManagerUtil.getDiscussion(user.getUserId(), scopeGroupId, BlogsEntry.class.getName(), entry.getEntryId(), new ServiceContextFunction(request));
 	%>
 
-	<div class="col-md-offset-2 col-md-8">
+	<div class="col-md-8 col-md-offset-2">
 		<c:if test="<%= (discussion != null) && blogsPortletInstanceConfiguration.enableComments() %>">
 			<h2><strong><%= LanguageUtil.format(request, "x-comments", CommentManagerUtil.getCommentsCount(BlogsEntry.class.getName(), entry.getEntryId())) %></strong></h2>
 

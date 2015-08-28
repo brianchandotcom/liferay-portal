@@ -122,7 +122,7 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 					</small>
 				</div>
 
-				<div class="col-md-offset-2 col-md-8">
+				<div class="col-md-8 col-md-offset-2">
 					<div class="entry-title">
 						<h1><liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
 					</div>
@@ -143,7 +143,7 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 				</div>
 			</div>
 
-			<div class="col-md-offset-2 col-md-8 hide" id="<portlet:namespace />settingsSection">
+			<div class="col-md-8 col-md-offset-2 hide" id="<portlet:namespace />settingsSection">
 				<div class="display-date-wrapper">
 					<h3><liferay-ui:message key="display-date" /></h3>
 
@@ -297,7 +297,7 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 			</div>
 		</div>
 
-		<aui:fieldset cssClass="col-md-offset-2 col-md-8 entry-footer">
+		<aui:fieldset cssClass="col-md-8 col-md-offset-2 entry-footer">
 
 			<%
 			boolean pending = false;

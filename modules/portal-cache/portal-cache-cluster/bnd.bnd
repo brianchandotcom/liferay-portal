@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Portal Cache Cluster
-Bundle-SymbolicName: com.liferay.portal.cache.cluster
-Bundle-Version: 1.0.0
-Include-Resource: \
-	classes,\
-	@../../../util-java/util-java.jar!/com/liferay/util/SerializableUtil.class

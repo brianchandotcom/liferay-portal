@@ -1562,7 +1562,7 @@
 		<property name="tableId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
-		<property name="defaultData" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="defaultData" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.portlet.expando.model.impl.ExpandoRowImpl" table="ExpandoRow">

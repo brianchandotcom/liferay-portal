@@ -52,122 +52,120 @@ else {
 }
 %>
 
-<span class="<%= row != null ? StringPool.BLANK : "entry-action overlay" %>">
-	<liferay-ui:icon-menu direction='<%= row != null ? "left-side" : "right-side" %>' icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" view='<%= row != null ? "lexicon" : null %>'>
-		<c:choose>
-			<c:when test="<%= folder != null %>">
-				<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>">
-					<portlet:renderURL var="editURL">
-						<portlet:param name="mvcPath" value="/edit_folder.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
-						<portlet:param name="mergeWithParentFolderDisabled" value="<%= String.valueOf(folderSelected) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:icon
-						iconCssClass="icon-edit"
-						message="edit"
-						url="<%= editURL %>"
-					/>
-
-					<portlet:renderURL var="moveURL">
-						<portlet:param name="mvcPath" value="/move_entries.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="folderIds" value="<%= String.valueOf(folder.getFolderId()) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:icon
-						iconCssClass="icon-move"
-						message="move"
-						url="<%= moveURL %>"
-					/>
-				</c:if>
-				<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.ADD_FOLDER) %>">
-					<portlet:renderURL var="addFolderURL">
-						<portlet:param name="mvcPath" value="/edit_folder.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
-						<portlet:param name="parentFolderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:icon
-						iconCssClass="icon-plus"
-						message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
-						url="<%= addFolderURL %>"
-					/>
-				</c:if>
-			</c:when>
-			<c:otherwise>
-
-				<%
-				boolean workflowEnabled = false;
-
-				if (WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null)) {
-					workflowEnabled = true;
-				}
-				%>
-
-				<c:if test="<%= workflowEnabled && JournalFolderPermission.contains(permissionChecker, scopeGroupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, ActionKeys.UPDATE) %>">
-					<portlet:renderURL var="editURL">
-						<portlet:param name="mvcPath" value="/edit_folder.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-						<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-						<portlet:param name="mergeWithParentFolderDisabled" value="<%= String.valueOf(folderSelected) %>" />
-						<portlet:param name="rootFolder" value="true" />
-					</portlet:renderURL>
-
-					<liferay-ui:icon
-						iconCssClass="icon-edit"
-						message="edit"
-						url="<%= editURL %>"
-					/>
-				</c:if>
-				<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FOLDER) %>">
-					<portlet:renderURL var="addFolderURL">
-						<portlet:param name="mvcPath" value="/edit_folder.jsp" />
-						<portlet:param name="redirect" value="<%= currentURL %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-						<portlet:param name="parentFolderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-					</portlet:renderURL>
-
-					<liferay-ui:icon
-						iconCssClass="icon-plus"
-						message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
-						url="<%= addFolderURL %>"
-					/>
-				</c:if>
-
-			</c:otherwise>
-		</c:choose>
-
-		<c:if test="<%= hasPermissionsPermission %>">
-			<liferay-security:permissionsURL
-				modelResource="<%= modelResource %>"
-				modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
-				resourcePrimKey="<%= resourcePrimKey %>"
-				var="permissionsURL"
-				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-			/>
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" view="lexicon">
+	<c:choose>
+		<c:when test="<%= folder != null %>">
+			<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>">
+				<portlet:renderURL var="editURL">
+					<portlet:param name="mvcPath" value="/edit_folder.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
+					<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+					<portlet:param name="mergeWithParentFolderDisabled" value="<%= String.valueOf(folderSelected) %>" />
+				</portlet:renderURL>
 
 			<liferay-ui:icon
-				iconCssClass="icon-lock"
-				message="permissions"
-				method="get"
-				url="<%= permissionsURL %>"
-				useDialog="<%= true %>"
+				iconCssClass="icon-edit"
+				message="edit"
+				url="<%= editURL %>"
+			/>
+
+			<portlet:renderURL var="moveURL">
+				<portlet:param name="mvcPath" value="/move_entries.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="folderIds" value="<%= String.valueOf(folder.getFolderId()) %>" />
+			</portlet:renderURL>
+
+			<liferay-ui:icon
+				iconCssClass="icon-move"
+				message="move"
+				url="<%= moveURL %>"
 			/>
 		</c:if>
-
-		<c:if test="<%= (folder != null) && JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
-			<portlet:actionURL name='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveFoldersToTrash" : "deleteFolders" %>' var="deleteURL">
+		<c:if test="<%= JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.ADD_FOLDER) %>">
+			<portlet:renderURL var="addFolderURL">
+				<portlet:param name="mvcPath" value="/edit_folder.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
-				<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
-			</portlet:actionURL>
+				<portlet:param name="parentFolderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+			</portlet:renderURL>
 
-			<liferay-ui:icon-delete trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>" url="<%= deleteURL %>" />
+			<liferay-ui:icon
+				iconCssClass="icon-plus"
+				message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
+				url="<%= addFolderURL %>"
+			/>
 		</c:if>
-	</liferay-ui:icon-menu>
-</span>
+		</c:when>
+		<c:otherwise>
+
+			<%
+			boolean workflowEnabled = false;
+
+			if (WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null)) {
+				workflowEnabled = true;
+			}
+			%>
+
+			<c:if test="<%= workflowEnabled && JournalFolderPermission.contains(permissionChecker, scopeGroupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, ActionKeys.UPDATE) %>">
+				<portlet:renderURL var="editURL">
+					<portlet:param name="mvcPath" value="/edit_folder.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+					<portlet:param name="mergeWithParentFolderDisabled" value="<%= String.valueOf(folderSelected) %>" />
+					<portlet:param name="rootFolder" value="true" />
+				</portlet:renderURL>
+
+				<liferay-ui:icon
+					iconCssClass="icon-edit"
+					message="edit"
+					url="<%= editURL %>"
+				/>
+			</c:if>
+			<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_FOLDER) %>">
+				<portlet:renderURL var="addFolderURL">
+					<portlet:param name="mvcPath" value="/edit_folder.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="parentFolderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+				</portlet:renderURL>
+
+				<liferay-ui:icon
+					iconCssClass="icon-plus"
+					message='<%= (folder != null) ? "add-subfolder" : "add-folder" %>'
+					url="<%= addFolderURL %>"
+				/>
+			</c:if>
+
+		</c:otherwise>
+	</c:choose>
+
+	<c:if test="<%= hasPermissionsPermission %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= modelResource %>"
+			modelResourceDescription="<%= HtmlUtil.escape(modelResourceDescription) %>"
+			resourcePrimKey="<%= resourcePrimKey %>"
+			var="permissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			iconCssClass="icon-lock"
+			message="permissions"
+			method="get"
+			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
+		/>
+	</c:if>
+
+	<c:if test="<%= (folder != null) && JournalFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
+		<portlet:actionURL name='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "moveFoldersToTrash" : "deleteFolders" %>' var="deleteURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(folder.getGroupId()) %>" />
+			<portlet:param name="folderId" value="<%= String.valueOf(folder.getFolderId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon-delete trash="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>" url="<%= deleteURL %>" />
+	</c:if>
+</liferay-ui:icon-menu>

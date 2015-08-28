@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>SITE_ID</td>
-	<td>//input[@id='_165_siteId']</td>
+	<td>//input[contains(@id,'siteId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_ADAPTER_SELECT</td>
-	<td>//select[@id='_165_customJspServletContextName']</td>
+	<td>//select[contains(@id,'customJspServletContextName')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,7 +41,7 @@
 <!--ACTIVE-->
 <tr>
 	<td>ACTIVE_LABEL</td>
-	<td>//label[@for='_165_active']</td>
+	<td>//label[contains(@for,'active')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,12 +52,12 @@
 <!--PARENT_SITE-->
 <tr>
 	<td>PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX</td>
-	<td>//input[@id='_165_membershipRestriction']</td>
+	<td>//input[contains(@id,'membershipRestriction')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PARENT_SITE_SELECT</td>
-	<td>//a[@id='_165_selectParentSiteLink']/span</td>
+	<td>//a[contains(@id,'selectParentSiteLink')]/span</td>
 	<td></td>
 </tr>
 <tr>

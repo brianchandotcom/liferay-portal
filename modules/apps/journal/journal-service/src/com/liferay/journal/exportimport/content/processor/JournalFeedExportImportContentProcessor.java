@@ -49,11 +49,11 @@ public class JournalFeedExportImportContentProcessor
 	@Override
 	public String replaceExportContentReferences(
 			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content,
+			StagedModel stagedModel, String content,
 			boolean exportReferencedContent, boolean escapeContent)
 		throws Exception {
 
-		JournalFeed feed = (JournalFeed)entityStagedModel;
+		JournalFeed feed = (JournalFeed)stagedModel;
 
 		Group group = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());
@@ -105,10 +105,10 @@ public class JournalFeedExportImportContentProcessor
 	@Override
 	public String replaceImportContentReferences(
 			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content)
+			StagedModel stagedModel, String content)
 		throws Exception {
 
-		JournalFeed feed = (JournalFeed)entityStagedModel;
+		JournalFeed feed = (JournalFeed)stagedModel;
 
 		Group group = _groupLocalService.getGroup(
 			portletDataContext.getScopeGroupId());

@@ -17,6 +17,7 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.layout.type.controller.full.page.application.constants.FullPageApplicationLayoutTypeControllerWebKeys" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
@@ -24,7 +25,8 @@ page import="com.liferay.portal.model.Layout" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
 page import="com.liferay.portal.util.WebKeys" %>
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.ResourceBundle" %>
 
 <liferay-theme:defineObjects />
 

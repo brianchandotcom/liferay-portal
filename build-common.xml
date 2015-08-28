@@ -873,6 +873,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	</macrodef>
 
 	<macrodef name="install-portal-snapshot">
+		<attribute name="artifact.dir" default="${basedir}" />
 		<attribute name="artifact.name" />
 
 		<sequential>
@@ -884,21 +885,21 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				version="${lp.version}-SNAPSHOT"
 			/>
 
-			<artifact:writepom pomRefId="prepare-@{artifact.name}" file="@{artifact.name}/pom.xml" />
+			<artifact:writepom pomRefId="prepare-@{artifact.name}" file="@{artifact.dir}/pom.xml" />
 
-			<artifact:pom file="@{artifact.name}/pom.xml" id="@{artifact.name}" />
+			<artifact:pom file="@{artifact.dir}/pom.xml" id="@{artifact.name}" />
 
 			<if>
 				<equals arg1="@{artifact.name}" arg2="portal-web" />
 				<then>
-					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.name}/@{artifact.name}.war" />
+					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.dir}/@{artifact.name}.war" />
 				</then>
 				<else>
-					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.name}/@{artifact.name}.jar" />
+					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.dir}/@{artifact.name}.jar" />
 				</else>
 			</if>
 
-			<delete file="@{artifact.name}/pom.xml" />
+			<delete file="@{artifact.dir}/pom.xml" />
 		</sequential>
 	</macrodef>
 
@@ -1668,6 +1669,10 @@ rerun your task.
 			<arg value="javadoc.output.file.prefix=${output.file.prefix}" />
 			<arg value="javadoc.update=${update}" />
 		</java>
+	</target>
+
+	<target name="install-portal-snapshot">
+		<install-portal-snapshot artifact.name="${ant.project.name}" />
 	</target>
 
 	<target name="print-properties">

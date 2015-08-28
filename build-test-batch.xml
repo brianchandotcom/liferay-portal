@@ -937,6 +937,30 @@
 			<get-testray-testcase-name />
 			<get-testray-testcase-product-edition />
 
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					long testBatchStopTime = System.currentTimeMillis();
+
+					project.setProperty("test.batch.stop.time", String.valueOf(testBatchStopTime));
+				]]>
+			</script>
+
+			<math
+				datatype="long"
+				operand1="${test.batch.stop.time}"
+				operand2="${test.batch.start.time}"
+				operation="-"
+				result="test.batch.duration"
+			/>
+
+			<get-job-build-time
+				job.duration="${test.batch.duration}"
+			/>
+
+			<var name="testray.build.time" unset="true" />
+
+			<property name="testray.build.time" value="${job.build.time}" />
+
 			<if>
 				<not>
 					<isset property="testray.testcase.priority" />

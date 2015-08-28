@@ -769,6 +769,7 @@ AUI.add(
 						value: ['*']
 					}
 				},
+
 				EXTENDS: Field,
 
 				prototype: {
@@ -778,61 +779,6 @@ AUI.add(
 						var container = instance.get('container');
 
 						container.delegate('click', instance._handleButtonsClick, '.btn', instance);
-
-						instance.uploader = new A.Uploader(
-							{
-								after: {
-									fileselect: function(event) {
-										instance.setPercentUploaded(0);
-
-										if (instance.notice) {
-											instance.notice.hide();
-										}
-
-										instance.uploader.uploadAll();
-									}
-								},
-								appendNewFiles: false,
-								dragAndDropArea: '#' + instance.getInputName() + 'Title',
-								fileFieldName: 'file',
-								fileFilters: instance.get('acceptedFileFormats'),
-								on: {
-									uploadcomplete: function(event) {
-										try {
-											var data = JSON.parse(event.data);
-
-											if (data.status) {
-												instance.showNotice(data.message);
-
-												instance.setPercentUploaded(0);
-											}
-											else {
-												data.tempFile = true;
-
-												instance.setValue(data);
-
-												instance.setPercentUploaded(100);
-											}
-										}
-										catch (e) {
-											instance.showNotice(Liferay.Language.get('an-unexpected-error-occurred'));
-
-											instance.setPercentUploaded(0);
-										}
-									},
-									uploaderror: function(event) {
-										instance.showNotice(Liferay.Language.get('an-unexpected-error-occurred'));
-
-										instance.setPercentUploaded(0);
-									},
-									uploadprogress: function(event) {
-										instance.setPercentUploaded(event.percentLoaded);
-									}
-								},
-								uploadURL: instance.getUploadURL(),
-								withCredentials: false
-							}
-						).render('#' + instance.getInputName() + 'UploadContainer');
 					},
 
 					syncUI: function() {
@@ -842,7 +788,7 @@ AUI.add(
 
 						var titleNode = A.one('#' + instance.getInputName() + 'Title');
 
-						titleNode.val(parsedValue.title || Liferay.Language.get('drag-file-here'));
+						titleNode.val(parsedValue.title || '');
 
 						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
 
@@ -867,10 +813,18 @@ AUI.add(
 						portletURL.setParameter('repositoryId', instance.get('doAsGroupId'));
 
 						var criterionJSON = {
-							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType'
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType'
 						};
 
 						portletURL.setParameter('0_json', JSON.stringify(criterionJSON));
+						portletURL.setParameter('1_json', JSON.stringify(criterionJSON));
+
+						var uploadCriterionJSON = {
+							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType',
+							URL: instance.getUploadURL()
+						};
+
+						portletURL.setParameter('2_json', JSON.stringify(uploadCriterionJSON));
 
 						portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
 						portletURL.setPortletMode('view');
@@ -907,19 +861,6 @@ AUI.add(
 						portletURL.setPortletId(Liferay.PortletKeys.DOCUMENT_LIBRARY);
 
 						return portletURL.toString();
-					},
-
-					setPercentUploaded: function(value) {
-						var instance = this;
-
-						var progressContainerNode = A.one('#' + instance.getInputName() + 'Progress');
-
-						progressContainerNode.toggle(value > 0);
-
-						var progressBarNode = progressContainerNode.one('.progress-bar');
-
-						progressBarNode.attr('aria-valuenow', value);
-						progressBarNode.setStyle('width', value + '%');
 					},
 
 					setValue: function(value) {
@@ -963,9 +904,6 @@ AUI.add(
 						if (currentTarget.test('.select-button')) {
 							instance._handleSelectButtonClick(event);
 						}
-						else if (currentTarget.test('.upload-button')) {
-							instance._handleUploadButtonClick(event);
-						}
 						else if (currentTarget.test('.clear-button')) {
 							instance._handleClearButtonClick(event);
 						}
@@ -976,17 +914,12 @@ AUI.add(
 
 						instance.setValue('');
 
-						instance.uploader.set('fileList', []);
-
-						instance.setPercentUploaded(0);
 					},
 
 					_handleSelectButtonClick: function(event) {
 						var instance = this;
 
 						var portletNamespace = instance.get('portletNamespace');
-
-						instance.setPercentUploaded(0);
 
 						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{
@@ -1013,12 +946,6 @@ AUI.add(
 						);
 
 						itemSelectorDialog.open();
-					},
-
-					_handleUploadButtonClick: function(event) {
-						var instance = this;
-
-						instance.uploader.openFileSelectDialog();
 					}
 				}
 			}
@@ -1052,13 +979,11 @@ AUI.add(
 
 						if (notEmpty) {
 							altNode.val(parsedValue.alt || '');
-
 							titleNode.val(parsedValue.title || '');
 						}
 						else {
 							altNode.val('');
-
-							titleNode.val(Liferay.Language.get('drag-file-here'));
+							titleNode.val('');
 						}
 
 						var clearButtonNode = A.one('#' + instance.getInputName() + 'ClearButton');
@@ -1696,6 +1621,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-datatype', 'aui-image-viewer', 'aui-io-request', 'aui-parse-content', 'aui-set', 'aui-sortable-list', 'json', 'liferay-item-selector-dialog', 'liferay-map-base', 'liferay-notice', 'liferay-portlet-url', 'liferay-translation-manager', 'uploader']
+		requires: ['aui-base', 'aui-datatype', 'aui-image-viewer', 'aui-io-request', 'aui-parse-content', 'aui-set', 'aui-sortable-list', 'json', 'liferay-item-selector-dialog', 'liferay-map-base', 'liferay-notice', 'liferay-portlet-url', 'liferay-translation-manager']
 	}
 );

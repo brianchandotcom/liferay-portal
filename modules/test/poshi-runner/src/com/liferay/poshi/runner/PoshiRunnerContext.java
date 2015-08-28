@@ -355,6 +355,8 @@ public class PoshiRunnerContext {
 
 				String classCommandName = testCaseClassName + "#" + commandName;
 
+				_testCaseClassCommandNames.add(classCommandName);
+
 				if (commandElement.attributeValue("known-issues") != null) {
 					for (String productName : _productNames) {
 						if (componentName.startsWith(productName)) {
@@ -732,6 +734,8 @@ public class PoshiRunnerContext {
 	private static final Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<>();
 	private static final List<String> _testCaseAvailablePropertyNames =
+		new ArrayList<>();
+	private static final List<String> _testCaseClassCommandNames =
 		new ArrayList<>();
 	private static final List<String> _testCaseClassNames = new ArrayList<>();
 	private static final Map<String, String> _testCaseDescriptions =

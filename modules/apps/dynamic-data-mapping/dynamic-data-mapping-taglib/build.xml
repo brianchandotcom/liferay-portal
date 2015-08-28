@@ -10,35 +10,10 @@
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
 
 	<target name="build-taglibs">
-		<path id="portal.classpath">
-			<pathelement path="${env.JAVA_HOME}/lib/tools.jar;${portal.project.dir}/classes;${portal.project.dir}/modules/core/registry-api/classes;${portal.project.dir}/portal-impl/classes;${portal.project.dir}/portal-impl/test-classes/integration;${portal.project.dir}/portal-impl/test-classes/unit;${portal.project.dir}/portal-service/classes;${portal.project.dir}/portal-service/test-classes/unit;${portal.project.dir}/portal-test/classes;${portal.project.dir}/portal-test-internal/classes;${portal.project.dir}/portal-web/docroot/WEB-INF/classes;${portal.project.dir}/portal-web/test-classes/functional;${portal.project.dir}/portal-web/test-classes/functional-generated;${portal.project.dir}/util-bridges/classes;${portal.project.dir}/util-java/classes;${portal.project.dir}/util-java/test-classes/unit;${portal.project.dir}/util-slf4j/classes;${portal.project.dir}/util-taglib/classes" />
-			<fileset dir="${portal.project.dir}/lib/development" includes="*.jar" />
-			<fileset dir="${portal.project.dir}/lib/global" includes="*.jar" />
-			<fileset dir="${portal.project.dir}/lib/portal" includes="*.jar" />
-		</path>
-
-		<path id="tag.builder.classpath">
-			<path refid="portal.classpath" />
-			<pathelement path="${portal.project.dir}/modules/apps/dynamic-data-mapping/dynamic-data-mapping-api/classes" />
-		</path>
-
-		<java
-			classname="com.liferay.alloy.tools.tagbuilder.TagBuilder"
-			classpathref="tag.builder.classpath"
-			fork="true"
-			maxmemory="256m"
-			newenvironment="true"
-		>
-			<jvmarg value="-Dtagbuilder.components.xml=liferay-ddm.xml" />
-			<jvmarg value="-Dtagbuilder.copyright.year=present" />
-			<jvmarg value="-Dtagbuilder.java.dir=src/com/liferay/dynamic/data/mapping/taglib/servlet/" />
-			<jvmarg value="-Dtagbuilder.java.package=com.liferay.dynamic.data.mapping.taglib.servlet" />
-			<jvmarg value="-Dtagbuilder.jsp.common.init.path=/init.jsp" />
-			<jvmarg value="-Dtagbuilder.jsp.dir=/" />
-			<jvmarg value="-Dtagbuilder.jsp.parent.dir=src/META-INF/resources/" />
-			<jvmarg value="-Dtagbuilder.osgi.module.symbolic.name=com.liferay.dynamic.data.mapping.taglib" />
-			<jvmarg value="-Dtagbuilder.templates.dir=com/liferay/alloy/tools/tagbuilder/templates/" />
-			<jvmarg value="-Dtagbuilder.tld.dir=src/META-INF/resources/" />
-		</java>
+		<build-taglibs
+			tagbuilder.components.xml="liferay-ddm.xml"
+			tagbuilder.java.dir="src/com/liferay/dynamic/data/mapping/taglib/servlet/"
+			tagbuilder.java.package="com.liferay.dynamic.data.mapping.taglib.servlet"
+		/>
 	</target>
 </project>

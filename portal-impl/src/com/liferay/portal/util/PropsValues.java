@@ -586,8 +586,6 @@ public class PropsValues {
 
 	public static final String EHCACHE_CACHE_MANAGER_PEER_PROVIDER_FACTORY = PropsUtil.get(PropsKeys.EHCACHE_CACHE_MANAGER_PEER_PROVIDER_FACTORY);
 
-	public static final boolean EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED));
-
 	public static final String EHCACHE_MULTI_VM_CONFIG_LOCATION = PropsUtil.get(PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION);
 
 	public static final String EHCACHE_SINGLE_VM_CONFIG_LOCATION = PropsUtil.get(PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION);

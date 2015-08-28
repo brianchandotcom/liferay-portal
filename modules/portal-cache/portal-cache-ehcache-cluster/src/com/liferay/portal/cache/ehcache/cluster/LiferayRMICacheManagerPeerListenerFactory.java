@@ -42,15 +42,12 @@ public class LiferayRMICacheManagerPeerListenerFactory
 
 		boolean clusterEnabled = GetterUtil.getBoolean(
 			properties.remove(PropsKeys.CLUSTER_LINK_ENABLED));
-		boolean clusterLinkReplicationEnabled = GetterUtil.getBoolean(
-			properties.remove(
-				PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED));
 
 		CacheManagerPeerListener cacheManagerPeerListener =
 			_cacheManagerPeerListenerFactory.createCachePeerListener(
 				cacheManager, properties);
 
-		if (clusterEnabled && !clusterLinkReplicationEnabled) {
+		if (clusterEnabled) {
 			return new LiferayCacheManagerPeerListener(
 				cacheManager, cacheManagerPeerListener);
 		}

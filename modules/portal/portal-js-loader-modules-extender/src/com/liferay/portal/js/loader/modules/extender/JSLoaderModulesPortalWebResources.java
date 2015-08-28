@@ -33,8 +33,7 @@ public class JSLoaderModulesPortalWebResources {
 	protected void activate(BundleContext bundleContext) {
 		try {
 			com.liferay.portal.kernel.servlet.PortalWebResources
-				portalWebResources = new InternalPortalWebResources(
-					_jsLoaderModulesServlet);
+				portalWebResources = new InternalPortalWebResources();
 
 			_serviceRegistration = bundleContext.registerService(
 				com.liferay.portal.kernel.servlet.PortalWebResources.class,
@@ -53,23 +52,33 @@ public class JSLoaderModulesPortalWebResources {
 	}
 
 	@Reference
+	protected void setJSBundleConfigTracker(
+		JSBundleConfigTracker jsBundleConfigTracker) {
+
+		_jsBundleConfigTracker = jsBundleConfigTracker;
+	}
+
+	@Reference
 	protected void setJSLoaderModulesServlet(
 		JSLoaderModulesServlet jsLoaderModulesServlet) {
 
 		_jsLoaderModulesServlet = jsLoaderModulesServlet;
 	}
 
+	@Reference
+	protected void setJSLoaderModulesTracker(
+		JSLoaderModulesTracker jsLoaderModulesTracker) {
+
+		_jsLoaderModulesTracker = jsLoaderModulesTracker;
+	}
+
+	private JSBundleConfigTracker _jsBundleConfigTracker;
 	private JSLoaderModulesServlet _jsLoaderModulesServlet;
+	private JSLoaderModulesTracker _jsLoaderModulesTracker;
 	private ServiceRegistration<?> _serviceRegistration;
 
 	private class InternalPortalWebResources
 		implements com.liferay.portal.kernel.servlet.PortalWebResources {
-
-		public InternalPortalWebResources(
-			JSLoaderModulesServlet jsLoaderModulesServlet) {
-
-			_jsLoaderModulesServlet = jsLoaderModulesServlet;
-		}
 
 		@Override
 		public String getContextPath() {
@@ -80,7 +89,8 @@ public class JSLoaderModulesPortalWebResources {
 
 		@Override
 		public long getLastModified() {
-			return _jsLoaderModulesServlet.getTrackingCount();
+			return _jsLoaderModulesTracker.getTrackingCount() +
+				_jsBundleConfigTracker.getTrackingCount();
 		}
 
 		@Override
@@ -93,8 +103,6 @@ public class JSLoaderModulesPortalWebResources {
 		public ServletContext getServletContext() {
 			return _jsLoaderModulesServlet.getServletContext();
 		}
-
-		private JSLoaderModulesServlet _jsLoaderModulesServlet;
 
 	}
 

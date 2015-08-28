@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=portlet-forms",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.footer-portlet-javascript=/admin/js/modules.js",
 		"com.liferay.portlet.header-portlet-css=/admin/css/main.css",
 		"com.liferay.portlet.icon=/admin/icons/form.png",
 		"com.liferay.portlet.instanceable=false",

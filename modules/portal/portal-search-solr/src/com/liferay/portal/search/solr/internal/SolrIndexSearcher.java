@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.BaseIndexSearcher;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.IndexSearcher;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.solr.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr.connection.SolrClientManager;
 import com.liferay.portal.search.solr.facet.FacetProcessor;
+import com.liferay.portal.search.solr.groupby.GroupByTranslator;
 import com.liferay.portal.search.solr.internal.facet.CompositeFacetProcessor;
 import com.liferay.portal.search.solr.internal.facet.SolrFacetFieldCollector;
 import com.liferay.portal.search.solr.internal.facet.SolrFacetQueryCollector;
@@ -74,6 +76,9 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.apache.solr.client.solrj.SolrRequest.METHOD;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.FieldStatsInfo;
+import org.apache.solr.client.solrj.response.Group;
+import org.apache.solr.client.solrj.response.GroupCommand;
+import org.apache.solr.client.solrj.response.GroupResponse;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -231,6 +236,18 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		solrQuery.setFacetLimit(-1);
 	}
 
+	protected void addGroupBy(
+		SolrQuery solrQuery, SearchContext searchContext, int start, int end) {
+
+		GroupBy groupBy = searchContext.getGroupBy();
+
+		if (groupBy == null) {
+			return;
+		}
+
+		_groupByTranslator.translate(solrQuery, searchContext, start, end);
+	}
+
 	protected void addHighlightedField(
 		SolrQuery solrQuery, QueryConfig queryConfig, String fieldName) {
 
@@ -261,7 +278,15 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 			queryConfig.isHighlightRequireFieldMatch());
 	}
 
-	protected void addPagination(SolrQuery solrQuery, int start, int end) {
+	protected void addPagination(
+		SolrQuery solrQuery, SearchContext searchContext, int start, int end) {
+
+		GroupBy groupBy = searchContext.getGroupBy();
+
+		if (groupBy != null) {
+			return;
+		}
+
 		solrQuery.setRows(end - start);
 		solrQuery.setStart(start);
 	}
@@ -286,8 +311,10 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 	protected void addSnippets(
 		SolrDocument solrDocument, Document document, QueryConfig queryConfig,
-		Set<String> queryTerms,
-		Map<String, Map<String, List<String>>> highlights) {
+		Set<String> queryTerms, QueryResponse queryResponse) {
+
+		Map<String, Map<String, List<String>>> highlights =
+			queryResponse.getHighlighting();
 
 		if (!queryConfig.isHighlightEnabled()) {
 			return;
@@ -391,8 +418,9 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 		if (!count) {
 			addFacets(solrQuery, searchContext);
+			addGroupBy(solrQuery, searchContext, start, end);
 			addHighlights(solrQuery, queryConfig);
-			addPagination(solrQuery, start, end);
+			addPagination(solrQuery, searchContext, start, end);
 			addSelectedFields(solrQuery, queryConfig);
 			addSort(solrQuery, searchContext.getSorts());
 
@@ -457,9 +485,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		QueryResponse queryResponse = doSearch(
 			searchContext, query, start, end, false);
 
-		Hits hits = processResponse(queryResponse, searchContext, query);
-
-		return hits;
+		return processResponse(queryResponse, searchContext, query);
 	}
 
 	protected QueryResponse executeSearchRequest(SolrQuery solrQuery)
@@ -473,47 +499,36 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 	protected Hits processResponse(
 		QueryResponse queryResponse, SearchContext searchContext, Query query) {
 
-		long startTime = System.currentTimeMillis();
-
-		SolrDocumentList solrDocumentList = queryResponse.getResults();
-
-		updateFacetCollectors(queryResponse, searchContext);
-
 		Hits hits = new HitsImpl();
 
+		updateFacetCollectors(queryResponse, searchContext);
+		updateGroupedHits(queryResponse, searchContext, query, hits);
 		updateStatsResults(searchContext, queryResponse, hits);
+
+		hits.setQuery(query);
+		hits.setSearchTime(queryResponse.getQTime());
+
+		processSearchHits(
+			queryResponse, queryResponse.getResults(), query, hits);
+
+		return hits;
+	}
+
+	protected void processSearchHits(
+		QueryResponse queryResponse, SolrDocumentList solrDocumentList,
+		Query query, Hits hits) {
 
 		List<Document> documents = new ArrayList<>();
 		Set<String> queryTerms = new HashSet<>();
 		List<Float> scores = new ArrayList<>();
 
-		QueryConfig queryConfig = query.getQueryConfig();
-		Map<String, Map<String, List<String>>> highlights =
-			queryResponse.getHighlighting();
-
-		for (SolrDocument solrDocument : solrDocumentList) {
-			Document document = processSolrDocument(solrDocument, queryConfig);
-
-			documents.add(document);
-
-			addSnippets(
-				solrDocument, document, queryConfig, queryTerms, highlights);
-
-			float score = GetterUtil.getFloat(
-				String.valueOf(solrDocument.getFieldValue("score")));
-
-			scores.add(score);
-		}
+		processSolrDocumentList(
+			queryResponse, solrDocumentList, query, hits, documents, queryTerms,
+			scores);
 
 		hits.setDocs(documents.toArray(new Document[documents.size()]));
-		hits.setLength((int)solrDocumentList.getNumFound());
-		hits.setQuery(query);
 		hits.setQueryTerms(queryTerms.toArray(new String[queryTerms.size()]));
 		hits.setScores(ArrayUtil.toFloatArray(scores));
-		hits.setSearchTime(queryResponse.getQTime());
-		hits.setStart(startTime);
-
-		return hits;
 	}
 
 	protected Document processSolrDocument(
@@ -540,6 +555,34 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		return document;
 	}
 
+	protected void processSolrDocumentList(
+		QueryResponse queryResponse, SolrDocumentList solrDocumentList,
+		Query query, Hits hits, List<Document> documents,
+		Set<String> queryTerms, List<Float> scores) {
+
+		if (solrDocumentList == null) {
+			return;
+		}
+
+		hits.setLength((int)solrDocumentList.getNumFound());
+
+		for (SolrDocument solrDocument : solrDocumentList) {
+			QueryConfig queryConfig = query.getQueryConfig();
+
+			Document document = processSolrDocument(solrDocument, queryConfig);
+
+			documents.add(document);
+
+			addSnippets(
+				solrDocument, document, queryConfig, queryTerms, queryResponse);
+
+			float score = GetterUtil.getFloat(
+				String.valueOf(solrDocument.getFieldValue("score")));
+
+			scores.add(score);
+		}
+	}
+
 	@Reference(service = CompositeFacetProcessor.class, unbind = "-")
 	protected void setFacetProcessor(FacetProcessor<SolrQuery> facetProcessor) {
 		_facetProcessor = facetProcessor;
@@ -550,6 +593,11 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		FilterTranslator<String> filterTranslator) {
 
 		_filterTranslator = filterTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setGroupByTranslator(GroupByTranslator groupByTranslator) {
+		_groupByTranslator = groupByTranslator;
 	}
 
 	@Reference(target = "(search.engine.impl=Solr)", unbind = "-")
@@ -600,6 +648,34 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 		}
 	}
 
+	protected void updateGroupedHits(
+		QueryResponse queryResponse, SearchContext searchContext, Query query,
+		Hits hits) {
+
+		GroupBy groupBy = searchContext.getGroupBy();
+
+		if (groupBy == null) {
+			return;
+		}
+
+		GroupResponse groupResponse = queryResponse.getGroupResponse();
+
+		List<GroupCommand> groupCommands = groupResponse.getValues();
+
+		for (GroupCommand groupCommand : groupCommands) {
+			List<Group> groups = groupCommand.getValues();
+
+			for (Group group : groups) {
+				Hits groupedHits = new HitsImpl();
+
+				processSearchHits(
+					queryResponse, group.getResult(), query, groupedHits);
+
+				hits.addGroupedHits(group.getGroupValue(), groupedHits);
+			}
+		}
+	}
+
 	protected void updateStatsResults(
 		SearchContext searchContext, QueryResponse queryResponse, Hits hits) {
 
@@ -633,6 +709,7 @@ public class SolrIndexSearcher extends BaseIndexSearcher {
 
 	private FacetProcessor<SolrQuery> _facetProcessor;
 	private FilterTranslator<String> _filterTranslator;
+	private GroupByTranslator _groupByTranslator;
 	private boolean _logExceptionsOnly;
 	private QueryTranslator<String> _queryTranslator;
 	private SolrClientManager _solrClientManager;

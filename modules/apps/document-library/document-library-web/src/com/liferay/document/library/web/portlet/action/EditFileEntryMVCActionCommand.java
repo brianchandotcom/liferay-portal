@@ -123,6 +123,9 @@ import org.osgi.service.component.annotations.Component;
 )
 public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
+	public static final String TEMP_FOLDER_NAME =
+		EditFileEntryMVCActionCommand.class.getName();
+
 	protected void addMultipleFileEntries(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -195,7 +198,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		try {
 			tempFileEntry = TempFileEntryUtil.getTempFileEntry(
 				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				_TEMP_FOLDER_NAME, selectedFileName);
+				TEMP_FOLDER_NAME, selectedFileName);
 
 			selectedFileName = DLUtil.getFileName(
 				tempFileEntry.getGroupId(), tempFileEntry.getFolderId(),
@@ -268,7 +271,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			String contentType = uploadPortletRequest.getContentType("file");
 
 			FileEntry fileEntry = DLAppServiceUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), folderId, _TEMP_FOLDER_NAME,
+				themeDisplay.getScopeGroupId(), folderId, TEMP_FOLDER_NAME,
 				sb.toString(), inputStream, contentType);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
@@ -419,7 +422,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			DLAppServiceUtil.deleteTempFileEntry(
-				themeDisplay.getScopeGroupId(), folderId, _TEMP_FOLDER_NAME,
+				themeDisplay.getScopeGroupId(), folderId, TEMP_FOLDER_NAME,
 				fileName);
 
 			jsonObject.put("deleted", Boolean.TRUE);
@@ -1041,8 +1044,5 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			StreamUtil.cleanUp(inputStream);
 		}
 	}
-
-	private static final String _TEMP_FOLDER_NAME =
-		EditFileEntryMVCActionCommand.class.getName();
 
 }

@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.document.library.web.portlet.action.EditFileEntryMVCActionCommand" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -79,7 +81,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 								method: Liferay.Service.bind('/dlapp/get-temp-file-names'),
 								params: {
 									folderId: <%= folderId %>,
-									folderName: 'com.liferay.portlet.documentlibrary.action.EditFileEntryAction',
+									folderName: '<%= EditFileEntryMVCActionCommand.TEMP_FOLDER_NAME %>',
 									groupId: <%= scopeGroupId %>
 								}
 							},

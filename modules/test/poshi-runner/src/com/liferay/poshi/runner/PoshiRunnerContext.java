@@ -229,19 +229,19 @@ public class PoshiRunnerContext {
 		_testClassName = testClassName;
 	}
 
-	private static void _addTestCaseClassCommandNames(
+	private static void _addComponentClassCommandNames(
 		String componentName, String classCommandName) {
 
 		Set<String> classCommandNames = new TreeSet<>();
 
 		classCommandNames.add(classCommandName);
 
-		if (_testCaseClassCommandNames.containsKey(componentName)) {
+		if (_componentClassCommandNames.containsKey(componentName)) {
 			classCommandNames.addAll(
-				_testCaseClassCommandNames.get(componentName));
+				_componentClassCommandNames.get(componentName));
 		}
 
-		_testCaseClassCommandNames.put(componentName, classCommandNames);
+		_componentClassCommandNames.put(componentName, classCommandNames);
 	}
 
 	private static String _getCommandSummary(
@@ -301,7 +301,7 @@ public class PoshiRunnerContext {
 		return relatedClassCommandNames;
 	}
 
-	private static void _initTestClassCommandNamesMap() {
+	private static void _initComponentCommandNamesMap() {
 		for (String testCaseClassName : _testCaseClassNames) {
 			Element rootElement = getTestCaseRootElement(testCaseClassName);
 
@@ -333,7 +333,7 @@ public class PoshiRunnerContext {
 						continue;
 					}
 
-					_addTestCaseClassCommandNames(
+					_addComponentClassCommandNames(
 						componentName,
 						testCaseClassName + "#" + extendsCommandName);
 
@@ -358,7 +358,7 @@ public class PoshiRunnerContext {
 				if (commandElement.attributeValue("known-issues") != null) {
 					for (String productName : _productNames) {
 						if (componentName.startsWith(productName)) {
-							_addTestCaseClassCommandNames(
+							_addComponentClassCommandNames(
 								productName + "-known-issues",
 								classCommandName);
 
@@ -367,7 +367,7 @@ public class PoshiRunnerContext {
 					}
 				}
 				else {
-					_addTestCaseClassCommandNames(
+					_addComponentClassCommandNames(
 						componentName, classCommandName);
 				}
 			}
@@ -583,7 +583,7 @@ public class PoshiRunnerContext {
 			}
 		}
 
-		_initTestClassCommandNamesMap();
+		_initComponentCommandNamesMap();
 	}
 
 	private static void _readSeleniumFiles() throws Exception {
@@ -611,7 +611,7 @@ public class PoshiRunnerContext {
 			sb.append(componentNameKey);
 			sb.append("=");
 
-			Set<String> classCommandNames = _testCaseClassCommandNames.get(
+			Set<String> classCommandNames = _componentClassCommandNames.get(
 				componentName);
 
 			if (Validator.isNotNull(classCommandNames) &&
@@ -719,6 +719,8 @@ public class PoshiRunnerContext {
 		new HashMap<>();
 	private static final Map<String, String> _commandSummaries =
 		new HashMap<>();
+	private static final Map<String, Set<String>> _componentClassCommandNames =
+		new TreeMap<>();
 	private static final Set<String> _componentNames = new TreeSet<>();
 	private static final Map<String, String> _filePaths = new HashMap<>();
 	private static String[] _filePathsArray;
@@ -731,8 +733,6 @@ public class PoshiRunnerContext {
 		new HashMap<>();
 	private static final List<String> _testCaseAvailablePropertyNames =
 		new ArrayList<>();
-	private static final Map<String, Set<String>> _testCaseClassCommandNames =
-		new TreeMap<>();
 	private static final List<String> _testCaseClassNames = new ArrayList<>();
 	private static final Map<String, String> _testCaseDescriptions =
 		new HashMap<>();

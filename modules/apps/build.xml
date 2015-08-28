@@ -45,7 +45,7 @@
 		<dirset dir="portlet-configuration" includes="*" />
 		<dirset dir="portlet-css" includes="*" />
 		<dirset dir="portlet-display-template" includes="*" />
-		<dirset dir="product-menu" includes="*" />
+		<dirset dir="product-navigation" includes="*" />
 		<dirset dir="quick-note" includes="*" />
 		<dirset dir="ratings" includes="*" />
 		<dirset dir="roles" includes="*" />

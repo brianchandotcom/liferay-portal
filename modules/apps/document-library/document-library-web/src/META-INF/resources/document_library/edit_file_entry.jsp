@@ -522,31 +522,38 @@ else {
 		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + document.<portlet:namespace />fm.<portlet:namespace />description.value;
 	}
 
-	function <portlet:namespace />saveFileEntry(draft) {
-		var fileTitleErrorNode = AUI().use('aui-node').one('#<portlet:namespace /><%= HtmlUtil.escape(fileTitleErrorId) %>');
+	Liferay.provide(
+		window,
+		'<portlet:namespace />saveFileEntry',
+		function(draft) {
+			var A = AUI();
 
-		fileTitleErrorNode.addClass('helper-hidden');
+			var fileTitleErrorNode = A.one('#<portlet:namespace /><%= HtmlUtil.escape(fileTitleErrorId) %>');
 
-		var fileValue = document.<portlet:namespace />fm.<portlet:namespace />file.value;
-		var titleValue = document.<portlet:namespace />fm.<portlet:namespace />title.value;
+			fileTitleErrorNode.addClass('helper-hidden');
 
-		var fileOrTileValid = !!fileValue || !!titleValue;
+			var fileValue = document.<portlet:namespace />fm.<portlet:namespace />file.value;
+			var titleValue = document.<portlet:namespace />fm.<portlet:namespace />title.value;
 
-		if (fileOrTileValid) {
-			<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
+			var fileOrTileValid = !!fileValue || !!titleValue;
 
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>';
+			if (fileOrTileValid) {
+				<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
 
-			if (draft) {
-				document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
+				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (fileEntry == null) ? Constants.ADD : Constants.UPDATE %>';
+
+				if (draft) {
+					document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = '<%= WorkflowConstants.ACTION_SAVE_DRAFT %>';
+				}
+
+				submitForm(document.<portlet:namespace />fm);
 			}
-
-			submitForm(document.<portlet:namespace />fm);
-		}
-		else {
-			fileTitleErrorNode.removeClass('helper-hidden');
-		}
-	}
+			else {
+				fileTitleErrorNode.removeClass('helper-hidden');
+			}
+		},
+		['aui-node']
+	);
 
 	function <portlet:namespace />validateTitle() {
 		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');

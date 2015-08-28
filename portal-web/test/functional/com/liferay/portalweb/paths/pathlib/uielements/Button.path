@@ -339,6 +339,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PLUS</td>
+	<td>//span[contains(@class,'icon-plus')]/../../button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>POST</td>
 	<td>//button[contains(.,'Post')]</td>
 	<td></td>

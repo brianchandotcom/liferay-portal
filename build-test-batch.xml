@@ -526,6 +526,61 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-job-build-time">
+		<attribute name="job.duration" />
+
+		<sequential>
+			<var name="job.build.time" unset="true" />
+
+			<var name="job.duration" value="@{job.duration}" />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					import java.util.concurrent.TimeUnit;
+
+					int milliseconds = Integer.parseInt(project.getProperty("job.duration"));
+
+					int seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % 60;
+					int minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % 60;
+					int hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
+
+					StringBuilder sb = new StringBuilder();
+
+					if (hours > 0) {
+						sb.append(hours);
+						sb.append(" hour");
+
+						if (hours > 1) {
+							sb.append("s");
+						}
+
+						sb.append(" ");
+					}
+
+					if (minutes > 0) {
+						sb.append(minutes);
+						sb.append(" minute");
+
+						if (minutes > 1) {
+							sb.append("s");
+						}
+
+						sb.append(" ");
+					}
+
+					sb.append(seconds);
+					sb.append(" second");
+
+					if (seconds > 1) {
+						sb.append("s");
+					}
+
+					project.setProperty("job.build.time", sb.toString());
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="merge-test-results">
 		<sequential>
 			<antcall target="merge-test-results" />

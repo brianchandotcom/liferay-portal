@@ -204,13 +204,17 @@
 		<execute function="AssertClick" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#FOLDER_NAME" value1="${folderName}" />
+
 		<execute function="Click" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN_GENERIC" />
+
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<var name="key_folderName" value="${editSubfolderName}" />
 
 		<execute function="AssertElementPresent" locator1="Checkbox#MERGE_WITH_PARENT_FOLDER" />
+
 		<execute function="Check" locator1="Checkbox#MERGE_WITH_PARENT_FOLDER" value1="Merge with Parent Folder" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<var name="key_bookmarkName" value="${bookmarkName}" />

@@ -2,6 +2,8 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.OSDetector
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+import org.gradle.api.tasks.testing.logging.TestLogEvent
+
 buildscript {
 	repositories {
 		if (!Boolean.getBoolean("maven.local.ignore")) {
@@ -49,6 +51,14 @@ buildCSS {
 buildLang {
 	translateClientId = project.properties["microsoft.translator.client.id"]
 	translateClientSecret = project.properties["microsoft.translator.client.secret"]
+}
+
+configure([test, testIntegration]) {
+	testLogging {
+		events = EnumSet.allOf(TestLogEvent)
+		exceptionFormat = "full"
+		stackTraceFilters = []
+	}
 }
 
 configurations {

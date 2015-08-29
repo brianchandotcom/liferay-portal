@@ -826,7 +826,6 @@
 							<antcall target="prepare-system-ext-properties" inheritAll="false" />
 
 							<gradle-execute dir="modules" task="testIntegration">
-								<arg value="-Dportal.build=true" />
 								<arg value="-Dtest.class.group.index=${axis.variable}" />
 							</gradle-execute>
 
@@ -956,16 +955,13 @@
 		<run-batch-test>
 			<test-action>
 				<gradle-execute dir="modules" task="test">
-					<arg value="-Dportal.build=true" />
 					<arg value="-Dtest.class.group.index=${axis.variable}" />
 				</gradle-execute>
 
 				<if>
 					<equals arg1="${axis.variable}" arg2="0" />
 					<then>
-						<gradle-execute dir="modules" task="compileJSP">
-							<arg value="-Dportal.build=true" />
-						</gradle-execute>
+						<gradle-execute dir="modules" task="compileJSP" />
 					</then>
 				</if>
 			</test-action>

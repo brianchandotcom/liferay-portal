@@ -98,12 +98,12 @@ gradle.taskGraph.useFilter {
 		}
 	}
 	else if (task.name == "test") {
-		if (!FileUtil.exists(task.project, "test/unit")) {
+		if (!_hasTestClasses(task.project, "test/unit")) {
 			return false
 		}
 	}
 	else if (task.name == "testIntegration") {
-		if (!FileUtil.exists(task.project, "test/integration")) {
+		if (!_hasTestClasses(task.project, "test/integration")) {
 			return false
 		}
 	}
@@ -111,6 +111,28 @@ gradle.taskGraph.useFilter {
 		FileTree esJsFileTree = fileTree(dir: task.project.projectDir, exclude: "**/samples/**", include: "**/*.es.js")
 
 		if (esJsFileTree.empty) {
+			return false
+		}
+	}
+
+	return true
+}
+
+private boolean _hasTestClasses(Project project, String testClassesDirName) {
+	File testClassesDir = project.file(testClassesDirName)
+
+	if (!testClassesDir.exists()) {
+		return false
+	}
+
+	if (project.gradle.hasProperty("testClassGroupIndex")) {
+		List<String> testJavaClasses = project.gradle.testClasses.collect {
+			it.replace ".class", ".java"
+		}
+
+		FileTree testJavaClassesFileTree = project.fileTree(dir: testClassesDir, includes: testJavaClasses)
+
+		if (testJavaClassesFileTree.empty) {
 			return false
 		}
 	}

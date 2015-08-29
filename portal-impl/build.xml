@@ -976,6 +976,11 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="format-source">
+		<path id="source.formatter.classpath">
+			<path refid="portal.tools.classpath" />
+			<path refid="project.classpath" />
+		</path>
+
 		<if>
 			<not>
 				<isset property="source.formatter.dir" />
@@ -987,7 +992,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 		<java
 			classname="com.liferay.source.formatter.SourceFormatter"
-			classpathref="portal.tools.classpath"
+			classpathref="source.formatter.classpath"
 			dir="${source.formatter.dir}"
 			fork="true"
 			newenvironment="true"

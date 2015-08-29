@@ -991,23 +991,6 @@
 		<execute function="AssertTextEquals" locator1="WC#SEARCH_FOLDER" value1="${webContentFolder}" />
 	</command>
 
-	<command name="searchNoPGViaWCS">
-		<var name="key_webContentSearchResultsName" value="${webContentSearchResultsName}" />
-
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentSearchTerm}" />
-		<execute function="Click" locator1="NavBar#BASIC_SEARCH_BUTTON" />
-
-		<execute function="AssertElementNotPresent" locator1="SearchResults#RESULTS_TABLE_NAME" />
-		<execute function="AssertElementNotPresent" locator1="SearchResults#RESULTS_TABLE_CONTENT" />
-
-		<if>
-			<equals arg1="${webContentSearchNoResults}" arg2="true" />
-			<then>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="No pages were found that matched the keywords: ${webContentSearchTerm}." />
-			</then>
-		</if>
-	</command>
-
 	<command name="searchNoResultsCP">
 		<var name="key_webContentFolder" value="${webContentFolder}" />
 		<var name="key_webContentTitle" value="${webContentTitle}" />
@@ -1019,16 +1002,6 @@
 		<execute function="AssertTextNotPresent" locator1="WC#SEARCH_BODY" value1="${webContentContent}" />
 		<execute function="Click" locator1="WC#SEARCH_FILTER_REMOVE_BUTTON" />
 		<execute function="AssertTextPresent" locator1="WC#SEARCH_TITLE" value1="${webContentTitle}" />
-	</command>
-
-	<command name="searchPGViaWCS">
-		<var name="key_webContentSearchResultsName" value="${webContentSearchResultsName}" />
-
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentSearchTerm}" />
-		<execute function="Click" locator1="NavBar#BASIC_SEARCH_BUTTON" />
-
-		<execute function="AssertTextEquals" locator1="SearchResults#RESULTS_TABLE_NAME" value1="${webContentSearchResultsName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#RESULTS_TABLE_CONTENT" value1="${webContentSearchResultsContent}" />
 	</command>
 
 	<command name="selectTemplateCP">

@@ -1,38 +1,13 @@
 <html>
 <head>
-<title>PGWebcontentsearchResults</title>
+<title>WebContentSearchResults</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGWebcontentsearchResults</td></tr>
+<tr><td rowspan="1" colspan="3">WebContentSearchResults</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>SEARCH_FIELD</td>
-	<td>//input[@name='_77_keywords']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_ICON</td>
-	<td>//input[@id='_77_search']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>INFO_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SEARCH_RESULTS</td>
-	<td>//div[@class='search-results']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RESULTS_TABLE-->
 <tr>
 	<td>RESULTS_TABLE_NUMBER</td>

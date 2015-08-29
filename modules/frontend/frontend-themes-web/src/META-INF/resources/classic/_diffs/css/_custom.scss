@@ -95,12 +95,8 @@ body {
 				color: #000;
 			}
 
-			.dropdown-menu {
-				margin-left: -20px;
-
-				.active > a {
-					color: #FFF;
-				}
+			.dropdown-menu .active > a {
+				color: #FFF;
 			}
 		}
 

@@ -16,8 +16,6 @@ package com.liferay.portlet.messageboards.service;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
-import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -32,8 +30,8 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.service.test.ServiceTestUtil;
-import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -132,14 +130,11 @@ public class MBMessageServiceTest {
 
 		try (CaptureAppender captureAppender1 =
 				Log4JLoggerTestUtil.configureLog4JLogger(
-					DefaultTransactionExecutor.class.getName(), Level.ERROR);
+					BasePersistenceImpl.class.getName(), Level.ERROR);
 				CaptureAppender captureAppender2 =
 					Log4JLoggerTestUtil.configureLog4JLogger(
-						SynchronousDestination.class.getName(), Level.ERROR);
-				CaptureAppender captureAppender3 =
-					Log4JLoggerTestUtil.configureLog4JLogger(
 						DoAsUserThread.class.getName(), Level.ERROR);
-				CaptureAppender captureAppender4 =
+				CaptureAppender captureAppender3 =
 					Log4JLoggerTestUtil.configureLog4JLogger(
 						JDBCExceptionReporter.class.getName(), Level.ERROR)) {
 
@@ -159,9 +154,10 @@ public class MBMessageServiceTest {
 				for (LoggingEvent loggingEvent :
 						captureAppender1.getLoggingEvents()) {
 
-					Assert.assertEquals(
-						"Application exception overridden by commit exception",
-						loggingEvent.getMessage());
+					String message = loggingEvent.getRenderedMessage();
+
+					Assert.assertTrue(
+						message.startsWith("Caught unexpected exception"));
 				}
 
 				for (LoggingEvent loggingEvent :
@@ -169,30 +165,16 @@ public class MBMessageServiceTest {
 
 					String message = loggingEvent.getRenderedMessage();
 
-					Assert.assertTrue(
-						message.startsWith(
-							"Unable to process message {destinationName=" +
-								DestinationNames.ASYNC_SERVICE)
-						);
-				}
-
-				for (LoggingEvent loggingEvent :
-						captureAppender3.getLoggingEvents()) {
-
-					String message = loggingEvent.getRenderedMessage();
-
 					StringBundler sb = new StringBundler();
 
 					sb.append("com.liferay.portal.kernel.exception.");
-					sb.append("SystemException: com.liferay.portal.kernel.");
-					sb.append("dao.orm.ORMException: org.hibernate.exception.");
-					sb.append("GenericJDBCException: Could not execute");
+					sb.append("SystemException:");
 
 					Assert.assertTrue(message.startsWith(sb.toString()));
 				}
 
 				for (LoggingEvent loggingEvent :
-						captureAppender4.getLoggingEvents()) {
+						captureAppender3.getLoggingEvents()) {
 
 					String message = loggingEvent.getRenderedMessage();
 

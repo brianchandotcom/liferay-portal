@@ -2639,20 +2639,14 @@ create database lportal${database.index} character set utf8;</echo>
 						<then>
 							<replace file="create.sql">
 								<replacefilter>
-									<replacetoken>use master</replacetoken>
-									<replacevalue expandProperties="true"><![CDATA[use master
-dump transaction master with no_log
+									<replacetoken>use master
+exec sp_dboption 'lportal', 'allow nulls by default' , true
 go
-if exists (select * from master.dbo.sysdatabases where name = "lportal")
-begin
-drop database lportal
-end
+
+exec sp_dboption 'lportal', 'select into/bulkcopy/pllsort' , true
 go
-create database lportal on ${database.device.name} = "250m"
-go]]></replacevalue>
-								</replacefilter>
-								<replacefilter>
-									<replacetoken>use lportal</replacetoken>
+
+use lportal</replacetoken>
 									<replacevalue><![CDATA[use lportal
 go]]></replacevalue>
 								</replacefilter>
@@ -3056,6 +3050,32 @@ go]]></replacevalue>
 				<exec executable="${basedir}/clean_up_java_processes.sh" />
 
 				<delete file="clean_up_java_processes.sh" />
+			</then>
+		</if>
+	</target>
+
+	<target name="clean-up-sybase-processes">
+		<if>
+			<os family="unix" />
+			<then>
+				<echo file="clean_up_sybase_processes.sh">
+					<![CDATA[
+						#!/bin/bash
+
+						for i in `ps -o pid,args -e | grep /opt/sybase | grep -v grep | cut -c1-5`
+						do
+							echo "Killing $i"
+
+							kill -9 $i
+						done
+					]]>
+				</echo>
+
+				<chmod file="clean_up_sybase_processes.sh" perm="a+x" />
+
+				<exec executable="${basedir}/clean_up_sybase_processes.sh" />
+
+				<delete file="clean_up_sybase_processes.sh" />
 			</then>
 		</if>
 	</target>

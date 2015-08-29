@@ -241,24 +241,11 @@ tasks.withType(JavaCompile) {
 	options.warnings = false
 }
 
-String testClassGroupIndex = System.getProperty("test.class.group.index")
-
-if (testClassGroupIndex) {
-	Properties properties = new Properties()
-
-	File file = new File(rootDir, "../test.class.file.names.properties")
-
-	properties.load(new StringReader(file.text.replace("\\", "/")))
-
-	String testClassGroup = properties["TEST_CLASS_GROUP_" + testClassGroupIndex]
-	String testClassGroups = properties["TEST_CLASS_GROUPS"]
-
-	List<String> testClasses = testClassGroup.tokenize(",")
-
+if (gradle.hasProperty("testClassGroupIndex")) {
 	configure([test, testIntegration]) {
-		include testClasses
+		include gradle.testClasses
 
-		jvmArgs "-Dtest.class.group.index=" + testClassGroupIndex
-		jvmArgs "-Dtest.class.groups=" + testClassGroups
+		jvmArgs "-Dtest.class.group.index=" + gradle.testClassGroupIndex
+		jvmArgs "-Dtest.class.groups=" + gradle.testClassGroups
 	}
 }

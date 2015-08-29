@@ -371,7 +371,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55436" name="MergeSingleTagWarning" priority="4">
+	<command known-issues="LPS-55436,LPS-56754" name="MergeSingleTagWarning" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>

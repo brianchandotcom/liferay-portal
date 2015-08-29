@@ -55,6 +55,10 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 
+		<execute macro="WikiPage#viewViewCount">
+			<var name="viewCountNumber" value="3" />
+		</execute>
+
 		<execute macro="WikiPage#gotoPG">
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
@@ -537,6 +541,51 @@
 		<execute macro="WikiPage#viewPG">
 			<var name="wikiPageContent" value="${wikiPageContent}" />
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddWikiPageFormatMediaWiki" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPages" />
+
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+
+		<execute macro="WikiEntry#addPageTitle">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiEntry#selectPageFormat">
+			<var name="pageFormat" value="MediaWiki" />
+		</execute>
+
+		<execute macro="WikiEntry#confirmMediaWiki" />
+
+		<execute macro="WikiEntry#addMediaWikiDescription">
+			<var name="wikiPageContent" value="Wiki Page Content Media Wiki" />
+		</execute>
+
+		<execute macro="WikiEntry#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPages" />
+
+		<execute macro="WikiTable#viewEntry">
+			<var name="draftStatus" value="Approved" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiTable#gotoEntry">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#viewPageContentBody">
+			<var name="wikiPageContent" value="Wiki Page Content Media Wiki" />
 		</execute>
 	</command>
 

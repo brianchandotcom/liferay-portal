@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>BASIC_WEB_CONTENT</td>
-	<td>//a[@role='menuitem' and @title='Basic Web Content']</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Basic Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -265,7 +265,7 @@
 </tr>
 <tr>
 	<td>FOLDER</td>
-	<td>//a[@role='menuitem' and @title='Folder']</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Folder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -560,7 +560,7 @@
 </tr>
 <tr>
 	<td>STRUCTURE_NAME</td>
-	<td>//a[@role='menuitem' and contains(.,'${key_structureName}')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_structureName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -575,12 +575,12 @@
 </tr>
 <tr>
 	<td>SUBFOLDER</td>
-	<td>//a[@role='menuitem' and contains(.,'Subfolder')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBFOLDER_2</td>
-	<td>xpath=(//a[@role='menuitem' and contains(.,'Subfolder')])[2]</td>
+	<td>xpath=(//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Subfolder')])[2]</td>
 	<td></td>
 </tr>
 <tr>

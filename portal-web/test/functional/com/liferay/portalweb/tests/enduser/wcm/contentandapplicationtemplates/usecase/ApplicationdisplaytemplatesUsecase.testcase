@@ -34,7 +34,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddRSSADTViaPortletConfiguration" priority="5">
+	<command known-issues="LPS-56754" name="AddRSSADTViaPortletConfiguration" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />

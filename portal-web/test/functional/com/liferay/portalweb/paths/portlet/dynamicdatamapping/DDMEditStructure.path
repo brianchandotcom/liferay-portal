@@ -278,6 +278,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_BUILDER_FIELD</td>
+	<td>//div[contains(@class,'form-builder-field')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_BUILDER_PARENT_FIELD</td>
+	<td>//div[contains(@class,'form-builder-drop-zone')]/div/../../div[contains(@class,'form-builder-field')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_FIELD</td>
 	<td>//div[contains(@class,'component form-builder-field')]/div/label[.='${key_fieldFieldLabel}']</td>
 	<td></td>
@@ -310,6 +320,16 @@
 <tr>
 	<td>FORM_FIELD_1</td>
 	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div/label)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_2</td>
+	<td>xpath=(//div[contains(@class,'component form-builder-field')]/div/label)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_NESTED</td>
+	<td>//div[contains(@class,'form-builder-drop-zone')]//div/label</td>
 	<td></td>
 </tr>
 <tr>
@@ -425,7 +445,7 @@
 </tr>
 <tr>
 	<td>SETTINGS_CELL_EDITOR_FIELD_ALERT</td>
-	<td>//div[@class='structureFieldName' and @role='alert']</td>
+	<td>//div[contains(@class,'FieldName') and (@role='alert')]</td>
 	<td></td>
 </tr>
 <tr>

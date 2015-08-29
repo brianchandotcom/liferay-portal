@@ -349,6 +349,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_2</td>
+	<td>xpath=(//input[@title='Search'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_FILES</td>
 	<td>//div[contains(@id,'uploaderContent') and contains(.,'Select Files')]/input</td>
 	<td></td>

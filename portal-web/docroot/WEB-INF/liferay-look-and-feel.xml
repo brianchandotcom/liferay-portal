@@ -29,14 +29,6 @@
 		<control-panel-theme>true</control-panel-theme>
 		<page-theme>false</page-theme>
 	</theme>
-	<theme id="control-panel" name="Control Panel">
-		<root-path>/control_panel</root-path>
-		<settings>
-			<setting configurable="true" key="footer-text" type="textarea" value="Powered by Liferay" />
-		</settings>
-		<control-panel-theme>true</control-panel-theme>
-		<page-theme>false</page-theme>
-	</theme>
 	<theme id="mobile" name="Mobile">
 		<root-path>/wap/themes/${theme-id}</root-path>
 		<settings>

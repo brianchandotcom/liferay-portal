@@ -53,8 +53,8 @@ public class CSSSourceProcessor extends BaseSourceProcessor {
 			"**/.ivy/**", "**/.sass-cache/**", "**/__MACOSX/**",
 			"**/_partial.scss", "**/_unstyled/css/**", "**/admin/css/**",
 			"**/aui/**", "**/aui_deprecated.css", "**/bourbon/**",
-			"**/classic/css/**", "**/control_panel/css/**", "**/expected/**",
-			"**/frontend-editors-web/**", "**/tools/node**"
+			"**/classic/css/**", "**/expected/**", "**/frontend-editors-web/**",
+			"**/tools/node**"
 		};
 
 		return getFileNames(excludes, getIncludes());

@@ -1,2 +1,0 @@
-Liferay.Util.portletTitleEdit = function() {
-};

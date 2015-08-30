@@ -24,9 +24,6 @@ public interface DDMFormFieldType {
 	public Class<? extends DDMFormFieldTypeSettings>
 		getDDMFormFieldTypeSettings();
 
-	public DDMFormFieldValueParameterSerializer
-		getDDMFormFieldValueParameterSerializer();
-
 	public DDMFormFieldValueRendererAccessor
 		getDDMFormFieldValueRendererAccessor(Locale locale);
 

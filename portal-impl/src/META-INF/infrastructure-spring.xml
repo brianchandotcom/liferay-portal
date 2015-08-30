@@ -8,13 +8,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean id="liferayDataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
-		<property name="targetDataSource" ref="liferayDataSourceWrapper" />
+		<property name="targetDataSource" ref="liferayDataSourceImpl" />
 	</bean>
 	<bean id="liferayDataSourceImpl" class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean">
 		<property name="propertyPrefix" value="jdbc.default." />
-	</bean>
-	<bean id="liferayDataSourceWrapper" class="com.liferay.portal.dao.jdbc.util.DataSourceWrapper">
-		<constructor-arg ref="liferayDataSourceImpl" />
 	</bean>
 	<bean id="mailSession" class="com.liferay.mail.util.MailSessionFactoryBean">
 		<property name="propertyPrefix" value="mail.session." />

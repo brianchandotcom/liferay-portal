@@ -8,12 +8,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean id="counterDataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
-		<property name="targetDataSource" ref="counterDataSourceWrapper" />
+		<property name="targetDataSource" ref="counterDataSourceImpl" />
 	</bean>
 	<bean id="counterDataSourceImpl" class="com.liferay.portal.dao.jdbc.spring.DataSourceFactoryBean">
 		<property name="propertyPrefixLookup" value="counter.jdbc.prefix" />
-	</bean>
-	<bean id="counterDataSourceWrapper" class="com.liferay.portal.dao.jdbc.util.DataSourceWrapper">
-		<constructor-arg ref="counterDataSourceImpl" />
 	</bean>
 </beans>

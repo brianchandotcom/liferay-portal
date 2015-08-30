@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.registry;
 
-import java.util.Locale;
-
 /**
  * @author Marcellus Tavares
  */
@@ -23,9 +21,6 @@ public interface DDMFormFieldType {
 
 	public Class<? extends DDMFormFieldTypeSettings>
 		getDDMFormFieldTypeSettings();
-
-	public DDMFormFieldValueRendererAccessor
-		getDDMFormFieldValueRendererAccessor(Locale locale);
 
 	public String getName();
 

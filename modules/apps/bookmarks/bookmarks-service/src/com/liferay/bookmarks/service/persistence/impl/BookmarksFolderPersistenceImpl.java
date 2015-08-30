@@ -7189,8 +7189,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey(),
 			bookmarksFolder, false);
 
-		clearUniqueFindersCache(bookmarksFolder);
-		cacheUniqueFindersCache(bookmarksFolder, isNew);
+		clearUniqueFindersCache((BookmarksFolder)bookmarksFolderModelImpl);
+		cacheUniqueFindersCache((BookmarksFolder)bookmarksFolderModelImpl, isNew);
 
 		bookmarksFolder.resetOriginalValues();
 

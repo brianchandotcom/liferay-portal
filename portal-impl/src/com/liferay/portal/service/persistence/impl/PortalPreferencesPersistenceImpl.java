@@ -391,7 +391,7 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(portalPreferences);
+		clearUniqueFindersCache((PortalPreferencesModelImpl)portalPreferences);
 	}
 
 	@Override
@@ -403,46 +403,44 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			EntityCacheUtil.removeResult(PortalPreferencesModelImpl.ENTITY_CACHE_ENABLED,
 				PortalPreferencesImpl.class, portalPreferences.getPrimaryKey());
 
-			clearUniqueFindersCache(portalPreferences);
+			clearUniqueFindersCache((PortalPreferencesModelImpl)portalPreferences);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		PortalPreferences portalPreferences, boolean isNew) {
+		PortalPreferencesModelImpl portalPreferencesModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					portalPreferences.getOwnerId(),
-					portalPreferences.getOwnerType()
+					portalPreferencesModelImpl.getOwnerId(),
+					portalPreferencesModelImpl.getOwnerType()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_O_O, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O, args,
-				portalPreferences);
+				portalPreferencesModelImpl);
 		}
 		else {
-			PortalPreferencesModelImpl portalPreferencesModelImpl = (PortalPreferencesModelImpl)portalPreferences;
-
 			if ((portalPreferencesModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_O_O.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						portalPreferences.getOwnerId(),
-						portalPreferences.getOwnerType()
+						portalPreferencesModelImpl.getOwnerId(),
+						portalPreferencesModelImpl.getOwnerType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_O_O, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_O_O, args,
-					portalPreferences);
+					portalPreferencesModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(PortalPreferences portalPreferences) {
-		PortalPreferencesModelImpl portalPreferencesModelImpl = (PortalPreferencesModelImpl)portalPreferences;
-
+	protected void clearUniqueFindersCache(
+		PortalPreferencesModelImpl portalPreferencesModelImpl) {
 		Object[] args = new Object[] {
-				portalPreferences.getOwnerId(), portalPreferences.getOwnerType()
+				portalPreferencesModelImpl.getOwnerId(),
+				portalPreferencesModelImpl.getOwnerType()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_O_O, args);
@@ -600,9 +598,8 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 			PortalPreferencesImpl.class, portalPreferences.getPrimaryKey(),
 			portalPreferences, false);
 
-		clearUniqueFindersCache((PortalPreferences)portalPreferencesModelImpl);
-		cacheUniqueFindersCache((PortalPreferences)portalPreferencesModelImpl,
-			isNew);
+		clearUniqueFindersCache(portalPreferencesModelImpl);
+		cacheUniqueFindersCache(portalPreferencesModelImpl, isNew);
 
 		portalPreferences.resetOriginalValues();
 

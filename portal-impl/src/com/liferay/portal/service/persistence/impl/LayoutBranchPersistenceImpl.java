@@ -1996,7 +1996,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(layoutBranch);
+		clearUniqueFindersCache((LayoutBranchModelImpl)layoutBranch);
 	}
 
 	@Override
@@ -2008,47 +2008,46 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			EntityCacheUtil.removeResult(LayoutBranchModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutBranchImpl.class, layoutBranch.getPrimaryKey());
 
-			clearUniqueFindersCache(layoutBranch);
+			clearUniqueFindersCache((LayoutBranchModelImpl)layoutBranch);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(LayoutBranch layoutBranch,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		LayoutBranchModelImpl layoutBranchModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					layoutBranch.getLayoutSetBranchId(), layoutBranch.getPlid(),
-					layoutBranch.getName()
+					layoutBranchModelImpl.getLayoutSetBranchId(),
+					layoutBranchModelImpl.getPlid(),
+					layoutBranchModelImpl.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_L_P_N, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_L_P_N, args,
-				layoutBranch);
+				layoutBranchModelImpl);
 		}
 		else {
-			LayoutBranchModelImpl layoutBranchModelImpl = (LayoutBranchModelImpl)layoutBranch;
-
 			if ((layoutBranchModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_L_P_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						layoutBranch.getLayoutSetBranchId(),
-						layoutBranch.getPlid(), layoutBranch.getName()
+						layoutBranchModelImpl.getLayoutSetBranchId(),
+						layoutBranchModelImpl.getPlid(),
+						layoutBranchModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_L_P_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_L_P_N, args,
-					layoutBranch);
+					layoutBranchModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(LayoutBranch layoutBranch) {
-		LayoutBranchModelImpl layoutBranchModelImpl = (LayoutBranchModelImpl)layoutBranch;
-
+	protected void clearUniqueFindersCache(
+		LayoutBranchModelImpl layoutBranchModelImpl) {
 		Object[] args = new Object[] {
-				layoutBranch.getLayoutSetBranchId(), layoutBranch.getPlid(),
-				layoutBranch.getName()
+				layoutBranchModelImpl.getLayoutSetBranchId(),
+				layoutBranchModelImpl.getPlid(), layoutBranchModelImpl.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_L_P_N, args);
@@ -2272,8 +2271,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 			LayoutBranchImpl.class, layoutBranch.getPrimaryKey(), layoutBranch,
 			false);
 
-		clearUniqueFindersCache((LayoutBranch)layoutBranchModelImpl);
-		cacheUniqueFindersCache((LayoutBranch)layoutBranchModelImpl, isNew);
+		clearUniqueFindersCache(layoutBranchModelImpl);
+		cacheUniqueFindersCache(layoutBranchModelImpl, isNew);
 
 		layoutBranch.resetOriginalValues();
 

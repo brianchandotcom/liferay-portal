@@ -18183,7 +18183,7 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(mbMessage);
+		clearUniqueFindersCache((MBMessageModelImpl)mbMessage);
 	}
 
 	@Override
@@ -18195,42 +18195,44 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 			EntityCacheUtil.removeResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 				MBMessageImpl.class, mbMessage.getPrimaryKey());
 
-			clearUniqueFindersCache(mbMessage);
+			clearUniqueFindersCache((MBMessageModelImpl)mbMessage);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MBMessage mbMessage, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		MBMessageModelImpl mbMessageModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					mbMessage.getUuid(), mbMessage.getGroupId()
+					mbMessageModelImpl.getUuid(),
+					mbMessageModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				mbMessage);
+				mbMessageModelImpl);
 		}
 		else {
-			MBMessageModelImpl mbMessageModelImpl = (MBMessageModelImpl)mbMessage;
-
 			if ((mbMessageModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mbMessage.getUuid(), mbMessage.getGroupId()
+						mbMessageModelImpl.getUuid(),
+						mbMessageModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					mbMessage);
+					mbMessageModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(MBMessage mbMessage) {
-		MBMessageModelImpl mbMessageModelImpl = (MBMessageModelImpl)mbMessage;
-
-		Object[] args = new Object[] { mbMessage.getUuid(), mbMessage.getGroupId() };
+	protected void clearUniqueFindersCache(
+		MBMessageModelImpl mbMessageModelImpl) {
+		Object[] args = new Object[] {
+				mbMessageModelImpl.getUuid(), mbMessageModelImpl.getGroupId()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
@@ -18994,8 +18996,8 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		EntityCacheUtil.putResult(MBMessageModelImpl.ENTITY_CACHE_ENABLED,
 			MBMessageImpl.class, mbMessage.getPrimaryKey(), mbMessage, false);
 
-		clearUniqueFindersCache((MBMessage)mbMessageModelImpl);
-		cacheUniqueFindersCache((MBMessage)mbMessageModelImpl, isNew);
+		clearUniqueFindersCache(mbMessageModelImpl);
+		cacheUniqueFindersCache(mbMessageModelImpl, isNew);
 
 		mbMessage.resetOriginalValues();
 

@@ -1876,7 +1876,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(region);
+		clearUniqueFindersCache((RegionModelImpl)region);
 	}
 
 	@Override
@@ -1888,41 +1888,42 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 			EntityCacheUtil.removeResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 				RegionImpl.class, region.getPrimaryKey());
 
-			clearUniqueFindersCache(region);
+			clearUniqueFindersCache((RegionModelImpl)region);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Region region, boolean isNew) {
+	protected void cacheUniqueFindersCache(RegionModelImpl regionModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					region.getCountryId(), region.getRegionCode()
+					regionModelImpl.getCountryId(),
+					regionModelImpl.getRegionCode()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R, args, region);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R, args,
+				regionModelImpl);
 		}
 		else {
-			RegionModelImpl regionModelImpl = (RegionModelImpl)region;
-
 			if ((regionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						region.getCountryId(), region.getRegionCode()
+						regionModelImpl.getCountryId(),
+						regionModelImpl.getRegionCode()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R, args, region);
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R, args,
+					regionModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Region region) {
-		RegionModelImpl regionModelImpl = (RegionModelImpl)region;
-
+	protected void clearUniqueFindersCache(RegionModelImpl regionModelImpl) {
 		Object[] args = new Object[] {
-				region.getCountryId(), region.getRegionCode()
+				regionModelImpl.getCountryId(), regionModelImpl.getRegionCode()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R, args);
@@ -2133,8 +2134,8 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 		EntityCacheUtil.putResult(RegionModelImpl.ENTITY_CACHE_ENABLED,
 			RegionImpl.class, region.getPrimaryKey(), region, false);
 
-		clearUniqueFindersCache((Region)regionModelImpl);
-		cacheUniqueFindersCache((Region)regionModelImpl, isNew);
+		clearUniqueFindersCache(regionModelImpl);
+		cacheUniqueFindersCache(regionModelImpl, isNew);
 
 		region.resetOriginalValues();
 

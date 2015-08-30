@@ -1560,7 +1560,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(resourceTypePermission);
+		clearUniqueFindersCache((ResourceTypePermissionModelImpl)resourceTypePermission);
 	}
 
 	@Override
@@ -1573,54 +1573,51 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 				ResourceTypePermissionImpl.class,
 				resourceTypePermission.getPrimaryKey());
 
-			clearUniqueFindersCache(resourceTypePermission);
+			clearUniqueFindersCache((ResourceTypePermissionModelImpl)resourceTypePermission);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		ResourceTypePermission resourceTypePermission, boolean isNew) {
+		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					resourceTypePermission.getCompanyId(),
-					resourceTypePermission.getGroupId(),
-					resourceTypePermission.getName(),
-					resourceTypePermission.getRoleId()
+					resourceTypePermissionModelImpl.getCompanyId(),
+					resourceTypePermissionModelImpl.getGroupId(),
+					resourceTypePermissionModelImpl.getName(),
+					resourceTypePermissionModelImpl.getRoleId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_G_N_R, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_R, args,
-				resourceTypePermission);
+				resourceTypePermissionModelImpl);
 		}
 		else {
-			ResourceTypePermissionModelImpl resourceTypePermissionModelImpl = (ResourceTypePermissionModelImpl)resourceTypePermission;
-
 			if ((resourceTypePermissionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_G_N_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						resourceTypePermission.getCompanyId(),
-						resourceTypePermission.getGroupId(),
-						resourceTypePermission.getName(),
-						resourceTypePermission.getRoleId()
+						resourceTypePermissionModelImpl.getCompanyId(),
+						resourceTypePermissionModelImpl.getGroupId(),
+						resourceTypePermissionModelImpl.getName(),
+						resourceTypePermissionModelImpl.getRoleId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_G_N_R, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_G_N_R, args,
-					resourceTypePermission);
+					resourceTypePermissionModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		ResourceTypePermission resourceTypePermission) {
-		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl = (ResourceTypePermissionModelImpl)resourceTypePermission;
-
+		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl) {
 		Object[] args = new Object[] {
-				resourceTypePermission.getCompanyId(),
-				resourceTypePermission.getGroupId(),
-				resourceTypePermission.getName(),
-				resourceTypePermission.getRoleId()
+				resourceTypePermissionModelImpl.getCompanyId(),
+				resourceTypePermissionModelImpl.getGroupId(),
+				resourceTypePermissionModelImpl.getName(),
+				resourceTypePermissionModelImpl.getRoleId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_G_N_R, args);
@@ -1825,9 +1822,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 			resourceTypePermission.getPrimaryKey(), resourceTypePermission,
 			false);
 
-		clearUniqueFindersCache((ResourceTypePermission)resourceTypePermissionModelImpl);
-		cacheUniqueFindersCache((ResourceTypePermission)resourceTypePermissionModelImpl,
-			isNew);
+		clearUniqueFindersCache(resourceTypePermissionModelImpl);
+		cacheUniqueFindersCache(resourceTypePermissionModelImpl, isNew);
 
 		resourceTypePermission.resetOriginalValues();
 

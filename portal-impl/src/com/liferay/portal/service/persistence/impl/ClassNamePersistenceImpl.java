@@ -386,7 +386,7 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(className);
+		clearUniqueFindersCache((ClassNameModelImpl)className);
 	}
 
 	@Override
@@ -398,38 +398,36 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 			EntityCacheUtil.removeResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 				ClassNameImpl.class, className.getPrimaryKey());
 
-			clearUniqueFindersCache(className);
+			clearUniqueFindersCache((ClassNameModelImpl)className);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ClassName className, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		ClassNameModelImpl classNameModelImpl, boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { className.getValue() };
+			Object[] args = new Object[] { classNameModelImpl.getValue() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VALUE, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VALUE, args,
-				className);
+				classNameModelImpl);
 		}
 		else {
-			ClassNameModelImpl classNameModelImpl = (ClassNameModelImpl)className;
-
 			if ((classNameModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_VALUE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { className.getValue() };
+				Object[] args = new Object[] { classNameModelImpl.getValue() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_VALUE, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_VALUE, args,
-					className);
+					classNameModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ClassName className) {
-		ClassNameModelImpl classNameModelImpl = (ClassNameModelImpl)className;
-
-		Object[] args = new Object[] { className.getValue() };
+	protected void clearUniqueFindersCache(
+		ClassNameModelImpl classNameModelImpl) {
+		Object[] args = new Object[] { classNameModelImpl.getValue() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_VALUE, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_VALUE, args);
@@ -581,8 +579,8 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 		EntityCacheUtil.putResult(ClassNameModelImpl.ENTITY_CACHE_ENABLED,
 			ClassNameImpl.class, className.getPrimaryKey(), className, false);
 
-		clearUniqueFindersCache((ClassName)classNameModelImpl);
-		cacheUniqueFindersCache((ClassName)classNameModelImpl, isNew);
+		clearUniqueFindersCache(classNameModelImpl);
+		cacheUniqueFindersCache(classNameModelImpl, isNew);
 
 		className.resetOriginalValues();
 

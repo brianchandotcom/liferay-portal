@@ -1402,7 +1402,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(layoutSet);
+		clearUniqueFindersCache((LayoutSetModelImpl)layoutSet);
 	}
 
 	@Override
@@ -1414,42 +1414,44 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 			EntityCacheUtil.removeResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
 				LayoutSetImpl.class, layoutSet.getPrimaryKey());
 
-			clearUniqueFindersCache(layoutSet);
+			clearUniqueFindersCache((LayoutSetModelImpl)layoutSet);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(LayoutSet layoutSet, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		LayoutSetModelImpl layoutSetModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					layoutSet.getGroupId(), layoutSet.getPrivateLayout()
+					layoutSetModelImpl.getGroupId(),
+					layoutSetModelImpl.getPrivateLayout()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P, args, layoutSet);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P, args,
+				layoutSetModelImpl);
 		}
 		else {
-			LayoutSetModelImpl layoutSetModelImpl = (LayoutSetModelImpl)layoutSet;
-
 			if ((layoutSetModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						layoutSet.getGroupId(), layoutSet.getPrivateLayout()
+						layoutSetModelImpl.getGroupId(),
+						layoutSetModelImpl.getPrivateLayout()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P, args,
-					layoutSet);
+					layoutSetModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(LayoutSet layoutSet) {
-		LayoutSetModelImpl layoutSetModelImpl = (LayoutSetModelImpl)layoutSet;
-
+	protected void clearUniqueFindersCache(
+		LayoutSetModelImpl layoutSetModelImpl) {
 		Object[] args = new Object[] {
-				layoutSet.getGroupId(), layoutSet.getPrivateLayout()
+				layoutSetModelImpl.getGroupId(),
+				layoutSetModelImpl.getPrivateLayout()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
@@ -1667,8 +1669,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		EntityCacheUtil.putResult(LayoutSetModelImpl.ENTITY_CACHE_ENABLED,
 			LayoutSetImpl.class, layoutSet.getPrimaryKey(), layoutSet, false);
 
-		clearUniqueFindersCache((LayoutSet)layoutSetModelImpl);
-		cacheUniqueFindersCache((LayoutSet)layoutSetModelImpl, isNew);
+		clearUniqueFindersCache(layoutSetModelImpl);
+		cacheUniqueFindersCache(layoutSetModelImpl, isNew);
 
 		layoutSet.resetOriginalValues();
 

@@ -887,7 +887,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(portlet);
+		clearUniqueFindersCache((PortletModelImpl)portlet);
 	}
 
 	@Override
@@ -899,42 +899,42 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 			EntityCacheUtil.removeResult(PortletModelImpl.ENTITY_CACHE_ENABLED,
 				PortletImpl.class, portlet.getPrimaryKey());
 
-			clearUniqueFindersCache(portlet);
+			clearUniqueFindersCache((PortletModelImpl)portlet);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Portlet portlet, boolean isNew) {
+	protected void cacheUniqueFindersCache(PortletModelImpl portletModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					portlet.getCompanyId(), portlet.getPortletId()
+					portletModelImpl.getCompanyId(),
+					portletModelImpl.getPortletId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P, args, portlet);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P, args,
+				portletModelImpl);
 		}
 		else {
-			PortletModelImpl portletModelImpl = (PortletModelImpl)portlet;
-
 			if ((portletModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						portlet.getCompanyId(), portlet.getPortletId()
+						portletModelImpl.getCompanyId(),
+						portletModelImpl.getPortletId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P, args,
-					portlet);
+					portletModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Portlet portlet) {
-		PortletModelImpl portletModelImpl = (PortletModelImpl)portlet;
-
+	protected void clearUniqueFindersCache(PortletModelImpl portletModelImpl) {
 		Object[] args = new Object[] {
-				portlet.getCompanyId(), portlet.getPortletId()
+				portletModelImpl.getCompanyId(), portletModelImpl.getPortletId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
@@ -1110,8 +1110,8 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		EntityCacheUtil.putResult(PortletModelImpl.ENTITY_CACHE_ENABLED,
 			PortletImpl.class, portlet.getPrimaryKey(), portlet, false);
 
-		clearUniqueFindersCache((Portlet)portletModelImpl);
-		cacheUniqueFindersCache((Portlet)portletModelImpl, isNew);
+		clearUniqueFindersCache(portletModelImpl);
+		cacheUniqueFindersCache(portletModelImpl, isNew);
 
 		portlet.resetOriginalValues();
 

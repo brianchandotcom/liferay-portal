@@ -2900,7 +2900,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(assetLink);
+		clearUniqueFindersCache((AssetLinkModelImpl)assetLink);
 	}
 
 	@Override
@@ -2912,46 +2912,46 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 			EntityCacheUtil.removeResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 				AssetLinkImpl.class, assetLink.getPrimaryKey());
 
-			clearUniqueFindersCache(assetLink);
+			clearUniqueFindersCache((AssetLinkModelImpl)assetLink);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AssetLink assetLink, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		AssetLinkModelImpl assetLinkModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					assetLink.getEntryId1(), assetLink.getEntryId2(),
-					assetLink.getType()
+					assetLinkModelImpl.getEntryId1(),
+					assetLinkModelImpl.getEntryId2(),
+					assetLinkModelImpl.getType()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_E_E_T, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_E_E_T, args,
-				assetLink);
+				assetLinkModelImpl);
 		}
 		else {
-			AssetLinkModelImpl assetLinkModelImpl = (AssetLinkModelImpl)assetLink;
-
 			if ((assetLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_E_E_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetLink.getEntryId1(), assetLink.getEntryId2(),
-						assetLink.getType()
+						assetLinkModelImpl.getEntryId1(),
+						assetLinkModelImpl.getEntryId2(),
+						assetLinkModelImpl.getType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_E_E_T, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_E_E_T, args,
-					assetLink);
+					assetLinkModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(AssetLink assetLink) {
-		AssetLinkModelImpl assetLinkModelImpl = (AssetLinkModelImpl)assetLink;
-
+	protected void clearUniqueFindersCache(
+		AssetLinkModelImpl assetLinkModelImpl) {
 		Object[] args = new Object[] {
-				assetLink.getEntryId1(), assetLink.getEntryId2(),
-				assetLink.getType()
+				assetLinkModelImpl.getEntryId1(),
+				assetLinkModelImpl.getEntryId2(), assetLinkModelImpl.getType()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_E_E_T, args);
@@ -3206,8 +3206,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		EntityCacheUtil.putResult(AssetLinkModelImpl.ENTITY_CACHE_ENABLED,
 			AssetLinkImpl.class, assetLink.getPrimaryKey(), assetLink, false);
 
-		clearUniqueFindersCache((AssetLink)assetLinkModelImpl);
-		cacheUniqueFindersCache((AssetLink)assetLinkModelImpl, isNew);
+		clearUniqueFindersCache(assetLinkModelImpl);
+		cacheUniqueFindersCache(assetLinkModelImpl, isNew);
 
 		assetLink.resetOriginalValues();
 

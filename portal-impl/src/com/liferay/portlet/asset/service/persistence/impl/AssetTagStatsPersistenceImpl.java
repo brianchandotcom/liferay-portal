@@ -1342,7 +1342,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(assetTagStats);
+		clearUniqueFindersCache((AssetTagStatsModelImpl)assetTagStats);
 	}
 
 	@Override
@@ -1354,44 +1354,44 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 			EntityCacheUtil.removeResult(AssetTagStatsModelImpl.ENTITY_CACHE_ENABLED,
 				AssetTagStatsImpl.class, assetTagStats.getPrimaryKey());
 
-			clearUniqueFindersCache(assetTagStats);
+			clearUniqueFindersCache((AssetTagStatsModelImpl)assetTagStats);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AssetTagStats assetTagStats,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		AssetTagStatsModelImpl assetTagStatsModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					assetTagStats.getTagId(), assetTagStats.getClassNameId()
+					assetTagStatsModelImpl.getTagId(),
+					assetTagStatsModelImpl.getClassNameId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_C, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_C, args,
-				assetTagStats);
+				assetTagStatsModelImpl);
 		}
 		else {
-			AssetTagStatsModelImpl assetTagStatsModelImpl = (AssetTagStatsModelImpl)assetTagStats;
-
 			if ((assetTagStatsModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_T_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetTagStats.getTagId(), assetTagStats.getClassNameId()
+						assetTagStatsModelImpl.getTagId(),
+						assetTagStatsModelImpl.getClassNameId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_C, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_C, args,
-					assetTagStats);
+					assetTagStatsModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(AssetTagStats assetTagStats) {
-		AssetTagStatsModelImpl assetTagStatsModelImpl = (AssetTagStatsModelImpl)assetTagStats;
-
+	protected void clearUniqueFindersCache(
+		AssetTagStatsModelImpl assetTagStatsModelImpl) {
 		Object[] args = new Object[] {
-				assetTagStats.getTagId(), assetTagStats.getClassNameId()
+				assetTagStatsModelImpl.getTagId(),
+				assetTagStatsModelImpl.getClassNameId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_C, args);
@@ -1586,8 +1586,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 			AssetTagStatsImpl.class, assetTagStats.getPrimaryKey(),
 			assetTagStats, false);
 
-		clearUniqueFindersCache((AssetTagStats)assetTagStatsModelImpl);
-		cacheUniqueFindersCache((AssetTagStats)assetTagStatsModelImpl, isNew);
+		clearUniqueFindersCache(assetTagStatsModelImpl);
+		cacheUniqueFindersCache(assetTagStatsModelImpl, isNew);
 
 		assetTagStats.resetOriginalValues();
 

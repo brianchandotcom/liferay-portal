@@ -21,11 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marcellus Tavares
  */
-public class DefaultDDMFormFieldValueParameterSerializer
-	implements DDMFormFieldValueParameterSerializer {
+public class DefaultDDMFormFieldValueRequestParameterRetriever
+	implements DDMFormFieldValueRequestParameterRetriever {
 
 	@Override
-	public String getParameterValue(
+	public String get(
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String defaultDDMFormFieldParameterValue) {
 

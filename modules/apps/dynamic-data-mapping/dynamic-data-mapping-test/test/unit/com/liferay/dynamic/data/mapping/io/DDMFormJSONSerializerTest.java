@@ -16,20 +16,24 @@ package com.liferay.dynamic.data.mapping.io;
 
 import com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
  */
+@PrepareForTest(DDMFormFieldTypeServicesTrackerUtil.class)
 public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 
 	@Before
 	public void setUp() {
-		setUpDDMFormFieldTypeRegistryUtil();
+		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpDDMFormToJSONSerializerUtil();
 		setUpJSONFactoryUtil();
 		setUpLanguageUtil();

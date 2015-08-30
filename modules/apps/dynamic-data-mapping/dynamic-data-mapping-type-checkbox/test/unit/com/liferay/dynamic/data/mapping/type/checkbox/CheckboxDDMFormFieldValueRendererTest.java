@@ -40,8 +40,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest({LanguageUtil.class})
 @RunWith(PowerMockRunner.class)
-public class CheckboxDDMFormFieldValueRendererAccessorTest
-	extends PowerMockito {
+public class CheckboxDDMFormFieldValueRendererTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
@@ -49,21 +48,21 @@ public class CheckboxDDMFormFieldValueRendererAccessorTest
 	}
 
 	@Test
-	public void testGet() {
+	public void testRender() {
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"Checkbox", new UnlocalizedValue("true"));
 
-		CheckboxDDMFormFieldValueRendererAccessor
-			checkboxDDMFormFieldValueRendererAccessor =
-				createCheckboxDDMFormFieldValueRendererAccessor(LocaleUtil.US);
+		CheckboxDDMFormFieldValueRenderer checkboxDDMFormFieldValueRenderer =
+			createCheckboxDDMFormFieldValueRenderer();
 
 		String expectedCheckboxRenderedValue = LanguageUtil.get(
 			LocaleUtil.US, "yes");
 
 		Assert.assertEquals(
 			expectedCheckboxRenderedValue,
-			checkboxDDMFormFieldValueRendererAccessor.get(ddmFormFieldValue));
+			checkboxDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.US));
 
 		ddmFormFieldValue.setValue(new UnlocalizedValue("false"));
 
@@ -71,17 +70,20 @@ public class CheckboxDDMFormFieldValueRendererAccessorTest
 
 		Assert.assertEquals(
 			expectedCheckboxRenderedValue,
-			checkboxDDMFormFieldValueRendererAccessor.get(ddmFormFieldValue));
+			checkboxDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	protected CheckboxDDMFormFieldValueRendererAccessor
-		createCheckboxDDMFormFieldValueRendererAccessor(Locale locale) {
+	protected CheckboxDDMFormFieldValueRenderer
+		createCheckboxDDMFormFieldValueRenderer() {
 
-		CheckboxDDMFormFieldValueAccessor checkboxDDMFormFieldValueAccessor =
-			new CheckboxDDMFormFieldValueAccessor(locale);
+		CheckboxDDMFormFieldValueRenderer checkboxDDMFormFieldValueRenderer =
+			new CheckboxDDMFormFieldValueRenderer();
 
-		return new CheckboxDDMFormFieldValueRendererAccessor(
-			checkboxDDMFormFieldValueAccessor);
+		checkboxDDMFormFieldValueRenderer.setCheckboxDDMFormFieldValueAccessor(
+			new CheckboxDDMFormFieldValueAccessor());
+
+		return checkboxDDMFormFieldValueRenderer;
 	}
 
 	protected void setUpLanguageUtil() {

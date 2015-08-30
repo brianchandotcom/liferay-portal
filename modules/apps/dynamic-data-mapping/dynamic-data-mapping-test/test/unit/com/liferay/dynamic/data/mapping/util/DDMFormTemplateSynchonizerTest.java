@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMFormTemplateSynchonizer;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -42,13 +43,13 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(LocaleUtil.class)
+@PrepareForTest({DDMFormFieldTypeServicesTrackerUtil.class, LocaleUtil.class})
 public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {
 		setUpConfigurationFactoryUtil();
-		setUpDDMFormFieldTypeRegistryUtil();
+		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpDDMFormJSONSerializerUtil();
 		setUpDDMFormJSONDeserializerUtil();
 		setUpJSONFactoryUtil();

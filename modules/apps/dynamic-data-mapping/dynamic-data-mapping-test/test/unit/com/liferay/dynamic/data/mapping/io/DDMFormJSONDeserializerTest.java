@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.io;
 import com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONDeserializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -28,13 +29,13 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({LocaleUtil.class})
+@PrepareForTest({DDMFormFieldTypeServicesTrackerUtil.class, LocaleUtil.class})
 public class DDMFormJSONDeserializerTest
 	extends BaseDDMFormDeserializerTestCase {
 
 	@Before
 	public void setUp() {
-		setUpDDMFormFieldTypeRegistryUtil();
+		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpDDMFormJSONDeserializerUtil();
 		setUpLanguageUtil();
 		setUpLocaleUtil();

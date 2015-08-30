@@ -42,10 +42,12 @@ public class RadioDDMFormFieldValueAccessorTest {
 				"Radio", new UnlocalizedValue("[\"value 1\"]"));
 
 		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor =
-			new RadioDDMFormFieldValueAccessor(LocaleUtil.US);
+			new RadioDDMFormFieldValueAccessor();
 
 		Assert.assertEquals(
-			"value 1", radioDDMFormFieldValueAccessor.get(ddmFormFieldValue));
+			"value 1",
+			radioDDMFormFieldValueAccessor.getValue(
+				ddmFormFieldValue, LocaleUtil.US));
 	}
 
 	protected void setUpJSONFactoryUtil() {

@@ -26,8 +26,6 @@ import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +33,7 @@ import org.junit.Test;
 /**
  * @author Renato Rego
  */
-public class RadioDDMFormFieldValueRendererAccessorTest {
+public class RadioDDMFormFieldValueRendererTest {
 
 	@Before
 	public void setUp() {
@@ -43,7 +41,7 @@ public class RadioDDMFormFieldValueRendererAccessorTest {
 	}
 
 	@Test
-	public void testGetRadioRenderedValue() {
+	public void testRender() {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
@@ -68,23 +66,25 @@ public class RadioDDMFormFieldValueRendererAccessorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		RadioDDMFormFieldValueRendererAccessor
-			radioDDMFormFieldValueRendererAccessor =
-				createRadioDDMFormFieldValueRendererAccessor(LocaleUtil.US);
+		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =
+			createRadioDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
 			"option 1",
-			radioDDMFormFieldValueRendererAccessor.get(ddmFormFieldValue));
+			radioDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.US));
 	}
 
-	protected RadioDDMFormFieldValueRendererAccessor
-		createRadioDDMFormFieldValueRendererAccessor(Locale locale) {
+	protected RadioDDMFormFieldValueRenderer
+		createRadioDDMFormFieldValueRenderer() {
 
-		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor =
-			new RadioDDMFormFieldValueAccessor(locale);
+		RadioDDMFormFieldValueRenderer radioDDMFormFieldValueRenderer =
+			new RadioDDMFormFieldValueRenderer();
 
-		return new RadioDDMFormFieldValueRendererAccessor(
-			radioDDMFormFieldValueAccessor);
+		radioDDMFormFieldValueRenderer.setRadioDDMFormFieldValueAccessor(
+			new RadioDDMFormFieldValueAccessor());
+
+		return radioDDMFormFieldValueRenderer;
 	}
 
 	protected void setUpJSONFactoryUtil() {

@@ -3648,7 +3648,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(assetEntry);
+		clearUniqueFindersCache((AssetEntryModelImpl)assetEntry);
 	}
 
 	@Override
@@ -3660,63 +3660,67 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			EntityCacheUtil.removeResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 				AssetEntryImpl.class, assetEntry.getPrimaryKey());
 
-			clearUniqueFindersCache(assetEntry);
+			clearUniqueFindersCache((AssetEntryModelImpl)assetEntry);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AssetEntry assetEntry, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		AssetEntryModelImpl assetEntryModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					assetEntry.getGroupId(), assetEntry.getClassUuid()
+					assetEntryModelImpl.getGroupId(),
+					assetEntryModelImpl.getClassUuid()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_CU, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_CU, args,
-				assetEntry);
+				assetEntryModelImpl);
 
 			args = new Object[] {
-					assetEntry.getClassNameId(), assetEntry.getClassPK()
+					assetEntryModelImpl.getClassNameId(),
+					assetEntryModelImpl.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args, assetEntry);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
+				assetEntryModelImpl);
 		}
 		else {
-			AssetEntryModelImpl assetEntryModelImpl = (AssetEntryModelImpl)assetEntry;
-
 			if ((assetEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_CU.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetEntry.getGroupId(), assetEntry.getClassUuid()
+						assetEntryModelImpl.getGroupId(),
+						assetEntryModelImpl.getClassUuid()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_CU, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_CU, args,
-					assetEntry);
+					assetEntryModelImpl);
 			}
 
 			if ((assetEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetEntry.getClassNameId(), assetEntry.getClassPK()
+						assetEntryModelImpl.getClassNameId(),
+						assetEntryModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
-					assetEntry);
+					assetEntryModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(AssetEntry assetEntry) {
-		AssetEntryModelImpl assetEntryModelImpl = (AssetEntryModelImpl)assetEntry;
-
+	protected void clearUniqueFindersCache(
+		AssetEntryModelImpl assetEntryModelImpl) {
 		Object[] args = new Object[] {
-				assetEntry.getGroupId(), assetEntry.getClassUuid()
+				assetEntryModelImpl.getGroupId(),
+				assetEntryModelImpl.getClassUuid()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_CU, args);
@@ -3733,7 +3737,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_CU, args);
 		}
 
-		args = new Object[] { assetEntry.getClassNameId(), assetEntry.getClassPK() };
+		args = new Object[] {
+				assetEntryModelImpl.getClassNameId(),
+				assetEntryModelImpl.getClassPK()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
@@ -4026,8 +4033,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		EntityCacheUtil.putResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryImpl.class, assetEntry.getPrimaryKey(), assetEntry, false);
 
-		clearUniqueFindersCache((AssetEntry)assetEntryModelImpl);
-		cacheUniqueFindersCache((AssetEntry)assetEntryModelImpl, isNew);
+		clearUniqueFindersCache(assetEntryModelImpl);
+		cacheUniqueFindersCache(assetEntryModelImpl, isNew);
 
 		assetEntry.resetOriginalValues();
 

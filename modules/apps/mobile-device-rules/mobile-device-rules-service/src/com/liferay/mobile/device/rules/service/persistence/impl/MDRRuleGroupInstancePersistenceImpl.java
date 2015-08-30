@@ -5424,16 +5424,16 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	private static final String _SQL_COUNT_MDRRULEGROUPINSTANCE = "SELECT COUNT(mdrRuleGroupInstance) FROM MDRRuleGroupInstance mdrRuleGroupInstance";
 	private static final String _SQL_COUNT_MDRRULEGROUPINSTANCE_WHERE = "SELECT COUNT(mdrRuleGroupInstance) FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "mdrRuleGroupInstance.ruleGroupInstanceId";
-	private static final String _FILTER_SQL_SELECT_MDRRULEGROUPINSTANCE_WHERE = "SELECT DISTINCT {mdrRuleGroupInstance.*} FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
+	private static final String _FILTER_SQL_SELECT_MDRRULEGROUPINSTANCE_WHERE = "SELECT DISTINCT {mdrRuleGroupInstance.*} FROM MDR_MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
 	private static final String _FILTER_SQL_SELECT_MDRRULEGROUPINSTANCE_NO_INLINE_DISTINCT_WHERE_1 =
-		"SELECT {MDRRuleGroupInstance.*} FROM (SELECT DISTINCT mdrRuleGroupInstance.ruleGroupInstanceId FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
+		"SELECT {MDR_MDRRuleGroupInstance.*} FROM (SELECT DISTINCT mdrRuleGroupInstance.ruleGroupInstanceId FROM MDR_MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
 	private static final String _FILTER_SQL_SELECT_MDRRULEGROUPINSTANCE_NO_INLINE_DISTINCT_WHERE_2 =
-		") TEMP_TABLE INNER JOIN MDRRuleGroupInstance ON TEMP_TABLE.ruleGroupInstanceId = MDRRuleGroupInstance.ruleGroupInstanceId";
-	private static final String _FILTER_SQL_COUNT_MDRRULEGROUPINSTANCE_WHERE = "SELECT COUNT(DISTINCT mdrRuleGroupInstance.ruleGroupInstanceId) AS COUNT_VALUE FROM MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
+		") TEMP_TABLE INNER JOIN MDR_MDRRuleGroupInstance ON TEMP_TABLE.ruleGroupInstanceId = MDR_MDRRuleGroupInstance.ruleGroupInstanceId";
+	private static final String _FILTER_SQL_COUNT_MDRRULEGROUPINSTANCE_WHERE = "SELECT COUNT(DISTINCT mdrRuleGroupInstance.ruleGroupInstanceId) AS COUNT_VALUE FROM MDR_MDRRuleGroupInstance mdrRuleGroupInstance WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "mdrRuleGroupInstance";
-	private static final String _FILTER_ENTITY_TABLE = "MDRRuleGroupInstance";
+	private static final String _FILTER_ENTITY_TABLE = "MDR_MDRRuleGroupInstance";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "mdrRuleGroupInstance.";
-	private static final String _ORDER_BY_ENTITY_TABLE = "MDRRuleGroupInstance.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "MDR_MDRRuleGroupInstance.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No MDRRuleGroupInstance exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No MDRRuleGroupInstance exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(MDRRuleGroupInstancePersistenceImpl.class);

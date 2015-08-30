@@ -12516,7 +12516,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(mbThread);
+		clearUniqueFindersCache((MBThreadModelImpl)mbThread);
 	}
 
 	@Override
@@ -12528,59 +12528,61 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			EntityCacheUtil.removeResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 				MBThreadImpl.class, mbThread.getPrimaryKey());
 
-			clearUniqueFindersCache(mbThread);
+			clearUniqueFindersCache((MBThreadModelImpl)mbThread);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MBThread mbThread, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		MBThreadModelImpl mbThreadModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					mbThread.getUuid(), mbThread.getGroupId()
+					mbThreadModelImpl.getUuid(), mbThreadModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				mbThread);
+				mbThreadModelImpl);
 
-			args = new Object[] { mbThread.getRootMessageId() };
+			args = new Object[] { mbThreadModelImpl.getRootMessageId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ROOTMESSAGEID, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ROOTMESSAGEID, args,
-				mbThread);
+				mbThreadModelImpl);
 		}
 		else {
-			MBThreadModelImpl mbThreadModelImpl = (MBThreadModelImpl)mbThread;
-
 			if ((mbThreadModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mbThread.getUuid(), mbThread.getGroupId()
+						mbThreadModelImpl.getUuid(),
+						mbThreadModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					mbThread);
+					mbThreadModelImpl);
 			}
 
 			if ((mbThreadModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_ROOTMESSAGEID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { mbThread.getRootMessageId() };
+				Object[] args = new Object[] {
+						mbThreadModelImpl.getRootMessageId()
+					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_ROOTMESSAGEID,
 					args, Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_ROOTMESSAGEID,
-					args, mbThread);
+					args, mbThreadModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(MBThread mbThread) {
-		MBThreadModelImpl mbThreadModelImpl = (MBThreadModelImpl)mbThread;
-
-		Object[] args = new Object[] { mbThread.getUuid(), mbThread.getGroupId() };
+	protected void clearUniqueFindersCache(MBThreadModelImpl mbThreadModelImpl) {
+		Object[] args = new Object[] {
+				mbThreadModelImpl.getUuid(), mbThreadModelImpl.getGroupId()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
@@ -12596,7 +12598,7 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { mbThread.getRootMessageId() };
+		args = new Object[] { mbThreadModelImpl.getRootMessageId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ROOTMESSAGEID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_ROOTMESSAGEID, args);
@@ -12967,8 +12969,8 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		EntityCacheUtil.putResult(MBThreadModelImpl.ENTITY_CACHE_ENABLED,
 			MBThreadImpl.class, mbThread.getPrimaryKey(), mbThread, false);
 
-		clearUniqueFindersCache((MBThread)mbThreadModelImpl);
-		cacheUniqueFindersCache((MBThread)mbThreadModelImpl, isNew);
+		clearUniqueFindersCache(mbThreadModelImpl);
+		cacheUniqueFindersCache(mbThreadModelImpl, isNew);
 
 		mbThread.resetOriginalValues();
 

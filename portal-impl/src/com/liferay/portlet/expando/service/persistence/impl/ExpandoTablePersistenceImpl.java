@@ -953,7 +953,7 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(expandoTable);
+		clearUniqueFindersCache((ExpandoTableModelImpl)expandoTable);
 	}
 
 	@Override
@@ -965,47 +965,47 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			EntityCacheUtil.removeResult(ExpandoTableModelImpl.ENTITY_CACHE_ENABLED,
 				ExpandoTableImpl.class, expandoTable.getPrimaryKey());
 
-			clearUniqueFindersCache(expandoTable);
+			clearUniqueFindersCache((ExpandoTableModelImpl)expandoTable);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ExpandoTable expandoTable,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		ExpandoTableModelImpl expandoTableModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					expandoTable.getCompanyId(), expandoTable.getClassNameId(),
-					expandoTable.getName()
+					expandoTableModelImpl.getCompanyId(),
+					expandoTableModelImpl.getClassNameId(),
+					expandoTableModelImpl.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_N, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_N, args,
-				expandoTable);
+				expandoTableModelImpl);
 		}
 		else {
-			ExpandoTableModelImpl expandoTableModelImpl = (ExpandoTableModelImpl)expandoTable;
-
 			if ((expandoTableModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						expandoTable.getCompanyId(),
-						expandoTable.getClassNameId(), expandoTable.getName()
+						expandoTableModelImpl.getCompanyId(),
+						expandoTableModelImpl.getClassNameId(),
+						expandoTableModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_N, args,
-					expandoTable);
+					expandoTableModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ExpandoTable expandoTable) {
-		ExpandoTableModelImpl expandoTableModelImpl = (ExpandoTableModelImpl)expandoTable;
-
+	protected void clearUniqueFindersCache(
+		ExpandoTableModelImpl expandoTableModelImpl) {
 		Object[] args = new Object[] {
-				expandoTable.getCompanyId(), expandoTable.getClassNameId(),
-				expandoTable.getName()
+				expandoTableModelImpl.getCompanyId(),
+				expandoTableModelImpl.getClassNameId(),
+				expandoTableModelImpl.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_N, args);
@@ -1186,8 +1186,8 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 			ExpandoTableImpl.class, expandoTable.getPrimaryKey(), expandoTable,
 			false);
 
-		clearUniqueFindersCache((ExpandoTable)expandoTableModelImpl);
-		cacheUniqueFindersCache((ExpandoTable)expandoTableModelImpl, isNew);
+		clearUniqueFindersCache(expandoTableModelImpl);
+		cacheUniqueFindersCache(expandoTableModelImpl, isNew);
 
 		expandoTable.resetOriginalValues();
 

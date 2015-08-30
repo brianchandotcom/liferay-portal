@@ -5523,7 +5523,7 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(dlFileVersion);
+		clearUniqueFindersCache((DLFileVersionModelImpl)dlFileVersion);
 	}
 
 	@Override
@@ -5535,66 +5535,67 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			EntityCacheUtil.removeResult(DLFileVersionModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileVersionImpl.class, dlFileVersion.getPrimaryKey());
 
-			clearUniqueFindersCache(dlFileVersion);
+			clearUniqueFindersCache((DLFileVersionModelImpl)dlFileVersion);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLFileVersion dlFileVersion,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		DLFileVersionModelImpl dlFileVersionModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					dlFileVersion.getUuid(), dlFileVersion.getGroupId()
+					dlFileVersionModelImpl.getUuid(),
+					dlFileVersionModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				dlFileVersion);
+				dlFileVersionModelImpl);
 
 			args = new Object[] {
-					dlFileVersion.getFileEntryId(), dlFileVersion.getVersion()
+					dlFileVersionModelImpl.getFileEntryId(),
+					dlFileVersionModelImpl.getVersion()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_F_V, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V, args,
-				dlFileVersion);
+				dlFileVersionModelImpl);
 		}
 		else {
-			DLFileVersionModelImpl dlFileVersionModelImpl = (DLFileVersionModelImpl)dlFileVersion;
-
 			if ((dlFileVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileVersion.getUuid(), dlFileVersion.getGroupId()
+						dlFileVersionModelImpl.getUuid(),
+						dlFileVersionModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					dlFileVersion);
+					dlFileVersionModelImpl);
 			}
 
 			if ((dlFileVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_F_V.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileVersion.getFileEntryId(),
-						dlFileVersion.getVersion()
+						dlFileVersionModelImpl.getFileEntryId(),
+						dlFileVersionModelImpl.getVersion()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_F_V, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_V, args,
-					dlFileVersion);
+					dlFileVersionModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(DLFileVersion dlFileVersion) {
-		DLFileVersionModelImpl dlFileVersionModelImpl = (DLFileVersionModelImpl)dlFileVersion;
-
+	protected void clearUniqueFindersCache(
+		DLFileVersionModelImpl dlFileVersionModelImpl) {
 		Object[] args = new Object[] {
-				dlFileVersion.getUuid(), dlFileVersion.getGroupId()
+				dlFileVersionModelImpl.getUuid(),
+				dlFileVersionModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -5612,7 +5613,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		}
 
 		args = new Object[] {
-				dlFileVersion.getFileEntryId(), dlFileVersion.getVersion()
+				dlFileVersionModelImpl.getFileEntryId(),
+				dlFileVersionModelImpl.getVersion()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_V, args);
@@ -5967,8 +5969,8 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 			DLFileVersionImpl.class, dlFileVersion.getPrimaryKey(),
 			dlFileVersion, false);
 
-		clearUniqueFindersCache((DLFileVersion)dlFileVersionModelImpl);
-		cacheUniqueFindersCache((DLFileVersion)dlFileVersionModelImpl, isNew);
+		clearUniqueFindersCache(dlFileVersionModelImpl);
+		cacheUniqueFindersCache(dlFileVersionModelImpl, isNew);
 
 		dlFileVersion.resetOriginalValues();
 

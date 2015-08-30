@@ -3045,7 +3045,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(dlFileEntryType);
+		clearUniqueFindersCache((DLFileEntryTypeModelImpl)dlFileEntryType);
 	}
 
 	@Override
@@ -3057,67 +3057,67 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			EntityCacheUtil.removeResult(DLFileEntryTypeModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileEntryTypeImpl.class, dlFileEntryType.getPrimaryKey());
 
-			clearUniqueFindersCache(dlFileEntryType);
+			clearUniqueFindersCache((DLFileEntryTypeModelImpl)dlFileEntryType);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLFileEntryType dlFileEntryType,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		DLFileEntryTypeModelImpl dlFileEntryTypeModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					dlFileEntryType.getUuid(), dlFileEntryType.getGroupId()
+					dlFileEntryTypeModelImpl.getUuid(),
+					dlFileEntryTypeModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				dlFileEntryType);
+				dlFileEntryTypeModelImpl);
 
 			args = new Object[] {
-					dlFileEntryType.getGroupId(),
-					dlFileEntryType.getFileEntryTypeKey()
+					dlFileEntryTypeModelImpl.getGroupId(),
+					dlFileEntryTypeModelImpl.getFileEntryTypeKey()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F, args,
-				dlFileEntryType);
+				dlFileEntryTypeModelImpl);
 		}
 		else {
-			DLFileEntryTypeModelImpl dlFileEntryTypeModelImpl = (DLFileEntryTypeModelImpl)dlFileEntryType;
-
 			if ((dlFileEntryTypeModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileEntryType.getUuid(), dlFileEntryType.getGroupId()
+						dlFileEntryTypeModelImpl.getUuid(),
+						dlFileEntryTypeModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					dlFileEntryType);
+					dlFileEntryTypeModelImpl);
 			}
 
 			if ((dlFileEntryTypeModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileEntryType.getGroupId(),
-						dlFileEntryType.getFileEntryTypeKey()
+						dlFileEntryTypeModelImpl.getGroupId(),
+						dlFileEntryTypeModelImpl.getFileEntryTypeKey()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F, args,
-					dlFileEntryType);
+					dlFileEntryTypeModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(DLFileEntryType dlFileEntryType) {
-		DLFileEntryTypeModelImpl dlFileEntryTypeModelImpl = (DLFileEntryTypeModelImpl)dlFileEntryType;
-
+	protected void clearUniqueFindersCache(
+		DLFileEntryTypeModelImpl dlFileEntryTypeModelImpl) {
 		Object[] args = new Object[] {
-				dlFileEntryType.getUuid(), dlFileEntryType.getGroupId()
+				dlFileEntryTypeModelImpl.getUuid(),
+				dlFileEntryTypeModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -3135,8 +3135,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		}
 
 		args = new Object[] {
-				dlFileEntryType.getGroupId(),
-				dlFileEntryType.getFileEntryTypeKey()
+				dlFileEntryTypeModelImpl.getGroupId(),
+				dlFileEntryTypeModelImpl.getFileEntryTypeKey()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
@@ -3386,8 +3386,8 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			DLFileEntryTypeImpl.class, dlFileEntryType.getPrimaryKey(),
 			dlFileEntryType, false);
 
-		clearUniqueFindersCache((DLFileEntryType)dlFileEntryTypeModelImpl);
-		cacheUniqueFindersCache((DLFileEntryType)dlFileEntryTypeModelImpl, isNew);
+		clearUniqueFindersCache(dlFileEntryTypeModelImpl);
+		cacheUniqueFindersCache(dlFileEntryTypeModelImpl, isNew);
 
 		dlFileEntryType.resetOriginalValues();
 

@@ -1370,7 +1370,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(trashVersion);
+		clearUniqueFindersCache((TrashVersionModelImpl)trashVersion);
 	}
 
 	@Override
@@ -1382,44 +1382,44 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 			EntityCacheUtil.removeResult(TrashVersionModelImpl.ENTITY_CACHE_ENABLED,
 				TrashVersionImpl.class, trashVersion.getPrimaryKey());
 
-			clearUniqueFindersCache(trashVersion);
+			clearUniqueFindersCache((TrashVersionModelImpl)trashVersion);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(TrashVersion trashVersion,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		TrashVersionModelImpl trashVersionModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					trashVersion.getClassNameId(), trashVersion.getClassPK()
+					trashVersionModelImpl.getClassNameId(),
+					trashVersionModelImpl.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
-				trashVersion);
+				trashVersionModelImpl);
 		}
 		else {
-			TrashVersionModelImpl trashVersionModelImpl = (TrashVersionModelImpl)trashVersion;
-
 			if ((trashVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						trashVersion.getClassNameId(), trashVersion.getClassPK()
+						trashVersionModelImpl.getClassNameId(),
+						trashVersionModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
-					trashVersion);
+					trashVersionModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(TrashVersion trashVersion) {
-		TrashVersionModelImpl trashVersionModelImpl = (TrashVersionModelImpl)trashVersion;
-
+	protected void clearUniqueFindersCache(
+		TrashVersionModelImpl trashVersionModelImpl) {
 		Object[] args = new Object[] {
-				trashVersion.getClassNameId(), trashVersion.getClassPK()
+				trashVersionModelImpl.getClassNameId(),
+				trashVersionModelImpl.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -1616,8 +1616,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 			TrashVersionImpl.class, trashVersion.getPrimaryKey(), trashVersion,
 			false);
 
-		clearUniqueFindersCache((TrashVersion)trashVersionModelImpl);
-		cacheUniqueFindersCache((TrashVersion)trashVersionModelImpl, isNew);
+		clearUniqueFindersCache(trashVersionModelImpl);
+		cacheUniqueFindersCache(trashVersionModelImpl, isNew);
 
 		trashVersion.resetOriginalValues();
 

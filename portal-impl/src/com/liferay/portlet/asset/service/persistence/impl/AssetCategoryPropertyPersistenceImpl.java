@@ -1962,7 +1962,7 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(assetCategoryProperty);
+		clearUniqueFindersCache((AssetCategoryPropertyModelImpl)assetCategoryProperty);
 	}
 
 	@Override
@@ -1975,48 +1975,45 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 				AssetCategoryPropertyImpl.class,
 				assetCategoryProperty.getPrimaryKey());
 
-			clearUniqueFindersCache(assetCategoryProperty);
+			clearUniqueFindersCache((AssetCategoryPropertyModelImpl)assetCategoryProperty);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		AssetCategoryProperty assetCategoryProperty, boolean isNew) {
+		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					assetCategoryProperty.getCategoryId(),
-					assetCategoryProperty.getKey()
+					assetCategoryPropertyModelImpl.getCategoryId(),
+					assetCategoryPropertyModelImpl.getKey()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CA_K, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CA_K, args,
-				assetCategoryProperty);
+				assetCategoryPropertyModelImpl);
 		}
 		else {
-			AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = (AssetCategoryPropertyModelImpl)assetCategoryProperty;
-
 			if ((assetCategoryPropertyModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_CA_K.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetCategoryProperty.getCategoryId(),
-						assetCategoryProperty.getKey()
+						assetCategoryPropertyModelImpl.getCategoryId(),
+						assetCategoryPropertyModelImpl.getKey()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CA_K, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CA_K, args,
-					assetCategoryProperty);
+					assetCategoryPropertyModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		AssetCategoryProperty assetCategoryProperty) {
-		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = (AssetCategoryPropertyModelImpl)assetCategoryProperty;
-
+		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl) {
 		Object[] args = new Object[] {
-				assetCategoryProperty.getCategoryId(),
-				assetCategoryProperty.getKey()
+				assetCategoryPropertyModelImpl.getCategoryId(),
+				assetCategoryPropertyModelImpl.getKey()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CA_K, args);
@@ -2265,9 +2262,8 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 			AssetCategoryPropertyImpl.class,
 			assetCategoryProperty.getPrimaryKey(), assetCategoryProperty, false);
 
-		clearUniqueFindersCache((AssetCategoryProperty)assetCategoryPropertyModelImpl);
-		cacheUniqueFindersCache((AssetCategoryProperty)assetCategoryPropertyModelImpl,
-			isNew);
+		clearUniqueFindersCache(assetCategoryPropertyModelImpl);
+		cacheUniqueFindersCache(assetCategoryPropertyModelImpl, isNew);
 
 		assetCategoryProperty.resetOriginalValues();
 

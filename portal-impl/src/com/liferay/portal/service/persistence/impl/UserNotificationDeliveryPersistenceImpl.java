@@ -988,7 +988,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(userNotificationDelivery);
+		clearUniqueFindersCache((UserNotificationDeliveryModelImpl)userNotificationDelivery);
 	}
 
 	@Override
@@ -1002,57 +1002,54 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 				UserNotificationDeliveryImpl.class,
 				userNotificationDelivery.getPrimaryKey());
 
-			clearUniqueFindersCache(userNotificationDelivery);
+			clearUniqueFindersCache((UserNotificationDeliveryModelImpl)userNotificationDelivery);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		UserNotificationDelivery userNotificationDelivery, boolean isNew) {
+		UserNotificationDeliveryModelImpl userNotificationDeliveryModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					userNotificationDelivery.getUserId(),
-					userNotificationDelivery.getPortletId(),
-					userNotificationDelivery.getClassNameId(),
-					userNotificationDelivery.getNotificationType(),
-					userNotificationDelivery.getDeliveryType()
+					userNotificationDeliveryModelImpl.getUserId(),
+					userNotificationDeliveryModelImpl.getPortletId(),
+					userNotificationDeliveryModelImpl.getClassNameId(),
+					userNotificationDeliveryModelImpl.getNotificationType(),
+					userNotificationDeliveryModelImpl.getDeliveryType()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args,
-				userNotificationDelivery);
+				userNotificationDeliveryModelImpl);
 		}
 		else {
-			UserNotificationDeliveryModelImpl userNotificationDeliveryModelImpl = (UserNotificationDeliveryModelImpl)userNotificationDelivery;
-
 			if ((userNotificationDeliveryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_P_C_N_D.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						userNotificationDelivery.getUserId(),
-						userNotificationDelivery.getPortletId(),
-						userNotificationDelivery.getClassNameId(),
-						userNotificationDelivery.getNotificationType(),
-						userNotificationDelivery.getDeliveryType()
+						userNotificationDeliveryModelImpl.getUserId(),
+						userNotificationDeliveryModelImpl.getPortletId(),
+						userNotificationDeliveryModelImpl.getClassNameId(),
+						userNotificationDeliveryModelImpl.getNotificationType(),
+						userNotificationDeliveryModelImpl.getDeliveryType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args,
-					userNotificationDelivery);
+					userNotificationDeliveryModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		UserNotificationDelivery userNotificationDelivery) {
-		UserNotificationDeliveryModelImpl userNotificationDeliveryModelImpl = (UserNotificationDeliveryModelImpl)userNotificationDelivery;
-
+		UserNotificationDeliveryModelImpl userNotificationDeliveryModelImpl) {
 		Object[] args = new Object[] {
-				userNotificationDelivery.getUserId(),
-				userNotificationDelivery.getPortletId(),
-				userNotificationDelivery.getClassNameId(),
-				userNotificationDelivery.getNotificationType(),
-				userNotificationDelivery.getDeliveryType()
+				userNotificationDeliveryModelImpl.getUserId(),
+				userNotificationDeliveryModelImpl.getPortletId(),
+				userNotificationDeliveryModelImpl.getClassNameId(),
+				userNotificationDeliveryModelImpl.getNotificationType(),
+				userNotificationDeliveryModelImpl.getDeliveryType()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args);
@@ -1237,9 +1234,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			userNotificationDelivery.getPrimaryKey(), userNotificationDelivery,
 			false);
 
-		clearUniqueFindersCache((UserNotificationDelivery)userNotificationDeliveryModelImpl);
-		cacheUniqueFindersCache((UserNotificationDelivery)userNotificationDeliveryModelImpl,
-			isNew);
+		clearUniqueFindersCache(userNotificationDeliveryModelImpl);
+		cacheUniqueFindersCache(userNotificationDeliveryModelImpl, isNew);
 
 		userNotificationDelivery.resetOriginalValues();
 

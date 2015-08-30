@@ -1894,7 +1894,7 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(dlFileEntryMetadata);
+		clearUniqueFindersCache((DLFileEntryMetadataModelImpl)dlFileEntryMetadata);
 	}
 
 	@Override
@@ -1907,48 +1907,44 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 				DLFileEntryMetadataImpl.class,
 				dlFileEntryMetadata.getPrimaryKey());
 
-			clearUniqueFindersCache(dlFileEntryMetadata);
+			clearUniqueFindersCache((DLFileEntryMetadataModelImpl)dlFileEntryMetadata);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		DLFileEntryMetadata dlFileEntryMetadata, boolean isNew) {
+		DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					dlFileEntryMetadata.getDDMStructureId(),
-					dlFileEntryMetadata.getFileVersionId()
+					dlFileEntryMetadataModelImpl.getDDMStructureId(),
+					dlFileEntryMetadataModelImpl.getFileVersionId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_D_F, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_D_F, args,
-				dlFileEntryMetadata);
+				dlFileEntryMetadataModelImpl);
 		}
 		else {
-			DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl = (DLFileEntryMetadataModelImpl)dlFileEntryMetadata;
-
 			if ((dlFileEntryMetadataModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_D_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileEntryMetadata.getDDMStructureId(),
-						dlFileEntryMetadata.getFileVersionId()
+						dlFileEntryMetadataModelImpl.getDDMStructureId(),
+						dlFileEntryMetadataModelImpl.getFileVersionId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_D_F, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_D_F, args,
-					dlFileEntryMetadata);
+					dlFileEntryMetadataModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		DLFileEntryMetadata dlFileEntryMetadata) {
-		DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl = (DLFileEntryMetadataModelImpl)dlFileEntryMetadata;
-
+		DLFileEntryMetadataModelImpl dlFileEntryMetadataModelImpl) {
 		Object[] args = new Object[] {
-				dlFileEntryMetadata.getDDMStructureId(),
-				dlFileEntryMetadata.getFileVersionId()
+				dlFileEntryMetadataModelImpl.getDDMStructureId(),
+				dlFileEntryMetadataModelImpl.getFileVersionId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_D_F, args);
@@ -2179,9 +2175,8 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 			DLFileEntryMetadataImpl.class, dlFileEntryMetadata.getPrimaryKey(),
 			dlFileEntryMetadata, false);
 
-		clearUniqueFindersCache((DLFileEntryMetadata)dlFileEntryMetadataModelImpl);
-		cacheUniqueFindersCache((DLFileEntryMetadata)dlFileEntryMetadataModelImpl,
-			isNew);
+		clearUniqueFindersCache(dlFileEntryMetadataModelImpl);
+		cacheUniqueFindersCache(dlFileEntryMetadataModelImpl, isNew);
 
 		dlFileEntryMetadata.resetOriginalValues();
 

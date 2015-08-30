@@ -1180,7 +1180,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(userIdMapper);
+		clearUniqueFindersCache((UserIdMapperModelImpl)userIdMapper);
 	}
 
 	@Override
@@ -1192,65 +1192,67 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			EntityCacheUtil.removeResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
 				UserIdMapperImpl.class, userIdMapper.getPrimaryKey());
 
-			clearUniqueFindersCache(userIdMapper);
+			clearUniqueFindersCache((UserIdMapperModelImpl)userIdMapper);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(UserIdMapper userIdMapper,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		UserIdMapperModelImpl userIdMapperModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					userIdMapper.getUserId(), userIdMapper.getType()
+					userIdMapperModelImpl.getUserId(),
+					userIdMapperModelImpl.getType()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T, args,
-				userIdMapper);
+				userIdMapperModelImpl);
 
 			args = new Object[] {
-					userIdMapper.getType(), userIdMapper.getExternalUserId()
+					userIdMapperModelImpl.getType(),
+					userIdMapperModelImpl.getExternalUserId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_E, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_E, args,
-				userIdMapper);
+				userIdMapperModelImpl);
 		}
 		else {
-			UserIdMapperModelImpl userIdMapperModelImpl = (UserIdMapperModelImpl)userIdMapper;
-
 			if ((userIdMapperModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						userIdMapper.getUserId(), userIdMapper.getType()
+						userIdMapperModelImpl.getUserId(),
+						userIdMapperModelImpl.getType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T, args,
-					userIdMapper);
+					userIdMapperModelImpl);
 			}
 
 			if ((userIdMapperModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_T_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						userIdMapper.getType(), userIdMapper.getExternalUserId()
+						userIdMapperModelImpl.getType(),
+						userIdMapperModelImpl.getExternalUserId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_E, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_E, args,
-					userIdMapper);
+					userIdMapperModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(UserIdMapper userIdMapper) {
-		UserIdMapperModelImpl userIdMapperModelImpl = (UserIdMapperModelImpl)userIdMapper;
-
+	protected void clearUniqueFindersCache(
+		UserIdMapperModelImpl userIdMapperModelImpl) {
 		Object[] args = new Object[] {
-				userIdMapper.getUserId(), userIdMapper.getType()
+				userIdMapperModelImpl.getUserId(),
+				userIdMapperModelImpl.getType()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
@@ -1268,7 +1270,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		}
 
 		args = new Object[] {
-				userIdMapper.getType(), userIdMapper.getExternalUserId()
+				userIdMapperModelImpl.getType(),
+				userIdMapperModelImpl.getExternalUserId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_E, args);
@@ -1445,8 +1448,8 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 			UserIdMapperImpl.class, userIdMapper.getPrimaryKey(), userIdMapper,
 			false);
 
-		clearUniqueFindersCache((UserIdMapper)userIdMapperModelImpl);
-		cacheUniqueFindersCache((UserIdMapper)userIdMapperModelImpl, isNew);
+		clearUniqueFindersCache(userIdMapperModelImpl);
+		cacheUniqueFindersCache(userIdMapperModelImpl, isNew);
 
 		userIdMapper.resetOriginalValues();
 

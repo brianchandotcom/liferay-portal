@@ -5484,7 +5484,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(socialRelation);
+		clearUniqueFindersCache((SocialRelationModelImpl)socialRelation);
 	}
 
 	@Override
@@ -5496,47 +5496,47 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			EntityCacheUtil.removeResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 				SocialRelationImpl.class, socialRelation.getPrimaryKey());
 
-			clearUniqueFindersCache(socialRelation);
+			clearUniqueFindersCache((SocialRelationModelImpl)socialRelation);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(SocialRelation socialRelation,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		SocialRelationModelImpl socialRelationModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					socialRelation.getUserId1(), socialRelation.getUserId2(),
-					socialRelation.getType()
+					socialRelationModelImpl.getUserId1(),
+					socialRelationModelImpl.getUserId2(),
+					socialRelationModelImpl.getType()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U1_U2_T, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U1_U2_T, args,
-				socialRelation);
+				socialRelationModelImpl);
 		}
 		else {
-			SocialRelationModelImpl socialRelationModelImpl = (SocialRelationModelImpl)socialRelation;
-
 			if ((socialRelationModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U1_U2_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						socialRelation.getUserId1(), socialRelation.getUserId2(),
-						socialRelation.getType()
+						socialRelationModelImpl.getUserId1(),
+						socialRelationModelImpl.getUserId2(),
+						socialRelationModelImpl.getType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U1_U2_T, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U1_U2_T, args,
-					socialRelation);
+					socialRelationModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(SocialRelation socialRelation) {
-		SocialRelationModelImpl socialRelationModelImpl = (SocialRelationModelImpl)socialRelation;
-
+	protected void clearUniqueFindersCache(
+		SocialRelationModelImpl socialRelationModelImpl) {
 		Object[] args = new Object[] {
-				socialRelation.getUserId1(), socialRelation.getUserId2(),
-				socialRelation.getType()
+				socialRelationModelImpl.getUserId1(),
+				socialRelationModelImpl.getUserId2(),
+				socialRelationModelImpl.getType()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U1_U2_T, args);
@@ -5899,8 +5899,8 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 			SocialRelationImpl.class, socialRelation.getPrimaryKey(),
 			socialRelation, false);
 
-		clearUniqueFindersCache((SocialRelation)socialRelationModelImpl);
-		cacheUniqueFindersCache((SocialRelation)socialRelationModelImpl, isNew);
+		clearUniqueFindersCache(socialRelationModelImpl);
+		cacheUniqueFindersCache(socialRelationModelImpl, isNew);
 
 		socialRelation.resetOriginalValues();
 

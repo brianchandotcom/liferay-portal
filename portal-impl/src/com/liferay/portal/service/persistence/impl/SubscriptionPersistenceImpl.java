@@ -2819,7 +2819,7 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(subscription);
+		clearUniqueFindersCache((SubscriptionModelImpl)subscription);
 	}
 
 	@Override
@@ -2831,47 +2831,50 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			EntityCacheUtil.removeResult(SubscriptionModelImpl.ENTITY_CACHE_ENABLED,
 				SubscriptionImpl.class, subscription.getPrimaryKey());
 
-			clearUniqueFindersCache(subscription);
+			clearUniqueFindersCache((SubscriptionModelImpl)subscription);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Subscription subscription,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		SubscriptionModelImpl subscriptionModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					subscription.getCompanyId(), subscription.getUserId(),
-					subscription.getClassNameId(), subscription.getClassPK()
+					subscriptionModelImpl.getCompanyId(),
+					subscriptionModelImpl.getUserId(),
+					subscriptionModelImpl.getClassNameId(),
+					subscriptionModelImpl.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_C_C, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_C_C, args,
-				subscription);
+				subscriptionModelImpl);
 		}
 		else {
-			SubscriptionModelImpl subscriptionModelImpl = (SubscriptionModelImpl)subscription;
-
 			if ((subscriptionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_U_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						subscription.getCompanyId(), subscription.getUserId(),
-						subscription.getClassNameId(), subscription.getClassPK()
+						subscriptionModelImpl.getCompanyId(),
+						subscriptionModelImpl.getUserId(),
+						subscriptionModelImpl.getClassNameId(),
+						subscriptionModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_C_C, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_C_C, args,
-					subscription);
+					subscriptionModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Subscription subscription) {
-		SubscriptionModelImpl subscriptionModelImpl = (SubscriptionModelImpl)subscription;
-
+	protected void clearUniqueFindersCache(
+		SubscriptionModelImpl subscriptionModelImpl) {
 		Object[] args = new Object[] {
-				subscription.getCompanyId(), subscription.getUserId(),
-				subscription.getClassNameId(), subscription.getClassPK()
+				subscriptionModelImpl.getCompanyId(),
+				subscriptionModelImpl.getUserId(),
+				subscriptionModelImpl.getClassNameId(),
+				subscriptionModelImpl.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_C_C, args);
@@ -3162,8 +3165,8 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 			SubscriptionImpl.class, subscription.getPrimaryKey(), subscription,
 			false);
 
-		clearUniqueFindersCache((Subscription)subscriptionModelImpl);
-		cacheUniqueFindersCache((Subscription)subscriptionModelImpl, isNew);
+		clearUniqueFindersCache(subscriptionModelImpl);
+		cacheUniqueFindersCache(subscriptionModelImpl, isNew);
 
 		subscription.resetOriginalValues();
 

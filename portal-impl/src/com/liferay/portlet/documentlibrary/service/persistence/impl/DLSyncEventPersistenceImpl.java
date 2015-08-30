@@ -825,7 +825,7 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(dlSyncEvent);
+		clearUniqueFindersCache((DLSyncEventModelImpl)dlSyncEvent);
 	}
 
 	@Override
@@ -837,39 +837,36 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 			EntityCacheUtil.removeResult(DLSyncEventModelImpl.ENTITY_CACHE_ENABLED,
 				DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey());
 
-			clearUniqueFindersCache(dlSyncEvent);
+			clearUniqueFindersCache((DLSyncEventModelImpl)dlSyncEvent);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLSyncEvent dlSyncEvent,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		DLSyncEventModelImpl dlSyncEventModelImpl, boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { dlSyncEvent.getTypePK() };
+			Object[] args = new Object[] { dlSyncEventModelImpl.getTypePK() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_TYPEPK, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TYPEPK, args,
-				dlSyncEvent);
+				dlSyncEventModelImpl);
 		}
 		else {
-			DLSyncEventModelImpl dlSyncEventModelImpl = (DLSyncEventModelImpl)dlSyncEvent;
-
 			if ((dlSyncEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_TYPEPK.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { dlSyncEvent.getTypePK() };
+				Object[] args = new Object[] { dlSyncEventModelImpl.getTypePK() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_TYPEPK, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_TYPEPK, args,
-					dlSyncEvent);
+					dlSyncEventModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(DLSyncEvent dlSyncEvent) {
-		DLSyncEventModelImpl dlSyncEventModelImpl = (DLSyncEventModelImpl)dlSyncEvent;
-
-		Object[] args = new Object[] { dlSyncEvent.getTypePK() };
+	protected void clearUniqueFindersCache(
+		DLSyncEventModelImpl dlSyncEventModelImpl) {
+		Object[] args = new Object[] { dlSyncEventModelImpl.getTypePK() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TYPEPK, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_TYPEPK, args);
@@ -1022,8 +1019,8 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 			DLSyncEventImpl.class, dlSyncEvent.getPrimaryKey(), dlSyncEvent,
 			false);
 
-		clearUniqueFindersCache((DLSyncEvent)dlSyncEventModelImpl);
-		cacheUniqueFindersCache((DLSyncEvent)dlSyncEventModelImpl, isNew);
+		clearUniqueFindersCache(dlSyncEventModelImpl);
+		cacheUniqueFindersCache(dlSyncEventModelImpl, isNew);
 
 		dlSyncEvent.resetOriginalValues();
 

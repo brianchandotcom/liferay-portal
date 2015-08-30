@@ -5204,7 +5204,7 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(calEvent);
+		clearUniqueFindersCache((CalEventModelImpl)calEvent);
 	}
 
 	@Override
@@ -5216,42 +5216,42 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			EntityCacheUtil.removeResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 				CalEventImpl.class, calEvent.getPrimaryKey());
 
-			clearUniqueFindersCache(calEvent);
+			clearUniqueFindersCache((CalEventModelImpl)calEvent);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(CalEvent calEvent, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		CalEventModelImpl calEventModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					calEvent.getUuid(), calEvent.getGroupId()
+					calEventModelImpl.getUuid(), calEventModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				calEvent);
+				calEventModelImpl);
 		}
 		else {
-			CalEventModelImpl calEventModelImpl = (CalEventModelImpl)calEvent;
-
 			if ((calEventModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						calEvent.getUuid(), calEvent.getGroupId()
+						calEventModelImpl.getUuid(),
+						calEventModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					calEvent);
+					calEventModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(CalEvent calEvent) {
-		CalEventModelImpl calEventModelImpl = (CalEventModelImpl)calEvent;
-
-		Object[] args = new Object[] { calEvent.getUuid(), calEvent.getGroupId() };
+	protected void clearUniqueFindersCache(CalEventModelImpl calEventModelImpl) {
+		Object[] args = new Object[] {
+				calEventModelImpl.getUuid(), calEventModelImpl.getGroupId()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
@@ -5607,8 +5607,8 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		EntityCacheUtil.putResult(CalEventModelImpl.ENTITY_CACHE_ENABLED,
 			CalEventImpl.class, calEvent.getPrimaryKey(), calEvent, false);
 
-		clearUniqueFindersCache((CalEvent)calEventModelImpl);
-		cacheUniqueFindersCache((CalEvent)calEventModelImpl, isNew);
+		clearUniqueFindersCache(calEventModelImpl);
+		cacheUniqueFindersCache(calEventModelImpl, isNew);
 
 		calEvent.resetOriginalValues();
 

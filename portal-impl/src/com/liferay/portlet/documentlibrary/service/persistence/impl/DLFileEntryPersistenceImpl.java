@@ -11409,7 +11409,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(dlFileEntry);
+		clearUniqueFindersCache((DLFileEntryModelImpl)dlFileEntry);
 	}
 
 	@Override
@@ -11421,113 +11421,119 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			EntityCacheUtil.removeResult(DLFileEntryModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileEntryImpl.class, dlFileEntry.getPrimaryKey());
 
-			clearUniqueFindersCache(dlFileEntry);
+			clearUniqueFindersCache((DLFileEntryModelImpl)dlFileEntry);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLFileEntry dlFileEntry,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		DLFileEntryModelImpl dlFileEntryModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					dlFileEntry.getUuid(), dlFileEntry.getGroupId()
+					dlFileEntryModelImpl.getUuid(),
+					dlFileEntryModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				dlFileEntry);
+				dlFileEntryModelImpl);
 
 			args = new Object[] {
-					dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-					dlFileEntry.getName()
+					dlFileEntryModelImpl.getGroupId(),
+					dlFileEntryModelImpl.getFolderId(),
+					dlFileEntryModelImpl.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_N, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_N, args,
-				dlFileEntry);
+				dlFileEntryModelImpl);
 
 			args = new Object[] {
-					dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-					dlFileEntry.getFileName()
+					dlFileEntryModelImpl.getGroupId(),
+					dlFileEntryModelImpl.getFolderId(),
+					dlFileEntryModelImpl.getFileName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_FN, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_FN, args,
-				dlFileEntry);
+				dlFileEntryModelImpl);
 
 			args = new Object[] {
-					dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-					dlFileEntry.getTitle()
+					dlFileEntryModelImpl.getGroupId(),
+					dlFileEntryModelImpl.getFolderId(),
+					dlFileEntryModelImpl.getTitle()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_T, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_T, args,
-				dlFileEntry);
+				dlFileEntryModelImpl);
 		}
 		else {
-			DLFileEntryModelImpl dlFileEntryModelImpl = (DLFileEntryModelImpl)dlFileEntry;
-
 			if ((dlFileEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileEntry.getUuid(), dlFileEntry.getGroupId()
+						dlFileEntryModelImpl.getUuid(),
+						dlFileEntryModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					dlFileEntry);
+					dlFileEntryModelImpl);
 			}
 
 			if ((dlFileEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_F_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-						dlFileEntry.getName()
+						dlFileEntryModelImpl.getGroupId(),
+						dlFileEntryModelImpl.getFolderId(),
+						dlFileEntryModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_N, args,
-					dlFileEntry);
+					dlFileEntryModelImpl);
 			}
 
 			if ((dlFileEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_F_FN.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-						dlFileEntry.getFileName()
+						dlFileEntryModelImpl.getGroupId(),
+						dlFileEntryModelImpl.getFolderId(),
+						dlFileEntryModelImpl.getFileName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_FN, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_FN, args,
-					dlFileEntry);
+					dlFileEntryModelImpl);
 			}
 
 			if ((dlFileEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_F_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-						dlFileEntry.getTitle()
+						dlFileEntryModelImpl.getGroupId(),
+						dlFileEntryModelImpl.getFolderId(),
+						dlFileEntryModelImpl.getTitle()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F_T, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F_T, args,
-					dlFileEntry);
+					dlFileEntryModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(DLFileEntry dlFileEntry) {
-		DLFileEntryModelImpl dlFileEntryModelImpl = (DLFileEntryModelImpl)dlFileEntry;
-
+	protected void clearUniqueFindersCache(
+		DLFileEntryModelImpl dlFileEntryModelImpl) {
 		Object[] args = new Object[] {
-				dlFileEntry.getUuid(), dlFileEntry.getGroupId()
+				dlFileEntryModelImpl.getUuid(),
+				dlFileEntryModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -11545,8 +11551,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		}
 
 		args = new Object[] {
-				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-				dlFileEntry.getName()
+				dlFileEntryModelImpl.getGroupId(),
+				dlFileEntryModelImpl.getFolderId(),
+				dlFileEntryModelImpl.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_N, args);
@@ -11565,8 +11572,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		}
 
 		args = new Object[] {
-				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-				dlFileEntry.getFileName()
+				dlFileEntryModelImpl.getGroupId(),
+				dlFileEntryModelImpl.getFolderId(),
+				dlFileEntryModelImpl.getFileName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_FN, args);
@@ -11585,8 +11593,9 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		}
 
 		args = new Object[] {
-				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-				dlFileEntry.getTitle()
+				dlFileEntryModelImpl.getGroupId(),
+				dlFileEntryModelImpl.getFolderId(),
+				dlFileEntryModelImpl.getTitle()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F_T, args);
@@ -12037,8 +12046,8 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 			DLFileEntryImpl.class, dlFileEntry.getPrimaryKey(), dlFileEntry,
 			false);
 
-		clearUniqueFindersCache((DLFileEntry)dlFileEntryModelImpl);
-		cacheUniqueFindersCache((DLFileEntry)dlFileEntryModelImpl, isNew);
+		clearUniqueFindersCache(dlFileEntryModelImpl);
+		cacheUniqueFindersCache(dlFileEntryModelImpl, isNew);
 
 		dlFileEntry.resetOriginalValues();
 

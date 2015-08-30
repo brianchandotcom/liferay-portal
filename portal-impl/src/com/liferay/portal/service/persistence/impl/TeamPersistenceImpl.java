@@ -2570,7 +2570,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(team);
+		clearUniqueFindersCache((TeamModelImpl)team);
 	}
 
 	@Override
@@ -2582,52 +2582,62 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			EntityCacheUtil.removeResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
 				TeamImpl.class, team.getPrimaryKey());
 
-			clearUniqueFindersCache(team);
+			clearUniqueFindersCache((TeamModelImpl)team);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Team team, boolean isNew) {
+	protected void cacheUniqueFindersCache(TeamModelImpl teamModelImpl,
+		boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { team.getUuid(), team.getGroupId() };
+			Object[] args = new Object[] {
+					teamModelImpl.getUuid(), teamModelImpl.getGroupId()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args, team);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				teamModelImpl);
 
-			args = new Object[] { team.getGroupId(), team.getName() };
+			args = new Object[] {
+					teamModelImpl.getGroupId(), teamModelImpl.getName()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args, team);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+				teamModelImpl);
 		}
 		else {
-			TeamModelImpl teamModelImpl = (TeamModelImpl)team;
-
 			if ((teamModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { team.getUuid(), team.getGroupId() };
+				Object[] args = new Object[] {
+						teamModelImpl.getUuid(), teamModelImpl.getGroupId()
+					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					team);
+					teamModelImpl);
 			}
 
 			if ((teamModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { team.getGroupId(), team.getName() };
+				Object[] args = new Object[] {
+						teamModelImpl.getGroupId(), teamModelImpl.getName()
+					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args, team);
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+					teamModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Team team) {
-		TeamModelImpl teamModelImpl = (TeamModelImpl)team;
-
-		Object[] args = new Object[] { team.getUuid(), team.getGroupId() };
+	protected void clearUniqueFindersCache(TeamModelImpl teamModelImpl) {
+		Object[] args = new Object[] {
+				teamModelImpl.getUuid(), teamModelImpl.getGroupId()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
@@ -2643,7 +2653,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { team.getGroupId(), team.getName() };
+		args = new Object[] { teamModelImpl.getGroupId(), teamModelImpl.getName() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
@@ -2883,8 +2893,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		EntityCacheUtil.putResult(TeamModelImpl.ENTITY_CACHE_ENABLED,
 			TeamImpl.class, team.getPrimaryKey(), team, false);
 
-		clearUniqueFindersCache((Team)teamModelImpl);
-		cacheUniqueFindersCache((Team)teamModelImpl, isNew);
+		clearUniqueFindersCache(teamModelImpl);
+		cacheUniqueFindersCache(teamModelImpl, isNew);
 
 		team.resetOriginalValues();
 

@@ -10308,7 +10308,7 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(assetCategory);
+		clearUniqueFindersCache((AssetCategoryModelImpl)assetCategory);
 	}
 
 	@Override
@@ -10320,67 +10320,69 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			EntityCacheUtil.removeResult(AssetCategoryModelImpl.ENTITY_CACHE_ENABLED,
 				AssetCategoryImpl.class, assetCategory.getPrimaryKey());
 
-			clearUniqueFindersCache(assetCategory);
+			clearUniqueFindersCache((AssetCategoryModelImpl)assetCategory);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AssetCategory assetCategory,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		AssetCategoryModelImpl assetCategoryModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					assetCategory.getUuid(), assetCategory.getGroupId()
+					assetCategoryModelImpl.getUuid(),
+					assetCategoryModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				assetCategory);
+				assetCategoryModelImpl);
 
 			args = new Object[] {
-					assetCategory.getParentCategoryId(), assetCategory.getName(),
-					assetCategory.getVocabularyId()
+					assetCategoryModelImpl.getParentCategoryId(),
+					assetCategoryModelImpl.getName(),
+					assetCategoryModelImpl.getVocabularyId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_P_N_V, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_N_V, args,
-				assetCategory);
+				assetCategoryModelImpl);
 		}
 		else {
-			AssetCategoryModelImpl assetCategoryModelImpl = (AssetCategoryModelImpl)assetCategory;
-
 			if ((assetCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetCategory.getUuid(), assetCategory.getGroupId()
+						assetCategoryModelImpl.getUuid(),
+						assetCategoryModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					assetCategory);
+					assetCategoryModelImpl);
 			}
 
 			if ((assetCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_P_N_V.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetCategory.getParentCategoryId(),
-						assetCategory.getName(), assetCategory.getVocabularyId()
+						assetCategoryModelImpl.getParentCategoryId(),
+						assetCategoryModelImpl.getName(),
+						assetCategoryModelImpl.getVocabularyId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_P_N_V, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_P_N_V, args,
-					assetCategory);
+					assetCategoryModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(AssetCategory assetCategory) {
-		AssetCategoryModelImpl assetCategoryModelImpl = (AssetCategoryModelImpl)assetCategory;
-
+	protected void clearUniqueFindersCache(
+		AssetCategoryModelImpl assetCategoryModelImpl) {
 		Object[] args = new Object[] {
-				assetCategory.getUuid(), assetCategory.getGroupId()
+				assetCategoryModelImpl.getUuid(),
+				assetCategoryModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -10398,8 +10400,9 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		}
 
 		args = new Object[] {
-				assetCategory.getParentCategoryId(), assetCategory.getName(),
-				assetCategory.getVocabularyId()
+				assetCategoryModelImpl.getParentCategoryId(),
+				assetCategoryModelImpl.getName(),
+				assetCategoryModelImpl.getVocabularyId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_P_N_V, args);
@@ -10852,8 +10855,8 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 			AssetCategoryImpl.class, assetCategory.getPrimaryKey(),
 			assetCategory, false);
 
-		clearUniqueFindersCache((AssetCategory)assetCategoryModelImpl);
-		cacheUniqueFindersCache((AssetCategory)assetCategoryModelImpl, isNew);
+		clearUniqueFindersCache(assetCategoryModelImpl);
+		cacheUniqueFindersCache(assetCategoryModelImpl, isNew);
 
 		assetCategory.resetOriginalValues();
 

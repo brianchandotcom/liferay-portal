@@ -17,29 +17,29 @@ package com.liferay.dynamic.data.mapping.type.select;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRendererAccessor;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Renato Rego
  */
-public class SelectDDMFormFieldValueRendererAccessor
-	extends DDMFormFieldValueRendererAccessor {
-
-	public SelectDDMFormFieldValueRendererAccessor(
-		DDMFormFieldValueAccessor<JSONArray> ddmFormFieldValueAccessor) {
-
-		_ddmFormFieldValueAccessor = ddmFormFieldValueAccessor;
-	}
+@Component(immediate = true, property = "ddm.form.field.type.name=select")
+public class SelectDDMFormFieldValueRenderer
+	implements DDMFormFieldValueRenderer {
 
 	@Override
-	public String get(DDMFormFieldValue ddmFormFieldValue) {
-		JSONArray optionsValuesJSONArray = _ddmFormFieldValueAccessor.get(
-			ddmFormFieldValue);
+	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+		JSONArray optionsValuesJSONArray =
+			_selectDDMFormFieldValueAccessor.getValue(
+				ddmFormFieldValue, locale);
 
 		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
 			ddmFormFieldValue);
@@ -55,8 +55,7 @@ public class SelectDDMFormFieldValueRendererAccessor
 			LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
 				optionsValuesJSONArray.getString(i));
 
-			sb.append(
-				optionLabel.getString(_ddmFormFieldValueAccessor.getLocale()));
+			sb.append(optionLabel.getString(locale));
 		}
 
 		return sb.toString();
@@ -70,7 +69,13 @@ public class SelectDDMFormFieldValueRendererAccessor
 		return ddmFormField.getDDMFormFieldOptions();
 	}
 
-	private final DDMFormFieldValueAccessor<JSONArray>
-		_ddmFormFieldValueAccessor;
+	@Reference
+	protected void setSelectDDMFormFieldValueAccessor(
+		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor) {
+
+		_selectDDMFormFieldValueAccessor = selectDDMFormFieldValueAccessor;
+	}
+
+	private SelectDDMFormFieldValueAccessor _selectDDMFormFieldValueAccessor;
 
 }

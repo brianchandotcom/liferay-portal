@@ -16,10 +16,6 @@ package com.liferay.dynamic.data.mapping.type.validation;
 
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRendererAccessor;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -37,13 +33,6 @@ import org.osgi.service.component.annotations.Component;
 	service = DDMFormFieldType.class
 )
 public class ValidationDDMFormFieldType extends BaseDDMFormFieldType {
-
-	@Override
-	public DDMFormFieldValueRendererAccessor
-		getDDMFormFieldValueRendererAccessor(Locale locale) {
-
-		return null;
-	}
 
 	@Override
 	public String getName() {

@@ -17,25 +17,25 @@ package com.liferay.dynamic.data.mapping.type.radio;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRendererAccessor;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+
+import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Renato Rego
  */
-public class RadioDDMFormFieldValueRendererAccessor
-	extends DDMFormFieldValueRendererAccessor {
-
-	public RadioDDMFormFieldValueRendererAccessor(
-		DDMFormFieldValueAccessor<String> ddmFormFieldValueAccessor) {
-
-		_ddmFormFieldValueAccessor = ddmFormFieldValueAccessor;
-	}
+@Component(immediate = true, property = {"ddm.form.field.type.name=radio"})
+public class RadioDDMFormFieldValueRenderer
+	implements DDMFormFieldValueRenderer {
 
 	@Override
-	public String get(DDMFormFieldValue ddmFormFieldValue) {
-		String optionValue = _ddmFormFieldValueAccessor.get(ddmFormFieldValue);
+	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+		String optionValue = _radioDDMFormFieldValueAccessor.getValue(
+			ddmFormFieldValue, locale);
 
 		DDMFormFieldOptions ddmFormFieldOptions = getDDMFormFieldOptions(
 			ddmFormFieldValue);
@@ -43,7 +43,7 @@ public class RadioDDMFormFieldValueRendererAccessor
 		LocalizedValue optionLabel = ddmFormFieldOptions.getOptionLabels(
 			optionValue);
 
-		return optionLabel.getString(_ddmFormFieldValueAccessor.getLocale());
+		return optionLabel.getString(locale);
 	}
 
 	protected DDMFormFieldOptions getDDMFormFieldOptions(
@@ -54,6 +54,13 @@ public class RadioDDMFormFieldValueRendererAccessor
 		return ddmFormField.getDDMFormFieldOptions();
 	}
 
-	private final DDMFormFieldValueAccessor<String> _ddmFormFieldValueAccessor;
+	@Reference
+	protected void setRadioDDMFormFieldValueAccessor(
+		RadioDDMFormFieldValueAccessor radioDDMFormFieldValueAccessor) {
+
+		_radioDDMFormFieldValueAccessor = radioDDMFormFieldValueAccessor;
+	}
+
+	private RadioDDMFormFieldValueAccessor _radioDDMFormFieldValueAccessor;
 
 }

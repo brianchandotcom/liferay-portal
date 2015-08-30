@@ -39,13 +39,6 @@ import org.osgi.service.component.annotations.Component;
 public class ValidationDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
-	public DDMFormFieldValueParameterSerializer
-		getDDMFormFieldValueParameterSerializer() {
-
-		return null;
-	}
-
-	@Override
 	public DDMFormFieldValueRendererAccessor
 		getDDMFormFieldValueRendererAccessor(Locale locale) {
 

@@ -21,8 +21,6 @@ import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRendererAccessor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.Locale;
 
@@ -50,28 +48,6 @@ public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return SelectDDMFormFieldTypeSettings.class;
-	}
-
-	@Override
-	public DDMFormFieldValueParameterSerializer
-		getDDMFormFieldValueParameterSerializer() {
-
-		return new DDMFormFieldValueParameterSerializer() {
-
-			@Override
-			public String getParameterValue(
-				HttpServletRequest httpServletRequest,
-				String ddmFormFieldParameterName,
-				String defaultDDMFormFieldParameterValue) {
-
-				String[] parameterValues = ParamUtil.getParameterValues(
-					httpServletRequest, ddmFormFieldParameterName,
-					GetterUtil.DEFAULT_STRING_VALUES);
-
-				return JSONFactoryUtil.serialize(parameterValues);
-			}
-
-		};
 	}
 
 	@Override

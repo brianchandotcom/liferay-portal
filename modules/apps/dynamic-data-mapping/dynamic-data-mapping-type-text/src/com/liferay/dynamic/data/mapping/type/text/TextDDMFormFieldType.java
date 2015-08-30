@@ -23,11 +23,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, 
+	immediate = true,
 	property = {
-		"ddm.form.field.type.icon=icon-font",
-		"ddm.form.field.type.name=text"
-	}, 
+		"ddm.form.field.type.icon=icon-font", "ddm.form.field.type.name=text"
+	},
 	service = DDMFormFieldType.class
 )
 public class TextDDMFormFieldType extends BaseDDMFormFieldType {

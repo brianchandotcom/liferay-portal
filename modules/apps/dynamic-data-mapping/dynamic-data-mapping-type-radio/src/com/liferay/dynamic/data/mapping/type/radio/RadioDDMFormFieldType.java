@@ -17,11 +17,6 @@ package com.liferay.dynamic.data.mapping.type.radio;
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,13 +24,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Renato Rego
  */
 @Component(
-	immediate = true, 
+	immediate = true,
 	property = {
 		"ddm.form.field.type.icon=icon-ok-circle",
 		"ddm.form.field.type.js.class=Liferay.DDM.Field.Radio",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-radio",
 		"ddm.form.field.type.name=radio"
-	}, 
+	},
 	service = DDMFormFieldType.class
 )
 public class RadioDDMFormFieldType extends BaseDDMFormFieldType {

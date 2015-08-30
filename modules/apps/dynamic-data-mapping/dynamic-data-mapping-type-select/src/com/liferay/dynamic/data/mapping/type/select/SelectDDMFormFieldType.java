@@ -17,12 +17,6 @@ package com.liferay.dynamic.data.mapping.type.select;
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-
-import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,13 +24,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Renato Rego
  */
 @Component(
-	immediate = true, 
+	immediate = true,
 	property = {
 		"ddm.form.field.type.icon=icon-list",
 		"ddm.form.field.type.js.class=Liferay.DDM.Field.Select",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-select",
 		"ddm.form.field.type.name=select"
-	}, 
+	},
 	service = DDMFormFieldType.class
 )
 public class SelectDDMFormFieldType extends BaseDDMFormFieldType {

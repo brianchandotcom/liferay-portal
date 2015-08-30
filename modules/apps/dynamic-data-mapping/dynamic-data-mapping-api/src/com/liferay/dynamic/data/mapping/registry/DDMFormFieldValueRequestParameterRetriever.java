@@ -19,9 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldValueParameterSerializer {
+public interface DDMFormFieldValueRequestParameterRetriever {
 
-	public String getParameterValue(
+	public String get(
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String defaultDDMFormFieldParameterValue);
 

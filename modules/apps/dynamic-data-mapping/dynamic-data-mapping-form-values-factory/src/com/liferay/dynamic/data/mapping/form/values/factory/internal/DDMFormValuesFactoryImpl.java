@@ -21,11 +21,12 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueParameterSerializer;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRequestParameterRetriever;
+import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldValueRequestParameterRetriever;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -48,7 +49,11 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Marcellus Tavares
@@ -75,6 +80,17 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		return create(
 			PortalUtil.getHttpServletRequest(portletRequest), ddmForm);
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext)
+		throws InvalidSyntaxException {
+
+		_serviceTrackerMap = ServiceTrackerMapFactory.singleValueMap(
+			bundleContext, DDMFormFieldValueRequestParameterRetriever.class,
+			"ddm.form.field.type.name");
+
+		_serviceTrackerMap.open();
 	}
 
 	protected void checkDDMFormFieldParameterNames(
@@ -220,6 +236,11 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		return defaultDDMFormFieldParameterNames;
 	}
 
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
+	}
+
 	protected String extractPrefix(String ddmFormFieldParameterName) {
 		return StringUtil.extractLast(
 			ddmFormFieldParameterName,
@@ -318,22 +339,13 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			DDMFormRendererConstants.DDM_FORM_FIELD_LANGUAGE_ID_SEPARATOR);
 		sb.append(LocaleUtil.toLanguageId(locale));
 
-		DDMFormFieldValueParameterSerializer
-			ddmFormFieldValueParameterSerializer =
-				getDDMFormFieldTypeParameterSerializer(fieldType);
+		DDMFormFieldValueRequestParameterRetriever
+			ddmFormFieldValueRequestParameterRetriever =
+				getDDMFormFieldValueRequestParameterRetriever(fieldType);
 
-		return ddmFormFieldValueParameterSerializer.getParameterValue(
+		return ddmFormFieldValueRequestParameterRetriever.get(
 			httpServletRequest, sb.toString(),
 			defaultDDMFormFieldParameterValue);
-	}
-
-	protected DDMFormFieldValueParameterSerializer
-		getDDMFormFieldTypeParameterSerializer(String fieldType) {
-
-		DDMFormFieldType ddmFormFieldType =
-			DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(fieldType);
-
-		return ddmFormFieldType.getDDMFormFieldValueParameterSerializer();
 	}
 
 	protected int getDDMFormFieldValueIndex(String ddmFormFieldParameterName) {
@@ -341,6 +353,16 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			getLastDDMFormFieldParameterNameParts(ddmFormFieldParameterName);
 
 		return getFieldIndex(lastDDMFormFieldParameterNameParts);
+	}
+
+	protected DDMFormFieldValueRequestParameterRetriever
+		getDDMFormFieldValueRequestParameterRetriever(String fieldType) {
+
+		if (!_serviceTrackerMap.containsKey(fieldType)) {
+			return _defaultDDMFormFieldValueRequestParameterRetriever;
+		}
+
+		return _serviceTrackerMap.getService(fieldType);
 	}
 
 	protected List<DDMFormFieldValue> getDDMFormFieldValues(
@@ -627,5 +649,11 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	private static final int _DDM_FORM_FIELD_INSTANCE_ID_INDEX = 1;
 
 	private static final int _DDM_FORM_FIELD_NAME_INDEX = 0;
+
+	private final DDMFormFieldValueRequestParameterRetriever
+		_defaultDDMFormFieldValueRequestParameterRetriever =
+			new DefaultDDMFormFieldValueRequestParameterRetriever();
+	private ServiceTrackerMap
+		<String, DDMFormFieldValueRequestParameterRetriever> _serviceTrackerMap;
 
 }

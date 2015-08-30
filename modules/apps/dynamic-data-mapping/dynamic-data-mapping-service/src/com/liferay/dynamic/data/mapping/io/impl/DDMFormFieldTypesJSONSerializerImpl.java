@@ -20,13 +20,16 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Bruno Basto
@@ -67,21 +70,37 @@ public class DDMFormFieldTypesJSONSerializerImpl
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("icon", ddmFormFieldType.getIcon());
+		Map<String, Object> ddmFormFieldTypeProperties =
+			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldTypeProperties(
+				ddmFormFieldType.getName());
+
+		jsonObject.put(
+			"icon",
+			MapUtil.getString(
+				ddmFormFieldTypeProperties, "ddm.form.field.type.icon",
+				"icon-ok-circle"));
 		jsonObject.put(
 			"javaScriptClass",
-			ddmFormFieldType.getDDMFormFieldTypeJavaScriptClass());
+			MapUtil.getString(
+				ddmFormFieldTypeProperties, "ddm.form.field.type.js.class",
+				"Liferay.DDM.Renderer.Field"));
 		jsonObject.put(
 			"javaScriptModule",
-			ddmFormFieldType.getDDMFormFieldTypeJavaScriptModule());
+			MapUtil.getString(
+				ddmFormFieldTypeProperties, "ddm.form.field.type.js.module",
+				"liferay-ddm-form-renderer-field"));
 		jsonObject.put("name", ddmFormFieldType.getName());
 		jsonObject.put(
 			"settings",
 			toJSONObject(ddmFormFieldType.getDDMFormFieldTypeSettings()));
-		jsonObject.put("system", ddmFormFieldType.isSystem());
+		jsonObject.put(
+			"system",
+			MapUtil.getBoolean(
+				ddmFormFieldTypeProperties, "ddm.form.field.type.system"));
 
 		DDMFormFieldRenderer ddmFormFieldRenderer =
-			ddmFormFieldType.getDDMFormFieldRenderer();
+			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldRenderer(
+				ddmFormFieldType.getName());
 
 		jsonObject.put(
 			"templateNamespace", ddmFormFieldRenderer.getTemplateNamespace());

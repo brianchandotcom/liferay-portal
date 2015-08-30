@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -33,8 +32,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Renato Rego
  */
 @Component(
-	immediate = true, property = {"templatePath=/META-INF/resources/radio.soy"},
-	service = {RadioDDMFormFieldRenderer.class, DDMFormFieldRenderer.class}
+	immediate = true, property = "ddm.form.field.type.name=radio",
+	service = DDMFormFieldRenderer.class
 )
 public class RadioDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
@@ -55,9 +54,8 @@ public class RadioDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		String templatePath = MapUtil.getString(properties, "templatePath");
-
-		_templateResource = getTemplateResource(templatePath);
+		_templateResource = getTemplateResource(
+			"/META-INF/resources/radio.soy");
 	}
 
 	protected List<Object> getOptions(

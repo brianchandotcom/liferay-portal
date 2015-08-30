@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.type.text;
 
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueParameterSerializer;
@@ -25,7 +24,6 @@ import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldValueParamet
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -41,9 +39,6 @@ import org.osgi.service.component.annotations.Reference;
 public class TextDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
-	public DDMFormFieldRenderer getDDMFormFieldRenderer() {
-		return _ddmFormFieldRenderer;
-	}
 
 	@Override
 	public DDMFormFieldValueAccessor<String> getDDMFormFieldValueAccessor(
@@ -71,14 +66,5 @@ public class TextDDMFormFieldType extends BaseDDMFormFieldType {
 	public String getName() {
 		return "text";
 	}
-
-	@Reference(service = TextDDMFormFieldRenderer.class, unbind = "-")
-	protected void setDDMFormFieldRenderer(
-		DDMFormFieldRenderer ddmFormFieldRenderer) {
-
-		_ddmFormFieldRenderer = ddmFormFieldRenderer;
-	}
-
-	private DDMFormFieldRenderer _ddmFormFieldRenderer;
 
 }

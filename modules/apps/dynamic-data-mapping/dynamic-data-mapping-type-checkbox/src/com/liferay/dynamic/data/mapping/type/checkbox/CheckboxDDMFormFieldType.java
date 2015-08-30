@@ -15,7 +15,6 @@
 package com.liferay.dynamic.data.mapping.type.checkbox;
 
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
@@ -26,7 +25,6 @@ import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldValueParamet
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Renato Rego
@@ -42,11 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = DDMFormFieldType.class
 )
 public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
-
-	@Override
-	public DDMFormFieldRenderer getDDMFormFieldRenderer() {
-		return _ddmFormFieldRenderer;
-	}
 
 	@Override
 	public Class<? extends DDMFormFieldTypeSettings>
@@ -81,14 +74,5 @@ public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
 	public String getName() {
 		return "checkbox";
 	}
-
-	@Reference(service = CheckboxDDMFormFieldRenderer.class, unbind = "-")
-	protected void setDDMFormFieldRenderer(
-		DDMFormFieldRenderer ddmFormFieldRenderer) {
-
-		_ddmFormFieldRenderer = ddmFormFieldRenderer;
-	}
-
-	private DDMFormFieldRenderer _ddmFormFieldRenderer;
 
 }

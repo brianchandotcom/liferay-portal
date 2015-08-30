@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.type.checkbox;
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueParameterSerializer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRendererAccessor;
 import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldValueParameterSerializer;
@@ -46,13 +45,6 @@ public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return CheckboxDDMFormFieldTypeSettings.class;
-	}
-
-	@Override
-	public DDMFormFieldValueAccessor<Boolean> getDDMFormFieldValueAccessor(
-		Locale locale) {
-
-		return new CheckboxDDMFormFieldValueAccessor(locale);
 	}
 
 	@Override

@@ -25,18 +25,24 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Renato Rego
  */
-public class SelectDDMFormFieldValueAccessor
-	extends DDMFormFieldValueAccessor<JSONArray> {
-
-	public SelectDDMFormFieldValueAccessor(Locale locale) {
-		super(locale);
+@Component(
+	immediate = true, property = "ddm.form.field.type.name=select",
+	service = {
+		DDMFormFieldValueAccessor.class, SelectDDMFormFieldValueAccessor.class
 	}
+)
+public class SelectDDMFormFieldValueAccessor
+	implements DDMFormFieldValueAccessor<JSONArray> {
 
 	@Override
-	public JSONArray get(DDMFormFieldValue ddmFormFieldValue) {
+	public JSONArray getValue(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
 		try {
 			Value value = ddmFormFieldValue.getValue();
 
@@ -47,11 +53,6 @@ public class SelectDDMFormFieldValueAccessor
 
 			return _EMPTY_JSON_ARRAY;
 		}
-	}
-
-	@Override
-	public Class<JSONArray> getAttributeClass() {
-		return JSONArray.class;
 	}
 
 	private static final JSONArray _EMPTY_JSON_ARRAY =

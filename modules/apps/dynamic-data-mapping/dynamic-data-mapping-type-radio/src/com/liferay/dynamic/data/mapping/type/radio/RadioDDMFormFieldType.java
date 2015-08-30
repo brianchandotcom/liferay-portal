@@ -18,7 +18,6 @@ import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueParameterSerializer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRendererAccessor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -50,13 +49,6 @@ public class RadioDDMFormFieldType extends BaseDDMFormFieldType {
 		getDDMFormFieldTypeSettings() {
 
 		return RadioDDMFormFieldTypeSettings.class;
-	}
-
-	@Override
-	public DDMFormFieldValueAccessor<String> getDDMFormFieldValueAccessor(
-		Locale locale) {
-
-		return new RadioDDMFormFieldValueAccessor(locale);
 	}
 
 	@Override

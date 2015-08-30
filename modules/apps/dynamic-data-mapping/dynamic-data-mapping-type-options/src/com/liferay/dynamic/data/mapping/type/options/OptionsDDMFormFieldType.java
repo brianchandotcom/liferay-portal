@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.type.options;
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueParameterSerializer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRendererAccessor;
 
 import java.util.Locale;
@@ -38,15 +37,6 @@ import org.osgi.service.component.annotations.Component;
 	service = DDMFormFieldType.class
 )
 public class OptionsDDMFormFieldType extends BaseDDMFormFieldType {
-
-	@Override
-
-	@Override
-	public DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
-		Locale locale) {
-
-		return null;
-	}
 
 	@Override
 	public DDMFormFieldValueParameterSerializer

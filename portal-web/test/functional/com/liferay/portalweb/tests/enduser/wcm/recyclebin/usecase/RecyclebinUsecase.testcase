@@ -226,8 +226,9 @@
 	<command name="RecycleBinEntriesMaxAge" priority="4">
 		<property name="custom.properties" value="trash.entries.max.age=86400" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="PortalSettings#disableRecycleBinCP" />
@@ -255,8 +256,9 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="PortalSettings#enableRecycleBinCP" />

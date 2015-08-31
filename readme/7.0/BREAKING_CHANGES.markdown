@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `dca7f96`.*
+*This document has been reviewed through commit `c68e01c`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -2168,28 +2168,29 @@ is now extracted to its own module, the old name no longer resembles its usage.
 
 ---------------------------------------
 
-### Removed support for filterFindBy generation or InlinePermissionUtil usage for tables which primary key type is not long
+### Removed Support for filterFindBy Generation or InlinePermissionUtil Usage for Tables When the Primary Key Type Is Not long
 - **Date:** 2015-Jul-21
 - **JIRA Ticket:** LPS-54590
 
 #### What changed?
 
-Removed ServiceBuilder and inline permission filter support other than long
-primary key types.
+ServiceBuilder and inline permission filter support has been removed for
+non-`long` primary key types.
 
 #### Who is affected?
 
-This is affecting the code that is using integer, float, double, boolean, short
-type primary keys at service.xml with inline permissions.
+This affects code that is using `int`, `float`, `double`, `boolean`, or `short`
+type primary keys in the `service.xml` with inline permissions.
 
 #### How should I update my code?
 
-Change primary key to be long
+You should change the primary key type to `long`.
 
 #### Why was this change made?
 
-Inline permission was using join between two different data types and that
-caused significant performance degradation with filterFindBy queries.
+Inline permissioning was using the `join` method between two different data
+types and that caused significant performance degradation with `filterFindBy`
+queries.
 
 ---------------------------------------
 

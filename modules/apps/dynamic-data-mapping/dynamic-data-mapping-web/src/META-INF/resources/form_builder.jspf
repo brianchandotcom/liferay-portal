@@ -109,35 +109,10 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 <aui:script use="aui-datepicker-deprecated,event-custom-base,json,liferay-portlet-dynamic-data-lists,liferay-portlet-dynamic-data-mapping,liferay-portlet-dynamic-data-mapping-custom-fields,aui-tabview,aui-ace-editor,liferay-xml-formatter">
 	var Lang = A.Lang;
 
-	var CSS_MESSAGE_ERROR = 'alert alert-danger';
-
-	var CSS_MESSAGE_SUCCESS = 'alert alert-success';
-
-	var MESSAGE_FAILURE = 0;
-
-	var MESSAGE_SUCCESS = 1;
-
 	var STR_VALUE = 'value';
 
 	var availableFields;
 	var formEditor;
-
-	var displayMessage = function(type, message) {
-		var messageContainer = A.one('#<portlet:namespace />messageContainer');
-
-		messageContainer.removeClass(CSS_MESSAGE_SUCCESS).removeClass(CSS_MESSAGE_ERROR);
-
-		var messageClass = CSS_MESSAGE_SUCCESS;
-
-		if (type === MESSAGE_FAILURE) {
-			messageClass = CSS_MESSAGE_ERROR;
-		}
-
-		messageContainer.addClass(messageClass);
-		messageContainer.html(message);
-
-		messageContainer.show();
-	};
 
 	var getContentValue = function() {
 		var content;

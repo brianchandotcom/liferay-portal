@@ -106,7 +106,6 @@ if (Validator.isNotNull(scriptContent)) {
 </liferay-ui:panel-container>
 
 <aui:script use="aui-ace-autocomplete-freemarker,aui-ace-autocomplete-plugin,aui-ace-autocomplete-velocity,aui-toggler,aui-popover,autocomplete-base,autocomplete-filters,event-mouseenter,event-outside,liferay-util-window,resize,transition">
-	var AArray = A.Array;
 	var ACPlugin = A.Plugin.AceAutoComplete;
 	var AObject = A.Object;
 	var Util = Liferay.Util;
@@ -118,8 +117,6 @@ if (Validator.isNotNull(scriptContent)) {
 	var selectLanguageNode = A.one('#<portlet:namespace />language');
 
 	var panelScriptContainer = A.one('#templateScriptContainer');
-
-	var editorContainer = panelScriptContainer.one('#<portlet:namespace />editorContainer');
 
 	if (Util.getTop() !== A.config.win) {
 		var dialog = Util.getWindow();
@@ -287,10 +284,6 @@ if (Validator.isNotNull(scriptContent)) {
 		return content;
 	}
 
-	function getSelectedLanguage() {
-		return selectLanguageNode.val();
-	}
-
 	var paletteSearchContainer = panelScriptContainer.one('#<portlet:namespace />paletteSearchContainer');
 
 	function resizeEditor(event) {
@@ -311,8 +304,6 @@ if (Validator.isNotNull(scriptContent)) {
 	}
 
 	function setEditorPlugins(event) {
-		var selectedOptionValue = getSelectedLanguage();
-
 		var AutoComplete;
 
 		<c:choose>
@@ -370,7 +361,7 @@ if (Validator.isNotNull(scriptContent)) {
 				}
 			).render();
 
-			var resize = new A.Resize(
+			new A.Resize(
 				{
 					handles: ['br'],
 					node: editorNode,
@@ -403,7 +394,7 @@ if (Validator.isNotNull(scriptContent)) {
 			<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
 				paletteContainer.delegate('click', onPaletteItemChosen, '.palette-item');
 
-				var togglerDelegate = new A.TogglerDelegate(
+				new A.TogglerDelegate(
 					{
 						animated: true,
 						container: paletteDataContainer,

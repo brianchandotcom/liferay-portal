@@ -231,7 +231,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="PortalSettings#disableRecycleBinCP" />
+		<execute macro="Site#disableRecycleBinCP" />
 
 		<execute macro="RecycleBin#viewDisabledCP">
 			<var name="siteScopeName" value="Site Name" />
@@ -261,7 +261,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="PortalSettings#enableRecycleBinCP" />
+		<execute macro="Site#enableRecycleBinCP" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />

@@ -23,7 +23,7 @@
 
 	<#if finderCol.comparator == "=">
 		"${finderFieldName} IS NULL${finderColConjunction}"
-	<#elseif finderCol.comparator == "<>" || finderCol.comparator = "!=">
+	<#elseif finderCol.comparator == "<>" || finderCol.comparator == "!=">
 		"${finderFieldName} IS NOT NULL${finderColConjunction}"
 	<#else>
 		"${finderFieldName} ${finderCol.comparator} NULL${finderColConjunction}"

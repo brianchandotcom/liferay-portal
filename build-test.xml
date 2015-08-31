@@ -2464,8 +2464,6 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<if>
 				<equals arg1="@{app.server.bundle.index}" arg2="0" />
 				<then>
-					<antcall target="clean-up-logs" />
-
 					<record action="start" name="${project.dir}/log" />
 				</then>
 			</if>
@@ -3055,9 +3053,7 @@ go]]></replacevalue>
 	</target>
 
 	<target name="clean-up-logs">
-		<delete failonerror="false" file="log" />
-
-		<delete failonerror="false" file="portal-web/test-ant-scripts/log" />
+		<delete failonerror="false" file="${project.dir}/console-shut-down" />
 	</target>
 
 	<target name="clean-up-sikuli-temp-files">
@@ -3393,61 +3389,7 @@ go]]></replacevalue>
 			</then>
 		</if>
 
-		<get-test-method-name />
-
-		<get-test-simple-class-name />
-
-		<if>
-			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-			<then>
-				<antcall target="run-poshi-evaluate-console" />
-			</then>
-			<elseif>
-				<isset property="test.evaluate.logs" />
-				<then>
-					<copy file="${project.dir}/console-shut-down" tofile="${project.dir}/log" />
-
-					<var name="test.class" unset="true" />
-
-					<ant dir="portal-web" target="test-class">
-						<property name="test.class" value="EvaluateLogTestSuite" />
-					</ant>
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<isset property="test.method.name" />
-			<then>
-				<property name="test.class" value="${test.simple.class.name}#${test.method.name}" />
-			</then>
-			<else>
-				<property name="test.class" value="${test.simple.class.name}" />
-			</else>
-		</if>
-
-		<if>
-			<isset property="env.JENKINS_HOME" />
-			<then>
-				<antcall target="build-test-results-xml" />
-
-				<if>
-					<isset property="jenkins.shared.user.content.dir" />
-					<then>
-						<var name="jenkins.shared.results.dir" value="${jenkins.shared.user.content.dir}/jobs" />
-					</then>
-					<else>
-						<var name="jenkins.shared.results.dir" value="." />
-					</else>
-				</if>
-
-				<copy
-					failonerror="false"
-					file="portal-web/test-results/functional/TEST-com.liferay.portalweb.portal.evaluatelog.EvaluateLogTestSuite.xml"
-					tofile="${jenkins.shared.results.dir}/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}_EvaluateLog.xml"
-				/>
-			</then>
-		</if>
+		<antcall target="run-poshi-evaluate-console" />
 
 		<antcall target="clean-up-logs" />
 	</target>

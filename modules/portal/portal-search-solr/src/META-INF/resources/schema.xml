@@ -568,7 +568,7 @@
 		<dynamicField docValues="true" indexed="true" multiValued="false" name="*_sortable" stored="true" type="string" />
 		<dynamicField indexed="true" multiValued="true" name="assetCategoryTitles*" stored="true" termPositions="true" termVectors="true" type="text" />
 		<dynamicField indexed="true" multiValued="true" name="expando__*" stored="true" type="text" />
-		<dynamicField indexed="true" multiValued="true" name="ddm__*" stored="true" type="text" />
+		<dynamicField indexed="true" multiValued="true" name="ddm__keyword__*" stored="true" type="string" />
 		<dynamicField indexed="true" multiValued="true" name="*_ar" stored="true" termPositions="true" termOffsets="true" termVectors="true" type="text_ar" />
 		<dynamicField indexed="true" multiValued="true" name="*_ar_BH" stored="true" termPositions="true" termOffsets="true" termVectors="true" type="text_ar" />
 		<dynamicField indexed="true" multiValued="true" name="*_ar_DZ" stored="true" termPositions="true" termOffsets="true" termVectors="true" type="text_ar" />
@@ -659,6 +659,7 @@
 		<dynamicField indexed="true" multiValued="true" name="*_zh_HK" stored="true" termPositions="true" termOffsets="true" termVectors="true" type="text_cjk" />
 		<dynamicField indexed="true" multiValued="true" name="*_zh_SG" stored="true" termPositions="true" termOffsets="true" termVectors="true" type="text_cjk" />
 		<dynamicField indexed="true" multiValued="true" name="*_zh_TW" stored="true" termPositions="true" termOffsets="true" termVectors="true" type="text_cjk" />
+		<dynamicField indexed="true" multiValued="true" name="ddm__*" stored="true" type="text" />
 
 		<!--
 		This must be the last entry since the fields element is an ordered set.

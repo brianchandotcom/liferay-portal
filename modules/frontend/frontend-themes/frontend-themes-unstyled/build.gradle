@@ -1,7 +1,4 @@
-import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask
-import com.liferay.gradle.plugins.tasks.CompileThemeTask
 import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
@@ -22,7 +19,7 @@ liferay {
 }
 
 File themesDestinationDir = file("src/META-INF/resources");
-File thirdPartyDir = file("../../../portal-web/third-party")
+File thirdPartyDir = file("../../../../portal-web/third-party")
 
 task buildAlloyBootstrapTheme(type: Copy)
 task buildAlloyFontAwesome(type: Copy)
@@ -183,32 +180,4 @@ copyFavicon {
 
 	from new File(themesDestinationDir, "_unstyled/images/favicon.ico")
 	into "src/META-INF/resources"
-}
-
-themesDestinationDir.eachDir {
-	File themeDir ->
-
-	if (themeDir.name in ["_styled", "_unstyled"]) {
-		return
-	}
-
-	String buildThemeThumbnailsTaskName = GradleUtil.getTaskName("buildThumbnails", themeDir)
-	String compileThemeTaskName = GradleUtil.getTaskName("compileTheme", themeDir)
-
-	task(compileThemeTaskName, type: CompileThemeTask) {
-		dependsOn buildThemeThumbnailsTaskName
-		diffsDir = new File(themeDir, "_diffs")
-		frontendThemesWebDir = "src/META-INF/resources"
-		themeParent = "_styled"
-		themeRootDir = themeDir
-		themeTypes "ftl", "vm"
-	}
-
-	task(buildThemeThumbnailsTaskName, type: BuildThumbnailsTask) {
-		imageDirs themeDir
-	}
-
-	buildThemes {
-		dependsOn compileThemeTaskName
-	}
 }

@@ -5441,8 +5441,6 @@ module.framework.properties.osgi.console=11312</echo>
 					<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 					<then>
 						<antcall target="record-test-case-method-names" />
-
-						<antcall target="record-test-generated-properties" />
 					</then>
 					<else>
 						<ant dir="portal-impl" target="build-selenium-block" inheritAll="false" />

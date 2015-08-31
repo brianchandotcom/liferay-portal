@@ -5,6 +5,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":core:osgi-service-tracker-map")
+	compile project(":portal:portal-report-stream")
 
 	testCompile group: "junit", name: "junit", version: "4.11"
 }

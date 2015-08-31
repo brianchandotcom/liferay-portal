@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Report Stream
+Bundle-SymbolicName: com.liferay.portal.report.stream
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.report.stream
+Include-Resource: classes

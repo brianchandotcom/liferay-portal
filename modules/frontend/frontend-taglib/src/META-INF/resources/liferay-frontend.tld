@@ -40,125 +40,150 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a lexicon based card component. Could be a vertical or an horizontal tag.</description>
 		<name>card</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.CardTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>The path to an action JSP page. Generally is the jsp for the card dropdown menu.</description>
 			<name>actionJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The service context of the <![CDATA[<code>actionJsp</code>]]>.</description>
 			<name>actionJspServletContext</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Check the card checkbox or not. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>checkboxChecked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>CSS Class to add to the checkbox input.</description>
 			<name>checkboxCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Data attributes to add to the checkbox input. This data is to stored via a map.</description>
 			<name>checkboxData</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Disable the checkbox input or not. The default value is false.</description>
 			<name>checkboxDisabled</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Id attribute to add to the checkbox input.</description>
 			<name>checkboxId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Name attribute to add to the checkbox input.</description>
 			<name>checkboxName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Value to add to the checkbox input.</description>
 			<name>checkboxValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>CSS Class to add to the card main container.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Data attributes to add to the card main container. This data is stored via a map.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Text to add to the card text zone footer when is a vertical card.</description>
 			<name>footer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Text to add to the card text zone header when is a vertical card.</description>
 			<name>header</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Set the card type between horizontal or vertical. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>horizontal</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>CSS Class to add to the card image.</description>
 			<name>imageCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Url of the card image.</description>
 			<name>imageUrl</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>When you pass a rowChecker the resultRow is mandatory. (com.liferay.portal.kernel.dao.search.ResultRow)</description>
 			<name>resultRow</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Opcionally you can pass a rowChecker object to manage all the options realted with the checkbox. The other checkbox options overwrite the rowChecker options. (com.liferay.portal.kernel.dao.search.RowChecker) </description>
 			<name>rowChecker</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the entry is selectable. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>showCheckbox</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>CSS Class to add to the small image in vertical card.</description>
 			<name>smallImageCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Url of the small image in vertical card.</description>
 			<name>smallImageUrl</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Text to add as a subtitle in the text zone when is a vertical card-</description>
 			<name>subtitle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Main text of the card.</description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Url to view the full content.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.copy.RenameDependencyClosure
+
 dependencies {
 	compile group: "org.apache.aries", name: "org.apache.aries.util", transitive: false, version: "1.0.0"
 	compile group: "org.apache.aries.jmx", name: "org.apache.aries.jmx.api", transitive: false, version: "1.1.1"
@@ -14,12 +16,17 @@ dependencies {
 	compile group: "org.eclipse.equinox", name: "org.eclipse.equinox.console", version: "1.1.100-SNAPSHOT"
 }
 
-deploy {
-	from("lib") {
-		include "*.jar"
-	}
-}
-
 liferay {
 	deployDir = file("${liferayHome}/osgi/static")
+}
+
+task deploy(type: Copy, overwrite: true)
+
+deploy {
+	ext {
+		autoClean = false
+	}
+
+	from configurations.compile
+	rename new RenameDependencyClosure(project, "compile")
 }

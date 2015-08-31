@@ -53,13 +53,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</portlet:renderURL>
 
 					<div class="entry-options">
-						<div class="status">
-							<small class="text-capitalize text-muted">
-								<%= WorkflowConstants.getStatusLabel(entry.getStatus()) %>
-
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-							</small>
-						</div>
 						<aui:button cssClass="icon-monospaced" href="<%= editEntryURL %>" icon="icon-pencil" />
 					</div>
 				</c:if>
@@ -240,7 +233,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			</div>
 
 			<c:if test="<%= viewSingleEntry %>">
-				<aui:container cssClass="entry-metadata">
+				<aui:container cssClass='<%= colCssClass + " entry-metadata" %>'>
 					<aui:col width="<%= 40 %>">
 						<c:if test="<%= blogsPortletInstanceConfiguration.enableRelatedAssets() %>">
 							<div class="entry-links">

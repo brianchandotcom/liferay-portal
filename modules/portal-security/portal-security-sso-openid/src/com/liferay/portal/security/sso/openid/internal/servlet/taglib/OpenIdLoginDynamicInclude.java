@@ -71,8 +71,7 @@ public class OpenIdLoginDynamicInclude extends BaseDynamicInclude {
 		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH =
-		"/html/portlet/login/open_id.jsp";
+	private static final String _JSP_PATH = "/html/portlet/login/open_id.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenIdLoginDynamicInclude.class);

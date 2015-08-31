@@ -434,7 +434,7 @@ public class SessionMessages {
 		return sb.toString();
 	}
 
-	protected static final String _CLASS_NAME = SessionMessages.class.getName();
+	private static final String _CLASS_NAME = SessionMessages.class.getName();
 
 	private static class SessionMessagesMap
 		extends LinkedHashMap<String, Object> {

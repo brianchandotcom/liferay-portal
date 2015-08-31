@@ -431,6 +431,6 @@ public class SessionErrors {
 		return sb.toString();
 	}
 
-	protected static final String _CLASS_NAME = SessionErrors.class.getName();
+	private static final String _CLASS_NAME = SessionErrors.class.getName();
 
 }

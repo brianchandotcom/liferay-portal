@@ -39,6 +39,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -55,6 +56,20 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			Method method, Object[] arguments,
 			AccessControlled accessControlled)
 		throws SecurityException {
+
+		AccessControlContext accessControlContext =
+			AccessControlUtil.getAccessControlContext();
+
+		if (accessControlContext != null) {
+			Map<String, Object> settings = accessControlContext.getSettings();
+
+			int serviceDepthCounter = (Integer)settings.get(
+				AccessControlContext.Settings.SERVICE_DEPTH_COUNTER.toString());
+
+			if (serviceDepthCounter > 1) {
+				return;
+			}
+		}
 
 		List<String> serviceAccessPolicyNames =
 			ServiceAccessPolicyThreadLocal.getActiveServiceAccessPolicyNames();
@@ -84,9 +99,6 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			}
 
 			boolean passwordBasedAuthentication = false;
-
-			AccessControlContext accessControlContext =
-				AccessControlUtil.getAccessControlContext();
 
 			if (accessControlContext != null) {
 				AuthVerifierResult authVerifierResult =

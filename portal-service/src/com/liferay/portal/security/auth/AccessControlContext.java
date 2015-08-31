@@ -56,6 +56,12 @@ public class AccessControlContext {
 		_response = response;
 	}
 
+	public static enum Settings {
+
+		SERVICE_DEPTH_COUNTER
+
+	}
+
 	private AuthVerifierResult _authVerifierResult;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;

@@ -24,6 +24,7 @@ import com.liferay.portal.security.auth.AccessControlContext;
 
 import java.lang.reflect.Method;
 
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,6 +51,15 @@ public class AllowedHostsAccessControlPolicy extends BaseAccessControlPolicy {
 			AccessControlUtil.getAccessControlContext();
 
 		if (accessControlContext == null) {
+			return;
+		}
+
+		Map<String, Object> settings = accessControlContext.getSettings();
+
+		int serviceDepthCounter = (Integer)settings.get(
+			AccessControlContext.Settings.SERVICE_DEPTH_COUNTER.toString());
+
+		if (serviceDepthCounter > 1) {
 			return;
 		}
 

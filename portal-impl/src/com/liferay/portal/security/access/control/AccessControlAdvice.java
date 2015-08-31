@@ -15,8 +15,12 @@
 package com.liferay.portal.security.access.control;
 
 import com.liferay.portal.kernel.security.access.control.AccessControl;
+import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+
+import java.util.Map;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -38,9 +42,16 @@ public class AccessControlAdvice
 			return null;
 		}
 
+		incrementServiceDepth();
+
 		_accessControlAdvisor.accept(methodInvocation, accessControlled);
 
 		return null;
+	}
+
+	@Override
+	public void duringFinally(MethodInvocation methodInvocation) {
+		decrementServiceDepth();
 	}
 
 	@Override
@@ -52,6 +63,53 @@ public class AccessControlAdvice
 		AccessControlAdvisor accessControlAdvisor) {
 
 		_accessControlAdvisor = accessControlAdvisor;
+	}
+
+	protected void decrementServiceDepth() {
+		AccessControlContext accessControlContext =
+			AccessControlUtil.getAccessControlContext();
+
+		if (accessControlContext == null) {
+			return;
+		}
+
+		Map<String, Object> settings = accessControlContext.getSettings();
+		Integer serviceDepthCounter = (Integer)settings.get(
+			AccessControlContext.Settings.SERVICE_DEPTH_COUNTER.toString());
+
+		if (serviceDepthCounter == null) {
+			return;
+		}
+
+		serviceDepthCounter--;
+
+		settings.put(
+			AccessControlContext.Settings.SERVICE_DEPTH_COUNTER.toString(),
+			serviceDepthCounter);
+	}
+
+	protected void incrementServiceDepth() {
+		AccessControlContext accessControlContext =
+			AccessControlUtil.getAccessControlContext();
+
+		if (accessControlContext == null) {
+			return;
+		}
+
+		Map<String, Object> settings = accessControlContext.getSettings();
+		Integer serviceDepthCounter = (Integer)settings.get(
+			AccessControlContext.Settings.SERVICE_DEPTH_COUNTER.toString());
+
+		if (serviceDepthCounter == null) {
+			serviceDepthCounter = Integer.valueOf(1);
+		}
+		else {
+			serviceDepthCounter ++;
+		}
+
+		settings.put(
+			AccessControlContext.Settings.SERVICE_DEPTH_COUNTER.toString(),
+			serviceDepthCounter);
 	}
 
 	private AccessControlAdvisor _accessControlAdvisor;

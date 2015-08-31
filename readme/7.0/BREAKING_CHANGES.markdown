@@ -2209,7 +2209,7 @@ Portal.
 
 #### How should I update my code?
 
-You should upgrade to Vaadin 7, bundle your `vaadin.jar` with your plugin, or 
+You should upgrade to Vaadin 7, bundle your `vaadin.jar` with your plugin, or
 deploy Vaadin libraries to Liferay's OSGi container.
 
 #### Why was this change made?

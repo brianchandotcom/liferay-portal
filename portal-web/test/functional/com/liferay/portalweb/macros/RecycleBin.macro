@@ -177,7 +177,7 @@
 
 		<execute function="AssertClick" locator1="NavListItem#RECYCLE_BIN" value1="Recycle Bin" />
 
-		<execute function="AssertElementNotPresent" locator1="SitesEditSite#MENU_BASIC_INFORMATION_RECYCLE_BIN" />
+		<execute function="AssertNotChecked" locator1="Checkbox#ENABLE_RECYCLE_BIN" />
 	</command>
 
 	<command name="viewDuplicateNames">

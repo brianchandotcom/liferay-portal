@@ -3389,8 +3389,6 @@ go]]></replacevalue>
 			</then>
 		</if>
 
-		<antcall target="run-poshi-evaluate-console" />
-
 		<antcall target="clean-up-logs" />
 	</target>
 
@@ -6300,6 +6298,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 						</copy>
 					</then>
 				</if>
+
+				<antcall target="run-poshi-evaluate-console" />
 
 				<antcall target="build-test-results-xml" />
 

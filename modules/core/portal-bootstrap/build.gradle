@@ -1,3 +1,5 @@
+import com.liferay.gradle.util.FileUtil
+
 import org.dm.gradle.plugins.bundle.JarBuilder
 
 dependencies {
@@ -10,7 +12,11 @@ liferay {
 	deployDir = file("${liferayHome}/osgi/core")
 }
 
+File systemPackagesExtraBndFile = file("system.packages.extra.bnd")
+File systemPackagesExtraManifestFile = file("system.packages.extra.mf")
+
 task buildSystemPackagesExtraManifest
+task copySystemPackagesExtraManifest(type: Copy)
 
 buildSystemPackagesExtraManifest {
 	dependsOn classes
@@ -23,16 +29,12 @@ buildSystemPackagesExtraManifest {
 
 		Map<String, String> properties = liferay.bundleDefaultInstructions
 
-		properties["-include"] = "system.packages.extra.bnd"
+		properties["-include"] = relativePath(systemPackagesExtraBndFile)
 
 		jarBuilder.withProperties properties
 		jarBuilder.withSourcepath sourceSets.main.allSource.srcDirs
 
-		File buildSystemPackagesExtraManifestFile = file("tmp/META-INF/MANIFEST.MF")
-
-		buildSystemPackagesExtraManifestFile.parentFile.mkdirs()
-
-		buildSystemPackagesExtraManifestFile.withOutputStream {
+		systemPackagesExtraManifestFile.withOutputStream {
 			jarBuilder.writeManifestTo it
 		}
 	}
@@ -46,6 +48,19 @@ deploy {
 	}
 }
 
+copySystemPackagesExtraManifest {
+	if (!FileUtil.isUpToDate(project, systemPackagesExtraBndFile, systemPackagesExtraManifestFile)) {
+		dependsOn buildSystemPackagesExtraManifest
+	}
+
+	from systemPackagesExtraManifestFile
+	into "tmp/META-INF"
+
+	rename {
+		"MANIFEST.MF"
+	}
+}
+
 jar {
-	dependsOn buildSystemPackagesExtraManifest
+	dependsOn copySystemPackagesExtraManifest
 }

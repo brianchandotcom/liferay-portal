@@ -130,7 +130,7 @@ boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 	<portlet:param name="mvcPath" value="/edit_site.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editGroupURL %>" method="post" name="fm">
+<aui:form action="<%= editGroupURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -155,3 +155,17 @@ boolean showPrototypes = ParamUtil.getBoolean(request, "showPrototypes", true);
 		showButtons="<%= true %>"
 	/>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />saveGroup(forceDisable) {
+		var $ = AUI.$;
+
+		var form = $(document.<portlet:namespace />fm);
+
+		<c:if test="<%= (group != null) && !group.isCompany() %>">
+			<portlet:namespace />saveLocales();
+		</c:if>
+
+		submitForm(form);
+	}
+</aui:script>

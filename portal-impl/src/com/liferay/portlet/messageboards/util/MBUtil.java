@@ -146,10 +146,7 @@ public class MBUtil {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		if (mvcRenderCommandName.equals("/message_boards/select_category") ||
-			mvcRenderCommandName.equals(
-				"/message_boards_admin/select_category")) {
-
+		if (mvcRenderCommandName.equals("/message_boards/select_category")) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 

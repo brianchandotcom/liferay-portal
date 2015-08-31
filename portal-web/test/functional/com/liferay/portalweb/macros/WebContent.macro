@@ -1194,10 +1194,7 @@
 	</command>
 
 	<command name="viewEmailConfigurationCP">
-		<execute function="Click" locator1="Icon#COG" />
-		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
-
-		<execute function="SelectFrame" locator1="WCConfiguration#CONFIGURATION_IFRAME" />
+		<execute macro="SiteAdmin#gotoPortletConfiguration" />
 
 		<execute function="AssertTextEquals" locator1="WCConfiguration#NAVIGATION_EMAIL_FROM" value1="Email From" />
 		<execute function="AssertTextEquals" locator1="WCConfiguration#NAVIGATION_WEB_CONTENT_ADDED_EMAIL" value1="Web Content Added Email" />

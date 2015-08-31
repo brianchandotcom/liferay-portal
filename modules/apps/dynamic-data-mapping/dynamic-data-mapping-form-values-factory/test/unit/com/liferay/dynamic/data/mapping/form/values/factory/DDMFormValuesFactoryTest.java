@@ -22,20 +22,21 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistry;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil;
-import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldValueParameterSerializer;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRequestParameterRetriever;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.Collections;
+import java.lang.reflect.Field;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -44,6 +45,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Matchers;
+import org.mockito.Mock;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -56,13 +60,13 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({LocaleUtil.class})
+@PrepareForTest(LocaleUtil.class)
 @RunWith(PowerMockRunner.class)
 public class DDMFormValuesFactoryTest extends PowerMockito {
 
 	@Before
-	public void setUp() {
-		setUpDDMFormFieldTypeRegistryUtil();
+	public void setUp() throws Exception {
+		setUpDDMFormValuesFactoryServiceTrackerMap();
 		setUpDDMFormValuesJSONSerializerUtil();
 		setUpJSONFactoryUtil();
 		setUpLocaleUtil();
@@ -747,20 +751,21 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 			enValue, ptValue, defaultLocale);
 	}
 
-	protected void setUpDDMFormFieldTypeRegistryUtil() {
-		DDMFormFieldType ddmFormFieldType = mock(DDMFormFieldType.class);
+	protected void setUpDDMFormValuesFactoryServiceTrackerMap()
+		throws Exception {
+
+		mockStatic(ServiceTrackerMapFactory.class);
 
 		when(
-			ddmFormFieldType.getDDMFormFieldValueParameterSerializer()
+			_serviceTrackerMap.containsKey(Matchers.anyString())
 		).thenReturn(
-			new DefaultDDMFormFieldValueParameterSerializer()
+			false
 		);
 
-		DDMFormFieldTypeRegistryUtil ddmFormFieldTypeRegistryUtil =
-			new DDMFormFieldTypeRegistryUtil();
+		Field field = ReflectionUtil.getDeclaredField(
+			_ddmFormValuesFactory.getClass(), "_serviceTrackerMap");
 
-		ddmFormFieldTypeRegistryUtil.setDDMFormFieldTypeRegistry(
-			new MockDDMFormFieldTypeRegistryImpl(ddmFormFieldType));
+		field.set(_ddmFormValuesFactory, _serviceTrackerMap);
 	}
 
 	protected void setUpDDMFormValuesJSONSerializerUtil() {
@@ -814,32 +819,8 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 	private final DDMFormValuesFactory _ddmFormValuesFactory =
 		new DDMFormValuesFactoryImpl();
 
-	private static class MockDDMFormFieldTypeRegistryImpl
-		implements DDMFormFieldTypeRegistry {
-
-		@Override
-		public DDMFormFieldType getDDMFormFieldType(String name) {
-			return _ddmFormFieldType;
-		}
-
-		@Override
-		public Set<String> getDDMFormFieldTypeNames() {
-			return Collections.emptySet();
-		}
-
-		@Override
-		public List<DDMFormFieldType> getDDMFormFieldTypes() {
-			return Collections.emptyList();
-		}
-
-		private MockDDMFormFieldTypeRegistryImpl(
-			DDMFormFieldType ddmFormFieldType) {
-
-			_ddmFormFieldType = ddmFormFieldType;
-		}
-
-		private final DDMFormFieldType _ddmFormFieldType;
-
-	}
+	@Mock
+	private ServiceTrackerMap
+		<String, DDMFormFieldValueRequestParameterRetriever> _serviceTrackerMap;
 
 }

@@ -23,7 +23,7 @@ import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.expression.ExpressionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,8 +53,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(
-	immediate = true, property = {"templatePath=/META-INF/resources/form.soy"},
-	service = {DDMFormRenderer.class}
+	immediate = true, property = {"templatePath=/META-INF/resources/form.soy"}
 )
 public class DDMFormRendererImpl implements DDMFormRenderer {
 
@@ -179,6 +178,8 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		DDMFormRendererHelper ddmFormRendererHelper = new DDMFormRendererHelper(
 			ddmForm, ddmFormRenderingContext);
 
+		ddmFormRendererHelper.setDDMFormFieldTypeServicesTracker(
+			_ddmFormFieldTypeServicesTracker);
 		ddmFormRendererHelper.setExpressionEvaluator(
 			new ExpressionEvaluator(_expressionFactory));
 
@@ -205,7 +206,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			"definition", DDMFormJSONSerializerUtil.serialize(ddmForm));
 
 		List<DDMFormFieldType> ddmFormFieldTypes =
-			DDMFormFieldTypeRegistryUtil.getDDMFormFieldTypes();
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 
 		template.put(
 			"fieldTypes",
@@ -235,10 +236,18 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	@Reference
+	protected void setDDMFormFieldTypeServicesTracker(
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+	}
+
+	@Reference
 	protected void setExpressionFactory(ExpressionFactory expressionFactory) {
 		_expressionFactory = expressionFactory;
 	}
 
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private ExpressionFactory _expressionFactory;
 	private TemplateResource _templateResource;
 

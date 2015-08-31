@@ -51,10 +51,10 @@ public class SelectDDMFormFieldValueAccessorTest {
 				"Select", new UnlocalizedValue(expectedJSONArray.toString()));
 
 		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor =
-			new SelectDDMFormFieldValueAccessor(LocaleUtil.US);
+			new SelectDDMFormFieldValueAccessor();
 
-		JSONArray actualJSONArray = selectDDMFormFieldValueAccessor.get(
-			ddmFormFieldValue);
+		JSONArray actualJSONArray = selectDDMFormFieldValueAccessor.getValue(
+			ddmFormFieldValue, LocaleUtil.US);
 
 		Assert.assertEquals(
 			expectedJSONArray.toString(), actualJSONArray.toString());

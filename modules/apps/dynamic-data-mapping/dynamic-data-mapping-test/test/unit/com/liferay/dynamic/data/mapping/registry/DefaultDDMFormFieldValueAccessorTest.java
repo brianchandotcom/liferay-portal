@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.text;
+package com.liferay.dynamic.data.mapping.registry;
 
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * @author Marcellus Tavares
  */
-public class TextDDMFormFieldValueAccessorTest {
+public class DefaultDDMFormFieldValueAccessorTest {
 
 	@Test
 	public void testGetWithLocalizedValue() {
@@ -39,19 +39,15 @@ public class TextDDMFormFieldValueAccessorTest {
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue("Text", value);
 
-		TextDDMFormFieldValueAccessor textDDMFormFieldValueAccessor =
-			new TextDDMFormFieldValueAccessor(LocaleUtil.US);
+		Assert.assertEquals(
+			"Portuguese value",
+			_defaultDDMFormFieldValueAccessor.getValue(
+				ddmFormFieldValue, LocaleUtil.BRAZIL));
 
 		Assert.assertEquals(
 			"English value",
-			textDDMFormFieldValueAccessor.get(ddmFormFieldValue));
-
-		textDDMFormFieldValueAccessor = new TextDDMFormFieldValueAccessor(
-			LocaleUtil.BRAZIL);
-
-		Assert.assertEquals(
-			"Portuguese value",
-			textDDMFormFieldValueAccessor.get(ddmFormFieldValue));
+			_defaultDDMFormFieldValueAccessor.getValue(
+				ddmFormFieldValue, LocaleUtil.US));
 	}
 
 	@Test
@@ -60,12 +56,14 @@ public class TextDDMFormFieldValueAccessorTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"Text", new UnlocalizedValue("Scott Joplin"));
 
-		TextDDMFormFieldValueAccessor textDDMFormFieldValueAccessor =
-			new TextDDMFormFieldValueAccessor(LocaleUtil.US);
-
 		Assert.assertEquals(
 			"Scott Joplin",
-			textDDMFormFieldValueAccessor.get(ddmFormFieldValue));
+			_defaultDDMFormFieldValueAccessor.getValue(
+				ddmFormFieldValue, LocaleUtil.US));
 	}
+
+	private final DefaultDDMFormFieldValueAccessor
+		_defaultDDMFormFieldValueAccessor =
+			new DefaultDDMFormFieldValueAccessor();
 
 }

@@ -21,7 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -207,11 +207,11 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 
 	protected DDMForm getDDMFormFieldTypeSettingsDDMForm(String type) {
 		DDMFormFieldType ddmFormFieldType =
-			DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(type);
+			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType(type);
 
 		if (ddmFormFieldType == null) {
-			ddmFormFieldType = DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(
-				"text");
+			ddmFormFieldType =
+				DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType("text");
 		}
 
 		return DDMFormFactory.create(

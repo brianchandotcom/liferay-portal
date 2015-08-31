@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -199,7 +199,7 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		throws DDMFormValidationException {
 
 		Set<String> fieldTypeNames =
-			DDMFormFieldTypeRegistryUtil.getDDMFormFieldTypeNames();
+			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldTypeNames();
 
 		if (!fieldTypeNames.contains(ddmFormField.getType())) {
 			throw new DDMFormValidationException(

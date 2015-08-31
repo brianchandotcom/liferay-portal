@@ -14,16 +14,22 @@
 
 package com.liferay.dynamic.data.mapping.registry;
 
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+
+import java.util.Locale;
+
 /**
  * @author Marcellus Tavares
  */
-public abstract class BaseDDMFormFieldType implements DDMFormFieldType {
+public class DefaultDDMFormFieldValueAccessor
+	implements DDMFormFieldValueAccessor<String> {
 
 	@Override
-	public Class<? extends DDMFormFieldTypeSettings>
-		getDDMFormFieldTypeSettings() {
+	public String getValue(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+		Value value = ddmFormFieldValue.getValue();
 
-		return DefaultDDMFormFieldTypeSettings.class;
+		return value.getString(locale);
 	}
 
 }

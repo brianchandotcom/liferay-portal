@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -53,7 +54,12 @@ import org.powermock.core.classloader.annotations.SuppressStaticInitializationFo
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({DDMStructureLocalServiceUtil.class})
+@PrepareForTest(
+	{
+		DDMFormFieldTypeServicesTrackerUtil.class,
+		DDMStructureLocalServiceUtil.class
+	}
+)
 @SuppressStaticInitializationFor(
 	"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
 )
@@ -62,7 +68,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 	@Before
 	public void setUp() throws Exception {
 		setUpConfigurationFactoryUtil();
-		setUpDDMFormFieldTypeRegistryUtil();
+		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpAvailableLocales();
 		setUpDDMFormJSONDeserializerUtil();
 		setUpDDMFormJSONSerializerUtil();

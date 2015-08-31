@@ -12,26 +12,34 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.registry;
+package com.liferay.dynamic.data.mapping.type.select;
 
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRequestParameterRetriever;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  */
-public class DefaultDDMFormFieldValueParameterSerializer
-	implements DDMFormFieldValueParameterSerializer {
+@Component(immediate = true, property = "ddm.form.field.type.name=select")
+public class SelectDDMFormFieldValueRequestParameterRetriever
+	implements DDMFormFieldValueRequestParameterRetriever {
 
 	@Override
-	public String getParameterValue(
+	public String get(
 		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
 		String defaultDDMFormFieldParameterValue) {
 
-		return ParamUtil.getString(
+		String[] parameterValues = ParamUtil.getParameterValues(
 			httpServletRequest, ddmFormFieldParameterName,
-			defaultDDMFormFieldParameterValue);
+			GetterUtil.DEFAULT_STRING_VALUES);
+
+		return JSONFactoryUtil.serialize(parameterValues);
 	}
 
 }

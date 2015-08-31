@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.text;
+package com.liferay.dynamic.data.mapping.registry;
 
-import com.liferay.dynamic.data.mapping.model.Value;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;
@@ -23,23 +21,8 @@ import java.util.Locale;
 /**
  * @author Marcellus Tavares
  */
-public class TextDDMFormFieldValueAccessor
-	extends DDMFormFieldValueAccessor<String> {
+public interface DDMFormFieldValueRenderer {
 
-	public TextDDMFormFieldValueAccessor(Locale locale) {
-		super(locale);
-	}
-
-	@Override
-	public String get(DDMFormFieldValue ddmFormFieldValue) {
-		Value value = ddmFormFieldValue.getValue();
-
-		return value.getString(locale);
-	}
-
-	@Override
-	public Class<String> getAttributeClass() {
-		return String.class;
-	}
+	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale);
 
 }

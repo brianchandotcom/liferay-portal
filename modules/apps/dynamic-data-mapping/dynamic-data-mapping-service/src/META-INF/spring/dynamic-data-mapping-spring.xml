@@ -36,11 +36,6 @@
 	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil">
 		<property name="DDMFormXSDDeserializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer" />
 	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil" class="com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil">
-		<property name="DDMFormFieldTypeRegistry">
-			<bean class="com.liferay.dynamic.data.mapping.registry.impl.DDMFormFieldTypeRegistryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry" class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldRendererRegistryImpl">
 		<property name="defaultDDMFormFieldRenderer">
 			<bean class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldFreeMarkerRenderer" />

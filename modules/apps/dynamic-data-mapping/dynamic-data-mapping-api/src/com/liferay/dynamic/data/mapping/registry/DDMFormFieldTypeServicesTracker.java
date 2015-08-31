@@ -14,16 +14,28 @@
 
 package com.liferay.dynamic.data.mapping.registry;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author Marcellus Tavares
  */
-public abstract class BaseDDMFormFieldType implements DDMFormFieldType {
+public interface DDMFormFieldTypeServicesTracker {
 
-	@Override
-	public Class<? extends DDMFormFieldTypeSettings>
-		getDDMFormFieldTypeSettings() {
+	public DDMFormFieldRenderer getDDMFormFieldRenderer(String name);
 
-		return DefaultDDMFormFieldTypeSettings.class;
-	}
+	public DDMFormFieldType getDDMFormFieldType(String name);
+
+	public Set<String> getDDMFormFieldTypeNames();
+
+	public Map<String, Object> getDDMFormFieldTypeProperties(String name);
+
+	public List<DDMFormFieldType> getDDMFormFieldTypes();
+
+	public <T> DDMFormFieldValueAccessor<T> getDDMFormFieldValueAccessor(
+		String name);
+
+	public DDMFormFieldValueRenderer getDDMFormFieldValueRenderer(String name);
 
 }

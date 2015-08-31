@@ -14,23 +14,24 @@
 
 package com.liferay.dynamic.data.mapping.registry;
 
-import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
-import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.ParamUtil;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
  */
-public abstract class DDMFormFieldValueRendererAccessor
-	implements Accessor<DDMFormFieldValue, String> {
+public class DefaultDDMFormFieldValueRequestParameterRetriever
+	implements DDMFormFieldValueRequestParameterRetriever {
 
 	@Override
-	public Class<String> getAttributeClass() {
-		return String.class;
-	}
+	public String get(
+		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
+		String defaultDDMFormFieldParameterValue) {
 
-	@Override
-	public Class<DDMFormFieldValue> getTypeClass() {
-		return DDMFormFieldValue.class;
+		return ParamUtil.getString(
+			httpServletRequest, ddmFormFieldParameterName,
+			defaultDDMFormFieldParameterValue);
 	}
 
 }

@@ -51,7 +51,7 @@ public class DDMImplTest extends BaseDDMTestCase {
 	@Before
 	public void setUp() throws Exception {
 		setUpConfigurationFactoryUtil();
-		setUpDDMFormFieldTypeRegistryUtil();
+		setUpDDMFormFieldTypeServicesTrackerUtil();
 		setUpDDMFormJSONDeserializerUtil();
 		setUpDDMFormJSONSerializerUtil();
 		setUpDDMStructureLocalServiceUtil();

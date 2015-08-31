@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.renderer;
+package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
-import com.liferay.dynamic.data.mapping.form.renderer.internal.DDMFormTransformer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 

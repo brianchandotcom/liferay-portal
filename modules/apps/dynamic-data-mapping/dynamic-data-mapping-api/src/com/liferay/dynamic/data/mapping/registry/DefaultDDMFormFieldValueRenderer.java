@@ -14,15 +14,23 @@
 
 package com.liferay.dynamic.data.mapping.registry;
 
-import javax.servlet.http.HttpServletRequest;
+import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.portal.kernel.util.HtmlUtil;
+
+import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldValueParameterSerializer {
+public class DefaultDDMFormFieldValueRenderer
+	implements DDMFormFieldValueRenderer {
 
-	public String getParameterValue(
-		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
-		String defaultDDMFormFieldParameterValue);
+	@Override
+	public String render(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+		Value value = ddmFormFieldValue.getValue();
+
+		return HtmlUtil.escape(value.getString(locale));
+	}
 
 }

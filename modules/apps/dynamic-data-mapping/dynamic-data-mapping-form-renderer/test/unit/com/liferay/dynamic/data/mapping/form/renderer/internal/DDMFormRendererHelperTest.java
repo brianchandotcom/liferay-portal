@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.form.renderer;
+package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
-import com.liferay.dynamic.data.mapping.form.renderer.internal.DDMFormRendererHelper;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
+import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistry;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -60,7 +59,7 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormFieldTypeRegistryUtil();
+		setUpDDMFormFieldTypeServicesTracker();
 		setUpLocaleUtil();
 		setUpStringUtil();
 	}
@@ -120,8 +119,8 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 
 		ddmFormRenderingContext.setDDMFormValues(ddmFormValues);
 
-		DDMFormRendererHelper ddmFormRendererHelper = new DDMFormRendererHelper(
-			ddmForm, ddmFormRenderingContext);
+		DDMFormRendererHelper ddmFormRendererHelper =
+			createDDMFormRendererHelper(ddmForm, ddmFormRenderingContext);
 
 		Map<String, String> renderedDDMFormFieldsMap =
 			ddmFormRendererHelper.getRenderedDDMFormFieldsMap();
@@ -215,7 +214,8 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 			renderedFaxDDMFormField);
 
 		DDMFormRendererHelper ddmFormFieldRendererHelper =
-			new DDMFormRendererHelper(ddmForm, createDDMFormRenderingContext());
+			createDDMFormRendererHelper(
+				ddmForm, createDDMFormRenderingContext());
 
 		Map<String, String> renderedDDMFormFieldsMap =
 			ddmFormFieldRendererHelper.getRenderedDDMFormFieldsMap();
@@ -251,7 +251,8 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 			ageDDMFormFieldParameterName, StringPool.BLANK, StringPool.BLANK);
 
 		DDMFormRendererHelper ddmFormFieldRendererHelper =
-			new DDMFormRendererHelper(ddmForm, createDDMFormRenderingContext());
+			createDDMFormRendererHelper(
+				ddmForm, createDDMFormRenderingContext());
 
 		Map<String, String> renderedDDMFormFieldsMap =
 			ddmFormFieldRendererHelper.getRenderedDDMFormFieldsMap();
@@ -267,6 +268,18 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 
 		return DDMFormValuesTestUtil.createDDMFormFieldValue(
 			instanceId, name, new UnlocalizedValue(value));
+	}
+
+	protected DDMFormRendererHelper createDDMFormRendererHelper(
+		DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext) {
+
+		DDMFormRendererHelper ddmFormRendererHelper = new DDMFormRendererHelper(
+			ddmForm, ddmFormRenderingContext);
+
+		ddmFormRendererHelper.setDDMFormFieldTypeServicesTracker(
+			_ddmFormFieldTypeServicesTracker);
+
+		return ddmFormRendererHelper;
 	}
 
 	protected DDMFormRenderingContext createDDMFormRenderingContext() {
@@ -435,29 +448,15 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpDDMFormFieldType() {
+	protected void setUpDDMFormFieldTypeServicesTracker() throws Exception {
+		setUpDDMFormFieldRenderer();
+
 		when(
-			_ddmFormFieldType.getDDMFormFieldRenderer()
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
+				Matchers.anyString())
 		).thenReturn(
 			_ddmFormFieldRenderer
 		);
-	}
-
-	protected void setUpDDMFormFieldTypeRegistryUtil() throws Exception {
-		setUpDDMFormFieldRenderer();
-		setUpDDMFormFieldType();
-
-		when(
-			_ddmFormFieldTypeRegistry.getDDMFormFieldType(Matchers.anyString())
-		).thenReturn(
-			_ddmFormFieldType
-		);
-
-		DDMFormFieldTypeRegistryUtil ddmFormFieldTypeRegistryUtil =
-			new DDMFormFieldTypeRegistryUtil();
-
-		ddmFormFieldTypeRegistryUtil.setDDMFormFieldTypeRegistry(
-			_ddmFormFieldTypeRegistry);
 	}
 
 	protected void setUpLocaleUtil() {
@@ -499,9 +498,6 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 	private DDMFormFieldRenderer _ddmFormFieldRenderer;
 
 	@Mock
-	private DDMFormFieldType _ddmFormFieldType;
-
-	@Mock
-	private DDMFormFieldTypeRegistry _ddmFormFieldTypeRegistry;
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 
 }

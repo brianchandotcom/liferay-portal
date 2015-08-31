@@ -14,18 +14,15 @@
 
 package com.liferay.dynamic.data.mapping.registry;
 
-import java.util.List;
-import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldTypeRegistry {
+public interface DDMFormFieldValueRequestParameterRetriever {
 
-	public DDMFormFieldType getDDMFormFieldType(String name);
-
-	public Set<String> getDDMFormFieldTypeNames();
-
-	public List<DDMFormFieldType> getDDMFormFieldTypes();
+	public String get(
+		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
+		String defaultDDMFormFieldParameterValue);
 
 }

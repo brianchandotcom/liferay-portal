@@ -30,7 +30,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,7 +63,7 @@ public class DDLFormAdminDisplayContext {
 
 	public JSONArray getDDMFormFieldTypesJSONArray() throws PortalException {
 		List<DDMFormFieldType> ddmFormFieldTypes =
-			DDMFormFieldTypeRegistryUtil.getDDMFormFieldTypes();
+			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldTypes();
 
 		String serializedDDMFormFieldTypes =
 			DDMFormFieldTypesJSONSerializerUtil.serialize(ddmFormFieldTypes);

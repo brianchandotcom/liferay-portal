@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.type.text;
+package com.liferay.dynamic.data.mapping.registry;
 
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-
-import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +33,7 @@ import org.mockito.MockitoAnnotations;
 /**
  * @author Marcellus Tavares
  */
-public class TextDDMFormFieldValueRendererAccessorTest {
+public class DefaultDDMFormFieldValueRendererTest {
 
 	@Before
 	public void setUp() {
@@ -45,28 +43,15 @@ public class TextDDMFormFieldValueRendererAccessorTest {
 	}
 
 	@Test
-	public void testGet() {
+	public void testRender() {
 		DDMFormFieldValue ddmFormFieldValue =
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"Text", new UnlocalizedValue(StringUtil.randomString()));
 
-		TextDDMFormFieldValueRendererAccessor
-			textDDMFormFieldValueRendererAccessor =
-				createTextDDMFormFieldValueRendererAccessor(LocaleUtil.US);
-
-		textDDMFormFieldValueRendererAccessor.get(ddmFormFieldValue);
+		_defaultDDMFormFieldValueRenderer.render(
+			ddmFormFieldValue, LocaleUtil.US);
 
 		Mockito.verify(_html).escape(Matchers.anyString());
-	}
-
-	protected TextDDMFormFieldValueRendererAccessor
-		createTextDDMFormFieldValueRendererAccessor(Locale locale) {
-
-		TextDDMFormFieldValueAccessor textDDMFormFieldValueAccessor =
-			new TextDDMFormFieldValueAccessor(locale);
-
-		return new TextDDMFormFieldValueRendererAccessor(
-			textDDMFormFieldValueAccessor);
 	}
 
 	protected void setUpHtmlUtil() {
@@ -74,6 +59,10 @@ public class TextDDMFormFieldValueRendererAccessorTest {
 
 		htmlUtil.setHtml(_html);
 	}
+
+	private final DefaultDDMFormFieldValueRenderer
+		_defaultDDMFormFieldValueRenderer =
+			new DefaultDDMFormFieldValueRenderer();
 
 	@Mock
 	private Html _html;

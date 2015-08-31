@@ -34,7 +34,7 @@ public class JournalFolderPermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
-	public void updatePermission(String primKey) {
+	public void updatedPermission(String primKey) {
 		JournalFolder folder = _journalFolderLocalService.fetchJournalFolder(
 			Long.valueOf(primKey));
 

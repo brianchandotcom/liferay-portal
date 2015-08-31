@@ -34,7 +34,7 @@ public class JournalArticlePermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
-	public void updatePermission(String primKey) {
+	public void updatedPermission(String primKey) {
 		JournalArticle article = _journalArticleLocalService.fetchLatestArticle(
 			Long.valueOf(primKey));
 

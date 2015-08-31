@@ -34,7 +34,7 @@ public class JournalFeedPermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
-	public void updatePermission(String primKey) {
+	public void updatedPermission(String primKey) {
 		JournalFeed feed = _journalFeedLocalService.fetchJournalFeed(
 			Long.valueOf(primKey));
 

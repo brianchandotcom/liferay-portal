@@ -28,6 +28,8 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 String keywords = ParamUtil.getString(request, "keywords");
 
 boolean search = mvcRenderCommandName.equals("/document_library/search");
+
+String navigation = ParamUtil.getString(request, "navigation", "home");
 %>
 
 <aui:nav-bar>
@@ -86,7 +88,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 
 		<liferay-util:include page="/document_library/add_button.jsp" servletContext="<%= application %>" />
 
-		<c:if test="<%= !search %>">
+		<c:if test="<%= !search && !navigation.equals("recent") %>">
 			<liferay-util:include page="/document_library/sort_button.jsp" servletContext="<%= application %>" />
 		</c:if>
 

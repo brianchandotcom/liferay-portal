@@ -207,6 +207,7 @@ page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.RawMetadataProcessor" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.DDMFormValues" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.DDMStructure" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.DDMStructureManager" %><%@

@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Renato Rego
@@ -51,14 +53,18 @@ public class SelectDDMFormFieldValueAccessor
 		catch (JSONException jsone) {
 			_log.error("Unable to parse JSON array", jsone);
 
-			return _EMPTY_JSON_ARRAY;
+			return _jsonFactory.createJSONArray();
 		}
 	}
 
-	private static final JSONArray _EMPTY_JSON_ARRAY =
-		JSONFactoryUtil.createJSONArray();
+	@Reference
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SelectDDMFormFieldValueAccessor.class);
+
+	private JSONFactory _jsonFactory;
 
 }

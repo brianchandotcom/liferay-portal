@@ -349,10 +349,6 @@ public class DDLRecordSearchTest {
 		PermissionThreadLocal.setPermissionChecker(
 			new SimplePermissionChecker() {
 
-				{
-					init(TestPropsValues.getUser());
-				}
-
 				@Override
 				public boolean hasOwnerPermission(
 					long companyId, String name, String primKey, long ownerId,

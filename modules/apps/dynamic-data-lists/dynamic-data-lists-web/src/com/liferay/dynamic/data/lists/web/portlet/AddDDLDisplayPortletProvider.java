@@ -16,14 +16,13 @@ package com.liferay.dynamic.data.lists.web.portlet;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.web.asset.DDLRecordAssetRenderer;
-import com.liferay.dynamic.data.lists.web.asset.DDLRecordAssetRendererFactory;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetEntryLocalService;
 
 import javax.portlet.PortletPreferences;
@@ -56,20 +55,17 @@ public class AddDDLDisplayPortletProvider
 		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
 
-		DDLRecordAssetRendererFactory ddlRecordAssetRendererFactory =
-			(DDLRecordAssetRendererFactory)
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						DDLRecord.class.getName());
+		AssetRendererFactory<DDLRecord> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				DDLRecord.class);
 
-		DDLRecordAssetRenderer ddlRecordAssetRenderer =
-			(DDLRecordAssetRenderer)ddlRecordAssetRendererFactory.
-				getAssetRenderer(assetEntry.getClassPK());
+		AssetRenderer<DDLRecord> assetRenderer =
+			assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
-		DDLRecordSet ddlRecordSet = ddlRecordAssetRenderer.getDDLRecordSet();
+		DDLRecord record = assetRenderer.getAssetObject();
 
 		portletPreferences.setValue(
-			"recordSetId", String.valueOf(ddlRecordSet.getRecordSetId()));
+			"recordSetId", String.valueOf(record.getRecordSetId()));
 	}
 
 	@Override
@@ -82,12 +78,6 @@ public class AddDDLDisplayPortletProvider
 		AssetEntryLocalService assetEntryLocalService) {
 
 		_assetEntryLocalService = assetEntryLocalService;
-	}
-
-	protected void unsetAssetEntryLocalService(
-		AssetEntryLocalService assetEntryLocalService) {
-
-		_assetEntryLocalService = null;
 	}
 
 	private AssetEntryLocalService _assetEntryLocalService;

@@ -88,10 +88,6 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 		return _record.getRecordId();
 	}
 
-	public DDLRecordSet getDDLRecordSet() {
-		return _recordSet;
-	}
-
 	@Override
 	public DDMFormValuesReader getDDMFormValuesReader() {
 		return new DDLRecordDDMFormValuesReader(_record);

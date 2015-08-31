@@ -341,12 +341,10 @@ public class CompileThemeTask extends DefaultTask {
 		String[] themeTypesArray = themeTypes.toArray(
 			new String[themeTypes.size()]);
 
-		String[] excludes = StringUtil.prepend(
-			themeTypesArray, "templates/init.");
 		String[] includes = StringUtil.prepend(
 			themeTypesArray, "templates/**/*.");
 
-		copyPortalThemeDir("_unstyled", excludes, includes);
+		copyPortalThemeDir("_unstyled", null, includes);
 	}
 
 	protected File getThemeResourcesDir(String theme) {

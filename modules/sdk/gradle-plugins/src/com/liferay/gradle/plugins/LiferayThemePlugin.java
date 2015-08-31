@@ -284,8 +284,8 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	protected void configureTaskCompileThemeFrontendThemesWebFile(
 		CompileThemeTask compileThemeTask) {
 
-		if ((compileThemeTask.getFrontendThemesWebDir() != null) ||
-			(compileThemeTask.getFrontendThemesWebFile() != null)) {
+		if ((compileThemeTask.getFrontendThemesDir() != null) ||
+			(compileThemeTask.getFrontendThemesFile() != null)) {
 
 			return;
 		}
@@ -294,8 +294,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 			compileThemeTask.getProject(),
 			FRONTEND_THEMES_WEB_CONFIGURATION_NAME);
 
-		compileThemeTask.setFrontendThemesWebFile(
-			configuration.getSingleFile());
+		compileThemeTask.setFrontendThemesFile(configuration.getSingleFile());
 	}
 
 	protected void configureTaskCompileThemeParent(

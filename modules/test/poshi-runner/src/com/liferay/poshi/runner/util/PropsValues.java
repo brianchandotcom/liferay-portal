@@ -98,6 +98,12 @@ public class PropsValues {
 
 	public static final String PROJECT_DIR = PropsUtil.get("project.dir");
 
+	public static final String TEST_BATCH_PROPERTY_NAME = PropsUtil.get(
+		"test.batch.property.name");
+
+	public static final String TEST_BATCH_PROPERTY_VALUE = PropsUtil.get(
+		"test.batch.property.value");
+
 	public static final boolean SAVE_SCREENSHOT = GetterUtil.getBoolean(
 		PropsUtil.get("save.screenshot"));
 

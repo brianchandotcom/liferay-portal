@@ -94,7 +94,6 @@
 				<setup-sdk />
 
 				<gradle-execute dir="${project.dir}/modules" task="clean">
-					<arg value="--parallel" />
 					<arg value="-Dportal.build=true" />
 				</gradle-execute>
 			</sequential>

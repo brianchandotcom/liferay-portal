@@ -178,7 +178,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				response, SyncDLObjectUpdate.class);
 		}
 
-		List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncDLObjects();
+		List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncFiles();
 
 		if (!syncFiles.isEmpty()) {
 			Collections.sort(syncFiles, _syncFileComparator);
@@ -403,7 +403,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			_syncDLObjectUpdate = JSONUtil.readValue(
 				response, SyncDLObjectUpdate.class);
 
-			List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncDLObjects();
+			List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncFiles();
 
 			if (!syncFiles.isEmpty()) {
 				super.logResponse(response);

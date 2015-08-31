@@ -38,14 +38,6 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 
 boolean search = Validator.isNotNull(keywords) || advancedSearch;
 
-boolean showSelectAll = false;
-
-int total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, WorkflowConstants.STATUS_ANY);
-
-if (total > 0) {
-	showSelectAll = true;
-}
-
 request.setAttribute("view.jsp-folder", folder);
 
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
@@ -57,20 +49,19 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<div id="<portlet:namespace />journalContainer">
-	<aui:row cssClass="lfr-app-column-view">
-		<aui:col cssClass="navigation-pane" width="<%= 25 %>">
-			<liferay-util:include page="/view_folders.jsp" servletContext="<%= application %>" />
-		</aui:col>
+<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
 
-		<aui:col cssClass="context-pane" last="<%= true %>" width="<%= 75 %>">
-			<liferay-ui:app-view-toolbar
-				includeDisplayStyle="<%= true %>"
-				includeSelectAll="<%= showSelectAll %>"
-			>
-				<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
-			</liferay-ui:app-view-toolbar>
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
+<div class="container-fluid-1280" id="<portlet:namespace />journalContainer">
+	<div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+		<div class="sidenav-menu-slider">
+			<div class="sidebar sidebar-default sidenav-menu">
+				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />
+			</div>
+		</div>
+
+		<div class="sidenav-content">
 			<div class="journal-breadcrumb" id="<portlet:namespace />breadcrumbContainer">
 				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
 					<liferay-util:include page="/breadcrumb.jsp" servletContext="<%= application %>" />
@@ -102,8 +93,8 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 					</c:choose>
 				</div>
 			</aui:form>
-		</aui:col>
-	</aui:row>
+		</div>
+	</div>
 </div>
 
 <c:if test="<%= !search %>">
@@ -111,12 +102,23 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 </c:if>
 
 <aui:script>
+	$('#<portlet:namespace />infoPanelId').sideNavigation(
+		{
+			gutter: 15,
+			position: 'right',
+			toggler: '.infoPanelToggler',
+			typeMobile: 'fixed',
+			type: 'relative',
+			width: 320
+		}
+	);
+
 	function <portlet:namespace />toggleActionsButton() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0;
 
-		AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
+		AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('on', !hide);
 	}
 
 	<portlet:namespace />toggleActionsButton();

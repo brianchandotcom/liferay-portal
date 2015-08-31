@@ -919,6 +919,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>iconCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[An ID for the component instance.]]></description>
 			<name>id</name>
 			<required>false</required>

@@ -113,7 +113,7 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 %>
 
-<div class="article-form <%= ((article != null) && !article.isNew()) ? "article-form-edit" : "article-form-add" %>">
+<div class="article-form <%= ((article != null) && !article.isNew()) ? "article-form-edit" : "article-form-add" %> container-fluid-1280">
 	<c:if test="<%= showHeader %>">
 		<liferay-util:include page="/article_header.jsp" servletContext="<%= application %>" />
 	</c:if>

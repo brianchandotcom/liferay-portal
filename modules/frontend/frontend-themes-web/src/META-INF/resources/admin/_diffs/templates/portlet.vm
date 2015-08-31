@@ -41,7 +41,5 @@
 		</div>
 	</header>
 
-	<div class="container-fluid-1280 portlet-content">
-		$portlet_display.writeContent($writer)
-	</div>
+	$portlet_display.writeContent($writer)
 </section>

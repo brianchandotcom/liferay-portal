@@ -50,7 +50,7 @@ if (workflowEnabled) {
 	/>
 </liferay-util:buffer>
 
-<aui:form action="<%= editFolderURL %>" method="post" name="fm">
+<aui:form action="<%= editFolderURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 	<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />

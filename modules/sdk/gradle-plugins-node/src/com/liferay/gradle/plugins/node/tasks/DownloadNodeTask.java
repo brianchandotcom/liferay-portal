@@ -18,7 +18,6 @@ import com.liferay.gradle.plugins.node.util.NodeExecutor;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
-import com.liferay.gradle.util.copy.StripPathSegmentsAction;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +31,7 @@ import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.process.ExecSpec;
 
 /**
  * @author Andrea Di Giorgi
@@ -66,24 +66,47 @@ public class DownloadNodeTask extends DefaultTask {
 
 		final File nodeFile = FileUtil.get(project, nodeUrl);
 
-		project.copy(
-			new Action<CopySpec>() {
+		if (nodeUrl.endsWith(".tar.gz")) {
+			project.delete(nodeDir);
 
-				@Override
-				public void execute(CopySpec copySpec) {
-					if (nodeUrl.endsWith(".tar.gz")) {
-						copySpec.eachFile(new StripPathSegmentsAction(1));
-						copySpec.from(project.tarTree(nodeFile));
-						copySpec.setIncludeEmptyDirs(false);
+			// Because of GRADLE-2844, we cannot use project.tarTree to extract
+			// the tarball.
+
+			project.exec(
+				new Action<ExecSpec>() {
+
+					@Override
+					public void execute(ExecSpec execSpec) {
+						execSpec.args("xfz", project.relativePath(nodeFile));
+						execSpec.args(
+							"-C",
+							project.relativePath(nodeDir.getParentFile()));
+
+						execSpec.setExecutable("tar");
 					}
-					else {
+
+				});
+
+			String dirName = nodeFile.getName();
+
+			dirName = dirName.substring(0, dirName.lastIndexOf(".tar.gz"));
+
+			File dir = new File(nodeDir.getParentFile(), dirName);
+
+			dir.renameTo(nodeDir);
+		}
+		else {
+			project.copy(
+				new Action<CopySpec>() {
+
+					@Override
+					public void execute(CopySpec copySpec) {
 						copySpec.from(nodeFile);
+						copySpec.into(nodeDir);
 					}
 
-					copySpec.into(nodeDir);
-				}
-
-			});
+				});
+		}
 
 		if (OSDetector.isWindows()) {
 			final File npmFile = FileUtil.get(project, getNpmUrl());

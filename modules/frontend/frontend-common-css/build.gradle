@@ -14,12 +14,12 @@ liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
 
+File commonCssDestinationDir = file("tmp/META-INF/resources")
+
 task buildBourbon(type: Copy)
-task buildCssCommon
+task buildCssCommon(type: Copy)
 
 buildBourbon {
-	File commonCssDestinationDir = file("tmp/META-INF/resources")
-
 	File bourbonDestinationDir = new File(commonCssDestinationDir, "bourbon")
 	File bourbonZipFile = file("../../../portal-web/third-party/bourbon-${bourbonVersion}.zip")
 
@@ -44,6 +44,8 @@ buildBourbon {
 
 buildCssCommon {
 	dependsOn buildBourbon
+	from commonCssDestinationDir
+	into new File(liferay.appServerPortalDir, "html/css/common")
 }
 
 classes {

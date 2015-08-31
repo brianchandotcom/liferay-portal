@@ -292,6 +292,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		copy.setDescription("Assembles the project and deploys it to Liferay.");
 
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		copy.from(jar);
+
 		GradleUtil.setProperty(copy, AUTO_CLEAN_PROPERTY_NAME, false);
 
 		return copy;
@@ -1573,8 +1577,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project = copy.getProject();
 
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
-
-		copy.from(jar);
 
 		addCleanDeployedFile(project, jar.getArchivePath());
 	}

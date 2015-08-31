@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Item Selector Editor Configuration
+Bundle-SymbolicName: com.liferay.item.selector.editor.configuration
+Bundle-Version: 1.0.0
+Include-Resource: classes

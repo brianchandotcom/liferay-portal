@@ -23,33 +23,72 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
-String reverseOrderByType = "asc";
+if (Validator.isNull(orderByCol)) {
+	orderByCol = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-col", "modified-date");
+	orderByType = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-type", "asc");
+}
+else {
+	boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
 
-if (orderByType.equals("asc")) {
-	reverseOrderByType = "desc";
+	if (saveOrderBy) {
+		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-col", orderByCol);
+		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-type", orderByType);
+	}
 }
 %>
 
-<aui:nav-item dropdown="<%= true %>" id="sortButtonContainer" label="sort-by">
-	<portlet:renderURL var="sortDisplayDatetURL">
+<li>
+	<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="orderByCol">
+		<aui:option label="display-date" selected='<%= orderByCol.equals("display-date") %>' />
+		<aui:option label="modified-date" selected='<%= orderByCol.equals("modified-date") %>' />
+	</aui:select>
+</li>
+
+<li class="<%= orderByType.equals("asc") ? "active" : StringPool.BLANK %>">
+	<portlet:renderURL var="orderByColAscURL">
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
-		<portlet:param name="orderByCol" value="display-date" />
-		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
+		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
+		<portlet:param name="orderByType" value="asc" />
 	</portlet:renderURL>
 
-	<aui:nav-item href="<%= sortDisplayDatetURL %>" iconCssClass="icon-calendar" label="display-date" />
+	<a class="btn hidden-xs" href="<%= orderByColAscURL %>"><span class="icon-caret-up icon-monospaced"></span></a>
+</li>
 
-	<portlet:renderURL var="sortModifiedDatetURL">
+<li class="<%= orderByType.equals("desc") ? "active" : StringPool.BLANK %>">
+	<portlet:renderURL var="orderByColDescURL">
 		<portlet:param name="navigation" value="<%= navigation %>" />
 		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
-		<portlet:param name="orderByCol" value="modified-date" />
-		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
+		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
+		<portlet:param name="orderByType" value="desc" />
 	</portlet:renderURL>
 
-	<aui:nav-item href="<%= sortModifiedDatetURL %>" iconCssClass="icon-calendar" label="modified-date" />
-</aui:nav-item>
+	<a class="btn hidden-xs" href="<%= orderByColDescURL %>"><span class="icon-caret-down icon-monospaced"></span></a>
+</li>
+
+<aui:script>
+	<portlet:renderURL var="orderByTypeURL">
+		<portlet:param name="navigation" value="<%= navigation %>" />
+		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
+		<portlet:param name="orderByType" value="<%= orderByType %>" />
+	</portlet:renderURL>
+
+	var orderByCol = $('#<portlet:namespace />orderByCol');
+
+	orderByCol.on(
+		'change',
+		function(event) {
+			var uri = '<%= orderByTypeURL %>';
+
+			uri = Liferay.Util.addParams('<portlet:namespace />orderByCol=' + orderByCol.val(), uri);
+
+			location.href = uri;
+		}
+	);
+</aui:script>

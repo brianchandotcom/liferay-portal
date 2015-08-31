@@ -36,6 +36,11 @@
 				<required>true</required>
 			</attribute>
 			<attribute>
+				<name>iconCssClass</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<description>An ID for the component instance.</description>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>

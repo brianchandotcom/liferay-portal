@@ -26,13 +26,43 @@ page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.JavaConstants" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.util.PortalUtil" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
+<%@ page import="javax.portlet.PortletRequest" %><%@
+page import="javax.portlet.PortletResponse" %><%@
+page import="javax.portlet.PortletURL" %>
+
 <%@ page import="javax.servlet.ServletContext" %>
 
 <liferay-theme:defineObjects />
+
+<%
+PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstants.JAVAX_PORTLET_REQUEST);
+
+PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+String namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
+
+if (Validator.isNull(namespace)) {
+	namespace = AUIUtil.getNamespace(request);
+}
+
+String currentURL = null;
+
+if ((portletRequest != null) && (portletResponse != null)) {
+	PortletURL currentURLObj = PortletURLUtil.getCurrent(PortalUtil.getLiferayPortletRequest(portletRequest), PortalUtil.getLiferayPortletResponse(portletResponse));
+
+	currentURL = currentURLObj.toString();
+}
+else {
+	currentURL = PortalUtil.getCurrentURL(request);
+}
+%>

@@ -329,28 +329,6 @@ public class PortalImpl implements Portal {
 
 		_computerName = computerName;
 
-		String computerAddress = null;
-
-		try {
-			InetAddress inetAddress = InetAddress.getByName(_computerName);
-
-			computerAddress = inetAddress.getHostAddress();
-		}
-		catch (UnknownHostException uhe) {
-		}
-
-		if (Validator.isNull(computerAddress)) {
-			try {
-				InetAddress inetAddress = InetAddress.getLocalHost();
-
-				computerAddress = inetAddress.getHostAddress();
-			}
-			catch (UnknownHostException uhe) {
-			}
-		}
-
-		_computerAddress = computerAddress;
-
 		try {
 			List<NetworkInterface> networkInterfaces = Collections.list(
 				NetworkInterface.getNetworkInterfaces());
@@ -1623,8 +1601,8 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public String getComputerAddress() {
-		return _computerAddress;
+	public Set<String> getComputerAddresses() {
+		return _computerAddresses;
 	}
 
 	@Override
@@ -8471,7 +8449,6 @@ public class PortalImpl implements Portal {
 	private final Pattern _bannedResourceIdPattern = Pattern.compile(
 		PropsValues.PORTLET_RESOURCE_ID_BANNED_PATHS_REGEXP,
 		Pattern.CASE_INSENSITIVE);
-	private final String _computerAddress;
 	private final Set<String> _computerAddresses = new ConcurrentHashSet<>();
 	private final String _computerName;
 	private String[] _customSqlKeys;

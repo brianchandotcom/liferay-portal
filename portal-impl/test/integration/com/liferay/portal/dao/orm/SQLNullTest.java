@@ -599,11 +599,11 @@ public class SQLNullTest {
 	public void testBlankStringLikeNull() {
 		String sql = _SQL_LIKE_NULL;
 
-		Session session = _sessionFactory.openSession();
-
 		if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
 		}
+
+		Session session = _sessionFactory.openSession();
 
 		try {
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
@@ -659,11 +659,11 @@ public class SQLNullTest {
 	public void testBlankStringNotLikeNull() {
 		String sql = _SQL_NOT_LIKE_NULL;
 
-		Session session = _sessionFactory.openSession();
-
 		if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
 		}
+
+		Session session = _sessionFactory.openSession();
 
 		try {
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
@@ -832,11 +832,11 @@ public class SQLNullTest {
 	public void testNullNotLikeNull() {
 		String sql = _SQL_NOT_LIKE_NULL;
 
-		Session session = _sessionFactory.openSession();
-
 		if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
 		}
+
+		Session session = _sessionFactory.openSession();
 
 		try {
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
@@ -863,11 +863,11 @@ public class SQLNullTest {
 	public void testZeroEqualsNull() {
 		String sql = _SQL_EQUALS_NULL;
 
-		Session session = _sessionFactory.openSession();
-
 		if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
 		}
+
+		Session session = _sessionFactory.openSession();
 
 		try {
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
@@ -963,11 +963,11 @@ public class SQLNullTest {
 	public void testZeroNotEqualsNull() {
 		String sql = _SQL_NOT_EQUALS_NULL;
 
-		Session session = _sessionFactory.openSession();
-
 		if (isHypersonic()) {
 			sql = transformHypersonicSQL(sql);
 		}
+
+		Session session = _sessionFactory.openSession();
 
 		try {
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);

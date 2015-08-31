@@ -183,9 +183,9 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGBookmarks#BACK_ICON" />
+			<condition function="IsElementPresent#pauseIsElementPresent" locator1="Icon#BACK" />
 			<then>
-				<execute function="Click" locator1="PGBookmarks#BACK_ICON" />
+				<execute function="Click" locator1="Icon#BACK" />
 			</then>
 		</while>
 

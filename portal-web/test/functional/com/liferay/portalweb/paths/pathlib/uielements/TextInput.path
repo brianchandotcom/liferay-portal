@@ -414,6 +414,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TRASH_ENTRIES_MAX_AGE</td>
+	<td>//input[contains(@id,'trashEntriesMaxAge')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TWITTER</td>
 	<td>//div[label[contains(.,'Twitter')]]//input[@type='text']</td>
 	<td></td>

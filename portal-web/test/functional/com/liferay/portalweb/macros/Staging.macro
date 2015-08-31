@@ -29,8 +29,8 @@
 		<if>
 			<equals arg1="${pageVersioningEnabled}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="SiteSettingsStaging#ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
-				<execute function="Check" locator1="SiteSettingsStaging#ENABLED_ON_PRIVATE_PAGES_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#ENABLED_ON_PUBLIC_PAGES" />
+				<execute function="Check" locator1="Checkbox#ENABLED_ON_PRIVATE_PAGES" />
 			</then>
 		</if>
 
@@ -38,9 +38,9 @@
 			<var name="key_contentName" value="${contentName}" />
 
 			<if>
-				<condition function="IsElementPresent" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
+				<condition function="IsElementPresent" locator1="Checkbox#STAGED_CONTENT" />
 				<then>
-					<execute function="Check" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
+					<execute function="Check" locator1="Checkbox#STAGED_CONTENT" />
 				</then>
 			</if>
 		</for>
@@ -50,7 +50,7 @@
 			<then>
 				<var name="key_contentName" value="${uncheckContent}" />
 
-				<execute function="Uncheck" locator1="SiteSettingsStaging#CONTENT_CHECKBOX" />
+				<execute function="Uncheck" locator1="Checkbox#STAGED_CONTENT" />
 			</then>
 		</if>
 

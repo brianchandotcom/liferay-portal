@@ -15,3 +15,18 @@
 --%>
 
 <%@ include file="/status/init.jsp" %>
+
+<c:if test="<%= group.isStagingGroup() %>">
+	<c:choose>
+		<c:when test="<%= stagedPortlet %>">
+			<span class="label <%= cssClass %>">
+				<liferay-ui:message key='<%= LanguageUtil.get(request, published ? "published" : "unpublished") %>' />
+			</span>
+		</c:when>
+		<c:otherwise>
+			<span class="label label-warning">
+				<liferay-ui:message key="not-staged" />
+			</span>
+		</c:otherwise>
+	</c:choose>
+</c:if>

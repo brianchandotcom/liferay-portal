@@ -15,3 +15,41 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+String cssClass = GetterUtil.getString(request.getAttribute("liferay-staging:status:cssClass"));
+StagedModel stagedModel = (StagedModel)request.getAttribute("liferay-staging:status:stagedModel");
+
+Date lastPublishDate = null;
+Date modifiedDate = null;
+
+if (stagedModel != null) {
+	lastPublishDate = stagedModel.getLastPublishDate();
+	modifiedDate = stagedModel.getModifiedDate();
+}
+
+group = themeDisplay.getScopeGroup();
+
+String portletId = portletDisplay.getId();
+
+boolean stagedPortlet = group.isInStagingPortlet(portletId);
+boolean published = false;
+
+if (stagedPortlet) {
+	if (lastPublishDate == null) {
+		lastPublishDate = modifiedDate;
+	}
+
+	if ((lastPublishDate != null) && lastPublishDate.after(modifiedDate)) {
+		published = true;
+	}
+
+	if (Validator.isNull(cssClass)) {
+		cssClass = "label-success";
+
+		if (!published) {
+			cssClass = "label-warning";
+		}
+	}
+}
+%>

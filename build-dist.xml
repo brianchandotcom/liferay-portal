@@ -2494,7 +2494,7 @@ plugins.includes=</echo>
 		<xmltask source="${lp.plugins.dir}/summary.xml">
 			<call path="plugins-summary/plugin">
 				<param name="plugins.includes.plugin.bundle" path="releng/bundle/text()" />
-				<param name="plugins.includes.plugin.dependent-apps" path="releng/dependent-apps/text()" />
+				<param name="plugins.includes.plugin.dependent-apps" path="releng/dependent-apps/text()" default="" />
 				<param name="plugins.includes.plugin.marketplace" path="releng/marketplace/text()" />
 				<param name="plugins.includes.plugin.name" path="artifact-id/text()" />
 				<param name="plugins.includes.plugin.public" path="releng/public/text()" />

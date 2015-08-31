@@ -19,14 +19,16 @@ buildscript {
 apply plugin: "com.liferay.poshi.runner"
 
 poshiRunner {
-	File poshiRunnerExtProperties = new File(project.properties["poshiRunnerExtProperties"])
+	if (project.hasProperty("poshiRunnerExtProperties")) {
+		File poshiRunnerExtProperties = new File(project.properties["poshiRunnerExtProperties"])
 
-	if (poshiRunnerExtProperties.exists()) {
-		project.ext.testProperties = new Properties()
+		if (poshiRunnerExtProperties.exists()) {
+			project.ext.testProperties = new Properties()
 
-		testProperties.load(new FileInputStream(project.properties["poshiRunnerExtProperties"]))
+			testProperties.load(new FileInputStream(project.properties["poshiRunnerExtProperties"]))
 
-		setPoshiProperties testProperties
+			setPoshiProperties testProperties
+		}
 	}
 
 	version = "1.0.14"

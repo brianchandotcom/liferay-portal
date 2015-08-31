@@ -692,6 +692,79 @@ public class PoshiRunnerContext {
 			sb.append("\n");
 		}
 
+		if (PropsValues.TEST_BATCH_PROPERTY_NAME != null) {
+			Set<String> classCommandNames = _getRunTestCaseCommandNames();
+
+			int totalGroupCount =
+				classCommandNames.size() /
+				PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+
+			int uncompleteGroupCount =
+				classCommandNames.size() %
+				PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+
+			if (uncompleteGroupCount > 0) {
+				totalGroupCount++;
+			}
+
+			Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
+
+			int classCommandNameCount = 0;
+
+			for (String classCommandName : classCommandNames) {
+				List<String> classCommandNameGroup = new ArrayList<>();
+
+				int classCommandNameGroupIndex =
+					classCommandNameCount % totalGroupCount;
+
+				if (classCommandNameGroups.containsKey(
+						classCommandNameGroupIndex)) {
+
+					classCommandNameGroup.addAll(
+						classCommandNameGroups.get(classCommandNameGroupIndex));
+				}
+
+				classCommandNameGroup.add(classCommandName);
+
+				classCommandNameGroups.put(
+					classCommandNameGroupIndex, classCommandNameGroup);
+
+				classCommandNameCount++;
+			}
+
+			for (int i = 0; i < classCommandNameGroups.size(); i++) {
+				sb.append("RUN_TEST_CASE_METHOD_GROUP_");
+				sb.append(i);
+				sb.append("=");
+
+				List<String> classCommandNameGroup = classCommandNameGroups.get(
+					i);
+
+				for (int j = 0; j < classCommandNameGroup.size(); j++) {
+					String testCaseClassCommandName = classCommandNameGroup.get(
+						j);
+
+					sb.append(testCaseClassCommandName);
+
+					if (j < (classCommandNameGroup.size() - 1)) {
+						sb.append(" ");
+					}
+				}
+
+				sb.append("\n\n");
+			}
+
+			sb.append("RUN_TEST_CASE_METHOD_GROUPS=");
+
+			for (int i = 0; i < classCommandNameGroups.size(); i++) {
+				sb.append(i);
+
+				if (i < (classCommandNameGroups.size() - 1)) {
+					sb.append(" ");
+				}
+			}
+		}
+
 		FileUtil.write("test.case.method.names.properties", sb.toString());
 	}
 

@@ -97,6 +97,17 @@
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//div[contains(@class,'form-search')]//input[contains(@id,'keywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//span[contains(@class,'btn')]//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

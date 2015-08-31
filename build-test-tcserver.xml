@@ -89,7 +89,5 @@
 
 	<target name="run-tcserver">
 		<antcall target="run-simple-server" />
-
-		<antcall target="evaluate-logs" />
 	</target>
 </project>

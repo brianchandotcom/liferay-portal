@@ -55,7 +55,5 @@
 
 	<target name="run-tomcat">
 		<antcall target="run-simple-server" />
-
-		<antcall target="evaluate-logs" />
 	</target>
 </project>

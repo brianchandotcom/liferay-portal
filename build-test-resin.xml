@@ -7,8 +7,6 @@
 		<antcall target="run-simple-server" />
 
 		<antcall target="copy-log-file" />
-
-		<antcall target="evaluate-logs" />
 	</target>
 
 	<target name="run-selenium-resin">

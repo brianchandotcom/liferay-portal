@@ -70,7 +70,8 @@ public class AggregateTestRule implements TestRule {
 		"com.liferay.portal.test.rule.SynchronousMailTestRule",
 		"com.liferay.document.library.webdav.test." +
 			"WebDAVEnvironmentConfigTestRule",
-		"com.liferay.portal.test.rule.SyntheticBundleRule"
+		"com.liferay.portal.test.rule.SyntheticBundleRule",
+		"com.liferay.portal.test.rule.HypersonicServerTestRule"
 	};
 
 	private static final Comparator<TestRule> _testRuleComparator =

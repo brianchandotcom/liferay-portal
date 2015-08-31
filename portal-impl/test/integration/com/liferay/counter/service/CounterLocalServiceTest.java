@@ -18,8 +18,6 @@ import com.liferay.counter.model.Counter;
 import com.liferay.portal.cache.key.SimpleCacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
@@ -34,6 +32,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.HypersonicServerTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.InitUtil;
@@ -43,17 +42,11 @@ import com.liferay.registry.RegistryUtil;
 
 import java.io.File;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
-
-import org.hsqldb.server.Server;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -69,22 +62,10 @@ public class CounterLocalServiceTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+	public static final AggregateTestRule aggregateTestRule;
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		DB db = DBFactoryUtil.getDB();
-
-		String dbType = db.getType();
-
-		_hypersonic = dbType.equals(DB.TYPE_HYPERSONIC);
-
-		if (_hypersonic) {
-			_createDatabase();
-		}
-
 		_COUNTER_NAME = StringUtil.randomString();
 
 		CounterLocalServiceUtil.reset(_COUNTER_NAME);
@@ -97,20 +78,24 @@ public class CounterLocalServiceTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		CounterLocalServiceUtil.reset(_COUNTER_NAME);
-
-		if (_hypersonic) {
-			_shutdownDatabase();
-		}
 	}
 
 	@Test
 	public void testConcurrentIncrement() throws Exception {
 		String classPath = getClassPath();
 
+		List<String> builderArguments = new ArrayList<>();
+
+		builderArguments.add("-Xmx1024m");
+		builderArguments.add("-XX:MaxPermSize=200m");
+
+		for (String property : _hypersonicTestRule.getJdbcProperties()) {
+			builderArguments.add("-D" + property);
+		}
+
 		Builder builder = new Builder();
 
-		builder.setArguments(
-			Arrays.asList("-Xmx1024m", "-XX:MaxPermSize=200m"));
+		builder.setArguments(builderArguments);
 		builder.setBootstrapClassPath(classPath);
 		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
 		builder.setRuntimeClassPath(classPath);
@@ -122,8 +107,7 @@ public class CounterLocalServiceTest {
 		for (int i = 0; i < _PROCESS_COUNT; i++) {
 			ProcessCallable<Long[]> processCallable =
 				new IncrementProcessCallable(
-					"Increment Process-" + i, _COUNTER_NAME, _INCREMENT_COUNT,
-						true);
+					"Increment Process-" + i, _COUNTER_NAME, _INCREMENT_COUNT);
 
 			ProcessChannel<Long[]> processChannel = ProcessExecutorUtil.execute(
 				processConfig, processCallable);
@@ -174,54 +158,31 @@ public class CounterLocalServiceTest {
 		return classPath;
 	}
 
-	private static void _createDatabase() throws Exception {
-		Class.forName("org.hsqldb.jdbcDriver");
-
-		_server = new Server();
-		_server.setDatabaseName(0, "lportal");
-		_server.setDatabasePath(0, PropsValues.LIFERAY_HOME +
-			"data/hsql/lportal");
-		_server.setLogWriter(null);
-		_server.setErrWriter(null);
-		_server.start();
-	}
-
-	private static void _shutdownDatabase() throws Exception {
-
-		// Shutdown Hypersonic
-
-		try (Connection con = DriverManager.getConnection(
-				"jdbc:hsqldb:hsql://localhost/lportal;", "sa", "")) {
-
-			try (Statement statement = con.createStatement()) {
-				statement.execute("SHUTDOWN COMPACT");
-			}
-		}
-
-		_server.stop();
-	}
-
 	private static String _COUNTER_NAME;
 
 	private static final int _INCREMENT_COUNT = 10000;
 
 	private static final int _PROCESS_COUNT = 4;
 
-	private static boolean _hypersonic;
+	private static final HypersonicServerTestRule _hypersonicTestRule;
 
-	private static Server _server;
+	static {
+		_hypersonicTestRule = new HypersonicServerTestRule("lportal");
+
+		aggregateTestRule = new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			_hypersonicTestRule);
+	}
 
 	private static class IncrementProcessCallable
 		implements ProcessCallable<Long[]> {
 
 		public IncrementProcessCallable(
-			String processName, String counterName, int incrementCount,
-			boolean hypersonic) {
+			String processName, String counterName, int incrementCount) {
 
 			_processName = processName;
 			_counterName = counterName;
 			_incrementCount = incrementCount;
-			_HYPERSONIC = hypersonic;
 		}
 
 		@Override
@@ -237,14 +198,6 @@ public class CounterLocalServiceTest {
 			System.setProperty("portal:jdbc.default.minPoolSize", "0");
 			System.setProperty("portal:jdbc.default.maximumPoolSize", "1");
 			System.setProperty("portal:jdbc.default.minimumIdle", "0");
-
-			if (_HYPERSONIC) {
-				System.setProperty(
-					"portal:jdbc.default.url",
-						"jdbc:hsqldb:hsql://localhost/lportal");
-				System.setProperty("portal:jdbc.default.username", "sa");
-				System.setProperty("portal:jdbc.default.password", "");
-			}
 
 			CacheKeyGeneratorUtil cacheKeyGeneratorUtil =
 				new CacheKeyGeneratorUtil();
@@ -277,8 +230,6 @@ public class CounterLocalServiceTest {
 		}
 
 		private static final long serialVersionUID = 1L;
-
-		private final boolean _HYPERSONIC;
 
 		private final String _counterName;
 		private final int _incrementCount;

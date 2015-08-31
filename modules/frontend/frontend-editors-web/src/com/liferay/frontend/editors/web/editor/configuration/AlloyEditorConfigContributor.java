@@ -15,11 +15,6 @@
 package com.liferay.frontend.editors.web.editor.configuration;
 
 import com.liferay.item.selector.ItemSelector;
-import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -32,13 +27,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
-
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -85,6 +76,10 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			"contextmenu,elementspath,image,link,liststyle,resize,tabletools," +
 				"toolbar");
 
+		jsonObject.put("filebrowserBrowseUrl", "");
+		jsonObject.put("filebrowserImageBrowseLinkUrl", "");
+		jsonObject.put("filebrowserImageBrowseUrl", "");
+
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:namespace"));
@@ -94,9 +89,6 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 				GetterUtil.getString(
 					inputEditorTaglibAttributes.get(
 						"liferay-ui:input-editor:name"));
-
-		populateFileBrowserURL(
-			jsonObject, requestBackedPortletURLFactory, name + "selectItem");
 
 		jsonObject.put("srcNode", name);
 
@@ -303,53 +295,6 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
 
 		return jsonObject;
-	}
-
-	protected void populateFileBrowserURL(
-		JSONObject jsonObject,
-		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
-		String eventName) {
-
-		List<ItemSelectorReturnType> urlDesiredItemSelectorReturnTypes =
-			new ArrayList<>();
-
-		ItemSelectorReturnType urlItemSelectorReturnType =
-			new URLItemSelectorReturnType();
-
-		urlDesiredItemSelectorReturnTypes.add(urlItemSelectorReturnType);
-
-		ItemSelectorCriterion urlItemSelectorCriterion =
-			new URLItemSelectorCriterion();
-
-		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			urlDesiredItemSelectorReturnTypes);
-
-		PortletURL layoutItemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, eventName,
-			urlItemSelectorCriterion);
-
-		jsonObject.put(
-			"filebrowserBrowseUrl", layoutItemSelectorURL.toString());
-
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
-		List<ItemSelectorReturnType> imageDesiredItemSelectorReturnTypes =
-			new ArrayList<>();
-
-		imageDesiredItemSelectorReturnTypes.add(urlItemSelectorReturnType);
-
-		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			imageDesiredItemSelectorReturnTypes);
-
-		PortletURL dlItemSelectorURL = _itemSelector.getItemSelectorURL(
-			requestBackedPortletURLFactory, eventName,
-			imageItemSelectorCriterion);
-
-		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", dlItemSelectorURL.toString());
-		jsonObject.put(
-			"filebrowserImageBrowseUrl", dlItemSelectorURL.toString());
 	}
 
 	private static final int _CKEDITOR_STYLE_BLOCK = 1;

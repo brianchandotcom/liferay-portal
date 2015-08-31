@@ -178,12 +178,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 							String[] stringArray = ArrayUtil.toStringArray(
 								jsonArray);
 
-							if (indexType.equals("keyword")) {
-								document.addKeywordSortable(name, stringArray);
-							}
-							else {
-								document.addTextSortable(name, stringArray);
-							}
+							document.addKeywordSortable(name, stringArray);
 						}
 						else {
 							if (type.equals(DDMImpl.TYPE_DDM_TEXT_HTML)) {

@@ -53,6 +53,18 @@ buildLang {
 	translateClientSecret = project.properties["microsoft.translator.client.secret"]
 }
 
+buildService {
+	doFirst {
+		if (project.name.endsWith("-service")) {
+			String requiredApiDirName = "../${project.name[0 .. -9]}-api/src"
+
+			if (apiDirName != requiredApiDirName) {
+				throw new GradleException("Please configure the 'buildService' task.")
+			}
+		}
+	}
+}
+
 configure([test, testIntegration]) {
 	testLogging {
 		events = EnumSet.allOf(TestLogEvent)

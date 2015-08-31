@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"ddm.form.field.type.icon=icon-list",
-		"ddm.form.field.type.js.class=Liferay.DDM.Field.Select",
+		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Select",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-select",
 		"ddm.form.field.type.name=select"
 	},

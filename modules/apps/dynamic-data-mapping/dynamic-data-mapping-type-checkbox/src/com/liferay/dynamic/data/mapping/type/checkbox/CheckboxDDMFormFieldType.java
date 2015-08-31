@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"ddm.form.field.type.icon=icon-check",
-		"ddm.form.field.type.js.class=Liferay.DDM.Field.Checkbox",
+		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Checkbox",
 		"ddm.form.field.type.js.module=liferay-ddm-form-field-checkbox",
 		"ddm.form.field.type.name=checkbox"
 	},

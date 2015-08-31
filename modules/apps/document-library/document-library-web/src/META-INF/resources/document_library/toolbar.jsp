@@ -19,13 +19,9 @@
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
-Folder folder = (Folder)request.getAttribute("view.jsp-folder");
-
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
-
-String keywords = ParamUtil.getString(request, "keywords");
 
 boolean search = mvcRenderCommandName.equals("/document_library/search");
 

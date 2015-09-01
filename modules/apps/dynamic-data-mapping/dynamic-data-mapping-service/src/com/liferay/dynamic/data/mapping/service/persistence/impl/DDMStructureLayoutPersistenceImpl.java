@@ -1718,7 +1718,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(ddmStructureLayout);
+		clearUniqueFindersCache((DDMStructureLayoutModelImpl)ddmStructureLayout);
 	}
 
 	@Override
@@ -1730,66 +1730,65 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 			EntityCacheUtil.removeResult(DDMStructureLayoutModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureLayoutImpl.class, ddmStructureLayout.getPrimaryKey());
 
-			clearUniqueFindersCache(ddmStructureLayout);
+			clearUniqueFindersCache((DDMStructureLayoutModelImpl)ddmStructureLayout);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		DDMStructureLayout ddmStructureLayout, boolean isNew) {
+		DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					ddmStructureLayout.getUuid(),
-					ddmStructureLayout.getGroupId()
+					ddmStructureLayoutModelImpl.getUuid(),
+					ddmStructureLayoutModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				ddmStructureLayout);
+				ddmStructureLayoutModelImpl);
 
-			args = new Object[] { ddmStructureLayout.getStructureVersionId() };
+			args = new Object[] {
+					ddmStructureLayoutModelImpl.getStructureVersionId()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_STRUCTUREVERSIONID,
 				args, Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STRUCTUREVERSIONID,
-				args, ddmStructureLayout);
+				args, ddmStructureLayoutModelImpl);
 		}
 		else {
-			DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl = (DDMStructureLayoutModelImpl)ddmStructureLayout;
-
 			if ((ddmStructureLayoutModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ddmStructureLayout.getUuid(),
-						ddmStructureLayout.getGroupId()
+						ddmStructureLayoutModelImpl.getUuid(),
+						ddmStructureLayoutModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					ddmStructureLayout);
+					ddmStructureLayoutModelImpl);
 			}
 
 			if ((ddmStructureLayoutModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_STRUCTUREVERSIONID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ddmStructureLayout.getStructureVersionId()
+						ddmStructureLayoutModelImpl.getStructureVersionId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_STRUCTUREVERSIONID,
 					args, Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_STRUCTUREVERSIONID,
-					args, ddmStructureLayout);
+					args, ddmStructureLayoutModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		DDMStructureLayout ddmStructureLayout) {
-		DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl = (DDMStructureLayoutModelImpl)ddmStructureLayout;
-
+		DDMStructureLayoutModelImpl ddmStructureLayoutModelImpl) {
 		Object[] args = new Object[] {
-				ddmStructureLayout.getUuid(), ddmStructureLayout.getGroupId()
+				ddmStructureLayoutModelImpl.getUuid(),
+				ddmStructureLayoutModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -1806,7 +1805,7 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { ddmStructureLayout.getStructureVersionId() };
+		args = new Object[] { ddmStructureLayoutModelImpl.getStructureVersionId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_STRUCTUREVERSIONID,
 			args);
@@ -2041,9 +2040,8 @@ public class DDMStructureLayoutPersistenceImpl extends BasePersistenceImpl<DDMSt
 			DDMStructureLayoutImpl.class, ddmStructureLayout.getPrimaryKey(),
 			ddmStructureLayout, false);
 
-		clearUniqueFindersCache((DDMStructureLayout)ddmStructureLayoutModelImpl);
-		cacheUniqueFindersCache((DDMStructureLayout)ddmStructureLayoutModelImpl,
-			isNew);
+		clearUniqueFindersCache(ddmStructureLayoutModelImpl);
+		cacheUniqueFindersCache(ddmStructureLayoutModelImpl, isNew);
 
 		ddmStructureLayout.resetOriginalValues();
 

@@ -2761,7 +2761,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(mdrRuleGroup);
+		clearUniqueFindersCache((MDRRuleGroupModelImpl)mdrRuleGroup);
 	}
 
 	@Override
@@ -2773,44 +2773,44 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			EntityCacheUtil.removeResult(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED,
 				MDRRuleGroupImpl.class, mdrRuleGroup.getPrimaryKey());
 
-			clearUniqueFindersCache(mdrRuleGroup);
+			clearUniqueFindersCache((MDRRuleGroupModelImpl)mdrRuleGroup);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MDRRuleGroup mdrRuleGroup,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		MDRRuleGroupModelImpl mdrRuleGroupModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					mdrRuleGroup.getUuid(), mdrRuleGroup.getGroupId()
+					mdrRuleGroupModelImpl.getUuid(),
+					mdrRuleGroupModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				mdrRuleGroup);
+				mdrRuleGroupModelImpl);
 		}
 		else {
-			MDRRuleGroupModelImpl mdrRuleGroupModelImpl = (MDRRuleGroupModelImpl)mdrRuleGroup;
-
 			if ((mdrRuleGroupModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mdrRuleGroup.getUuid(), mdrRuleGroup.getGroupId()
+						mdrRuleGroupModelImpl.getUuid(),
+						mdrRuleGroupModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					mdrRuleGroup);
+					mdrRuleGroupModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(MDRRuleGroup mdrRuleGroup) {
-		MDRRuleGroupModelImpl mdrRuleGroupModelImpl = (MDRRuleGroupModelImpl)mdrRuleGroup;
-
+	protected void clearUniqueFindersCache(
+		MDRRuleGroupModelImpl mdrRuleGroupModelImpl) {
 		Object[] args = new Object[] {
-				mdrRuleGroup.getUuid(), mdrRuleGroup.getGroupId()
+				mdrRuleGroupModelImpl.getUuid(),
+				mdrRuleGroupModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -3057,8 +3057,8 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			MDRRuleGroupImpl.class, mdrRuleGroup.getPrimaryKey(), mdrRuleGroup,
 			false);
 
-		clearUniqueFindersCache((MDRRuleGroup)mdrRuleGroupModelImpl);
-		cacheUniqueFindersCache((MDRRuleGroup)mdrRuleGroupModelImpl, isNew);
+		clearUniqueFindersCache(mdrRuleGroupModelImpl);
+		cacheUniqueFindersCache(mdrRuleGroupModelImpl, isNew);
 
 		mdrRuleGroup.resetOriginalValues();
 

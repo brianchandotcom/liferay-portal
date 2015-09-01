@@ -1618,7 +1618,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(portletItem);
+		clearUniqueFindersCache((PortletItemModelImpl)portletItem);
 	}
 
 	@Override
@@ -1630,47 +1630,50 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			EntityCacheUtil.removeResult(PortletItemModelImpl.ENTITY_CACHE_ENABLED,
 				PortletItemImpl.class, portletItem.getPrimaryKey());
 
-			clearUniqueFindersCache(portletItem);
+			clearUniqueFindersCache((PortletItemModelImpl)portletItem);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(PortletItem portletItem,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		PortletItemModelImpl portletItemModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					portletItem.getGroupId(), portletItem.getName(),
-					portletItem.getPortletId(), portletItem.getClassNameId()
+					portletItemModelImpl.getGroupId(),
+					portletItemModelImpl.getName(),
+					portletItemModelImpl.getPortletId(),
+					portletItemModelImpl.getClassNameId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N_P_C, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N_P_C, args,
-				portletItem);
+				portletItemModelImpl);
 		}
 		else {
-			PortletItemModelImpl portletItemModelImpl = (PortletItemModelImpl)portletItem;
-
 			if ((portletItemModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N_P_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						portletItem.getGroupId(), portletItem.getName(),
-						portletItem.getPortletId(), portletItem.getClassNameId()
+						portletItemModelImpl.getGroupId(),
+						portletItemModelImpl.getName(),
+						portletItemModelImpl.getPortletId(),
+						portletItemModelImpl.getClassNameId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N_P_C, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N_P_C, args,
-					portletItem);
+					portletItemModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(PortletItem portletItem) {
-		PortletItemModelImpl portletItemModelImpl = (PortletItemModelImpl)portletItem;
-
+	protected void clearUniqueFindersCache(
+		PortletItemModelImpl portletItemModelImpl) {
 		Object[] args = new Object[] {
-				portletItem.getGroupId(), portletItem.getName(),
-				portletItem.getPortletId(), portletItem.getClassNameId()
+				portletItemModelImpl.getGroupId(),
+				portletItemModelImpl.getName(),
+				portletItemModelImpl.getPortletId(),
+				portletItemModelImpl.getClassNameId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_P_C, args);
@@ -1898,8 +1901,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 			PortletItemImpl.class, portletItem.getPrimaryKey(), portletItem,
 			false);
 
-		clearUniqueFindersCache((PortletItem)portletItemModelImpl);
-		cacheUniqueFindersCache((PortletItem)portletItemModelImpl, isNew);
+		clearUniqueFindersCache(portletItemModelImpl);
+		cacheUniqueFindersCache(portletItemModelImpl, isNew);
 
 		portletItem.resetOriginalValues();
 

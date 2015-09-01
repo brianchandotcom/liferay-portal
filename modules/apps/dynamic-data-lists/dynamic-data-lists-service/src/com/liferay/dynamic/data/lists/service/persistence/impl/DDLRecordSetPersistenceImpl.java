@@ -3023,7 +3023,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(ddlRecordSet);
+		clearUniqueFindersCache((DDLRecordSetModelImpl)ddlRecordSet);
 	}
 
 	@Override
@@ -3035,66 +3035,67 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 			EntityCacheUtil.removeResult(DDLRecordSetModelImpl.ENTITY_CACHE_ENABLED,
 				DDLRecordSetImpl.class, ddlRecordSet.getPrimaryKey());
 
-			clearUniqueFindersCache(ddlRecordSet);
+			clearUniqueFindersCache((DDLRecordSetModelImpl)ddlRecordSet);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DDLRecordSet ddlRecordSet,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		DDLRecordSetModelImpl ddlRecordSetModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					ddlRecordSet.getUuid(), ddlRecordSet.getGroupId()
+					ddlRecordSetModelImpl.getUuid(),
+					ddlRecordSetModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				ddlRecordSet);
+				ddlRecordSetModelImpl);
 
 			args = new Object[] {
-					ddlRecordSet.getGroupId(), ddlRecordSet.getRecordSetKey()
+					ddlRecordSetModelImpl.getGroupId(),
+					ddlRecordSetModelImpl.getRecordSetKey()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_R, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_R, args,
-				ddlRecordSet);
+				ddlRecordSetModelImpl);
 		}
 		else {
-			DDLRecordSetModelImpl ddlRecordSetModelImpl = (DDLRecordSetModelImpl)ddlRecordSet;
-
 			if ((ddlRecordSetModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ddlRecordSet.getUuid(), ddlRecordSet.getGroupId()
+						ddlRecordSetModelImpl.getUuid(),
+						ddlRecordSetModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					ddlRecordSet);
+					ddlRecordSetModelImpl);
 			}
 
 			if ((ddlRecordSetModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ddlRecordSet.getGroupId(),
-						ddlRecordSet.getRecordSetKey()
+						ddlRecordSetModelImpl.getGroupId(),
+						ddlRecordSetModelImpl.getRecordSetKey()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_R, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_R, args,
-					ddlRecordSet);
+					ddlRecordSetModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(DDLRecordSet ddlRecordSet) {
-		DDLRecordSetModelImpl ddlRecordSetModelImpl = (DDLRecordSetModelImpl)ddlRecordSet;
-
+	protected void clearUniqueFindersCache(
+		DDLRecordSetModelImpl ddlRecordSetModelImpl) {
 		Object[] args = new Object[] {
-				ddlRecordSet.getUuid(), ddlRecordSet.getGroupId()
+				ddlRecordSetModelImpl.getUuid(),
+				ddlRecordSetModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -3112,7 +3113,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		}
 
 		args = new Object[] {
-				ddlRecordSet.getGroupId(), ddlRecordSet.getRecordSetKey()
+				ddlRecordSetModelImpl.getGroupId(),
+				ddlRecordSetModelImpl.getRecordSetKey()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_R, args);
@@ -3359,8 +3361,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 			DDLRecordSetImpl.class, ddlRecordSet.getPrimaryKey(), ddlRecordSet,
 			false);
 
-		clearUniqueFindersCache((DDLRecordSet)ddlRecordSetModelImpl);
-		cacheUniqueFindersCache((DDLRecordSet)ddlRecordSetModelImpl, isNew);
+		clearUniqueFindersCache(ddlRecordSetModelImpl);
+		cacheUniqueFindersCache(ddlRecordSetModelImpl, isNew);
 
 		ddlRecordSet.resetOriginalValues();
 

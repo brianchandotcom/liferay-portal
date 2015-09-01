@@ -4500,7 +4500,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(assetTag);
+		clearUniqueFindersCache((AssetTagModelImpl)assetTag);
 	}
 
 	@Override
@@ -4512,60 +4512,64 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 			EntityCacheUtil.removeResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
 				AssetTagImpl.class, assetTag.getPrimaryKey());
 
-			clearUniqueFindersCache(assetTag);
+			clearUniqueFindersCache((AssetTagModelImpl)assetTag);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(AssetTag assetTag, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		AssetTagModelImpl assetTagModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					assetTag.getUuid(), assetTag.getGroupId()
+					assetTagModelImpl.getUuid(), assetTagModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				assetTag);
+				assetTagModelImpl);
 
-			args = new Object[] { assetTag.getGroupId(), assetTag.getName() };
+			args = new Object[] {
+					assetTagModelImpl.getGroupId(), assetTagModelImpl.getName()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args, assetTag);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+				assetTagModelImpl);
 		}
 		else {
-			AssetTagModelImpl assetTagModelImpl = (AssetTagModelImpl)assetTag;
-
 			if ((assetTagModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetTag.getUuid(), assetTag.getGroupId()
+						assetTagModelImpl.getUuid(),
+						assetTagModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					assetTag);
+					assetTagModelImpl);
 			}
 
 			if ((assetTagModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetTag.getGroupId(), assetTag.getName()
+						assetTagModelImpl.getGroupId(),
+						assetTagModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
-					assetTag);
+					assetTagModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(AssetTag assetTag) {
-		AssetTagModelImpl assetTagModelImpl = (AssetTagModelImpl)assetTag;
-
-		Object[] args = new Object[] { assetTag.getUuid(), assetTag.getGroupId() };
+	protected void clearUniqueFindersCache(AssetTagModelImpl assetTagModelImpl) {
+		Object[] args = new Object[] {
+				assetTagModelImpl.getUuid(), assetTagModelImpl.getGroupId()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
@@ -4581,7 +4585,9 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { assetTag.getGroupId(), assetTag.getName() };
+		args = new Object[] {
+				assetTagModelImpl.getGroupId(), assetTagModelImpl.getName()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
@@ -4824,8 +4830,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		EntityCacheUtil.putResult(AssetTagModelImpl.ENTITY_CACHE_ENABLED,
 			AssetTagImpl.class, assetTag.getPrimaryKey(), assetTag, false);
 
-		clearUniqueFindersCache((AssetTag)assetTagModelImpl);
-		cacheUniqueFindersCache((AssetTag)assetTagModelImpl, isNew);
+		clearUniqueFindersCache(assetTagModelImpl);
+		cacheUniqueFindersCache(assetTagModelImpl, isNew);
 
 		assetTag.resetOriginalValues();
 

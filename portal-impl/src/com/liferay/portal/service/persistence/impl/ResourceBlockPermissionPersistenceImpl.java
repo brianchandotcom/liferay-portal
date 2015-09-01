@@ -1370,7 +1370,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(resourceBlockPermission);
+		clearUniqueFindersCache((ResourceBlockPermissionModelImpl)resourceBlockPermission);
 	}
 
 	@Override
@@ -1384,48 +1384,45 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 				ResourceBlockPermissionImpl.class,
 				resourceBlockPermission.getPrimaryKey());
 
-			clearUniqueFindersCache(resourceBlockPermission);
+			clearUniqueFindersCache((ResourceBlockPermissionModelImpl)resourceBlockPermission);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		ResourceBlockPermission resourceBlockPermission, boolean isNew) {
+		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					resourceBlockPermission.getResourceBlockId(),
-					resourceBlockPermission.getRoleId()
+					resourceBlockPermissionModelImpl.getResourceBlockId(),
+					resourceBlockPermissionModelImpl.getRoleId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_R, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R, args,
-				resourceBlockPermission);
+				resourceBlockPermissionModelImpl);
 		}
 		else {
-			ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl = (ResourceBlockPermissionModelImpl)resourceBlockPermission;
-
 			if ((resourceBlockPermissionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_R_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						resourceBlockPermission.getResourceBlockId(),
-						resourceBlockPermission.getRoleId()
+						resourceBlockPermissionModelImpl.getResourceBlockId(),
+						resourceBlockPermissionModelImpl.getRoleId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_R, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R, args,
-					resourceBlockPermission);
+					resourceBlockPermissionModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		ResourceBlockPermission resourceBlockPermission) {
-		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl = (ResourceBlockPermissionModelImpl)resourceBlockPermission;
-
+		ResourceBlockPermissionModelImpl resourceBlockPermissionModelImpl) {
 		Object[] args = new Object[] {
-				resourceBlockPermission.getResourceBlockId(),
-				resourceBlockPermission.getRoleId()
+				resourceBlockPermissionModelImpl.getResourceBlockId(),
+				resourceBlockPermissionModelImpl.getRoleId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
@@ -1626,9 +1623,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 			resourceBlockPermission.getPrimaryKey(), resourceBlockPermission,
 			false);
 
-		clearUniqueFindersCache((ResourceBlockPermission)resourceBlockPermissionModelImpl);
-		cacheUniqueFindersCache((ResourceBlockPermission)resourceBlockPermissionModelImpl,
-			isNew);
+		clearUniqueFindersCache(resourceBlockPermissionModelImpl);
+		cacheUniqueFindersCache(resourceBlockPermissionModelImpl, isNew);
 
 		resourceBlockPermission.resetOriginalValues();
 

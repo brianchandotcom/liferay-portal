@@ -1334,7 +1334,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(shoppingCart);
+		clearUniqueFindersCache((ShoppingCartModelImpl)shoppingCart);
 	}
 
 	@Override
@@ -1346,44 +1346,44 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			EntityCacheUtil.removeResult(ShoppingCartModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingCartImpl.class, shoppingCart.getPrimaryKey());
 
-			clearUniqueFindersCache(shoppingCart);
+			clearUniqueFindersCache((ShoppingCartModelImpl)shoppingCart);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ShoppingCart shoppingCart,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		ShoppingCartModelImpl shoppingCartModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					shoppingCart.getGroupId(), shoppingCart.getUserId()
+					shoppingCartModelImpl.getGroupId(),
+					shoppingCartModelImpl.getUserId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U, args,
-				shoppingCart);
+				shoppingCartModelImpl);
 		}
 		else {
-			ShoppingCartModelImpl shoppingCartModelImpl = (ShoppingCartModelImpl)shoppingCart;
-
 			if ((shoppingCartModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						shoppingCart.getGroupId(), shoppingCart.getUserId()
+						shoppingCartModelImpl.getGroupId(),
+						shoppingCartModelImpl.getUserId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U, args,
-					shoppingCart);
+					shoppingCartModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ShoppingCart shoppingCart) {
-		ShoppingCartModelImpl shoppingCartModelImpl = (ShoppingCartModelImpl)shoppingCart;
-
+	protected void clearUniqueFindersCache(
+		ShoppingCartModelImpl shoppingCartModelImpl) {
 		Object[] args = new Object[] {
-				shoppingCart.getGroupId(), shoppingCart.getUserId()
+				shoppingCartModelImpl.getGroupId(),
+				shoppingCartModelImpl.getUserId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
@@ -1598,8 +1598,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 			ShoppingCartImpl.class, shoppingCart.getPrimaryKey(), shoppingCart,
 			false);
 
-		clearUniqueFindersCache((ShoppingCart)shoppingCartModelImpl);
-		cacheUniqueFindersCache((ShoppingCart)shoppingCartModelImpl, isNew);
+		clearUniqueFindersCache(shoppingCartModelImpl);
+		cacheUniqueFindersCache(shoppingCartModelImpl, isNew);
 
 		shoppingCart.resetOriginalValues();
 

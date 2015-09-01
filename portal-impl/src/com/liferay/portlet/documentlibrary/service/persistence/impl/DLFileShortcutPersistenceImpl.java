@@ -5839,7 +5839,7 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(dlFileShortcut);
+		clearUniqueFindersCache((DLFileShortcutModelImpl)dlFileShortcut);
 	}
 
 	@Override
@@ -5851,44 +5851,44 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			EntityCacheUtil.removeResult(DLFileShortcutModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileShortcutImpl.class, dlFileShortcut.getPrimaryKey());
 
-			clearUniqueFindersCache(dlFileShortcut);
+			clearUniqueFindersCache((DLFileShortcutModelImpl)dlFileShortcut);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLFileShortcut dlFileShortcut,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		DLFileShortcutModelImpl dlFileShortcutModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					dlFileShortcut.getUuid(), dlFileShortcut.getGroupId()
+					dlFileShortcutModelImpl.getUuid(),
+					dlFileShortcutModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				dlFileShortcut);
+				dlFileShortcutModelImpl);
 		}
 		else {
-			DLFileShortcutModelImpl dlFileShortcutModelImpl = (DLFileShortcutModelImpl)dlFileShortcut;
-
 			if ((dlFileShortcutModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileShortcut.getUuid(), dlFileShortcut.getGroupId()
+						dlFileShortcutModelImpl.getUuid(),
+						dlFileShortcutModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					dlFileShortcut);
+					dlFileShortcutModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(DLFileShortcut dlFileShortcut) {
-		DLFileShortcutModelImpl dlFileShortcutModelImpl = (DLFileShortcutModelImpl)dlFileShortcut;
-
+	protected void clearUniqueFindersCache(
+		DLFileShortcutModelImpl dlFileShortcutModelImpl) {
 		Object[] args = new Object[] {
-				dlFileShortcut.getUuid(), dlFileShortcut.getGroupId()
+				dlFileShortcutModelImpl.getUuid(),
+				dlFileShortcutModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -6226,8 +6226,8 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			DLFileShortcutImpl.class, dlFileShortcut.getPrimaryKey(),
 			dlFileShortcut, false);
 
-		clearUniqueFindersCache((DLFileShortcut)dlFileShortcutModelImpl);
-		cacheUniqueFindersCache((DLFileShortcut)dlFileShortcutModelImpl, isNew);
+		clearUniqueFindersCache(dlFileShortcutModelImpl);
+		cacheUniqueFindersCache(dlFileShortcutModelImpl, isNew);
 
 		dlFileShortcut.resetOriginalValues();
 

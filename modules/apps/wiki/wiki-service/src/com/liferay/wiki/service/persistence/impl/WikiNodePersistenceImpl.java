@@ -4462,7 +4462,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(wikiNode);
+		clearUniqueFindersCache((WikiNodeModelImpl)wikiNode);
 	}
 
 	@Override
@@ -4474,60 +4474,64 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			EntityCacheUtil.removeResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 				WikiNodeImpl.class, wikiNode.getPrimaryKey());
 
-			clearUniqueFindersCache(wikiNode);
+			clearUniqueFindersCache((WikiNodeModelImpl)wikiNode);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(WikiNode wikiNode, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		WikiNodeModelImpl wikiNodeModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					wikiNode.getUuid(), wikiNode.getGroupId()
+					wikiNodeModelImpl.getUuid(), wikiNodeModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				wikiNode);
+				wikiNodeModelImpl);
 
-			args = new Object[] { wikiNode.getGroupId(), wikiNode.getName() };
+			args = new Object[] {
+					wikiNodeModelImpl.getGroupId(), wikiNodeModelImpl.getName()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args, wikiNode);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
+				wikiNodeModelImpl);
 		}
 		else {
-			WikiNodeModelImpl wikiNodeModelImpl = (WikiNodeModelImpl)wikiNode;
-
 			if ((wikiNodeModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						wikiNode.getUuid(), wikiNode.getGroupId()
+						wikiNodeModelImpl.getUuid(),
+						wikiNodeModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					wikiNode);
+					wikiNodeModelImpl);
 			}
 
 			if ((wikiNodeModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						wikiNode.getGroupId(), wikiNode.getName()
+						wikiNodeModelImpl.getGroupId(),
+						wikiNodeModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
-					wikiNode);
+					wikiNodeModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(WikiNode wikiNode) {
-		WikiNodeModelImpl wikiNodeModelImpl = (WikiNodeModelImpl)wikiNode;
-
-		Object[] args = new Object[] { wikiNode.getUuid(), wikiNode.getGroupId() };
+	protected void clearUniqueFindersCache(WikiNodeModelImpl wikiNodeModelImpl) {
+		Object[] args = new Object[] {
+				wikiNodeModelImpl.getUuid(), wikiNodeModelImpl.getGroupId()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
@@ -4543,7 +4547,9 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { wikiNode.getGroupId(), wikiNode.getName() };
+		args = new Object[] {
+				wikiNodeModelImpl.getGroupId(), wikiNodeModelImpl.getName()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
@@ -4845,8 +4851,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		EntityCacheUtil.putResult(WikiNodeModelImpl.ENTITY_CACHE_ENABLED,
 			WikiNodeImpl.class, wikiNode.getPrimaryKey(), wikiNode, false);
 
-		clearUniqueFindersCache((WikiNode)wikiNodeModelImpl);
-		cacheUniqueFindersCache((WikiNode)wikiNodeModelImpl, isNew);
+		clearUniqueFindersCache(wikiNodeModelImpl);
+		cacheUniqueFindersCache(wikiNodeModelImpl, isNew);
 
 		wikiNode.resetOriginalValues();
 

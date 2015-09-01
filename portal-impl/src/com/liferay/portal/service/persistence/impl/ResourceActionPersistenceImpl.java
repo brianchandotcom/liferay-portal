@@ -965,7 +965,7 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(resourceAction);
+		clearUniqueFindersCache((ResourceActionModelImpl)resourceAction);
 	}
 
 	@Override
@@ -977,44 +977,44 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			EntityCacheUtil.removeResult(ResourceActionModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceActionImpl.class, resourceAction.getPrimaryKey());
 
-			clearUniqueFindersCache(resourceAction);
+			clearUniqueFindersCache((ResourceActionModelImpl)resourceAction);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ResourceAction resourceAction,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		ResourceActionModelImpl resourceActionModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					resourceAction.getName(), resourceAction.getActionId()
+					resourceActionModelImpl.getName(),
+					resourceActionModelImpl.getActionId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_A, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A, args,
-				resourceAction);
+				resourceActionModelImpl);
 		}
 		else {
-			ResourceActionModelImpl resourceActionModelImpl = (ResourceActionModelImpl)resourceAction;
-
 			if ((resourceActionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_N_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						resourceAction.getName(), resourceAction.getActionId()
+						resourceActionModelImpl.getName(),
+						resourceActionModelImpl.getActionId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_A, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_A, args,
-					resourceAction);
+					resourceActionModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ResourceAction resourceAction) {
-		ResourceActionModelImpl resourceActionModelImpl = (ResourceActionModelImpl)resourceAction;
-
+	protected void clearUniqueFindersCache(
+		ResourceActionModelImpl resourceActionModelImpl) {
 		Object[] args = new Object[] {
-				resourceAction.getName(), resourceAction.getActionId()
+				resourceActionModelImpl.getName(),
+				resourceActionModelImpl.getActionId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_A, args);
@@ -1191,8 +1191,8 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 			ResourceActionImpl.class, resourceAction.getPrimaryKey(),
 			resourceAction, false);
 
-		clearUniqueFindersCache((ResourceAction)resourceActionModelImpl);
-		cacheUniqueFindersCache((ResourceAction)resourceActionModelImpl, isNew);
+		clearUniqueFindersCache(resourceActionModelImpl);
+		cacheUniqueFindersCache(resourceActionModelImpl, isNew);
 
 		resourceAction.resetOriginalValues();
 

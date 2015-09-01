@@ -3717,7 +3717,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(calendar);
+		clearUniqueFindersCache((CalendarModelImpl)calendar);
 	}
 
 	@Override
@@ -3729,42 +3729,42 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 			EntityCacheUtil.removeResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 				CalendarImpl.class, calendar.getPrimaryKey());
 
-			clearUniqueFindersCache(calendar);
+			clearUniqueFindersCache((CalendarModelImpl)calendar);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Calendar calendar, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		CalendarModelImpl calendarModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					calendar.getUuid(), calendar.getGroupId()
+					calendarModelImpl.getUuid(), calendarModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				calendar);
+				calendarModelImpl);
 		}
 		else {
-			CalendarModelImpl calendarModelImpl = (CalendarModelImpl)calendar;
-
 			if ((calendarModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						calendar.getUuid(), calendar.getGroupId()
+						calendarModelImpl.getUuid(),
+						calendarModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					calendar);
+					calendarModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Calendar calendar) {
-		CalendarModelImpl calendarModelImpl = (CalendarModelImpl)calendar;
-
-		Object[] args = new Object[] { calendar.getUuid(), calendar.getGroupId() };
+	protected void clearUniqueFindersCache(CalendarModelImpl calendarModelImpl) {
+		Object[] args = new Object[] {
+				calendarModelImpl.getUuid(), calendarModelImpl.getGroupId()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
@@ -4052,8 +4052,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		EntityCacheUtil.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 			CalendarImpl.class, calendar.getPrimaryKey(), calendar, false);
 
-		clearUniqueFindersCache((Calendar)calendarModelImpl);
-		cacheUniqueFindersCache((Calendar)calendarModelImpl, isNew);
+		clearUniqueFindersCache(calendarModelImpl);
+		cacheUniqueFindersCache(calendarModelImpl, isNew);
 
 		calendar.resetOriginalValues();
 

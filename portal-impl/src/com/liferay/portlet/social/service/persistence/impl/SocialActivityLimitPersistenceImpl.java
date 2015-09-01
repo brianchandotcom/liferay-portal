@@ -2014,7 +2014,7 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(socialActivityLimit);
+		clearUniqueFindersCache((SocialActivityLimitModelImpl)socialActivityLimit);
 	}
 
 	@Override
@@ -2027,60 +2027,56 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 				SocialActivityLimitImpl.class,
 				socialActivityLimit.getPrimaryKey());
 
-			clearUniqueFindersCache(socialActivityLimit);
+			clearUniqueFindersCache((SocialActivityLimitModelImpl)socialActivityLimit);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		SocialActivityLimit socialActivityLimit, boolean isNew) {
+		SocialActivityLimitModelImpl socialActivityLimitModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					socialActivityLimit.getGroupId(),
-					socialActivityLimit.getUserId(),
-					socialActivityLimit.getClassNameId(),
-					socialActivityLimit.getClassPK(),
-					socialActivityLimit.getActivityType(),
-					socialActivityLimit.getActivityCounterName()
+					socialActivityLimitModelImpl.getGroupId(),
+					socialActivityLimitModelImpl.getUserId(),
+					socialActivityLimitModelImpl.getClassNameId(),
+					socialActivityLimitModelImpl.getClassPK(),
+					socialActivityLimitModelImpl.getActivityType(),
+					socialActivityLimitModelImpl.getActivityCounterName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U_C_C_A_A, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U_C_C_A_A, args,
-				socialActivityLimit);
+				socialActivityLimitModelImpl);
 		}
 		else {
-			SocialActivityLimitModelImpl socialActivityLimitModelImpl = (SocialActivityLimitModelImpl)socialActivityLimit;
-
 			if ((socialActivityLimitModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_U_C_C_A_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						socialActivityLimit.getGroupId(),
-						socialActivityLimit.getUserId(),
-						socialActivityLimit.getClassNameId(),
-						socialActivityLimit.getClassPK(),
-						socialActivityLimit.getActivityType(),
-						socialActivityLimit.getActivityCounterName()
+						socialActivityLimitModelImpl.getGroupId(),
+						socialActivityLimitModelImpl.getUserId(),
+						socialActivityLimitModelImpl.getClassNameId(),
+						socialActivityLimitModelImpl.getClassPK(),
+						socialActivityLimitModelImpl.getActivityType(),
+						socialActivityLimitModelImpl.getActivityCounterName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U_C_C_A_A,
 					args, Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U_C_C_A_A,
-					args, socialActivityLimit);
+					args, socialActivityLimitModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		SocialActivityLimit socialActivityLimit) {
-		SocialActivityLimitModelImpl socialActivityLimitModelImpl = (SocialActivityLimitModelImpl)socialActivityLimit;
-
+		SocialActivityLimitModelImpl socialActivityLimitModelImpl) {
 		Object[] args = new Object[] {
-				socialActivityLimit.getGroupId(),
-				socialActivityLimit.getUserId(),
-				socialActivityLimit.getClassNameId(),
-				socialActivityLimit.getClassPK(),
-				socialActivityLimit.getActivityType(),
-				socialActivityLimit.getActivityCounterName()
+				socialActivityLimitModelImpl.getGroupId(),
+				socialActivityLimitModelImpl.getUserId(),
+				socialActivityLimitModelImpl.getClassNameId(),
+				socialActivityLimitModelImpl.getClassPK(),
+				socialActivityLimitModelImpl.getActivityType(),
+				socialActivityLimitModelImpl.getActivityCounterName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_C_C_A_A, args);
@@ -2301,9 +2297,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 			SocialActivityLimitImpl.class, socialActivityLimit.getPrimaryKey(),
 			socialActivityLimit, false);
 
-		clearUniqueFindersCache((SocialActivityLimit)socialActivityLimitModelImpl);
-		cacheUniqueFindersCache((SocialActivityLimit)socialActivityLimitModelImpl,
-			isNew);
+		clearUniqueFindersCache(socialActivityLimitModelImpl);
+		cacheUniqueFindersCache(socialActivityLimitModelImpl, isNew);
 
 		socialActivityLimit.resetOriginalValues();
 

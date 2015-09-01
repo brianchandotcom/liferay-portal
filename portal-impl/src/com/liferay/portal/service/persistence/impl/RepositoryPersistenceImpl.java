@@ -2286,7 +2286,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(repository);
+		clearUniqueFindersCache((RepositoryModelImpl)repository);
 	}
 
 	@Override
@@ -2298,66 +2298,68 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 			EntityCacheUtil.removeResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
 				RepositoryImpl.class, repository.getPrimaryKey());
 
-			clearUniqueFindersCache(repository);
+			clearUniqueFindersCache((RepositoryModelImpl)repository);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Repository repository, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		RepositoryModelImpl repositoryModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					repository.getUuid(), repository.getGroupId()
+					repositoryModelImpl.getUuid(),
+					repositoryModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				repository);
+				repositoryModelImpl);
 
 			args = new Object[] {
-					repository.getGroupId(), repository.getName(),
-					repository.getPortletId()
+					repositoryModelImpl.getGroupId(),
+					repositoryModelImpl.getName(),
+					repositoryModelImpl.getPortletId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N_P, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N_P, args,
-				repository);
+				repositoryModelImpl);
 		}
 		else {
-			RepositoryModelImpl repositoryModelImpl = (RepositoryModelImpl)repository;
-
 			if ((repositoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						repository.getUuid(), repository.getGroupId()
+						repositoryModelImpl.getUuid(),
+						repositoryModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					repository);
+					repositoryModelImpl);
 			}
 
 			if ((repositoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N_P.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						repository.getGroupId(), repository.getName(),
-						repository.getPortletId()
+						repositoryModelImpl.getGroupId(),
+						repositoryModelImpl.getName(),
+						repositoryModelImpl.getPortletId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N_P, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N_P, args,
-					repository);
+					repositoryModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Repository repository) {
-		RepositoryModelImpl repositoryModelImpl = (RepositoryModelImpl)repository;
-
+	protected void clearUniqueFindersCache(
+		RepositoryModelImpl repositoryModelImpl) {
 		Object[] args = new Object[] {
-				repository.getUuid(), repository.getGroupId()
+				repositoryModelImpl.getUuid(), repositoryModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2375,8 +2377,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		}
 
 		args = new Object[] {
-				repository.getGroupId(), repository.getName(),
-				repository.getPortletId()
+				repositoryModelImpl.getGroupId(), repositoryModelImpl.getName(),
+				repositoryModelImpl.getPortletId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_P, args);
@@ -2623,8 +2625,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		EntityCacheUtil.putResult(RepositoryModelImpl.ENTITY_CACHE_ENABLED,
 			RepositoryImpl.class, repository.getPrimaryKey(), repository, false);
 
-		clearUniqueFindersCache((Repository)repositoryModelImpl);
-		cacheUniqueFindersCache((Repository)repositoryModelImpl, isNew);
+		clearUniqueFindersCache(repositoryModelImpl);
+		cacheUniqueFindersCache(repositoryModelImpl, isNew);
 
 		repository.resetOriginalValues();
 

@@ -8320,7 +8320,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(role);
+		clearUniqueFindersCache((RoleModelImpl)role);
 	}
 
 	@Override
@@ -8332,57 +8332,65 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			EntityCacheUtil.removeResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 				RoleImpl.class, role.getPrimaryKey());
 
-			clearUniqueFindersCache(role);
+			clearUniqueFindersCache((RoleModelImpl)role);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Role role, boolean isNew) {
+	protected void cacheUniqueFindersCache(RoleModelImpl roleModelImpl,
+		boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { role.getCompanyId(), role.getName() };
+			Object[] args = new Object[] {
+					roleModelImpl.getCompanyId(), roleModelImpl.getName()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args, role);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+				roleModelImpl);
 
 			args = new Object[] {
-					role.getCompanyId(), role.getClassNameId(),
-					role.getClassPK()
+					roleModelImpl.getCompanyId(), roleModelImpl.getClassNameId(),
+					roleModelImpl.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C, args, role);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C, args,
+				roleModelImpl);
 		}
 		else {
-			RoleModelImpl roleModelImpl = (RoleModelImpl)role;
-
 			if ((roleModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { role.getCompanyId(), role.getName() };
+				Object[] args = new Object[] {
+						roleModelImpl.getCompanyId(), roleModelImpl.getName()
+					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args, role);
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+					roleModelImpl);
 			}
 
 			if ((roleModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						role.getCompanyId(), role.getClassNameId(),
-						role.getClassPK()
+						roleModelImpl.getCompanyId(),
+						roleModelImpl.getClassNameId(),
+						roleModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_C, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C, args, role);
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_C, args,
+					roleModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Role role) {
-		RoleModelImpl roleModelImpl = (RoleModelImpl)role;
-
-		Object[] args = new Object[] { role.getCompanyId(), role.getName() };
+	protected void clearUniqueFindersCache(RoleModelImpl roleModelImpl) {
+		Object[] args = new Object[] {
+				roleModelImpl.getCompanyId(), roleModelImpl.getName()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
@@ -8399,7 +8407,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		}
 
 		args = new Object[] {
-				role.getCompanyId(), role.getClassNameId(), role.getClassPK()
+				roleModelImpl.getCompanyId(), roleModelImpl.getClassNameId(),
+				roleModelImpl.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_C, args);
@@ -8730,8 +8739,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		EntityCacheUtil.putResult(RoleModelImpl.ENTITY_CACHE_ENABLED,
 			RoleImpl.class, role.getPrimaryKey(), role, false);
 
-		clearUniqueFindersCache((Role)roleModelImpl);
-		cacheUniqueFindersCache((Role)roleModelImpl, isNew);
+		clearUniqueFindersCache(roleModelImpl);
+		cacheUniqueFindersCache(roleModelImpl, isNew);
 
 		role.resetOriginalValues();
 

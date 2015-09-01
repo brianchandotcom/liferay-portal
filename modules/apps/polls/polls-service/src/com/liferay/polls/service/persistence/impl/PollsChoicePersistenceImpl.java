@@ -2238,7 +2238,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(pollsChoice);
+		clearUniqueFindersCache((PollsChoiceModelImpl)pollsChoice);
 	}
 
 	@Override
@@ -2250,65 +2250,67 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			EntityCacheUtil.removeResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
 				PollsChoiceImpl.class, pollsChoice.getPrimaryKey());
 
-			clearUniqueFindersCache(pollsChoice);
+			clearUniqueFindersCache((PollsChoiceModelImpl)pollsChoice);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(PollsChoice pollsChoice,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		PollsChoiceModelImpl pollsChoiceModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					pollsChoice.getUuid(), pollsChoice.getGroupId()
+					pollsChoiceModelImpl.getUuid(),
+					pollsChoiceModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				pollsChoice);
+				pollsChoiceModelImpl);
 
 			args = new Object[] {
-					pollsChoice.getQuestionId(), pollsChoice.getName()
+					pollsChoiceModelImpl.getQuestionId(),
+					pollsChoiceModelImpl.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_Q_N, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_N, args,
-				pollsChoice);
+				pollsChoiceModelImpl);
 		}
 		else {
-			PollsChoiceModelImpl pollsChoiceModelImpl = (PollsChoiceModelImpl)pollsChoice;
-
 			if ((pollsChoiceModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						pollsChoice.getUuid(), pollsChoice.getGroupId()
+						pollsChoiceModelImpl.getUuid(),
+						pollsChoiceModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					pollsChoice);
+					pollsChoiceModelImpl);
 			}
 
 			if ((pollsChoiceModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_Q_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						pollsChoice.getQuestionId(), pollsChoice.getName()
+						pollsChoiceModelImpl.getQuestionId(),
+						pollsChoiceModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_Q_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_Q_N, args,
-					pollsChoice);
+					pollsChoiceModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(PollsChoice pollsChoice) {
-		PollsChoiceModelImpl pollsChoiceModelImpl = (PollsChoiceModelImpl)pollsChoice;
-
+	protected void clearUniqueFindersCache(
+		PollsChoiceModelImpl pollsChoiceModelImpl) {
 		Object[] args = new Object[] {
-				pollsChoice.getUuid(), pollsChoice.getGroupId()
+				pollsChoiceModelImpl.getUuid(),
+				pollsChoiceModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2325,7 +2327,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { pollsChoice.getQuestionId(), pollsChoice.getName() };
+		args = new Object[] {
+				pollsChoiceModelImpl.getQuestionId(),
+				pollsChoiceModelImpl.getName()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_Q_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_Q_N, args);
@@ -2572,8 +2577,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 			PollsChoiceImpl.class, pollsChoice.getPrimaryKey(), pollsChoice,
 			false);
 
-		clearUniqueFindersCache((PollsChoice)pollsChoiceModelImpl);
-		cacheUniqueFindersCache((PollsChoice)pollsChoiceModelImpl, isNew);
+		clearUniqueFindersCache(pollsChoiceModelImpl);
+		cacheUniqueFindersCache(pollsChoiceModelImpl, isNew);
 
 		pollsChoice.resetOriginalValues();
 

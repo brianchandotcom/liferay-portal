@@ -1726,7 +1726,7 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(expandoColumn);
+		clearUniqueFindersCache((ExpandoColumnModelImpl)expandoColumn);
 	}
 
 	@Override
@@ -1738,44 +1738,44 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			EntityCacheUtil.removeResult(ExpandoColumnModelImpl.ENTITY_CACHE_ENABLED,
 				ExpandoColumnImpl.class, expandoColumn.getPrimaryKey());
 
-			clearUniqueFindersCache(expandoColumn);
+			clearUniqueFindersCache((ExpandoColumnModelImpl)expandoColumn);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ExpandoColumn expandoColumn,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		ExpandoColumnModelImpl expandoColumnModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					expandoColumn.getTableId(), expandoColumn.getName()
+					expandoColumnModelImpl.getTableId(),
+					expandoColumnModelImpl.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_N, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_N, args,
-				expandoColumn);
+				expandoColumnModelImpl);
 		}
 		else {
-			ExpandoColumnModelImpl expandoColumnModelImpl = (ExpandoColumnModelImpl)expandoColumn;
-
 			if ((expandoColumnModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_T_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						expandoColumn.getTableId(), expandoColumn.getName()
+						expandoColumnModelImpl.getTableId(),
+						expandoColumnModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_N, args,
-					expandoColumn);
+					expandoColumnModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ExpandoColumn expandoColumn) {
-		ExpandoColumnModelImpl expandoColumnModelImpl = (ExpandoColumnModelImpl)expandoColumn;
-
+	protected void clearUniqueFindersCache(
+		ExpandoColumnModelImpl expandoColumnModelImpl) {
 		Object[] args = new Object[] {
-				expandoColumn.getTableId(), expandoColumn.getName()
+				expandoColumnModelImpl.getTableId(),
+				expandoColumnModelImpl.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_N, args);
@@ -1972,8 +1972,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 			ExpandoColumnImpl.class, expandoColumn.getPrimaryKey(),
 			expandoColumn, false);
 
-		clearUniqueFindersCache((ExpandoColumn)expandoColumnModelImpl);
-		cacheUniqueFindersCache((ExpandoColumn)expandoColumnModelImpl, isNew);
+		clearUniqueFindersCache(expandoColumnModelImpl);
+		cacheUniqueFindersCache(expandoColumnModelImpl, isNew);
 
 		expandoColumn.resetOriginalValues();
 

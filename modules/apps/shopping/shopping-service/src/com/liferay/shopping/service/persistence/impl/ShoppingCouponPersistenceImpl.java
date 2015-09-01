@@ -875,7 +875,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(shoppingCoupon);
+		clearUniqueFindersCache((ShoppingCouponModelImpl)shoppingCoupon);
 	}
 
 	@Override
@@ -887,39 +887,36 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			EntityCacheUtil.removeResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingCouponImpl.class, shoppingCoupon.getPrimaryKey());
 
-			clearUniqueFindersCache(shoppingCoupon);
+			clearUniqueFindersCache((ShoppingCouponModelImpl)shoppingCoupon);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ShoppingCoupon shoppingCoupon,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		ShoppingCouponModelImpl shoppingCouponModelImpl, boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { shoppingCoupon.getCode() };
+			Object[] args = new Object[] { shoppingCouponModelImpl.getCode() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CODE, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CODE, args,
-				shoppingCoupon);
+				shoppingCouponModelImpl);
 		}
 		else {
-			ShoppingCouponModelImpl shoppingCouponModelImpl = (ShoppingCouponModelImpl)shoppingCoupon;
-
 			if ((shoppingCouponModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_CODE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { shoppingCoupon.getCode() };
+				Object[] args = new Object[] { shoppingCouponModelImpl.getCode() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_CODE, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_CODE, args,
-					shoppingCoupon);
+					shoppingCouponModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ShoppingCoupon shoppingCoupon) {
-		ShoppingCouponModelImpl shoppingCouponModelImpl = (ShoppingCouponModelImpl)shoppingCoupon;
-
-		Object[] args = new Object[] { shoppingCoupon.getCode() };
+	protected void clearUniqueFindersCache(
+		ShoppingCouponModelImpl shoppingCouponModelImpl) {
+		Object[] args = new Object[] { shoppingCouponModelImpl.getCode() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CODE, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_CODE, args);
@@ -1114,8 +1111,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 			ShoppingCouponImpl.class, shoppingCoupon.getPrimaryKey(),
 			shoppingCoupon, false);
 
-		clearUniqueFindersCache((ShoppingCoupon)shoppingCouponModelImpl);
-		cacheUniqueFindersCache((ShoppingCoupon)shoppingCouponModelImpl, isNew);
+		clearUniqueFindersCache(shoppingCouponModelImpl);
+		cacheUniqueFindersCache(shoppingCouponModelImpl, isNew);
 
 		shoppingCoupon.resetOriginalValues();
 

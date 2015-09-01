@@ -398,7 +398,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(release);
+		clearUniqueFindersCache((ReleaseModelImpl)release);
 	}
 
 	@Override
@@ -410,38 +410,39 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 			EntityCacheUtil.removeResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 				ReleaseImpl.class, release.getPrimaryKey());
 
-			clearUniqueFindersCache(release);
+			clearUniqueFindersCache((ReleaseModelImpl)release);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Release release, boolean isNew) {
+	protected void cacheUniqueFindersCache(ReleaseModelImpl releaseModelImpl,
+		boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { release.getServletContextName() };
+			Object[] args = new Object[] {
+					releaseModelImpl.getServletContextName()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
 				args, Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
-				args, release);
+				args, releaseModelImpl);
 		}
 		else {
-			ReleaseModelImpl releaseModelImpl = (ReleaseModelImpl)release;
-
 			if ((releaseModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { release.getServletContextName() };
+				Object[] args = new Object[] {
+						releaseModelImpl.getServletContextName()
+					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
 					args, Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_SERVLETCONTEXTNAME,
-					args, release);
+					args, releaseModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Release release) {
-		ReleaseModelImpl releaseModelImpl = (ReleaseModelImpl)release;
-
-		Object[] args = new Object[] { release.getServletContextName() };
+	protected void clearUniqueFindersCache(ReleaseModelImpl releaseModelImpl) {
+		Object[] args = new Object[] { releaseModelImpl.getServletContextName() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_SERVLETCONTEXTNAME,
 			args);
@@ -618,8 +619,8 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		EntityCacheUtil.putResult(ReleaseModelImpl.ENTITY_CACHE_ENABLED,
 			ReleaseImpl.class, release.getPrimaryKey(), release, false);
 
-		clearUniqueFindersCache((Release)releaseModelImpl);
-		cacheUniqueFindersCache((Release)releaseModelImpl, isNew);
+		clearUniqueFindersCache(releaseModelImpl);
+		cacheUniqueFindersCache(releaseModelImpl, isNew);
 
 		release.resetOriginalValues();
 

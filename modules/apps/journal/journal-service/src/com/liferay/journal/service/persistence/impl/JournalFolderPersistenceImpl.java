@@ -7101,7 +7101,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(journalFolder);
+		clearUniqueFindersCache((JournalFolderModelImpl)journalFolder);
 	}
 
 	@Override
@@ -7113,89 +7113,92 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			EntityCacheUtil.removeResult(JournalFolderModelImpl.ENTITY_CACHE_ENABLED,
 				JournalFolderImpl.class, journalFolder.getPrimaryKey());
 
-			clearUniqueFindersCache(journalFolder);
+			clearUniqueFindersCache((JournalFolderModelImpl)journalFolder);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(JournalFolder journalFolder,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		JournalFolderModelImpl journalFolderModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					journalFolder.getUuid(), journalFolder.getGroupId()
+					journalFolderModelImpl.getUuid(),
+					journalFolderModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				journalFolder);
+				journalFolderModelImpl);
 
 			args = new Object[] {
-					journalFolder.getGroupId(), journalFolder.getName()
+					journalFolderModelImpl.getGroupId(),
+					journalFolderModelImpl.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
-				journalFolder);
+				journalFolderModelImpl);
 
 			args = new Object[] {
-					journalFolder.getGroupId(),
-					journalFolder.getParentFolderId(), journalFolder.getName()
+					journalFolderModelImpl.getGroupId(),
+					journalFolderModelImpl.getParentFolderId(),
+					journalFolderModelImpl.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_N, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_N, args,
-				journalFolder);
+				journalFolderModelImpl);
 		}
 		else {
-			JournalFolderModelImpl journalFolderModelImpl = (JournalFolderModelImpl)journalFolder;
-
 			if ((journalFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						journalFolder.getUuid(), journalFolder.getGroupId()
+						journalFolderModelImpl.getUuid(),
+						journalFolderModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					journalFolder);
+					journalFolderModelImpl);
 			}
 
 			if ((journalFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						journalFolder.getGroupId(), journalFolder.getName()
+						journalFolderModelImpl.getGroupId(),
+						journalFolderModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
-					journalFolder);
+					journalFolderModelImpl);
 			}
 
 			if ((journalFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_P_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						journalFolder.getGroupId(),
-						journalFolder.getParentFolderId(),
-						journalFolder.getName()
+						journalFolderModelImpl.getGroupId(),
+						journalFolderModelImpl.getParentFolderId(),
+						journalFolderModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_N, args,
-					journalFolder);
+					journalFolderModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(JournalFolder journalFolder) {
-		JournalFolderModelImpl journalFolderModelImpl = (JournalFolderModelImpl)journalFolder;
-
+	protected void clearUniqueFindersCache(
+		JournalFolderModelImpl journalFolderModelImpl) {
 		Object[] args = new Object[] {
-				journalFolder.getUuid(), journalFolder.getGroupId()
+				journalFolderModelImpl.getUuid(),
+				journalFolderModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -7212,7 +7215,10 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { journalFolder.getGroupId(), journalFolder.getName() };
+		args = new Object[] {
+				journalFolderModelImpl.getGroupId(),
+				journalFolderModelImpl.getName()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_N, args);
@@ -7229,8 +7235,9 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		}
 
 		args = new Object[] {
-				journalFolder.getGroupId(), journalFolder.getParentFolderId(),
-				journalFolder.getName()
+				journalFolderModelImpl.getGroupId(),
+				journalFolderModelImpl.getParentFolderId(),
+				journalFolderModelImpl.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_N, args);
@@ -7541,8 +7548,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			JournalFolderImpl.class, journalFolder.getPrimaryKey(),
 			journalFolder, false);
 
-		clearUniqueFindersCache((JournalFolder)journalFolderModelImpl);
-		cacheUniqueFindersCache((JournalFolder)journalFolderModelImpl, isNew);
+		clearUniqueFindersCache(journalFolderModelImpl);
+		cacheUniqueFindersCache(journalFolderModelImpl, isNew);
 
 		journalFolder.resetOriginalValues();
 

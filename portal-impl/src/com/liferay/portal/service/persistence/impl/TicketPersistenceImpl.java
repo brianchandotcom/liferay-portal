@@ -946,7 +946,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(ticket);
+		clearUniqueFindersCache((TicketModelImpl)ticket);
 	}
 
 	@Override
@@ -958,36 +958,35 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 			EntityCacheUtil.removeResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
 				TicketImpl.class, ticket.getPrimaryKey());
 
-			clearUniqueFindersCache(ticket);
+			clearUniqueFindersCache((TicketModelImpl)ticket);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Ticket ticket, boolean isNew) {
+	protected void cacheUniqueFindersCache(TicketModelImpl ticketModelImpl,
+		boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { ticket.getKey() };
+			Object[] args = new Object[] { ticketModelImpl.getKey() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KEY, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY, args, ticket);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY, args,
+				ticketModelImpl);
 		}
 		else {
-			TicketModelImpl ticketModelImpl = (TicketModelImpl)ticket;
-
 			if ((ticketModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_KEY.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { ticket.getKey() };
+				Object[] args = new Object[] { ticketModelImpl.getKey() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KEY, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY, args, ticket);
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY, args,
+					ticketModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Ticket ticket) {
-		TicketModelImpl ticketModelImpl = (TicketModelImpl)ticket;
-
-		Object[] args = new Object[] { ticket.getKey() };
+	protected void clearUniqueFindersCache(TicketModelImpl ticketModelImpl) {
+		Object[] args = new Object[] { ticketModelImpl.getKey() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KEY, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KEY, args);
@@ -1161,8 +1160,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		EntityCacheUtil.putResult(TicketModelImpl.ENTITY_CACHE_ENABLED,
 			TicketImpl.class, ticket.getPrimaryKey(), ticket, false);
 
-		clearUniqueFindersCache((Ticket)ticketModelImpl);
-		cacheUniqueFindersCache((Ticket)ticketModelImpl, isNew);
+		clearUniqueFindersCache(ticketModelImpl);
+		cacheUniqueFindersCache(ticketModelImpl, isNew);
 
 		ticket.resetOriginalValues();
 

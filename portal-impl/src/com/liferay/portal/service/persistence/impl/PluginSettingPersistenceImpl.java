@@ -957,7 +957,7 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(pluginSetting);
+		clearUniqueFindersCache((PluginSettingModelImpl)pluginSetting);
 	}
 
 	@Override
@@ -969,48 +969,47 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			EntityCacheUtil.removeResult(PluginSettingModelImpl.ENTITY_CACHE_ENABLED,
 				PluginSettingImpl.class, pluginSetting.getPrimaryKey());
 
-			clearUniqueFindersCache(pluginSetting);
+			clearUniqueFindersCache((PluginSettingModelImpl)pluginSetting);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(PluginSetting pluginSetting,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		PluginSettingModelImpl pluginSettingModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					pluginSetting.getCompanyId(), pluginSetting.getPluginId(),
-					pluginSetting.getPluginType()
+					pluginSettingModelImpl.getCompanyId(),
+					pluginSettingModelImpl.getPluginId(),
+					pluginSettingModelImpl.getPluginType()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_I_T, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_I_T, args,
-				pluginSetting);
+				pluginSettingModelImpl);
 		}
 		else {
-			PluginSettingModelImpl pluginSettingModelImpl = (PluginSettingModelImpl)pluginSetting;
-
 			if ((pluginSettingModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_I_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						pluginSetting.getCompanyId(),
-						pluginSetting.getPluginId(),
-						pluginSetting.getPluginType()
+						pluginSettingModelImpl.getCompanyId(),
+						pluginSettingModelImpl.getPluginId(),
+						pluginSettingModelImpl.getPluginType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_I_T, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_I_T, args,
-					pluginSetting);
+					pluginSettingModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(PluginSetting pluginSetting) {
-		PluginSettingModelImpl pluginSettingModelImpl = (PluginSettingModelImpl)pluginSetting;
-
+	protected void clearUniqueFindersCache(
+		PluginSettingModelImpl pluginSettingModelImpl) {
 		Object[] args = new Object[] {
-				pluginSetting.getCompanyId(), pluginSetting.getPluginId(),
-				pluginSetting.getPluginType()
+				pluginSettingModelImpl.getCompanyId(),
+				pluginSettingModelImpl.getPluginId(),
+				pluginSettingModelImpl.getPluginType()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_I_T, args);
@@ -1190,8 +1189,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 			PluginSettingImpl.class, pluginSetting.getPrimaryKey(),
 			pluginSetting, false);
 
-		clearUniqueFindersCache((PluginSetting)pluginSettingModelImpl);
-		cacheUniqueFindersCache((PluginSetting)pluginSettingModelImpl, isNew);
+		clearUniqueFindersCache(pluginSettingModelImpl);
+		cacheUniqueFindersCache(pluginSettingModelImpl, isNew);
 
 		pluginSetting.resetOriginalValues();
 

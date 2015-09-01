@@ -967,7 +967,7 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(listType);
+		clearUniqueFindersCache((ListTypeModelImpl)listType);
 	}
 
 	@Override
@@ -979,39 +979,41 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 			EntityCacheUtil.removeResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 				ListTypeImpl.class, listType.getPrimaryKey());
 
-			clearUniqueFindersCache(listType);
+			clearUniqueFindersCache((ListTypeModelImpl)listType);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ListType listType, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		ListTypeModelImpl listTypeModelImpl, boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { listType.getName(), listType.getType() };
+			Object[] args = new Object[] {
+					listTypeModelImpl.getName(), listTypeModelImpl.getType()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T, args, listType);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T, args,
+				listTypeModelImpl);
 		}
 		else {
-			ListTypeModelImpl listTypeModelImpl = (ListTypeModelImpl)listType;
-
 			if ((listTypeModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_N_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						listType.getName(), listType.getType()
+						listTypeModelImpl.getName(), listTypeModelImpl.getType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T, args,
-					listType);
+					listTypeModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ListType listType) {
-		ListTypeModelImpl listTypeModelImpl = (ListTypeModelImpl)listType;
-
-		Object[] args = new Object[] { listType.getName(), listType.getType() };
+	protected void clearUniqueFindersCache(ListTypeModelImpl listTypeModelImpl) {
+		Object[] args = new Object[] {
+				listTypeModelImpl.getName(), listTypeModelImpl.getType()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T, args);
@@ -1183,8 +1185,8 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		EntityCacheUtil.putResult(ListTypeModelImpl.ENTITY_CACHE_ENABLED,
 			ListTypeImpl.class, listType.getPrimaryKey(), listType, false);
 
-		clearUniqueFindersCache((ListType)listTypeModelImpl);
-		cacheUniqueFindersCache((ListType)listTypeModelImpl, isNew);
+		clearUniqueFindersCache(listTypeModelImpl);
+		cacheUniqueFindersCache(listTypeModelImpl, isNew);
 
 		listType.resetOriginalValues();
 

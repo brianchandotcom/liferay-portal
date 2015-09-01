@@ -1699,7 +1699,7 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(journalArticleResource);
+		clearUniqueFindersCache((JournalArticleResourceModelImpl)journalArticleResource);
 	}
 
 	@Override
@@ -1712,71 +1712,68 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 				JournalArticleResourceImpl.class,
 				journalArticleResource.getPrimaryKey());
 
-			clearUniqueFindersCache(journalArticleResource);
+			clearUniqueFindersCache((JournalArticleResourceModelImpl)journalArticleResource);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		JournalArticleResource journalArticleResource, boolean isNew) {
+		JournalArticleResourceModelImpl journalArticleResourceModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					journalArticleResource.getUuid(),
-					journalArticleResource.getGroupId()
+					journalArticleResourceModelImpl.getUuid(),
+					journalArticleResourceModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				journalArticleResource);
+				journalArticleResourceModelImpl);
 
 			args = new Object[] {
-					journalArticleResource.getGroupId(),
-					journalArticleResource.getArticleId()
+					journalArticleResourceModelImpl.getGroupId(),
+					journalArticleResourceModelImpl.getArticleId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_A, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A, args,
-				journalArticleResource);
+				journalArticleResourceModelImpl);
 		}
 		else {
-			JournalArticleResourceModelImpl journalArticleResourceModelImpl = (JournalArticleResourceModelImpl)journalArticleResource;
-
 			if ((journalArticleResourceModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						journalArticleResource.getUuid(),
-						journalArticleResource.getGroupId()
+						journalArticleResourceModelImpl.getUuid(),
+						journalArticleResourceModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					journalArticleResource);
+					journalArticleResourceModelImpl);
 			}
 
 			if ((journalArticleResourceModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						journalArticleResource.getGroupId(),
-						journalArticleResource.getArticleId()
+						journalArticleResourceModelImpl.getGroupId(),
+						journalArticleResourceModelImpl.getArticleId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_A, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A, args,
-					journalArticleResource);
+					journalArticleResourceModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		JournalArticleResource journalArticleResource) {
-		JournalArticleResourceModelImpl journalArticleResourceModelImpl = (JournalArticleResourceModelImpl)journalArticleResource;
-
+		JournalArticleResourceModelImpl journalArticleResourceModelImpl) {
 		Object[] args = new Object[] {
-				journalArticleResource.getUuid(),
-				journalArticleResource.getGroupId()
+				journalArticleResourceModelImpl.getUuid(),
+				journalArticleResourceModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -1794,8 +1791,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		}
 
 		args = new Object[] {
-				journalArticleResource.getGroupId(),
-				journalArticleResource.getArticleId()
+				journalArticleResourceModelImpl.getGroupId(),
+				journalArticleResourceModelImpl.getArticleId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
@@ -2002,9 +1999,8 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 			journalArticleResource.getPrimaryKey(), journalArticleResource,
 			false);
 
-		clearUniqueFindersCache((JournalArticleResource)journalArticleResourceModelImpl);
-		cacheUniqueFindersCache((JournalArticleResource)journalArticleResourceModelImpl,
-			isNew);
+		clearUniqueFindersCache(journalArticleResourceModelImpl);
+		cacheUniqueFindersCache(journalArticleResourceModelImpl, isNew);
 
 		journalArticleResource.resetOriginalValues();
 

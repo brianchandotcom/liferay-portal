@@ -2532,7 +2532,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(shoppingOrder);
+		clearUniqueFindersCache((ShoppingOrderModelImpl)shoppingOrder);
 	}
 
 	@Override
@@ -2544,56 +2544,53 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			EntityCacheUtil.removeResult(ShoppingOrderModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey());
 
-			clearUniqueFindersCache(shoppingOrder);
+			clearUniqueFindersCache((ShoppingOrderModelImpl)shoppingOrder);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ShoppingOrder shoppingOrder,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		ShoppingOrderModelImpl shoppingOrderModelImpl, boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { shoppingOrder.getNumber() };
+			Object[] args = new Object[] { shoppingOrderModelImpl.getNumber() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NUMBER, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER, args,
-				shoppingOrder);
+				shoppingOrderModelImpl);
 
-			args = new Object[] { shoppingOrder.getPpTxnId() };
+			args = new Object[] { shoppingOrderModelImpl.getPpTxnId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PPTXNID, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID, args,
-				shoppingOrder);
+				shoppingOrderModelImpl);
 		}
 		else {
-			ShoppingOrderModelImpl shoppingOrderModelImpl = (ShoppingOrderModelImpl)shoppingOrder;
-
 			if ((shoppingOrderModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_NUMBER.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { shoppingOrder.getNumber() };
+				Object[] args = new Object[] { shoppingOrderModelImpl.getNumber() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_NUMBER, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_NUMBER, args,
-					shoppingOrder);
+					shoppingOrderModelImpl);
 			}
 
 			if ((shoppingOrderModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_PPTXNID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { shoppingOrder.getPpTxnId() };
+				Object[] args = new Object[] { shoppingOrderModelImpl.getPpTxnId() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_PPTXNID, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_PPTXNID, args,
-					shoppingOrder);
+					shoppingOrderModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ShoppingOrder shoppingOrder) {
-		ShoppingOrderModelImpl shoppingOrderModelImpl = (ShoppingOrderModelImpl)shoppingOrder;
-
-		Object[] args = new Object[] { shoppingOrder.getNumber() };
+	protected void clearUniqueFindersCache(
+		ShoppingOrderModelImpl shoppingOrderModelImpl) {
+		Object[] args = new Object[] { shoppingOrderModelImpl.getNumber() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NUMBER, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER, args);
@@ -2606,7 +2603,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_NUMBER, args);
 		}
 
-		args = new Object[] { shoppingOrder.getPpTxnId() };
+		args = new Object[] { shoppingOrderModelImpl.getPpTxnId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_PPTXNID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_PPTXNID, args);
@@ -2824,8 +2821,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 			ShoppingOrderImpl.class, shoppingOrder.getPrimaryKey(),
 			shoppingOrder, false);
 
-		clearUniqueFindersCache((ShoppingOrder)shoppingOrderModelImpl);
-		cacheUniqueFindersCache((ShoppingOrder)shoppingOrderModelImpl, isNew);
+		clearUniqueFindersCache(shoppingOrderModelImpl);
+		cacheUniqueFindersCache(shoppingOrderModelImpl, isNew);
 
 		shoppingOrder.resetOriginalValues();
 

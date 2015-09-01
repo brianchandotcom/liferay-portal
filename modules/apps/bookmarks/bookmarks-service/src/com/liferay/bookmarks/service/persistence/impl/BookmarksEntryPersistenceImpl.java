@@ -11864,7 +11864,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(bookmarksEntry);
+		clearUniqueFindersCache((BookmarksEntryModelImpl)bookmarksEntry);
 	}
 
 	@Override
@@ -11876,44 +11876,44 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			EntityCacheUtil.removeResult(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
 				BookmarksEntryImpl.class, bookmarksEntry.getPrimaryKey());
 
-			clearUniqueFindersCache(bookmarksEntry);
+			clearUniqueFindersCache((BookmarksEntryModelImpl)bookmarksEntry);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(BookmarksEntry bookmarksEntry,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		BookmarksEntryModelImpl bookmarksEntryModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					bookmarksEntry.getUuid(), bookmarksEntry.getGroupId()
+					bookmarksEntryModelImpl.getUuid(),
+					bookmarksEntryModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				bookmarksEntry);
+				bookmarksEntryModelImpl);
 		}
 		else {
-			BookmarksEntryModelImpl bookmarksEntryModelImpl = (BookmarksEntryModelImpl)bookmarksEntry;
-
 			if ((bookmarksEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						bookmarksEntry.getUuid(), bookmarksEntry.getGroupId()
+						bookmarksEntryModelImpl.getUuid(),
+						bookmarksEntryModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					bookmarksEntry);
+					bookmarksEntryModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(BookmarksEntry bookmarksEntry) {
-		BookmarksEntryModelImpl bookmarksEntryModelImpl = (BookmarksEntryModelImpl)bookmarksEntry;
-
+	protected void clearUniqueFindersCache(
+		BookmarksEntryModelImpl bookmarksEntryModelImpl) {
 		Object[] args = new Object[] {
-				bookmarksEntry.getUuid(), bookmarksEntry.getGroupId()
+				bookmarksEntryModelImpl.getUuid(),
+				bookmarksEntryModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -12294,8 +12294,8 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			BookmarksEntryImpl.class, bookmarksEntry.getPrimaryKey(),
 			bookmarksEntry, false);
 
-		clearUniqueFindersCache(bookmarksEntry);
-		cacheUniqueFindersCache(bookmarksEntry, isNew);
+		clearUniqueFindersCache(bookmarksEntryModelImpl);
+		cacheUniqueFindersCache(bookmarksEntryModelImpl, isNew);
 
 		bookmarksEntry.resetOriginalValues();
 

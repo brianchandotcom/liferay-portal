@@ -167,6 +167,7 @@ buildLexicon {
 
 buildThemes {
 	dependsOn buildAlloyBootstrapTheme, buildAlloyFontAwesome, buildAlloyTheme, buildLexicon, copyFavicon
+	mustRunAfter buildAlloyBootstrapTheme, buildAlloyFontAwesome, buildAlloyTheme, buildLexicon, copyFavicon
 }
 
 classes {

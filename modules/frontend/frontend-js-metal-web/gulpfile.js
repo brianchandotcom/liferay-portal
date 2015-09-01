@@ -7,7 +7,7 @@ gulp.task('default', ['build:amd:jquery']);
 
 metal.registerTasks(
 	{
-		buildAmdJqueryDest: '.js-cache/META-INF/resources',
+		buildAmdJqueryDest: 'classes/META-INF/resources',
 		buildSrc: 'bower_components/crystal-*/src/**/*.js',
 		bundleFileName: 'crystal.js',
 		cssSrc: 'bower_components/crystal-*/src/**/*.css',

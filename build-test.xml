@@ -6307,7 +6307,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 					</then>
 				</if>
 
-				<move file="${jenkins.results.xml.file}" todir="${project.dir}/portal-web/test-results/functional"/>
+				<move file="${jenkins.results.xml.file}" todir="${project.dir}/portal-web/test-results/functional" />
 			</then>
 		</if>
 	</target>

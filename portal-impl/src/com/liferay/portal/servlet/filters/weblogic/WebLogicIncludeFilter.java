@@ -36,24 +36,16 @@ public class WebLogicIncludeFilter
 	public HttpServletResponse getWrappedHttpServletResponse(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		if (!ServerDetector.isWebLogic()) {
-			ServletContext servletContext = request.getServletContext();
-
-			InvokerFilterHelper invokerFilterHelper =
-				(InvokerFilterHelper)servletContext.getAttribute(
-					InvokerFilterHelper.class.getName());
-
-			FilterConfig filterConfig = getFilterConfig();
-
-			invokerFilterHelper.unregisterFilterMappings(
-				filterConfig.getFilterName());
-		}
-
 		if (isWrap(response)) {
 			return new WebLogicIncludeServletResponse(response);
 		}
 
 		return response;
+	}
+
+	@Override
+	public boolean isFilterEnabled() {
+		return ServerDetector.isWebLogic();
 	}
 
 	protected boolean isWrap(HttpServletResponse response) {

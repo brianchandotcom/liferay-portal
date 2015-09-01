@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -156,46 +157,16 @@ public class OracleDB extends BaseDB {
 
 		StringBuffer sb = new StringBuffer();
 
-		boolean fixVarchar2CharSpace = false;
-
 		while (matcher.find()) {
-			fixVarchar2CharSpace = true;
-
 			matcher.appendReplacement(
-				sb, matcher.group().replace(" CHAR)", "#CHAR)"));
+				sb, "VARCHAR2(" + matcher.group(1) + "%20CHAR)");
 		}
 
 		matcher.appendTail(sb);
 
-		if (fixVarchar2CharSpace) {
-			line = sb.toString();
-		}
+		String[] template = super.buildColumnTypeTokens(sb.toString());
 
-		String[] words = StringUtil.split(line, ' ');
-
-		if (fixVarchar2CharSpace) {
-			for (int i = 0; i < words.length; i++) {
-				words[i] = words[i].replace("#CHAR)", " CHAR)");
-			}
-		}
-
-		String nullable = "";
-
-		if (words.length == 6) {
-			nullable = "not null;";
-		}
-		else if (words.length == 5) {
-			nullable = words[4];
-		}
-		else if (words.length == 4) {
-			nullable = "not null;";
-
-			if (words[3].endsWith(";")) {
-				words[3] = words[3].substring(0, words[3].length() - 1);
-			}
-		}
-
-		String[] template = {words[1], words[2], "", words[3], nullable};
+		template[3] = StringUtil.replace(template[3], "%20", StringPool.SPACE);
 
 		return template;
 	}
@@ -358,7 +329,7 @@ public class OracleDB extends BaseDB {
 	private static final OracleDB _instance = new OracleDB();
 
 	private static final Pattern _varchar2CharPattern = Pattern.compile(
-		"VARCHAR2\\(\\d+ CHAR\\)");
+		"VARCHAR2\\((\\d+) CHAR\\)");
 	private static final Pattern _varcharPattern = Pattern.compile(
 		"VARCHAR\\((\\d+)\\)");
 

@@ -16,7 +16,7 @@ AUI.add(
 			},
 
 			visible: {
-				value: true
+				valueFn: '_valueVisible'
 			}
 		};
 
@@ -78,6 +78,12 @@ AUI.add(
 				var instance = this;
 
 				instance.render();
+			},
+
+			_valueVisible: function() {
+				var instance = this;
+
+				return A.DataType.Boolean.parse(instance.get('visibilityExpression'));
 			}
 		};
 
@@ -85,6 +91,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-expressions-evaluator', 'liferay-ddm-form-renderer-util']
+		requires: ['aui-datatype', 'liferay-ddm-form-renderer-expressions-evaluator', 'liferay-ddm-form-renderer-util']
 	}
 );

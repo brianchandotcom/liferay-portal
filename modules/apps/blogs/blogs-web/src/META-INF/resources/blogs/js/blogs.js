@@ -106,7 +106,7 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						instance._captionNode = AUI.$('.entry-cover-image-caption');
+						instance._captionNode = AUI.$('.cover-image-caption');
 
 						var eventHandles = [
 							Liferay.on('coverImageDeleted', instance._removeCaption, instance),

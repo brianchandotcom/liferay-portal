@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -1802,10 +1803,13 @@ public class DLAppHelperLocalServiceImpl
 		DLGroupServiceSettings dlGroupServiceSettings =
 			DLGroupServiceSettings.getInstance(fileVersion.getGroupId());
 
+		boolean isCommandUpdate = serviceContext.isCommandUpdate() ||
+			(Constants.CHECKIN.equals(serviceContext.getCommand()));
+
 		if (serviceContext.isCommandAdd() &&
 			dlGroupServiceSettings.isEmailFileEntryAddedEnabled()) {
 		}
-		else if (serviceContext.isCommandUpdate() &&
+		else if (isCommandUpdate &&
 				 dlGroupServiceSettings.isEmailFileEntryUpdatedEnabled()) {
 		}
 		else {
@@ -1820,7 +1824,7 @@ public class DLAppHelperLocalServiceImpl
 		LocalizedValuesMap subjectLocalizedValuesMap = null;
 		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
-		if (serviceContext.isCommandUpdate()) {
+		if (isCommandUpdate) {
 			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryUpdatedSubject();
 			bodyLocalizedValuesMap =
@@ -1886,7 +1890,7 @@ public class DLAppHelperLocalServiceImpl
 		int notificationType =
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
 
-		if (serviceContext.isCommandUpdate()) {
+		if (isCommandUpdate) {
 			notificationType =
 				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY;
 		}

@@ -404,7 +404,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 			String roleName = role.getName();
 
 			if (role.isTeam()) {
-				roleName = PermissionExporter.ROLE_TEAM_PREFIX + roleName;
+				try {
+					roleName =
+						PermissionExporter.ROLE_TEAM_PREFIX +
+							role.getDescriptiveName();
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 			}
 
 			KeyValuePair permission = new KeyValuePair(

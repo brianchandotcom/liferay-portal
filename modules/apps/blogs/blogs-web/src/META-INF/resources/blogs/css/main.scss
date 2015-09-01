@@ -210,10 +210,10 @@
 
 			a {
 				color: inherit;
-			}
 
-			a:hover {
-				text-decoration: none;
+				&:hover {
+					text-decoration: none;
+				}
 			}
 		}
 	}
@@ -353,10 +353,10 @@
 		a {
 			color: inherit;
 			font-weight: bold;
-		}
 
-		a:hover {
-			text-decoration: none;
+			&:hover {
+				text-decoration: none;
+			}
 		}
 	}
 

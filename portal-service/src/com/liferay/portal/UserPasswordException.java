@@ -159,7 +159,9 @@ public class UserPasswordException extends PortalException {
 		public MustNotBeChanged(long userId) {
 			super(
 				String.format(
-					"Password for user %s must not be changed", userId),
+					"Password for user %s must not be changed under the " +
+						"current password policy",
+					userId),
 				PASSWORD_NOT_CHANGEABLE);
 
 			this.userId = userId;

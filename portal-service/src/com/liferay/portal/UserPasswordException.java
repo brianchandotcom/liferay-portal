@@ -225,8 +225,7 @@ public class UserPasswordException extends PortalException {
 		public MustNotBeRecentlyUsed(long userId) {
 			super(
 				String.format(
-					"Password for user %s was used too recently",
-						userId),
+					"Password for user %s was used too recently", userId),
 				PASSWORD_ALREADY_USED);
 
 			this.userId = userId;

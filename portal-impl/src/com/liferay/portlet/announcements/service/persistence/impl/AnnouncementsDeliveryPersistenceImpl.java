@@ -901,7 +901,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(announcementsDelivery);
+		clearUniqueFindersCache((AnnouncementsDeliveryModelImpl)announcementsDelivery);
 	}
 
 	@Override
@@ -914,48 +914,45 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 				AnnouncementsDeliveryImpl.class,
 				announcementsDelivery.getPrimaryKey());
 
-			clearUniqueFindersCache(announcementsDelivery);
+			clearUniqueFindersCache((AnnouncementsDeliveryModelImpl)announcementsDelivery);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		AnnouncementsDelivery announcementsDelivery, boolean isNew) {
+		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					announcementsDelivery.getUserId(),
-					announcementsDelivery.getType()
+					announcementsDeliveryModelImpl.getUserId(),
+					announcementsDeliveryModelImpl.getType()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T, args,
-				announcementsDelivery);
+				announcementsDeliveryModelImpl);
 		}
 		else {
-			AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl = (AnnouncementsDeliveryModelImpl)announcementsDelivery;
-
 			if ((announcementsDeliveryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						announcementsDelivery.getUserId(),
-						announcementsDelivery.getType()
+						announcementsDeliveryModelImpl.getUserId(),
+						announcementsDeliveryModelImpl.getType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T, args,
-					announcementsDelivery);
+					announcementsDeliveryModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		AnnouncementsDelivery announcementsDelivery) {
-		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl = (AnnouncementsDeliveryModelImpl)announcementsDelivery;
-
+		AnnouncementsDeliveryModelImpl announcementsDeliveryModelImpl) {
 		Object[] args = new Object[] {
-				announcementsDelivery.getUserId(),
-				announcementsDelivery.getType()
+				announcementsDeliveryModelImpl.getUserId(),
+				announcementsDeliveryModelImpl.getType()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
@@ -1134,9 +1131,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 			AnnouncementsDeliveryImpl.class,
 			announcementsDelivery.getPrimaryKey(), announcementsDelivery, false);
 
-		clearUniqueFindersCache((AnnouncementsDelivery)announcementsDeliveryModelImpl);
-		cacheUniqueFindersCache((AnnouncementsDelivery)announcementsDeliveryModelImpl,
-			isNew);
+		clearUniqueFindersCache(announcementsDeliveryModelImpl);
+		cacheUniqueFindersCache(announcementsDeliveryModelImpl, isNew);
 
 		announcementsDelivery.resetOriginalValues();
 

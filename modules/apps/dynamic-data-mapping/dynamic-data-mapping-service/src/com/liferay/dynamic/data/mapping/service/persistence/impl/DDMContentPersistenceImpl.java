@@ -2447,7 +2447,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(ddmContent);
+		clearUniqueFindersCache((DDMContentModelImpl)ddmContent);
 	}
 
 	@Override
@@ -2459,43 +2459,43 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 			EntityCacheUtil.removeResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
 				DDMContentImpl.class, ddmContent.getPrimaryKey());
 
-			clearUniqueFindersCache(ddmContent);
+			clearUniqueFindersCache((DDMContentModelImpl)ddmContent);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DDMContent ddmContent, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		DDMContentModelImpl ddmContentModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					ddmContent.getUuid(), ddmContent.getGroupId()
+					ddmContentModelImpl.getUuid(),
+					ddmContentModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				ddmContent);
+				ddmContentModelImpl);
 		}
 		else {
-			DDMContentModelImpl ddmContentModelImpl = (DDMContentModelImpl)ddmContent;
-
 			if ((ddmContentModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ddmContent.getUuid(), ddmContent.getGroupId()
+						ddmContentModelImpl.getUuid(),
+						ddmContentModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					ddmContent);
+					ddmContentModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(DDMContent ddmContent) {
-		DDMContentModelImpl ddmContentModelImpl = (DDMContentModelImpl)ddmContent;
-
+	protected void clearUniqueFindersCache(
+		DDMContentModelImpl ddmContentModelImpl) {
 		Object[] args = new Object[] {
-				ddmContent.getUuid(), ddmContent.getGroupId()
+				ddmContentModelImpl.getUuid(), ddmContentModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2759,8 +2759,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		EntityCacheUtil.putResult(DDMContentModelImpl.ENTITY_CACHE_ENABLED,
 			DDMContentImpl.class, ddmContent.getPrimaryKey(), ddmContent, false);
 
-		clearUniqueFindersCache((DDMContent)ddmContentModelImpl);
-		cacheUniqueFindersCache((DDMContent)ddmContentModelImpl, isNew);
+		clearUniqueFindersCache(ddmContentModelImpl);
+		cacheUniqueFindersCache(ddmContentModelImpl, isNew);
 
 		ddmContent.resetOriginalValues();
 

@@ -2378,7 +2378,7 @@ public class CalendarNotificationTemplatePersistenceImpl
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(calendarNotificationTemplate);
+		clearUniqueFindersCache((CalendarNotificationTemplateModelImpl)calendarNotificationTemplate);
 	}
 
 	@Override
@@ -2392,75 +2392,70 @@ public class CalendarNotificationTemplatePersistenceImpl
 				CalendarNotificationTemplateImpl.class,
 				calendarNotificationTemplate.getPrimaryKey());
 
-			clearUniqueFindersCache(calendarNotificationTemplate);
+			clearUniqueFindersCache((CalendarNotificationTemplateModelImpl)calendarNotificationTemplate);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		CalendarNotificationTemplate calendarNotificationTemplate, boolean isNew) {
+		CalendarNotificationTemplateModelImpl calendarNotificationTemplateModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					calendarNotificationTemplate.getUuid(),
-					calendarNotificationTemplate.getGroupId()
+					calendarNotificationTemplateModelImpl.getUuid(),
+					calendarNotificationTemplateModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				calendarNotificationTemplate);
+				calendarNotificationTemplateModelImpl);
 
 			args = new Object[] {
-					calendarNotificationTemplate.getCalendarId(),
-					calendarNotificationTemplate.getNotificationType(),
-					calendarNotificationTemplate.getNotificationTemplateType()
+					calendarNotificationTemplateModelImpl.getCalendarId(),
+					calendarNotificationTemplateModelImpl.getNotificationType(),
+					calendarNotificationTemplateModelImpl.getNotificationTemplateType()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_NT_NTT, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_NT_NTT, args,
-				calendarNotificationTemplate);
+				calendarNotificationTemplateModelImpl);
 		}
 		else {
-			CalendarNotificationTemplateModelImpl calendarNotificationTemplateModelImpl =
-				(CalendarNotificationTemplateModelImpl)calendarNotificationTemplate;
-
 			if ((calendarNotificationTemplateModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						calendarNotificationTemplate.getUuid(),
-						calendarNotificationTemplate.getGroupId()
+						calendarNotificationTemplateModelImpl.getUuid(),
+						calendarNotificationTemplateModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					calendarNotificationTemplate);
+					calendarNotificationTemplateModelImpl);
 			}
 
 			if ((calendarNotificationTemplateModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_NT_NTT.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						calendarNotificationTemplate.getCalendarId(),
-						calendarNotificationTemplate.getNotificationType(),
-						calendarNotificationTemplate.getNotificationTemplateType()
+						calendarNotificationTemplateModelImpl.getCalendarId(),
+						calendarNotificationTemplateModelImpl.getNotificationType(),
+						calendarNotificationTemplateModelImpl.getNotificationTemplateType()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_NT_NTT, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_NT_NTT, args,
-					calendarNotificationTemplate);
+					calendarNotificationTemplateModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		CalendarNotificationTemplate calendarNotificationTemplate) {
-		CalendarNotificationTemplateModelImpl calendarNotificationTemplateModelImpl =
-			(CalendarNotificationTemplateModelImpl)calendarNotificationTemplate;
-
+		CalendarNotificationTemplateModelImpl calendarNotificationTemplateModelImpl) {
 		Object[] args = new Object[] {
-				calendarNotificationTemplate.getUuid(),
-				calendarNotificationTemplate.getGroupId()
+				calendarNotificationTemplateModelImpl.getUuid(),
+				calendarNotificationTemplateModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2478,9 +2473,9 @@ public class CalendarNotificationTemplatePersistenceImpl
 		}
 
 		args = new Object[] {
-				calendarNotificationTemplate.getCalendarId(),
-				calendarNotificationTemplate.getNotificationType(),
-				calendarNotificationTemplate.getNotificationTemplateType()
+				calendarNotificationTemplateModelImpl.getCalendarId(),
+				calendarNotificationTemplateModelImpl.getNotificationType(),
+				calendarNotificationTemplateModelImpl.getNotificationTemplateType()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_NT_NTT, args);
@@ -2743,9 +2738,8 @@ public class CalendarNotificationTemplatePersistenceImpl
 			calendarNotificationTemplate.getPrimaryKey(),
 			calendarNotificationTemplate, false);
 
-		clearUniqueFindersCache((CalendarNotificationTemplate)calendarNotificationTemplateModelImpl);
-		cacheUniqueFindersCache((CalendarNotificationTemplate)calendarNotificationTemplateModelImpl,
-			isNew);
+		clearUniqueFindersCache(calendarNotificationTemplateModelImpl);
+		cacheUniqueFindersCache(calendarNotificationTemplateModelImpl, isNew);
 
 		calendarNotificationTemplate.resetOriginalValues();
 

@@ -6342,7 +6342,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(calendarResource);
+		clearUniqueFindersCache((CalendarResourceModelImpl)calendarResource);
 	}
 
 	@Override
@@ -6354,68 +6354,67 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			EntityCacheUtil.removeResult(CalendarResourceModelImpl.ENTITY_CACHE_ENABLED,
 				CalendarResourceImpl.class, calendarResource.getPrimaryKey());
 
-			clearUniqueFindersCache(calendarResource);
+			clearUniqueFindersCache((CalendarResourceModelImpl)calendarResource);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(CalendarResource calendarResource,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		CalendarResourceModelImpl calendarResourceModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					calendarResource.getUuid(), calendarResource.getGroupId()
+					calendarResourceModelImpl.getUuid(),
+					calendarResourceModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				calendarResource);
+				calendarResourceModelImpl);
 
 			args = new Object[] {
-					calendarResource.getClassNameId(),
-					calendarResource.getClassPK()
+					calendarResourceModelImpl.getClassNameId(),
+					calendarResourceModelImpl.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
-				calendarResource);
+				calendarResourceModelImpl);
 		}
 		else {
-			CalendarResourceModelImpl calendarResourceModelImpl = (CalendarResourceModelImpl)calendarResource;
-
 			if ((calendarResourceModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						calendarResource.getUuid(),
-						calendarResource.getGroupId()
+						calendarResourceModelImpl.getUuid(),
+						calendarResourceModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					calendarResource);
+					calendarResourceModelImpl);
 			}
 
 			if ((calendarResourceModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						calendarResource.getClassNameId(),
-						calendarResource.getClassPK()
+						calendarResourceModelImpl.getClassNameId(),
+						calendarResourceModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
-					calendarResource);
+					calendarResourceModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(CalendarResource calendarResource) {
-		CalendarResourceModelImpl calendarResourceModelImpl = (CalendarResourceModelImpl)calendarResource;
-
+	protected void clearUniqueFindersCache(
+		CalendarResourceModelImpl calendarResourceModelImpl) {
 		Object[] args = new Object[] {
-				calendarResource.getUuid(), calendarResource.getGroupId()
+				calendarResourceModelImpl.getUuid(),
+				calendarResourceModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -6433,7 +6432,8 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		}
 
 		args = new Object[] {
-				calendarResource.getClassNameId(), calendarResource.getClassPK()
+				calendarResourceModelImpl.getClassNameId(),
+				calendarResourceModelImpl.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -6761,9 +6761,8 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 			CalendarResourceImpl.class, calendarResource.getPrimaryKey(),
 			calendarResource, false);
 
-		clearUniqueFindersCache((CalendarResource)calendarResourceModelImpl);
-		cacheUniqueFindersCache((CalendarResource)calendarResourceModelImpl,
-			isNew);
+		clearUniqueFindersCache(calendarResourceModelImpl);
+		cacheUniqueFindersCache(calendarResourceModelImpl, isNew);
 
 		calendarResource.resetOriginalValues();
 

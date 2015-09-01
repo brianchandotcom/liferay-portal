@@ -2196,7 +2196,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(journalArticleImage);
+		clearUniqueFindersCache((JournalArticleImageModelImpl)journalArticleImage);
 	}
 
 	@Override
@@ -2209,60 +2209,56 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 				JournalArticleImageImpl.class,
 				journalArticleImage.getPrimaryKey());
 
-			clearUniqueFindersCache(journalArticleImage);
+			clearUniqueFindersCache((JournalArticleImageModelImpl)journalArticleImage);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		JournalArticleImage journalArticleImage, boolean isNew) {
+		JournalArticleImageModelImpl journalArticleImageModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					journalArticleImage.getGroupId(),
-					journalArticleImage.getArticleId(),
-					journalArticleImage.getVersion(),
-					journalArticleImage.getElInstanceId(),
-					journalArticleImage.getElName(),
-					journalArticleImage.getLanguageId()
+					journalArticleImageModelImpl.getGroupId(),
+					journalArticleImageModelImpl.getArticleId(),
+					journalArticleImageModelImpl.getVersion(),
+					journalArticleImageModelImpl.getElInstanceId(),
+					journalArticleImageModelImpl.getElName(),
+					journalArticleImageModelImpl.getLanguageId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_A_V_E_E_L, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L, args,
-				journalArticleImage);
+				journalArticleImageModelImpl);
 		}
 		else {
-			JournalArticleImageModelImpl journalArticleImageModelImpl = (JournalArticleImageModelImpl)journalArticleImage;
-
 			if ((journalArticleImageModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_A_V_E_E_L.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						journalArticleImage.getGroupId(),
-						journalArticleImage.getArticleId(),
-						journalArticleImage.getVersion(),
-						journalArticleImage.getElInstanceId(),
-						journalArticleImage.getElName(),
-						journalArticleImage.getLanguageId()
+						journalArticleImageModelImpl.getGroupId(),
+						journalArticleImageModelImpl.getArticleId(),
+						journalArticleImageModelImpl.getVersion(),
+						journalArticleImageModelImpl.getElInstanceId(),
+						journalArticleImageModelImpl.getElName(),
+						journalArticleImageModelImpl.getLanguageId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_A_V_E_E_L,
 					args, Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_A_V_E_E_L,
-					args, journalArticleImage);
+					args, journalArticleImageModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		JournalArticleImage journalArticleImage) {
-		JournalArticleImageModelImpl journalArticleImageModelImpl = (JournalArticleImageModelImpl)journalArticleImage;
-
+		JournalArticleImageModelImpl journalArticleImageModelImpl) {
 		Object[] args = new Object[] {
-				journalArticleImage.getGroupId(),
-				journalArticleImage.getArticleId(),
-				journalArticleImage.getVersion(),
-				journalArticleImage.getElInstanceId(),
-				journalArticleImage.getElName(),
-				journalArticleImage.getLanguageId()
+				journalArticleImageModelImpl.getGroupId(),
+				journalArticleImageModelImpl.getArticleId(),
+				journalArticleImageModelImpl.getVersion(),
+				journalArticleImageModelImpl.getElInstanceId(),
+				journalArticleImageModelImpl.getElName(),
+				journalArticleImageModelImpl.getLanguageId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_A_V_E_E_L, args);
@@ -2487,9 +2483,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 			JournalArticleImageImpl.class, journalArticleImage.getPrimaryKey(),
 			journalArticleImage, false);
 
-		clearUniqueFindersCache((JournalArticleImage)journalArticleImageModelImpl);
-		cacheUniqueFindersCache((JournalArticleImage)journalArticleImageModelImpl,
-			isNew);
+		clearUniqueFindersCache(journalArticleImageModelImpl);
+		cacheUniqueFindersCache(journalArticleImageModelImpl, isNew);
 
 		journalArticleImage.resetOriginalValues();
 

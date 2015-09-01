@@ -4036,7 +4036,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(userGroup);
+		clearUniqueFindersCache((UserGroupModelImpl)userGroup);
 	}
 
 	@Override
@@ -4048,42 +4048,43 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			EntityCacheUtil.removeResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 				UserGroupImpl.class, userGroup.getPrimaryKey());
 
-			clearUniqueFindersCache(userGroup);
+			clearUniqueFindersCache((UserGroupModelImpl)userGroup);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(UserGroup userGroup, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		UserGroupModelImpl userGroupModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					userGroup.getCompanyId(), userGroup.getName()
+					userGroupModelImpl.getCompanyId(),
+					userGroupModelImpl.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args, userGroup);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+				userGroupModelImpl);
 		}
 		else {
-			UserGroupModelImpl userGroupModelImpl = (UserGroupModelImpl)userGroup;
-
 			if ((userGroupModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						userGroup.getCompanyId(), userGroup.getName()
+						userGroupModelImpl.getCompanyId(),
+						userGroupModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
-					userGroup);
+					userGroupModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(UserGroup userGroup) {
-		UserGroupModelImpl userGroupModelImpl = (UserGroupModelImpl)userGroup;
-
+	protected void clearUniqueFindersCache(
+		UserGroupModelImpl userGroupModelImpl) {
 		Object[] args = new Object[] {
-				userGroup.getCompanyId(), userGroup.getName()
+				userGroupModelImpl.getCompanyId(), userGroupModelImpl.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
@@ -4357,8 +4358,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		EntityCacheUtil.putResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 			UserGroupImpl.class, userGroup.getPrimaryKey(), userGroup, false);
 
-		clearUniqueFindersCache((UserGroup)userGroupModelImpl);
-		cacheUniqueFindersCache((UserGroup)userGroupModelImpl, isNew);
+		clearUniqueFindersCache(userGroupModelImpl);
+		cacheUniqueFindersCache(userGroupModelImpl, isNew);
 
 		userGroup.resetOriginalValues();
 

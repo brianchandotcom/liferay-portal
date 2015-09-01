@@ -2200,7 +2200,7 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(dlContent);
+		clearUniqueFindersCache((DLContentModelImpl)dlContent);
 	}
 
 	@Override
@@ -2212,46 +2212,49 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 			EntityCacheUtil.removeResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 				DLContentImpl.class, dlContent.getPrimaryKey());
 
-			clearUniqueFindersCache(dlContent);
+			clearUniqueFindersCache((DLContentModelImpl)dlContent);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLContent dlContent, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		DLContentModelImpl dlContentModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					dlContent.getCompanyId(), dlContent.getRepositoryId(),
-					dlContent.getPath(), dlContent.getVersion()
+					dlContentModelImpl.getCompanyId(),
+					dlContentModelImpl.getRepositoryId(),
+					dlContentModelImpl.getPath(),
+					dlContentModelImpl.getVersion()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R_P_V, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R_P_V, args,
-				dlContent);
+				dlContentModelImpl);
 		}
 		else {
-			DLContentModelImpl dlContentModelImpl = (DLContentModelImpl)dlContent;
-
 			if ((dlContentModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_R_P_V.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlContent.getCompanyId(), dlContent.getRepositoryId(),
-						dlContent.getPath(), dlContent.getVersion()
+						dlContentModelImpl.getCompanyId(),
+						dlContentModelImpl.getRepositoryId(),
+						dlContentModelImpl.getPath(),
+						dlContentModelImpl.getVersion()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R_P_V, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R_P_V, args,
-					dlContent);
+					dlContentModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(DLContent dlContent) {
-		DLContentModelImpl dlContentModelImpl = (DLContentModelImpl)dlContent;
-
+	protected void clearUniqueFindersCache(
+		DLContentModelImpl dlContentModelImpl) {
 		Object[] args = new Object[] {
-				dlContent.getCompanyId(), dlContent.getRepositoryId(),
-				dlContent.getPath(), dlContent.getVersion()
+				dlContentModelImpl.getCompanyId(),
+				dlContentModelImpl.getRepositoryId(),
+				dlContentModelImpl.getPath(), dlContentModelImpl.getVersion()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_P_V, args);
@@ -2459,8 +2462,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		EntityCacheUtil.putResult(DLContentModelImpl.ENTITY_CACHE_ENABLED,
 			DLContentImpl.class, dlContent.getPrimaryKey(), dlContent, false);
 
-		clearUniqueFindersCache((DLContent)dlContentModelImpl);
-		cacheUniqueFindersCache((DLContent)dlContentModelImpl, isNew);
+		clearUniqueFindersCache(dlContentModelImpl);
+		cacheUniqueFindersCache(dlContentModelImpl, isNew);
 
 		dlContent.resetOriginalValues();
 

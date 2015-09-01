@@ -2004,7 +2004,7 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(kaleoTimerInstanceToken);
+		clearUniqueFindersCache((KaleoTimerInstanceTokenModelImpl)kaleoTimerInstanceToken);
 	}
 
 	@Override
@@ -2018,48 +2018,45 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 				KaleoTimerInstanceTokenImpl.class,
 				kaleoTimerInstanceToken.getPrimaryKey());
 
-			clearUniqueFindersCache(kaleoTimerInstanceToken);
+			clearUniqueFindersCache((KaleoTimerInstanceTokenModelImpl)kaleoTimerInstanceToken);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		KaleoTimerInstanceToken kaleoTimerInstanceToken, boolean isNew) {
+		KaleoTimerInstanceTokenModelImpl kaleoTimerInstanceTokenModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					kaleoTimerInstanceToken.getKaleoInstanceTokenId(),
-					kaleoTimerInstanceToken.getKaleoTimerId()
+					kaleoTimerInstanceTokenModelImpl.getKaleoInstanceTokenId(),
+					kaleoTimerInstanceTokenModelImpl.getKaleoTimerId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KITI_KTI, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KITI_KTI, args,
-				kaleoTimerInstanceToken);
+				kaleoTimerInstanceTokenModelImpl);
 		}
 		else {
-			KaleoTimerInstanceTokenModelImpl kaleoTimerInstanceTokenModelImpl = (KaleoTimerInstanceTokenModelImpl)kaleoTimerInstanceToken;
-
 			if ((kaleoTimerInstanceTokenModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_KITI_KTI.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						kaleoTimerInstanceToken.getKaleoInstanceTokenId(),
-						kaleoTimerInstanceToken.getKaleoTimerId()
+						kaleoTimerInstanceTokenModelImpl.getKaleoInstanceTokenId(),
+						kaleoTimerInstanceTokenModelImpl.getKaleoTimerId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KITI_KTI, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KITI_KTI, args,
-					kaleoTimerInstanceToken);
+					kaleoTimerInstanceTokenModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		KaleoTimerInstanceToken kaleoTimerInstanceToken) {
-		KaleoTimerInstanceTokenModelImpl kaleoTimerInstanceTokenModelImpl = (KaleoTimerInstanceTokenModelImpl)kaleoTimerInstanceToken;
-
+		KaleoTimerInstanceTokenModelImpl kaleoTimerInstanceTokenModelImpl) {
 		Object[] args = new Object[] {
-				kaleoTimerInstanceToken.getKaleoInstanceTokenId(),
-				kaleoTimerInstanceToken.getKaleoTimerId()
+				kaleoTimerInstanceTokenModelImpl.getKaleoInstanceTokenId(),
+				kaleoTimerInstanceTokenModelImpl.getKaleoTimerId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KITI_KTI, args);
@@ -2311,9 +2308,8 @@ public class KaleoTimerInstanceTokenPersistenceImpl extends BasePersistenceImpl<
 			kaleoTimerInstanceToken.getPrimaryKey(), kaleoTimerInstanceToken,
 			false);
 
-		clearUniqueFindersCache((KaleoTimerInstanceToken)kaleoTimerInstanceTokenModelImpl);
-		cacheUniqueFindersCache((KaleoTimerInstanceToken)kaleoTimerInstanceTokenModelImpl,
-			isNew);
+		clearUniqueFindersCache(kaleoTimerInstanceTokenModelImpl);
+		cacheUniqueFindersCache(kaleoTimerInstanceTokenModelImpl, isNew);
 
 		kaleoTimerInstanceToken.resetOriginalValues();
 

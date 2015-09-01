@@ -1900,7 +1900,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(ddmStructureLink);
+		clearUniqueFindersCache((DDMStructureLinkModelImpl)ddmStructureLink);
 	}
 
 	@Override
@@ -1912,49 +1912,47 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			EntityCacheUtil.removeResult(DDMStructureLinkModelImpl.ENTITY_CACHE_ENABLED,
 				DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey());
 
-			clearUniqueFindersCache(ddmStructureLink);
+			clearUniqueFindersCache((DDMStructureLinkModelImpl)ddmStructureLink);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DDMStructureLink ddmStructureLink,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		DDMStructureLinkModelImpl ddmStructureLinkModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					ddmStructureLink.getClassNameId(),
-					ddmStructureLink.getClassPK(),
-					ddmStructureLink.getStructureId()
+					ddmStructureLinkModelImpl.getClassNameId(),
+					ddmStructureLinkModelImpl.getClassPK(),
+					ddmStructureLinkModelImpl.getStructureId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_S, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_S, args,
-				ddmStructureLink);
+				ddmStructureLinkModelImpl);
 		}
 		else {
-			DDMStructureLinkModelImpl ddmStructureLinkModelImpl = (DDMStructureLinkModelImpl)ddmStructureLink;
-
 			if ((ddmStructureLinkModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C_S.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ddmStructureLink.getClassNameId(),
-						ddmStructureLink.getClassPK(),
-						ddmStructureLink.getStructureId()
+						ddmStructureLinkModelImpl.getClassNameId(),
+						ddmStructureLinkModelImpl.getClassPK(),
+						ddmStructureLinkModelImpl.getStructureId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C_S, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C_S, args,
-					ddmStructureLink);
+					ddmStructureLinkModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(DDMStructureLink ddmStructureLink) {
-		DDMStructureLinkModelImpl ddmStructureLinkModelImpl = (DDMStructureLinkModelImpl)ddmStructureLink;
-
+	protected void clearUniqueFindersCache(
+		DDMStructureLinkModelImpl ddmStructureLinkModelImpl) {
 		Object[] args = new Object[] {
-				ddmStructureLink.getClassNameId(), ddmStructureLink.getClassPK(),
-				ddmStructureLink.getStructureId()
+				ddmStructureLinkModelImpl.getClassNameId(),
+				ddmStructureLinkModelImpl.getClassPK(),
+				ddmStructureLinkModelImpl.getStructureId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C_S, args);
@@ -2174,9 +2172,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 			DDMStructureLinkImpl.class, ddmStructureLink.getPrimaryKey(),
 			ddmStructureLink, false);
 
-		clearUniqueFindersCache((DDMStructureLink)ddmStructureLinkModelImpl);
-		cacheUniqueFindersCache((DDMStructureLink)ddmStructureLinkModelImpl,
-			isNew);
+		clearUniqueFindersCache(ddmStructureLinkModelImpl);
+		cacheUniqueFindersCache(ddmStructureLinkModelImpl, isNew);
 
 		ddmStructureLink.resetOriginalValues();
 

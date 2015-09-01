@@ -2442,7 +2442,7 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(dlFileRank);
+		clearUniqueFindersCache((DLFileRankModelImpl)dlFileRank);
 	}
 
 	@Override
@@ -2454,46 +2454,47 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 			EntityCacheUtil.removeResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 				DLFileRankImpl.class, dlFileRank.getPrimaryKey());
 
-			clearUniqueFindersCache(dlFileRank);
+			clearUniqueFindersCache((DLFileRankModelImpl)dlFileRank);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(DLFileRank dlFileRank, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		DLFileRankModelImpl dlFileRankModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					dlFileRank.getCompanyId(), dlFileRank.getUserId(),
-					dlFileRank.getFileEntryId()
+					dlFileRankModelImpl.getCompanyId(),
+					dlFileRankModelImpl.getUserId(),
+					dlFileRankModelImpl.getFileEntryId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_F, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_F, args,
-				dlFileRank);
+				dlFileRankModelImpl);
 		}
 		else {
-			DLFileRankModelImpl dlFileRankModelImpl = (DLFileRankModelImpl)dlFileRank;
-
 			if ((dlFileRankModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_U_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						dlFileRank.getCompanyId(), dlFileRank.getUserId(),
-						dlFileRank.getFileEntryId()
+						dlFileRankModelImpl.getCompanyId(),
+						dlFileRankModelImpl.getUserId(),
+						dlFileRankModelImpl.getFileEntryId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_F, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_F, args,
-					dlFileRank);
+					dlFileRankModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(DLFileRank dlFileRank) {
-		DLFileRankModelImpl dlFileRankModelImpl = (DLFileRankModelImpl)dlFileRank;
-
+	protected void clearUniqueFindersCache(
+		DLFileRankModelImpl dlFileRankModelImpl) {
 		Object[] args = new Object[] {
-				dlFileRank.getCompanyId(), dlFileRank.getUserId(),
-				dlFileRank.getFileEntryId()
+				dlFileRankModelImpl.getCompanyId(),
+				dlFileRankModelImpl.getUserId(),
+				dlFileRankModelImpl.getFileEntryId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_F, args);
@@ -2732,8 +2733,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		EntityCacheUtil.putResult(DLFileRankModelImpl.ENTITY_CACHE_ENABLED,
 			DLFileRankImpl.class, dlFileRank.getPrimaryKey(), dlFileRank, false);
 
-		clearUniqueFindersCache((DLFileRank)dlFileRankModelImpl);
-		cacheUniqueFindersCache((DLFileRank)dlFileRankModelImpl, isNew);
+		clearUniqueFindersCache(dlFileRankModelImpl);
+		cacheUniqueFindersCache(dlFileRankModelImpl, isNew);
 
 		dlFileRank.resetOriginalValues();
 

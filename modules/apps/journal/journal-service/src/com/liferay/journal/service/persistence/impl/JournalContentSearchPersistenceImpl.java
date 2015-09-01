@@ -4516,7 +4516,7 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(journalContentSearch);
+		clearUniqueFindersCache((JournalContentSearchModelImpl)journalContentSearch);
 	}
 
 	@Override
@@ -4529,57 +4529,54 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 				JournalContentSearchImpl.class,
 				journalContentSearch.getPrimaryKey());
 
-			clearUniqueFindersCache(journalContentSearch);
+			clearUniqueFindersCache((JournalContentSearchModelImpl)journalContentSearch);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		JournalContentSearch journalContentSearch, boolean isNew) {
+		JournalContentSearchModelImpl journalContentSearchModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					journalContentSearch.getGroupId(),
-					journalContentSearch.getPrivateLayout(),
-					journalContentSearch.getLayoutId(),
-					journalContentSearch.getPortletId(),
-					journalContentSearch.getArticleId()
+					journalContentSearchModelImpl.getGroupId(),
+					journalContentSearchModelImpl.getPrivateLayout(),
+					journalContentSearchModelImpl.getLayoutId(),
+					journalContentSearchModelImpl.getPortletId(),
+					journalContentSearchModelImpl.getArticleId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_L_P_A, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_L_P_A, args,
-				journalContentSearch);
+				journalContentSearchModelImpl);
 		}
 		else {
-			JournalContentSearchModelImpl journalContentSearchModelImpl = (JournalContentSearchModelImpl)journalContentSearch;
-
 			if ((journalContentSearchModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_P_L_P_A.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						journalContentSearch.getGroupId(),
-						journalContentSearch.getPrivateLayout(),
-						journalContentSearch.getLayoutId(),
-						journalContentSearch.getPortletId(),
-						journalContentSearch.getArticleId()
+						journalContentSearchModelImpl.getGroupId(),
+						journalContentSearchModelImpl.getPrivateLayout(),
+						journalContentSearchModelImpl.getLayoutId(),
+						journalContentSearchModelImpl.getPortletId(),
+						journalContentSearchModelImpl.getArticleId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_P_L_P_A, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_P_L_P_A, args,
-					journalContentSearch);
+					journalContentSearchModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		JournalContentSearch journalContentSearch) {
-		JournalContentSearchModelImpl journalContentSearchModelImpl = (JournalContentSearchModelImpl)journalContentSearch;
-
+		JournalContentSearchModelImpl journalContentSearchModelImpl) {
 		Object[] args = new Object[] {
-				journalContentSearch.getGroupId(),
-				journalContentSearch.getPrivateLayout(),
-				journalContentSearch.getLayoutId(),
-				journalContentSearch.getPortletId(),
-				journalContentSearch.getArticleId()
+				journalContentSearchModelImpl.getGroupId(),
+				journalContentSearchModelImpl.getPrivateLayout(),
+				journalContentSearchModelImpl.getLayoutId(),
+				journalContentSearchModelImpl.getPortletId(),
+				journalContentSearchModelImpl.getArticleId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_P_L_P_A, args);
@@ -4895,9 +4892,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 			JournalContentSearchImpl.class,
 			journalContentSearch.getPrimaryKey(), journalContentSearch, false);
 
-		clearUniqueFindersCache((JournalContentSearch)journalContentSearchModelImpl);
-		cacheUniqueFindersCache((JournalContentSearch)journalContentSearchModelImpl,
-			isNew);
+		clearUniqueFindersCache(journalContentSearchModelImpl);
+		cacheUniqueFindersCache(journalContentSearchModelImpl, isNew);
 
 		journalContentSearch.resetOriginalValues();
 

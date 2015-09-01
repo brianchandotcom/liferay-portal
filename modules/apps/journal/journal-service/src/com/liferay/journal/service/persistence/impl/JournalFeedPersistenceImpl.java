@@ -2589,7 +2589,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(journalFeed);
+		clearUniqueFindersCache((JournalFeedModelImpl)journalFeed);
 	}
 
 	@Override
@@ -2601,65 +2601,67 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			EntityCacheUtil.removeResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 				JournalFeedImpl.class, journalFeed.getPrimaryKey());
 
-			clearUniqueFindersCache(journalFeed);
+			clearUniqueFindersCache((JournalFeedModelImpl)journalFeed);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(JournalFeed journalFeed,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		JournalFeedModelImpl journalFeedModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					journalFeed.getUuid(), journalFeed.getGroupId()
+					journalFeedModelImpl.getUuid(),
+					journalFeedModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				journalFeed);
+				journalFeedModelImpl);
 
 			args = new Object[] {
-					journalFeed.getGroupId(), journalFeed.getFeedId()
+					journalFeedModelImpl.getGroupId(),
+					journalFeedModelImpl.getFeedId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F, args,
-				journalFeed);
+				journalFeedModelImpl);
 		}
 		else {
-			JournalFeedModelImpl journalFeedModelImpl = (JournalFeedModelImpl)journalFeed;
-
 			if ((journalFeedModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						journalFeed.getUuid(), journalFeed.getGroupId()
+						journalFeedModelImpl.getUuid(),
+						journalFeedModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					journalFeed);
+					journalFeedModelImpl);
 			}
 
 			if ((journalFeedModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						journalFeed.getGroupId(), journalFeed.getFeedId()
+						journalFeedModelImpl.getGroupId(),
+						journalFeedModelImpl.getFeedId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F, args,
-					journalFeed);
+					journalFeedModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(JournalFeed journalFeed) {
-		JournalFeedModelImpl journalFeedModelImpl = (JournalFeedModelImpl)journalFeed;
-
+	protected void clearUniqueFindersCache(
+		JournalFeedModelImpl journalFeedModelImpl) {
 		Object[] args = new Object[] {
-				journalFeed.getUuid(), journalFeed.getGroupId()
+				journalFeedModelImpl.getUuid(),
+				journalFeedModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2676,7 +2678,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { journalFeed.getGroupId(), journalFeed.getFeedId() };
+		args = new Object[] {
+				journalFeedModelImpl.getGroupId(),
+				journalFeedModelImpl.getFeedId()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F, args);
@@ -2921,8 +2926,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			JournalFeedImpl.class, journalFeed.getPrimaryKey(), journalFeed,
 			false);
 
-		clearUniqueFindersCache((JournalFeed)journalFeedModelImpl);
-		cacheUniqueFindersCache((JournalFeed)journalFeedModelImpl, isNew);
+		clearUniqueFindersCache(journalFeedModelImpl);
+		cacheUniqueFindersCache(journalFeedModelImpl, isNew);
 
 		journalFeed.resetOriginalValues();
 

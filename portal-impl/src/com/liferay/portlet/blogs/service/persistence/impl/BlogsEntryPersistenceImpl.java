@@ -17637,7 +17637,7 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(blogsEntry);
+		clearUniqueFindersCache((BlogsEntryModelImpl)blogsEntry);
 	}
 
 	@Override
@@ -17649,64 +17649,66 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			EntityCacheUtil.removeResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 				BlogsEntryImpl.class, blogsEntry.getPrimaryKey());
 
-			clearUniqueFindersCache(blogsEntry);
+			clearUniqueFindersCache((BlogsEntryModelImpl)blogsEntry);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(BlogsEntry blogsEntry, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		BlogsEntryModelImpl blogsEntryModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					blogsEntry.getUuid(), blogsEntry.getGroupId()
+					blogsEntryModelImpl.getUuid(),
+					blogsEntryModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				blogsEntry);
+				blogsEntryModelImpl);
 
 			args = new Object[] {
-					blogsEntry.getGroupId(), blogsEntry.getUrlTitle()
+					blogsEntryModelImpl.getGroupId(),
+					blogsEntryModelImpl.getUrlTitle()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_UT, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_UT, args,
-				blogsEntry);
+				blogsEntryModelImpl);
 		}
 		else {
-			BlogsEntryModelImpl blogsEntryModelImpl = (BlogsEntryModelImpl)blogsEntry;
-
 			if ((blogsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						blogsEntry.getUuid(), blogsEntry.getGroupId()
+						blogsEntryModelImpl.getUuid(),
+						blogsEntryModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					blogsEntry);
+					blogsEntryModelImpl);
 			}
 
 			if ((blogsEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_UT.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						blogsEntry.getGroupId(), blogsEntry.getUrlTitle()
+						blogsEntryModelImpl.getGroupId(),
+						blogsEntryModelImpl.getUrlTitle()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_UT, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_UT, args,
-					blogsEntry);
+					blogsEntryModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(BlogsEntry blogsEntry) {
-		BlogsEntryModelImpl blogsEntryModelImpl = (BlogsEntryModelImpl)blogsEntry;
-
+	protected void clearUniqueFindersCache(
+		BlogsEntryModelImpl blogsEntryModelImpl) {
 		Object[] args = new Object[] {
-				blogsEntry.getUuid(), blogsEntry.getGroupId()
+				blogsEntryModelImpl.getUuid(), blogsEntryModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -17723,7 +17725,10 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { blogsEntry.getGroupId(), blogsEntry.getUrlTitle() };
+		args = new Object[] {
+				blogsEntryModelImpl.getGroupId(),
+				blogsEntryModelImpl.getUrlTitle()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_UT, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_UT, args);
@@ -18126,8 +18131,8 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 		EntityCacheUtil.putResult(BlogsEntryModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsEntryImpl.class, blogsEntry.getPrimaryKey(), blogsEntry, false);
 
-		clearUniqueFindersCache((BlogsEntry)blogsEntryModelImpl);
-		cacheUniqueFindersCache((BlogsEntry)blogsEntryModelImpl, isNew);
+		clearUniqueFindersCache(blogsEntryModelImpl);
+		cacheUniqueFindersCache(blogsEntryModelImpl, isNew);
 
 		blogsEntry.resetOriginalValues();
 

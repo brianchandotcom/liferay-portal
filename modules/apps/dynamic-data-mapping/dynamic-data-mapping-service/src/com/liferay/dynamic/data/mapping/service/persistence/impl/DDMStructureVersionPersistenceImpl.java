@@ -1425,7 +1425,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(ddmStructureVersion);
+		clearUniqueFindersCache((DDMStructureVersionModelImpl)ddmStructureVersion);
 	}
 
 	@Override
@@ -1438,48 +1438,44 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 				DDMStructureVersionImpl.class,
 				ddmStructureVersion.getPrimaryKey());
 
-			clearUniqueFindersCache(ddmStructureVersion);
+			clearUniqueFindersCache((DDMStructureVersionModelImpl)ddmStructureVersion);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		DDMStructureVersion ddmStructureVersion, boolean isNew) {
+		DDMStructureVersionModelImpl ddmStructureVersionModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					ddmStructureVersion.getStructureId(),
-					ddmStructureVersion.getVersion()
+					ddmStructureVersionModelImpl.getStructureId(),
+					ddmStructureVersionModelImpl.getVersion()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_S_V, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_S_V, args,
-				ddmStructureVersion);
+				ddmStructureVersionModelImpl);
 		}
 		else {
-			DDMStructureVersionModelImpl ddmStructureVersionModelImpl = (DDMStructureVersionModelImpl)ddmStructureVersion;
-
 			if ((ddmStructureVersionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_S_V.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ddmStructureVersion.getStructureId(),
-						ddmStructureVersion.getVersion()
+						ddmStructureVersionModelImpl.getStructureId(),
+						ddmStructureVersionModelImpl.getVersion()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_S_V, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_S_V, args,
-					ddmStructureVersion);
+					ddmStructureVersionModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		DDMStructureVersion ddmStructureVersion) {
-		DDMStructureVersionModelImpl ddmStructureVersionModelImpl = (DDMStructureVersionModelImpl)ddmStructureVersion;
-
+		DDMStructureVersionModelImpl ddmStructureVersionModelImpl) {
 		Object[] args = new Object[] {
-				ddmStructureVersion.getStructureId(),
-				ddmStructureVersion.getVersion()
+				ddmStructureVersionModelImpl.getStructureId(),
+				ddmStructureVersionModelImpl.getVersion()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_S_V, args);
@@ -1683,9 +1679,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 			DDMStructureVersionImpl.class, ddmStructureVersion.getPrimaryKey(),
 			ddmStructureVersion, false);
 
-		clearUniqueFindersCache((DDMStructureVersion)ddmStructureVersionModelImpl);
-		cacheUniqueFindersCache((DDMStructureVersion)ddmStructureVersionModelImpl,
-			isNew);
+		clearUniqueFindersCache(ddmStructureVersionModelImpl);
+		cacheUniqueFindersCache(ddmStructureVersionModelImpl, isNew);
 
 		ddmStructureVersion.resetOriginalValues();
 

@@ -2207,7 +2207,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(mbMailingList);
+		clearUniqueFindersCache((MBMailingListModelImpl)mbMailingList);
 	}
 
 	@Override
@@ -2219,66 +2219,67 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			EntityCacheUtil.removeResult(MBMailingListModelImpl.ENTITY_CACHE_ENABLED,
 				MBMailingListImpl.class, mbMailingList.getPrimaryKey());
 
-			clearUniqueFindersCache(mbMailingList);
+			clearUniqueFindersCache((MBMailingListModelImpl)mbMailingList);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MBMailingList mbMailingList,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		MBMailingListModelImpl mbMailingListModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					mbMailingList.getUuid(), mbMailingList.getGroupId()
+					mbMailingListModelImpl.getUuid(),
+					mbMailingListModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				mbMailingList);
+				mbMailingListModelImpl);
 
 			args = new Object[] {
-					mbMailingList.getGroupId(), mbMailingList.getCategoryId()
+					mbMailingListModelImpl.getGroupId(),
+					mbMailingListModelImpl.getCategoryId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C, args,
-				mbMailingList);
+				mbMailingListModelImpl);
 		}
 		else {
-			MBMailingListModelImpl mbMailingListModelImpl = (MBMailingListModelImpl)mbMailingList;
-
 			if ((mbMailingListModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mbMailingList.getUuid(), mbMailingList.getGroupId()
+						mbMailingListModelImpl.getUuid(),
+						mbMailingListModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					mbMailingList);
+					mbMailingListModelImpl);
 			}
 
 			if ((mbMailingListModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mbMailingList.getGroupId(),
-						mbMailingList.getCategoryId()
+						mbMailingListModelImpl.getGroupId(),
+						mbMailingListModelImpl.getCategoryId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_C, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_C, args,
-					mbMailingList);
+					mbMailingListModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(MBMailingList mbMailingList) {
-		MBMailingListModelImpl mbMailingListModelImpl = (MBMailingListModelImpl)mbMailingList;
-
+	protected void clearUniqueFindersCache(
+		MBMailingListModelImpl mbMailingListModelImpl) {
 		Object[] args = new Object[] {
-				mbMailingList.getUuid(), mbMailingList.getGroupId()
+				mbMailingListModelImpl.getUuid(),
+				mbMailingListModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2296,7 +2297,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		}
 
 		args = new Object[] {
-				mbMailingList.getGroupId(), mbMailingList.getCategoryId()
+				mbMailingListModelImpl.getGroupId(),
+				mbMailingListModelImpl.getCategoryId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
@@ -2544,8 +2546,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 			MBMailingListImpl.class, mbMailingList.getPrimaryKey(),
 			mbMailingList, false);
 
-		clearUniqueFindersCache((MBMailingList)mbMailingListModelImpl);
-		cacheUniqueFindersCache((MBMailingList)mbMailingListModelImpl, isNew);
+		clearUniqueFindersCache(mbMailingListModelImpl);
+		cacheUniqueFindersCache(mbMailingListModelImpl, isNew);
 
 		mbMailingList.resetOriginalValues();
 

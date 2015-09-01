@@ -2677,7 +2677,7 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(mbThreadFlag);
+		clearUniqueFindersCache((MBThreadFlagModelImpl)mbThreadFlag);
 	}
 
 	@Override
@@ -2689,65 +2689,67 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			EntityCacheUtil.removeResult(MBThreadFlagModelImpl.ENTITY_CACHE_ENABLED,
 				MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey());
 
-			clearUniqueFindersCache(mbThreadFlag);
+			clearUniqueFindersCache((MBThreadFlagModelImpl)mbThreadFlag);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(MBThreadFlag mbThreadFlag,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		MBThreadFlagModelImpl mbThreadFlagModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					mbThreadFlag.getUuid(), mbThreadFlag.getGroupId()
+					mbThreadFlagModelImpl.getUuid(),
+					mbThreadFlagModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				mbThreadFlag);
+				mbThreadFlagModelImpl);
 
 			args = new Object[] {
-					mbThreadFlag.getUserId(), mbThreadFlag.getThreadId()
+					mbThreadFlagModelImpl.getUserId(),
+					mbThreadFlagModelImpl.getThreadId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T, args,
-				mbThreadFlag);
+				mbThreadFlagModelImpl);
 		}
 		else {
-			MBThreadFlagModelImpl mbThreadFlagModelImpl = (MBThreadFlagModelImpl)mbThreadFlag;
-
 			if ((mbThreadFlagModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mbThreadFlag.getUuid(), mbThreadFlag.getGroupId()
+						mbThreadFlagModelImpl.getUuid(),
+						mbThreadFlagModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					mbThreadFlag);
+					mbThreadFlagModelImpl);
 			}
 
 			if ((mbThreadFlagModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_T.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						mbThreadFlag.getUserId(), mbThreadFlag.getThreadId()
+						mbThreadFlagModelImpl.getUserId(),
+						mbThreadFlagModelImpl.getThreadId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_T, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_T, args,
-					mbThreadFlag);
+					mbThreadFlagModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(MBThreadFlag mbThreadFlag) {
-		MBThreadFlagModelImpl mbThreadFlagModelImpl = (MBThreadFlagModelImpl)mbThreadFlag;
-
+	protected void clearUniqueFindersCache(
+		MBThreadFlagModelImpl mbThreadFlagModelImpl) {
 		Object[] args = new Object[] {
-				mbThreadFlag.getUuid(), mbThreadFlag.getGroupId()
+				mbThreadFlagModelImpl.getUuid(),
+				mbThreadFlagModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -2764,7 +2766,10 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
-		args = new Object[] { mbThreadFlag.getUserId(), mbThreadFlag.getThreadId() };
+		args = new Object[] {
+				mbThreadFlagModelImpl.getUserId(),
+				mbThreadFlagModelImpl.getThreadId()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_T, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_T, args);
@@ -3027,8 +3032,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 			MBThreadFlagImpl.class, mbThreadFlag.getPrimaryKey(), mbThreadFlag,
 			false);
 
-		clearUniqueFindersCache((MBThreadFlag)mbThreadFlagModelImpl);
-		cacheUniqueFindersCache((MBThreadFlag)mbThreadFlagModelImpl, isNew);
+		clearUniqueFindersCache(mbThreadFlagModelImpl);
+		cacheUniqueFindersCache(mbThreadFlagModelImpl, isNew);
 
 		mbThreadFlag.resetOriginalValues();
 

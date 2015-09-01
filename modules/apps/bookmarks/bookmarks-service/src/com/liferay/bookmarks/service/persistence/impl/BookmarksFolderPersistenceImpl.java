@@ -6809,7 +6809,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(bookmarksFolder);
+		clearUniqueFindersCache((BookmarksFolderModelImpl)bookmarksFolder);
 	}
 
 	@Override
@@ -6821,44 +6821,44 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			EntityCacheUtil.removeResult(BookmarksFolderModelImpl.ENTITY_CACHE_ENABLED,
 				BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey());
 
-			clearUniqueFindersCache(bookmarksFolder);
+			clearUniqueFindersCache((BookmarksFolderModelImpl)bookmarksFolder);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(BookmarksFolder bookmarksFolder,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		BookmarksFolderModelImpl bookmarksFolderModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					bookmarksFolder.getUuid(), bookmarksFolder.getGroupId()
+					bookmarksFolderModelImpl.getUuid(),
+					bookmarksFolderModelImpl.getGroupId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-				bookmarksFolder);
+				bookmarksFolderModelImpl);
 		}
 		else {
-			BookmarksFolderModelImpl bookmarksFolderModelImpl = (BookmarksFolderModelImpl)bookmarksFolder;
-
 			if ((bookmarksFolderModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						bookmarksFolder.getUuid(), bookmarksFolder.getGroupId()
+						bookmarksFolderModelImpl.getUuid(),
+						bookmarksFolderModelImpl.getGroupId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					bookmarksFolder);
+					bookmarksFolderModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(BookmarksFolder bookmarksFolder) {
-		BookmarksFolderModelImpl bookmarksFolderModelImpl = (BookmarksFolderModelImpl)bookmarksFolder;
-
+	protected void clearUniqueFindersCache(
+		BookmarksFolderModelImpl bookmarksFolderModelImpl) {
 		Object[] args = new Object[] {
-				bookmarksFolder.getUuid(), bookmarksFolder.getGroupId()
+				bookmarksFolderModelImpl.getUuid(),
+				bookmarksFolderModelImpl.getGroupId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
@@ -7189,8 +7189,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			BookmarksFolderImpl.class, bookmarksFolder.getPrimaryKey(),
 			bookmarksFolder, false);
 
-		clearUniqueFindersCache(bookmarksFolder);
-		cacheUniqueFindersCache(bookmarksFolder, isNew);
+		clearUniqueFindersCache(bookmarksFolderModelImpl);
+		cacheUniqueFindersCache(bookmarksFolderModelImpl, isNew);
 
 		bookmarksFolder.resetOriginalValues();
 

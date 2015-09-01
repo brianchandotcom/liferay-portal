@@ -2421,7 +2421,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(app);
+		clearUniqueFindersCache((AppModelImpl)app);
 	}
 
 	@Override
@@ -2433,38 +2433,35 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			EntityCacheUtil.removeResult(AppModelImpl.ENTITY_CACHE_ENABLED,
 				AppImpl.class, app.getPrimaryKey());
 
-			clearUniqueFindersCache(app);
+			clearUniqueFindersCache((AppModelImpl)app);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(App app, boolean isNew) {
+	protected void cacheUniqueFindersCache(AppModelImpl appModelImpl,
+		boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { app.getRemoteAppId() };
+			Object[] args = new Object[] { appModelImpl.getRemoteAppId() };
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_REMOTEAPPID, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_REMOTEAPPID, args,
-				app);
+				appModelImpl);
 		}
 		else {
-			AppModelImpl appModelImpl = (AppModelImpl)app;
-
 			if ((appModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_REMOTEAPPID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { app.getRemoteAppId() };
+				Object[] args = new Object[] { appModelImpl.getRemoteAppId() };
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_REMOTEAPPID,
 					args, Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_REMOTEAPPID,
-					args, app);
+					args, appModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(App app) {
-		AppModelImpl appModelImpl = (AppModelImpl)app;
-
-		Object[] args = new Object[] { app.getRemoteAppId() };
+	protected void clearUniqueFindersCache(AppModelImpl appModelImpl) {
+		Object[] args = new Object[] { appModelImpl.getRemoteAppId() };
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_REMOTEAPPID, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_REMOTEAPPID, args);
@@ -2714,8 +2711,8 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		EntityCacheUtil.putResult(AppModelImpl.ENTITY_CACHE_ENABLED,
 			AppImpl.class, app.getPrimaryKey(), app, false);
 
-		clearUniqueFindersCache((App)appModelImpl);
-		cacheUniqueFindersCache((App)appModelImpl, isNew);
+		clearUniqueFindersCache(appModelImpl);
+		cacheUniqueFindersCache(appModelImpl, isNew);
 
 		app.resetOriginalValues();
 

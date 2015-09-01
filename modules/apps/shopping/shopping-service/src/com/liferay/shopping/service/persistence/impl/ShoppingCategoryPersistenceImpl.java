@@ -2169,7 +2169,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(shoppingCategory);
+		clearUniqueFindersCache((ShoppingCategoryModelImpl)shoppingCategory);
 	}
 
 	@Override
@@ -2181,45 +2181,44 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			EntityCacheUtil.removeResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingCategoryImpl.class, shoppingCategory.getPrimaryKey());
 
-			clearUniqueFindersCache(shoppingCategory);
+			clearUniqueFindersCache((ShoppingCategoryModelImpl)shoppingCategory);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ShoppingCategory shoppingCategory,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		ShoppingCategoryModelImpl shoppingCategoryModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					shoppingCategory.getGroupId(), shoppingCategory.getName()
+					shoppingCategoryModelImpl.getGroupId(),
+					shoppingCategoryModelImpl.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
-				shoppingCategory);
+				shoppingCategoryModelImpl);
 		}
 		else {
-			ShoppingCategoryModelImpl shoppingCategoryModelImpl = (ShoppingCategoryModelImpl)shoppingCategory;
-
 			if ((shoppingCategoryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_G_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						shoppingCategory.getGroupId(),
-						shoppingCategory.getName()
+						shoppingCategoryModelImpl.getGroupId(),
+						shoppingCategoryModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_N, args,
-					shoppingCategory);
+					shoppingCategoryModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ShoppingCategory shoppingCategory) {
-		ShoppingCategoryModelImpl shoppingCategoryModelImpl = (ShoppingCategoryModelImpl)shoppingCategory;
-
+	protected void clearUniqueFindersCache(
+		ShoppingCategoryModelImpl shoppingCategoryModelImpl) {
 		Object[] args = new Object[] {
-				shoppingCategory.getGroupId(), shoppingCategory.getName()
+				shoppingCategoryModelImpl.getGroupId(),
+				shoppingCategoryModelImpl.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N, args);
@@ -2440,9 +2439,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 			ShoppingCategoryImpl.class, shoppingCategory.getPrimaryKey(),
 			shoppingCategory, false);
 
-		clearUniqueFindersCache((ShoppingCategory)shoppingCategoryModelImpl);
-		cacheUniqueFindersCache((ShoppingCategory)shoppingCategoryModelImpl,
-			isNew);
+		clearUniqueFindersCache(shoppingCategoryModelImpl);
+		cacheUniqueFindersCache(shoppingCategoryModelImpl, isNew);
 
 		shoppingCategory.resetOriginalValues();
 

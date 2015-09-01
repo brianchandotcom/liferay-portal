@@ -2131,7 +2131,7 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(kaleoTransition);
+		clearUniqueFindersCache((KaleoTransitionModelImpl)kaleoTransition);
 	}
 
 	@Override
@@ -2143,68 +2143,67 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 			EntityCacheUtil.removeResult(KaleoTransitionModelImpl.ENTITY_CACHE_ENABLED,
 				KaleoTransitionImpl.class, kaleoTransition.getPrimaryKey());
 
-			clearUniqueFindersCache(kaleoTransition);
+			clearUniqueFindersCache((KaleoTransitionModelImpl)kaleoTransition);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(KaleoTransition kaleoTransition,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		KaleoTransitionModelImpl kaleoTransitionModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					kaleoTransition.getKaleoNodeId(), kaleoTransition.getName()
+					kaleoTransitionModelImpl.getKaleoNodeId(),
+					kaleoTransitionModelImpl.getName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KNI_N, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KNI_N, args,
-				kaleoTransition);
+				kaleoTransitionModelImpl);
 
 			args = new Object[] {
-					kaleoTransition.getKaleoNodeId(),
-					kaleoTransition.getDefaultTransition()
+					kaleoTransitionModelImpl.getKaleoNodeId(),
+					kaleoTransitionModelImpl.getDefaultTransition()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KNI_DT, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KNI_DT, args,
-				kaleoTransition);
+				kaleoTransitionModelImpl);
 		}
 		else {
-			KaleoTransitionModelImpl kaleoTransitionModelImpl = (KaleoTransitionModelImpl)kaleoTransition;
-
 			if ((kaleoTransitionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_KNI_N.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						kaleoTransition.getKaleoNodeId(),
-						kaleoTransition.getName()
+						kaleoTransitionModelImpl.getKaleoNodeId(),
+						kaleoTransitionModelImpl.getName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KNI_N, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KNI_N, args,
-					kaleoTransition);
+					kaleoTransitionModelImpl);
 			}
 
 			if ((kaleoTransitionModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_KNI_DT.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						kaleoTransition.getKaleoNodeId(),
-						kaleoTransition.getDefaultTransition()
+						kaleoTransitionModelImpl.getKaleoNodeId(),
+						kaleoTransitionModelImpl.getDefaultTransition()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KNI_DT, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KNI_DT, args,
-					kaleoTransition);
+					kaleoTransitionModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(KaleoTransition kaleoTransition) {
-		KaleoTransitionModelImpl kaleoTransitionModelImpl = (KaleoTransitionModelImpl)kaleoTransition;
-
+	protected void clearUniqueFindersCache(
+		KaleoTransitionModelImpl kaleoTransitionModelImpl) {
 		Object[] args = new Object[] {
-				kaleoTransition.getKaleoNodeId(), kaleoTransition.getName()
+				kaleoTransitionModelImpl.getKaleoNodeId(),
+				kaleoTransitionModelImpl.getName()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KNI_N, args);
@@ -2222,8 +2221,8 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 		}
 
 		args = new Object[] {
-				kaleoTransition.getKaleoNodeId(),
-				kaleoTransition.getDefaultTransition()
+				kaleoTransitionModelImpl.getKaleoNodeId(),
+				kaleoTransitionModelImpl.getDefaultTransition()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KNI_DT, args);
@@ -2465,8 +2464,8 @@ public class KaleoTransitionPersistenceImpl extends BasePersistenceImpl<KaleoTra
 			KaleoTransitionImpl.class, kaleoTransition.getPrimaryKey(),
 			kaleoTransition, false);
 
-		clearUniqueFindersCache((KaleoTransition)kaleoTransitionModelImpl);
-		cacheUniqueFindersCache((KaleoTransition)kaleoTransitionModelImpl, isNew);
+		clearUniqueFindersCache(kaleoTransitionModelImpl);
+		cacheUniqueFindersCache(kaleoTransitionModelImpl, isNew);
 
 		kaleoTransition.resetOriginalValues();
 

@@ -380,7 +380,7 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(webDAVProps);
+		clearUniqueFindersCache((WebDAVPropsModelImpl)webDAVProps);
 	}
 
 	@Override
@@ -392,44 +392,44 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			EntityCacheUtil.removeResult(WebDAVPropsModelImpl.ENTITY_CACHE_ENABLED,
 				WebDAVPropsImpl.class, webDAVProps.getPrimaryKey());
 
-			clearUniqueFindersCache(webDAVProps);
+			clearUniqueFindersCache((WebDAVPropsModelImpl)webDAVProps);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(WebDAVProps webDAVProps,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		WebDAVPropsModelImpl webDAVPropsModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					webDAVProps.getClassNameId(), webDAVProps.getClassPK()
+					webDAVPropsModelImpl.getClassNameId(),
+					webDAVPropsModelImpl.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
-				webDAVProps);
+				webDAVPropsModelImpl);
 		}
 		else {
-			WebDAVPropsModelImpl webDAVPropsModelImpl = (WebDAVPropsModelImpl)webDAVProps;
-
 			if ((webDAVPropsModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						webDAVProps.getClassNameId(), webDAVProps.getClassPK()
+						webDAVPropsModelImpl.getClassNameId(),
+						webDAVPropsModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
-					webDAVProps);
+					webDAVPropsModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(WebDAVProps webDAVProps) {
-		WebDAVPropsModelImpl webDAVPropsModelImpl = (WebDAVPropsModelImpl)webDAVProps;
-
+	protected void clearUniqueFindersCache(
+		WebDAVPropsModelImpl webDAVPropsModelImpl) {
 		Object[] args = new Object[] {
-				webDAVProps.getClassNameId(), webDAVProps.getClassPK()
+				webDAVPropsModelImpl.getClassNameId(),
+				webDAVPropsModelImpl.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -609,8 +609,8 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 			WebDAVPropsImpl.class, webDAVProps.getPrimaryKey(), webDAVProps,
 			false);
 
-		clearUniqueFindersCache((WebDAVProps)webDAVPropsModelImpl);
-		cacheUniqueFindersCache((WebDAVProps)webDAVPropsModelImpl, isNew);
+		clearUniqueFindersCache(webDAVPropsModelImpl);
+		cacheUniqueFindersCache(webDAVPropsModelImpl, isNew);
 
 		webDAVProps.resetOriginalValues();
 

@@ -895,7 +895,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(announcementsFlag);
+		clearUniqueFindersCache((AnnouncementsFlagModelImpl)announcementsFlag);
 	}
 
 	@Override
@@ -907,48 +907,47 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			EntityCacheUtil.removeResult(AnnouncementsFlagModelImpl.ENTITY_CACHE_ENABLED,
 				AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey());
 
-			clearUniqueFindersCache(announcementsFlag);
+			clearUniqueFindersCache((AnnouncementsFlagModelImpl)announcementsFlag);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		AnnouncementsFlag announcementsFlag, boolean isNew) {
+		AnnouncementsFlagModelImpl announcementsFlagModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					announcementsFlag.getUserId(),
-					announcementsFlag.getEntryId(), announcementsFlag.getValue()
+					announcementsFlagModelImpl.getUserId(),
+					announcementsFlagModelImpl.getEntryId(),
+					announcementsFlagModelImpl.getValue()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_E_V, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_E_V, args,
-				announcementsFlag);
+				announcementsFlagModelImpl);
 		}
 		else {
-			AnnouncementsFlagModelImpl announcementsFlagModelImpl = (AnnouncementsFlagModelImpl)announcementsFlag;
-
 			if ((announcementsFlagModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_E_V.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						announcementsFlag.getUserId(),
-						announcementsFlag.getEntryId(),
-						announcementsFlag.getValue()
+						announcementsFlagModelImpl.getUserId(),
+						announcementsFlagModelImpl.getEntryId(),
+						announcementsFlagModelImpl.getValue()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_E_V, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_E_V, args,
-					announcementsFlag);
+					announcementsFlagModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(AnnouncementsFlag announcementsFlag) {
-		AnnouncementsFlagModelImpl announcementsFlagModelImpl = (AnnouncementsFlagModelImpl)announcementsFlag;
-
+	protected void clearUniqueFindersCache(
+		AnnouncementsFlagModelImpl announcementsFlagModelImpl) {
 		Object[] args = new Object[] {
-				announcementsFlag.getUserId(), announcementsFlag.getEntryId(),
-				announcementsFlag.getValue()
+				announcementsFlagModelImpl.getUserId(),
+				announcementsFlagModelImpl.getEntryId(),
+				announcementsFlagModelImpl.getValue()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_E_V, args);
@@ -1125,9 +1124,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 			AnnouncementsFlagImpl.class, announcementsFlag.getPrimaryKey(),
 			announcementsFlag, false);
 
-		clearUniqueFindersCache((AnnouncementsFlag)announcementsFlagModelImpl);
-		cacheUniqueFindersCache((AnnouncementsFlag)announcementsFlagModelImpl,
-			isNew);
+		clearUniqueFindersCache(announcementsFlagModelImpl);
+		cacheUniqueFindersCache(announcementsFlagModelImpl, isNew);
 
 		announcementsFlag.resetOriginalValues();
 

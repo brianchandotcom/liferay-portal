@@ -2800,7 +2800,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(module);
+		clearUniqueFindersCache((ModuleModelImpl)module);
 	}
 
 	@Override
@@ -2812,64 +2812,67 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 			EntityCacheUtil.removeResult(ModuleModelImpl.ENTITY_CACHE_ENABLED,
 				ModuleImpl.class, module.getPrimaryKey());
 
-			clearUniqueFindersCache(module);
+			clearUniqueFindersCache((ModuleModelImpl)module);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Module module, boolean isNew) {
+	protected void cacheUniqueFindersCache(ModuleModelImpl moduleModelImpl,
+		boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					module.getAppId(), module.getContextName()
+					moduleModelImpl.getAppId(), moduleModelImpl.getContextName()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_A_CN, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A_CN, args, module);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A_CN, args,
+				moduleModelImpl);
 
 			args = new Object[] {
-					module.getAppId(), module.getBundleSymbolicName(),
-					module.getBundleVersion()
+					moduleModelImpl.getAppId(),
+					moduleModelImpl.getBundleSymbolicName(),
+					moduleModelImpl.getBundleVersion()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_A_BSN_BV, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A_BSN_BV, args,
-				module);
+				moduleModelImpl);
 		}
 		else {
-			ModuleModelImpl moduleModelImpl = (ModuleModelImpl)module;
-
 			if ((moduleModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_A_CN.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						module.getAppId(), module.getContextName()
+						moduleModelImpl.getAppId(),
+						moduleModelImpl.getContextName()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_A_CN, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A_CN, args,
-					module);
+					moduleModelImpl);
 			}
 
 			if ((moduleModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_A_BSN_BV.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						module.getAppId(), module.getBundleSymbolicName(),
-						module.getBundleVersion()
+						moduleModelImpl.getAppId(),
+						moduleModelImpl.getBundleSymbolicName(),
+						moduleModelImpl.getBundleVersion()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_A_BSN_BV, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A_BSN_BV, args,
-					module);
+					moduleModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Module module) {
-		ModuleModelImpl moduleModelImpl = (ModuleModelImpl)module;
-
-		Object[] args = new Object[] { module.getAppId(), module.getContextName() };
+	protected void clearUniqueFindersCache(ModuleModelImpl moduleModelImpl) {
+		Object[] args = new Object[] {
+				moduleModelImpl.getAppId(), moduleModelImpl.getContextName()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_CN, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_CN, args);
@@ -2886,8 +2889,9 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		}
 
 		args = new Object[] {
-				module.getAppId(), module.getBundleSymbolicName(),
-				module.getBundleVersion()
+				moduleModelImpl.getAppId(),
+				moduleModelImpl.getBundleSymbolicName(),
+				moduleModelImpl.getBundleVersion()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_BSN_BV, args);
@@ -3122,8 +3126,8 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		EntityCacheUtil.putResult(ModuleModelImpl.ENTITY_CACHE_ENABLED,
 			ModuleImpl.class, module.getPrimaryKey(), module, false);
 
-		clearUniqueFindersCache((Module)moduleModelImpl);
-		cacheUniqueFindersCache((Module)moduleModelImpl, isNew);
+		clearUniqueFindersCache(moduleModelImpl);
+		cacheUniqueFindersCache(moduleModelImpl, isNew);
 
 		module.resetOriginalValues();
 

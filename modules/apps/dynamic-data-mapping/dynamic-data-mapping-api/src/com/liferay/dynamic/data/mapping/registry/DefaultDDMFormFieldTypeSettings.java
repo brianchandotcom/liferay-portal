@@ -57,7 +57,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(label = "%required")
 	public boolean required();
 
-	@DDMFormField(label = "%show-label")
+	@DDMFormField(label = "%show-label", visibilityExpression = "false")
 	public boolean showLabel();
 
 	@DDMFormField(label = "%tip", type = "text")

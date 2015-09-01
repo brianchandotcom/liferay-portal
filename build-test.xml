@@ -4687,15 +4687,6 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
-			<equals arg1="${test.selenium.logger.enabled}" arg2="false" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					selenium.logger.enabled=false
-				</echo>
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${test.skip.tear.down}" arg2="true" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -5264,6 +5255,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<echo append="true" file="${test.ext.properties.file}">
 			portal.url=${test.url}
 			selenium.executable.dir=${basedir.unix}/tools/selenium/
+			selenium.logger.enabled=${test.selenium.logger.enabled}
 			test.class.command.name=${test.class}
 		</echo>
 	</target>

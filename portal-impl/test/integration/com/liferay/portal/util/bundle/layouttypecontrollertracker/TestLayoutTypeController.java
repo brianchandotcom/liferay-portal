@@ -35,6 +35,11 @@ import org.osgi.service.component.annotations.Component;
 public class TestLayoutTypeController implements LayoutTypeController {
 
 	@Override
+	public String getBaseLayoutType() {
+		return null;
+	}
+
+	@Override
 	public String[] getConfigurationActionDelete() {
 		return null;
 	}
@@ -72,6 +77,11 @@ public class TestLayoutTypeController implements LayoutTypeController {
 
 	@Override
 	public boolean isFirstPageable() {
+		return false;
+	}
+
+	@Override
+	public boolean isFullPageDisplayable() {
 		return false;
 	}
 

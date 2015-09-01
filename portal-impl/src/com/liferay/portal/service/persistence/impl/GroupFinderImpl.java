@@ -32,6 +32,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.impl.GroupImpl;
+import com.liferay.portal.security.permission.RolePermissions;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
@@ -965,11 +966,11 @@ public class GroupFinderImpl
 			}
 
 			if (key.equals("rolePermissions")) {
-				List<Object> values = (List<Object>)value;
+				RolePermissions rolePermissions = (RolePermissions)value;
 
-				String name = (String)values.get(0);
+				if (ResourceBlockLocalServiceUtil.isSupported(
+						rolePermissions.getName())) {
 
-				if (ResourceBlockLocalServiceUtil.isSupported(name)) {
 					key = "rolePermissions_6_block";
 				}
 				else {
@@ -1052,11 +1053,12 @@ public class GroupFinderImpl
 			}
 			else {
 				if (key.equals("rolePermissions")) {
-					List<Object> values = (List<Object>)entry.getValue();
+					RolePermissions rolePermissions =
+						(RolePermissions)entry.getValue();
 
-					String name = (String)values.get(0);
+					if (ResourceBlockLocalServiceUtil.isSupported(
+							rolePermissions.getName())) {
 
-					if (ResourceBlockLocalServiceUtil.isSupported(name)) {
 						key = "rolePermissions_6_block";
 					}
 					else {
@@ -1159,29 +1161,27 @@ public class GroupFinderImpl
 			else if (key.equals("pageCount")) {
 			}
 			else if (key.equals("rolePermissions")) {
-				List<Object> values = (List<Object>)entry.getValue();
-
-				String name = (String)values.get(0);
-				Integer scope = (Integer)values.get(1);
-				String actionId = (String)values.get(2);
-				Long roleId = (Long)values.get(3);
+				RolePermissions rolePermissions =
+					(RolePermissions)entry.getValue();
 
 				ResourceAction resourceAction =
 					ResourceActionLocalServiceUtil.getResourceAction(
-						name, actionId);
+						rolePermissions.getName(),
+						rolePermissions.getActionId());
 
-				if (ResourceBlockLocalServiceUtil.isSupported(name)) {
+				if (ResourceBlockLocalServiceUtil.isSupported(
+						rolePermissions.getName())) {
 
 					// Scope is assumed to always be group
 
-					qPos.add(name);
-					qPos.add(roleId);
+					qPos.add(rolePermissions.getName());
+					qPos.add(rolePermissions.getRoleId());
 					qPos.add(resourceAction.getBitwiseValue());
 				}
 				else {
-					qPos.add(name);
-					qPos.add(scope);
-					qPos.add(roleId);
+					qPos.add(rolePermissions.getName());
+					qPos.add(rolePermissions.getScope());
+					qPos.add(rolePermissions.getRoleId());
 					qPos.add(resourceAction.getBitwiseValue());
 				}
 			}
@@ -1285,11 +1285,12 @@ public class GroupFinderImpl
 			String key = entry.getKey();
 
 			if (key.equals("rolePermissions")) {
-				List<Object> values = (List<Object>)entry.getValue();
+				RolePermissions rolePermissions =
+					(RolePermissions)entry.getValue();
 
-				String name = (String)values.get(0);
+				if (ResourceBlockLocalServiceUtil.isSupported(
+						rolePermissions.getName())) {
 
-				if (ResourceBlockLocalServiceUtil.isSupported(name)) {
 					key = "rolePermissions_6_block";
 				}
 				else {

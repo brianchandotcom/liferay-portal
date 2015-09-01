@@ -72,6 +72,7 @@ page import="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUt
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.security.permission.PermissionConverterUtil" %><%@
 page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
+page import="com.liferay.portal.security.permission.RolePermissions" %><%@
 page import="com.liferay.portal.security.permission.comparator.ActionComparator" %><%@
 page import="com.liferay.portal.security.permission.comparator.ModelResourceWeightComparator" %><%@
 page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@

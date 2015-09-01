@@ -1102,9 +1102,7 @@
 					<arg value="clean" />
 				</gradle-execute>
 
-				<exec dir="portal-impl" executable="ant" failonerror="true">
-					<arg value="build-services" />
-				</exec>
+				<ant dir="portal-impl" target="build-services" />
 			</test-action>
 
 			<test-set-up>

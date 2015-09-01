@@ -103,6 +103,12 @@ public interface PortletDataContext extends Serializable {
 	public void addAssetCategories(
 		String className, long classPK, long[] assetCategoryIds);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             BaseStagedModelDataHandler#exportAssetTags(
+	 *             PortletDataContext, StagedModel)}
+	 */
+	@Deprecated
 	public void addAssetTags(Class<?> clazz, long classPK);
 
 	public void addAssetTags(

@@ -188,6 +188,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
+	@Deprecated
 	@Override
 	public void addAssetTags(Class<?> clazz, long classPK) {
 		String[] tagNames = AssetTagLocalServiceUtil.getTagNames(
@@ -247,7 +248,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 					classedModel);
 
 				addAssetLinks(clazz, classPK);
-				addAssetTags(clazz, classPK);
 				addExpando(element, path, classedModel, clazz);
 				addLocks(clazz, String.valueOf(classPK));
 				addPermissions(clazz, classPK);

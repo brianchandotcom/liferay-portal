@@ -207,6 +207,14 @@
 	.entry-content {
 		h4 {
 			margin-top: 0;
+
+			a {
+				color: inherit;
+
+				&:hover {
+					text-decoration: none;
+				}
+			}
 		}
 	}
 
@@ -343,7 +351,12 @@
 		}
 
 		a {
+			color: inherit;
 			font-weight: bold;
+
+			&:hover {
+				text-decoration: none;
+			}
 		}
 	}
 

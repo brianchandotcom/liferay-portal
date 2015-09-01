@@ -4627,6 +4627,15 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
+			<isset property="test.assert.warning.exceptions" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.assert.warning.exceptions=${test.assert.warning.exceptions}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="test.base.dir.name" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">

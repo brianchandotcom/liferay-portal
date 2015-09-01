@@ -77,7 +77,7 @@
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
-		<execute macro="FormPortlet#send" />
+		<execute macro="FormPortlet#submit" />
 	</command>
 
 	<command name="SubmitFormWithThreePages" priority="4">
@@ -232,6 +232,6 @@
 			<var name="fieldName" value="Checkbox Field Name" />
 		</execute>
 
-		<execute macro="FormPortlet#send" />
+		<execute macro="FormPortlet#submit" />
 	</command>
 </definition>

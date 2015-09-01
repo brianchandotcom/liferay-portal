@@ -17,8 +17,8 @@
 		<execute function="AssertTextEquals" locator1="FormPortlet#FORM_PAGE_ACTIVE" value1="${formPageNext}" />
 	</command>
 
-	<command name="send">
-		<execute function="AssertClick" locator1="Button#SEND" value1="Send" />
+	<command name="submit">
+		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>

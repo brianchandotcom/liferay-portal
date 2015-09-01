@@ -84,7 +84,7 @@
 </tr>
 <tr>
 	<td>TEXT_LABEL</td>
-	<td>//input[@type='text' and contains(@id,'${key_fieldName}')]/../label[contains(@class,'control-fieldLabel')]</td>
+	<td>//input[@type='text' and contains(@id,'${key_fieldName}')]/../label[contains(@class,'control-label')]</td>
 	<td></td>
 </tr>
 <tr>

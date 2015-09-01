@@ -526,6 +526,82 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-testray-build-time">
+		<sequential>
+			<var name="test.batch.duration" unset="true" />
+			<var name="testray.build.time" unset="true" />
+
+			<if>
+				<isset property="test.batch.start.time" />
+				<then>
+					<script classpathref="project.classpath" language="beanshell">
+						<![CDATA[
+							long testBatchStopTime = System.currentTimeMillis();
+
+							project.setProperty("test.batch.stop.time", String.valueOf(testBatchStopTime));
+						]]>
+					</script>
+
+					<math
+						datatype="long"
+						operand1="${test.batch.stop.time}"
+						operand2="${test.batch.start.time}"
+						operation="-"
+						result="test.batch.duration"
+					/>
+				</then>
+				<else>
+					<var name="test.batch.duration" value="0" />
+				</else>
+			</if>
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					import java.util.concurrent.TimeUnit;
+
+					int milliseconds = Integer.parseInt(project.getProperty("test.batch.duration"));
+
+					int seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % 60;
+					int minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % 60;
+					int hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
+
+					StringBuilder sb = new StringBuilder();
+
+					if (hours > 0) {
+						sb.append(hours);
+						sb.append(" hour");
+
+						if (hours > 1) {
+							sb.append("s");
+						}
+
+						sb.append(" ");
+					}
+
+					if (minutes > 0) {
+						sb.append(minutes);
+						sb.append(" minute");
+
+						if (minutes > 1) {
+							sb.append("s");
+						}
+
+						sb.append(" ");
+					}
+
+					sb.append(seconds);
+					sb.append(" second");
+
+					if (seconds > 1) {
+						sb.append("s");
+					}
+
+					project.setProperty("testray.build.time", sb.toString());
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="merge-test-results">
 		<sequential>
 			<antcall target="merge-test-results" />
@@ -872,6 +948,7 @@
 			<get-env-java-jdk />
 			<get-env-liferay-portal />
 			<get-env-operating-system />
+			<get-testray-build-time />
 			<get-testray-case-defect />
 			<get-testray-components />
 			<get-testray-logs />

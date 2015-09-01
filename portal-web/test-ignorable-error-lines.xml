@@ -64,7 +64,7 @@
 			<contains>Table 'lportal.lock_' doesn't exist</contains>
 			<matches></matches>
 		</ignore-error>
-		<ignore-error description="LPS-17667">
+		<ignore-error description="LPS-17639">
 			<contains>Table 'lportal.Lock_' doesn't exist</contains>
 			<matches></matches>
 		</ignore-error>

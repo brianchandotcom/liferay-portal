@@ -58,11 +58,21 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 	if (recordVersion != null) {
 		ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
 	}
+
+	long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
+	long classPK = ddmStructure.getPrimaryKey();
+
+	if (formDDMTemplateId > 0) {
+		classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
+
+		classPK = formDDMTemplateId;
+	}
 	%>
 
 	<liferay-ddm:html
-		classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
-		classPK="<%= ddmStructure.getPrimaryKey() %>"
+		classNameId="<%= classNameId %>"
+		classPK="<%= classPK %>"
 		ddmFormValues="<%= ddmFormValues %>"
 		readOnly="<%= true %>"
 		requestedLocale="<%= locale %>"

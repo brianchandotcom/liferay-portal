@@ -7,14 +7,14 @@ buildCSS {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "net.jsourcerer.webdriver.JSErrorCollector", version: "0.5-atlassian-2"
+	compile group: "com.liferay", name: "net.jsourcerer.webdriver.JSErrorCollector", version: "0.6"
 	compile group: "commons-io", name: "commons-io", version: "2.4"
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
 	compile group: "dom4j", name: "dom4j", version: "1.6.1"
 	compile group: "io.appium", name: "java-client", version: "2.2.0"
 	compile group: "junit", name: "junit", version: "4.12"
 	compile group: "org.apache.ant", name: "ant", version: "1.9.4"
-	compile group: "org.seleniumhq.selenium", name: "selenium-java", version: "2.44.0"
+	compile group: "org.seleniumhq.selenium", name: "selenium-java", version: "2.47.1"
 	compile group: "org.sikuli", name: "sikuli-api", version: "1.2.0"
 }
 

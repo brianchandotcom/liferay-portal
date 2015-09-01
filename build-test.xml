@@ -855,10 +855,9 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 				<then>
 					<loadfile property="testray.testcase.warnings" srcfile="poshi-warnings.xml" />
 				</then>
-				<else>
-					<var name="testray.testcase.warnings" value="" />
-				</else>
 			</if>
+
+			<property name="testray.testcase.warnings" value="" />
 		</sequential>
 	</macrodef>
 
@@ -6298,6 +6297,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 						/>
 					</then>
 				</if>
+
+				<move file="${jenkins.results.xml.file}" todir="${project.dir}/portal-web/test-results/functional"/>
 			</then>
 		</if>
 	</target>

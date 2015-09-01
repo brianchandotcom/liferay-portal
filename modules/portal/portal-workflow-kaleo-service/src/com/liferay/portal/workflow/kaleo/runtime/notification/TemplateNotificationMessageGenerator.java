@@ -129,7 +129,7 @@ public class TemplateNotificationMessageGenerator
 				executionContext.getServiceContext();
 
 			User user = UserLocalServiceUtil.getUser(
-					serviceContext.getGuestOrUserId());
+				serviceContext.getGuestOrUserId());
 
 			template.put("userId", user.getUserId());
 			template.put("userName", user.getFullName());

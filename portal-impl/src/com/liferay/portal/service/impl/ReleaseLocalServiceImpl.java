@@ -116,6 +116,18 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		return release;
 	}
 
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+
+		try {
+			//Make sure database is initialized
+			releaseLocalService.getBuildNumberOrCreate();
+		}
+		catch (PortalException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	@Override
 	public void createTablesAndPopulate() {
 		try {

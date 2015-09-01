@@ -113,7 +113,8 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		Map<String, Object> properties = new HashMap<>();
 
 		properties.put("ddm.form.field.type.icon", "my-icon");
-		properties.put("ddm.form.field.type.js.class", "myJavaScriptClass");
+		properties.put(
+			"ddm.form.field.type.js.class.name", "myJavaScriptClass");
 		properties.put("ddm.form.field.type.js.module", "myJavaScriptModule");
 
 		when(

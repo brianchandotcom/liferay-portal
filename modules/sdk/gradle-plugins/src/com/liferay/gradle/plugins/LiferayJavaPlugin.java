@@ -32,6 +32,7 @@ import com.liferay.gradle.plugins.patcher.PatchTask;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
+import com.liferay.gradle.plugins.soy.SoyPlugin;
 import com.liferay.gradle.plugins.tasks.AppServerTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
@@ -887,6 +888,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
+		GradleUtil.applyPlugin(project, SoyPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, UpgradeTableBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);

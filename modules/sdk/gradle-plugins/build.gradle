@@ -11,6 +11,7 @@ dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.patcher", version: "1.0.4"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.service.builder", version: "1.0.5"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.source.formatter", version: "1.0.1"
+	compile group: "com.liferay", name: "com.liferay.gradle.plugins.soy", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.tld.formatter", version: "1.0.0"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.upgrade.table.builder", version: "1.0.1"
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.whip", version: "1.0.1"

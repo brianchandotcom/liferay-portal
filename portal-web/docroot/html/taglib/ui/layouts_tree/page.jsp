@@ -89,6 +89,11 @@ String treeId = (String)request.getAttribute("liferay-ui:layouts-tree:treeId");
 			incomplete: <%= incomplete %>,
 			layouts: <%= layoutsJSON %>,
 			layoutURL: '<%= portletURL + StringPool.AMPERSAND + portletDisplay.getNamespace() + "selPlid={selPlid}" + StringPool.AMPERSAND + portletDisplay.getNamespace() %>',
+
+ 			<c:if test="<%= draggableTree %>">
+ 				lazyLoad: false,
+ 			</c:if>
+
 			maxChildren: <%= PropsValues.LAYOUT_MANAGE_PAGES_INITIAL_CHILDREN %>,
 			plugins: plugins,
 			root: {

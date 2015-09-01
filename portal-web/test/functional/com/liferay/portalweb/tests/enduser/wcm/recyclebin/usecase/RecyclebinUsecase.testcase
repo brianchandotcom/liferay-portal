@@ -581,8 +581,8 @@
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
 			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content 1" />
-			<var name="entryTitle" value="Blogs Entry Title 1" />
+			<var name="entryContent" value="Blogs Entry Content 3" />
+			<var name="entryTitle" value="Blogs Entry Title 3" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
@@ -593,8 +593,8 @@
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
 			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content 3" />
-			<var name="entryTitle" value="Blogs Entry Title 3" />
+			<var name="entryContent" value="Blogs Entry Content 1" />
+			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

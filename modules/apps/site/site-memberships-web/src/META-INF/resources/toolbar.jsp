@@ -22,6 +22,11 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-members")
 long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId());
 
 Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+if (group != null) {
+	group = StagingUtil.getLiveGroup(group.getGroupId());
+	groupId = group.getGroupId();
+}
 %>
 
 <aui:nav-bar>

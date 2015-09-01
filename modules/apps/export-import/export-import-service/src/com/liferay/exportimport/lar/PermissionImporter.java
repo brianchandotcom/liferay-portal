@@ -147,6 +147,14 @@ public class PermissionImporter {
 			Element roleElement)
 		throws Exception {
 
+		long liveGroupId = groupId;
+
+		Group group = GroupLocalServiceUtil.getGroup(liveGroupId);
+
+		if (group.isStagingGroup()) {
+			liveGroupId = group.getLiveGroupId();
+		}
+
 		String name = roleElement.attributeValue("name");
 
 		Role role = null;
@@ -159,11 +167,12 @@ public class PermissionImporter {
 			Team team = null;
 
 			try {
-				team = TeamLocalServiceUtil.getTeam(groupId, name);
+				team = TeamLocalServiceUtil.getTeam(liveGroupId, name);
 			}
 			catch (NoSuchTeamException nste) {
 				team = TeamLocalServiceUtil.addTeam(
-					userId, groupId, name, description, new ServiceContext());
+					userId, liveGroupId, name, description,
+					new ServiceContext());
 			}
 
 			role = RoleLocalServiceUtil.getTeamRole(

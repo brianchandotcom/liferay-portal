@@ -67,6 +67,10 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			"ae_autolink,ae_dragresize,ae_addimages,ae_placeholder," +
 				"ae_selectionregion,ae_tableresize,ae_tabletools,ae_uicore");
 
+		jsonObject.put("filebrowserBrowseUrl", "");
+		jsonObject.put("filebrowserImageBrowseLinkUrl", "");
+		jsonObject.put("filebrowserImageBrowseUrl", "");
+
 		String languageId = getLanguageId(themeDisplay);
 
 		jsonObject.put("language", languageId.replace("iw_", "he_"));
@@ -75,10 +79,6 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			"removePlugins",
 			"contextmenu,elementspath,image,link,liststyle,resize,tabletools," +
 				"toolbar");
-
-		jsonObject.put("filebrowserBrowseUrl", "");
-		jsonObject.put("filebrowserImageBrowseLinkUrl", "");
-		jsonObject.put("filebrowserImageBrowseUrl", "");
 
 		String namespace = GetterUtil.getString(
 			inputEditorTaglibAttributes.get(

@@ -61,6 +61,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.util.SerializableUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1496,6 +1497,9 @@ public class DDMStructureLocalServiceImpl
 		String version = getNextVersion(
 			latestStructureVersion.getVersion(), majorVersion);
 
+		DDMStructure structureClone = (DDMStructure)SerializableUtil.clone(
+			structure);
+
 		structure.setVersion(version);
 		structure.setNameMap(nameMap);
 		structure.setVersionUserId(user.getUserId());
@@ -1503,16 +1507,14 @@ public class DDMStructureLocalServiceImpl
 		structure.setDescriptionMap(descriptionMap);
 		structure.setDefinition(DDMFormJSONSerializerUtil.serialize(ddmForm));
 
-		ddmStructurePersistence.update(structure);
-
-		// Structure templates
-
-		syncStructureTemplatesFields(structure);
-
 		// Structure version
 
 		DDMStructureVersion structureVersion = addStructureVersion(
 			user, structure, version, serviceContext);
+
+		if (!structureVersion.isApproved()) {
+			return structureClone;
+		}
 
 		// Structure Layout
 
@@ -1520,6 +1522,12 @@ public class DDMStructureLocalServiceImpl
 			structureVersion.getUserId(), structureVersion.getGroupId(),
 			structureVersion.getStructureVersionId(), ddmFormLayout,
 			serviceContext);
+
+		ddmStructurePersistence.update(structure);
+
+		// Structure templates
+
+		syncStructureTemplatesFields(structure);
 
 		// Indexer
 

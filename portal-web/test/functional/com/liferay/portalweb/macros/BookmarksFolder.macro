@@ -50,7 +50,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
 	</command>
 
 	<command name="addSubfolderCP">
@@ -91,7 +91,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
 	</command>
 
 	<command name="deletePG">

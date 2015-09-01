@@ -82,7 +82,7 @@ public class DDMFormFieldTypesJSONSerializerImpl
 		jsonObject.put(
 			"javaScriptClass",
 			MapUtil.getString(
-				ddmFormFieldTypeProperties, "ddm.form.field.type.js.class",
+				ddmFormFieldTypeProperties, "ddm.form.field.type.js.class.name",
 				"Liferay.DDM.Renderer.Field"));
 		jsonObject.put(
 			"javaScriptModule",

@@ -5,8 +5,6 @@ import com.liferay.gradle.util.tasks.ConcatenateTask
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	compile project(":apps:item-selector:item-selector-api")
-	compile project(":apps:item-selector:item-selector-criteria-api")
 }
 
 ext {

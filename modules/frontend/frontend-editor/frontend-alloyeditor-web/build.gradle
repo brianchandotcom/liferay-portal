@@ -1,6 +1,5 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
-import com.liferay.gradle.util.tasks.ConcatenateTask
 
 dependencies {
 	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
@@ -14,11 +13,6 @@ dependencies {
 
 ext {
 	alloyEditorVersion = "0.4.0-alpha.1"
-	ckEditorVersion = "4.5.3"
-	tinyMCEVersion = "4.1.7"
-
-	ckEditorScaytUrl = "http://download.ckeditor.com/scayt/releases/scayt_${ckEditorVersion}.zip"
-	ckEditorWscUrl = "http://download.ckeditor.com/wsc/releases/wsc_${ckEditorVersion}.zip"
 }
 
 liferay {
@@ -27,14 +21,9 @@ liferay {
 
 File editorsDestinationDir = file("tmp/META-INF/resources")
 File editorsSrcDir = file("src/META-INF/resources")
-File thirdPartyDir = file("../../../portal-web/third-party")
+File thirdPartyDir = file("../../../../portal-web/third-party")
 
 task buildAlloyEditor(type: Copy)
-task buildCKEditorBBCode(type: ConcatenateTask)
-task buildCKEditor(type: Copy)
-task buildCKEditorScayt(type: Copy)
-task buildCKEditorWsc(type: Copy)
-task buildTinyMCE(type: Copy)
 
 buildAlloyEditor {
 	File alloyEditorDestinationDir = new File(editorsDestinationDir, "alloyeditor")
@@ -74,104 +63,6 @@ buildAlloyEditor {
 	}
 }
 
-buildCKEditor {
-	File ckEditorDestinationDir = new File(editorsDestinationDir, "ckeditor")
-	File ckEditorZipFile = new File(thirdPartyDir, "ckeditor_${ckEditorVersion}_liferay.zip")
-
-	doFirst {
-		delete ckEditorDestinationDir
-	}
-
-	duplicatesStrategy = "exclude"
-
-	from(zipTree(ckEditorZipFile)) {
-		eachFile new StripPathSegmentsAction(1)
-		include "ckeditor/**"
-	}
-
-	from new File(editorsSrcDir, "ckeditor_diffs")
-	includeEmptyDirs = false
-	into ckEditorDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, ckEditorZipFile, ckEditorDestinationDir)
-	}
-}
-
-buildCKEditorBBCode {
-	File bbCodeDir = new File(editorsSrcDir, "ckeditor_diffs/plugins/bbcode")
-
-	destinationFile = new File(bbCodeDir, "bbcode_parser.js")
-
-	ext {
-		autoClean = false
-	}
-
-	sourceFiles new File(bbCodeDir, "bbcode_utils.js")
-	sourceFiles new File(bbCodeDir, "lexer.js")
-	sourceFiles new File(bbCodeDir, "parser.js")
-	sourceFiles new File(bbCodeDir, "converter.js")
-}
-
-buildCKEditorScayt {
-	dependsOn buildCKEditor
-
-	from {
-		File ckEditorScaytFile = new File(thirdPartyDir, "scayt_${ckEditorVersion}.zip")
-
-		if (!ckEditorScaytFile.exists()) {
-			FileUtil.get(project, ckEditorScaytUrl, ckEditorScaytFile)
-		}
-
-		zipTree ckEditorScaytFile
-	}
-
-	into new File(editorsDestinationDir, "ckeditor/plugins")
-}
-
-buildCKEditorWsc {
-	dependsOn buildCKEditor
-
-	from {
-		File ckEditorWscFile = new File(thirdPartyDir, "wsc_${ckEditorVersion}.zip")
-
-		if (!ckEditorWscFile.exists()) {
-			FileUtil.get(project, ckEditorWscUrl, ckEditorWscFile)
-		}
-
-		zipTree ckEditorWscFile
-	}
-
-	into new File(editorsDestinationDir, "ckeditor/plugins")
-}
-
-buildTinyMCE {
-	File tinyMCEDestinationDir = new File(editorsDestinationDir, "tiny_mce")
-	File tinyMCEZipFile = new File(thirdPartyDir, "tinymce_${tinyMCEVersion}.zip")
-
-	doFirst {
-		delete tinyMCEDestinationDir
-	}
-
-	duplicatesStrategy = "exclude"
-
-	from new File(editorsSrcDir, "tiny_mce_diffs")
-
-	from(zipTree(tinyMCEZipFile)) {
-		eachFile new StripPathSegmentsAction(3)
-		include "tinymce/js/tinymce/**"
-	}
-
-	includeEmptyDirs = false
-	into tinyMCEDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, tinyMCEZipFile, tinyMCEDestinationDir)
-	}
-}
-
 classes {
 	dependsOn buildAlloyEditor
-	dependsOn buildCKEditor, buildCKEditorScayt, buildCKEditorWsc
-	dependsOn buildTinyMCE
 }

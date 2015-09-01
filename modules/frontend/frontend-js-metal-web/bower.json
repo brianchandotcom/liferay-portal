@@ -1,0 +1,7 @@
+{
+	"dependencies": {
+		"crystal-components": "metal/crystal-components#master"
+  	},
+  	"name": "frontend-js-metal-web",
+  	"version": "1.0.0"
+}

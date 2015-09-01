@@ -946,5 +946,14 @@
 		useBrowserConsole: false
 	};
 
+	Loader.addModule(
+		{
+			dependencies: [],
+			exports: 'soy',
+			name: 'soyutils',
+			path: '/o/frontend-js-web/misc/soyutils.js'
+		}
+	);
+
 	CORE_MODULES.push('liferay-browser-selectors');
 })();

@@ -91,9 +91,7 @@ gradle.taskGraph.useFilter {
 		}
 	}
 	else if (task.name == "configJSModules") {
-		FileTree esJsFileTree = fileTree(dir: task.project.projectDir, exclude: "**/samples/**", include: "**/*.es.js")
-
-		if (!FileUtil.exists(task.project, "bower.json") || esJsFileTree.empty) {
+		if (!FileUtil.exists(task.project, "bower.json")) {
 			return false
 		}
 	}
@@ -108,7 +106,7 @@ gradle.taskGraph.useFilter {
 		}
 	}
 	else if (task.name == "transpileJS") {
-		FileTree esJsFileTree = fileTree(dir: task.project.projectDir, exclude: "**/samples/**", include: "**/*.es.js")
+		FileTree esJsFileTree = fileTree(dir: task.project.projectDir, exclude: "**/samples/**", include: "src/**/*.es.js")
 
 		if (esJsFileTree.empty) {
 			return false

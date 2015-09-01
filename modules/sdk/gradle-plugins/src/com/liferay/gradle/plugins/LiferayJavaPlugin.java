@@ -1518,15 +1518,14 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskConfigJSModulesIgnorePath(configJSModulesTask);
 		configureTaskConfigJSModulesIncludes(configJSModulesTask);
 		configureTaskConfigJSModulesModuleFormat(configJSModulesTask);
+		configureTaskConfigJSModulesMustRunAfter(configJSModulesTask);
 		configureTaskConfigJSModulesSourceDir(configJSModulesTask);
 	}
 
 	protected void configureTaskConfigJSModulesDependsOn(
 		ConfigJSModulesTask configJSModulesTask) {
 
-		configJSModulesTask.dependsOn(
-			JavaPlugin.PROCESS_RESOURCES_TASK_NAME,
-			JSTranspilerPlugin.TRANSPILE_JS_TASK_NAME);
+		configJSModulesTask.dependsOn(JavaPlugin.PROCESS_RESOURCES_TASK_NAME);
 	}
 
 	protected void configureTaskConfigJSModulesIgnorePath(
@@ -1545,6 +1544,13 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		ConfigJSModulesTask configJSModulesTask) {
 
 		configJSModulesTask.setModuleFormat("/_/g,-");
+	}
+
+	protected void configureTaskConfigJSModulesMustRunAfter(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		configJSModulesTask.mustRunAfter(
+			JSTranspilerPlugin.TRANSPILE_JS_TASK_NAME);
 	}
 
 	protected void configureTaskConfigJSModulesSourceDir(

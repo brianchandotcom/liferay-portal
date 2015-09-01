@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Frontend JS Metal
+Bundle-SymbolicName: com.liferay.frontend.js.metal.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	bower.json,\
+	classes

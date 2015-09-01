@@ -18,7 +18,7 @@ import com.liferay.frontend.taglib.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,7 +64,7 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_addMenuItems = Collections.emptyList();
+		_addMenuItems = new ArrayList<>();
 	}
 
 	@Override
@@ -82,6 +82,6 @@ public class AddMenuTag extends IncludeTag {
 			"liferay-frontend:add-menu:addMenuItems", addMenuItems);
 	}
 
-	private List<AddMenuItem> _addMenuItems = Collections.emptyList();
+	private List<AddMenuItem> _addMenuItems = new ArrayList<>();
 
 }

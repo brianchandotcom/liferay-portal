@@ -1102,7 +1102,24 @@
 					<arg value="clean" />
 				</gradle-execute>
 
+				<record action="start" name="${project.dir}/build.services.output.txt" />
+
 				<ant dir="portal-impl" target="build-services" />
+
+				<record action="stop" name="${project.dir}/build.services.output.txt" />
+
+				<replace file="${project.dir}/build.services.output.txt" token="Writing src/service.properties" value="" />
+
+				<loadfile property="build.services.output.txt.content" srcfile="${project.dir}/build.services.output.txt" />
+
+				<delete file="${project.dir}/build.services.output.txt" />
+
+				<if>
+					<contains string="${build.services.output.txt.content}" substring="Writing " />
+					<then>
+						<fail>Detected build services changes see above build services log for more detail. Make sure to commit in all build services results.</fail>
+					</then>
+				</if>
 			</test-action>
 
 			<test-set-up>

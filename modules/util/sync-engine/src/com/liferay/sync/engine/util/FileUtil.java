@@ -15,6 +15,8 @@
 package com.liferay.sync.engine.util;
 
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
+import com.liferay.sync.engine.filesystem.Watcher;
+import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.service.SyncFileService;
 
@@ -383,24 +385,30 @@ public class FileUtil {
 			return true;
 		}
 
-		try {
-			FileTime fileTime = Files.getLastModifiedTime(filePath);
+		Watcher watcher = WatcherRegistry.getWatcher(
+			syncFile.getSyncAccountId());
 
-			long modifiedTime = syncFile.getModifiedTime();
+		if ((watcher != null) && watcher.isInitializing()) {
+			try {
+				FileTime fileTime = Files.getLastModifiedTime(filePath);
 
-			if (OSDetector.isUnix()) {
-				modifiedTime = modifiedTime / 1000 * 1000;
+				long modifiedTime = syncFile.getModifiedTime();
+
+				if (OSDetector.isUnix()) {
+					modifiedTime = modifiedTime / 1000 * 1000;
+				}
+
+				if ((fileTime.toMillis() < modifiedTime) &&
+					FileKeyUtil.hasFileKey(
+						filePath, syncFile.getSyncFileId())) {
+
+					return false;
+				}
 			}
-
-			if ((fileTime.toMillis() <= modifiedTime) &&
-				FileKeyUtil.hasFileKey(filePath, syncFile.getSyncFileId())) {
-
-				return false;
-			}
-		}
-		catch (IOException ioe) {
-			if (_logger.isDebugEnabled()) {
-				_logger.debug(ioe.getMessage(), ioe);
+			catch (IOException ioe) {
+				if (_logger.isDebugEnabled()) {
+					_logger.debug(ioe.getMessage(), ioe);
+				}
 			}
 		}
 

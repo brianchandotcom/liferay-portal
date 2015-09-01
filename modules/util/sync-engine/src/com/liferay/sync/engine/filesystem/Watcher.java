@@ -57,11 +57,13 @@ public abstract class Watcher implements Runnable {
 		_baseFilePath = filePath;
 		_watchEventListener = watchEventListener;
 
+		WatcherRegistry.register(_watchEventListener.getSyncAccountId(), this);
+
 		init();
 
 		walkFileTree(_baseFilePath);
 
-		WatcherRegistry.register(_watchEventListener.getSyncAccountId(), this);
+		_initialized = true;
 	}
 
 	public void close() {
@@ -70,6 +72,10 @@ public abstract class Watcher implements Runnable {
 
 	public List<String> getDownloadedFilePathNames() {
 		return _downloadedFilePathNames;
+	}
+
+	public boolean isInitializing() {
+		return !_initialized;
 	}
 
 	public abstract void registerFilePath(Path filePath) throws IOException;
@@ -384,6 +390,7 @@ public abstract class Watcher implements Runnable {
 		new ConcurrentSkipListMap<>();
 	private final List<String> _downloadedFilePathNames = new ArrayList<>();
 	private final List<Path> _failedFilePaths = new CopyOnWriteArrayList<>();
+	private final boolean _initialized;
 	private final WatchEventListener _watchEventListener;
 
 }

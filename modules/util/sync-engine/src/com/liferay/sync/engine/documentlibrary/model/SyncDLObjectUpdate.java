@@ -15,6 +15,7 @@
 package com.liferay.sync.engine.documentlibrary.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.sync.engine.model.SyncFile;
 
@@ -30,19 +31,21 @@ public class SyncDLObjectUpdate {
 		return lastAccessTime;
 	}
 
-	public List<SyncFile> getSyncDLObjects() {
-		return syncDLObjects;
+	public List<SyncFile> getSyncFiles() {
+		return syncFiles;
 	}
 
 	public void setLastAccessTime(long lastAccessTime) {
 		this.lastAccessTime = lastAccessTime;
 	}
 
-	public void setSyncDLObjects(List<SyncFile> syncDLObjects) {
-		this.syncDLObjects = syncDLObjects;
+	public void setSyncFiles(List<SyncFile> syncFiles) {
+		this.syncFiles = syncFiles;
 	}
 
 	protected long lastAccessTime;
-	protected List<SyncFile> syncDLObjects;
+
+	@JsonProperty("syncDLObjects")
+	protected List<SyncFile> syncFiles;
 
 }

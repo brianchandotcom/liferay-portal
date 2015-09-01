@@ -269,9 +269,7 @@ public class CompileThemeTask extends DefaultTask {
 		if (themeParent.equals("_styled")) {
 			copyThemeParentStyled();
 		}
-		else if (themeParent.equals("classic") ||
-				 themeParent.equals("control_panel")) {
-
+		else if (themeParent.equals("admin") || themeParent.equals("classic")) {
 			copyThemeParentPortal();
 		}
 		else if (!themeParent.equals("_unstyled")) {
@@ -352,7 +350,7 @@ public class CompileThemeTask extends DefaultTask {
 	}
 
 	private static final String[] _PORTAL_THEMES = {
-		"_styled", "_unstyled", "classic", "control_panel"
+		"_styled", "_unstyled", "admin", "classic"
 	};
 
 	private static final String[] _THEME_DIR_NAMES = {

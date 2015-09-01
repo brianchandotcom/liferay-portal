@@ -904,10 +904,20 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, jarSourcesTask);
 
-		Task zipJavadocTask = GradleUtil.getTask(
-			project, ZIP_JAVADOC_TASK_NAME);
+		Map<String, Object> args = new HashMap<>();
 
-		artifactHandler.add(Dependency.ARCHIVES_CONFIGURATION, zipJavadocTask);
+		args.put("dir", project.getProjectDir());
+		args.put("include", "**/*.java");
+
+		FileTree javaFileTree = project.fileTree(args);
+
+		if (!javaFileTree.isEmpty()) {
+			Task zipJavadocTask = GradleUtil.getTask(
+				project, ZIP_JAVADOC_TASK_NAME);
+
+			artifactHandler.add(
+				Dependency.ARCHIVES_CONFIGURATION, zipJavadocTask);
+		}
 	}
 
 	protected void configureConf2ScopeMappings(Project project) {

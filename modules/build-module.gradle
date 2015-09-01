@@ -40,6 +40,10 @@ afterEvaluate {
 	if (project.hasProperty("snapshot") && !project.version.endsWith("-SNAPSHOT")) {
 		project.version = project.version + "-SNAPSHOT"
 	}
+
+	javadoc {
+		classpath = sourceSets.main.output + sourceSets.main.compileClasspath
+	}
 }
 
 buildCSS {

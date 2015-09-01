@@ -865,6 +865,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 				<args />
+				<arg value="--no-daemon" />
 				<arg value="--project-cache-dir=${project.dir}/.gradle" />
 				<arg value="--stacktrace" />
 				<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />

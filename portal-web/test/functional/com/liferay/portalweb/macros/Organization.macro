@@ -423,8 +423,8 @@
 	</command>
 
 	<command name="gotoActionsCmd">
-		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${orgName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${orgName}" />
+		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_orgName" value="${orgName}" />
 

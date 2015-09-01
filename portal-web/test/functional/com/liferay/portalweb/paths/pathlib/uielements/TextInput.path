@@ -385,7 +385,7 @@
 </tr>
 <tr>
 	<td>SUBJECT</td>
-	<td>//input[contains(@id,'subject')]</td>
+	<td>//input[contains(@id,'subject')] | //input[contains(@id,'Subject')]</td>
 	<td></td>
 </tr>
 <tr>

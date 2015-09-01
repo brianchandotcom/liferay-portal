@@ -24,6 +24,9 @@
 		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${workflowComment}" />
 		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
+
+		<var name="key_entryComment" value="${workflowComment}" />
+
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${workflowComment}" />
 	</command>
 
@@ -42,6 +45,8 @@
 				<execute function="AssertClick" locator1="MyWorkflowTasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
 			</else>
 		</if>
+
+		<var name="key_entryComment" value="${workflowComment}" />
 
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${workflowComment}" />
 	</command>

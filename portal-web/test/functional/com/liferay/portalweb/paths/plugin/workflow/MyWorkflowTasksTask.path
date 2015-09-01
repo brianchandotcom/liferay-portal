@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>PREVIEW_CONTENT</td>
-	<td>//div[@id='preview']//div[@class='panel-body']</td>
+	<td>//h3[@class='task-content-title']/../div[2]</td>
 	<td></td>
 </tr>
 <tr>

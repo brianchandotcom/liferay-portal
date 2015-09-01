@@ -89,7 +89,7 @@
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${subCategoryDescription}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="TextInput#REQUIRED_ALERT" value1="This field is required." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="This field is required." />
 	</command>
 
 	<command name="addSubcategoryPG">
@@ -274,9 +274,17 @@
 	<command name="viewMySubscriptionsPG">
 		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_MY_SUBSCRIPTIONS" value1="My Subscriptions" />
 
-		<execute function="AssertTextPresent" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_1" value1="${parentcategory1}" />
-		<execute function="AssertTextPresent" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_2" value1="${parentcategory2}" />
-		<execute function="AssertTextPresent" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_3" value1="${subscribedThread}" />
+		<var method="StringUtil#upperCase('${parentcategory1}')" name="parentcategory1" />
+
+		<execute function="AssertTextEquals" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_1" value1="${parentcategory1}" />
+
+		<var method="StringUtil#upperCase('${parentcategory2}')" name="parentcategory2" />
+
+		<execute function="AssertTextEquals" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_2" value1="${parentcategory2}" />
+
+		<var method="StringUtil#upperCase('${subscribedThread}')" name="subscribedThread" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="MessageBoardsMySubscriptions#CATEGORY_TABLE_CATEGORY_BREADCRUMB_3" value1="${subscribedThread}" />
 	</command>
 
 	<command name="viewNoCP">

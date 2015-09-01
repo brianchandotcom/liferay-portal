@@ -677,8 +677,8 @@
 	<command name="removeMemberCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<if>
 			<isset var="userMiddleName" />
@@ -978,10 +978,11 @@
 
 	<command name="viewGlobalLandingDefault">
 		<var name="key_portletName" value="${portletName}" />
+		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertElementPresent" locator1="Home#SCOPE_SELECTOR_SITE_NAME" value1="${siteName}" />
+		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" value1="${siteName}" />
 		<execute function="AssertTextNotPresent" value1="You do not have the roles required to access this portlet" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" value1="${portletName}" />
+		<execute function="AssertTextEquals" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${portletName}" />
 	</command>
 
 	<command name="viewLimitMembershipParentSiteCP">

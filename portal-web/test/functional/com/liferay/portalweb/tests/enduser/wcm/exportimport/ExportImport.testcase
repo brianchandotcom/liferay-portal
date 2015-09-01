@@ -19,8 +19,7 @@
 	</tear-down>
 
 	<command known-issues="LPS-56378" name="DeleteExportTemplate" priority="4">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletCategoryName" value="Configuration" />
+		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Export/Import" />
 		</execute>
 
@@ -59,8 +58,7 @@
 			<var name="assetName" value="Export Template Name" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletCategoryName" value="Configuration" />
+		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Export/Import" />
 		</execute>
 
@@ -99,8 +97,7 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletCategoryName" value="Configuration" />
+		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Export/Import" />
 		</execute>
 
@@ -166,8 +163,7 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletCategoryName" value="Configuration" />
+		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Export/Import" />
 		</execute>
 
@@ -731,8 +727,7 @@
 	</command>
 
 	<command known-issues="LRQA-16325" name="ExportImportWithExportTemplate" priority="4">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name = "portletCategoryName" value = "Configuration" />
+		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Export/Import" />
 		</execute>
 

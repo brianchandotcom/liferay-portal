@@ -1501,13 +1501,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 			cleanTask.dependsOn(taskName);
 		}
-
-		Configuration compileConfiguration = GradleUtil.getConfiguration(
-			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
-
-		cleanTask.dependsOn(
-			compileConfiguration.getTaskDependencyFromProjectDependency(
-				true, BasePlugin.CLEAN_TASK_NAME));
 	}
 
 	protected void configureTaskConfigJSModules(Project project) {

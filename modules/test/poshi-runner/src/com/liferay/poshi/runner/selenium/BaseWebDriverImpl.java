@@ -540,12 +540,12 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void javaScriptMouseDown(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.executeJavaScriptMouseEvent(this, locator, "mousedown");
 	}
 
 	@Override
 	public void javaScriptMouseUp(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.executeJavaScriptMouseEvent(this, locator, "mouseup");
 	}
 
 	@Override

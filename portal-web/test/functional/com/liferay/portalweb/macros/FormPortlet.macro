@@ -5,6 +5,18 @@
 		<execute function="AssertClick" locator1="FormPortlet#FORM_PAGE" value1="${formPageName}" />
 	</command>
 
+	<command name="nextPage">
+		<execute function="AssertClick" locator1="Button#NEXT" value1="Next" />
+
+		<var name="key_formPageName" value="${formPageCurrent}" />
+
+		<execute function="AssertTextEquals" locator1="FormPortlet#FORM_PAGE_COMPLETE" value1="${formPageCurrent}" />
+
+		<var name="key_formPageName" value="${formPageNext}" />
+
+		<execute function="AssertTextEquals" locator1="FormPortlet#FORM_PAGE_ACTIVE" value1="${formPageNext}" />
+	</command>
+
 	<command name="send">
 		<execute function="AssertClick" locator1="Button#SEND" value1="Send" />
 

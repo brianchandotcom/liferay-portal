@@ -203,8 +203,9 @@
 			<var name="fieldValue" value="Text Field Value" />
 		</execute>
 
-		<execute macro="FormPortlet#gotoFormPage">
-			<var name="formPageName" value="Page 2" />
+		<execute macro="FormPortlet#nextPage">
+			<var name="formPageCurrent" value="Page 1" />
+			<var name="formPageNext" value="Page 2" />
 		</execute>
 
 		<execute macro="FormFields#viewRadioLabel">
@@ -217,8 +218,9 @@
 			<var name="radioOption" value="Option 2" />
 		</execute>
 
-		<execute macro="FormPortlet#gotoFormPage">
-			<var name="formPageName" value="Page 3" />
+		<execute macro="FormPortlet#nextPage">
+			<var name="formPageCurrent" value="Page 2" />
+			<var name="formPageNext" value="Page 3" />
 		</execute>
 
 		<execute macro="FormFields#viewCheckboxLabel">

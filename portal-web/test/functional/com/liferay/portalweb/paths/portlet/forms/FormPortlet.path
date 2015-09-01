@@ -18,6 +18,16 @@
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'${key_formPageName}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>FORM_PAGE_ACTIVE</td>
+	<td>//ul[contains(@class,'multi-step-progress-bar')]/li[@class='active' and contains(.,'${key_formPageName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_PAGE_COMPLETE</td>
+	<td>//ul[contains(@class,'multi-step-progress-bar')]/li[@class='complete' and contains(.,'${key_formPageName}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

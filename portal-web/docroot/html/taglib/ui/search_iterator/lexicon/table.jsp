@@ -64,7 +64,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 	</div>
 </c:if>
 
-<div class="lfr-search-container <%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %>">
+<div class="<%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %>">
 	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (resultRows.size() > PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA) && paginate %>">
 		<div class="taglib-search-iterator-page-iterator-top">
 			<liferay-ui:search-paginator id='<%= id + "PageIteratorTop" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />
@@ -72,13 +72,21 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 	</c:if>
 
 	<div id="<%= namespace + id %>SearchContainer">
-		<table class="table table-bordered table-hover table-striped">
+		<table class="table table-list">
 
 		<c:if test="<%= headerNames != null %>">
-			<thead class="table-columns">
+			<thead>
 				<tr>
 
 				<%
+				List entries = Collections.EMPTY_LIST;
+
+				if (!resultRows.isEmpty()) {
+					com.liferay.portal.kernel.dao.search.ResultRow row = (com.liferay.portal.kernel.dao.search.ResultRow)resultRows.get(0);
+
+					entries = row.getEntries();
+				}
+
 				for (int i = 0; i < headerNames.size(); i++) {
 					String headerName = headerNames.get(i);
 
@@ -108,25 +116,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 						}
 					}
 
-					String cssClass = StringPool.BLANK;
-
-					if (headerNames.size() == 1) {
-						cssClass = "only";
-					}
-					else if (i == 0) {
-						cssClass = "table-first-header";
-					}
-					else if (i == (headerNames.size() - 1)) {
-						cssClass = "table-last-header";
-					}
-
 					if (orderCurrentHeader) {
-						cssClass += " table-sorted";
-
-						if (HtmlUtil.escapeAttribute(orderByType).equals("desc")) {
-							cssClass += " table-sorted-desc";
-						}
-
 						if (orderByType.equals("asc")) {
 							orderByType = "desc";
 						}
@@ -134,70 +124,51 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 							orderByType = "asc";
 						}
 					}
+
+					String cssClass = StringPool.BLANK;
+
+					if (rowChecker != null) {
+						if (i == 0) {
+							cssClass = rowChecker.getCssClass();
+						}
+						else {
+							com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i - 1);
+
+							if (entry != null) {
+								cssClass = entry.getCssClass();
+							}
+						}
+					}
+					else {
+						com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i);
+
+						if (entry != null) {
+							cssClass = entry.getCssClass();
+						}
+					}
 				%>
 
-					<th class="<%= cssClass %>" id="<%= namespace + id %>_col-<%= normalizedHeaderName %>"
+					<th class="<%= cssClass %>" id="<%= namespace + id %>_col-<%= normalizedHeaderName %>">
 
-						<%--
+						<%
+						String headerNameValue = null;
 
-						// Minimize the width of the first column if and only if
-						// it is a row checker.
+						if ((rowChecker == null) || (i > 0)) {
+							headerNameValue = LanguageUtil.get(request, HtmlUtil.escape(headerName));
+						}
+						else {
+							headerNameValue = headerName;
+						}
+						%>
 
-						--%>
-
-						<c:if test="<%= (rowChecker != null) && (i == 0) %>">
-							width="1%"
-						</c:if>
-					>
-
-						<c:if test="<%= orderKey != null %>">
-							<div class="table-sort-liner">
-
-								<%
-								String orderByJS = searchContainer.getOrderByJS();
-								%>
-
-								<c:choose>
-									<c:when test="<%= Validator.isNull(orderByJS) %>">
-
-										<%
-										url = HttpUtil.setParameter(url, namespace + searchContainer.getOrderByColParam(), orderKey);
-										url = HttpUtil.setParameter(url, namespace + searchContainer.getOrderByTypeParam(), orderByType);
-										%>
-
-										<a href="<%= url %>">
-									</c:when>
-									<c:otherwise>
-										<a href="<%= StringUtil.replace(orderByJS, new String[] { "orderKey", "orderByType" }, new String[] { orderKey, orderByType }) %>">
-									</c:otherwise>
-								</c:choose>
-						</c:if>
-
-							<%
-							String headerNameValue = null;
-
-							if ((rowChecker == null) || (i > 0)) {
-								headerNameValue = LanguageUtil.get(request, HtmlUtil.escape(headerName));
-							}
-							else {
-								headerNameValue = headerName;
-							}
-							%>
-
-							<c:choose>
-								<c:when test="<%= Validator.isNull(headerNameValue) %>">
-									<%= StringPool.NBSP %>
-								</c:when>
-								<c:otherwise>
-									<%= headerNameValue %>
-								</c:otherwise>
-							</c:choose>
-
-						<c:if test="<%= orderKey != null %>">
-									<span class="table-sort-indicator"></span>
-								</a>
-							</div>
-						</c:if>
+						<c:choose>
+							<c:when test="<%= Validator.isNull(headerNameValue) %>">
+								<%= StringPool.NBSP %>
+							</c:when>
+							<c:otherwise>
+								<%= headerNameValue %>
+							</c:otherwise>
+						</c:choose>
 					</th>
 
 				<%
@@ -208,11 +179,11 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 			</thead>
 		</c:if>
 
-		<tbody class="table-data">
+		<tbody>
 
 		<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
 			<tr>
-				<td class="table-cell">
+				<td>
 					<%= LanguageUtil.get(request, emptyResultsMessage) %>
 				</td>
 			</tr>
@@ -278,23 +249,27 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 				request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY, entry);
 
 				String columnClassName = entry.getCssClass();
-
-				if (entries.size() == 1) {
-					columnClassName += " only";
-				}
-				else if (j == 0) {
-					columnClassName += " first";
-				}
-				else if ((j + 1) == entries.size()) {
-					columnClassName += " last";
-				}
 			%>
 
-				<td class="table-cell <%= columnClassName %> text-<%= entry.getAlign() %> text-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>">
+				<td class="<%= columnClassName %> text-<%= entry.getAlign() %> text-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>">
+				<c:choose>
+					<c:when test="<%= entry.getTruncate() %>">
+						<span class="truncate-text">
 
-					<%
-					entry.print(pageContext.getOut(), request, response);
-					%>
+							<%
+								entry.print(pageContext.getOut(), request, response);
+							%>
+
+						</span>
+					</c:when>
+					<c:otherwise>
+
+						<%
+							entry.print(pageContext.getOut(), request, response);
+						%>
+
+					</c:otherwise>
+				</c:choose>
 
 				</td>
 
@@ -311,22 +286,6 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 			request.removeAttribute("liferay-ui:search-container-row:rowId");
 		}
 		%>
-
-		<c:if test="<%= headerNames != null %>">
-			<tr class="lfr-template">
-
-				<%
-				for (int i = 0; i < headerNames.size(); i++) {
-				%>
-
-					<td class="table-cell"></td>
-
-				<%
-				}
-				%>
-
-			</tr>
-		</c:if>
 
 		</tbody>
 		</table>

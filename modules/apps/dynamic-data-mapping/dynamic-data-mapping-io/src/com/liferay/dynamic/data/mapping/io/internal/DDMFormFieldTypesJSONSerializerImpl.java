@@ -16,14 +16,13 @@ package com.liferay.dynamic.data.mapping.io.internal;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -68,18 +67,16 @@ public class DDMFormFieldTypesJSONSerializerImpl
 		_ddmFormJSONSerializer = ddmFormJSONSerializer;
 	}
 
-	protected JSONObject toJSONObject(
-			Class<? extends DDMFormFieldTypeSettings> ddmFormFieldTypeSettings)
-		throws PortalException {
+	@Reference
+	protected void setDDMFormLayoutJSONSerializer(
+		DDMFormLayoutJSONSerializer ddmFormLayoutJSONSerializer) {
 
-		DDMForm ddmFormFieldTypeSettingsDDMForm = DDMFormFactory.create(
-			ddmFormFieldTypeSettings);
+		_ddmFormLayoutJSONSerializer = ddmFormLayoutJSONSerializer;
+	}
 
-		String serializedDDMFormFieldTypeSettings =
-			_ddmFormJSONSerializer.serialize(ddmFormFieldTypeSettingsDDMForm);
-
-		return JSONFactoryUtil.createJSONObject(
-			serializedDDMFormFieldTypeSettings);
+	@Reference
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
 	}
 
 	protected JSONObject toJSONObject(DDMFormFieldType ddmFormFieldType)
@@ -107,9 +104,21 @@ public class DDMFormFieldTypesJSONSerializerImpl
 				ddmFormFieldTypeProperties, "ddm.form.field.type.js.module",
 				"liferay-ddm-form-renderer-field"));
 		jsonObject.put("name", ddmFormFieldType.getName());
+
+		DDMFormFieldTypeSettingsSerializerHelper
+			ddmFormFieldTypeSettingsSerializerHelper =
+				new DDMFormFieldTypeSettingsSerializerHelper(
+					ddmFormFieldType.getDDMFormFieldTypeSettings(),
+					_ddmFormJSONSerializer, _ddmFormLayoutJSONSerializer,
+					_jsonFactory);
+
 		jsonObject.put(
 			"settings",
-			toJSONObject(ddmFormFieldType.getDDMFormFieldTypeSettings()));
+			ddmFormFieldTypeSettingsSerializerHelper.getSettingsJSONObject());
+		jsonObject.put(
+			"settingsLayout",
+			ddmFormFieldTypeSettingsSerializerHelper.
+				getSettingsLayoutJSONObject());
 		jsonObject.put(
 			"system",
 			MapUtil.getBoolean(
@@ -127,5 +136,7 @@ public class DDMFormFieldTypesJSONSerializerImpl
 
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private DDMFormJSONSerializer _ddmFormJSONSerializer;
+	private DDMFormLayoutJSONSerializer _ddmFormLayoutJSONSerializer;
+	private JSONFactory _jsonFactory;
 
 }

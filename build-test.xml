@@ -4722,6 +4722,14 @@ module.framework.properties.osgi.console=11312</echo>
 				</echo>
 			</then>
 			<elseif>
+				<equals arg1="${browser.type}" arg2="edge" />
+				<then>
+					<echo append="true" file="${test.ext.properties.file}">
+						browser.type=*edge
+					</echo>
+				</then>
+			</elseif>
+			<elseif>
 				<equals arg1="${browser.type}" arg2="googlechrome" />
 				<then>
 					<echo append="true" file="${test.ext.properties.file}">

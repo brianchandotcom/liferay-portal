@@ -93,27 +93,6 @@
 
 			<replaceregexp
 				file="@{test.results.file}"
-				flags="g"
-				match="(.*classname=&quot;\S+\.(\w+).*name=&quot;(\w+)[\s\S]+?)(\$\{testray\.testcase\.name\})"
-				replace="\1\2#\3"
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="g"
-				match="(&lt;/?)error"
-				replace="\1failure"
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="g"
-				match="(&lt;failure\s*)type"
-				replace="\1message"
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
 				match="&lt;testcase[^&gt;]*&gt;"
 				replace="${test.suite.properties}\0"
 			/>
@@ -123,6 +102,13 @@
 				flags="g"
 				match="&lt;testcase[^&gt;]*&gt;"
 				replace="\0${test.case.attachments}${line.separator}${test.case.properties}"
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="(.*classname=&quot;\S+\.(\w+).*name=&quot;(\w+)[\s\S]+?)(\$\{testray\.testcase\.name\})"
+				replace="\1\2#\3"
 			/>
 
 			<replaceregexp
@@ -143,6 +129,20 @@
 					/>
 				</then>
 			</if>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="(&lt;/?)error"
+				replace="\1failure"
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="(&lt;failure\s*)type"
+				replace="\1message"
+			/>
 		</sequential>
 	</macrodef>
 

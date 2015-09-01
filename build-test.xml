@@ -4531,11 +4531,6 @@ module.framework.properties.osgi.console=11312</echo>
 	<target name="prepare-selenium">
 		<delete file="${test.ext.properties.file}" />
 
-		<antcall target="prepare-selenium-app-server-properties" />
-		<antcall target="prepare-selenium-browser-properties" />
-		<antcall target="prepare-selenium-database-properties" />
-		<antcall target="prepare-selenium-email-properties" />
-
 		<if>
 			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 			<then>
@@ -4543,6 +4538,10 @@ module.framework.properties.osgi.console=11312</echo>
 			</then>
 		</if>
 
+		<antcall target="prepare-selenium-app-server-properties" />
+		<antcall target="prepare-selenium-browser-properties" />
+		<antcall target="prepare-selenium-database-properties" />
+		<antcall target="prepare-selenium-email-properties" />
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
@@ -6083,7 +6082,7 @@ if (ppstate.equals("normal")) {
 		</execute>
 	</target>
 
-	<target name="run-poshi-evaluate-console">
+	<target name="run-poshi-evaluate-console" depends="prepare-selenium">
 		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
 
 		<gradle-execute failonerror="false" task="evaluatePoshiConsole">
@@ -6093,7 +6092,7 @@ if (ppstate.equals("normal")) {
 		</gradle-execute>
 	</target>
 
-	<target name="run-poshi-runner">
+	<target name="run-poshi-runner" depends="prepare-selenium">
 		<property name="test.console.log.file.name" value="${liferay.home}/logs/liferay.${current.date}.xml" />
 
 		<gradle-execute failonerror="false" task="runPoshi">

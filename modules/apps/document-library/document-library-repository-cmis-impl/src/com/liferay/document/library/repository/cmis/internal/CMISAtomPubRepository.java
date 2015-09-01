@@ -72,11 +72,24 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 		parameters.put(SessionParameter.PASSWORD, password);
 		parameters.put(SessionParameter.USER, login);
 
-		CMISRepositoryUtil.checkRepository(
-			getRepositoryId(), parameters, getTypeSettingsProperties(),
-			CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER);
+		Thread thread = Thread.currentThread();
 
-		return CMISRepositoryUtil.createSession(parameters);
+		ClassLoader contextClassLoader = thread.getContextClassLoader();
+
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		thread.setContextClassLoader(classLoader);
+
+		try {
+			CMISRepositoryUtil.checkRepository(
+				getRepositoryId(), parameters, getTypeSettingsProperties(),
+				CMISRepositoryConstants.CMIS_ATOMPUB_REPOSITORY_ID_PARAMETER);
+
+			return CMISRepositoryUtil.createSession(parameters);
+		}
+		finally {
+			thread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	protected String getTypeSettingsValue(String typeSettingsKey)

@@ -122,6 +122,15 @@ public class TeamStagedModelDataHandler
 		Team existingTeam = TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(
 			team.getUuid(), portletDataContext.getScopeGroupId());
 
+		if (existingTeam == null) {
+			try {
+				existingTeam = TeamLocalServiceUtil.getTeam(
+					portletDataContext.getScopeGroupId(), team.getName());
+			}
+			catch (Exception e) {
+			}
+		}
+
 		Team importedTeam = null;
 
 		if (existingTeam == null) {

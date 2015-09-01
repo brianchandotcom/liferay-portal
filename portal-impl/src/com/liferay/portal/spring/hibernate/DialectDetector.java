@@ -15,6 +15,7 @@
 package com.liferay.portal.spring.hibernate;
 
 import com.liferay.portal.dao.orm.hibernate.DB2Dialect;
+import com.liferay.portal.dao.orm.hibernate.HSQLDialect;
 import com.liferay.portal.dao.orm.hibernate.SQLServer2005Dialect;
 import com.liferay.portal.dao.orm.hibernate.SQLServer2008Dialect;
 import com.liferay.portal.dao.orm.hibernate.SybaseASE157Dialect;
@@ -73,6 +74,8 @@ public class DialectDetector {
 			}
 
 			if (dbName.startsWith("HSQL")) {
+				dialect = new HSQLDialect();
+
 				if (_log.isWarnEnabled()) {
 					StringBundler sb = new StringBundler(6);
 
@@ -86,8 +89,7 @@ public class DialectDetector {
 					_log.warn(sb.toString());
 				}
 			}
-
-			if (dbName.equals("ASE") && (dbMajorVersion == 15)) {
+			else if (dbName.equals("ASE") && (dbMajorVersion == 15)) {
 				dialect = new SybaseASE157Dialect();
 			}
 			else if (dbName.startsWith("DB2") && (dbMajorVersion >= 9)) {

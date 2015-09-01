@@ -106,7 +106,7 @@ gradle.taskGraph.useFilter {
 		}
 	}
 	else if (task.name == "transpileJS") {
-		FileTree esJsFileTree = fileTree(dir: task.project.projectDir, exclude: "**/samples/**", include: "**/*.es.js")
+		FileTree esJsFileTree = fileTree(dir: task.project.projectDir, exclude: "**/samples/**", include: "src/**/*.es.js")
 
 		if (esJsFileTree.empty) {
 			return false

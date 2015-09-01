@@ -83,8 +83,6 @@ AUI.add(
 					boundingBox
 				);
 
-				instance.set('lazyLoad', false);
-
 				instance._treeId = instance.get(STR_BOUNDING_BOX).attr('data-treeid');
 
 				instance._bindUILTBase();

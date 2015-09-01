@@ -795,12 +795,6 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="run-build-selenium">
-		<sequential>
-			<ant antfile="build.xml" dir="portal-web" target="build-selenium" />
-		</sequential>
-	</macrodef>
-
 	<macrodef name="run-functional-test">
 		<attribute name="app.server.type" />
 		<attribute default="${app.server.@{app.server.type}.version}" name="app.server.version" />
@@ -916,6 +910,12 @@
 					<prepare-test-build />
 				</test-set-up>
 			</run-batch-test>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="run-poshi-validation">
+		<sequential>
+			<antcall target="run-poshi-validation" />
 		</sequential>
 	</macrodef>
 
@@ -1074,7 +1074,7 @@
 			<test-action>
 				<database-test-run-test database.type="mysql">
 					<test-action>
-						<run-build-selenium />
+						<run-poshi-validation />
 
 						<if>
 							<equals arg1="${env.TEST_PORTAL_WEB}" arg2="true" />

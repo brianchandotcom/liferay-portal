@@ -39,11 +39,6 @@
 			height: 400px;
 		}
 
-		.cover-image-caption {
-			color: #868896;
-			text-align: right;
-		}
-
 		.uploading-image-container {
 			display: inline-block;
 
@@ -55,5 +50,10 @@
 		.uploading-image {
 			opacity: 0.4;
 		}
+	}
+
+	.cover-image-caption {
+		color: #868896;
+		text-align: right;
 	}
 }

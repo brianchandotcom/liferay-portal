@@ -290,7 +290,7 @@ public class PortletPermissionImpl implements PortletPermission {
 				groupId, name, primKey, actionId);
 		}
 
-		if (!actionId.equals(ActionKeys.VIEW) &&
+		if (!actionId.equals(ActionKeys.VIEW) && !layout.isTypeControlPanel() &&
 			(layout instanceof VirtualLayout)) {
 
 			return hasCustomizePermission(
@@ -299,7 +299,7 @@ public class PortletPermissionImpl implements PortletPermission {
 
 		Group group = layout.getGroup();
 
-		if (!group.isLayoutSetPrototype() &&
+		if (!group.isLayoutSetPrototype() && !layout.isTypeControlPanel() &&
 			actionId.equals(ActionKeys.CONFIGURATION) &&
 			!SitesUtil.isLayoutUpdateable(layout)) {
 

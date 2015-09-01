@@ -61,7 +61,6 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.util.SerializableUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1430,7 +1429,7 @@ public class DDMStructureLocalServiceImpl
 
 		int status = GetterUtil.getInteger(
 			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_DRAFT);
+			WorkflowConstants.STATUS_APPROVED);
 
 		structureVersion.setStatus(status);
 
@@ -1497,9 +1496,6 @@ public class DDMStructureLocalServiceImpl
 		String version = getNextVersion(
 			latestStructureVersion.getVersion(), majorVersion);
 
-		DDMStructure structureClone = (DDMStructure)SerializableUtil.clone(
-			structure);
-
 		structure.setVersion(version);
 		structure.setNameMap(nameMap);
 		structure.setVersionUserId(user.getUserId());
@@ -1513,7 +1509,7 @@ public class DDMStructureLocalServiceImpl
 			user, structure, version, serviceContext);
 
 		if (!structureVersion.isApproved()) {
-			return structureClone;
+			return structure;
 		}
 
 		// Structure Layout

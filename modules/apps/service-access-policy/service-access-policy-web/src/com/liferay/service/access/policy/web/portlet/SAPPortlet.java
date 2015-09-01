@@ -93,10 +93,6 @@ public class SAPPortlet extends MVCPortlet {
 		String serviceClass = ParamUtil.get(
 			resourceRequest, "serviceClass", StringPool.BLANK);
 
-		if (contextName.equals("root")) {
-			contextName = "";
-		}
-
 		Map<String, Set> jsonWebServiceClasses = getJsonWebServiceClasses(
 			contextName);
 
@@ -105,22 +101,10 @@ public class SAPPortlet extends MVCPortlet {
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonArray.put(jsonObject);
-
-		jsonObject.put("method", "All methods");
-
 		for (JSONWebServiceActionMapping jsonWebServiceActionMapping :
 				jsonWebServiceActionMappings) {
 
-			JSONObject jsonMethodObject = JSONFactoryUtil.createJSONObject();
-
-			jsonArray.put(jsonMethodObject);
-
 			Method method = jsonWebServiceActionMapping.getActionMethod();
-
-			jsonMethodObject.put("method", method.getName());
 		}
 
 		PrintWriter writer = resourceResponse.getWriter();
@@ -141,16 +125,12 @@ public class SAPPortlet extends MVCPortlet {
 			Map<String, Set> jsonWebServiceClasses = getJsonWebServiceClasses(
 				contextName);
 
-			if (contextName.equals("")) {
-				contextName = "root";
-			}
-
 			for (String className : jsonWebServiceClasses.keySet()) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				jsonArray.put(jsonObject);
 
-				jsonObject.put("serviceClass", contextName + "/" + className);
+				jsonObject.put("serviceClass", className);
 			}
 		}
 

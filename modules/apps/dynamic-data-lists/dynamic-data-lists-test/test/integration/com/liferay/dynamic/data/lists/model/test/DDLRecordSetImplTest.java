@@ -61,7 +61,7 @@ public class DDLRecordSetImplTest {
 	@Test
 	public void testGetDDMStructure() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			"Text 1", "Text 2", "Text 3");
+			"Text1", "Text2", "Text3");
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), DDLRecordSet.class.getName(), ddmForm);
@@ -69,7 +69,7 @@ public class DDLRecordSetImplTest {
 		DDLRecordSet recordSet = _ddlRecordSetTestHelper.addRecordSet(
 			ddmStructure);
 
-		ddmForm = DDMFormTestUtil.createDDMForm("Text 2", "Text 3");
+		ddmForm = DDMFormTestUtil.createDDMForm("Text2", "Text3");
 
 		DDMTemplate template = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(), "json",

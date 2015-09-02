@@ -60,7 +60,7 @@
 			<entry name="required"><![CDATA[false]]></entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element name="multi-list" type="multi-list" index-type="" repeatable="false">
+	<dynamic-element name="multi_list" type="multi-list" index-type="" repeatable="false">
 		<dynamic-element name="Multi Item 01" type="value 01" repeatable="false" />
 		<dynamic-element name="Multi Item 02" type="value 02" repeatable="false" />
 		<meta-data>

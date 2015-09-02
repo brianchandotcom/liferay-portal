@@ -18,6 +18,19 @@ buildscript {
 
 apply plugin: "com.liferay.poshi.runner"
 
+configurations {
+	sikuliComplete
+}
+
+dependencies {
+	["x86", "x86_64"].each {
+		sikuliComplete classifier: "linux-${it}", group: "org.bytedeco.javacpp-presets", name: "opencv", version: poshiRunner.openCVVersion
+		sikuliComplete classifier: "windows-${it}", group: "org.bytedeco.javacpp-presets", name: "opencv", version: poshiRunner.openCVVersion
+	}
+
+	sikuliComplete classifier: "macosx-x86_64", group: "org.bytedeco.javacpp-presets", name: "opencv", version: poshiRunner.openCVVersion
+}
+
 poshiRunner {
 	if (project.hasProperty("poshiRunnerExtProperties")) {
 		File poshiRunnerExtProperties = new File(project.properties["poshiRunnerExtProperties"])
@@ -47,6 +60,7 @@ repositories {
 File localPoshiDir = new File(buildDir, "poshi")
 
 task copyLocalPoshi(type: GradleBuild)
+task updateGradleCache
 
 copyLocalPoshi {
 	configure(startParameter) {
@@ -61,6 +75,11 @@ copyLocalPoshi {
 
 runPoshi {
 	jvmArgs "-Dfile.encoding=UTF-8"
+}
+
+updateGradleCache << {
+	configurations.poshiRunner.resolve()
+	configurations.sikuliComplete.resolve()
 }
 
 if (GradleUtil.getProperty(project, "local", false)) {

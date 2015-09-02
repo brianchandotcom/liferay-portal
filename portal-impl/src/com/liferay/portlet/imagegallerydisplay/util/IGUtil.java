@@ -49,9 +49,7 @@ public class IGUtil {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		if (mvcRenderCommandName.equals(
-				"/image_gallery_display/select_folder")) {
-
+		if (mvcRenderCommandName.equals("/document_library/select_folder")) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 

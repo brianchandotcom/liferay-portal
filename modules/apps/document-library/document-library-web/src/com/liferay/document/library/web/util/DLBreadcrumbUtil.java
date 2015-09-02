@@ -226,11 +226,7 @@ public class DLBreadcrumbUtil {
 
 		if (mvcRenderCommandName.equals(
 				"/document_library/select_file_entry") ||
-			mvcRenderCommandName.equals("/document_library/select_folder") ||
-			mvcRenderCommandName.equals(
-				"/document_library_display/select_folder") ||
-			mvcRenderCommandName.equals(
-				"/image_gallery_display/select_folder")) {
+			mvcRenderCommandName.equals("/document_library/select_folder")) {
 
 			_addPortletBreadcrumbEntry(
 				request, "mvcRenderCommandName", mvcRenderCommandName, groupId,

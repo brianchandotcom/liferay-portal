@@ -38,7 +38,9 @@ public class HypersonicServerTestCallback
 	}
 
 	@Override
-	public void afterClass(Class<?> clazz, Object c) throws Throwable {
+	public void doAfterClass(Description description, Object c)
+		throws Throwable {
+
 		if (_server != null) {
 			try (Connection con = DriverManager.getConnection(
 					_databaseURL, "sa", "")) {
@@ -53,7 +55,7 @@ public class HypersonicServerTestCallback
 	}
 
 	@Override
-	public Object beforeClass(Class<?> clazz) throws Throwable {
+	public Object doBeforeClass(Description description) throws Throwable {
 		Class.forName("org.hsqldb.jdbcDriver");
 
 		Server server = new Server();
@@ -68,18 +70,6 @@ public class HypersonicServerTestCallback
 		}
 
 		return null;
-	}
-
-	@Override
-	public void doAfterClass(Description description, Object c)
-		throws Throwable {
-
-		afterClass(description.getTestClass(), c);
-	}
-
-	@Override
-	public Object doBeforeClass(Description description) throws Throwable {
-		return beforeClass(description.getTestClass());
 	}
 
 	private final String _databaseName;

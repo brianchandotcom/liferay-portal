@@ -102,9 +102,6 @@ public class HypersonicServerTestCallback
 
 		};
 
-		server.setDatabaseName(0, _databaseName);
-		server.setDatabasePath(0, _HSQL_HOME.concat(_databaseName));
-
 		File hsqlHome = new File(_HSQL_HOME);
 
 		hsqlHome.mkdirs();
@@ -115,6 +112,9 @@ public class HypersonicServerTestCallback
 		server.setLogWriter(
 			new UnsyncPrintWriter(
 				new File(hsqlHome, _databaseName.concat(".std.log"))));
+
+		server.setDatabaseName(0, _databaseName);
+		server.setDatabasePath(0, _HSQL_HOME.concat(_databaseName));
 
 		server.start();
 

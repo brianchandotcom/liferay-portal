@@ -382,12 +382,10 @@
 	</command>
 
 	<command name="deactivateStagingCP">
-		<execute function="AssertClick" locator1="NavListItem#STAGING" value1="Staging" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="SiteSettingsStaging#ENABLED_ON_PUBLIC_PAGES_CHECKBOX" />
 			<then>
-				<execute function="AssertClick" locator1="NavListItem#STAGING" value1="Staging" />
 				<execute function="Check" locator1="SiteSettingsStaging#NONE_RADIO" />
 				<execute function="AssertClickNoError" locator1="Button#SAVE" value1="Save" />
 				<execute function="Confirm" value1="Are you sure you want to deactivate staging for ${siteName}?" />

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -148,6 +149,26 @@ public class OracleDB extends BaseDB {
 
 	protected OracleDB() {
 		super(TYPE_ORACLE);
+	}
+
+	@Override
+	protected String[] buildColumnTypeTokens(String line) {
+		Matcher matcher = _varchar2CharPattern.matcher(line);
+
+		StringBuffer sb = new StringBuffer();
+
+		while (matcher.find()) {
+			matcher.appendReplacement(
+				sb, "VARCHAR2(" + matcher.group(1) + "%20CHAR)");
+		}
+
+		matcher.appendTail(sb);
+
+		String[] template = super.buildColumnTypeTokens(sb.toString());
+
+		template[3] = StringUtil.replace(template[3], "%20", StringPool.SPACE);
+
+		return template;
 	}
 
 	@Override
@@ -307,6 +328,8 @@ public class OracleDB extends BaseDB {
 
 	private static final OracleDB _instance = new OracleDB();
 
+	private static final Pattern _varchar2CharPattern = Pattern.compile(
+		"VARCHAR2\\((\\d+) CHAR\\)");
 	private static final Pattern _varcharPattern = Pattern.compile(
 		"VARCHAR\\((\\d+)\\)");
 

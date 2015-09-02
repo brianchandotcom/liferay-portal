@@ -47,67 +47,70 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 					<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-web-content-entry" />
 				</div>
 			</c:when>
-			<c:otherwise>
-				<c:if test="<%= Validator.isNotNull(journalContentDisplayContext.getArticleId()) %>">
-					<c:choose>
-						<c:when test="<%= journalContentDisplayContext.isExpired() %>">
-							<div class="alert alert-warning">
-								<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
-							</div>
-						</c:when>
-						<c:when test="<%= !article.isApproved() %>">
+			<c:when test="<%= Validator.isNotNull(journalContentDisplayContext.getArticleId()) %>">
+				<c:choose>
+					<c:when test="<%= journalContentDisplayContext.isExpired() %>">
+						<div class="alert alert-warning">
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
+						</div>
+					</c:when>
+					<c:when test="<%= article.isScheduled() %>">
+						<div class="alert alert-warning">
+							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(article.getTitle(locale)), dateFormatDateTime.format(article.getDisplayDate())} %>" key="x-is-scheduled-and-will-be-displayed-on-x" />
+						</div>
+					</c:when>
+					<c:when test="<%= !article.isApproved() %>">
+
+						<%
+							AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
+						%>
+
+						<c:choose>
+							<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
+								<div class="alert alert-warning">
+									<a href="<%= assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, WindowState.MAXIMIZED, currentURLObj) %>">
+										<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
+									</a>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="alert alert-warning">
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:when test="<%= (articleDisplay != null) %>">
+						<div class="user-tool-asset-addon-entries">
+							<liferay-ui:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>" />
+						</div>
+
+						<div class="journal-content-article">
+							<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>
+						</div>
+
+						<c:if test="<%= articleDisplay.isPaginate() %>">
 
 							<%
-								AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
+							PortletURL portletURL = renderResponse.createRenderURL();
 							%>
 
-							<c:choose>
-								<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
-									<div class="alert alert-warning">
-										<a href="<%= assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, WindowState.MAXIMIZED, currentURLObj) %>">
-											<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
-										</a>
-									</div>
-								</c:when>
-								<c:otherwise>
-									<div class="alert alert-warning">
-										<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
-									</div>
-								</c:otherwise>
-							</c:choose>
-						</c:when>
-						<c:when test="<%= (articleDisplay != null) %>">
-							<div class="user-tool-asset-addon-entries">
-								<liferay-ui:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>" />
-							</div>
+							<liferay-ui:page-iterator
+								cur="<%= articleDisplay.getCurrentPage() %>"
+								curParam='<%= "page" %>'
+								delta="<%= 1 %>"
+								id="articleDisplayPages"
+								maxPages="<%= 25 %>"
+								total="<%= articleDisplay.getNumberOfPages() %>"
+								type="article"
+								url="<%= portletURL.toString() %>"
+							/>
 
-							<div class="journal-content-article">
-								<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>
-							</div>
-
-							<c:if test="<%= articleDisplay.isPaginate() %>">
-
-								<%
-								PortletURL portletURL = renderResponse.createRenderURL();
-								%>
-
-								<liferay-ui:page-iterator
-									cur="<%= articleDisplay.getCurrentPage() %>"
-									curParam='<%= "page" %>'
-									delta="<%= 1 %>"
-									id="articleDisplayPages"
-									maxPages="<%= 25 %>"
-									total="<%= articleDisplay.getNumberOfPages() %>"
-									type="article"
-									url="<%= portletURL.toString() %>"
-								/>
-
-								<br />
-							</c:if>
-						</c:when>
-					</c:choose>
-				</c:if>
-			</c:otherwise>
+							<br />
+						</c:if>
+					</c:when>
+				</c:choose>
+			</c:when>
 		</c:choose>
 	</c:otherwise>
 </c:choose>

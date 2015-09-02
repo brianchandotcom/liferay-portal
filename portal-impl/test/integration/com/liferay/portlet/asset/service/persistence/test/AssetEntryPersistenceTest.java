@@ -532,19 +532,19 @@ public class AssetEntryPersistenceTest {
 
 		AssetEntry existingAssetEntry = _persistence.findByPrimaryKey(newAssetEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetEntry.getGroupId(),
-			ReflectionTestUtil.invoke(existingAssetEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingAssetEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingAssetEntry.getClassUuid(),
 				ReflectionTestUtil.invoke(existingAssetEntry,
 					"getOriginalClassUuid", new Class<?>[0])));
 
-		Assert.assertEquals(existingAssetEntry.getClassNameId(),
-			ReflectionTestUtil.invoke(existingAssetEntry,
+		Assert.assertEquals(Long.valueOf(existingAssetEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetEntry,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingAssetEntry.getClassPK(),
-			ReflectionTestUtil.invoke(existingAssetEntry, "getOriginalClassPK",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingAssetEntry.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingAssetEntry,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected AssetEntry addAssetEntry() throws Exception {

@@ -447,8 +447,8 @@ public class DDLRecordVersionPersistenceTest {
 
 		DDLRecordVersion existingDDLRecordVersion = _persistence.findByPrimaryKey(newDDLRecordVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingDDLRecordVersion.getRecordId(),
-			ReflectionTestUtil.invoke(existingDDLRecordVersion,
+		Assert.assertEquals(Long.valueOf(existingDDLRecordVersion.getRecordId()),
+			ReflectionTestUtil.<Long>invoke(existingDDLRecordVersion,
 				"getOriginalRecordId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingDDLRecordVersion.getVersion(),

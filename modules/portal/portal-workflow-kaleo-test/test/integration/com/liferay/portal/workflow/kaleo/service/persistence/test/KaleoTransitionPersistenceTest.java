@@ -465,18 +465,21 @@ public class KaleoTransitionPersistenceTest {
 
 		KaleoTransition existingKaleoTransition = _persistence.findByPrimaryKey(newKaleoTransition.getPrimaryKey());
 
-		Assert.assertEquals(existingKaleoTransition.getKaleoNodeId(),
-			ReflectionTestUtil.invoke(existingKaleoTransition,
+		Assert.assertEquals(Long.valueOf(
+				existingKaleoTransition.getKaleoNodeId()),
+			ReflectionTestUtil.<Long>invoke(existingKaleoTransition,
 				"getOriginalKaleoNodeId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingKaleoTransition.getName(),
 				ReflectionTestUtil.invoke(existingKaleoTransition,
 					"getOriginalName", new Class<?>[0])));
 
-		Assert.assertEquals(existingKaleoTransition.getKaleoNodeId(),
-			ReflectionTestUtil.invoke(existingKaleoTransition,
+		Assert.assertEquals(Long.valueOf(
+				existingKaleoTransition.getKaleoNodeId()),
+			ReflectionTestUtil.<Long>invoke(existingKaleoTransition,
 				"getOriginalKaleoNodeId", new Class<?>[0]));
-		Assert.assertEquals(existingKaleoTransition.getDefaultTransition(),
-			ReflectionTestUtil.invoke(existingKaleoTransition,
+		Assert.assertEquals(Boolean.valueOf(
+				existingKaleoTransition.getDefaultTransition()),
+			ReflectionTestUtil.<Boolean>invoke(existingKaleoTransition,
 				"getOriginalDefaultTransition", new Class<?>[0]));
 	}
 

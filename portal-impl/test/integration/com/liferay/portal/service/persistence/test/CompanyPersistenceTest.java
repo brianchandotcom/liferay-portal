@@ -428,9 +428,9 @@ public class CompanyPersistenceTest {
 				ReflectionTestUtil.invoke(existingCompany, "getOriginalMx",
 					new Class<?>[0])));
 
-		Assert.assertEquals(existingCompany.getLogoId(),
-			ReflectionTestUtil.invoke(existingCompany, "getOriginalLogoId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingCompany.getLogoId()),
+			ReflectionTestUtil.<Long>invoke(existingCompany,
+				"getOriginalLogoId", new Class<?>[0]));
 	}
 
 	protected Company addCompany() throws Exception {

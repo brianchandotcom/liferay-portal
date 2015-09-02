@@ -448,8 +448,8 @@ public class UserGroupPersistenceTest {
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
 
-		Assert.assertEquals(existingUserGroup.getCompanyId(),
-			ReflectionTestUtil.invoke(existingUserGroup,
+		Assert.assertEquals(Long.valueOf(existingUserGroup.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingUserGroup,
 				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingUserGroup.getName(),
 				ReflectionTestUtil.invoke(existingUserGroup, "getOriginalName",

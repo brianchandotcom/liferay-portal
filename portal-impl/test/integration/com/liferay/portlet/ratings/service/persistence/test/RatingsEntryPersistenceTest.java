@@ -442,14 +442,14 @@ public class RatingsEntryPersistenceTest {
 
 		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(newRatingsEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingRatingsEntry.getUserId(),
-			ReflectionTestUtil.invoke(existingRatingsEntry,
+		Assert.assertEquals(Long.valueOf(existingRatingsEntry.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingRatingsEntry,
 				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(existingRatingsEntry.getClassNameId(),
-			ReflectionTestUtil.invoke(existingRatingsEntry,
+		Assert.assertEquals(Long.valueOf(existingRatingsEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingRatingsEntry,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingRatingsEntry.getClassPK(),
-			ReflectionTestUtil.invoke(existingRatingsEntry,
+		Assert.assertEquals(Long.valueOf(existingRatingsEntry.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingRatingsEntry,
 				"getOriginalClassPK", new Class<?>[0]));
 	}
 

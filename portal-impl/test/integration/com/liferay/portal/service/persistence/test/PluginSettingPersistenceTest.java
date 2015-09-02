@@ -396,8 +396,8 @@ public class PluginSettingPersistenceTest {
 
 		PluginSetting existingPluginSetting = _persistence.findByPrimaryKey(newPluginSetting.getPrimaryKey());
 
-		Assert.assertEquals(existingPluginSetting.getCompanyId(),
-			ReflectionTestUtil.invoke(existingPluginSetting,
+		Assert.assertEquals(Long.valueOf(existingPluginSetting.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingPluginSetting,
 				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingPluginSetting.getPluginId(),

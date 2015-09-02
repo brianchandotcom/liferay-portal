@@ -408,19 +408,23 @@ public class SCProductScreenshotPersistenceTest {
 
 		SCProductScreenshot existingSCProductScreenshot = _persistence.findByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
 
-		Assert.assertEquals(existingSCProductScreenshot.getThumbnailId(),
-			ReflectionTestUtil.invoke(existingSCProductScreenshot,
+		Assert.assertEquals(Long.valueOf(
+				existingSCProductScreenshot.getThumbnailId()),
+			ReflectionTestUtil.<Long>invoke(existingSCProductScreenshot,
 				"getOriginalThumbnailId", new Class<?>[0]));
 
-		Assert.assertEquals(existingSCProductScreenshot.getFullImageId(),
-			ReflectionTestUtil.invoke(existingSCProductScreenshot,
+		Assert.assertEquals(Long.valueOf(
+				existingSCProductScreenshot.getFullImageId()),
+			ReflectionTestUtil.<Long>invoke(existingSCProductScreenshot,
 				"getOriginalFullImageId", new Class<?>[0]));
 
-		Assert.assertEquals(existingSCProductScreenshot.getProductEntryId(),
-			ReflectionTestUtil.invoke(existingSCProductScreenshot,
+		Assert.assertEquals(Long.valueOf(
+				existingSCProductScreenshot.getProductEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingSCProductScreenshot,
 				"getOriginalProductEntryId", new Class<?>[0]));
-		Assert.assertEquals(existingSCProductScreenshot.getPriority(),
-			ReflectionTestUtil.invoke(existingSCProductScreenshot,
+		Assert.assertEquals(Integer.valueOf(
+				existingSCProductScreenshot.getPriority()),
+			ReflectionTestUtil.<Integer>invoke(existingSCProductScreenshot,
 				"getOriginalPriority", new Class<?>[0]));
 	}
 

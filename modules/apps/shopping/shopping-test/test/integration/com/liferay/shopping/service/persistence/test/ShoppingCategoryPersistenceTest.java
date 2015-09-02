@@ -429,8 +429,8 @@ public class ShoppingCategoryPersistenceTest {
 
 		ShoppingCategory existingShoppingCategory = _persistence.findByPrimaryKey(newShoppingCategory.getPrimaryKey());
 
-		Assert.assertEquals(existingShoppingCategory.getGroupId(),
-			ReflectionTestUtil.invoke(existingShoppingCategory,
+		Assert.assertEquals(Long.valueOf(existingShoppingCategory.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingShoppingCategory,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingShoppingCategory.getName(),
 				ReflectionTestUtil.invoke(existingShoppingCategory,

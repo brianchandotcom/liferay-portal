@@ -470,14 +470,17 @@ public class JournalContentSearchPersistenceTest {
 
 		JournalContentSearch existingJournalContentSearch = _persistence.findByPrimaryKey(newJournalContentSearch.getPrimaryKey());
 
-		Assert.assertEquals(existingJournalContentSearch.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalContentSearch,
+		Assert.assertEquals(Long.valueOf(
+				existingJournalContentSearch.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalContentSearch,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingJournalContentSearch.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingJournalContentSearch,
+		Assert.assertEquals(Boolean.valueOf(
+				existingJournalContentSearch.getPrivateLayout()),
+			ReflectionTestUtil.<Boolean>invoke(existingJournalContentSearch,
 				"getOriginalPrivateLayout", new Class<?>[0]));
-		Assert.assertEquals(existingJournalContentSearch.getLayoutId(),
-			ReflectionTestUtil.invoke(existingJournalContentSearch,
+		Assert.assertEquals(Long.valueOf(
+				existingJournalContentSearch.getLayoutId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalContentSearch,
 				"getOriginalLayoutId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingJournalContentSearch.getPortletId(),

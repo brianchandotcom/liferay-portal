@@ -459,8 +459,9 @@ public class DDMStructureVersionPersistenceTest {
 
 		DDMStructureVersion existingDDMStructureVersion = _persistence.findByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMStructureVersion.getStructureId(),
-			ReflectionTestUtil.invoke(existingDDMStructureVersion,
+		Assert.assertEquals(Long.valueOf(
+				existingDDMStructureVersion.getStructureId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructureVersion,
 				"getOriginalStructureId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingDDMStructureVersion.getVersion(),

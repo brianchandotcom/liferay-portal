@@ -392,11 +392,11 @@ public class VirtualHostPersistenceTest {
 				ReflectionTestUtil.invoke(existingVirtualHost,
 					"getOriginalHostname", new Class<?>[0])));
 
-		Assert.assertEquals(existingVirtualHost.getCompanyId(),
-			ReflectionTestUtil.invoke(existingVirtualHost,
+		Assert.assertEquals(Long.valueOf(existingVirtualHost.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingVirtualHost,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(existingVirtualHost.getLayoutSetId(),
-			ReflectionTestUtil.invoke(existingVirtualHost,
+		Assert.assertEquals(Long.valueOf(existingVirtualHost.getLayoutSetId()),
+			ReflectionTestUtil.<Long>invoke(existingVirtualHost,
 				"getOriginalLayoutSetId", new Class<?>[0]));
 	}
 

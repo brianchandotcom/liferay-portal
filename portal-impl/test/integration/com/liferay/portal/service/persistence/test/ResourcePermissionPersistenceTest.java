@@ -489,22 +489,24 @@ public class ResourcePermissionPersistenceTest {
 
 		ResourcePermission existingResourcePermission = _persistence.findByPrimaryKey(newResourcePermission.getPrimaryKey());
 
-		Assert.assertEquals(existingResourcePermission.getCompanyId(),
-			ReflectionTestUtil.invoke(existingResourcePermission,
+		Assert.assertEquals(Long.valueOf(
+				existingResourcePermission.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingResourcePermission,
 				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingResourcePermission.getName(),
 				ReflectionTestUtil.invoke(existingResourcePermission,
 					"getOriginalName", new Class<?>[0])));
-		Assert.assertEquals(existingResourcePermission.getScope(),
-			ReflectionTestUtil.invoke(existingResourcePermission,
+		Assert.assertEquals(Integer.valueOf(
+				existingResourcePermission.getScope()),
+			ReflectionTestUtil.<Integer>invoke(existingResourcePermission,
 				"getOriginalScope", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingResourcePermission.getPrimKey(),
 				ReflectionTestUtil.invoke(existingResourcePermission,
 					"getOriginalPrimKey", new Class<?>[0])));
-		Assert.assertEquals(existingResourcePermission.getRoleId(),
-			ReflectionTestUtil.invoke(existingResourcePermission,
+		Assert.assertEquals(Long.valueOf(existingResourcePermission.getRoleId()),
+			ReflectionTestUtil.<Long>invoke(existingResourcePermission,
 				"getOriginalRoleId", new Class<?>[0]));
 	}
 

@@ -551,15 +551,16 @@ public class PasswordPolicyPersistenceTest {
 
 		PasswordPolicy existingPasswordPolicy = _persistence.findByPrimaryKey(newPasswordPolicy.getPrimaryKey());
 
-		Assert.assertEquals(existingPasswordPolicy.getCompanyId(),
-			ReflectionTestUtil.invoke(existingPasswordPolicy,
+		Assert.assertEquals(Long.valueOf(existingPasswordPolicy.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingPasswordPolicy,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(existingPasswordPolicy.getDefaultPolicy(),
-			ReflectionTestUtil.invoke(existingPasswordPolicy,
+		Assert.assertEquals(Boolean.valueOf(
+				existingPasswordPolicy.getDefaultPolicy()),
+			ReflectionTestUtil.<Boolean>invoke(existingPasswordPolicy,
 				"getOriginalDefaultPolicy", new Class<?>[0]));
 
-		Assert.assertEquals(existingPasswordPolicy.getCompanyId(),
-			ReflectionTestUtil.invoke(existingPasswordPolicy,
+		Assert.assertEquals(Long.valueOf(existingPasswordPolicy.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingPasswordPolicy,
 				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingPasswordPolicy.getName(),
 				ReflectionTestUtil.invoke(existingPasswordPolicy,

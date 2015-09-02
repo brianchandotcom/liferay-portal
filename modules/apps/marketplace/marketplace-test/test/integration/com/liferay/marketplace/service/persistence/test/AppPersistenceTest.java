@@ -437,9 +437,9 @@ public class AppPersistenceTest {
 
 		App existingApp = _persistence.findByPrimaryKey(newApp.getPrimaryKey());
 
-		Assert.assertEquals(existingApp.getRemoteAppId(),
-			ReflectionTestUtil.invoke(existingApp, "getOriginalRemoteAppId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingApp.getRemoteAppId()),
+			ReflectionTestUtil.<Long>invoke(existingApp,
+				"getOriginalRemoteAppId", new Class<?>[0]));
 	}
 
 	protected App addApp() throws Exception {

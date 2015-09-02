@@ -421,8 +421,8 @@ public class KaleoTaskPersistenceTest {
 
 		KaleoTask existingKaleoTask = _persistence.findByPrimaryKey(newKaleoTask.getPrimaryKey());
 
-		Assert.assertEquals(existingKaleoTask.getKaleoNodeId(),
-			ReflectionTestUtil.invoke(existingKaleoTask,
+		Assert.assertEquals(Long.valueOf(existingKaleoTask.getKaleoNodeId()),
+			ReflectionTestUtil.<Long>invoke(existingKaleoTask,
 				"getOriginalKaleoNodeId", new Class<?>[0]));
 	}
 

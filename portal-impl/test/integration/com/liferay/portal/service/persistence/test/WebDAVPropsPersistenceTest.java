@@ -393,11 +393,11 @@ public class WebDAVPropsPersistenceTest {
 
 		WebDAVProps existingWebDAVProps = _persistence.findByPrimaryKey(newWebDAVProps.getPrimaryKey());
 
-		Assert.assertEquals(existingWebDAVProps.getClassNameId(),
-			ReflectionTestUtil.invoke(existingWebDAVProps,
+		Assert.assertEquals(Long.valueOf(existingWebDAVProps.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingWebDAVProps,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingWebDAVProps.getClassPK(),
-			ReflectionTestUtil.invoke(existingWebDAVProps,
+		Assert.assertEquals(Long.valueOf(existingWebDAVProps.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingWebDAVProps,
 				"getOriginalClassPK", new Class<?>[0]));
 	}
 

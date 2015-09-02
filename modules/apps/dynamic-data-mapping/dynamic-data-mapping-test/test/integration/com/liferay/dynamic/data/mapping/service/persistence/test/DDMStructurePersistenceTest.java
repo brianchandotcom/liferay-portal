@@ -564,15 +564,15 @@ public class DDMStructurePersistenceTest {
 		Assert.assertTrue(Validator.equals(existingDDMStructure.getUuid(),
 				ReflectionTestUtil.invoke(existingDDMStructure,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingDDMStructure.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDMStructure,
+		Assert.assertEquals(Long.valueOf(existingDDMStructure.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructure,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDDMStructure.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDMStructure,
+		Assert.assertEquals(Long.valueOf(existingDDMStructure.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructure,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingDDMStructure.getClassNameId(),
-			ReflectionTestUtil.invoke(existingDDMStructure,
+		Assert.assertEquals(Long.valueOf(existingDDMStructure.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructure,
 				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingDDMStructure.getStructureKey(),

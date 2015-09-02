@@ -419,12 +419,14 @@ public class JournalArticleResourcePersistenceTest {
 				existingJournalArticleResource.getUuid(),
 				ReflectionTestUtil.invoke(existingJournalArticleResource,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingJournalArticleResource.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalArticleResource,
+		Assert.assertEquals(Long.valueOf(
+				existingJournalArticleResource.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalArticleResource,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingJournalArticleResource.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalArticleResource,
+		Assert.assertEquals(Long.valueOf(
+				existingJournalArticleResource.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalArticleResource,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingJournalArticleResource.getArticleId(),

@@ -403,8 +403,8 @@ public class ExpandoColumnPersistenceTest {
 
 		ExpandoColumn existingExpandoColumn = _persistence.findByPrimaryKey(newExpandoColumn.getPrimaryKey());
 
-		Assert.assertEquals(existingExpandoColumn.getTableId(),
-			ReflectionTestUtil.invoke(existingExpandoColumn,
+		Assert.assertEquals(Long.valueOf(existingExpandoColumn.getTableId()),
+			ReflectionTestUtil.<Long>invoke(existingExpandoColumn,
 				"getOriginalTableId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingExpandoColumn.getName(),
 				ReflectionTestUtil.invoke(existingExpandoColumn,

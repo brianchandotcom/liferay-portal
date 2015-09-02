@@ -658,52 +658,52 @@ public class UserPersistenceTest {
 
 		User existingUser = _persistence.findByPrimaryKey(newUser.getPrimaryKey());
 
-		Assert.assertEquals(existingUser.getContactId(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalContactId",
+		Assert.assertEquals(Long.valueOf(existingUser.getContactId()),
+			ReflectionTestUtil.<Long>invoke(existingUser,
+				"getOriginalContactId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(existingUser.getPortraitId()),
+			ReflectionTestUtil.<Long>invoke(existingUser,
+				"getOriginalPortraitId", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(existingUser.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingUser,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingUser.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingUser, "getOriginalUserId",
 				new Class<?>[0]));
 
-		Assert.assertEquals(existingUser.getPortraitId(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalPortraitId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingUser.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingUser,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(Boolean.valueOf(existingUser.getDefaultUser()),
+			ReflectionTestUtil.<Boolean>invoke(existingUser,
+				"getOriginalDefaultUser", new Class<?>[0]));
 
-		Assert.assertEquals(existingUser.getCompanyId(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertEquals(existingUser.getUserId(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalUserId",
-				new Class<?>[0]));
-
-		Assert.assertEquals(existingUser.getCompanyId(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertEquals(existingUser.getDefaultUser(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalDefaultUser",
-				new Class<?>[0]));
-
-		Assert.assertEquals(existingUser.getCompanyId(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingUser.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingUser,
+				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingUser.getScreenName(),
 				ReflectionTestUtil.invoke(existingUser,
 					"getOriginalScreenName", new Class<?>[0])));
 
-		Assert.assertEquals(existingUser.getCompanyId(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingUser.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingUser,
+				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingUser.getEmailAddress(),
 				ReflectionTestUtil.invoke(existingUser,
 					"getOriginalEmailAddress", new Class<?>[0])));
 
-		Assert.assertEquals(existingUser.getCompanyId(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertEquals(existingUser.getFacebookId(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalFacebookId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingUser.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingUser,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingUser.getFacebookId()),
+			ReflectionTestUtil.<Long>invoke(existingUser,
+				"getOriginalFacebookId", new Class<?>[0]));
 
-		Assert.assertEquals(existingUser.getCompanyId(),
-			ReflectionTestUtil.invoke(existingUser, "getOriginalCompanyId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingUser.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingUser,
+				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingUser.getOpenId(),
 				ReflectionTestUtil.invoke(existingUser, "getOriginalOpenId",
 					new Class<?>[0])));

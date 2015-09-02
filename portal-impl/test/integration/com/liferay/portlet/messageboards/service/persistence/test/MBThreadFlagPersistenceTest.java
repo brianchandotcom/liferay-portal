@@ -449,15 +449,15 @@ public class MBThreadFlagPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingMBThreadFlag.getUuid(),
 				ReflectionTestUtil.invoke(existingMBThreadFlag,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingMBThreadFlag.getGroupId(),
-			ReflectionTestUtil.invoke(existingMBThreadFlag,
+		Assert.assertEquals(Long.valueOf(existingMBThreadFlag.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBThreadFlag,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMBThreadFlag.getUserId(),
-			ReflectionTestUtil.invoke(existingMBThreadFlag,
+		Assert.assertEquals(Long.valueOf(existingMBThreadFlag.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingMBThreadFlag,
 				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(existingMBThreadFlag.getThreadId(),
-			ReflectionTestUtil.invoke(existingMBThreadFlag,
+		Assert.assertEquals(Long.valueOf(existingMBThreadFlag.getThreadId()),
+			ReflectionTestUtil.<Long>invoke(existingMBThreadFlag,
 				"getOriginalThreadId", new Class<?>[0]));
 	}
 

@@ -429,14 +429,17 @@ public class SocialActivitySettingPersistenceTest {
 
 		SocialActivitySetting existingSocialActivitySetting = _persistence.findByPrimaryKey(newSocialActivitySetting.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivitySetting.getGroupId(),
-			ReflectionTestUtil.invoke(existingSocialActivitySetting,
+		Assert.assertEquals(Long.valueOf(
+				existingSocialActivitySetting.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivitySetting,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingSocialActivitySetting.getClassNameId(),
-			ReflectionTestUtil.invoke(existingSocialActivitySetting,
+		Assert.assertEquals(Long.valueOf(
+				existingSocialActivitySetting.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivitySetting,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingSocialActivitySetting.getActivityType(),
-			ReflectionTestUtil.invoke(existingSocialActivitySetting,
+		Assert.assertEquals(Integer.valueOf(
+				existingSocialActivitySetting.getActivityType()),
+			ReflectionTestUtil.<Integer>invoke(existingSocialActivitySetting,
 				"getOriginalActivityType", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingSocialActivitySetting.getName(),

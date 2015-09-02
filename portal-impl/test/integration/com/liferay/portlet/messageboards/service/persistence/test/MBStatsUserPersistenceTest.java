@@ -400,12 +400,12 @@ public class MBStatsUserPersistenceTest {
 
 		MBStatsUser existingMBStatsUser = _persistence.findByPrimaryKey(newMBStatsUser.getPrimaryKey());
 
-		Assert.assertEquals(existingMBStatsUser.getGroupId(),
-			ReflectionTestUtil.invoke(existingMBStatsUser,
+		Assert.assertEquals(Long.valueOf(existingMBStatsUser.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBStatsUser,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingMBStatsUser.getUserId(),
-			ReflectionTestUtil.invoke(existingMBStatsUser, "getOriginalUserId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingMBStatsUser.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingMBStatsUser,
+				"getOriginalUserId", new Class<?>[0]));
 	}
 
 	protected MBStatsUser addMBStatsUser() throws Exception {

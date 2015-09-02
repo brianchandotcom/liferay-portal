@@ -445,17 +445,17 @@ public class SubscriptionPersistenceTest {
 
 		Subscription existingSubscription = _persistence.findByPrimaryKey(newSubscription.getPrimaryKey());
 
-		Assert.assertEquals(existingSubscription.getCompanyId(),
-			ReflectionTestUtil.invoke(existingSubscription,
+		Assert.assertEquals(Long.valueOf(existingSubscription.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingSubscription,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(existingSubscription.getUserId(),
-			ReflectionTestUtil.invoke(existingSubscription,
+		Assert.assertEquals(Long.valueOf(existingSubscription.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSubscription,
 				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(existingSubscription.getClassNameId(),
-			ReflectionTestUtil.invoke(existingSubscription,
+		Assert.assertEquals(Long.valueOf(existingSubscription.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingSubscription,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingSubscription.getClassPK(),
-			ReflectionTestUtil.invoke(existingSubscription,
+		Assert.assertEquals(Long.valueOf(existingSubscription.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingSubscription,
 				"getOriginalClassPK", new Class<?>[0]));
 	}
 

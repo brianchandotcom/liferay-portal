@@ -567,9 +567,9 @@ public class MBCategoryPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingMBCategory.getUuid(),
 				ReflectionTestUtil.invoke(existingMBCategory,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingMBCategory.getGroupId(),
-			ReflectionTestUtil.invoke(existingMBCategory, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingMBCategory.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBCategory,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected MBCategory addMBCategory() throws Exception {

@@ -420,18 +420,21 @@ public class ResourceTypePermissionPersistenceTest {
 
 		ResourceTypePermission existingResourceTypePermission = _persistence.findByPrimaryKey(newResourceTypePermission.getPrimaryKey());
 
-		Assert.assertEquals(existingResourceTypePermission.getCompanyId(),
-			ReflectionTestUtil.invoke(existingResourceTypePermission,
+		Assert.assertEquals(Long.valueOf(
+				existingResourceTypePermission.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingResourceTypePermission,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(existingResourceTypePermission.getGroupId(),
-			ReflectionTestUtil.invoke(existingResourceTypePermission,
+		Assert.assertEquals(Long.valueOf(
+				existingResourceTypePermission.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingResourceTypePermission,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingResourceTypePermission.getName(),
 				ReflectionTestUtil.invoke(existingResourceTypePermission,
 					"getOriginalName", new Class<?>[0])));
-		Assert.assertEquals(existingResourceTypePermission.getRoleId(),
-			ReflectionTestUtil.invoke(existingResourceTypePermission,
+		Assert.assertEquals(Long.valueOf(
+				existingResourceTypePermission.getRoleId()),
+			ReflectionTestUtil.<Long>invoke(existingResourceTypePermission,
 				"getOriginalRoleId", new Class<?>[0]));
 	}
 

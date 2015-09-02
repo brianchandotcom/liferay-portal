@@ -403,11 +403,13 @@ public class ResourceBlockPermissionPersistenceTest {
 
 		ResourceBlockPermission existingResourceBlockPermission = _persistence.findByPrimaryKey(newResourceBlockPermission.getPrimaryKey());
 
-		Assert.assertEquals(existingResourceBlockPermission.getResourceBlockId(),
-			ReflectionTestUtil.invoke(existingResourceBlockPermission,
+		Assert.assertEquals(Long.valueOf(
+				existingResourceBlockPermission.getResourceBlockId()),
+			ReflectionTestUtil.<Long>invoke(existingResourceBlockPermission,
 				"getOriginalResourceBlockId", new Class<?>[0]));
-		Assert.assertEquals(existingResourceBlockPermission.getRoleId(),
-			ReflectionTestUtil.invoke(existingResourceBlockPermission,
+		Assert.assertEquals(Long.valueOf(
+				existingResourceBlockPermission.getRoleId()),
+			ReflectionTestUtil.<Long>invoke(existingResourceBlockPermission,
 				"getOriginalRoleId", new Class<?>[0]));
 	}
 

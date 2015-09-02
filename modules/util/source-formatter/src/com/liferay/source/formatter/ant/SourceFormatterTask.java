@@ -88,6 +88,10 @@ public class SourceFormatterTask extends Task {
 		_sourceFormatterArgs.setPrintErrors(printErrors);
 	}
 
+	public void setFormatLocalChanges(boolean formatLocalChanges) {
+		_sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
+	}
+
 	public void setThrowException(boolean throwException) {
 		_sourceFormatterArgs.setThrowException(throwException);
 	}

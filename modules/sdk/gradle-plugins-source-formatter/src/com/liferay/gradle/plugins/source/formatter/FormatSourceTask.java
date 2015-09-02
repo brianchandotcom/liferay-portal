@@ -65,6 +65,7 @@ public class FormatSourceTask extends JavaExec {
 
 		args.add("source.auto.fix=" + isAutoFix());
 		args.add("source.copyright.file=" + getCopyrightFileName());
+		args.add("source.format.local.changes" + isFormatLocalChanges());
 		args.add("source.print.errors=" + isPrintErrors());
 		args.add("source.throw.exception=" + isThrowException());
 		args.add("source.use.properties=" + isUseProperties());
@@ -126,6 +127,10 @@ public class FormatSourceTask extends JavaExec {
 
 	public boolean isAutoFix() {
 		return _sourceFormatterArgs.isAutoFix();
+	}
+
+	public boolean isFormatLocalChanges() {
+		return _sourceFormatterArgs.isFormatLocalChanges();
 	}
 
 	public boolean isPrintErrors() {

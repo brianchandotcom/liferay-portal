@@ -170,23 +170,7 @@ public class SourceFormatterHelper {
 
 						fileNames.add(fileName);
 
-						if (!_useProperties) {
-							return FileVisitResult.CONTINUE;
-						}
-
-						File file = new File(fileName);
-
-						String encodedFileName = StringUtil.replace(
-							fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-						long timestamp = GetterUtil.getLong(
-							_properties.getProperty(encodedFileName));
-
-						if (timestamp < file.lastModified()) {
-							_properties.setProperty(
-								encodedFileName,
-								String.valueOf(file.lastModified()));
-						}
+						updateProperties(fileName);
 
 						return FileVisitResult.CONTINUE;
 					}
@@ -197,6 +181,25 @@ public class SourceFormatterHelper {
 			});
 
 		return fileNames;
+	}
+
+	protected void updateProperties(String fileName) {
+		if (!_useProperties) {
+			return;
+		}
+
+		File file = new File(fileName);
+
+		String encodedFileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		long timestamp = GetterUtil.getLong(
+			_properties.getProperty(encodedFileName));
+
+		if (timestamp < file.lastModified()) {
+			_properties.setProperty(
+				encodedFileName, String.valueOf(file.lastModified()));
+		}
 	}
 
 	private final Properties _properties = new Properties();

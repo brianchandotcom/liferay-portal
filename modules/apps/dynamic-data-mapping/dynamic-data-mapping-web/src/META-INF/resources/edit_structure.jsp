@@ -133,7 +133,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 	<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
 
-	<c:if test="<%= structureVersion != null %>">
+	<c:if test="<%= ddmDisplay.isVersioningEnabled() && structureVersion != null %>">
 		<aui:workflow-status model="<%= DDMStructure.class %>" status="<%= structureVersion.getStatus() %>" version="<%= structureVersion.getVersion() %>" />
 
 		<div class="structure-history-toolbar" id="<portlet:namespace />structureHistoryToolbar"></div>
@@ -250,7 +250,9 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 <aui:button-row>
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(false);" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
 
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(true);" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
+	<c:if test="<%= ddmDisplay.isVersioningEnabled() %>">
+		<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(true);" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
+	</c:if>
 
 	<aui:button href="<%= redirect %>" type="cancel" />
 </aui:button-row>

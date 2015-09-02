@@ -1,41 +1,6 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer" class="com.liferay.dynamic.data.mapping.io.impl.DDMFormFieldTypesJSONSerializerImpl" />
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializerUtil">
-		<property name="DDMFormFieldTypesJSONSerializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer" />
-	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer" class="com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONDeserializerImpl" />
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil">
-		<property name="DDMFormJSONDeserializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer" />
-	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil">
-		<property name="DDMFormJSONSerializer">
-			<bean class="com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONSerializerImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer" class="com.liferay.dynamic.data.mapping.io.impl.DDMFormLayoutJSONDeserializerImpl" />
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializerUtil">
-		<property name="DDMFormLayoutJSONDeserializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONDeserializer" />
-	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil">
-		<property name="DDMFormLayoutJSONSerializer">
-			<bean class="com.liferay.dynamic.data.mapping.io.impl.DDMFormLayoutJSONSerializerImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer" class="com.liferay.dynamic.data.mapping.io.impl.DDMFormValuesJSONDeserializerImpl" />
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil">
-		<property name="DDMFormValuesJSONDeserializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializer" />
-	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil">
-		<property name="DDMFormValuesJSONSerializer">
-			<bean class="com.liferay.dynamic.data.mapping.io.impl.DDMFormValuesJSONSerializerImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer" class="com.liferay.dynamic.data.mapping.io.impl.DDMFormXSDDeserializerImpl" />
-	<bean id="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil" class="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializerUtil">
-		<property name="DDMFormXSDDeserializer" ref="com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer" />
-	</bean>
 	<bean id="com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistry" class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldRendererRegistryImpl">
 		<property name="defaultDDMFormFieldRenderer">
 			<bean class="com.liferay.dynamic.data.mapping.render.impl.DDMFormFieldFreeMarkerRenderer" />

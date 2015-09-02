@@ -86,11 +86,15 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void addJSPIncludeFileNames(String fileName) {
+	protected Set<String> getJSPIncludeFileNames(
+		String fileName, Set<String> fileNames) {
+
+		Set<String> includeFileNames = new HashSet<>();
+
 		String content = _jspContents.get(fileName);
 
 		if (Validator.isNull(content)) {
-			return;
+			return includeFileNames;
 		}
 
 		for (int x = 0;;) {
@@ -133,20 +137,33 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				!includeFileName.endsWith("html/common/init.jsp") &&
 				!includeFileName.endsWith("html/portlet/init.jsp") &&
 				!includeFileName.endsWith("html/taglib/init.jsp") &&
-				!_includeFileNames.contains(includeFileName)) {
+				!fileNames.contains(includeFileName)) {
 
-				_includeFileNames.add(includeFileName);
+				includeFileNames.add(includeFileName);
 			}
 
 			x = y;
 		}
+
+		return includeFileNames;
 	}
 
-	protected void addJSPReferenceFileNames(String fileName) {
+	protected Set<String> getJSPReferenceFileNames(
+		String fileName, Set<String> fileNames) {
+
+		Set<String> referenceFileNames = new HashSet<>();
+
+		if (!fileName.endsWith("init.jsp") &&
+			!fileName.endsWith("init.jspf") &&
+			!fileName.contains("init-ext.jsp")) {
+
+			return referenceFileNames;
+		}
+
 		for (Map.Entry<String, String> entry : _jspContents.entrySet()) {
 			String referenceFileName = entry.getKey();
 
-			if (_includeFileNames.contains(referenceFileName)) {
+			if (fileNames.contains(referenceFileName)) {
 				continue;
 			}
 
@@ -182,12 +199,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					content.contains(
 						"<%@ include file=\"" + fileName.substring(x + 1))) {
 
-					_includeFileNames.add(referenceFileName);
+					referenceFileNames.add(referenceFileName);
 
 					break;
 				}
 			}
 		}
+
+		return referenceFileNames;
 	}
 
 	protected void addJSPUnusedImports(
@@ -1325,14 +1344,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (!_checkedForIncludesFileNames.contains(fileName)) {
-			addJSPIncludeFileNames(fileName);
-
-			if (fileName.endsWith("init.jsp") ||
-				fileName.endsWith("init.jspf") ||
-				fileName.contains("init-ext.jsp")) {
-
-				addJSPReferenceFileNames(fileName);
-			}
+			_includeFileNames.addAll(
+				getJSPIncludeFileNames(fileName, _includeFileNames));
+			_includeFileNames.addAll(
+				getJSPReferenceFileNames(fileName, _includeFileNames));
 		}
 
 		_checkedForIncludesFileNames.add(fileName);

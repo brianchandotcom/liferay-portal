@@ -24,7 +24,9 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 String rowHREF = (String)row.getParameter("rowHREF");
 %>
 
-<a href="<%= rowHREF %>">
+<c:if test="<%= Validator.isNotNull(rowHREF) %>">
+	<a href="<%= rowHREF %>">
+</c:if>
 
 <c:choose>
 	<c:when test="<%= template.isSmallImage() %>">
@@ -35,4 +37,6 @@ String rowHREF = (String)row.getParameter("rowHREF");
 	</c:otherwise>
 </c:choose>
 
-</a>
+<c:if test="<%= Validator.isNotNull(rowHREF) %>">
+	</a>
+</c:if>

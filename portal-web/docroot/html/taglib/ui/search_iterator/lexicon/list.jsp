@@ -113,7 +113,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 
 					if (rowChecker != null) {
 						if (i == 0) {
-							cssClass = rowChecker.getCssClass();
+							cssClass = "checkbox-cell checkbox-default";
 						}
 						else {
 							com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i - 1);
@@ -200,7 +200,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 
 				textSearchEntry.setAlign(rowChecker.getAlign());
 				textSearchEntry.setColspan(rowChecker.getColspan());
-				textSearchEntry.setCssClass(rowChecker.getCssClass());
+				textSearchEntry.setCssClass("checkbox-cell checkbox-default");
 				textSearchEntry.setName(rowChecker.getRowCheckBox(request, rowIsChecked, rowIsDisabled, row.getPrimaryKey()));
 				textSearchEntry.setValign(rowChecker.getValign());
 

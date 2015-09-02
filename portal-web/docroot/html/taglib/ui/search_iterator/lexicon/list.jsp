@@ -238,7 +238,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 				<td class="<%= columnClassName %> text-<%= entry.getAlign() %> text-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>">
 
 				<c:choose>
-					<c:when test="<%= entry.getTruncate() %>">
+					<c:when test="<%= entry.isTruncate() %>">
 						<span class="truncate-text">
 
 							<%

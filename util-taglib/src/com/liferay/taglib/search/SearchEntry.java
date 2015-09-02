@@ -46,13 +46,13 @@ public abstract class SearchEntry
 	}
 
 	@Override
-	public boolean getTruncate() {
-		return _truncate;
+	public String getValign() {
+		return _valign;
 	}
 
 	@Override
-	public String getValign() {
-		return _valign;
+	public boolean isTruncate() {
+		return _truncate;
 	}
 
 	@Override

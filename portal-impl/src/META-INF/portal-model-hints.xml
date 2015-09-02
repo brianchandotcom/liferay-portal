@@ -1626,7 +1626,7 @@
 		</field>
 		<field name="type" type="int" />
 		<field name="defaultData" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />

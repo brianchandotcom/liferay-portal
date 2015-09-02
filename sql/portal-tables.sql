@@ -564,7 +564,7 @@ create table ExpandoColumn (
 	tableId LONG,
 	name VARCHAR(75) null,
 	type_ INTEGER,
-	defaultData STRING null,
+	defaultData TEXT null,
 	typeSettings TEXT null
 );
 

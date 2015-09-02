@@ -14,13 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormValuesJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -28,25 +28,14 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({LocaleUtil.class})
 public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
-
-	@Before
-	public void setUp() {
-		setUpDDMFormValuesJSONSerializerUtil();
-		setUpLocaleUtil();
-		setUpJSONFactoryUtil();
-	}
 
 	@Test
 	public void testFormValuesSerialization() throws Exception {
@@ -55,7 +44,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 
 		DDMFormValues ddmFormValues = createDDMFormValues();
 
-		String actualJSON = DDMFormValuesJSONSerializerUtil.serialize(
+		String actualJSON = _ddmFormValuesJSONSerializer.serialize(
 			ddmFormValues);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
@@ -106,7 +95,8 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		DDMFormValues ddmFormValues = new DDMFormValues(null);
 
 		ddmFormValues.setAvailableLocales(
-			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US));
+			DDMFormValuesTestUtil.createAvailableLocales(
+				LocaleUtil.BRAZIL, LocaleUtil.US));
 		ddmFormValues.setDDMFormFieldValues(createDDMFormFieldValues());
 		ddmFormValues.setDefaultLocale(LocaleUtil.US);
 
@@ -242,12 +232,7 @@ public class DDMFormValuesJSONSerializerTest extends BaseDDMTestCase {
 		return value;
 	}
 
-	protected void setUpDDMFormValuesJSONSerializerUtil() {
-		DDMFormValuesJSONSerializerUtil ddmFormValuesJSONSerializerUtil =
-			new DDMFormValuesJSONSerializerUtil();
-
-		ddmFormValuesJSONSerializerUtil.setDDMFormValuesJSONSerializer(
-			new DDMFormValuesJSONSerializerImpl());
-	}
+	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer =
+		new DDMFormValuesJSONSerializerImpl();
 
 }

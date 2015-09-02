@@ -15,12 +15,12 @@
 package com.liferay.dynamic.data.mapping.io.internal;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializer;
-import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -31,9 +31,13 @@ import com.liferay.portal.kernel.util.MapUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Bruno Basto
  */
+@Component(immediate = true)
 public class DDMFormFieldTypesJSONSerializerImpl
 	implements DDMFormFieldTypesJSONSerializer {
 
@@ -50,6 +54,20 @@ public class DDMFormFieldTypesJSONSerializerImpl
 		return jsonArray.toString();
 	}
 
+	@Reference
+	protected void setDDMFormFieldTypeServicesTracker(
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+	}
+
+	@Reference
+	protected void setDDMFormJSONSerializer(
+		DDMFormJSONSerializer ddmFormJSONSerializer) {
+
+		_ddmFormJSONSerializer = ddmFormJSONSerializer;
+	}
+
 	protected JSONObject toJSONObject(
 			Class<? extends DDMFormFieldTypeSettings> ddmFormFieldTypeSettings)
 		throws PortalException {
@@ -58,8 +76,7 @@ public class DDMFormFieldTypesJSONSerializerImpl
 			ddmFormFieldTypeSettings);
 
 		String serializedDDMFormFieldTypeSettings =
-			DDMFormJSONSerializerUtil.serialize(
-				ddmFormFieldTypeSettingsDDMForm);
+			_ddmFormJSONSerializer.serialize(ddmFormFieldTypeSettingsDDMForm);
 
 		return JSONFactoryUtil.createJSONObject(
 			serializedDDMFormFieldTypeSettings);
@@ -71,7 +88,7 @@ public class DDMFormFieldTypesJSONSerializerImpl
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		Map<String, Object> ddmFormFieldTypeProperties =
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldTypeProperties(
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
 				ddmFormFieldType.getName());
 
 		jsonObject.put(
@@ -99,7 +116,7 @@ public class DDMFormFieldTypesJSONSerializerImpl
 				ddmFormFieldTypeProperties, "ddm.form.field.type.system"));
 
 		DDMFormFieldRenderer ddmFormFieldRenderer =
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldRenderer(
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
 				ddmFormFieldType.getName());
 
 		jsonObject.put(
@@ -107,5 +124,8 @@ public class DDMFormFieldTypesJSONSerializerImpl
 
 		return jsonObject;
 	}
+
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
+	private DDMFormJSONSerializer _ddmFormJSONSerializer;
 
 }

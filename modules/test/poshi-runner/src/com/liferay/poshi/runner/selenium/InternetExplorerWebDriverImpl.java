@@ -14,11 +14,11 @@
 
 package com.liferay.poshi.runner.selenium;
 
-import org.openqa.selenium.JavascriptExecutor;
+import com.liferay.poshi.runner.util.PropsValues;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.internal.WrapsDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
  * @author Brian Wing Shun Chan
@@ -39,52 +39,35 @@ public class InternetExplorerWebDriverImpl extends BaseWebDriverImpl {
 
 	@Override
 	public void javaScriptMouseDown(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
+		if (PropsValues.SELENIUM_DESIRED_CAPABILITIES_VERSION.equals("11.0")) {
+			WebDriverHelper.executeJavaScriptMouseEvent(
+				this, locator, "pointerdown");
 		}
-
-		StringBuilder sb = new StringBuilder(4);
-
-		sb.append("var element = arguments[0];");
-		sb.append("var event = document.createEvent('MouseEvents');");
-		sb.append("event.initEvent('pointerdown', true, false);");
-		sb.append("element.dispatchEvent(event);");
-
-		javascriptExecutor.executeScript(sb.toString(), webElement);
+		else {
+			super.javaScriptMouseDown(locator);
+		}
 	}
 
 	@Override
 	public void javaScriptMouseUp(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
+		if (PropsValues.SELENIUM_DESIRED_CAPABILITIES_VERSION.equals("11.0")) {
+			WebDriverHelper.executeJavaScriptMouseEvent(
+				this, locator, "pointerup");
 		}
+		else {
+			super.javaScriptMouseUp(locator);
+		}
+	}
 
-		StringBuilder sb = new StringBuilder(5);
+	private static final DesiredCapabilities _desiredCapabilities;
 
-		sb.append("var element = arguments[0];");
-		sb.append("var event = document.createEvent('MouseEvents');");
-		sb.append("event.initEvent('pointerup', true, false);");
-		sb.append("element.dispatchEvent(event)");
+	static {
+		_desiredCapabilities = DesiredCapabilities.internetExplorer();
 
-		javascriptExecutor.executeScript(sb.toString(), webElement);
+		_desiredCapabilities.setCapability(
+			InternetExplorerDriver.
+				INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
+			true);
 	}
 
 }

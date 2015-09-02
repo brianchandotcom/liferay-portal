@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.util.PropsValues;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -42,6 +43,10 @@ public class InternetExplorerRemoteWebDriverImpl
 	static {
 		_desiredCapabilities = DesiredCapabilities.internetExplorer();
 
+		_desiredCapabilities.setCapability(
+			InternetExplorerDriver.
+				INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS,
+			true);
 		_desiredCapabilities.setCapability(
 			"platform", PropsValues.SELENIUM_DESIRED_CAPABILITIES_PLATFORM);
 		_desiredCapabilities.setCapability(

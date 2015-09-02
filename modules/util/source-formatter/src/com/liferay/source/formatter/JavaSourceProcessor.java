@@ -853,16 +853,34 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					fileName);
 		}
 
-		// LPS-56706
+		// LPS-56706 & LPS-57722
 
-		if (portalSource && isModulesFile(absolutePath) &&
-			absolutePath.contains("/test/integration/") &&
-			newContent.contains("@RunWith(Arquillian.class)") &&
-			newContent.contains("import org.powermock.")) {
+		if (portalSource && isModulesFile(absolutePath)) {
+			if (absolutePath.contains("/test/integration/")) {
+				if (newContent.contains("@RunWith(Arquillian.class)") &&
+					newContent.contains("import org.powermock.")) {
 
-			processErrorMessage(
-				fileName,
-				"Do not use PowerMock inside Arquillian tests: " + fileName);
+					processErrorMessage(
+						fileName,
+						"Do not use PowerMock inside Arquillian tests: " +
+							fileName);
+				}
+
+				if (!packagePath.endsWith(".test")) {
+					processErrorMessage(
+						fileName,
+						"Module integration test must be under a test " +
+							"subpackage" + fileName);
+				}
+			}
+			else if (absolutePath.contains("/test/unit/") &&
+					 packagePath.endsWith(".test")) {
+
+				processErrorMessage(
+					fileName,
+					"Module unit test should not be under a test subpackage" +
+						fileName);
+			}
 		}
 
 		// LPS-48156

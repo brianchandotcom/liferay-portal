@@ -18,6 +18,10 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+
 /**
  * @author Marcellus Tavares
  */
@@ -33,17 +37,20 @@ public class DDMFormJSONDeserializerUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			DDMFormJSONDeserializerUtil.class);
 
-		return _ddmFormJSONDeserializer;
+		return _serviceTracker.getService();
 	}
 
-	public void setDDMFormJSONDeserializer(
-		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
+	private static final ServiceTracker
+		<DDMFormJSONDeserializer, DDMFormJSONDeserializer> _serviceTracker;
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			DDMFormJSONDeserializerUtil.class);
 
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+		_serviceTracker = new ServiceTracker<>(
+			bundle.getBundleContext(), DDMFormJSONDeserializer.class, null);
+
+		_serviceTracker.open();
 	}
-
-	private static DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 
 }

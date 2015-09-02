@@ -28,10 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property =
-		{"model.class.name=com.liferay.portlet.documentlibrary.model." +
-			"DLFileEntry"
-		},
+	property = {"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntry"},
 	service = PermissionUpdateHandler.class
 )
 public class DLFileEntryPermissionUpdateHandler

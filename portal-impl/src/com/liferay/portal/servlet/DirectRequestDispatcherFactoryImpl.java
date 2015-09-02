@@ -117,7 +117,7 @@ public class DirectRequestDispatcherFactoryImpl
 			}
 
 			requestDispatcher = new DirectRequestDispatcher(
-				servlet, queryString);
+				servlet, path, queryString);
 		}
 
 		return _pacl.getRequestDispatcher(servletContext, requestDispatcher);

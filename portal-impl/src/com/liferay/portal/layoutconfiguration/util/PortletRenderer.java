@@ -88,11 +88,11 @@ public class PortletRenderer {
 			HttpServletRequest request, HttpServletResponse response)
 		throws PortletContainerException {
 
-		request.setAttribute(
-			WebKeys.PARALLEL_RENDERING_TIMEOUT_ERROR, Boolean.TRUE);
-
 		request = PortletContainerUtil.setupOptionalRenderParameters(
 			request, null, _columnId, _columnPos, _columnCount);
+
+		request.setAttribute(
+			WebKeys.PARALLEL_RENDERING_TIMEOUT_ERROR, Boolean.TRUE);
 
 		_restrictPortletServletRequest = (RestrictPortletServletRequest)request;
 

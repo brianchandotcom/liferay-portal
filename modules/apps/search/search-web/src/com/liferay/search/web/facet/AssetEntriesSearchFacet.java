@@ -51,7 +51,7 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/META-INF/resources/facets/configuration/asset_entries.jsp";
+		return "/facets/configuration/asset_entries.jsp";
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/META-INF/resources/facets/view/asset_entries.jsp";
+		return "/facets/view/asset_entries.jsp";
 	}
 
 	@Override

@@ -17,6 +17,10 @@
 		<param-name>com.ibm.websphere.portletcontainer.PortletDeploymentEnabled</param-name>
 		<param-value>false</param-value>
 	</context-param>
+	<context-param>
+		<param-name>osgi.http.endpoint</param-name>
+		<param-value>/o/</param-value>
+	</context-param>
 	<filter>
 		<filter-name>Invoker Filter - ERROR</filter-name>
 		<filter-class>com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter</filter-class>

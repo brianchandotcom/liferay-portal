@@ -35,6 +35,10 @@ public interface LiferayPortletRequest extends PortletRequest {
 
 	public HttpServletRequest getHttpServletRequest();
 
+	public long getPlid();
+
+	public String getPortletName();
+
 	public Map<String, String[]> getRenderParameters();
 
 }

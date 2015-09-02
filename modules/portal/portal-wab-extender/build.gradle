@@ -3,7 +3,7 @@ dependencies {
 	compile group: "commons-io", name: "commons-io", transitive: false, version: "1.4"
 	compile group: "org.apache.felix", name: "org.apache.felix.utils", transitive: false, version: "1.6.0"
 	compile group: "org.apache.felix", name: "org.apache.felix.webconsole", transitive: false, version: "4.2.2"
-	compile group: "org.eclipse.equinox", name: "org.eclipse.equinox.http.servlet", version: "1.2.1-SNAPSHOT"
+	compile group: "org.eclipse.equinox", name: "org.eclipse.equinox.http.servlet", version: "1.2.100-SNAPSHOT"
 	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi.services", version: "3.5.0-SNAPSHOT"
 	compile group: "org.glassfish", name: "javax.servlet", transitive: false, version: "3.2-b06"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"

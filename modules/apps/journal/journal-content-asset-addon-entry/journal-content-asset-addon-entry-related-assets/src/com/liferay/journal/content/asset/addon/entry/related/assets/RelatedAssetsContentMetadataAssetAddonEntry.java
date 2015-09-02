@@ -39,7 +39,7 @@ public class RelatedAssetsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getJspPath() {
-		return "/META-INF/resources/related_assets.jsp";
+		return "/related_assets.jsp";
 	}
 
 	@Override

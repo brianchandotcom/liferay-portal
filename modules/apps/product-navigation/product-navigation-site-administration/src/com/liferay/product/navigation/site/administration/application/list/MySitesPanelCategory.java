@@ -52,7 +52,7 @@ public class MySitesPanelCategory extends BaseJSPPanelCategory {
 
 	@Override
 	public String getJspPath() {
-		return "/META-INF/resources/my_sites/my_sites.jsp";
+		return "/my_sites/my_sites.jsp";
 	}
 
 	@Override

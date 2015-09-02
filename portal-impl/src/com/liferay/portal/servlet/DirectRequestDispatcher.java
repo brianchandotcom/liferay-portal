@@ -30,8 +30,11 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DirectRequestDispatcher implements RequestDispatcher {
 
-	public DirectRequestDispatcher(Servlet servlet, String queryString) {
+	public DirectRequestDispatcher(
+		Servlet servlet, String path, String queryString) {
+
 		_servlet = servlet;
+		_path = path;
 		_queryString = queryString;
 	}
 
@@ -51,12 +54,16 @@ public class DirectRequestDispatcher implements RequestDispatcher {
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
+		servletRequest.setAttribute(RequestDispatcher.INCLUDE_PATH_INFO, null);
+		servletRequest.setAttribute(
+			RequestDispatcher.INCLUDE_SERVLET_PATH, _path);
 		servletRequest = DynamicServletRequest.addQueryString(
 			(HttpServletRequest)servletRequest, _queryString);
 
 		_servlet.service(servletRequest, servletResponse);
 	}
 
+	private final String _path;
 	private final String _queryString;
 	private final Servlet _servlet;
 

@@ -39,7 +39,7 @@ public class PrintUserToolAssetAddonEntry
 
 	@Override
 	public String getJspPath() {
-		return "/META-INF/resources/print.jsp";
+		return "/print.jsp";
 	}
 
 	@Override

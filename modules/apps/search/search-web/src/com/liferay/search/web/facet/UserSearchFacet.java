@@ -37,7 +37,7 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/META-INF/resources/facets/configuration/users.jsp";
+		return "/facets/configuration/users.jsp";
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/META-INF/resources/facets/view/users.jsp";
+		return "/facets/view/users.jsp";
 	}
 
 	public String getFacetClassName() {

@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -57,7 +58,8 @@ public class PortalIncludeUtil {
 			WebKeys.CTX);
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(path);
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				servletContext, path);
 
 		requestDispatcher.include(
 			request, new PipingServletResponse(response, pageContext.getOut()));

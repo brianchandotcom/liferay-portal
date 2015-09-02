@@ -283,6 +283,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		return _request.getParameterValues(name);
 	}
 
+	public long getPlid() {
+		return _plid;
+	}
+
 	@Override
 	public PortalContext getPortalContext() {
 		return _portalContext;

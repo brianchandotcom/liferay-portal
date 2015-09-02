@@ -82,7 +82,7 @@ public class MentionsCompanySettingsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/META-INF/resources/portal_settings/mentions.jsp";
+		return "/portal_settings/mentions.jsp";
 	}
 
 }

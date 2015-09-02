@@ -37,7 +37,7 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/META-INF/resources/facets/configuration/scopes.jsp";
+		return "/facets/configuration/scopes.jsp";
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class ScopeSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/META-INF/resources/facets/view/scopes.jsp";
+		return "/facets/view/scopes.jsp";
 	}
 
 	public String getFacetClassName() {

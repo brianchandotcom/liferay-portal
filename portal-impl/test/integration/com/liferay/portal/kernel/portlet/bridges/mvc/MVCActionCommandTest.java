@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.mvcactioncommand.TestMVCActionCommand1;
 import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.mvcactioncommand.TestMVCActionCommand2;
 import com.liferay.portal.kernel.portlet.bridges.mvc.bundle.mvcactioncommand.TestPortlet;
@@ -27,8 +28,14 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
 
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.GenericPortlet;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -37,6 +44,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.portlet.MockActionRequest;
 import org.springframework.mock.web.portlet.MockActionResponse;
 
@@ -74,7 +82,7 @@ public class MVCActionCommandTest {
 
 	@Test
 	public void testMultipleMVCActionCommands() throws Exception {
-		MockActionRequest mockActionRequest = new MockActionRequest();
+		MockActionRequest mockActionRequest = new MockLiferayPortletRequest();
 
 		mockActionRequest.addParameter(
 			ActionRequest.ACTION_NAME,
@@ -103,7 +111,7 @@ public class MVCActionCommandTest {
 
 	@Test
 	public void testSingleMVCActionCommand() throws Exception {
-		MockActionRequest mockActionRequest = new MockActionRequest();
+		MockActionRequest mockActionRequest = new MockLiferayPortletRequest();
 
 		mockActionRequest.addParameter(
 			ActionRequest.ACTION_NAME,
@@ -124,5 +132,35 @@ public class MVCActionCommandTest {
 	private static GenericPortlet _genericPortlet;
 	private static ServiceTracker<GenericPortlet, GenericPortlet>
 		_genericPortletServiceTracker;
+
+	private class MockLiferayPortletRequest extends MockActionRequest
+		implements LiferayPortletRequest {
+
+		@Override
+		public void defineObjects(
+			PortletConfig portletConfig, PortletResponse portletResponse) {
+		}
+
+		@Override
+		public HttpServletRequest getHttpServletRequest() {
+			return new MockHttpServletRequest();
+		}
+
+		@Override
+		public long getPlid() {
+			return 0;
+		}
+
+		@Override
+		public String getPortletName() {
+			return null;
+		}
+
+		@Override
+		public Map<String, String[]> getRenderParameters() {
+			return null;
+		}
+
+	}
 
 }

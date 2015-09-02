@@ -24,8 +24,6 @@ String type = (String)request.getAttribute("liferay-ui:search:type");
 
 String id = searchContainer.getId(request, namespace);
 
-int end = searchContainer.getEnd();
-int total = searchContainer.getTotal();
 List resultRows = searchContainer.getResultRows();
 List<String> headerNames = searchContainer.getHeaderNames();
 List<String> normalizedHeaderNames = searchContainer.getNormalizedHeaderNames();
@@ -33,26 +31,12 @@ Map orderableHeaders = searchContainer.getOrderableHeaders();
 String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
 RowChecker rowChecker = searchContainer.getRowChecker();
 
-if (end > total) {
-	end = total;
-}
-
 if (rowChecker != null) {
 	if (headerNames != null) {
 		headerNames.add(0, rowChecker.getAllRowsCheckBox(request));
 
 		normalizedHeaderNames.add(0, "rowChecker");
 	}
-}
-
-String url = StringPool.BLANK;
-
-PortletURL iteratorURL = searchContainer.getIteratorURL();
-
-if (iteratorURL != null) {
-	url = iteratorURL.toString();
-	url = HttpUtil.removeParameter(url, namespace + searchContainer.getOrderByColParam());
-	url = HttpUtil.removeParameter(url, namespace + searchContainer.getOrderByTypeParam());
 }
 
 JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
@@ -252,12 +236,13 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 			%>
 
 				<td class="<%= columnClassName %> text-<%= entry.getAlign() %> text-<%= entry.getValign() %>" colspan="<%= entry.getColspan() %>">
+
 				<c:choose>
 					<c:when test="<%= entry.getTruncate() %>">
 						<span class="truncate-text">
 
 							<%
-								entry.print(pageContext.getOut(), request, response);
+							entry.print(pageContext.getOut(), request, response);
 							%>
 
 						</span>
@@ -265,7 +250,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 					<c:otherwise>
 
 						<%
-							entry.print(pageContext.getOut(), request, response);
+						entry.print(pageContext.getOut(), request, response);
 						%>
 
 					</c:otherwise>
@@ -286,6 +271,22 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 			request.removeAttribute("liferay-ui:search-container-row:rowId");
 		}
 		%>
+
+		<c:if test="<%= headerNames != null %>">
+			<tr class="lfr-template">
+
+				<%
+				for (int i = 0; i < headerNames.size(); i++) {
+				%>
+
+					<td class="table-cell"></td>
+
+				<%
+				}
+				%>
+
+			</tr>
+		</c:if>
 
 		</tbody>
 		</table>

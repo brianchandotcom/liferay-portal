@@ -31,7 +31,7 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolder
 
 boolean defaultFolderView = false;
 
-if ((folder == null) && (defaultFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+if (defaultFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	defaultFolderView = true;
 }
 

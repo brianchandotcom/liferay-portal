@@ -7,10 +7,11 @@ buildService {
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
 	compile group: "com.liferay", name: "net.fortuna.ical4j", version: "1.0"
-	compile group: "javax.mail", name: "mail", version: "1.4"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile group: "rome", name: "rome", version: "1.0"
 	compile project(":apps:calendar:calendar-api")
+
+	provided group: "javax.mail", name: "mail", version: "1.4"
 }
 
 liferay {

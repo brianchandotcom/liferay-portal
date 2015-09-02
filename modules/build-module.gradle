@@ -125,7 +125,7 @@ dependencies {
 
 	portal files(appServerClassesPortalDir)
 	portal fileTree(dir: appServerLibPortalDir, include: "*.jar")
-	portal fileTree(dir: liferay.appServerLibGlobalDir, include: "*.jar")
+	portal fileTree(dir: liferay.appServerLibGlobalDir, exclude: "mail.jar", include: "*.jar")
 	portal group: "com.liferay", name: "net.sf.jargs", version: "1.0"
 	portal group: "com.thoughtworks.qdox", name: "qdox", version: "1.12.1"
 	portal group: "javax.activation", name: "activation", version: "1.1"

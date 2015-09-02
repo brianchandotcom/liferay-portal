@@ -6,8 +6,9 @@ buildService {
 
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
-	compile group: "javax.mail", name: "mail", version: "1.4"
 	compile project(":apps:social:social-networking-api")
+
+	provided group: "javax.mail", name: "mail", version: "1.4"
 }
 
 liferay {

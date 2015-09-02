@@ -1,7 +1,8 @@
 dependencies {
-	compile group: "javax.mail", name: "mail", version: "1.4"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
+
+	provided group: "javax.mail", name: "mail", version: "1.4"
 }
 
 liferay {

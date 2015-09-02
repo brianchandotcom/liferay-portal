@@ -15,6 +15,7 @@
 package com.liferay.site.teams.web.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -127,7 +128,7 @@ public class TeamStagedModelDataHandler
 				existingTeam = TeamLocalServiceUtil.getTeam(
 					portletDataContext.getScopeGroupId(), team.getName());
 			}
-			catch (Exception e) {
+			catch (NoSuchTeamException nste) {
 			}
 		}
 

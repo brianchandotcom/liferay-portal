@@ -17,8 +17,8 @@ package com.liferay.dynamic.data.mapping;
 import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONDeserializerImpl;
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONDeserializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
@@ -84,6 +84,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -91,9 +92,23 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Pablo Carvalho
  * @author Miguel Angelo Caldas Gallindo
  */
+@PrepareForTest(
+	{
+		DDMFormFieldTypeServicesTrackerUtil.class,
+		DDMFormJSONDeserializerUtil.class, DDMFormJSONSerializerUtil.class,
+		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
+		LocaleUtil.class
+	}
+)
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor(
-	"com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil"
+	{
+		"com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil",
+		"com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil",
+		"com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil",
+		"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil",
+		"com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil"
+	}
 )
 public abstract class BaseDDMTestCase extends PowerMockito {
 
@@ -472,20 +487,32 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		);
 	}
 
-	protected void setUpDDMFormJSONDeserializerUtil() {
-		DDMFormJSONDeserializerUtil ddmFormJSONDeserializerUtil =
-			new DDMFormJSONDeserializerUtil();
+	protected void setUpDDMFormJSONDeserializerUtil() throws Exception {
+		mockStatic(DDMFormJSONDeserializerUtil.class);
 
-		ddmFormJSONDeserializerUtil.setDDMFormJSONDeserializer(
-			new DDMFormJSONDeserializerImpl());
+		when(
+			DDMFormJSONDeserializerUtil.getDDMFormJSONDeserializer()
+		).thenReturn(
+			new DDMFormJSONDeserializerImpl()
+		);
+
+		when(
+			DDMFormJSONDeserializerUtil.deserialize(Matchers.anyString())
+		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMFormJSONSerializerUtil() {
-		DDMFormJSONSerializerUtil ddmFormJSONSerializerUtil =
-			new DDMFormJSONSerializerUtil();
+		mockStatic(DDMFormJSONSerializerUtil.class);
 
-		ddmFormJSONSerializerUtil.setDDMFormJSONSerializer(
-			new DDMFormJSONSerializerImpl());
+		when(
+			DDMFormJSONSerializerUtil.getDDMFormJSONSerializer()
+		).thenReturn(
+			new DDMFormJSONSerializerImpl()
+		);
+
+		when(
+			DDMFormJSONSerializerUtil.serialize(Matchers.any(DDMForm.class))
+		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMStructureLocalServiceUtil() {

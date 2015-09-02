@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BaseRelatedEntryIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentHelper;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -98,8 +97,7 @@ import javax.portlet.PortletResponse;
  */
 @OSGiBeanProperties
 public class DLFileEntryIndexer
-	extends BaseIndexer<DLFileEntry>
-	implements DDMStructureIndexer, RelatedEntryIndexer {
+	extends BaseIndexer<DLFileEntry> implements RelatedEntryIndexer {
 
 	public static final String CLASS_NAME = DLFileEntry.class.getName();
 
@@ -301,31 +299,6 @@ public class DLFileEntryIndexer
 			if (Validator.isNotNull(expandoAttributes)) {
 				addSearchExpando(searchQuery, searchContext, expandoAttributes);
 			}
-		}
-	}
-
-	@Override
-	public void reindexDDMStructures(List<Long> ddmStructureIds)
-		throws SearchException {
-
-		if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
-			return;
-		}
-
-		try {
-			Indexer<DLFileEntry> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
-
-			List<DLFileEntry> dlFileEntries =
-				DLFileEntryLocalServiceUtil.getDDMStructureFileEntries(
-					ArrayUtil.toLongArray(ddmStructureIds));
-
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				indexer.reindex(dlFileEntry);
-			}
-		}
-		catch (Exception e) {
-			throw new SearchException(e);
 		}
 	}
 

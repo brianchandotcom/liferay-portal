@@ -307,8 +307,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm("name");
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			serviceContext.getScopeGroupId(), DLFileEntry.class.getName(),
-			ddmForm);
+			serviceContext.getScopeGroupId(),
+			DLFileEntryMetadata.class.getName(), ddmForm);
 
 		return addBaseModel(keywords, ddmStructure, serviceContext);
 	}

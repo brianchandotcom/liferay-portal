@@ -21,8 +21,10 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
@@ -87,6 +89,23 @@ public class DDMStructureLayoutServiceTest extends BaseDDMServiceTestCase {
 			"Text1", "Text2");
 	}
 
+	protected DDMFormLayoutPage createDDMFormLayoutPage(
+		DDMFormLayoutRow ddmFormLayoutRow) {
+
+		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
+
+		LocalizedValue ddmFormLayoutPageTitle = new LocalizedValue(
+			LocaleUtil.US);
+
+		ddmFormLayoutPageTitle.addString(LocaleUtil.US, "Page1");
+
+		ddmFormLayoutPage.setTitle(ddmFormLayoutPageTitle);
+
+		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
+
+		return ddmFormLayoutPage;
+	}
+
 	protected DDMFormLayoutRow createDDMFormLayoutRow(
 		List<DDMFormLayoutColumn> ddmFormLayoutColumns) {
 
@@ -110,15 +129,16 @@ public class DDMStructureLayoutServiceTest extends BaseDDMServiceTestCase {
 	protected void setUpDDMFormLayout() {
 		_ddmFormLayout = new DDMFormLayout();
 
+		_ddmFormLayout.setDefaultLocale(LocaleUtil.US);
+
 		List<DDMFormLayoutColumn> ddmFormLayoutColumns =
 			createDDMFormLayoutColumns("Text1", "Text2");
 
 		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
 			ddmFormLayoutColumns);
 
-		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
-
-		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow);
+		DDMFormLayoutPage ddmFormLayoutPage = createDDMFormLayoutPage(
+			ddmFormLayoutRow);
 
 		_ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
 	}

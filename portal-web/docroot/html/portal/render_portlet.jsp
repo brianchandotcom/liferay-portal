@@ -335,6 +335,14 @@ if (siteGroup.isStaged() && !siteGroup.isStagedRemotely() && !siteGroup.isStaged
 	themeDisplay.setSiteGroupId(siteGroup.getGroupId());
 }
 
+LayoutTypeController layoutTypeController = layoutTypePortlet.getLayoutTypeController();
+
+if (layoutTypeController.isFullPageDisplayable()) {
+	showMaxIcon = false;
+	showMinIcon = false;
+	showCloseIcon = false;
+}
+
 portletDisplay.recycle();
 
 portletDisplay.setActive(portlet.isActive());

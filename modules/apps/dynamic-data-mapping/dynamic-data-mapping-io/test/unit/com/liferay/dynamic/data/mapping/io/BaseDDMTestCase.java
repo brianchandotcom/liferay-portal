@@ -22,14 +22,11 @@ import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializerI
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONDeserializerImpl;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormXSDDeserializerImpl;
-import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
-import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldTypeSettingsTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -53,6 +50,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -171,119 +169,105 @@ public class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void setUpDDMFormFieldTypesJSONSerializerUtil() throws Exception {
-		mockStatic(DDMFormFieldTypesJSONSerializerUtil.class);
+		mockStatic(
+			DDMFormFieldTypesJSONSerializerUtil.class,
+			Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormFieldTypesJSONSerializerUtil.
-				getDDMFormFieldTypesJSONSerializer()
-		).thenReturn(
+		stub(
+			method(
+				DDMFormFieldTypesJSONSerializerUtil.class,
+				"getDDMFormFieldTypesJSONSerializer")
+		).toReturn(
 			new DDMFormFieldTypesJSONSerializerImpl()
 		);
-
-		when(
-			DDMFormFieldTypesJSONSerializerUtil.serialize(Matchers.anyList())
-		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMFormJSONDeserializerUtil() throws Exception {
-		mockStatic(DDMFormJSONDeserializerUtil.class);
+		mockStatic(
+			DDMFormJSONDeserializerUtil.class, Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormJSONDeserializerUtil.getDDMFormJSONDeserializer()
-		).thenReturn(
+		stub(
+			method(
+				DDMFormJSONDeserializerUtil.class, "getDDMFormJSONDeserializer")
+		).toReturn(
 			new DDMFormJSONDeserializerImpl()
 		);
-
-		when(
-			DDMFormJSONDeserializerUtil.deserialize(Matchers.anyString())
-		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMFormJSONSerializerUtil() {
-		mockStatic(DDMFormJSONSerializerUtil.class);
+		mockStatic(DDMFormJSONSerializerUtil.class, Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormJSONSerializerUtil.getDDMFormJSONSerializer()
-		).thenReturn(
+		stub(
+			method(DDMFormJSONSerializerUtil.class, "getDDMFormJSONSerializer")
+		).toReturn(
 			new DDMFormJSONSerializerImpl()
 		);
-
-		when(
-			DDMFormJSONSerializerUtil.serialize(Matchers.any(DDMForm.class))
-		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMFormLayoutJSONDeserializerUtil() throws Exception {
-		mockStatic(DDMFormLayoutJSONDeserializerUtil.class);
+		mockStatic(
+			DDMFormLayoutJSONDeserializerUtil.class,
+			Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormLayoutJSONDeserializerUtil.getDDMFormLayoutJSONDeserializer()
-		).thenReturn(
+		stub(
+			method(
+				DDMFormLayoutJSONDeserializerUtil.class,
+				"getDDMFormLayoutJSONDeserializer")
+		).toReturn(
 			new DDMFormLayoutJSONDeserializerImpl()
 		);
-
-		when(
-			DDMFormLayoutJSONDeserializerUtil.deserialize(Matchers.anyString())
-		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMFormLayoutJSONSerializerUtil() {
-		mockStatic(DDMFormLayoutJSONSerializerUtil.class);
+		mockStatic(
+			DDMFormLayoutJSONSerializerUtil.class, Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormLayoutJSONSerializerUtil.getDDMFormLayoutJSONSerializer()
-		).thenReturn(
+		stub(
+			method(
+				DDMFormLayoutJSONSerializerUtil.class,
+				"getDDMFormLayoutJSONSerializer")
+		).toReturn(
 			new DDMFormLayoutJSONSerializerImpl()
 		);
-
-		when(
-			DDMFormLayoutJSONSerializerUtil.serialize(
-				Matchers.any(DDMFormLayout.class))
-		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMFormValuesJSONDeserializerUtil() throws Exception {
-		mockStatic(DDMFormValuesJSONDeserializerUtil.class);
+		mockStatic(
+			DDMFormValuesJSONDeserializerUtil.class,
+			Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormValuesJSONDeserializerUtil.getDDMFormValuesJSONDeserializer()
-		).thenReturn(
+		stub(
+			method(
+				DDMFormValuesJSONDeserializerUtil.class,
+				"getDDMFormValuesJSONDeserializer")
+		).toReturn(
 			new DDMFormValuesJSONDeserializerImpl()
 		);
-
-		when(
-			DDMFormValuesJSONDeserializerUtil.deserialize(
-				Matchers.any(DDMForm.class), Matchers.anyString())
-		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMFormValuesJSONSerializerUtil() {
-		mockStatic(DDMFormValuesJSONSerializerUtil.class);
+		mockStatic(
+			DDMFormValuesJSONSerializerUtil.class, Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormValuesJSONSerializerUtil.getDDMFormValuesJSONSerializer()
-		).thenReturn(
+		stub(
+			method(
+				DDMFormValuesJSONSerializerUtil.class,
+				"getDDMFormValuesJSONSerializer")
+		).toReturn(
 			new DDMFormValuesJSONSerializerImpl()
 		);
-
-		when(
-			DDMFormValuesJSONSerializerUtil.serialize(
-				Matchers.any(DDMFormValues.class))
-		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMFormXSDDeserializerUtil() throws Exception {
-		mockStatic(DDMFormXSDDeserializerUtil.class);
+		mockStatic(
+			DDMFormXSDDeserializerUtil.class, Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormXSDDeserializerUtil.getDDMFormXSDDeserializer()
-		).thenReturn(
+		stub(
+			method(
+				DDMFormXSDDeserializerUtil.class, "getDDMFormXSDDeserializer")
+		).toReturn(
 			new DDMFormXSDDeserializerImpl()
 		);
-
-		when(
-			DDMFormXSDDeserializerUtil.deserialize(Matchers.anyString())
-		).thenCallRealMethod();
 	}
 
 	protected void setUpDefaultDDMFormFieldType() {

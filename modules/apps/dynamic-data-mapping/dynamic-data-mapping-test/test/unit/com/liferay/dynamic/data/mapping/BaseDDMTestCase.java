@@ -80,6 +80,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -488,31 +489,25 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void setUpDDMFormJSONDeserializerUtil() throws Exception {
-		mockStatic(DDMFormJSONDeserializerUtil.class);
+		mockStatic(
+			DDMFormJSONDeserializerUtil.class, Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormJSONDeserializerUtil.getDDMFormJSONDeserializer()
-		).thenReturn(
+		stub(
+			method(
+				DDMFormJSONDeserializerUtil.class, "getDDMFormJSONDeserializer")
+		).toReturn(
 			new DDMFormJSONDeserializerImpl()
 		);
-
-		when(
-			DDMFormJSONDeserializerUtil.deserialize(Matchers.anyString())
-		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMFormJSONSerializerUtil() {
-		mockStatic(DDMFormJSONSerializerUtil.class);
+		mockStatic(DDMFormJSONSerializerUtil.class, Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormJSONSerializerUtil.getDDMFormJSONSerializer()
-		).thenReturn(
+		stub(
+			method(DDMFormJSONSerializerUtil.class, "getDDMFormJSONSerializer")
+		).toReturn(
 			new DDMFormJSONSerializerImpl()
 		);
-
-		when(
-			DDMFormJSONSerializerUtil.serialize(Matchers.any(DDMForm.class))
-		).thenCallRealMethod();
 	}
 
 	protected void setUpDDMStructureLocalServiceUtil() {

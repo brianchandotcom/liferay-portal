@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portlet.documentlibrary.store.bundle.storefactory.DelegatingTestStore;
+import com.liferay.portlet.documentlibrary.store.bundle.storefactory.TopTestStoreWrapper;
+
+import java.lang.reflect.Method;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -48,6 +52,61 @@ public class StoreFactoryTest {
 
 		Assert.assertEquals(1, fileNames.length);
 		Assert.assertEquals("TestStore", fileNames[0]);
+	}
+
+	@Test
+	public void testInstanceIsWrapped() throws Exception {
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore("test");
+
+		assertWrapperClass(store, DelegatingTestStore.class.getName());
+	}
+
+	@Test
+	public void testWrapperChain() throws Exception {
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore("test");
+
+		Assert.assertEquals(2, getWrapperChainLength(store));
+	}
+
+	@Test
+	public void testWrapperPriority() throws Exception {
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore("test");
+
+		assertWrapperClass(store, TopTestStoreWrapper.Wrapper.class.getName());
+	}
+
+	protected void assertWrapperClass(Store store, String className)
+		throws Exception {
+
+		Assert.assertTrue(isWrapper(store, className));
+	}
+
+	protected int getWrapperChainLength(Store store) throws Exception {
+		assertWrapperClass(store, DelegatingTestStore.class.getName());
+
+		Class<? extends Store> storeClass = store.getClass();
+
+		Method method = storeClass.getMethod("getWrapperChainLength");
+
+		return (Integer)method.invoke(store);
+	}
+
+	private boolean isWrapper(Store store, String className)
+		throws ClassNotFoundException {
+
+		Class<? extends Store> storeClass = store.getClass();
+
+		ClassLoader classLoader = storeClass.getClassLoader();
+
+		Class<?> clazz = classLoader.loadClass(className);
+
+		return clazz.isAssignableFrom(storeClass);
 	}
 
 }

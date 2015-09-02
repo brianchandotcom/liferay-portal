@@ -14,29 +14,31 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormXSDDeserializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormXSDDeserializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
+import com.liferay.portal.util.HtmlImpl;
+import com.liferay.portal.xml.SAXReaderImpl;
 
 import org.junit.Before;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**
  * @author Pablo Carvalho
  */
-@PrepareForTest({DDMFormFieldTypeServicesTrackerUtil.class, LocaleUtil.class})
 public class DDMFormXSDDeserializerTest
 	extends BaseDDMFormDeserializerTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDMFormFieldTypeServicesTrackerUtil();
-		setUpDDMFormXSDDeserializerUtil();
+		super.setUp();
+
 		setUpHtmlUtil();
-		setUpLocaleUtil();
 		setUpPropsUtil();
 		setUpSAXReaderUtil();
 	}
@@ -45,7 +47,7 @@ public class DDMFormXSDDeserializerTest
 	protected DDMForm deserialize(String serializedDDMForm)
 		throws PortalException {
 
-		return DDMFormXSDDeserializerUtil.deserialize(serializedDDMForm);
+		return _ddmFormXSDDeserializer.deserialize(serializedDDMForm);
 	}
 
 	@Override
@@ -58,12 +60,42 @@ public class DDMFormXSDDeserializerTest
 		return ".xml";
 	}
 
-	protected void setUpDDMFormXSDDeserializerUtil() {
-		DDMFormXSDDeserializerUtil ddmFormXSDDeserializerUtil =
-			new DDMFormXSDDeserializerUtil();
+	protected void setUpHtmlUtil() {
+		HtmlUtil htmlUtil = new HtmlUtil();
 
-		ddmFormXSDDeserializerUtil.setDDMFormXSDDeserializer(
-			new DDMFormXSDDeserializerImpl());
+		htmlUtil.setHtml(new HtmlImpl());
 	}
+
+	protected void setUpPropsUtil() {
+		Props props = mock(Props.class);
+
+		when(
+			props.get(PropsKeys.XML_SECURITY_ENABLED)
+		).thenReturn(
+			Boolean.TRUE.toString()
+		);
+
+		PropsUtil.setProps(props);
+	}
+
+	protected void setUpSAXReaderUtil() {
+		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
+
+		SAXReaderImpl secureSAXReader = new SAXReaderImpl();
+
+		secureSAXReader.setSecure(true);
+
+		saxReaderUtil.setSAXReader(secureSAXReader);
+
+		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
+			new UnsecureSAXReaderUtil();
+
+		SAXReaderImpl unsecureSAXReader = new SAXReaderImpl();
+
+		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
+	}
+
+	private final DDMFormXSDDeserializer _ddmFormXSDDeserializer =
+		new DDMFormXSDDeserializerImpl();
 
 }

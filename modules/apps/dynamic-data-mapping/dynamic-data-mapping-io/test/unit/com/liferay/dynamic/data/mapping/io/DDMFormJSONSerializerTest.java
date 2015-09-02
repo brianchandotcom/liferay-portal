@@ -14,30 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 
-import org.junit.Before;
 import org.junit.Test;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(DDMFormFieldTypeServicesTrackerUtil.class)
 public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
-
-	@Before
-	public void setUp() {
-		setUpDDMFormFieldTypeServicesTrackerUtil();
-		setUpDDMFormToJSONSerializerUtil();
-		setUpJSONFactoryUtil();
-		setUpLanguageUtil();
-	}
 
 	@Test
 	public void testDDMFormSerialization() throws Exception {
@@ -45,17 +32,12 @@ public class DDMFormJSONSerializerTest extends BaseDDMFormSerializerTestCase {
 
 		DDMForm ddmForm = createDDMForm();
 
-		String actualJSON = DDMFormJSONSerializerUtil.serialize(ddmForm);
+		String actualJSON = _ddmFormJSONSerializer.serialize(ddmForm);
 
 		JSONAssert.assertEquals(expectedJSON, actualJSON, false);
 	}
 
-	protected void setUpDDMFormToJSONSerializerUtil() {
-		DDMFormJSONSerializerUtil ddmFormJSONSerializerUtil =
-			new DDMFormJSONSerializerUtil();
-
-		ddmFormJSONSerializerUtil.setDDMFormJSONSerializer(
-			new DDMFormJSONSerializerImpl());
-	}
+	private final DDMFormJSONSerializer _ddmFormJSONSerializer =
+		new DDMFormJSONSerializerImpl();
 
 }

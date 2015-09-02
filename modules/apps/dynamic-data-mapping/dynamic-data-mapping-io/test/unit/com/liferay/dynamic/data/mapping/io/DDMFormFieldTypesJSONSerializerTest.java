@@ -14,15 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormFieldTypesJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormFieldTypesJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+
+import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,34 +38,28 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.mockito.Matchers;
-import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(DDMFormFieldTypeServicesTrackerUtil.class)
 public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 
 	@Before
-	public void setUp() {
-		setUpDDMFormFieldTypeServicesTrackerUtil();
-		setUpDDMFormFieldTypesJSONSerializerUtil();
-		setUpDDMFormJSONSerializerUtil();
-		setUpJSONFactoryUtil();
-		setUpLanguageUtil();
+	public void setUp() throws Exception {
+		super.setUp();
+
+		setUpDDMFormFieldTypesJSONSerializer();
 	}
 
 	@Test
 	public void testSerializationWithEmptyParameterList() throws Exception {
 		List<DDMFormFieldType> ddmFormFieldTypes = Collections.emptyList();
 
-		String actualJSON = DDMFormFieldTypesJSONSerializerUtil.serialize(
+		String actualJSON = _ddmFormFieldTypesJSONSerializer.serialize(
 			ddmFormFieldTypes);
 
 		Assert.assertEquals("[]", actualJSON);
@@ -72,9 +69,11 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 	public void testSerializationWithNonEmptyParameterList() throws Exception {
 		List<DDMFormFieldType> ddmFormFieldTypes = new ArrayList<>();
 
-		ddmFormFieldTypes.add(_ddmFormFieldType);
+		DDMFormFieldType ddmFormFieldType = getMockedDDMFormFieldType();
 
-		String actualJSON = DDMFormFieldTypesJSONSerializerUtil.serialize(
+		ddmFormFieldTypes.add(ddmFormFieldType);
+
+		String actualJSON = _ddmFormFieldTypesJSONSerializer.serialize(
 			ddmFormFieldTypes);
 
 		JSONAssert.assertEquals(createExpectedJSON(), actualJSON, false);
@@ -95,20 +94,21 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		return jsonArray.toString();
 	}
 
-	@Override
-	protected void setUpDDMFormFieldTypeServicesTrackerUtil() {
-		mockStatic(DDMFormFieldTypeServicesTrackerUtil.class);
+	protected DDMFormFieldType getMockedDDMFormFieldType() {
+		DDMFormFieldType ddmFormFieldType = mock(DDMFormFieldType.class);
 
 		whenDDMFormFieldTypeGetDDMFormFieldTypeSettings(
-			_ddmFormFieldType, DDMFormFieldTypeSettings.class);
-		whenDDMFormFieldTypeGetName(_ddmFormFieldType, "Text");
+			ddmFormFieldType, DDMFormFieldTypeSettings.class);
+		whenDDMFormFieldTypeGetName(ddmFormFieldType, "Text");
 
-		when(
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType(
-				Matchers.anyString())
-		).thenReturn(
-			_ddmFormFieldType
-		);
+		return ddmFormFieldType;
+	}
+
+	protected DDMFormFieldTypeServicesTracker
+		getMockedDDMFormFieldTypeServicesTracker() {
+
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker = mock(
+			DDMFormFieldTypeServicesTracker.class);
 
 		Map<String, Object> properties = new HashMap<>();
 
@@ -118,30 +118,43 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		properties.put("ddm.form.field.type.js.module", "myJavaScriptModule");
 
 		when(
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldTypeProperties(
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldTypeProperties(
 				Matchers.anyString())
 		).thenReturn(
 			properties
 		);
 
+		DDMFormFieldRenderer ddmFormFieldRenderer = mock(
+			DDMFormFieldRenderer.class);
+
 		whenDDMFormFieldRendererGetTemplateNamespace(
-			_ddmFormFieldRenderer, "_templateNamespace_");
+			ddmFormFieldRenderer, "_templateNamespace_");
 
 		when(
-			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldRenderer(
+			ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
 				Matchers.anyString())
 		).thenReturn(
-			_ddmFormFieldRenderer
+			ddmFormFieldRenderer
 		);
+
+		return ddmFormFieldTypeServicesTracker;
 	}
 
-	protected void setUpDDMFormFieldTypesJSONSerializerUtil() {
-		DDMFormFieldTypesJSONSerializerUtil
-			ddmFormFieldTypesJSONSerializerUtil =
-				new DDMFormFieldTypesJSONSerializerUtil();
+	protected void setUpDDMFormFieldTypesJSONSerializer() throws Exception {
+		Field field = ReflectionUtil.getDeclaredField(
+			DDMFormFieldTypesJSONSerializerImpl.class,
+			"_ddmFormJSONSerializer");
 
-		ddmFormFieldTypesJSONSerializerUtil.setDDMFormFieldTypesJSONSerializer(
-			new DDMFormFieldTypesJSONSerializerImpl());
+		field.set(
+			_ddmFormFieldTypesJSONSerializer, new DDMFormJSONSerializerImpl());
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormFieldTypesJSONSerializerImpl.class,
+			"_ddmFormFieldTypeServicesTracker");
+
+		field.set(
+			_ddmFormFieldTypesJSONSerializer,
+			getMockedDDMFormFieldTypeServicesTracker());
 	}
 
 	protected void whenDDMFormFieldRendererGetTemplateNamespace(
@@ -187,10 +200,8 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		);
 	}
 
-	@Mock
-	private DDMFormFieldRenderer _ddmFormFieldRenderer;
-
-	@Mock
-	private DDMFormFieldType _ddmFormFieldType;
+	private final DDMFormFieldTypesJSONSerializer
+		_ddmFormFieldTypesJSONSerializer =
+			new DDMFormFieldTypesJSONSerializerImpl();
 
 }

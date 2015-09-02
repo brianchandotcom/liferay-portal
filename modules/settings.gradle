@@ -5,6 +5,7 @@ FileTree fileTree = fileTree(rootDir) {
 		exclude "apps/journal/journal-content-asset-addon-entry/build.gradle"
 		exclude "apps/mentions/mentions-editor-config/build.gradle"
 		exclude "apps/social/social-networking-*/build.gradle"
+		exclude "frontend/frontend-js-metal-web/build.gradle"
 		exclude "portal/portal-search-solr/build.gradle"
 		exclude "portal/portal-taglib-aui-form-extension-sample/build.gradle"
 

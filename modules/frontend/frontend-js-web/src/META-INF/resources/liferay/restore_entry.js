@@ -185,7 +185,7 @@ AUI.add(
 						var rename = instance.byId('rename');
 						var newName = instance.byId('newName');
 
-						rename.on('click', A.bind('focusFormField', Liferay.Util, newName));
+						rename.on('click', A.fn('focusFormField', Liferay.Util, newName));
 
 						newName.on(
 							'focus',

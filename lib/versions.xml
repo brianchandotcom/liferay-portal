@@ -293,7 +293,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/hsql.jar</file-name>
-				<version>2.3.2</version>
+				<version>2.3.3</version>
 				<project-name>HSQL Database Engine</project-name>
 				<project-url>http://hsqldb.org</project-url>
 				<licenses>
@@ -302,6 +302,10 @@
 						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
 					</license>
 				</licenses>
+				<comments>
+					This is a customized build from HSQLDB 2.3.3 release to include debug info in classes.
+					See LPS-58322.
+				</comments>
 			</library>
 			<library>
 				<file-name>lib/development/interbase.jar</file-name>

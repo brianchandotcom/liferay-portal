@@ -40,6 +40,7 @@ page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -56,6 +57,8 @@ page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %>
+
+<%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.List" %>
 
@@ -75,6 +78,8 @@ String currentURL = currentURLObj.toString();
 JournalContentPortletInstanceConfiguration journalContentPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(JournalContentPortletInstanceConfiguration.class);
 
 JournalContentDisplayContext journalContentDisplayContext = new JournalContentDisplayContext(liferayPortletRequest, liferayPortletResponse, journalContentPortletInstanceConfiguration);
+
+Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <%@ include file="/init-ext.jsp" %>

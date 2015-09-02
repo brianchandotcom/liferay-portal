@@ -219,6 +219,10 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 
 <%
 String displayStyle = journalDisplayContext.getDisplayStyle();
+
+if (!displayStyle.equals("descriptive") && !displayStyle.equals("icon")) {
+	entriesChecker.setCssClass(entriesChecker.getCssClass() + " checkbox-cell checkbox-default");
+}
 %>
 
 <liferay-ui:search-container
@@ -338,6 +342,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						<liferay-ui:search-container-column-jsp
 							name="title"
 							path="/article_title.jsp"
+							truncate="<%= true %>"
 						/>
 
 						<liferay-ui:search-container-column-status
@@ -369,7 +374,8 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action"
+							align="right"
+							cssClass="checkbox-cell entry-action"
 							path="/article_action.jsp"
 						/>
 					</c:otherwise>
@@ -453,22 +459,11 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 						/>
 
 						<liferay-ui:search-container-column-text
+							href="<%= rowURL.toString() %>"
 							name="title"
-						>
-
-							<%
-							AssetRendererFactory<JournalFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalFolder.class);
-
-							AssetRenderer<JournalFolder> assetRenderer = assetRendererFactory.getAssetRenderer(curFolder.getFolderId());
-							%>
-
-							<liferay-ui:icon
-								iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-								label="<%= true %>"
-								message="<%= HtmlUtil.escape(curFolder.getName()) %>"
-								url="<%= rowURL.toString() %>"
-							/>
-						</liferay-ui:search-container-column-text>
+							truncate="<%= true %>"
+							value="<%= HtmlUtil.escape(curFolder.getName()) %>"
+						/>
 
 						<liferay-ui:search-container-column-text
 							name="status"
@@ -492,11 +487,12 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 						<liferay-ui:search-container-column-text
 							name="type"
-							value="--"
+							value='<%= LanguageUtil.get(request, "folder") %>'
 						/>
 
 						<liferay-ui:search-container-column-jsp
-							cssClass="entry-action"
+							align="right"
+							cssClass="checkbox-cell entry-action"
 							path="/folder_action.jsp"
 						/>
 					</c:otherwise>

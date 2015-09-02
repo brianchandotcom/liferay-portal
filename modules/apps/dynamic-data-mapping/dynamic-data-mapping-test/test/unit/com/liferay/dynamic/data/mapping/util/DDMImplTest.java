@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutColumn;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
@@ -36,16 +35,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({DDMStructureLocalServiceUtil.class, LocaleUtil.class})
-@SuppressStaticInitializationFor(
-	"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil"
-)
 public class DDMImplTest extends BaseDDMTestCase {
 
 	@Before

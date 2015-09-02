@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
@@ -72,7 +73,7 @@ public class DDMFormValuesValidatorTest {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		LocalizedValue localizedValue = new LocalizedValue(LocaleUtil.US);
+		Value localizedValue = new LocalizedValue(LocaleUtil.US);
 
 		localizedValue.addString(LocaleUtil.US, StringUtil.randomString());
 

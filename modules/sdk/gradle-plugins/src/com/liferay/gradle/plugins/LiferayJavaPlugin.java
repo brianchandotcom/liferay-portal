@@ -1509,12 +1509,20 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				project,
 				JSModuleConfigGeneratorPlugin.CONFIG_JS_MODULES_TASK_NAME);
 
+		configureTaskConfigJSModulesConfigVariable(configJSModulesTask);
 		configureTaskConfigJSModulesDependsOn(configJSModulesTask);
 		configureTaskConfigJSModulesIgnorePath(configJSModulesTask);
 		configureTaskConfigJSModulesIncludes(configJSModulesTask);
+		configureTaskConfigJSModulesModuleExtension(configJSModulesTask);
 		configureTaskConfigJSModulesModuleFormat(configJSModulesTask);
 		configureTaskConfigJSModulesMustRunAfter(configJSModulesTask);
 		configureTaskConfigJSModulesSourceDir(configJSModulesTask);
+	}
+
+	protected void configureTaskConfigJSModulesConfigVariable(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		configJSModulesTask.setConfigVariable("");
 	}
 
 	protected void configureTaskConfigJSModulesDependsOn(
@@ -1533,6 +1541,12 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		ConfigJSModulesTask configJSModulesTask) {
 
 		configJSModulesTask.setIncludes(Collections.singleton("**/*.es.js"));
+	}
+
+	protected void configureTaskConfigJSModulesModuleExtension(
+		ConfigJSModulesTask configJSModulesTask) {
+
+		configJSModulesTask.setModuleExtension("");
 	}
 
 	protected void configureTaskConfigJSModulesModuleFormat(

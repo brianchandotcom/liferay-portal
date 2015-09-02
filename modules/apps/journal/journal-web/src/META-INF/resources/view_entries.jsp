@@ -219,10 +219,6 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(articleSearchCo
 
 <%
 String displayStyle = journalDisplayContext.getDisplayStyle();
-
-if (!displayStyle.equals("descriptive") && !displayStyle.equals("icon")) {
-	entriesChecker.setCssClass(entriesChecker.getCssClass() + " checkbox-cell checkbox-default");
-}
 %>
 
 <liferay-ui:search-container

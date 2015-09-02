@@ -57,7 +57,8 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		}
 
 		if (Validator.isNotNull(_view)) {
-			return "/html/taglib/ui/search_iterator/" + _view + "/" + displayStyle + ".jsp";
+			return "/html/taglib/ui/search_iterator/" + _view + "/" +
+				displayStyle + ".jsp";
 		}
 
 		return "/html/taglib/ui/search_iterator/" + displayStyle + ".jsp";

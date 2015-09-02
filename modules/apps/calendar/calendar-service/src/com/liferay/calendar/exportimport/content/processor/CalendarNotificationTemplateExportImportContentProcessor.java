@@ -25,10 +25,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Gergely Mathe
  */
 @Component(
-	property =
-		{"model.class.name=com.liferay.calendar.model." +
-			"CalendarNotificationTemplate"
-		},
+	property = {"model.class.name=com.liferay.calendar.model.CalendarNotificationTemplate"},
 	service = {
 		CalendarNotificationTemplateExportImportContentProcessor.class,
 		ExportImportContentProcessor.class

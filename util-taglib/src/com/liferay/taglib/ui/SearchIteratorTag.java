@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 
-	public static final String DEFAULT_DISPLAY_STYPE = "table";
+	public static final String DEFAULT_DISPLAY_STYPE = "list";
 
 	public String getDisplayStyle() {
 		return _displayStyle;

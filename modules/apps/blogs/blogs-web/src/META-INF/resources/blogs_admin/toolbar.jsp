@@ -22,20 +22,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewEntriesURL">
-			<portlet:param name="mvcRenderCommandName" value="/blogs_admin/view" />
-		</portlet:renderURL>
-
-		<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
-			<portlet:renderURL var="addEntryURL">
-				<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-				<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
-				<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
-			</portlet:renderURL>
-
-			<aui:nav-item href="<%= addEntryURL %>" iconCssClass="icon-plus" label="add-blog-entry" selected='<%= toolbarItem.equals("add") %>' />
-		</c:if>
-
 		<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
 			<liferay-security:permissionsURL
 				modelResource="com.liferay.portlet.blogs"

@@ -52,6 +52,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 			<liferay-ui:layouts-tree
 				defaultStateChecked="<%= true %>"
+				draggableTree="<%= false %>"
 				groupId="<%= groupId %>"
 				incomplete="<%= false %>"
 				privateLayout="<%= privateLayout %>"

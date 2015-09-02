@@ -34,8 +34,13 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Eudaldo Alonso
  */
-public abstract class BasePanelLayoutTypeControllerImpl
+public abstract class BaseLayoutTypeControllerImpl
 	implements LayoutTypeController {
+
+	@Override
+	public String getBaseLayoutType() {
+		return StringPool.BLANK;
+	}
 
 	@Override
 	public String[] getConfigurationActionDelete() {
@@ -111,6 +116,11 @@ public abstract class BasePanelLayoutTypeControllerImpl
 	@Override
 	public boolean isBrowsable() {
 		return true;
+	}
+
+	@Override
+	public boolean isFullPageDisplayable() {
+		return false;
 	}
 
 	@Override

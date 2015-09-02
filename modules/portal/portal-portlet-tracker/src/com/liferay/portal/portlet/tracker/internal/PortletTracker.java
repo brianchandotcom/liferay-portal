@@ -564,6 +564,10 @@ public class PortletTracker
 			GetterUtil.getString(
 				get(serviceReference, "friendly-url-routes"),
 				portletModel.getFriendlyURLRoutes()));
+		portletModel.setFullPageDisplayable(
+			GetterUtil.getBoolean(
+				get(serviceReference, "full-page-displayable"),
+				portletModel.isFullPageDisplayable()));
 		portletModel.setHeaderPortalCss(
 			StringPlus.asList(get(serviceReference, "header-portal-css")));
 		portletModel.setHeaderPortalJavaScript(

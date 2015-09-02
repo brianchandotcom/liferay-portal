@@ -46,8 +46,6 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 	@Override
 	public Statement apply(Statement statement, Description description) {
 		if (!InitUtil.isInitialized()) {
-			System.setProperty("catalina.base", ".");
-
 			ServerDetector.init(ServerDetector.TOMCAT_ID);
 
 			List<String> configLocations = ListUtil.fromArray(

@@ -301,7 +301,10 @@ public class PoshiRunnerContext {
 		return relatedClassCommandNames;
 	}
 
-	private static Set<String> _getRunTestCaseCommandNames() throws Exception {
+	private static Set<String> _getRunTestCaseCommandNames(
+			String propertyName, String propertyValue)
+		throws Exception {
+
 		Set<String> runTestClassCommandNames = new TreeSet<>();
 
 		for (String testCaseClassCommandName : _testCaseClassCommandNames) {
@@ -320,11 +323,11 @@ public class PoshiRunnerContext {
 				String attributeName = rootPropertyElement.attributeValue(
 					"name");
 
-				if (attributeName.equals(
-						PropsValues.TEST_BATCH_PROPERTY_NAME)) {
-
+				if (attributeName.equals(propertyName)) {
 					runAttributeValue = rootPropertyElement.attributeValue(
 						"value");
+
+					break;
 				}
 			}
 
@@ -338,17 +341,16 @@ public class PoshiRunnerContext {
 				String attributeName = commandPropertyElement.attributeValue(
 					"name");
 
-				if (attributeName.equals(
-						PropsValues.TEST_BATCH_PROPERTY_NAME)) {
-
+				if (attributeName.equals(propertyName)) {
 					runAttributeValue = commandPropertyElement.attributeValue(
 						"value");
+
+					break;
 				}
 			}
 
 			if ((runAttributeValue != null) &&
-				runAttributeValue.equals(
-					PropsValues.TEST_BATCH_PROPERTY_VALUE)) {
+				runAttributeValue.equals(propertyValue)) {
 
 				runTestClassCommandNames.add(testCaseClassCommandName);
 			}
@@ -692,16 +694,21 @@ public class PoshiRunnerContext {
 			sb.append("\n");
 		}
 
-		if (PropsValues.TEST_BATCH_PROPERTY_NAME != null) {
-			Set<String> classCommandNames = _getRunTestCaseCommandNames();
+		if ((PropsValues.TEST_BATCH_MAX_GROUP_SIZE > 0) &&
+			(PropsValues.TEST_BATCH_PROPERTY_NAME != null) &&
+			(PropsValues.TEST_BATCH_PROPERTY_VALUE != null)) {
+
+			Set<String> classCommandNames = _getRunTestCaseCommandNames(
+				PropsValues.TEST_BATCH_PROPERTY_NAME,
+				PropsValues.TEST_BATCH_PROPERTY_VALUE);
 
 			int totalGroupCount =
 				classCommandNames.size() /
-				PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+					PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
 
 			int uncompleteGroupCount =
 				classCommandNames.size() %
-				PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
+					PropsValues.TEST_BATCH_MAX_GROUP_SIZE;
 
 			if (uncompleteGroupCount > 0) {
 				totalGroupCount++;
@@ -709,13 +716,13 @@ public class PoshiRunnerContext {
 
 			Map<Integer, List<String>> classCommandNameGroups = new HashMap<>();
 
-			int classCommandNameCount = 0;
+			int classCommandNameIndex = 0;
 
 			for (String classCommandName : classCommandNames) {
 				List<String> classCommandNameGroup = new ArrayList<>();
 
 				int classCommandNameGroupIndex =
-					classCommandNameCount % totalGroupCount;
+					classCommandNameIndex % totalGroupCount;
 
 				if (classCommandNameGroups.containsKey(
 						classCommandNameGroupIndex)) {
@@ -729,7 +736,7 @@ public class PoshiRunnerContext {
 				classCommandNameGroups.put(
 					classCommandNameGroupIndex, classCommandNameGroup);
 
-				classCommandNameCount++;
+				classCommandNameIndex++;
 			}
 
 			for (int i = 0; i < classCommandNameGroups.size(); i++) {
@@ -751,7 +758,7 @@ public class PoshiRunnerContext {
 					}
 				}
 
-				sb.append("\n\n");
+				sb.append("\n");
 			}
 
 			sb.append("RUN_TEST_CASE_METHOD_GROUPS=");

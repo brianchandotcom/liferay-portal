@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 
+import java.io.IOException;
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -187,6 +190,76 @@ public class SourceFormatter {
 
 	public SourceMismatchException getSourceMismatchException() {
 		return _firstSourceMismatchException;
+	}
+
+	protected static List<String> getLocalChangesFileNames(String baseDirName) 
+		throws Exception {
+
+		Runtime runtime = Runtime.getRuntime();
+
+		Process process = null;
+
+		try {
+			process = runtime.exec("git add . --dry-run");
+		}
+		catch (IOException ioe) {
+			String errorMessage = ioe.getMessage();
+
+			if (errorMessage.contains("Cannot run program")) {
+				System.out.println(
+					"Add Git to your PATH system variable before executing " +
+						"'ant format-source-local-changes'.");
+
+				System.exit(0);
+			}
+
+			throw ioe;
+		}
+
+		String content = StringUtil.read(process.getInputStream());
+
+		int gitLevel = -1;
+
+		for (int i = 0; i < BaseSourceProcessor.PORTAL_MAX_DIR_LEVEL; i++) {
+			File file = new File(baseDirName + ".git");
+
+			if (file.exists()) {
+				gitLevel = i;
+
+				break;
+			}
+
+			baseDirName = "../" + baseDirName;
+		}
+
+		if (gitLevel == -1) {
+			System.out.println(
+				"Cannot retrieve files because .git directory is missing.");
+
+			System.exit(1);
+		}
+
+		List<String> localChangesFileNames = new ArrayList<>();
+
+		for (String line : StringUtil.splitLines(content)) {
+			if (!line.startsWith("add '") ||
+				(StringUtil.count(line, StringPool.SLASH) < gitLevel)) {
+
+				continue;
+			}
+
+			line = line.substring(5, line.length() - 1);
+
+			for (int i = 0; i < gitLevel; i++) {
+				int x = line.indexOf(StringPool.SLASH);
+
+				line = line.substring(x + 1);
+			}
+
+			localChangesFileNames.add(line);
+		}
+
+		return localChangesFileNames;
 	}
 
 	private void _runSourceProcessor(SourceProcessor sourceProcessor)

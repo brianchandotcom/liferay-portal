@@ -1001,11 +1001,7 @@ public class ${entity.name}PersistenceTest {
 					<#if finderCol.type == "double">
 						AssertUtils.assertEquals(existing${entity.name}.get${finderCol.methodName}(), ReflectionTestUtil.<Double>invoke(existing${entity.name}, "getOriginal${finderCol.methodName}", new Class<?>[0]));
 					<#elseif finderCol.isPrimitiveType()>
-						<#if finderCol.type == "long" || finderCol.type == "int">
-							Assert.assertEquals(Long.valueOf(existing${entity.name}.get${finderCol.methodName}()), ReflectionTestUtil.<Long>invoke(existing${entity.name}, "getOriginal${finderCol.methodName}", new Class<?>[0]));
-						<#else>
-							Assert.assertEquals(existing${entity.name}.get${finderCol.methodName}(), ReflectionTestUtil.invoke(existing${entity.name}, "getOriginal${finderCol.methodName}", new Class<?>[0]));
-						</#if>
+						Assert.assertEquals(${serviceBuilder.getPrimitiveObj(finderCol.type)}.valueOf(existing${entity.name}.get${finderCol.methodName}()), ReflectionTestUtil.<${serviceBuilder.getPrimitiveObj(finderCol.type)}>invoke(existing${entity.name}, "getOriginal${finderCol.methodName}", new Class<?>[0]));
 					<#else>
 						Assert.assertTrue(Validator.equals(existing${entity.name}.get${finderCol.methodName}(), ReflectionTestUtil.invoke(existing${entity.name}, "getOriginal${finderCol.methodName}", new Class<?>[0])));
 					</#if>

@@ -31,9 +31,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true)
 public class DDMFormLayoutJSONDeserializerImpl
 	implements DDMFormLayoutJSONDeserializer {
 

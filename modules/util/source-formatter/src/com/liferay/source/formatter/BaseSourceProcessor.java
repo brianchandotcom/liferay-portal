@@ -1735,8 +1735,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return line;
 	}
 
-	protected static final String BASEDIR = "./";
-
 	protected static final int PORTAL_MAX_DIR_LEVEL = 5;
 
 	protected static Pattern attributeNamePattern = Pattern.compile(

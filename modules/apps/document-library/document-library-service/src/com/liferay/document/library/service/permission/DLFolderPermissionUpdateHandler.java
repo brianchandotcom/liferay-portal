@@ -36,16 +36,16 @@ public class DLFolderPermissionUpdateHandler
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DLFolder folder = _dLFolderLocalService.fetchDLFolder(
+		DLFolder dlFolder = _dLFolderLocalService.fetchDLFolder(
 			GetterUtil.getLong(primKey));
 
-		if (folder == null) {
+		if (dlFolder == null) {
 			return;
 		}
 
-		folder.setModifiedDate(new Date());
+		dlFolder.setModifiedDate(new Date());
 
-		_dLFolderLocalService.updateDLFolder(folder);
+		_dLFolderLocalService.updateDLFolder(dlFolder);
 	}
 
 	@Reference

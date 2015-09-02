@@ -36,17 +36,17 @@ public class DLFileEntryTypePermissionUpdateHandler
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DLFileEntryType fileEntryType =
+		DLFileEntryType dlFileEntryType =
 			_dLFileEntryTypeLocalService.fetchDLFileEntryType(
 				GetterUtil.getLong(primKey));
 
-		if (fileEntryType == null) {
+		if (dlFileEntryType == null) {
 			return;
 		}
 
-		fileEntryType.setModifiedDate(new Date());
+		dlFileEntryType.setModifiedDate(new Date());
 
-		_dLFileEntryTypeLocalService.updateDLFileEntryType(fileEntryType);
+		_dLFileEntryTypeLocalService.updateDLFileEntryType(dlFileEntryType);
 	}
 
 	@Reference

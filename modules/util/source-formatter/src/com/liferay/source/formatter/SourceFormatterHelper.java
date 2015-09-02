@@ -99,7 +99,7 @@ public class SourceFormatterHelper {
 		System.out.println(message);
 	}
 
-	public List<String> scanForFiles(
+	public List<String> getFileNames(
 			String baseDir, List<String> localChangesFileNames,
 			String[] excludes, String[] includes)
 		throws Exception {

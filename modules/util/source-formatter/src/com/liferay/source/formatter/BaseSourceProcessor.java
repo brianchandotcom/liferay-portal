@@ -1131,7 +1131,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			excludes = ArrayUtil.append(excludes, _excludes);
 		}
 
-		return _sourceFormatterHelper.scanForFiles(
+		return _sourceFormatterHelper.getFileNames(
 			basedir, localChangesFileNames, excludes, includes);
 	}
 

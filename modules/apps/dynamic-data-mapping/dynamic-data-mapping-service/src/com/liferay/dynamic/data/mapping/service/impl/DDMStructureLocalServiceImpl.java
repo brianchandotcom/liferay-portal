@@ -1123,11 +1123,12 @@ public class DDMStructureLocalServiceImpl
 	@Override
 	public List<DDMStructure> search(
 		long companyId, long[] groupIds, long classNameId, String keywords,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
+		int status) {
 
 		return ddmStructureFinder.findByKeywords(
 			companyId, groupIds, classNameId, keywords, start, end,
-			orderByComparator);
+			orderByComparator, status);
 	}
 
 	/**
@@ -1166,11 +1167,12 @@ public class DDMStructureLocalServiceImpl
 	public List<DDMStructure> search(
 		long companyId, long[] groupIds, long classNameId, String name,
 		String description, String storageType, int type, boolean andOperator,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator,
+		int status) {
 
-		return ddmStructureFinder.findByC_G_C_N_D_S_T(
+		return ddmStructureFinder.findByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, name, description, storageType,
-			type, andOperator, start, end, orderByComparator);
+			type, andOperator, start, end, orderByComparator, status);
 	}
 
 	/**
@@ -1187,10 +1189,11 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public int searchCount(
-		long companyId, long[] groupIds, long classNameId, String keywords) {
+		long companyId, long[] groupIds, long classNameId, String keywords,
+		int status) {
 
 		return ddmStructureFinder.countByKeywords(
-			companyId, groupIds, classNameId, keywords);
+			companyId, groupIds, classNameId, keywords, status);
 	}
 
 	/**
@@ -1213,11 +1216,12 @@ public class DDMStructureLocalServiceImpl
 	@Override
 	public int searchCount(
 		long companyId, long[] groupIds, long classNameId, String name,
-		String description, String storageType, int type, boolean andOperator) {
+		String description, String storageType, int type, boolean andOperator,
+		int status) {
 
-		return ddmStructureFinder.countByC_G_C_N_D_S_T(
+		return ddmStructureFinder.countByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, name, description, storageType,
-			type, andOperator);
+			type, andOperator, status);
 	}
 
 	@Override

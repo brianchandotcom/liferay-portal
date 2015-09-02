@@ -52,6 +52,7 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
@@ -499,18 +500,16 @@ public class UpgradeDynamicDataMappingTest extends PowerMockito {
 	}
 
 	protected void setUpDDMFormValuesJSONSerializerUtil() {
-		mockStatic(DDMFormValuesJSONSerializerUtil.class);
+		mockStatic(
+			DDMFormValuesJSONSerializerUtil.class, Mockito.CALLS_REAL_METHODS);
 
-		when(
-			DDMFormValuesJSONSerializerUtil.getDDMFormValuesJSONSerializer()
-		).thenReturn(
+		stub(
+			method(
+				DDMFormValuesJSONSerializerUtil.class,
+				"getDDMFormValuesJSONSerializer")
+		).toReturn(
 			new DDMFormValuesJSONSerializerImpl()
 		);
-
-		when(
-			DDMFormValuesJSONSerializerUtil.serialize(
-				Matchers.any(DDMFormValues.class))
-		).thenCallRealMethod();
 	}
 
 	protected void setUpJSONFactoryUtil() {

@@ -20,6 +20,7 @@ import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncUser;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncUserService;
+import com.liferay.sync.engine.util.GetterUtil;
 import com.liferay.sync.engine.util.JSONUtil;
 
 import java.util.Map;
@@ -66,21 +67,21 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 		Map<String, String> portletPreferencesMap =
 			syncContext.getPortletPreferencesMap();
 
-		int batchFileMaxSize = Integer.parseInt(
+		int batchFileMaxSize = GetterUtil.getInteger(
 			portletPreferencesMap.get(
 				SyncContext.PREFERENCE_KEY_BATCH_FILE_MAX_SIZE));
 
 		syncAccount.setBatchFileMaxSize(batchFileMaxSize);
 
-		int maxConnections = Integer.parseInt(
+		int maxConnections = GetterUtil.getInteger(
 			portletPreferencesMap.get(
-				SyncContext.PREFERENCE_KEY_MAX_CONNECTIONS));
+				SyncContext.PREFERENCE_KEY_MAX_CONNECTIONS), 1);
 
 		syncAccount.setMaxConnections(maxConnections);
 
-		int pollInterval = Integer.parseInt(
+		int pollInterval = GetterUtil.getInteger(
 			portletPreferencesMap.get(
-				SyncContext.PREFERENCE_KEY_POLL_INTERVAL));
+				SyncContext.PREFERENCE_KEY_POLL_INTERVAL), 5);
 
 		syncAccount.setPollInterval(pollInterval);
 

@@ -42,7 +42,7 @@ public class ReleaseInfo {
 		}
 
 		if (pluginVersion.startsWith("6.2") &&
-			(Integer.parseInt(matcher.group(1)) < 3)) {
+			(Integer.parseInt(matcher.group(1)) < 4)) {
 
 			return false;
 		}

@@ -270,6 +270,10 @@ public class WebServerServlet extends HttpServlet {
 				sendGroups(
 					response, user,
 					request.getServletPath() + StringPool.SLASH + path);
+
+				if (response.getStatus() == HttpServletResponse.SC_FORBIDDEN) {
+					throw new PrincipalException();
+				}
 			}
 			else {
 				if (Validator.isNumber(pathArray[0])) {

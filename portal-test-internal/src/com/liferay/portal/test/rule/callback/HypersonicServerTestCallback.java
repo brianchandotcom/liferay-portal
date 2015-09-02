@@ -29,7 +29,7 @@ import org.junit.runner.Description;
  * @author William Newbury
  */
 public class HypersonicServerTestCallback
-	extends BaseTestCallback<Object, Object> {
+	extends BaseTestCallback<Server, Object> {
 
 	public HypersonicServerTestCallback(String databaseName) {
 		_databaseName = databaseName;
@@ -38,10 +38,10 @@ public class HypersonicServerTestCallback
 	}
 
 	@Override
-	public void doAfterClass(Description description, Object c)
+	public void doAfterClass(Description description, Server server)
 		throws Throwable {
 
-		if (_server != null) {
+		if (server != null) {
 			try (Connection con = DriverManager.getConnection(
 					_databaseURL, "sa", "")) {
 
@@ -50,12 +50,12 @@ public class HypersonicServerTestCallback
 				}
 			}
 
-			_server.stop();
+			server.stop();
 		}
 	}
 
 	@Override
-	public Object doBeforeClass(Description description) throws Throwable {
+	public Server doBeforeClass(Description description) throws Throwable {
 		Class.forName("org.hsqldb.jdbcDriver");
 
 		Server server = new Server();
@@ -66,7 +66,7 @@ public class HypersonicServerTestCallback
 		server.setErrWriter(null);
 
 		if (server.start() == 16) {
-			_server = server;
+			return server;
 		}
 
 		return null;
@@ -74,6 +74,5 @@ public class HypersonicServerTestCallback
 
 	private final String _databaseName;
 	private final String _databaseURL;
-	private Server _server = null;
 
 }

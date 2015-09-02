@@ -36,17 +36,17 @@ public class BookmarksFolderPermissionUpdateHandler
 
 	@Override
 	public void updatedPermission(String primKey) {
-		BookmarksFolder folder =
+		BookmarksFolder bookmarksFolder =
 			_bookmarksFolderLocalService.fetchBookmarksFolder(
 				GetterUtil.getLong(primKey));
 
-		if (folder == null) {
+		if (bookmarksFolder == null) {
 			return;
 		}
 
-		folder.setModifiedDate(new Date());
+		bookmarksFolder.setModifiedDate(new Date());
 
-		_bookmarksFolderLocalService.updateBookmarksFolder(folder);
+		_bookmarksFolderLocalService.updateBookmarksFolder(bookmarksFolder);
 	}
 
 	@Reference

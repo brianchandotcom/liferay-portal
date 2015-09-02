@@ -36,16 +36,17 @@ public class BookmarksEntryPermissionUpdateHandler
 
 	@Override
 	public void updatedPermission(String primKey) {
-		BookmarksEntry entry = _bookmarksEntryLocalService.fetchBookmarksEntry(
-			GetterUtil.getLong(primKey));
+		BookmarksEntry bookmarksEntry =
+			_bookmarksEntryLocalService.fetchBookmarksEntry(
+				GetterUtil.getLong(primKey));
 
-		if (entry == null) {
+		if (bookmarksEntry == null) {
 			return;
 		}
 
-		entry.setModifiedDate(new Date());
+		bookmarksEntry.setModifiedDate(new Date());
 
-		_bookmarksEntryLocalService.updateBookmarksEntry(entry);
+		_bookmarksEntryLocalService.updateBookmarksEntry(bookmarksEntry);
 	}
 
 	@Reference

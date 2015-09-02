@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -33,7 +33,8 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		DDMForm ddmForm = new DDMForm();
 
 		ddmForm.setAvailableLocales(
-			createAvailableLocales(LocaleUtil.BRAZIL, LocaleUtil.US));
+			DDMFormTestUtil.createAvailableLocales(
+				LocaleUtil.BRAZIL, LocaleUtil.US));
 		ddmForm.setDDMFormFields(createDDMFormFields());
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
@@ -180,7 +181,6 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		return ddmFormField;
 	}
 
-	@Override
 	protected DDMFormField createTextDDMFormField(String name) {
 		DDMFormField ddmFormField = new DDMFormField(name, "text");
 

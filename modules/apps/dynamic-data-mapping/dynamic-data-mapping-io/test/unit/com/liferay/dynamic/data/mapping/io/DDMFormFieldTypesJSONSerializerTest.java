@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormFieldTypesJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
@@ -39,23 +37,18 @@ import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
-
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(DDMFormFieldTypeServicesTrackerUtil.class)
 public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
+		super.setUp();
+
 		setUpDDMFormFieldTypeServicesTrackerUtil();
-		setUpDDMFormFieldTypesJSONSerializerUtil();
-		setUpDDMFormJSONSerializerUtil();
-		setUpJSONFactoryUtil();
-		setUpLanguageUtil();
 	}
 
 	@Test
@@ -133,15 +126,6 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 		).thenReturn(
 			_ddmFormFieldRenderer
 		);
-	}
-
-	protected void setUpDDMFormFieldTypesJSONSerializerUtil() {
-		DDMFormFieldTypesJSONSerializerUtil
-			ddmFormFieldTypesJSONSerializerUtil =
-				new DDMFormFieldTypesJSONSerializerUtil();
-
-		ddmFormFieldTypesJSONSerializerUtil.setDDMFormFieldTypesJSONSerializer(
-			new DDMFormFieldTypesJSONSerializerImpl());
 	}
 
 	protected void whenDDMFormFieldRendererGetTemplateNamespace(

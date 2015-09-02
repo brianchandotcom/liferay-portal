@@ -14,33 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormJSONDeserializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import org.junit.Assert;
-import org.junit.Before;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({DDMFormFieldTypeServicesTrackerUtil.class, LocaleUtil.class})
 public class DDMFormJSONDeserializerTest
 	extends BaseDDMFormDeserializerTestCase {
-
-	@Before
-	public void setUp() {
-		setUpDDMFormFieldTypeServicesTrackerUtil();
-		setUpDDMFormJSONDeserializerUtil();
-		setUpLanguageUtil();
-		setUpLocaleUtil();
-		setUpJSONFactoryUtil();
-	}
 
 	@Override
 	protected DDMForm deserialize(String serializedDDMForm)
@@ -57,15 +41,6 @@ public class DDMFormJSONDeserializerTest
 	@Override
 	protected String getTestFileExtension() {
 		return ".json";
-	}
-
-	@Override
-	protected void setUpDDMFormJSONDeserializerUtil() {
-		DDMFormJSONDeserializerUtil ddmFormJSONDeserializerUtil =
-			new DDMFormJSONDeserializerUtil();
-
-		ddmFormJSONDeserializerUtil.setDDMFormJSONDeserializer(
-			new DDMFormJSONDeserializerImpl());
 	}
 
 	@Override

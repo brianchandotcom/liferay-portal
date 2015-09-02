@@ -14,32 +14,19 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormLayoutJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import org.junit.Before;
 import org.junit.Test;
-
-import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest({LocaleUtil.class})
 public class DDMFormLayoutJSONSerializerTest extends BaseDDMTestCase {
-
-	@Before
-	public void setUp() {
-		setUpDDMFormLayoutJSONSerializerUtil();
-		setUpJSONFactoryUtil();
-		setUpLocaleUtil();
-	}
 
 	@Test
 	public void testDDMFormLayoutSerialization() throws Exception {
@@ -88,14 +75,6 @@ public class DDMFormLayoutJSONSerializerTest extends BaseDDMTestCase {
 		title.addString(LocaleUtil.BRAZIL, ptTitle);
 
 		return ddmFormLayoutPage;
-	}
-
-	protected void setUpDDMFormLayoutJSONSerializerUtil() {
-		DDMFormLayoutJSONSerializerUtil ddmFormLayoutJSONSerializerUtil =
-			new DDMFormLayoutJSONSerializerUtil();
-
-		ddmFormLayoutJSONSerializerUtil.setDDMFormLayoutJSONSerializer(
-			new DDMFormLayoutJSONSerializerImpl());
 	}
 
 }

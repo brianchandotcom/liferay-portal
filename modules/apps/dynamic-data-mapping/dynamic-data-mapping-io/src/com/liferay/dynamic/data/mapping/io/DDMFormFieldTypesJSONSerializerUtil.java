@@ -20,6 +20,10 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 
 import java.util.List;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+
 /**
  * @author Bruno Basto
  */
@@ -31,7 +35,7 @@ public class DDMFormFieldTypesJSONSerializerUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			DDMFormFieldTypesJSONSerializerUtil.class);
 
-		return _ddmFormFieldTypesJSONSerializer;
+		return _serviceTracker.getService();
 	}
 
 	public static String serialize(List<DDMFormFieldType> ddmFormFieldTypes)
@@ -41,15 +45,19 @@ public class DDMFormFieldTypesJSONSerializerUtil {
 			ddmFormFieldTypes);
 	}
 
-	public void setDDMFormFieldTypesJSONSerializer(
-		DDMFormFieldTypesJSONSerializer ddmFormFieldTypesJSONSerializer) {
+	private static final ServiceTracker
+		<DDMFormFieldTypesJSONSerializer, DDMFormFieldTypesJSONSerializer>
+			_serviceTracker;
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			DDMFormFieldTypesJSONSerializerUtil.class);
 
-		_ddmFormFieldTypesJSONSerializer = ddmFormFieldTypesJSONSerializer;
+		_serviceTracker = new ServiceTracker<>(
+			bundle.getBundleContext(), DDMFormFieldTypesJSONSerializer.class,
+			null);
+
+		_serviceTracker.open();
 	}
-
-	private static DDMFormFieldTypesJSONSerializer
-		_ddmFormFieldTypesJSONSerializer;
 
 }

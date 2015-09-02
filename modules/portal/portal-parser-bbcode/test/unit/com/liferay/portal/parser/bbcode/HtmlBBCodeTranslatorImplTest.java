@@ -25,7 +25,7 @@ import org.junit.Test;
  * @author Sergio González
  * @author John Zhao
  */
-public class HtmlBBCodeTranslatorTest {
+public class HtmlBBCodeTranslatorImplTest {
 
 	@Before
 	public void setUp() {

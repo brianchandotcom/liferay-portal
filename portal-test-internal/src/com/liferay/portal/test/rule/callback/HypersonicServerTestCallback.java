@@ -29,6 +29,7 @@ import java.sql.Statement;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import org.hsqldb.jdbcDriver;
 import org.hsqldb.server.Server;
 import org.hsqldb.server.ServerConstants;
 
@@ -60,7 +61,7 @@ public class HypersonicServerTestCallback
 
 	@Override
 	public Server doBeforeClass(Description description) throws Throwable {
-		Class.forName("org.hsqldb.jdbcDriver");
+		Class.forName(jdbcDriver.class.getName());
 
 		final CountDownLatch startCountDownLatch = new CountDownLatch(1);
 

@@ -15,8 +15,9 @@
 package com.liferay.dynamic.data.mapping.form.values.factory;
 
 import com.liferay.dynamic.data.mapping.form.values.factory.internal.DDMFormValuesFactoryImpl;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormValuesJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -48,9 +49,11 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -60,8 +63,11 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest(LocaleUtil.class)
+@PrepareForTest({DDMFormLayoutJSONSerializerUtil.class, LocaleUtil.class})
 @RunWith(PowerMockRunner.class)
+@SuppressStaticInitializationFor(
+	"com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil"
+)
 public class DDMFormValuesFactoryTest extends PowerMockito {
 
 	@Before
@@ -769,11 +775,16 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 	}
 
 	protected void setUpDDMFormValuesJSONSerializerUtil() {
-		DDMFormValuesJSONSerializerUtil ddmFormValuesJSONSerializerUtil =
-			new DDMFormValuesJSONSerializerUtil();
+		mockStatic(
+			DDMFormValuesJSONSerializerUtil.class, Mockito.CALLS_REAL_METHODS);
 
-		ddmFormValuesJSONSerializerUtil.setDDMFormValuesJSONSerializer(
-			new DDMFormValuesJSONSerializerImpl());
+		stub(
+			method(
+				DDMFormValuesJSONSerializerUtil.class,
+				"getDDMFormValuesJSONSerializer")
+		).toReturn(
+			new DDMFormValuesJSONSerializerImpl()
+		);
 	}
 
 	protected void setUpJSONFactoryUtil() {

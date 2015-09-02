@@ -19,9 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
-import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -35,26 +32,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
-
 /**
  * @author Miguel Angelo Caldas Gallindo
  * @author Marcellus Tavares
  */
-@PrepareForTest(
-	{
-		DDMFormFieldTypeServicesTrackerUtil.class,
-		DDMStructureLocalServiceUtil.class, DDMTemplateLocalServiceUtil.class,
-		LocaleUtil.class
-	}
-)
-@SuppressStaticInitializationFor(
-	{
-		"com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil",
-		"com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil"
-	}
-)
 public class DDMStructureImplTest extends BaseDDMTestCase {
 
 	@Before

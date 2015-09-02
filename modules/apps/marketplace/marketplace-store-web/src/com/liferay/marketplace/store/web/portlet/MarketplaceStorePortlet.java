@@ -364,7 +364,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 
 	@Override
 	protected String getServerPortletId() {
-		return _OSB_PORTLET_ID;
+		return MarketplaceStoreWebConfigurationValues.MARKETPLACE_PORTLET_ID;
 	}
 
 	@Override
@@ -380,7 +380,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		Map<String, String[]> parameterMap) {
 
 		parameterMap.put(
-			"clientId",
+			"clientBuild",
 			new String[] {String.valueOf(MarketplaceConstants.CLIENT_BUILD)});
 		parameterMap.put(
 			"compatibility",
@@ -397,7 +397,5 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 	protected void setOAuthManager(OAuthManager oAuthManager) {
 		super.setOAuthManager(oAuthManager);
 	}
-
-	private static final String _OSB_PORTLET_ID = "12_WAR_osbportlet";
 
 }

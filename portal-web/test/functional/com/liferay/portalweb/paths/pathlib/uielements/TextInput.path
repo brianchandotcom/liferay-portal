@@ -195,7 +195,7 @@
 </tr>
 <tr>
 	<td>KEYWORDS</td>
-	<td>//input[@title='keywords']</td>
+	<td>//input[contains(@title,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>

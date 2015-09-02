@@ -428,8 +428,8 @@ public class PortletItemPersistenceTest {
 
 		PortletItem existingPortletItem = _persistence.findByPrimaryKey(newPortletItem.getPrimaryKey());
 
-		Assert.assertEquals(existingPortletItem.getGroupId(),
-			ReflectionTestUtil.invoke(existingPortletItem,
+		Assert.assertEquals(Long.valueOf(existingPortletItem.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingPortletItem,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingPortletItem.getName(),
 				ReflectionTestUtil.invoke(existingPortletItem,
@@ -437,8 +437,8 @@ public class PortletItemPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingPortletItem.getPortletId(),
 				ReflectionTestUtil.invoke(existingPortletItem,
 					"getOriginalPortletId", new Class<?>[0])));
-		Assert.assertEquals(existingPortletItem.getClassNameId(),
-			ReflectionTestUtil.invoke(existingPortletItem,
+		Assert.assertEquals(Long.valueOf(existingPortletItem.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingPortletItem,
 				"getOriginalClassNameId", new Class<?>[0]));
 	}
 

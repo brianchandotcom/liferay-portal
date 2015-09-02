@@ -501,8 +501,8 @@ public class OrganizationPersistenceTest {
 
 		Organization existingOrganization = _persistence.findByPrimaryKey(newOrganization.getPrimaryKey());
 
-		Assert.assertEquals(existingOrganization.getCompanyId(),
-			ReflectionTestUtil.invoke(existingOrganization,
+		Assert.assertEquals(Long.valueOf(existingOrganization.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingOrganization,
 				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingOrganization.getName(),
 				ReflectionTestUtil.invoke(existingOrganization,

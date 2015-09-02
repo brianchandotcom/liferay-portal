@@ -381,11 +381,11 @@ public class RatingsStatsPersistenceTest {
 
 		RatingsStats existingRatingsStats = _persistence.findByPrimaryKey(newRatingsStats.getPrimaryKey());
 
-		Assert.assertEquals(existingRatingsStats.getClassNameId(),
-			ReflectionTestUtil.invoke(existingRatingsStats,
+		Assert.assertEquals(Long.valueOf(existingRatingsStats.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingRatingsStats,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingRatingsStats.getClassPK(),
-			ReflectionTestUtil.invoke(existingRatingsStats,
+		Assert.assertEquals(Long.valueOf(existingRatingsStats.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingRatingsStats,
 				"getOriginalClassPK", new Class<?>[0]));
 	}
 

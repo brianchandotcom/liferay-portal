@@ -631,19 +631,19 @@ public class DDMTemplatePersistenceTest {
 		Assert.assertTrue(Validator.equals(existingDDMTemplate.getUuid(),
 				ReflectionTestUtil.invoke(existingDDMTemplate,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingDDMTemplate.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDMTemplate,
+		Assert.assertEquals(Long.valueOf(existingDDMTemplate.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplate,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDDMTemplate.getSmallImageId(),
-			ReflectionTestUtil.invoke(existingDDMTemplate,
+		Assert.assertEquals(Long.valueOf(existingDDMTemplate.getSmallImageId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplate,
 				"getOriginalSmallImageId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDDMTemplate.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDMTemplate,
+		Assert.assertEquals(Long.valueOf(existingDDMTemplate.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplate,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingDDMTemplate.getClassNameId(),
-			ReflectionTestUtil.invoke(existingDDMTemplate,
+		Assert.assertEquals(Long.valueOf(existingDDMTemplate.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplate,
 				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingDDMTemplate.getTemplateKey(),

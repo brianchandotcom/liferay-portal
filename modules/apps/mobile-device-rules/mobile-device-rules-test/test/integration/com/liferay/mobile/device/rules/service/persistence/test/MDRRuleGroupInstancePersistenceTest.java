@@ -493,18 +493,22 @@ public class MDRRuleGroupInstancePersistenceTest {
 				existingMDRRuleGroupInstance.getUuid(),
 				ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingMDRRuleGroupInstance.getGroupId(),
-			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+		Assert.assertEquals(Long.valueOf(
+				existingMDRRuleGroupInstance.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRuleGroupInstance,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMDRRuleGroupInstance.getClassNameId(),
-			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+		Assert.assertEquals(Long.valueOf(
+				existingMDRRuleGroupInstance.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRuleGroupInstance,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingMDRRuleGroupInstance.getClassPK(),
-			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+		Assert.assertEquals(Long.valueOf(
+				existingMDRRuleGroupInstance.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRuleGroupInstance,
 				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(existingMDRRuleGroupInstance.getRuleGroupId(),
-			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+		Assert.assertEquals(Long.valueOf(
+				existingMDRRuleGroupInstance.getRuleGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRuleGroupInstance,
 				"getOriginalRuleGroupId", new Class<?>[0]));
 	}
 

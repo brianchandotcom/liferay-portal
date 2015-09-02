@@ -406,11 +406,13 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		DLFileEntryMetadata existingDLFileEntryMetadata = _persistence.findByPrimaryKey(newDLFileEntryMetadata.getPrimaryKey());
 
-		Assert.assertEquals(existingDLFileEntryMetadata.getDDMStructureId(),
-			ReflectionTestUtil.invoke(existingDLFileEntryMetadata,
+		Assert.assertEquals(Long.valueOf(
+				existingDLFileEntryMetadata.getDDMStructureId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntryMetadata,
 				"getOriginalDDMStructureId", new Class<?>[0]));
-		Assert.assertEquals(existingDLFileEntryMetadata.getFileVersionId(),
-			ReflectionTestUtil.invoke(existingDLFileEntryMetadata,
+		Assert.assertEquals(Long.valueOf(
+				existingDLFileEntryMetadata.getFileVersionId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntryMetadata,
 				"getOriginalFileVersionId", new Class<?>[0]));
 	}
 

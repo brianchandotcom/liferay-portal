@@ -407,12 +407,12 @@ public class WikiPageResourcePersistenceTest {
 		Assert.assertTrue(Validator.equals(existingWikiPageResource.getUuid(),
 				ReflectionTestUtil.invoke(existingWikiPageResource,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingWikiPageResource.getGroupId(),
-			ReflectionTestUtil.invoke(existingWikiPageResource,
+		Assert.assertEquals(Long.valueOf(existingWikiPageResource.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingWikiPageResource,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingWikiPageResource.getNodeId(),
-			ReflectionTestUtil.invoke(existingWikiPageResource,
+		Assert.assertEquals(Long.valueOf(existingWikiPageResource.getNodeId()),
+			ReflectionTestUtil.<Long>invoke(existingWikiPageResource,
 				"getOriginalNodeId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingWikiPageResource.getTitle(),

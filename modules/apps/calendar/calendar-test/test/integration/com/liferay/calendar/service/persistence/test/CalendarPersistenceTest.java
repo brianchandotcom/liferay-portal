@@ -485,9 +485,9 @@ public class CalendarPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingCalendar.getUuid(),
 				ReflectionTestUtil.invoke(existingCalendar, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(existingCalendar.getGroupId(),
-			ReflectionTestUtil.invoke(existingCalendar, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingCalendar.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendar,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected Calendar addCalendar() throws Exception {

@@ -455,12 +455,12 @@ public class PollsChoicePersistenceTest {
 		Assert.assertTrue(Validator.equals(existingPollsChoice.getUuid(),
 				ReflectionTestUtil.invoke(existingPollsChoice,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingPollsChoice.getGroupId(),
-			ReflectionTestUtil.invoke(existingPollsChoice,
+		Assert.assertEquals(Long.valueOf(existingPollsChoice.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingPollsChoice,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingPollsChoice.getQuestionId(),
-			ReflectionTestUtil.invoke(existingPollsChoice,
+		Assert.assertEquals(Long.valueOf(existingPollsChoice.getQuestionId()),
+			ReflectionTestUtil.<Long>invoke(existingPollsChoice,
 				"getOriginalQuestionId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingPollsChoice.getName(),
 				ReflectionTestUtil.invoke(existingPollsChoice,

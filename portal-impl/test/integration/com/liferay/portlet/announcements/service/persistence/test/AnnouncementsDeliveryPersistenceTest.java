@@ -402,8 +402,9 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		AnnouncementsDelivery existingAnnouncementsDelivery = _persistence.findByPrimaryKey(newAnnouncementsDelivery.getPrimaryKey());
 
-		Assert.assertEquals(existingAnnouncementsDelivery.getUserId(),
-			ReflectionTestUtil.invoke(existingAnnouncementsDelivery,
+		Assert.assertEquals(Long.valueOf(
+				existingAnnouncementsDelivery.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingAnnouncementsDelivery,
 				"getOriginalUserId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingAnnouncementsDelivery.getType(),

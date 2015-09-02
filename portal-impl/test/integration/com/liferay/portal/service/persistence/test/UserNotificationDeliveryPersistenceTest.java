@@ -419,22 +419,28 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		UserNotificationDelivery existingUserNotificationDelivery = _persistence.findByPrimaryKey(newUserNotificationDelivery.getPrimaryKey());
 
-		Assert.assertEquals(existingUserNotificationDelivery.getUserId(),
-			ReflectionTestUtil.invoke(existingUserNotificationDelivery,
+		Assert.assertEquals(Long.valueOf(
+				existingUserNotificationDelivery.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingUserNotificationDelivery,
 				"getOriginalUserId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingUserNotificationDelivery.getPortletId(),
 				ReflectionTestUtil.invoke(existingUserNotificationDelivery,
 					"getOriginalPortletId", new Class<?>[0])));
-		Assert.assertEquals(existingUserNotificationDelivery.getClassNameId(),
-			ReflectionTestUtil.invoke(existingUserNotificationDelivery,
+		Assert.assertEquals(Long.valueOf(
+				existingUserNotificationDelivery.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingUserNotificationDelivery,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingUserNotificationDelivery.getNotificationType(),
-			ReflectionTestUtil.invoke(existingUserNotificationDelivery,
+		Assert.assertEquals(Integer.valueOf(
+				existingUserNotificationDelivery.getNotificationType()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingUserNotificationDelivery,
 				"getOriginalNotificationType", new Class<?>[0]));
-		Assert.assertEquals(existingUserNotificationDelivery.getDeliveryType(),
-			ReflectionTestUtil.invoke(existingUserNotificationDelivery,
-				"getOriginalDeliveryType", new Class<?>[0]));
+		Assert.assertEquals(Integer.valueOf(
+				existingUserNotificationDelivery.getDeliveryType()),
+			ReflectionTestUtil.<Integer>invoke(
+				existingUserNotificationDelivery, "getOriginalDeliveryType",
+				new Class<?>[0]));
 	}
 
 	protected UserNotificationDelivery addUserNotificationDelivery()

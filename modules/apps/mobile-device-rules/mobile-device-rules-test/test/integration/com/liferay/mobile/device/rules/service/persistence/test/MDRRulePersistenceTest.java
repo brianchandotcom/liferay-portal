@@ -447,9 +447,9 @@ public class MDRRulePersistenceTest {
 		Assert.assertTrue(Validator.equals(existingMDRRule.getUuid(),
 				ReflectionTestUtil.invoke(existingMDRRule, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(existingMDRRule.getGroupId(),
-			ReflectionTestUtil.invoke(existingMDRRule, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingMDRRule.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRule,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected MDRRule addMDRRule() throws Exception {

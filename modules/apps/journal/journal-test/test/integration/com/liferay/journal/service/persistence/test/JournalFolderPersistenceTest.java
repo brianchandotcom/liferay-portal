@@ -546,22 +546,23 @@ public class JournalFolderPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingJournalFolder.getUuid(),
 				ReflectionTestUtil.invoke(existingJournalFolder,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingJournalFolder.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalFolder,
+		Assert.assertEquals(Long.valueOf(existingJournalFolder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalFolder,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingJournalFolder.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalFolder,
+		Assert.assertEquals(Long.valueOf(existingJournalFolder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalFolder,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingJournalFolder.getName(),
 				ReflectionTestUtil.invoke(existingJournalFolder,
 					"getOriginalName", new Class<?>[0])));
 
-		Assert.assertEquals(existingJournalFolder.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalFolder,
+		Assert.assertEquals(Long.valueOf(existingJournalFolder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalFolder,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingJournalFolder.getParentFolderId(),
-			ReflectionTestUtil.invoke(existingJournalFolder,
+		Assert.assertEquals(Long.valueOf(
+				existingJournalFolder.getParentFolderId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalFolder,
 				"getOriginalParentFolderId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingJournalFolder.getName(),
 				ReflectionTestUtil.invoke(existingJournalFolder,

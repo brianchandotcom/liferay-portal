@@ -506,24 +506,25 @@ public class SocialRequestPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingSocialRequest.getUuid(),
 				ReflectionTestUtil.invoke(existingSocialRequest,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingSocialRequest.getGroupId(),
-			ReflectionTestUtil.invoke(existingSocialRequest,
+		Assert.assertEquals(Long.valueOf(existingSocialRequest.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialRequest,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingSocialRequest.getUserId(),
-			ReflectionTestUtil.invoke(existingSocialRequest,
+		Assert.assertEquals(Long.valueOf(existingSocialRequest.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialRequest,
 				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(existingSocialRequest.getClassNameId(),
-			ReflectionTestUtil.invoke(existingSocialRequest,
+		Assert.assertEquals(Long.valueOf(existingSocialRequest.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialRequest,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingSocialRequest.getClassPK(),
-			ReflectionTestUtil.invoke(existingSocialRequest,
+		Assert.assertEquals(Long.valueOf(existingSocialRequest.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingSocialRequest,
 				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(existingSocialRequest.getType(),
-			ReflectionTestUtil.invoke(existingSocialRequest, "getOriginalType",
-				new Class<?>[0]));
-		Assert.assertEquals(existingSocialRequest.getReceiverUserId(),
-			ReflectionTestUtil.invoke(existingSocialRequest,
+		Assert.assertEquals(Integer.valueOf(existingSocialRequest.getType()),
+			ReflectionTestUtil.<Integer>invoke(existingSocialRequest,
+				"getOriginalType", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(
+				existingSocialRequest.getReceiverUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialRequest,
 				"getOriginalReceiverUserId", new Class<?>[0]));
 	}
 

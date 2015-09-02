@@ -453,8 +453,8 @@ public class MDRRuleGroupPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingMDRRuleGroup.getUuid(),
 				ReflectionTestUtil.invoke(existingMDRRuleGroup,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingMDRRuleGroup.getGroupId(),
-			ReflectionTestUtil.invoke(existingMDRRuleGroup,
+		Assert.assertEquals(Long.valueOf(existingMDRRuleGroup.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRuleGroup,
 				"getOriginalGroupId", new Class<?>[0]));
 	}
 

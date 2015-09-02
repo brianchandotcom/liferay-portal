@@ -383,11 +383,11 @@ public class ExpandoTablePersistenceTest {
 
 		ExpandoTable existingExpandoTable = _persistence.findByPrimaryKey(newExpandoTable.getPrimaryKey());
 
-		Assert.assertEquals(existingExpandoTable.getCompanyId(),
-			ReflectionTestUtil.invoke(existingExpandoTable,
+		Assert.assertEquals(Long.valueOf(existingExpandoTable.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingExpandoTable,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(existingExpandoTable.getClassNameId(),
-			ReflectionTestUtil.invoke(existingExpandoTable,
+		Assert.assertEquals(Long.valueOf(existingExpandoTable.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingExpandoTable,
 				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingExpandoTable.getName(),
 				ReflectionTestUtil.invoke(existingExpandoTable,

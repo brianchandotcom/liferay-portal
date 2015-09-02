@@ -392,12 +392,12 @@ public class ExpandoRowPersistenceTest {
 
 		ExpandoRow existingExpandoRow = _persistence.findByPrimaryKey(newExpandoRow.getPrimaryKey());
 
-		Assert.assertEquals(existingExpandoRow.getTableId(),
-			ReflectionTestUtil.invoke(existingExpandoRow, "getOriginalTableId",
-				new Class<?>[0]));
-		Assert.assertEquals(existingExpandoRow.getClassPK(),
-			ReflectionTestUtil.invoke(existingExpandoRow, "getOriginalClassPK",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingExpandoRow.getTableId()),
+			ReflectionTestUtil.<Long>invoke(existingExpandoRow,
+				"getOriginalTableId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingExpandoRow.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingExpandoRow,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected ExpandoRow addExpandoRow() throws Exception {

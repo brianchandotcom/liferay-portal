@@ -393,11 +393,12 @@ public class DDMTemplateLinkPersistenceTest {
 
 		DDMTemplateLink existingDDMTemplateLink = _persistence.findByPrimaryKey(newDDMTemplateLink.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMTemplateLink.getClassNameId(),
-			ReflectionTestUtil.invoke(existingDDMTemplateLink,
+		Assert.assertEquals(Long.valueOf(
+				existingDDMTemplateLink.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplateLink,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingDDMTemplateLink.getClassPK(),
-			ReflectionTestUtil.invoke(existingDDMTemplateLink,
+		Assert.assertEquals(Long.valueOf(existingDDMTemplateLink.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplateLink,
 				"getOriginalClassPK", new Class<?>[0]));
 	}
 

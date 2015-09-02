@@ -382,9 +382,9 @@ public class PortletPersistenceTest {
 
 		Portlet existingPortlet = _persistence.findByPrimaryKey(newPortlet.getPrimaryKey());
 
-		Assert.assertEquals(existingPortlet.getCompanyId(),
-			ReflectionTestUtil.invoke(existingPortlet, "getOriginalCompanyId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingPortlet.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingPortlet,
+				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingPortlet.getPortletId(),
 				ReflectionTestUtil.invoke(existingPortlet,
 					"getOriginalPortletId", new Class<?>[0])));

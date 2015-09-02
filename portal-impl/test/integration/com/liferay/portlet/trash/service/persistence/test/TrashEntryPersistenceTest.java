@@ -433,12 +433,12 @@ public class TrashEntryPersistenceTest {
 
 		TrashEntry existingTrashEntry = _persistence.findByPrimaryKey(newTrashEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingTrashEntry.getClassNameId(),
-			ReflectionTestUtil.invoke(existingTrashEntry,
+		Assert.assertEquals(Long.valueOf(existingTrashEntry.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingTrashEntry,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingTrashEntry.getClassPK(),
-			ReflectionTestUtil.invoke(existingTrashEntry, "getOriginalClassPK",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingTrashEntry.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingTrashEntry,
+				"getOriginalClassPK", new Class<?>[0]));
 	}
 
 	protected TrashEntry addTrashEntry() throws Exception {

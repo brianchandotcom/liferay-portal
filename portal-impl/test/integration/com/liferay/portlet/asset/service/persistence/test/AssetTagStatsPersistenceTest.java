@@ -386,11 +386,11 @@ public class AssetTagStatsPersistenceTest {
 
 		AssetTagStats existingAssetTagStats = _persistence.findByPrimaryKey(newAssetTagStats.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetTagStats.getTagId(),
-			ReflectionTestUtil.invoke(existingAssetTagStats,
+		Assert.assertEquals(Long.valueOf(existingAssetTagStats.getTagId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetTagStats,
 				"getOriginalTagId", new Class<?>[0]));
-		Assert.assertEquals(existingAssetTagStats.getClassNameId(),
-			ReflectionTestUtil.invoke(existingAssetTagStats,
+		Assert.assertEquals(Long.valueOf(existingAssetTagStats.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetTagStats,
 				"getOriginalClassNameId", new Class<?>[0]));
 	}
 

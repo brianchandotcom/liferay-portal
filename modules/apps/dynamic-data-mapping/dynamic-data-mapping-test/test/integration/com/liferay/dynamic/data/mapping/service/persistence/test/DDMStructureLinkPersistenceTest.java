@@ -401,14 +401,16 @@ public class DDMStructureLinkPersistenceTest {
 
 		DDMStructureLink existingDDMStructureLink = _persistence.findByPrimaryKey(newDDMStructureLink.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMStructureLink.getClassNameId(),
-			ReflectionTestUtil.invoke(existingDDMStructureLink,
+		Assert.assertEquals(Long.valueOf(
+				existingDDMStructureLink.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructureLink,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingDDMStructureLink.getClassPK(),
-			ReflectionTestUtil.invoke(existingDDMStructureLink,
+		Assert.assertEquals(Long.valueOf(existingDDMStructureLink.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructureLink,
 				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(existingDDMStructureLink.getStructureId(),
-			ReflectionTestUtil.invoke(existingDDMStructureLink,
+		Assert.assertEquals(Long.valueOf(
+				existingDDMStructureLink.getStructureId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructureLink,
 				"getOriginalStructureId", new Class<?>[0]));
 	}
 

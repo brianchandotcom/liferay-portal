@@ -583,19 +583,22 @@ public class CalendarBookingPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingCalendarBooking.getUuid(),
 				ReflectionTestUtil.invoke(existingCalendarBooking,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingCalendarBooking.getGroupId(),
-			ReflectionTestUtil.invoke(existingCalendarBooking,
+		Assert.assertEquals(Long.valueOf(existingCalendarBooking.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarBooking,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingCalendarBooking.getCalendarId(),
-			ReflectionTestUtil.invoke(existingCalendarBooking,
+		Assert.assertEquals(Long.valueOf(
+				existingCalendarBooking.getCalendarId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarBooking,
 				"getOriginalCalendarId", new Class<?>[0]));
-		Assert.assertEquals(existingCalendarBooking.getParentCalendarBookingId(),
-			ReflectionTestUtil.invoke(existingCalendarBooking,
+		Assert.assertEquals(Long.valueOf(
+				existingCalendarBooking.getParentCalendarBookingId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarBooking,
 				"getOriginalParentCalendarBookingId", new Class<?>[0]));
 
-		Assert.assertEquals(existingCalendarBooking.getCalendarId(),
-			ReflectionTestUtil.invoke(existingCalendarBooking,
+		Assert.assertEquals(Long.valueOf(
+				existingCalendarBooking.getCalendarId()),
+			ReflectionTestUtil.<Long>invoke(existingCalendarBooking,
 				"getOriginalCalendarId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingCalendarBooking.getVEventUid(),

@@ -377,11 +377,12 @@ public class PortalPreferencesPersistenceTest {
 
 		PortalPreferences existingPortalPreferences = _persistence.findByPrimaryKey(newPortalPreferences.getPrimaryKey());
 
-		Assert.assertEquals(existingPortalPreferences.getOwnerId(),
-			ReflectionTestUtil.invoke(existingPortalPreferences,
+		Assert.assertEquals(Long.valueOf(existingPortalPreferences.getOwnerId()),
+			ReflectionTestUtil.<Long>invoke(existingPortalPreferences,
 				"getOriginalOwnerId", new Class<?>[0]));
-		Assert.assertEquals(existingPortalPreferences.getOwnerType(),
-			ReflectionTestUtil.invoke(existingPortalPreferences,
+		Assert.assertEquals(Integer.valueOf(
+				existingPortalPreferences.getOwnerType()),
+			ReflectionTestUtil.<Integer>invoke(existingPortalPreferences,
 				"getOriginalOwnerType", new Class<?>[0]));
 	}
 

@@ -399,8 +399,8 @@ public class DDMStorageLinkPersistenceTest {
 
 		DDMStorageLink existingDDMStorageLink = _persistence.findByPrimaryKey(newDDMStorageLink.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMStorageLink.getClassPK(),
-			ReflectionTestUtil.invoke(existingDDMStorageLink,
+		Assert.assertEquals(Long.valueOf(existingDDMStorageLink.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStorageLink,
 				"getOriginalClassPK", new Class<?>[0]));
 	}
 

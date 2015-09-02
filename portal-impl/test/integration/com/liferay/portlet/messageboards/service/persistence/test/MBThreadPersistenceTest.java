@@ -599,12 +599,12 @@ public class MBThreadPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingMBThread.getUuid(),
 				ReflectionTestUtil.invoke(existingMBThread, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(existingMBThread.getGroupId(),
-			ReflectionTestUtil.invoke(existingMBThread, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingMBThread.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBThread,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMBThread.getRootMessageId(),
-			ReflectionTestUtil.invoke(existingMBThread,
+		Assert.assertEquals(Long.valueOf(existingMBThread.getRootMessageId()),
+			ReflectionTestUtil.<Long>invoke(existingMBThread,
 				"getOriginalRootMessageId", new Class<?>[0]));
 	}
 

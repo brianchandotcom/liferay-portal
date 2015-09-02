@@ -409,11 +409,11 @@ public class ResourceBlockPersistenceTest {
 
 		ResourceBlock existingResourceBlock = _persistence.findByPrimaryKey(newResourceBlock.getPrimaryKey());
 
-		Assert.assertEquals(existingResourceBlock.getCompanyId(),
-			ReflectionTestUtil.invoke(existingResourceBlock,
+		Assert.assertEquals(Long.valueOf(existingResourceBlock.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingResourceBlock,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(existingResourceBlock.getGroupId(),
-			ReflectionTestUtil.invoke(existingResourceBlock,
+		Assert.assertEquals(Long.valueOf(existingResourceBlock.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingResourceBlock,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingResourceBlock.getName(),
 				ReflectionTestUtil.invoke(existingResourceBlock,

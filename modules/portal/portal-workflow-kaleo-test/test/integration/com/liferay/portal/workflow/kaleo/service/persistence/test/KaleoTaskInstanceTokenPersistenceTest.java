@@ -492,11 +492,13 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 
 		KaleoTaskInstanceToken existingKaleoTaskInstanceToken = _persistence.findByPrimaryKey(newKaleoTaskInstanceToken.getPrimaryKey());
 
-		Assert.assertEquals(existingKaleoTaskInstanceToken.getKaleoInstanceId(),
-			ReflectionTestUtil.invoke(existingKaleoTaskInstanceToken,
+		Assert.assertEquals(Long.valueOf(
+				existingKaleoTaskInstanceToken.getKaleoInstanceId()),
+			ReflectionTestUtil.<Long>invoke(existingKaleoTaskInstanceToken,
 				"getOriginalKaleoInstanceId", new Class<?>[0]));
-		Assert.assertEquals(existingKaleoTaskInstanceToken.getKaleoTaskId(),
-			ReflectionTestUtil.invoke(existingKaleoTaskInstanceToken,
+		Assert.assertEquals(Long.valueOf(
+				existingKaleoTaskInstanceToken.getKaleoTaskId()),
+			ReflectionTestUtil.<Long>invoke(existingKaleoTaskInstanceToken,
 				"getOriginalKaleoTaskId", new Class<?>[0]));
 	}
 

@@ -507,12 +507,12 @@ public class JournalFeedPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingJournalFeed.getUuid(),
 				ReflectionTestUtil.invoke(existingJournalFeed,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingJournalFeed.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalFeed,
+		Assert.assertEquals(Long.valueOf(existingJournalFeed.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalFeed,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingJournalFeed.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalFeed,
+		Assert.assertEquals(Long.valueOf(existingJournalFeed.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalFeed,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingJournalFeed.getFeedId(),
 				ReflectionTestUtil.invoke(existingJournalFeed,

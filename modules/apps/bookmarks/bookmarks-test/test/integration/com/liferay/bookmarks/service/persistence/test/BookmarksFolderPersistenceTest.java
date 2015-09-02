@@ -534,8 +534,8 @@ public class BookmarksFolderPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingBookmarksFolder.getUuid(),
 				ReflectionTestUtil.invoke(existingBookmarksFolder,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingBookmarksFolder.getGroupId(),
-			ReflectionTestUtil.invoke(existingBookmarksFolder,
+		Assert.assertEquals(Long.valueOf(existingBookmarksFolder.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingBookmarksFolder,
 				"getOriginalGroupId", new Class<?>[0]));
 	}
 

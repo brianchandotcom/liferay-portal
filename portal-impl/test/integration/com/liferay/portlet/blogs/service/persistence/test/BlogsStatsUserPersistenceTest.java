@@ -435,11 +435,11 @@ public class BlogsStatsUserPersistenceTest {
 
 		BlogsStatsUser existingBlogsStatsUser = _persistence.findByPrimaryKey(newBlogsStatsUser.getPrimaryKey());
 
-		Assert.assertEquals(existingBlogsStatsUser.getGroupId(),
-			ReflectionTestUtil.invoke(existingBlogsStatsUser,
+		Assert.assertEquals(Long.valueOf(existingBlogsStatsUser.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingBlogsStatsUser,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingBlogsStatsUser.getUserId(),
-			ReflectionTestUtil.invoke(existingBlogsStatsUser,
+		Assert.assertEquals(Long.valueOf(existingBlogsStatsUser.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingBlogsStatsUser,
 				"getOriginalUserId", new Class<?>[0]));
 	}
 

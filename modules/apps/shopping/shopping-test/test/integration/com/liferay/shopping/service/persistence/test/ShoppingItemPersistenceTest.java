@@ -542,20 +542,21 @@ public class ShoppingItemPersistenceTest {
 
 		ShoppingItem existingShoppingItem = _persistence.findByPrimaryKey(newShoppingItem.getPrimaryKey());
 
-		Assert.assertEquals(existingShoppingItem.getSmallImageId(),
-			ReflectionTestUtil.invoke(existingShoppingItem,
+		Assert.assertEquals(Long.valueOf(existingShoppingItem.getSmallImageId()),
+			ReflectionTestUtil.<Long>invoke(existingShoppingItem,
 				"getOriginalSmallImageId", new Class<?>[0]));
 
-		Assert.assertEquals(existingShoppingItem.getMediumImageId(),
-			ReflectionTestUtil.invoke(existingShoppingItem,
+		Assert.assertEquals(Long.valueOf(
+				existingShoppingItem.getMediumImageId()),
+			ReflectionTestUtil.<Long>invoke(existingShoppingItem,
 				"getOriginalMediumImageId", new Class<?>[0]));
 
-		Assert.assertEquals(existingShoppingItem.getLargeImageId(),
-			ReflectionTestUtil.invoke(existingShoppingItem,
+		Assert.assertEquals(Long.valueOf(existingShoppingItem.getLargeImageId()),
+			ReflectionTestUtil.<Long>invoke(existingShoppingItem,
 				"getOriginalLargeImageId", new Class<?>[0]));
 
-		Assert.assertEquals(existingShoppingItem.getCompanyId(),
-			ReflectionTestUtil.invoke(existingShoppingItem,
+		Assert.assertEquals(Long.valueOf(existingShoppingItem.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingShoppingItem,
 				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingShoppingItem.getSku(),
 				ReflectionTestUtil.invoke(existingShoppingItem,

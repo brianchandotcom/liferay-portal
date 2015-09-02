@@ -423,11 +423,11 @@ public class ShoppingCartPersistenceTest {
 
 		ShoppingCart existingShoppingCart = _persistence.findByPrimaryKey(newShoppingCart.getPrimaryKey());
 
-		Assert.assertEquals(existingShoppingCart.getGroupId(),
-			ReflectionTestUtil.invoke(existingShoppingCart,
+		Assert.assertEquals(Long.valueOf(existingShoppingCart.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingShoppingCart,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingShoppingCart.getUserId(),
-			ReflectionTestUtil.invoke(existingShoppingCart,
+		Assert.assertEquals(Long.valueOf(existingShoppingCart.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingShoppingCart,
 				"getOriginalUserId", new Class<?>[0]));
 	}
 

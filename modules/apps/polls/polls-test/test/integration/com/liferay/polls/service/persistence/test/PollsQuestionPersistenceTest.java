@@ -459,8 +459,8 @@ public class PollsQuestionPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingPollsQuestion.getUuid(),
 				ReflectionTestUtil.invoke(existingPollsQuestion,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingPollsQuestion.getGroupId(),
-			ReflectionTestUtil.invoke(existingPollsQuestion,
+		Assert.assertEquals(Long.valueOf(existingPollsQuestion.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingPollsQuestion,
 				"getOriginalGroupId", new Class<?>[0]));
 	}
 

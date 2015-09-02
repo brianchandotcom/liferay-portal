@@ -58,6 +58,17 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setBaseDirName(baseDirName);
 
+			boolean formatLocalChanges = GetterUtil.getBoolean(
+				arguments.get("format.local.changes"),
+				SourceFormatterArgs.FORMAT_LOCAL_CHANGES);
+
+			sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
+
+			if (formatLocalChanges) {
+				sourceFormatterArgs.setLocalChangesFileNames(
+					getLocalChangesFileNames(baseDirName));
+			}
+
 			String copyrightFileName = GetterUtil.getString(
 				arguments.get("source.copyright.file"),
 				SourceFormatterArgs.COPYRIGHT_FILE_NAME);

@@ -40,6 +40,7 @@ import java.util.Properties;
 /**
  * @author Igor Spasic
  * @author Brian Wing Shun Chan
+ * @author Hugo Huijser
  */
 public class SourceFormatterHelper {
 
@@ -99,14 +100,13 @@ public class SourceFormatterHelper {
 	}
 
 	public List<String> scanForFiles(
-			String baseDir, String[] excludes, String[] includes)
+			String baseDir, List<String> localChangesFileNames,
+			String[] excludes, String[] includes)
 		throws Exception {
 
-		final List<String> fileNames = new ArrayList<>();
-
-		final List<PathMatcher> excludeDirPathMatchers = new ArrayList<>();
-		final List<PathMatcher> excludeFilePathMatchers = new ArrayList<>();
-		final List<PathMatcher> includeFilePathMatchers = new ArrayList<>();
+		List<PathMatcher> excludeDirPathMatchers = new ArrayList<>();
+		List<PathMatcher> excludeFilePathMatchers = new ArrayList<>();
+		List<PathMatcher> includeFilePathMatchers = new ArrayList<>();
 
 		FileSystem fileSystem = FileSystems.getDefault();
 
@@ -127,6 +127,88 @@ public class SourceFormatterHelper {
 			includeFilePathMatchers.add(
 				fileSystem.getPathMatcher("glob:" + include));
 		}
+
+		if (localChangesFileNames == null) {
+			return scanForFiles(
+				baseDir, excludeDirPathMatchers, excludeFilePathMatchers,
+				includeFilePathMatchers);
+		}
+
+		return getFileNames(
+			baseDir, localChangesFileNames, excludeDirPathMatchers,
+			excludeFilePathMatchers, includeFilePathMatchers);
+	}
+
+	protected List<String> getFileNames(
+			String baseDir, List<String> localChangesFileNames,
+			List<PathMatcher> excludeDirPathMatchers,
+			List<PathMatcher> excludeFilePathMatchers,
+			List<PathMatcher> includeFilePathMatchers)
+		throws Exception {
+
+		List<String> fileNames = new ArrayList<>();
+
+		localChangesFileNamesLoop:
+		for (String fileName : localChangesFileNames) {
+			File file = new File(fileName);
+
+			Path filePath = file.toPath();
+
+			for (PathMatcher pathMatcher : excludeFilePathMatchers) {
+				if (pathMatcher.matches(filePath)) {
+					continue localChangesFileNamesLoop;
+				}
+			}
+
+			File dir = file.getParentFile();
+
+			Path dirPath = dir.toPath();
+
+			for (PathMatcher pathMatcher : excludeDirPathMatchers) {
+				if (pathMatcher.matches(dirPath)) {
+					continue localChangesFileNamesLoop;
+				}
+			}
+
+			while (true) {
+				if (Files.exists(dirPath.resolve("source_formatter.ignore"))) {
+					continue localChangesFileNamesLoop;
+				}
+
+				dir = dir.getParentFile();
+
+				if (dir == null) {
+					break;
+				}
+
+				dirPath = dir.toPath();
+			}
+
+			for (PathMatcher pathMatcher : includeFilePathMatchers) {
+				if (pathMatcher.matches(filePath)) {
+					fileName = StringUtil.replace(
+						baseDir + fileName, StringPool.SLASH,
+						StringPool.BACK_SLASH);
+
+					fileNames.add(fileName);
+
+					updateProperties(fileName);
+
+					continue localChangesFileNamesLoop;
+				}
+			}
+		}
+
+		return fileNames;
+	}
+
+	protected List<String> scanForFiles(
+			String baseDir, final List<PathMatcher> excludeDirPathMatchers,
+			final List<PathMatcher> excludeFilePathMatchers,
+			final List<PathMatcher> includeFilePathMatchers)
+		throws Exception {
+
+		final List<String> fileNames = new ArrayList<>();
 
 		Files.walkFileTree(
 			Paths.get(baseDir),

@@ -1001,9 +1001,16 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<jvmarg value="-Xss2048k" />
 			<jvmarg value="-Dsource.formatter.check.unprocessed.exceptions=${source.formatter.check.unprocessed.exceptions}" />
 			<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
+			<arg value="format.local.changes=${format.local.changes}" />
 		</java>
 
 		<delete file="ServiceBuilder.temp" />
+	</target>
+
+	<target name="format-source-local-changes">
+		<antcall target="format-source">
+			<param name="format.local.changes" value="true" />
+		</antcall>
 	</target>
 
 	<target name="format-tld">

@@ -1123,14 +1123,25 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected List<String> getFileNames(
-			String basedir, String[] excludes, String[] includes)
+			String basedir, List<String> localChangesFileNames,
+			String[] excludes, String[] includes)
 		throws Exception {
 
 		if (_excludes != null) {
 			excludes = ArrayUtil.append(excludes, _excludes);
 		}
 
-		return _sourceFormatterHelper.scanForFiles(basedir, excludes, includes);
+		return _sourceFormatterHelper.scanForFiles(
+			basedir, localChangesFileNames, excludes, includes);
+	}
+
+	protected List<String> getFileNames(
+			String basedir, String[] excludes, String[] includes)
+		throws Exception {
+
+		return getFileNames(
+			basedir, sourceFormatterArgs.getLocalChangesFileNames(), excludes,
+			includes);
 	}
 
 	protected List<String> getFileNames(String[] excludes, String[] includes)

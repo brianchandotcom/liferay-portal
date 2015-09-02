@@ -27,6 +27,8 @@ public class SourceFormatterArgs {
 
 	public static final String COPYRIGHT_FILE_NAME = "copyright.txt";
 
+	public static final boolean FORMAT_LOCAL_CHANGES = false;
+
 	public static final String OUTPUT_KEY_MODIFIED_FILES =
 		"source.formatter.modified.files";
 
@@ -48,8 +50,16 @@ public class SourceFormatterArgs {
 		return _fileNames;
 	}
 
+	public List<String> getLocalChangesFileNames() {
+		return _localChangesFileNames;
+	}
+
 	public boolean isAutoFix() {
 		return _autoFix;
+	}
+
+	public boolean isFormatLocalChanges() {
+		return _formatLocalChanges;
 	}
 
 	public boolean isPrintErrors() {
@@ -97,6 +107,14 @@ public class SourceFormatterArgs {
 		_fileNames = fileNames;
 	}
 
+	public void setFormatLocalChanges(boolean formatLocalChanges) {
+		_formatLocalChanges = formatLocalChanges;
+	}
+
+	public void setLocalChangesFileNames(List<String> localChangesFileNames) {
+		_localChangesFileNames = localChangesFileNames;
+	}
+
 	public void setPrintErrors(boolean printErrors) {
 		_printErrors = printErrors;
 	}
@@ -113,6 +131,8 @@ public class SourceFormatterArgs {
 	private String _baseDirName = BASE_DIR_NAME;
 	private String _copyrightFileName = COPYRIGHT_FILE_NAME;
 	private List<String> _fileNames;
+	private boolean _formatLocalChanges = FORMAT_LOCAL_CHANGES;
+	private List<String> _localChangesFileNames;
 	private boolean _printErrors = PRINT_ERRORS;
 	private boolean _throwException = THROW_EXCEPTION;
 	private boolean _useProperties = USE_PROPERTIES;

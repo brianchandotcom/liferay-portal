@@ -1123,14 +1123,25 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected List<String> getFileNames(
-			String basedir, String[] excludes, String[] includes)
+			String basedir, List<String> localChangesFileNames,
+			String[] excludes, String[] includes)
 		throws Exception {
 
 		if (_excludes != null) {
 			excludes = ArrayUtil.append(excludes, _excludes);
 		}
 
-		return _sourceFormatterHelper.scanForFiles(basedir, excludes, includes);
+		return _sourceFormatterHelper.getFileNames(
+			basedir, localChangesFileNames, excludes, includes);
+	}
+
+	protected List<String> getFileNames(
+			String basedir, String[] excludes, String[] includes)
+		throws Exception {
+
+		return getFileNames(
+			basedir, sourceFormatterArgs.getLocalChangesFileNames(), excludes,
+			includes);
 	}
 
 	protected List<String> getFileNames(String[] excludes, String[] includes)
@@ -1734,8 +1745,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return line;
 	}
-
-	protected static final String BASEDIR = "./";
 
 	protected static final int PORTAL_MAX_DIR_LEVEL = 5;
 

@@ -49,4 +49,15 @@ public class StructureSearch extends SearchContainer<DDMStructure> {
 			StructureDisplayTerms.STORAGE_TYPE, displayTerms.getStorageType());
 	}
 
+	public StructureSearch(
+		PortletRequest portletRequest, PortletURL iteratorURL, int status) {
+
+		this(portletRequest, iteratorURL);
+
+		StructureSearchTerms searchTerms =
+			(StructureSearchTerms)getSearchTerms();
+
+		searchTerms.setStatus(status);
+	}
+
 }

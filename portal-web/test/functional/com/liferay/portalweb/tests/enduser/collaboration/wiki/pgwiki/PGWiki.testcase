@@ -994,7 +994,7 @@
 			<var name="wikiPage2Content" value="${wikiPage2Content}" />
 			<var name="wikiPage2Title" value="${wikiPage2Title}" />
 			<var name="wikiPageContent" value="${wikiPage2Content}" />
-</execute>
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1061,8 +1061,8 @@
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="wikiNodeName" value="${wikiNodeName}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-		<var name="wikiPageTitle" value="${wikiPageTitle}" />
-</execute>
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

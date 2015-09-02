@@ -1,0 +1,9 @@
+<definition>
+	<command name="clickReorderButton">
+		<execute function="Click" locator1="Button#REORDER" />
+	</command>
+
+	<command name="clickReorderIcon">
+		<execute function="Click" locator1="Icon#REORDER" />
+	</command>
+</definition>

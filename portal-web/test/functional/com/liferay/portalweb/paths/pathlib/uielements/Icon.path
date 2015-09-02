@@ -79,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REORDER</td>
+	<td>//a/i[@class='icon-reorder']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TWITTER</td>
 	<td>//span[@class='social-bookmark']//span[contains(.,'Twitter')]</td>
 	<td></td>

@@ -71,9 +71,11 @@
 
 		<execute function="AssertClick" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
 
+		<execute macro-mobile="MobileNavigator#clickReorderIcon" />
+
 		<execute function="AssertClick" locator1="SitePages#TOOLBAR_ADD_PAGE" value1="Add Page" />
 
-		<execute function="Type#mouseOverFocusType" locator1="TextInput#NAME" value1="${pageName}" />
+		<execute function="Type#typeClickAt" locator1="TextInput#NAME" value1="${pageName}" />
 
 		<var name="key_pageType" value="${pageTemplateName}" />
 
@@ -130,6 +132,8 @@
 				</then>
 			</elseif>
 		</if>
+
+		<execute macro-mobile="MobileNavigator#clickReorderButton" />
 
 		<var name="key_pageName" value="${pageName}" />
 

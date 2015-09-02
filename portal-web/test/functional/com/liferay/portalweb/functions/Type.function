@@ -205,6 +205,20 @@
 		<execute selenium="assertLiferayErrors" />
 	</command>
 
+	<command name="typeClickAt">
+		<execute selenium="waitForVisible" />
+
+		<execute selenium="mouseOver" />
+
+		<execute selenium="type" />
+
+		<execute selenium="clickAt" />
+
+		<execute selenium="assertJavaScriptErrors" />
+
+		<execute selenium="assertLiferayErrors" />
+	</command>
+
 	<command name="typeWaitForCKEditor">
 		<execute argument1="//a[contains(@class,'cke_button__unlink') and contains(@class,'cke_button_disabled')]" selenium="waitForVisible" />
 

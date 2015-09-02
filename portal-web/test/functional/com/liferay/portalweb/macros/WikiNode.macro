@@ -13,7 +13,7 @@
 	</command>
 
 	<command name="addDescription">
-		<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${wikiNodeDescription}" />
+		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${wikiNodeDescription}" />
 	</command>
 
 	<command name="addMainCP">

@@ -27,31 +27,26 @@
 	</command>
 
 	<command name="configureSetupPG">
-		<if>
-			<condition function="IsElementPresent#isVisible" locator1="Message#INFO_1" />
-			<then>
-				<execute function="AssertClick" locator1="Message#INFO_1" value1="Please configure this portlet to make it visible to all users." />
-			</then>
-			<elseif>
-				<condition function="IsElementNotPresent" locator1="Message#INFO_1" />
-				<then>
-					<execute function="Click" locator1="PGWikidisplay#OPTIONS_ICON"  />
-					<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
-				</then>
-			</elseif>
-		</if>
+		<execute function="Click" locator1="Icon#COG" />
+
+		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
 		<execute function="Select" locator1="WikiConfiguration#COMMUNICATION_SELECT_NODE_ID" value1="${wikiNodeName}" />
+
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#COMMUNICATION_SELECT_NODE_ID" value1="${wikiNodeName}" />
 
 		<execute function="Select" locator1="WikiConfiguration#COMMUNICATION_SELECT_TITLE" value1="${wikiPageName}" />
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#COMMUNICATION_SELECT_TITLE" value1="${wikiPageName}" />
 
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertSelectedLabel" locator1="WikiConfiguration#COMMUNICATION_SELECT_TITLE" value1="${wikiPageName}" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

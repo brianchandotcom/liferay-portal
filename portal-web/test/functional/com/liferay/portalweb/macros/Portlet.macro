@@ -1,4 +1,12 @@
 <definition>
+	<command name="_clickAddPortlet">
+		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" value1="Add" />
+	</command>
+
+	<command name="_mobileClickAddPortlet">
+		<execute function="AssertClick" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" value1="Add" />
+	</command>
+
 	<command name="addDuplicatePG">
 		<var name="portletTypeKey" value="PORTLET" />
 
@@ -106,9 +114,12 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick#assertTextClickAtAddApplication" locator1="DockbarAddpanelapplications#APPLICATIONS_TAB" value1="Applications" />
+		<execute function="AssertClick" locator1="DockbarAddpanelapplications#APPLICATIONS_TAB" value1="Applications" />
 		<execute function="Type#sendKeysApplicationSearch" locator1="NavBar#APPLICATION_SEARCH_FIELD" value1="${portletName}" />
-		<execute function="AssertClick#pauseMakeVisibleAssertTextEqualsClickAt" locator1="ControlMenuAddPanel#ADD_PORTLET_LINK" value1="Add" />
+
+		<execute macro-desktop="Portlet#_clickAddPortlet" macro-mobile="Portlet#_mobileClickAddPortlet">
+			<var name="portletName" value="${portletName}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 

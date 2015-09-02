@@ -394,6 +394,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REORDER</td>
+	<td>//button[span[@class='icon-bar'][3]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPLY</td>
 	<td>//button[contains(.,'Reply')]</td>
 	<td></td>

@@ -301,6 +301,10 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	protected void deleteFile(SyncFile sourceSyncFile, boolean trashed)
 		throws Exception {
 
+		if (sourceSyncFile.getUiEvent() == SyncFile.UI_EVENT_DELETED_LOCAL) {
+			return;
+		}
+
 		if (trashed) {
 			sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_TRASHED_REMOTE);
 		}

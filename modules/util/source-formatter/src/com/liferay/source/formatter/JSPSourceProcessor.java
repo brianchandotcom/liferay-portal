@@ -86,129 +86,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected Set<String> getJSPIncludeFileNames(
-		String fileName, Set<String> fileNames) {
-
-		Set<String> includeFileNames = new HashSet<>();
-
-		String content = _jspContents.get(fileName);
-
-		if (Validator.isNull(content)) {
-			return includeFileNames;
-		}
-
-		for (int x = 0;;) {
-			x = content.indexOf("<%@ include file=", x);
-
-			if (x == -1) {
-				break;
-			}
-
-			x = content.indexOf(CharPool.QUOTE, x);
-
-			if (x == -1) {
-				break;
-			}
-
-			int y = content.indexOf(CharPool.QUOTE, x + 1);
-
-			if (y == -1) {
-				break;
-			}
-
-			String includeFileName = content.substring(x + 1, y);
-
-			if (!includeFileName.startsWith(StringPool.SLASH)) {
-				includeFileName = StringPool.SLASH + includeFileName;
-			}
-
-			Matcher matcher = _jspIncludeFilePattern.matcher(includeFileName);
-
-			if (!matcher.find()) {
-				throw new RuntimeException(
-					"Invalid include " + includeFileName);
-			}
-
-			includeFileName = buildFullPathIncludeFileName(
-				fileName, includeFileName);
-
-			if ((includeFileName.endsWith("jsp") ||
-				 includeFileName.endsWith("jspf")) &&
-				!includeFileName.endsWith("html/common/init.jsp") &&
-				!includeFileName.endsWith("html/portlet/init.jsp") &&
-				!includeFileName.endsWith("html/taglib/init.jsp") &&
-				!fileNames.contains(includeFileName)) {
-
-				includeFileNames.add(includeFileName);
-			}
-
-			x = y;
-		}
-
-		return includeFileNames;
-	}
-
-	protected Set<String> getJSPReferenceFileNames(
-		String fileName, Set<String> fileNames) {
-
-		Set<String> referenceFileNames = new HashSet<>();
-
-		if (!fileName.endsWith("init.jsp") &&
-			!fileName.endsWith("init.jspf") &&
-			!fileName.contains("init-ext.jsp")) {
-
-			return referenceFileNames;
-		}
-
-		for (Map.Entry<String, String> entry : _jspContents.entrySet()) {
-			String referenceFileName = entry.getKey();
-
-			if (fileNames.contains(referenceFileName)) {
-				continue;
-			}
-
-			String sharedPath = fileName.substring(
-				0, StringUtil.startsWithWeight(referenceFileName, fileName));
-
-			if (Validator.isNull(sharedPath) ||
-				!sharedPath.contains(StringPool.SLASH)) {
-
-				continue;
-			}
-
-			if (!sharedPath.endsWith(StringPool.SLASH)) {
-				sharedPath = sharedPath.substring(
-					0, sharedPath.lastIndexOf(CharPool.SLASH) + 1);
-			}
-
-			String content = null;
-
-			for (int x = -1;;) {
-				x = sharedPath.indexOf(CharPool.SLASH, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				if (content == null) {
-					content = entry.getValue();
-				}
-
-				if (content.contains(
-						"<%@ include file=\"" + fileName.substring(x)) ||
-					content.contains(
-						"<%@ include file=\"" + fileName.substring(x + 1))) {
-
-					referenceFileNames.add(referenceFileName);
-
-					break;
-				}
-			}
-		}
-
-		return referenceFileNames;
-	}
-
 	protected void addJSPUnusedImports(
 		String fileName, List<String> importLines,
 		List<String> unneededImports) {
@@ -1080,6 +957,129 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return duplicateImports;
+	}
+
+	protected Set<String> getJSPIncludeFileNames(
+		String fileName, Set<String> fileNames) {
+
+		Set<String> includeFileNames = new HashSet<>();
+
+		String content = _jspContents.get(fileName);
+
+		if (Validator.isNull(content)) {
+			return includeFileNames;
+		}
+
+		for (int x = 0;;) {
+			x = content.indexOf("<%@ include file=", x);
+
+			if (x == -1) {
+				break;
+			}
+
+			x = content.indexOf(CharPool.QUOTE, x);
+
+			if (x == -1) {
+				break;
+			}
+
+			int y = content.indexOf(CharPool.QUOTE, x + 1);
+
+			if (y == -1) {
+				break;
+			}
+
+			String includeFileName = content.substring(x + 1, y);
+
+			if (!includeFileName.startsWith(StringPool.SLASH)) {
+				includeFileName = StringPool.SLASH + includeFileName;
+			}
+
+			Matcher matcher = _jspIncludeFilePattern.matcher(includeFileName);
+
+			if (!matcher.find()) {
+				throw new RuntimeException(
+					"Invalid include " + includeFileName);
+			}
+
+			includeFileName = buildFullPathIncludeFileName(
+				fileName, includeFileName);
+
+			if ((includeFileName.endsWith("jsp") ||
+				 includeFileName.endsWith("jspf")) &&
+				!includeFileName.endsWith("html/common/init.jsp") &&
+				!includeFileName.endsWith("html/portlet/init.jsp") &&
+				!includeFileName.endsWith("html/taglib/init.jsp") &&
+				!fileNames.contains(includeFileName)) {
+
+				includeFileNames.add(includeFileName);
+			}
+
+			x = y;
+		}
+
+		return includeFileNames;
+	}
+
+	protected Set<String> getJSPReferenceFileNames(
+		String fileName, Set<String> fileNames) {
+
+		Set<String> referenceFileNames = new HashSet<>();
+
+		if (!fileName.endsWith("init.jsp") &&
+			!fileName.endsWith("init.jspf") &&
+			!fileName.contains("init-ext.jsp")) {
+
+			return referenceFileNames;
+		}
+
+		for (Map.Entry<String, String> entry : _jspContents.entrySet()) {
+			String referenceFileName = entry.getKey();
+
+			if (fileNames.contains(referenceFileName)) {
+				continue;
+			}
+
+			String sharedPath = fileName.substring(
+				0, StringUtil.startsWithWeight(referenceFileName, fileName));
+
+			if (Validator.isNull(sharedPath) ||
+				!sharedPath.contains(StringPool.SLASH)) {
+
+				continue;
+			}
+
+			if (!sharedPath.endsWith(StringPool.SLASH)) {
+				sharedPath = sharedPath.substring(
+					0, sharedPath.lastIndexOf(CharPool.SLASH) + 1);
+			}
+
+			String content = null;
+
+			for (int x = -1;;) {
+				x = sharedPath.indexOf(CharPool.SLASH, x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (content == null) {
+					content = entry.getValue();
+				}
+
+				if (content.contains(
+						"<%@ include file=\"" + fileName.substring(x)) ||
+					content.contains(
+						"<%@ include file=\"" + fileName.substring(x + 1))) {
+
+					referenceFileNames.add(referenceFileName);
+
+					break;
+				}
+			}
+		}
+
+		return referenceFileNames;
 	}
 
 	protected Set<String> getPrimitiveTagAttributeDataTypes() {

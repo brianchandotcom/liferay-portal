@@ -18,7 +18,6 @@ import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
-import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -295,21 +294,21 @@ public class ConfigJSModulesTask extends ExecuteNodeTask {
 
 		String configVariable = getConfigVariable();
 
-		if (Validator.isNotNull(configVariable)) {
+		if (configVariable != null) {
 			completeArgs.add("--config");
 			completeArgs.add(configVariable);
 		}
 
 		String moduleExtension = getModuleExtension();
 
-		if (Validator.isNotNull(moduleExtension)) {
+		if (moduleExtension != null) {
 			completeArgs.add("--extension");
 			completeArgs.add(moduleExtension);
 		}
 
 		String moduleFormat = getModuleFormat();
 
-		if (Validator.isNotNull(moduleFormat)) {
+		if (moduleFormat != null) {
 			completeArgs.add("--format");
 			completeArgs.add(moduleFormat);
 		}

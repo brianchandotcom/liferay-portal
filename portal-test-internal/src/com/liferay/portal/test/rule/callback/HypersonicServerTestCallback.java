@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.concurrent.CountDownLatch;
@@ -37,6 +38,7 @@ import org.junit.runner.Description;
 
 /**
  * @author William Newbury
+ * @author Shuyang Zhou
  */
 public class HypersonicServerTestCallback
 	extends BaseTestCallback<Server, Object> {
@@ -47,7 +49,7 @@ public class HypersonicServerTestCallback
 
 	@Override
 	public void doAfterClass(Description description, Server server)
-		throws Throwable {
+		throws SQLException {
 
 		try (Connection connection = DriverManager.getConnection(
 				"jdbc:hsqldb:hsql://localhost/".concat(databaseName), "sa", "");
@@ -60,7 +62,7 @@ public class HypersonicServerTestCallback
 	}
 
 	@Override
-	public Server doBeforeClass(Description description) throws Throwable {
+	public Server doBeforeClass(Description description) throws Exception {
 		Class.forName(jdbcDriver.class.getName());
 
 		final CountDownLatch startCountDownLatch = new CountDownLatch(1);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.pmd.rules.junit.test;
+package com.liferay.pmd.rules.junit;
 
 import net.sourceforge.pmd.testframework.SimpleAggregatorTst;
 

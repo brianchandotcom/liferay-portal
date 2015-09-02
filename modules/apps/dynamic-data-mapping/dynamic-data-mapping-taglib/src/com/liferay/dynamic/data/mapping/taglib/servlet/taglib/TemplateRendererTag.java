@@ -23,9 +23,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.taglib.FileAvailabilityUtil;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
@@ -84,13 +81,6 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
-
-		Map<String, Object> contextObjects = getContextObjects();
-
-		if (contextObjects == null) {
-			setNamespacedAttribute(
-				request, "contextObjects", new HashMap<String, Object>());
-		}
 
 		long displaStyleGroupId = getDisplayStyleGroupId();
 

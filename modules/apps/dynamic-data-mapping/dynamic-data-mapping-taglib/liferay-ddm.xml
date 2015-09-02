@@ -121,6 +121,7 @@
 				<inputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></inputType>
 				<outputType><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></outputType>
 				<required>false</required>
+				<defaultValue><![CDATA[new java.util.HashMap<java.lang.String, java.lang.Object>()]]></defaultValue>
 			</attribute>
 			<attribute>
 				<name>displayStyle</name>

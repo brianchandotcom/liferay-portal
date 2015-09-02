@@ -95,7 +95,7 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		super.cleanUp();
 
 		_className = null;
-		_contextObjects = null;
+		_contextObjects = new java.util.HashMap<java.lang.String, java.lang.Object>();
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_entries = null;
@@ -121,7 +121,7 @@ public abstract class BaseTemplateRendererTag extends com.liferay.taglib.util.In
 		"/template_renderer/start.jsp";
 
 	private java.lang.String _className = null;
-	private java.util.Map<java.lang.String, java.lang.Object> _contextObjects = null;
+	private java.util.Map<java.lang.String, java.lang.Object> _contextObjects = new java.util.HashMap<java.lang.String, java.lang.Object>();
 	private java.lang.String _displayStyle = null;
 	private long _displayStyleGroupId = 0;
 	private java.util.List<?> _entries = null;

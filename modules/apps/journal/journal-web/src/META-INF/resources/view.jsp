@@ -53,8 +53,8 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
-<div class="container-fluid-1280" id="<portlet:namespace />journalContainer">
-	<div class="closed sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
+<div id="<portlet:namespace />journalContainer">
+	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 		<div class="sidenav-menu-slider">
 			<div class="sidebar sidebar-default sidenav-menu">
 				<liferay-util:include page="/info_panel.jsp" servletContext="<%= application %>" />

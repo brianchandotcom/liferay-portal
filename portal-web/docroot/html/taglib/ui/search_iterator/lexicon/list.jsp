@@ -63,7 +63,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 				<tr>
 
 				<%
-				List entries = Collections.EMPTY_LIST;
+				List entries = Collections.emptyList();
 
 				if (!resultRows.isEmpty()) {
 					com.liferay.portal.kernel.dao.search.ResultRow row = (com.liferay.portal.kernel.dao.search.ResultRow)resultRows.get(0);

@@ -238,13 +238,13 @@ for (int i = 0; i < groupMappingArray.length; i++) {
 
 		<aui:input cssClass="lfr-input-text-container" label="portrait" name="userMappingPortrait" type="text" value="<%= userMappingPortrait %>" />
 
+		<aui:input cssClass="lfr-textarea" label="custom-user-mapping" name='<%= "settings--" + PropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix + "--" %>' type="textarea" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix, PropsUtil.get(PropsKeys.LDAP_USER_CUSTOM_MAPPINGS)) %>" />
+
+		<aui:input cssClass="lfr-textarea" label="custom-contact-mapping" name='<%= "settings--" + PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix + "--" %>' type="textarea" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix, PropsUtil.get(PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS)) %>" />
+
 		<aui:input name='<%= "settings--" + PropsKeys.LDAP_USER_MAPPINGS + postfix + "--" %>' type="hidden" />
 
-		<aui:input name='<%= "settings--" + PropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix + "--" %>' type="hidden" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix, PropsUtil.get(PropsKeys.LDAP_USER_CUSTOM_MAPPINGS)) %>" />
-
 		<aui:input name='<%= "settings--" + PropsKeys.LDAP_CONTACT_MAPPINGS + postfix + "--" %>' type="hidden" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_CONTACT_MAPPINGS + postfix, PropsUtil.get(PropsKeys.LDAP_CONTACT_MAPPINGS)) %>" />
-
-		<aui:input name='<%= "settings--" + PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix + "--" %>' type="hidden" value="<%= PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix, PropsUtil.get(PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS)) %>" />
 
 		<aui:button-row>
 

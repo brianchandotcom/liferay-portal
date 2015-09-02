@@ -32,6 +32,8 @@ public class HypersonicServerTestCallback
 	extends BaseTestCallback<Object, Object> {
 
 	public HypersonicServerTestCallback(String databaseName) {
+		_databaseName = databaseName;
+
 		_databaseURL = "jdbc:hsqldb:hsql://localhost/" + databaseName;
 	}
 
@@ -55,9 +57,9 @@ public class HypersonicServerTestCallback
 		Class.forName("org.hsqldb.jdbcDriver");
 
 		Server server = new Server();
-		server.setDatabaseName(0, "lportal");
+		server.setDatabaseName(0, _databaseName);
 		server.setDatabasePath(
-			0, PropsValues.LIFERAY_HOME + "/data/hsql/lportal");
+			0, PropsValues.LIFERAY_HOME + "/data/hsql/" + _databaseName);
 		server.setLogWriter(null);
 		server.setErrWriter(null);
 
@@ -80,6 +82,7 @@ public class HypersonicServerTestCallback
 		return beforeClass(description.getTestClass());
 	}
 
+	private final String _databaseName;
 	private final String _databaseURL;
 	private Server _server = null;
 

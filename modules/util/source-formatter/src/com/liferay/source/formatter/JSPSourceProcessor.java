@@ -39,6 +39,7 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -84,6 +85,41 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			_importCountMap.put(importName, count + 1);
 		}
+	}
+
+	protected List<String> addIncludedAndReferencedFileNames(
+			List<String> fileNames, Set<String> checkedFileNames) {
+
+		Set<String> includedAndReferencedFileNames = new HashSet<>();
+
+		for (String fileName : fileNames) {
+			if (!checkedFileNames.add(fileName)) {
+				continue;
+			}
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			includedAndReferencedFileNames.addAll(
+				getJSPIncludeFileNames(fileName, fileNames));
+			includedAndReferencedFileNames.addAll(
+				getJSPReferenceFileNames(fileName, fileNames));
+		}
+
+		if (includedAndReferencedFileNames.isEmpty()) {
+			return fileNames;
+		}
+
+		for (String fileName : includedAndReferencedFileNames) { 
+			fileName = StringUtil.replace(
+				fileName, StringPool.SLASH, StringPool.BACK_SLASH);
+
+			if (!fileNames.contains(fileName)) {
+				fileNames.add(fileName);
+			}
+		}
+
+		return addIncludedAndReferencedFileNames(fileNames, checkedFileNames);
 	}
 
 	protected void addJSPUnusedImports(
@@ -376,11 +412,26 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		List<String> fileNames = getFileNames(excludes, getIncludes());
 
+		if (fileNames.isEmpty()) {
+			return fileNames;
+		}
+
+		List<String> allFileNames = null;
+
+		if (sourceFormatterArgs.isFormatLocalChanges()) {
+			allFileNames = getFileNames(
+				sourceFormatterArgs.getBaseDirName(), null, excludes,
+				getIncludes());
+		}
+		else {
+			allFileNames = fileNames;
+		}
+
 		try {
 			Pattern pattern = Pattern.compile(
 				"\\s*@\\s*include\\s*file=['\"](.*)['\"]");
 
-			for (String fileName : fileNames) {
+			for (String fileName : allFileNames) {
 				File file = new File(fileName);
 
 				fileName = StringUtil.replace(
@@ -422,7 +473,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			ReflectionUtil.throwException(e);
 		}
 
-		return fileNames;
+		if (!sourceFormatterArgs.isFormatLocalChanges()) {
+			return fileNames;
+		}
+
+		return addIncludedAndReferencedFileNames(
+			fileNames, new HashSet<String>());
 	}
 
 	protected String fixRedirectBackURL(String content) {
@@ -960,7 +1016,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected Set<String> getJSPIncludeFileNames(
-		String fileName, Set<String> fileNames) {
+		String fileName, Collection<String> fileNames) {
 
 		Set<String> includeFileNames = new HashSet<>();
 
@@ -1022,7 +1078,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected Set<String> getJSPReferenceFileNames(
-		String fileName, Set<String> fileNames) {
+		String fileName, Collection<String> fileNames) {
 
 		Set<String> referenceFileNames = new HashSet<>();
 

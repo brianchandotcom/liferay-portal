@@ -2718,25 +2718,8 @@ go]]></replacevalue>
 			</elseif>
 		</if>
 
-		<var name="result.file" value="portal-web/test-results/functional/report.html" />
-
 		<if>
-			<and>
-				<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-				<isset property="test.class" />
-			</and>
-			<then>
-				<get-poshi-class-name />
-				<get-poshi-method-name />
-
-				<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
-
-				<var name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
-			</then>
-		</if>
-
-		<if>
-			<available file="${result.file}" />
+			<available file="portal-web/test-results/functional/report.html" />
 			<then>
 				<property name="test.case.attachments">
 					<![CDATA[
@@ -5980,37 +5963,16 @@ if (ppstate.equals("normal")) {
 
 						<property name="testray.logs.dir" value="@{jenkins.testray.results.path}/logs/${job.name}/builds/${env.TOP_LEVEL_BUILD_NUMBER}" />
 
-						<var name="result.file" value="portal-web/test-results/functional/report.html" />
-						<var name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
-
-						<if>
-							<and>
-								<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-								<isset property="test.class" />
-							</and>
-							<then>
-								<get-poshi-class-name />
-								<get-poshi-method-name />
-
-								<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
-
-								<var name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
-								<var name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
-							</then>
-						</if>
-
 						<mkdir dir="${testray.logs.dir}" />
 
 						<copy
 							failonerror="false"
-							file="${result.file}"
+							file="portal-web/test-results/functional/report.html"
 							tofile="${testray.logs.dir}/report.html"
 						/>
 
 						<copy failonerror="false" todir="${testray.logs.dir}/screenshots">
-							<fileset
-								dir="${screenshot.dir}"
-							/>
+							<fileset dir="portal-web/test-results/functional/screenshots" />
 						</copy>
 
 						<propertyregex
@@ -6229,26 +6191,32 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
 
 				<if>
+					<available file="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
+					<then>
+						<copy
+							file="portal-web/test-results/${poshi.runner.results.dir}/index.html"
+							tofile="portal-web/test-results/functional/report.html"
+						/>
+					</then>
+				</if>
+
+				<if>
+					<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
+					<then>
+						<copy todir="portal-web/test-results/functional/screenshots">
+							<fileset dir="portal-web/test-results/${poshi.runner.results.dir}/screenshots" erroronmissingdir="false" />
+						</copy>
+					</then>
+				</if>
+
+				<if>
 					<and>
-						<or>
-							<available file="portal-web/test-results/functional/report.html" />
-							<available file="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
-						</or>
+						<available file="portal-web/test-results/functional/report.html" />
 						<equals arg1="${test.selenium.logger.enabled}" arg2="true" />
 					</and>
 					<then>
-						<if>
-							<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-							<then>
-								<property name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
-							</then>
-							<else>
-								<property name="result.file" value="portal-web/test-results/functional/report.html" />
-							</else>
-						</if>
-
 						<copy
-							file="${result.file}"
+							file="portal-web/test-results/functional/report.html"
 							tofile="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/report.html"
 						/>
 					</then>
@@ -6256,25 +6224,12 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 				<if>
 					<and>
-						<or>
-							<available file="portal-web/test-results/functional/screenshots" />
-							<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
-						</or>
+						<available file="portal-web/test-results/functional/screenshots" />
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
 					<then>
-						<if>
-							<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
-							<then>
-								<property name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
-							</then>
-							<else>
-								<property name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
-							</else>
-						</if>
-
 						<copy todir="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
-							<fileset dir="${screenshot.dir}" erroronmissingdir="false" />
+							<fileset dir="portal-web/test-results/functional/screenshots" erroronmissingdir="false" />
 						</copy>
 					</then>
 				</if>

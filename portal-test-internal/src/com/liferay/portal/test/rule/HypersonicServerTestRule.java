@@ -24,6 +24,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.hsqldb.jdbcDriver;
+
 /**
  * @author William Newbury
  */
@@ -63,7 +65,7 @@ public class HypersonicServerTestRule extends BaseTestRule<Object, Object> {
 
 		String jdbcDriver = props.get("jdbc.default.driverClassName");
 
-		_HYPERSONIC = jdbcDriver.contains("hsqldb");
+		_HYPERSONIC = jdbcDriver.equals(jdbcDriver.class.getName());
 	}
 
 	private final String _databaseURL;

@@ -49,21 +49,22 @@ public class HypersonicServerTestRule extends BaseTestRule<Object, Object> {
 	}
 
 	private static BaseTestCallback getTestCallback(String databaseName) {
+		if (_HYPERSONIC) {
+			return new HypersonicServerTestCallback(databaseName);
+		}
+
+		return new BaseTestCallback();
+	}
+
+	private static final boolean _HYPERSONIC;
+
+	static {
 		Props props = new PropsImpl();
 
 		String jdbcDriver = props.get("jdbc.default.driverClassName");
 
 		_HYPERSONIC = jdbcDriver.contains("hsqldb");
-
-		if (_HYPERSONIC) {
-			return new HypersonicServerTestCallback(databaseName);
-		}
-		else {
-			return new BaseTestCallback();
-		}
 	}
-
-	private static boolean _HYPERSONIC;
 
 	private final String _databaseURL;
 

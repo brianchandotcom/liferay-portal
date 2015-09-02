@@ -17,44 +17,6 @@
 		<attribute name="test.results.file" />
 
 		<sequential>
-			<if>
-				<isset property="testray.logs.report" />
-				<then>
-					<property name="test.case.attachments">
-						<![CDATA[
-							<attachments>
-								<file name="console.output" value="${testray.logs.console}" />
-								<file name="report.html" value="${testray.logs.report}" />
-							</attachments>
-						]]>
-					</property>
-				</then>
-				<else>
-					<property name="test.case.attachments">
-						<![CDATA[
-							<attachments>
-								<file name="console.output" value="${testray.logs.console}" />
-							</attachments>
-						]]>
-					</property>
-				</else>
-			</if>
-
-			<property name="test.case.properties">
-				<![CDATA[
-					<properties>
-						<property name="testray.case.defect" value="${testray.case.defect}" />
-						<property name="testray.component.names" value="${testray.component.names}" />
-						<property name="testray.main.component.name" value="${testray.main.component.name}" />
-						<property name="testray.team.name" value="${testray.team.name}" />
-						<property name="testray.testcase.description" value="${testray.testcase.description}" />
-						<property name="testray.testcase.name" value="${testray.testcase.name}" />
-						<property name="testray.testcase.priority" value="${testray.testcase.priority}" />
-						<property name="testray.testcase.product.edition" value="${testray.testcase.product.edition}" />
-					</properties>
-				]]>
-			</property>
-
 			<property name="test.suite.properties">
 				<![CDATA[
 					<environments>
@@ -97,13 +59,71 @@
 				replace="${test.suite.properties}\0"
 			/>
 
+			<if>
+				<isset property="testray.logs.report" />
+				<then>
+					<property name="test.case.attachments">
+						<![CDATA[
+							<attachments>
+								<file name="console.output" value="${testray.logs.console}" />
+								<file name="report.html" value="${testray.logs.report}" />
+							</attachments>
+						]]>
+					</property>
+				</then>
+				<else>
+					<property name="test.case.attachments">
+						<![CDATA[
+							<attachments>
+								<file name="console.output" value="${testray.logs.console}" />
+							</attachments>
+						]]>
+					</property>
+				</else>
+			</if>
+
+			<property name="test.case.properties">
+				<![CDATA[
+					<properties>
+						<property name="testray.case.defect" value="${testray.case.defect}" />
+						<property name="testray.component.names" value="${testray.component.names}" />
+						<property name="testray.main.component.name" value="${testray.main.component.name}" />
+						<property name="testray.team.name" value="${testray.team.name}" />
+						<property name="testray.testcase.description" value="${testray.testcase.description}" />
+						<property name="testray.testcase.name" value="${testray.testcase.name}" />
+						<property name="testray.testcase.priority" value="${testray.testcase.priority}" />
+						<property name="testray.testcase.product.edition" value="${testray.testcase.product.edition}" />
+					</properties>
+				]]>
+			</property>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="(&lt;/?)error"
+				replace="\1failure"
+			/>
+
+			<replaceregexp
+				file="@{test.results.file}"
+				flags="g"
+				match="(&lt;failure\s*)type"
+				replace="\1message"
+			/>
+
 			<replaceregexp
 				file="@{test.results.file}"
 				flags="g"
 				match="&lt;testcase[^&gt;]*&gt;"
 				replace="\0${test.case.attachments}${line.separator}${test.case.properties}"
 			/>
+		</sequential>
+	</macrodef>
 
+	<macrodef name="apply-testcase-name-to-testray-results">
+		<attribute name="test.results.file" />
+
+		<sequential>
 			<replaceregexp
 				file="@{test.results.file}"
 				flags="g"
@@ -129,20 +149,6 @@
 					/>
 				</then>
 			</if>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="g"
-				match="(&lt;/?)error"
-				replace="\1failure"
-			/>
-
-			<replaceregexp
-				file="@{test.results.file}"
-				flags="g"
-				match="(&lt;failure\s*)type"
-				replace="\1message"
-			/>
 		</sequential>
 	</macrodef>
 
@@ -157,6 +163,8 @@
 			<clean-testray-results test.results.file="@{test.results.file}" />
 
 			<apply-properties-to-testray-results test.results.file="@{test.results.file}" />
+
+			<apply-testcase-name-to-testray-results test.results.file="@{test.results.file}" />
 
 			<format-testray-results test.results.file="@{test.results.file}" />
 		</sequential>

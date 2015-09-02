@@ -15,8 +15,8 @@
 package com.liferay.dynamic.data.mapping.form.values.factory;
 
 import com.liferay.dynamic.data.mapping.form.values.factory.internal.DDMFormValuesFactoryImpl;
-import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormValuesJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializer;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormValuesJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
@@ -67,7 +67,6 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 	@Before
 	public void setUp() throws Exception {
 		setUpDDMFormValuesFactoryServiceTrackerMap();
-		setUpDDMFormValuesJSONSerializerUtil();
 		setUpJSONFactoryUtil();
 		setUpLocaleUtil();
 	}
@@ -687,10 +686,10 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		throws Exception {
 
 		String serializedExpectedDDMFormValues =
-			DDMFormValuesJSONSerializerUtil.serialize(expectedDDMFormValues);
+			_ddmFormValuesJSONSerializer.serialize(expectedDDMFormValues);
 
 		String serializedActualDDMFormValues =
-			DDMFormValuesJSONSerializerUtil.serialize(actualDDMFormValues);
+			_ddmFormValuesJSONSerializer.serialize(actualDDMFormValues);
 
 		JSONAssert.assertEquals(
 			serializedExpectedDDMFormValues, serializedActualDDMFormValues,
@@ -768,14 +767,6 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		field.set(_ddmFormValuesFactory, _serviceTrackerMap);
 	}
 
-	protected void setUpDDMFormValuesJSONSerializerUtil() {
-		DDMFormValuesJSONSerializerUtil ddmFormValuesJSONSerializerUtil =
-			new DDMFormValuesJSONSerializerUtil();
-
-		ddmFormValuesJSONSerializerUtil.setDDMFormValuesJSONSerializer(
-			new DDMFormValuesJSONSerializerImpl());
-	}
-
 	protected void setUpJSONFactoryUtil() {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
@@ -818,6 +809,8 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 
 	private final DDMFormValuesFactory _ddmFormValuesFactory =
 		new DDMFormValuesFactoryImpl();
+	private final DDMFormValuesJSONSerializer _ddmFormValuesJSONSerializer =
+		new DDMFormValuesJSONSerializerImpl();
 
 	@Mock
 	private ServiceTrackerMap

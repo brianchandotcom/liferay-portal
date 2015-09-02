@@ -380,7 +380,7 @@ public class MarketplaceStorePortlet extends RemoteMVCPortlet {
 		Map<String, String[]> parameterMap) {
 
 		parameterMap.put(
-			"clientId",
+			"clientBuild",
 			new String[] {String.valueOf(MarketplaceConstants.CLIENT_BUILD)});
 		parameterMap.put(
 			"compatibility",

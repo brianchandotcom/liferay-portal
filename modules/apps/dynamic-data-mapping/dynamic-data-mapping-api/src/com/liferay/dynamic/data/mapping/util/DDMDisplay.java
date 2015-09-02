@@ -105,4 +105,6 @@ public interface DDMDisplay {
 
 	public boolean isShowStructureSelector();
 
+	public boolean isVersioningEnabled();
+
 }

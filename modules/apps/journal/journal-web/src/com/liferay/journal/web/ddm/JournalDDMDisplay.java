@@ -161,6 +161,11 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		return true;
 	}
 
+	@Override
+	public boolean isVersioningEnabled() {
+		return false;
+	}
+
 	private static final Set<String> _templateLanguageTypes = SetUtil.fromArray(
 		new String[] {
 			TemplateConstants.LANG_TYPE_FTL, TemplateConstants.LANG_TYPE_VM,

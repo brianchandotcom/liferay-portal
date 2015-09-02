@@ -60,6 +60,11 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 		return DLFileEntryMetadata.class.getName();
 	}
 
+	@Override
+	public boolean isVersioningEnabled() {
+		return false;
+	}
+
 	private final DDMPermissionHandler _ddmPermissionHandler =
 		new DLDDMPermissionHandler();
 

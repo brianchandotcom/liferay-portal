@@ -26,9 +26,14 @@ PortletURL rowURL = (PortletURL)request.getAttribute("view_entries.jsp-rowURL");
 AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
 
 AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(article));
+
+Map<String, Object> linkData = new HashMap<String, Object>();
+
+linkData.put("toggle", "tooltip");
+linkData.put("placement", "top");
 %>
 
-<aui:a href="<%= rowURL.toString() %>" title="<%= HtmlUtil.escape(article.getTitle(locale)) %>">
+<aui:a data="<%= linkData %>" href="<%= rowURL.toString() %>" title="<%= HtmlUtil.escape(article.getTitle(locale)) %>">
 	<%= HtmlUtil.escape(article.getTitle(locale)) %>
 </aui:a>
 

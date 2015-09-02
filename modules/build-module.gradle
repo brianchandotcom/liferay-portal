@@ -69,6 +69,12 @@ buildService {
 	}
 }
 
+buildSoy {
+	ext {
+		autoClean = false
+	}
+}
+
 configure([test, testIntegration]) {
 	testLogging {
 		events = EnumSet.allOf(TestLogEvent)

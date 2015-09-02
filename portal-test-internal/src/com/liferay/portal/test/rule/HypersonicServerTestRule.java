@@ -20,7 +20,8 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.test.rule.callback.HypersonicServerTestCallback;
 import com.liferay.portal.util.PropsImpl;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -35,15 +36,16 @@ public class HypersonicServerTestRule extends BaseTestRule<Object, Object> {
 	}
 
 	public List<String> getJdbcProperties() {
-		List<String> jdbcProps = new ArrayList<>();
-
 		if (_HYPERSONIC) {
-			jdbcProps.add("portal:jdbc.default.url=" + _databaseURL);
-			jdbcProps.add("portal:jdbc.default.username=sa");
-			jdbcProps.add("portal:jdbc.default.password=");
+			return Arrays.asList(
+				new String[] {
+					"portal:jdbc.default.url=".concat(_databaseURL),
+					"portal:jdbc.default.username=sa",
+					"portal:jdbc.default.password="
+				});
 		}
 
-		return jdbcProps;
+		return Collections.emptyList();
 	}
 
 	private static BaseTestCallback getTestCallback(String databaseName) {

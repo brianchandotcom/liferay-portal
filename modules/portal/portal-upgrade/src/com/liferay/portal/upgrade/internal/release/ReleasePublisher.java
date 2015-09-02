@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.internal.release;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.service.ReleaseLocalService;
 
@@ -64,10 +65,6 @@ public final class ReleasePublisher {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		if (true) {
-			return;
-		}
-
 		List<Release> releases = _releaseLocalService.getReleases(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -83,6 +80,11 @@ public final class ReleasePublisher {
 
 			serviceRegistration.unregister();
 		}
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 	@Reference

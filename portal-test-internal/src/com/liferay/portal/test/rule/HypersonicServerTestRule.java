@@ -25,14 +25,15 @@ import java.util.Collections;
 import java.util.List;
 
 import org.hsqldb.jdbcDriver;
+import org.hsqldb.server.Server;
 
 /**
  * @author William Newbury
  */
-public class HypersonicServerTestRule extends BaseTestRule<Object, Object> {
+public class HypersonicServerTestRule extends BaseTestRule<Server, Object> {
 
 	public HypersonicServerTestRule(String databaseName) {
-		super(getTestCallback(databaseName));
+		super(_getTestCallback(databaseName));
 
 		_databaseURL = "jdbc:hsqldb:hsql://localhost/" + databaseName;
 	}
@@ -50,12 +51,14 @@ public class HypersonicServerTestRule extends BaseTestRule<Object, Object> {
 		return Collections.emptyList();
 	}
 
-	private static BaseTestCallback getTestCallback(String databaseName) {
+	private static BaseTestCallback<Server, Object> _getTestCallback(
+		String databaseName) {
+
 		if (_HYPERSONIC) {
 			return new HypersonicServerTestCallback(databaseName);
 		}
 
-		return new BaseTestCallback();
+		return new BaseTestCallback<>();
 	}
 
 	private static final boolean _HYPERSONIC;

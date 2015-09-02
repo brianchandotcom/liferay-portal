@@ -60,45 +60,6 @@ public class SourceFormatterHelper {
 		}
 	}
 
-	public void init() throws IOException {
-		if (!_useProperties) {
-			return;
-		}
-
-		File basedirFile = new File("./");
-
-		String basedirAbsolutePath = StringUtil.replace(
-			basedirFile.getAbsolutePath(), new String[] {".", ":", "/", "\\"},
-			new String[] {"_", "_", "_", "_"});
-
-		String propertiesFileName =
-			System.getProperty("java.io.tmpdir") + "/SourceFormatter." +
-				basedirAbsolutePath;
-
-		_propertiesFile = new File(propertiesFileName);
-
-		if (_propertiesFile.exists()) {
-			_propertiesContent = FileUtil.read(_propertiesFile);
-
-			PropertiesUtil.load(_properties, _propertiesContent);
-		}
-	}
-
-	public void printError(String fileName, File file) {
-		printError(fileName, file.toString());
-	}
-
-	public void printError(String fileName, String message) {
-		if (_useProperties) {
-			String encodedFileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-			_properties.remove(encodedFileName);
-		}
-
-		System.out.println(message);
-	}
-
 	public List<String> getFileNames(
 			String baseDir, List<String> localChangesFileNames,
 			String[] excludes, String[] includes)
@@ -137,6 +98,45 @@ public class SourceFormatterHelper {
 		return getFileNames(
 			baseDir, localChangesFileNames, excludeDirPathMatchers,
 			excludeFilePathMatchers, includeFilePathMatchers);
+	}
+
+	public void init() throws IOException {
+		if (!_useProperties) {
+			return;
+		}
+
+		File basedirFile = new File("./");
+
+		String basedirAbsolutePath = StringUtil.replace(
+			basedirFile.getAbsolutePath(), new String[] {".", ":", "/", "\\"},
+			new String[] {"_", "_", "_", "_"});
+
+		String propertiesFileName =
+			System.getProperty("java.io.tmpdir") + "/SourceFormatter." +
+				basedirAbsolutePath;
+
+		_propertiesFile = new File(propertiesFileName);
+
+		if (_propertiesFile.exists()) {
+			_propertiesContent = FileUtil.read(_propertiesFile);
+
+			PropertiesUtil.load(_properties, _propertiesContent);
+		}
+	}
+
+	public void printError(String fileName, File file) {
+		printError(fileName, file.toString());
+	}
+
+	public void printError(String fileName, String message) {
+		if (_useProperties) {
+			String encodedFileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			_properties.remove(encodedFileName);
+		}
+
+		System.out.println(message);
 	}
 
 	protected List<String> getFileNames(

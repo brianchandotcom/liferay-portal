@@ -43,6 +43,9 @@ import org.junit.runner.Description;
 public class HypersonicServerTestCallback
 	extends BaseTestCallback<Server, Object> {
 
+	public static final String DATABASE_URL_BASE =
+		"jdbc:hsqldb:hsql://localhost/";
+
 	public HypersonicServerTestCallback(String databaseName) {
 		_databaseName = databaseName;
 	}
@@ -52,7 +55,7 @@ public class HypersonicServerTestCallback
 		throws SQLException {
 
 		try (Connection connection = DriverManager.getConnection(
-				"jdbc:hsqldb:hsql://localhost/".concat(databaseName), "sa", "");
+				DATABASE_URL_BASE.concat(_databaseName), "sa", "");
 			Statement statement = connection.createStatement()) {
 
 			statement.execute("SHUTDOWN COMPACT");

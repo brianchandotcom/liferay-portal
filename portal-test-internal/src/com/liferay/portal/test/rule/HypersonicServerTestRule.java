@@ -29,13 +29,15 @@ import org.hsqldb.server.Server;
 
 /**
  * @author William Newbury
+ * @author Shuyang Zhou
  */
 public class HypersonicServerTestRule extends BaseTestRule<Server, Object> {
 
 	public HypersonicServerTestRule(String databaseName) {
 		super(_getTestCallback(databaseName));
 
-		_databaseURL = "jdbc:hsqldb:hsql://localhost/" + databaseName;
+		_databaseURL = HypersonicServerTestCallback.DATABASE_URL_BASE.concat(
+			databaseName);
 	}
 
 	public List<String> getJdbcProperties() {

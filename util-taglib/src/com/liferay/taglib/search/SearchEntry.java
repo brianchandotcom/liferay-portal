@@ -46,7 +46,7 @@ public abstract class SearchEntry
 	}
 
 	@Override
-	public boolean getTruncate() {
+	public boolean isTruncate() {
 		return _truncate;
 	}
 

@@ -42,7 +42,7 @@ public interface SearchEntry {
 
 	public int getIndex();
 
-	public boolean getTruncate();
+	public boolean isTruncate();
 
 	public String getValign();
 

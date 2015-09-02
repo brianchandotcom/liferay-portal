@@ -1,15 +1,11 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-jboss" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-test-wildfly" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
 
-	<target name="run-jboss">
-		<antcall target="run-simple-server" />
-	</target>
-
-	<target name="run-selenium-jboss">
+	<target name="run-selenium-wildfly">
 		<app-server-properties-update>
-			app.server.type=jboss
+			app.server.type=wildfly
 		</app-server-properties-update>
 
 		<if>
@@ -17,7 +13,7 @@
 				<isset property="build.app.server" />
 			</not>
 			<then>
-				<ant antfile="build-dist.xml" target="build-dist-jboss" />
+				<ant antfile="build-dist.xml" target="build-dist-wildfly" />
 			</then>
 		</if>
 
@@ -29,10 +25,14 @@
 
 		<antcall target="start-selenium" />
 
-		<antcall target="run-jboss" inheritAll="false">
+		<antcall target="run-wildfly" inheritAll="false">
 			<param name="test.class" value="${test.class}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />
+	</target>
+
+	<target name="run-wildfly">
+		<antcall target="run-simple-server" />
 	</target>
 </project>

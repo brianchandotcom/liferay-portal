@@ -27,7 +27,7 @@ liferay {
 			dir = project.properties["app.server.jboss.dir"] ?: "${->liferay.appServerParentDir}/jboss-eap-${->liferay.appServers.jboss.version}"
 			libGlobalDir = project.properties["app.server.jboss.lib.global.dir"] ?: "${->liferay.appServers.jboss.dir}/modules/com/liferay/portal/main"
 			portalDir = project.properties["app.server.jboss.portal.dir"] ?: "${->liferay.appServers.jboss.dir}/standalone/deployments/ROOT.war"
-			version = project.properties["app.server.jboss.version"] ?: "6.4"
+			version = project.properties["app.server.jboss.version"] ?: "6.4.0"
 		}
 
 		jetty {

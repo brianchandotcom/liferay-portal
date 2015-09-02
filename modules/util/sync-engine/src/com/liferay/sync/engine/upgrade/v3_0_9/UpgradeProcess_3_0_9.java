@@ -37,6 +37,10 @@ public class UpgradeProcess_3_0_9 extends UpgradeProcess {
 		syncAccountPersistence.executeRaw(
 			"ALTER TABLE `SyncAccount` ADD COLUMN batchFileMaxSize " +
 				"VARCHAR(16777216) BEFORE filePathName;");
+
+		syncAccountPersistence.executeRaw(
+			"ALTER TABLE `SyncFile` ADD COLUMN previousModifiedTime LONG " +
+				"BEFORE repositoryId;");
 	}
 
 }

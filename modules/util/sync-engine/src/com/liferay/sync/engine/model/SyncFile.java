@@ -196,6 +196,10 @@ public class SyncFile extends StateAwareModel {
 		return parentFolderId;
 	}
 
+	public long getPreviousModifiedTime() {
+		return previousModifiedTime;
+	}
+
 	public long getRepositoryId() {
 		return repositoryId;
 	}
@@ -333,6 +337,10 @@ public class SyncFile extends StateAwareModel {
 		this.parentFolderId = parentFolderId;
 	}
 
+	public void setPreviousModifiedTime(long previousModifiedTime) {
+		this.previousModifiedTime = previousModifiedTime;
+	}
+
 	public void setRepositoryId(long repositoryId) {
 		this.repositoryId = repositoryId;
 	}
@@ -427,6 +435,9 @@ public class SyncFile extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true)
 	protected long parentFolderId;
+
+	@DatabaseField(useGetSet = true)
+	protected long previousModifiedTime;
 
 	@DatabaseField(useGetSet = true)
 	protected long repositoryId;

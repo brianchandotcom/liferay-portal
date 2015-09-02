@@ -21,16 +21,16 @@
 		<liferay-ui:message key="drag-portlets-below-to-nest-them" />
 	</div>
 
-	<aui:script use="aui-base">
-		var portletWrapper = A.one('#portlet-wrapper-<%= portletDisplay.getId() %>');
+	<aui:script sandbox="<%= true %>">
+		var portletWrapper = $('#portlet-wrapper-<%= portletDisplay.getId() %>');
 
-		if (portletWrapper) {
-			var message = portletWrapper.one('#<portlet:namespace />nested-portlets-msg');
+		if (portletWrapper.length) {
+			var message = portletWrapper.find('#<portlet:namespace />nested-portlets-msg');
 
-			var nestedPortlet = portletWrapper.one('.portlet, .portlet-borderless-container');
+			var nestedPortlet = portletWrapper.find('.portlet, .portlet-borderless-container');
 
-			if (!nestedPortlet) {
-				message.show();
+			if (!nestedPortlet.length) {
+				message.removeClass('hide');
 			}
 		}
 	</aui:script>

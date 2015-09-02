@@ -892,6 +892,23 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 				</exec>
 			</then>
 		</if>
+
+		<if>
+			<equals arg1="${app.server.type}" arg2="wildfly" />
+			<then>
+				<if>
+					<not>
+						<available file="${app.server.lib.global.dir}/module.xml" />
+					</not>
+					<then>
+						<copy
+							file="tools/servers/wildfly/modules/module.xml"
+							tofile="${app.server.lib.global.dir}/module.xml"
+						/>
+					</then>
+				</if>
+			</then>
+		</if>
 	</target>
 
 	<target name="update-gradle-cache">

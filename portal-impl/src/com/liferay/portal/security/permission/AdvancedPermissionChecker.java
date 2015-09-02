@@ -349,16 +349,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			if (groupId > 0) {
 				group = GroupLocalServiceUtil.getGroup(groupId);
 
-				// If the group is a personal site, check the "User Personal
-				// Site" group.
-
-				if (group.isUser() && (group.getClassPK() == getUserId())) {
-					group = GroupLocalServiceUtil.getGroup(
-						getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
-
-					groupId = group.getGroupId();
-				}
-
 				// If the group is a scope group for a layout, check the
 				// original group.
 
@@ -371,6 +361,16 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 					groupId = layout.getGroupId();
 
 					group = GroupLocalServiceUtil.getGroup(groupId);
+				}
+
+				// If the group is a personal site, check the "User Personal
+				// Site" group.
+
+				if (group.isUser() && (group.getClassPK() == getUserId())) {
+					group = GroupLocalServiceUtil.getGroup(
+						getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
+
+					groupId = group.getGroupId();
 				}
 
 				// If the group is a staging group, check the live group.

@@ -84,18 +84,18 @@ public class CounterLocalServiceTest {
 	public void testConcurrentIncrement() throws Exception {
 		String classPath = getClassPath();
 
-		List<String> builderArguments = new ArrayList<>();
+		List<String> arguments = new ArrayList<>();
 
-		builderArguments.add("-Xmx1024m");
-		builderArguments.add("-XX:MaxPermSize=200m");
+		arguments.add("-Xmx1024m");
+		arguments.add("-XX:MaxPermSize=200m");
 
 		for (String property : _hypersonicTestRule.getJdbcProperties()) {
-			builderArguments.add("-D" + property);
+			arguments.add("-D" + property);
 		}
 
 		Builder builder = new Builder();
 
-		builder.setArguments(builderArguments);
+		builder.setArguments(arguments);
 		builder.setBootstrapClassPath(classPath);
 		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
 		builder.setRuntimeClassPath(classPath);

@@ -11,6 +11,6 @@ Include-Resource:\
 	META-INF/resources=src/META-INF/resources
 JS-Config: /META-INF/resources/blogs/js/config.js
 Require-Capability:\
-	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/ddm";version:Version="1.0.0"\
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/ddm";version:Version="1.0.0",\
 	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/frontend";version:Version="1.0.0"
 Web-ContextPath: /blogs-web

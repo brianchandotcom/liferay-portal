@@ -96,7 +96,7 @@ AUI.add(
 								eventName: eventName,
 								id: eventName,
 								stack: !zIndex,
-								title: Liferay.Language.get('select-image'),
+								title: instance.get('title'),
 								uri: instance.get('url')
 							},
 							A.bind(instance._onItemSelected, instance)

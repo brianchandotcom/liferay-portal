@@ -266,9 +266,8 @@ public class BaseExportImportContentProcessor
 	}
 
 	protected String replaceExportDLReferences(
-			PortletDataContext portletDataContext,
-			StagedModel entityStagedModel, String content,
-			boolean exportReferencedContent)
+			PortletDataContext portletDataContext, StagedModel stagedModel,
+			String content, boolean exportReferencedContent)
 		throws Exception {
 
 		Group group = GroupLocalServiceUtil.getGroup(
@@ -322,16 +321,15 @@ public class BaseExportImportContentProcessor
 			try {
 				if (exportReferencedContent) {
 					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, entityStagedModel, fileEntry,
+						portletDataContext, stagedModel, fileEntry,
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}
 				else {
 					Element entityElement =
-						portletDataContext.getExportDataElement(
-							entityStagedModel);
+						portletDataContext.getExportDataElement(stagedModel);
 
 					portletDataContext.addReferenceElement(
-						entityStagedModel, entityElement, fileEntry,
+						stagedModel, entityElement, fileEntry,
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 				}
 

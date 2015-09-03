@@ -28,6 +28,7 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 
 <div class="management-bar-container">
 	<liferay-frontend:management-bar
+		checkBoxCssClass="select-all-checkboxes"
 		includeCheckBox="<%= !user.isDefaultUser() %>"
 	>
 		<liferay-frontend:management-bar-buttons>
@@ -44,8 +45,10 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 	</liferay-frontend:management-bar>
 
 	<liferay-frontend:management-bar
+		checkBoxCssClass="select-all-checkboxes"
 		cssClass="management-bar-no-collapse"
 		id="actionsButtonContainer"
+		includeCheckBox="<%= !user.isDefaultUser() %>"
 	>
 
 		<liferay-frontend:management-bar-buttons>

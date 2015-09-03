@@ -64,8 +64,8 @@ public class CounterLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			HypersonicServerTestRule.INSTANCE);
+			HypersonicServerTestRule.INSTANCE, new LiferayIntegrationTestRule(),
+			MainServletTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {

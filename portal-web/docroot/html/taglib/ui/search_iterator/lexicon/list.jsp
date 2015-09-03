@@ -27,7 +27,6 @@ String id = searchContainer.getId(request, namespace);
 List resultRows = searchContainer.getResultRows();
 List<String> headerNames = searchContainer.getHeaderNames();
 List<String> normalizedHeaderNames = searchContainer.getNormalizedHeaderNames();
-Map orderableHeaders = searchContainer.getOrderableHeaders();
 String emptyResultsMessage = searchContainer.getEmptyResultsMessage();
 RowChecker rowChecker = searchContainer.getRowChecker();
 
@@ -44,7 +43,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 
 <c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
 	<div class="alert alert-info">
-		<%= LanguageUtil.get(request, emptyResultsMessage) %>
+		<liferay-ui:message key="<%= emptyResultsMessage %>" />
 	</div>
 </c:if>
 
@@ -84,50 +83,27 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 						normalizedHeaderName = String.valueOf(i +1);
 					}
 
-					String orderKey = null;
-					String orderByType = null;
-					boolean orderCurrentHeader = false;
-
-					if (orderableHeaders != null) {
-						orderKey = (String)orderableHeaders.get(headerName);
-
-						if (orderKey != null) {
-							orderByType = searchContainer.getOrderByType();
-
-							if (orderKey.equals(searchContainer.getOrderByCol())) {
-								orderCurrentHeader = true;
-							}
-						}
-					}
-
-					if (orderCurrentHeader) {
-						if (orderByType.equals("asc")) {
-							orderByType = "desc";
-						}
-						else {
-							orderByType = "asc";
-						}
-					}
-
 					String cssClass = StringPool.BLANK;
 
-					if (rowChecker != null) {
-						if (i == 0) {
-							cssClass = "checkbox-cell checkbox-default";
+					if (!entries.isEmpty()) {
+						if (rowChecker != null) {
+							if (i == 0) {
+								cssClass = "checkbox-cell checkbox-default";
+							}
+							else {
+								com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i - 1);
+
+								if (entry != null) {
+									cssClass = entry.getCssClass();
+								}
+							}
 						}
 						else {
-							com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i - 1);
+							com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i);
 
 							if (entry != null) {
 								cssClass = entry.getCssClass();
 							}
-						}
-					}
-					else {
-						com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(i);
-
-						if (entry != null) {
-							cssClass = entry.getCssClass();
 						}
 					}
 				%>
@@ -168,7 +144,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 		<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
 			<tr>
 				<td>
-					<%= LanguageUtil.get(request, emptyResultsMessage) %>
+					<liferay-ui:message key="<%= emptyResultsMessage %>" />
 				</td>
 			</tr>
 		</c:if>
@@ -217,16 +193,6 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 			<%
 			for (int j = 0; j < entries.size(); j++) {
 				com.liferay.portal.kernel.dao.search.SearchEntry entry = (com.liferay.portal.kernel.dao.search.SearchEntry)entries.get(j);
-
-				String normalizedHeaderName = null;
-
-				if ((normalizedHeaderNames != null) && (j < normalizedHeaderNames.size())) {
-					normalizedHeaderName = normalizedHeaderNames.get(j);
-				}
-
-				if (Validator.isNull(normalizedHeaderName)) {
-					normalizedHeaderName = String.valueOf(j + 1);
-				}
 
 				entry.setIndex(j);
 

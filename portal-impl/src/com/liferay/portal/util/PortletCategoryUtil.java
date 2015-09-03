@@ -38,31 +38,24 @@ public class PortletCategoryUtil {
 	public static String getPortletCategoryKey(
 		String legacyPortletCategoryKey) {
 
-		if (Validator.equals(legacyPortletCategoryKey, "apps")) {
-			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
+		if (Validator.equals(legacyPortletCategoryKey, "apps") ||
+			Validator.equals(legacyPortletCategoryKey, "marketplace") ||
+			Validator.equals(legacyPortletCategoryKey, "portal") ||
+			Validator.equals(legacyPortletCategoryKey, "server")) {
+
+			return PortletCategoryKeys.CONTROL_PANEL_APPS;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "configuration")) {
-			legacyPortletCategoryKey =
-				PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION;
+			return PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "content")) {
-			legacyPortletCategoryKey =
-				PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
-		}
-		else if (Validator.equals(legacyPortletCategoryKey, "marketplace")) {
-			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
+			return PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "my")) {
-			legacyPortletCategoryKey = PortletCategoryKeys.USER_MY_ACCOUNT;
-		}
-		else if (Validator.equals(legacyPortletCategoryKey, "portal")) {
-			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_USERS;
-		}
-		else if (Validator.equals(legacyPortletCategoryKey, "server")) {
-			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
+			return PortletCategoryKeys.USER_MY_ACCOUNT;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "users")) {
-			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_USERS;
+			return PortletCategoryKeys.CONTROL_PANEL_USERS;
 		}
 
 		return legacyPortletCategoryKey;

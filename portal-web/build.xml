@@ -590,6 +590,13 @@ Please set the property "jdk.7.home" in build.properties.
 		<ant antfile="build-node.xml" dir="${sdk.dir}" target="npm-execute" inheritAll="false" />
 	</target>
 
+	<target name="update-gradle-cache">
+		<gradle-execute forcedcacheenabled="false" task="updateGradleCache">
+			<arg value="--build-file=build-test.gradle" />
+			<arg value="-Dmaven.local.ignore=true" />
+		</gradle-execute>
+	</target>
+
 	<target name="war" depends="build-portal-web-dependencies">
 		<manifest-macro />
 

@@ -28,7 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord"},
+	property = {
+		"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord"
+	},
 	service = PermissionUpdateHandler.class
 )
 public class DDLRecordPermissionUpdateHandler
@@ -36,16 +38,16 @@ public class DDLRecordPermissionUpdateHandler
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DDLRecord record = _ddlRecordLocalService.fetchDDLRecord(
+		DDLRecord ddlRecord = _ddlRecordLocalService.fetchDDLRecord(
 			GetterUtil.getLong(primKey));
 
-		if (record == null) {
+		if (ddlRecord == null) {
 			return;
 		}
 
-		record.setModifiedDate(new Date());
+		ddlRecord.setModifiedDate(new Date());
 
-		_ddlRecordLocalService.updateDDLRecord(record);
+		_ddlRecordLocalService.updateDDLRecord(ddlRecord);
 	}
 
 	@Reference

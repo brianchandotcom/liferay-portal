@@ -193,9 +193,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 			List<ItemSelectorReturnType> itemSelectorReturnTypes =
 				_itemSelectorReturnTypes.get(desiredItemSelectorReturnTypeName);
 
-			if ((itemSelectorReturnTypes == null) ||
-				itemSelectorReturnTypes.isEmpty()) {
-
+			if (ListUtil.isEmpty(itemSelectorReturnTypes)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"No return types are registered for " +

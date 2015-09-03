@@ -37,8 +37,6 @@ public class PortletKeys {
 
 	public static final String CHAT = "1_WAR_chatportlet";
 
-	public static final String CONTROL_PANEL_HOME = "190";
-
 	public static final String DIRECTORY = "11";
 
 	public static final String DOCKBAR = "145";

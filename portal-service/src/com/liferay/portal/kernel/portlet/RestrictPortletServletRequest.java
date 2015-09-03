@@ -41,14 +41,14 @@ public class RestrictPortletServletRequest
 	extends PersistentHttpServletRequestWrapper {
 
 	public static boolean isSharedRequestAttribute(String name) {
-			for (String requestSharedAttribute : _REQUEST_SHARED_ATTRIBUTES) {
-				if (name.startsWith(requestSharedAttribute)) {
-					return true;
-				}
+		for (String requestSharedAttribute : _REQUEST_SHARED_ATTRIBUTES) {
+			if (name.startsWith(requestSharedAttribute)) {
+				return true;
 			}
-
-			return false;
 		}
+
+		return false;
+	}
 
 	public RestrictPortletServletRequest(HttpServletRequest request) {
 		super(request);

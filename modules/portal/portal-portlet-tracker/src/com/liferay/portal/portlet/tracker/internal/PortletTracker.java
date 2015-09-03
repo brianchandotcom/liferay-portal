@@ -1176,7 +1176,8 @@ public class PortletTracker
 				DispatcherType.ASYNC.toString(),
 				DispatcherType.FORWARD.toString(),
 				DispatcherType.INCLUDE.toString(),
-				DispatcherType.REQUEST.toString()});
+				DispatcherType.REQUEST.toString()
+			});
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN, "/*");
 
@@ -1405,6 +1406,59 @@ public class PortletTracker
 
 	}
 
+	private class RestrictServletFilter implements Filter {
+
+		@Override
+		public void destroy() {
+		}
+
+		@Override
+		public void doFilter(
+				ServletRequest request, ServletResponse response,
+				FilterChain filterChain)
+			throws IOException, ServletException {
+
+			try {
+				filterChain.doFilter(request, response);
+			}
+			finally {
+				PortletRequest portletRequest =
+					(PortletRequest)request.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST);
+
+				if (portletRequest == null) {
+					return;
+				}
+
+				RestrictPortletServletRequest restrictPortletServletRequest =
+					new RestrictPortletServletRequest(
+						PortalUtil.getHttpServletRequest(portletRequest));
+
+				for (Enumeration<String> names = request.getAttributeNames();
+						names.hasMoreElements();) {
+
+					String name = names.nextElement();
+
+					if (!RestrictPortletServletRequest.isSharedRequestAttribute(
+							name)) {
+
+						continue;
+					}
+
+					restrictPortletServletRequest.setAttribute(
+						name, request.getAttribute(name));
+				}
+
+				restrictPortletServletRequest.mergeSharedAttributes();
+			}
+		}
+
+		@Override
+		public void init(FilterConfig filterConfig) throws ServletException {
+		}
+
+	}
+
 	private class ServiceRegistrations {
 
 		public synchronized void addServiceReference(
@@ -1478,59 +1532,6 @@ public class PortletTracker
 			new ArrayList<>();
 		private final List<ServiceRegistration<?>> _serviceRegistrations =
 			new ArrayList<>();
-
-	}
-
-	private class RestrictServletFilter implements Filter {
-
-		@Override
-		public void destroy() {
-		}
-
-		@Override
-		public void doFilter(
-				ServletRequest request, ServletResponse response,
-				FilterChain filterChain)
-			throws IOException, ServletException {
-
-			try {
-				filterChain.doFilter(request, response);
-			}
-			finally {
-				PortletRequest portletRequest =
-					(PortletRequest)request.getAttribute(
-						JavaConstants.JAVAX_PORTLET_REQUEST);
-
-				if (portletRequest == null) {
-					return;
-				}
-
-				RestrictPortletServletRequest restrictPortletServletRequest =
-					new RestrictPortletServletRequest(
-						PortalUtil.getHttpServletRequest(portletRequest));
-
-				for (Enumeration<String> names = request.getAttributeNames();
-						names.hasMoreElements();) {
-
-					String name = names.nextElement();
-
-					if (!RestrictPortletServletRequest.isSharedRequestAttribute(
-							name)) {
-
-						continue;
-					}
-
-					restrictPortletServletRequest.setAttribute(
-						name, request.getAttribute(name));
-				}
-
-				restrictPortletServletRequest.mergeSharedAttributes();
-			}
-		}
-
-		@Override
-		public void init(FilterConfig filterConfig) throws ServletException {
-		}
 
 	}
 

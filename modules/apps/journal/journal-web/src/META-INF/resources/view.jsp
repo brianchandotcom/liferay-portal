@@ -148,6 +148,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			rowIds: '<portlet:namespace /><%= RowChecker.ROW_IDS %>',
 			select: {
 				displayStyleCSSClass: 'entry-display-style',
+				selectAllCheckbox: '.select-all-checkboxes',
 				selectedCSSClass: 'active'
 			}
 		}

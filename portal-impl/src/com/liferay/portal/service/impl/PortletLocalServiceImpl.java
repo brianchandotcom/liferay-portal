@@ -76,7 +76,7 @@ import com.liferay.portal.service.base.PortletLocalServiceBaseImpl;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.servlet.ComboServlet;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletCategoryKeys;
+import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
@@ -1482,19 +1482,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			portletElement.elementText("control-panel-entry-category"),
 			portletModel.getControlPanelEntryCategory());
 
-		if (Validator.equals(controlPanelEntryCategory, "content")) {
-			controlPanelEntryCategory =
-				PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
-		}
-		else if (Validator.equals(controlPanelEntryCategory, "marketplace")) {
-			controlPanelEntryCategory = PortletCategoryKeys.APPS;
-		}
-		else if (Validator.equals(controlPanelEntryCategory, "portal")) {
-			controlPanelEntryCategory = PortletCategoryKeys.USERS;
-		}
-		else if (Validator.equals(controlPanelEntryCategory, "server")) {
-			controlPanelEntryCategory = PortletCategoryKeys.APPS;
-		}
+		controlPanelEntryCategory = PortletCategoryUtil.getPortletCategoryKey(
+			controlPanelEntryCategory);
 
 		portletModel.setControlPanelEntryCategory(controlPanelEntryCategory);
 

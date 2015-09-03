@@ -60,9 +60,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 /**
  * @author Marcellus Tavares
  */
-@PrepareForTest( {
-	DLAppLocalServiceUtil.class, LocaleUtil.class, LayoutServiceUtil.class
-})
+@PrepareForTest({DLAppLocalServiceUtil.class, LayoutServiceUtil.class})
 public class DDMFormFieldValueRendererTest extends BaseDDMTestCase {
 
 	@Before

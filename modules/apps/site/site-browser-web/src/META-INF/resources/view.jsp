@@ -256,6 +256,7 @@ portletURL.setParameter("target", target);
 					data.put("groupid", group.getGroupId());
 					data.put("grouptype", LanguageUtil.get(request, group.getTypeLabel()));
 					data.put("target", target);
+					data.put("url", group.getDisplayURL(themeDisplay));
 
 					boolean disabled = false;
 

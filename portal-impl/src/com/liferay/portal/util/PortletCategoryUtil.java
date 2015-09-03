@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
@@ -33,6 +34,26 @@ import java.util.Set;
  * @author Eudaldo Alonso
  */
 public class PortletCategoryUtil {
+
+	public static String getPortletCategoryKey(
+		String legacyPortletCategoryKey) {
+
+		if (Validator.equals(legacyPortletCategoryKey, "content")) {
+			legacyPortletCategoryKey =
+				PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
+		}
+		else if (Validator.equals(legacyPortletCategoryKey, "marketplace")) {
+			legacyPortletCategoryKey = PortletCategoryKeys.APPS;
+		}
+		else if (Validator.equals(legacyPortletCategoryKey, "portal")) {
+			legacyPortletCategoryKey = PortletCategoryKeys.USERS;
+		}
+		else if (Validator.equals(legacyPortletCategoryKey, "server")) {
+			legacyPortletCategoryKey = PortletCategoryKeys.APPS;
+		}
+
+		return legacyPortletCategoryKey;
+	}
 
 	public static PortletCategory getRelevantPortletCategory(
 			PermissionChecker permissionChecker, long companyId, Layout layout,

@@ -20,7 +20,7 @@ package com.liferay.portal.util;
 public class PortletCategoryKeys {
 
 	public static final String[] ALL = {
-		PortletCategoryKeys.USERS, PortletCategoryKeys.SITES,
+		PortletCategoryKeys.CONTROL_PANEL_USERS, PortletCategoryKeys.SITES,
 		PortletCategoryKeys.CONTROL_PANEL_APPS,
 		PortletCategoryKeys.CONFIGURATION
 	};
@@ -40,6 +40,8 @@ public class PortletCategoryKeys {
 	public static final String CONTENT = "content";
 
 	public static final String CONTROL_PANEL_APPS = "control_panel.apps";
+
+	public static final String CONTROL_PANEL_USERS = "control_panel.users";
 
 	public static final String CURRENT_SITE = "current_site";
 
@@ -93,6 +95,10 @@ public class PortletCategoryKeys {
 
 	public static final String SITES = "sites";
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_USERS}
+	 */
+	@Deprecated
 	public static final String USERS = "users";
 
 }

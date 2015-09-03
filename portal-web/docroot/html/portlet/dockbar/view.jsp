@@ -149,7 +149,7 @@ if (layout != null) {
 							cssClass = "control-panel-sites";
 							iconCssClass = "icon-globe";
 						}
-						else if (curCategory.equals(PortletCategoryKeys.USERS)) {
+						else if (curCategory.equals(PortletCategoryKeys.CONTROL_PANEL_USERS)) {
 							cssClass = "control-panel-users";
 							iconCssClass = "icon-user";
 						}

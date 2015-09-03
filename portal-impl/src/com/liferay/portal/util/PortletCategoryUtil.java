@@ -49,10 +49,13 @@ public class PortletCategoryUtil {
 			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "portal")) {
-			legacyPortletCategoryKey = PortletCategoryKeys.USERS;
+			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_USERS;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "server")) {
 			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
+		}
+		else if (Validator.equals(legacyPortletCategoryKey, "users")) {
+			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_USERS;
 		}
 
 		return legacyPortletCategoryKey;

@@ -27,7 +27,7 @@ public interface PanelCategoryKeys {
 		PortletCategoryKeys.CONTROL_PANEL_APPS;
 
 	public static final String CONTROL_PANEL_CONFIGURATION =
-		"control_panel.configuration";
+		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION;
 
 	public static final String CONTROL_PANEL_USERS =
 		PortletCategoryKeys.CONTROL_PANEL_USERS;

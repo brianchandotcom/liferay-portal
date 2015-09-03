@@ -41,6 +41,10 @@ public class PortletCategoryUtil {
 		if (Validator.equals(legacyPortletCategoryKey, "apps")) {
 			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
 		}
+		else if (Validator.equals(legacyPortletCategoryKey, "configuration")) {
+			legacyPortletCategoryKey =
+				PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION;
+		}
 		else if (Validator.equals(legacyPortletCategoryKey, "content")) {
 			legacyPortletCategoryKey =
 				PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;

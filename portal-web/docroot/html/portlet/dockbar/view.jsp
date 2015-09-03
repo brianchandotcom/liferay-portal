@@ -141,7 +141,7 @@ if (layout != null) {
 							cssClass = "control-panel-apps";
 							iconCssClass = "icon-th";
 						}
-						else if (curCategory.equals(PortletCategoryKeys.CONFIGURATION)) {
+						else if (curCategory.equals(PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION)) {
 							cssClass = "control-panel-configuration";
 							iconCssClass = "icon-cog";
 						}

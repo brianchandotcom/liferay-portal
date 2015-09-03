@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.panel.menu.web.portlet;
+package com.liferay.product.navigation.user.menu.web.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portlet.admin.util.PortalUserMenuApplicationType;
-import com.liferay.product.navigation.control.panel.menu.web.constants.ProductNavigationUserMenuPortletKeys;
+import com.liferay.product.navigation.user.menu.web.constants.ProductNavigationUserMenuPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

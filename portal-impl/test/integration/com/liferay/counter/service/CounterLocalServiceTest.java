@@ -62,7 +62,10 @@ public class CounterLocalServiceTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			HypersonicServerTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -89,7 +92,9 @@ public class CounterLocalServiceTest {
 		arguments.add("-Xmx1024m");
 		arguments.add("-XX:MaxPermSize=200m");
 
-		for (String property : _hypersonicTestRule.getJdbcProperties()) {
+		for (String property :
+				HypersonicServerTestRule.INSTANCE.getJdbcProperties()) {
+
 			arguments.add("-D" + property);
 		}
 
@@ -163,16 +168,6 @@ public class CounterLocalServiceTest {
 	private static final int _INCREMENT_COUNT = 10000;
 
 	private static final int _PROCESS_COUNT = 4;
-
-	private static final HypersonicServerTestRule _hypersonicTestRule;
-
-	static {
-		_hypersonicTestRule = new HypersonicServerTestRule("lportal");
-
-		aggregateTestRule = new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			_hypersonicTestRule);
-	}
 
 	private static class IncrementProcessCallable
 		implements ProcessCallable<Long[]> {

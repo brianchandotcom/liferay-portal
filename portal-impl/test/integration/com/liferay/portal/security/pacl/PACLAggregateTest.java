@@ -87,7 +87,7 @@ public class PACLAggregateTest {
 
 	@ClassRule
 	public static final HypersonicServerTestRule hypersonicServerTestRule =
-		new HypersonicServerTestRule("lportal");
+		HypersonicServerTestRule.INSTANCE;
 
 	@Test
 	public void testPACLTests() throws Exception {

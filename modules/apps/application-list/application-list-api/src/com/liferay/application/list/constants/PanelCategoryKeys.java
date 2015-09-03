@@ -37,21 +37,21 @@ public interface PanelCategoryKeys {
 	public static final String SITE_ADMINISTRATION = "site_administration";
 
 	public static final String SITE_ADMINISTRATION_CONFIGURATION =
-		"site_administration.configuration";
+		PortletCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION;
 
 	public static final String SITE_ADMINISTRATION_CONTENT =
-		"site_administration.content";
+		PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
 
 	public static final String SITE_ADMINISTRATION_PAGES =
-		"site_administration.pages";
+		PortletCategoryKeys.SITE_ADMINISTRATION_PAGES;
 
 	public static final String SITE_ADMINISTRATION_PUBLISHING_TOOLS =
-		"site_administration.publishing_tools";
+		PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS;
 
 	public static final String SITE_ADMINISTRATION_USERS =
 		PortletCategoryKeys.SITE_ADMINISTRATION_USERS;
 
-	public static final String SITES = "sites";
+	public static final String SITES = PortletCategoryKeys.SITES;
 
 	public static final String SITES_ADMINISTRATION_MY_SITES =
 		"sites_administration.my_sites";

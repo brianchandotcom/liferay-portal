@@ -62,6 +62,10 @@ public class InputSearchTag extends IncludeTag {
 		_useNamespace = useNamespace;
 	}
 
+	public void setView(String view) {
+		_view = view;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -75,11 +79,16 @@ public class InputSearchTag extends IncludeTag {
 		_showButton = true;
 		_title = null;
 		_useNamespace = true;
+		_view = null;
 	}
 
 	@Override
 	protected String getPage() {
-		return _PAGE;
+		if (Validator.isNotNull(_view)) {
+			return "/html/taglib/ui/input_search/" + _view +"/page.jsp";
+		}
+
+		return "/html/taglib/ui/input_search/page.jsp";
 	}
 
 	@Override
@@ -131,8 +140,6 @@ public class InputSearchTag extends IncludeTag {
 			"liferay-ui:input-search:useNamespace", _useNamespace);
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/input_search/page.jsp";
-
 	private boolean _autoFocus;
 	private String _buttonLabel;
 	private String _cssClass;
@@ -142,5 +149,6 @@ public class InputSearchTag extends IncludeTag {
 	private boolean _showButton = true;
 	private String _title;
 	private boolean _useNamespace = true;
+	private String _view;
 
 }

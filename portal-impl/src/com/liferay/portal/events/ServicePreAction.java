@@ -382,7 +382,7 @@ public class ServicePreAction extends Action {
 			}
 
 			if ((Validator.isNull(controlPanelCategory) ||
-				 controlPanelCategory.equals(PortletCategoryKeys.MY) ||
+				 controlPanelCategory.equals(PortletCategoryKeys.USER) ||
 				 controlPanelCategory.equals(PortletCategoryKeys.PORTLET)) &&
 				Validator.isNotNull(ppid) &&
 				(LiferayWindowState.isPopUp(request) ||
@@ -1790,7 +1790,7 @@ public class ServicePreAction extends Action {
 					return true;
 				}
 			}
-			else if (controlPanelCategory.equals(PortletCategoryKeys.MY) ||
+			else if (controlPanelCategory.equals(PortletCategoryKeys.USER) ||
 					 controlPanelCategory.equals(PortletCategoryKeys.PORTLET)) {
 
 				return true;

@@ -111,7 +111,7 @@
 							if (controlPanelEntryCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
 								tooltipTitle = "this-portlet-is-available-in-site-administration";
 							}
-							else if (controlPanelEntryCategory.equals(PortletCategoryKeys.MY)) {
+							else if (controlPanelEntryCategory.equals(PortletCategoryKeys.USER)) {
 								tooltipTitle = "this-portlet-is-available-in-my-account";
 							}
 							else {

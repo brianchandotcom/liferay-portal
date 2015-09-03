@@ -14,6 +14,8 @@
 
 package com.liferay.application.list.constants;
 
+import com.liferay.portal.util.PortletCategoryKeys;
+
 /**
  * @author Adolfo Pérez
  */
@@ -21,7 +23,8 @@ public interface PanelCategoryKeys {
 
 	public static final String CONTROL_PANEL = "control_panel";
 
-	public static final String CONTROL_PANEL_APPS = "control_panel.apps";
+	public static final String CONTROL_PANEL_APPS =
+		PortletCategoryKeys.CONTROL_PANEL_APPS;
 
 	public static final String CONTROL_PANEL_CONFIGURATION =
 		"control_panel.configuration";

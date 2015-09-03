@@ -137,7 +137,7 @@ if (layout != null) {
 						String cssClass = StringPool.BLANK;
 						String iconCssClass = StringPool.BLANK;
 
-						if (curCategory.equals(PortletCategoryKeys.APPS)) {
+						if (curCategory.equals(PortletCategoryKeys.CONTROL_PANEL_APPS)) {
 							cssClass = "control-panel-apps";
 							iconCssClass = "icon-th";
 						}

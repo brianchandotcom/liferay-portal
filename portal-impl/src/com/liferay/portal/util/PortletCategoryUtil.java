@@ -38,18 +38,21 @@ public class PortletCategoryUtil {
 	public static String getPortletCategoryKey(
 		String legacyPortletCategoryKey) {
 
-		if (Validator.equals(legacyPortletCategoryKey, "content")) {
+		if (Validator.equals(legacyPortletCategoryKey, "apps")) {
+			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
+		}
+		else if (Validator.equals(legacyPortletCategoryKey, "content")) {
 			legacyPortletCategoryKey =
 				PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "marketplace")) {
-			legacyPortletCategoryKey = PortletCategoryKeys.APPS;
+			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "portal")) {
 			legacyPortletCategoryKey = PortletCategoryKeys.USERS;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "server")) {
-			legacyPortletCategoryKey = PortletCategoryKeys.APPS;
+			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
 		}
 
 		return legacyPortletCategoryKey;

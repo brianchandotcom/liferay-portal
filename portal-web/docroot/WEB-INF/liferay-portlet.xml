@@ -277,19 +277,6 @@
 		<css-class-wrapper>portlet-directory</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>190</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>control_panel_home</struts-path>
-		<use-default-template>false</use-default-template>
-		<show-portlet-access-denied>false</show-portlet-access-denied>
-		<show-portlet-inactive>false</show-portlet-inactive>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>195</portlet-name>
 		<struts-path>image_uploader</struts-path>
 		<use-default-template>false</use-default-template>

@@ -51,7 +51,11 @@ public class PortletCategoryKeys {
 	@Deprecated
 	public static final String MARKETPLACE = "marketplace";
 
-	public static final String MY = "my";
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #USER}
+	 */
+	@Deprecated
+	public static final String MY = "user";
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #CONFIGURATION}, {@link
@@ -94,6 +98,8 @@ public class PortletCategoryKeys {
 		"site_administration.users";
 
 	public static final String SITES = "sites";
+
+	public static final String USER = "user";
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_USERS}

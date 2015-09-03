@@ -48,6 +48,9 @@ public class PortletCategoryUtil {
 		else if (Validator.equals(legacyPortletCategoryKey, "marketplace")) {
 			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
 		}
+		else if (Validator.equals(legacyPortletCategoryKey, "my")) {
+			legacyPortletCategoryKey = PortletCategoryKeys.USER;
+		}
 		else if (Validator.equals(legacyPortletCategoryKey, "portal")) {
 			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_USERS;
 		}

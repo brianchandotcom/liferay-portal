@@ -290,7 +290,7 @@
 					<ul class="permission-navigation-item-content toggler-content toggler-content-collapsed">
 
 						<%
-						Set<Portlet> myAccountPortlets = PortalUtil.getControlPanelPortlets(company.getCompanyId(), PortletCategoryKeys.MY);
+						Set<Portlet> myAccountPortlets = PortalUtil.getControlPanelPortlets(company.getCompanyId(), PortletCategoryKeys.USER);
 
 						for (Portlet myAccountPortlet : myAccountPortlets) {
 							editPermissionsResourceURL.setParameter("portletResource", myAccountPortlet.getPortletId());

@@ -61,7 +61,7 @@ public interface PanelCategoryKeys {
 
 	public static final String SITES_ALL_SITES = "sites_all_sites";
 
-	public static final String USER = "user";
+	public static final String USER = PortletCategoryKeys.USER;
 
 	public static final String USER_MY_ACCOUNT = "user.my_account";
 

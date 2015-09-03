@@ -29,7 +29,8 @@ public interface PanelCategoryKeys {
 	public static final String CONTROL_PANEL_CONFIGURATION =
 		"control_panel.configuration";
 
-	public static final String CONTROL_PANEL_USERS = "control_panel.users";
+	public static final String CONTROL_PANEL_USERS =
+		PortletCategoryKeys.CONTROL_PANEL_USERS;
 
 	public static final String ROOT = "root";
 
@@ -48,7 +49,7 @@ public interface PanelCategoryKeys {
 		"site_administration.publishing_tools";
 
 	public static final String SITE_ADMINISTRATION_USERS =
-		"site_administration.users";
+		PortletCategoryKeys.SITE_ADMINISTRATION_USERS;
 
 	public static final String SITES = "sites";
 

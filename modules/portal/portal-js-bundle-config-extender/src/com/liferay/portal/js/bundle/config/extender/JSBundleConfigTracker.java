@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.js.loader.modules.extender;
+package com.liferay.portal.js.bundle.config.extender;
 
 import java.net.URL;
 

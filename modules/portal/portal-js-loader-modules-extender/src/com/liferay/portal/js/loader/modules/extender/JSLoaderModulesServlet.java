@@ -16,13 +16,8 @@ package com.liferay.portal.js.loader.modules.extender;
 
 import aQute.lib.converter.Converter;
 
-import com.liferay.portal.kernel.util.StreamUtil;
-
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-
-import java.net.URL;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -66,10 +61,6 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		_logger = new Logger(componentContext.getBundleContext());
 
 		setDetails(Converter.cnv(Details.class, properties));
-	}
-
-	protected JSBundleConfigTracker getJSBundleConfigTracker() {
-		return _jsBundleConfigTracker;
 	}
 
 	protected JSLoaderModulesTracker getJSLoaderModulesTracker() {
@@ -193,42 +184,11 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		printWriter.println("\n};");
 		printWriter.println("}());");
 
-		Collection<URL> jsConfigURLs = _jsBundleConfigTracker.getJSConfigURLs();
-
-		if (!jsConfigURLs.isEmpty()) {
-			printWriter.println("(function() {");
-
-			for (URL jsConfigURL : jsConfigURLs) {
-				try (InputStream inputStream = jsConfigURL.openStream()) {
-					servletOutputStream.println("try {");
-
-					StreamUtil.transfer(
-						inputStream, servletOutputStream, false);
-
-					servletOutputStream.println("} catch (error) {");
-					servletOutputStream.println("console.error(error);");
-					servletOutputStream.println("}");
-				}
-				catch (Exception e) {
-					_logger.log(Logger.LOG_ERROR, "Unable to open resource", e);
-				}
-			}
-
-			printWriter.println("}());");
-		}
-
 		printWriter.close();
 	}
 
 	protected void setDetails(Details details) {
 		_details = details;
-	}
-
-	@Reference
-	protected void setJSBundleConfigTracker(
-		JSBundleConfigTracker jsBundleConfigTracker) {
-
-		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
 	@Reference
@@ -239,7 +199,6 @@ public class JSLoaderModulesServlet extends HttpServlet {
 	}
 
 	private volatile Details _details;
-	private JSBundleConfigTracker _jsBundleConfigTracker;
 	private JSLoaderModulesTracker _jsLoaderModulesTracker;
 	private Logger _logger;
 

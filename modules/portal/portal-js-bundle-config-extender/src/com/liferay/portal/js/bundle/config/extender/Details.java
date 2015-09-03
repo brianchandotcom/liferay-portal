@@ -12,25 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet;
+package com.liferay.portal.js.bundle.config.extender;
+
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Peter Fellwock
+ * @author Carlos Sierra Andrés
  */
-public class PortalWebResourceConstants {
+@Meta.OCD(
+	id = "com.liferay.portal.js.bundle.config.extender.BundleConfigServlet",
+	name = "%JS Bundle Config Servlet Configuration"
+)
+public @interface Details {
 
-	public static final String RESOURCE_TYPE_CSS = "css";
+	public static final String CONTENT_TYPE = "text/javascript; charset=UTF-8";
 
-	public static final String RESOURCE_TYPE_EDITORS = "editors";
-
-	public static final String RESOURCE_TYPE_JS = "js";
-
-	public static final String RESOURCE_TYPE_JS_BUNDLE_CONFIG =
-		"js_bundle_config";
-
-	public static final String RESOURCE_TYPE_JS_LOADER_MODULES =
-		"js_loader_modules";
-
-	public static final String RESOURCE_TYPE_THEMES = "themes";
-
+	public static final int MAX_VALUE_LESS_1K = (Integer.MAX_VALUE - 1000);
 }

@@ -18,6 +18,8 @@ AUI.add(
 
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
+		var STR_ALL_CHECKBOX = 'allRowIds';
+
 		var STR_CLICK = 'click';
 
 		var STR_DISPLAY_STYLE = 'displayStyle';
@@ -64,6 +66,10 @@ AUI.add(
 						value: CSS_SELECTED
 					},
 
+					selectAllCheckbox: {
+						validator: Lang.isString
+					},
+
 					selector: {
 						validator: Lang.isString
 					},
@@ -93,7 +99,12 @@ AUI.add(
 
 						instance._entriesContainer = instance.byId('entriesContainer');
 
-						instance._selectAllCheckbox = instance.byId('allRowIds');
+						if (instance.get('selectAllCheckbox')) {
+							instance._selectAllCheckbox = instance.all(instance.get('selectAllCheckbox'));
+						}
+						else {
+							instance._selectAllCheckbox = instance.byId(STR_ALL_CHECKBOX);
+						}
 
 						instance._selectedCSSClass = instance.get('selectedCSSClass');
 
@@ -206,10 +217,10 @@ AUI.add(
 						);
 					},
 
-					_toggleEntriesSelection: function() {
+					_toggleEntriesSelection: function(event) {
 						var instance = this;
 
-						var selectAllCheckbox = instance._selectAllCheckbox;
+						var selectAllCheckbox = event.currentTarget;
 
 						for (var i = 0; i < instance._checkBoxesId.length; i++) {
 							Util.checkAll(
@@ -219,6 +230,12 @@ AUI.add(
 								SELECTOR_TR_SELECTABLE
 							);
 						}
+
+						Util.checkAllBox(
+							instance._entriesContainer,
+							instance._checkBoxesId,
+							instance._selectAllCheckbox
+						);
 
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 

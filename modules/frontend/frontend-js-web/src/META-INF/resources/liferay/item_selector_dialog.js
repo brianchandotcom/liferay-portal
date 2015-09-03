@@ -68,7 +68,7 @@ AUI.add(
 									modal: true,
 									'toolbars.footer': [
 										{
-											cssClass: 'btn-primary',
+											cssClass: 'btn-lg btn-primary',
 											disabled: true,
 											id: 'addButton',
 											label: strings.add,
@@ -80,7 +80,7 @@ AUI.add(
 											}
 										},
 										{
-											cssClass: 'btn-link close-modal',
+											cssClass: 'btn-lg btn-link close-modal',
 											id: 'cancelButton',
 											label: strings.cancel,
 											on: {

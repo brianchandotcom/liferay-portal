@@ -168,14 +168,14 @@ public class DelegatingTestStore extends BaseStore {
 		return _store.getFileSize(companyId, repositoryId, fileName);
 	}
 
-	public int getWrapperChainLength() {
+	public int getWrapperChainLengthForTest() {
 		if (!(_store instanceof DelegatingTestStore)) {
 			return 1;
 		}
 
 		DelegatingTestStore delegatingTestStore = (DelegatingTestStore)_store;
 
-		return 1 + delegatingTestStore.getWrapperChainLength();
+		return 1 + delegatingTestStore.getWrapperChainLengthForTest();
 	}
 
 	@Override

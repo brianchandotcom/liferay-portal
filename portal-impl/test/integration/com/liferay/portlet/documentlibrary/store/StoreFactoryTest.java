@@ -93,7 +93,7 @@ public class StoreFactoryTest {
 
 		Class<? extends Store> storeClass = store.getClass();
 
-		Method method = storeClass.getMethod("getWrapperChainLength");
+		Method method = storeClass.getMethod("getWrapperChainLengthForTest");
 
 		return (Integer)method.invoke(store);
 	}

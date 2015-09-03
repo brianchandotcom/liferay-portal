@@ -40,6 +40,16 @@ import javax.servlet.http.HttpServletRequest;
 public class RestrictPortletServletRequest
 	extends PersistentHttpServletRequestWrapper {
 
+	public static boolean isSharedRequestAttribute(String name) {
+			for (String requestSharedAttribute : _REQUEST_SHARED_ATTRIBUTES) {
+				if (name.startsWith(requestSharedAttribute)) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+
 	public RestrictPortletServletRequest(HttpServletRequest request) {
 		super(request);
 	}
@@ -190,16 +200,6 @@ public class RestrictPortletServletRequest
 				_log.debug("Ignore setting restricted attribute " + name);
 			}
 		}
-	}
-
-	protected boolean isSharedRequestAttribute(String name) {
-		for (String requestSharedAttribute : _REQUEST_SHARED_ATTRIBUTES) {
-			if (name.startsWith(requestSharedAttribute)) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static final String[] _REQUEST_SHARED_ATTRIBUTES =

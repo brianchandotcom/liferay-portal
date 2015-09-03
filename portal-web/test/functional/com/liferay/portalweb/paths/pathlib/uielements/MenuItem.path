@@ -264,8 +264,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Folder')]</td>
+	<td>FOLDER_DM</td>
+	<td>//a[@role='menuitem' and @title='Folder']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_WCM</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[.='Folder']</td>			
 	<td></td>
 </tr>
 <tr>

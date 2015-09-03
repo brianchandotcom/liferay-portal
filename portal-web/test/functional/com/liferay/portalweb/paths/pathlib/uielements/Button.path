@@ -324,6 +324,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEXT</td>
+	<td>//button[contains(.,'Next')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OK</td>
 	<td>//button[contains(.,'OK')]</td>
 	<td></td>

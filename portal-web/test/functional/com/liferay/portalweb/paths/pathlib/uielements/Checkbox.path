@@ -159,6 +159,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLED_ON_PRIVATE_PAGES</td>
+	<td>//input[contains(@id,'branchingPrivate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLED_ON_PUBLIC_PAGES</td>
+	<td>//input[contains(@id,'branchingPublic')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACEBOOK</td>
 	<td>//input[contains(@id,'facebook')]</td>
 	<td></td>
@@ -286,6 +296,11 @@
 <tr>
 	<td>SITE_OWNER</td>
 	<td>xpath=(//input[contains(@name,'rowIds')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGED_CONTENT</td>
+	<td>//div[contains(@id,'stagedPortlets')]//label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>

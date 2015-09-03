@@ -78,12 +78,12 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoPG">
+		<execute macro="BlogsNavigator#gotoPG">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPG">
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
@@ -224,13 +224,14 @@
 	</command>
 
 	<command name="RecycleBinEntriesMaxAge" priority="4">
-		<property name="custom.properties" value="trash.entries.max.age=86400${line.separator}company.settings.form.configuration=general,authentication,users,mail-host-names,email-notifications,content-sharing,recycle-bin" />
+		<property name="custom.properties" value="trash.entries.max.age=86400" />
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="PortalSettings#disableRecycleBinCP" />
+		<execute macro="Site#disableRecycleBinCP" />
 
 		<execute macro="RecycleBin#viewDisabledCP">
 			<var name="siteScopeName" value="Site Name" />
@@ -241,7 +242,7 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="BlogsEntry#addCP">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
@@ -255,11 +256,12 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Portal Settings" />
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="PortalSettings#enableRecycleBinCP" />
+		<execute macro="Site#enableRecycleBinCP" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -579,8 +581,8 @@
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
 			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content 1" />
-			<var name="entryTitle" value="Blogs Entry Title 1" />
+			<var name="entryContent" value="Blogs Entry Content 3" />
+			<var name="entryTitle" value="Blogs Entry Title 3" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
@@ -591,8 +593,8 @@
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
 			<var name="assetType" value="Blogs Entry" />
-			<var name="entryContent" value="Blogs Entry Content 3" />
-			<var name="entryTitle" value="Blogs Entry Title 3" />
+			<var name="entryContent" value="Blogs Entry Content 1" />
+			<var name="entryTitle" value="Blogs Entry Title 1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

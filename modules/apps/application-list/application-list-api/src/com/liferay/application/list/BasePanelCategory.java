@@ -15,6 +15,8 @@
 package com.liferay.application.list;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -29,11 +31,36 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class BasePanelCategory implements PanelCategory {
 
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PanelCategory)) {
+			return false;
+		}
+
+		PanelCategory panelCategory = (PanelCategory)obj;
+
+		if (Validator.equals(getKey(), panelCategory.getKey())) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
 	public boolean hasAccessPermission(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
 		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, getKey());
 	}
 
 	@Override

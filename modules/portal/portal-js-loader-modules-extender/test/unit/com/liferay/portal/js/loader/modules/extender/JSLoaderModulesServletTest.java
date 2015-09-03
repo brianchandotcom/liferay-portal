@@ -436,11 +436,6 @@ public class JSLoaderModulesServletTest extends PowerMockito {
 		jsLoaderModulesServlet.setDetails(
 			Converter.cnv(Details.class, properties));
 
-		JSBundleConfigTracker jsBundleConfigTracker =
-			new JSBundleConfigTracker();
-
-		jsLoaderModulesServlet.setJSBundleConfigTracker(jsBundleConfigTracker);
-
 		JSLoaderModulesTracker jsLoaderModulesTracker =
 			new JSLoaderModulesTracker();
 

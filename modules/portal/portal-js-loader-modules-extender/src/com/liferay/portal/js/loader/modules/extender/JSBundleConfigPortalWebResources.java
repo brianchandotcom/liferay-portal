@@ -24,10 +24,11 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Raymond Augé
+ * @author Carlos Sierra Andrés
+ * @author Chema Balsas
  */
 @Component(immediate = true)
-public class JSLoaderModulesPortalWebResources {
+public class JSBundleConfigPortalWebResources {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
@@ -52,21 +53,21 @@ public class JSLoaderModulesPortalWebResources {
 	}
 
 	@Reference
-	protected void setJSLoaderModulesServlet(
-		JSLoaderModulesServlet jsLoaderModulesServlet) {
+	protected void setBundlerConfigServlet(
+		JSBundleConfigServlet jsLBundleConfigServlet) {
 
-		_jsLoaderModulesServlet = jsLoaderModulesServlet;
+		_jsBundleConfigServlet = jsLBundleConfigServlet;
 	}
 
 	@Reference
-	protected void setJSLoaderModulesTracker(
-		JSLoaderModulesTracker jsLoaderModulesTracker) {
+	protected void setJSBundleConfigTracker(
+		JSBundleConfigTracker jsBundleConfigTracker) {
 
-		_jsLoaderModulesTracker = jsLoaderModulesTracker;
+		_jsBundleConfigTracker = jsBundleConfigTracker;
 	}
 
-	private JSLoaderModulesServlet _jsLoaderModulesServlet;
-	private JSLoaderModulesTracker _jsLoaderModulesTracker;
+	private JSBundleConfigServlet _jsBundleConfigServlet;
+	private JSBundleConfigTracker _jsBundleConfigTracker;
 	private ServiceRegistration<?> _serviceRegistration;
 
 	private class InternalPortalWebResources
@@ -81,18 +82,18 @@ public class JSLoaderModulesPortalWebResources {
 
 		@Override
 		public long getLastModified() {
-			return _jsLoaderModulesTracker.getTrackingCount();
+			return _jsBundleConfigTracker.getTrackingCount();
 		}
 
 		@Override
 		public String getResourceType() {
 			return com.liferay.portal.kernel.servlet.PortalWebResourceConstants.
-				RESOURCE_TYPE_JS_LOADER_MODULES;
+				RESOURCE_TYPE_JS_BUNDLE_CONFIG;
 		}
 
 		@Override
 		public ServletContext getServletContext() {
-			return _jsLoaderModulesServlet.getServletContext();
+			return _jsBundleConfigServlet.getServletContext();
 		}
 
 	}

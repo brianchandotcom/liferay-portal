@@ -22,7 +22,7 @@ public class PortletCategoryKeys {
 	public static final String[] ALL = {
 		PortletCategoryKeys.CONTROL_PANEL_USERS, PortletCategoryKeys.SITES,
 		PortletCategoryKeys.CONTROL_PANEL_APPS,
-		PortletCategoryKeys.CONFIGURATION
+		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION
 	};
 
 	/**
@@ -31,7 +31,11 @@ public class PortletCategoryKeys {
 	@Deprecated
 	public static final String APPS = "apps";
 
-	public static final String CONFIGURATION = "configuration";
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_CONFIGURATION}
+	 */
+	@Deprecated
+	public static final String CONFIGURATION = "control_panel.configuration";
 
 	/**
 	 * @deprecated As of 6.2.0
@@ -40,6 +44,9 @@ public class PortletCategoryKeys {
 	public static final String CONTENT = "content";
 
 	public static final String CONTROL_PANEL_APPS = "control_panel.apps";
+
+	public static final String CONTROL_PANEL_CONFIGURATION =
+		"control_panel.configuration";
 
 	public static final String CONTROL_PANEL_USERS = "control_panel.users";
 

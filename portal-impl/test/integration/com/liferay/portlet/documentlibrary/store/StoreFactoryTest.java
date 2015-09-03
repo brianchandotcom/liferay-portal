@@ -30,6 +30,7 @@ import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
+ * @author Adolfo Pérez
  */
 public class StoreFactoryTest {
 

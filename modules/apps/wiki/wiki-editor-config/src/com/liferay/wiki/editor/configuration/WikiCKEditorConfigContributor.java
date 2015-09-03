@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = EditorConfigContributor.class
 )
-public class WikiCKeditorEditorConfigContributor
+public class WikiCKEditorConfigContributor
 	extends WikiBaseEditorConfigContributor {
 
 	@Reference(unbind = "-")

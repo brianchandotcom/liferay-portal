@@ -4423,7 +4423,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 	private static final String _FINDER_COLUMN_G_LIKEN_GROUPID_2 = "assetTag.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_LIKEN_GROUPID_7 = "assetTag.groupId IN (";
-	private static final String _FINDER_COLUMN_G_LIKEN_NAME_1 = "assetTag.name LIKE NULL";
+	private static final String _FINDER_COLUMN_G_LIKEN_NAME_1 = "assetTag.name IS NULL";
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_2 = "assetTag.name LIKE ?";
 	private static final String _FINDER_COLUMN_G_LIKEN_NAME_3 = "(assetTag.name IS NULL OR assetTag.name LIKE '')";
 

@@ -324,9 +324,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="Document 4 Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="fieldFieldLabel" value="Attachment" />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
@@ -485,9 +484,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="Document 3 Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="fieldFieldLabel" value="Attachment" />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
@@ -572,9 +570,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="Document 2 Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="fieldFieldLabel" value="Attachment" />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
@@ -659,8 +656,7 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="Document 1 Title" />
-			<var name="document" value="Document_1.txt" />			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="document" value="Document_1.txt" />			<var name="fieldFieldLabel" value="Attachment" />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
@@ -1128,7 +1124,7 @@
 			<var name="ddlListName" value="${ddlListName}" />
 		</execute>
 
-		<execute macro="DDLRecord#populateFieldDocumentsAndMediaUpload">
+		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
 			<var name="document" value="${document}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />

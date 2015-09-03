@@ -26,17 +26,16 @@ PortletURL rowURL = (PortletURL)request.getAttribute("view_entries.jsp-rowURL");
 AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
 
 AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(article));
+
+Map<String, Object> linkData = new HashMap<String, Object>();
+
+linkData.put("toggle", "tooltip");
+linkData.put("placement", "top");
 %>
 
-<liferay-ui:icon
-	cssClass="entry-display-style selectable"
-	iconCssClass="<%= assetRenderer.getIconCssClass() %>"
-	label="<%= true %>"
-	localizeMessage="<%= false %>"
-	message="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
-	method="get"
-	url="<%= rowURL.toString() %>"
-/>
+<aui:a data="<%= linkData %>" href="<%= rowURL.toString() %>" title="<%= HtmlUtil.escape(article.getTitle(locale)) %>">
+	<%= HtmlUtil.escape(article.getTitle(locale)) %>
+</aui:a>
 
 <c:if test="<%= article.getGroupId() != scopeGroupId %>">
 	<small class="group-info">

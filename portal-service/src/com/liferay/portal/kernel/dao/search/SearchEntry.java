@@ -44,6 +44,8 @@ public interface SearchEntry {
 
 	public String getValign();
 
+	public boolean isTruncate();
+
 	public void print(
 			Writer writer, HttpServletRequest request,
 			HttpServletResponse response)
@@ -56,6 +58,8 @@ public interface SearchEntry {
 	public void setCssClass(String cssClass);
 
 	public void setIndex(int index);
+
+	public void setTruncate(boolean truncate);
 
 	public void setValign(String valign);
 

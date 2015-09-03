@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 
-	public static final String DEFAULT_DISPLAY_STYPE = "table";
+	public static final String DEFAULT_DISPLAY_STYPE = "list";
 
 	public String getDisplayStyle() {
 		return _displayStyle;
@@ -35,6 +35,10 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 
 	public void setPaginate(boolean paginate) {
 		_paginate = paginate;
+	}
+
+	public void setView(String view) {
+		_view = view;
 	}
 
 	@Override
@@ -52,6 +56,11 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 			displayStyle = DEFAULT_DISPLAY_STYPE;
 		}
 
+		if (Validator.isNotNull(_view)) {
+			return "/html/taglib/ui/search_iterator/" + _view + "/" +
+				displayStyle + ".jsp";
+		}
+
 		return "/html/taglib/ui/search_iterator/" + displayStyle + ".jsp";
 	}
 
@@ -65,5 +74,6 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 
 	private String _displayStyle = DEFAULT_DISPLAY_STYPE;
 	private boolean _paginate = true;
+	private String _view;
 
 }

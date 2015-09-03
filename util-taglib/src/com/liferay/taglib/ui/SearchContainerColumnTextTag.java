@@ -93,6 +93,7 @@ public class SearchContainerColumnTextTag<R>
 			textSearchEntry.setName(getValue());
 			textSearchEntry.setTarget(getTarget());
 			textSearchEntry.setTitle(getTitle());
+			textSearchEntry.setTruncate(getTruncate());
 			textSearchEntry.setValign(getValign());
 
 			resultRow.addSearchEntry(index, textSearchEntry);

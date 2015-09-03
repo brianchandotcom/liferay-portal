@@ -58,6 +58,7 @@ public class SearchContainerColumnJSPTag<R> extends SearchContainerColumnTag {
 			jspSearchEntry.setResponse(
 				(HttpServletResponse)pageContext.getResponse());
 			jspSearchEntry.setServletContext(pageContext.getServletContext());
+			jspSearchEntry.setTruncate(getTruncate());
 			jspSearchEntry.setValign(getValign());
 
 			resultRow.addSearchEntry(index, jspSearchEntry);

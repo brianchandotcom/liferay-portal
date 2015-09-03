@@ -51,6 +51,11 @@ public abstract class SearchEntry
 	}
 
 	@Override
+	public boolean isTruncate() {
+		return _truncate;
+	}
+
+	@Override
 	public abstract void print(
 			Writer writer, HttpServletRequest request,
 			HttpServletResponse response)
@@ -77,6 +82,11 @@ public abstract class SearchEntry
 	}
 
 	@Override
+	public void setTruncate(boolean truncate) {
+		_truncate = truncate;
+	}
+
+	@Override
 	public void setValign(String valign) {
 		_valign = valign;
 	}
@@ -85,6 +95,7 @@ public abstract class SearchEntry
 	private int _colspan = DEFAULT_COLSPAN;
 	private String _cssClass = DEFAULT_CSS_CLASS;
 	private int _index;
+	private boolean _truncate;
 	private String _valign = DEFAULT_VALIGN;
 
 }

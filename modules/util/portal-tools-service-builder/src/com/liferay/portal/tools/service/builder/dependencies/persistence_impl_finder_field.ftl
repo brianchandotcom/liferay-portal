@@ -21,12 +21,10 @@
 <#if !finderCol.isPrimitiveType()>
 	private static final String _FINDER_COLUMN_${finder.name?upper_case}_${finderCol.name?upper_case}_1${finderFieldSuffix} =
 
-	<#if finderCol.comparator == "=">
-		"${finderFieldName} IS NULL${finderColConjunction}"
-	<#elseif finderCol.comparator == "<>" || finderCol.comparator == "!=">
+	<#if finderCol.comparator == "<>" || finderCol.comparator == "!=">
 		"${finderFieldName} IS NOT NULL${finderColConjunction}"
 	<#else>
-		"${finderFieldName} ${finderCol.comparator} NULL${finderColConjunction}"
+		"${finderFieldName} IS NULL${finderColConjunction}"
 	</#if>
 
 	;

@@ -35,6 +35,10 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 		return super.doStartTag();
 	}
 
+	public void setCheckBoxCssClass(String checkBoxCssClass) {
+		_checkBoxCssClass = checkBoxCssClass;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
@@ -56,6 +60,7 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 
 	@Override
 	protected void cleanUp() {
+		_checkBoxCssClass = StringPool.BLANK;
 		_cssClass = StringPool.BLANK;
 		_id = StringPool.BLANK;
 		_includeCheckBox = false;
@@ -79,6 +84,9 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
+			"liferay-frontend:management-bar:checkBoxCssClass",
+			_checkBoxCssClass);
+		request.setAttribute(
 			"liferay-frontend:management-bar:cssClass", _cssClass);
 		request.setAttribute("liferay-frontend:management-bar:id", _id);
 		request.setAttribute(
@@ -93,6 +101,7 @@ public class ManagementBarTag extends IncludeTag implements BodyTag {
 
 	private static final String _PAGE = "/management_bar/page.jsp";
 
+	private String _checkBoxCssClass = StringPool.BLANK;
 	private String _cssClass = StringPool.BLANK;
 	private String _id = StringPool.BLANK;
 	private boolean _includeCheckBox;

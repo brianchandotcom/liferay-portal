@@ -22,7 +22,7 @@
 			<div class="management-bar-header">
 				<c:if test="<%= includeCheckBox %>">
 					<label class="checkbox-default">
-						<aui:input inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" title="select-all" type="checkbox" />
+						<aui:input cssClass="<%= checkBoxCssClass %>" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" title="select-all" type="checkbox" />
 					</label>
 				</c:if>
 			</div>

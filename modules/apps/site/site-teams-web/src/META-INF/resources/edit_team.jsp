@@ -28,14 +28,12 @@ if (Validator.isNull(redirect)) {
 long teamId = ParamUtil.getLong(request, "teamId");
 
 Team team = TeamLocalServiceUtil.fetchTeam(teamId);
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	escapeXml="<%= false %>"
-	localizeTitle="<%= false %>"
-	title='<%= ((team == null) ? LanguageUtil.get(request, "new-team") : HtmlUtil.escape(team.getName())) %>'
-/>
+renderResponse.setTitle(((team == null) ? LanguageUtil.get(request, "new-team") : HtmlUtil.escape(team.getName())));
+
+portletDisplay.setURLBack(redirect);
+portletDisplay.setShowBackIcon(true);
+%>
 
 <portlet:actionURL name="editTeam" var="editTeamURL">
 	<portlet:param name="mvcPath" value="/edit_team.jsp" />

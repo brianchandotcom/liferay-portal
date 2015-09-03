@@ -67,13 +67,12 @@ request.setAttribute("edit_team_assignments.jsp-group", group);
 request.setAttribute("edit_team_assignments.jsp-organization", organization);
 
 request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title="<%= team.getName() %>"
-/>
+renderResponse.setTitle(HtmlUtil.escape(team.getName()));
+
+portletDisplay.setURLBack(redirect);
+portletDisplay.setShowBackIcon(true);
+%>
 
 <liferay-ui:tabs
 	names="users,user-groups"

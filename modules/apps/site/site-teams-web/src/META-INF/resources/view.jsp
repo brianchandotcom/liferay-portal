@@ -17,25 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 pageContext.setAttribute("portletURL", portletURL);
 %>
-
-<c:if test="<%= !layout.isTypeControlPanel() %>">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		escapeXml="<%= false %>"
-		localizeTitle="<%= false %>"
-		title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, "manage-memberships") %>'
-	/>
-</c:if>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="form-search" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />

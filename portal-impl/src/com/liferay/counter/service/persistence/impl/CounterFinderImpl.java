@@ -321,14 +321,14 @@ public class CounterFinderImpl
 
 		// Use the slow path
 
-		CompeteLatch completeLatch = counterRegister.getCompeteLatch();
+		CompeteLatch competeLatch = counterRegister.getCompeteLatch();
 
-		if (!completeLatch.compete()) {
+		if (!competeLatch.compete()) {
 
 			// Loser thread has to wait for the winner thread to finish its job
 
 			try {
-				completeLatch.await();
+				competeLatch.await();
 			}
 			catch (InterruptedException ie) {
 				throw processException(ie);
@@ -365,7 +365,7 @@ public class CounterFinderImpl
 
 			// Winner thread opens the latch so that loser threads can continue
 
-			completeLatch.done();
+			competeLatch.done();
 		}
 
 		return newValue;

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.HypersonicServerTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.InitUtil;
@@ -63,7 +64,8 @@ public class CounterLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			HypersonicServerTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -85,10 +87,20 @@ public class CounterLocalServiceTest {
 	public void testConcurrentIncrement() throws Exception {
 		String classPath = getClassPath();
 
+		List<String> arguments = new ArrayList<>();
+
+		arguments.add("-Xmx1024m");
+		arguments.add("-XX:MaxPermSize=200m");
+
+		for (String property :
+				HypersonicServerTestRule.INSTANCE.getJdbcProperties()) {
+
+			arguments.add("-D" + property);
+		}
+
 		Builder builder = new Builder();
 
-		builder.setArguments(
-			Arrays.asList("-Xmx1024m", "-XX:MaxPermSize=200m"));
+		builder.setArguments(arguments);
 		builder.setBootstrapClassPath(classPath);
 		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
 		builder.setRuntimeClassPath(classPath);

@@ -61,7 +61,8 @@ public class StoreFactoryTest {
 
 		Store store = storeFactory.getStore("test");
 
-		assertWrapperClass(store, DelegatingTestStore.class.getName());
+		Assert.assertTrue(
+			isWrapper(store, DelegatingTestStore.class.getName()));
 	}
 
 	@Test
@@ -79,23 +80,24 @@ public class StoreFactoryTest {
 
 		Store store = storeFactory.getStore("test");
 
-		assertWrapperClass(store, TopTestStoreWrapper.Wrapper.class.getName());
-	}
-
-	protected void assertWrapperClass(Store store, String className)
-		throws Exception {
-
-		Assert.assertTrue(isWrapper(store, className));
+		Assert.assertTrue(
+			isWrapper(store, TopTestStoreWrapper.Wrapper.class.getName()));
 	}
 
 	protected int getWrapperChainLength(Store store) throws Exception {
-		assertWrapperClass(store, DelegatingTestStore.class.getName());
+		try {
+			Class<? extends Store> storeClass = store.getClass();
 
-		Class<? extends Store> storeClass = store.getClass();
+			Method method = storeClass.getMethod(
+				"getWrapperChainLengthForTest");
 
-		Method method = storeClass.getMethod("getWrapperChainLengthForTest");
-
-		return (Integer)method.invoke(store);
+			return (Integer)method.invoke(store);
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new IllegalArgumentException(
+				store.getClass() + " is not an instance of DelegatingTestStore",
+				nsme);
+		}
 	}
 
 	private boolean isWrapper(Store store, String className)

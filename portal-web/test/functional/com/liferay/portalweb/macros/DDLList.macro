@@ -90,7 +90,7 @@
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlListNameEdit}" />
 
 		<if>
-			<isset var="ddlListDescription" />
+			<isset var="ddlListDescriptionEdit" />
 			<then>
 				<execute function="Type#clickAtSendKeys" locator1="TextArea#DESCRIPTION" value1="${ddlListDescriptionEdit}" />
 			</then>

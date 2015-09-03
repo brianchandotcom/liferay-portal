@@ -14,8 +14,12 @@
 
 package com.liferay.portal.test.rule.callback;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
 import com.liferay.portal.util.PropsValues;
+
+import java.io.File;
+import java.io.PrintWriter;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,8 +37,6 @@ public class HypersonicServerTestCallback
 
 	public HypersonicServerTestCallback(String databaseName) {
 		_databaseName = databaseName;
-
-		_databaseURL = "jdbc:hsqldb:hsql://localhost/" + databaseName;
 	}
 
 	@Override
@@ -42,12 +44,12 @@ public class HypersonicServerTestCallback
 		throws Throwable {
 
 		if (server != null) {
-			try (Connection con = DriverManager.getConnection(
-					_databaseURL, "sa", "")) {
+			try (Connection connection = DriverManager.getConnection(
+					"jdbc:hsqldb:hsql://localhost/".concat(databaseName), "sa",
+					"");
+				Statement statement = connection.createStatement()) {
 
-				try (Statement statement = con.createStatement()) {
-					statement.execute("SHUTDOWN COMPACT");
-				}
+				statement.execute("SHUTDOWN COMPACT");
 			}
 
 			server.stop();
@@ -58,12 +60,32 @@ public class HypersonicServerTestCallback
 	public Server doBeforeClass(Description description) throws Throwable {
 		Class.forName("org.hsqldb.jdbcDriver");
 
-		Server server = new Server();
+		Server server = new Server() {
+
+			@Override
+			public int stop() {
+				try (PrintWriter logPrintWriter = getLogWriter();
+					PrintWriter errPrintWriter = getErrWriter()) {
+
+					return super.stop();
+				}
+			}
+
+		};
+
 		server.setDatabaseName(0, _databaseName);
-		server.setDatabasePath(
-			0, PropsValues.LIFERAY_HOME + "/data/hsql/" + _databaseName);
-		server.setLogWriter(null);
-		server.setErrWriter(null);
+		server.setDatabasePath(0, _HSQL_HOME.concat(_databaseName));
+
+		File hsqlHome = new File(_HSQL_HOME);
+
+		hsqlHome.mkdirs();
+
+		server.setErrWriter(
+			new UnsyncPrintWriter(
+				new File(hsqlHome, _databaseName.concat(".err.log"))));
+		server.setLogWriter(
+			new UnsyncPrintWriter(
+				new File(hsqlHome, _databaseName.concat(".std.log"))));
 
 		if (server.start() == 16) {
 			return server;
@@ -72,7 +94,9 @@ public class HypersonicServerTestCallback
 		return null;
 	}
 
+	private static final String _HSQL_HOME = PropsValues.LIFERAY_HOME.concat(
+		"/data/hsql/");
+
 	private final String _databaseName;
-	private final String _databaseURL;
 
 }

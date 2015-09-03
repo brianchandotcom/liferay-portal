@@ -9,6 +9,8 @@ dependencies {
 	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile project(":apps:export-import:export-import-api")
+	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:wiki:wiki-api")
 	compile project(":core:osgi-service-tracker-map")
 }

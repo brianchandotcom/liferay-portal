@@ -94,6 +94,7 @@ import java.util.regex.Pattern;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -183,6 +184,7 @@ public class ExportImportHelperUtilTest {
 			RandomTestUtil.randomString());
 	}
 
+	@Ignore
 	@Test
 	public void testDeleteTimestampFromDLReferenceURLs() throws Exception {
 		String content = replaceParameters(
@@ -215,6 +217,7 @@ public class ExportImportHelperUtilTest {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testExportDLReferences() throws Exception {
 		_portletDataContextExport.setZipWriter(new TestReaderWriter());
@@ -248,6 +251,7 @@ public class ExportImportHelperUtilTest {
 		};
 	}
 
+	@Ignore
 	@Test
 	public void testExportDLReferencesInvalidReference() throws Exception {
 		_portletDataContextExport.setZipWriter(new TestReaderWriter());
@@ -269,6 +273,7 @@ public class ExportImportHelperUtilTest {
 			true);
 	}
 
+	@Ignore
 	@Test
 	public void testExportLayoutReferencesWithContext() throws Exception {
 		PortalImpl portalImpl = new PortalImpl() {
@@ -327,6 +332,7 @@ public class ExportImportHelperUtilTest {
 		portalUtil.setPortal(new PortalImpl());
 	}
 
+	@Ignore
 	@Test
 	public void testExportLayoutReferencesWithoutContext() throws Exception {
 		_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING =
@@ -369,6 +375,7 @@ public class ExportImportHelperUtilTest {
 				StringPool.SLASH);
 	}
 
+	@Ignore
 	@Test
 	public void testExportLinksToLayouts() throws Exception {
 		String content = replaceLinksToLayoutsParameters(
@@ -386,6 +393,7 @@ public class ExportImportHelperUtilTest {
 			content, _stagingPublicLayout, _stagingPublicLayout.getGroupId());
 	}
 
+	@Ignore
 	@Test
 	public void testExportLinksToUserLayouts() throws Exception {
 		User user = TestPropsValues.getUser();
@@ -521,6 +529,7 @@ public class ExportImportHelperUtilTest {
 		Assert.assertEquals(layout.getPlid(), layoutJSONObject.getLong("plid"));
 	}
 
+	@Ignore
 	@Test
 	public void testImportDLReferences() throws Exception {
 		Element referrerStagedModelElement =
@@ -547,6 +556,7 @@ public class ExportImportHelperUtilTest {
 		Assert.assertFalse(content.contains("[$dl-reference="));
 	}
 
+	@Ignore
 	@Test
 	public void testImportLayoutReferences() throws Exception {
 		String content = replaceParameters(
@@ -568,6 +578,7 @@ public class ExportImportHelperUtilTest {
 			content.contains("@data_handler_public_servlet_mapping@"));
 	}
 
+	@Ignore
 	@Test
 	public void testImportLinksToLayouts() throws Exception {
 		String content = replaceLinksToLayoutsParameters(
@@ -586,6 +597,7 @@ public class ExportImportHelperUtilTest {
 		Assert.assertEquals(originalContent, importedContent);
 	}
 
+	@Ignore
 	@Test
 	public void testImportLinksToLayoutsIdsReplacement() throws Exception {
 		LayoutTestUtil.addLayout(_liveGroup, true);

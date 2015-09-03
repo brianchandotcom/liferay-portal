@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.lar;
 
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,13 +31,12 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
+import com.liferay.wiki.exportimport.content.processor.WikiPageExportImportContentProcessor;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Zsolt Berentey
@@ -118,10 +119,13 @@ public class WikiPageStagedModelDataHandler
 			portletDataContext, page, page.getNode(),
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 
-		String content = ExportImportHelperUtil.replaceExportContentReferences(
-			portletDataContext, page, page.getContent(),
-			portletDataContext.getBooleanParameter(
-				WikiPortletDataHandler.NAMESPACE, "referenced-content"));
+		String content =
+			_wikiPageExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, page, page.getContent(),
+					portletDataContext.getBooleanParameter(
+						WikiPortletDataHandler.NAMESPACE, "referenced-content"),
+					true);
 
 		page.setContent(content);
 
@@ -168,8 +172,10 @@ public class WikiPageStagedModelDataHandler
 		Element pageElement =
 			portletDataContext.getImportDataStagedModelElement(page);
 
-		String content = ExportImportHelperUtil.replaceImportContentReferences(
-			portletDataContext, page, page.getContent());
+		String content =
+			_wikiPageExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, page, page.getContent());
 
 		page.setContent(content);
 
@@ -319,7 +325,19 @@ public class WikiPageStagedModelDataHandler
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageExportImportContentProcessor(
+		WikiPageExportImportContentProcessor
+			wikiPageExportImportContentProcessor) {
+
+		_wikiPageExportImportContentProcessor =
+			wikiPageExportImportContentProcessor;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiPageStagedModelDataHandler.class);
+
+	private WikiPageExportImportContentProcessor
+		_wikiPageExportImportContentProcessor;
 
 }

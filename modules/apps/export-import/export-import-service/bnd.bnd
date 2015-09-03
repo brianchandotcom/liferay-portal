@@ -2,6 +2,7 @@ Bundle-Name: Liferay Export Import Service
 Bundle-SymbolicName: com.liferay.exportimport.service
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.exportimport.content.processor.base,\
 	com.liferay.exportimport.controller,\
 	com.liferay.exportimport.lar,\
 	com.liferay.exportimport.lifecycle,\

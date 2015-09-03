@@ -1,5 +1,6 @@
 dependencies {
 	compile gradleApi()
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.18"
-	compile project(":util:javadoc-formatter")
+
+	provided project(":util:javadoc-formatter")
 }

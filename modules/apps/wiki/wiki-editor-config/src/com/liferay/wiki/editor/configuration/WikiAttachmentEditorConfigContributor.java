@@ -17,8 +17,11 @@ package com.liferay.wiki.editor.configuration;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,10 +36,23 @@ import java.util.Map;
 
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
+ * @author Sergio González
  * @author Roberto Díaz
  */
-public abstract class WikiBaseEditorConfigContributor
+@Component(
+	property = {
+		"javax.portlet.name=" + WikiPortletKeys.WIKI,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
+		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY,
+		"service.ranking:Integer=100"
+	},
+	service = EditorConfigContributor.class
+)
+public class WikiAttachmentEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -74,8 +90,9 @@ public abstract class WikiBaseEditorConfigContributor
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
-		desiredItemSelectorReturnTypes.addAll(
-			getWikiAttachmentItemSelectorCriterionDesiredReturnTypes());
+		desiredItemSelectorReturnTypes.add(new UploadableFileReturnType());
+		desiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
 
 		attachmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
@@ -95,8 +112,8 @@ public abstract class WikiBaseEditorConfigContributor
 		List<ItemSelectorReturnType> uploadDesiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
-		uploadDesiredItemSelectorReturnTypes.addAll(
-			getUploadItemSelectorCriterionDesiredReturnTypes());
+		uploadDesiredItemSelectorReturnTypes.add(
+			new UploadableFileReturnType());
 
 		uploadItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			uploadDesiredItemSelectorReturnTypes);
@@ -116,7 +133,7 @@ public abstract class WikiBaseEditorConfigContributor
 			name = namespace + name;
 		}
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, name + "selectItem",
 			attachmentItemSelectorCriterion, uploadItemSelectorCriterion);
 
@@ -125,12 +142,11 @@ public abstract class WikiBaseEditorConfigContributor
 		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
 	}
 
-	protected abstract List<ItemSelectorReturnType>
-		getUploadItemSelectorCriterionDesiredReturnTypes();
+	@Reference(unbind = "-")
+	public void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
 
-	protected abstract List<ItemSelectorReturnType>
-		getWikiAttachmentItemSelectorCriterionDesiredReturnTypes();
-
-	protected ItemSelector itemSelector;
+	private ItemSelector _itemSelector;
 
 }

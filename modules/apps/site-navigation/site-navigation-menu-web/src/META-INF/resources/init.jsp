@@ -40,7 +40,7 @@ page import="com.liferay.site.navigation.menu.web.display.context.SiteNavigation
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-SiteNavigationMenuWebConfiguration siteNavigationMenuWebConfiguration = (SiteNavigationMenuWebConfiguration)renderRequest.getAttribute(SiteNavigationMenuWebConfiguration.class.getName());
+SiteNavigationMenuWebConfiguration siteNavigationMenuWebConfiguration = (SiteNavigationMenuWebConfiguration)request.getAttribute(SiteNavigationMenuWebConfiguration.class.getName());
 
 SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext = new SiteNavigationMenuDisplayContext(request, siteNavigationMenuWebConfiguration);
 %>

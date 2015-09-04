@@ -123,6 +123,8 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute function="Pause" locator1="1000" />
+
 		<execute function="AssertTextEquals" locator1="Comments#ENTRY_COUNT_PANEL" value1="${commentCount} Comments" />
 		<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${userFullName}" />
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryComment}" />

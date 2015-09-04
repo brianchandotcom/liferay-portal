@@ -58,6 +58,8 @@ import org.apache.tools.ant.types.selectors.SelectorUtils;
  */
 public abstract class BaseSourceProcessor implements SourceProcessor {
 
+	public static final int PORTAL_MAX_DIR_LEVEL = 5;
+
 	public BaseSourceProcessor() {
 		portalSource = _isPortalSource();
 
@@ -1745,8 +1747,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return line;
 	}
-
-	protected static final int PORTAL_MAX_DIR_LEVEL = 5;
 
 	protected static Pattern attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");

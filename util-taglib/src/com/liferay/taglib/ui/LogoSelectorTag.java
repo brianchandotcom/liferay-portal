@@ -54,6 +54,10 @@ public class LogoSelectorTag extends IncludeTag {
 		_showBackground = showBackground;
 	}
 
+	public void setShowButtons(boolean showButtons) {
+		_showButtons = showButtons;
+	}
+
 	public void setTempImageFileName(String tempImageFileName) {
 		_tempImageFileName = tempImageFileName;
 	}
@@ -67,6 +71,7 @@ public class LogoSelectorTag extends IncludeTag {
 		_logoDisplaySelector = null;
 		_maxFileSize = 0;
 		_showBackground = true;
+		_showButtons = true;
 		_tempImageFileName = null;
 	}
 
@@ -106,6 +111,11 @@ public class LogoSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:logo-selector:showBackground",
 			String.valueOf(_showBackground));
+
+		request.setAttribute(
+				"liferay-ui:logo-selector:showButtons",
+				String.valueOf(_showButtons));
+
 		request.setAttribute(
 			"liferay-ui:logo-selector:tempImageFileName", _tempImageFileName);
 	}
@@ -120,6 +130,7 @@ public class LogoSelectorTag extends IncludeTag {
 	private String _logoDisplaySelector;
 	private long _maxFileSize;
 	private boolean _showBackground = true;
+	private boolean _showButtons = true;
 	private String _tempImageFileName;
 
 }

@@ -29,10 +29,6 @@ compileJavaMvn {
 }
 
 downloadSrc {
-	ext {
-		autoClean = false
-	}
-
 	from zipTree(
 		{
 			FileUtil.get(project, srcUrl)

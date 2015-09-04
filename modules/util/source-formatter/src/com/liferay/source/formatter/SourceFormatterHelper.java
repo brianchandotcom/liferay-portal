@@ -162,15 +162,15 @@ public class SourceFormatterHelper {
 
 			File dir = file.getParentFile();
 
-			Path dirPath = dir.toPath();
-
-			for (PathMatcher pathMatcher : excludeDirPathMatchers) {
-				if (pathMatcher.matches(dirPath)) {
-					continue recentChangesFileNamesLoop;
-				}
-			}
-
 			while (true) {
+				Path dirPath = dir.toPath();
+
+				for (PathMatcher pathMatcher : excludeDirPathMatchers) {
+					if (pathMatcher.matches(dirPath)) {
+						continue recentChangesFileNamesLoop;
+					}
+				}
+
 				if (Files.exists(dirPath.resolve("source_formatter.ignore"))) {
 					continue recentChangesFileNamesLoop;
 				}
@@ -180,8 +180,6 @@ public class SourceFormatterHelper {
 				if (dir == null) {
 					break;
 				}
-
-				dirPath = dir.toPath();
 			}
 
 			for (PathMatcher pathMatcher : includeFilePathMatchers) {

@@ -412,7 +412,7 @@
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_VIEW_MY_CUSTOMIZED_PAGE</td>
-	<td>//div[contains(@class,'page-customization-bar-form')]/span[contains(.,'View My Customized')]/a/span</td>
+	<td>//div[@class='customizable-layout']//span[contains(.,'View My Customized')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

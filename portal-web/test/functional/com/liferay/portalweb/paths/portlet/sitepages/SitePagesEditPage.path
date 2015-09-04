@@ -300,7 +300,7 @@
 <!--CUSTOMIZATION_SETTINGS-->
 <tr>
 	<td>CUSTOMIZATION_SETTINGS_PANEL_TOGGLE</td>
-	<td>//div[contains(@id,'customizationSettings')]/div</td>
+	<td>//a[contains(@id,'customizationSettings')]</td>
 	<td></td>
 </tr>
 <tr>

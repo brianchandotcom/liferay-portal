@@ -1007,7 +1007,7 @@
 <!--SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS_APPLICATIONS_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_MESSAGE_BOARDS_APPLICATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
-	<td>//input[@value='19ADD_TO_PAGE']</td>
+	<td>//input[contains(@value,'MBPortletADD_TO_PAGE')]</td>
 	<td></td>
 </tr>
 <!---->

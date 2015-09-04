@@ -44,12 +44,14 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 		newContent = StringUtil.replace(
 			newContent,
 			new String[] {
-				"else{", "for(", "function (", "if(", "while(", "){\n",
-				"= new Array();", "= new Object();"
+				StringPool.TAB + "else{", StringPool.TAB + "for(",
+				StringPool.TAB + "if(", StringPool.TAB + "while(",
+				" function (", "){\n", "= new Array();", "= new Object();"
 			},
 			new String[] {
-				"else {", "for (", "function(", "if (", "while (", ") {\n",
-				"= [];", "= {};"
+				StringPool.TAB + "else {", StringPool.TAB + "for (",
+				StringPool.TAB + "if (", StringPool.TAB + "while (",
+				" function(", ") {\n", "= [];", "= {};"
 			});
 
 		while (true) {

@@ -9,13 +9,38 @@
 </thead>
 <tbody>
 <tr>
-	<td>CONTROL_PANEL_SIDE_NAVIGATION_TOGGLE</td>
+	<td>TOGGLE</td>
 	<td>//a[contains(@class,'sidenav-toggler')]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PRODUCT_MENU_SIDEBAR_OPEN</td>
+	<td>PRODUCT_MENU_OPENED</td>
 	<td>//div[contains(@id,'sidenavSliderId') and not(contains(@class,'closed'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAB</td>
+	<td>//div[contains(.,'${key_tab}')]/../div[contains(@class,'tab-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK_ARROW</td>
+	<td>//a[contains(@id,'allSitesLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_COLLAPSED</td>
+	<td>//div[contains(@class,'active')]//a[contains(.,'${key_category}') and contains(@class,'collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_EXPANDED</td>
+	<td>//div[contains(@class,'active')]//a[contains(.,'${key_category}') and not(contains(@class,'collapsed'))]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET</td>
+	<td>//div[@class='list-group-item']//li/a[contains(.,'${key_portlet}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,12 +78,12 @@
 	<td>PRODUCT_MENU_TABS_MY_SPACE_NAVIGATION</td>
 	<td>//div[contains(.,'My Space')]/../div[contains(@class,'tab-text')]</td>
 	<td></td>
-</tr>	
+</tr>
 <tr>
 	<td>PRODUCT_MENU_TABS_CONTROL_PANEL_NAVIGATION</td>
 	<td>//div[contains(.,'Control Panel')]/../div[contains(@class,'tab-text')]</td>
 	<td></td>
-</tr>		
+</tr>
 <tr>
 	<td></td>
 	<td></td>

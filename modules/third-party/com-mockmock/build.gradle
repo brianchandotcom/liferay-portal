@@ -1,0 +1,71 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.OSDetector
+
+String mockMockGitHash = "1e88530f74aea4efa139fec7214f395d25a4032b"
+String mockMockSrcVersion = "1.3"
+
+ext {
+	originalJarName = "MockMock-${mockMockSrcVersion}.one-jar.jar"
+	srcDir = "${buildDir}/MockMock-${mockMockGitHash}"
+	srcUrl = "https://github.com/tweakers-dev/MockMock/archive/${mockMockGitHash}.zip"
+}
+
+sourceCompatibility = "1.6"
+targetCompatibility = "1.6"
+
+task compileJavaMvn(type: Exec)
+task downloadSrc(type: Copy)
+task jarMvn(type: Exec)
+
+compileJava {
+	deleteAllActions()
+	dependsOn compileJavaMvn
+}
+
+compileJavaMvn {
+	commandLine _getMvnCommand("compile")
+	dependsOn downloadSrc
+	workingDir = srcDir
+}
+
+downloadSrc {
+	ext {
+		autoClean = false
+	}
+
+	from zipTree(
+		{
+			FileUtil.get(project, srcUrl)
+		})
+
+	into buildDir
+}
+
+jar {
+	deleteAllActions()
+	dependsOn jarMvn
+}
+
+jarMvn {
+	commandLine _getMvnCommand("package")
+	dependsOn compileJavaMvn
+
+	doLast {
+		copy {
+			from "${srcDir}/target"
+			include originalJarName
+			into distsDir
+		}
+	}
+
+	workingDir = srcDir
+}
+
+private List<String> _getMvnCommand(String command) {
+	if (OSDetector.windows) {
+		return ["cmd.exe", "/c", "mvn ${command}"]
+	}
+	else {
+		return ["/bin/sh", "-c", "mvn ${command}"]
+	}
+}

@@ -84,16 +84,16 @@ public class SourceFormatterTask extends Task {
 			Arrays.asList(StringUtil.split(fileNames)));
 	}
 
-	public void setPrintErrors(boolean printErrors) {
-		_sourceFormatterArgs.setPrintErrors(printErrors);
-	}
-
 	public void setFormatLatestAuthor(boolean formatLatestAuthor) {
 		_sourceFormatterArgs.setFormatLatestAuthor(formatLatestAuthor);
 	}
 
 	public void setFormatLocalChanges(boolean formatLocalChanges) {
 		_sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
+	}
+
+	public void setPrintErrors(boolean printErrors) {
+		_sourceFormatterArgs.setPrintErrors(printErrors);
 	}
 
 	public void setThrowException(boolean throwException) {

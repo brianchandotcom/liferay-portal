@@ -50,8 +50,8 @@ public class SourceFormatterArgs {
 		return _fileNames;
 	}
 
-	public List<String> getLocalChangesFileNames() {
-		return _localChangesFileNames;
+	public List<String> getRecentChangesFileNames() {
+		return _recentChangesFileNames;
 	}
 
 	public boolean isAutoFix() {
@@ -111,12 +111,12 @@ public class SourceFormatterArgs {
 		_formatLocalChanges = formatLocalChanges;
 	}
 
-	public void setLocalChangesFileNames(List<String> localChangesFileNames) {
-		_localChangesFileNames = localChangesFileNames;
-	}
-
 	public void setPrintErrors(boolean printErrors) {
 		_printErrors = printErrors;
+	}
+
+	public void setRecentChangesFileNames(List<String> recentChangesFileNames) {
+		_recentChangesFileNames = recentChangesFileNames;
 	}
 
 	public void setThrowException(boolean throwException) {
@@ -132,8 +132,8 @@ public class SourceFormatterArgs {
 	private String _copyrightFileName = COPYRIGHT_FILE_NAME;
 	private List<String> _fileNames;
 	private boolean _formatLocalChanges = FORMAT_LOCAL_CHANGES;
-	private List<String> _localChangesFileNames;
 	private boolean _printErrors = PRINT_ERRORS;
+	private List<String> _recentChangesFileNames;
 	private boolean _throwException = THROW_EXCEPTION;
 	private boolean _useProperties = USE_PROPERTIES;
 

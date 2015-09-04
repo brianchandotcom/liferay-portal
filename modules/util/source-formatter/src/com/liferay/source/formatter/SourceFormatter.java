@@ -63,7 +63,7 @@ public class SourceFormatter {
 			sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
 
 			if (formatLocalChanges) {
-				sourceFormatterArgs.setLocalChangesFileNames(
+				sourceFormatterArgs.setRecentChangesFileNames(
 					GitUtil.getLocalChangesFileNames(baseDirName));
 			}
 

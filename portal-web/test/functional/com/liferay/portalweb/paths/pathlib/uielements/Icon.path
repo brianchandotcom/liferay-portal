@@ -24,6 +24,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BASIC_SEARCH</td>
+	<td>//button[contains(@type,'submit')]/span[@class='icon-search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_VERTICAL_ELLIPSIS</td>
+	<td>//div[contains(@class,'portlet-content-container')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_VERTICAL_ELLIPSIS_2</td>
+	<td>xpath=(//div[contains(@class,'portlet-content-container')]//span[contains(@class,'icon-ellipsis-vertical')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLEAR_SEARCH</td>
 	<td>//input[@type='image' and @title='Clear Search']</td>
 	<td></td>
@@ -39,8 +54,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE</td>
+	<td>//a[contains(@href,'deleteEntries')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//div[contains(.,'Details')]/span/a/i[@class='icon-file-alt']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_DESCRIPTIVE</td>
+	<td>//a[contains(@href,'descriptive')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_ICON</td>
+	<td>//a[contains(@href,'icon')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_LIST</td>
+	<td>//a[contains(@href,'list')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,6 +89,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPIRE</td>
+	<td>//a[contains(@href,'editEntry')]/span[contains(@class,'icon-time')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FLAG</td>
 	<td>//div[contains(@class,'asset-actions')]/div[@title='Flag']/span/a</td>
 	<td></td>
@@ -64,8 +104,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>HEADER_VERTICAL_ELLIPSIS</td>
+	<td>//header//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO</td>
+	<td>//div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_ALL_ENTRIES</td>
+	<td>//div[contains(@class,'management-bar-no-collapse on')]//a[contains(@class,'infoPanelToggler')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCALIZED_FLAG</td>
 	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE</td>
+	<td>//a[contains(@href,'editEntry')]/span[contains(@class,'icon-move')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,11 +146,6 @@
 <tr>
 	<td>TWITTER</td>
 	<td>//span[@class='social-bookmark']//span[contains(.,'Twitter')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VERTICAL_ELLIPSIS</td>
-	<td>//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 </tbody>

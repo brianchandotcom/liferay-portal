@@ -15,8 +15,22 @@
 		<execute function="Type" locator1="TextInput#TITLE" value1="${wikiPageTitle}" />
 	</command>
 
+	<command name="cancel">
+		<execute function="AssertClick" locator1="Button#CANCEL" value1="Cancel" />
+	</command>
+
 	<command name="confirmMediaWiki">
 		<execute function="Confirm" value1="You may lose some formatting when switching from Creole to MediaWiki. Do you want to continue?" />
+	</command>
+
+	<command name="previewPageContent">
+		<execute function="AssertTextEquals" locator1="Wiki#BODY" value1="${wikiPageContent}" />
+	</command>
+
+	<command name="previewPageTitle">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Wiki#PAGE_HEADER" value1="${wikiPageTitle}" />
 	</command>
 
 	<command name="publish">
@@ -25,7 +39,21 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request has completed successfully." />
 	</command>
 
+	<command name="saveAsDraft">
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save as Draft" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request has completed successfully." />
+	</command>
+
 	<command name="selectPageFormat">
 		<execute function="SelectNoError#pauseSelect" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
+	</command>
+
+	<command name="viewPageContentBody">
+		<execute function="SelectFrame" locator1="CKEditor#BODY_FIELD_IFRAME" />
+
+		<execute function="AssertTextEquals" locator1="CKEditor#BODY" value1="${wikiPageContent}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

@@ -294,7 +294,7 @@
 		</execute>
 	</command>
 
-	<command name="AddPageVariation" priority="5">
+	<command known-issues="LPS-58342" name="AddPageVariation" priority="5">
 		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -329,7 +329,7 @@
 		</execute>
 	</command>
 
-	<command name="AddPageWithPageVersioningEnabled" priority="5">
+	<command known-issues="LPS-58342" name="AddPageWithPageVersioningEnabled" priority="5">
 		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -352,7 +352,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePagesVariation" priority="5">
+	<command known-issues="LPS-58342" name="AddSitePagesVariation" priority="5">
 		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />

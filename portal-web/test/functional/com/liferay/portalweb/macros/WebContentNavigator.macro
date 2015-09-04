@@ -22,9 +22,9 @@
 			</else>
 		</if>
 
-		<execute function="Click" locator1="Toolbar#DISPLAY_STYLE_BUTTON" />
-
-		<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_DESCRIPTIVE" value1="Descriptive" />
+		<execute macro="WebContent#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 
@@ -40,7 +40,7 @@
 	</command>
 
 	<command name="gotoManageStructures">
-		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#STRUCTURES" value1="Structures" />
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
@@ -49,8 +49,10 @@
 	<command name="gotoViewStatus">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="Toolbar#DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_DESCRIPTIVE" value1="Descriptive" />
+		<execute macro="WebContent#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
 		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="WC#ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="${webContentStatus}" />
 		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />

@@ -10,8 +10,11 @@
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="Click" locator1="Toolbar#DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_DESCRIPTIVE" value1="Descriptive" />
+
+		<execute macro="WebContent#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
 		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
 	</command>
@@ -19,8 +22,10 @@
 	<command name="addSubfolderCP">
 		<var name="key_webContentTitle" value="${folderName}" />
 
-		<execute function="Click" locator1="Toolbar#DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_DESCRIPTIVE" value1="Descriptive" />
+		<execute macro="WebContent#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />
 		<execute function="AssertTextEquals" locator1="WC#FILTER_SELECTED" value1="${folderName}" />
 		<execute function="Click" locator1="Button#PLUS" />
@@ -58,7 +63,7 @@
 
 					<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
-					<var name="key_structureName" value="${structureName}" />
+					<var name="key_ddlDataDefinitionName" value="${structureName}" />
 
 					<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 
@@ -80,8 +85,9 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute function="Click" locator1="Toolbar#DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_DESCRIPTIVE" value1="Descriptive" />
+		<execute macro="WebContent#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
@@ -92,16 +98,19 @@
 	<command name="gotoEditCP">
 		<var name="key_webContentTitle" value="${folderName}" />
 
-		<execute function="Click" locator1="Toolbar#DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_DESCRIPTIVE" value1="Descriptive" />
+		<execute macro="WebContent#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<execute function="Click" locator1="Toolbar#DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="MenuItem#DISPLAY_STYLE_DESCRIPTIVE" value1="Descriptive" />
+		<execute macro="WebContent#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
 
 		<var name="key_webContentTitle" value="${folderName}" />
 

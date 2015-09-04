@@ -115,7 +115,7 @@
 </tr>
 <tr>
 	<td>BASIC_WEB_CONTENT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Basic Web Content')]</td>
+	<td>//ul[contains(@class,'dropdown-menu-left-side-bottom')]/li/a[contains(.,'Basic Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -270,7 +270,7 @@
 </tr>
 <tr>
 	<td>FOLDER_WCM</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[.='Folder']</td>			
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[.='Folder']</td>
 	<td></td>
 </tr>
 <tr>
@@ -570,7 +570,7 @@
 </tr>
 <tr>
 	<td>STRUCTURES</td>
-	<td>//a[@role='menuitem']//span[contains(.,'Structures')] | //a[@role='menuitem' and contains(.,'Structures')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Structures')] | //a[@role='menuitem' and .='Structures']</td>
 	<td></td>
 </tr>
 <tr>
@@ -590,7 +590,7 @@
 </tr>
 <tr>
 	<td>TEMPLATES</td>
-	<td>//a[@role='menuitem']//span[contains(.,'Templates')] | //a[@role='menuitem' and contains(.,'Templates')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Templates')] | //a[@role='menuitem' and .='Templates']</td>
 	<td></td>
 </tr>
 <tr>

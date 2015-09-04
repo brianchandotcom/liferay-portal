@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
@@ -44,21 +44,23 @@
 			<then>
 				<execute function="AssertClick" locator1="DDMEditTemplate#DETAILS_SELECT_STRUCTURE" value1="Select" />
 
-				<execute function="SelectFrame" />
+				<execute function="SelectFrameTop" />
 				<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
-				<var name="key_structureName" value="${structureName}" />
+				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${structureName}" />
 
-				<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />
-				<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+
+				<var name="key_ddlDatadefinitionName" value="${structureName}" />
+
+				<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME_1" value1="${structureName}" />
+				<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON_1" value1="Choose" />
 				<execute function="Confirm" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
 
-				<execute function="SelectFrame" />
+				<execute function="SelectFrameTop" />
 				<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
 
-				<var name="key_structureName" value="${structureName}" />
-
-				<execute function="AssertElementPresent" locator1="DDMEditTemplate#DETAILS_STRUCTURE" value1="${structureName}" />
+				<execute function="AssertTextEquals#assertValue" locator1="TextInput#DATA_DEFINITION" value1="${structureName}" />
 
 				<if>
 					<equals arg1="${templateLanguage}" arg2="ftl" />
@@ -136,7 +138,7 @@
 	</command>
 
 	<command name="addNullCP">
-		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
@@ -152,7 +154,7 @@
 	</command>
 
 	<command name="advancedSearchCP">
-		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
@@ -182,7 +184,7 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<var name="key_templateName" value="${templateName}" />
@@ -211,7 +213,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />
@@ -246,7 +248,7 @@
 	</command>
 
 	<command name="viewCP">
-		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#TEMPLATES" value1="Templates" />
 
 		<execute function="SelectFrame" locator1="IFrame#TEMPLATES" />

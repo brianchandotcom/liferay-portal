@@ -814,7 +814,7 @@
 		<if>
 			<equals arg1="${userBasicSearch}" arg2="Basic" />
 			<then>
-				<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
+				<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
 				<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 				<var name="key_userScreenName" value="${userScreenName}" />
@@ -832,7 +832,7 @@
 				<then>
 					<var name="fullName"><![CDATA["${userFirstName} ${userLastName}"]]></var>
 
-					<execute function="Type" locator1="TextInput#KEYWORDS" value1="${fullName}" />
+					<execute function="Type" locator1="TextInput#SEARCH" value1="${fullName}" />
 					<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />
@@ -853,7 +853,7 @@
 				<then>
 					<var name="quotes"><![CDATA["${userScreenName}"]]></var>
 
-					<execute function="Type" locator1="TextInput#KEYWORDS" value1="${quotes}" />
+					<execute function="Type" locator1="TextInput#SEARCH" value1="${quotes}" />
 					<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 					<var name="key_userScreenName" value="${userScreenName}" />

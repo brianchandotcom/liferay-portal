@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>AVAILABLE_TRANSLATION</td>
-	<td>//span[contains(@class,'translation-editing') and contains(.,'${key_localizedLanguage}')]</td>
+	<td>//span[contains(@class,'available-translations')]//span[contains(@class,'translation-manager') and contains(.,'${key_localizedLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>

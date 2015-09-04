@@ -1,6 +1,6 @@
 <definition>
 	<command name="gotoPortletConfiguration">
-		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 

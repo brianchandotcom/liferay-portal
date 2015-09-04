@@ -69,6 +69,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_HEADER</td>
+	<td>//div[contains(@class,'taglib-header') and contains(.,'${key_wikiPageTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_BODY_FIELD</td>
 	<td>//html/body[contains(@class,'portlet-wiki') and contains(.,'${key_wikiPageContent}')]</td>
 	<td></td>

@@ -43,7 +43,7 @@
 
 				<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
-				<var name="key_structureName" value="${parentStructureName}" />
+				<var name="key_ddlDataDefinitionName" value="${parentStructureName}" />
 
 				<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 				<execute function="SelectFrame" value1="relative=top" />
@@ -98,7 +98,7 @@
 		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
-		<var name="key_structureName" value="${structureName}" />
+		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 
 		<execute function="AssertClickNoError" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_CHOOSE_BUTTON" value1="Choose" />
 		<execute function="Confirm" value1="Selecting a new structure changes the available input fields and available templates. Do you want to proceed?" />
@@ -109,7 +109,7 @@
 	</command>
 
 	<command name="advancedSearchCP">
-		<var name="key_structureName" value="${structureName}" />
+		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 
 		<execute function="AssertTextEquals" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />
 		<execute function="Click" locator1="Icon#ADVANCED_SEARCH" />
@@ -205,14 +205,14 @@
 	</command>
 
 	<command name="editSubstructureDefaultValuesCP">
-		<var name="key_structureName" value="${substructureName}" />
+		<var name="key_ddlDataDefinitionName" value="${substructureName}" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${substructureName}" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
 
-		<execute function="SelectFrame" />
+		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
@@ -229,7 +229,7 @@
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT_DEFAULT_VALUES" value1="Edit Default Values" />
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrameTop" />
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
 		<for list="${editSubstructureFieldNames}" param="structureFieldName">
@@ -240,21 +240,14 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute function="Click" locator1="Icon#VERTICAL_ELLIPSIS" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#STRUCTURES" value1="Structures" />
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 	</command>
 
 	<command name="saveCP">
-		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
-
-		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="SelectFrame" />
-
-		<execute function="SelectFrame" locator1="DDMEditStructure#IFRAME" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+		<execute macro="DDLDataDefinition#saveCP" />
 
 		<if>
 			<isset var="addRoleViewPermissions" />
@@ -311,7 +304,7 @@
 	</command>
 
 	<command name="viewCP">
-		<var name="key_structureName" value="${structureName}" />
+		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 
 		<if>
 			<isset var="structureName" />
@@ -328,6 +321,9 @@
 		</if>
 
 		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />
+
+		<execute function="SelectFrameTop" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 
 		<execute macro="CPWebcontentStructuresAddstructure#showDetails" />
 

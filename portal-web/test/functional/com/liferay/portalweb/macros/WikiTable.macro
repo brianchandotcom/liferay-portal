@@ -13,6 +13,22 @@
 		<execute function="AssertClick" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
 	</command>
 
+	<command name="gotoEntryCopy">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" value1="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="MenuItem#COPY" value1="Copy" />
+	</command>
+
+	<command name="gotoEntryEdit">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" value1="${wikiPageTitle}" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+	</command>
+
 	<command name="gotoEntryMove">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
@@ -47,5 +63,11 @@
 
 		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />
 		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_NUMBER_OF_PAGES" value1="${numberOfWikiPages}" />
+	</command>
+
+	<command name="viewNoEntry">
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute function="AssertElementNotPresent" locator1="Wiki#ALL_PAGES_TABLE_WIKI_PAGE_TITLE" value1="${wikiPageTitle}" />
 	</command>
 </definition>

@@ -777,7 +777,10 @@
 
 	<target name="update-app-server-scripts">
 		<if>
-			<equals arg1="${app.server.type}" arg2="jboss" />
+			<or>
+				<equals arg1="${app.server.type}" arg2="jboss" />
+				<equals arg1="${app.server.type}" arg2="wildfly" />
+			</or>
 			<then>
 				<if>
 					<not>
@@ -890,23 +893,6 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
 					<arg line="/c stopServer.bat server1" />
 				</exec>
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${app.server.type}" arg2="wildfly" />
-			<then>
-				<if>
-					<not>
-						<available file="${app.server.lib.global.dir}/module.xml" />
-					</not>
-					<then>
-						<copy
-							file="tools/servers/wildfly/modules/module.xml"
-							tofile="${app.server.lib.global.dir}/module.xml"
-						/>
-					</then>
-				</if>
 			</then>
 		</if>
 	</target>

@@ -21,14 +21,29 @@
 
 	<command name="gotoCustomizationSettingsPG">
 		<execute function="Click" locator1="DockbarEditpanel#EDIT" />
-		<execute function="AssertTextEquals" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
+
+		<execute function="AssertClick" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
+	</command>
+
+	<command name="gotoCustomizedPageInfo">
+		<execute function="Click" locator1="Dockbar#PAGE_INFO_MESSAGE_ICON" />
 
 		<if>
-			<condition function="IsElementNotPresent" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_SHOW_CUSTOMIZABLE_SECTIONS" />
+			<isset var="viewDefaultPage" />
 			<then>
-				<execute function="AssertClick" locator1="SitePagesEditPage#CUSTOMIZATION_SETTINGS_PANEL_TOGGLE" value1="Customization Settings" />
+				<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE" value1="View Default Page" />
 			</then>
+			<else>
+				<execute function="AssertClickNoError" locator1="Home#PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS" value1="Reset My Customizations" />
+				<execute function="Confirm" value1="Are you sure you want to reset your customizations to default?" />
+			</else>
 		</if>
+	</command>
+
+	<command name="gotoViewMyCustomizedPage">
+		<execute function="Click" locator1="Dockbar#PAGE_INFO_MESSAGE_ICON" />
+
+		<execute function="AssertClick" locator1="Home#PAGE_CUSTOMIZATION_VIEW_MY_CUSTOMIZED_PAGE" value1="View My Customized Page" />
 	</command>
 
 	<command name="viewCustomizablePagePG">

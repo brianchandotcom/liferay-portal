@@ -53,7 +53,7 @@ page import="java.util.Map" %>
 <liferay-theme:defineObjects />
 
 <%
-RSSWebConfiguration rssWebConfiguration = (RSSWebConfiguration)renderRequest.getAttribute(RSSWebConfiguration.class.getName());
+RSSWebConfiguration rssWebConfiguration = (RSSWebConfiguration)request.getAttribute(RSSWebConfiguration.class.getName());
 
 RSSDisplayContext rssDisplayContext = new RSSDisplayContext(request, rssWebConfiguration);
 

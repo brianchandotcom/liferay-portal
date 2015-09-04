@@ -53,7 +53,7 @@ public class BaseUpgradeLastPublishDate extends UpgradeProcess {
 				UnicodeProperties settingsProperties = new UnicodeProperties(
 					true);
 
-				settingsProperties.load(rs.getString("settings"));
+				settingsProperties.load(rs.getString("settings_"));
 
 				String lastPublishDateString = settingsProperties.getProperty(
 					"last-publish-date");

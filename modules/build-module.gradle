@@ -159,6 +159,18 @@ dependencies {
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "default"
 }
 
+downloadNode {
+	doLast {
+		File npmrcFile = new File(nodeDir, "etc/npmrc")
+
+		npmrcFile << """
+fetch-retries = 10
+fetch-retry-maxtimeout = 120000
+fetch-retry-mintimeout = 60000
+"""
+	}
+}
+
 eclipse {
 	classpath {
 		file {

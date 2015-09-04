@@ -1903,7 +1903,9 @@
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT" />
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG" />
+		<execute macro="DMDocument#viewDocumentVersionNumberCmdPG">
+			<var name="dmDocumentVersionNumber" value="${dmDocumentVersionNumber}" />
+		</execute>
 	</command>
 
 	<command name="viewDocumentViewPermissionsPG">

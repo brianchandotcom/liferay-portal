@@ -23,8 +23,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.IOException;
 
 import java.lang.reflect.Method;
+
+import java.net.URL;
+import java.net.URLConnection;
 
 import java.util.Collection;
 import java.util.List;
@@ -105,12 +109,25 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 		ServletContext servletContext = servletConfig.getServletContext();
 
-		String rootPath = servletContext.getRealPath(StringPool.BLANK);
+		try {
+			URL url = servletContext.getResource(path);
 
-		File file = new File(rootPath, path);
+			if (url == null) {
 
-		if (file.exists()) {
-			return file.lastModified();
+				// Fall back to the root just in case the path is in a protected
+				// or abstracted location.
+
+				url = servletContext.getResource(StringPool.BLANK);
+			}
+
+			if (url != null) {
+				URLConnection connection = url.openConnection();
+
+				return connection.getLastModified();
+			}
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
 		}
 
 		return -1;

@@ -1,4 +1,5 @@
 FileTree fileTree = fileTree(rootDir) {
+	exclude "**/bin/**"
 	exclude "sdk/*/samples/build.gradle"
 
 	if (Boolean.getBoolean("portal.build")) {

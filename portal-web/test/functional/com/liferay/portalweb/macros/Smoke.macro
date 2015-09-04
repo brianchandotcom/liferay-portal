@@ -64,16 +64,15 @@
 			</execute>
 		</task>
 
-		<var name="portletName" value="Web Content" />
-		<var name="portletTitle" value="Web Content" />
+		<var name="portlet" value="Web Content" />
 
 		<task macro-summary="ProductMenu#gotoSitesContent">
 			<execute macro="ProductMenu#gotoSitesContent">
-				<var name="portlet" value="${portletName}" />
+				<var name="portlet" value="${portlet}" />
 			</execute>
 
 			<execute macro="SiteAdmin#viewPortletTitle">
-				<var name="portletTitle" value="${portletTitle}" />
+				<var name="portletTitle" value="${portlet}" />
 			</execute>
 		</task>
 	</command>

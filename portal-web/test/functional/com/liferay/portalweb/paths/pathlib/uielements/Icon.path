@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_BLOGS_ENTRY_PLUS</td>
+	<td>//a[contains(@data-original-title,'Add Blog Entry')]/span[@class='icon-plus']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADVANCED_SEARCH</td>
 	<td>//a[contains(@class,'toggle-advanced') and i[@class='icon-search']]</td>
 	<td></td>
@@ -126,6 +131,11 @@
 <tr>
 	<td>MOVE</td>
 	<td>//a[contains(@href,'editEntry')]/span[contains(@class,'icon-move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENCIL</td>
+	<td>//a[contains(@class,'btn icon-monospaced btn-default')]/i[contains(@class,'icon-pencil')]</td>
 	<td></td>
 </tr>
 <tr>

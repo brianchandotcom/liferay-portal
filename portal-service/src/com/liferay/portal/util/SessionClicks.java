@@ -81,20 +81,20 @@ public class SessionClicks {
 		HttpServletRequest request, String namespace, String key,
 		String value) {
 
-		try {
-			if ((key.length() > _SESSION_CLICKS_MAX_SIZE_TERMS) ||
-				(value.length() > _SESSION_CLICKS_MAX_SIZE_TERMS)) {
+		if ((key.length() > _SESSION_CLICKS_MAX_SIZE_TERMS) ||
+			(value.length() > _SESSION_CLICKS_MAX_SIZE_TERMS)) {
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Session clicks has attempted to exceed the maximum " +
-							"size allowed for keys or values with {key=" + key +
-								", value=" + value + "}");
-				}
-
-				return;
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Session clicks has attempted to exceed the maximum " +
+						"size allowed for keys or values with {key=" + key +
+							", value=" + value + "}");
 			}
 
+			return;
+		}
+
+		try {
 			PortalPreferences preferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(request);
 

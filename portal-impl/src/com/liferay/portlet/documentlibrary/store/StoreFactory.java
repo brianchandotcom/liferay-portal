@@ -28,6 +28,7 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -130,11 +131,15 @@ public class StoreFactory {
 	public Store getStore(String key) {
 		Store store = _storeServiceTrackerMap.getService(key);
 
-		StoreWrapper storeWrapper = _storeWrapperServiceTrackerMap.getService(
-			key);
+		List<StoreWrapper> storeWrappers =
+			_storeWrapperServiceTrackerMap.getService(key);
 
-		if (storeWrapper != null) {
-			return storeWrapper.wrap(store);
+		if (storeWrappers == null) {
+			return store;
+		}
+
+		for (StoreWrapper storeWrapper : storeWrappers) {
+			store = storeWrapper.wrap(store);
 		}
 
 		return store;
@@ -178,9 +183,9 @@ public class StoreFactory {
 		ServiceTrackerCollections.singleValueMap(
 			Store.class, "store.type", new StoreServiceTrackerCustomizer());
 	private String _storeType;
-	private final ServiceTrackerMap<String, StoreWrapper>
+	private final ServiceTrackerMap<String, List<StoreWrapper>>
 		_storeWrapperServiceTrackerMap =
-			ServiceTrackerCollections.singleValueMap(
+			ServiceTrackerCollections.multiValueMap(
 				StoreWrapper.class, "store.type");
 
 	private class StoreServiceTrackerCustomizer

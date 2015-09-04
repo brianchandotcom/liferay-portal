@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portlet.documentlibrary.store.bundle.storefactory.StoreWrapperDelegate;
+import com.liferay.portlet.documentlibrary.store.bundle.storefactory.TopTestStoreWrapper;
+
+import java.lang.reflect.Method;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -26,6 +30,7 @@ import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
+ * @author Adolfo Pérez
  */
 public class StoreFactoryTest {
 
@@ -37,7 +42,7 @@ public class StoreFactoryTest {
 			new SyntheticBundleRule("bundle.storefactory"));
 
 	@Test
-	public void testGetInstance() throws Exception {
+	public void testGetStore() throws Exception {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
 		Store store = storeFactory.getStore("test");
@@ -48,6 +53,70 @@ public class StoreFactoryTest {
 
 		Assert.assertEquals(1, fileNames.length);
 		Assert.assertEquals("TestStore", fileNames[0]);
+	}
+
+	@Test
+	public void testGetStoreIsStoreWrapperDelegate() throws Exception {
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore("test");
+
+		Assert.assertTrue(
+			isStoreWrapperDelegate(
+				store, StoreWrapperDelegate.class.getName()));
+	}
+
+	@Test
+	public void testGetStoreShouldReturnTopPriorityStoreWrapper()
+		throws Exception {
+
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore("test");
+
+		Assert.assertTrue(
+			isStoreWrapperDelegate(
+				store, TopTestStoreWrapper.Delegate.class.getName()));
+	}
+
+	@Test
+	public void testGetStoreWrapperDelegateChainLength() throws Exception {
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore("test");
+
+		Assert.assertEquals(2, getStoreWrapperDelegateChainLength(store));
+	}
+
+	protected int getStoreWrapperDelegateChainLength(Store store)
+		throws Exception {
+
+		try {
+			Class<? extends Store> storeClass = store.getClass();
+
+			Method method = storeClass.getMethod(
+				"getStoreWrapperDelegateChainLengthForTest");
+
+			return (Integer)method.invoke(store);
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new IllegalArgumentException(
+				store.getClass() +
+					" is not an subclass of StoreWrapperDelegate",
+				nsme);
+		}
+	}
+
+	private boolean isStoreWrapperDelegate(Store store, String className)
+		throws ClassNotFoundException {
+
+		Class<? extends Store> storeClass = store.getClass();
+
+		ClassLoader classLoader = storeClass.getClassLoader();
+
+		Class<?> clazz = classLoader.loadClass(className);
+
+		return clazz.isAssignableFrom(storeClass);
 	}
 
 }

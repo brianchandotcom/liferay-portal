@@ -1,0 +1,137 @@
+<definition>
+	<command name="gotoControlPanelApps" summary="Navigate to Product Menu > Control Panel > Apps > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoControlPanel" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Apps" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoControlPanelConfiguration" summary="Navigate to Product Menu > Control Panel > Configuration > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoControlPanel" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Configuration" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoControlPanelUsers" summary="Navigate to Product Menu > Control Panel > Users > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoControlPanel" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Users" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoMySpaceMyAccount" summary="Navigate to Product Menu > My Space > My Account > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoMySpace" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="My Account" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitesAdministration" summary="Navigate to Product Menu > Sites > Administration > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Administration" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitesConfiguration" summary="Navigate to Product Menu > Sites > Configuration > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Configuration" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitesContent" summary="Navigate to Product Menu > Sites > Content > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Content" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitesMySites" summary="Navigate to Product Menu > Sites > My Sites > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="My Sites" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitesPages" summary="Navigate to Product Menu > Sites > Pages > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Pages" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitesPublishingTools" summary="Navigate to Product Menu > Sites > Publishing tools > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Publishing tools" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitesUsers" summary="Navigate to Product Menu > Sites > Users > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Users" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+</definition>

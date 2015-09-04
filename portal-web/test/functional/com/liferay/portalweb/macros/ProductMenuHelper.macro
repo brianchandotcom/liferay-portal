@@ -1,0 +1,65 @@
+<definition>
+	<command name="expandCategory">
+		<var name="key_category" value="${category}" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="ProductMenu#CATEGORY_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="ProductMenu#CATEGORY_COLLAPSED" />
+
+				<execute function="AssertVisible" locator1="ProductMenu#CATEGORY_EXPANDED" />
+			</then>
+		</if>
+	</command>
+
+	<command name="gotoControlPanel">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute macro="ProductMenuHelper#gotoTab">
+			<var name="tab" value="Control Panel" />
+		</execute>
+	</command>
+
+	<command name="gotoMySpace">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute macro="ProductMenuHelper#gotoTab">
+			<var name="tab" value="My Space" />
+		</execute>
+	</command>
+
+	<command name="gotoPortlet">
+		<var name="key_portlet" value="${portlet}" />
+
+		<execute function="AssertClick" locator1="ProductMenu#PORTLET" value1="${portlet}" />
+	</command>
+
+	<command name="gotoSites">
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute macro="ProductMenuHelper#openProductMenu" />
+
+		<execute macro="ProductMenuHelper#gotoTab">
+			<var name="tab" value="Sites" />
+		</execute>
+	</command>
+
+	<command name="gotoTab">
+		<var name="key_tab" value="${tab}" />
+
+		<execute function="Click" locator1="ProductMenu#TAB" />
+	</command>
+
+	<command name="openProductMenu">
+		<if>
+			<not>
+				<condition function="IsElementPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
+			</not>
+			<then>
+				<execute function="Click" locator1="ProductMenu#TOGGLE" />
+
+				<execute function="AssertVisible" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
+			</then>
+		</if>
+	</command>
+</definition>

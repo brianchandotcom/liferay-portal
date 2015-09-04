@@ -88,6 +88,10 @@ public class SourceFormatterTask extends Task {
 		_sourceFormatterArgs.setPrintErrors(printErrors);
 	}
 
+	public void setFormatLatestAuthor(boolean formatLatestAuthor) {
+		_sourceFormatterArgs.setFormatLatestAuthor(formatLatestAuthor);
+	}
+
 	public void setFormatLocalChanges(boolean formatLocalChanges) {
 		_sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
 	}

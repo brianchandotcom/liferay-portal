@@ -855,7 +855,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		// LPS-56706 & LPS-57722
 
-		if (portalSource && isModulesFile(absolutePath)) {
+		if (portalSource && isModulesFile(absolutePath) &&
+			fileName.endsWith("Test.java")) {
+
 			if (absolutePath.contains("/test/integration/")) {
 				if (newContent.contains("@RunWith(Arquillian.class)") &&
 					newContent.contains("import org.powermock.")) {

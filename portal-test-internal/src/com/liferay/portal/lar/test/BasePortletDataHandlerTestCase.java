@@ -16,7 +16,8 @@ package com.liferay.portal.lar.test;
 
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.LongWrapper;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -29,9 +30,9 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataContextFactoryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -65,18 +66,15 @@ public abstract class BasePortletDataHandlerTestCase {
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
 
-		Map<String, LongWrapper> modelAdditionCounters =
-			manifestSummary.getModelAdditionCounters();
+		ManifestSummary expectedManifestSummary =
+			(ManifestSummary)manifestSummary.clone();
 
-		Map<String, LongWrapper> expectedModelAdditionCounters = new HashMap<>(
-			modelAdditionCounters);
-
-		modelAdditionCounters.clear();
+		manifestSummary.resetCounters();
 
 		portletDataHandler.exportData(
 			portletDataContext, portletId, new PortletPreferencesImpl());
 
-		checkManifestSummary(expectedModelAdditionCounters);
+		checkManifestSummary(expectedManifestSummary);
 	}
 
 	protected void addBooleanParameter(
@@ -97,39 +95,50 @@ public abstract class BasePortletDataHandlerTestCase {
 	protected abstract void addStagedModels() throws Exception;
 
 	protected void checkManifestSummary(
-		Map<String, LongWrapper> expectedModelAdditionCounters) {
+		ManifestSummary expectedManifestSummary) {
 
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
 
-		Map<String, LongWrapper> modelAdditionCounters =
-			manifestSummary.getModelAdditionCounters();
+		for (String manifestSummaryKey :
+				manifestSummary.getManifestSummaryKeys()) {
 
-		int expectedModelAdditionCountersSize =
-			expectedModelAdditionCounters.size();
+			Assert.assertFalse(
+				manifestSummaryKey.endsWith(
+					StagedModelType.REFERRER_CLASS_NAME_ANY));
+
+			Assert.assertFalse(
+				manifestSummaryKey.endsWith(
+					StagedModelType.REFERRER_CLASS_NAME_ALL));
+		}
 
 		for (String manifestSummaryKey :
-				expectedModelAdditionCounters.keySet()) {
+				expectedManifestSummary.getManifestSummaryKeys()) {
 
-			LongWrapper expectedModelAdditionCounter =
-				expectedModelAdditionCounters.get(manifestSummaryKey);
-			LongWrapper modelAdditionCounter = modelAdditionCounters.get(
-				manifestSummaryKey);
+			String[] keyParts = StringUtil.split(
+				manifestSummaryKey, StringPool.POUND);
 
-			if ((expectedModelAdditionCounter.getValue() == 0) &&
-				(modelAdditionCounter == null)) {
+			long expectedModelAdditionCount =
+				expectedManifestSummary.getModelAdditionCount(
+					manifestSummaryKey);
 
-				expectedModelAdditionCountersSize--;
+			StagedModelType stagedModelType = new StagedModelType(keyParts[0]);
+
+			if (keyParts.length > 1) {
+				stagedModelType = new StagedModelType(keyParts[0], keyParts[1]);
+			}
+
+			long modelAdditionCount = manifestSummary.getModelAdditionCount(
+				stagedModelType);
+
+			if (expectedModelAdditionCount == 0) {
+				Assert.assertFalse(modelAdditionCount > 0);
 			}
 			else {
 				Assert.assertEquals(
-					expectedModelAdditionCounter.getValue(),
-					modelAdditionCounter.getValue());
+					expectedModelAdditionCount, modelAdditionCount);
 			}
 		}
-
-		Assert.assertEquals(
-			expectedModelAdditionCountersSize, modelAdditionCounters.size());
 	}
 
 	protected abstract PortletDataHandler createPortletDataHandler();

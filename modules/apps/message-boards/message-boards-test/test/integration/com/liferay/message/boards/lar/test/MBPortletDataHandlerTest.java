@@ -151,14 +151,27 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected void checkManifestSummary(
-		Map<String, LongWrapper> expectedModelAdditionCounters) {
+		ManifestSummary expectedManifestSummary) {
 
 		String manifestSummaryKey = ManifestSummary.getManifestSummaryKey(
 			new StagedModelType(MBThread.class.getName()));
 
-		expectedModelAdditionCounters.remove(manifestSummaryKey);
+		Collection<String> manifestSummaryKeys =
+			expectedManifestSummary.getManifestSummaryKeys();
 
-		super.checkManifestSummary(expectedModelAdditionCounters);
+		manifestSummaryKeys.remove(manifestSummaryKey);
+
+		Map<String, LongWrapper> modelAdditionCounters =
+			expectedManifestSummary.getModelAdditionCounters();
+
+		modelAdditionCounters.remove(manifestSummaryKey);
+
+		Map<String, LongWrapper> modelDeletionCounters =
+			expectedManifestSummary.getModelDeletionCounters();
+
+		modelDeletionCounters.remove(manifestSummaryKey);
+
+		super.checkManifestSummary(expectedManifestSummary);
 	}
 
 	@Override

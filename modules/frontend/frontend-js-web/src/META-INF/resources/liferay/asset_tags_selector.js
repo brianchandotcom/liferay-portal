@@ -243,7 +243,9 @@ AUI.add(
 					_bindTagsSelector: function() {
 						var instance = this;
 
-						instance._submitFormListener = A.Do.before(instance._addEntries, window, 'submitForm', instance);
+						var form = instance.inputNode.get('form');
+
+						instance._submitFormListener = A.Do.before(instance._addEntries, form, 'submit', instance);
 
 						instance.get('boundingBox').on('keypress', instance._onKeyPress, instance);
 					},

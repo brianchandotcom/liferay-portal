@@ -42,7 +42,7 @@ public class StoreFactoryTest {
 			new SyntheticBundleRule("bundle.storefactory"));
 
 	@Test
-	public void testGetInstance() throws Exception {
+	public void testGetStore() throws Exception {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
 		Store store = storeFactory.getStore("test");
@@ -56,7 +56,7 @@ public class StoreFactoryTest {
 	}
 
 	@Test
-	public void testInstanceIsStoreWrapperDelegate() throws Exception {
+	public void testGetStoreIsStoreWrapperDelegate() throws Exception {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
 		Store store = storeFactory.getStore("test");
@@ -67,16 +67,9 @@ public class StoreFactoryTest {
 	}
 
 	@Test
-	public void testStoreWrapperDelegateChainLength() throws Exception {
-		StoreFactory storeFactory = StoreFactory.getInstance();
+	public void testGetStoreShouldReturnTopPriorityStoreWrapper()
+		throws Exception {
 
-		Store store = storeFactory.getStore("test");
-
-		Assert.assertEquals(2, getStoreWrapperDelegateChainLength(store));
-	}
-
-	@Test
-	public void testStoreWrapperDelegatePriority() throws Exception {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
 		Store store = storeFactory.getStore("test");
@@ -84,6 +77,15 @@ public class StoreFactoryTest {
 		Assert.assertTrue(
 			isStoreWrapperDelegate(
 				store, TopTestStoreWrapper.Delegate.class.getName()));
+	}
+
+	@Test
+	public void testGetStoreWrapperDelegateChainLength() throws Exception {
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore("test");
+
+		Assert.assertEquals(2, getStoreWrapperDelegateChainLength(store));
 	}
 
 	protected int getStoreWrapperDelegateChainLength(Store store)

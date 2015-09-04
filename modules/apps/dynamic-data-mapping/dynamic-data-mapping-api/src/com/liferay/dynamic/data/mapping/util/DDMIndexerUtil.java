@@ -16,9 +16,11 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 /**
@@ -48,6 +50,14 @@ public class DDMIndexerUtil {
 
 		return getDDMIndexer().extractIndexableAttributes(
 			ddmStructure, ddmFormValues, locale);
+	}
+
+	public static BooleanQuery getBooleanQuery(
+		String ddmStructureFieldName, Serializable ddmStructureFieldValue,
+		Locale locale) throws Exception{
+
+		return getDDMIndexer().getBooleanQuery(
+			ddmStructureFieldName, ddmStructureFieldValue, locale);
 	}
 
 	public static DDMIndexer getDDMIndexer() {

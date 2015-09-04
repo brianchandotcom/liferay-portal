@@ -16,11 +16,13 @@ package com.liferay.dynamic.data.mapping.util.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -28,7 +30,9 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,14 +42,12 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
-
 import java.math.BigDecimal;
-
 import java.text.Format;
-
 import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
@@ -308,6 +310,35 @@ public class DDMIndexerImpl implements DDMIndexer {
 		return sb.toString();
 	}
 
+	public BooleanQuery getBooleanQuery(
+		String ddmStructureFieldName, Serializable ddmStructureFieldValue,
+		Locale locale) throws Exception {
+
+		String[] ddmStructureFieldNameParts = StringUtil.split(
+				ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
+
+		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+			GetterUtil.getLong(ddmStructureFieldNameParts[1]));
+
+		String fieldName = StringUtil.replaceLast(
+			ddmStructureFieldNameParts[2],
+			StringPool.UNDERLINE.concat(LocaleUtil.toLanguageId(locale)),
+			StringPool.BLANK);
+
+		if (structure.hasField(fieldName)) {
+			ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
+				ddmStructureFieldValue, structure.getFieldType(fieldName));
+		}
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.addRequiredTerm(
+			ddmStructureFieldName,
+			StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
+
+		return booleanQuery;
+	}
+	
 	protected Fields toFields(
 		DDMStructure ddmStructure, DDMFormValues ddmFormValues) {
 

@@ -169,28 +169,9 @@ public class JournalArticleIndexer
 		if (Validator.isNotNull(ddmStructureFieldName) &&
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
-			String[] ddmStructureFieldNameParts = StringUtil.split(
-				ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
-
-			DDMStructure structure = _ddmStructureLocalService.getStructure(
-				GetterUtil.getLong(ddmStructureFieldNameParts[1]));
-
-			String fieldName = StringUtil.replaceLast(
-				ddmStructureFieldNameParts[2],
-				StringPool.UNDERLINE.concat(
-					LocaleUtil.toLanguageId(searchContext.getLocale())),
-				StringPool.BLANK);
-
-			if (structure.hasField(fieldName)) {
-				ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
-					ddmStructureFieldValue, structure.getFieldType(fieldName));
-			}
-
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-			booleanQuery.addRequiredTerm(
-				ddmStructureFieldName,
-				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
+			BooleanQuery booleanQuery = DDMIndexerUtil.getBooleanQuery(
+				ddmStructureFieldName, ddmStructureFieldValue,
+				searchContext.getLocale());
 
 			contextBooleanFilter.add(
 				new QueryFilter(booleanQuery), BooleanClauseOccur.MUST);

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
+import java.util.ConcurrentModificationException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -94,26 +96,35 @@ public class SessionClicks {
 			return;
 		}
 
-		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
+		while (true) {
+			try {
+				PortalPreferences preferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			int size = preferences.size();
+				int size = preferences.size();
 
-			if (size <= _SESSION_CLICKS_MAX_ALLOWED_VALUES) {
-				preferences.setValue(namespace, key, value);
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Session clicks has attempted to exceed the maximum " +
-							"number of allowed values with {key=" + key +
-								", value=" + value + "}");
+				if (size <= _SESSION_CLICKS_MAX_ALLOWED_VALUES) {
+					preferences.setValue(namespace, key, value);
 				}
+				else {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Session clicks has attempted to exceed the " +
+								"maximum number of allowed values with {key=" +
+									key + ", value=" + value + "}");
+					}
+				}
+
+				break;
 			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				break;
+			}
 		}
 	}
 

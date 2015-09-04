@@ -941,9 +941,7 @@
 
 		<execute function="Check" locator1="CPWebcontent#TOOLBAR_SELECT_ALL_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ACTIONS" value1="Actions" />
-
-		<execute function="AssertClick" locator1="CPWebcontent#ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="Click" locator1="Icon#DELETE" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 	</command>

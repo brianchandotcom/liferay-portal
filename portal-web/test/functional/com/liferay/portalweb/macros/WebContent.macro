@@ -934,7 +934,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RECYCLE_BIN" value1="The Web Content Article ${webContentTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
-	<command name="moveToRecycleBinViaActionsMenuCP">
+	<command name="moveToRecycleBinViaDeleteIconCP">
 		<execute macro="WebContent#changeDisplayStyle">
 			<var name="displayStyle" value="Descriptive" />
 		</execute>

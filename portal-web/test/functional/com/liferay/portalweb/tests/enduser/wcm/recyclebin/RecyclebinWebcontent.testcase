@@ -199,7 +199,7 @@
 			<var name="siteScopeName" value="Liferay" />
 		</execute>
 
-		<execute macro="WebContent#moveToRecycleBinViaActionsMenuCP" />
+		<execute macro="WebContent#moveToRecycleBinViaDeleteIconCP" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -305,7 +305,7 @@
 			<var name="siteScopeName" value="Liferay" />
 		</execute>
 
-		<execute macro="WebContent#moveToRecycleBinViaActionsMenuCP" />
+		<execute macro="WebContent#moveToRecycleBinViaDeleteIconCP" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />
@@ -341,7 +341,7 @@
 			<var name="siteScopeName" value="Liferay" />
 		</execute>
 
-		<execute macro="WebContent#moveToRecycleBinViaActionsMenuCP" />
+		<execute macro="WebContent#moveToRecycleBinViaDeleteIconCP" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />

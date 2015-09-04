@@ -115,7 +115,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Navigation" />
+			<var name="portletName" value="Navigation Menu" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -124,8 +124,8 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Portlet#viewPG">
-			<var name="portletName" value="Navigation" />
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="Navigation Menu" />
 		</execute>
 	</command>
 

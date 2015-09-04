@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.util;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.BaseSourceProcessor;
@@ -21,6 +23,7 @@ import com.liferay.source.formatter.BaseSourceProcessor;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,79 @@ import java.util.List;
  * @author Hugo Huijser
  */
 public class GitUtil {
+
+	public static List<String> getLatestAuthorFileNames(String baseDirName)
+		throws Exception {
+
+		List<String> latestAuthorFileNames = new ArrayList<>();
+
+		int gitLevel = getGitLevel(baseDirName);
+
+		if (gitLevel == -1) {
+			return latestAuthorFileNames;
+		}
+
+		InputStream gitCommandInputStream = getGitCommandInputStream("git log");
+
+		if (gitCommandInputStream == null) {
+			return latestAuthorFileNames;
+		}
+
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(gitCommandInputStream));
+
+		String line = null;
+
+		String commitId = null;
+		String latestAuthor = null;
+		List<String> latestAuthorCommitIds = new ArrayList<>();
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.startsWith("commit ")) {
+				commitId = line.substring(7);
+			}
+			else if (line.startsWith("Author: ")) {
+				if (latestAuthor == null) {
+					int x = line.lastIndexOf(CharPool.LESS_THAN);
+					int y = line.lastIndexOf(CharPool.GREATER_THAN);
+
+					latestAuthor = line.substring(x + 1, y);
+
+					latestAuthorCommitIds.add(commitId);
+				}
+				else {
+					if (line.endsWith("<" + latestAuthor + ">")) {
+						latestAuthorCommitIds.add(commitId);
+					}
+					else {
+						break;
+					}
+				}
+			}
+		}
+
+		for (String latestAuthorCommitId : latestAuthorCommitIds) {
+			gitCommandInputStream = getGitCommandInputStream(
+				"git diff-tree --no-commit-id --name-only -r " +
+					latestAuthorCommitId);
+
+			String output = StringUtil.read(gitCommandInputStream);
+
+			for (String outputLine : StringUtil.splitLines(output)) {
+				if (StringUtil.count(outputLine, StringPool.SLASH) < gitLevel) {
+					continue;
+				}
+
+				String fileName = getFileName(outputLine, gitLevel);
+
+				if (!latestAuthorFileNames.contains(fileName)) {
+					latestAuthorFileNames.add(fileName);
+				}
+			}
+		}
+
+		return latestAuthorFileNames;
+	}
 
 	public static List<String> getLocalChangesFileNames(String baseDirName)
 		throws Exception {

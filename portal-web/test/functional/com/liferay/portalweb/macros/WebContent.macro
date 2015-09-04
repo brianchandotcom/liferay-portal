@@ -930,7 +930,7 @@
 		</if>
 
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN_2" value1="Move to the Recycle Bin" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RECYCLE_BIN" value1="The Web Content Article ${webContentTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 

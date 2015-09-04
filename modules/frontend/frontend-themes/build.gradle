@@ -1,0 +1,24 @@
+task buildThemes
+task cleanThemes
+task deployThemes
+
+buildThemes {
+	dependsOn ":frontend:frontend-themes:frontend-themes-unstyled:buildTheme"
+	dependsOn ":frontend:frontend-themes:frontend-themes-styled:buildTheme"
+	dependsOn ":frontend:frontend-themes:frontend-themes-classic-web:buildTheme"
+	dependsOn ":frontend:frontend-themes:frontend-themes-admin-web:buildTheme"
+}
+
+cleanThemes {
+	dependsOn ":frontend:frontend-themes:frontend-themes-unstyled:clean"
+	dependsOn ":frontend:frontend-themes:frontend-themes-styled:clean"
+	dependsOn ":frontend:frontend-themes:frontend-themes-classic-web:clean"
+	dependsOn ":frontend:frontend-themes:frontend-themes-admin-web:clean"
+}
+
+deployThemes {
+	dependsOn ":frontend:frontend-themes:frontend-themes-unstyled:deploy"
+	dependsOn ":frontend:frontend-themes:frontend-themes-styled:deploy"
+	dependsOn ":frontend:frontend-themes:frontend-themes-classic-web:deploy"
+	dependsOn ":frontend:frontend-themes:frontend-themes-admin-web:deploy"
+}

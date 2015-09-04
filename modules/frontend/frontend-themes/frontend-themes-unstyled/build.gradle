@@ -25,7 +25,7 @@ task buildAlloyBootstrapTheme(type: Copy)
 task buildAlloyFontAwesome(type: Copy)
 task buildAlloyTheme(type: Copy)
 task buildLexicon(type: Copy)
-task buildThemes
+task buildTheme
 task copyFavicon(type: Copy)
 
 buildAlloyBootstrapTheme {
@@ -96,7 +96,7 @@ buildAlloyTheme {
 }
 
 buildCSS {
-	dependsOn buildThemes
+	dependsOn buildTheme
 }
 
 buildLexicon {
@@ -165,13 +165,13 @@ buildLexicon {
 	}
 }
 
-buildThemes {
+buildTheme {
 	dependsOn buildAlloyBootstrapTheme, buildAlloyFontAwesome, buildAlloyTheme, buildLexicon, copyFavicon
 	mustRunAfter buildAlloyBootstrapTheme, buildAlloyFontAwesome, buildAlloyTheme, buildLexicon, copyFavicon
 }
 
 classes {
-	dependsOn buildThemes
+	dependsOn buildTheme
 }
 
 copyFavicon {

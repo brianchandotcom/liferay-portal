@@ -58,6 +58,8 @@ import org.apache.tools.ant.types.selectors.SelectorUtils;
  */
 public abstract class BaseSourceProcessor implements SourceProcessor {
 
+	public static final int PORTAL_MAX_DIR_LEVEL = 5;
+
 	public BaseSourceProcessor() {
 		portalSource = _isPortalSource();
 
@@ -1123,7 +1125,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected List<String> getFileNames(
-			String basedir, List<String> localChangesFileNames,
+			String basedir, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes)
 		throws Exception {
 
@@ -1132,7 +1134,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return _sourceFormatterHelper.getFileNames(
-			basedir, localChangesFileNames, excludes, includes);
+			basedir, recentChangesFileNames, excludes, includes);
 	}
 
 	protected List<String> getFileNames(
@@ -1140,7 +1142,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		throws Exception {
 
 		return getFileNames(
-			basedir, sourceFormatterArgs.getLocalChangesFileNames(), excludes,
+			basedir, sourceFormatterArgs.getRecentChangesFileNames(), excludes,
 			includes);
 	}
 
@@ -1745,8 +1747,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		return line;
 	}
-
-	protected static final int PORTAL_MAX_DIR_LEVEL = 5;
 
 	protected static Pattern attributeNamePattern = Pattern.compile(
 		"[a-z]+[-_a-zA-Z0-9]*");

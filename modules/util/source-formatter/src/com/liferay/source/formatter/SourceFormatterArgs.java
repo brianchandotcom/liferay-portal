@@ -27,6 +27,8 @@ public class SourceFormatterArgs {
 
 	public static final String COPYRIGHT_FILE_NAME = "copyright.txt";
 
+	public static final boolean FORMAT_LATEST_AUTHOR = false;
+
 	public static final boolean FORMAT_LOCAL_CHANGES = false;
 
 	public static final String OUTPUT_KEY_MODIFIED_FILES =
@@ -50,12 +52,16 @@ public class SourceFormatterArgs {
 		return _fileNames;
 	}
 
-	public List<String> getLocalChangesFileNames() {
-		return _localChangesFileNames;
+	public List<String> getRecentChangesFileNames() {
+		return _recentChangesFileNames;
 	}
 
 	public boolean isAutoFix() {
 		return _autoFix;
+	}
+
+	public boolean isFormatLatestAuthor() {
+		return _formatLatestAuthor;
 	}
 
 	public boolean isFormatLocalChanges() {
@@ -107,16 +113,20 @@ public class SourceFormatterArgs {
 		_fileNames = fileNames;
 	}
 
+	public void setFormatLatestAuthor(boolean formatLatestAuthor) {
+		_formatLatestAuthor = formatLatestAuthor;
+	}
+
 	public void setFormatLocalChanges(boolean formatLocalChanges) {
 		_formatLocalChanges = formatLocalChanges;
 	}
 
-	public void setLocalChangesFileNames(List<String> localChangesFileNames) {
-		_localChangesFileNames = localChangesFileNames;
-	}
-
 	public void setPrintErrors(boolean printErrors) {
 		_printErrors = printErrors;
+	}
+
+	public void setRecentChangesFileNames(List<String> recentChangesFileNames) {
+		_recentChangesFileNames = recentChangesFileNames;
 	}
 
 	public void setThrowException(boolean throwException) {
@@ -131,9 +141,10 @@ public class SourceFormatterArgs {
 	private String _baseDirName = BASE_DIR_NAME;
 	private String _copyrightFileName = COPYRIGHT_FILE_NAME;
 	private List<String> _fileNames;
+	private boolean _formatLatestAuthor = FORMAT_LATEST_AUTHOR;
 	private boolean _formatLocalChanges = FORMAT_LOCAL_CHANGES;
-	private List<String> _localChangesFileNames;
 	private boolean _printErrors = PRINT_ERRORS;
+	private List<String> _recentChangesFileNames;
 	private boolean _throwException = THROW_EXCEPTION;
 	private boolean _useProperties = USE_PROPERTIES;
 

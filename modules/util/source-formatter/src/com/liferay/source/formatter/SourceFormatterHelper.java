@@ -61,7 +61,7 @@ public class SourceFormatterHelper {
 	}
 
 	public List<String> getFileNames(
-			String baseDir, List<String> localChangesFileNames,
+			String baseDir, List<String> recentChangesFileNames,
 			String[] excludes, String[] includes)
 		throws Exception {
 
@@ -89,14 +89,14 @@ public class SourceFormatterHelper {
 				fileSystem.getPathMatcher("glob:" + include));
 		}
 
-		if (localChangesFileNames == null) {
+		if (recentChangesFileNames == null) {
 			return scanForFiles(
 				baseDir, excludeDirPathMatchers, excludeFilePathMatchers,
 				includeFilePathMatchers);
 		}
 
 		return getFileNames(
-			baseDir, localChangesFileNames, excludeDirPathMatchers,
+			baseDir, recentChangesFileNames, excludeDirPathMatchers,
 			excludeFilePathMatchers, includeFilePathMatchers);
 	}
 
@@ -140,7 +140,7 @@ public class SourceFormatterHelper {
 	}
 
 	protected List<String> getFileNames(
-			String baseDir, List<String> localChangesFileNames,
+			String baseDir, List<String> recentChangesFileNames,
 			List<PathMatcher> excludeDirPathMatchers,
 			List<PathMatcher> excludeFilePathMatchers,
 			List<PathMatcher> includeFilePathMatchers)
@@ -148,31 +148,31 @@ public class SourceFormatterHelper {
 
 		List<String> fileNames = new ArrayList<>();
 
-		localChangesFileNamesLoop:
-		for (String fileName : localChangesFileNames) {
+		recentChangesFileNamesLoop:
+		for (String fileName : recentChangesFileNames) {
 			File file = new File(fileName);
 
 			Path filePath = file.toPath();
 
 			for (PathMatcher pathMatcher : excludeFilePathMatchers) {
 				if (pathMatcher.matches(filePath)) {
-					continue localChangesFileNamesLoop;
+					continue recentChangesFileNamesLoop;
 				}
 			}
 
 			File dir = file.getParentFile();
 
-			Path dirPath = dir.toPath();
-
-			for (PathMatcher pathMatcher : excludeDirPathMatchers) {
-				if (pathMatcher.matches(dirPath)) {
-					continue localChangesFileNamesLoop;
-				}
-			}
-
 			while (true) {
+				Path dirPath = dir.toPath();
+
+				for (PathMatcher pathMatcher : excludeDirPathMatchers) {
+					if (pathMatcher.matches(dirPath)) {
+						continue recentChangesFileNamesLoop;
+					}
+				}
+
 				if (Files.exists(dirPath.resolve("source_formatter.ignore"))) {
-					continue localChangesFileNamesLoop;
+					continue recentChangesFileNamesLoop;
 				}
 
 				dir = dir.getParentFile();
@@ -180,8 +180,6 @@ public class SourceFormatterHelper {
 				if (dir == null) {
 					break;
 				}
-
-				dirPath = dir.toPath();
 			}
 
 			for (PathMatcher pathMatcher : includeFilePathMatchers) {
@@ -194,7 +192,7 @@ public class SourceFormatterHelper {
 
 					updateProperties(fileName);
 
-					continue localChangesFileNamesLoop;
+					continue recentChangesFileNamesLoop;
 				}
 			}
 		}

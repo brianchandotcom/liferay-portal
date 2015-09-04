@@ -445,11 +445,14 @@
 					</execute>
 				</then>
 			</elseif>
-			<else>
-				<execute macro="SitePage#addSitePageTypePanelCP">
-					<var name="componentName" value="${componentName}" />
-				</execute>
-			</else>
+			<elseif>
+				<equals arg1="${sitePageType}" arg2="Panel" />
+				<then>
+					<execute macro="SitePage#addSitePageTypePanelCP">
+						<var name="componentName" value="${componentName}" />
+					</execute>
+				</then>
+			</elseif>
 		</if>
 	</command>
 

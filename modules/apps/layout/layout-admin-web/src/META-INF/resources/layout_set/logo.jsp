@@ -19,6 +19,7 @@
 <%
 Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+boolean showButtons= GroupPermissionUtil.contains(permissionChecker, layoutsAdminDisplayContext.getSelGroup(), ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="logo" />
@@ -56,6 +57,7 @@ LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 		defaultLogo="<%= selLayoutSet.getLogoId() == 0 %>"
 		defaultLogoURL="<%= companyLogoURL %>"
 		logoDisplaySelector=".layoutset-logo"
+		showButtons="showButtons"
 		tempImageFileName="<%= String.valueOf(selLayoutSet.getLayoutSetId()) %>"
 	/>
 

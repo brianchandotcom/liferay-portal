@@ -67,9 +67,9 @@
 		<var name="portletName" value="Web Content" />
 		<var name="portletTitle" value="Web Content" />
 
-		<task macro-summary="Page#gotoContentCP">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="${portletName}" />
+		<task macro-summary="ProductMenu#gotoSitesContent">
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="${portletName}" />
 			</execute>
 
 			<execute macro="SiteAdmin#viewPortletTitle">

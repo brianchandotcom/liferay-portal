@@ -841,11 +841,16 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String formatWhitespace(String line, String trimmedLine) {
-		line = formatIncorrectSyntax(line, "catch(", "catch (");
-		line = formatIncorrectSyntax(line, "else{", "else {");
-		line = formatIncorrectSyntax(line, "for(", "for (");
-		line = formatIncorrectSyntax(line, "if(", "if (");
-		line = formatIncorrectSyntax(line, "while(", "while (");
+		line = formatIncorrectSyntax(
+			line, StringPool.TAB + "catch(", StringPool.TAB + "catch (");
+		line = formatIncorrectSyntax(
+			line, StringPool.TAB + "else{", StringPool.TAB + "else {");
+		line = formatIncorrectSyntax(
+			line, StringPool.TAB + "for(", StringPool.TAB + "for (");
+		line = formatIncorrectSyntax(
+			line, StringPool.TAB + "if(", StringPool.TAB + "if (");
+		line = formatIncorrectSyntax(
+			line, StringPool.TAB + "while(", StringPool.TAB + "while (");
 		line = formatIncorrectSyntax(line, "List <", "List<");
 		line = formatIncorrectSyntax(line, "){", ") {");
 		line = formatIncorrectSyntax(line, "]{", "] {");

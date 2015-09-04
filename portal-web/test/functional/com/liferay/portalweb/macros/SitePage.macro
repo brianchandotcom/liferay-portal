@@ -558,16 +558,18 @@
 
 		<execute function="Click" locator1="Home#PAGE_NAVIGATION_BAR" />
 
+		<var name="key_pageName" value="${pageName}" />
+
 		<if>
 			<equals arg1="${siteTemplate}" arg2="Community" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_1" value1="Home" />
+				<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_1" value1="${pageName}" />
 				<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_2" value1="Wiki" />
 			</then>
 			<elseif>
 				<equals arg1="${siteTemplate}" arg2="Intranet" />
 				<then>
-					<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_1" value1="Home" />
+					<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_1" value1="${pageName}" />
 					<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE_2" value1="Documents and Media" />
 				</then>
 			</elseif>
@@ -575,7 +577,7 @@
 				<equals arg1="${siteTemplate}" arg2="Zoe Healthcare Theme" />
 				<then>
 					<execute function="AssertElementPresent" locator1="Home#SITE_NAME_LOGO" />
-					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="HOME" />
+					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_1" value1="${pageName}" />
 					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_2" value1="ABOUT" />
 					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_3" value1="CLINIC" />
 					<execute function="AssertElementPresent" locator1="Home#PAGE_TEMPLATE_4" value1="SERVICES" />

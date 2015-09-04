@@ -69,7 +69,15 @@
 			<var name="virtualHostsURL" value="${virtualHostsURL}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
+		<if>
+			<isset var="privatePage" />
+			<then>
+				<execute function="AssertClick" locator1="SitePages#NAVIGATION_PRIVATE_PAGES" value1="Private Pages" />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="SitePages#NAVIGATION_PUBLIC_PAGES" value1="Public Pages" />
+			</else>
+		</if>
 
 		<execute macro-mobile="MobileNavigator#clickReorderIcon" />
 

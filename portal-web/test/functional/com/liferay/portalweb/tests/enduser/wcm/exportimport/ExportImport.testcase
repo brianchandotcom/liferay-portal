@@ -218,7 +218,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-17720" name="ExportImportDDLViaGlobal" priority="5">
+	<command known-issues="LPS-57878" name="ExportImportDDLViaGlobal" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -578,7 +578,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-17720" name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">
+	<command known-issues="LPS-57878" name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -881,7 +881,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-17720" name="ImportCorruptedFile" priority="5">
+	<command known-issues="LPS-57878" name="ImportCorruptedFile" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Bookmarks" />
 		</execute>

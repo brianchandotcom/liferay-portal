@@ -734,7 +734,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		'.asset-subtypefields-popup',
 		function(event) {
 			var currentTarget = $(event.currentTarget);
-			var target = $(event.target);
+			var btn = $('.btn', currentTarget);
 
 			Liferay.Util.selectEntity(
 				{
@@ -746,7 +746,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					eventName: '<portlet:namespace />selectDDMStructureField',
 					id: '<portlet:namespace />selectDDMStructure' + currentTarget.attr('id'),
 					title: '<liferay-ui:message arguments="structure-field" key="select-x" />',
-					uri: target.data('href')
+					uri: btn.data('href')
 				},
 				function(event) {
 					setDDMFields(event.className, event.name, event.value, event.displayValue, event.label + ': ' + event.displayValue);

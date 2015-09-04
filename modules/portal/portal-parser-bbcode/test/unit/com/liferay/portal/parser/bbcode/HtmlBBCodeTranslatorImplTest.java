@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.parser.bbcode.test;
+package com.liferay.portal.parser.bbcode;
 
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.parser.bbcode.HtmlBBCodeTranslatorImpl;
 import com.liferay.portal.util.HtmlImpl;
 
 import org.junit.Assert;
@@ -26,7 +25,7 @@ import org.junit.Test;
  * @author Sergio González
  * @author John Zhao
  */
-public class HtmlBBCodeTranslatorTest {
+public class HtmlBBCodeTranslatorImplTest {
 
 	@Before
 	public void setUp() {

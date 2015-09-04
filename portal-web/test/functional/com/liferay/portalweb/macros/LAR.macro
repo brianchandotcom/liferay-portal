@@ -233,6 +233,8 @@
 	</command>
 
 	<command name="exportCmd">
+		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+
 		<if>
 			<isset var="larFileName" />
 			<then>
@@ -490,6 +492,8 @@
 	</command>
 
 	<command name="selectImportFileCmd">
+		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+
 		<execute function="AssertClick" locator1="ExportImport#NAVIGATION_IMPORT" value1="Import" />
 		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 

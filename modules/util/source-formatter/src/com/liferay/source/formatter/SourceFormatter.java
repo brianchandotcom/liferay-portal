@@ -56,13 +56,23 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setBaseDirName(baseDirName);
 
+			boolean formatLatestAuthor = GetterUtil.getBoolean(
+				arguments.get("format.latest.author"),
+				SourceFormatterArgs.FORMAT_LATEST_AUTHOR);
+
+			sourceFormatterArgs.setFormatLatestAuthor(formatLatestAuthor);
+
 			boolean formatLocalChanges = GetterUtil.getBoolean(
 				arguments.get("format.local.changes"),
 				SourceFormatterArgs.FORMAT_LOCAL_CHANGES);
 
 			sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
 
-			if (formatLocalChanges) {
+			if (formatLatestAuthor) {
+				sourceFormatterArgs.setRecentChangesFileNames(
+					GitUtil.getLatestAuthorFileNames(baseDirName));
+			}
+			else if (formatLocalChanges) {
 				sourceFormatterArgs.setRecentChangesFileNames(
 					GitUtil.getLocalChangesFileNames(baseDirName));
 			}

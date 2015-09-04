@@ -13,16 +13,16 @@ liferay {
 
 
 task copyFavicon(type: Copy)
-task buildThemes
+task buildTheme
 
 
 buildCSS {
-	dependsOn buildThemes
-	mustRunAfter buildThemes
+	dependsOn buildTheme
+	mustRunAfter buildTheme
 }
 
 classes {
-	dependsOn buildThemes
+	dependsOn buildTheme
 }
 
 copyFavicon {
@@ -41,7 +41,7 @@ String compileThemeTaskName = GradleUtil.getTaskName("compileTheme", themeDir)
 
 task(compileThemeTaskName, type: CompileThemeTask) {
 	dependsOn buildThemeThumbnailsTaskName
-	dependsOn ":frontend:frontend-themes:frontend-themes-unstyled:buildThemes"
+	dependsOn ":frontend:frontend-themes:frontend-themes-unstyled:buildTheme"
 	diffsDir = new File(themeDir, "_diffs")
 	frontendThemesDir = "../"
 	themeParent = "_styled"
@@ -53,6 +53,6 @@ task(buildThemeThumbnailsTaskName, type: BuildThumbnailsTask) {
 	imageDirs themeDir
 }
 
-buildThemes {
+buildTheme {
 	dependsOn copyFavicon, compileThemeTaskName
 }

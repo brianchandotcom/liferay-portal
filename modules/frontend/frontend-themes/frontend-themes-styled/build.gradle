@@ -7,19 +7,19 @@ liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
 
-task buildThemes
+task buildTheme
 task copyFavicon(type: Copy)
 
 buildCSS {
-	dependsOn buildThemes
+	dependsOn buildTheme
 }
 
-buildThemes {
+buildTheme {
 	dependsOn  copyFavicon
 }
 
 classes {
-	dependsOn buildThemes
+	dependsOn buildTheme
 }
 
 copyFavicon {

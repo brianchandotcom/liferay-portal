@@ -76,7 +76,7 @@
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
-		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
+		<execute function="Click#clickAtAndWait" locator1="Icon#PENCIL" />
 	</command>
 
 	<command name="gotoEntryCP">
@@ -94,7 +94,7 @@
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 
-		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
 	</command>
 
 	<command name="gotoEntryTitleSpecialCharacter">

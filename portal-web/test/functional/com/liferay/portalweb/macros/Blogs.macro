@@ -24,7 +24,15 @@
 	</command>
 
 	<command name="addEntry">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<if>
+			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+			<then>
+				<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+			</then>
+			<else>
+				<execute function="Click#clickAtAndWait" locator1="Icon#ADD_BLOGS_ENTRY_PLUS" />
+			</else>
+		</if>
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />

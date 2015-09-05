@@ -2255,3 +2255,37 @@ ADTs allow you to change an application's look and feel without changing its JSP
 code.
 
 ---------------------------------------
+
+### Renamed URI Attribute Used to Generate AUI Tag Library
+- **Date:** 2015-Aug-12
+- **JIRA Ticket:** LPS-57809
+
+#### What changed?
+
+The URI attribute used to identify the AUI taglib has been renamed.
+
+#### Who is affected?
+
+This affects developers that use the URI `http://alloy.liferay.com/tld/aui` in
+their JSPs, XMLs, etc.
+
+#### How should I update my code?
+
+You should use the new AUI URI declaration:
+
+Old:
+
+    http://alloy.liferay.com/tld/aui
+
+New:
+
+    http://liferay.com/tld/aui
+
+#### Why was this change made?
+
+To stay consistent with other taglibs provided by Liferay, the AUI `.tld` file
+was modified to start with the prefix `liferay-`. Due to this change, the XML
+files used to automatically generate the AUI taglib were modified, changing the
+AUI URI declaration.
+
+---------------------------------------

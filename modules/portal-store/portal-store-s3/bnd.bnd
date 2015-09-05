@@ -2,12 +2,26 @@ Bundle-Name: Liferay Portal Store S3
 Bundle-SymbolicName: com.liferay.portal.store.s3
 Bundle-Version: 1.0.0
 Import-Package:\
-	!net.iharder,\
-	!org.codehaus.jackson.map,\
+	!com.sun.org.apache.xerces.internal.jaxp,\
+	!com.sun.org.apache.xml.internal.dtm,\
+	!com.sun.org.apache.xml.internal.dtm.ref,\
+	!com.sun.org.apache.xpath.internal,\
+	!org.apache.avalon.framework.logger,\
+	!org.ietf.jgss,\
+	!org.joda.convert,\
+	!org.apache.log,\
+	!org.apache.log4j,\
 	*
 Include-Resource:\
 	classes,\
+	@lib/aws-java-sdk-core.jar,\
+	@lib/aws-java-sdk-kms.jar,\
+	@lib/aws-java-sdk-s3.jar,\
+	@lib/commons-codec.jar,\
+	@lib/commons-logging.jar,\
 	@lib/httpclient.jar,\
 	@lib/httpcore.jar,\
-	@lib/java-xmlbuilder.jar,\
-	@lib/jets3t.jar
+	@lib/jackson-annotations.jar,\
+	@lib/jackson-core.jar,\
+	@lib/jackson-databind.jar,\
+	@lib/joda-time.jar

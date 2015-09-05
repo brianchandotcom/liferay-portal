@@ -25,31 +25,52 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface S3StoreConfiguration {
 
-	@Meta.AD(required = true)
+	@Meta.AD(
+		description =
+			"Optional. Must be provided here," +
+				" in the AWS_ACCESS_KEY_ID system environment variable," +
+				" the aws.accessKeyId Java system property," +
+				" or the EC2 instance must be configured with an IAM Role.",
+		required = false
+	)
 	public String accessKey();
 
 	@Meta.AD(required = true)
 	public String bucketName();
 
-	@Meta.AD(deflt = "50", required = false, type = Meta.Type.Integer)
-	public String httpClientMaxConnections();
+	@Meta.AD(deflt = "50", required = false)
+	public int httpClientMaxConnections();
 
-	@Meta.AD(deflt = "US", required = false)
-	public String s3ServiceDefaultBucketLocation();
+	@Meta.AD(
+		deflt = "us-east-1",
+		description =
+			"AWS region name. See http://docs.aws.amazon.com/" +
+				"general/latest/gr/rande.html#s3_region",
+		required = false
+	)
+	public String s3Region();
 
-	@Meta.AD(deflt = "STANDARD", required = false)
-	public String s3ServiceDefaultStorageClass();
+	@Meta.AD(
+		deflt = "STANDARD", description = "AWS S3 storage class",
+		optionValues = {"REDUCED_REDUNDANCY", "STANDARD"},
+		required = false
+	)
+	public String s3StorageClass();
 
-	@Meta.AD(deflt = "s3.amazonws.com", required = false)
-	public String s3ServiceS3Endpoint();
-
-	@Meta.AD(required = true)
+	@Meta.AD(
+		description =
+			"Optional. Must be provided here," +
+				" in the AWS_SECRET_ACCESS_KEY system environment variable," +
+				" the aws.secretKey Java system property," +
+				" or the EC2 instance must be configured with an IAM Role.",
+		required = false
+	)
 	public String secretKey();
 
-	@Meta.AD(deflt = "7", required = false, type = Meta.Type.Integer)
-	public String tempDirCleanUpExpunge();
+	@Meta.AD(deflt = "7", required = false)
+	public int tempDirCleanUpExpunge();
 
-	@Meta.AD(deflt = "100", required = false, type = Meta.Type.Integer)
-	public String tempDirCleanUpFrequency();
+	@Meta.AD(deflt = "100", required = false)
+	public int tempDirCleanUpFrequency();
 
 }

@@ -218,9 +218,7 @@
 			<var name="entryTitle" value="${entryInvalidTitleLength}" />
 		</execute>
 
-		<execute macro="BlogsEntry#publishWithInvalidTitleLength" >
-			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
-		</execute>
+		<execute macro="BlogsEntry#publishWithInvalidTitleLength" />
 	</command>
 
 	<command name="addWithNullCustomAbstract">

@@ -471,9 +471,9 @@ public class SPIClassPathContextListenerTest {
 
 		// Does not exist
 
-		deleteFile(new File(_CONTEXT_PATH, dirName));
-
 		File file = new File(_CONTEXT_PATH, dirName);
+
+		deleteFile(file);
 
 		SPIClassPathContextListener spiClassPathContextListener =
 			new SPIClassPathContextListener();

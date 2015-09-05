@@ -1,8 +1,6 @@
 <definition>
 	<command name="add">
-		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
-
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
+		<execute function="Type#typeAlloyEditor" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
 
 		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 

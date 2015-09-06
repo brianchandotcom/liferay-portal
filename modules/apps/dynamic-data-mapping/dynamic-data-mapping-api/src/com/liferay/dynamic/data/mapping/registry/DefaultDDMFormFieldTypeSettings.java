@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.registry;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
@@ -92,11 +93,12 @@ public interface DefaultDDMFormFieldTypeSettings
 	public LocalizedValue tip();
 
 	@DDMFormField(
+		dataType = "ddm-validation",
 		label = "%validation",
 		properties = {"setting.category=advanced", "setting.weight=0"},
 		type = "validation"
 	)
-	public String validationExpression();
+	public DDMFormFieldValidation validation();
 
 	@DDMFormField(
 		label = "%validation-message",

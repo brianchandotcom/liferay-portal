@@ -25,8 +25,10 @@
 				"pt_BR": ""
 			},
 			"type": "checkbox",
-			"validationExpression": "Boolean2282",
-			"validationMessage": "You must check this box to continue.",
+			"validation": {
+				"expression": "Boolean2282",
+				"errorMessage": "You must check this box to continue."
+			},
 			"visibilityExpression": "true"
 		},
 		{
@@ -481,7 +483,7 @@
 								{
 									"label": {
 										"en_US": "Option 2",
-										"pt_BR": "Opcao 2",
+										"pt_BR": "Opcao 2"
 									},
 									"value": "Value 2"
 								},

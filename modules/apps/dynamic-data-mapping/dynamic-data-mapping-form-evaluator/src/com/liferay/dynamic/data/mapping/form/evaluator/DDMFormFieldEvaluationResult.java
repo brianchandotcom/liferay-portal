@@ -30,6 +30,10 @@ public class DDMFormFieldEvaluationResult {
 		_instanceId = instanceId;
 	}
 
+	public String getErrorMessage() {
+		return _errorMessage;
+	}
+
 	public String getInstanceId() {
 		return _instanceId;
 	}
@@ -45,16 +49,16 @@ public class DDMFormFieldEvaluationResult {
 		return _nestedDDMFormFieldEvaluationResults;
 	}
 
-	public String getValidationMessage() {
-		return _validationMessage;
-	}
-
 	public boolean isValid() {
 		return _valid;
 	}
 
 	public boolean isVisible() {
 		return _visible;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		_errorMessage = errorMessage;
 	}
 
 	public void setNestedDDMFormFieldEvaluationResults(
@@ -69,20 +73,16 @@ public class DDMFormFieldEvaluationResult {
 		_valid = valid;
 	}
 
-	public void setValidationMessage(String validationMessage) {
-		_validationMessage = validationMessage;
-	}
-
 	public void setVisible(boolean visible) {
 		_visible = visible;
 	}
 
+	private String _errorMessage = StringPool.BLANK;
 	private final String _instanceId;
 	private final String _name;
 	private List<DDMFormFieldEvaluationResult>
 		_nestedDDMFormFieldEvaluationResults = new ArrayList<>();
 	private boolean _valid;
-	private String _validationMessage = StringPool.BLANK;
 	private boolean _visible;
 
 }

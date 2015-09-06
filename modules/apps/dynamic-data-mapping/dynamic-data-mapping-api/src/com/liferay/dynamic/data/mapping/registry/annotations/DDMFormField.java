@@ -42,9 +42,9 @@ public @interface DDMFormField {
 
 	public String type() default StringPool.BLANK;
 
-	public String validationExpression() default StringPool.TRUE;
+	public String validationErrorMessage() default StringPool.BLANK;
 
-	public String validationMessage() default StringPool.BLANK;
+	public String validationExpression() default StringPool.TRUE;
 
 	public String visibilityExpression() default StringPool.TRUE;
 

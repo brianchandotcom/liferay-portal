@@ -49,6 +49,8 @@ import javax.sql.DataSource;
 import org.apache.log4j.Level;
 import org.apache.log4j.spi.LoggingEvent;
 
+import org.hsqldb.jdbc.JDBCDriver;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -78,7 +80,7 @@ public class DataSourceFactoryImplTest {
 
 	@Before
 	public void setUp() {
-		_properties.setProperty("driverClassName", "org.hsqldb.jdbcDriver");
+		_properties.setProperty("driverClassName", JDBCDriver.class.getName());
 		_properties.setProperty("maximumPoolSize", "10");
 		_properties.setProperty("password", "");
 		_properties.setProperty("poolName", "TestJDBCPool");

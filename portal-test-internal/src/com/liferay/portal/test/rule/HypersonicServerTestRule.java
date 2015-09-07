@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.hsqldb.jdbcDriver;
+import org.hsqldb.jdbc.JDBCDriver;
 import org.hsqldb.server.Server;
 
 /**
@@ -72,7 +72,7 @@ public class HypersonicServerTestRule extends BaseTestRule<Server, Object> {
 
 		String className = props.get("jdbc.default.driverClassName");
 
-		_HYPERSONIC = className.equals(jdbcDriver.class.getName());
+		_HYPERSONIC = className.equals(JDBCDriver.class.getName());
 
 		if (_HYPERSONIC) {
 			String jdbcURL = props.get("jdbc.default.url");

@@ -64,6 +64,10 @@ public class PatcherUtil {
 		return getPatcher().isConfigured();
 	}
 
+	public static void verifyPatchLevels() throws PatchInconsistencyException {
+		getPatcher().verifyPatchLevels();
+	}
+
 	public void setPatcher(Patcher patcher) {
 		PortalRuntimePermission.checkGetBeanProperty(Patcher.class);
 

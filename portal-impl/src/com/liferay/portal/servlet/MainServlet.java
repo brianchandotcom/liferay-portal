@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.patcher.PatchInconsistencyException;
+import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
@@ -204,6 +206,20 @@ public class MainServlet extends ActionServlet {
 		servletContext.setAttribute(MainServlet.class.getName(), Boolean.TRUE);
 
 		callParentInit();
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Verify patch levels");
+		}
+
+		try {
+			PatcherUtil.verifyPatchLevels();
+		}
+		catch (PatchInconsistencyException pie) {
+			_log.error(
+				"Stopping the server due to the inconsistent patch levels");
+
+			System.exit(0);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Process startup events");

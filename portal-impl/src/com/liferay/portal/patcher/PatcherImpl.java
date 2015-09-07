@@ -16,8 +16,10 @@ package com.liferay.portal.patcher;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.patcher.PatchInconsistencyException;
 import com.liferay.portal.kernel.patcher.Patcher;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -29,6 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -85,12 +88,7 @@ public class PatcherImpl implements Patcher {
 			return _installedPatchNames;
 		}
 
-		Properties properties = getProperties();
-
-		_installedPatchNames = StringUtil.split(
-			properties.getProperty(PROPERTY_INSTALLED_PATCHES));
-
-		return _installedPatchNames;
+		return _getInstalledPatches(null);
 	}
 
 	@Override
@@ -160,6 +158,58 @@ public class PatcherImpl implements Patcher {
 	@Override
 	public boolean isConfigured() {
 		return _configured;
+	}
+
+	@Override
+	public void verifyPatchLevels() throws PatchInconsistencyException {
+		Properties implJarProperty = _getProperties(PATCHER_PROPERTIES);
+		Properties serviceJarProperty = _getProperties(
+			PATCHER_SERVICE_PROPERTIES);
+
+		String[] implJarPatches = _getInstalledPatches(implJarProperty);
+		String[] serviceJarPatches = _getInstalledPatches(serviceJarProperty);
+
+		Arrays.sort(implJarPatches);
+		Arrays.sort(serviceJarPatches);
+
+		if (!Arrays.equals(implJarPatches, serviceJarPatches)) {
+			_log.error("Different patch level detected");
+
+			if (_log.isWarnEnabled()) {
+				if (ArrayUtil.isEmpty(implJarPatches)) {
+					_log.warn(
+						"There are no patches installed on portal-impl.jar");
+				}
+				else {
+					_log.warn(
+						"Patch level on portal-impl.jar: " +
+							Arrays.toString(implJarPatches));
+				}
+
+				if (ArrayUtil.isEmpty(serviceJarPatches)) {
+					_log.warn(
+						"There are no patches installed on portal-service.jar");
+				}
+				else {
+					_log.warn(
+						"Patch level on portal-service.jar: " +
+							Arrays.toString(serviceJarPatches));
+				}
+			}
+
+			throw new PatchInconsistencyException();
+		}
+	}
+
+	private String[] _getInstalledPatches(Properties properties) {
+		if (properties == null) {
+			properties = getProperties();
+		}
+
+		_installedPatchNames = StringUtil.split(
+			properties.getProperty(PROPERTY_INSTALLED_PATCHES));
+
+		return _installedPatchNames;
 	}
 
 	private Properties _getProperties(String propertyFileName) {

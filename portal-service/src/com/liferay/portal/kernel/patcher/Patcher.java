@@ -26,6 +26,9 @@ public interface Patcher {
 
 	public static final String PATCHER_PROPERTIES = "patcher.properties";
 
+	public static final String PATCHER_SERVICE_PROPERTIES =
+		"patcher-service.properties";
+
 	public static final String PROPERTY_FIXED_ISSUES = "fixed.issues";
 
 	public static final String PROPERTY_INSTALLED_PATCHES = "installed.patches";

@@ -89,7 +89,7 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 					{
 						contentBox: '#<portlet:namespace />assetCategoriesSelector<%= curVocabulary.getVocabularyId() %>',
 
-						<c:if test="<%= ((curVocabulary.getVocabularyId() == vocabularyId) && (parentCategory != null)) %>">
+						<c:if test="<%= (curVocabulary.getVocabularyId() == vocabularyId) && (parentCategory != null) %>">
 							curEntries: '<%= parentCategory.getTitle(locale) %>',
 							curEntryIds: '<%= parentCategory.getCategoryId() %>',
 						</c:if>

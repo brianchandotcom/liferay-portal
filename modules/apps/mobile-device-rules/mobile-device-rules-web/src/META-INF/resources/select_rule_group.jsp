@@ -98,7 +98,7 @@ portletURL.setParameter("eventName", eventName);
 				MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(className, classPK, ruleGroup.getRuleGroupId());
 				%>
 
-				<c:if test="<%= (ruleGroupInstance == null) %>">
+				<c:if test="<%= ruleGroupInstance == null %>">
 
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();

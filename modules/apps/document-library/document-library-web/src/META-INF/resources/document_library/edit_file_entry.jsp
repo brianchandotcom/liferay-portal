@@ -329,7 +329,7 @@ else {
 			</aui:validator>
 		</aui:input>
 
-		<c:if test="<%= ((folder == null) || folder.isSupportsMetadata()) %>">
+		<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
 			<aui:input name="description" />
 
 			<c:if test="<%= (folder == null) || (folder.getModel() instanceof DLFolder) %>">
@@ -427,7 +427,7 @@ else {
 			</liferay-ui:custom-attributes-available>
 		</c:if>
 
-		<c:if test="<%= ((folder == null) || folder.isSupportsSocial()) %>">
+		<c:if test="<%= (folder == null) || folder.isSupportsSocial() %>">
 			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="dlFileEntryCategorizationPanel" persistState="<%= true %>" title="categorization">
 				<aui:fieldset>
 					<aui:input classPK="<%= assetClassPK %>" classTypePK="<%= fileEntryTypeId %>" model="<%= DLFileEntry.class %>" name="categories" type="assetCategories" />

@@ -76,7 +76,7 @@ if (layout != null) {
 	}
 	%>
 
-	<c:if test="<%= (liveGroup != null) %>">
+	<c:if test="<%= liveGroup != null %>">
 		<aui:button-row>
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">

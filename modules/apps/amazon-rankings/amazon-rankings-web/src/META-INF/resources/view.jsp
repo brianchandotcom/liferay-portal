@@ -56,7 +56,7 @@
 				</td>
 			</tr>
 
-			<c:if test="<%= i < amazonRankingsSet.size() - 1 %>">
+			<c:if test="<%= i < (amazonRankingsSet.size() - 1) %>">
 				<tr>
 					<td>
 						<br />

@@ -236,7 +236,7 @@ iteratorURL.setParameter("title", wikiPage.getTitle());
 									message='<%= LanguageUtil.format(request, "x-updated-the-page-to-version-x", new Object[] {HtmlUtil.escape(socialActivityUser.getFullName()), pageTitleLink}, false) %>'
 								/>
 
-								<c:if test="<%= (socialActivityWikiPage != null) && socialActivityWikiPage.getStatus() != WorkflowConstants.STATUS_APPROVED %>">
+								<c:if test="<%= (socialActivityWikiPage != null) && (socialActivityWikiPage.getStatus() != WorkflowConstants.STATUS_APPROVED) %>">
 									<span class="activity-status"><liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(socialActivityWikiPage.getStatus()) %>" /></span>
 								</c:if>
 

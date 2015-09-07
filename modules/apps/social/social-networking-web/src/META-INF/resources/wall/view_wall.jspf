@@ -145,7 +145,7 @@
 							}
 							%>
 
-							<c:if test="<%= Validator.isNotNull(wallToWallHREF) && wallToWallUser == null %>">
+							<c:if test="<%= Validator.isNotNull(wallToWallHREF) && (wallToWallUser == null) %>">
 								<liferay-ui:icon
 									iconCssClass="icon-copy"
 									label="<%= true %>"

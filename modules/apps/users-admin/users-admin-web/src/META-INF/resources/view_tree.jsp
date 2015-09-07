@@ -112,7 +112,7 @@ if (organization != null) {
 		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), _getParentOrganizationId(request, organization, filterManageableOrganizations), null, null, null, null, organizationParams);
 		%>
 
-		<c:if test="<%= (organization != null) %>">
+		<c:if test="<%= organization != null %>">
 
 			<%
 			long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;

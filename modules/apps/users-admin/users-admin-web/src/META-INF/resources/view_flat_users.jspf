@@ -264,7 +264,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	%>
 
 	<c:if test="<%= showDeleteButton || showRestoreButton %>">
-		<c:if test="<%= (usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS)) && (userOrganization == null) %>">
+		<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_USERS) && (userOrganization == null) %>">
 			<div class="separator"><!-- --></div>
 		</c:if>
 

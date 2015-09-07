@@ -203,7 +203,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 			<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
 			<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
-			<c:if test="<%= (layoutRevision != null) %>">
+			<c:if test="<%= layoutRevision != null %>">
 				<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
 			</c:if>
 
@@ -231,7 +231,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					</c:when>
 				</c:choose>
 
-				<c:if test="<%= (selLayout.getGroupId() != layoutsAdminDisplayContext.getGroupId()) && (selLayoutGroup.isUserGroup()) %>">
+				<c:if test="<%= (selLayout.getGroupId() != layoutsAdminDisplayContext.getGroupId()) && selLayoutGroup.isUserGroup() %>">
 
 					<%
 					UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(selLayoutGroup.getClassPK());

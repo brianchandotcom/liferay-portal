@@ -516,7 +516,7 @@ else {
 	}
 
 	function <portlet:namespace />previewMessage() {
-		<c:if test="<%= ((message != null) && !message.isDraft()) %>">
+		<c:if test="<%= (message != null) && !message.isDraft() %>">
 			if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-message-is-saved-as-a-draft-and-other-users-may-not-be-able-to-see-it" />')) {
 				return false;
 			}

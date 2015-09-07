@@ -24,7 +24,7 @@ AssetRendererFactory assetRendererFactory = workflowTaskDisplayContext.getAssetR
 request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 %>
 
-<c:if test="<%= (assetEntry != null) %>">
+<c:if test="<%= assetEntry != null %>">
 	<liferay-ui:header
 		localizeTitle="<%= false %>"
 		title="<%= assetRenderer.getTitle(locale) %>"

@@ -325,7 +325,7 @@ String iconMenuId = null;
 		<c:choose>
 			<c:when test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
-					<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) %>">
+					<c:if test="<%= (folder == null) || folder.isSupportsMultipleUpload() %>">
 						<portlet:renderURL var="editFileEntryURL">
 							<portlet:param name="mvcPath" value="/document_library/upload_multiple_file_entries.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />

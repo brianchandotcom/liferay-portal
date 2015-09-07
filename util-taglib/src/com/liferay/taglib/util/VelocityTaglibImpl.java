@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.JSPSupportServlet;
 import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -961,8 +962,20 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		throws Exception {
 
 		RuntimeTag.doTag(
-			portletProviderClassName, portletProviderAction, null, null,
-			_pageContext, _request, _response);
+			portletProviderClassName, portletProviderAction, StringPool.BLANK,
+			null, null, _pageContext, _request, _response);
+	}
+
+	@Override
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction,
+			String portletInstanceId)
+		throws Exception {
+
+		RuntimeTag.doTag(
+			portletProviderClassName, portletProviderAction, portletInstanceId,
+			null, null, _pageContext, _request, _response);
 	}
 
 	@Override
@@ -981,6 +994,17 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 		RuntimeTag.doTag(
 			portletName, queryString, defaultPreferences, _pageContext,
 			_request, _response);
+	}
+
+	@Override
+	public void runtime(
+			String portletName, String portletInstanceId, String queryString,
+			String defaultPreferences)
+		throws Exception {
+
+		RuntimeTag.doTag(
+			portletName, portletInstanceId, queryString, defaultPreferences,
+			_pageContext, _request, _response);
 	}
 
 	@Override

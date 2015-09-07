@@ -215,10 +215,20 @@ public class MainServlet extends ActionServlet {
 			PatcherUtil.verifyPatchLevels();
 		}
 		catch (PatchInconsistencyException pie) {
-			_log.error(
-				"Stopping the server due to the inconsistent patch levels");
+			if (!PropsValues.VERIFY_PATCH_LEVELS_DISABLED) {
+				_log.error(
+					"Stopping the server due to the inconsistent patch levels");
 
-			System.exit(0);
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"If you intend to start the portal anyway, set the " +
+							"following property in your portal-ext." +
+								"properties file: " +
+									"'verify.patch.levels.disabled=true'");
+				}
+
+				System.exit(0);
+			}
 		}
 
 		if (_log.isDebugEnabled()) {

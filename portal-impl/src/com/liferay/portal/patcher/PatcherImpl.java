@@ -188,7 +188,7 @@ public class PatcherImpl implements Patcher {
 		return _configured;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(PatcherImpl.class);
+	private static final Log _log = LogFactoryUtil.getLog(PatcherImpl.class);
 
 	private boolean _configured;
 	private String[] _fixedIssueKeys;

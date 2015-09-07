@@ -39,7 +39,27 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 
 <c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() && userSetupComplete %>">
 	<div class="control-menu">
-		<div class="control-menu-level-2"></div>
+		<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && themeDisplay.isShowStagingIcon() %>">
+			<div class="control-menu-level-2">
+				<div class="container-fluid-1280">
+					<ul class="control-menu-nav">
+
+						<%
+						String renderPortletBoundary = GetterUtil.getString(request.getAttribute(WebKeys.RENDER_PORTLET_BOUNDARY));
+
+						request.setAttribute(WebKeys.RENDER_PORTLET_BOUNDARY, String.valueOf(false));
+						%>
+
+						<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
+
+						<%
+						request.setAttribute(WebKeys.RENDER_PORTLET_BOUNDARY, renderPortletBoundary);
+						%>
+
+					</ul>
+				</div>
+			</div>
+		</c:if>
 
 		<div class="control-menu-level-1">
 			<div class="container-fluid-1280">
@@ -70,7 +90,7 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 						<portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 							<portlet:param name="mvcPath" value="/add_panel.jsp" />
 							<portlet:param name="stateMaximized" value="<%= String.valueOf(themeDisplay.isStateMaximized()) %>" />
-							<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
+							<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>"/>
 						</portlet:renderURL>
 
 						<%
@@ -146,32 +166,6 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 									);
 								</aui:script>
 							</c:if>
-						</li>
-					</c:if>
-
-					<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && themeDisplay.isShowStagingIcon() %>">
-						<li>
-							<liferay-ui:icon
-								iconCssClass="icon-circle-blank icon-monospaced"
-								id="stagingBarButton"
-								label="staging"
-								linkCssClass="control-menu-icon"
-								url="javascript:;"
-							/>
-
-							<liferay-util:buffer var="stagingContent">
-								<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
-							</liferay-util:buffer>
-
-							<aui:script sandbox="<%= true %>">
-								$('#<portlet:namespace />stagingBarButton').popover(
-									{
-										content: '<%= HtmlUtil.escapeJS(stagingContent) %>',
-										html: true,
-										placement: 'top'
-									}
-								);
-							</aui:script>
 						</li>
 					</c:if>
 

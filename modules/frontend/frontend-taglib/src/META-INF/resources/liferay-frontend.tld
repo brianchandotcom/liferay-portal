@@ -10,30 +10,36 @@
 	<short-name>frontend</short-name>
 	<uri>http://liferay.com/tld/frontend</uri>
 	<tag>
+		<description>Creates an add menu that contains a list of url menu items.</description>
 		<name>add-menu</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.AddMenuTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>List of url menu items.</description>
 			<name>addMenuItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a menu item.</description>
 		<name>add-menu-item</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.AddMenuItemTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A title for the menu item.</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A URL to the action to execute.</description>
 			<name>url</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

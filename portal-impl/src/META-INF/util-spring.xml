@@ -329,11 +329,6 @@
 	<bean id="com.liferay.portal.kernel.util.MimeTypesUtil" class="com.liferay.portal.kernel.util.MimeTypesUtil">
 		<property name="mimeTypes" ref="com.liferay.portal.kernel.util.MimeTypes" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.util.MultiValueMapFactoryUtil" class="com.liferay.portal.kernel.util.MultiValueMapFactoryUtil">
-		<property name="multiValueMapFactory">
-			<bean class="com.liferay.portal.util.MultiValueMapFactoryImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil" class="com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil">
 		<property name="serviceBeanMethodInvocationFactory">
 			<bean class="com.liferay.portal.util.ServiceBeanMethodInvocationFactoryImpl" />

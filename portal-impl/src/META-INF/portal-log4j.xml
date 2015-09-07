@@ -233,7 +233,7 @@
 	</category>
 
 	<category name="com.liferay.portal.events.StartupAction">
-		<priority value="ERROR" />
+		<priority value="INFO" />
 	</category>
 
 	<category name="com.liferay.portal.events.StartupHelper">

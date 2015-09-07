@@ -16,12 +16,15 @@ package com.liferay.wiki.web.display.context.logic;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.language.AggregateResourceBundle;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.Company;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * @author Iván Zaera
@@ -36,32 +39,30 @@ public class MailTemplatesHelper {
 	}
 
 	public Map<String, String> getEmailFromDefinitionTerms() {
+		ResourceBundle resourceBundle = getResourceBundle();
+
 		Map<String, String> definitionTerms = new LinkedHashMap<>();
 
 		definitionTerms.put(
 			"[$COMPANY_ID$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-company-id-associated-with-the-wiki"));
+				resourceBundle, "the-company-id-associated-with-the-wiki"));
 		definitionTerms.put(
 			"[$COMPANY_MX$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-company-mx-associated-with-the-wiki"));
+				resourceBundle, "the-company-mx-associated-with-the-wiki"));
 		definitionTerms.put(
 			"[$COMPANY_NAME$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-company-name-associated-with-the-wiki"));
+				resourceBundle, "the-company-name-associated-with-the-wiki"));
 		definitionTerms.put(
 			"[$PAGE_USER_ADDRESS$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
+				resourceBundle,
 				"the-email-address-of-the-user-who-added-the-page"));
 		definitionTerms.put(
 			"[$PAGE_USER_NAME$]",
-			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(), "the-user-who-added-the-page"));
+			LanguageUtil.get(resourceBundle, "the-user-who-added-the-page"));
 
 		definitionTerms.put(
 			"[$PORTLET_NAME$]",
@@ -70,34 +71,32 @@ public class MailTemplatesHelper {
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-site-name-associated-with-the-wiki"));
+				resourceBundle, "the-site-name-associated-with-the-wiki"));
 
 		return definitionTerms;
 	}
 
 	public Map<String, String> getEmailNotificationDefinitionTerms() {
+		ResourceBundle resourceBundle = getResourceBundle();
+
 		Map<String, String> definitionTerms = new LinkedHashMap<>();
 
 		definitionTerms.put(
 			"[$COMPANY_ID$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-company-id-associated-with-the-wiki"));
+				resourceBundle, "the-company-id-associated-with-the-wiki"));
 		definitionTerms.put(
 			"[$COMPANY_MX$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-company-mx-associated-with-the-wiki"));
+				resourceBundle, "the-company-mx-associated-with-the-wiki"));
 		definitionTerms.put(
 			"[$COMPANY_NAME$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-company-name-associated-with-the-wiki"));
+				resourceBundle, "the-company-name-associated-with-the-wiki"));
 		definitionTerms.put(
 			"[$DIFFS_URL$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
+				resourceBundle,
 				"the-url-of-the-page-comparing-this-page-content-with-the-" +
 					"previous-version"));
 		definitionTerms.put(
@@ -111,46 +110,41 @@ public class MailTemplatesHelper {
 		definitionTerms.put(
 			"[$NODE_NAME$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-node-in-which-the-page-was-added"));
+				resourceBundle, "the-node-in-which-the-page-was-added"));
 		definitionTerms.put(
 			"[$PAGE_CONTENT$]",
-			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(), "the-page-content"));
+			LanguageUtil.get(resourceBundle, "the-page-content"));
 		definitionTerms.put(
 			"[$PAGE_DATE_UPDATE$]",
-			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-date-of-the-modifications"));
+			LanguageUtil.get(resourceBundle, "the-date-of-the-modifications"));
 		definitionTerms.put(
 			"[$PAGE_DIFFS$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
+				resourceBundle,
 				"the-page-content-compared-with-the-previous-version-page-" +
 					"content"));
 		definitionTerms.put(
 			"[$PAGE_ID$]",
-			LanguageUtil.get(_wikiRequestHelper.getLocale(), "the-page-id"));
+			LanguageUtil.get(resourceBundle, "the-page-id"));
 		definitionTerms.put(
 			"[$PAGE_SUMMARY$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
+				resourceBundle,
 				"the-summary-of-the-page-or-the-modifications"));
 		definitionTerms.put(
 			"[$PAGE_TITLE$]",
-			LanguageUtil.get(_wikiRequestHelper.getLocale(), "the-page-title"));
+			LanguageUtil.get(resourceBundle, "the-page-title"));
 		definitionTerms.put(
 			"[$PAGE_URL$]",
-			LanguageUtil.get(_wikiRequestHelper.getLocale(), "the-page-url"));
+			LanguageUtil.get(resourceBundle, "the-page-url"));
 		definitionTerms.put(
 			"[$PAGE_USER_ADDRESS$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
+				resourceBundle,
 				"the-email-address-of-the-user-who-added-the-page"));
 		definitionTerms.put(
 			"[$PAGE_USER_NAME$]",
-			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(), "the-user-who-added-the-page"));
+			LanguageUtil.get(resourceBundle, "the-user-who-added-the-page"));
 
 		Company company = _wikiRequestHelper.getCompany();
 
@@ -161,20 +155,28 @@ public class MailTemplatesHelper {
 		definitionTerms.put(
 			"[$SITE_NAME$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-site-name-associated-with-the-wiki"));
+				resourceBundle, "the-site-name-associated-with-the-wiki"));
 		definitionTerms.put(
 			"[$TO_ADDRESS$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-address-of-the-email-recipient"));
+				resourceBundle, "the-address-of-the-email-recipient"));
 		definitionTerms.put(
 			"[$TO_NAME$]",
 			LanguageUtil.get(
-				_wikiRequestHelper.getLocale(),
-				"the-name-of-the-email-recipient"));
+				resourceBundle, "the-name-of-the-email-recipient"));
 
 		return definitionTerms;
+	}
+
+	protected ResourceBundle getResourceBundle() {
+		ResourceBundle bundleResourceBundle = ResourceBundle.getBundle(
+			"content.Language", _wikiRequestHelper.getLocale());
+
+		ResourceBundle portalResourceBundle =
+			LanguageResources.getResourceBundle(_wikiRequestHelper.getLocale());
+
+		return new AggregateResourceBundle(
+			bundleResourceBundle, portalResourceBundle);
 	}
 
 	private final WikiGroupServiceOverriddenConfiguration

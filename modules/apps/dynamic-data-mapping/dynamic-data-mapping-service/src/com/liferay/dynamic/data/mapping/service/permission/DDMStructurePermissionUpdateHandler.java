@@ -28,7 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure"},
+	property = {
+		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure"
+	},
 	service = PermissionUpdateHandler.class
 )
 public class DDMStructurePermissionUpdateHandler
@@ -36,16 +38,16 @@ public class DDMStructurePermissionUpdateHandler
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DDMStructure structure = _ddmStructureLocalService.fetchDDMStructure(
+		DDMStructure ddmStructure = _ddmStructureLocalService.fetchDDMStructure(
 			GetterUtil.getLong(primKey));
 
-		if (structure == null) {
+		if (ddmStructure == null) {
 			return;
 		}
 
-		structure.setModifiedDate(new Date());
+		ddmStructure.setModifiedDate(new Date());
 
-		_ddmStructureLocalService.updateDDMStructure(structure);
+		_ddmStructureLocalService.updateDDMStructure(ddmStructure);
 	}
 
 	@Reference

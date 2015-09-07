@@ -28,7 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"},
+	property = {
+		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"
+	},
 	service = PermissionUpdateHandler.class
 )
 public class DDMTemplatePermissionUpdateHandler
@@ -36,16 +38,16 @@ public class DDMTemplatePermissionUpdateHandler
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DDMTemplate template = _ddmTemplateLocalService.fetchDDMTemplate(
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.fetchDDMTemplate(
 			GetterUtil.getLong(primKey));
 
-		if (template == null) {
+		if (ddmTemplate == null) {
 			return;
 		}
 
-		template.setModifiedDate(new Date());
+		ddmTemplate.setModifiedDate(new Date());
 
-		_ddmTemplateLocalService.updateDDMTemplate(template);
+		_ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
 	}
 
 	@Reference

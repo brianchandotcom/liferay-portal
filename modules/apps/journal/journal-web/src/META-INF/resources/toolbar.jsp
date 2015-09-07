@@ -72,6 +72,14 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 
 			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-move" />
 		</liferay-frontend:management-bar-buttons>
+
+		<liferay-frontend:management-bar-filters>
+			<li>
+				<span class="management-bar-text">
+					<span class="selected-items-count"></span> items selected
+				</span>
+			</li>
+		</liferay-frontend:management-bar-filters>
 	</liferay-frontend:management-bar>
 </div>
 

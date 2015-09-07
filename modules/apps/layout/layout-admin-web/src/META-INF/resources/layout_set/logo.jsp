@@ -57,7 +57,7 @@ boolean showButtons = GroupPermissionUtil.contains(permissionChecker, layoutsAdm
 		defaultLogo="<%= selLayoutSet.getLogoId() == 0 %>"
 		defaultLogoURL="<%= companyLogoURL %>"
 		logoDisplaySelector=".layoutset-logo"
-		showButtons="showButtons"
+		showButtons="<%= showButtons %>"
 		tempImageFileName="<%= String.valueOf(selLayoutSet.getLayoutSetId()) %>"
 	/>
 

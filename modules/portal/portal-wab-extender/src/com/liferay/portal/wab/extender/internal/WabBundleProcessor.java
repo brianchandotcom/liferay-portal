@@ -14,7 +14,10 @@
 
 package com.liferay.portal.wab.extender.internal;
 
+import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.wab.extender.internal.adapter.FilterExceptionAdapter;
 import com.liferay.portal.wab.extender.internal.adapter.ServletContextListenerExceptionAdapter;
 import com.liferay.portal.wab.extender.internal.adapter.ServletExceptionAdapter;
@@ -23,6 +26,8 @@ import com.liferay.portal.wab.extender.internal.definition.ListenerDefinition;
 import com.liferay.portal.wab.extender.internal.definition.ServletDefinition;
 import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinition;
 import com.liferay.portal.wab.extender.internal.definition.WebXMLDefinitionLoader;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -35,14 +40,22 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 
+import javax.portlet.PortletRequest;
+
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextAttributeListener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestAttributeListener;
 import javax.servlet.ServletRequestListener;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionListener;
 
@@ -167,6 +180,8 @@ public class WabBundleProcessor implements ServletContextListener {
 
 				_defaultServletServiceRegistration = createDefaultServlet();
 				_jspServletServiceRegistration = createJspServlet();
+				_restrictPortletServletRequestFilterRegistration =
+					createRestrictPortletServletRequestFilter();
 			}
 			finally {
 				currentThread.setContextClassLoader(_bundleClassLoader);
@@ -251,6 +266,33 @@ public class WabBundleProcessor implements ServletContextListener {
 
 		return _bundleContext.registerService(
 			Servlet.class, servlet, properties);
+	}
+
+	protected ServiceRegistration<Filter>
+		createRestrictPortletServletRequestFilter() {
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
+			_contextName);
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_ASYNC_SUPPORTED,
+			Boolean.TRUE);
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_DISPATCHER,
+			new String[] {
+				DispatcherType.ASYNC.toString(),
+				DispatcherType.FORWARD.toString(),
+				DispatcherType.INCLUDE.toString(),
+				DispatcherType.REQUEST.toString()
+			});
+		properties.put(
+			HttpWhiteboardConstants.HTTP_WHITEBOARD_FILTER_PATTERN, "/*");
+
+		return _bundleContext.registerService(
+			Filter.class, new RestrictPortletServletRequestFilter(),
+			properties);
 	}
 
 	protected void destroyContext() {
@@ -579,6 +621,8 @@ public class WabBundleProcessor implements ServletContextListener {
 	private final Set<ServiceRegistration<Filter>> _filterRegistrations =
 		new ConcurrentSkipListSet<>();
 	private ServiceRegistration<Servlet> _jspServletServiceRegistration;
+	private ServiceRegistration<Filter>
+		_restrictPortletServletRequestFilterRegistration;
 	private final Set<ServiceRegistration<?>> _listenerRegistrations =
 		new ConcurrentSkipListSet<>();
 	private final Logger _logger;
@@ -592,5 +636,59 @@ public class WabBundleProcessor implements ServletContextListener {
 	private WabServletContextHelper _wabServletContextHelper;
 	private WebXMLDefinition _webXMLDefinition;
 	private final WebXMLDefinitionLoader _webXMLDefinitionLoader;
+
+	private class RestrictPortletServletRequestFilter implements Filter {
+
+		@Override
+		public void destroy() {
+		}
+
+		@Override
+		public void doFilter(
+				ServletRequest servletRequest, ServletResponse servletResponse,
+				FilterChain filterChain)
+			throws IOException, ServletException {
+
+			try {
+				filterChain.doFilter(servletRequest, servletResponse);
+			}
+			finally {
+				PortletRequest portletRequest =
+					(PortletRequest)servletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST);
+
+				if (portletRequest == null) {
+					return;
+				}
+
+				RestrictPortletServletRequest restrictPortletServletRequest =
+					new RestrictPortletServletRequest(
+						PortalUtil.getHttpServletRequest(portletRequest));
+
+				Enumeration<String> enumeration =
+					servletRequest.getAttributeNames();
+
+				while (enumeration.hasMoreElements()) {
+					String name = enumeration.nextElement();
+
+					if (!RestrictPortletServletRequest.isSharedRequestAttribute(
+							name)) {
+
+						continue;
+					}
+
+					restrictPortletServletRequest.setAttribute(
+						name, servletRequest.getAttribute(name));
+				}
+
+				restrictPortletServletRequest.mergeSharedAttributes();
+			}
+		}
+
+		@Override
+		public void init(FilterConfig filterConfig) throws ServletException {
+		}
+
+	}
 
 }

@@ -5,12 +5,6 @@ dependencies {
 	compile project(":apps:application-list:application-list-taglib")
 }
 
-deploy {
-	from("lib") {
-		include "com.liferay.osgi.service.tracker.map.jar"
-	}
-}
-
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }

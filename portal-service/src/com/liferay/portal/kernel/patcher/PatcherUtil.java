@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.patcher;
+package com.liferay.portal.kernel.patcher;
 
 import java.io.File;
 

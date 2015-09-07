@@ -72,13 +72,11 @@ public class GitUtil {
 
 					latestAuthorCommitIds.add(commitId);
 				}
+				else if (line.endsWith("<" + latestAuthor + ">")) {
+					latestAuthorCommitIds.add(commitId);
+				}
 				else {
-					if (line.endsWith("<" + latestAuthor + ">")) {
-						latestAuthorCommitIds.add(commitId);
-					}
-					else {
-						break;
-					}
+					break;
 				}
 			}
 		}

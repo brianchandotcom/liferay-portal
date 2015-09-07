@@ -85,7 +85,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 
 		<li class="list-group-item <%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %> <%= Validator.isNotNull(row.getState()) ? "list-group-item-" + row.getState() : StringPool.BLANK %>"  <%= AUIUtil.buildData(data) %>>
 			<c:if test="<%= rowChecker != null %>">
-				<div class="hidden-sm hidden-x list-group-item-field">
+				<div class="checkbox-default hidden-sm hidden-x list-group-item-field">
 					<%= rowChecker.getRowCheckBox(request, rowIsChecked, rowChecker.isDisabled(row.getObject()), row.getPrimaryKey()) %>
 				</div>
 			</c:if>

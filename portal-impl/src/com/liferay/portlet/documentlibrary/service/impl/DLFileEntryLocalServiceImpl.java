@@ -2573,6 +2573,9 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntryMetadataLocalService.deleteFileVersionFileEntryMetadata(
 			dlFileVersion.getFileVersionId());
 
+		assetEntryLocalService.deleteEntry(
+			DLFileEntryConstants.getClassName(), dlFileVersion.getPrimaryKey());
+
 		DLStoreUtil.deleteFile(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(),

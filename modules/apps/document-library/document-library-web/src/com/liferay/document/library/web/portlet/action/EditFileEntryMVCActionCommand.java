@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -397,12 +399,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		FileEntry fileEntry = DLAppServiceUtil.moveFileEntryToTrash(
-			fileEntryId);
+		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
 
-		if (fileEntry.getModel() instanceof DLFileEntry) {
+		if (fileEntry.isRepositoryCapabilityProvided(TrashCapability.class)) {
+			fileEntry = DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
+
 			TrashUtil.addTrashSessionMessages(
-				actionRequest, (DLFileEntry)fileEntry.getModel());
+				actionRequest, (TrashedModel)fileEntry.getModel());
 		}
 
 		hideDefaultSuccessMessage(actionRequest);

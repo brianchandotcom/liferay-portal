@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -77,7 +78,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.hibernate.util.JDBCExceptionReporter;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -949,6 +952,72 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			Assert.assertEquals(1, moveCounter.get());
 		}
+
+	}
+
+	@Sync
+	public static class WhenMovingAFileEntryToTrash extends BaseDLAppTestCase {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				SynchronousDestinationTestRule.INSTANCE);
+
+		@Before
+		public void setUp() throws Exception {
+			super.setUp();
+
+			_fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
+		}
+
+		@Test
+		public void shouldCancelCheckout() throws Exception {
+			DLAppServiceUtil.checkOutFileEntry(
+				_fileEntry.getFileEntryId(),
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+			Assert.assertTrue(_fileEntry.isCheckedOut());
+
+			DLAppServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
+
+			_fileEntry = DLAppServiceUtil.getFileEntry(
+				_fileEntry.getFileEntryId());
+
+			Assert.assertFalse(_fileEntry.isCheckedOut());
+		}
+
+		@Test
+		public void shouldDeletePWCAssetEntry() throws Exception {
+			DLAppServiceUtil.checkOutFileEntry(
+				_fileEntry.getFileEntryId(),
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+			FileVersion fileVersion = _fileEntry.getLatestFileVersion(false);
+
+			Assert.assertNotNull(
+				AssetEntryLocalServiceUtil.fetchEntry(
+					DLFileEntryConstants.getClassName(),
+					fileVersion.getFileVersionId()));
+
+			DLAppServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
+
+			Assert.assertNull(
+				AssetEntryLocalServiceUtil.fetchEntry(
+					DLFileEntryConstants.getClassName(),
+					fileVersion.getFileVersionId()));
+		}
+
+		@After
+		public void tearDown() throws Exception {
+			DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
+
+			super.tearDown();
+		}
+
+		private FileEntry _fileEntry;
 
 	}
 

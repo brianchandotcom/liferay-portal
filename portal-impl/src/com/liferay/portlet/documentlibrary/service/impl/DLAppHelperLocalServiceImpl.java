@@ -530,6 +530,11 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		try {
+			if (fileEntry.isCheckedOut()) {
+				dlFileEntryLocalService.cancelCheckOut(
+					userId, fileEntry.getFileEntryId());
+			}
+
 			return doMoveFileEntryToTrash(userId, fileEntry);
 		}
 		finally {

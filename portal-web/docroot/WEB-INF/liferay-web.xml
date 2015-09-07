@@ -1002,7 +1002,6 @@
 		<filter-name>Upload Servlet Request Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>INCLUDE</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 </web-app>

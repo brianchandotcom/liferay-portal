@@ -60,6 +60,10 @@ public class PatcherUtil {
 		return getPatcher().getProperties();
 	}
 
+	public static boolean hasInconsistentPatchLevels() {
+		return getPatcher().hasInconsistentPatchLevels();
+	}
+
 	public static boolean isConfigured() {
 		return getPatcher().isConfigured();
 	}

@@ -156,6 +156,11 @@ public class PatcherImpl implements Patcher {
 	}
 
 	@Override
+	public boolean hasInconsistentPatchLevels() {
+		return _inconsistentPatchLevels;
+	}
+
+	@Override
 	public boolean isConfigured() {
 		return _configured;
 	}
@@ -196,6 +201,8 @@ public class PatcherImpl implements Patcher {
 							Arrays.toString(serviceJarPatches));
 				}
 			}
+
+			_inconsistentPatchLevels = true;
 
 			throw new PatchInconsistencyException();
 		}
@@ -258,6 +265,7 @@ public class PatcherImpl implements Patcher {
 
 	private boolean _configured;
 	private String[] _fixedIssueKeys;
+	private boolean _inconsistentPatchLevels;
 	private String[] _installedPatchNames;
 	private File _patchDirectory;
 	private int _patchingToolVersion;

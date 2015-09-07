@@ -55,6 +55,8 @@ public interface Patcher {
 
 	public Properties getProperties();
 
+	public boolean hasInconsistentPatchLevels();
+
 	public boolean isConfigured();
 
 	public void verifyPatchLevels() throws PatchInconsistencyException;

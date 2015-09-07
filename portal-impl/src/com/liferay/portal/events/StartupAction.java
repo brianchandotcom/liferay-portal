@@ -91,7 +91,7 @@ public class StartupAction extends SimpleAction {
 
 		// Installed patches
 
-		if (_log.isInfoEnabled()) {
+		if (_log.isInfoEnabled() && !PatcherUtil.hasInconsistentPatchLevels()) {
 			String installedPatches = StringUtil.merge(
 				PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
 

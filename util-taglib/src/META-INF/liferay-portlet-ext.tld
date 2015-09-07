@@ -470,6 +470,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>portletInstanceId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>portletName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

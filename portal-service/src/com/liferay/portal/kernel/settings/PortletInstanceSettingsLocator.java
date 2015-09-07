@@ -17,7 +17,9 @@ package com.liferay.portal.kernel.settings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Ivan Zaera
@@ -56,7 +58,7 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 
 		return
 			_settingsLocatorHelper.getPortletInstancePortletPreferencesSettings(
-				_layout.getCompanyId(), _layout.getPlid(), _settingsId,
+				_layout.getCompanyId(), getPlid(), _settingsId,
 				groupPortletPreferencesSettings);
 	}
 
@@ -76,6 +78,33 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 		}
 	}
 
+	protected long getPlid() {
+		if (isEmbeddedPortlet()) {
+			return PortletKeys.PREFS_PLID_SHARED;
+		}
+
+		return _layout.getPlid();
+	}
+
+	protected boolean isEmbeddedPortlet() {
+		if (_isEmbeddedPortlet != null) {
+			return _isEmbeddedPortlet;
+		}
+
+		_isEmbeddedPortlet = false;
+
+		if (_layout.isSupportsEmbeddedPortlets()) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)_layout.getLayoutType();
+
+			_isEmbeddedPortlet = layoutTypePortlet.isPortletEmbedded(
+				_settingsId);
+		}
+
+		return _isEmbeddedPortlet;
+	}
+
+	private Boolean _isEmbeddedPortlet = null;
 	private final Layout _layout;
 	private final String _settingsId;
 	private final SettingsLocatorHelper _settingsLocatorHelper =

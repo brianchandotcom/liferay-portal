@@ -167,8 +167,7 @@ public class GitUtil {
 
 			if (errorMessage.contains("Cannot run program")) {
 				System.out.println(
-					"Add Git to your PATH system variable before executing " +
-						"'ant format-source-local-changes'.");
+					"Add Git to your PATH system variable first.");
 
 				return null;
 			}

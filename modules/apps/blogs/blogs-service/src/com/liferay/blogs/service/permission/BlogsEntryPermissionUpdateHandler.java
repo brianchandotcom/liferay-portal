@@ -36,16 +36,16 @@ public class BlogsEntryPermissionUpdateHandler
 
 	@Override
 	public void updatedPermission(String primKey) {
-		BlogsEntry entry = _blogsEntryLocalService.fetchBlogsEntry(
+		BlogsEntry blogsEntry = _blogsEntryLocalService.fetchBlogsEntry(
 			GetterUtil.getLong(primKey));
 
-		if (entry == null) {
+		if (blogsEntry == null) {
 			return;
 		}
 
-		entry.setModifiedDate(new Date());
+		blogsEntry.setModifiedDate(new Date());
 
-		_blogsEntryLocalService.updateBlogsEntry(entry);
+		_blogsEntryLocalService.updateBlogsEntry(blogsEntry);
 	}
 
 	@Reference

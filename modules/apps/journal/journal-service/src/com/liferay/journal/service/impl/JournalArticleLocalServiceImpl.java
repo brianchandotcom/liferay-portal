@@ -437,10 +437,13 @@ public class JournalArticleLocalServiceImpl
 
 		// Asset
 
+		Double priority = GetterUtil.getDouble(
+			serviceContext.getAttribute("priority"));
+
 		updateAsset(
 			userId, article, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+			serviceContext.getAssetLinkEntryIds(), priority);
 
 		// Comment
 
@@ -880,7 +883,7 @@ public class JournalArticleLocalServiceImpl
 
 		updateAsset(
 			userId, newArticle, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds);
+			assetLinkEntryIds, null);
 
 		// Dynamic data mapping
 
@@ -5302,10 +5305,13 @@ public class JournalArticleLocalServiceImpl
 
 		// Asset
 
+		Double priority = GetterUtil.getDouble(
+			serviceContext.getAttribute("priority"));
+
 		updateAsset(
 			userId, article, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
+			serviceContext.getAssetLinkEntryIds(), priority);
 
 		// Dynamic data mapping
 
@@ -5574,12 +5580,13 @@ public class JournalArticleLocalServiceImpl
 	 * @param  assetCategoryIds the primary keys of the new asset categories
 	 * @param  assetTagNames the new asset tag names
 	 * @param  assetLinkEntryIds the primary keys of the new asset link entries
+	 * @param priority the priority of the asset
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public void updateAsset(
 			long userId, JournalArticle article, long[] assetCategoryIds,
-			String[] assetTagNames, long[] assetLinkEntryIds)
+			String[] assetTagNames, long[] assetLinkEntryIds, Double priority)
 		throws PortalException {
 
 		boolean visible = article.isApproved();
@@ -5614,7 +5621,7 @@ public class JournalArticleLocalServiceImpl
 				getClassTypeId(article), assetCategoryIds, assetTagNames, false,
 				null, null, null, ContentTypes.TEXT_HTML, article.getTitle(),
 				article.getDescription(), article.getDescription(), null,
-				article.getLayoutUuid(), 0, 0, null);
+				article.getLayoutUuid(), 0, 0, priority);
 		}
 		else {
 			JournalArticleResource journalArticleResource =
@@ -5629,7 +5636,7 @@ public class JournalArticleLocalServiceImpl
 				assetCategoryIds, assetTagNames, visible, null, null, null,
 				ContentTypes.TEXT_HTML, article.getTitle(),
 				article.getDescription(), article.getDescription(), null,
-				article.getLayoutUuid(), 0, 0, null);
+				article.getLayoutUuid(), 0, 0, priority);
 		}
 
 		assetLinkLocalService.updateLinks(

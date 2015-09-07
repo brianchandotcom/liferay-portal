@@ -81,6 +81,8 @@ import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.ObjectAlreadyExistsException;
 import org.quartz.Scheduler;
+import org.quartz.SimpleScheduleBuilder;
+import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
@@ -747,15 +749,27 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			return triggerBuilder.build();
 		}
 
-		CalendarIntervalScheduleBuilder calendarIntervalScheduleBuilder =
-			CalendarIntervalScheduleBuilder.calendarIntervalSchedule();
-
 		TimeUnit timeUnit = objectValuePair.getValue();
 
-		calendarIntervalScheduleBuilder.withInterval(
-			interval, IntervalUnit.valueOf(timeUnit.name()));
+		if (timeUnit == TimeUnit.MILLISECOND) {
+			SimpleScheduleBuilder simpleScheduleBuilder =
+				SimpleScheduleBuilder.simpleSchedule();
 
-		triggerBuilder.withSchedule(calendarIntervalScheduleBuilder);
+			simpleScheduleBuilder.withIntervalInMilliseconds(interval);
+			simpleScheduleBuilder.withRepeatCount(
+				SimpleTrigger.REPEAT_INDEFINITELY);
+
+			triggerBuilder.withSchedule(simpleScheduleBuilder);
+		}
+		else {
+			CalendarIntervalScheduleBuilder calendarIntervalScheduleBuilder =
+				CalendarIntervalScheduleBuilder.calendarIntervalSchedule();
+
+			calendarIntervalScheduleBuilder.withInterval(
+				interval, IntervalUnit.valueOf(timeUnit.name()));
+
+			triggerBuilder.withSchedule(calendarIntervalScheduleBuilder);
+		}
 
 		return triggerBuilder.build();
 	}
@@ -832,6 +846,16 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				new com.liferay.portal.kernel.scheduler.CronTrigger(
 					jobName, groupName, cronTrigger.getStartTime(),
 					cronTrigger.getEndTime(), cronTrigger.getCronExpression()));
+		}
+		else if (trigger instanceof SimpleTrigger) {
+			SimpleTrigger simpleTrigger = SimpleTrigger.class.cast(trigger);
+
+			schedulerResponse.setTrigger(
+				new IntervalTrigger(
+					jobName, groupName, simpleTrigger.getStartTime(),
+					simpleTrigger.getEndTime(),
+					(int)simpleTrigger.getRepeatInterval(),
+					TimeUnit.MILLISECOND));
 		}
 
 		return schedulerResponse;

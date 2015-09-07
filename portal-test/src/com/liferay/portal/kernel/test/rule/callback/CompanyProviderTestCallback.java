@@ -16,9 +16,8 @@ package com.liferay.portal.kernel.test.rule.callback;
 
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
+
 import org.junit.runner.Description;
-import org.junit.runner.RunWith;
-import org.junit.runner.Runner;
 
 /**
  * @author Cristina González
@@ -26,7 +25,7 @@ import org.junit.runner.Runner;
 public class CompanyProviderTestCallback extends BaseTestCallback<Long, Long> {
 
 	public static final CompanyProviderTestCallback INSTANCE =
-			new CompanyProviderTestCallback();
+		new CompanyProviderTestCallback();
 
 	@Override
 	public void doAfterClass(Description description, Long previousCompanyId) {

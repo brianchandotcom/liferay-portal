@@ -247,7 +247,7 @@ portletURL.setParameter("target", target);
 			/>
 
 			<liferay-ui:search-container-column-text>
-				<c:if test="<%= ((Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()))) %>">
+				<c:if test="<%= Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()) %>">
 
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();

@@ -446,7 +446,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editors.web#" + editorName + "#onEditorCreate" %>' />
 
-		<c:if test="<%= inlineEdit && (Validator.isNotNull(inlineEditSaveURL)) %>">
+		<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
 			inlineEditor = new Liferay.CKEditorInline(
 				{
 					editor: ckEditor,

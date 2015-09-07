@@ -374,7 +374,7 @@
 
 <script type="text/javascript">
 	// <![CDATA[
-		<c:if test="<%= (layoutTypePortlet != null) %>">
+		<c:if test="<%= layoutTypePortlet != null %>">
 
 			<%
 			List<Portlet> allPortlets = layoutTypePortlet.getAllPortlets(true);

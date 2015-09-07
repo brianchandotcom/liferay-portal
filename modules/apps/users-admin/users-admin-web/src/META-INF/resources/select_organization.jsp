@@ -102,7 +102,7 @@ if (Validator.isNotNull(target)) {
 			/>
 
 			<liferay-ui:search-container-column-text>
-				<c:if test="<%= (Validator.isNull(p_u_i_d) || OrganizationMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, organization.getOrganizationId())) %>">
+				<c:if test="<%= Validator.isNull(p_u_i_d) || OrganizationMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, organization.getOrganizationId()) %>">
 
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();

@@ -32,7 +32,7 @@
 				}
 			);
 
-			<c:if test="<%= themeDisplay.isSignedIn() && PropsValues.SESSION_TIMEOUT_WARNING > 0 %>">
+			<c:if test="<%= themeDisplay.isSignedIn() && (PropsValues.SESSION_TIMEOUT_WARNING > 0) %>">
 				Liferay.Session.plug(Liferay.SessionDisplay);
 			</c:if>
 		</aui:script>

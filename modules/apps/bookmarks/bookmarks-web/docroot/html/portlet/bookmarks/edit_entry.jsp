@@ -80,7 +80,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<aui:model-context bean="<%= entry %>" model="<%= BookmarksEntry.class %>" />
 
 	<aui:fieldset>
-		<c:if test="<%= ((entry != null) || (folderId <= 0) || Validator.isNotNull(referringPortletResource)) %>">
+		<c:if test="<%= (entry != null) || (folderId <= 0) || Validator.isNotNull(referringPortletResource) %>">
 
 			<%
 			String folderName = StringPool.BLANK;

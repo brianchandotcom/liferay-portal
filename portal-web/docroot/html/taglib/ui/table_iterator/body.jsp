@@ -35,7 +35,7 @@
 </c:if>
 
 <c:if test="<%= (listPos + 1) < list.size() %>">
-	<c:if test="<%= (listPos % rowLength) + 1 < rowLength %>">
+	<c:if test="<%= ((listPos % rowLength) + 1) < rowLength %>">
 		<td style="padding-left: <%= rowPadding %>px;"></td>
 	</c:if>
 

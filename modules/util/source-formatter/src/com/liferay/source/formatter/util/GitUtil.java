@@ -72,13 +72,11 @@ public class GitUtil {
 
 					latestAuthorCommitIds.add(commitId);
 				}
+				else if (line.endsWith("<" + latestAuthor + ">")) {
+					latestAuthorCommitIds.add(commitId);
+				}
 				else {
-					if (line.endsWith("<" + latestAuthor + ">")) {
-						latestAuthorCommitIds.add(commitId);
-					}
-					else {
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -167,8 +165,7 @@ public class GitUtil {
 
 			if (errorMessage.contains("Cannot run program")) {
 				System.out.println(
-					"Add Git to your PATH system variable before executing " +
-						"'ant format-source-local-changes'.");
+					"Add Git to your PATH system variable first.");
 
 				return null;
 			}

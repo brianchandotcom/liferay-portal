@@ -291,7 +291,7 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 <liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/preview_article_content.jsp" />
 
-	<c:if test="<%= (article != null) %>">
+	<c:if test="<%= article != null %>">
 		<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 		<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 		<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />

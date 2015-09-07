@@ -70,7 +70,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 		<aui:nav-item href="<%= editFileShortcutURL %>" iconCssClass="icon-external-link" label="shortcut" />
 	</c:if>
 
-	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY)) %>">
+	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY) %>">
 		<portlet:renderURL var="addRepositoryURL">
 			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

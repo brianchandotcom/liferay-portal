@@ -431,7 +431,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 			},
 			rootNode: '#<%= randomNamespace %>ItemSelectorContainer'
 
-			<c:if test="<%= (draggableFileReturnType != null) %>">
+			<c:if test="<%= draggableFileReturnType != null %>">
 				, uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>',
 				uploadItemUrl: '<%= uploadURL.toString() %>'
 			</c:if>

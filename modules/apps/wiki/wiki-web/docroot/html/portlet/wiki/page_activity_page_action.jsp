@@ -32,7 +32,7 @@ WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.ge
 
 <c:if test="<%= socialActivityWikiPage != null %>">
 	<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-		<c:if test="<%= (version != wikiPage.getVersion()) && (socialActivityWikiPage.isApproved()) && (WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) %>">
+		<c:if test="<%= (version != wikiPage.getVersion()) && socialActivityWikiPage.isApproved() && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 			<portlet:actionURL var="revertURL">
 				<portlet:param name="struts_action" value="/wiki/edit_page" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />

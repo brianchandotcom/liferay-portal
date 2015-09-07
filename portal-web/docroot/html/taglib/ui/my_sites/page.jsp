@@ -271,7 +271,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 													id="my-site-public-pages"
 												</c:if>
 
-												<c:if test="<%= (mySiteGroup.getPublicLayoutsPageCount() > 0) %>">
+												<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
 													onclick="Liferay.Util.forcePost(this); return false;"
 												</c:if>
 

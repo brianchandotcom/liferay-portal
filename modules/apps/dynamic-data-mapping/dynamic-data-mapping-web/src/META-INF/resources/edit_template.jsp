@@ -190,7 +190,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 					<div class="form-group">
 						<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />
 
-						<c:if test="<%= ((template == null) || (template.getClassPK() == 0)) %>">
+						<c:if test="<%= (template == null) || (template.getClassPK() == 0) %>">
 							<liferay-ui:icon
 								iconCssClass="icon-search"
 								label="<%= true %>"

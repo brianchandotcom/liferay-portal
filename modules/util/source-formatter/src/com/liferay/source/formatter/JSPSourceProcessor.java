@@ -658,6 +658,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					checkIfClauseParentheses(trimmedLine, fileName, lineCount);
 				}
 
+				Matcher matcher = _ifTagPattern.matcher(trimmedLine);
+
+				if (matcher.find()) {
+					String ifClause = "if (" + matcher.group(2) + ") {";
+
+					checkIfClauseParentheses(ifClause, fileName, lineCount);
+				}
+
 				if (readAttributes) {
 					if (!trimmedLine.startsWith(StringPool.FORWARD_SLASH) &&
 						!trimmedLine.startsWith(StringPool.GREATER_THAN)) {
@@ -813,7 +821,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 						if (y != -1) {
 							String includeFileName = line.substring(x + 1, y);
 
-							Matcher matcher = _jspIncludeFilePattern.matcher(
+							matcher = _jspIncludeFilePattern.matcher(
 								includeFileName);
 
 							if (!matcher.find()) {
@@ -1541,6 +1549,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	private Set<String> _checkedForIncludesFileNames = new HashSet<>();
 	private final List<String> _duplicateImportClassNames = new ArrayList<>();
+	private final Pattern _ifTagPattern = Pattern.compile(
+		"^<c:if test=('|\")<%= (.+) %>('|\")>$");
 	private final List<String> _importClassNames = new ArrayList<>();
 	private final Map<String, Integer> _importCountMap = new HashMap<>();
 	private final Pattern _importsPattern = Pattern.compile(

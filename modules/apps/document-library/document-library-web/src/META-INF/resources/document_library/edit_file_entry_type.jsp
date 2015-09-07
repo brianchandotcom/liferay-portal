@@ -138,7 +138,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 			/>
 		</liferay-ui:panel>
 
-		<c:if test="<%= (fileEntryType == null) %>">
+		<c:if test="<%= fileEntryType == null %>">
 			<aui:field-wrapper label="permissions">
 				<liferay-ui:input-permissions
 					modelName="<%= DLFileEntryType.class.getName() %>"

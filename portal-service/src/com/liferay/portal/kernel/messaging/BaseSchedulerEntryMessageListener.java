@@ -89,11 +89,6 @@ public abstract class BaseSchedulerEntryMessageListener
 	}
 
 	@Override
-	public void setTriggerValue(long triggerValue) {
-		schedulerEntry.setTriggerValue(triggerValue);
-	}
-
-	@Override
 	public void setTriggerValue(String triggerValue) {
 		schedulerEntry.setTriggerValue(triggerValue);
 	}

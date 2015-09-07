@@ -15,6 +15,7 @@
 package com.liferay.portal.workflow.kaleo.parser.impl;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.xml.Document;
@@ -317,8 +318,8 @@ public class XMLWorkflowModelParser implements WorkflowModelParser {
 
 		double duration = GetterUtil.getDouble(
 			delayElement.elementText("duration"));
-		DurationScale durationScale = DurationScale.parse(
-			delayElement.elementText("scale"));
+		DurationScale durationScale = DurationScale.valueOf(
+			StringUtil.toUpperCase(delayElement.elementText("scale")));
 
 		return new DelayDuration(duration, durationScale);
 	}

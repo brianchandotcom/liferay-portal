@@ -1367,7 +1367,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					TimeUnit.SECOND.getValue());
 
 				schedulerEntry.setTimeUnit(
-					TimeUnit.parse(StringUtil.toLowerCase(timeUnit)));
+					TimeUnit.valueOf(StringUtil.toUpperCase(timeUnit)));
 			}
 
 			portletModel.addSchedulerEntry(schedulerEntry);

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.util.Date;
@@ -25,34 +26,41 @@ public class IntervalTrigger extends BaseTrigger {
 
 	public IntervalTrigger(
 		String jobName, String groupName, Date startDate, Date endDate,
-		long interval) {
+		int interval, TimeUnit timeUnit) {
 
 		super(jobName, groupName, TriggerType.SIMPLE, startDate, endDate);
 
 		_interval = interval;
+		_timeUnit = timeUnit;
 	}
 
 	public IntervalTrigger(
-		String jobName, String groupName, Date startDate, long interval) {
+		String jobName, String groupName, Date startDate, int interval,
+		TimeUnit timeUnit) {
 
-		this(jobName, groupName, startDate, null, interval);
+		this(jobName, groupName, startDate, null, interval, timeUnit);
 	}
 
-	public IntervalTrigger(String jobName, String groupName, long interval) {
-		this(jobName, groupName, null, null, interval);
+	public IntervalTrigger(
+		String jobName, String groupName, int interval, TimeUnit timeUnit) {
+
+		this(jobName, groupName, null, null, interval, timeUnit);
 	}
 
 	@Override
-	public Long getTriggerContent() {
-		return _interval;
+	public ObjectValuePair<Integer, TimeUnit> getTriggerContent() {
+		return new ObjectValuePair<>(_interval, _timeUnit);
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("{interval=");
 		sb.append(_interval);
+		sb.append(", ");
+		sb.append("timeUnit=");
+		sb.append(_timeUnit);
 		sb.append(", ");
 		sb.append(super.toString());
 		sb.append("}");
@@ -60,6 +68,7 @@ public class IntervalTrigger extends BaseTrigger {
 		return sb.toString();
 	}
 
-	private final Long _interval;
+	private final int _interval;
+	private final TimeUnit _timeUnit;
 
 }

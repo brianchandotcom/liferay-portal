@@ -113,8 +113,8 @@ public class LogoSelectorTag extends IncludeTag {
 			String.valueOf(_showBackground));
 
 		request.setAttribute(
-				"liferay-ui:logo-selector:showButtons",
-				String.valueOf(_showButtons));
+			"liferay-ui:logo-selector:showButtons",
+			String.valueOf(_showButtons));
 
 		request.setAttribute(
 			"liferay-ui:logo-selector:tempImageFileName", _tempImageFileName);

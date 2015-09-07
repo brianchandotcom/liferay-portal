@@ -56,7 +56,8 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 
 		return
 			_settingsLocatorHelper.getPortletInstancePortletPreferencesSettings(
-				_layout, _settingsId, groupPortletPreferencesSettings);
+				_layout.getCompanyId(), _layout.getPlid(), _settingsId,
+				groupPortletPreferencesSettings);
 	}
 
 	@Override

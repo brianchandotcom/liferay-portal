@@ -18,6 +18,8 @@ AUI.add(
 
 		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
 
+		var SELECTED_ITEMS_COUNT_SELECTOR = 'selected-items-count';
+
 		var STR_ALL_CHECKBOX = 'allRowIds';
 
 		var STR_CLICK = 'click';
@@ -55,6 +57,11 @@ AUI.add(
 
 					displayStyleToolbar: {
 						setter: A.one
+					},
+
+					itemsCountSelector: {
+						validator: Lang.isString,
+						value: SELECTED_ITEMS_COUNT_SELECTOR
 					},
 
 					portletContainerId: {
@@ -113,6 +120,10 @@ AUI.add(
 						instance._checkBoxesId = instance.get('checkBoxesId');
 
 						instance._displayStyleCSSClass = instance.get('displayStyleCSSClass');
+
+						instance._selectedItemsCount = 0;
+
+						instance._selectedItemsCountSelector = instance.get('itemsCountSelector');
 
 						instance._eventHandles = [
 							Liferay.on('liferay-app-view-move:dragStart', instance._onDragStart, instance)
@@ -210,11 +221,21 @@ AUI.add(
 
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 
-						Util.checkAllBox(
+						var selectedItemsCount = Util.checkAllBox(
 							instance._entriesContainer,
 							instance._checkBoxesId,
 							instance._selectAllCheckbox
 						);
+
+						instance._setSelectedItemsCount(selectedItemsCount);
+					},
+
+					_setSelectedItemsCount: function(itemsCount) {
+						var instance = this;
+
+						instance._selectedItemsCount = itemsCount;
+
+						instance.all(STR_DOT + instance._selectedItemsCountSelector).html(itemsCount);
 					},
 
 					_toggleEntriesSelection: function(event) {
@@ -231,11 +252,13 @@ AUI.add(
 							);
 						}
 
-						Util.checkAllBox(
+						var selectedItemsCount = Util.checkAllBox(
 							instance._entriesContainer,
 							instance._checkBoxesId,
 							instance._selectAllCheckbox
 						);
+
+						instance._setSelectedItemsCount(selectedItemsCount);
 
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 

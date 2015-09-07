@@ -763,6 +763,19 @@ public class LayoutTypePortletImpl
 	}
 
 	@Override
+	public boolean isPortletEmbedded(String portletId) {
+		List<Portlet> embeddedPortlets = getEmbeddedPortlets();
+
+		for (Portlet embeddedPortlet : embeddedPortlets) {
+			if (portletId.equals(embeddedPortlet.getPortletId())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public void movePortletId(
 		long userId, String portletId, String columnId, int columnPos) {
 

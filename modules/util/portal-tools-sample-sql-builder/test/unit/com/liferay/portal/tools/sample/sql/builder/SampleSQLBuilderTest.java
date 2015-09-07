@@ -142,8 +142,6 @@ public class SampleSQLBuilderTest {
 	private void _loadHypersonic(String sqlDir, String outputDir)
 		throws Exception {
 
-		Class.forName("org.hsqldb.jdbcDriver");
-
 		Connection connection = null;
 		Statement statement = null;
 

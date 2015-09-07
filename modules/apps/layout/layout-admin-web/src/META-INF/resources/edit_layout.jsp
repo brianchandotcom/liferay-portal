@@ -86,13 +86,12 @@ if (selLayout.isSupportsEmbeddedPortlets()) {
 }
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
-boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 %>
 
 <c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav" id="layoutsNav">
-			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT) && showAddAction %>">
+			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT) %>">
 				<portlet:renderURL var="addPagesURL">
 					<portlet:param name="mvcPath" value="/add_layout.jsp" />
 					<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
@@ -243,14 +242,12 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 				</c:if>
 			</c:if>
 
-			<c:if test="<%= !selGroup.hasLocalOrRemoteStagingGroup() || selGroup.isStagingGroup() %>">
-				<liferay-ui:form-navigator
-					displayStyle="<%= displayStyle %>"
-					formModelBean="<%= selLayout %>"
-					id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT %>"
-					showButtons="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
-				/>
-			</c:if>
+			<liferay-ui:form-navigator
+				displayStyle="<%= displayStyle %>"
+				formModelBean="<%= selLayout %>"
+				id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT %>"
+				showButtons="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
+			/>
 		</aui:form>
 	</c:otherwise>
 </c:choose>

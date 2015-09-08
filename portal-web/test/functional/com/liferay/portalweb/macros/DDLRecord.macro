@@ -165,18 +165,6 @@
 		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 	</command>
 
-	<command name="populateFieldDocumentsAndMediaUpload">
-		<var name="key_fieldName" value="${fieldName}" />
-
-		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Upload" />
-
-		<execute function="SikuliClick" locator1="OS#FILE_DIALOG_BOX_TYPE_FILE_NAME_ICON_PNG" />
-		<execute function="SikuliUploadCommonFile" locator1="OS#FILE_DIALOG_BOX_FILE_NAME_FIELD_PNG" value1="${document}" />
-		<execute function="Pause" locator1="5000" />
-
-		<execute function="AssertTextEquals" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_FIELD" value1="${document}" />
-	</command>
-
 	<command name="populateFieldGeolocation">
 		<var name="key_fieldName" value="${fieldName}" />
 

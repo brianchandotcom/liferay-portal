@@ -15,23 +15,15 @@ liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
 
-task buildNodeSass(type: ExecuteNodeTask)
 task downloadBower(type: DownloadNodeModuleTask)
 task downloadGulp(type: DownloadNodeModuleTask)
-task installNodeSass(type: ExecuteNodeTask)
 task npmInstall(type: ExecuteNpmTask)
 task runGulp(type: ExecuteNodeTask)
 task bowerInstall(type: ExecuteNodeTask)
 
 bowerInstall {
 	args = [new File(node.nodeDir, "node_modules/bower/bin/bower"), "install", "--allow-root"]
-	dependsOn buildNodeSass
-}
-
-buildNodeSass {
-	args = ["scripts/build.js"]
-	dependsOn installNodeSass
-	workingDir = "node_modules/gulp-metal/node_modules/gulp-sass/node_modules/node-sass"
+	dependsOn npmInstall
 }
 
 configJSModules {
@@ -47,12 +39,6 @@ downloadBower {
 downloadGulp {
 	moduleName = "gulp"
 	moduleVersion = gulpVersion
-}
-
-installNodeSass {
-	args = ["scripts/install.js"]
-	dependsOn npmInstall
-	workingDir = "node_modules/gulp-metal/node_modules/gulp-sass/node_modules/node-sass"
 }
 
 npmInstall {

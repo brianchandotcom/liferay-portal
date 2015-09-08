@@ -59,7 +59,7 @@ public class DownloadNodeTask extends DefaultTask {
 	}
 
 	@TaskAction
-	public synchronized void downloadNode() throws IOException {
+	public void downloadNode() throws IOException {
 		final File nodeDir = getNodeDir();
 		final String nodeUrl = getNodeUrl();
 		final Project project = getProject();

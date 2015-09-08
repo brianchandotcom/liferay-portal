@@ -159,6 +159,18 @@ dependencies {
 	xmlFormatter group: "com.liferay", name: "com.liferay.xml.formatter", version: "default"
 }
 
+downloadNode {
+	doLast {
+		File npmrcFile = new File(nodeDir, "etc/npmrc")
+
+		npmrcFile << """
+fetch-retries = 10
+fetch-retry-maxtimeout = 120000
+fetch-retry-mintimeout = 60000
+"""
+	}
+}
+
 eclipse {
 	classpath {
 		file {
@@ -206,6 +218,12 @@ jspC {
 jsTranspiler {
 	babelVersion = project.properties["nodejs.babel.version"]
 	lfrAmdLoaderVersion = project.properties["nodejs.lfr.amd.loader.version"]
+}
+
+if (System.getenv("JENKINS_HOME")) {
+	node {
+		nodeUrl = "https://nodejs.org/dist/v${nodeVersion}/node-v${nodeVersion}-linux-x64.tar.gz"
+	}
 }
 
 repositories {

@@ -25,18 +25,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav">
-			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) %>">
-				<liferay-security:permissionsURL
-					modelResource="com.liferay.portlet.asset"
-					modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
-					resourcePrimKey="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>"
-					var="permissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
-
-				<aui:nav-item href="<%= permissionsURL %>" iconCssClass="icon-lock" label="permissions" useDialog="<%= true %>" />
-			</c:if>
-
 			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="vocabulariesActionsButton" label="actions">
 				<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedVocabularies" label="delete" />
 			</aui:nav-item>

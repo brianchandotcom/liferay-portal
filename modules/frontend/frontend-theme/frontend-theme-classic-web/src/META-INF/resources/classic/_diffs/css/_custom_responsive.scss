@@ -1,38 +1,67 @@
 @import "mixins";
 
-@include respond-to(phone) {
-	body #wrapper #banner {
-		padding: 20px 0;
+#wrapper #banner {
+	padding: 20px 0;
 
-		.navbar-form .field-wrapper .search-button {
-			height: 32px;
-			padding: 0 10px;
-		}
+	@include media-query(sm) {
+		padding: 40px 0 30px;
 	}
 
-	#navigationCollapse {
-		font-size: 125%;
-
-		.nav > li > a {
-			border-bottom: 1px solid #E1E1E1;
+	.navbar-form {
+		.field-wrapper .search-button {
+			@include media-query(null, $screen-xs-max) {
+				padding: 0 14px;
+			}
 		}
 
-		.navbar-form .input-text-wrapper {
-			display: block;
-		}
-	}
+		.search-input {
+			font-size: 16px;
+			padding-right: 40px;
 
-	.modify-pages .lfr-nav-item .lfr-nav-child-toggle, .user-personal-bar .icon-caret-down {
-		line-height: 28px;
-		padding: 14px;
-		position: absolute;
-		right: 0;
-		top: 0;
+			@include media-query(sm) {
+				height: auto;
+				max-width: 200px;
+			}
+		}
 	}
 }
 
-@include respond-to(phone, tablet) {
-	.touch .modify-pages .lfr-nav-sortable > a > span {
-		padding-left: -18px;
+#navigationCollapse {
+	@include media-query(null, $screen-xs-max) {
+		font-size: 125%;
+	}
+
+	.nav > li > a {
+		@include media-query(null, $screen-xs-max) {
+			border-bottom: 1px solid #E1E1E1;
+		}
+	}
+
+	.navbar-form .input-text-wrapper {
+		@include media-query(null, $screen-xs-max) {
+			display: block;
+		}
+	}
+}
+
+.modify-pages .lfr-nav-item .lfr-nav-child-toggle, .user-personal-bar .icon-caret-down {
+	line-height: 28px;
+	margin-top: -14px;
+	padding-left: 15px;
+	padding-right: 15px;
+	position: absolute;
+	right: 4px;
+	top: 50%;
+
+	@include media-query(sm) {
+		display: none;
+	}
+}
+
+.display-style-buttons > .dropdown > .dropdown-menu {
+	&:after, &:before {
+		@include media-query(null, $screen-xs-max) {
+			border-width: 0;
+		}
 	}
 }

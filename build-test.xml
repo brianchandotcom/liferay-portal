@@ -3086,6 +3086,24 @@ go]]></replacevalue>
 		<delete failonerror="false" file="${project.dir}/console-shut-down" />
 	</target>
 
+	<target name="clean-up-mobile-device">
+		<if>
+			<equals arg1="${mobile.device.type}" arg2="android" />
+			<then>
+				<stop-android-device />
+			</then>
+		</if>
+	</target>
+
+	<target name="clean-up-selenium-driver">
+		<if>
+			<isset property="${mobile.device.type}" />
+			<then>
+				<stop-appium />
+			</then>
+		</if>
+	</target>
+
 	<target name="clean-up-sikuli-temp-files">
 		<delete dir="lib/development/libs" />
 	</target>
@@ -4112,6 +4130,15 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		</if>
 	</target>
 
+	<target name="prepare-mobile-device">
+		<if>
+			<equals arg1="${mobile.device.type}" arg2="android" />
+			<then>
+				<start-android-device />
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-portal-ext-properties">
 		<prepare-fix-pack-bundle />
 
@@ -5080,6 +5107,15 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 	</target>
 
+	<target name="prepare-selenium-driver">
+		<if>
+			<isset property="${mobile.device.type}" />
+			<then>
+				<start-appium />
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-selenium-email-properties">
 		<if>
 			<isset property="email.address.1" />
@@ -5338,6 +5374,18 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.5=${marketplace.email.password.5}
+				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-mobile-properties">
+		<if>
+			<isset property="mobile.device.type" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					mobile.android.home=${mobile.android.home}
+					mobile.device.type=${mobile.device.type}
 				</echo>
 			</then>
 		</if>

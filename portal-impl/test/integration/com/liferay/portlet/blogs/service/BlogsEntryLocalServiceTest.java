@@ -194,9 +194,8 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = addEntry(false);
 
 		MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			BlogsEntry.class.getName(), entry.getEntryId(),
-			WorkflowConstants.STATUS_ANY);
+			_user.getUserId(), _group.getGroupId(), BlogsEntry.class.getName(),
+			entry.getEntryId(), WorkflowConstants.STATUS_ANY);
 	}
 
 	@Test
@@ -468,14 +467,14 @@ public class BlogsEntryLocalServiceTest {
 	public void testSubscribe() throws Exception {
 		int initialCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), _group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		int actualCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -484,17 +483,17 @@ public class BlogsEntryLocalServiceTest {
 	public void testUnsubscribe() throws Exception {
 		int initialCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), _group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		BlogsEntryLocalServiceUtil.unsubscribe(
-			TestPropsValues.getUserId(), _group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		int actualCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		Assert.assertEquals(initialCount, actualCount);
 	}
@@ -508,7 +507,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	protected BlogsEntry addEntry(boolean statusInTrash) throws Exception {
-		return addEntry(TestPropsValues.getUserId(), statusInTrash);
+		return addEntry(_user.getUserId(), statusInTrash);
 	}
 
 	protected BlogsEntry addEntry(long userId, boolean statusInTrash)
@@ -607,7 +606,7 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = null;
 
 		if (smallImage) {
-			entry = addEntryWithSmallImage(TestPropsValues.getUserId());
+			entry = addEntryWithSmallImage(_user.getUserId());
 		}
 		else {
 			entry = addEntry(false);

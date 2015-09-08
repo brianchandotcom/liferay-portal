@@ -16,15 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+%>
+
 <aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="tags" />
-
-		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="tagsActionsButton" label="actions">
-			<aui:nav-item iconCssClass="icon-random" id="mergeSelectedTags" label="merge" />
-
-			<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedTags" label="delete" />
-		</aui:nav-item>
 	</aui:nav>
 
 	<aui:nav-bar-search>
@@ -32,11 +30,40 @@
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
+<div class="management-bar-container">
+	<liferay-frontend:management-bar
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-portlet:renderURL varImpl="portletURL" />
+
+			<liferay-frontend:management-bar-display-buttons
+				displayStyleURL="<%= portletURL %>"
+				displayViews='<%= new String[]{"list"} %>'
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+
+	<liferay-frontend:management-bar
+		cssClass="management-bar-no-collapse"
+		id="tagsActionsButton"
+	>
+
+		<liferay-frontend:management-bar-buttons>
+			<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-random" id="mergeSelectedTags" />
+
+			<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedTags" />
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+</div>
+
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="deleteTagIds" type="hidden" />
 
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-tags"
+		id="assetTags"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 	>
 
@@ -104,13 +131,13 @@
 
 	var form = $(document.<portlet:namespace />fm);
 
-	$('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').on(
+	$('#<portlet:namespace />assetTagsSearchContainer').on(
 		'click',
 		'input[type=checkbox]',
 		function() {
 			var hide = (Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
 
-			$('#<portlet:namespace />tagsActionsButton').toggleClass('hide', hide);
+			$('#<portlet:namespace />tagsActionsButton').toggleClass('on', !hide);
 		}
 	);
 

@@ -2670,6 +2670,17 @@ go]]></replacevalue>
 					</elseif>
 				</if>
 
+				<if>
+					<equals arg1="${database.type}" arg2="oracle" />
+					<then>
+						<replace file="create.sql">
+							<replacetoken>grant connect,resource to &amp;1;</replacetoken>
+							<replacevalue>grant connect,resource to &amp;1;
+grant unlimited tablespace to &amp;1;</replacevalue>
+						</replace>
+					</then>
+				</if>
+
 				<get-database-property property.name="database.schema" />
 
 				<if>
@@ -3176,6 +3187,25 @@ go]]></replacevalue>
 					<mirrors-get
 						dest="${todir}"
 						src="${test.jdbc.drivers.url}/oracle/11.2.0.1.0/${jdbc.oracle.driver}"
+					/>
+				</then>
+			</elseif>
+			<elseif>
+				<and>
+					<equals arg1="${database.type}" arg2="oracle" />
+					<equals arg1="${database.version}" arg2="12" />
+				</and>
+				<then>
+					<delete includeemptydirs="true" failonerror="false">
+						<fileset
+							dir="${app.server.lib.global.dir}"
+							includes="${jdbc.oracle.driver}"
+						/>
+					</delete>
+
+					<mirrors-get
+						dest="${todir}"
+						src="${test.jdbc.drivers.url}/oracle/12.1.0.2/${jdbc.oracle.driver}"
 					/>
 				</then>
 			</elseif>
@@ -5727,11 +5757,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 							<get-database-property property.name="database.password" />
 							<get-database-property property.name="database.username" />
 
-							<exec executable="${oracle.sqlplus.executable}" failonerror="true">
-								<arg value="${oracle.admin.user}/${oracle.admin.password}" />
-								<arg value="@create.sql" />
-								<arg value="${database.username}" />
-								<arg value="${database.password}" />
+							<exec executable="su" failonerror="true">
+								<arg value="-c" />
+								<arg value="${oracle.sqlplus.executable} ${oracle.admin.user}/${oracle.admin.password} as sysdba @create.sql ${database.username} ${database.password}" />
+								<arg value="oracle" />
 							</exec>
 						</then>
 					</elseif>

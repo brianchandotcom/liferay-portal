@@ -58,6 +58,10 @@ String shortTitle = StringUtil.shorten(title, 60);
 String linkTitle = StringPool.BLANK;
 
 if (showLinkTitle) {
-	linkTitle = HtmlUtil.escapeAttribute(HtmlUtil.unescape(title) + " - " + HtmlUtil.unescape(description));
+	linkTitle = HtmlUtil.escapeAttribute(HtmlUtil.unescape(title));
+
+	if (Validator.isNotNull(description)) {
+		linkTitle += HtmlUtil.escapeAttribute(" - " + HtmlUtil.unescape(description));
+	}
 }
 %>

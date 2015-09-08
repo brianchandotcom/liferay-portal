@@ -81,12 +81,12 @@ else {
 		categoryPropertiesIndexes = new int[0];
 	}
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= (category != null) ? category.getTitle(locale) : "add-new-category" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new-category") : category.getTitle(locale)));
+%>
 
 <portlet:actionURL name="editCategory" var="editCategoryURL">
 	<portlet:param name="mvcPath" value="/edit_category.jsp" />

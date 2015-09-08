@@ -56,22 +56,13 @@ portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("categoryId", String.valueOf(categoryId));
 portletURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
 
-String title = StringPool.BLANK;
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
-if (category != null) {
-	title = category.getTitle(locale);
-}
-else {
-	title = vocabulary.getTitle(locale);
-}
+renderResponse.setTitle((category != null) ? category.getTitle(locale) : vocabulary.getTitle(locale));
 
 AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, renderResponse);
 %>
-
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title="<%= title %>"
-/>
 
 <aui:form name="fm">
 	<aui:input name="deleteCategoryIds" type="hidden" />

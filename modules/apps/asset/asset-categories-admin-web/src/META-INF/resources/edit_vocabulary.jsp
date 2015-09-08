@@ -32,12 +32,12 @@ AssetVocabulary vocabulary = null;
 if (vocabularyId > 0) {
 	vocabulary = AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId);
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= (vocabulary != null) ? vocabulary.getTitle(locale) : "add-new-vocabulary" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((vocabulary == null) ? LanguageUtil.get(request, "add-new-vocabulary") : vocabulary.getTitle(locale)));
+%>
 
 <portlet:actionURL name="editVocabulary" var="editVocabularyURL">
 	<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />

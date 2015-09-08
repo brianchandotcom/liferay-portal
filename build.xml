@@ -257,17 +257,13 @@
 		<setup-sdk />
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="glassfish" />
-			<then>
-				<delete file="${app.server.glassfish.portal.war.name}" />
-			</then>
-			<elseif>
+			<or>
+				<equals arg1="${app.server.type}" arg2="glassfish" />
 				<equals arg1="${app.server.type}" arg2="websphere" />
-				<then>
-					<delete dir="${app.server.portal.dir}" />
-					<delete file="${app.server.portal.dir}" />
-				</then>
-			</elseif>
+			</or>
+			<then>
+				<delete file="${app.server.portal.war.name}" />
+			</then>
 		</if>
 
 		<if>
@@ -320,11 +316,11 @@
 				</not>
 			</and>
 			<then>
-				<move file="${app.server.glassfish.portal.war.name}" tofile="${app.server.glassfish.portal.war.name}-tmp" />
+				<move file="${app.server.portal.war.name}" tofile="${app.server.portal.war.name}-tmp" />
 
 				<mkdir dir="${app.server.portal.dir}" />
 
-				<unzip src="${app.server.glassfish.portal.war.name}-tmp" dest="${app.server.portal.dir}" />
+				<unzip src="${app.server.portal.war.name}-tmp" dest="${app.server.portal.dir}" />
 			</then>
 		</if>
 
@@ -347,14 +343,14 @@
 
 		<if>
 			<and>
-				<available file="${app.server.glassfish.portal.war.name}-tmp" type="file" />
 				<available file="${app.server.portal.dir}" type="dir" />
+				<available file="${app.server.portal.war.name}-tmp" type="file" />
 				<equals arg1="${app.server.type}" arg2="glassfish" />
 			</and>
 			<then>
 				<delete dir="${app.server.portal.dir}" />
 
-				<move file="${app.server.glassfish.portal.war.name}-tmp" tofile="${app.server.glassfish.portal.war.name}" />
+				<move file="${app.server.portal.war.name}-tmp" tofile="${app.server.portal.war.name}" />
 			</then>
 		</if>
 
@@ -382,24 +378,6 @@
 		<copy todir="${app.server.lib.portal.dir}">
 			<fileset dir="lib/portal" />
 		</copy>
-
-		<if>
-			<equals arg1="${app.server.type}" arg2="glassfish" />
-			<then>
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<jar
-					basedir="${app.server.portal.dir}"
-					jarfile="${tstamp.value}"
-				/>
-
-				<delete dir="${app.server.portal.dir}" />
-
-				<move file="${tstamp.value}" tofile="${app.server.glassfish.portal.war.name}" />
-			</then>
-		</if>
 
 		<if>
 			<equals arg1="${app.server.type}" arg2="jetty" />
@@ -502,7 +480,10 @@
 		</if>
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="websphere" />
+			<or>
+				<equals arg1="${app.server.type}" arg2="glassfish" />
+				<equals arg1="${app.server.type}" arg2="websphere" />
+			</or>
 			<then>
 				<tstamp>
 					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
@@ -515,8 +496,13 @@
 
 				<delete dir="${app.server.portal.dir}" />
 
-				<move file="${tstamp.value}" tofile="${app.server.portal.dir}" />
+				<move file="${tstamp.value}" tofile="${app.server.portal.war.name}" />
+			</then>
+		</if>
 
+		<if>
+			<equals arg1="${app.server.type}" arg2="websphere" />
+			<then>
 				<ant dir="support-websphere" target="deploy" inheritAll="false" />
 			</then>
 		</if>

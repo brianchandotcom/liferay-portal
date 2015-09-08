@@ -105,7 +105,7 @@
 		<var method="TestPropsUtil#get('browser.type')" name="browserType" />
 
 		<if>
-			<contains string="${browserType}" substring="iexplore" />
+			<equals arg1="${browserType}" arg2="internetexplorer" />
 			<then>
 				<execute function="MouseDown#javaScriptMouseDown" locator1="Dockbar#ADD_ICON" />
 

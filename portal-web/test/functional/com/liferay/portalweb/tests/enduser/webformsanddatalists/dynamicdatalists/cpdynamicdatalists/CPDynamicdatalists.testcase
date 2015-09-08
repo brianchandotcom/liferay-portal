@@ -1062,7 +1062,7 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithDocumentsAndMediaFieldUpload" priority="4">
+	<command name="AddListRecordWithDocumentsAndMediaField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="document" value="Document_1.txt" />

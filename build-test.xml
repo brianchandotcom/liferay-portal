@@ -2272,25 +2272,43 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="start-appium">
 		<sequential>
-			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
+			<if>
+				<equals arg1="${mobile.device.type}" arg2="android" />
+				<then>
+					<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
 
-			<parallel>
-				<daemons>
-					<exec executable="/bin/bash" os="${os.apple},${os.unix}">
-						<env key="ANDROID_HOME" value="${mobile.android.home}" />
-						<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
-						<arg value="-c" />
-						<arg value="${appium.unix.cmd}" />
-					</exec>
+					<parallel>
+						<daemons>
+							<exec executable="/bin/bash" os="${os.apple},${os.unix}">
+								<env key="ANDROID_HOME" value="${mobile.android.home}" />
+								<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
+								<arg value="-c" />
+								<arg value="${appium.unix.cmd}" />
+							</exec>
 
-					<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
-						<env key="ANDROID_HOME" value="${mobile.android.home}" />
-						<env key="Path" value="${env.Path}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
-						<arg value="/c" />
-						<arg value="${appium.win32.cmd}" />
-					</exec>
-				</daemons>
-			</parallel>
+							<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
+								<env key="ANDROID_HOME" value="${mobile.android.home}" />
+								<env key="Path" value="${env.Path}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
+								<arg value="/c" />
+								<arg value="${appium.win32.cmd}" />
+							</exec>
+						</daemons>
+					</parallel>
+				</then>
+				<elseif>
+					<equals arg1="${mobile.device.type}" arg2="ios" />
+					<then>
+						<parallel>
+							<daemons>
+								<exec executable="/bin/bash" os="${os.apple}">
+									<arg value="-c" />
+									<arg value="${appium.unix.cmd}" />
+								</exec>
+							</daemons>
+						</parallel>
+					</then>
+				</elseif>
+			</if>
 		</sequential>
 	</macrodef>
 

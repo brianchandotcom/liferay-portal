@@ -28,7 +28,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddDraftNotApproved" priority="4">
+	<command known-issues="LPS-58386" name="AddDraftNotApproved" priority="4">
 		<execute macro="WebContent#addPGViaWCD">
 			<var name="draft" value="true" />
 			<var name="webContentContent" value="WC WebContent Content" />
@@ -45,7 +45,7 @@
 		</execute>
 	</command>
 
-	<command name="AddNewWebContentViaAddContentPanel" priority="4">
+	<command known-issues="LPS-58386" name="AddNewWebContentViaAddContentPanel" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Page" />
 		</execute>
@@ -103,7 +103,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContent" priority="5">
+	<command known-issues="LPS-58386" name="AddWebContent" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -114,7 +114,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentPortalScopeCurrentPage" priority="4">
+	<command known-issues="LPS-58386" name="AddWebContentPortalScopeCurrentPage" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -385,7 +385,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWebContent" priority="4">
+	<command known-issues="LPS-58386" name="EditWebContent" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -403,7 +403,7 @@
 		</execute>
 	</command>
 
-	<command name="LocalizeWebContent" priority="4">
+	<command known-issues="LPS-58386" name="LocalizeWebContent" priority="4">
 		<var name="languageKey" value="zh_CN" />
 
 		<execute macro="Page#gotoPG">
@@ -589,7 +589,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAllFileTypesEnabled" priority="4">
+	<command known-issues="LPS-58386" name="ViewAllFileTypesEnabled" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -716,7 +716,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewArticleWithGuestViewPermission" priority="4">
+	<command known-issues="LPS-58386" name="ViewArticleWithGuestViewPermission" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -829,7 +829,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54964" name="ViewEditTemplate" priority="4">
+	<command known-issues="LPS-54964,LPS-58386" name="ViewEditTemplate" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -848,7 +848,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPortletWCDShowAvailableLocales" priority="4">
+	<command known-issues="LPS-58386" name="ViewPortletWCDShowAvailableLocales" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -900,7 +900,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWCDWithDeletedWCArticle" priority="4">
+	<command known-issues="LPS-58386" name="ViewWCDWithDeletedWCArticle" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -927,7 +927,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWithPaginationScript" priority="4">
+	<command known-issues="LPS-58386" name="ViewWithPaginationScript" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

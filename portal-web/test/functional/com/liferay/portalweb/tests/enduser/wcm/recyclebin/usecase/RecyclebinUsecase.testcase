@@ -27,7 +27,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="RecycleBinBlogs" priority="3">
+	<command known-issues="LPS-58386" name="RecycleBinBlogs" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -945,7 +945,7 @@
 		</execute>
 	</command>
 
-	<command name="RecycleBinWiki" priority="3">
+	<command known-issues="LPS-58386" name="RecycleBinWiki" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 			<var name="siteScopeName" value="Site Name" />

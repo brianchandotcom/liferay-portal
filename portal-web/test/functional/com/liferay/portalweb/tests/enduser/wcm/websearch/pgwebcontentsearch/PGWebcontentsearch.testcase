@@ -30,7 +30,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="SearchWebContent" priority="4">
+	<command known-issues="LPS-58386" name="SearchWebContent" priority="4">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -346,7 +346,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentQuotes" priority="4">
+	<command known-issues="LPS-58386" name="SearchWebContentQuotes" priority="4">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -503,7 +503,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentTag" priority="4">
+	<command known-issues="LPS-58386" name="SearchWebContentTag" priority="4">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="tagName" value="tag name" />
@@ -585,7 +585,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContentTagQuotes" priority="4">
+	<command known-issues="LPS-58386" name="SearchWebContentTagQuotes" priority="4">
 		<var name="pageName" value="Web Content Display Page" />
 		<var name="portletName" value="Web Content Display" />
 		<var name="tagName" value="tag name" />

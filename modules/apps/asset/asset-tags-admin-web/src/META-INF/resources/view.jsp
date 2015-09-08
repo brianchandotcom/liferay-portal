@@ -25,14 +25,6 @@
 	>
 		<aui:nav-bar>
 			<aui:nav cssClass="navbar-nav">
-				<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
-					<portlet:renderURL var="editTagURL">
-						<portlet:param name="mvcPath" value="/edit_tag.jsp" />
-					</portlet:renderURL>
-
-					<aui:nav-item href="<%= editTagURL %>" iconCssClass="icon-plus" label="add-tag" />
-				</c:if>
-
 				<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="tagsActionsButton" label="actions">
 					<aui:nav-item iconCssClass="icon-random" id="mergeSelectedTags" label="merge" />
 
@@ -95,6 +87,16 @@
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
+	<portlet:renderURL var="editTagURL">
+		<portlet:param name="mvcPath" value="/edit_tag.jsp" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tag") %>' url="<%= editTagURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script sandbox="<%= true %>">
 	var Util = Liferay.Util;

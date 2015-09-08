@@ -190,6 +190,11 @@
 			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.patcher.PatcherUtil" class="com.liferay.portal.kernel.patcher.PatcherUtil">
+		<property name="patcher">
+			<bean class="com.liferay.portal.patcher.PatcherImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil" class="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil">
 		<property name="cometHandlerPool">
 			<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPool" />

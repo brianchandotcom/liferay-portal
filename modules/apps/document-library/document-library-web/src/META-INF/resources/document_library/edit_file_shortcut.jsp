@@ -90,7 +90,11 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 		</div>
 
 		<%
-		String toGroupName = BeanPropertiesUtil.getString(toGroup, "name");
+		String toGroupName = StringPool.BLANK;
+
+		if (toGroup != null) {
+			toGroupName = HtmlUtil.escape(toGroup.getDescriptiveName(locale));
+		}
 		%>
 
 		<div class="form-group">

@@ -556,7 +556,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-test-url">
 		<sequential>
-			<get-testcase-property property.name="mobile.device.enabled" />
+			<get-testcase-property property.name="mobile.device.type" />
 
 			<get-testcase-property property.name="testcase.url" />
 
@@ -566,7 +566,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<var name="test.url" value="${test.url}" />
 				</then>
 				<elseif>
-					<equals arg1="${mobile.device.enabled}" arg2="true" />
+					<isset property="${mobile.device.type}" />
 					<then>
 						<get-ip-address />
 
@@ -4216,10 +4216,10 @@ javascript.fast.load=false</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="mobile.device.enabled" />
+		<get-testcase-property property.name="mobile.device.type" />
 
 		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<isset property="${mobile.device.type}" />
 			<then>
 				<get-ip-address />
 
@@ -5357,13 +5357,13 @@ module.framework.properties.osgi.console=11312</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="mobile.device.enabled" />
+		<get-testcase-property property.name="mobile.device.type" />
 
 		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<isset property="${mobile.device.type}" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					mobile.device.enabled=${mobile.device.enabled}
+					mobile.device.type=${mobile.device.type}
 				</echo>
 			</then>
 		</if>
@@ -6381,10 +6381,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="mobile.device.enabled" />
+		<get-testcase-property property.name="mobile.device.type" />
 
 		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<equals arg1="${mobile.device.type}" arg2="android" />
 			<then>
 				<start-android-device />
 
@@ -6644,10 +6644,10 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="mobile.device.enabled" />
+		<get-testcase-property property.name="mobile.device.type" />
 
 		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<equals arg1="${mobile.device.type}" arg2="android" />
 			<then>
 				<stop-android-device />
 

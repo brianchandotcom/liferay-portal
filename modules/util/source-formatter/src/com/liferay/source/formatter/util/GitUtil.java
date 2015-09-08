@@ -36,22 +36,18 @@ public class GitUtil {
 	public static List<String> getLatestAuthorFileNames(String baseDirName)
 		throws Exception {
 
-		List<String> latestAuthorFileNames = new ArrayList<>();
-
 		int gitLevel = getGitLevel(baseDirName);
 
 		if (gitLevel == -1) {
-			return latestAuthorFileNames;
+			return new ArrayList<>();
 		}
 
-		InputStream gitCommandInputStream = getGitCommandInputStream("git log");
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git log");
 
-		if (gitCommandInputStream == null) {
-			return latestAuthorFileNames;
+		if (unsyncBufferedReader == null) {
+			return new ArrayList<>();
 		}
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(gitCommandInputStream));
 
 		String line = null;
 
@@ -81,28 +77,7 @@ public class GitUtil {
 			}
 		}
 
-		for (String latestAuthorCommitId : latestAuthorCommitIds) {
-			gitCommandInputStream = getGitCommandInputStream(
-				"git diff-tree --no-commit-id --name-only -r " +
-					latestAuthorCommitId);
-
-			unsyncBufferedReader = new UnsyncBufferedReader(
-				new InputStreamReader(gitCommandInputStream));
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (StringUtil.count(line, StringPool.SLASH) < gitLevel) {
-					continue;
-				}
-
-				String fileName = getFileName(line, gitLevel);
-
-				if (!latestAuthorFileNames.contains(fileName)) {
-					latestAuthorFileNames.add(fileName);
-				}
-			}
-		}
-
-		return latestAuthorFileNames;
+		return getFileNames(latestAuthorCommitIds, gitLevel);
 	}
 
 	public static List<String> getLocalChangesFileNames(String baseDirName)
@@ -116,15 +91,12 @@ public class GitUtil {
 			return localChangesFileNames;
 		}
 
-		InputStream gitCommandInputStream = getGitCommandInputStream(
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 			"git add . --dry-run");
 
-		if (gitCommandInputStream == null) {
+		if (unsyncBufferedReader == null) {
 			return localChangesFileNames;
 		}
-
-		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
-			new InputStreamReader(gitCommandInputStream));
 
 		String line = null;
 
@@ -154,7 +126,35 @@ public class GitUtil {
 		return fileName;
 	}
 
-	protected static InputStream getGitCommandInputStream(String gitCommand)
+	protected static List<String> getFileNames(
+			List<String> commitIds, int gitLevel)
+		throws Exception {
+
+		List<String> fileNames = new ArrayList<>();
+
+		String line = null;
+
+		for (String commitId : commitIds) {
+			UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+				"git diff-tree --no-commit-id --name-only -r " + commitId);
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (StringUtil.count(line, StringPool.SLASH) < gitLevel) {
+					continue;
+				}
+
+				String fileName = getFileName(line, gitLevel);
+
+				if (!fileNames.contains(fileName)) {
+					fileNames.add(fileName);
+				}
+			}
+		}
+
+		return fileNames;
+	}
+
+	protected static UnsyncBufferedReader getGitCommandReader(String gitCommand)
 		throws Exception {
 
 		Runtime runtime = Runtime.getRuntime();
@@ -177,7 +177,8 @@ public class GitUtil {
 			throw ioe;
 		}
 
-		return process.getInputStream();
+		return new UnsyncBufferedReader(
+			new InputStreamReader(process.getInputStream()));
 	}
 
 	protected static int getGitLevel(String baseDirName) {

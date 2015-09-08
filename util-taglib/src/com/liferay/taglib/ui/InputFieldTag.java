@@ -169,6 +169,9 @@ public class InputFieldTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-field:model", _model.getName());
 		request.setAttribute(
 			"liferay-ui:input-field:placeholder", _placeholder);
+		request.setAttribute(
+				"liferay-ui:input-field:dynamicAttributes",
+				getDynamicAttributes());
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/input_field/page.jsp";

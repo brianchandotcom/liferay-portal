@@ -30,20 +30,21 @@ import org.postgresql.largeobject.LargeObjectManager;
  */
 public class JDBCUtil {
 
-	public static byte[] getPGLargeObject(ResultSet resultSet, String name)
+	public static byte[] getPGLargeObject(ResultSet rs, String name)
 		throws SQLException {
 
-		Connection connection = resultSet.getStatement().getConnection();
+		Statement statement = rs.getStatement();
+
+		Connection connection = statement.getConnection();
 
 		connection.setAutoCommit(false);
 
-		PGConnection pgConnection = connection.unwrap(
-			org.postgresql.PGConnection.class);
+		PGConnection pgConnection = connection.unwrap(PGConnection.class);
 
 		LargeObjectManager largeObjectManager =
 			pgConnection.getLargeObjectAPI();
 
-		long oid = resultSet.getLong(name);
+		long oid = rs.getLong(name);
 
 		LargeObject largeObject = largeObjectManager.open(
 			oid, LargeObjectManager.READ);
@@ -76,15 +77,14 @@ public class JDBCUtil {
 	}
 
 	public static void setPGLargeObject(
-			PreparedStatement preparedStatement, int paramIndex, byte[] value)
+			PreparedStatement ps, int paramIndex, byte[] value)
 		throws SQLException {
 
-		Connection connection = preparedStatement.getConnection();
+		Connection connection = ps.getConnection();
 
 		connection.setAutoCommit(false);
 
-		PGConnection pgConnection = connection.unwrap(
-			org.postgresql.PGConnection.class);
+		PGConnection pgConnection = connection.unwrap(PGConnection.class);
 
 		LargeObjectManager largeObjectManager =
 			pgConnection.getLargeObjectAPI();
@@ -99,7 +99,7 @@ public class JDBCUtil {
 
 		largeObject.close();
 
-		preparedStatement.setLong(paramIndex, oid);
+		ps.setLong(paramIndex, oid);
 
 		connection.setAutoCommit(true);
 	}

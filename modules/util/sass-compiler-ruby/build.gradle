@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.0-SNAPSHOT"
 	compile group: "org.jruby", name: "jruby-complete", version: "1.7.20"
 
 	provided group: "com.liferay", name: "com.liferay.ruby.gems", transitive: false, version: "1.0.0"

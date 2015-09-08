@@ -703,6 +703,7 @@
 	<command name="deleteCP">
 		<execute macro="WebContent#moveToRecycleBinCP">
 			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitleEscapeCharacter" value="${webContentTitleEscapeCharacter}" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -917,6 +918,7 @@
 	<command name="moveToRecycleBinCP">
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitleEscapeCharacter" value="${webContentTitleEscapeCharacter}" />
 		</execute>
 
 		<if>

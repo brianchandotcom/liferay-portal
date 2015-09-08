@@ -1,0 +1,32 @@
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+task buildTheme
+task copyFavicon(type: Copy)
+
+buildCSS {
+	dependsOn buildTheme
+}
+
+buildTheme {
+	dependsOn  copyFavicon
+}
+
+classes {
+	dependsOn buildTheme
+}
+
+copyFavicon {
+	ext {
+		autoClean = false
+	}
+
+	from new File("../frontend-themes-unstyled/src/META-INF/resources/_unstyled/images/favicon.ico")
+	into "src/META-INF/resources"
+}

@@ -1,0 +1,58 @@
+import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask
+import com.liferay.gradle.plugins.tasks.CompileThemeTask
+import com.liferay.gradle.util.GradleUtil
+
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+
+task copyFavicon(type: Copy)
+task buildTheme
+
+
+buildCSS {
+	dependsOn buildTheme
+	mustRunAfter buildTheme
+}
+
+classes {
+	dependsOn buildTheme
+}
+
+copyFavicon {
+	ext {
+		autoClean = false
+	}
+
+	from new File("../frontend-themes-unstyled/src/META-INF/resources/_unstyled/images/favicon.ico")
+	into "src/META-INF/resources"
+}
+
+File themeDir = file("src/META-INF/resources/admin")
+
+String buildThemeThumbnailsTaskName = GradleUtil.getTaskName("buildThumbnails", themeDir)
+String compileThemeTaskName = GradleUtil.getTaskName("compileTheme", themeDir)
+
+task(compileThemeTaskName, type: CompileThemeTask) {
+	dependsOn buildThemeThumbnailsTaskName
+	dependsOn ":frontend:frontend-themes:frontend-themes-unstyled:buildTheme"
+	diffsDir = new File(themeDir, "_diffs")
+	frontendThemesDir = "../"
+	themeParent = "_styled"
+	themeRootDir = themeDir
+	themeTypes "ftl", "vm"
+}
+
+task(buildThemeThumbnailsTaskName, type: BuildThumbnailsTask) {
+	imageDirs themeDir
+}
+
+buildTheme {
+	dependsOn copyFavicon, compileThemeTaskName
+}

@@ -95,7 +95,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 				"init",
 				StringPool.SLASH + themeDisplay.getPathContext() +
 					TemplateConstants.SERVLET_SEPARATOR +
-						"/_unstyled/templates/init.ftl");
+						"/classic/templates/init.ftl");
 		}
 
 		// Insert custom ftl variables

@@ -3242,7 +3242,7 @@ go]]></replacevalue>
 					</then>
 				</if>
 
-				<delete includeemptydirs="true">
+				<delete failonerror="false" includeemptydirs="true">
 					<fileset dir="${test.app.server.liferay.home}/data">
 						<exclude name="hsql/lportal.properties" if:true="${keep.hsqldb}" />
 						<exclude name="hsql/lportal.script" if:true="${keep.hsqldb}" />

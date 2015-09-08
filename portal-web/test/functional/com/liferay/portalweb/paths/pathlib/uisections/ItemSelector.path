@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>ItemSelector</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ItemSelector</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ITEM_SELECTOR_IFRAME</td>
+	<td>//iframe[contains(@id,'selectImage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>BLOG_IMAGES</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Blog Images')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCUMENTS_AND_MEDIA</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Documents and Media')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPLOAD_IMAGE</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'Upload Image')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATE_BACK</td>
+	<td>//button[contains(@class,'close') and not(contains(@hidden,'hidden'))]//span[contains(@class,'glyphicon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_FILE-->
+<tr>
+	<td>SELECT_FILE_UPLOAD_IMAGE</td>
+	<td>//div[@id='itemSelectorUploadContainer']//label[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILE_DOCUMENTS_AND_MEDIA</td>
+	<td>//div[contains(@id,'ItemSelectorContainer')]//label[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VIEWER-->
+<tr>
+	<td>CAPTION</td>
+	<td>//div[@class='image-viewer-footer-content']/p[@class='image-viewer-caption' and contains(.,'${key_uploadFileName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_INFO_ICON</td>
+	<td>//div[contains(@class,'image-viewer-focused')]//span[contains(@class,'item-viewer-icon-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SIDEBAR-->
+<tr>
+	<td>SIDEBAR_HEADER</td>
+	<td>//div[@class='sidebar-header']//a[contains(.,'File Info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_BODY</td>
+	<td>//div[@class='sidebar-body']//div[contains(.,'${key_fileDetail}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_CONTENT</td>
+	<td>//div[@class='tab-content']//p[contains(.,'${key_fileDetail}')]</td>
+	<td></td>
+</tr>
+<!--SELECT_IMAGE_PREVIEW-->
+<tr>
+	<td>SELECT_IMAGE_PREVIEW_BLOGS</td>
+	<td>//div[contains(@id,'ItemSelectorPortlet') and not(@class='hide')]//a[@title='${key_uploadFileName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_IMAGE_PREVIEW_DM</td>
+	<td>xpath=(//div[contains(@id,'ItemSelectorPortlet') and not(@class='hide')]//a[@title='${key_uploadFileName}'])[2]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

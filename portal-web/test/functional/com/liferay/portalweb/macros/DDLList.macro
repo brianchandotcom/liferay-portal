@@ -58,7 +58,7 @@
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="DDL#LIST_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#LIST_TABLE_ACTIONS_1" />
 		<execute function="AssertClickNoError" locator1="DDL#MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -72,7 +72,7 @@
 		<execute function="Type" locator1="DDLConfiguration#SEARCH_FIELD" value1="${ddlListName}" />
 		<execute function="AssertClick" locator1="DDLConfiguration#SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="DDLConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="DDLConfiguration#LIST_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDLConfiguration#LIST_TABLE_ACTIONS_1" />
 		<execute function="AssertClickNoError" locator1="DDLConfiguration#LIST_MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextNotPresent" value1="${ddlListNameEdit}" />
@@ -84,7 +84,7 @@
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlListName}" />
 		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="DDL#LIST_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#LIST_TABLE_ACTIONS_1" />
 		<execute function="AssertClick" locator1="DDL#MENULIST_EDIT" value1="Edit" />
 
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlListNameEdit}" />
@@ -108,7 +108,7 @@
 		<execute function="Type" locator1="DDLConfiguration#SEARCH_FIELD" value1="${ddlListName}" />
 		<execute function="AssertClick" locator1="DDLConfiguration#SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="DDLConfiguration#LIST_TABLE_NAME_1" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="DDLConfiguration#LIST_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDLConfiguration#LIST_TABLE_ACTIONS_1" />
 		<execute function="AssertClick" locator1="DDLConfiguration#LIST_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlListNameEdit}" />

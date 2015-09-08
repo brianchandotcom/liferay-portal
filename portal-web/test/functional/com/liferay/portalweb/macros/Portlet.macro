@@ -205,7 +205,7 @@
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
+				<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
 			</else>
 		</if>
 

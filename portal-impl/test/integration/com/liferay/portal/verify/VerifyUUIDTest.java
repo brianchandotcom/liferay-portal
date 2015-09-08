@@ -63,6 +63,13 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
+				dbType = DB.TYPE_HYPERSONIC,
+				expectedLog =
+					"Unable to process runnable: user lacks privilege or " +
+						"object not found:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				dbType = DB.TYPE_ORACLE,
 				expectedLog =
 					"Unable to process runnable: ORA-00904: \"UNKNOWN\":" +
@@ -109,6 +116,13 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				dbType = DB.TYPE_DB2,
 				expectedLog = "Unable to process runnable:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_HYPERSONIC,
+				expectedLog =
+					"Unable to process runnable: user lacks privilege or " +
+						"object not found:",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
@@ -174,6 +188,13 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				dbType = DB.TYPE_DB2,
 				expectedLog =
 					"Unable to process runnable:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_HYPERSONIC,
+				expectedLog =
+					"Unable to process runnable: user lacks privilege or " +
+						"object not found:",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(

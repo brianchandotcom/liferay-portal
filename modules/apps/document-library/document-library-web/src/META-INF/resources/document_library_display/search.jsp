@@ -171,10 +171,10 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, fileEntry.getFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-						description="<%= (summary != null) ? summary.getContent() : fileEntry.getDescription() %>"
+						description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getDescription() %>"
 						queryTerms="<%= hits.getQueryTerms() %>"
 						thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
-						title="<%= (summary != null) ? summary.getTitle() : fileEntry.getTitle() %>"
+						title="<%= ((summary != null) && Validator.isNotNull(summary.getTitle())) ? summary.getTitle() : fileEntry.getTitle() %>"
 						url="<%= rowURL %>"
 					/>
 				</c:when>
@@ -203,10 +203,10 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						actionJspServletContext="<%= application %>"
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, folder.getParentFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
-						description="<%= (summary != null) ? summary.getContent() : folder.getDescription() %>"
+						description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : folder.getDescription() %>"
 						queryTerms="<%= hits.getQueryTerms() %>"
 						thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
-						title="<%= (summary != null) ? summary.getTitle() : folder.getName() %>"
+						title="<%= ((summary != null) && Validator.isNotNull(summary.getTitle())) ? summary.getTitle() : folder.getName() %>"
 						url="<%= rowURL %>"
 					/>
 				</c:when>

@@ -668,6 +668,7 @@ public class PortletTracker
 			GetterUtil.getBoolean(
 				serviceReference.getProperty("requires-namespaced-parameters"),
 				defaultRequiresNamespacedParameters));
+
 		portletModel.setRestoreCurrentView(
 			GetterUtil.getBoolean(
 				get(serviceReference, "restore-current-view"),

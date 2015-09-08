@@ -2227,7 +2227,9 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 						</then>
 					</if>
 
-					<antcall target="delete-liferay-home" />
+					<antcall target="delete-liferay-home">
+						<param name="keep.hsqldb" value="true" />
+					</antcall>
 
 					<if>
 						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
@@ -3240,7 +3242,12 @@ go]]></replacevalue>
 					</then>
 				</if>
 
-				<delete dir="${test.app.server.liferay.home}/data" />
+				<delete includeemptydirs="true">
+					<fileset dir="${test.app.server.liferay.home}/data">
+						<exclude name="hsql/lportal.properties" if:true="${keep.hsqldb}" />
+						<exclude name="hsql/lportal.script" if:true="${keep.hsqldb}" />
+					</fileset>
+				</delete>
 				<delete dir="${test.app.server.liferay.home}/logs" />
 				<delete dir="${test.app.server.liferay.home}/osgi/state" />
 

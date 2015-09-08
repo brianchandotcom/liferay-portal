@@ -160,9 +160,9 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute function="SelectFrameTop" value1="relative=top" />
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 	</command>
 
 	<command name="populateFieldDocumentsAndMediaUpload">

@@ -5,10 +5,10 @@
 
 	<target name="build-sample-sql">
 		<path id="sample.sql.builder.classpath">
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.dynamic.data.*.jar" />
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.journal.*.jar" />
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.portal.tools.sample.sql.builder*.jar" />
-			<fileset dir="${sdk.dir}/dist" includes="com.liferay.wiki.*.jar" />
+			<fileset dir="${sdk.dir}/dist2" includes="com.liferay.dynamic.data.*.jar" />
+			<fileset dir="${sdk.dir}/dist2" includes="com.liferay.journal.*.jar" />
+			<fileset dir="${sdk.dir}/dist2" includes="com.liferay.portal.tools.sample.sql.builder*.jar" />
+			<fileset dir="${sdk.dir}/dist2" includes="com.liferay.wiki.*.jar" />
 			<path refid="project.classpath" />
 		</path>
 

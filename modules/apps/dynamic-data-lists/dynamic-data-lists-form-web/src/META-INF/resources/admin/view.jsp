@@ -20,7 +20,7 @@
 PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 %>
 
-<liferay-util:include page="/admin/toolbar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/admin/search_bar.jsp" servletContext="<%= application %>" />
 
 <div id="<portlet:namespace />formContainer" class="container-fluid-1280">
 	

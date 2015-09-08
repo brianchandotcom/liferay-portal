@@ -24,14 +24,10 @@
 	<aui:script sandbox="<%= true %>">
 		var portletWrapper = $('#p_p_id_<%= portletDisplay.getId() %>_');
 
-		if (portletWrapper.length) {
-			var message = portletWrapper.find('#<portlet:namespace />nested-portlets-msg');
+		var nestedPortlet = portletWrapper.find('.portlet-boundary, .portlet-borderless-container');
 
-			var nestedPortlet = portletWrapper.find('.portlet-boundary, .portlet-borderless-container');
-
-			if (!nestedPortlet.length) {
-				message.removeClass('hide');
-			}
+		if (!nestedPortlet.length) {
+			portletWrapper.find('#<portlet:namespace />nested-portlets-msg').removeClass('hide');
 		}
 	</aui:script>
 </c:if>

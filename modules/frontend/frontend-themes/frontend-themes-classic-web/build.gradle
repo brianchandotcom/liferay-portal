@@ -2,23 +2,45 @@ import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask
 import com.liferay.gradle.plugins.tasks.CompileThemeTask
 import com.liferay.gradle.util.GradleUtil
 
+configurations {
+	frontendThemes
+}
+
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+
+	frontendThemes project(":frontend:frontend-themes:frontend-themes-styled")
+	frontendThemes project(":frontend:frontend-themes:frontend-themes-unstyled")
 }
 
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
 
+File themeDestinationDir = file("src/META-INF/resources/classic")
 
+task buildTheme(type: CompileThemeTask)
+task buildThumbnails(type: BuildThumbnailsTask)
 task copyFavicon(type: Copy)
-task buildTheme
-
 
 buildCSS {
 	dependsOn buildTheme
-	mustRunAfter buildTheme
+}
+
+buildTheme {
+	dependsOn buildThumbnails
+	dependsOn copyFavicon
+
+	diffsDir = new File(themeDestinationDir, "_diffs")
+	frontendThemeFiles = configurations.frontendThemes
+	themeParent = "_styled"
+	themeRootDir = themeDestinationDir
+	themeTypes = ["ftl", "vm"]
+}
+
+buildThumbnails {
+	imageDirs themeDestinationDir
 }
 
 classes {
@@ -30,29 +52,6 @@ copyFavicon {
 		autoClean = false
 	}
 
-	from new File("../frontend-themes-unstyled/src/META-INF/resources/_unstyled/images/favicon.ico")
+	from "../frontend-themes-unstyled/src/META-INF/resources/_unstyled/images/favicon.ico"
 	into "src/META-INF/resources"
-}
-
-File themeDir = file("src/META-INF/resources/classic")
-
-String buildThemeThumbnailsTaskName = GradleUtil.getTaskName("buildThumbnails", themeDir)
-String compileThemeTaskName = GradleUtil.getTaskName("compileTheme", themeDir)
-
-task(compileThemeTaskName, type: CompileThemeTask) {
-	dependsOn buildThemeThumbnailsTaskName
-	dependsOn ":frontend:frontend-themes:frontend-themes-unstyled:buildTheme"
-	diffsDir = new File(themeDir, "_diffs")
-	frontendThemesDir = "../"
-	themeParent = "_styled"
-	themeRootDir = themeDir
-	themeTypes "ftl", "vm"
-}
-
-task(buildThemeThumbnailsTaskName, type: BuildThumbnailsTask) {
-	imageDirs themeDir
-}
-
-buildTheme {
-	dependsOn copyFavicon, compileThemeTaskName
 }

@@ -6146,8 +6146,6 @@ if (ppstate.equals("normal")) {
 			</then>
 		</if>
 
-		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
-
 		<if>
 			<equals arg1="${database.type}" arg2="hsql" />
 			<then>
@@ -6173,6 +6171,8 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<antcall target="run-poshi-runner" />
 			</then>
 			<else>
+				<ant dir="portal-impl" target="compile-test" inheritAll="false" />
+
 				<if>
 					<contains string="${test.class}" substring="#" />
 					<then>

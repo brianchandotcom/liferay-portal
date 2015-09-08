@@ -86,14 +86,15 @@ public class GitUtil {
 				"git diff-tree --no-commit-id --name-only -r " +
 					latestAuthorCommitId);
 
-			String output = StringUtil.read(gitCommandInputStream);
+			unsyncBufferedReader = new UnsyncBufferedReader(
+				new InputStreamReader(gitCommandInputStream));
 
-			for (String outputLine : StringUtil.splitLines(output)) {
-				if (StringUtil.count(outputLine, StringPool.SLASH) < gitLevel) {
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (StringUtil.count(line, StringPool.SLASH) < gitLevel) {
 					continue;
 				}
 
-				String fileName = getFileName(outputLine, gitLevel);
+				String fileName = getFileName(line, gitLevel);
 
 				if (!latestAuthorFileNames.contains(fileName)) {
 					latestAuthorFileNames.add(fileName);
@@ -122,9 +123,12 @@ public class GitUtil {
 			return localChangesFileNames;
 		}
 
-		String output = StringUtil.read(gitCommandInputStream);
+		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
+			new InputStreamReader(gitCommandInputStream));
 
-		for (String line : StringUtil.splitLines(output)) {
+		String line = null;
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if (!line.startsWith("add '") ||
 				(StringUtil.count(line, StringPool.SLASH) < gitLevel)) {
 

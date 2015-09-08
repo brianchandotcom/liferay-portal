@@ -80,7 +80,7 @@ public class FileUtil {
 		return get(project, url, destinationFile, false, true, false);
 	}
 
-	public static File get(
+	public static synchronized File get(
 			Project project, String url, File destinationFile,
 			boolean ignoreErrors, boolean tryLocalNetwork, boolean verbose)
 		throws IOException {

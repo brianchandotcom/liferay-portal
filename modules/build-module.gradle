@@ -220,6 +220,12 @@ jsTranspiler {
 	lfrAmdLoaderVersion = project.properties["nodejs.lfr.amd.loader.version"]
 }
 
+if (System.getenv("JENKINS_HOME")) {
+	node {
+		nodeUrl = "https://nodejs.org/dist/v${nodeVersion}/node-v${nodeVersion}-linux-x64.tar.gz"
+	}
+}
+
 repositories {
 	if (!Boolean.getBoolean("maven.local.ignore")) {
 		mavenLocal()

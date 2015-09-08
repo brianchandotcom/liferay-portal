@@ -316,10 +316,12 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		PortletURL portletURL = _getRenderURL(
-			"/document_library/edit_file_entry");
+		PortletURL portletURL = null;
 
-		if (_fileShortcut != null) {
+		if (_fileShortcut == null) {
+			portletURL = _getRenderURL("/document_library/edit_file_entry");
+		}
+		else {
 			portletURL = _getRenderURL("/document_library/edit_file_shortcut");
 		}
 

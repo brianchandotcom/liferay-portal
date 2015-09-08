@@ -61,6 +61,8 @@ public class JSPSearchEntry extends SearchEntry {
 			HttpServletResponse response)
 		throws Exception {
 
+		request.setAttribute(ENTRY_HREF, getHref());
+
 		if (_servletContext != null) {
 			RequestDispatcher requestDispatcher =
 				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
@@ -75,6 +77,8 @@ public class JSPSearchEntry extends SearchEntry {
 
 			requestDispatcher.include(request, response);
 		}
+
+		request.removeAttribute(ENTRY_HREF);
 	}
 
 	public void setPath(String path) {
@@ -93,7 +97,16 @@ public class JSPSearchEntry extends SearchEntry {
 		_servletContext = servletContext;
 	}
 
+	public String getHref() {
+		return _href;
+	}
+
+	public void setHref(String href) {
+		_href = href;
+	}
+
 	private String _path;
+	private String _href;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
 	private ServletContext _servletContext;

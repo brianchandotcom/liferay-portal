@@ -192,7 +192,9 @@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %><%@
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.util.RSSUtil" %>
+page import="com.liferay.util.RSSUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.SearchEntry" %>
+
 
 <%@ page import="java.text.Format" %>
 

@@ -660,10 +660,14 @@ public class PortletTracker
 			portletModel.setRenderWeight(1);
 		}
 
+		boolean defaultRequiresNamespacedParameters = GetterUtil.getBoolean(
+			get(serviceReference, "requires-namespaced-parameters"),
+			portletModel.isRequiresNamespacedParameters());
+
 		portletModel.setRequiresNamespacedParameters(
 			GetterUtil.getBoolean(
-				get(serviceReference, "requires-namespaced-parameters"),
-				portletModel.isRequiresNamespacedParameters()));
+				serviceReference.getProperty("requires-namespaced-parameters"),
+				defaultRequiresNamespacedParameters));
 		portletModel.setRestoreCurrentView(
 			GetterUtil.getBoolean(
 				get(serviceReference, "restore-current-view"),

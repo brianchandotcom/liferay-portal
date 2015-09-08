@@ -39,6 +39,10 @@ public class JSPSearchEntry extends SearchEntry {
 		return jspSearchEntry;
 	}
 
+	public String getHref() {
+		return _href;
+	}
+
 	public String getPath() {
 		return _path;
 	}
@@ -61,6 +65,8 @@ public class JSPSearchEntry extends SearchEntry {
 			HttpServletResponse response)
 		throws Exception {
 
+		request.setAttribute(ENTRY_HREF, getHref());
+
 		if (_servletContext != null) {
 			RequestDispatcher requestDispatcher =
 				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
@@ -75,6 +81,12 @@ public class JSPSearchEntry extends SearchEntry {
 
 			requestDispatcher.include(request, response);
 		}
+
+		request.removeAttribute(ENTRY_HREF);
+	}
+
+	public void setHref(String href) {
+		_href = href;
 	}
 
 	public void setPath(String path) {
@@ -93,6 +105,7 @@ public class JSPSearchEntry extends SearchEntry {
 		_servletContext = servletContext;
 	}
 
+	private String _href;
 	private String _path;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;

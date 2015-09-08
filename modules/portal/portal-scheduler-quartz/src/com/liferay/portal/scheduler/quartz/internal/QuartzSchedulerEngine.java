@@ -81,6 +81,8 @@ import org.quartz.JobDetail;
 import org.quartz.JobKey;
 import org.quartz.ObjectAlreadyExistsException;
 import org.quartz.Scheduler;
+import org.quartz.SimpleScheduleBuilder;
+import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
@@ -747,15 +749,27 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			return triggerBuilder.build();
 		}
 
-		CalendarIntervalScheduleBuilder calendarIntervalScheduleBuilder =
-			CalendarIntervalScheduleBuilder.calendarIntervalSchedule();
-
 		TimeUnit timeUnit = objectValuePair.getValue();
 
-		calendarIntervalScheduleBuilder.withInterval(
-			interval, IntervalUnit.valueOf(timeUnit.name()));
+		if (timeUnit == TimeUnit.MILLISECOND) {
+			SimpleScheduleBuilder simpleScheduleBuilder =
+				SimpleScheduleBuilder.simpleSchedule();
 
-		triggerBuilder.withSchedule(calendarIntervalScheduleBuilder);
+			simpleScheduleBuilder.withIntervalInMilliseconds(interval);
+			simpleScheduleBuilder.withRepeatCount(
+				SimpleTrigger.REPEAT_INDEFINITELY);
+
+			triggerBuilder.withSchedule(simpleScheduleBuilder);
+		}
+		else {
+			CalendarIntervalScheduleBuilder calendarIntervalScheduleBuilder =
+				CalendarIntervalScheduleBuilder.calendarIntervalSchedule();
+
+			calendarIntervalScheduleBuilder.withInterval(
+				interval, IntervalUnit.valueOf(timeUnit.name()));
+
+			triggerBuilder.withSchedule(calendarIntervalScheduleBuilder);
+		}
 
 		return triggerBuilder.build();
 	}
@@ -776,10 +790,18 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		String destinationName = jobDataMap.getString(
 			SchedulerEngine.DESTINATION_NAME);
 		Message message = getMessage(jobDataMap);
+		JobState jobState = getJobState(jobDataMap);
 		StorageType storageType = StorageType.valueOf(
 			jobDataMap.getString(SchedulerEngine.STORAGE_TYPE));
 
-		SchedulerResponse schedulerResponse = null;
+		message.put(SchedulerEngine.JOB_STATE, jobState);
+
+		SchedulerResponse schedulerResponse = new SchedulerResponse();
+
+		schedulerResponse.setDescription(description);
+		schedulerResponse.setDestinationName(destinationName);
+		schedulerResponse.setMessage(message);
+		schedulerResponse.setStorageType(storageType);
 
 		String jobName = jobKey.getName();
 		String groupName = jobKey.getGroup();
@@ -788,68 +810,52 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		Trigger trigger = scheduler.getTrigger(triggerKey);
 
-		JobState jobState = getJobState(jobDataMap);
-
-		message.put(SchedulerEngine.JOB_STATE, jobState);
-
 		if (trigger == null) {
-			schedulerResponse = new SchedulerResponse();
-
-			schedulerResponse.setDescription(description);
-			schedulerResponse.setDestinationName(destinationName);
 			schedulerResponse.setGroupName(groupName);
 			schedulerResponse.setJobName(jobName);
-			schedulerResponse.setMessage(message);
-			schedulerResponse.setStorageType(storageType);
+
+			return schedulerResponse;
 		}
-		else {
-			message.put(SchedulerEngine.END_TIME, trigger.getEndTime());
-			message.put(
-				SchedulerEngine.FINAL_FIRE_TIME, trigger.getFinalFireTime());
-			message.put(
-				SchedulerEngine.NEXT_FIRE_TIME, trigger.getNextFireTime());
-			message.put(
-				SchedulerEngine.PREVIOUS_FIRE_TIME,
-				trigger.getPreviousFireTime());
-			message.put(SchedulerEngine.START_TIME, trigger.getStartTime());
 
-			if (trigger instanceof CalendarIntervalTrigger) {
-				CalendarIntervalTrigger calendarIntervalTrigger =
-					CalendarIntervalTrigger.class.cast(trigger);
+		message.put(SchedulerEngine.END_TIME, trigger.getEndTime());
+		message.put(
+			SchedulerEngine.FINAL_FIRE_TIME, trigger.getFinalFireTime());
+		message.put(SchedulerEngine.NEXT_FIRE_TIME, trigger.getNextFireTime());
+		message.put(
+			SchedulerEngine.PREVIOUS_FIRE_TIME, trigger.getPreviousFireTime());
+		message.put(SchedulerEngine.START_TIME, trigger.getStartTime());
 
-				schedulerResponse = new SchedulerResponse();
+		if (trigger instanceof CalendarIntervalTrigger) {
+			CalendarIntervalTrigger calendarIntervalTrigger =
+				CalendarIntervalTrigger.class.cast(trigger);
 
-				schedulerResponse.setDescription(description);
-				schedulerResponse.setDestinationName(destinationName);
-				schedulerResponse.setMessage(message);
-				schedulerResponse.setStorageType(storageType);
+			IntervalUnit intervalUnit =
+				calendarIntervalTrigger.getRepeatIntervalUnit();
 
-				IntervalUnit intervalUnit =
-					calendarIntervalTrigger.getRepeatIntervalUnit();
+			schedulerResponse.setTrigger(
+				new IntervalTrigger(
+					jobName, groupName, calendarIntervalTrigger.getStartTime(),
+					calendarIntervalTrigger.getEndTime(),
+					calendarIntervalTrigger.getRepeatInterval(),
+					TimeUnit.valueOf(intervalUnit.name())));
+		}
+		else if (trigger instanceof CronTrigger) {
+			CronTrigger cronTrigger = CronTrigger.class.cast(trigger);
 
-				schedulerResponse.setTrigger(
-					new IntervalTrigger(
-						jobName, groupName,
-						calendarIntervalTrigger.getStartTime(),
-						calendarIntervalTrigger.getEndTime(),
-						calendarIntervalTrigger.getRepeatInterval(),
-						TimeUnit.valueOf(intervalUnit.name())));
-			}
-			else if (trigger instanceof CronTrigger) {
-				CronTrigger cronTrigger = CronTrigger.class.cast(trigger);
+			schedulerResponse.setTrigger(
+				new com.liferay.portal.kernel.scheduler.CronTrigger(
+					jobName, groupName, cronTrigger.getStartTime(),
+					cronTrigger.getEndTime(), cronTrigger.getCronExpression()));
+		}
+		else if (trigger instanceof SimpleTrigger) {
+			SimpleTrigger simpleTrigger = SimpleTrigger.class.cast(trigger);
 
-				schedulerResponse = new SchedulerResponse();
-
-				schedulerResponse.setDescription(description);
-				schedulerResponse.setDestinationName(destinationName);
-				schedulerResponse.setMessage(message);
-				schedulerResponse.setStorageType(storageType);
-				schedulerResponse.setTrigger(
-					new com.liferay.portal.kernel.scheduler.CronTrigger(
-						jobName, groupName, cronTrigger.getStartTime(),
-						cronTrigger.getEndTime(),
-						cronTrigger.getCronExpression()));
-			}
+			schedulerResponse.setTrigger(
+				new IntervalTrigger(
+					jobName, groupName, simpleTrigger.getStartTime(),
+					simpleTrigger.getEndTime(),
+					(int)simpleTrigger.getRepeatInterval(),
+					TimeUnit.MILLISECOND));
 		}
 
 		return schedulerResponse;

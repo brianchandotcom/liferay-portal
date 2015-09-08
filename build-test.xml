@@ -6081,7 +6081,7 @@ if (ppstate.equals("normal")) {
 		</execute>
 	</target>
 
-	<target name="run-poshi-evaluate-console" depends="prepare-selenium">
+	<target name="run-poshi-evaluate-console">
 		<antcall target="prepare-poshi-runner-properties" inheritall="false" />
 
 		<gradle-execute failonerror="false" task="evaluatePoshiConsole">
@@ -6091,7 +6091,7 @@ if (ppstate.equals("normal")) {
 		</gradle-execute>
 	</target>
 
-	<target name="run-poshi-runner" depends="prepare-selenium">
+	<target name="run-poshi-runner">
 		<property name="test.console.log.file.name" value="${liferay.home}/logs/liferay.${current.date}.xml" />
 
 		<gradle-execute failonerror="false" task="runPoshi">
@@ -6127,7 +6127,7 @@ if (ppstate.equals("normal")) {
 		<antcall target="stop-selenium" />
 	</target>
 
-	<target name="run-selenium-test">
+	<target name="run-selenium-test" depends="prepare-selenium">
 		<if>
 			<and>
 				<equals arg1="${test.class}" arg2="PortalWebTestSuite" />

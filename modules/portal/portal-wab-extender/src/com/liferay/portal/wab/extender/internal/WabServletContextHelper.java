@@ -62,7 +62,7 @@ public class WabServletContextHelper extends ServletContextHelper {
 
 	@Override
 	public URL getResource(String name) {
-		if (name.charAt(0) != '/') {
+		if ((name.length() > 0) && name.charAt(0) != '/') {
 			name = '/' + name;
 		}
 

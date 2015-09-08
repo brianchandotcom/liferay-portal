@@ -508,7 +508,7 @@ public class JspServlet extends HttpServlet {
 
 		private URL getResource(String path) {
 			try {
-				if (path.charAt(0) != '/') {
+				if ((path.length() > 0) && path.charAt(0) != '/') {
 					path = '/' + path;
 				}
 

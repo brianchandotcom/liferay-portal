@@ -247,6 +247,27 @@ public class LayoutStagedModelDataHandler
 		return portletIds;
 	}
 
+	protected void deleteMissingLayoutFriendlyURLs(
+		PortletDataContext portletDataContext, Layout layout) {
+
+		Map<Long, Long> layoutFriendlyURLIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				LayoutFriendlyURL.class);
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				layout.getPlid());
+
+		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			if (!layoutFriendlyURLIds.containsValue(
+					layoutFriendlyURL.getLayoutFriendlyURLId())) {
+
+				LayoutFriendlyURLLocalServiceUtil.deleteLayoutFriendlyURL(
+					layoutFriendlyURL);
+			}
+		}
+	}
+
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Layout layout)
@@ -640,6 +661,8 @@ public class LayoutStagedModelDataHandler
 		importAssets(portletDataContext, layout, importedLayout);
 
 		importLayoutFriendlyURLs(portletDataContext, layout);
+
+		deleteMissingLayoutFriendlyURLs(portletDataContext, importedLayout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}

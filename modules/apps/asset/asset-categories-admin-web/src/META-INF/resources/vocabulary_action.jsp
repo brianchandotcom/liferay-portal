@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 AssetVocabulary vocabulary = (AssetVocabulary)row.getObject();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" view="lexicon">
 	<c:if test="<%= AssetVocabularyPermission.contains(permissionChecker, vocabulary, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editVocabularyURL">
 			<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />

@@ -144,12 +144,12 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
+				cssClass="checkbox-cell entry-action"
 				path="/category_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator view="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

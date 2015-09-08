@@ -172,12 +172,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
+				cssClass="checkbox-cell entry-action"
 				path="/vocabulary_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator view="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

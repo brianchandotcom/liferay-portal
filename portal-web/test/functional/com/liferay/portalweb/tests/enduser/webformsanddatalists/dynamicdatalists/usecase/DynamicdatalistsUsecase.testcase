@@ -653,7 +653,6 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData2}" />
 			<var name="document" value="${document}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel2}" />
 			<var name="fieldName" value="${fieldName2}" />
@@ -1436,7 +1435,6 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="Document Title" />
 			<var name="document" value="Document_1.txt" />
 			<var name="fieldFieldLabel" value="Resume" />
 			<var name="fieldName" value="Resume" />

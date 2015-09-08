@@ -73,7 +73,7 @@ public class EditorConfigContributorTest {
 
 			_bundleIds.add(bundleId);
 
-			ModuleFrameworkUtilAdapter.stopBundle(Long.valueOf(bundleId));
+			ModuleFrameworkUtilAdapter.stopBundle(bundleId);
 		}
 	}
 
@@ -84,13 +84,13 @@ public class EditorConfigContributorTest {
 				ModuleFrameworkUtilAdapter.startBundle(bundleId);
 			}
 			catch (Exception e) {
-				_log.error("Could not start bundle " + bundleId);
+				_log.error("Could not start bundle " + bundleId, e);
 			}
 		}
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
 		if (_editorConfigContributorServiceRegistration1 != null) {
 			_editorConfigContributorServiceRegistration1.unregister();
 		}

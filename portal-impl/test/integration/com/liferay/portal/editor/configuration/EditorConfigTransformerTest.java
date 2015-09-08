@@ -77,7 +77,7 @@ public class EditorConfigTransformerTest {
 
 			_bundleIds.add(bundleId);
 
-			ModuleFrameworkUtilAdapter.stopBundle(Long.valueOf(bundleId));
+			ModuleFrameworkUtilAdapter.stopBundle(bundleId);
 		}
 	}
 
@@ -88,7 +88,7 @@ public class EditorConfigTransformerTest {
 				ModuleFrameworkUtilAdapter.startBundle(bundleId);
 			}
 			catch (Exception e) {
-				_log.error("Could not start bundle " + bundleId);
+				_log.error("Could not start bundle " + bundleId, e);
 			}
 		}
 	}

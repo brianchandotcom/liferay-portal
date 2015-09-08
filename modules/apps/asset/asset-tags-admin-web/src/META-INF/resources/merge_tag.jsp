@@ -38,12 +38,12 @@ for (long mergeTagId : mergeTagIds) {
 
 	mergeTagNames.add(tag.getName());
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title="merge-tags"
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
+%>
 
 <portlet:actionURL name="mergeTag" var="mergeURL">
 	<portlet:param name="mvcPath" value="/merge_tag.jsp" />

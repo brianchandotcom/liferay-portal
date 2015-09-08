@@ -28,12 +28,12 @@ if (Validator.isNull(redirect)) {
 long tagId = ParamUtil.getLong(request, "tagId");
 
 AssetTag tag = AssetTagLocalServiceUtil.fetchAssetTag(tagId);
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= (tag != null) ? tag.getName() : "add-tag" %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "add-tag") : tag.getName()));
+%>
 
 <portlet:actionURL name="editTag" var="editTagURL">
 	<portlet:param name="mvcPath" value="/edit_tag.jsp" />

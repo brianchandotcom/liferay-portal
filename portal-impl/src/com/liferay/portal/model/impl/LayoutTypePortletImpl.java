@@ -258,23 +258,16 @@ public class LayoutTypePortletImpl
 
 	@Override
 	public List<Portlet> getAllPortlets() throws PortalException {
-		List<Portlet> portlets = new ArrayList<>();
-
-		List<String> columns = getColumns();
-
-		for (int i = 0; i < columns.size(); i++) {
-			String columnId = columns.get(i);
-
-			portlets.addAll(getAllPortlets(columnId));
-		}
+		List<Portlet> explicitlyAddedPortlets = getExplicitelyAddedPortlets();
 
 		List<Portlet> staticPortlets = getStaticPortlets(
 			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
 
 		List<Portlet> embeddedPortlets = getEmbeddedPortlets(
-			portlets, staticPortlets);
+			explicitlyAddedPortlets, staticPortlets);
 
-		return addStaticPortlets(portlets, staticPortlets, embeddedPortlets);
+		return addStaticPortlets(
+			explicitlyAddedPortlets, staticPortlets, embeddedPortlets);
 	}
 
 	@Override
@@ -1531,6 +1524,22 @@ public class LayoutTypePortletImpl
 		_embeddedPortlets = portlets;
 
 		return _embeddedPortlets;
+	}
+
+	protected List<Portlet> getExplicitelyAddedPortlets()
+		throws PortalException {
+
+		List<Portlet> portlets = new ArrayList<>();
+
+		List<String> columns = getColumns();
+
+		for (int i = 0; i < columns.size(); i++) {
+			String columnId = columns.get(i);
+
+			portlets.addAll(getAllPortlets(columnId));
+		}
+
+		return portlets;
 	}
 
 	protected List<String> getNestedColumns() {

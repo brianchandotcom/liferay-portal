@@ -2125,7 +2125,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				hw.keyboard=yes
 			</echo>
 
-			<exec executable="/bin/bash" os="${os.unix}" spawn="true">
+			<exec executable="/bin/bash" os="${os.apple},${os.unix}" spawn="true">
 				<arg value="-c" />
 				<arg value="${mobile.android.home}/tools/emulator -avd deviceName -no-boot-anim" />
 			</exec>
@@ -2276,7 +2276,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<parallel>
 				<daemons>
-					<exec executable="/bin/bash" os="${os.unix}">
+					<exec executable="/bin/bash" os="${os.apple},${os.unix}">
 						<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
 						<arg value="-c" />
 						<arg value="${appium.unix.cmd}" />
@@ -2429,7 +2429,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="stop-appium">
 		<sequential>
-			<exec executable="/bin/bash" os="${os.unix}" >
+			<exec executable="/bin/bash" os="${os.apple},${os.unix}" >
 				<arg value="-c" />
 				<arg value="killall node" />
 			</exec>

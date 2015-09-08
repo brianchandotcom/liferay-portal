@@ -1,3 +1,6 @@
+@import "bourbon";
+@import "mixins";
+
 .portlet-asset-tag-admin {
 	.merge-tags-container {
 		border: 1px solid transparent;
@@ -36,6 +39,37 @@
 		.target-tag-msg {
 			display: block;
 			margin-bottom: 10px;
+		}
+	}
+
+	.management-bar-container {
+		overflow: hidden;
+		position: relative;
+
+		.management-bar {
+			&.management-bar-no-collapse {
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -100%;
+				@include transition(all 300ms ease);
+
+				&.on {
+					top: 0;
+				}
+			}
+
+			.form-group {
+				margin-bottom: 0;
+			}
+
+			.input-select-wrapper {
+				margin-top: 10px;
+
+				select {
+					border-bottom: 0;
+				}
+			}
 		}
 	}
 }

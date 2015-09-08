@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 long categoryId = ParamUtil.getLong(request, "categoryId");
 
 AssetCategory category = null;
@@ -55,6 +57,7 @@ portletURL.setParameter("mvcPath", "/view_categories.jsp");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("categoryId", String.valueOf(categoryId));
 portletURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
+portletURL.setParameter("displayStyle", displayStyle);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -67,16 +70,43 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 <aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="categories" />
-
-		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="categoriesActionsButton" label="actions">
-			<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedCategories" label="delete" />
-		</aui:nav-item>
 	</aui:nav>
 
 	<aui:nav-bar-search>
 		<liferay-ui:input-search view="lexicon" />
 	</aui:nav-bar-search>
 </aui:nav-bar>
+
+<div class="management-bar-container">
+	<liferay-frontend:management-bar
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-portlet:renderURL varImpl="displayStyleURL">
+				<liferay-portlet:param name="mvcPath" value="/view_categories.jsp" />
+				<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+				<liferay-portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
+				<liferay-portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-frontend:management-bar-display-buttons
+				displayStyleURL="<%= displayStyleURL %>"
+				displayViews='<%= new String[]{"list"} %>'
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+
+	<liferay-frontend:management-bar
+		cssClass="management-bar-no-collapse"
+		id="categoriesActionsButton"
+	>
+
+		<liferay-frontend:management-bar-buttons>
+			<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedCategories" />
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+</div>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="deleteCategoryIds" type="hidden" />
@@ -90,6 +120,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-categories"
+		id="assetCategories"
 		iteratorURL="<%= portletURL %>"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 	>
@@ -174,13 +205,13 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 
 	var form = $(document.<portlet:namespace />fm);
 
-	$('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').on(
+	$('#<portlet:namespace />assetCategoriesSearchContainer').on(
 		'click',
 		'input[type=checkbox]',
 		function() {
 			var hide = (Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
 
-			$('#<portlet:namespace />categoriesActionsButton').toggleClass('hide', hide);
+			$('#<portlet:namespace />categoriesActionsButton').toggleClass('on', !hide);
 		}
 	);
 

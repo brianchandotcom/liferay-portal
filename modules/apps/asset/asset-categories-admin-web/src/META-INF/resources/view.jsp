@@ -17,22 +17,46 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="vocabularies" />
-
-		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="vocabulariesActionsButton" label="actions">
-			<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedVocabularies" label="delete" />
-		</aui:nav-item>
 	</aui:nav>
 
 	<aui:nav-bar-search>
 		<liferay-ui:input-search view="lexicon" />
 	</aui:nav-bar-search>
 </aui:nav-bar>
+
+<div class="management-bar-container">
+	<liferay-frontend:management-bar
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-portlet:renderURL varImpl="portletURL" />
+
+			<liferay-frontend:management-bar-display-buttons
+				displayStyleURL="<%= portletURL %>"
+				displayViews='<%= new String[]{"list"} %>'
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+
+	<liferay-frontend:management-bar
+		cssClass="management-bar-no-collapse"
+		id="vocabulariesActionsButton"
+	>
+
+		<liferay-frontend:management-bar-buttons>
+			<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedVocabularies" />
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+</div>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="deleteVocabularyIds" type="hidden" />
@@ -46,6 +70,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-vocabularies"
+		id="assetVocabularies"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 	>
 
@@ -184,13 +209,13 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 	var form = $(document.<portlet:namespace />fm);
 
-	$('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').on(
+	$('#<portlet:namespace />assetVocabulariesSearchContainer').on(
 		'click',
 		'input[type=checkbox]',
 		function() {
 			var hide = (Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
 
-			$('#<portlet:namespace />vocabulariesActionsButton').toggleClass('hide', hide);
+			$('#<portlet:namespace />vocabulariesActionsButton').toggleClass('on', !hide);
 		}
 	);
 

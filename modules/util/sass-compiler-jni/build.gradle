@@ -6,7 +6,7 @@ configurations {
 }
 
 dependencies {
-	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "1.0.0"
+	compile group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.0-SNAPSHOT"
 
 	jnaerator classifier: "shaded", group: "com.nativelibs4java", name: "jnaerator", transitive: false, version: "0.11"
 

@@ -252,7 +252,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<App> getInstalledAppsByCategory(String category) {
+	public List<App> getInstalledApps(String category) {
 		List<App> apps = appPersistence.findByCategory(category);
 
 		List<App> installedMarketplaceApps = new ArrayList<>();

@@ -1572,7 +1572,16 @@ public class LayoutTypePortletImpl
 
 		String selector1 = StringPool.BLANK;
 
-		Group group = layout.getGroup();
+		Group group = null;
+
+		try {
+			group = layout.getGroup();
+		}
+		catch (PortalException e) {
+			_log.error("Cannot find group with id " + layout.getGroupId());
+
+			return new String[0];
+		}
 
 		if (group.isUser()) {
 			selector1 = LayoutTypePortletConstants.STATIC_PORTLET_USER_SELECTOR;

@@ -4687,15 +4687,6 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
-			<isset property="mobile.android.home" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					mobile.android.home=${mobile.android.home}
-				</echo>
-			</then>
-		</if>
-
-		<if>
 			<isset property="osb.lcs.portlet.host.name" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -6453,17 +6444,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="mobile.device.type" />
-
-		<if>
-			<equals arg1="${mobile.device.type}" arg2="android" />
-			<then>
-				<start-android-device />
-
-				<start-appium />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="web.xml.timeout" />
 
 		<if>
@@ -6713,17 +6693,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 				</antelope:repeat>
 
 				<var name="app.server.bundle.index" unset="true" />
-			</then>
-		</if>
-
-		<get-testcase-property property.name="mobile.device.type" />
-
-		<if>
-			<equals arg1="${mobile.device.type}" arg2="android" />
-			<then>
-				<stop-android-device />
-
-				<stop-appium />
 			</then>
 		</if>
 

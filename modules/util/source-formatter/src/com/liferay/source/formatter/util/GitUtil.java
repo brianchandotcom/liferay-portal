@@ -33,6 +33,35 @@ import java.util.List;
  */
 public class GitUtil {
 
+	public static List<String> getCurrentBranchFileNames(String baseDirName)
+		throws Exception {
+
+		int gitLevel = getGitLevel(baseDirName);
+
+		if (gitLevel == -1) {
+			return new ArrayList<>();
+		}
+
+		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
+			"git log " + _WORKING_BRANCH_NAME + "..head");
+
+		if (unsyncBufferedReader == null) {
+			return new ArrayList<>();
+		}
+
+		String line = null;
+
+		List<String> latestBranchCommitIds = new ArrayList<>();
+
+		while ((line = unsyncBufferedReader.readLine()) != null) {
+			if (line.startsWith("commit ")) {
+				latestBranchCommitIds.add(line.substring(7));
+			}
+		}
+
+		return getFileNames(latestBranchCommitIds, gitLevel);
+	}
+
 	public static List<String> getLatestAuthorFileNames(String baseDirName)
 		throws Exception {
 
@@ -197,5 +226,7 @@ public class GitUtil {
 
 		return -1;
 	}
+
+	private static final String _WORKING_BRANCH_NAME = "master";
 
 }

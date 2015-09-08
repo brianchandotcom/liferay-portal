@@ -3072,6 +3072,12 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<description>The time format. An acceptable value is for 24hrs<![CDATA[<code>24h</code>]]> and for AM/PM<![CDATA[<code>ampm</code>]]>.</description>
+			<name>timeFormat</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<description>Creates a configurable timezone drop-down menu.</description>

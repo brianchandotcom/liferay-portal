@@ -189,12 +189,16 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 			datePicker.after(
 				'selectionChange',
 				function(event) {
-					var input = document.getElementById('<%= nameId %>');
+					var input = A.one('#<%= nameId %>');
 
-					if (input && input.form) {
-						var form = Liferay.Form.get(input.form.id);
+					if (input) {
+						var form = input.get('form');
 
-						form.formValidator.validateField('<%= namespace + HtmlUtil.escapeAttribute(name) %>');
+						var formId = form.get('id');
+
+						var formInstance = Liferay.Form.get(formId);
+
+						formInstance.formValidator.validateField('<%= namespace + HtmlUtil.escapeAttribute(name) %>');
 					}
 				}
 			);

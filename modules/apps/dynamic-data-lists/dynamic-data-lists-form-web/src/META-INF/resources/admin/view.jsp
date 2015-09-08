@@ -81,3 +81,15 @@ PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= ddlFormAdminDisplayContext.isShowAddRecordSetButton() %>">
+	<portlet:renderURL var="addRecordSetURL">
+		<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new-form") %>' url="<%= addRecordSetURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>

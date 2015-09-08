@@ -21,20 +21,6 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.
 %>
 
 <aui:nav-bar id="toolbar">
-	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-		<c:if test="<%= ddlFormAdminDisplayContext.isShowAddRecordSetButton() %>">
-			<aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">
-				<portlet:renderURL var="addRecordSetURL">
-					<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item cssClass="add-form" href="<%= addRecordSetURL %>" iconCssClass="icon-plus" label="new-form" />
-			</aui:nav-item>
-		</c:if>
-	</aui:nav>
-
 	<aui:nav-bar-search>
 		<liferay-util:include page="/admin/record_set_search.jsp" servletContext="<%= application %>" />
 	</aui:nav-bar-search>

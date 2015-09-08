@@ -383,7 +383,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-9807" name="ADTDMMediaGallery" priority="3">
+	<command name="ADTDMMediaGallery" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoPublishingtools">

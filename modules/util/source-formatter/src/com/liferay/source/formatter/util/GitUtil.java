@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.BaseSourceProcessor;
+import com.liferay.source.formatter.GitException;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,18 +37,8 @@ public class GitUtil {
 	public static List<String> getCurrentBranchFileNames(String baseDirName)
 		throws Exception {
 
-		int gitLevel = getGitLevel(baseDirName);
-
-		if (gitLevel == -1) {
-			return new ArrayList<>();
-		}
-
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 			"git log " + _WORKING_BRANCH_NAME + "..head");
-
-		if (unsyncBufferedReader == null) {
-			return new ArrayList<>();
-		}
 
 		String line = null;
 
@@ -59,24 +50,14 @@ public class GitUtil {
 			}
 		}
 
-		return getFileNames(latestBranchCommitIds, gitLevel);
+		return getFileNames(baseDirName, latestBranchCommitIds);
 	}
 
 	public static List<String> getLatestAuthorFileNames(String baseDirName)
 		throws Exception {
 
-		int gitLevel = getGitLevel(baseDirName);
-
-		if (gitLevel == -1) {
-			return new ArrayList<>();
-		}
-
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 			"git log");
-
-		if (unsyncBufferedReader == null) {
-			return new ArrayList<>();
-		}
 
 		String line = null;
 
@@ -106,7 +87,7 @@ public class GitUtil {
 			}
 		}
 
-		return getFileNames(latestAuthorCommitIds, gitLevel);
+		return getFileNames(baseDirName, latestAuthorCommitIds);
 	}
 
 	public static List<String> getLocalChangesFileNames(String baseDirName)
@@ -114,20 +95,12 @@ public class GitUtil {
 
 		List<String> localChangesFileNames = new ArrayList<>();
 
-		int gitLevel = getGitLevel(baseDirName);
-
-		if (gitLevel == -1) {
-			return localChangesFileNames;
-		}
-
 		UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
 			"git add . --dry-run");
 
-		if (unsyncBufferedReader == null) {
-			return localChangesFileNames;
-		}
-
 		String line = null;
+
+		int gitLevel = getGitLevel(baseDirName);
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			if (!line.startsWith("add '") ||
@@ -156,12 +129,14 @@ public class GitUtil {
 	}
 
 	protected static List<String> getFileNames(
-			List<String> commitIds, int gitLevel)
+			String baseDirName, List<String> commitIds)
 		throws Exception {
 
 		List<String> fileNames = new ArrayList<>();
 
 		String line = null;
+
+		int gitLevel = getGitLevel(baseDirName);
 
 		for (String commitId : commitIds) {
 			UnsyncBufferedReader unsyncBufferedReader = getGitCommandReader(
@@ -197,10 +172,8 @@ public class GitUtil {
 			String errorMessage = ioe.getMessage();
 
 			if (errorMessage.contains("Cannot run program")) {
-				System.out.println(
+				throw new GitException(
 					"Add Git to your PATH system variable first.");
-
-				return null;
 			}
 
 			throw ioe;
@@ -210,7 +183,7 @@ public class GitUtil {
 			new InputStreamReader(process.getInputStream()));
 	}
 
-	protected static int getGitLevel(String baseDirName) {
+	protected static int getGitLevel(String baseDirName) throws GitException {
 		for (int i = 0; i < BaseSourceProcessor.PORTAL_MAX_DIR_LEVEL; i++) {
 			File file = new File(baseDirName + ".git");
 
@@ -221,10 +194,8 @@ public class GitUtil {
 			baseDirName = "../" + baseDirName;
 		}
 
-		System.out.println(
+		throw new GitException(
 			"Unable to retrieve files because .git directory is missing.");
-
-		return -1;
 	}
 
 	private static final String _WORKING_BRANCH_NAME = "master";

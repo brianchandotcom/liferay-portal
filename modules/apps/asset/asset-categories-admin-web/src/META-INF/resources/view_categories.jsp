@@ -69,20 +69,6 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav">
-			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY) %>">
-				<portlet:renderURL var="addCategoryURL">
-					<portlet:param name="mvcPath" value="/edit_category.jsp" />
-
-					<c:if test="<%= categoryId > 0 %>">
-						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
-					</c:if>
-
-					<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item href="<%= addCategoryURL %>" iconCssClass="icon-plus" label="add-category" />
-			</c:if>
-
 			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="categoriesActionsButton" label="actions">
 				<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedCategories" label="delete" />
 			</aui:nav-item>
@@ -166,6 +152,22 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY) %>">
+	<portlet:renderURL var="addCategoryURL">
+		<portlet:param name="mvcPath" value="/edit_category.jsp" />
+
+		<c:if test="<%= categoryId > 0 %>">
+			<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
+		</c:if>
+
+		<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-category") %>' url="<%= addCategoryURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script sandbox="<%= true %>">
 	var Util = Liferay.Util;

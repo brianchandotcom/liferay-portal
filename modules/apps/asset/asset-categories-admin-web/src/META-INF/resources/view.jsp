@@ -25,14 +25,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav">
-			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY) %>">
-				<portlet:renderURL var="addVocabularyURL">
-					<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
-				</portlet:renderURL>
-
-				<aui:nav-item href="<%= addVocabularyURL %>" iconCssClass="icon-plus" label="add-vocabulary" />
-			</c:if>
-
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) %>">
 				<liferay-security:permissionsURL
 					modelResource="com.liferay.portlet.asset"
@@ -188,6 +180,16 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY) %>">
+	<portlet:renderURL var="addVocabularyURL">
+		<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-vocabulary") %>' url="<%= addVocabularyURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script sandbox="<%= true %>">
 	var Util = Liferay.Util;

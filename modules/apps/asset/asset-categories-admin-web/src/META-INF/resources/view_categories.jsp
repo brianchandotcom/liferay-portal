@@ -36,9 +36,8 @@ AssetVocabulary vocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(vocab
 if (Validator.isNull(redirect)) {
 	PortletURL backURL = renderResponse.createRenderURL();
 
-	backURL.setParameter("mvcPath", "/view_categories.jsp");
-
 	if (category != null) {
+		backURL.setParameter("mvcPath", "/view_categories.jsp");
 		backURL.setParameter("categoryId", String.valueOf(category.getParentCategoryId()));
 
 		if (vocabularyId > 0) {

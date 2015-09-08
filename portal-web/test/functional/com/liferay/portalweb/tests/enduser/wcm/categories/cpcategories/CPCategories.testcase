@@ -357,7 +357,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="AddVocabularies" priority="4">
+	<command name="AddVocabularies" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -405,7 +405,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="AddVocabularyAssetTypeAllAssetTypes" priority="4">
+	<command name="AddVocabularyAssetTypeAllAssetTypes" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1026,7 +1026,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="EditVocabulary" priority="5">
+	<command name="EditVocabulary" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

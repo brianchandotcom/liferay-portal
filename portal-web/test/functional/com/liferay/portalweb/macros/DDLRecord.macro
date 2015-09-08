@@ -160,7 +160,7 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

@@ -18,7 +18,7 @@ liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
 
-File themesDestinationDir = file("src/META-INF/resources");
+File themeDestinationDir = file("src/META-INF/resources/_unstyled");
 File thirdPartyDir = file("../../../../portal-web/third-party")
 
 task buildAlloyBootstrapTheme(type: Copy)
@@ -28,7 +28,7 @@ task buildLexicon(type: Copy)
 task buildTheme
 
 buildAlloyBootstrapTheme {
-	File alloyBootstrapDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui")
+	File alloyBootstrapDestinationDir = new File(themeDestinationDir, "css/aui")
 	File bootstrapSassZipFile = new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip")
 
 	doFirst {
@@ -47,7 +47,7 @@ buildAlloyBootstrapTheme {
 }
 
 buildAlloyFontAwesome {
-	File alloyFontAwesomeDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui/alloy-font-awesome")
+	File alloyFontAwesomeDestinationDir = new File(themeDestinationDir, "css/aui/alloy-font-awesome")
 	File alloyFontAwesomeZipFile = new File(thirdPartyDir, "alloy-font-awesome-${alloyFontAwesomeVersion}.zip")
 
 	dependsOn buildAlloyBootstrapTheme
@@ -71,7 +71,7 @@ buildAlloyFontAwesome {
 }
 
 buildAlloyTheme {
-	File alloyThemeDestinationDir = new File(themesDestinationDir, "_unstyled/images/aui")
+	File alloyThemeDestinationDir = new File(themeDestinationDir, "images/aui")
 	File alloyZipFile = new File(thirdPartyDir, "alloy-${alloyVersion}.zip")
 
 	doFirst {
@@ -99,7 +99,7 @@ buildCSS {
 }
 
 buildLexicon {
-	File lexiconDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui/lexicon")
+	File lexiconDestinationDir = new File(themeDestinationDir, "css/aui/lexicon")
 	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
 
 	dependsOn buildAlloyBootstrapTheme
@@ -165,8 +165,10 @@ buildLexicon {
 }
 
 buildTheme {
-	dependsOn buildAlloyBootstrapTheme, buildAlloyFontAwesome, buildAlloyTheme, buildLexicon
-	mustRunAfter buildAlloyBootstrapTheme, buildAlloyFontAwesome, buildAlloyTheme, buildLexicon
+	dependsOn buildAlloyBootstrapTheme
+	dependsOn buildAlloyFontAwesome
+	dependsOn buildAlloyTheme
+	dependsOn buildLexicon
 }
 
 classes {

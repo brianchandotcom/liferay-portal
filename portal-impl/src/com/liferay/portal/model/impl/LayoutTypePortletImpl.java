@@ -318,6 +318,16 @@ public class LayoutTypePortletImpl
 	}
 
 	@Override
+	public List<Portlet> getEmbeddedPortlets() throws PortalException {
+		List<Portlet> explicitlyAddedPortlets = getExplicitelyAddedPortlets();
+
+		List<Portlet> staticPortlets = getStaticPortlets(
+			PropsKeys.LAYOUT_STATIC_PORTLETS_ALL);
+
+		return getEmbeddedPortlets(explicitlyAddedPortlets, staticPortlets);
+	}
+
+	@Override
 	public Layout getLayoutSetPrototypeLayout() {
 		return _layoutSetPrototypeLayout;
 	}

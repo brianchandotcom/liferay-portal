@@ -49,7 +49,7 @@
 				margin: 0;
 				padding: 11px 14px;
 
-				@include respond-to(desktop) {
+				@include media-query(md) {
 					padding: 11px;
 				}
 			}

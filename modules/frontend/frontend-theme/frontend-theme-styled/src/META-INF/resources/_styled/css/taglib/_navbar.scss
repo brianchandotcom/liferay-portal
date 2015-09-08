@@ -4,16 +4,8 @@
 	.navbar-search {
 		background-color: #F3F3F3;
 
-		@media (min-width: 768px) {
+		@include media-query(sm) {
 			background-color: transparent;
-		}
-	}
-
-	@include respond-to(phone, tablet) {
-		.container, .container-fluid {
-			.navbar-btn {
-				color: #000;
-			}
 		}
 	}
 }

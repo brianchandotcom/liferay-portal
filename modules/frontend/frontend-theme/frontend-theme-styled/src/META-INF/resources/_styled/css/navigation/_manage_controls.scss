@@ -55,37 +55,49 @@
 
 	.lfr-nav-updateable {
 		.add-page-editor {
+			@include media-query(md) {
+				margin-top: 7px;
+			}
+
+			.add-page-editor-input, .btn {
+				height: 32px;
+
+				@include media-query(md) {
+					height: auto;
+				}
+			}
+
 			.add-page-editor-input {
-				width: 150px;
+				left: 5px;
+				width: 70%;
+
+				@include media-query(md) {
+					width: 150px;
+				}
 			}
 
 			.btn {
-				width: auto;
+				margin-left: 0;
+				margin-top: 0;
+				padding-bottom: 0;
+				padding-top: 0;
+				width: 30%;
+
+				@include media-query(md) {
+					padding-bottom: 6px;
+					padding-top: 6px;
+					width: auto;
+				}
 			}
 
-			@include respond-to(phone, tablet) {
-				margin: 0 5px;
+			.input-group {
+				margin: 6px 0 7px;
+				width: 100%;
 
-				.input-group {
-					margin: 6px 0 7px;
-					width: 100%;
-				}
-
-				.add-page-editor-input, .btn {
-					height: 32px;
-				}
-
-				.add-page-editor-input {
-					left: 5px;
-					position: relative;
-					top: 2px;
-					width: 70%;
-					z-index: 1;
-				}
-
-				.btn {
-					display: inline-block;
-					width: 30%;
+				@include media-query(md) {
+					margin-bottom: 0;
+					margin-top: 0;
+					width: auto;
 				}
 			}
 		}
@@ -111,7 +123,7 @@
 		padding-left: 28px;
 	}
 
-	@include respond-to(desktop) {
+	@include media-query(md) {
 		.lfr-nav-sortable > a > span {
 			padding-left: 0;
 		}

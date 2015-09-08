@@ -31,7 +31,7 @@
 	.nav-display-style-buttons {
 		.display-style-buttons {
 			> .dropdown {
-				@include respond-to(phone) {
+				@include media-query(null, $screen-xs-max) {
 					> .dropdown-menu {
 						background-color: transparent;
 						box-shadow: none;

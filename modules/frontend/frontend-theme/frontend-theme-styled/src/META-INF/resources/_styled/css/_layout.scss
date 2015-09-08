@@ -12,9 +12,4 @@
 	padding-bottom: 0;
 	padding-top: 2em;
 	position: relative;
-
-	@include respond-to(desktop) {
-		padding-left: 5em;
-		padding-right: 5em;
-	}
 }

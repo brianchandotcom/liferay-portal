@@ -39,38 +39,12 @@
 		}
 	}
 
-	@include respond-to(phone, tablet) {
-		position: static;
-		width: auto;
-
-		@include respond-to(tablet) {
-			margin: 0;
-		}
-
-		&.lfr-add-panel .add-content-menu .lfr-add-page-toolbar, &.lfr-edit-layout-panel .taglib-form-navigator .button-holder {
-			margin-top: 0;
-			position: static;
-			width: auto;
-		}
-
-		&.lfr-edit-layout-panel {
-			.taglib-form-navigator .panel-group {
-				margin-bottom: 20px;
-			}
-
-			.site-admin-link {
-				padding: 0;
-				position: static;
-			}
-		}
-	}
-
 	.lfr-page-layouts {
 		margin-left: 0;
 	}
 }
 
-@include respond-to(desktop) {
+@include media-query(md) {
 	.lfr-has-add-content {
 		padding-right: $addContentPanelWidth;
 
@@ -111,7 +85,7 @@
 
 	@include prefixer(overflow-scrolling, touch, 'webkit');
 
-	@include respond-to(desktop) {
+	@include media-query(md) {
 		height: 100%;
 		position: fixed;
 		width: 100%;

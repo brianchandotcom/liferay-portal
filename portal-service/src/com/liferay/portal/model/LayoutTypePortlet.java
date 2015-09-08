@@ -81,6 +81,8 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public List<Portlet> getAllPortlets(String columnId) throws PortalException;
 
+	public List<Portlet> getEmbeddedPortlets() throws PortalException;
+
 	public Layout getLayoutSetPrototypeLayout();
 
 	public String getLayoutSetPrototypeLayoutProperty(String key);

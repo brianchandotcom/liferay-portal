@@ -268,7 +268,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56568" name="AddWithStructure" priority="4">
+	<command name="AddWithStructure" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -338,7 +338,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56568" name="ChangeTemplate" priority="4">
+	<command name="ChangeTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

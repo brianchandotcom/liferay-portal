@@ -802,7 +802,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56568" name="EditWebContentTemplate" priority="4">
+	<command name="EditWebContentTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

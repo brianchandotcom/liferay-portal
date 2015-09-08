@@ -27,6 +27,8 @@ public class SourceFormatterArgs {
 
 	public static final String COPYRIGHT_FILE_NAME = "copyright.txt";
 
+	public static final boolean FORMAT_CURRENT_BRANCH = false;
+
 	public static final boolean FORMAT_LATEST_AUTHOR = false;
 
 	public static final boolean FORMAT_LOCAL_CHANGES = false;
@@ -58,6 +60,10 @@ public class SourceFormatterArgs {
 
 	public boolean isAutoFix() {
 		return _autoFix;
+	}
+
+	public boolean isFormatCurrentBranch() {
+		return _formatCurrentBranch;
 	}
 
 	public boolean isFormatLatestAuthor() {
@@ -113,6 +119,10 @@ public class SourceFormatterArgs {
 		_fileNames = fileNames;
 	}
 
+	public void setFormatCurrentBranch(boolean formatCurrentBranch) {
+		_formatCurrentBranch = formatCurrentBranch;
+	}
+
 	public void setFormatLatestAuthor(boolean formatLatestAuthor) {
 		_formatLatestAuthor = formatLatestAuthor;
 	}
@@ -141,6 +151,7 @@ public class SourceFormatterArgs {
 	private String _baseDirName = BASE_DIR_NAME;
 	private String _copyrightFileName = COPYRIGHT_FILE_NAME;
 	private List<String> _fileNames;
+	private boolean _formatCurrentBranch = FORMAT_CURRENT_BRANCH;
 	private boolean _formatLatestAuthor = FORMAT_LATEST_AUTHOR;
 	private boolean _formatLocalChanges = FORMAT_LOCAL_CHANGES;
 	private boolean _printErrors = PRINT_ERRORS;

@@ -418,7 +418,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		List<String> allFileNames = null;
 
-		if (sourceFormatterArgs.isFormatLatestAuthor() ||
+		if (sourceFormatterArgs.isFormatCurrentBranch() ||
+			sourceFormatterArgs.isFormatLatestAuthor() ||
 			sourceFormatterArgs.isFormatLocalChanges()) {
 
 			allFileNames = getFileNames(
@@ -475,7 +476,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			ReflectionUtil.throwException(e);
 		}
 
-		if (!sourceFormatterArgs.isFormatLatestAuthor() &&
+		if (!sourceFormatterArgs.isFormatCurrentBranch() &&
+			!sourceFormatterArgs.isFormatLatestAuthor() &&
 			!sourceFormatterArgs.isFormatLocalChanges()) {
 
 			return fileNames;

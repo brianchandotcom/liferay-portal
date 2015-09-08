@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs;
 
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -186,11 +187,14 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 
 		tempFileEntries.add(tempFileEntry);
 
+		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+			_user.getUserId(), _group.getGroupId());
+
 		return
 			_blogsEntryAttachmentFileEntryHelper.
 				addBlogsEntryAttachmentFileEntries(
 					_group.getGroupId(), _user.getUserId(), entry.getEntryId(),
-					tempFileEntries);
+					folder, tempFileEntries);
 	}
 
 	protected String getContent(String tempFileEntryImgTag) {

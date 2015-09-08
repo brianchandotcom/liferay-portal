@@ -30,15 +30,6 @@
 		<sequential>
 			<if>
 				<not>
-					<isset property="app.server.type" />
-				</not>
-				<then>
-					<property name="app.server.type" value="tomcat" />
-				</then>
-			</if>
-
-			<if>
-				<not>
 					<or>
 						<equals arg1="${app.server.type}" arg2="glassfish" />
 						<equals arg1="${app.server.type}" arg2="jboss" />
@@ -59,15 +50,6 @@
 
 			<if>
 				<not>
-					<isset property="browser.type" />
-				</not>
-				<then>
-					<property name="browser.type" value="firefox" />
-				</then>
-			</if>
-
-			<if>
-				<not>
 					<or>
 						<equals arg1="${browser.type}" arg2="firefox" />
 						<equals arg1="${browser.type}" arg2="googlechrome" />
@@ -76,15 +58,6 @@
 				</not>
 				<then>
 					<fail>Please set "browser.type" to one of the following:${line.separator}firefox, googlechrome, ie.</fail>
-				</then>
-			</if>
-
-			<if>
-				<not>
-					<isset property="database.type" />
-				</not>
-				<then>
-					<property name="database.type" value="mysql" />
 				</then>
 			</if>
 

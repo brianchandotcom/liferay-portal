@@ -27,7 +27,7 @@
 		var nestedPortlet = portletWrapper.find('.portlet-boundary, .portlet-borderless-container');
 
 		if (!nestedPortlet.length) {
-			portletWrapper.find('#<portlet:namespace />nested-portlets-msg').removeClass('hide');
+			portletWrapper.find('#<portlet:namespace />nested-portlets-msg').first().removeClass('hide');
 		}
 	</aui:script>
 </c:if>

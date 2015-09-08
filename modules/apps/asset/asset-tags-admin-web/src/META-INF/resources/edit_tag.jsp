@@ -39,7 +39,7 @@ renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "add-tag") : 
 	<portlet:param name="mvcPath" value="/edit_tag.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editTagURL %>" method="post" name="fm">
+<aui:form action="<%= editTagURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<liferay-ui:error exception="<%= AssetTagException.class %>">
@@ -65,9 +65,9 @@ renderResponse.setTitle(((tag == null) ? LanguageUtil.get(request, "add-tag") : 
 				<aui:input autoFocus="<%= true %>" cssClass="tag-name" name="name" />
 
 				<aui:button-row>
-					<aui:button type="submit" />
+					<aui:button cssClass="btn-lg" type="submit" />
 
-					<aui:button href="<%= redirect %>" type="cancel" />
+					<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 				</aui:button-row>
 			</div>
 		</div>

@@ -656,7 +656,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="document" value="Document_1.txt" />			<var name="fieldFieldLabel" value="Attachment" />
+			<var name="document" value="Document_1.txt" />
+			<var name="fieldFieldLabel" value="Attachment" />
 			<var name="fieldName" value="attachment" />
 		</execute>
 

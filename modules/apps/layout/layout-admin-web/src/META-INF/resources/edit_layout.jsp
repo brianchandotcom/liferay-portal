@@ -68,17 +68,9 @@ if (layoutRevision != null) {
 }
 
 if (selLayout.isSupportsEmbeddedPortlets()) {
-	List<Portlet> embeddedPortlets = new ArrayList<Portlet>();
-
 	LayoutTypePortlet selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
 
-	List<String> portletIds = selLayoutTypePortlet.getPortletIds();
-
-	for (Portlet portlet : selLayoutTypePortlet.getAllPortlets(false)) {
-		if (!portletIds.contains(portlet.getPortletId())) {
-			embeddedPortlets.add(portlet);
-		}
-	}
+	List<Portlet> embeddedPortlets = selLayoutTypePortlet.getEmbeddedPortlets();
 
 	if (!embeddedPortlets.isEmpty()) {
 		request.setAttribute("edit_pages.jsp-embeddedPortlets", embeddedPortlets);

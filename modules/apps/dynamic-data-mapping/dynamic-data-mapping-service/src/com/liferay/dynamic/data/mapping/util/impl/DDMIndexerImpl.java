@@ -46,8 +46,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
+
 import java.math.BigDecimal;
+
 import java.text.Format;
+
 import java.util.Date;
 import java.util.Locale;
 import java.util.Set;
@@ -315,7 +318,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		Locale locale) throws Exception {
 
 		String[] ddmStructureFieldNameParts = StringUtil.split(
-				ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
+			ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
 
 		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 			GetterUtil.getLong(ddmStructureFieldNameParts[1]));
@@ -338,7 +341,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		return booleanQuery;
 	}
-	
+
 	protected Fields toFields(
 		DDMStructure ddmStructure, DDMFormValues ddmFormValues) {
 

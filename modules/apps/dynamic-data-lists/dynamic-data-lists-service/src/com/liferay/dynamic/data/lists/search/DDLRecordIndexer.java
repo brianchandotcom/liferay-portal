@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -112,7 +113,7 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 		}
 
 		addSearchClassTypeIds(contextBooleanFilter, searchContext);
-		
+
 		String ddmStructureFieldName = (String)searchContext.getAttribute(
 			"ddmStructureFieldName");
 		Serializable ddmStructureFieldValue = searchContext.getAttribute(

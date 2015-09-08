@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.io.Serializable;
+
 import java.util.Locale;
 
 /**
@@ -54,7 +55,7 @@ public class DDMIndexerUtil {
 
 	public static BooleanQuery getBooleanQuery(
 		String ddmStructureFieldName, Serializable ddmStructureFieldValue,
-		Locale locale) throws Exception{
+		Locale locale) throws Exception {
 
 		return getDDMIndexer().getBooleanQuery(
 			ddmStructureFieldName, ddmStructureFieldValue, locale);

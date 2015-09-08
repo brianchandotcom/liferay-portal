@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
+
 import java.util.Locale;
 
 /**

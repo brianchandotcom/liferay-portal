@@ -20,7 +20,7 @@
 SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
 %>
 
-<aui:nav-bar id="toolbar">
+<aui:nav-bar id="toolbar" cssClass="collapse-basic-search" view="lexicon">
 	<aui:nav-bar-search>
 		<liferay-util:include page="/admin/record_set_search.jsp" servletContext="<%= application %>" />
 	</aui:nav-bar-search>

@@ -20,8 +20,9 @@
 PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
 %>
 
+<liferay-util:include page="/admin/toolbar.jsp" servletContext="<%= application %>" />
+
 <div id="<portlet:namespace />formContainer" class="container-fluid-1280">
-	<liferay-util:include page="/admin/toolbar.jsp" servletContext="<%= application %>" />
 	
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />

@@ -246,7 +246,7 @@ public interface AppLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.marketplace.model.App> getInstalledApps();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.marketplace.model.App> getInstalledMarketplaceApps(
+	public java.util.List<com.liferay.marketplace.model.App> getInstalledApps(
 		java.lang.String category);
 
 	@Override

@@ -289,9 +289,9 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.marketplace.model.App> getInstalledMarketplaceApps(
+	public java.util.List<com.liferay.marketplace.model.App> getInstalledApps(
 		java.lang.String category) {
-		return _appLocalService.getInstalledMarketplaceApps(category);
+		return _appLocalService.getInstalledApps(category);
 	}
 
 	@Override

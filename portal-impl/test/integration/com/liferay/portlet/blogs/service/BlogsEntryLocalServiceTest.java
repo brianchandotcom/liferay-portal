@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -90,6 +91,32 @@ public class BlogsEntryLocalServiceTest {
 			WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 		_user = TestPropsValues.getUser();
+	}
+
+	@Test
+	public void testAddEntryWithCoverImage() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		FileEntry fileEntry = getTempFileEntry(
+			_user.getUserId(), serviceContext);
+
+		ImageSelector coverImageSelector = new ImageSelector(
+			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
+		ImageSelector smallImageSelector = null;
+
+		BlogsEntry expectedEntry = BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), true, true,
+			new String[0], StringPool.BLANK, coverImageSelector,
+			smallImageSelector, serviceContext);
+
+		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
+			expectedEntry.getEntryId());
+
+		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);
 	}
 
 	@Test
@@ -511,24 +538,7 @@ public class BlogsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
 
-		ClassLoader classLoader = getClass().getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portal/util/dependencies/test.jpg");
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = TempFileEntryUtil.getTempFileEntry(
-				serviceContext.getScopeGroupId(), userId,
-				BlogsEntry.class.getName(), "image.jpg");
-		}
-		catch (Exception e) {
-			fileEntry = TempFileEntryUtil.addTempFileEntry(
-				serviceContext.getScopeGroupId(), userId,
-				BlogsEntry.class.getName(), "image.jpg", inputStream,
-				MimeTypesUtil.getContentType("image.jpg"));
-		}
+		FileEntry fileEntry = getTempFileEntry(userId, serviceContext);
 
 		ImageSelector coverImageSelector = null;
 		ImageSelector smallImageSelector = new ImageSelector(
@@ -562,6 +572,32 @@ public class BlogsEntryLocalServiceTest {
 					WorkflowConstants.STATUS_IN_TRASH, entry.getStatus());
 			}
 		}
+	}
+
+	protected FileEntry getTempFileEntry(
+			long userId, ServiceContext serviceContext)
+		throws PortalException {
+
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portal/util/dependencies/test.jpg");
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = TempFileEntryUtil.getTempFileEntry(
+				serviceContext.getScopeGroupId(), userId,
+				BlogsEntry.class.getName(), "image.jpg");
+		}
+		catch (Exception e) {
+			fileEntry = TempFileEntryUtil.addTempFileEntry(
+				serviceContext.getScopeGroupId(), userId,
+				BlogsEntry.class.getName(), "image.jpg", inputStream,
+				MimeTypesUtil.getContentType("image.jpg"));
+		}
+
+		return fileEntry;
 	}
 
 	protected BlogsEntry testAddEntry(boolean smallImage) throws Exception {
@@ -847,6 +883,9 @@ public class BlogsEntryLocalServiceTest {
 
 		return sb.toString();
 	}
+
+	private static final String _IMAGE_CROP_REGION =
+		"{\"height\":10,\"width\":10,\"x\":0,\"y\":0}";
 
 	@DeleteAfterTestRun
 	private Group _group;

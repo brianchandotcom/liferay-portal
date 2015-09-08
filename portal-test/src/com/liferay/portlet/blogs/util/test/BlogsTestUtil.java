@@ -91,6 +91,9 @@ public class BlogsTestUtil {
 			expectedEntry.isAllowTrackbacks(), actualEntry.isAllowTrackbacks());
 		Assert.assertEquals(
 			expectedEntry.isSmallImage(), actualEntry.isSmallImage());
+		Assert.assertEquals(
+			expectedEntry.getCoverImageFileEntryId(),
+			actualEntry.getCoverImageFileEntryId());
 	}
 
 	public static String getTempBlogsEntryAttachmentFileEntryImgTag(

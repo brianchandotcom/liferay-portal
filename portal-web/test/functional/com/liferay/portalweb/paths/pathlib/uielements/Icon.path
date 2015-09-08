@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_BLOGS_ENTRY_PLUS</td>
-	<td>//a[contains(@data-original-title,'Add Blog Entry')]/span[@class='icon-plus']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADVANCED_SEARCH</td>
 	<td>//a[contains(@class,'toggle-advanced') and i[@class='icon-search']]</td>
 	<td></td>

@@ -355,7 +355,7 @@
 </tr>
 <tr>
 	<td>PLUS</td>
-	<td>//span[contains(@class,'icon-plus')]/../../button</td>
+	<td>//a[contains(@class,'btn') and span[contains(@class,'icon-plus')]] | //button[span[contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
 <tr>

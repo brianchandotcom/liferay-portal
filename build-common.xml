@@ -121,6 +121,16 @@
 	<propertycopy from="app.server.${app.server.type}.temp.dir" name="app.server.temp.dir" />
 	<propertycopy from="app.server.${app.server.type}.work.dir" name="app.server.work.dir" />
 
+	<if>
+		<or>
+			<equals arg1="${app.server.type}" arg2="glassfish" />
+			<equals arg1="${app.server.type}" arg2="websphere" />
+		</or>
+		<then>
+			<propertycopy from="app.server.${app.server.type}.portal.war.name" name="app.server.portal.war.name" />
+		</then>
+	</if>
+
 	<propertyselector
 		casesensitive="false"
 		delimiter="," match="app\.(.+)\.dir"

@@ -20,22 +20,22 @@
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
-<aui:form name="fm">
+<aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item cssClass="active" label="vocabularies" />
+
+		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="vocabulariesActionsButton" label="actions">
+			<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedVocabularies" label="delete" />
+		</aui:nav-item>
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<liferay-ui:input-search view="lexicon" />
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="deleteVocabularyIds" type="hidden" />
-
-	<aui:nav-bar>
-		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="vocabulariesActionsButton" label="actions">
-				<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedVocabularies" label="delete" />
-			</aui:nav-item>
-		</aui:nav>
-
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<liferay-ui:input-search />
-			</div>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
 
 	<liferay-ui:breadcrumb
 		showCurrentGroup="<%= false %>"

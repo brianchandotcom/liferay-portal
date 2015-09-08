@@ -56,7 +56,7 @@ renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle
 	<portlet:param name="mvcPath" value="/move_category.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= moveCategoryURL %>" name="fm" onSubmit="event.preventDefault();">
+<aui:form action="<%= moveCategoryURL %>" cssClass="container-fluid-1280" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 
 	<aui:select label="vocabulary" name="vocabularyId">
@@ -111,9 +111,9 @@ renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle
 	</div>
 
 	<aui:button-row>
-		<aui:button type="submit" value="move" />
+		<aui:button cssClass="btn-lg" type="submit" value="move" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

@@ -93,7 +93,7 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 	<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= editCategoryURL %>" name="fm">
+<aui:form action="<%= editCategoryURL %>" cssClass="container-fluid-1280" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 	<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
@@ -147,9 +147,9 @@ renderResponse.setTitle(((category == null) ? LanguageUtil.get(request, "add-new
 		</liferay-ui:panel-container>
 
 		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>

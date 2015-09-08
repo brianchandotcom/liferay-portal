@@ -913,7 +913,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="DeactivateStaging" priority="4">
+	<command name="DeactivateStaging" priority="4">
 		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -1029,7 +1029,7 @@
 		<execute function="AssertElementNotPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT_THUMBNAIL" />
 	</command>
 
-	<command known-issues="LRQA-16325" name="LayoutScope" priority="4">
+	<command name="LayoutScope" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -1338,7 +1338,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingPublishPortlet" priority="4">
+	<command name="StagingPublishPortlet" priority="4">
 		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />

@@ -17,7 +17,7 @@ package com.liferay.item.selector.url.web;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
-import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.item.selector.url.web.display.context.ItemSelectorURLViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,14 +44,14 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ItemSelectorView.class)
 public class ItemSelectorURLView
-	implements ItemSelectorView<ImageItemSelectorCriterion> {
+	implements ItemSelectorView<URLItemSelectorCriterion> {
 
 	public static final String ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT =
 		"ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT";
 
 	@Override
-	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return ImageItemSelectorCriterion.class;
+	public Class<URLItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return URLItemSelectorCriterion.class;
 	}
 
 	public ServletContext getServletContext() {
@@ -76,7 +76,7 @@ public class ItemSelectorURLView
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			ImageItemSelectorCriterion imageItemSelectorCriterion,
+			URLItemSelectorCriterion URLItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 

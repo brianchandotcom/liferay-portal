@@ -64,9 +64,6 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			"extraPlugins",
 			"ae_autolink,ae_dragresize,ae_addimages,ae_placeholder," +
 				"ae_selectionregion,ae_tableresize,ae_tabletools,ae_uicore");
-		jsonObject.put("filebrowserBrowseUrl", "");
-		jsonObject.put("filebrowserImageBrowseLinkUrl", "");
-		jsonObject.put("filebrowserImageBrowseUrl", "");
 
 		String languageId = getLanguageId(themeDisplay);
 

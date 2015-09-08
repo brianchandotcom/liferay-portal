@@ -37,23 +37,19 @@ public abstract class BaseEditorConfigContributor
 	public PortletURL getItemSelectorPortletURL(
 		Map<String, Object> inputEditorTaglibAttributes,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory,
-		ItemSelectorCriterion itemSelectorCriterion) {
-
-		boolean allowBrowseDocuments = GetterUtil.getBoolean(
-			inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:allowBrowseDocuments"));
-
-		if (!allowBrowseDocuments) {
-			return null;
-		}
+		ItemSelectorCriterion... itemSelectorCriteria) {
 
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new ArrayList<>();
 
 		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
 
-		itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			desiredItemSelectorReturnTypes);
+		for (ItemSelectorCriterion itemSelectorCriterion :
+				itemSelectorCriteria) {
+
+			itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+				desiredItemSelectorReturnTypes);
+		}
 
 		String name = GetterUtil.getString(
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
@@ -74,7 +70,7 @@ public abstract class BaseEditorConfigContributor
 
 		return itemSelector.getItemSelectorURL(
 			requestBackedPortletURLFactory, name + "selectItem",
-			itemSelectorCriterion);
+			itemSelectorCriteria);
 	}
 
 	protected abstract ItemSelector getItemSelector();

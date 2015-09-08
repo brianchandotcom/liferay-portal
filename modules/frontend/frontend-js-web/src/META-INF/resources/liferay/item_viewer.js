@@ -358,6 +358,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-image-viewer']
+		requires: ['aui-component', 'aui-image-viewer']
 	}
 );

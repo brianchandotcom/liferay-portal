@@ -50,9 +50,13 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		if (Validator.isNull(selectedTab)) {
 			selectedTab = titles.get(0);
 		}
+
+		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(selectedTab);
+
+		ItemSelectorView<ItemSelectorCriterion> initialItemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
 		%>
 
-		<div class="form-search" id="<portlet:namespace />formSearch">
+		<div class="form-search <%= initialItemSelectorView.isShowSearch() ? "" : "hide" %>" id="<portlet:namespace />formSearch">
 			<aui:form action="<%= currentURL %>" cssClass="basic-search input-group"  name="searchFm">
 				<div class="input-group-input">
 					<div class="basic-search-slider">
@@ -77,11 +81,11 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 			<%
 			for (String title : titles) {
-				ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
+				ItemSelectorViewRenderer curItemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
 
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
+				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = curItemSelectorViewRenderer.getItemSelectorView();
 
 				data.put("showSearch", itemSelectorView.isShowSearch());
 			%>
@@ -90,7 +94,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 					<div>
 
 						<%
-						itemSelectorViewRenderer.renderHTML(pageContext);
+						curItemSelectorViewRenderer.renderHTML(pageContext);
 						%>
 
 					</div>

@@ -15,12 +15,17 @@
 package com.liferay.item.selector.editor.configuration;
 
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
@@ -40,9 +45,22 @@ public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 		ThemeDisplay themeDisplay,
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory) {
 
+		boolean allowBrowseDocuments = GetterUtil.getBoolean(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:allowBrowseDocuments"));
+
+		List<ItemSelectorCriterion> itemSelectorCriteria = new ArrayList<>();
+
+		itemSelectorCriteria.add(new URLItemSelectorCriterion());
+
+		if (allowBrowseDocuments) {
+			itemSelectorCriteria.add(new ImageItemSelectorCriterion());
+		}
+
 		PortletURL itemSelectorURL = getItemSelectorPortletURL(
 			inputEditorTaglibAttributes, requestBackedPortletURLFactory,
-			new ImageItemSelectorCriterion());
+			itemSelectorCriteria.toArray(
+				new ItemSelectorCriterion[itemSelectorCriteria.size()]));
 
 		if (itemSelectorURL != null) {
 			jsonObject.put(

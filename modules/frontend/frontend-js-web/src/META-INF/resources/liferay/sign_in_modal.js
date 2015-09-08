@@ -86,7 +86,7 @@ AUI.add(
 
 						instance._setModalContent(signInPortletBody);
 
-						Liferay.Util.focusFormField('#signinmodal input:text');
+						Liferay.Util.focusFormField(signInPortletBody.one('input:text'));
 					},
 
 					_loadIO: function() {

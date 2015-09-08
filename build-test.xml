@@ -51,13 +51,15 @@
 			<if>
 				<not>
 					<or>
+						<equals arg1="${browser.type}" arg2="chrome" />
+						<equals arg1="${browser.type}" arg2="edge" />
 						<equals arg1="${browser.type}" arg2="firefox" />
-						<equals arg1="${browser.type}" arg2="googlechrome" />
-						<equals arg1="${browser.type}" arg2="ie" />
+						<equals arg1="${browser.type}" arg2="internetexplorer" />
+						<equals arg1="${browser.type}" arg2="safari" />
 					</or>
 				</not>
 				<then>
-					<fail>Please set "browser.type" to one of the following:${line.separator}firefox, googlechrome, ie.</fail>
+					<fail>Please set "browser.type" to one of the following:${line.separator}chrome, edge, firefox, internetexplorer, safari.</fail>
 				</then>
 			</if>
 
@@ -3070,6 +3072,20 @@ go]]></replacevalue>
 
 	<target name="clean-up-selenium-driver">
 		<if>
+			<equals arg1="${browser.type}" arg2="chrome" />
+			<then>
+				<stop-chrome-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="internetexplorer" />
+			<then>
+				<stop-ie-driver />
+			</then>
+		</if>
+
+		<if>
 			<isset property="${mobile.device.type}" />
 			<then>
 				<stop-appium />
@@ -4786,64 +4802,17 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 	</target>
 
-	<target name="prepare-selenium-browser-driver">
-		<if>
-			<equals arg1="${browser.type}" arg2="googlechrome" />
-			<then>
-				<prepare-chrome-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="ie" />
-			<then>
-				<prepare-ie-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="safari" />
-			<then>
-				<prepare-safari-driver />
-			</then>
-		</if>
-	</target>
-
 	<target name="prepare-selenium-browser-properties">
-		<if>
-			<equals arg1="${browser.type}" arg2="edge" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					browser.type=*edge
-				</echo>
-			</then>
-			<elseif>
-				<equals arg1="${browser.type}" arg2="firefox" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						browser.type=*chrome
-					</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${browser.type}" arg2="googlechrome" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						browser.type=*googlechrome
-						selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
-					</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${browser.type}" arg2="ie" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						browser.type=*iehta
-						selenium.ie.driver.executable=${selenium.ie.driver.executable}
-					</echo>
-				</then>
-			</elseif>
-		</if>
+		<echo append="true" file="${test.ext.properties.file}">
+			browser.type=${browser.type}
+			selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
+			selenium.chrome.driver.version=${selenium.chrome.driver.version}
+			selenium.executable.dir.name=${selenium.executable.dir.name}
+			selenium.ie.driver.executable=${selenium.ie.driver.executable}
+			selenium.ie.driver.version=${selenium.ie.driver.version}
+			selenium.remote.driver.enabled=${selenium.remote.driver.enabled}
+			selenium.remote.driver.hub=${selenium.remote.driver.hub}
+		</echo>
 	</target>
 
 	<target name="prepare-selenium-database-properties">
@@ -5074,6 +5043,27 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-selenium-driver">
+		<if>
+			<equals arg1="${browser.type}" arg2="chrome" />
+			<then>
+				<prepare-chrome-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="internetexplorer" />
+			<then>
+				<prepare-ie-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="safari" />
+			<then>
+				<prepare-safari-driver />
+			</then>
+		</if>
+
 		<if>
 			<isset property="${mobile.device.type}" />
 			<then>
@@ -6561,8 +6551,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<remake-dir dir="${selenium.output.dir}" />
 
-		<antcall target="prepare-selenium-browser-driver" />
-
 		<antcall target="copy-sikuli-temp-files" />
 
 		<start-app-server />
@@ -6676,20 +6664,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<antcall target="clean-up-sikuli-temp-files" />
 
 		<antcall target="clean-up-web-xml" />
-
-		<if>
-			<equals arg1="${browser.type}" arg2="googlechrome" />
-			<then>
-				<stop-chrome-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="ie" />
-			<then>
-				<stop-ie-driver />
-			</then>
-		</if>
 	</target>
 
 	<target name="set-portal-impl-portal-ext-properties">

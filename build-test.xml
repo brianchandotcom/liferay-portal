@@ -6468,8 +6468,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<antcall target="prepare-selenium" />
-
 		<remake-dir dir="${selenium.output.dir}" />
 
 		<antcall target="prepare-selenium-browser-driver" />

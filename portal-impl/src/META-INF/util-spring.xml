@@ -494,6 +494,11 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" class="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" />
+	<bean id="com.liferay.portal.theme.PortletDecoratorFactoryUtil" class="com.liferay.portal.theme.PortletDecoratorFactoryUtil">
+		<property name="portletDecoratorFactory">
+			<bean class="com.liferay.portal.theme.PortletDecoratorFactoryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.util.CustomJspRegistryUtil" class="com.liferay.portal.util.CustomJspRegistryUtil">
 		<property name="customJspRegistry">
 			<bean class="com.liferay.portal.util.CustomJspRegistryImpl" />

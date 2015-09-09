@@ -32,6 +32,7 @@ import com.liferay.portal.upload.LiferayFileItemFactory;
 import com.liferay.portal.upload.LiferayServletRequest;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -49,6 +50,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -94,6 +98,26 @@ public class PortletContainerTestUtil {
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		return httpServletRequest;
+	}
+
+	public static PortalAuthentication getPortalAuthentication(
+			HttpServletRequest httpServletRequest, Layout layout,
+			String portletId)
+		throws Exception {
+
+		// Get the portal authentication token by making a resource request
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			httpServletRequest, portletId, layout.getPlid(),
+			PortletRequest.RESOURCE_PHASE);
+
+		Map<String, List<String>> responseMap = request(portletURL.toString());
+
+		String portalAuthenticationToken = getString(responseMap, "body");
+
+		List<String> cookies = responseMap.get("Set-Cookie");
+
+		return new PortalAuthentication(portalAuthenticationToken, cookies);
 	}
 
 	public static String getString(Map<String, List<String>> map, String key) {
@@ -288,6 +312,28 @@ public class PortletContainerTestUtil {
 		buffer.flush();
 
 		return buffer.toByteArray();
+	}
+
+	public static class PortalAuthentication {
+
+		public PortalAuthentication(
+			String portalAuthenticationToken, List<String> cookies) {
+
+			this._portalAuthenticationToken = portalAuthenticationToken;
+			this._cookies = cookies;
+		}
+
+		public List<String> getCookies() {
+			return _cookies;
+		}
+
+		public String getPortalAuthenticationToken() {
+			return _portalAuthenticationToken;
+		}
+
+		private final List<String> _cookies;
+		private final String _portalAuthenticationToken;
+
 	}
 
 	protected static String read(InputStream inputStream) throws IOException {

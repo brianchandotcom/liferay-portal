@@ -482,12 +482,27 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction,
+			String portletInstanceId)
+		throws Exception {
+	}
+
+	@Override
 	public void runtime(String portletName, String queryString) {
 	}
 
 	@Override
 	public void runtime(
 		String portletName, String queryString, String defaultPreferences) {
+	}
+
+	@Override
+	public void runtime(
+			String portletName, String portletInstanceId, String queryString,
+			String defaultPreferences)
+		throws Exception {
 	}
 
 	@Override

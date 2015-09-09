@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -72,7 +73,8 @@ public class RuntimeTag extends TagSupport {
 
 	public static void doTag(
 			String portletProviderClassName,
-			PortletProvider.Action portletProviderAction, String queryString,
+			PortletProvider.Action portletProviderAction,
+			String portletInstanceId, String queryString,
 			String defaultPreferences, PageContext pageContext,
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
@@ -82,8 +84,9 @@ public class RuntimeTag extends TagSupport {
 
 		if (Validator.isNotNull(portletId)) {
 			doTag(
-				portletId, queryString, _SETTINGS_SCOPE_DEFAULT,
-				defaultPreferences, pageContext, request, response);
+				portletId, portletInstanceId, queryString,
+				_SETTINGS_SCOPE_DEFAULT, defaultPreferences, pageContext,
+				request, response);
 		}
 		else {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -125,14 +128,27 @@ public class RuntimeTag extends TagSupport {
 		throws Exception {
 
 		doTag(
-			portletName, queryString, _SETTINGS_SCOPE_DEFAULT,
+			portletName, StringPool.BLANK, queryString, _SETTINGS_SCOPE_DEFAULT,
 			defaultPreferences, pageContext, request, response);
 	}
 
 	public static void doTag(
-			String portletName, String queryString, String settingsScope,
+			String portletName, String portletInstanceId, String queryString,
 			String defaultPreferences, PageContext pageContext,
 			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		doTag(
+			portletName, portletInstanceId, queryString,
+			_SETTINGS_SCOPE_DEFAULT, defaultPreferences, pageContext, request,
+			response);
+	}
+
+	public static void doTag(
+			String portletName, String portletInstanceId, String queryString,
+			String settingsScope, String defaultPreferences,
+			PageContext pageContext, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		if (pageContext != null) {
@@ -140,17 +156,22 @@ public class RuntimeTag extends TagSupport {
 				response, pageContext.getOut());
 		}
 
-		String portletId = portletName;
+		PortletInstance portletInstance = new PortletInstance(
+			portletName, portletInstanceId);
 
 		RestrictPortletServletRequest restrictPortletServletRequest =
 			new RestrictPortletServletRequest(
 				PortalUtil.getOriginalServletRequest(request));
 
-		queryString = PortletParameterUtil.addNamespace(portletId, queryString);
+		queryString = PortletParameterUtil.addNamespace(
+			portletInstance.getPortletInstanceKey(), queryString);
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
-		if (!portletId.equals(request.getParameter("p_p_id"))) {
+		if (!Validator.equals(
+				portletInstance.getPortletInstanceKey(),
+				request.getParameter("p_p_id"))) {
+
 			parameterMap = MapUtil.filterByKeys(
 				parameterMap, new PrefixPredicateFilter("p_p_"));
 		}
@@ -168,7 +189,8 @@ public class RuntimeTag extends TagSupport {
 				LayoutTypePortlet layoutTypePortlet =
 					themeDisplay.getLayoutTypePortlet();
 
-				if (layoutTypePortlet.hasStateMaxPortletId(portletId)) {
+				if (layoutTypePortlet.hasStateMaxPortletId(
+						portletInstance.getPortletInstanceKey())) {
 
 					// A portlet in the maximized state has already been
 					// processed
@@ -182,7 +204,7 @@ public class RuntimeTag extends TagSupport {
 			request.setAttribute(WebKeys.PORTLET_DECORATE, false);
 
 			Portlet portlet = getPortlet(
-				themeDisplay.getCompanyId(), portletId);
+				themeDisplay.getCompanyId(), portletInstance.getPortletName());
 
 			PortletPreferences renderPortletPreferences =
 				getRenderPortletPreferences(
@@ -200,20 +222,23 @@ public class RuntimeTag extends TagSupport {
 
 			if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-					portletId) < 1) ||
+					portletInstance.getPortletInstanceKey()) < 1) ||
 				layout.isTypeControlPanel() || layout.isTypePanel()) {
 
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					layout, portletId, defaultPreferences);
+					layout, portletInstance.getPortletInstanceKey(),
+					defaultPreferences);
 				PortletPreferencesFactoryUtil.getPortletSetup(
-					request, portletId, defaultPreferences);
+					request, portletInstance.getPortletInstanceKey(),
+					defaultPreferences);
 
 				PortletLayoutListener portletLayoutListener =
 					portlet.getPortletLayoutListenerInstance();
 
 				if (portletLayoutListener != null) {
 					portletLayoutListener.onAddToLayout(
-						portletId, themeDisplay.getPlid());
+						portletInstance.getPortletInstanceKey(),
+						themeDisplay.getPlid());
 				}
 
 				jsonObject = JSONFactoryUtil.createJSONObject();
@@ -256,13 +281,14 @@ public class RuntimeTag extends TagSupport {
 				(_portletProviderAction != null)) {
 					doTag(
 						_portletProviderClassName, _portletProviderAction,
-						_queryString, _defaultPreferences, pageContext, request,
-						response);
+						_portletInstanceId, _queryString, _defaultPreferences,
+						pageContext, request, response);
 			}
 			else {
 				doTag(
-					_portletName, _queryString, _settingsScope,
-					_defaultPreferences, pageContext, request, response);
+					_portletName, _portletInstanceId, _queryString,
+					_settingsScope, _defaultPreferences, pageContext, request,
+					response);
 			}
 
 			return EVAL_PAGE;
@@ -276,6 +302,10 @@ public class RuntimeTag extends TagSupport {
 
 	public void setDefaultPreferences(String defaultPreferences) {
 		_defaultPreferences = defaultPreferences;
+	}
+
+	public void setPortletInstanceId(String portletInstanceId) {
+		_portletInstanceId = portletInstanceId;
 	}
 
 	public void setPortletName(String portletName) {
@@ -354,11 +384,12 @@ public class RuntimeTag extends TagSupport {
 		"/html/taglib/portlet/runtime/error.jsp";
 
 	private static final String _SETTINGS_SCOPE_DEFAULT =
-		PortletPreferencesFactoryConstants.SETTINGS_SCOPE_GROUP;
+		PortletPreferencesFactoryConstants.SETTINGS_SCOPE_PORTLET_INSTANCE;
 
 	private static final Log _log = LogFactoryUtil.getLog(RuntimeTag.class);
 
 	private String _defaultPreferences;
+	private String _portletInstanceId;
 	private String _portletName;
 	private PortletProvider.Action _portletProviderAction;
 	private String _portletProviderClassName;

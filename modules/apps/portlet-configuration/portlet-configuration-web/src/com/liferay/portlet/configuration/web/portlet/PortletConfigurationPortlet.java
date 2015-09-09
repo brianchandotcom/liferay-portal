@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.AggregateResourceBundle;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferencesIds;
@@ -52,11 +53,11 @@ import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
-import com.liferay.portlet.PortletPreferencesFactoryConstants;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.configuration.web.upgrade.PortletConfigurationWebUpgrade;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
@@ -750,18 +751,23 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	protected PortletPreferences getPortletPreferences(
 		ThemeDisplay themeDisplay, String portletId, String settingsScope) {
 
-		if (Validator.isNull(settingsScope) ||
-			settingsScope.equals(
-				PortletPreferencesFactoryConstants.
-					SETTINGS_SCOPE_PORTLET_INSTANCE)) {
+		Layout layout = themeDisplay.getLayout();
 
+		if (!layout.isSupportsEmbeddedPortlets()) {
+			return null;
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		if (!layoutTypePortlet.isPortletEmbedded(portletId)) {
 			return null;
 		}
 
 		PortletPreferencesIds portletPreferencesIds =
 			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
 				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
-				themeDisplay.getPlid(), portletId, settingsScope);
+				PortletKeys.PREFS_PLID_SHARED, portletId, settingsScope);
 
 		return PortletPreferencesLocalServiceUtil.getPreferences(
 			portletPreferencesIds);

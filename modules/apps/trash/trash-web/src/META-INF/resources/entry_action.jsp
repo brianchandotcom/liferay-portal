@@ -37,7 +37,7 @@ else {
 }
 %>
 
-<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" view="lexicon">
 	<%@ include file="/action/restore.jspf" %>
 	<%@ include file="/action/delete.jspf" %>
 </liferay-ui:icon-menu>

@@ -43,7 +43,11 @@ AUI.add(
 				var queue = new A.Queue();
 
 				var addToQueue = function(item) {
-					queue.add(item);
+					item.getRepeatedSiblings().forEach(
+						function(field) {
+							queue.add(field);
+						}
+					);
 				};
 
 				instance.get('fields').forEach(addToQueue);

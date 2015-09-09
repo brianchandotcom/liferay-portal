@@ -3,25 +3,20 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_OPTION = '<option value="{value}">{label}</option>';
-
 		var ValidationField = A.Component.create(
 			{
 				ATTRS: {
 					parameterValue: {
-						getter: '_getParameterValue',
-						setter: '_setParameterValue'
+						value: ''
 					},
 
 					selectedType: {
-						getter: '_getSelectedType',
-						setter: '_setSelectedType',
 						value: 'text'
 					},
 
 					selectedValidation: {
 						getter: '_getSelectedValidation',
-						setter: '_setSelectedValidation'
+						value: 'notEmpty'
 					},
 
 					strings: {
@@ -114,10 +109,9 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var container = instance.get('container');
-
 						instance._eventHandlers.push(
-							container.delegate('change', A.bind(instance._onChangeSelects, instance), 'select')
+							instance.after('containerChange', instance._afterValidationContainerChange),
+							instance.after('render', instance._afterValidationRender)
 						);
 					},
 
@@ -129,6 +123,18 @@ AUI.add(
 						var matches = regex.exec(expression);
 
 						return matches && matches[2] || '';
+					},
+
+					getTemplateContext: function() {
+						var instance = this;
+
+						return A.merge(
+							ValidationField.superclass.getTemplateContext.apply(instance, arguments),
+							{
+								typesOptions: instance._getTypesOptions(),
+								validationsOptions: instance._getValidatiionsOptions()
+							}
+						);
 					},
 
 					getValue: function() {
@@ -147,16 +153,6 @@ AUI.add(
 								parameter: instance.get('parameterValue')
 							}
 						);
-					},
-
-					render: function() {
-						var instance = this;
-
-						ValidationField.superclass.render.apply(instance, arguments);
-
-						instance._populateTypesNode();
-						instance._populateValidationsNode();
-						instance._populateParameterNode();
 					},
 
 					setValue: function(expression) {
@@ -189,12 +185,26 @@ AUI.add(
 						);
 					},
 
-					_afterValueChange: function(event) {
+					_afterValidationContainerChange: function(event) {
 						var instance = this;
 
-						ValidationField.superclass._afterValueChange.apply(instance, arguments);
+						instance._bindContainerEvents();
+					},
 
-						instance.updateValues(event.newVal);
+					_afterValidationRender: function() {
+						var instance = this;
+
+						instance._bindContainerEvents();
+					},
+
+					_bindContainerEvents: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						instance._eventHandlers.push(
+							container.delegate('change', A.bind(instance._onChangeSelects, instance), 'select')
+						);
 					},
 
 					_getParameterValue: function() {
@@ -207,29 +217,57 @@ AUI.add(
 						return parameterNode.val();
 					},
 
-					_getSelectedType: function() {
+					_getSelectedValidation: function(val) {
 						var instance = this;
-
-						var container = instance.get('container');
-
-						var typesNode = container.one('.types-select');
-
-						return typesNode.val();
-					},
-
-					_getSelectedValidation: function() {
-						var instance = this;
-
-						var container = instance.get('container');
 
 						var validations = instance.get('validations');
-
-						var validationsNode = container.one('.validations-select');
 
 						return A.Array.find(
 							validations[instance.get('selectedType')],
 							function(validation) {
-								return validation.name === validationsNode.val();
+								return validation.name === val;
+							}
+						);
+					},
+
+					_getTypesOptions: function() {
+						var instance = this;
+
+						var selectedType = instance.get('selectedType');
+
+						var strings = instance.get('strings');
+
+						var options = [];
+
+						A.each(
+							instance.get('validations'),
+							function(validation, validationType) {
+								var status = selectedType === validationType ? 'selected' : '';
+
+								options.push(
+									{
+										label: strings[validationType],
+										status: status,
+										value: validationType
+									}
+								);
+							}
+						);
+
+						return options;
+					},
+
+					_getValidatiionsOptions: function() {
+						var instance = this;
+
+						var validations = instance.get('validations');
+
+						return validations[instance.get('selectedType')].map(
+							function(validation) {
+								return {
+									label: validation.label,
+									value: validation.name
+								};
 							}
 						);
 					},
@@ -239,14 +277,35 @@ AUI.add(
 
 						var currentTarget = event.currentTarget;
 
+						var newVal = currentTarget.val();
+
 						if (currentTarget.hasClass('types-select')) {
-							instance._populateValidationsNode();
+							instance.set('selectedType', newVal);
+
+							var validations = instance.get('validations');
+
+							instance.set('selectedValidation', validations[newVal][0].name);
+						}
+						else {
+							instance.set('selectedValidation', newVal);
 						}
 
-						instance._populateParameterNode();
+						instance.render();
+
+						instance._syncParameterNode();
 					},
 
-					_populateParameterNode: function() {
+					_setParameterValue: function(value) {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var parameterNode = container.one('.parameter-input');
+
+						parameterNode.val(value);
+					},
+
+					_syncParameterNode: function() {
 						var instance = this;
 
 						var container = instance.get('container');
@@ -260,95 +319,6 @@ AUI.add(
 						}
 
 						parameterNode.toggle(!!selectedValidation.parameterMessage);
-					},
-
-					_populateTypesNode: function() {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var strings = instance.get('strings');
-
-						var typesNode = container.one('.types-select');
-
-						typesNode.empty();
-
-						A.each(
-							instance.get('validations'),
-							function(validation, validationType) {
-								typesNode.append(
-									Lang.sub(
-										TPL_OPTION,
-										{
-											label: strings[validationType],
-											value: validationType
-										}
-									)
-								);
-							}
-						);
-					},
-
-					_populateValidationsNode: function() {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var validationsNode = container.one('.validations-select');
-
-						var validations = instance.get('validations');
-
-						validationsNode.empty();
-
-						A.each(
-							validations[instance.get('selectedType')],
-							function(validation) {
-								validationsNode.append(
-									Lang.sub(
-										TPL_OPTION,
-										{
-											label: validation.label,
-											value: validation.name
-										}
-									)
-								);
-							}
-						);
-					},
-
-					_setParameterValue: function(value) {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var parameterNode = container.one('.parameter-input');
-
-						parameterNode.val(value);
-					},
-
-					_setSelectedType: function(value) {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var typesNode = container.one('.types-select');
-
-						typesNode.val(value);
-
-						instance._populateValidationsNode();
-						instance._populateParameterNode();
-					},
-
-					_setSelectedValidation: function(value) {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var validationsNode = container.one('.validations-select');
-
-						validationsNode.val(value);
-
-						instance._populateParameterNode();
 					}
 				}
 			}

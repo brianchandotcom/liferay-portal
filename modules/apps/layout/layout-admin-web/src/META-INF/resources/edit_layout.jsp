@@ -67,16 +67,6 @@ if (layoutRevision != null) {
 	}
 }
 
-if (selLayout.isSupportsEmbeddedPortlets()) {
-	LayoutTypePortlet selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
-
-	List<Portlet> embeddedPortlets = selLayoutTypePortlet.getEmbeddedPortlets();
-
-	if (!embeddedPortlets.isEmpty()) {
-		request.setAttribute("edit_pages.jsp-embeddedPortlets", embeddedPortlets);
-	}
-}
-
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 %>
 

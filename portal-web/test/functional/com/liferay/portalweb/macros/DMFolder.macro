@@ -278,7 +278,7 @@
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" value1="${dmFolderName2}" />
 		<execute function="AssertElementPresent" locator1="MenuItem#MOVE" />
-		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="MOVE" />
+		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectFolder#SELECT_FOLDER_IFRAME" />

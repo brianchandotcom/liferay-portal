@@ -19,7 +19,13 @@
 <%
 Layout selLayout = layoutsAdminDisplayContext.getSelLayout();
 
-List<Portlet> embeddedPortlets = (List<Portlet>)request.getAttribute("edit_pages.jsp-embeddedPortlets");
+List<Portlet> embeddedPortlets = Collections.emptyList();
+
+if (selLayout.isSupportsEmbeddedPortlets()) {
+	LayoutTypePortlet selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
+
+	embeddedPortlets = selLayoutTypePortlet.getEmbeddedPortlets();
+}
 
 RowChecker rowChecker = new RowChecker(liferayPortletResponse);
 

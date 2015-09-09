@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-app-view-select',
 	function(A) {
-		var AArray = A.Array;
 		var History = Liferay.HistoryManager;
 		var Lang = A.Lang;
 		var Util = Liferay.Util;
@@ -11,8 +10,6 @@ AUI.add(
 		var CSS_SELECTABLE = 'selectable';
 
 		var CSS_SELECTED = 'selected';
-
-		var DISPLAY_STYLE_BUTTON_GROUP = 'displayStyleButtonGroup';
 
 		var DISPLAY_STYLE_LIST = 'list';
 

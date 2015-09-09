@@ -126,9 +126,10 @@ public class BaseJSONHandler extends BaseHandler {
 			return false;
 		}
 
-		if (!ConnectionRetryUtil.retryInProgress(getSyncAccountId()) &&
-			_logger.isDebugEnabled()) {
+		boolean retryInProgress = ConnectionRetryUtil.retryInProgress(
+			getSyncAccountId());
 
+		if (!retryInProgress && _logger.isDebugEnabled()) {
 			_logger.debug("Handling exception {}", exception);
 		}
 
@@ -226,6 +227,10 @@ public class BaseJSONHandler extends BaseHandler {
 				SyncAccount.UI_EVENT_AUTHENTICATION_EXCEPTION);
 		}
 		else {
+			if (retryInProgress && _logger.isDebugEnabled()) {
+				_logger.debug("Handling exception {}", exception);
+			}
+
 			SyncFile syncFile = getLocalSyncFile();
 
 			syncFile.setState(SyncFile.STATE_ERROR);

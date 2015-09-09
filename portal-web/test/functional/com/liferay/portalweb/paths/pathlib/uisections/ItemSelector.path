@@ -83,24 +83,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SIDEBAR_BODY</td>
-	<td>//div[@class='sidebar-body']//div[contains(.,'${key_fileDetail}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SIDEBAR_CONTENT</td>
 	<td>//div[@class='tab-content']//p[contains(.,'${key_fileDetail}')]</td>
 	<td></td>
 </tr>
 <!--SELECT_IMAGE_PREVIEW-->
 <tr>
-	<td>SELECT_IMAGE_PREVIEW_BLOGS</td>
+	<td>SELECT_IMAGE_PREVIEW</td>
 	<td>//div[contains(@id,'ItemSelectorPortlet') and not(@class='hide')]//a[@title='${key_uploadFileName}']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SELECT_IMAGE_PREVIEW_DM</td>
-	<td>xpath=(//div[contains(@id,'ItemSelectorPortlet') and not(@class='hide')]//a[@title='${key_uploadFileName}'])[2]</td>
 	<td></td>
 </tr>
 </tbody>

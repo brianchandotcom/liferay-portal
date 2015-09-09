@@ -87,6 +87,11 @@
 	<td>//div[@class='tab-content']//p[contains(.,'${key_fileDetail}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SELECT_IMAGE_PREVIEW-->
 <tr>
 	<td>SELECT_IMAGE_PREVIEW</td>

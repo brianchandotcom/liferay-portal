@@ -2,6 +2,13 @@
 	<command name="configureConfigurationAdminXSL">
 		<var name="key_configurationAdminName" value="XSLContent" />
 
+		<while>
+			<condition function="IsElementNotPresent" locator1="ConfigurationAdmin#CONFIGURATION_ADMIN_NAME_LINK" />
+			<then>
+				<execute function="Click" locator1="Pagination#NEXT_LINK" />
+			</then>
+		</while>
+
 		<execute function="Click" locator1="ConfigurationAdmin#CONFIGURATION_ADMIN_NAME_LINK" />
 
 		<execute function="Type" locator1="ConfigurationAdmin#XSL_CONTENT_CONFIGURATION_VALID_URL_PREFIXES_FIELD" value1="@portlet_context_url@,@portal_url@" />

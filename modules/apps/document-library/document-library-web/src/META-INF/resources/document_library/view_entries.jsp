@@ -374,6 +374,12 @@ dlSearchContainer.setResults(results);
 						<c:when test="<%= fileEntry != null %>">
 
 							<%
+							FileVersion latestFileVersion = fileEntry.getFileVersion();
+
+							if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+								latestFileVersion = fileEntry.getLatestFileVersion();
+							}
+
 							if (fileShortcut == null) {
 								row.setPrimaryKey(String.valueOf(fileEntry.getFileEntryId()));
 							}
@@ -401,17 +407,6 @@ dlSearchContainer.setResults(results);
 
 							<c:choose>
 								<c:when test='<%= displayStyle.equals("descriptive") %>'>
-
-									<%
-									FileVersion fileVersion = fileEntry.getFileVersion();
-
-									FileVersion latestFileVersion = fileVersion;
-
-									if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-										latestFileVersion = fileEntry.getLatestFileVersion();
-									}
-									%>
-
 									<c:choose>
 										<c:when test="<%= fileShortcut != null %>">
 											<liferay-ui:search-container-column-icon
@@ -435,17 +430,8 @@ dlSearchContainer.setResults(results);
 									<liferay-ui:search-container-column-jsp
 										path="/document_library/file_entry_action.jsp"
 									/>
-									</c:when>
+								</c:when>
 								<c:otherwise>
-
-									<%
-									FileVersion latestFileVersion = fileEntry.getFileVersion();
-
-									if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-										latestFileVersion = fileEntry.getLatestFileVersion();
-									}
-									%>
-
 									<c:if test='<%= ArrayUtil.contains(entryColumns, "name") %>'>
 										<liferay-ui:search-container-column-text
 											name="title"
@@ -630,10 +616,8 @@ dlSearchContainer.setResults(results);
 									</c:if>
 								</c:otherwise>
 							</c:choose>
-
 						</c:otherwise>
 					</c:choose>
-
 				</liferay-ui:search-container-row>
 
 				<liferay-ui:search-iterator displayStyle='<%= displayStyle.equals("descriptive") ? displayStyle : null %>' paginate="<%= false %>" searchContainer="<%= dlSearchContainer %>" view="lexicon" />

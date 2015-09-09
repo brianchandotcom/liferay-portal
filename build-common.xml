@@ -677,7 +677,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<equals arg1="${app.server.type}" arg2="glassfish" />
 				</and>
 				<then>
-					<war destfile="${app.server.glassfish.portal.war.dir}" update="true">
+					<war destfile="${app.server.glassfish.portal.war.name}" update="true">
 						<classes dir="${project.dir}/portal-impl/src" includes="portal-*.properties,system-*.properties" />
 					</war>
 				</then>

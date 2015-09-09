@@ -27,7 +27,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddWCWithMultipleTranslations" priority="4">
+	<command known-issues="LPS-58386" name="AddWCWithMultipleTranslations" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -154,7 +154,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWCWithTranslation" priority="5">
+	<command known-issues="LPS-58386" name="AddWCWithTranslation" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />

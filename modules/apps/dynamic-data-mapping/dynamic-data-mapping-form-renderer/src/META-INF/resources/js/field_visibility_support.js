@@ -16,7 +16,7 @@ AUI.add(
 			},
 
 			visible: {
-				value: true
+				valueFn: '_valueVisible'
 			}
 		};
 
@@ -78,6 +78,18 @@ AUI.add(
 				var instance = this;
 
 				instance.render();
+			},
+
+			_valueVisible: function() {
+				var instance = this;
+
+				var visible = true;
+
+				if (instance.get('visibilityExpression') === 'false') {
+					visible = false;
+				}
+
+				return visible;
 			}
 		};
 

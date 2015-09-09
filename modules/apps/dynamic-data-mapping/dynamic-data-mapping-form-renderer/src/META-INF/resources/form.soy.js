@@ -106,3 +106,16 @@ ddm.tabbed_form = function(opt_data, opt_ignored) {
   output += '</div></div>';
   return output;
 };
+
+
+ddm.settings_form = function(opt_data, opt_ignored) {
+  var output = '\t<div class="lfr-ddm-settings-form">';
+  var pageList126 = opt_data.pages;
+  var pageListLen126 = pageList126.length;
+  for (var pageIndex126 = 0; pageIndex126 < pageListLen126; pageIndex126++) {
+    var pageData126 = pageList126[pageIndex126];
+    output += '<div class="lfr-ddm-form-page' + ((pageIndex126 == 0) ? ' active basic' : '') + ((pageIndex126 == pageListLen126 - 1) ? ' advanced' : '') + '">' + ddm.form_rows(soy.$$augmentMap(opt_data, {rows: pageData126.rows})) + '</div>';
+  }
+  output += '</div>';
+  return output;
+};

@@ -24,11 +24,7 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				var evaluator = instance.get('evaluator');
-
 				instance._eventHandlers.push(
-					evaluator.after('evaluationEnded', A.bind('_afterVisibilityEvaluationEnded', instance)),
-					evaluator.after('evaluationStarted', A.bind('_afterVisibilityEvaluationStarted', instance)),
 					instance.after('valueChanged', instance._afterValueChanged),
 					instance.after('visibleChange', instance._afterVisibleChange)
 				);
@@ -44,20 +40,8 @@ AUI.add(
 				instance.set('visible', visibility && visibility.visible === true);
 			},
 
-			_afterValueChanged: function() {
+			processVisibilityEvaluation: function(result) {
 				var instance = this;
-
-				var evaluator = instance.get('evaluator');
-
-				evaluator.evaluate();
-			},
-
-			_afterVisibilityEvaluationEnded: function(event) {
-				var instance = this;
-
-				var result = event.result;
-
-				instance.hideFeedback();
 
 				if (result && Lang.isObject(result)) {
 					instance.getRoot().eachField(
@@ -68,10 +52,20 @@ AUI.add(
 				}
 			},
 
-			_afterVisibilityEvaluationStarted: function() {
+			_afterValueChanged: function() {
 				var instance = this;
 
+				var evaluator = instance.get('evaluator');
+
 				instance.showLoadingFeedback();
+
+				evaluator.evaluate(
+					function(result) {
+						instance.hideFeedback();
+
+						instance.processVisibilityEvaluation(result);
+					}
+				);
 			},
 
 			_afterVisibleChange: function() {

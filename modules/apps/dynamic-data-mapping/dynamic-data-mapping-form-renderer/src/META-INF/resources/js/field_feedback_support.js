@@ -24,8 +24,6 @@ AUI.add(
 					instance.after('validationMessagesChange', instance._afterValidationMessagesChange),
 					instance.after(instance._renderValidationMessages, instance, 'render')
 				);
-
-				instance._renderValidationMessages();
 			},
 
 			addValidationMessage: function(message) {

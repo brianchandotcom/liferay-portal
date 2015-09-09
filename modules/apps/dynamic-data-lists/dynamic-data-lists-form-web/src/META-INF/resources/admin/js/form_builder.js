@@ -192,7 +192,7 @@ AUI.add(
 						return AArray.filter(
 							fieldTypes,
 							function(item) {
-								return item.get('system') === false;
+								return !item.get('system');
 							}
 						);
 					},

@@ -51,8 +51,16 @@ public class Menu extends BaseUIItem {
 		return _triggerCssClass;
 	}
 
+	public String getView() {
+		return _view;
+	}
+
 	public boolean isExtended() {
 		return _extended;
+	}
+
+	public boolean isScroll() {
+		return _scroll;
 	}
 
 	public boolean isShowArrow() {
@@ -95,6 +103,10 @@ public class Menu extends BaseUIItem {
 		_message = message;
 	}
 
+	public void setScroll(boolean scroll) {
+		_scroll = scroll;
+	}
+
 	public void setShowArrow(boolean showArrow) {
 		_showArrow = showArrow;
 	}
@@ -111,6 +123,10 @@ public class Menu extends BaseUIItem {
 		_triggerCssClass = triggerCssClass;
 	}
 
+	public void setView(String view) {
+		_view = view;
+	}
+
 	private String _cssClass = StringPool.BLANK;
 	private String _direction = "left";
 	private boolean _extended = true;
@@ -118,9 +134,11 @@ public class Menu extends BaseUIItem {
 	private String _label = StringPool.BLANK;
 	private List<MenuItem> _menuItems;
 	private String _message = StringPool.BLANK;
+	private boolean _scroll = true;
 	private boolean _showArrow = true;
 	private boolean _showExpanded;
 	private boolean _showWhenSingleIcon;
 	private String _triggerCssClass = StringPool.BLANK;
+	private String _view = StringPool.BLANK;
 
 }

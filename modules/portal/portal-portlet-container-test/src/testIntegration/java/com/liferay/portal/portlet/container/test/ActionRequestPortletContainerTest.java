@@ -266,40 +266,32 @@ public class ActionRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		// Get the portal authentication token by making a resource request
-
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
-			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
-			PortletRequest.RESOURCE_PHASE);
-
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request(portletURL.toString());
-
-		String portalAuthenticationToken = PortletContainerTestUtil.getString(
-			responseMap, "body");
-
-		List<String> cookies = responseMap.get("Set-Cookie");
+		PortletContainerTestUtil.PortalAuthentication portalAuthentication =
+			PortletContainerTestUtil.getPortalAuthentication(
+				httpServletRequest, layout, TEST_PORTLET_ID);
 
 		map.clear();
 
 		// Make an action request using the portal authentication token
 
-		portletURL = new PortletURLImpl(
+		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		String url = portletURL.toString();
 
-		url = HttpUtil.setParameter(url, "p_auth", portalAuthenticationToken);
+		url = HttpUtil.setParameter(
+			url, "p_auth", portalAuthentication.getPortalAuthenticationToken());
 
 		Map<String, List<String>> headers = new HashMap<>();
 
-		headers.put("Cookie", cookies);
+		headers.put("Cookie", portalAuthentication.getCookies());
 
-		responseMap = PortletContainerTestUtil.request(url, headers);
+		Map<String, List<String>> responseMap =
+			PortletContainerTestUtil.request(url, headers);
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));
@@ -393,28 +385,18 @@ public class ActionRequestPortletContainerTest
 
 		setUpPortlet(testPortlet, properties, TEST_PORTLET_ID);
 
-		// Get the portal authentication token by making a resource request
-
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
-			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
-			PortletRequest.RESOURCE_PHASE);
-
-		Map<String, List<String>> responseMap =
-			PortletContainerTestUtil.request(portletURL.toString());
-
-		String portalAuthenticationToken = PortletContainerTestUtil.getString(
-			responseMap, "body");
-
-		List<String> cookies = responseMap.get("Set-Cookie");
+		PortletContainerTestUtil.PortalAuthentication portalAuthentication =
+			PortletContainerTestUtil.getPortalAuthentication(
+				httpServletRequest, layout, TEST_PORTLET_ID);
 
 		map.clear();
 
 		// Make an action request using the portal authentication token
 
-		portletURL = new PortletURLImpl(
+		PortletURL portletURL = new PortletURLImpl(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
@@ -424,12 +406,14 @@ public class ActionRequestPortletContainerTest
 
 		Map<String, List<String>> headers = new HashMap<>();
 
-		headers.put("Cookie", cookies);
+		headers.put("Cookie", portalAuthentication.getCookies());
 		headers.put(
 			"X-CSRF-Token",
-			Collections.singletonList(portalAuthenticationToken));
+			Collections.singletonList(
+				portalAuthentication.getPortalAuthenticationToken()));
 
-		responseMap = PortletContainerTestUtil.request(url, headers);
+		Map<String, List<String>> responseMap =
+			PortletContainerTestUtil.request(url, headers);
 
 		Assert.assertEquals(
 			"200", PortletContainerTestUtil.getString(responseMap, "code"));

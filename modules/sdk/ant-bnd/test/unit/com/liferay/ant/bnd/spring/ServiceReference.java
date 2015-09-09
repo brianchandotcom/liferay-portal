@@ -28,6 +28,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD, ElementType.METHOD})
 public @interface ServiceReference {
 
+	public String filterString() default "";
+
 	public Class<?> type() default Object.class;
 
 }

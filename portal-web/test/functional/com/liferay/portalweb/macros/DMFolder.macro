@@ -423,6 +423,8 @@
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName}" />
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
 
+		<var method="StringUtil#upperCase('${dmFolderName}')" name="dmFolderName" />
+
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_LAST" value1="${dmFolderName}" />
 	</command>
 

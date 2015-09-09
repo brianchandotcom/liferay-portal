@@ -43,18 +43,6 @@ import javax.servlet.http.HttpServletResponse;
 public class TunnelServlet extends HttpServlet {
 
 	@Override
-	protected void doGet(
-		HttpServletRequest request, HttpServletResponse response)
-	throws IOException, ServletException {
-
-		IllegalArgumentException e = new IllegalArgumentException(
-			"method GET is not supported by this URL");
-
-		PortalUtil.sendError(
-			HttpServletResponse.SC_NOT_FOUND, e, request, response);
-	}
-
-	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
@@ -128,6 +116,18 @@ public class TunnelServlet extends HttpServlet {
 				throw ioe;
 			}
 		}
+	}
+
+	@Override
+	protected void doGet(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		IllegalArgumentException e = new IllegalArgumentException(
+			"method GET is not supported by this URL");
+
+		PortalUtil.sendError(
+			HttpServletResponse.SC_NOT_FOUND, e, request, response);
 	}
 
 	protected boolean isValidRequest(Class<?> clazz) {

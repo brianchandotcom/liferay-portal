@@ -46,8 +46,8 @@ public class XmlRpcServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(
-		HttpServletRequest request, HttpServletResponse response)
-	throws IOException, ServletException {
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
 
 		IllegalArgumentException e = new IllegalArgumentException(
 			"method GET is not supported by this URL");

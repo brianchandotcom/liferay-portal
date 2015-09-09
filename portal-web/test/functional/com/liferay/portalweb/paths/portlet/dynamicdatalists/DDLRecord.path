@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG</td>
+	<td>/portal/screenshots/ddm/nested_field_repeatable_visual_grouping.png</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//span[contains(@class,'workflow-status')]/strong</td>
 	<td></td>

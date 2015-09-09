@@ -129,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PENCIL</td>
+	<td>//a[contains(@class,'btn icon-monospaced btn-default')]/i[contains(@class,'icon-pencil')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PREVIEW</td>
 	<td>//a[contains(@id,'previewPanel') and i[contains(@class,'icon-desktop')]]</td>
 	<td></td>

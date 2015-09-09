@@ -24,7 +24,15 @@
 	</command>
 
 	<command name="addEntry">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<if>
+			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+			<then>
+				<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+			</then>
+			<else>
+				<execute function="Click#clickAtAndWait" locator1="Button#PLUS" />
+			</else>
+		</if>
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -210,9 +218,7 @@
 			<var name="entryTitle" value="${entryInvalidTitleLength}" />
 		</execute>
 
-		<execute macro="BlogsEntry#publishWithInvalidTitleLength" >
-			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
-		</execute>
+		<execute macro="BlogsEntry#publishWithInvalidTitleLength" />
 	</command>
 
 	<command name="addWithNullCustomAbstract">

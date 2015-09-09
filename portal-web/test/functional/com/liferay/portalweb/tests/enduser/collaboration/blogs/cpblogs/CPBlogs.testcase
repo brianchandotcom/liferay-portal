@@ -443,6 +443,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#editContent">
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryContentEdit" value="${entryContentEdit}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>

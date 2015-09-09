@@ -1,6 +1,6 @@
 <definition>
 	<command name="configureListViewPG">
-		<execute function="Click" locator1="PGDynamicdatalists#OPTIONS_ICON" />
+		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
 		<execute function="AssertClick" locator1="PGDynamicdatalists#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="DDLConfiguration#CONFIGURATION_IFRAME" />

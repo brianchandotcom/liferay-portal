@@ -324,9 +324,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="Document 4 Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="fieldFieldLabel" value="Attachment" />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
@@ -485,9 +484,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="Document 3 Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="fieldFieldLabel" value="Attachment" />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
@@ -572,9 +570,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="Document 2 Title" />
 			<var name="document" value="Document_1.txt" />
-			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="fieldFieldLabel" value="Attachment" />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
@@ -659,8 +656,8 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="Document 1 Title" />
-			<var name="document" value="Document_1.txt" />			<var name="fieldFieldLabel" value="Attachment Upload documents no larger than 3,000k." />
+			<var name="document" value="Document_1.txt" />
+			<var name="fieldFieldLabel" value="Attachment" />
 			<var name="fieldName" value="attachment" />
 		</execute>
 
@@ -979,10 +976,9 @@
 		</execute>
 	</command>
 
-	<command name="AddListRecordWithDocumentsAndMediaFieldChooseFromDocumentLibrary" priority="4">
+	<command name="AddListRecordWithDocumentsAndMediaField" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
-		<var name="ddlRecordFieldData" value="Document Title" />
 		<var name="document" value="Document_1.txt" />
 		<var name="field" value="Documents and Media" />
 		<var name="fieldFieldLabel" value="Documents and Media" />
@@ -1043,92 +1039,6 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="document" value="${document}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute macro="DDLRecord#publishCP" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLRecord#viewCP">
-			<var name="ddlListName" value="${ddlListName}" />
-		</execute>
-
-		<execute macro="DDLRecord#viewFirstFieldCP">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData}" />
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		</execute>
-	</command>
-
-	<command name="AddListRecordWithDocumentsAndMediaFieldUpload" priority="4">
-		<var name="ddlDataDefinitionName" value="Data Definition" />
-		<var name="ddlListName" value="List Name" />
-		<var name="document" value="Document_1.txt" />
-		<var name="field" value="Documents and Media" />
-		<var name="fieldFieldLabel" value="Documents and Media" />
-		<var name="fieldName" value="Documents_and_Media" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#addField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#saveCP" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#viewCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		</execute>
-
-		<execute macro="DynamicDataMapping#viewField">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-			<var name="fieldName" value="${fieldName}" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLList#addCP">
-			<var name="ddlListName" value="${ddlListName}" />
-		</execute>
-
-		<execute macro="DDLDataDefinition#selectCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-		</execute>
-
-		<execute macro="DDLList#saveCP" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
-		<execute macro="DDLRecord#addCP">
-			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
-			<var name="ddlListName" value="${ddlListName}" />
-		</execute>
-
-		<execute macro="DDLRecord#populateFieldDocumentsAndMediaUpload">
 			<var name="document" value="${document}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
 			<var name="fieldName" value="${fieldName}" />

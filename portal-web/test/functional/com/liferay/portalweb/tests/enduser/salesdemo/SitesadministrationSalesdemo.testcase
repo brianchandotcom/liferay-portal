@@ -82,6 +82,7 @@
 		</execute>
 
 		<execute macro="SitePage#viewDefaultSiteTemplatePagesPG">
+			<var name="pageName" value="Home" />
 			<var name="siteName" value="Healthcare Site Name" />
 			<var name="siteTemplate" value="Zoe Healthcare Theme" />
 		</execute>

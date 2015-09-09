@@ -233,6 +233,8 @@
 	</command>
 
 	<command name="exportCmd">
+		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+
 		<if>
 			<isset var="larFileName" />
 			<then>
@@ -252,7 +254,7 @@
 		<var name="key_larFileName" value="${larFileName}" />
 
 		<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="ExportImport#CURRENT_AND_PREVIOUS_DOWNLOAD" value1="${larFileName}" />
+		<execute function="Click" locator1="ExportImport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" locator1="${larFileName}" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -490,6 +492,8 @@
 	</command>
 
 	<command name="selectImportFileCmd">
+		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+
 		<execute function="AssertClick" locator1="ExportImport#NAVIGATION_IMPORT" value1="Import" />
 		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 

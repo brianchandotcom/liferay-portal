@@ -335,7 +335,7 @@
 
 		<execute macro="DDLRecord#editCP">
 			<var name="ddlListName" value="Dynamic Data List" />
-			<var name="ddlRecordFieldData" value="Content" />
+			<var name="ddlRecordFieldData" value="Content, Content 2" />
 		</execute>
 
 		<execute macro="DDLRecord#addTranslation">
@@ -427,13 +427,13 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" locator1="DDLSpreadsheet#SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_BUTTON" value1="Add" />
 		<execute function="AssertElementNotPresent" locator1="DDLSpreadsheet#SPREADSHEET_EDIT_CONTROLS_ADD_ROWS_SELECT_MENULIST" />
 
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
+		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
 		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
 		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 		<execute function="AssertTextEquals" locator1="BasePortlet#OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
@@ -485,7 +485,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
@@ -499,7 +499,7 @@
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
@@ -638,7 +638,7 @@
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
@@ -653,7 +653,6 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="${ddlRecordFieldData2}" />
 			<var name="document" value="${document}" />
 			<var name="fieldFieldLabel" value="${fieldFieldLabel2}" />
 			<var name="fieldName" value="${fieldName2}" />
@@ -662,7 +661,7 @@
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
@@ -672,7 +671,7 @@
 		<var method="selenium#getLocation()" name="adminViewURL" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DDLRecord#editPG" />
@@ -684,7 +683,7 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel1}" />
@@ -714,7 +713,7 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="Open" locator1="${adminEditURL}" />
@@ -784,7 +783,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
@@ -798,7 +797,7 @@
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
@@ -853,7 +852,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
@@ -867,7 +866,7 @@
 		<execute macro="DDLList#saveViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
@@ -1436,7 +1435,6 @@
 		</execute>
 
 		<execute macro="DDLRecord#populateFieldDocumentsAndMediaChooseFromDocumentLibrary">
-			<var name="ddlRecordFieldData" value="Document Title" />
 			<var name="document" value="Document_1.txt" />
 			<var name="fieldFieldLabel" value="Resume" />
 			<var name="fieldName" value="Resume" />

@@ -333,7 +333,7 @@
 		<execute function="AssertClick" locator1="DDLEditRecord#DOCUMENTS_AND_MEDIA_CHOOSE_FROM_DOCUMENT_LIBRARY_BUTTON" value1="Select" />
 
 		<execute function="SelectFrame" locator1="DocumentsAndMediaSelectDocument#SELECT_DOCUMENT_IFRAME" />
-		<execute function="AssertClick" locator1="DocumentsAndMediaSelectDocument#TOOLBAR_ADD" value1="Add" />
+		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
 		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 
 		<execute function="UploadCommonFile" locator1="DocumentsAndMediaEditDocument#FILE_FIELD" value1="${document}" />

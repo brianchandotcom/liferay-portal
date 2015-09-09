@@ -192,7 +192,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="DeleteLivePage" priority="4">
+	<command name="DeleteLivePage" priority="4">
 		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -686,7 +686,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingAssetPublisher" priority="4">
+	<command name="StagingAssetPublisher" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

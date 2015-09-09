@@ -1174,18 +1174,8 @@
 	<command name="publishWithInvalidTitleLength">
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-
-		<var name="key_entryTitle" value="${entryValidTitleLength}" />
-
-		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryValidTitleLength}" />
-		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
-		<execute function="AssertTextNotEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
-
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
-		<execute function="AssertElementNotPresent" locator1="BlogsEntry#CONTENT" />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_ENTER_A_VALID_TITLE" value1="Please enter a valid title." />
 	</command>
 
 	<command name="publishWithWorkflow">

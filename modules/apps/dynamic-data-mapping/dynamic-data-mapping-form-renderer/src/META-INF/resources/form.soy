@@ -7,7 +7,9 @@
  */
 {template .field}
 	{if isNonnull($field)}
-		{$field|noAutoescape}
+		<div class="lfr-ddm-form-field-container">
+			{$field|noAutoescape}
+		</div>
 	{/if}
 {/template}
 
@@ -34,7 +36,6 @@
  * @param values
  */
 {template .form_renderer_js}
-	<link href="/o/ddm-form-renderer/css/main.css" rel="stylesheet" type="text/css" />
 	<script src="/o/ddm-form-renderer/js/modules.js"></script>
 
 	<script type="text/javascript">
@@ -101,133 +102,88 @@
 /**
  * Prints a form with pagination.
  *
- * @param containerId
- * @param definition
- * @param fieldTypes
  * @param pages
- * @param portletNamespace
- * @param values
  */
 {template .paginated_form}
-	<div class="lfr-ddm-form-container" id="{$containerId}">
-		<div class="lfr-ddm-form-wizard">
-			<ul class="multi-step-progress-bar">
-				{foreach $page in $pages}
-					<li {if isFirst($page)}class="active"{/if}>
-						<div class="progress-bar-title">{$page.title|noAutoescape}</div>
-
-						<div class="divider"></div>
-
-						<div class="progress-bar-step">{index($page) + 1}</div>
-					</li>
-				{/foreach}
-			</ul>
-		</div>
-
-		<div class="lfr-ddm-form-pages">
+	<div class="lfr-ddm-form-wizard">
+		<ul class="multi-step-progress-bar">
 			{foreach $page in $pages}
-				<div class="{if isFirst($page)}active{/if} lfr-ddm-form-page">
-					{if isNonnull($page.title)}
-						<h3>{$page.title|noAutoescape}</h3>
-					{/if}
+				<li {if isFirst($page)}class="active"{/if}>
+					<div class="progress-bar-title">{$page.title|noAutoescape}</div>
 
-					{if isNonnull($page.description)}
-						<h4>{$page.description|noAutoescape}</h4>
-					{/if}
+					<div class="divider"></div>
 
+					<div class="progress-bar-step">{index($page) + 1}</div>
+				</li>
+			{/foreach}
+		</ul>
+	</div>
+
+	<div class="lfr-ddm-form-pages">
+		{foreach $page in $pages}
+			<div class="{if isFirst($page)}active{/if} lfr-ddm-form-page">
+				{if isNonnull($page.title)}
+					<h3>{$page.title|noAutoescape}</h3>
+				{/if}
+
+				{if isNonnull($page.description)}
+					<h4>{$page.description|noAutoescape}</h4>
+				{/if}
+
+				{call ddm.form_rows data="all"}
+					{param rows: $page.rows /}
+				{/call}
+			</div>
+		{/foreach}
+	</div>
+
+	<div class="lfr-ddm-form-pagination-controls">
+		<button class="btn btn-primary hide lfr-ddm-form-pagination-prev" type="button">Prev</button>
+
+		<button class="btn btn-primary{if length($pages) == 1} hide{/if} lfr-ddm-form-pagination-next pull-right" type="button">Next</button>
+
+		<button class="btn btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">Submit</button>
+	</div>
+{/template}
+
+/**
+ * Prints a simple form with just one page.
+ *
+ * @param fields
+ */
+{template .simple_form}
+	<div class="lfr-ddm-form-fields">
+		{foreach $field in $fields}
+			{call ddm.field data="all"}
+				{param field: $field /}
+			{/call}
+		{/foreach}
+	</div>
+{/template}
+
+/**
+ * Prints a form with tabs.
+ *
+ * @param pages
+ */
+{template .tabbed_form}
+	<div class="lfr-ddm-form-tabs">
+		<ul class="nav nav-tabs">
+			{foreach $page in $pages}
+				<li>
+					<a href="javascript:;">{$page.title}</a>
+				</li>
+			{/foreach}
+		</ul>
+
+		<div class="tab-content">
+			{foreach $page in $pages}
+				<div class="tab-pane {if isFirst($page)}active{/if}">
 					{call ddm.form_rows data="all"}
 						{param rows: $page.rows /}
 					{/call}
 				</div>
 			{/foreach}
 		</div>
-
-		<div class="lfr-ddm-form-pagination-controls">
-			<button class="btn btn-primary hide lfr-ddm-form-pagination-prev" type="button">Prev</button>
-
-			<button class="btn btn-primary{if length($pages) == 1} hide{/if} lfr-ddm-form-pagination-next pull-right" type="button">Next</button>
-
-			<button class="btn btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">Submit</button>
-		</div>
 	</div>
-
-	{call ddm.form_renderer_js data="all"}
-		{param containerId: $containerId /}
-		{param definition: $definition /}
-		{param fieldTypes: $fieldTypes /}
-		{param portletNamespace: $portletNamespace /}
-		{param values: $values /}
-	{/call}
-{/template}
-
-/**
- * Prints a simple form with just one page.
- *
- * @param containerId
- * @param definition
- * @param fields
- * @param fieldTypes
- * @param portletNamespace
- * @param values
- */
-{template .simple_form}
-	<div class="lfr-ddm-form-container" id="{$containerId}">
-		<div class="lfr-ddm-form-fields">
-			{foreach $field in $fields}
-				{call ddm.field data="all"}
-					{param field: $field /}
-				{/call}
-			{/foreach}
-		</div>
-	</div>
-
-	{call ddm.form_renderer_js data="all"}
-		{param containerId: $containerId /}
-		{param definition: $definition /}
-		{param fieldTypes: $fieldTypes /}
-		{param portletNamespace: $portletNamespace /}
-		{param values: $values /}
-	{/call}
-{/template}
-
-/**
- * Prints a form with tabs.
- *
- * @param containerId
- * @param definition
- * @param fieldTypes
- * @param pages
- * @param portletNamespace
- * @param values
- */
-{template .tabbed_form}
-	<div class="lfr-ddm-form-container" id="{$containerId}">
-		<div class="lfr-ddm-form-tabs">
-			<ul class="nav nav-tabs">
-				{foreach $page in $pages}
-					<li>
-						<a href="javascript:;">{$page.title}</a>
-					</li>
-				{/foreach}
-			</ul>
-
-			<div class="tab-content">
-				{foreach $page in $pages}
-					<div class="tab-pane {if isFirst($page)}active{/if}">
-						{call ddm.form_rows data="all"}
-							{param rows: $page.rows /}
-						{/call}
-					</div>
-				{/foreach}
-			</div>
-		</div>
-	</div>
-
-	{call ddm.form_renderer_js data="all"}
-		{param containerId: $containerId /}
-		{param definition: $definition /}
-		{param fieldTypes: $fieldTypes /}
-		{param portletNamespace: $portletNamespace /}
-		{param values: $values /}
-	{/call}
 {/template}

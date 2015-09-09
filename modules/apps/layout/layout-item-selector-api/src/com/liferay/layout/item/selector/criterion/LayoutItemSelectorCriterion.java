@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria.layout.criterion;
+package com.liferay.layout.item.selector.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 

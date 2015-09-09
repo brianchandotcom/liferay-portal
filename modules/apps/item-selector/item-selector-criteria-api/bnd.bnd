@@ -5,7 +5,6 @@ Export-Package:\
 	com.liferay.item.selector.criteria,\
 	com.liferay.item.selector.criteria.file.criterion,\
 	com.liferay.item.selector.criteria.image.criterion,\
-	com.liferay.item.selector.criteria.layout.criterion,\
 	com.liferay.item.selector.criteria.upload.criterion,\
 	com.liferay.item.selector.criteria.url.criterion
 Include-Resource: classes

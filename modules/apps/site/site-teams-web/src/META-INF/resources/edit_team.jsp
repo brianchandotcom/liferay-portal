@@ -61,7 +61,7 @@ renderResponse.setTitle(((team == null) ? LanguageUtil.get(request, "new-team") 
 	<aui:button-row>
 		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button cssClass="btn-lg btn-link" href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

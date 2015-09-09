@@ -99,17 +99,25 @@ public class DefaultDLViewFileVersionDisplayContext
 	public Menu getMenu() throws PortalException {
 		Menu menu = new Menu();
 
-		String direction = "left";
+		String direction = "left-side";
 
-		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
+		if (_dlVisualizationHelper.isShowMinimalActionsButton() &&
+			_dlVisualizationHelper.getDisplayStyle().equals("icon")) {
+
 			direction = "down";
 		}
 
 		menu.setDirection(direction);
 
+		if (!_dlVisualizationHelper.getDisplayStyle().equals("icon")) {
+			menu.setShowExpanded(true);
+		}
+
 		boolean extended = true;
 
-		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
+		if (_dlVisualizationHelper.isShowMinimalActionsButton() ||
+			!_dlVisualizationHelper.getDisplayStyle().equals("icon")) {
+
 			extended = false;
 		}
 
@@ -133,9 +141,20 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		menu.setMessage(message);
 
+		if (!_dlVisualizationHelper.getDisplayStyle().equals("icon")) {
+			menu.setScroll(true);
+		}
+
 		menu.setShowWhenSingleIcon(
 			_dlVisualizationHelper.isShowWhenSingleIconActionButton());
-		menu.setTriggerCssClass("btn btn-default");
+
+		if (_dlVisualizationHelper.getDisplayStyle().equals("icon")) {
+			menu.setTriggerCssClass("btn btn-default");
+		}
+
+		if (!_dlVisualizationHelper.getDisplayStyle().equals("icon")) {
+			menu.setView("lexicon");
+		}
 
 		return menu;
 	}

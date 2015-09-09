@@ -81,51 +81,15 @@ else {
 }
 
 DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
-
-DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-
-boolean showWhenSingleIcon = false;
-
-if ((row == null) || dlVisualizationHelper.isShowWhenSingleIconActionButton()) {
-	showWhenSingleIcon = true;
-}
-
-boolean view = false;
-
-if ((row == null) && ((portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlVisualizationHelper.isShowMinimalActionsButton()) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY))) {
-	view = true;
-}
 %>
 
-<liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu direction='<%= row != null ? "left-side" : "down" %>' icon="<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' scroll="<%= row != null %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>" view='<%= row != null ? "lexicon" : null %>'>
-
-		<%
-		List<MenuItem> menuItems = dlViewFileVersionDisplayContext.getMenu().getMenuItems();
-
-		for (MenuItem menuItem : menuItems) {
-		%>
-
-			<liferay-ui:menu-item menuItem="<%= menuItem %>" />
-
-		<%
-		}
-		%>
-
-	</liferay-ui:icon-menu>
-</liferay-util:buffer>
-
 <c:choose>
-	<c:when test="<%= (portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) && !dlVisualizationHelper.isShowMinimalActionsButton() %>">
-
-		<%= iconMenu %>
-
+	<c:when test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) && !dlVisualizationHelper.isShowMinimalActionsButton() %>">
+		<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
 	</c:when>
 	<c:otherwise>
-		<span class="<%= row != null ? StringPool.BLANK : "entry-action overlay" %>">
-
-			<%= iconMenu %>
-
+		<span class="<%= (row != null) ? StringPool.BLANK : "entry-action overlay" %>">
+			<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
 		</span>
 	</c:otherwise>
 </c:choose>

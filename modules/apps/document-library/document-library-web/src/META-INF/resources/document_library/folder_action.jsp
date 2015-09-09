@@ -116,7 +116,7 @@ String iconMenuId = null;
 %>
 
 <liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu direction='<%= row != null ? "left-side" : "down" %>' icon="<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' scroll="<%= row != null %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>" view='<%= row != null ? "lexicon" : null %>'>
+	<liferay-ui:icon-menu direction='<%= (row != null) ? "left-side" : "down" %>' icon="<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' scroll="<%= row != null %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>" view='<%= row != null ? "lexicon" : null %>'>
 
 		<%
 		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);

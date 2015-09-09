@@ -45,6 +45,7 @@ page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServic
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
 page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %><%@
 page import="com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration" %><%@
+page import="com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@

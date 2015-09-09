@@ -37,10 +37,9 @@ downloadSrc {
 		}
 	}
 
-	from zipTree(
-		{
-			FileUtil.get(project, "https://gdata-java-client.googlecode.com/files/gdata-samples.java-1.47.1.zip")
-		})
+	from {
+		zipTree FileUtil.get(project, "https://gdata-java-client.googlecode.com/files/gdata-samples.java-1.47.1.zip")
+	}
 
 	include "gdata/java/lib/gdata-appsforyourdomain-1.0.jar"
 	include "gdata/java/lib/gdata-client-1.0.jar"

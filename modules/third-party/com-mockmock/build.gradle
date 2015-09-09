@@ -28,10 +28,9 @@ compileJavaMvn {
 }
 
 downloadSrc {
-	from zipTree(
-		{
-			FileUtil.get(project, mockMockSrcUrl)
-		})
+	from {
+		zipTree FileUtil.get(project, mockMockSrcUrl)
+	}
 
 	into buildDir
 }

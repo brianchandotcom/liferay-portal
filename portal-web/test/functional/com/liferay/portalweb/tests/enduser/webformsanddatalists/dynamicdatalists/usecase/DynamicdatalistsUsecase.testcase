@@ -2211,4 +2211,62 @@
 			<var name="nestedFieldFieldLabel" value="Integer" />
 		</execute>
 	</command>
+
+	<command name="ViewVisualGroupingOfRepeatableNestedFields" priority="3">
+		<description message="This is a use case for LPS-42060." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addFieldNested">
+			<var name="field" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#editFieldRepeatable">
+			<var name="fieldFieldLabel" value="Text" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLList#addCP">
+			<var name="ddlListDescription" value="List Description" />
+			<var name="ddlListName" value="List Name" />
+		</execute>
+
+		<execute macro="DDLDataDefinition#selectCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+		</execute>
+
+		<execute macro="DDLList#saveCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DDLRecord#addCP">
+			<var name="ddlDataDefinitionName" value="Data Definition Name" />
+			<var name="ddlListName" value="List Name" />
+		</execute>
+
+		<execute macro="DDLRecord#addRepeatableField">
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="DDLRecord#viewRepeatableNestedFieldsVisualGrouping" />
+	</command>
 </definition>

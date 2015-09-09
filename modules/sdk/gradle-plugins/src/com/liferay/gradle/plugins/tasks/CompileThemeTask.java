@@ -30,15 +30,16 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import org.gradle.api.DefaultTask;
-import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
-import org.gradle.api.tasks.InputFile;
+import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.TaskAction;
@@ -54,7 +55,7 @@ public class CompileThemeTask extends DefaultTask {
 	}
 
 	@TaskAction
-	public void compileTheme() {
+	public void compileTheme() throws Exception {
 		copyThemeParent();
 
 		copyDiffs();
@@ -66,16 +67,10 @@ public class CompileThemeTask extends DefaultTask {
 		return GradleUtil.toFile(_project, _diffsDir);
 	}
 
-	@InputDirectory
+	@InputFiles
 	@Optional
-	public File getFrontendThemesDir() {
-		return GradleUtil.toFile(_project, _frontendThemesDir);
-	}
-
-	@InputFile
-	@Optional
-	public File getFrontendThemesFile() {
-		return GradleUtil.toFile(_project, _frontendThemesFile);
+	public FileCollection getFrontendThemeFiles() {
+		return _frontendThemeFiles;
 	}
 
 	@OutputDirectories
@@ -135,12 +130,8 @@ public class CompileThemeTask extends DefaultTask {
 		_diffsDir = diffsDir;
 	}
 
-	public void setFrontendThemesDir(Object frontendThemesDir) {
-		_frontendThemesDir = frontendThemesDir;
-	}
-
-	public void setFrontendThemesFile(Object frontendThemesFile) {
-		_frontendThemesFile = frontendThemesFile;
+	public void setFrontendThemeFiles(FileCollection frontendThemeFiles) {
+		_frontendThemeFiles = frontendThemeFiles;
 	}
 
 	public void setThemeParent(Object themeParent) {
@@ -189,73 +180,44 @@ public class CompileThemeTask extends DefaultTask {
 	}
 
 	protected void copyPortalThemeDir(
-		String theme, String[] excludes, String include) {
+			String theme, String[] excludes, String include)
+		throws Exception {
 
 		copyPortalThemeDir(theme, excludes, new String[] {include});
 	}
 
 	protected void copyPortalThemeDir(
-		String theme, final String[] excludes, final String[] includes) {
+			String theme, String[] excludes, String[] includes)
+		throws Exception {
 
-		final String prefix = "/" + theme + "/";
+		String prefix = "META-INF/resources/" + theme + "/";
 
-		final File themeResourcesDir = getThemeResourcesDir(theme);
-		final File frontendThemesFile = getFrontendThemesFile();
-		final File themeRootDir = getThemeRootDir();
+		final File frontendThemeFile = getFrontendThemeFile(theme);
+		final String[] prefixedExcludes = StringUtil.prepend(excludes, prefix);
+		final String[] prefixedIncludes = StringUtil.prepend(includes, prefix);
 
-		if (themeResourcesDir != null) {
-			Closure<Void> closure = new Closure<Void>(null) {
+		Closure<Void> closure = new Closure<Void>(null) {
 
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.from(new File(themeResourcesDir, prefix));
+			@SuppressWarnings("unused")
+			public void doCall(CopySpec copySpec) {
+				copySpec.eachFile(new StripPathSegmentsAction(3));
 
-					if (ArrayUtil.isNotEmpty(excludes)) {
-						copySpec.exclude(excludes);
-					}
-
-					copySpec.include(includes);
-					copySpec.into(themeRootDir);
+				if (ArrayUtil.isNotEmpty(prefixedExcludes)) {
+					copySpec.exclude(prefixedExcludes);
 				}
 
-			};
+				copySpec.from(_project.zipTree(frontendThemeFile));
+				copySpec.include(prefixedIncludes);
+				copySpec.into(getThemeRootDir());
+				copySpec.setIncludeEmptyDirs(false);
+			}
 
-			_project.copy(closure);
-		}
-		else if (frontendThemesFile != null) {
-			String jarPrefix = "META-INF/resources" + prefix;
+		};
 
-			final String[] prefixedExcludes = StringUtil.prepend(
-				excludes, jarPrefix);
-			final String[] prefixedIncludes = StringUtil.prepend(
-				includes, jarPrefix);
-
-			Closure<Void> closure = new Closure<Void>(null) {
-
-				@SuppressWarnings("unused")
-				public void doCall(CopySpec copySpec) {
-					copySpec.eachFile(new StripPathSegmentsAction(5));
-
-					if (ArrayUtil.isNotEmpty(prefixedExcludes)) {
-						copySpec.exclude(prefixedExcludes);
-					}
-
-					copySpec.from(_project.zipTree(frontendThemesFile));
-					copySpec.include(prefixedIncludes);
-					copySpec.into(themeRootDir);
-					copySpec.setIncludeEmptyDirs(false);
-				}
-
-			};
-
-			_project.copy(closure);
-		}
-		else {
-			throw new GradleException("Unable to find frontend themes web");
-		}
+		_project.copy(closure);
 	}
 
-	protected void copyThemeParent() {
+	protected void copyThemeParent() throws Exception {
 		String themeParent = getThemeParent();
 
 		if (Validator.isNull(themeParent)) {
@@ -277,7 +239,7 @@ public class CompileThemeTask extends DefaultTask {
 		}
 	}
 
-	protected void copyThemeParentPortal() {
+	protected void copyThemeParentPortal() throws Exception {
 		String themeParent = getThemeParent();
 
 		copyPortalThemeDir(
@@ -322,13 +284,13 @@ public class CompileThemeTask extends DefaultTask {
 		_project.copy(closure);
 	}
 
-	protected void copyThemeParentStyled() {
+	protected void copyThemeParentStyled() throws Exception {
 		copyPortalThemeDir(
 			"_styled",
 			new String[] {"**/*.css", "npm-debug.log", "package.json"}, "**");
 	}
 
-	protected void copyThemeParentUnstyled() {
+	protected void copyThemeParentUnstyled() throws Exception {
 		copyPortalThemeDir(
 			"_unstyled",
 			new String[] {
@@ -347,18 +309,19 @@ public class CompileThemeTask extends DefaultTask {
 		copyPortalThemeDir("_unstyled", null, includes);
 	}
 
-	protected File getThemeResourcesDir(String theme) {
-		String themeDir = "frontend-themes-";
+	protected File getFrontendThemeFile(String theme) throws Exception {
+		for (File file : getFrontendThemeFiles()) {
+			try (JarFile jarFile = new JarFile(file)) {
+				JarEntry jarEntry = jarFile.getJarEntry(
+					"META-INF/resources/" + theme);
 
-		if (theme.equals("_styled") || theme.equals("_unstyled")) {
-			themeDir += theme.substring(1);
-		}
-		else {
-			themeDir += theme + "-web";
+				if (jarEntry != null) {
+					return file;
+				}
+			}
 		}
 
-		return new File(
-			getFrontendThemesDir(), themeDir + "/src/META-INF/resources");
+		return null;
 	}
 
 	private static final String[] _PORTAL_THEMES = {
@@ -370,8 +333,7 @@ public class CompileThemeTask extends DefaultTask {
 	};
 
 	private Object _diffsDir;
-	private Object _frontendThemesDir;
-	private Object _frontendThemesFile;
+	private FileCollection _frontendThemeFiles;
 	private final Project _project;
 	private Object _themeParent;
 	private Project _themeParentProject;

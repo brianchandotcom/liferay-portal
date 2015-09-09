@@ -22,32 +22,38 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 PortletURL portletURL = renderResponse.createRenderURL();
 
 pageContext.setAttribute("portletURL", portletURL);
+
+SearchContainer teamSearchContainer = new TeamSearch(renderRequest, portletURL);
+
+TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTerms();
 %>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="form-search" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="portletURL" />
+<aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item cssClass="active" label="teams" />
+	</aui:nav>
 
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
+			<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= searchTerms.NAME %>" view="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<div class="container-fluid-1280">
 	<liferay-ui:search-container
-		searchContainer="<%= new TeamSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= teamSearchContainer %>"
 	>
 
 		<%
-		TeamDisplayTerms searchTerms = (TeamDisplayTerms)searchContainer.getSearchTerms();
-
 		portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
 
 		total = TeamLocalServiceUtil.searchCount(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
 
 		searchContainer.setTotal(total);
 		%>
-
-		<aui:nav-bar>
-			<aui:nav-bar-search>
-				<div class="form-search">
-					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= searchTerms.NAME %>" />
-				</div>
-			</aui:nav-bar-search>
-		</aui:nav-bar>
 
 		<liferay-ui:search-container-results
 			results="<%= TeamLocalServiceUtil.search(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
@@ -83,14 +89,14 @@ pageContext.setAttribute("portletURL", portletURL);
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
+				cssClass="checkbox-cell entry-action"
 				path="/team_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" view="lexicon" />
 	</liferay-ui:search-container>
-</aui:form>
+</div>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_TEAMS) %>">
 

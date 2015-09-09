@@ -291,7 +291,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getConfirmation() {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getConfirmation(this);
 	}
 
 	@Override

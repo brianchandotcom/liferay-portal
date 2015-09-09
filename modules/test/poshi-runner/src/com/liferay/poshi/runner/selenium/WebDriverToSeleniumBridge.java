@@ -48,7 +48,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -500,23 +499,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public String getConfirmation() {
-		switchTo();
-
-		WebDriverWait webDriverWait = new WebDriverWait(this, 1);
-
-		try {
-			Alert alert = webDriverWait.until(
-				ExpectedConditions.alertIsPresent());
-
-			String confirmation = alert.getText();
-
-			alert.accept();
-
-			return confirmation;
-		}
-		catch (Exception e) {
-			throw new WebDriverException();
-		}
+		return WebDriverHelper.getConfirmation(this);
 	}
 
 	@Override

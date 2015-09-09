@@ -19,20 +19,14 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-Folder folder = null;
+Folder folder = (Folder)row.getObject();
 
-if (row != null) {
-	folder = (Folder)row.getObject();
-}
-else {
-	folder = (Folder)request.getAttribute("view_entries.jsp-folder");
-}
+folder = folder.toEscapedModel();
 
 PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 rowURL.setParameter("mvcRenderCommandName", "/document_library/view");
 rowURL.setParameter("redirect", currentURL);
-rowURL.setParameter("groupId", String.valueOf(folder.getGroupId()));
 rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 %>
 
@@ -45,6 +39,6 @@ rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 	modifiedDate="<%= folder.getModifiedDate() %>"
 	showCheckbox="<%= DLFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>"
 	title="<%= folder.getName() %>"
-	url="<%= rowURL != null ? rowURL.toString() : null %>"
+	url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 	view="lexicon"
 />

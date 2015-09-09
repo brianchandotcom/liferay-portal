@@ -459,7 +459,7 @@ String iconMenuId = null;
 
 	</c:when>
 	<c:otherwise>
-		<span class="<%= row != null ? StringPool.BLANK : "entry-action overlay" %>">
+		<span class="<%= (row != null) ? StringPool.BLANK : "entry-action overlay" %>">
 
 			<%= iconMenu %>
 

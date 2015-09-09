@@ -22,19 +22,18 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 FileEntry fileEntry = null;
 FileShortcut fileShortcut = null;
 
-if (row != null) {
-	if (row.getObject() instanceof FileEntry) {
-		fileEntry = (FileEntry)row.getObject();
-	}
-	else if (row.getObject() instanceof FileShortcut) {
-		fileShortcut = (FileShortcut)row.getObject();
+if (row.getObject() instanceof FileEntry) {
+	fileEntry = (FileEntry)row.getObject();
+}
+else if (row.getObject() instanceof FileShortcut) {
+	fileShortcut = (FileShortcut)row.getObject();
 
-		fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
-	}
+	fileShortcut = fileShortcut.toEscapedModel();
+
+	fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
 }
-else {
-	fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntry");
-}
+
+fileEntry = fileEntry.toEscapedModel();
 
 FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -52,14 +51,13 @@ if (!latestFileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT)
 else {
 	assetClassPK = fileEntry.getFileEntryId();
 }
-%>
 
-<liferay-portlet:renderURL varImpl="rowURL">
-	<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
-	<portlet:param name="redirect" value="<%= HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax") %>" />
-	<portlet:param name="backURL" value="<%= currentURL %>" />
-	<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
-</liferay-portlet:renderURL>
+PortletURL rowURL = liferayPortletResponse.createRenderURL();
+
+rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
+rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
+rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
+%>
 
 <liferay-ui:app-view-entry
 	assetCategoryClassName="<%= DLFileEntryConstants.getClassName() %>"
@@ -78,7 +76,7 @@ else {
 	showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"
 	status="<%= latestFileVersion.getStatus() %>"
 	title="<%= latestFileVersion.getTitle() %>"
-	url="<%= rowURL != null ? rowURL.toString() : null %>"
+	url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 	version="<%= latestFileVersion.getVersion() %>"
 	view="lexicon"
 />

@@ -16,7 +16,23 @@
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(storageType = ? OR ? IS NULL) AND
-				(type_ = ?) AND EXISTS (SELECT 1 FROM DDMStructureVersion WHERE DDMStructureVersion.structureId = DDMStructure.structureId [$STATUS$])
+				(type_ = ?)
+				[$STATUS$]
+		]]>
+	</sql>
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByAndStructureVersionStatus">
+		<![CDATA[
+			AND EXISTS
+				(
+					SELECT
+						1
+					FROM
+						DDMStructureVersion
+					WHERE
+					 	(DDMStructureVersion.structureId = DDMStructure.structureId) AND
+					 	(DDMStructureVersion.version = DDMStructure.version) AND
+					 	(DDMStructureVersion.status = ?)
+				)
 		]]>
 	</sql>
 	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T_S">
@@ -34,7 +50,8 @@
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(storageType = ? OR ? IS NULL) AND
-				(type_ = ?) AND EXISTS (SELECT 1 FROM DDMStructureVersion WHERE DDMStructureVersion.structureId = DDMStructure.structureId [$STATUS$])
+				(type_ = ?)
+				[$STATUS$]
 			ORDER BY
 				DDMStructure.structureId DESC
 		]]>

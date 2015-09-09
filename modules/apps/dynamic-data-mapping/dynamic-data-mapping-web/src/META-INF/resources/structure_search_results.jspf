@@ -24,18 +24,18 @@ if (showAncestorScopes) {
 }
 
 if (searchTerms.isAdvancedSearch()) {
-	total = DDMStructureServiceUtil.searchCount(company.getCompanyId(), groupIds, searchTerms.getClassNameId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), DDMStructureConstants.TYPE_DEFAULT, searchTerms.isAndOperator(), searchTerms.getStatus());
+	total = DDMStructureServiceUtil.searchCount(company.getCompanyId(), groupIds, searchTerms.getClassNameId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), DDMStructureConstants.TYPE_DEFAULT, searchTerms.getStatus(), searchTerms.isAndOperator());
 
 	searchContainer.setTotal(total);
 
-	results = DDMStructureServiceUtil.search(company.getCompanyId(), groupIds, searchTerms.getClassNameId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), DDMStructureConstants.TYPE_DEFAULT, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator(), searchTerms.getStatus());
+	results = DDMStructureServiceUtil.search(company.getCompanyId(), groupIds, searchTerms.getClassNameId(), searchTerms.getName(), searchTerms.getDescription(), searchTerms.getStorageType(), DDMStructureConstants.TYPE_DEFAULT, searchTerms.getStatus(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 else {
 	total = DDMStructureServiceUtil.searchCount(company.getCompanyId(), groupIds, scopeClassNameId, searchTerms.getKeywords(), searchTerms.getStatus());
 
 	searchContainer.setTotal(total);
 
-	results = DDMStructureServiceUtil.search(company.getCompanyId(), groupIds, scopeClassNameId, searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator(), searchTerms.getStatus());
+	results = DDMStructureServiceUtil.search(company.getCompanyId(), groupIds, scopeClassNameId, searchTerms.getKeywords(), searchTerms.getStatus(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 
 searchContainer.setResults(results);

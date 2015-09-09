@@ -133,7 +133,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 	<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
 
-	<c:if test="<%= ddmDisplay.isVersioningEnabled() && structureVersion != null %>">
+	<c:if test="<%= (structureVersion != null) && ddmDisplay.isVersioningEnabled() %>">
 		<aui:workflow-status model="<%= DDMStructure.class %>" status="<%= structureVersion.getStatus() %>" version="<%= structureVersion.getVersion() %>" />
 
 		<div class="structure-history-toolbar" id="<portlet:namespace />structureHistoryToolbar"></div>

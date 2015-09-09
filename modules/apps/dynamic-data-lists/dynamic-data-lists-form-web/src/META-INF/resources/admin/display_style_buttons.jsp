@@ -16,8 +16,12 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<aui:nav-bar id="toolbar" cssClass="collapse-basic-search" view="lexicon">
-	<aui:nav-bar-search>
-		<liferay-util:include page="/admin/record_set_search.jsp" servletContext="<%= application %>" />
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<%
+PortletURL displayStyleURL = renderResponse.createRenderURL();
+%>
+
+<liferay-frontend:management-bar-display-buttons
+	displayStyleURL="<%= displayStyleURL %>"
+	displayViews="<%= ddlFormAdminDisplayContext.getDisplayViews() %>"
+	selectedDisplayStyle="<%= ddlFormAdminDisplayContext.getDisplayStyle() %>"
+/>

@@ -16,8 +16,8 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<aui:nav-bar id="toolbar" cssClass="collapse-basic-search" view="lexicon">
-	<aui:nav-bar-search>
-		<liferay-util:include page="/admin/record_set_search.jsp" servletContext="<%= application %>" />
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-util:include page="/admin/display_style_buttons.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-buttons>
+</liferay-frontend:management-bar>

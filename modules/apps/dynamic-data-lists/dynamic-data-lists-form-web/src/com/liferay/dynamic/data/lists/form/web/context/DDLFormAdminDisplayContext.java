@@ -15,6 +15,8 @@
 package com.liferay.dynamic.data.lists.form.web.context;
 
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
+import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigurationValues;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -36,12 +38,18 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.List;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -59,6 +67,8 @@ public class DDLFormAdminDisplayContext {
 
 		_ddlFormAdminRequestHelper = new DDLFormAdminRequestHelper(
 			renderRequest);
+
+		_portletPreferences = _renderRequest.getPreferences();
 	}
 
 	public JSONArray getDDMFormFieldTypesJSONArray() throws PortalException {
@@ -88,6 +98,55 @@ public class DDLFormAdminDisplayContext {
 		return _ddmStucture;
 	}
 
+	public String getDisplayStyle() {
+		
+		if (_displayStyle == null) {
+			String [] displayViews = getDisplayViews();
+
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					_renderRequest);
+
+			String displayStyle = ParamUtil.getString(
+					_renderRequest, "displayStyle");
+
+			if (Validator.isNull(displayStyle)) {
+				displayStyle = portalPreferences.getValue(
+					DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+					"display-style",
+					DDLFormWebConfigurationValues.DEFAULT_DISPLAY_VIEW);
+			}
+			else {
+				if (ArrayUtil.contains(displayViews, displayStyle)) {
+					portalPreferences.setValue(
+						DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+						"display-style", displayStyle);
+				}
+			}
+
+			if (!ArrayUtil.contains(displayViews, displayStyle)) {
+				displayStyle = displayViews[0];
+			}
+
+			_displayStyle = displayStyle;
+
+		}
+
+		return _displayStyle;
+	}
+
+	public String[] getDisplayViews() {
+		if (_displayViews == null) {
+			_displayViews = StringUtil.split(
+				PrefsParamUtil.getString(
+					_portletPreferences, _renderRequest, "displayViews",
+					StringUtil.merge(
+							DDLFormWebConfigurationValues.DISPLAY_VIEWS)));
+		}
+
+		return _displayViews;
+	}
+	
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -221,8 +280,11 @@ public class DDLFormAdminDisplayContext {
 
 	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
 	private DDMStructure _ddmStucture;
+	private String _displayStyle;
+	private String[] _displayViews;
 	private DDLRecordSet _recordSet;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final PortletPreferences _portletPreferences;
 
 }

@@ -202,6 +202,7 @@ AUI.add(
 
 						return new Liferay.DDL.LayoutDeserializer(
 							{
+								builder: instance,
 								definition: instance.get('definition')
 							}
 						);

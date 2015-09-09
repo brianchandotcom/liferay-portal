@@ -66,8 +66,13 @@ public class UploadPortletRequestTest {
 		new LiferayIntegrationTestRule();
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		_portletNamespace = RandomTestUtil.randomString();
+
+		InputStream inputStream = getClass().getResourceAsStream(
+			_TXT_DEPENDENCY);
+
+		_bytes = PortletContainerTestUtil.toByteArray(inputStream);
 	}
 
 	@Test
@@ -78,7 +83,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -111,7 +116,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -145,7 +150,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -171,7 +176,7 @@ public class UploadPortletRequestTest {
 	public void testCleanUpShouldNotFailFromMainConstructor() throws Exception {
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -199,7 +204,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -231,7 +236,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -255,7 +260,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -288,7 +293,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -310,7 +315,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -343,7 +348,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -370,7 +375,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -396,7 +401,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -429,7 +434,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -453,7 +458,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -480,7 +485,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -516,7 +521,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -540,7 +545,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -567,7 +572,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -606,7 +611,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -631,7 +636,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -653,7 +658,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -688,7 +693,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -714,7 +719,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -742,7 +747,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -782,7 +787,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -806,7 +811,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -829,7 +834,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -862,7 +867,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -887,7 +892,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -913,7 +918,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -952,7 +957,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -981,7 +986,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		String parameter = RandomTestUtil.randomString();
 
@@ -1036,7 +1041,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		String parameter = RandomTestUtil.randomString();
 
@@ -1102,7 +1107,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -1135,7 +1140,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -1161,7 +1166,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -1186,7 +1191,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -1219,7 +1224,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -1243,7 +1248,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		UploadPortletRequest uploadPortletRequest =
 			new UploadPortletRequestImpl(
@@ -1262,7 +1267,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		HttpServletRequest mockHttpServletRequest =
 			(HttpServletRequest)liferayServletRequest.getRequest();
@@ -1283,7 +1288,7 @@ public class UploadPortletRequestTest {
 
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), _TXT_DEPENDENCY);
+				_portletNamespace, _bytes);
 
 		HttpServletRequest mockHttpServletRequest =
 			(HttpServletRequest)liferayServletRequest.getRequest();
@@ -1310,6 +1315,7 @@ public class UploadPortletRequestTest {
 		"/com/liferay/portal/portlet/container/upload/test/dependencies/" +
 			"file_upload.txt";
 
+	private byte[] _bytes;
 	private String _portletNamespace;
 
 }

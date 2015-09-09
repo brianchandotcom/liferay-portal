@@ -259,7 +259,7 @@
 		<if>
 			<equals arg1="${app.server.type}" arg2="glassfish" />
 			<then>
-				<delete file="${app.server.glassfish.portal.war.dir}" />
+				<delete file="${app.server.glassfish.portal.war.name}" />
 			</then>
 			<elseif>
 				<equals arg1="${app.server.type}" arg2="websphere" />
@@ -320,11 +320,11 @@
 				</not>
 			</and>
 			<then>
-				<move file="${app.server.glassfish.portal.war.dir}" tofile="${app.server.glassfish.portal.war.dir}-tmp" />
+				<move file="${app.server.glassfish.portal.war.name}" tofile="${app.server.glassfish.portal.war.name}-tmp" />
 
 				<mkdir dir="${app.server.portal.dir}" />
 
-				<unzip src="${app.server.glassfish.portal.war.dir}-tmp" dest="${app.server.portal.dir}" />
+				<unzip src="${app.server.glassfish.portal.war.name}-tmp" dest="${app.server.portal.dir}" />
 			</then>
 		</if>
 
@@ -347,14 +347,14 @@
 
 		<if>
 			<and>
-				<available file="${app.server.glassfish.portal.war.dir}-tmp" type="file" />
+				<available file="${app.server.glassfish.portal.war.name}-tmp" type="file" />
 				<available file="${app.server.portal.dir}" type="dir" />
 				<equals arg1="${app.server.type}" arg2="glassfish" />
 			</and>
 			<then>
 				<delete dir="${app.server.portal.dir}" />
 
-				<move file="${app.server.glassfish.portal.war.dir}-tmp" tofile="${app.server.glassfish.portal.war.dir}" />
+				<move file="${app.server.glassfish.portal.war.name}-tmp" tofile="${app.server.glassfish.portal.war.name}" />
 			</then>
 		</if>
 
@@ -397,7 +397,7 @@
 
 				<delete dir="${app.server.portal.dir}" />
 
-				<move file="${tstamp.value}" tofile="${app.server.glassfish.portal.war.dir}" />
+				<move file="${tstamp.value}" tofile="${app.server.glassfish.portal.war.name}" />
 			</then>
 		</if>
 

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.upgrade.util;
 
-import com.liferay.portal.dao.jdbc.util.JDBCUtil;
+import com.liferay.portal.dao.jdbc.util.PostgresUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
@@ -363,8 +363,8 @@ public class Table {
 			value = GetterUtil.getBoolean(rs.getBoolean(name));
 		}
 		else if ((t == Types.BLOB) || (t == Types.LONGVARBINARY)) {
-			if (JDBCUtil.isPostgreSQL(rs)) {
-				value = JDBCUtil.getPGLargeObject(rs, name);
+			if (PostgresUtil.isPostgreSQL(rs)) {
+				value = PostgresUtil.getLargeObject(rs, name);
 			}
 			else {
 				value = rs.getBytes(name);
@@ -576,8 +576,9 @@ public class Table {
 			ps.setLong(paramIndex, GetterUtil.getLong(value));
 		}
 		else if ((t == Types.BLOB) || (t == Types.LONGVARBINARY)) {
-			if (JDBCUtil.isPostgreSQL(ps)) {
-				JDBCUtil.setPGLargeObject(ps, paramIndex, Base64.decode(value));
+			if (PostgresUtil.isPostgreSQL(ps)) {
+				PostgresUtil.setLargeObject(
+					ps, paramIndex, Base64.decode(value));
 			}
 			else {
 				ps.setBytes(paramIndex, Base64.decode(value));

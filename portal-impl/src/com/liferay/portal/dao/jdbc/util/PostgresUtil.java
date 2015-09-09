@@ -28,9 +28,9 @@ import org.postgresql.largeobject.LargeObjectManager;
 /**
  * @author Istvan Andras Dezsi
  */
-public class JDBCUtil {
+public class PostgresUtil {
 
-	public static byte[] getPGLargeObject(ResultSet rs, String name)
+	public static byte[] getLargeObject(ResultSet rs, String name)
 		throws SQLException {
 
 		Statement statement = rs.getStatement();
@@ -76,7 +76,7 @@ public class JDBCUtil {
 		return false;
 	}
 
-	public static void setPGLargeObject(
+	public static void setLargeObject(
 			PreparedStatement ps, int paramIndex, byte[] value)
 		throws SQLException {
 

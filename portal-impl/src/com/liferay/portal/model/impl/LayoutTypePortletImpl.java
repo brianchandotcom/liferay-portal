@@ -1442,10 +1442,6 @@ public class LayoutTypePortletImpl
 	protected List<Portlet> getEmbeddedPortlets(
 		List<Portlet> columnPortlets, List<Portlet> staticPortlets) {
 
-		if (_embeddedPortlets != null) {
-			return _embeddedPortlets;
-		}
-
 		List<Portlet> portlets = new ArrayList<>();
 
 		Layout layout = getLayout();

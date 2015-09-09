@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.ant.bnd.spring;
+package com.liferay.ant.bnd.spring.bean;
+
+import com.liferay.ant.bnd.spring.ServiceReference;
 
 /**
  * @author Miguel Pastor

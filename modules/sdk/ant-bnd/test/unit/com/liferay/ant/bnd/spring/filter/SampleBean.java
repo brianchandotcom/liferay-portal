@@ -12,24 +12,16 @@
  * details.
  */
 
-package com.liferay.ant.bnd.spring;
+package com.liferay.ant.bnd.spring.filter;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.liferay.ant.bnd.spring.ServiceReference;
 
 /**
  * @author Miguel Pastor
  */
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.FIELD, ElementType.METHOD})
-public @interface ServiceReference {
+public class SampleBean {
 
-	public String filterString() default "";
-
-	public Class<?> type() default Object.class;
+	@ServiceReference(filterString = "(service.ranking=1)", type = String.class)
+	protected String s;
 
 }

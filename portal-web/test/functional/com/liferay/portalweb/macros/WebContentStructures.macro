@@ -155,6 +155,7 @@
 	</command>
 
 	<command name="editFieldSettingCP">
+		<var name="key_ddlDataDefinitionName" value="${structureName}" />
 		<var name="key_structureName" value="${structureName}" />
 
 		<execute function="AssertClick" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_NAME" value1="${structureName}" />

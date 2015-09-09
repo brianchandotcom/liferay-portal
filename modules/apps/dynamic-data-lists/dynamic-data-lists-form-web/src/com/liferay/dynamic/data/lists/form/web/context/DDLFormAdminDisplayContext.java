@@ -99,16 +99,15 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	public String getDisplayStyle() {
-		
 		if (_displayStyle == null) {
-			String [] displayViews = getDisplayViews();
+			String[] displayViews = getDisplayViews();
 
 			PortalPreferences portalPreferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(
 					_renderRequest);
 
 			String displayStyle = ParamUtil.getString(
-					_renderRequest, "displayStyle");
+				_renderRequest, "displayStyle");
 
 			if (Validator.isNull(displayStyle)) {
 				displayStyle = portalPreferences.getValue(
@@ -129,7 +128,6 @@ public class DDLFormAdminDisplayContext {
 			}
 
 			_displayStyle = displayStyle;
-
 		}
 
 		return _displayStyle;
@@ -141,12 +139,12 @@ public class DDLFormAdminDisplayContext {
 				PrefsParamUtil.getString(
 					_portletPreferences, _renderRequest, "displayViews",
 					StringUtil.merge(
-							DDLFormWebConfigurationValues.DISPLAY_VIEWS)));
+						DDLFormWebConfigurationValues.DISPLAY_VIEWS)));
 		}
 
 		return _displayViews;
 	}
-	
+
 	public PortletURL getPortletURL() {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
@@ -282,9 +280,9 @@ public class DDLFormAdminDisplayContext {
 	private DDMStructure _ddmStucture;
 	private String _displayStyle;
 	private String[] _displayViews;
+	private final PortletPreferences _portletPreferences;
 	private DDLRecordSet _recordSet;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
-	private final PortletPreferences _portletPreferences;
 
 }

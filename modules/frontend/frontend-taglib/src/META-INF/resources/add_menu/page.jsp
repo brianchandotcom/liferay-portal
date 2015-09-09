@@ -25,9 +25,15 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 
 		<%
 		AddMenuItem addMenuItem = addMenuItems.get(0);
+
+		String id = addMenuItem.getId();
+
+		if (Validator.isNull(id)) {
+			id = "menuItem";
+		}
 		%>
 
-		<a class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + addMenuItem.getId() %>" title="<%= HtmlUtil.escapeAttribute(addMenuItem.getLabel()) %>">
+		<a class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(addMenuItem.getLabel()) %>">
 			<span class="icon-plus"></span>
 		</a>
 
@@ -50,10 +56,16 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 				<%
 				for (int i = 0; i < addMenuItems.size(); i++) {
 					AddMenuItem addMenuItem = addMenuItems.get(i);
+
+					String id = addMenuItem.getId();
+
+					if (Validator.isNull(id)) {
+						id = "menuItem" + i;
+					}
 				%>
 
 					<li>
-						<a href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + addMenuItem.getId() %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
+						<a href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
 					</li>
 
 				<%

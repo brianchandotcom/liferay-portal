@@ -128,63 +128,16 @@ boolean wsrp = ParamUtil.getBoolean(PortalUtil.getOriginalServletRequest(request
 		}
 		%>
 
-		<c:choose>
-			<c:when test="<%= portletDecorate %>">
-				<liferay-theme:wrap-portlet page="portlet.jsp">
-					<div class="<%= portletDisplay.isStateMin() ? "hide" : "" %> portlet-content-container" <%= containerStyles %>>
-						<%@ include file="/html/common/themes/portlet_content_wrapper.jspf" %>
-					</div>
-				</liferay-theme:wrap-portlet>
-			</c:when>
-			<c:otherwise>
+		<liferay-theme:wrap-portlet page="portlet.jsp">
+			<div class="<%= portletDisplay.isStateMin() ? "hide" : "" %> portlet-content-container" <%= containerStyles %>>
+				<%@ include file="/html/common/themes/portlet_content_wrapper.jspf" %>
+			</div>
+		</liferay-theme:wrap-portlet>
 
-				<%
-				boolean showPortletActions =
-					(group.isLayoutPrototype() || tilesPortletDecorate) &&
-					(portletDisplay.isShowCloseIcon() ||
-					 portletDisplay.isShowConfigurationIcon() ||
-					 portletDisplay.isShowEditDefaultsIcon() ||
-					 portletDisplay.isShowEditGuestIcon() ||
-					 portletDisplay.isShowEditIcon() ||
-					 portletDisplay.isShowExportImportIcon() ||
-					 portletDisplay.isShowHelpIcon() ||
-					 portletDisplay.isShowPortletCssIcon() ||
-					 portletDisplay.isShowPrintIcon() ||
-					 portletDisplay.isShowRefreshIcon());
-				%>
-
-				<div class="portlet-borderless-container" <%= containerStyles %>>
-					<c:if test="<%= showPortletActions %>">
-						<div class="portlet-borderless-bar">
-							<span class="portlet-title-default"><%= HtmlUtil.escape(portletDisplay.getTitle()) %></span>
-
-							<span class="portlet-actions">
-								<span class="portlet-action">
-									<span class="portlet-action-separator">-</span>
-
-									<liferay-portlet:icon-options />
-								</span>
-
-								<c:if test="<%= portletDisplay.isShowBackIcon() %>">
-									<span class="portlet-action portlet-back">
-										<span class="portlet-action-separator">-</span>
-
-										<a href="<%= HtmlUtil.escapeAttribute(portletDisplay.getURLBack()) %>" title="<liferay-ui:message key="back" />"><liferay-ui:message key="back" /></a>
-									</span>
-								</c:if>
-							</span>
-						</div>
-					</c:if>
-
-					<%@ include file="/html/common/themes/portlet_content_wrapper.jspf" %>
-				</div>
-
-				<c:if test="<%= freeformPortlet %>">
-					<div class="portlet-resize-container">
-						<div class="portlet-resize-handle"></div>
-					</div>
-				</c:if>
-			</c:otherwise>
-		</c:choose>
+		<c:if test="<%= freeformPortlet %>">
+			<div class="portlet-resize-container">
+				<div class="portlet-resize-handle"></div>
+			</div>
+		</c:if>
 	</c:otherwise>
 </c:choose>

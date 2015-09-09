@@ -1,6 +1,8 @@
 (function() {
 	var pluginName = 'imageselector';
 
+	var STR_FILE_ENTRY_RETURN_TYPE = 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType';
+
 	var STR_UPLOADABLE_FILE_RETURN_TYPE = 'com.liferay.item.selector.criteria.UploadableFileReturnType';
 
 	CKEDITOR.plugins.add(
@@ -20,9 +22,12 @@
 								if (selectedItem) {
 									var imageSrc = selectedItem.value;
 
-									if (selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
+									if (selectedItem.returnType === STR_FILE_ENTRY_RETURN_TYPE ||
+										selectedItem.returnType === STR_UPLOADABLE_FILE_RETURN_TYPE) {
 										try {
-											imageSrc = JSON.parse(selectedItem.value).url;
+											var itemValue = JSON.parse(selectedItem.value);
+
+											imageSrc = editor.config.toolbar === 'creole' ? itemValue.title : itemValue.url;
 										}
 										catch (e) {
 										}
@@ -36,6 +41,8 @@
 											var el = CKEDITOR.dom.element.createFromHtml('<img src="' + imageSrc + '">');
 
 											editor.insertElement(el);
+
+											editor.setData(editor.getData());
 										}
 									}
 								}

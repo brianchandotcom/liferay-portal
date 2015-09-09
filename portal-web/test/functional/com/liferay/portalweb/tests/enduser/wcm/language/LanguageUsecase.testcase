@@ -44,18 +44,21 @@
 			<var name="localizedContent" value="WC Contenido" />
 			<var name="localizedLanguage" value="Spanish (Spain)" />
 			<var name="localizedTitle" value="WC Titulo" />
+			<var name="webContentTitle" value="WC Title" />
 		</execute>
 
 		<execute macro="WebContent#addTranslation">
 			<var name="localizedContent" value="WC Inhalt" />
 			<var name="localizedLanguage" value="German (Germany)" />
 			<var name="localizedTitle" value="WC Titel" />
+			<var name="webContentTitle" value="WC Titulo" />
 		</execute>
 
 		<execute macro="WebContent#addTranslation">
 			<var name="localizedContent" value="WC Pitoisuus" />
 			<var name="localizedLanguage" value="Finnish (Finland)" />
 			<var name="localizedTitle" value="WC Otsikko" />
+			<var name="webContentTitle" value="WC Titel" />
 		</execute>
 
 		<execute macro="WebContent#publish" />

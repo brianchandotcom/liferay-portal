@@ -26,6 +26,8 @@ import com.liferay.portal.util.bundle.portalimpl.TestAlwaysAllowDoAsUser;
 import com.liferay.portal.util.test.AtomicState;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 
+import java.io.InputStream;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.AfterClass;
@@ -83,9 +85,13 @@ public class PortalImplTest {
 			testGetUploadServletRequestShouldReturnUploadServletRequestImpl()
 		throws Exception {
 
+		InputStream inputStream = getClass().getResourceAsStream(
+			"/com/liferay/portal/util/dependencies/test.txt");
+
 		LiferayServletRequest liferayServletRequest =
 			PortletContainerTestUtil.mockLiferayServletRequest(
-				getClass(), "/com/liferay/portal/util/dependencies/test.txt");
+				"fileParameterName",
+				PortletContainerTestUtil.toByteArray(inputStream));
 
 		UploadServletRequest uploadServletRequest =
 			PortalUtil.getUploadServletRequest(

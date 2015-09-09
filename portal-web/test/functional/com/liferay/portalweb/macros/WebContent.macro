@@ -266,7 +266,7 @@
 		<if>
 			<isset var="localizedContent" />
 			<then>
-				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD_LOCALIZED" value1="${localizedContent}" />
+				<execute function="Type#typeCKEditor" locator1="CKEditor#BODY_FIELD_LOCALIZED" value1="${localizedContent}" />
 			</then>
 		</if>
 

@@ -26,12 +26,6 @@
 								'liferay-ddl-form-builder-layout-visitor'
 							]
 						},
-						'liferay-ddl-form-builder-field-support': {
-							path: 'form_builder_field_support.js',
-							requires: [
-								'aui-form-field'
-							]
-						},
 						'liferay-ddl-form-builder-layout-deserializer': {
 							path: 'form_layout_deserializer.js',
 							requires: [
@@ -53,6 +47,18 @@
 							requires: [
 								'aui-form-builder-field-list',
 								'aui-layout'
+							]
+						},
+						'liferay-ddl-form-builder-settings-form': {
+							path: 'form_builder_settings_form.js',
+							requires: [
+								'liferay-ddm-form-renderer'
+							]
+						},
+						'liferay-ddl-form-builder-settings-support': {
+							path: 'form_builder_settings_support.js',
+							requires: [
+								'liferay-ddl-form-builder-settings-form'
 							]
 						},
 						'liferay-ddl-form-builder-util': {

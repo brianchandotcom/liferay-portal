@@ -18,9 +18,8 @@ AUI.add(
 					},
 
 					fieldTypes: {
-						getter: function() {
-							return FieldTypes.getAll();
-						}
+						setter: '_setFieldTypes',
+						valueFn: '_valueFieldTypes'
 					},
 
 					layouts: {
@@ -187,6 +186,17 @@ AUI.add(
 						pages._uiSetActivePageNumber(pages.get('activePageNumber'));
 					},
 
+					_setFieldTypes: function(fieldTypes) {
+						var instance = this;
+
+						return AArray.filter(
+							fieldTypes,
+							function(item) {
+								return item.get('system') === false;
+							}
+						);
+					},
+
 					_valueDeserializer: function() {
 						var instance = this;
 
@@ -195,6 +205,12 @@ AUI.add(
 								definition: instance.get('definition')
 							}
 						);
+					},
+
+					_valueFieldTypes: function() {
+						var instance = this;
+
+						return FieldTypes.getAll();
 					},
 
 					_valueLayouts: function() {

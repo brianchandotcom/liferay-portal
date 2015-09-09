@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.security.auth.HttpPrincipal;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -30,6 +31,7 @@ import java.io.ObjectOutputStream;
 
 import java.lang.reflect.InvocationTargetException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,6 +41,18 @@ import javax.servlet.http.HttpServletResponse;
  * @author Brian Wing Shun Chan
  */
 public class TunnelServlet extends HttpServlet {
+
+	@Override
+	protected void doGet(
+		HttpServletRequest request, HttpServletResponse response)
+	throws IOException, ServletException {
+
+		IllegalArgumentException e = new IllegalArgumentException(
+			"method GET is not supported by this URL");
+
+		PortalUtil.sendError(
+			HttpServletResponse.SC_NOT_FOUND, e, request, response);
+	}
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)

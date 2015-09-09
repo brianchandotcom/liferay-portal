@@ -16,8 +16,8 @@ package com.liferay.layout.item.selector.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

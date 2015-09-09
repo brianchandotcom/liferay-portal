@@ -60,6 +60,7 @@ if (displayActivityCounterNameCount == 0) {
 						<div class="row-fields">
 							<liferay-util:include page="/add_activity_counter.jsp" servletContext="<%= application %>">
 								<liferay-util:param name="index" value="<%= String.valueOf(displayActivityCounterNameIndex) %>" />
+								<liferay-util:param name="portletResource" value="<%= portletName %>" />
 							</liferay-util:include>
 						</div>
 					</div>
@@ -76,7 +77,7 @@ if (displayActivityCounterNameCount == 0) {
 				{
 					contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
 					namespace: '<portlet:namespace />',
-					url: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcRenderCommandName" value="/portlet_configuration/add_user_statistics_activity_counter" /><liferay-portlet:param name="index" value="<%= String.valueOf(displayActivityCounterNameCount) %>" /></liferay-portlet:renderURL>'
+					url: '<liferay-portlet:renderURL portletName="<%= SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/add_activity_counter.jsp" /><liferay-portlet:param name="index" value="<%= String.valueOf(displayActivityCounterNameCount) %>" /><liferay-portlet:param name="portletResource" value="<%= portletName %>" /></liferay-portlet:renderURL>'
 				}
 			).render();
 		</aui:script>

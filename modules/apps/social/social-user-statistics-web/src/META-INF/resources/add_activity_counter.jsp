@@ -23,6 +23,10 @@ String displayActivityCounterName = "";
 
 int index = ParamUtil.getInteger(request, "index");
 
+String portletResource = ParamUtil.getString(request, "portletResource");
+
+String portletResourceNamespace = PortalUtil.getPortletNamespace(portletResource);
+
 String displayActivityCounterNames[] = socialUserStatisticsPortletInstanceConfiguration.displayActivityCounterName();
 
 if (index < displayActivityCounterNames.length) {
@@ -39,7 +43,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 %>
 
 <div class="field-row query-row">
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayActivityCounterName" + index + "--" %>' title="display-activity-counter-name">
+	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "preferences--displayActivityCounterName" + index + "--" %>' title="display-activity-counter-name" useNamespace="<%= false %>">
 
 		<%
 		for (String activityCounterName : activityCounterNames) {

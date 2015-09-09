@@ -38,6 +38,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Tuple" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityCounter" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityCounterConstants" %><%@
 page import="com.liferay.portlet.social.model.impl.SocialActivityCounterImpl" %><%@
@@ -45,6 +46,7 @@ page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServic
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
 page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %><%@
 page import="com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration" %><%@
+page import="com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@

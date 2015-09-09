@@ -27,6 +27,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.dynamic.data.lists.exception.RecordSetNameException" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.context.DDLFormAdminDisplayContext" %><%@
+page import="com.liferay.dynamic.data.lists.form.web.context.DDLFormViewEntriesDisplayContext" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.search.RecordSetDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.search.RecordSetSearch" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.util.DDLFormPortletUtil" %><%@
@@ -34,9 +35,12 @@ page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureDefinitionException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureLayoutException" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
+page import="com.liferay.dynamic.data.mapping.storage.DDMFormValues" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructureVersion" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
+page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocalizationUtil" %><%@
 page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@

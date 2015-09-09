@@ -18,11 +18,14 @@
 
 	.asset-content {
 		clear: right;
-		padding: 10px;
 
 		.lfr-preview-file-content {
 			border-bottom-width: 0;
 			height: auto;
+
+			.lfr-preview-file-image-current-column {
+				padding: 0;
+			}
 
 			.lfr-preview-file-image-container {
 				height: auto;
@@ -35,10 +38,6 @@
 	}
 
 	.asset-full-content {
-		.asset-content {
-			margin-right: 25px;
-		}
-
 		&.show-asset-title .asset-content {
 			margin-right: 10px;
 			overflow-x: auto;

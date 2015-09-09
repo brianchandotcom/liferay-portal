@@ -768,7 +768,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void select(String selectLocator, String optionLocator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.select(this, selectLocator, optionLocator);
 	}
 
 	@Override

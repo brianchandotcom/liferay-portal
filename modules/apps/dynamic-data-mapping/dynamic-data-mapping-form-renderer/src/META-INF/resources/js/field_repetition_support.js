@@ -24,6 +24,10 @@ AUI.add(
 
 			repeatedIndex: {
 				value: 0
+			},
+
+			repetitions: {
+				valueFn: '_valueRepetitions'
 			}
 		};
 
@@ -35,23 +39,15 @@ AUI.add(
 					instance._eventHandlers.push(
 						instance.after(instance.renderRepeatable, instance, 'render'),
 						instance.after('repeatedIndexChange', instance._afterRepeatableIndexChange),
-						instance.get('container').delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance)
+						instance.after('render', instance._afterRepeatableFieldRender)
 					);
-
-					instance.renderRepeatable();
 				}
 			},
 
 			getRepeatedSiblings: function() {
 				var instance = this;
 
-				var parent = instance.get('parent');
-
-				return parent.get('fields').filter(
-					function(item) {
-						return item.get('name') === instance.get('name');
-					}
-				);
+				return instance.get('repetitions');
 			},
 
 			remove: function() {
@@ -83,26 +79,31 @@ AUI.add(
 			repeat: function() {
 				var instance = this;
 
+				var container = instance.get('container');
 				var parent = instance.get('parent');
+				var repetitions = instance.get('repetitions');
 				var type = instance.get('type');
 
 				var fieldClass = Util.getFieldClass(type);
 
 				var field = new fieldClass(
 					{
-						container: instance._createContainer(),
 						label: instance.get('label'),
 						name: instance.get('name'),
 						parent: parent,
 						portletNamespace: instance.get('portletNamespace'),
 						repeatable: instance.get('repeatable'),
+						repeatedIndex: instance.getRepeatedSiblings().length,
+						repetitions: repetitions,
 						type: type
 					}
-				);
+				).render();
 
-				parent.insert(parent.indexOf(instance) + 1, field);
+				var index = repetitions.indexOf(instance) + 1;
 
-				instance.get('container').insert(field.get('container'), 'after');
+				repetitions.splice(index, 0, field);
+
+				container.insert(field.get('container'), 'after');
 
 				A.each(
 					instance.getRepeatedSiblings(),
@@ -118,6 +119,12 @@ AUI.add(
 				var container = instance.get('container');
 
 				container.one('.lfr-ddm-form-field-repeatable-delete-button').toggle(instance.get('repeatedIndex') > 0);
+			},
+
+			_afterRepeatableFieldRender: function() {
+				var instance = this;
+
+				instance.get('container').delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance);
 			},
 
 			_afterRepeatableIndexChange: function() {
@@ -147,6 +154,12 @@ AUI.add(
 				var repeatedSiblings = instance.getRepeatedSiblings();
 
 				field.set('repeatedIndex', repeatedSiblings.indexOf(field));
+			},
+
+			_valueRepetitions: function() {
+				var instance = this;
+
+				return [instance];
 			}
 		};
 

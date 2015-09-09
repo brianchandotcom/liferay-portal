@@ -666,43 +666,12 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getSelectedLabel(String selectLocator, String timeout) {
-		try {
-			WebElement selectLocatorWebElement = getWebElement(
-				selectLocator, timeout);
-
-			Select select = new Select(selectLocatorWebElement);
-
-			WebElement firstSelectedOptionWebElement =
-				select.getFirstSelectedOption();
-
-			return firstSelectedOptionWebElement.getText();
-		}
-		catch (Exception e) {
-			return null;
-		}
+		return WebDriverHelper.getSelectedLabel(this, selectLocator, timeout);
 	}
 
 	@Override
 	public String[] getSelectedLabels(String selectLocator) {
-		WebElement selectLocatorWebElement = getWebElement(selectLocator);
-
-		Select select = new Select(selectLocatorWebElement);
-
-		List<WebElement> allSelectedOptionsWebElements =
-			select.getAllSelectedOptions();
-
-		String[] selectedOptionsWebElements =
-			new String[allSelectedOptionsWebElements.size()];
-
-		for (int i = 0; i < allSelectedOptionsWebElements.size(); i++) {
-			WebElement webElement = allSelectedOptionsWebElements.get(i);
-
-			if (webElement != null) {
-				selectedOptionsWebElements[i] = webElement.getText();
-			}
-		}
-
-		return selectedOptionsWebElements;
+		return WebDriverHelper.getSelectedLabels(this, selectLocator);
 	}
 
 	@Override

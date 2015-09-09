@@ -408,16 +408,16 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getSelectedLabel(String selectLocator) {
-		throw new UnsupportedOperationException();
+		return getSelectedLabel(selectLocator, null);
 	}
 
 	public String getSelectedLabel(String selectLocator, String timeout) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getSelectedLabel(this, selectLocator, timeout);
 	}
 
 	@Override
 	public String[] getSelectedLabels(String selectLocator) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getSelectedLabels(this, selectLocator);
 	}
 
 	@Override

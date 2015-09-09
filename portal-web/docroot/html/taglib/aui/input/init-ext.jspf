@@ -23,15 +23,7 @@ String baseType = GetterUtil.getString((String)request.getAttribute("aui:input:b
 String forLabel = namespace + GetterUtil.getString((String)request.getAttribute("aui:input:forLabel"));
 
 if (Validator.isNull(label) && changesContext) {
-	StringBundler sb = new StringBundler(5);
-
-	sb.append(LanguageUtil.get(request, title));
-	sb.append(StringPool.SPACE);
-	sb.append(StringPool.OPEN_PARENTHESIS);
-	sb.append(LanguageUtil.get(request, "changing-the-value-of-this-field-reloads-the-page"));
-	sb.append(StringPool.CLOSE_PARENTHESIS);
-
-	title = sb.toString();
+	title = StringUtil.appendParentheticalSuffix(LanguageUtil.get(request, title), LanguageUtil.get(request, "changing-the-value-of-this-field-reloads-the-page"));
 }
 else if (Validator.isNotNull(title)) {
 	title = LanguageUtil.get(request, title);

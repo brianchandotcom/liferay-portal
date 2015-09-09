@@ -128,15 +128,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									}
 
 									if (showPublicSiteStaging) {
-										StringBundler sb = new StringBundler(5);
-
-										sb.append(HtmlUtil.escape(siteName));
-										sb.append(StringPool.SPACE);
-										sb.append(StringPool.OPEN_PARENTHESIS);
-										sb.append(LanguageUtil.get(request, "staging"));
-										sb.append(StringPool.CLOSE_PARENTHESIS);
-
-										siteName = sb.toString();
+										siteName = StringUtil.appendParentheticalSuffix(siteName, LanguageUtil.get(request, "staging"));
 									}
 
 									if ((mySiteGroup.getPrivateLayoutsPageCount() > 0) || showPrivateSiteStaging) {
@@ -177,15 +169,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 									}
 
 									if (showPrivateSiteStaging) {
-										StringBundler sb = new StringBundler(5);
-
-										sb.append(siteName);
-										sb.append(StringPool.SPACE);
-										sb.append(StringPool.OPEN_PARENTHESIS);
-										sb.append(LanguageUtil.get(request, "staging"));
-										sb.append(StringPool.CLOSE_PARENTHESIS);
-
-										siteName = sb.toString();
+										siteName = StringUtil.appendParentheticalSuffix(siteName, LanguageUtil.get(request, "staging"));
 									}
 
 									if ((mySiteGroup.getPublicLayoutsPageCount() > 0) || showPublicSiteStaging) {

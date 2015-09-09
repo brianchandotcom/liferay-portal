@@ -438,7 +438,7 @@
 		</execute>
 
 		<execute macro="DMDocumentComment#addPG">
-			<var name="commentBody" value="The is comment #2" />
+			<var name="commentBody" value="This is comment #2" />
 			<var name="dmDocumentTitle" value="Zero Document File" />
 		</execute>
 
@@ -464,7 +464,7 @@
 		</execute>
 
 		<execute macro="DMDocumentComment#viewPG">
-			<var name="commentBody" value="The is comment #2" />
+			<var name="commentBody" value="This is comment #2" />
 			<var name="dmDocumentTitle" value="Zero Document File" />
 		</execute>
 	</command>

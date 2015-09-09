@@ -1,0 +1,557 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.10/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.10/ http://www.mediawiki.org/xml/export-0.10.xsd" version="0.10" xml:lang="en">
+<siteinfo>
+	<sitename>Wikipedia</sitename>
+	<dbname>enwiki</dbname>
+	<base>https://en.wikipedia.org/wiki/Main_Page</base>
+	<generator>MediaWiki 1.26wmf21</generator>
+	<case>first-letter</case>
+	<namespaces>
+	  <namespace key="-2" case="first-letter">Media</namespace>
+	  <namespace key="-1" case="first-letter">Special</namespace>
+	  <namespace key="0" case="first-letter" />
+	  <namespace key="1" case="first-letter">Talk</namespace>
+	  <namespace key="2" case="first-letter">User</namespace>
+	  <namespace key="3" case="first-letter">User talk</namespace>
+	  <namespace key="4" case="first-letter">Wikipedia</namespace>
+	  <namespace key="5" case="first-letter">Wikipedia talk</namespace>
+	  <namespace key="6" case="first-letter">File</namespace>
+	  <namespace key="7" case="first-letter">File talk</namespace>
+	  <namespace key="8" case="first-letter">MediaWiki</namespace>
+	  <namespace key="9" case="first-letter">MediaWiki talk</namespace>
+	  <namespace key="10" case="first-letter">Template</namespace>
+	  <namespace key="11" case="first-letter">Template talk</namespace>
+	  <namespace key="12" case="first-letter">Help</namespace>
+	  <namespace key="13" case="first-letter">Help talk</namespace>
+	  <namespace key="14" case="first-letter">Category</namespace>
+	  <namespace key="15" case="first-letter">Category talk</namespace>
+	  <namespace key="100" case="first-letter">Portal</namespace>
+	  <namespace key="101" case="first-letter">Portal talk</namespace>
+	  <namespace key="108" case="first-letter">Book</namespace>
+	  <namespace key="109" case="first-letter">Book talk</namespace>
+	  <namespace key="118" case="first-letter">Draft</namespace>
+	  <namespace key="119" case="first-letter">Draft talk</namespace>
+	  <namespace key="446" case="first-letter">Education Program</namespace>
+	  <namespace key="447" case="first-letter">Education Program talk</namespace>
+	  <namespace key="710" case="first-letter">TimedText</namespace>
+	  <namespace key="711" case="first-letter">TimedText talk</namespace>
+	  <namespace key="828" case="first-letter">Module</namespace>
+	  <namespace key="829" case="first-letter">Module talk</namespace>
+	  <namespace key="2300" case="first-letter">Gadget</namespace>
+	  <namespace key="2301" case="first-letter">Gadget talk</namespace>
+	  <namespace key="2302" case="case-sensitive">Gadget definition</namespace>
+	  <namespace key="2303" case="case-sensitive">Gadget definition talk</namespace>
+	  <namespace key="2600" case="first-letter">Topic</namespace>
+	</namespaces>
+</siteinfo>
+<page>
+	<title>[;Li:fe|ra%y&lt;&gt;]</title>
+	<ns>0</ns>
+	<id>12584512</id>
+	<revision>
+	  <id>679070827</id>
+	  <parentid>669051450</parentid>
+	  <timestamp>2015-09-02T08:20:29Z</timestamp>
+	  <contributor>
+		<username>Syced</username>
+		<id>223682</id>
+	  </contributor>
+	  <comment>Lead must explain why the the topic is notable. Java is internal information, so pushed a bit further away. List of sub-products not needed in the lead</comment>
+	  <model>wikitext</model>
+	  <format>text/x-wiki</format>
+	  <text xml:space="preserve" bytes="19064">{{Infobox software
+| logo                   = Liferaylogo.png
+| logo size              = 120px
+| screenshot             = LiferayHomePage.png
+| developer              = Liferay Inc
+| status                 = Active
+| latest release version = 6.2.3 (6.2 GA4)
+| latest release date    = {{release date|2015|04|17}}
+| operating system       = [[Cross-platform]]
+| size                   =
+| programming language   = [[Java (programming language)|Java]]
+| genre                  = [[Enterprise portal]], [[content management framework]], [[content management system]], [[community]]
+| license                = [[GNU Lesser General Public License|LGPL License]] [http://www.liferay.com/web/bryan.cheung/blog/-/blogs/liferay-adopting-the-lgpl-license]  and proprietary&lt;ref name=&quot;liferay&quot;&gt;{{cite web |url=http://www.liferay.com/community/forums/-/message_boards/message/4882318 |title=Liferay 6.0 CE vs. EE licensing question |work=www.liferay.com |accessdate=2012-01-04 }}&lt;/ref&gt;
+| website                = http://www.liferay.com
+| changelog              = [http://issues.liferay.com/secure/ReleaseNote.jspa?version=10656&amp;styleName=Html&amp;projectId=10952 changelog]
+}}
+
+'''Liferay Portal''' is a [[free and open source software|free and open source]] [[enterprise portal]] software product. Distributed under the [[GNU LGPL|GNU Lesser General Public License]]&lt;ref&gt;{{cite web
+|url=http://www.liferay.com/web/bryan.cheung/blog/-/blogs/liferay-adopting-the-lgpl-license |title=Liferay Adopting the LGPL License |work=www.liferay.com |accessdate=2010-09-04 }}&lt;/ref&gt; and optional commercial license,&lt;ref name=&quot;liferay&quot; /&gt; Liferay has been declared &quot;Best Open Source Portal&quot; by InfoWorld in 2007.&lt;ref&gt;http://www.infoworld.com/article/2659795/computer-hardware/2007-technology-of-the-year-award-winners.html&lt;/ref&gt; It is primarily used to power corporate [[intranet]]s and [[extranet]]s.&lt;ref name=&quot;:0&quot;&gt;http://www.cmswire.com/cms/customer-experience/gartners-magic-quadrant-for-horizontal-portals-oracle-ibm-microsoft-sap-liferay-top-dogs-017717.php&lt;/ref&gt;
+
+Written in [[Java]], Liferay Portal is a web platform with features commonly required for the development of websites and portals. Liferay includes a built-in web content management system allowing users to build websites and portals as an assembly of themes, pages, [[portlets]]/gadgets and a common navigation.&lt;ref&gt;{{cite web |url=http://www.liferay.com/community/wiki/-/wiki/Main/Portlets |title=List of Liferay Portlets |work=www.liferay.com |accessdate=2010-09-04 }}&lt;/ref&gt; Liferay is sometimes described as a [[content management framework]] or a [[web application framework]]. Liferay's support for plugins extends into multiple programming languages, including support for [[PHP]] and [[Ruby (programming language)|Ruby]] portlets.&lt;ref&gt;{{cite web |url=http://www.liferay.com/community/wiki/-/wiki/Main/PHP+Portlets |title=Liferay PHP Portlets |work=www.liferay.com |accessdate=2010-09-04 }}&lt;/ref&gt;
+
+Although Liferay offers a sophisticated programming interface for developers, no programming skills are required for basic website installation and administration.
+
+Liferay Portal is Java-based and runs on any [[computing platform]] capable of running the [[Java Runtime Environment]] and an [[application server]]. Liferay is available bundled with a servlet container such as [[Apache Tomcat]].&lt;ref&gt;{{cite web |url=http://www.liferay.com/products/liferay-portal/overview |title=Liferay Portal |work=www.liferay.com |accessdate=2010-09-04 }}&lt;/ref&gt;
+
+== History ==
+
+'''Liferay, Inc.''', is a [[professional open-source]] company that provides free documentation and paid professional service to users of its software. Mainly focused on [[enterprise portal]] technology, the company has its headquarters in [[Diamond Bar]], [[California]], [[United States]].
+
+Liferay Portal was created in 2000 by [[chief software architect]] Brian Chan to provide an [[enterprise portal]] solution for [[non-profit organizations]].&lt;ref&gt;{{cite news |last=Howard |first=Phil |title=Liferay after Plumtree: Pure play portals alive and kicking |publisher=Reg Developer |date=October 18, 2005 |url=http://www.regdeveloper.co.uk/2005/10/18/pure_play_portal_alive_and_kicking/ }}&lt;/ref&gt; In 2004, the company was incorporated under the name Liferay, Inc. and formalized its [[Germany]] subsidiary Liferay GmbH.  In 2007, the company opened new [[Asia]]n headquarters in [[Dalian]], [[China]], and the [[Spain|Spanish]] subsidiary Liferay SL. In March 2009, the company opened a new office in [[Bangalore]], [[India]]. To date there are 18 offices in 15 countries worldwide with a partner network of 110+ in 40 countries.
+
+The company's [[enterprise portal]] product has been acknowledged by several notable organizations. It was recognized by EContent magazine in its &quot;EContent 100&quot; list of industry leaders&lt;ref&gt;{{cite news |title = Liferay Breaks Into EContent Magazine's &quot;EContent 100&quot; Of Industry Leaders | date = November 20, 2006 | url = http://findarticles.com/p/articles/mi_m0EIN/is_2006_Nov_20/ai_n16853170 | work=Business Wire}}&lt;/ref&gt;&lt;ref&gt;{{cite web | url = http://www.econtentmag.com/Articles/ArticleReader.aspx?ArticleID=18642&amp;IssueID=380&amp;PageNum=3 | title = 2006 EContent 100 List | publisher = EContent Magazine |date=December 2006}}&lt;/ref&gt; and in 2007, [[InfoWorld]] named it a &quot;Technology of the Year&quot;.&lt;ref&gt;{{cite web |  title = 2007 Technology of the Year Awards: Applications
+| publisher = InfoWorld | date = January 1, 2007 | url =http://www.infoworld.com/slideshow/2007/01/26-2007_technology-5.html }}&lt;/ref&gt; In July 2007, it announced a partnership with ICEsoft Technologies, provider of the [[ICEfaces]] library, for developing [[Ajax (programming)|Ajax]] technology for its [[enterprise portal]] software.&lt;ref&gt;{{cite web | title = Liferay and ICEfaces Announce Ajax Portal Technology Partnership | date = August 3, 2007 | url=http://home.businesswire.com/portal/site/google/index.jsp?ndmViewId=news_view&amp;newsId=20070723005871&amp;newsLang=en }}&lt;/ref&gt;  In January 2008, the company hired the lead engineer for [[jQuery]] UI, to exclusively work full-time on the [[JavaScript library]].&lt;ref&gt;{{cite web | url=http://blog.jquery.com/2008/01/23/jquery-ui-and-beyond-the-jquery-liferay-partnership/| title= jQuery UI and beyond: The jQuery-Liferay partnership|last=Bakaus|first=Paul|date=January 23, 2008}}&lt;/ref&gt; Gartner recognized Liferay as visionary leader in the [[Magic Quadrant]] for Horizontal Portal Products in 2008, 2010, 2011, 2012 and 2013.&lt;ref name=&quot;:0&quot; /&gt;&lt;ref&gt;{{cite web |url=http://www.liferay.com/home/-/blogs/4077289/maximized |title=PRESS RELEASE: Liferay Named a Visionary in Gartner’s Magic Quadrant |last1=Cheng |first1=Alice |date=2009-09-29 |publisher=www.liferay.com |accessdate=2013-02-18}}&lt;/ref&gt;Most recently in the Gartner 2014 report, Liferay out performed SAP, Oracle and Microsoft Sharepoint to become the leading open source product in its class. Liferay offers different levels of partnership across various geographies for its global SI partners which includes Platinum, Gold and Silver Liferay Service Partners.&lt;ref&gt; http://www.liferay.com/partners/service-partners&lt;/ref&gt;
+
+[[Sun Microsystems]] and Liferay signed a technology-sharing agreement during May 2008.&lt;ref&gt;{{cite web | url=http://www.liferay.com/web/guest/news/latest/-/blogs/1403796?_33_redirect=%2Fweb%2Fguest%2Fnews%2Flatest%3Fp_p_id%3D33%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_p_col_id%3Dcolumn-3%26p_p_col_count%3D1%26_33_struts_action%3D%252Fblogs%252Fview%26_33_delta%3D10%26_33_keywords%3D%26_33_advancedSearch%3Dfalse%26_33_andOperator%3Dtrue%26cur%3D3
+|title=Press Release: Sun Joins Liferay Open Source Community|date=May 2008}}&lt;/ref&gt; Sun Microsystems rebranded the offering [[GlassFish]] Web Space Server. ZDNet further describes the relationship in the May 2008 article ''Sun and Liferay launch web-presentation platform''.&lt;ref&gt;{{cite web | url=http://news.zdnet.co.uk/software/0,1000000121,39412974,00.htm
+|title=Sun and Liferay launch web-presentation platform|date=May 2008}}&lt;/ref&gt; In 2010 Sun was acquired by [[Oracle Corporation|Oracle]]&lt;ref&gt;{{cite web | url=http://news.cnet.com/8301-30685_3-20000019-264.html
+|title=Oracle buys Sun, becomes hardware company|date=January 27, 2010&lt;!-- 6:55 AM PST--&gt;}}&lt;/ref&gt; and the GlassFish Web Space Server was not included in their portal roadmap, with all prospects turned over to Liferay, Inc.
+
+Liferay 6.1 was released in January 2012 and saw several improvements and new functionality including an improved document library, dynamic data lists and an app store.&lt;ref&gt;http://www.liferay.com/marketplace&lt;/ref&gt;
+
+In April 2013, Liferay partnered with [[TIBCO Software]] to offer a series of Liferay enterprise Connectivity Adapters (eC Adapters) that use TIBCO ActiveMatrix BusinessWorks with the intention of easing integration of Liferay Portal with multiple systems.&lt;ref&gt;{{cite web |url=http://www.cmswire.com/cms/information-management/enterprise-portal-liferay-partners-with-tibco-software-for-lower-cost-backend-integration-020698.php |title=Enterprise Portal Liferay Partners with TIBCO Software for Lower Cost Back-End Integration |work=www.cmswire.com |accessdate=2013-04-30 }}&lt;/ref&gt;
+
+== Products ==
+Liferay Portal is a [[JSR-286]], [[JSR-168]]  and [[enterprise portal]] which includes a suite of applications (e.g., [[content management system]], [[blogs]], [[instant messaging]], [[message boards]], etc.)&lt;ref&gt;https://www.liferay.com/products/liferay-portal/overview&lt;/ref&gt;
+
+It is distributed in two different editions:
+* '''Liferay Portal Community Edition''' — A version with the latest features and support through the active community.
+* '''Liferay Portal Enterprise Edition''' — A commercial offering that includes services including updates and full support. This release goes through additional quality assurance cycles and is usually available around 1 or 2 months after the Community Edition and comes under a subscription.&lt;ref&gt;https://www.liferay.com/community/releases&lt;/ref&gt;
+
+Liferay also provides a collaboration suite based on the Liferay platform:
+* '''Liferay Social Office''' — A social collaboration suite for enterprises.
+Additional Liferay products and projects include:
+* '''Liferay Sync '''— Enables Liferay Portal users to publish and access documents and files from multiple environments, including Windows and Mac OS desktops, and iOS and Android-based mobile platforms.
+* '''AlloyUI''' — A UI framework for building web applications.
+* '''Liferay Faces''' — An umbrella project that provides support for the [[JavaServer Faces]] (JSF) standard within Liferay Portal.
+* '''Liferay IDE''' — Set of [[Eclipse (software)|Eclipse]] plugins for development with the Liferay Portal platform.
+* '''Liferay Marketplace '''—''' '''Liferay's public apps repository.
+
+== Core portlets ==
+
+Liferay comes with certain portlets preinstalled.&lt;ref&gt;{{cite web | url=http://www.liferay.com/community/wiki/-/wiki/Main/Liferay+Portlets |title=List of Core Liferay Portlets}}&lt;/ref&gt; These comprise the core functionality of the portal system. They include:
+
+* Alerts and Announcements
+* [[Alfresco (software)|Alfresco]], [[Documentum]], and other document library integration
+* Asset Publishing
+* Blogs and blog aggregation
+* Breadcrumbs
+* Calendar
+* Chat
+* Document and Image management
+* Document Library Manager, Recent Documents
+* Knowledge Base
+* [[LDAP]] Integration
+* Mail
+* Message Boards
+* Nested Portlets
+* Page Ratings &amp; Flags
+* Polls
+* Site Map
+* Site Navigation
+* Social Equity
+* Software Catalog
+* Tags and Categories
+* Themes, supporting [[Apache Velocity|Velocity]] and [[FreeMarker]] markup
+* User Directory
+* Web Content
+* Web Form Builder
+* [[WebDAV]] Integration
+* Website Tool
+* Wiki (supports [[Creole (markup)|Creole]] as well as [[MediaWiki]] syntax)
+
+== Version release ==
+{| class=&quot;wikitable sortable&quot;  style=&quot;margin:auto; text-align:left; width:auto;&quot;
+|-
+! Version
+! Name
+! Edition
+! Date
+! Downloads
+|-
+! {{rh}} | 6.2.3 GA4
+| Newton
+| Community Edition
+| 2015-04-17
+| ~
+|-
+! {{rh}} | 6.2.2 GA3
+| Newton
+| Community Edition
+| 2015-01-15
+| ~
+|-
+! {{rh}} | 6.2.1 GA2
+| Newton
+| Community Edition
+| 2014-02-28
+| ~
+|-
+! {{rh}} | 6.2.10 GA1
+| Newton
+| Enterprise Edition
+| 2013-12-3
+| unknown
+|-
+! {{rh}} | 6.2.0 GA1
+| Newton
+| Community Edition
+| 2013-11-01
+| ~
+|-
+! {{rh}} | 6.1.2 GA3
+| Paton
+| Community Edition
+| 2013-08-23
+| 42.000+
+|-
+! {{rh}} | 6.1.30 GA3
+| Paton
+| Enterprise Edition
+| 2013-08-16
+| unknown
+|-
+! {{rh}} | 6.1.1 GA2
+| Paton
+| Community Edition
+| 2012-07-31
+| 336.614+
+|-
+! {{rh}} | 6.1.20 GA2
+| Paton
+| Enterprise Edition
+| 2012-07-31
+| unknown
+|-
+! {{rh}} | 6.1.10 GA1
+| Paton
+| Enterprise Edition
+| 2012-02-15
+| unknown
+|-
+! {{rh}} | 6.1.0 GA1
+| Paton
+| Community Edition
+| 2012-01-01
+| 265.718
+|-
+! {{rh}} | 6.0.12 SP2
+| Bunyan
+| Enterprise Edition
+| 2011-11-07
+| unknown
+|-
+! {{rh}} | 6.0.6
+| Bunyan
+| Community Edition
+| 2011-03-04
+| 376.812
+|-
+! {{rh}} | 6.0.11 SP1
+| Bunyan
+| Enterprise Edition
+| 2011-01-13
+| unknown
+|-
+! {{rh}} | 5.2 SP5
+| Augustine
+| Enterprise Edition
+| 2010-10-20
+| unknown
+|-
+! {{rh}} | 6.0.10
+| Bunyan
+| Enterprise Edition
+| 2010-09-10
+| unknown
+|-
+! {{rh}} | 6.0.5
+| Bunyan
+| Community Edition
+| 2010-08-16
+| 300.560
+|-
+! {{rh}} | 6.0.4
+| Bunyan
+| Community Edition
+| 2010-07-23
+| 34.209
+|-
+! {{rh}} | 6.0.3
+| Bunyan
+| Community Edition
+| 2010-07-20
+| 16.263
+|-
+! {{rh}} | 6.0.2
+| Bunyan
+| Community Edition
+| 2010-06-08
+| 34.436
+|-
+! {{rh}} | 5.2 SP4
+| Augustine
+| Enterprise Edition
+| 2010-05-19
+| unknown
+|-
+! {{rh}} | 6.0.1
+| Bunyan
+| Community Edition
+| 2010-04-20
+| 27.565
+|-
+! {{rh}} | 5.1 SP5
+| Calvin
+| Enterprise Edition
+| 2010-03-12
+| unknown
+|-
+! {{rh}} | 6.0.0
+| Bunyan
+| Community Edition
+| 2010-03-04
+| 16.231
+|-
+! {{rh}} | 5.2 SP3
+| Augustine
+| Enterprise Edition
+| 2010-01-07
+| unknown
+|-
+! {{rh}} | 5.2 SP2
+| Augustine
+| Enterprise Edition
+| 2009-11-17
+| unknown
+|-
+! {{rh}} | 5.1 SP4
+| Calvin
+| Enterprise Edition
+| 2009-10-23
+| unknown
+|-
+! {{rh}} | 5.2 SP1
+| Augustine
+| Enterprise Edition
+| 2009-08-07
+| unknown
+|-
+! {{rh}} | 5.1 SP3
+| Calvin
+| Enterprise Edition
+| 2009-07-20
+| unknown
+|-
+! {{rh}} | 5.2
+| Augustine
+| Enterprise Edition
+| 2009-06-01
+| unknown
+|-
+! {{rh}} | 5.2.3
+| Augustine
+| Community Edition
+| 2009-05-12
+| 427.726
+|-
+! {{rh}} | 5.1 SP2
+| Calvin
+| Enterprise Edition
+| 2009-05-12
+| unknown
+|-
+! {{rh}} | 5.2.2
+| Augustine
+| Community Edition
+| 2009-02-26
+| 102.367
+|-
+! {{rh}} | 5.1 SP1
+| Calvin
+| Enterprise Edition
+| 2009-02-18
+| unknown
+|-
+! {{rh}} | 5.2.1
+| Augustine
+| Community Edition
+| 2009-02-03
+| 42.720
+|-
+! {{rh}} | 5.2.0
+| Augustine
+| Community Edition
+| 2009-01-26
+| 7.143
+|-
+! {{rh}} | 5.1 SP
+| Calvin
+| Enterprise Edition
+| 2008-12-16
+| unknown
+|-
+! {{rh}} | 5.1.2
+| Calvin
+| Community Edition
+| 2008-10-03
+| 178.934
+|-
+! {{rh}} | 5.1.1
+| Calvin
+| Community Edition
+| 2008-08-11
+| 84.246
+|-
+! {{rh}} | 5.1.0
+| Calvin
+| Community Edition
+| 2008-07-17
+|31.761
+|-
+! {{rh}} | 5.0.1 RC
+| Luther
+| Community Edition
+| 2008-04-14
+| 101.543
+|-
+! {{rh}} | 5.0.0 RC
+| Luther
+| Community Edition
+| 2008-04-09
+| 10.704
+|-
+|}
+
+== See also ==
+{{Portal|Free software}}
+* [[JSR-286]]
+* [[List of enterprise portal vendors]]
+
+==References==
+{{Reflist}}
+
+==Further reading==
+{{refbegin}}
+
+2008
+*{{Cite book
+| first1    = Richard
+| last1     = Sezov
+| date      = September 9, 2008
+| title     = Liferay Administrator's Guide
+| edition   = 2nd
+| publisher = [[Liferay Press]]
+| pages     = 276
+| isbn      = 0-615-24733-4
+| url       = http://www.liferay.com/web/guest/community/documentation/5_1
+}}
+*{{Cite book
+| first1    = Jonas X
+| last1     = Yuan
+| date      = January, 2008-2012
+| title     = Several Liferay Portal Books
+| publisher = [[Packt Publishing]]
+| url       = http://www.packtpub.com/books?keys=Liferay
+}}
+2009
+*{{Cite book
+| first1    = Poornachandra
+| last1     = Sarang
+| date      = April 30, 2009
+| title     = Practical Liferay: Java–based Portal Applications Development
+| edition   = 1st
+| publisher = [[Apress]]
+| pages     = 384
+| isbn      = 1-4302-1847-9
+| url       = http://www.apress.com/book/view/9781430218470
+}}
+2011
+*{{Cite book
+| first1    = Richard
+| last1     = Sezov
+| date      = September 10, 2011
+| title     = Liferay in Action
+| edition   = 1st
+| publisher = [[Manning Publication]]
+| pages     = 376
+| isbn      = 9781935182825
+}}
+*{{Cite book
+| last1     = Robert Chen, Sandeep Nair, Samir Bhatt, Mahipalsinh Rana, Gaurav Barot
+| date      = December 2011
+| title     = Liferay Beginners Guide
+| edition   = 1st
+| publisher = [[Manning Publishing]]
+| pages     = 546
+| isbn      = 9781849517003
+| url       = http://www.packtpub.com/build-deploy-maintain-liferay-portal-beginners-guide/book
+}}
+2012
+*{{Cite book
+| first1    = Jonas X
+| last1     = Yuan
+| date      = January 2012
+| title     = Liferay Portal Systems Development
+| edition   = 1st
+| publisher = [[Packt Publishing]]
+| pages     = 546
+| isbn      = 9781849515986
+| url       = http://www.packtpub.com/liferay-portal-systems-development/book
+}}
+2013
+*{{Cite book
+| first1    = Sandeep
+| last1     = Nair
+| date      = March 2013
+| title     = Liferay Portal 6 Starter
+| edition   = 1st
+| publisher = [[Packt Publishing]]
+| pages     = 54
+| isbn      = 9781782169666
+| url       = http://www.packtpub.com/liferay-portal-6-starter/book
+}}
+
+*{{Cite book
+| first1    = Richard
+| last1     = Sezov
+| date      = May 10, 2013
+| title     = Using Liferay Portal 6.1
+| edition   = 1st
+| publisher = [[Liferay Press]]
+| pages     = 683
+| isbn      = 978-0-578-12351-6}}
+&lt;!-- blacklisted | url=http://www.lulu.com/shop/rich-sezov/using-liferay-portal-61/paperback/product-21014853.html
+|deadurl=no |accessdate=25 September 2013--&gt;
+
+*{{Cite book
+| first1    = Richard
+| last1     = Sezov
+| date      = May 10, 2013
+| title     = Using Liferay Portal 6.1 - User Guide
+| edition   = 1st
+| publisher = [[Liferay Press]]
+| pages     = 683
+| isbn      = 978-0-578-12351-6
+| url       = http://www.liferay.com/documentation/liferay-portal/6.1/user-guide
+|deadurl=no |accessdate=25 September 2013}}
+
+*{{Cite book
+| first1    = Samir
+| last1     = Bhatt
+| date      = June 2013
+| title     = Liferay Portal performance best practices
+| edition   = 1st
+| publisher = [[Packt Publishing]]
+| pages     = 54
+| isbn      = 9781782169666
+| url       = http://www.packtpub.com/liferay-portal-performance-best-practices/book
+}}
+
+
+{{refend}}
+
+==External links==
+{{Commons category|{{#property:P373}}}}
+* {{Official website|http://www.liferay.com/}}
+*{{cite news | last = Gasperson | first = Tina | title = Goodwill is good with open source portal Liferay | publisher = Linux.com | date = September 13, 2006 | url = http://www.linux.com/articles/56972 }}
+*{{cite news | last = Heck | first = Mike | title = Jboss and Liferay provide open portals to SOA | publisher = InfoWorld | date = May 5, 2006 | url = http://www.infoworld.com/article/06/05/05/77788_19TCportals_1.html }}
+
+[[Category:Information technology companies of the United States]]
+[[Category:Companies based in Los Angeles, California]]
+[[Category:Portal software]]</text>
+	  <sha1>pxf5yjea1vihns91ofdjiawgnv4al0q</sha1>
+	</revision>
+</page>
+</mediawiki>

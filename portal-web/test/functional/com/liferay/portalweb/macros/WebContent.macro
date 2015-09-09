@@ -243,7 +243,7 @@
 	<command name="addTranslation">
 		<var name="key_localizedLanguage" value="${localizedLanguage}" />
 
-		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
+		<execute function="AssertTextEquals" locator1="TextInput#TITLE" value1="${webContentTitle}" />
 		<execute function="AssertClick" locator1="CPWebcontentEditwebcontent#ADD_TRANSLATION" value1="Add Translation" />
 		<execute function="AssertClick" locator1="Translation#ADD_MENULIST_LANGUAGE" value1="${localizedLanguage}" />
 		<execute function="AssertClick" locator1="CPWebcontentEditwebcontent#AVAILABLE_TRANSLATION" value1="${localizedLanguage}" />
@@ -252,7 +252,7 @@
 			<isset var="localizedTitle" />
 			<then>
 				<execute function="Click" locator1="Translation#TITLE" />
-				<execute function="Type#mouseOverFocusType" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${localizedTitle}" />
+				<execute function="Type#mouseOverFocusType" locator1="TextInput#TITLE" value1="${localizedTitle}" />
 			</then>
 		</if>
 
@@ -266,7 +266,7 @@
 		<if>
 			<isset var="localizedContent" />
 			<then>
-				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CPWebcontentEditwebcontent#CONTENT_FIELD" value1="${localizedContent}" />
+				<execute function="Type#typeCKEditorWaitForCKEditor" locator1="CKEditor#BODY_FIELD_LOCALIZED" value1="${localizedContent}" />
 			</then>
 		</if>
 

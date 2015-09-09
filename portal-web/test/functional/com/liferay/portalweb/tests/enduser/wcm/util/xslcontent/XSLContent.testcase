@@ -86,7 +86,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -106,7 +106,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 
@@ -192,7 +192,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -212,7 +212,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 
@@ -286,7 +286,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -306,7 +306,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 
@@ -378,7 +378,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -398,7 +398,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 

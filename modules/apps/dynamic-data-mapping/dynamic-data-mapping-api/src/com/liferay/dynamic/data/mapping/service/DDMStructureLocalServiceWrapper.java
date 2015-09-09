@@ -1103,10 +1103,10 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> search(
 		long companyId, long[] groupIds, long classNameId,
-		java.lang.String keywords, int start, int end,
+		java.lang.String keywords, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator) {
 		return _ddmStructureLocalService.search(companyId, groupIds,
-			classNameId, keywords, start, end, orderByComparator);
+			classNameId, keywords, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -1145,12 +1145,12 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> search(
 		long companyId, long[] groupIds, long classNameId,
 		java.lang.String name, java.lang.String description,
-		java.lang.String storageType, int type, boolean andOperator, int start,
-		int end,
+		java.lang.String storageType, int type, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator) {
 		return _ddmStructureLocalService.search(companyId, groupIds,
-			classNameId, name, description, storageType, type, andOperator,
-			start, end, orderByComparator);
+			classNameId, name, description, storageType, type, status,
+			andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -1167,9 +1167,9 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	*/
 	@Override
 	public int searchCount(long companyId, long[] groupIds, long classNameId,
-		java.lang.String keywords) {
+		java.lang.String keywords, int status) {
 		return _ddmStructureLocalService.searchCount(companyId, groupIds,
-			classNameId, keywords);
+			classNameId, keywords, status);
 	}
 
 	/**
@@ -1192,9 +1192,10 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	@Override
 	public int searchCount(long companyId, long[] groupIds, long classNameId,
 		java.lang.String name, java.lang.String description,
-		java.lang.String storageType, int type, boolean andOperator) {
+		java.lang.String storageType, int type, int status, boolean andOperator) {
 		return _ddmStructureLocalService.searchCount(companyId, groupIds,
-			classNameId, name, description, storageType, type, andOperator);
+			classNameId, name, description, storageType, type, status,
+			andOperator);
 	}
 
 	/**

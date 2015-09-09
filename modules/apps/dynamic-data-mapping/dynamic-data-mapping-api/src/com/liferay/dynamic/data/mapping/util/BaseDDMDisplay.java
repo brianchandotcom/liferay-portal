@@ -293,7 +293,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 
 	@Override
 	public boolean isVersioningEnabled() {
-		return true;
+		return false;
 	}
 
 	protected String getDefaultEditTemplateTitle(Locale locale) {

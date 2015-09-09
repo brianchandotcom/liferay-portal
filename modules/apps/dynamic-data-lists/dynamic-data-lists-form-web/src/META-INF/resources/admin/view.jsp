@@ -63,6 +63,7 @@ String displayStyle = ddlFormAdminDisplayContext.getDisplayStyle();
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<% request.setAttribute("rowURL", rowURL); %>
 
 						<liferay-ui:search-container-column-image
 							src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
@@ -80,6 +81,28 @@ String displayStyle = ddlFormAdminDisplayContext.getDisplayStyle();
 						
 					</c:when>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
+						<%
+						row.setCssClass("col-md-3 col-sm-4 col-xs-12");
+						%>
+
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+							<%
+								User userDisplay = UserLocalServiceUtil.fetchUserById(recordSet.getUserId());
+							%>
+							<liferay-frontend:card
+								actionJsp="/admin/record_set_action.jsp"
+								actionJspServletContext="<%= application %>"
+								cssClass="entry-display-style"
+								header='<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), HtmlUtil.escape(recordSet.getUserName())}, false) %>'
+								imageUrl='<%=themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+								resultRow="<%= row %>"
+								smallImageCSSClass="user-icon user-icon-lg"
+								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+								showCheckbox= "<%= false %>" 
+								title="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
+								url="<%= rowURL %>"
+							/>
+						</liferay-ui:search-container-column-text>
 
 					</c:when>
 					<c:otherwise>
@@ -91,13 +114,11 @@ String displayStyle = ddlFormAdminDisplayContext.getDisplayStyle();
 						/>
 
 						<liferay-ui:search-container-column-text
-							href="<%= rowURL %>"
 							name="description"
 							value="<%= StringUtil.shorten(recordSet.getDescription(locale), 100) %>"
 						/>
 
 						<liferay-ui:search-container-column-date
-							href="<%= rowURL %>"
 							name="modified-date"
 							value="<%= recordSet.getModifiedDate() %>"
 						/>

@@ -137,6 +137,11 @@ public class FileShortcutWrapper
 	}
 
 	@Override
+	public long getRepositoryId() {
+		return _fileShortcut.getRepositoryId();
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return _fileShortcut.getStagedModelType();
 	}

@@ -17,7 +17,6 @@
 <%@ include file="/blogs/init.jsp" %>
 
 <%
-int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH), AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
 AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.ASSET_RENDERER);
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
@@ -46,6 +45,6 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 			<div class="cover-image-container" style="background-image: url(<%= coverImageURL %>)"></div>
 		</c:if>
 
-		<%= StringUtil.shorten(HtmlUtil.stripHtml(assetRenderer.getSummary()), abstractLength) %>
+		<%= assetRenderer.getSummary(renderRequest, renderResponse) %>
 	</div>
 </div>

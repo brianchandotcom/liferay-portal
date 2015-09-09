@@ -270,6 +270,14 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	}
 
 	@Override
+	public DDMStructureVersion getLatestStructureVersion()
+		throws PortalException {
+
+		return DDMStructureVersionLocalServiceUtil.getLatestStructureVersion(
+			getStructureId());
+	}
+
+	@Override
 	public List<String> getRootFieldNames() {
 		DDMForm ddmForm = getFullHierarchyDDMForm();
 

@@ -28,7 +28,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashMap;
@@ -79,12 +81,29 @@ public class DDMStructureTestHelper {
 			DDMFormLayout ddmFormLayout, String storageType, int type)
 		throws Exception {
 
+		return addStructure(
+			parentStructureId, classNameId, structureKey, name, description,
+			ddmForm, ddmFormLayout, storageType, type,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
+	public DDMStructure addStructure(
+			long parentStructureId, long classNameId, String structureKey,
+			String name, String description, DDMForm ddmForm,
+			DDMFormLayout ddmFormLayout, String storageType, int type,
+			int status)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		serviceContext.setAttribute("status", status);
+
 		return DDMStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(), parentStructureId,
 			classNameId, structureKey, getDefaultLocaleMap(name),
 			getDefaultLocaleMap(description), ddmForm, ddmFormLayout,
-			storageType, type,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+			storageType, type, serviceContext);
 	}
 
 	public DDMStructure addStructure(

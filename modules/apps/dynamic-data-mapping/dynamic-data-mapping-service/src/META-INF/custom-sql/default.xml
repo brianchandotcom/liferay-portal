@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T_S">
 		<![CDATA[
 			SELECT
 				COUNT(DDMStructure.structureId) AS COUNT_VALUE
@@ -17,9 +17,25 @@
 				) AND
 				(storageType = ? OR ? IS NULL) AND
 				(type_ = ?)
+				[$STATUS$]
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByAndStructureVersionStatus">
+		<![CDATA[
+			AND EXISTS
+				(
+					SELECT
+						1
+					FROM
+						DDMStructureVersion
+					WHERE
+					 	(DDMStructureVersion.structureId = DDMStructure.structureId) AND
+					 	(DDMStructureVersion.version = DDMStructure.version) AND
+					 	(DDMStructureVersion.status = ?)
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T_S">
 		<![CDATA[
 			SELECT
 				{DDMStructure.*}
@@ -35,6 +51,7 @@
 				) AND
 				(storageType = ? OR ? IS NULL) AND
 				(type_ = ?)
+				[$STATUS$]
 			ORDER BY
 				DDMStructure.structureId DESC
 		]]>

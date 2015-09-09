@@ -488,6 +488,12 @@ public class DDMStructureWrapper implements DDMStructure,
 		return _ddmStructure.getLastPublishDate();
 	}
 
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMStructureVersion getLatestStructureVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructure.getLatestStructureVersion();
+	}
+
 	/**
 	* Returns the modified date of this d d m structure.
 	*

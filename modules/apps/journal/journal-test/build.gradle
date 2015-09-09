@@ -1,5 +1,6 @@
 dependencies {
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-io")
 	compile project(":apps:journal:journal-api")
 	compile project(":apps:journal:journal-web")
 	compile project(":portal:portal-search")

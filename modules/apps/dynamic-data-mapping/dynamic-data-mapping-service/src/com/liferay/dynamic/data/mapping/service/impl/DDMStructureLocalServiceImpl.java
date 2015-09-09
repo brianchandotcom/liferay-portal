@@ -1123,10 +1123,11 @@ public class DDMStructureLocalServiceImpl
 	@Override
 	public List<DDMStructure> search(
 		long companyId, long[] groupIds, long classNameId, String keywords,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		return ddmStructureFinder.findByKeywords(
-			companyId, groupIds, classNameId, keywords, start, end,
+			companyId, groupIds, classNameId, keywords, status, start, end,
 			orderByComparator);
 	}
 
@@ -1165,12 +1166,13 @@ public class DDMStructureLocalServiceImpl
 	@Override
 	public List<DDMStructure> search(
 		long companyId, long[] groupIds, long classNameId, String name,
-		String description, String storageType, int type, boolean andOperator,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+		String description, String storageType, int type, int status,
+		boolean andOperator, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return ddmStructureFinder.findByC_G_C_N_D_S_T(
+		return ddmStructureFinder.findByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, name, description, storageType,
-			type, andOperator, start, end, orderByComparator);
+			type, status, andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -1187,10 +1189,11 @@ public class DDMStructureLocalServiceImpl
 	 */
 	@Override
 	public int searchCount(
-		long companyId, long[] groupIds, long classNameId, String keywords) {
+		long companyId, long[] groupIds, long classNameId, String keywords,
+		int status) {
 
 		return ddmStructureFinder.countByKeywords(
-			companyId, groupIds, classNameId, keywords);
+			companyId, groupIds, classNameId, keywords, status);
 	}
 
 	/**
@@ -1213,11 +1216,12 @@ public class DDMStructureLocalServiceImpl
 	@Override
 	public int searchCount(
 		long companyId, long[] groupIds, long classNameId, String name,
-		String description, String storageType, int type, boolean andOperator) {
+		String description, String storageType, int type, int status,
+		boolean andOperator) {
 
-		return ddmStructureFinder.countByC_G_C_N_D_S_T(
+		return ddmStructureFinder.countByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, name, description, storageType,
-			type, andOperator);
+			type, status, andOperator);
 	}
 
 	@Override
@@ -1429,7 +1433,7 @@ public class DDMStructureLocalServiceImpl
 
 		int status = GetterUtil.getInteger(
 			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_DRAFT);
+			WorkflowConstants.STATUS_APPROVED);
 
 		structureVersion.setStatus(status);
 
@@ -1503,12 +1507,6 @@ public class DDMStructureLocalServiceImpl
 		structure.setDescriptionMap(descriptionMap);
 		structure.setDefinition(DDMFormJSONSerializerUtil.serialize(ddmForm));
 
-		ddmStructurePersistence.update(structure);
-
-		// Structure templates
-
-		syncStructureTemplatesFields(structure);
-
 		// Structure version
 
 		DDMStructureVersion structureVersion = addStructureVersion(
@@ -1520,6 +1518,16 @@ public class DDMStructureLocalServiceImpl
 			structureVersion.getUserId(), structureVersion.getGroupId(),
 			structureVersion.getStructureVersionId(), ddmFormLayout,
 			serviceContext);
+
+		if (!structureVersion.isApproved()) {
+			return structure;
+		}
+
+		ddmStructurePersistence.update(structure);
+
+		// Structure templates
+
+		syncStructureTemplatesFields(structure);
 
 		// Indexer
 

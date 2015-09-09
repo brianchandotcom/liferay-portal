@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.util.PortalUtil;
 
@@ -120,13 +121,24 @@ public class BaseDDMServiceTestCase {
 			String storageType, int type)
 		throws Exception {
 
+		return addStructure(
+			parentStructureId, classNameId, structureKey, name, description,
+			definition, storageType, type, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	protected DDMStructure addStructure(
+			long parentStructureId, long classNameId, String structureKey,
+			String name, String description, String definition,
+			String storageType, int type, int status)
+		throws Exception {
+
 		DDMForm ddmForm = ddmStructureTestHelper.toDDMForm(definition);
 
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
 		return ddmStructureTestHelper.addStructure(
 			parentStructureId, classNameId, structureKey, name, description,
-			ddmForm, ddmFormLayout, storageType, type);
+			ddmForm, ddmFormLayout, storageType, type, status);
 	}
 
 	protected DDMStructure addStructure(long classNameId, String name)

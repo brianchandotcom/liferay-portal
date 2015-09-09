@@ -89,7 +89,7 @@ public class DialectDetector {
 					_log.warn(sb.toString());
 				}
 			}
-			else if (dbName.equals("ASE") && (dbMajorVersion == 15)) {
+			else if (dbName.equals("ASE") && (dbMajorVersion >= 15)) {
 				dialect = new SybaseASE157Dialect();
 			}
 			else if (dbName.startsWith("DB2") && (dbMajorVersion >= 9)) {

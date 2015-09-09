@@ -1398,6 +1398,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>empty-result-message</name>
+		<tag-class>com.liferay.taglib.ui.EmptyResultMessageTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>message</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<description>Creates an error message to display to the user.</description>
 		<name>error</name>
 		<tag-class>com.liferay.taglib.ui.ErrorTag</tag-class>

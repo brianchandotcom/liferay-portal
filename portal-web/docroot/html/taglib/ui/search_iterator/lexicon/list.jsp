@@ -42,9 +42,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 %>
 
 <c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
-	<div class="alert alert-info">
-		<liferay-ui:message key="<%= emptyResultsMessage %>" />
-	</div>
+	<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
 </c:if>
 
 <div class="<%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %>">
@@ -144,7 +142,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 		<c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
 			<tr>
 				<td>
-					<liferay-ui:message key="<%= emptyResultsMessage %>" />
+					<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
 				</td>
 			</tr>
 		</c:if>

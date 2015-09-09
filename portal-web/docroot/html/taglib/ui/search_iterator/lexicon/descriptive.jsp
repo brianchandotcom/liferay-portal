@@ -42,9 +42,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 %>
 
 <c:if test="<%= resultRows.isEmpty() && (emptyResultsMessage != null) %>">
-	<div class="alert alert-info">
-		<%= LanguageUtil.get(request, emptyResultsMessage) %>
-	</div>
+	<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
 </c:if>
 
 <c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (resultRows.size() > PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA) && paginate %>">

@@ -21,7 +21,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 JournalArticle article = (JournalArticle)row.getObject();
 
-PortletURL rowURL = (PortletURL)request.getAttribute("view_entries.jsp-rowURL");
+String rowURL = (String)request.getAttribute(SearchEntry.ENTRY_HREF);
 
 JournalArticle latestApprovedArticleVersion = null;
 
@@ -69,7 +69,7 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	thumbnailSrc='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
-	url="<%= rowURL != null ? rowURL.toString() : null %>"
+	url="<%= rowURL %>"
 	version="<%= String.valueOf(article.getVersion()) %>"
 	view="lexicon"
 />

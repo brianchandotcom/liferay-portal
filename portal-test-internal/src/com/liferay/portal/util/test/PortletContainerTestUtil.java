@@ -40,6 +40,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import java.nio.charset.StandardCharsets;
@@ -57,6 +58,15 @@ import javax.portlet.PortletURL;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HeaderElement;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.StatusLine;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.multipart.ByteArrayPartSource;
+import org.apache.commons.httpclient.methods.multipart.FilePart;
+import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
+import org.apache.commons.httpclient.methods.multipart.Part;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpSession;
@@ -67,6 +77,40 @@ import org.springframework.mock.web.MockMultipartHttpServletRequest;
  * @author Manuel de la Peña
  */
 public class PortletContainerTestUtil {
+
+	public static void addGroupAndLayoutToServletRequest(
+			LiferayServletRequest liferayServletRequest, Layout layout)
+		throws Exception {
+
+		if ((liferayServletRequest == null) || (layout == null)) {
+			throw new IllegalArgumentException("Arguments cannot be null.");
+		}
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)liferayServletRequest.getRequest();
+
+		httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			layout.getCompanyId());
+
+		themeDisplay.setCompany(company);
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setPlid(layout.getPlid());
+		themeDisplay.setPortalURL(TestPropsValues.PORTAL_URL);
+		themeDisplay.setRequest(httpServletRequest);
+
+		Group group = layout.getGroup();
+
+		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+	}
 
 	public static HttpServletRequest getHttpServletRequest(
 			Group group, Layout layout)
@@ -165,6 +209,76 @@ public class PortletContainerTestUtil {
 			mockMultipartHttpServletRequest);
 
 		return liferayServletRequest;
+	}
+
+	public static Map<String, List<String>> postMultipart(
+			String url,
+			MockMultipartHttpServletRequest mockMultipartHttpServletRequest,
+			String fileNameParameter)
+		throws IOException, URISyntaxException {
+
+		if (mockMultipartHttpServletRequest.getInputStream() == null) {
+			throw new IllegalStateException(
+				"An inputStream must be present on the mock request.");
+		}
+
+		String[] cookies = mockMultipartHttpServletRequest.getParameterValues(
+			"Cookie");
+
+		if ((cookies == null) || (cookies.length == 0)) {
+			throw new IllegalStateException(
+				"Valid cookies must be present on the mock request.");
+		}
+
+		PostMethod postMethod = new PostMethod(url);
+
+		for (String cookie : cookies) {
+			postMethod.addRequestHeader(new Header("Cookie", cookie));
+		}
+
+		byte[] bytes = toByteArray(
+			mockMultipartHttpServletRequest.getInputStream());
+
+		Part[] parts = {
+			new FilePart(
+				fileNameParameter,
+				new ByteArrayPartSource(fileNameParameter, bytes))
+		};
+
+		MultipartRequestEntity multipartRequestEntity =
+			new MultipartRequestEntity(parts, postMethod.getParams());
+
+		postMethod.setRequestEntity(multipartRequestEntity);
+
+		HttpClient client = new HttpClient();
+
+		client.executeMethod(postMethod);
+
+		Map<String, List<String>> responseMap = new HashMap<>();
+
+		StatusLine statusLine = postMethod.getStatusLine();
+
+		String code = String.valueOf(statusLine.getStatusCode());
+
+		responseMap.put("code", Arrays.asList(code));
+
+		InputStream inputStream = postMethod.getResponseBodyAsStream();
+
+		Header[] headers = postMethod.getRequestHeaders();
+
+		for (Header header : headers) {
+			HeaderElement[] elements = header.getElements();
+
+			for (HeaderElement element : elements) {
+				String key = header.getName() + "[" + element.getName() + "]";
+
+				responseMap.put(key, Arrays.asList(element.getValue()));
+			}
+		}
+
+			responseMap.put("body", Arrays.asList(read(inputStream)));
+
+		return responseMap;
 	}
 
 	public static void putFileParameter(

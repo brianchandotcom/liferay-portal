@@ -410,6 +410,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether the provided title and description will be escaped. The default value is <![CDATA[<code>true</code>]]></description>
+			<name>escape</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>fileEntryRelatedSearchResults</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

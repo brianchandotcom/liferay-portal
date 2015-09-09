@@ -97,6 +97,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? summary.getContent() : entry.getDescription() %>"
+				escape="<%= summary.isEscape() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				thumbnailSrc="<%= Validator.isNotNull(entry.getSmallImageURL(themeDisplay)) ? entry.getSmallImageURL(themeDisplay) : StringPool.BLANK %>"
 				title="<%= (summary != null) ? summary.getTitle() : entry.getTitle() %>"

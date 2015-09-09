@@ -77,6 +77,10 @@ public class Summary {
 		return _title;
 	}
 
+	public boolean isEscape() {
+		return _escape;
+	}
+
 	public boolean isHighlight() {
 		return _highlight;
 	}

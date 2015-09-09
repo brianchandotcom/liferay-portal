@@ -260,7 +260,7 @@
 </tr>
 <tr>
 	<td>SHOW_ACTIONS_CHECKBOX</td>
-	<td>//input[@id='_86_showActions']</td>
+	<td>//input[contains(@id,'showActions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -275,17 +275,17 @@
 </tr>
 <tr>
 	<td>SHOW_FOLDER_MENU_CHECKBOX</td>
-	<td>//input[@id='_86_showFolderMenu']</td>
+	<td>//input[contains(@id,'showFolderMenu')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHOW_NAVIGATION_LINKS_CHECKBOX</td>
-	<td>//input[@id='_86_showTabs']</td>
+	<td>//input[contains(@id,'showTabs')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHOW_SEARCH_CHECKBOX</td>
-	<td>//input[@id='_86_showFoldersSearch']</td>
+	<td>//input[contains(@id,'showFoldersSearch')]</td>
 	<td></td>
 </tr>
 <tr>

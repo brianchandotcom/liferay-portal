@@ -21,20 +21,7 @@ AUI.add(
 			getAll: function(includeSystem) {
 				var instance = this;
 
-				if (!ALang.isBoolean(includeSystem)) {
-					includeSystem = false;
-				}
-
-				return AArray.filter(
-					_fieldTypes,
-					function(item) {
-						if (item.get('system') && !includeSystem) {
-							return false;
-						}
-
-						return true
-					}
-				);
+				return _fieldTypes;
 			},
 
 			register: function(fieldTypes) {
@@ -60,6 +47,7 @@ AUI.add(
 				fieldType.set('className', config.javaScriptClass);
 				fieldType.set('name', config.name);
 				fieldType.set('settings', config.settings);
+				fieldType.set('settingsLayout', config.settingsLayout);
 				fieldType.set('system', config.system);
 				fieldType.set('templateNamespace', config.templateNamespace);
 

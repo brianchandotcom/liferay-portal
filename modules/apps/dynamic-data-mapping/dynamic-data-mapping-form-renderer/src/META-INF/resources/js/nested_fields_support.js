@@ -8,6 +8,7 @@ AUI.add(
 
 		NestedFieldsSupport.ATTRS = {
 			fields: {
+				setter: '_setFields',
 				validator: Array.isArray,
 				value: []
 			}
@@ -18,11 +19,8 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandlers.push(
-					instance.after('containerChange', instance._afterContainerChange),
 					instance.after('fieldsChange', instance._afterFieldsChange)
 				);
-
-				instance._updateFieldsParent(instance.get('fields'));
 			},
 
 			destructor: function() {
@@ -155,31 +153,22 @@ AUI.add(
 				instance.set('fields', fields);
 			},
 
-			_afterContainerChange: function(event) {
+			_afterFieldsChange: function(event) {
 				var instance = this;
 
-				A.each(
-					instance.get('fields'),
-					function(item) {
-						event.newVal.append(item.get('container'));
+				instance.eachField(
+					function(field) {
+						field.render();
 					}
 				);
 			},
 
-			_afterFieldsChange: function(event) {
-				var instance = this;
-
-				instance._updateFieldsParent(event.newVal);
-			},
-
-			_updateFieldsParent: function(fields) {
+			_setFields: function(fields) {
 				var instance = this;
 
 				fields.forEach(
 					function(field) {
-						if (field.get('parent') !== instance) {
-							field.set('parent', instance);
-						}
+						field.set('parent', instance);
 					}
 				);
 			}

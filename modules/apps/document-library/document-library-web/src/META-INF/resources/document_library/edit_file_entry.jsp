@@ -522,10 +522,6 @@ else {
 		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + document.<portlet:namespace />fm.<portlet:namespace />description.value;
 	}
 
-	function <portlet:namespace />validateTitle() {
-		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');
-	}
-
 	function <portlet:namespace />saveFileEntry(draft) {
 		var className = 'alert alert-danger';
 
@@ -537,11 +533,10 @@ else {
 			fileTitleErrorNode.className = className + ' hide';
 
 			var fileValue = form.<portlet:namespace />file.value;
-			var titleValue = form.<portlet:namespace />title.value;
 
-			var fileOrTileValid = !!fileValue || !!titleValue;
+			var hasFieldValue = !!(fileValue || form.<portlet:namespace />title.value);
 
-			if (fileOrTileValid) {
+			if (hasFieldValue) {
 				if (fileValue) {
 					<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
 				}
@@ -557,9 +552,13 @@ else {
 			else {
 				fileTitleErrorNode.className = className + ' show';
 
-				window.location.href = '#<portlet:namespace /><%= HtmlUtil.escape(fileTitleErrorId) %>';
+				window.location.hash = '<portlet:namespace /><%= HtmlUtil.escape(fileTitleErrorId) %>';
 			}
 		}
+	}
+
+	function <portlet:namespace />validateTitle() {
+		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');
 	}
 </aui:script>
 

@@ -1040,20 +1040,20 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		else {
 			Portlet portlet = _portletLocalService.getPortletById(portletId);
 
-			if (portlet != null) {
-				PortletApp portletApp = portlet.getPortletApp();
-
-				ServletContext servletContext = portletApp.getServletContext();
-
-				classLoader = servletContext.getClassLoader();
-			}
-			else {
+			if (portlet == null) {
 
 				// No portlet found for the portlet ID, try getting the
 				// class loader where we assume the portlet ID is really a
 				// servlet context name
 
 				classLoader = ClassLoaderPool.getClassLoader(portletId);
+			}
+			else {
+				PortletApp portletApp = portlet.getPortletApp();
+
+				ServletContext servletContext = portletApp.getServletContext();
+
+				classLoader = servletContext.getClassLoader();
 			}
 		}
 

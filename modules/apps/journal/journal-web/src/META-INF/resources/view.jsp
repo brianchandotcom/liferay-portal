@@ -107,8 +107,8 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			gutter: 15,
 			position: 'right',
 			toggler: '.infoPanelToggler',
-			typeMobile: 'fixed',
 			type: 'relative',
+			typeMobile: 'fixed',
 			width: 320
 		}
 	);

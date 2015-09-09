@@ -406,6 +406,10 @@ public class PropsValues {
 
 	public static final String DEFAULT_LOGOUT_PAGE_PATH = PropsUtil.get(PropsKeys.DEFAULT_LOGOUT_PAGE_PATH);
 
+	public static final String DEFAULT_PORTLET_DECORATOR_CSS_CLASS = PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_CSS_CLASS);
+
+	public static final String DEFAULT_PORTLET_DECORATOR_ID = PropsUtil.get(PropsKeys.DEFAULT_PORTLET_DECORATOR_ID);
+
 	public static final String DEFAULT_REGULAR_COLOR_SCHEME_ID = PropsUtil.get(PropsKeys.DEFAULT_REGULAR_COLOR_SCHEME_ID);
 
 	public static final String DEFAULT_REGULAR_THEME_ID = PropsUtil.get(PropsKeys.DEFAULT_REGULAR_THEME_ID);

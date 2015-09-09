@@ -399,7 +399,7 @@ public class CacheFilter extends BasePortalFilter {
 			companyId, key);
 
 		if ((cacheResponseData == null) || !cacheResponseData.isValid()) {
-			if (((cacheResponseData != null) && !cacheResponseData.isValid()) ||
+			if (!_isValidCache(cacheResponseData) ||
 				!isCacheableData(companyId, request)) {
 
 				if (_log.isDebugEnabled()) {
@@ -473,6 +473,14 @@ public class CacheFilter extends BasePortalFilter {
 		}
 
 		CacheResponseUtil.write(response, cacheResponseData);
+	}
+
+	private boolean _isValidCache(CacheResponseData cacheResponseData) {
+		if ((cacheResponseData != null) && !cacheResponseData.isValid()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final int _PATTERN_FRIENDLY = 0;

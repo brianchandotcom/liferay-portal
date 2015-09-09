@@ -99,21 +99,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void addSelection(String locator, String optionLocator) {
-		Select select = new Select(getWebElement(locator));
-
-		if (optionLocator.startsWith("index=")) {
-			select.selectByIndex(
-				GetterUtil.getInteger(optionLocator.substring(6)));
-		}
-		else if (optionLocator.startsWith("label=")) {
-			select.selectByVisibleText(optionLocator.substring(6));
-		}
-		else if (optionLocator.startsWith("value=")) {
-			select.selectByValue(optionLocator.substring(6));
-		}
-		else {
-			select.selectByVisibleText(optionLocator);
-		}
+		WebDriverHelper.addSelection(this, locator, optionLocator);
 	}
 
 	@Override

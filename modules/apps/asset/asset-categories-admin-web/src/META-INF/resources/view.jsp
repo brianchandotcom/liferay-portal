@@ -17,45 +17,49 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
-<aui:form name="fm">
+<aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item cssClass="active" label="vocabularies" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<liferay-ui:input-search view="lexicon" />
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<div class="management-bar-container">
+	<liferay-frontend:management-bar
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-portlet:renderURL varImpl="portletURL" />
+
+			<liferay-frontend:management-bar-display-buttons
+				displayStyleURL="<%= portletURL %>"
+				displayViews='<%= new String[]{"list"} %>'
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+
+	<liferay-frontend:management-bar
+		cssClass="management-bar-no-collapse"
+		id="vocabulariesActionsButton"
+	>
+
+		<liferay-frontend:management-bar-buttons>
+			<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedVocabularies" />
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+</div>
+
+<aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="deleteVocabularyIds" type="hidden" />
-
-	<aui:nav-bar>
-		<aui:nav cssClass="navbar-nav">
-			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY) %>">
-				<portlet:renderURL var="addVocabularyURL">
-					<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
-				</portlet:renderURL>
-
-				<aui:nav-item href="<%= addVocabularyURL %>" iconCssClass="icon-plus" label="add-vocabulary" />
-			</c:if>
-
-			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) %>">
-				<liferay-security:permissionsURL
-					modelResource="com.liferay.portlet.asset"
-					modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"
-					resourcePrimKey="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>"
-					var="permissionsURL"
-					windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-				/>
-
-				<aui:nav-item href="<%= permissionsURL %>" iconCssClass="icon-lock" label="permissions" useDialog="<%= true %>" />
-			</c:if>
-
-			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="vocabulariesActionsButton" label="actions">
-				<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedVocabularies" label="delete" />
-			</aui:nav-item>
-		</aui:nav>
-
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<liferay-ui:input-search />
-			</div>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
 
 	<liferay-ui:breadcrumb
 		showCurrentGroup="<%= false %>"
@@ -66,6 +70,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-vocabularies"
+		id="assetVocabularies"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 	>
 
@@ -180,27 +185,37 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
+				cssClass="checkbox-cell entry-action"
 				path="/vocabulary_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator view="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_VOCABULARY) %>">
+	<portlet:renderURL var="addVocabularyURL">
+		<portlet:param name="mvcPath" value="/edit_vocabulary.jsp" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-vocabulary") %>' url="<%= addVocabularyURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script sandbox="<%= true %>">
 	var Util = Liferay.Util;
 
 	var form = $(document.<portlet:namespace />fm);
 
-	$('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').on(
+	$('#<portlet:namespace />assetVocabulariesSearchContainer').on(
 		'click',
 		'input[type=checkbox]',
 		function() {
 			var hide = (Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
 
-			$('#<portlet:namespace />vocabulariesActionsButton').toggleClass('hide', hide);
+			$('#<portlet:namespace />vocabulariesActionsButton').toggleClass('on', !hide);
 		}
 	);
 

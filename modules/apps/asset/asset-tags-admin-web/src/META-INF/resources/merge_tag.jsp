@@ -38,18 +38,18 @@ for (long mergeTagId : mergeTagIds) {
 
 	mergeTagNames.add(tag.getName());
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title="merge-tags"
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "merge-tags"));
+%>
 
 <portlet:actionURL name="mergeTag" var="mergeURL">
 	<portlet:param name="mvcPath" value="/merge_tag.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= mergeURL %>" method="post" name="fm" onSubmit="event.preventDefault();">
+<aui:form action="<%= mergeURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 
@@ -85,9 +85,9 @@ for (long mergeTagId : mergeTagIds) {
 	</div>
 
 	<aui:button-row>
-		<aui:button type="submit" value="merge" />
+		<aui:button cssClass="btn-lg" type="submit" value="merge" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

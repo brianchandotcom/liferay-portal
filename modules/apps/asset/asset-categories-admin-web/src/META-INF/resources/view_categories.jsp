@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 long categoryId = ParamUtil.getLong(request, "categoryId");
 
 AssetCategory category = null;
@@ -34,9 +36,8 @@ AssetVocabulary vocabulary = AssetVocabularyLocalServiceUtil.getVocabulary(vocab
 if (Validator.isNull(redirect)) {
 	PortletURL backURL = renderResponse.createRenderURL();
 
-	backURL.setParameter("mvcPath", "/view_categories.jsp");
-
 	if (category != null) {
+		backURL.setParameter("mvcPath", "/view_categories.jsp");
 		backURL.setParameter("categoryId", String.valueOf(category.getParentCategoryId()));
 
 		if (vocabularyId > 0) {
@@ -55,54 +56,59 @@ portletURL.setParameter("mvcPath", "/view_categories.jsp");
 portletURL.setParameter("redirect", currentURL);
 portletURL.setParameter("categoryId", String.valueOf(categoryId));
 portletURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
+portletURL.setParameter("displayStyle", displayStyle);
 
-String title = StringPool.BLANK;
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
-if (category != null) {
-	title = category.getTitle(locale);
-}
-else {
-	title = vocabulary.getTitle(locale);
-}
+renderResponse.setTitle((category != null) ? category.getTitle(locale) : vocabulary.getTitle(locale));
 
 AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, renderResponse);
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title="<%= title %>"
-/>
+<aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item cssClass="active" label="categories" />
+	</aui:nav>
 
-<aui:form name="fm">
+	<aui:nav-bar-search>
+		<liferay-ui:input-search view="lexicon" />
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<div class="management-bar-container">
+	<liferay-frontend:management-bar
+		includeCheckBox="<%= true %>"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-portlet:renderURL varImpl="displayStyleURL">
+				<liferay-portlet:param name="mvcPath" value="/view_categories.jsp" />
+				<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
+				<liferay-portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
+				<liferay-portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-frontend:management-bar-display-buttons
+				displayStyleURL="<%= displayStyleURL %>"
+				displayViews='<%= new String[]{"list"} %>'
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+
+	<liferay-frontend:management-bar
+		cssClass="management-bar-no-collapse"
+		id="categoriesActionsButton"
+	>
+
+		<liferay-frontend:management-bar-buttons>
+			<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedCategories" />
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+</div>
+
+<aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="deleteCategoryIds" type="hidden" />
-
-	<aui:nav-bar>
-		<aui:nav cssClass="navbar-nav">
-			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY) %>">
-				<portlet:renderURL var="addCategoryURL">
-					<portlet:param name="mvcPath" value="/edit_category.jsp" />
-
-					<c:if test="<%= categoryId > 0 %>">
-						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
-					</c:if>
-
-					<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item href="<%= addCategoryURL %>" iconCssClass="icon-plus" label="add-category" />
-			</c:if>
-
-			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="categoriesActionsButton" label="actions">
-				<aui:nav-item cssClass="item-remove" iconCssClass="icon-remove" id="deleteSelectedCategories" label="delete" />
-			</aui:nav-item>
-		</aui:nav>
-
-		<aui:nav-bar-search>
-			<div class="form-search">
-				<liferay-ui:input-search />
-			</div>
-		</aui:nav-bar-search>
-	</aui:nav-bar>
 
 	<liferay-ui:breadcrumb
 		showCurrentGroup="<%= false %>"
@@ -113,6 +119,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-categories"
+		id="assetCategories"
 		iteratorURL="<%= portletURL %>"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 	>
@@ -167,27 +174,43 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
+				cssClass="checkbox-cell entry-action"
 				path="/category_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator view="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_CATEGORY) %>">
+	<portlet:renderURL var="addCategoryURL">
+		<portlet:param name="mvcPath" value="/edit_category.jsp" />
+
+		<c:if test="<%= categoryId > 0 %>">
+			<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
+		</c:if>
+
+		<portlet:param name="vocabularyId" value="<%= String.valueOf(vocabularyId) %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-category") %>' url="<%= addCategoryURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
 
 <aui:script sandbox="<%= true %>">
 	var Util = Liferay.Util;
 
 	var form = $(document.<portlet:namespace />fm);
 
-	$('#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer').on(
+	$('#<portlet:namespace />assetCategoriesSearchContainer').on(
 		'click',
 		'input[type=checkbox]',
 		function() {
 			var hide = (Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
 
-			$('#<portlet:namespace />categoriesActionsButton').toggleClass('hide', hide);
+			$('#<portlet:namespace />categoriesActionsButton').toggleClass('on', !hide);
 		}
 	);
 

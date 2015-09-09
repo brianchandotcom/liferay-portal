@@ -44,19 +44,19 @@ if (Validator.isNull(redirect)) {
 }
 
 List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId);
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= LanguageUtil.format(request, "move-x", category.getTitle(locale)) %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.format(request, "move-x", category.getTitle(locale)));
+%>
 
 <portlet:actionURL name="moveCategory" var="moveCategoryURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="mvcPath" value="/move_category.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= moveCategoryURL %>" name="fm" onSubmit="event.preventDefault();">
+<aui:form action="<%= moveCategoryURL %>" cssClass="container-fluid-1280" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 
 	<aui:select label="vocabulary" name="vocabularyId">
@@ -111,9 +111,9 @@ List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabula
 	</div>
 
 	<aui:button-row>
-		<aui:button type="submit" value="move" />
+		<aui:button cssClass="btn-lg" type="submit" value="move" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

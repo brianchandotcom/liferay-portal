@@ -187,3 +187,20 @@
 		</div>
 	</div>
 {/template}
+
+/**
+ * Prints the settings form.
+ *
+ * @param pages
+ */
+{template .settings_form}
+	<div class="lfr-ddm-settings-form">
+		{foreach $page in $pages}
+			<div class="lfr-ddm-form-page{if isFirst($page)} active basic{/if}{if isLast($page)} advanced{/if}">
+				{call ddm.form_rows data="all"}
+					{param rows: $page.rows /}
+				{/call}
+			</div>
+		{/foreach}
+	</div>
+{/template}

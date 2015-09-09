@@ -173,11 +173,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void check(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		if (!webElement.isSelected()) {
-			webElement.click();
-		}
+		WebDriverHelper.check(this, locator);
 	}
 
 	@Override
@@ -1545,11 +1541,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void uncheck(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		if (webElement.isSelected()) {
-			webElement.click();
-		}
+		WebDriverHelper.uncheck(this, locator);
 	}
 
 	@Override

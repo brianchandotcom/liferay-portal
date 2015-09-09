@@ -118,7 +118,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void check(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.check(this, locator);
 	}
 
 	@Override
@@ -895,7 +895,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void uncheck(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.uncheck(this, locator);
 	}
 
 	@Override

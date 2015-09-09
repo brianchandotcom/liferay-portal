@@ -33,18 +33,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Marcellus Tavares
  */
 public class DDMFormValuesValidatorTest {
-
-	@Before
-	public void setUp() {
-		setUpDDMFormValuesValidator();
-	}
 
 	@Test(expected = StorageFieldNameException.class)
 	public void testValidationWithInvalidFieldName() throws Exception {
@@ -56,7 +50,7 @@ public class DDMFormValuesValidatorTest {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue("lastName", null));
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldNameException.class)
@@ -90,7 +84,7 @@ public class DDMFormValuesValidatorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -109,7 +103,7 @@ public class DDMFormValuesValidatorTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"name", new UnlocalizedValue("Joe")));
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldRequiredException.class)
@@ -137,7 +131,7 @@ public class DDMFormValuesValidatorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -171,7 +165,7 @@ public class DDMFormValuesValidatorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldRequiredException.class)
@@ -188,7 +182,7 @@ public class DDMFormValuesValidatorTest {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -208,7 +202,7 @@ public class DDMFormValuesValidatorTest {
 		ddmFormValues.addDDMFormFieldValue(
 			DDMFormValuesTestUtil.createDDMFormFieldValue("name", null));
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test
@@ -237,7 +231,7 @@ public class DDMFormValuesValidatorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test
@@ -254,14 +248,14 @@ public class DDMFormValuesValidatorTest {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void testValidationWithoutDDMFormReference() throws Exception {
 		DDMFormValues ddmFormValues = new DDMFormValues(null);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -290,7 +284,7 @@ public class DDMFormValuesValidatorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -324,7 +318,7 @@ public class DDMFormValuesValidatorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -349,7 +343,7 @@ public class DDMFormValuesValidatorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldRequiredException.class)
@@ -368,7 +362,7 @@ public class DDMFormValuesValidatorTest {
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -387,7 +381,7 @@ public class DDMFormValuesValidatorTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"separator", new UnlocalizedValue("separator value")));
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -410,7 +404,7 @@ public class DDMFormValuesValidatorTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"name", localizedValue));
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -439,7 +433,7 @@ public class DDMFormValuesValidatorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -463,7 +457,7 @@ public class DDMFormValuesValidatorTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"name", localizedValue));
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -486,7 +480,7 @@ public class DDMFormValuesValidatorTest {
 			DDMFormValuesTestUtil.createDDMFormFieldValue(
 				"name", localizedValue));
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
 	@Test(expected = StorageFieldValueException.class)
@@ -525,13 +519,10 @@ public class DDMFormValuesValidatorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		ddmFormValuesValidator.validate(ddmFormValues);
+		_ddmFormValuesValidator.validate(ddmFormValues);
 	}
 
-	protected void setUpDDMFormValuesValidator() {
-		ddmFormValuesValidator = new DDMFormValuesValidatorImpl();
-	}
-
-	protected DDMFormValuesValidator ddmFormValuesValidator;
+	private final DDMFormValuesValidator _ddmFormValuesValidator =
+		new DDMFormValuesValidatorImpl();
 
 }

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -40,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormValidator.class)
+@Component(immediate = true)
 public class DDMFormValidatorImpl implements DDMFormValidator {
 
 	@Override
@@ -197,10 +198,9 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 	protected void validateDDMFormFieldType(DDMFormField ddmFormField)
 		throws DDMFormValidationException {
 
-		if ((ddmFormField.getType() == null) ||
-			(ddmFormField.getType().trim().length() == 0)) {
-				throw new DDMFormValidationException(
-					"The field type was never set for DDM form field");
+		if (Validator.isNull(ddmFormField.getType())) {
+			throw new DDMFormValidationException(
+				"The field type was never set for DDM form field");
 		}
 
 		Matcher matcher = _ddmFormFieldTypePattern.matcher(

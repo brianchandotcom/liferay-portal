@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Marcellus Tavares
  */
-@Component(immediate = true, service = DDMFormValuesValidator.class)
+@Component(immediate = true)
 public class DDMFormValuesValidatorImpl implements DDMFormValuesValidator {
 
 	@Override

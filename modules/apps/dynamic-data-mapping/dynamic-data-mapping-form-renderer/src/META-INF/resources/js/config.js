@@ -17,9 +17,11 @@
 								'liferay-ddm-form-renderer-nested-fields',
 								'liferay-ddm-form-renderer-pagination',
 								'liferay-ddm-form-renderer-tabs',
+								'liferay-ddm-form-renderer-template',
 								'liferay-ddm-form-renderer-types',
 								'liferay-ddm-form-renderer-util',
-								'liferay-ddm-form-renderer-validation'
+								'liferay-ddm-form-renderer-validation',
+								'liferay-ddm-form-soy'
 							]
 						},
 						'liferay-ddm-form-renderer-definition': {
@@ -107,6 +109,12 @@
 								'aui-tabview'
 							]
 						},
+						'liferay-ddm-form-renderer-template': {
+							path: 'form_template_support.js',
+							requires: [
+								'aui-base'
+							]
+						},
 						'liferay-ddm-form-renderer-types': {
 							path: 'types.js',
 							requires: [
@@ -139,6 +147,18 @@
 						}
 					},
 					root: PATH_FORM_RENDERER + '/js/'
+				},
+				'templates': {
+					base: PATH_FORM_RENDERER + '/',
+					modules: {
+						'liferay-ddm-form-soy': {
+							path: 'form.soy.js',
+							requires: [
+								'soyutils'
+							]
+						}
+					},
+					root: PATH_FORM_RENDERER + '/'
 				}
 			}
 		}

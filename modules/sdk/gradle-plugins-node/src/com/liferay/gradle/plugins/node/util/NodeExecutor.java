@@ -22,7 +22,9 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -55,6 +57,7 @@ public class NodeExecutor {
 						execSpec.setExecutable(getExecutable());
 					}
 
+					execSpec.setEnvironment(getEnvironment());
 					execSpec.setWorkingDir(_workingDir);
 				}
 
@@ -99,14 +102,38 @@ public class NodeExecutor {
 		_workingDir = workingDir;
 	}
 
-	protected File getExecutable() {
-		File dir = GradleUtil.toFile(_project, _nodeDir);
+	protected Map<String, String> getEnvironment() {
+		Map<String, String> environment = new HashMap<>(System.getenv());
 
-		if (!OSDetector.isWindows()) {
-			dir = new File(dir, "bin");
+		File executableDir = getExecutableDir();
+
+		for (String pathKey : _PATH_KEYS) {
+			String path = environment.get(pathKey);
+
+			if (Validator.isNull(path)) {
+				continue;
+			}
+
+			path = executableDir.getAbsolutePath() + File.pathSeparator + path;
+
+			environment.put(pathKey, path);
 		}
 
-		return new File(dir, GradleUtil.toString(_command));
+		return environment;
+	}
+
+	protected File getExecutable() {
+		return new File(getExecutableDir(), GradleUtil.toString(_command));
+	}
+
+	protected File getExecutableDir() {
+		File executableDir = GradleUtil.toFile(_project, _nodeDir);
+
+		if (!OSDetector.isWindows()) {
+			executableDir = new File(executableDir, "bin");
+		}
+
+		return executableDir;
 	}
 
 	protected List<String> getWindowsArgs() {
@@ -136,6 +163,8 @@ public class NodeExecutor {
 
 		return windowsArgs;
 	}
+
+	private static final String[] _PATH_KEYS = {"Path", "PATH"};
 
 	private final List<Object> _args = new ArrayList<>();
 	private Object _command = "node";

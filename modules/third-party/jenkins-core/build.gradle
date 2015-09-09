@@ -44,10 +44,9 @@ war {
 
 	extension = "war"
 
-	from zipTree(
-		{
-			FileUtil.get(project, "http://repo.jenkins-ci.org/releases/org/jenkins-ci/main/jenkins-war/${jenkinsCoreVersion}/jenkins-war-${jenkinsCoreVersion}.war")
-		})
+	from {
+		zipTree FileUtil.get(project, "http://repo.jenkins-ci.org/releases/org/jenkins-ci/main/jenkins-war/${jenkinsCoreVersion}/jenkins-war-${jenkinsCoreVersion}.war")
+	}
 
 	into("WEB-INF/lib") {
 		from jar

@@ -111,16 +111,15 @@ buildCKEditorBBCode {
 buildCKEditorScayt {
 	dependsOn buildCKEditor
 
-	from zipTree(
-		{
-			File ckEditorScaytFile = new File(thirdPartyDir, "scayt_${ckEditorVersion}.zip")
+	from {
+		File ckEditorScaytFile = new File(thirdPartyDir, "scayt_${ckEditorVersion}.zip")
 
-			if (!ckEditorScaytFile.exists()) {
-				FileUtil.get(project, ckEditorScaytUrl, ckEditorScaytFile)
-			}
+		if (!ckEditorScaytFile.exists()) {
+			FileUtil.get(project, ckEditorScaytUrl, ckEditorScaytFile)
+		}
 
-			ckEditorScaytFile
-		})
+		zipTree ckEditorScaytFile
+	}
 
 	into new File(editorsDestinationDir, "ckeditor/plugins")
 }
@@ -128,16 +127,15 @@ buildCKEditorScayt {
 buildCKEditorWsc {
 	dependsOn buildCKEditor
 
-	from zipTree(
-		{
-			File ckEditorWscFile = new File(thirdPartyDir, "wsc_${ckEditorVersion}.zip")
+	from {
+		File ckEditorWscFile = new File(thirdPartyDir, "wsc_${ckEditorVersion}.zip")
 
-			if (!ckEditorWscFile.exists()) {
-				FileUtil.get(project, ckEditorWscUrl, ckEditorWscFile)
-			}
+		if (!ckEditorWscFile.exists()) {
+			FileUtil.get(project, ckEditorWscUrl, ckEditorWscFile)
+		}
 
-			ckEditorWscFile
-		})
+		zipTree ckEditorWscFile
+	}
 
 	into new File(editorsDestinationDir, "ckeditor/plugins")
 }

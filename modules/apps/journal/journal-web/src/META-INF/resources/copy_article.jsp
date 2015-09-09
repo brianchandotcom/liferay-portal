@@ -23,6 +23,11 @@ long groupId = ParamUtil.getLong(request, "groupId");
 String oldArticleId = ParamUtil.getString(request, "oldArticleId");
 String newArticleId = ParamUtil.getString(request, "newArticleId");
 double version = ParamUtil.getDouble(request, "version");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "web-content"));
 %>
 
 <portlet:actionURL name="copyArticle" var="copyArticleURL">
@@ -34,11 +39,6 @@ double version = ParamUtil.getDouble(request, "version");
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="oldArticleId" type="hidden" value="<%= oldArticleId %>" />
 	<aui:input name="version" type="hidden" value="<%= version %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="web-content"
-	/>
 
 	<liferay-ui:error exception="<%= ArticleIdException.class %>" message="please-enter-a-valid-id" />
 	<liferay-ui:error exception="<%= DuplicateArticleIdException.class %>" message="please-enter-a-unique-id" />

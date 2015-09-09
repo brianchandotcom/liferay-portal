@@ -63,6 +63,11 @@ for (JournalArticle curArticle : articles) {
 		invalidMoveArticles.add(curArticle);
 	}
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "move-web-content"));
 %>
 
 <portlet:actionURL name="moveEntries" var="moveArticleURL">
@@ -72,11 +77,6 @@ for (JournalArticle curArticle : articles) {
 <aui:form action="<%= moveArticleURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveArticle();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="move-web-content"
-	/>
 
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 	<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="the-folder-you-selected-does-not-allow-this-type-of-structure.-please-select-a-different-folder" />

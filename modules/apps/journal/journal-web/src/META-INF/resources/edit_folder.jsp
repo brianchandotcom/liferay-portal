@@ -36,6 +36,25 @@ List<WorkflowDefinition> workflowDefinitions = null;
 if (workflowEnabled) {
 	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+String title = StringPool.BLANK;
+
+if (rootFolder) {
+	title = LanguageUtil.get(request, "home");
+}
+else {
+	if (folder == null) {
+		title = LanguageUtil.get(request, "new-folder");
+	}
+	else {
+		title = folder.getName();
+	}
+}
+
+renderResponse.setTitle(title);
 %>
 
 <portlet:actionURL name='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? "addFolder" : "updateFolder") %>' var="editFolderURL">
@@ -54,12 +73,6 @@ if (workflowEnabled) {
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 	<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (folder == null) %>"
-		title='<%= rootFolder ? "home" : ((folder == null) ? "new-folder" : folder.getName()) %>'
-	/>
 
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
 

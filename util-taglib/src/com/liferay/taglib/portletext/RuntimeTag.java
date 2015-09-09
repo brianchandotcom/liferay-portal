@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -155,23 +156,22 @@ public class RuntimeTag extends TagSupport {
 				response, pageContext.getOut());
 		}
 
-		String portletId = portletName;
-
-		if (Validator.isNotNull(portletInstanceId)) {
-			portletId =
-				portletId + LayoutTemplateConstants.INSTANCE_SEPARATOR +
-					portletInstanceId;
-		}
+		PortletInstance portletInstance = new PortletInstance(
+			portletName, portletInstanceId);
 
 		RestrictPortletServletRequest restrictPortletServletRequest =
 			new RestrictPortletServletRequest(
 				PortalUtil.getOriginalServletRequest(request));
 
-		queryString = PortletParameterUtil.addNamespace(portletId, queryString);
+		queryString = PortletParameterUtil.addNamespace(
+			portletInstance.getPortletInstanceKey(), queryString);
 
 		Map<String, String[]> parameterMap = request.getParameterMap();
 
-		if (!portletId.equals(request.getParameter("p_p_id"))) {
+		if (!Validator.equals(
+				portletInstance.getPortletInstanceKey(),
+				request.getParameter("p_p_id"))) {
+
 			parameterMap = MapUtil.filterByKeys(
 				parameterMap, new PrefixPredicateFilter("p_p_"));
 		}
@@ -189,7 +189,8 @@ public class RuntimeTag extends TagSupport {
 				LayoutTypePortlet layoutTypePortlet =
 					themeDisplay.getLayoutTypePortlet();
 
-				if (layoutTypePortlet.hasStateMaxPortletId(portletId)) {
+				if (layoutTypePortlet.hasStateMaxPortletId(
+						portletInstance.getPortletInstanceKey())) {
 
 					// A portlet in the maximized state has already been
 					// processed
@@ -203,7 +204,7 @@ public class RuntimeTag extends TagSupport {
 			request.setAttribute(WebKeys.PORTLET_DECORATE, false);
 
 			Portlet portlet = getPortlet(
-				themeDisplay.getCompanyId(), portletId);
+				themeDisplay.getCompanyId(), portletInstance.getPortletName());
 
 			PortletPreferences renderPortletPreferences =
 				getRenderPortletPreferences(
@@ -221,20 +222,23 @@ public class RuntimeTag extends TagSupport {
 
 			if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 					PortletKeys.PREFS_OWNER_TYPE_LAYOUT, themeDisplay.getPlid(),
-					portletId) < 1) ||
+					portletInstance.getPortletInstanceKey()) < 1) ||
 				layout.isTypeControlPanel() || layout.isTypePanel()) {
 
 				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
-					layout, portletId, defaultPreferences);
+					layout, portletInstance.getPortletInstanceKey(),
+					defaultPreferences);
 				PortletPreferencesFactoryUtil.getPortletSetup(
-					request, portletId, defaultPreferences);
+					request, portletInstance.getPortletInstanceKey(),
+					defaultPreferences);
 
 				PortletLayoutListener portletLayoutListener =
 					portlet.getPortletLayoutListenerInstance();
 
 				if (portletLayoutListener != null) {
 					portletLayoutListener.onAddToLayout(
-						portletId, themeDisplay.getPlid());
+						portletInstance.getPortletInstanceKey(),
+						themeDisplay.getPlid());
 				}
 
 				jsonObject = JSONFactoryUtil.createJSONObject();

@@ -35,9 +35,11 @@ import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PortletDecorator;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.plugin.PluginUtil;
 import com.liferay.portal.service.base.ThemeLocalServiceBaseImpl;
+import com.liferay.portal.theme.PortletDecoratorFactoryUtil;
 import com.liferay.portal.theme.ThemeCompanyId;
 import com.liferay.portal.theme.ThemeCompanyLimit;
 import com.liferay.portal.theme.ThemeGroupId;
@@ -82,6 +84,24 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		Map<String, ColorScheme> colorSchemesMap = theme.getColorSchemesMap();
 
 		return colorSchemesMap.get(colorSchemeId);
+	}
+
+	@Override
+	public PortletDecorator fetchPortletDecorator(
+		long companyId, String themeId, String colorSchemeId) {
+
+		colorSchemeId = GetterUtil.getString(colorSchemeId);
+
+		Theme theme = fetchTheme(companyId, themeId);
+
+		if (theme == null) {
+			return null;
+		}
+
+		Map<String, PortletDecorator> portletDecoratorMap =
+			theme.getPortletDecoratorsMap();
+
+		return portletDecoratorMap.get(colorSchemeId);
 	}
 
 	@Override
@@ -179,6 +199,39 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		}
 
 		return themes;
+	}
+
+	@Override
+	public PortletDecorator getPortletDecorator(
+		long companyId, String themeId, String portletDecoratorId) {
+
+		portletDecoratorId = GetterUtil.getString(portletDecoratorId);
+
+		Theme theme = fetchTheme(companyId, themeId);
+
+		Map<String, PortletDecorator> portletDecoratorMap =
+			theme.getPortletDecoratorsMap();
+
+		PortletDecorator portletDecorator = portletDecoratorMap.get(
+			portletDecoratorId);
+
+		if (portletDecorator != null) {
+			return portletDecorator;
+		}
+
+		List<PortletDecorator> portletDecorators = theme.getPortletDecorators();
+
+		if (!portletDecorators.isEmpty()) {
+			for (int i = (portletDecorators.size() - 1); i >= 0; i--) {
+				portletDecorator = portletDecorators.get(i);
+
+				if (portletDecorator.isDefaultPortletDecorator()) {
+					return portletDecorator;
+				}
+			}
+		}
+
+		return PortletDecoratorFactoryUtil.getDefaultPortletDecorator();
 	}
 
 	@Override
@@ -484,6 +537,73 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 		}
 	}
 
+	private void _readPortletDecorators(
+		Element themeElement, Map<String, PortletDecorator> portletDecorators,
+		ContextReplace themeContextReplace) {
+
+		List<Element> portletDecoratorElements = themeElement.elements(
+			"portlet-decorator");
+
+		for (Element portletDecoratorElement : portletDecoratorElements) {
+			ContextReplace portletDecoratorContextReplace =
+				(ContextReplace)themeContextReplace.clone();
+
+			String id = portletDecoratorElement.attributeValue("id");
+
+			portletDecoratorContextReplace.addValue("portlet-decorator-id", id);
+
+			PortletDecorator portletDecoratorModel = portletDecorators.get(id);
+
+			if (portletDecoratorModel == null) {
+				portletDecoratorModel =
+					PortletDecoratorFactoryUtil.getPortletDecorator(id);
+			}
+
+			String name = GetterUtil.getString(
+				portletDecoratorElement.attributeValue("name"),
+				portletDecoratorModel.getName());
+
+			name = portletDecoratorContextReplace.replace(name);
+
+			boolean defaultPortletDecorator = GetterUtil.getBoolean(
+				portletDecoratorElement.elementText(
+					"default-portlet-decorator"),
+				portletDecoratorModel.isDefaultPortletDecorator());
+
+			String cssClass = GetterUtil.getString(
+				portletDecoratorElement.elementText(
+					"portlet-decorator-css-class"),
+				portletDecoratorModel.getCssClass());
+
+			cssClass = portletDecoratorContextReplace.replace(cssClass);
+
+			portletDecoratorContextReplace.addValue(
+				"portlet-decorator-css-class", cssClass);
+
+			String portletDecoratorThumbnailPath = GetterUtil.getString(
+				portletDecoratorElement.elementText(
+					"portlet-decorator-thumbnail-path"),
+				portletDecoratorModel.getPortletDecoratorThumbnailPath());
+
+			portletDecoratorThumbnailPath =
+				portletDecoratorContextReplace.replace(
+					portletDecoratorThumbnailPath);
+
+			portletDecoratorContextReplace.addValue(
+				"portlet-decorator-thumbnail-path",
+				portletDecoratorThumbnailPath);
+
+			portletDecoratorModel.setName(name);
+			portletDecoratorModel.setDefaultPortletDecorator(
+				defaultPortletDecorator);
+			portletDecoratorModel.setCssClass(cssClass);
+			portletDecoratorModel.setPortletDecoratorThumbnailPath(
+				portletDecoratorThumbnailPath);
+
+			portletDecorators.put(id, portletDecoratorModel);
+		}
+	}
+
 	private Set<Theme> _readThemes(
 			String servletContextName, ServletContext servletContext,
 			String themesPath, boolean loadFromServletContext, String xml,
@@ -760,6 +880,13 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			if (!_themes.containsKey(themeId)) {
 				_themes.put(themeId, theme);
 			}
+
+			_readPortletDecorators(
+				themeElement, theme.getPortletDecoratorsMap(),
+				themeContextReplace);
+			_readPortletDecorators(
+				themeElement, theme.getPortletDecoratorsMap(),
+				themeContextReplace);
 
 			themes.add(theme);
 		}

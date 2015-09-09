@@ -103,7 +103,7 @@ public class PortletContainerTestUtil {
 	}
 
 	public static LiferayServletRequest mockLiferayServletRequest(
-			Class<?> clazz, String dependency)
+			String fileNameParameter, byte[] bytes)
 		throws Exception {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
@@ -112,20 +112,12 @@ public class PortletContainerTestUtil {
 		mockMultipartHttpServletRequest.setContentType(
 			"multipart/form-data;boundary=" + new Date().getTime());
 
-		InputStream inputStream = clazz.getResourceAsStream(dependency);
-
 		MockMultipartFile multipartFile = new MockMultipartFile(
-			"attachment", inputStream);
+			fileNameParameter, bytes);
 
 		mockMultipartHttpServletRequest.addFile(multipartFile);
 
 		mockMultipartHttpServletRequest.setCharacterEncoding("UTF-8");
-
-		// refresh the inputStream
-
-		inputStream = clazz.getResourceAsStream(dependency);
-
-		byte[] bytes = toByteArray(inputStream);
 
 		mockMultipartHttpServletRequest.setContent(bytes);
 

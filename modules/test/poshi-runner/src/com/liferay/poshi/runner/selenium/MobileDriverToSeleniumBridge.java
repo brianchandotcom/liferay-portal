@@ -505,7 +505,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void goBack() {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.goBack(this);
 	}
 
 	@Override

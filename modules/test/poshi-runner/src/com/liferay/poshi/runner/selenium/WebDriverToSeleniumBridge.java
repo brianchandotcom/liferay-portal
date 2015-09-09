@@ -763,9 +763,7 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void goBack() {
-		WebDriver.Navigation navigation = navigate();
-
-		navigation.back();
+		WebDriverHelper.goBack(this);
 	}
 
 	@Override

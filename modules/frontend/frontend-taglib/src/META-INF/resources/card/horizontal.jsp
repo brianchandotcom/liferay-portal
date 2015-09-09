@@ -19,7 +19,7 @@
 <div class="<%= cssClass %>">
 	<div class="card-horizontal">
 		<div class="card-row card-row-padded <%= showCheckbox ? "selectable" : StringPool.BLANK %>" <%= AUIUtil.buildData(data) %> >
-			<div class="card-col-field">
+			<div class="card-col-field <%= ((rowChecker != null && resultRow != null) || (showCheckbox)) ? "checkbox-default" : StringPool.BLANK %>">
 				<c:choose>
 					<c:when test="<%= (rowChecker != null) && (resultRow != null) %>">
 						<%= rowChecker.getRowCheckBox(request, rowChecker.isChecked(resultRow.getObject()), rowChecker.isDisabled(resultRow.getObject()), resultRow.getPrimaryKey()) %>

@@ -148,6 +148,8 @@
 			);
 
 			allBox.prop(STR_CHECKED, totalBoxes == totalOn);
+
+			return totalOn;
 		},
 
 		checkTab: function(box) {

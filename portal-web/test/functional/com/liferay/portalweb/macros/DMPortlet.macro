@@ -58,11 +58,18 @@
 					</then>
 				</while>
 
-				<for list="${currentDisplayStyleViews}" param="currentDisplayStyleView">
-					<execute function="Select" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT" value1="${currentDisplayStyleView}" />
-					<execute function="Click" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
-					<execute function="AssertTextEquals" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_CURRENT_SELECT" value1="${currentDisplayStyleView}" />
-				</for>
+				<if>
+					<not>
+						<equals arg1="${currentDisplayStyleViews}" arg2="" />
+					</not>
+					<then>
+						<for list="${currentDisplayStyleViews}" param="currentDisplayStyleView">
+							<execute function="Select" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_AVAILABLE_SELECT" value1="${currentDisplayStyleView}" />
+							<execute function="Click" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+							<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMediaConfiguration#DISPLAY_SETTINGS_DISPLAY_STYLE_VIEWS_CURRENT_SELECT" value1="${currentDisplayStyleView}" />
+						</for>
+					</then>
+				</if>
 			</then>
 		</if>
 

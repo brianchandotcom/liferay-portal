@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -1039,11 +1040,21 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		else {
 			Portlet portlet = _portletLocalService.getPortletById(portletId);
 
-			PortletApp portletApp = portlet.getPortletApp();
+			if (portlet != null) {
+				PortletApp portletApp = portlet.getPortletApp();
 
-			ServletContext servletContext = portletApp.getServletContext();
+				ServletContext servletContext = portletApp.getServletContext();
 
-			classLoader = servletContext.getClassLoader();
+				classLoader = servletContext.getClassLoader();
+			}
+			else {
+
+				// No portlet found for the portlet ID, try getting the
+				// class loader where we assume the portlet ID is really a
+				// servlet context name
+
+				classLoader = ClassLoaderPool.getClassLoader(portletId);
+			}
 		}
 
 		if (classLoader == null) {

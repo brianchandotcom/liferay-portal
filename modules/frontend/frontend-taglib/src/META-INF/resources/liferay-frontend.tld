@@ -24,6 +24,11 @@
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.AddMenuItemTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

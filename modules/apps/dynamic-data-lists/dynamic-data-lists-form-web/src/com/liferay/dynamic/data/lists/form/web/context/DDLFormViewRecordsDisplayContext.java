@@ -58,9 +58,9 @@ import javax.portlet.PortletURL;
 /**
  * @author Leonardo Barros
  */
-public class DDLFormViewEntriesDisplayContext {
+public class DDLFormViewRecordsDisplayContext {
 
-	public DDLFormViewEntriesDisplayContext(
+	public DDLFormViewRecordsDisplayContext(
 		LiferayPortletRequest liferayPortletRequest,
 		LiferayPortletResponse liferayPortletResponse,
 		DDMStructure ddmStructure, DDLRecordSet recordSet) {

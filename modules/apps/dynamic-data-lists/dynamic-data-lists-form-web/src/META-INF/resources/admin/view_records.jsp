@@ -17,9 +17,9 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-DDLFormViewEntriesDisplayContext ddlFormViewEntriesDisplayContext = new DDLFormViewEntriesDisplayContext(liferayPortletRequest, liferayPortletResponse, ddlFormAdminDisplayContext.getDDMStructure(), ddlFormAdminDisplayContext.getRecordSet());
+DDLFormViewRecordsDisplayContext ddlFormViewRecordsDisplayContext = new DDLFormViewRecordsDisplayContext(liferayPortletRequest, liferayPortletResponse, ddlFormAdminDisplayContext.getDDMStructure(), ddlFormAdminDisplayContext.getRecordSet());
 
-DisplayTerms displayTerms = ddlFormViewEntriesDisplayContext.getRecordSearchContainer().getDisplayTerms();
+DisplayTerms displayTerms = ddlFormViewRecordsDisplayContext.getRecordSearchContainer().getDisplayTerms();
 %>
 
 <aui:form action="<%= currentURL.toString() %>" method="post" name="fm">
@@ -32,12 +32,12 @@ DisplayTerms displayTerms = ddlFormViewEntriesDisplayContext.getRecordSearchCont
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/admin/view_entries_sort_button.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/view_records_sort_button.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280" id="<portlet:namespace />viewEntriesContainer">
-	<liferay-ui:search-container searchContainer="<%= ddlFormViewEntriesDisplayContext.getRecordSearchContainer() %>">
+	<liferay-ui:search-container searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>">
 
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.lists.model.DDLRecord"
@@ -45,14 +45,14 @@ DisplayTerms displayTerms = ddlFormViewEntriesDisplayContext.getRecordSearchCont
 			modelVar="ddlRecord">
 
 			<%
-			DDMFormValues ddmFormValues = ddlFormViewEntriesDisplayContext.getDDMFormValues(ddlRecord);
+			DDMFormValues ddmFormValues = ddlFormViewRecordsDisplayContext.getDDMFormValues(ddlRecord);
 
-			for (int i = 0; i < ddlFormViewEntriesDisplayContext.getTotalColumns(); i++) {
+			for (int i = 0; i < ddlFormViewRecordsDisplayContext.getTotalColumns(); i++) {
 			%>
 
 				<liferay-ui:search-container-column-text
-					name="<%= ddlFormViewEntriesDisplayContext.getColumnName(i, ddmFormValues) %>"
-					value="<%= ddlFormViewEntriesDisplayContext.getColumnValue(i, ddmFormValues) %>"
+					name="<%= ddlFormViewRecordsDisplayContext.getColumnName(i, ddmFormValues) %>"
+					value="<%= ddlFormViewRecordsDisplayContext.getColumnValue(i, ddmFormValues) %>"
 				/>
 
 			<%
@@ -65,16 +65,16 @@ DisplayTerms displayTerms = ddlFormViewEntriesDisplayContext.getRecordSearchCont
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				path="/admin/view_entries_action.jsp"
+				path="/admin/view_records_action.jsp"
 			/>
 
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= ddlFormViewEntriesDisplayContext.getDisplayStyle() %>" paginate="<%= false %>" searchContainer="<%= ddlFormViewEntriesDisplayContext.getRecordSearchContainer() %>" view="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= ddlFormViewRecordsDisplayContext.getDisplayStyle() %>" paginate="<%= false %>" searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>" view="lexicon" />
 
 	</liferay-ui:search-container>
 </div>
 
 <div class="container-fluid-1280">
-	<liferay-ui:search-paginator searchContainer="<%= ddlFormViewEntriesDisplayContext.getRecordSearchContainer() %>" />
+	<liferay-ui:search-paginator searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>" />
 </div>

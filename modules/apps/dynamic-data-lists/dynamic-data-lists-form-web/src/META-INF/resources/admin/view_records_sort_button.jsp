@@ -31,7 +31,7 @@ String redirect = ParamUtil.getString(request, "redirect", PortalUtil.getCurrent
 
 <li class="<%= orderByType.equals("asc") ? "active" : StringPool.BLANK %>">
 	<portlet:renderURL var="orderByColAscURL">
-		<portlet:param name="mvcPath" value="/admin/view_entries.jsp" />
+		<portlet:param name="mvcPath" value="/admin/view_records.jsp" />
 		<portlet:param name="recordSetId" value="<%= String.valueOf(recordSetId) %>" />
 		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
 		<portlet:param name="orderByType" value="asc" />
@@ -43,7 +43,7 @@ String redirect = ParamUtil.getString(request, "redirect", PortalUtil.getCurrent
 
 <li class="<%= orderByType.equals("desc") ? "active" : StringPool.BLANK %>">
 	<portlet:renderURL var="orderByColDescURL">
-		<portlet:param name="mvcPath" value="/admin/view_entries.jsp" />
+		<portlet:param name="mvcPath" value="/admin/view_records.jsp" />
 		<portlet:param name="recordSetId" value="<%= String.valueOf(recordSetId) %>" />
 		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
 		<portlet:param name="orderByType" value="desc" />
@@ -55,7 +55,7 @@ String redirect = ParamUtil.getString(request, "redirect", PortalUtil.getCurrent
 
 <aui:script>
 	<portlet:renderURL var="orderByTypeURL">
-		<portlet:param name="mvcPath" value="/admin/view_entries.jsp" />
+		<portlet:param name="mvcPath" value="/admin/view_records.jsp" />
 		<portlet:param name="recordSetId" value="<%= String.valueOf(recordSetId) %>" />
 		<portlet:param name="orderByType" value="<%= orderByType %>" />
 		<portlet:param name="redirect" value="<%= redirect %>" />

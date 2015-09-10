@@ -162,8 +162,9 @@ public class SpringDependencyAnalyzerPluginTest {
 		"com.liferay.ant.bnd.spring.filter";
 
 	private static final String _RELEASE_INFO =
-		"java.lang.Object (&(release.bundle.symbolic.name=test.bundle)" +
-			"(release.schema.version=1.0.0.1))\n";
+		"com.liferay.portal.model.Release " +
+			"(&(release.bundle.symbolic.name=test.bundle)" +
+				"(release.schema.version=1.0.0.1))\n";
 
 	private static final class JarResource {
 

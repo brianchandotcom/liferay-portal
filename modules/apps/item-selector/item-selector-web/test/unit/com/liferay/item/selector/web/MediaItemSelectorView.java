@@ -62,7 +62,7 @@ public class MediaItemSelectorView
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			MediaItemSelectorCriterion mediaItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedEventName)
+			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException {
 
 		PrintWriter printWriter = response.getWriter();

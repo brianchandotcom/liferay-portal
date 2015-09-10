@@ -77,7 +77,7 @@ public class ItemSelectorURLView
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			URLItemSelectorCriterion URLItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedEventName)
+			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		ServletContext servletContext = getServletContext();

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 
@@ -111,14 +112,16 @@ public class ItemSelectorImpl implements ItemSelector {
 					requestBackedPortletURLFactory, itemSelectedEventName,
 					itemSelectorCriteriaArray);
 
-				portletURL.setParameter(
-					PARAMETER_SELECTED_TAB,
-					itemSelectorView.getTitle(portletRequest.getLocale()));
+				String title = itemSelectorView.getTitle(
+					portletRequest.getLocale());
+
+				portletURL.setParameter(PARAMETER_SELECTED_TAB, title);
 
 				itemSelectorViewRenderers.add(
 					new ItemSelectorViewRendererImpl(
 						itemSelectorView, itemSelectorCriterion, portletURL,
-						itemSelectedEventName));
+						itemSelectedEventName,
+						isSearch(portletRequest, title)));
 			}
 		}
 
@@ -259,6 +262,17 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 
 		return values[0];
+	}
+
+	protected boolean isSearch(PortletRequest portletRequest, String title) {
+		String keywords = portletRequest.getParameter("keywords");
+		String selectedTab = portletRequest.getParameter("selectedTab");
+
+		if (Validator.isNotNull(keywords) && title.equals(selectedTab)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void populateCriteria(

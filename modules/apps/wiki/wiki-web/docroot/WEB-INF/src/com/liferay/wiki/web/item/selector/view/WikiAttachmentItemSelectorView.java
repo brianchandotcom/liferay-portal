@@ -85,14 +85,14 @@ public class WikiAttachmentItemSelectorView
 			ServletRequest request, ServletResponse response,
 			WikiAttachmentItemSelectorCriterion
 				wikiAttachmentItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedEventName)
+			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		WikiAttachmentItemSelectorViewDisplayContext
 			wikiAttachmentItemSelectorViewDisplayContext =
 				new WikiAttachmentItemSelectorViewDisplayContext(
 					wikiAttachmentItemSelectorCriterion, this,
-					itemSelectedEventName, portletURL);
+					itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
 			WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

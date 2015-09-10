@@ -82,14 +82,14 @@ public class BlogsItemSelectorView
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			BlogsItemSelectorCriterion blogsItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedEventName)
+			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		BlogsItemSelectorViewDisplayContext
 			blogsItemSelectorViewDisplayContext =
 				new BlogsItemSelectorViewDisplayContext(
 					blogsItemSelectorCriterion, this, itemSelectedEventName,
-					portletURL);
+					search, portletURL);
 
 		request.setAttribute(
 			BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

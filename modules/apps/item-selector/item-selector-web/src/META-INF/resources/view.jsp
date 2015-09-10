@@ -88,6 +88,13 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = curItemSelectorViewRenderer.getItemSelectorView();
 
 				data.put("showSearch", itemSelectorView.isShowSearch());
+
+				if (selectedTab.equals(itemSelectorView.getTitle(locale))) {
+					data.put("portletURL", currentURL);
+				}
+				else {
+					data.put("portletURL", itemSelectorViewRenderer.getPortletURL());
+				}
 			%>
 
 				<liferay-ui:section data="<%= data %>">
@@ -125,6 +132,10 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 				if (formSearch) {
 					formSearch.toggle(showSearch === 'true');
+
+					var searchFm = A.one('#<portlet:namespace />searchFm');
+
+					searchFm.setAttribute('action', tabSection.getData('portletURL'));
 				}
 			}
 		}

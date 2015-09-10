@@ -61,7 +61,7 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response, T t,
-			PortletURL portletURL, String itemSelectedEventName)
+			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		ServletContext servletContext = getServletContext();
@@ -71,7 +71,7 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
 			new DLItemSelectorViewDisplayContext(
-				t, this, itemSelectedEventName, portletURL);
+				t, this, itemSelectedEventName, search, portletURL);
 
 		request.setAttribute(
 			DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

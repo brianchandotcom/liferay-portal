@@ -36,12 +36,13 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	public ItemSelectorViewRendererImpl(
 		ItemSelectorView<ItemSelectorCriterion> itemSelectorView,
 		ItemSelectorCriterion itemSelectorCriterion, PortletURL portletURL,
-		String itemSelectedEventName) {
+		String itemSelectedEventName, boolean search) {
 
 		_itemSelectorView = itemSelectorView;
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
+		_search = search;
 	}
 
 	@Override
@@ -52,6 +53,11 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	@Override
 	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView() {
 		return _itemSelectorView;
+	}
+
+	@Override
+	public PortletURL getPortletURL() {
+		return _portletURL;
 	}
 
 	@Override
@@ -70,7 +76,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 					_itemSelectorView.renderHTML(
 						request, response, _itemSelectorCriterion, _portletURL,
-						_itemSelectedEventName);
+						_itemSelectedEventName, _search);
 				}
 
 			});
@@ -80,5 +86,6 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	private final ItemSelectorCriterion _itemSelectorCriterion;
 	private final ItemSelectorView<ItemSelectorCriterion> _itemSelectorView;
 	private final PortletURL _portletURL;
+	private final boolean _search;
 
 }

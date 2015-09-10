@@ -93,7 +93,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 					data.put("portletURL", currentURL);
 				}
 				else {
-					data.put("portletURL", itemSelectorViewRenderer.getPortletUrl());
+					data.put("portletURL", itemSelectorViewRenderer.getPortletURL());
 				}
 			%>
 

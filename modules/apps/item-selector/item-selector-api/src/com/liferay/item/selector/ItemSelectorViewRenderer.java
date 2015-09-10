@@ -30,7 +30,7 @@ public interface ItemSelectorViewRenderer {
 
 	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView();
 
-	public PortletURL getPortletUrl();
+	public PortletURL getPortletURL();
 
 	public void renderHTML(PageContext pageContext)
 		throws IOException, ServletException;

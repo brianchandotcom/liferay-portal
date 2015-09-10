@@ -56,7 +56,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	}
 
 	@Override
-	public PortletURL getPortletUrl() {
+	public PortletURL getPortletURL() {
 		return _portletURL;
 	}
 

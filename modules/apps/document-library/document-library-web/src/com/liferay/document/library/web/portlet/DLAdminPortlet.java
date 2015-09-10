@@ -44,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.webdav-storage-token=document_library",
 		"javax.portlet.display-name=Documents and Media Admin",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.single-page-application-cacheable=false",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/document_library_admin/view.jsp",
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,

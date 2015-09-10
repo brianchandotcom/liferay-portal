@@ -11,8 +11,6 @@ YUI.add(
 
 		var ATTR_DATA_LOG_ID = 'logId';
 
-		var BODY = A.getBody();
-
 		var CSS_COLLAPSE = 'collapse';
 
 		var CSS_CURRENT_SCOPE = 'current-scope';

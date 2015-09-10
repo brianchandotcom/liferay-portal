@@ -6,7 +6,7 @@
 
 	&.toggle {
 		transform: translate(calc(-100% + 4%));
-		transition: transform 0.15s ease, visibility 0s 0.15s;
+		transition: transform 0.2s ease, visibility 0s 0.15s;
 		visibility: hidden;
 		will-change: initial;
 	}
@@ -125,6 +125,11 @@
 	margin: 0 6px;
 	position: relative;
 	width: 100%;
+
+	img {
+		cursor: pointer;
+		width: 100%;
+	}
 }
 
 .before {

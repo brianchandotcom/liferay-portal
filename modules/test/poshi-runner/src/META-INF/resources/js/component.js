@@ -533,7 +533,13 @@ YUI.add(
 						var instance = this;
 
 						var consoleLog = command.one('.console');
-						var screenshot = command.one('.screenshots');
+						var screenshots = command.one('.screenshots');
+
+						if (screenshots) {
+							screenshots.removeAttribute('Class');
+							screenshots.addClass('screenshots-log');
+							consoleLog.append(screenshots);
+						}
 
 						var functionLinkId = command.getData(ATTR_DATA_FUNCTION_LINK_ID);
 
@@ -541,7 +547,7 @@ YUI.add(
 
 						var failedFunction = instance.get(STR_XML_LOG).one(functionLinkIdSelector);
 
-						if (consoleLog && screenshot && failedFunction) {
+						if (consoleLog && failedFunction) {
 							var buffer = [];
 
 							var consoleBtn = A.Lang.sub(
@@ -552,15 +558,6 @@ YUI.add(
 								}
 							);
 
-							var screenshotBtn = A.Lang.sub(
-								TPL_ERROR_BUTTONS,
-								{
-									cssClass: 'btn-screenshot',
-									linkId: screenshot.getData(ATTR_DATA_ERROR_LINK_ID)
-								}
-							);
-
-							buffer.push(screenshotBtn);
 							buffer.push(consoleBtn);
 
 							buffer = buffer.join(STR_BLANK);
@@ -569,7 +566,6 @@ YUI.add(
 
 							btnContainer.append(buffer);
 
-							failedFunction.prepend(screenshot.clone());
 							failedFunction.append(consoleLog.clone());
 						}
 					},

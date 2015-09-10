@@ -41,7 +41,6 @@ recordSetSearch.setOrderByType(orderByType);
 
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-		<aui:input name="deleteStructureIds" type="hidden" />
 
 		<liferay-ui:search-container
 			emptyResultsMessage="no-forms-were-found"

@@ -4148,6 +4148,10 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	private String _friendlyURLRoutes;
 
+	/**
+	 * <code>True</code> if the portlet can be displayed as a full page of the
+	 * view.
+	 */
 	private boolean _fullPageDisplayable;
 
 	/**

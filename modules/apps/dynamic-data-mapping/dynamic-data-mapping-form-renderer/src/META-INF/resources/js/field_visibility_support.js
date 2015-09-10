@@ -37,7 +37,9 @@ AUI.add(
 
 				var visibility = Util.getFieldByKey(result, instanceId, 'instanceId');
 
-				instance.set('visible', visibility && visibility.visible === true);
+				if (visibility !== undefined) {
+					instance.set('visible', visibility.visible);
+				}
 			},
 
 			processVisibilityEvaluation: function(result) {

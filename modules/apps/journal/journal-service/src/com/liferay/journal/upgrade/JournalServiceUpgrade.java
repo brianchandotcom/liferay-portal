@@ -20,12 +20,14 @@ import com.liferay.journal.upgrade.v1_0_0.UpgradeJournal;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalArticleType;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeJournalDisplayPreferences;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeLastPublishDate;
+import com.liferay.journal.upgrade.v1_0_0.UpgradePortletSettings;
 import com.liferay.journal.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 
@@ -73,6 +75,11 @@ public class JournalServiceUpgrade {
 		_releaseLocalService = releaseLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
 	@Activate
 	protected void upgrade() throws Exception {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
@@ -84,6 +91,7 @@ public class JournalServiceUpgrade {
 		upgradeProcesses.add(new UpgradeJournalArticleType());
 		upgradeProcesses.add(new UpgradeJournalDisplayPreferences());
 		upgradeProcesses.add(new UpgradeLastPublishDate());
+		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.journal.service", upgradeProcesses, 1, 1, false);
@@ -95,5 +103,6 @@ public class JournalServiceUpgrade {
 		JournalServiceUpgrade.class);
 
 	private ReleaseLocalService _releaseLocalService;
+	private SettingsFactory _settingsFactory;
 
 }

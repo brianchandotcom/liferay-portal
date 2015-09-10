@@ -81,7 +81,7 @@ public class SeleniumUtil extends PropsValues {
 				_selenium = new FirefoxWebDriverImpl(projectDirName, portalURL);
 			}
 			else if (BROWSER_TYPE.equals("internetexplorer") &&
-					  !SELENIUM_REMOTE_DRIVER_ENABLED) {
+					 !SELENIUM_REMOTE_DRIVER_ENABLED) {
 
 				System.setProperty(
 					"webdriver.ie.driver",
@@ -92,7 +92,7 @@ public class SeleniumUtil extends PropsValues {
 					projectDirName, portalURL);
 			}
 			else if (BROWSER_TYPE.equals("internetexplorer") &&
-					  SELENIUM_REMOTE_DRIVER_ENABLED) {
+					 SELENIUM_REMOTE_DRIVER_ENABLED) {
 
 				_selenium = new InternetExplorerRemoteWebDriverImpl(
 					projectDirName, portalURL);

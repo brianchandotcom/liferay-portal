@@ -27,7 +27,4 @@ public interface NestedPortletsPortletInstanceConfiguration {
 	@Meta.AD(deflt = "", required = false)
 	public String layoutTemplateId();
 
-	@Meta.AD(deflt = "true", required = false)
-	public boolean portletSetupShowBorders();
-
 }

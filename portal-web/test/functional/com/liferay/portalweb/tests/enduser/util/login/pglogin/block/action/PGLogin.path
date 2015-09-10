@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>EMAIL_ADDRESS_FIELD</td>
-	<td>//input[@id='_58_login']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_login']</td>
 	<td>Email Address Field</td>
 </tr>
 <tr>
@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>SCREEN_NAME_FIELD</td>
-	<td>//input[@id='_58_login']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_login']</td>
 	<td>Screen Name Field</td>
 </tr>
 <tr>
 	<td>PASSWORD_FIELD</td>
-	<td>//input[@id='_58_password']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_password']</td>
 	<td>Password Field</td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>REMEMBER_ME_CHECKBOX</td>
-	<td>//input[@id='_58_rememberMe']</td>
+	<td>//input[@id='_com_liferay_login_web_portlet_LoginPortlet_rememberMe']</td>
 	<td></td>
 </tr>
 <tr>

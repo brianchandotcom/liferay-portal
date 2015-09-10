@@ -20,7 +20,7 @@
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="tags" />
 	</aui:nav>

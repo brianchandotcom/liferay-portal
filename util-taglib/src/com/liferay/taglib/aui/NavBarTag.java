@@ -50,10 +50,10 @@ public class NavBarTag extends BaseNavBarTag implements BodyTag {
 
 	@Override
 	protected String getPage() {
-		String view = getView();
+		String markupView = getMarkupView();
 
-		if (Validator.isNotNull(view)) {
-			return "/html/taglib/aui/nav_bar/" + view + "/page.jsp";
+		if (Validator.isNotNull(markupView)) {
+			return "/html/taglib/aui/nav_bar/" + markupView + "/page.jsp";
 		}
 
 		return "/html/taglib/aui/nav_bar/page.jsp";

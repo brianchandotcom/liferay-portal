@@ -1067,7 +1067,7 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
-				<name>view</name>
+				<name>markupView</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>

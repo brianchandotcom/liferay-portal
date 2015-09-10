@@ -48,7 +48,7 @@ if (Validator.isNotNull(keywords)) {
 }
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="entries" />
 	</aui:nav>

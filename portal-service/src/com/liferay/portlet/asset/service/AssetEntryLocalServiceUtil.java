@@ -750,7 +750,7 @@ public class AssetEntryLocalServiceUtil {
 		java.lang.String mimeType, java.lang.String title,
 		java.lang.String description, java.lang.String summary,
 		java.lang.String url, java.lang.String layoutUuid, int height,
-		int width, java.lang.Integer priority)
+		int width, java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateEntry(userId, groupId, createDate, modifiedDate,
@@ -763,7 +763,7 @@ public class AssetEntryLocalServiceUtil {
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	Date, Date, String, long, String, long, long[], String[],
 	boolean, Date, Date, Date, String, String, String, String,
-	String, String, int, int, Integer)}
+	String, String, int, int, Double)}
 	*/
 	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetEntry updateEntry(

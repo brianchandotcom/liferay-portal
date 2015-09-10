@@ -739,11 +739,17 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			boolean sync)
 		throws PortalException {
 
+		Double priorityValue = null;
+
+		if (priority != null) {
+			priorityValue = priority.doubleValue();
+		}
+
 		return updateEntry(
 			userId, groupId, createDate, modifiedDate, className, classPK,
 			classUuid, classTypeId, categoryIds, tagNames, visible, startDate,
 			endDate, expirationDate, mimeType, title, description, summary, url,
-			layoutUuid, height, width, priority.doubleValue());
+			layoutUuid, height, width, priorityValue);
 	}
 
 	@Override
@@ -817,11 +823,17 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			int height, int width, Integer priority, boolean sync)
 		throws PortalException {
 
+		Double priorityValue = null;
+
+		if (priority != null) {
+			priorityValue = priority.doubleValue();
+		}
+
 		return updateEntry(
 			userId, groupId, null, null, className, classPK, classUuid,
 			classTypeId, categoryIds, tagNames, visible, startDate, endDate,
 			expirationDate, mimeType, title, description, summary, url,
-			layoutUuid, height, width, priority.doubleValue());
+			layoutUuid, height, width, priorityValue);
 	}
 
 	@Override

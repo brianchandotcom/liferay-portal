@@ -2066,6 +2066,11 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The number of items to show in the icon menu before scrolling. The default value is <![CDATA[<code>15</code>]]>.</description>
 			<name>maxDisplayItems</name>
 			<required>false</required>
@@ -2124,11 +2129,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<name>view</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>

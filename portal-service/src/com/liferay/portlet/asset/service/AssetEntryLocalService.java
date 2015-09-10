@@ -567,13 +567,13 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		java.lang.String title, java.lang.String description,
 		java.lang.String summary, java.lang.String url,
 		java.lang.String layoutUuid, int height, int width,
-		java.lang.Integer priority) throws PortalException;
+		java.lang.Double priority) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	Date, Date, String, long, String, long, long[], String[],
 	boolean, Date, Date, Date, String, String, String, String,
-	String, String, int, int, Integer)}
+	String, String, int, int, Double)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portlet.asset.model.AssetEntry updateEntry(long userId,

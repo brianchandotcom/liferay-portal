@@ -77,6 +77,8 @@
 	</command>
 
 	<command name="Smoke" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page" />
 		</execute>

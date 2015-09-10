@@ -41,8 +41,8 @@ public class SearchToggleTag extends IncludeTag {
 		_id = id;
 	}
 
-	public void setView(String view) {
-		_view = view;
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
 	}
 
 	@Override
@@ -51,13 +51,13 @@ public class SearchToggleTag extends IncludeTag {
 		_buttonLabel = null;
 		_displayTerms = null;
 		_id = null;
-		_view = null;
+		_markupView = null;
 	}
 
 	@Override
 	protected String getEndPage() {
-		if (Validator.isNotNull(_view)) {
-			return "/html/taglib/ui/search_toggle/" + _view + "/end.jsp";
+		if (Validator.isNotNull(_markupView)) {
+			return "/html/taglib/ui/search_toggle/" + _markupView + "/end.jsp";
 		}
 
 		return "/html/taglib/ui/search_toggle/end.jsp";
@@ -65,8 +65,9 @@ public class SearchToggleTag extends IncludeTag {
 
 	@Override
 	protected String getStartPage() {
-		if (Validator.isNotNull(_view)) {
-			return "/html/taglib/ui/search_toggle/" + _view + "/start.jsp";
+		if (Validator.isNotNull(_markupView)) {
+			return
+				"/html/taglib/ui/search_toggle/" + _markupView + "/start.jsp";
 		}
 
 		return "/html/taglib/ui/search_toggle/start.jsp";
@@ -87,6 +88,6 @@ public class SearchToggleTag extends IncludeTag {
 	private String _buttonLabel;
 	private DisplayTerms _displayTerms;
 	private String _id;
-	private String _view;
+	private String _markupView;
 
 }

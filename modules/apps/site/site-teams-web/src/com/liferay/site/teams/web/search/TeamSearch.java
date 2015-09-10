@@ -15,7 +15,10 @@
 package com.liferay.site.teams.web.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.model.Role;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.Team;
+import com.liferay.portal.util.comparator.TeamNameComparator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +29,7 @@ import javax.portlet.PortletURL;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TeamSearch extends SearchContainer<Role> {
+public class TeamSearch extends SearchContainer<Team> {
 
 	public static final String EMPTY_RESULTS_MESSAGE = "no-teams-were-found";
 
@@ -48,6 +51,36 @@ public class TeamSearch extends SearchContainer<Role> {
 		iteratorURL.setParameter(
 			TeamDisplayTerms.DESCRIPTION, displayTerms.getDescription());
 		iteratorURL.setParameter(TeamDisplayTerms.NAME, displayTerms.getName());
+
+		String orderByCol = ParamUtil.getString(
+			portletRequest, "orderByCol", "name");
+		String orderByType = ParamUtil.getString(
+			portletRequest, "orderByType", "asc");
+
+		OrderByComparator<Team> orderByComparator = getTeamOrderByComparator(
+			orderByCol, orderByType);
+
+		setOrderByCol(orderByCol);
+		setOrderByType(orderByType);
+		setOrderByComparator(orderByComparator);
+	}
+
+	protected static OrderByComparator<Team> getTeamOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<Team> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = new TeamNameComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 }

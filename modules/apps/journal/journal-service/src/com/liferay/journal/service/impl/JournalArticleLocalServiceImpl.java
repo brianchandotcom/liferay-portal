@@ -5576,6 +5576,32 @@ public class JournalArticleLocalServiceImpl
 	 * @param  assetCategoryIds the primary keys of the new asset categories
 	 * @param  assetTagNames the new asset tag names
 	 * @param  assetLinkEntryIds the primary keys of the new asset link entries
+	 * @throws PortalException if a portal exception occurred
+	 *
+	 * @deprecated As of 7.0.0, replaced by {@link #updateAsset(long, JournalArticle, long[], String[], long[], Double)}
+	 */
+	@Deprecated
+	@Override
+	public void updateAsset(
+			long userId, JournalArticle article, long[] assetCategoryIds,
+			String[] assetTagNames, long[] assetLinkEntryIds)
+		throws PortalException {
+
+		updateAsset(
+			userId, article, assetCategoryIds, assetTagNames, assetLinkEntryIds,
+			null);
+	}
+
+	/**
+	 * Updates the web content article's asset with the new asset categories,
+	 * tag names, and link entries, removing and adding them as necessary.
+	 *
+	 * @param  userId the primary key of the user updating the web content
+	 *         article's asset
+	 * @param  article the web content article
+	 * @param  assetCategoryIds the primary keys of the new asset categories
+	 * @param  assetTagNames the new asset tag names
+	 * @param  assetLinkEntryIds the primary keys of the new asset link entries
 	 * @param priority the priority of the asset
 	 * @throws PortalException if a portal exception occurred
 	 */

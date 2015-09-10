@@ -1887,9 +1887,21 @@ module.framework.base.dir=${project.dir}/osgi]]></echo>
 				</then>
 				<elseif>
 					<or>
-						<contains string="@{liferay.portal.bundle}" substring="6.2.10" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.2" />
 						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.3" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.1" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.2" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.3" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.4" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.5" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.6" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.7" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.8" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.9" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.10" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.11" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.12" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.10.13" />
 					</or>
 					<then>
 						<echo file="app.server.${user.name}.properties" append="true">

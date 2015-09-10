@@ -11,7 +11,7 @@
 		<execute macro="WebContent#tearDownCP" />
 	</tear-down>
 
-	<command description="Ensure that the super admin can add pages, add portlets, and navigate to the product menu." name="Smoke" priority="5">
+	<command description="Ensure that the super admin can add pages, add portlets, navigate to the product menu, use the WYSIWYG editor, and view alert messages." name="Smoke" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Smoke#viewWelcomePage" />

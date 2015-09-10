@@ -79,7 +79,7 @@
 		<var name="webContentContent" value="Web Content Content" />
 		<var name="webContentTitle" value="Web Content Title" />
 
-		<task summary="Add a Web Content article with '${webContentTitle}' as the Title and '${webContentContent}' as the Content">
+		<task summary="Add a web content article with '${webContentTitle}' as the title and '${webContentContent}' as the content">
 			<execute macro="WebContentNavigator#gotoAddCP" />
 
 			<execute macro="WebContent#addCP">

@@ -76,7 +76,7 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 		<liferay-frontend:management-bar-filters>
 			<li>
 				<span class="management-bar-text">
-					<span class="selected-items-count"></span> items selected
+					<span class="selected-items-count"></span> <liferay-ui:message key="items-selected" />
 				</span>
 			</li>
 		</liferay-frontend:management-bar-filters>

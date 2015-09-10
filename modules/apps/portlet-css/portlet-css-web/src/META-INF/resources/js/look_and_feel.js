@@ -115,16 +115,8 @@ AUI.add(
 					instance._baseRenderPortletURL = baseRenderPortletURL;
 					instance._baseResourcePortletURL = baseResourcePortletURL;
 					instance._portletId = portletId;
-
-					if (!obj.hasClass('portlet-borderless')) {
-						instance._curPortlet = obj.one('.portlet');
-						instance._curPortletWrapperId = instance._curPortlet.attr(ID);
-					}
-					else {
-						instance._curPortlet = obj;
-						instance._curPortletWrapperId = curPortletBoundaryId;
-					}
-
+					instance._curPortlet = obj.one('.portlet');
+					instance._curPortletWrapperId = instance._curPortlet.attr(ID);
 					instance._portletBoundary = obj;
 					instance._portletBoundaryId = curPortletBoundaryId;
 					instance._newPanel = A.one('#portlet-set-properties');
@@ -833,7 +825,7 @@ AUI.add(
 						customTitle: EMPTY,
 						language: 'en_US',
 						portletLinksTarget: EMPTY,
-						showBorders: EMPTY,
+						portletDecoratorId: EMPTY,
 						title: EMPTY,
 						titles: {},
 						useCustomTitle: false
@@ -959,7 +951,7 @@ AUI.add(
 
 					instance._customTitleInput = instance._getNodeById('custom-title');
 					instance._customTitleCheckbox = instance._getNodeById('use-custom-title');
-					instance._showBorders = instance._getNodeById('show-borders');
+					instance._portletDecorator = instance._getNodeById('portlet-decorator');
 					instance._borderNote = A.one('#border-note');
 					instance._portletLanguage = instance._getNodeById('lfr-portlet-language');
 					instance._portletLinksTarget = instance._getNodeById('lfr-point-links');
@@ -1280,7 +1272,7 @@ AUI.add(
 				var language = instance._portletLanguage;
 				var portletData = instance._objData.portletData;
 				var portletLinksTarget = instance._portletLinksTarget;
-				var showBorders = instance._showBorders;
+				var portletDecorator = instance._portletDecorator;
 
 				// Use custom title
 
@@ -1321,15 +1313,9 @@ AUI.add(
 							if (portletLanguage == instance._currentLanguage) {
 								portletTitle.html(cruft);
 
-								var portletTitleText = portletTitle;
+								var portletTitleText = portletTitle.one('.portlet-title-text');
 
-								if (instance._showBorders.val() != 'false') {
-									portletTitleText = portletTitle.one('.portlet-title-text');
-								}
-
-								if (portletTitleText) {
-									portletTitleText.text(value);
-								}
+								portletTitleText.text(value);
 							}
 
 							portletData.title = value;
@@ -1339,14 +1325,14 @@ AUI.add(
 					}
 				);
 
-				// Show borders
+				// Portlet decorator
 
-				showBorders.on(
+				portletDecorator.on(
 					CHANGE,
 					function(event) {
 						borderNote.show();
 
-						portletData.showBorders = event.currentTarget.val();
+						portletData.portletDecoratorId = event.currentTarget.val();
 					}
 				);
 
@@ -1430,11 +1416,7 @@ AUI.add(
 
 				var portletData = instance._objData.portletData;
 
-				var portletTitleSelector = '.portlet-title-default';
-
-				if (instance._showBorders.val() != 'false') {
-					portletTitleSelector = '.portlet-title-text';
-				}
+				var portletTitleSelector = '.portlet-title-text';
 
 				var portletTitleText = instance._curPortlet.one(portletTitleSelector);
 
@@ -1506,7 +1488,7 @@ AUI.add(
 				// Portlet config
 
 				instance._setCheckbox(instance._customTitleCheckbox, portletData.useCustomTitle);
-				instance._setSelect(instance._showBorders, portletData.showBorders);
+				instance._setSelect(instance._portletDecorator, portletData.portletDecoratorId);
 				instance._setSelect(instance._portletLanguage, instance._currentLanguage);
 				instance._setSelect(instance._portletLinksTarget, portletData.portletLinksTarget);
 

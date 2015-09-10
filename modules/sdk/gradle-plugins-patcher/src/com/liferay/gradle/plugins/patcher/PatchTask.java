@@ -31,6 +31,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -250,7 +251,7 @@ public class PatchTask extends DefaultTask {
 
 		_project.copy(closure);
 
-		for (final File patchFile : getPatchFiles()) {
+		for (final File patchFile : getSortedPatchFiles()) {
 			final ByteArrayOutputStream byteArrayOutputStream =
 				new ByteArrayOutputStream();
 
@@ -429,6 +430,16 @@ public class PatchTask extends DefaultTask {
 		}
 
 		return GradleUtil.toFile(_project, patchedSrcDir);
+	}
+
+	protected List<File> getSortedPatchFiles() {
+		List<File> sortedPatchFiles = new ArrayList<>();
+
+		GUtil.addToCollection(sortedPatchFiles, getPatchFiles());
+
+		Collections.sort(sortedPatchFiles);
+
+		return sortedPatchFiles;
 	}
 
 	private static final String _BASE_URL =

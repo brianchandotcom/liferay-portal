@@ -1,7 +1,4 @@
-import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask
-import com.liferay.gradle.plugins.tasks.CompileThemeTask
 import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.GradleUtil
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
@@ -21,18 +18,17 @@ liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
 }
 
-File themesDestinationDir = file("src/META-INF/resources");
-File thirdPartyDir = file("../../../portal-web/third-party")
+File themeDestinationDir = file("src/META-INF/resources/_unstyled");
+File thirdPartyDir = file("../../../../portal-web/third-party")
 
 task buildAlloyBootstrapTheme(type: Copy)
 task buildAlloyFontAwesome(type: Copy)
 task buildAlloyTheme(type: Copy)
 task buildLexicon(type: Copy)
-task buildThemes
-task copyFavicon(type: Copy)
+task buildTheme
 
 buildAlloyBootstrapTheme {
-	File alloyBootstrapDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui")
+	File alloyBootstrapDestinationDir = new File(themeDestinationDir, "css/aui")
 	File bootstrapSassZipFile = new File(thirdPartyDir, "bootstrap-sass-${alloyBootstrapVersion}.zip")
 
 	doFirst {
@@ -51,7 +47,7 @@ buildAlloyBootstrapTheme {
 }
 
 buildAlloyFontAwesome {
-	File alloyFontAwesomeDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui/alloy-font-awesome")
+	File alloyFontAwesomeDestinationDir = new File(themeDestinationDir, "css/aui/alloy-font-awesome")
 	File alloyFontAwesomeZipFile = new File(thirdPartyDir, "alloy-font-awesome-${alloyFontAwesomeVersion}.zip")
 
 	dependsOn buildAlloyBootstrapTheme
@@ -75,7 +71,7 @@ buildAlloyFontAwesome {
 }
 
 buildAlloyTheme {
-	File alloyThemeDestinationDir = new File(themesDestinationDir, "_unstyled/images/aui")
+	File alloyThemeDestinationDir = new File(themeDestinationDir, "images/aui")
 	File alloyZipFile = new File(thirdPartyDir, "alloy-${alloyVersion}.zip")
 
 	doFirst {
@@ -99,11 +95,11 @@ buildAlloyTheme {
 }
 
 buildCSS {
-	dependsOn buildThemes
+	dependsOn buildTheme
 }
 
 buildLexicon {
-	File lexiconDestinationDir = new File(themesDestinationDir, "_unstyled/css/aui/lexicon")
+	File lexiconDestinationDir = new File(themeDestinationDir, "css/aui/lexicon")
 	File lexiconZipFile = new File(thirdPartyDir, "lexicon-${lexiconVersion}.zip")
 
 	dependsOn buildAlloyBootstrapTheme
@@ -168,47 +164,13 @@ buildLexicon {
 	}
 }
 
-buildThemes {
-	dependsOn buildAlloyBootstrapTheme, buildAlloyFontAwesome, buildAlloyTheme, buildLexicon, copyFavicon
+buildTheme {
+	dependsOn buildAlloyBootstrapTheme
+	dependsOn buildAlloyFontAwesome
+	dependsOn buildAlloyTheme
+	dependsOn buildLexicon
 }
 
 classes {
-	dependsOn buildThemes
-}
-
-copyFavicon {
-	ext {
-		autoClean = false
-	}
-
-	from new File(themesDestinationDir, "_unstyled/images/favicon.ico")
-	into "src/META-INF/resources"
-}
-
-themesDestinationDir.eachDir {
-	File themeDir ->
-
-	if (themeDir.name in ["_styled", "_unstyled"]) {
-		return
-	}
-
-	String buildThemeThumbnailsTaskName = GradleUtil.getTaskName("buildThumbnails", themeDir)
-	String compileThemeTaskName = GradleUtil.getTaskName("compileTheme", themeDir)
-
-	task(compileThemeTaskName, type: CompileThemeTask) {
-		dependsOn buildThemeThumbnailsTaskName
-		diffsDir = new File(themeDir, "_diffs")
-		frontendThemesWebDir = "src/META-INF/resources"
-		themeParent = "_styled"
-		themeRootDir = themeDir
-		themeTypes "ftl", "vm"
-	}
-
-	task(buildThemeThumbnailsTaskName, type: BuildThumbnailsTask) {
-		imageDirs themeDir
-	}
-
-	buildThemes {
-		dependsOn compileThemeTaskName
-	}
+	dependsOn buildTheme
 }

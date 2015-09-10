@@ -16,6 +16,8 @@ package com.liferay.portal.velocity;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.template.URLResourceParser;
@@ -74,11 +76,12 @@ public class VelocityServletResourceParser extends URLResourceParser {
 				_log.warn("The template " + name + " should be created");
 			}
 
-			ServletContext portalServletContext = ServletContextPool.get(
-				PortalUtil.getServletContextName());
+			ServletContext themesServletContext =
+				PortalWebResourcesUtil.getServletContext(
+					PortalWebResourceConstants.RESOURCE_TYPE_CLASSIC_THEME);
 
-			url = portalServletContext.getResource(
-				"/_unstyled/templates/init_custom.vm");
+			url = themesServletContext.getResource(
+				"/classic/templates/init_custom.vm");
 		}
 
 		return url;

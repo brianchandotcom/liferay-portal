@@ -65,7 +65,7 @@ public class JSPSearchEntry extends SearchEntry {
 			HttpServletResponse response)
 		throws Exception {
 
-		request.setAttribute(ENTRY_HREF, getHref());
+		request.setAttribute(SEARCH_ENTRY_HREF, getHref());
 
 		if (_servletContext != null) {
 			RequestDispatcher requestDispatcher =
@@ -82,7 +82,7 @@ public class JSPSearchEntry extends SearchEntry {
 			requestDispatcher.include(request, response);
 		}
 
-		request.removeAttribute(ENTRY_HREF);
+		request.removeAttribute(SEARCH_ENTRY_HREF);
 	}
 
 	public void setHref(String href) {

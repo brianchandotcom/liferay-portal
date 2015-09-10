@@ -21,7 +21,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 
 JournalArticle article = (JournalArticle)row.getObject();
 
-String rowURL = (String)request.getAttribute(SearchEntry.ENTRY_HREF);
+String rowURL = (String)request.getAttribute(SearchEntry.SEARCH_ENTRY_HREF);
 
 AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
 

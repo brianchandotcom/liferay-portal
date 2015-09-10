@@ -34,7 +34,7 @@ public interface SearchEntry {
 
 	public static final String DEFAULT_VALIGN = "middle";
 
-	public static final String ENTRY_HREF = "href";
+	public static final String SEARCH_ENTRY_HREF = "search_entry_href";
 
 	public String getAlign();
 

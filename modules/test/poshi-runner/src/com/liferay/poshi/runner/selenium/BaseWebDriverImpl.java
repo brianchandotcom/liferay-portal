@@ -22,9 +22,7 @@ import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 import com.liferay.poshi.runner.util.Validator;
 
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
@@ -473,15 +471,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isNotSelectedLabel(String selectLocator, String pattern) {
-		if (isElementNotPresent(selectLocator)) {
-			return false;
-		}
-
-		String[] selectedLabels = getSelectedLabels(selectLocator);
-
-		List<String> selectedLabelsList = Arrays.asList(selectedLabels);
-
-		return !selectedLabelsList.contains(pattern);
+		return WebDriverHelper.isNotSelectedLabel(this, selectLocator, pattern);
 	}
 
 	@Override
@@ -506,11 +496,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public boolean isSelectedLabel(String selectLocator, String pattern) {
-		if (isElementNotPresent(selectLocator)) {
-			return false;
-		}
-
-		return pattern.equals(getSelectedLabel(selectLocator, "1"));
+		return WebDriverHelper.isSelectedLabel(this, selectLocator, pattern);
 	}
 
 	@Override

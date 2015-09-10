@@ -58,7 +58,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void addSelection(String locator, String optionLocator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.addSelection(this, locator, optionLocator);
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void check(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.check(this, locator);
 	}
 
 	@Override
@@ -291,7 +291,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getConfirmation() {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getConfirmation(this);
 	}
 
 	@Override
@@ -408,16 +408,16 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getSelectedLabel(String selectLocator) {
-		throw new UnsupportedOperationException();
+		return getSelectedLabel(selectLocator, null);
 	}
 
 	public String getSelectedLabel(String selectLocator, String timeout) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getSelectedLabel(this, selectLocator, timeout);
 	}
 
 	@Override
 	public String[] getSelectedLabels(String selectLocator) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.getSelectedLabels(this, selectLocator);
 	}
 
 	@Override
@@ -505,7 +505,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void goBack() {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.goBack(this);
 	}
 
 	@Override
@@ -768,7 +768,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void select(String selectLocator, String optionLocator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.select(this, selectLocator, optionLocator);
 	}
 
 	@Override
@@ -895,7 +895,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void uncheck(String locator) {
-		throw new UnsupportedOperationException();
+		WebDriverHelper.uncheck(this, locator);
 	}
 
 	@Override

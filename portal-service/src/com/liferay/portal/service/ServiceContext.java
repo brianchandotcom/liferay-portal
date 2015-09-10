@@ -95,6 +95,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setAssetCategoryIds(getAssetCategoryIds());
 		serviceContext.setAssetEntryVisible(isAssetEntryVisible());
 		serviceContext.setAssetLinkEntryIds(getAssetLinkEntryIds());
+		serviceContext.setAssetPriority(getAssetPriority());
 		serviceContext.setAssetTagNames(getAssetTagNames());
 		serviceContext.setAttributes(getAttributes());
 		serviceContext.setCommand(getCommand());
@@ -229,6 +230,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public long[] getAssetLinkEntryIds() {
 		return _assetLinkEntryIds;
+	}
+
+	public double getAssetPriority() {
+		return _assetPriority;
 	}
 
 	/**
@@ -905,6 +910,10 @@ public class ServiceContext implements Cloneable, Serializable {
 			setAssetLinkEntryIds(serviceContext.getAssetLinkEntryIds());
 		}
 
+		if (serviceContext.getAssetPriority() > 0) {
+			setAssetPriority(serviceContext.getAssetPriority());
+		}
+
 		if (serviceContext.getAssetTagNames() != null) {
 			setAssetTagNames(serviceContext.getAssetTagNames());
 		}
@@ -1113,6 +1122,16 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public void setAssetLinkEntryIds(long[] assetLinkEntryIds) {
 		_assetLinkEntryIds = assetLinkEntryIds;
+	}
+
+	/**
+	 * Sets the priority an asset entry if this service context is being passed
+	 * as a parameter to a method which manipulates the asset entry.
+	 *
+	 * @param assetPriority the priority of an asset entry
+	 */
+	public void setAssetPriority(double assetPriority) {
+		_assetPriority = assetPriority;
 	}
 
 	/**
@@ -1558,6 +1577,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private long[] _assetCategoryIds;
 	private boolean _assetEntryVisible = true;
 	private long[] _assetLinkEntryIds;
+	private double _assetPriority;
 	private String[] _assetTagNames;
 	private Map<String, Serializable> _attributes;
 	private String _command;

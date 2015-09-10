@@ -65,8 +65,7 @@ public class DDLFormPortletUtil {
 		PortletRequest portletRequest, String[] displayViews) {
 
 		PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					portletRequest);
+			PortletPreferencesFactoryUtil.getPortalPreferences(portletRequest);
 
 		String displayStyle = ParamUtil.getString(
 			portletRequest, "displayStyle");
@@ -77,12 +76,10 @@ public class DDLFormPortletUtil {
 				"display-style",
 				DDLFormWebConfigurationValues.DEFAULT_DISPLAY_VIEW);
 		}
-		else {
-			if (ArrayUtil.contains(displayViews, displayStyle)) {
-				portalPreferences.setValue(
-					DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-					"display-style", displayStyle);
-			}
+		else if (ArrayUtil.contains(displayViews, displayStyle)) {
+			portalPreferences.setValue(
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+				"display-style", displayStyle);
 		}
 
 		if (!ArrayUtil.contains(displayViews, displayStyle)) {

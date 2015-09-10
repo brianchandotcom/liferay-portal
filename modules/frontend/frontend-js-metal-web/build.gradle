@@ -22,7 +22,7 @@ task runGulp(type: ExecuteNodeTask)
 task bowerInstall(type: ExecuteNodeTask)
 
 bowerInstall {
-	args = [new File(node.nodeDir, "node_modules/bower/bin/bower"), "install", "--allow-root"]
+	args = [new File(node.nodeDir, "node_modules/bower/bin/bower"), "install", "--allow-root", "--config.timeout=300000"]
 	dependsOn npmInstall
 }
 

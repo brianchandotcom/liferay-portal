@@ -17,7 +17,6 @@ package com.liferay.nested.portlets.web.display.context;
 import com.liferay.nested.portlets.web.configuration.NestedPortletsConfiguration;
 import com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.Validator;
@@ -98,28 +97,6 @@ public class NestedPortletsDisplayContext {
 			});
 	}
 
-	public boolean isPortletSetupShowBorders() {
-		if (_portletSetupShowBorders != null) {
-			return _portletSetupShowBorders;
-		}
-
-		_portletSetupShowBorders =
-			_nestedPortletsPortletInstanceConfiguration.
-				portletSetupShowBorders();
-
-		if (Validator.isNull(_portletSetupShowBorders)) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			_portletSetupShowBorders = GetterUtil.getBoolean(
-				themeDisplay.getThemeSetting(
-					"portlet-setup-show-borders-default"),
-				true);
-		}
-
-		return _portletSetupShowBorders;
-	}
-
 	protected List<String> getUnsupportedLayoutTemplateIds() {
 		return ListUtil.fromArray(
 			_nestedPortletsConfiguration.layoutTemplatesUnsupported());
@@ -129,7 +106,6 @@ public class NestedPortletsDisplayContext {
 	private final NestedPortletsConfiguration _nestedPortletsConfiguration;
 	private final NestedPortletsPortletInstanceConfiguration
 		_nestedPortletsPortletInstanceConfiguration;
-	private Boolean _portletSetupShowBorders;
 	private final HttpServletRequest _request;
 
 }

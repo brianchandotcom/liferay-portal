@@ -304,24 +304,9 @@ JSONObject advancedData = jsonObject.getJSONObject("advancedData");
 
 String customCSS = advancedData.getString("customCSS");
 
-// Portlet data
-
-JSONObject portletData = jsonObject.getJSONObject("portletData");
-
-boolean portletDecorate = GetterUtil.getBoolean(themeDisplay.getThemeSetting("portlet-setup-show-borders-default"), PropsValues.THEME_PORTLET_DECORATE_DEFAULT);
-
-boolean showBorders = portletData.getBoolean("showBorders", portletDecorate);
-
 // Generated CSS
 
-out.print("#p_p_id_" + portlet.getPortletId() + "_");
-
-if (showBorders) {
-	out.print(" .portlet");
-}
-else {
-	out.print(" .portlet-borderless-container");
-}
+out.print("#p_p_id_" + portlet.getPortletId() + "_ .portlet");
 
 out.print(" {\n");
 

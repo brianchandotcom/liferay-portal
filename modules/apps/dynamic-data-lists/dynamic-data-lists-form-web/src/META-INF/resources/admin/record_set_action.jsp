@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>" view="lexicon">
+<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
 	<c:if test="<%= ddlFormAdminDisplayContext.isShowEditRecordSetIcon(recordSet) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />

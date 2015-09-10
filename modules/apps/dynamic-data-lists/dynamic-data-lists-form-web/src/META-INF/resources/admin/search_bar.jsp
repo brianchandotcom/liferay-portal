@@ -16,7 +16,7 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<aui:nav-bar cssClass="collapse-basic-search" id="toolbar" view="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
 	<aui:nav-bar-search>
 
 		<%

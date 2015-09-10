@@ -38,6 +38,7 @@ String rowURL = (String)request.getAttribute("rowURL");
 	groupId="<%= ddlRecordSet.getGroupId() %>"
 	latestApprovedVersion="<%= ddmStructureVersion.getVersion() %>"
 	latestApprovedVersionAuthor="<%= ddmStructureVersion.getUserName() %>"
+	markupView="lexicon"
 	modifiedDate="<%= ddlRecordSet.getModifiedDate() %>"
 	rowCheckerId="<%= String.valueOf(ddlRecordSet.getRecordSetId()) %>"
 	rowCheckerName="<%= DDLRecordSet.class.getSimpleName() %>"
@@ -48,5 +49,4 @@ String rowURL = (String)request.getAttribute("rowURL");
 	title="<%= HtmlUtil.escape(ddlRecordSet.getName(locale)) %>"
 	url="<%= rowURL %>"
 	version="<%= ddmStructureVersion.getVersion() %>"
-	view="lexicon"
 />

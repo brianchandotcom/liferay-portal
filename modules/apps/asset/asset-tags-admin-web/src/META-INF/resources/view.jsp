@@ -112,7 +112,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator view="lexicon" />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

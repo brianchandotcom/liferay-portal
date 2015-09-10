@@ -190,7 +190,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator view="lexicon" />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

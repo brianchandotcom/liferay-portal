@@ -94,7 +94,7 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" view="lexicon" />
+		<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
 	</liferay-ui:search-container>
 </div>
 

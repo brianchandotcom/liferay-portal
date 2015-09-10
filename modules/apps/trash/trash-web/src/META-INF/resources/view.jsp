@@ -303,6 +303,6 @@ if (Validator.isNotNull(keywords)) {
 			showParentGroups="<%= false %>"
 		/>
 
-		<liferay-ui:search-iterator type='<%= approximate ? "more" : "regular" %>' view="lexicon" />
+		<liferay-ui:search-iterator markupView="lexicon" type='<%= approximate ? "more" : "regular" %>' />
 	</liferay-ui:search-container>
 </div>

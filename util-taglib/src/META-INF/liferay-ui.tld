@@ -4846,6 +4846,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to add a <![CDATA[<code>liferay-ui:search-paginator</code>]]> to the search container. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>paginate</name>
 			<required>false</required>
@@ -4861,11 +4866,6 @@
 		<attribute>
 			<description>A type of iterator to display. Options are <![CDATA[<code>approximate</code>]]>, <![CDATA[<code>article</code>]]>, <![CDATA[<code>more</code>]]>, and <![CDATA[<code>regular</code>]]>.</description>
 			<name>type</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>view</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -294,7 +294,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 								/>
 							</liferay-ui:search-container-row>
 
-							<liferay-ui:search-iterator view="lexicon" />
+							<liferay-ui:search-iterator markupView="lexicon" />
 						</liferay-ui:search-container>
 					</liferay-ui:panel>
 				</c:if>
@@ -343,7 +343,7 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 								/>
 							</liferay-ui:search-container-row>
 
-							<liferay-ui:search-iterator view="lexicon" />
+							<liferay-ui:search-iterator markupView="lexicon" />
 						</liferay-ui:search-container>
 					</liferay-ui:panel>
 				</c:if>

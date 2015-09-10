@@ -4410,6 +4410,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>href</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>index</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

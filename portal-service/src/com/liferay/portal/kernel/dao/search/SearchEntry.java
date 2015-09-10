@@ -34,6 +34,8 @@ public interface SearchEntry {
 
 	public static final String DEFAULT_VALIGN = "middle";
 
+	public static final String SEARCH_ENTRY_HREF = "search_entry_href";
+
 	public String getAlign();
 
 	public int getColspan();

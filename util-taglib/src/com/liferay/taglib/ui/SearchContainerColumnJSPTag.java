@@ -22,6 +22,8 @@ import com.liferay.taglib.search.JSPSearchEntry;
 
 import java.util.List;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
@@ -52,6 +54,7 @@ public class SearchContainerColumnJSPTag<R> extends SearchContainerColumnTag {
 			jspSearchEntry.setAlign(getAlign());
 			jspSearchEntry.setColspan(getColspan());
 			jspSearchEntry.setCssClass(getCssClass());
+			jspSearchEntry.setHref((String)getHref());
 			jspSearchEntry.setPath(getPath());
 			jspSearchEntry.setRequest(
 				(HttpServletRequest)pageContext.getRequest());
@@ -99,14 +102,27 @@ public class SearchContainerColumnJSPTag<R> extends SearchContainerColumnTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public Object getHref() {
+		if (_href instanceof PortletURL) {
+			_href = _href.toString();
+		}
+
+		return _href;
+	}
+
 	public String getPath() {
 		return _path;
+	}
+
+	public void setHref(Object href) {
+		_href = href;
 	}
 
 	public void setPath(String path) {
 		_path = path;
 	}
 
+	private Object _href;
 	private String _path;
 
 }

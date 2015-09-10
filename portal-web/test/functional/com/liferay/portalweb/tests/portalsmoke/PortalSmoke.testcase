@@ -7,6 +7,8 @@
 
 	<tear-down>
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="WebContent#tearDownCP" />
 	</tear-down>
 
 	<command description="Ensure that the super admin can add pages, add portlets, and navigate to the product menu." name="Smoke" priority="5">

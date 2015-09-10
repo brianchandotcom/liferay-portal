@@ -75,6 +75,26 @@
 				<var name="portletTitle" value="${portlet}" />
 			</execute>
 		</task>
+
+		<var name="webContentContent" value="Web Content Content" />
+		<var name="webContentTitle" value="Web Content Title" />
+
+		<task summary="Add a Web Content article with '${webContentTitle}' as the Title and '${webContentContent}' as the Content">
+			<execute macro="WebContentNavigator#gotoAddCP" />
+
+			<execute macro="WebContent#addCP">
+				<var name="webContentContent" value="${webContentContent}" />
+				<var name="webContentTitle" value="${webContentTitle}" />
+			</execute>
+
+			<execute macro="WebContent#publish" />
+
+			<execute macro="Alert#viewSuccess" />
+
+			<execute macro="WebContent#viewTitle">
+				<var name="webContentTitle" value="${webContentTitle}" />
+			</execute>
+		</task>
 	</command>
 
 	<command name="viewWelcomePage" summary="View default welcome page while signed in as '${userFirstName} ${userLastName}'">

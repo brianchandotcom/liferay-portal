@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -90,15 +90,8 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		DDMStructure structure, DDMTemplate template, Locale locale) {
 
 		if ((structure != null) && (template != null)) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(template.getName(locale));
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(structure.getName(locale));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			return sb.toString();
+			return StringUtil.appendParentheticalSuffix(
+				template.getName(locale), structure.getName(locale));
 		}
 		else if (structure != null) {
 			return LanguageUtil.format(

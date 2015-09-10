@@ -31,6 +31,7 @@ page import="com.liferay.dynamic.data.lists.form.web.context.DDLFormViewEntriesD
 page import="com.liferay.dynamic.data.lists.form.web.search.RecordSetDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.search.RecordSetSearch" %><%@
 page import="com.liferay.dynamic.data.lists.form.web.util.DDLFormPortletUtil" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecord" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureDefinitionException" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.StructureLayoutException" %><%@

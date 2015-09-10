@@ -16,22 +16,32 @@
 
 <%@ include file="/admin/init.jsp" %>
 
+<%
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+DDLRecord record = (DDLRecord)row.getObject();
+%>
+
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" view="lexicon">
 	<portlet:renderURL var="viewURL">
 		<portlet:param name="mvcPath" value="/" />
+		<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 	</portlet:renderURL>
-
-	<portlet:actionURL name="deleteFormEntry" var="deleteURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:actionURL>
 
 	<liferay-ui:icon
 		message="view"
 		url="<%= viewURL %>"
 	/>
 
-	<liferay-ui:icon
-		message="delete"
-		url="<%= deleteURL %>"
-	/>
+	<c:if test="<%= ddlFormAdminDisplayContext.isShowDeleteRecordSetIcon(ddlFormAdminDisplayContext.getRecordSet()) %>">
+		<portlet:actionURL name="deleteRecord" var="deleteURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message="delete"
+			url="<%= deleteURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

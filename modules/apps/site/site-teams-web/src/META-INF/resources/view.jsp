@@ -23,6 +23,8 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
+portletURL.setParameter("displayStyle", displayStyle);
+
 pageContext.setAttribute("portletURL", portletURL);
 
 SearchContainer teamSearchContainer = new TeamSearch(renderRequest, portletURL);
@@ -48,13 +50,33 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 	<liferay-frontend:management-bar
 		includeCheckBox="<%= true %>"
 	>
+
+		<%
+		PortletURL displayStyleURL = renderResponse.createRenderURL();
+		%>
+
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
-				displayStyleURL="<%= portletURL %>"
+				displayStyleURL="<%= displayStyleURL %>"
 				displayViews='<%= new String[]{"descriptive", "list"} %>'
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>
+
+		<%
+		PortletURL iteratorURL = renderResponse.createRenderURL();
+
+		iteratorURL.setParameter("displayStyle", displayStyle);
+		%>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= teamSearchContainer.getOrderByCol() %>"
+				orderByType="<%= teamSearchContainer.getOrderByType() %>"
+				orderColumns='<%= new String[]{"name"} %>'
+				portletURL="<%= iteratorURL %>"
+			/>
+		</liferay-frontend:management-bar-filters>
 	</liferay-frontend:management-bar>
 
 	<liferay-frontend:management-bar
@@ -67,10 +89,6 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 	</liferay-frontend:management-bar>
 </div>
 
-<%
-portletURL.setParameter("displayStyle", displayStyle);
-%>
-
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="teamIds" type="hidden" />
 
@@ -81,8 +99,6 @@ portletURL.setParameter("displayStyle", displayStyle);
 	>
 
 		<%
-		portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
-
 		total = TeamLocalServiceUtil.searchCount(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
 
 		searchContainer.setTotal(total);

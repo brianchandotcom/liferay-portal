@@ -23,6 +23,20 @@
 		</execute>
 	</command>
 
+	<command name="gotoControlPanelLocalization" summary="NNavigate to Product Menu > Control Panel > ${category} > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoTab">
+			<var name="tab" value="${tab}" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="${category}" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
 	<command name="gotoControlPanelUsers" summary="Navigate to Product Menu > Control Panel > Users > ${portlet}.">
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 
@@ -47,6 +61,20 @@
 		</execute>
 	</command>
 
+	<command name="gotoMySpaceMyAccountLocalization" summary="Navigate to Product Menu > My Space > My Account > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoTab">
+			<var name="tab" value="${tab}" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="${category}" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
 	<command name="gotoSitesAdministration" summary="Navigate to Product Menu > Sites > Administration > ${portlet}.">
 		<execute macro="ProductMenuHelper#gotoSites" />
 
@@ -54,6 +82,22 @@
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="Administration" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitesAdministrationLocalization" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoTab">
+			<var name="tab" value="${tab}" />
+		</execute>
+
+		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="${category}" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#gotoPortlet">

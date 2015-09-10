@@ -105,15 +105,6 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
 
-		String paginationMode = ddmFormLayout.getPaginationMode();
-
-		if (paginationMode.equals("tabs")) {
-			template.put(TemplateConstants.NAMESPACE, "ddm.tabbed_form");
-		}
-		else {
-			template.put(TemplateConstants.NAMESPACE, "ddm.paginated_form");
-		}
-
 		populateCommonContext(template, ddmForm, ddmFormRenderingContext);
 
 		List<Object> pages = getPages(
@@ -121,7 +112,11 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 		template.put("pages", pages);
 
-		return render(template);
+		String html = render(template, getTemplateNamespace(ddmFormLayout));
+
+		String javaScript = render(template, "ddm.form_renderer_js");
+
+		return html.concat(javaScript);
 	}
 
 	protected String doRender(
@@ -131,15 +126,17 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
 
-		template.put(TemplateConstants.NAMESPACE, "ddm.simple_form");
-
 		populateCommonContext(template, ddmForm, ddmFormRenderingContext);
 
 		List<String> fields = getFields(ddmForm, ddmFormRenderingContext);
 
 		template.put("fields", fields);
 
-		return render(template);
+		String html = render(template, "ddm.simple_form");
+
+		String javaScript = render(template, "ddm.form_renderer_js");
+
+		return html.concat(javaScript);
 	}
 
 	protected List<String> getFields(
@@ -186,6 +183,16 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return ddmFormRendererHelper.getRenderedDDMFormFieldsMap();
 	}
 
+	protected String getTemplateNamespace(DDMFormLayout ddmFormLayout) {
+		String paginationMode = ddmFormLayout.getPaginationMode();
+
+		if (paginationMode.equals("tabs")) {
+			return "ddm.tabbed_form";
+		}
+
+		return "ddm.paginated_form";
+	}
+
 	protected TemplateResource getTemplateResource(String templatePath) {
 		Class<?> clazz = getClass();
 
@@ -227,8 +234,12 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		}
 	}
 
-	protected String render(Template template) throws TemplateException {
+	protected String render(Template template, String namespace)
+		throws TemplateException {
+
 		Writer writer = new UnsyncStringWriter();
+
+		template.put(TemplateConstants.NAMESPACE, namespace);
 
 		template.processTemplate(writer);
 

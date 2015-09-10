@@ -20,12 +20,6 @@
 LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSelectorRendering.get(liferayPortletRequest);
 
 List<String> titles = localizedItemSelectorRendering.getTitles();
-
-String selectedTab = localizedItemSelectorRendering.getSelectedTab();
-
-if (Validator.isNull(selectedTab)) {
-	selectedTab = titles.get(0);
-}
 %>
 
 <c:choose>
@@ -51,6 +45,12 @@ if (Validator.isNull(selectedTab)) {
 	<c:otherwise>
 
 		<%
+		String selectedTab = localizedItemSelectorRendering.getSelectedTab();
+
+		if (Validator.isNull(selectedTab)) {
+			selectedTab = titles.get(0);
+		}
+
 		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(selectedTab);
 
 		ItemSelectorView<ItemSelectorCriterion> initialItemSelectorView = itemSelectorViewRenderer.getItemSelectorView();

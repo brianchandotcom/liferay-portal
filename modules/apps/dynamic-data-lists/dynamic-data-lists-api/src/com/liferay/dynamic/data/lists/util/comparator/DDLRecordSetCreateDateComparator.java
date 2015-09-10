@@ -14,17 +14,15 @@
 
 package com.liferay.dynamic.data.lists.util.comparator;
 
-
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
 
 /**
  * @author Rafael Praxedes
  */
-public class DDLRecordSetCreateDateComparator extends OrderByComparator<DDLRecordSet>{
+public class DDLRecordSetCreateDateComparator
+	extends OrderByComparator<DDLRecordSet> {
 
 	public static final String ORDER_BY_ASC = "createDate ASC";
 
@@ -43,8 +41,7 @@ public class DDLRecordSetCreateDateComparator extends OrderByComparator<DDLRecor
 	@Override
 	public int compare(DDLRecordSet ddlRecordSet1, DDLRecordSet ddlRecordSet2) {
 		int value = DateUtil.compareTo(
-				ddlRecordSet1.getCreateDate(), ddlRecordSet2.getCreateDate());
-
+			ddlRecordSet1.getCreateDate(), ddlRecordSet2.getCreateDate());
 
 		if (_ascending) {
 			return value;

@@ -14,19 +14,29 @@
 
 package com.liferay.dynamic.data.lists.form.web.util;
 
+import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigurationValues;
+import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetCreateDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetModifiedDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Rafael Praxedes
  */
 public class DDLFormPortletUtil {
 
-	public static OrderByComparator<DDLRecordSet> getDDLRecordSetOrderByComparator(
-		String orderByCol, String orderByType) {
+	public static OrderByComparator<DDLRecordSet>
+		getDDLRecordSetOrderByComparator(
+			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
 
@@ -37,16 +47,49 @@ public class DDLFormPortletUtil {
 		OrderByComparator<DDLRecordSet> orderByComparator = null;
 
 		if (orderByCol.equals("create-date")) {
-			orderByComparator = new DDLRecordSetCreateDateComparator(orderByAsc);
+			orderByComparator = new DDLRecordSetCreateDateComparator(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("modified-date")) {
-			orderByComparator = new DDLRecordSetModifiedDateComparator(orderByAsc);
+			orderByComparator = new DDLRecordSetModifiedDateComparator(
+				orderByAsc);
 		}
 		else if (orderByCol.equals("name")) {
 			orderByComparator = new DDLRecordSetNameComparator(orderByAsc);
 		}
 
 		return orderByComparator;
+	}
+
+	public static String getDisplayStyle(
+		PortletRequest portletRequest, String[] displayViews) {
+
+		PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(
+					portletRequest);
+
+		String displayStyle = ParamUtil.getString(
+			portletRequest, "displayStyle");
+
+		if (Validator.isNull(displayStyle)) {
+			displayStyle = portalPreferences.getValue(
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+				"display-style",
+				DDLFormWebConfigurationValues.DEFAULT_DISPLAY_VIEW);
+		}
+		else {
+			if (ArrayUtil.contains(displayViews, displayStyle)) {
+				portalPreferences.setValue(
+					DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
+					"display-style", displayStyle);
+			}
+		}
+
+		if (!ArrayUtil.contains(displayViews, displayStyle)) {
+			displayStyle = displayViews[0];
+		}
+
+		return displayStyle;
 	}
 
 }

@@ -16,9 +16,9 @@ package com.liferay.dynamic.data.lists.form.web.context;
 
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigurationValues;
-import com.liferay.dynamic.data.lists.form.web.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.context.util.DDLFormAdminRequestHelper;
 import com.liferay.dynamic.data.lists.form.web.search.RecordSetSearchTerms;
+import com.liferay.dynamic.data.lists.form.web.util.DDLFormPortletUtil;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
@@ -38,14 +38,11 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portlet.PortalPreferences;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.List;
 
@@ -100,34 +97,8 @@ public class DDLFormAdminDisplayContext {
 
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
-			String[] displayViews = getDisplayViews();
-
-			PortalPreferences portalPreferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(
-					_renderRequest);
-
-			String displayStyle = ParamUtil.getString(
-				_renderRequest, "displayStyle");
-
-			if (Validator.isNull(displayStyle)) {
-				displayStyle = portalPreferences.getValue(
-					DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-					"display-style",
-					DDLFormWebConfigurationValues.DEFAULT_DISPLAY_VIEW);
-			}
-			else {
-				if (ArrayUtil.contains(displayViews, displayStyle)) {
-					portalPreferences.setValue(
-						DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN,
-						"display-style", displayStyle);
-				}
-			}
-
-			if (!ArrayUtil.contains(displayViews, displayStyle)) {
-				displayStyle = displayViews[0];
-			}
-
-			_displayStyle = displayStyle;
+			_displayStyle = DDLFormPortletUtil.getDisplayStyle(
+				_renderRequest, getDisplayViews());
 		}
 
 		return _displayStyle;

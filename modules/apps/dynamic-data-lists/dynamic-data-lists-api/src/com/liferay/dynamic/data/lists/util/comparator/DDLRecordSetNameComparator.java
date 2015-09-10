@@ -14,16 +14,15 @@
 
 package com.liferay.dynamic.data.lists.util.comparator;
 
-
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Rafael Praxedes
  */
-public class DDLRecordSetNameComparator extends OrderByComparator<DDLRecordSet>{
+public class DDLRecordSetNameComparator
+	extends OrderByComparator<DDLRecordSet> {
 
 	public static final String ORDER_BY_ASC = "name ASC";
 

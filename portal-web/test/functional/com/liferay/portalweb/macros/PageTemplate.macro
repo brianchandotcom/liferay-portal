@@ -94,19 +94,27 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_1" value1="Blog" />
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_2" value1="Content Display Page" />
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_3" value1="Wiki" />
+		<for list="${pageTemplateNameList}" param="pageTemplateName" >
+			<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
+			<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+		</for>
+
 		<execute function="AssertElementNotPresent" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_4" />
 	</command>
 
 	<command name="viewDefaultLocalizedCP">
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_1" value1="${blogTranslation}" />
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_2" value1="${contentDisplayPageTranslation}" />
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME_3" value1="${wikiTranslation}" />
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRITPION_1" value1="${blogDescriptionTranslation}" />
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${contentDisplayPageDescriptionTranslation}" />
-		<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRIPTION_3" value1="${wikiDescripionTranslation}" />
+		<for list="${pageTemplateNameList}" param="pageTemplateNameTranslation" >
+			<var name="key_pageTemplateName" value="${pageTemplateNameTranslation}" />
+
+			<execute function="AssertTextEquals" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateNameTranslation}" />
+		</for>
+
+		<for list="${pageTemplateDescriptionList}" param="DescriptionTranslation" >
+			<var name="key_pageTemplateDescription" value="${DescriptionTranslation}" />
+
+			<execute function="AssertTextEquals#assertPartialText" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_DESCRITPION" value1="${DescriptionTranslation}" />
+		</for>
 	</command>
 
 	<command name="viewDefaultPortletPG">

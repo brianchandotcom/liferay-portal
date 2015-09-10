@@ -102,10 +102,10 @@ portletURL.setParameter("displayStyle", displayStyle);
 			<%
 			PortletURL rowURL = null;
 
-			if (TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.UPDATE)) {
+			if (TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.ASSIGN_MEMBERS)) {
 				rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcPath", "/edit_team.jsp");
+				rowURL.setParameter("mvcPath", "/edit_team_assignments.jsp");
 				rowURL.setParameter("teamId", String.valueOf(team.getTeamId()));
 			}
 			%>

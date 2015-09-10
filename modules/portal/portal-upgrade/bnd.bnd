@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Portal Upgrade
 Bundle-SymbolicName: com.liferay.portal.upgrade
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.upgrade.tools
 Include-Resource:\
 	classes,\
 	@lib/jgrapht-core.jar,\

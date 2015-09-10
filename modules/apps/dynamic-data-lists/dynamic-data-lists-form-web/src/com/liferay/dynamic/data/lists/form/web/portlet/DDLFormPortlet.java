@@ -57,6 +57,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=dynamic-data-lists-form",
 		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.full-page-displayable=true",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",

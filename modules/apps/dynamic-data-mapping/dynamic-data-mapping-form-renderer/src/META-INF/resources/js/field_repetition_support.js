@@ -129,7 +129,15 @@ AUI.add(
 			_afterRepeatableFieldRender: function() {
 				var instance = this;
 
-				instance.get('container').delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance);
+				var container = instance.get('container');
+
+				instance.renderRepeatable();
+
+				(new A.EventHandle(instance._DOMEventHandlers)).detach();
+
+				instance._DOMEventHandlers = [
+					container.delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance)
+				];
 			},
 
 			_afterRepeatableIndexChange: function() {

@@ -83,7 +83,7 @@
 		</execute>
 
 		<execute macro="PageTemplate#viewDefaultCP">
-			<var name="pageTemplateName" value="Page Template Name" />
+			<var name="pageTemplateNameList" value="Blog,Content Display Page,Wiki" />
 		</execute>
 	</command>
 
@@ -104,39 +104,47 @@
 	</command>
 
 	<command name="LocalizeDefaultPageTemplates" priority="4">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Page Templates" />
+		<execute macro="ProductMenu#gotoSitesAdministration">
+			<var name="portlet" value="Page Templates" />
 		</execute>
 
-		<execute macro="PageTemplate#viewDefaultCP" />
+		<execute macro="PageTemplate#viewDefaultCP">
+			<var name="pageTemplateNameList" value="Blog,Content Display Page,Wiki" />
+		</execute>
 
-		<execute macro="MyAccount#configureDisplaySettingsLanguage">
-			<var name="displaySettings" value="Display Settings" />
+		<execute macro="ProductMenu#gotoMySpaceMyAccount">
+			<var name="portlet" value="Account Settings" />
+		</execute>
+
+		<execute macro="MyAccount#userLanguageTranslation">
 			<var name="languageName" value="español (España)" />
-			<var name="myAccount" value="My Account" />
 			<var name="saveButton" value="Save" />
 			<var name="successMessage" value="Su petición ha terminado con éxito." />
 		</execute>
 
-		<execute function="Refresh" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesAdministrationLocalization">
+			<var name="category" value="Administración" />
+			<var name="portlet" value="Plantillas de página" />
+			<var name="tab" value="Sitios Web" />
+		</execute>
 
 		<execute macro="PageTemplate#viewDefaultLocalizedCP">
-			<var name="blogDescriptionTranslation" value="Crear, editar y ver los blogs de esta página. Explorar temas utilizando etiquetas y conectar con otros miembros de ese blog." />
-			<var name="blogTranslation" value="Blog" />
-			<var name="contentDisplayPageDescriptionTranslation" value="Crear, editar y explorar el contenido de la web con esta página. Buscar contenido disponible, explorar contenido relacionado con las etiquetas y ver contenidos categorias." />
-			<var name="contentDisplayPageTranslation" value="Página de visualización de contenido" />
-			<var name="wikiDescripionTranslation" value="Colaborar con los miembros a través de la wiki en esta página. Descubra el contenido relacionado a través de etiquetas y navegar rápida y fácilmente con categorías." />
-			<var name="wikiTranslation" value="Wiki" />
+			<var name="pageTemplateDescriptionList" value="editar y ver los blogs de esta página. Explorar temas utilizando etiquetas y conectar con otros miembros de ese blog.,editar y explorar el contenido de la web con esta página. Buscar contenido disponible, explorar contenido relacionado con las etiquetas y ver contenidos categorias.,Colaborar con los miembros a través de la wiki en esta página. Descubra el contenido relacionado a través de etiquetas y navegar rápida y fácilmente con categorías." />
+			<var name="pageTemplateNameList" value="Blog,Seleccione una página de visualización,Wiki" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="siteName" value="Liferay" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoMySpaceMyAccountLocalization">
+			<var name="category" value="Mi cuenta" />
+			<var name="portlet" value="Mi cuenta" />
+			<var name="tab" value="Mi espacio" />
 		</execute>
 
-		<execute macro="MyAccount#configureDisplaySettingsLanguage">
-			<var name="displaySettings" value="Preferencias de presentación" />
+		<execute macro="MyAccount#userLanguageTranslation">
 			<var name="languageName" value="English (United States)" />
-			<var name="myAccount" value="Mi cuenta" />
 			<var name="saveButton" value="Guardar" />
 			<var name="successMessage" value="Your request completed successfully." />
 		</execute>
@@ -145,7 +153,9 @@
 			<var name="portletName" value="Page Templates" />
 		</execute>
 
-		<execute macro="PageTemplate#viewDefaultCP" />
+		<execute macro="PageTemplate#viewDefaultCP">
+			<var name="pageTemplateNameList" value="Blog,Content Display Page,Wiki" />
+		</execute>
 	</command>
 
 	<command name="ViewEditedPageTemplatePageName" priority="4">

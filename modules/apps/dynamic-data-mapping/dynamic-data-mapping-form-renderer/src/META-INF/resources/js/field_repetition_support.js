@@ -37,7 +37,6 @@ AUI.add(
 
 				if (instance.get('repeatable')) {
 					instance._eventHandlers.push(
-						instance.after(instance.renderRepeatable, instance, 'render'),
 						instance.after('repeatedIndexChange', instance._afterRepeatableIndexChange),
 						instance.after('render', instance._afterRepeatableFieldRender)
 					);
@@ -114,10 +113,7 @@ AUI.add(
 
 				container.insert(field.get('container'), 'after');
 
-				A.each(
-					instance.getRepeatedSiblings(),
-					A.bind('_syncRepeatableField', instance)
-				);
+				repetitions.forEach(A.bind('_syncRepeatableField', instance));
 
 				return field;
 			},

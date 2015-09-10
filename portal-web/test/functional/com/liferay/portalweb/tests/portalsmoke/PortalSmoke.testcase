@@ -12,6 +12,8 @@
 	</tear-down>
 
 	<command description="Ensure that the super admin can add pages, add portlets, and navigate to the product menu." name="Smoke" priority="5">
+		<property name="portal.acceptance" value="true" />
+
 		<execute macro="Smoke#viewWelcomePage" />
 
 		<execute macro="Smoke#runSmoke" />

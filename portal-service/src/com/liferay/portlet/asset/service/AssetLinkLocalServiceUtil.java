@@ -319,6 +319,11 @@ public class AssetLinkLocalServiceUtil {
 		return getService().getDirectLinks(entryId, typeId);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionbleDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionbleDynamicQuery(portletDataContext);
+	}
+
 	/**
 	* Returns all the asset links whose first or second entry ID is the given
 	* entry ID.

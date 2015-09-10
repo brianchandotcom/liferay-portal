@@ -58,7 +58,7 @@ AUI.add(
 
 							var yourScore = value;
 
-							if ((instance.get('type') == 'stars') && (yourScore == -1.0)) {
+							if (instance.get('type') == 'stars' && yourScore == -1.0) {
 								yourScore = 0;
 							}
 
@@ -241,7 +241,7 @@ AUI.add(
 
 										var config = item.config;
 
-										config.initialFocus = (event.type === 'focus');
+										config.initialFocus = event.type === 'focus';
 
 										Ratings._registerRating(config);
 									}
@@ -278,8 +278,8 @@ AUI.add(
 					_itemSelect: function(event) {
 						var instance = this;
 
-						var uri = instance.get(STR_URI);
 						var score = (instance.ratings.get('selectedIndex') + 1) / instance.get(STR_SIZE);
+						var uri = instance.get(STR_URI);
 
 						instance._sendVoteRequest(uri, score, instance._saveCallback);
 					},
@@ -444,8 +444,8 @@ AUI.add(
 
 						var elements = instance.ratings.get('elements');
 
-						var ratingThumbUp = elements.item(0);
 						var ratingThumbDown = elements.item(1);
+						var ratingThumbUp = elements.item(0);
 
 						ratingThumbUp.html(thumbScore.positiveVotes);
 

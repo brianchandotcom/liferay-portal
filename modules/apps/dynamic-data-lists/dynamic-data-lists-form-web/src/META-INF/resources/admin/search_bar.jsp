@@ -18,6 +18,13 @@
 
 <aui:nav-bar cssClass="collapse-basic-search" id="toolbar" view="lexicon">
 	<aui:nav-bar-search>
-		<liferay-util:include page="/admin/record_set_search.jsp" servletContext="<%= application %>" />
+
+		<%
+		PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
+		%>
+
+		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+			<liferay-util:include page="/admin/record_set_search.jsp" servletContext="<%= application %>" />
+		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>

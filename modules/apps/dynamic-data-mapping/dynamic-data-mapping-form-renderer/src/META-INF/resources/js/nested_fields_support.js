@@ -148,9 +148,9 @@ AUI.add(
 
 				if (index > -1) {
 					fields.splice(index, 1);
-				}
 
-				instance.set('fields', fields);
+					instance.set('fields', fields);
+				}
 			},
 
 			_afterFieldsChange: function(event) {

@@ -20,4 +20,8 @@
 	<liferay-frontend:management-bar-buttons>
 		<liferay-util:include page="/admin/display_style_buttons.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/admin/sort_buttons.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>

@@ -21,6 +21,8 @@ Import-Package:\
 	com.liferay.alloy.taglib.alloy_util.base;version='[7.0.0,8.0)',\
 	com.liferay.alloy.taglib.liferay;version='[7.0.0,8.0)',\
 	com.liferay.alloy.taglib.liferay.base;version='[7.0.0,8.0)',\
+	com.liferay.dynamic.data.mapping.taglib.servlet.taglib;version='[1.0.0,2.0)',\
+	com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;version='[1.0.0,2.0)',\
 	com.liferay.staging.taglib.servlet.taglib;version='[1.0.0,2.0)',\
 	com.liferay.taglib;version='[7.0.0,8.0)',\
 	com.liferay.taglib.aui;version='[7.0.0,8.0)',\

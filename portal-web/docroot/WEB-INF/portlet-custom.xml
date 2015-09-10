@@ -459,24 +459,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>190</portlet-name>
-		<display-name>Control Panel Home</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/control_panel_home/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/control_panel_home/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-	</portlet>
-	<portlet>
 		<portlet-name>195</portlet-name>
 		<display-name>Image Uploader</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

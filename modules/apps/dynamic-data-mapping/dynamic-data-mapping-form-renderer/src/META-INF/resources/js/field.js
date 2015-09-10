@@ -433,7 +433,9 @@ AUI.add(
 
 						var fields = val.get('fields');
 
-						if (fields && fields.indexOf(instance) == -1) {
+						var name = instance.get('name');
+
+						if (fields && !val.getField(name)) {
 							fields.push(instance);
 						}
 

@@ -44,6 +44,20 @@ AUI.add(
 				}
 			},
 
+			destructor: function() {
+				var instance = this;
+
+				var repetitions = instance.get('repetitions');
+
+				var index = repetitions.indexOf(instance);
+
+				if (index > -1) {
+					repetitions.splice(index, 1);
+				}
+
+				repetitions.forEach(A.bind('_syncRepeatableField', instance));
+			},
+
 			getRepeatedSiblings: function() {
 				var instance = this;
 
@@ -54,11 +68,6 @@ AUI.add(
 				var instance = this;
 
 				instance.destroy();
-
-				A.each(
-					instance.getRepeatedSiblings(),
-					A.bind('_syncRepeatableField', instance)
-				);
 			},
 
 			renderRepeatable: function() {

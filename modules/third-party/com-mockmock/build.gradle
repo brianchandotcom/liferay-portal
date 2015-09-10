@@ -1,6 +1,12 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.OSDetector
 
+configurations {
+	archives.artifacts.removeAll {
+		it.archiveTask in [jarSources, zipJavadoc]
+	}
+}
+
 ext {
 	mockMockGitHash = "1e88530f74aea4efa139fec7214f395d25a4032b"
 	mockMockSrcUrl = "https://github.com/tweakers-dev/MockMock/archive/${mockMockGitHash}.zip"

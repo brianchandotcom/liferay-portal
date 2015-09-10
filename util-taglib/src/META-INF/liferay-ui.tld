@@ -5026,6 +5026,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>feedResourceURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>javax.portlet.ResourceURL</type>
+		</attribute>
+		<attribute>
 			<name>feedTitle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

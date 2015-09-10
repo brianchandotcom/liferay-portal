@@ -103,6 +103,7 @@
 		feedType="<%= feedType %>"
 		message="<%= feedLinkMessage %>"
 		name="<%= feedTitle %>"
+		resourceURL="<%= feedResourceURL %>"
 		url="<%= feedLink %>"
 	/>
 </c:if>

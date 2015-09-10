@@ -30,6 +30,7 @@ String feedDisplayStyle = (String)request.getAttribute("liferay-ui:social-activi
 boolean feedEnabled = !PortalUtil.isRSSFeedsEnabled() ? false : GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:social-activities:feedEnabled"));
 String feedLink = (String)request.getAttribute("liferay-ui:social-activities:feedLink");
 String feedLinkMessage = (String)request.getAttribute("liferay-ui:social-activities:feedLinkMessage");
+ResourceURL feedResourceURL = (ResourceURL)request.getAttribute("liferay-ui:social-activities:feedResourceURL");
 String feedTitle = (String)request.getAttribute("liferay-ui:social-activities:feedTitle");
 String feedType = (String)request.getAttribute("liferay-ui:social-activities:feedType");
 

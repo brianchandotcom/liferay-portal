@@ -20,6 +20,8 @@ import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 
+import javax.portlet.ResourceURL;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -63,6 +65,10 @@ public class SocialActivitiesTag extends IncludeTag {
 		_feedLinkMessage = feedLinkMessage;
 	}
 
+	public void setFeedResourceURL(ResourceURL feedResourceURL) {
+		_feedResourceURL = feedResourceURL;
+	}
+
 	public void setFeedTitle(String feedTitle) {
 		_feedTitle = feedTitle;
 	}
@@ -82,6 +88,7 @@ public class SocialActivitiesTag extends IncludeTag {
 		_feedEnabled = false;
 		_feedLink = StringPool.BLANK;
 		_feedLinkMessage = StringPool.BLANK;
+		_feedResourceURL = null;
 		_feedTitle = null;
 		_feedType = null;
 	}
@@ -115,6 +122,8 @@ public class SocialActivitiesTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:social-activities:feedLinkMessage", _feedLinkMessage);
 		request.setAttribute(
+			"liferay-ui:social-activities:feedResourceURL", _feedResourceURL);
+		request.setAttribute(
 			"liferay-ui:social-activities:feedTitle", _feedTitle);
 		request.setAttribute(
 			"liferay-ui:social-activities:feedType", _feedType);
@@ -132,6 +141,7 @@ public class SocialActivitiesTag extends IncludeTag {
 	private boolean _feedEnabled;
 	private String _feedLink = StringPool.BLANK;
 	private String _feedLinkMessage = StringPool.BLANK;
+	private ResourceURL _feedResourceURL;
 	private String _feedTitle;
 	private String _feedType;
 

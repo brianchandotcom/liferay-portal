@@ -166,7 +166,12 @@ AUI.add(
 
 				var repeatedSiblings = instance.getRepeatedSiblings();
 
+				var value = field.getValue();
+
 				field.set('repeatedIndex', repeatedSiblings.indexOf(field));
+				field.set('repetitions', repeatedSiblings);
+
+				field.setValue(value);
 			},
 
 			_valueRepetitions: function() {

@@ -99,8 +99,6 @@
 	</command>
 
 	<command name="LocalizeDefaultSiteTemplates" priority="4">
-		<var name="pageTemplateName" value="Page Template Name" />
-
 		<execute macro="ProductMenu#gotoSitesAdministration">
 			<var name="portlet" value="Site Templates" />
 		</execute>

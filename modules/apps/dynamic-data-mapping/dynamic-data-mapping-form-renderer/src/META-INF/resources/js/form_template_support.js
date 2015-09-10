@@ -116,11 +116,14 @@ AUI.add(
 			_normalizeLayoutPage: function(page) {
 				var instance = this;
 
+				var locale = instance.get('locale');
+
 				return A.merge(
 					page,
 					{
+						description: page.description && page.description[locale] || '',
 						rows: page.rows.map(A.bind(instance._normalizeLayoutRow, instance)),
-						title: page.title && page.title[instance.get('locale')] || ''
+						title: page.title && page.title[locale] || ''
 					}
 				);
 			},

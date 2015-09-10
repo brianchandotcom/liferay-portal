@@ -414,13 +414,13 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								description="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
 								displayStyle="descriptive"
 								folder="<%= true %>"
+								markupView="lexicon"
 								modifiedDate="<%= curFolder.getModifiedDate() %>"
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
 								showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
 								title="<%= HtmlUtil.escape(curFolder.getName()) %>"
 								url="<%= rowURL.toString() %>"
-								view="lexicon"
 							/>
 						</liferay-ui:search-container-column-text>
 

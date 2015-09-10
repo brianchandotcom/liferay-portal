@@ -176,6 +176,11 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>The date of the most recent modification to the entry.</description>
 			<name>modifiedDate</name>
 			<required>false</required>
@@ -260,11 +265,6 @@
 		<attribute>
 			<description>The current version of the entry.</description>
 			<name>version</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>view</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -41,6 +41,8 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 	<%
 	long classPK = 0;
 
+	double priority = 0;
+
 	if (article != null) {
 		classPK = article.getResourcePrimKey();
 
@@ -49,6 +51,8 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 			if (assetEntry != null) {
 				classPK = article.getPrimaryKey();
+
+				priority = assetEntry.getPriority();
 			}
 		}
 	}
@@ -57,6 +61,12 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 	<aui:input classPK="<%= classPK %>" classTypePK="<%= ddmStructure.getStructureId() %>" ignoreRequestValue="<%= changeStructure %>" name="categories" type="assetCategories" />
 
 	<aui:input classPK="<%= classPK %>" ignoreRequestValue="<%= changeStructure %>" name="tags" type="assetTags" />
+
+	<aui:input name="priority" type="text" value="<%= priority %>">
+		<aui:validator name="number" />
+
+		<aui:validator name="min">[0]</aui:validator>
+	</aui:input>
 </aui:fieldset>
 
 <aui:script>

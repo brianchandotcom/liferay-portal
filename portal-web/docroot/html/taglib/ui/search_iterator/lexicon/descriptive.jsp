@@ -32,7 +32,7 @@ RowChecker rowChecker = searchContainer.getRowChecker();
 
 if (rowChecker != null) {
 	if (headerNames != null) {
-		headerNames.add(0, rowChecker.getAllRowsCheckBox(request));
+		headerNames.add(0, StringPool.BLANK);
 
 		normalizedHeaderNames.add(0, "rowChecker");
 	}

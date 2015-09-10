@@ -24,9 +24,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortalUtil;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,22 +54,6 @@ public class MyPagesPanelApp extends GroupPagesPanelApp {
 		User user = permissionChecker.getUser();
 
 		return super.hasAccessPermission(permissionChecker, user.getGroup());
-	}
-
-	@Override
-	protected Group getGroup(HttpServletRequest request) {
-		Group group = null;
-
-		try {
-			User user = PortalUtil.getUser(request);
-
-			return user.getGroup();
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		return group;
 	}
 
 	@Reference(unbind = "-")

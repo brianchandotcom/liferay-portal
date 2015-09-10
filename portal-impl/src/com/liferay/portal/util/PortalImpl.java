@@ -1744,8 +1744,8 @@ public class PortalImpl implements Portal {
 			WebKeys.THEME_DISPLAY);
 
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
-			request, portletId, getControlPanelLayout(themeDisplay, group),
-			lifecycle);
+			request, portletId,
+			getControlPanelLayout(themeDisplay, group, portletId), lifecycle);
 
 		if (refererPlid > 0) {
 			liferayPortletURL.setRefererPlid(refererPlid);
@@ -1780,7 +1780,7 @@ public class PortalImpl implements Portal {
 
 		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
 			portletRequest, portletId,
-			getControlPanelLayout(themeDisplay, group), lifecycle);
+			getControlPanelLayout(themeDisplay, group, portletId), lifecycle);
 
 		if (refererPlid > 0) {
 			liferayPortletURL.setRefererPlid(refererPlid);
@@ -7746,7 +7746,7 @@ public class PortalImpl implements Portal {
 	}
 
 	protected Layout getControlPanelLayout(
-		ThemeDisplay themeDisplay, Group group) {
+		ThemeDisplay themeDisplay, Group group, String portletId) {
 
 		Layout layout = null;
 
@@ -7762,14 +7762,42 @@ public class PortalImpl implements Portal {
 		}
 
 		if (group == null) {
-			long groupId = themeDisplay.getDoAsGroupId();
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), portletId);
 
-			if (groupId > 0) {
-				group = GroupLocalServiceUtil.fetchGroup(groupId);
+			String portletCategory = portlet.getControlPanelEntryCategory();
+
+			if (portletCategory.equals(PortletCategoryKeys.APPS) ||
+				portletCategory.equals(PortletCategoryKeys.CONFIGURATION) ||
+				portletCategory.equals(PortletCategoryKeys.USERS)) {
+
+				return layout;
 			}
+			else if (portletCategory.equals(PortletCategoryKeys.MY)) {
+				User user = null;
 
-			if (group == null) {
-				group = themeDisplay.getScopeGroup();
+				try {
+					user = UserLocalServiceUtil.getUser(
+						themeDisplay.getUserId());
+				}
+				catch (PortalException e) {
+					_log.error(
+						"can not find user with id " +
+							themeDisplay.getUserId());
+				}
+
+				group = user.getGroup();
+			}
+			else {
+				long groupId = themeDisplay.getDoAsGroupId();
+
+				if (groupId > 0) {
+					group = GroupLocalServiceUtil.fetchGroup(groupId);
+				}
+
+				if (group == null) {
+					group = themeDisplay.getScopeGroup();
+				}
 			}
 		}
 

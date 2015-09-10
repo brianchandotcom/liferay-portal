@@ -114,14 +114,6 @@ AUI.add(
 							container.remove(true);
 						}
 
-						var repetitions = instance.get('repetitions');
-
-						var index = repetitions.indexOf(instance);
-
-						if (index > -1) {
-							repetitions.splice(index, 1);
-						}
-
 						var parent = instance.get('parent');
 
 						if (parent) {

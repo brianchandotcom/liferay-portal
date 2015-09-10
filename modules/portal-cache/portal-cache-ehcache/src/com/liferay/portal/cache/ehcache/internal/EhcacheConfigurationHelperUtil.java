@@ -166,7 +166,7 @@ public class EhcacheConfigurationHelperUtil {
 		}
 
 		if (!properties.isEmpty()) {
-			sb.setIndex(sb.length() - 1);
+			sb.setIndex(sb.index() - 1);
 		}
 
 		return sb.toString();

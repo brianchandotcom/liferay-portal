@@ -9,7 +9,7 @@ AUI.add(
 
 		var EMPTY_FN = Lang.emptyFn;
 
-		var EVENT_INTERACTIONS_RENDER = ['focus', 'mousemove'];
+		var EVENT_INTERACTIONS_RENDER = ['focus', 'mousemove', 'touchstart'];
 
 		var SELECTOR_RATING_ELEMENT = '.rating-element';
 

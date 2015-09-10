@@ -2882,6 +2882,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A name for the search box. The default value is <![CDATA[<code>displayTerms.KEYWORDS</code>]]>.</description>
 			<name>name</name>
 			<required>false</required>
@@ -2912,11 +2917,6 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
-		</attribute>
-		<attribute>
-			<name>view</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>

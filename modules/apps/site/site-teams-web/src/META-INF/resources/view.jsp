@@ -37,7 +37,7 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 		<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 			<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= searchTerms.NAME %>" view="lexicon" />
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" name="<%= searchTerms.NAME %>" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>

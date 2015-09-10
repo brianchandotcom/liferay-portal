@@ -62,7 +62,7 @@ if (Validator.isNotNull(keywords)) {
 			<aui:input name="deleteTrashEntryIds" type="hidden" />
 			<aui:input name="restoreTrashEntryIds" type="hidden" />
 
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "search") %>' view="lexicon" />
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>

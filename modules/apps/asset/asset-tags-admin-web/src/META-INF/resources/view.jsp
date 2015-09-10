@@ -26,7 +26,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<liferay-ui:input-search view="lexicon" />
+		<liferay-ui:input-search markupView="lexicon" />
 	</aui:nav-bar-search>
 </aui:nav-bar>
 

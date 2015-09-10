@@ -437,13 +437,11 @@ public class JournalArticleLocalServiceImpl
 
 		// Asset
 
-		Double priority = GetterUtil.getDouble(
-			serviceContext.getAttribute("priority"));
-
 		updateAsset(
 			userId, article, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds(), priority);
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority());
 
 		// Comment
 
@@ -883,7 +881,7 @@ public class JournalArticleLocalServiceImpl
 
 		updateAsset(
 			userId, newArticle, assetCategoryIds, assetTagNames,
-			assetLinkEntryIds, null);
+			assetLinkEntryIds, oldAssetEntry.getPriority());
 
 		// Dynamic data mapping
 
@@ -5305,13 +5303,11 @@ public class JournalArticleLocalServiceImpl
 
 		// Asset
 
-		Double priority = GetterUtil.getDouble(
-			serviceContext.getAttribute("priority"));
-
 		updateAsset(
 			userId, article, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds(), priority);
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority());
 
 		// Dynamic data mapping
 

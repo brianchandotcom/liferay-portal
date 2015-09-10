@@ -13,7 +13,7 @@ AUI.add(
 
 		var WIN = A.config.win;
 
-		var HTML5_UPLOAD = (WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest);
+		var HTML5_UPLOAD = WIN && WIN.File && WIN.FormData && WIN.XMLHttpRequest;
 
 		var DocumentLibrary = A.Component.create(
 			{
@@ -96,7 +96,7 @@ AUI.add(
 
 						instance._toggleTrashAction();
 
-						var hasPermission = (themeDisplay.isSignedIn() && instance.one('#addButtonContainer'));
+						var hasPermission = themeDisplay.isSignedIn() && instance.one('#addButtonContainer');
 
 						if (HTML5_UPLOAD && hasPermission && instance._entriesContainer.inDoc()) {
 							config.appViewEntryTemplates = instance.byId('appViewEntryTemplates');
@@ -135,6 +135,15 @@ AUI.add(
 									Liferay.Language.get('cannot-open-the-requested-document-due-to-the-following-reason'),
 									[exception.message]
 								);
+
+								var openMSOfficeError = instance.ns('openMSOfficeError');
+
+								if (openMSOfficeError) {
+									openMSOfficeError.setHTML(errorMessage);
+
+									openMSOfficeError.removeClass('hide');
+								}
+
 							}
 						);
 					},

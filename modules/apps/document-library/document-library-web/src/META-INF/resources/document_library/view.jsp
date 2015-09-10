@@ -245,7 +245,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 				for (Folder mountFolder : mountFolders) {
 				%>
 
-					,{
+					, {
 						id: '<%= mountFolder.getRepositoryId() %>',
 						name: '<%= HtmlUtil.escapeJS(mountFolder.getName()) %>'
 					}

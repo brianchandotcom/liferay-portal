@@ -48,7 +48,7 @@ if (Validator.isNotNull(keywords)) {
 }
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="entries" />
 	</aui:nav>
@@ -62,7 +62,7 @@ if (Validator.isNotNull(keywords)) {
 			<aui:input name="deleteTrashEntryIds" type="hidden" />
 			<aui:input name="restoreTrashEntryIds" type="hidden" />
 
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "search") %>' view="lexicon" />
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
@@ -303,6 +303,6 @@ if (Validator.isNotNull(keywords)) {
 			showParentGroups="<%= false %>"
 		/>
 
-		<liferay-ui:search-iterator type='<%= approximate ? "more" : "regular" %>' view="lexicon" />
+		<liferay-ui:search-iterator markupView="lexicon" type='<%= approximate ? "more" : "regular" %>' />
 	</liferay-ui:search-container>
 </div>

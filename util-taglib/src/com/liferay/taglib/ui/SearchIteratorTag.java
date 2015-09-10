@@ -33,12 +33,12 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		_displayStyle = displayStyle;
 	}
 
-	public void setPaginate(boolean paginate) {
-		_paginate = paginate;
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
 	}
 
-	public void setView(String view) {
-		_view = view;
+	public void setPaginate(boolean paginate) {
+		_paginate = paginate;
 	}
 
 	@Override
@@ -56,8 +56,8 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 			displayStyle = DEFAULT_DISPLAY_STYPE;
 		}
 
-		if (Validator.isNotNull(_view)) {
-			return "/html/taglib/ui/search_iterator/" + _view + "/" +
+		if (Validator.isNotNull(_markupView)) {
+			return "/html/taglib/ui/search_iterator/" + _markupView + "/" +
 				displayStyle + ".jsp";
 		}
 
@@ -73,7 +73,7 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 	}
 
 	private String _displayStyle = DEFAULT_DISPLAY_STYPE;
+	private String _markupView;
 	private boolean _paginate = true;
-	private String _view;
 
 }

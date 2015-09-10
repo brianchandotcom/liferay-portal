@@ -47,9 +47,9 @@ AssetRenderer<JournalArticle> assetRenderer = journalContentDisplayContext.getAs
 				<p><%= assetRenderer.getSummary() %></p>
 
 				<liferay-ui:user-display
+					markupView="lexicon"
 					showLink="<%= false %>"
 					userId="<%= assetRenderer.getUserId() %>"
-					view="lexicon"
 				/>
 			</div>
 		</div>

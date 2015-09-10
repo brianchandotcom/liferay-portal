@@ -1600,6 +1600,12 @@
 		<tag-class>com.liferay.taglib.aui.IconTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>view</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[A class to give to the container of the icon, to provide an implementation for the icon. Note that the preferred method of setting the icon's image is via the <code>image</code> attribute.]]></description>
 			<name>cssClass</name>
 			<required>false</required>
@@ -1635,6 +1641,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[The target window in which the URL is opened. The default value is <code>self</code>. Possible values are <code>blank</code>, <code>self</code>, <code>parent</code>, <code>top</code>, and a unique frame's name.]]></description>
 			<name>target</name>
 			<required>false</required>
@@ -1644,12 +1656,6 @@
 		<attribute>
 			<description><![CDATA[A URL navigated to when the icon is clicked.]]></description>
 			<name>url</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>view</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -2103,7 +2109,7 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
-			<name>view</name>
+			<name>markupView</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -2809,6 +2815,12 @@
 		<tag-class>com.liferay.taglib.aui.WorkflowStatusTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>view</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[A bean associated with the workflow status component.]]></description>
 			<name>bean</name>
 			<required>false</required>
@@ -2825,6 +2837,12 @@
 		<attribute>
 			<description><![CDATA[An ID for the component instance.]]></description>
 			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>markupView</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -2867,12 +2885,6 @@
 		<attribute>
 			<description><![CDATA[A version for the workflow status that is displayed in a label next to the workflow status.]]></description>
 			<name>version</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>view</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>

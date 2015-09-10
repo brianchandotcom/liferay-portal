@@ -27,10 +27,10 @@ public class IconTag extends BaseIconTag {
 
 	@Override
 	protected String getPage() {
-		String view = getView();
+		String markupView = getMarkupView();
 
-		if (Validator.isNotNull(view)) {
-			return "/html/taglib/aui/icon/" + view + "/page.jsp";
+		if (Validator.isNotNull(markupView)) {
+			return "/html/taglib/aui/icon/" + markupView + "/page.jsp";
 		}
 
 		return "/html/taglib/aui/icon/page.jsp";

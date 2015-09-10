@@ -59,6 +59,7 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	groupId="<%= article.getGroupId() %>"
 	latestApprovedVersion="<%= (latestApprovedArticleVersion != null) ? String.valueOf(latestApprovedArticleVersion.getVersion()) : null %>"
 	latestApprovedVersionAuthor="<%= (latestApprovedArticleVersion != null) ? String.valueOf(latestApprovedArticleVersion.getUserName()) : null %>"
+	markupView="lexicon"
 	modifiedDate="<%= article.getModifiedDate() %>"
 	reviewDate="<%= article.getReviewDate() %>"
 	rowCheckerId="<%= HtmlUtil.escape(article.getArticleId()) %>"
@@ -71,5 +72,4 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	title="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
 	url="<%= rowURL != null ? rowURL.toString() : null %>"
 	version="<%= String.valueOf(article.getVersion()) %>"
-	view="lexicon"
 />

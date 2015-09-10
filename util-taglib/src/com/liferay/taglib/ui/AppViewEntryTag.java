@@ -123,6 +123,10 @@ public class AppViewEntryTag extends IncludeTag {
 		_locked = locked;
 	}
 
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 	}
@@ -179,10 +183,6 @@ public class AppViewEntryTag extends IncludeTag {
 		_version = version;
 	}
 
-	public void setView(String view) {
-		_view = view;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_actionJsp = null;
@@ -220,7 +220,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_title = null;
 		_url = null;
 		_version = null;
-		_view = null;
+		_markupView = null;
 	}
 
 	protected ServletContext getActionJspServletContext() {
@@ -233,8 +233,8 @@ public class AppViewEntryTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		if (Validator.isNotNull(_view)) {
-			return "/html/taglib/ui/app_view_entry/" + _view + "/" +
+		if (Validator.isNotNull(_markupView)) {
+			return "/html/taglib/ui/app_view_entry/" + _markupView + "/" +
 				_displayStyle + ".jsp";
 		}
 
@@ -336,6 +336,7 @@ public class AppViewEntryTag extends IncludeTag {
 	private String _latestApprovedVersion;
 	private String _latestApprovedVersionAuthor;
 	private boolean _locked;
+	private String _markupView;
 	private Date _modifiedDate;
 	private Date _reviewDate;
 	private String _rowCheckerId;
@@ -350,6 +351,5 @@ public class AppViewEntryTag extends IncludeTag {
 	private String _title;
 	private String _url;
 	private String _version;
-	private String _view;
 
 }

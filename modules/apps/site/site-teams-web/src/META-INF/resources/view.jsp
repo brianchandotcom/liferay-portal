@@ -28,7 +28,7 @@ SearchContainer teamSearchContainer = new TeamSearch(renderRequest, portletURL);
 TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTerms();
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="teams" />
 	</aui:nav>
@@ -37,7 +37,7 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 		<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 			<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= searchTerms.NAME %>" view="lexicon" />
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" name="<%= searchTerms.NAME %>" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
@@ -94,7 +94,7 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" view="lexicon" />
+		<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
 	</liferay-ui:search-container>
 </div>
 

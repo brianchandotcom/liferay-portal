@@ -21,7 +21,7 @@
 <%
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-bar:cssClass"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-bar:id"));
-java.lang.String view = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-bar:view"));
+java.lang.String markupView = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav-bar:markupView"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("aui:nav-bar:dynamicAttributes");
 Map<String, Object> scopedAttributes = (Map<String, Object>)request.getAttribute("aui:nav-bar:scopedAttributes");
 %>

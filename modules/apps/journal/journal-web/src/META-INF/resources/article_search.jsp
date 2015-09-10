@@ -35,7 +35,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="<%= renderResponse.getNamespace() %>"
-	view="lexicon"
+	markupView="lexicon"
 >
 	<aui:fieldset>
 		<aui:input inlineField="<%= true %>" label="id" name="<%= ArticleDisplayTerms.ARTICLE_ID %>" size="20" value="<%= displayTerms.getArticleId() %>" />

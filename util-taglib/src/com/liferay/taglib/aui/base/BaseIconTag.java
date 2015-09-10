@@ -53,16 +53,16 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 		return _label;
 	}
 
+	public java.lang.String getMarkupView() {
+		return _markupView;
+	}
+
 	public java.lang.String getTarget() {
 		return _target;
 	}
 
 	public java.lang.String getUrl() {
 		return _url;
-	}
-
-	public java.lang.String getView() {
-		return _view;
 	}
 
 	public void setCssClass(java.lang.String cssClass) {
@@ -95,6 +95,12 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("label", label);
 	}
 
+	public void setMarkupView(java.lang.String markupView) {
+		_markupView = markupView;
+
+		setScopedAttribute("markupView", markupView);
+	}
+
 	public void setTarget(java.lang.String target) {
 		_target = target;
 
@@ -107,12 +113,6 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("url", url);
 	}
 
-	public void setView(java.lang.String view) {
-		_view = view;
-
-		setScopedAttribute("view", view);
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -122,9 +122,9 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 		_id = null;
 		_image = null;
 		_label = null;
+		_markupView = null;
 		_target = null;
 		_url = null;
-		_view = null;
 	}
 
 	@Override
@@ -139,9 +139,9 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "image", _image);
 		setNamespacedAttribute(request, "label", _label);
+		setNamespacedAttribute(request, "markupView", _markupView);
 		setNamespacedAttribute(request, "target", _target);
 		setNamespacedAttribute(request, "url", _url);
-		setNamespacedAttribute(request, "view", _view);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:icon:";
@@ -154,8 +154,8 @@ public abstract class BaseIconTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _id = null;
 	private java.lang.String _image = null;
 	private java.lang.String _label = null;
+	private java.lang.String _markupView = null;
 	private java.lang.String _target = null;
 	private java.lang.String _url = null;
-	private java.lang.String _view = null;
 
 }

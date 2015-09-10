@@ -20,13 +20,13 @@
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="tags" />
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<liferay-ui:input-search view="lexicon" />
+		<liferay-ui:input-search markupView="lexicon" />
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
@@ -112,7 +112,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator view="lexicon" />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

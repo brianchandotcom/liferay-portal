@@ -143,5 +143,5 @@
 	</c:if>
 
 	<c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">
-		<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" view="lexicon" />
+		<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
 	</c:if>

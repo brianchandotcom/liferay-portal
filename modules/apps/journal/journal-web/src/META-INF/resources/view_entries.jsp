@@ -310,7 +310,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 							%>
 
 							<liferay-util:buffer var="statusHtml">
-								<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" view="lexicon" />
+								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
 							</liferay-util:buffer>
 
 							<liferay-frontend:card
@@ -414,13 +414,13 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 								description="<%= HtmlUtil.escape(curFolder.getDescription()) %>"
 								displayStyle="descriptive"
 								folder="<%= true %>"
+								markupView="lexicon"
 								modifiedDate="<%= curFolder.getModifiedDate() %>"
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
 								showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
 								title="<%= HtmlUtil.escape(curFolder.getName()) %>"
 								url="<%= rowURL.toString() %>"
-								view="lexicon"
 							/>
 						</liferay-ui:search-container-column-text>
 
@@ -497,7 +497,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" paginate="<%= false %>" searchContainer="<%= articleSearchContainer %>" view="lexicon" />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= articleSearchContainer %>" />
 </liferay-ui:search-container>
 
 <div class="article-entries-pagination">

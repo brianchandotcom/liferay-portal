@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String checkBoxCssClass = (String)request.getAttribute("liferay-frontend:management-bar:checkBoxCssClass");
 String cssClass = (String)request.getAttribute("liferay-frontend:management-bar:cssClass");
 String id = (String)request.getAttribute("liferay-frontend:management-bar:id");
 boolean includeCheckBox = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:management-bar:includeCheckBox"));

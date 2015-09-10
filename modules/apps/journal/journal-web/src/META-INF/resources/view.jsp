@@ -107,8 +107,8 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			gutter: 15,
 			position: 'right',
 			toggler: '.infoPanelToggler',
-			typeMobile: 'fixed',
 			type: 'relative',
+			typeMobile: 'fixed',
 			width: 320
 		}
 	);
@@ -148,6 +148,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			rowIds: '<portlet:namespace /><%= RowChecker.ROW_IDS %>',
 			select: {
 				displayStyleCSSClass: 'entry-display-style',
+				selectAllCheckbox: '.select-all-checkboxes',
 				selectedCSSClass: 'active'
 			}
 		}

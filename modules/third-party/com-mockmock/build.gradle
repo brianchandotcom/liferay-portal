@@ -36,8 +36,10 @@ downloadSrc {
 }
 
 jar {
+	archiveName = "com.liferay.com.mockmock.${mockMockSrcVersion}.jar"
 	deleteAllActions()
 	dependsOn jarMvn
+	version = mockMockSrcVersion
 }
 
 jarMvn {
@@ -49,6 +51,7 @@ jarMvn {
 			from new File(srcDir, "target")
 			include "MockMock-${mockMockSrcVersion}.one-jar.jar"
 			into distsDir
+			rename ".*", jar.archiveName
 		}
 	}
 

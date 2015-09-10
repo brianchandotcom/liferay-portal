@@ -284,9 +284,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				<c:if test="<%= viewSingleEntry %>">
 					<div class="entry-author">
 						<liferay-ui:user-display
+							markupView="lexicon"
 							userId="<%= entry.getUserId() %>"
 							userName="<%= entry.getUserName() %>"
-							view="lexicon"
 						>
 							<%= dateFormatDateTime.format(entry.getDisplayDate()) %>
 						</liferay-ui:user-display>

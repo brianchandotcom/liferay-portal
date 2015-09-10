@@ -5634,6 +5634,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>showLink</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5665,11 +5670,6 @@
 		</attribute>
 		<attribute>
 			<name>userName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>view</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

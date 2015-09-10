@@ -23,5 +23,5 @@ boolean toggleRowChecker = GetterUtil.getBoolean(request.getAttribute("liferay-u
 %>
 
 <div class="<%= toggleRowChecker ? "click-selector" : StringPool.BLANK %>">
-	<aui:icon cssClass="icon-xl text-default" image="<%= icon %>" url="<%= href %>" view="lexicon" />
+	<aui:icon cssClass="icon-xl text-default" image="<%= icon %>" markupView="lexicon" url="<%= href %>" />
 </div>

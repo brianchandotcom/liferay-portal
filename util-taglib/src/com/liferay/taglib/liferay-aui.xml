@@ -660,6 +660,11 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<name>markupView</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<description>The target window in which the URL is opened. The default value is <![CDATA[<code>self</code>]]>. Possible values are <![CDATA[<code>blank</code>]]>, <![CDATA[<code>self</code>]]>, <![CDATA[<code>parent</code>]]>, <![CDATA[<code>top</code>]]>, and a unique frame's name.</description>
 				<name>target</name>
 				<inputType>java.lang.String</inputType>
@@ -668,11 +673,6 @@
 			<attribute>
 				<description>A URL navigated to when the icon is clicked.</description>
 				<name>url</name>
-				<inputType>java.lang.String</inputType>
-				<outputType>java.lang.String</outputType>
-			</attribute>
-			<attribute>
-				<name>view</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>

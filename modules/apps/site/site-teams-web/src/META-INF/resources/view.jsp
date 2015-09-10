@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
 
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
@@ -51,7 +51,7 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 		<liferay-frontend:management-bar-buttons>
 			<liferay-frontend:management-bar-display-buttons
 				displayStyleURL="<%= portletURL %>"
-				displayViews='<%= new String[]{"list"} %>'
+				displayViews='<%= new String[]{"descriptive", "list"} %>'
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
 		</liferay-frontend:management-bar-buttons>
@@ -66,6 +66,10 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 		</liferay-frontend:management-bar-buttons>
 	</liferay-frontend:management-bar>
 </div>
+
+<%
+portletURL.setParameter("displayStyle", displayStyle);
+%>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="teamIds" type="hidden" />
@@ -106,25 +110,51 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 			}
 			%>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="name"
-				property="name"
-			/>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-text>
+						<h3 class="icon-group"></h3>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="description"
-				property="description"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<a href="<%= rowURL.toString() %>">
+								<%= team.getName() %>
+							</a>
+						</h5>
+						<h6 class="text-default">
+							<span><%= team.getDescription() %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="checkbox-cell entry-action"
-				path="/team_action.jsp"
-			/>
+					<liferay-ui:search-container-column-jsp
+						path="/team_action.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="name"
+						property="name"
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="description"
+						property="description"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="checkbox-cell entry-action"
+						path="/team_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= searchContainer %>" />
 	</liferay-ui:search-container>
 </aui:form>
 

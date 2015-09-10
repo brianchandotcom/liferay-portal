@@ -168,6 +168,12 @@ fetch-retries = 10
 fetch-retry-maxtimeout = 120000
 fetch-retry-mintimeout = 60000
 """
+
+		if (System.getenv("JENKINS_HOME")) {
+			npmrcFile << """
+registry = http://registry.npmjs.org/
+"""
+		}
 	}
 }
 

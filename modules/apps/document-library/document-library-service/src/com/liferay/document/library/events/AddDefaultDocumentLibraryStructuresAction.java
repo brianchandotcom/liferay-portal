@@ -279,8 +279,8 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		sb.append(fieldClass.getSimpleName());
 		sb.append(StringPool.UNDERLINE);
 		sb.append(field.getName());
-		sb.append("\" required=\"false\" showLabel=\"true\" type=\"text\">");
-		sb.append("<meta-data locale=\"");
+		sb.append("\" localizable=\"false\" required=\"false\" ");
+		sb.append("showLabel=\"true\" type=\"text\"><meta-data locale=\"");
 		sb.append(locale);
 		sb.append("\">");
 		sb.append("<entry name=\"label\"><![CDATA[metadata.");

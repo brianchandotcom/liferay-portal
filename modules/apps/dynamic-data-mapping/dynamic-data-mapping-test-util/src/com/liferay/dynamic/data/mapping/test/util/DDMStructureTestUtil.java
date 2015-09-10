@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -196,7 +197,9 @@ public class DDMStructureTestUtil {
 
 		DDMForm ddmForm = new DDMForm();
 
-		ddmForm.setAvailableLocales(SetUtil.fromArray(availableLocales));
+		Set<Locale> availableLocalesSet = SetUtil.fromArray(availableLocales);
+
+		ddmForm.setAvailableLocales(availableLocalesSet);
 		ddmForm.setDefaultLocale(defaultLocale);
 
 		DDMFormField ddmFormField = new DDMFormField(name, type);
@@ -208,7 +211,12 @@ public class DDMStructureTestUtil {
 
 		LocalizedValue label = new LocalizedValue(defaultLocale);
 
-		label.addString(defaultLocale, "Field");
+		label.addString(
+			defaultLocale, "Field_" + LocaleUtil.toLanguageId(defaultLocale));
+
+		for (Locale locale : availableLocalesSet) {
+			label.addString(locale, "Field_" + LocaleUtil.toLanguageId(locale));
+		}
 
 		ddmFormField.setLabel(label);
 

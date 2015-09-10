@@ -310,7 +310,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 							%>
 
 							<liferay-util:buffer var="statusHtml">
-								<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" view="lexicon" />
+								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
 							</liferay-util:buffer>
 
 							<liferay-frontend:card

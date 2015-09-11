@@ -11,8 +11,6 @@
 			</then>
 		</if>
 
-		<var name="commentBody" value="${commentBody}" />
-
 		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${commentBody}" />
 		<execute function="Pause" locator1="3000" />
 
@@ -34,8 +32,6 @@
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
-
-		<var name="commentBody" value="${commentBody}" />
 
 		<var name="key_commentBody" value="${commentBody}" />
 

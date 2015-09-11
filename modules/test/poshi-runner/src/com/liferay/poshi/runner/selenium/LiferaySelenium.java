@@ -36,6 +36,10 @@ public interface LiferaySelenium extends Selenium {
 
 	public void assertConsoleTextPresent(String text) throws Exception;
 
+	public void assertCssValue(
+			String locator, String cssAttribute, String cssValue)
+		throws Exception;
+
 	public void assertEditable(String locator) throws Exception;
 
 	public void assertElementNotPresent(String locator) throws Exception;

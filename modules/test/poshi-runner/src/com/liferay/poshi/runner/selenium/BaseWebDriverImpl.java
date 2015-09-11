@@ -113,6 +113,21 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void assertCssValue(
+			String locator, String cssAttribute, String cssValue)
+		throws Exception {
+
+		WebElement webElement = getWebElement(locator);
+
+		String value = webElement.getCssValue(cssAttribute);
+
+		if (!value.equals(cssValue)) {
+			throw new Exception(
+				"CSS Value " + value + " does not match " + cssValue);
+		}
+	}
+
+	@Override
 	public void assertEditable(String locator) throws Exception {
 		LiferaySeleniumHelper.assertEditable(this, locator);
 	}

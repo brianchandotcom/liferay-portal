@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ADD_CATEGORY</td>
-	<td>//a[contains(.,'Add Category')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Add Category')]</td>
 	<td></td>
 </tr>
 <tr>

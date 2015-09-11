@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VOCABULARY_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_vocabularyName}')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[@class='alert alert-info']</td>
 	<td></td>

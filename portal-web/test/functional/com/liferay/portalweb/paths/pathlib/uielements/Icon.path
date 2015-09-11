@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//a[contains(@href,'deleteEntries')]</td>
+	<td>//a/span[contains(@class,'icon-trash')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,6 +116,11 @@
 <tr>
 	<td>INFO_ALL_ENTRIES</td>
 	<td>//div[contains(@class,'management-bar-no-collapse on')]//a[contains(@class,'infoPanelToggler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_VERTICAL_ELLIPSIS</td>
+	<td>//tr[contains(@class,'info')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -969,13 +969,12 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	@Override
 	public void runtime(
 			String portletProviderClassName,
-			PortletProvider.Action portletProviderAction,
-			String portletInstanceId)
+			PortletProvider.Action portletProviderAction, String instanceId)
 		throws Exception {
 
 		RuntimeTag.doTag(
-			portletProviderClassName, portletProviderAction, portletInstanceId,
-			null, null, _pageContext, _request, _response);
+			portletProviderClassName, portletProviderAction, instanceId, null,
+			null, _pageContext, _request, _response);
 	}
 
 	@Override
@@ -998,12 +997,12 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 
 	@Override
 	public void runtime(
-			String portletName, String portletInstanceId, String queryString,
+			String portletName, String instanceId, String queryString,
 			String defaultPreferences)
 		throws Exception {
 
 		RuntimeTag.doTag(
-			portletName, portletInstanceId, queryString, defaultPreferences,
+			portletName, instanceId, queryString, defaultPreferences,
 			_pageContext, _request, _response);
 	}
 

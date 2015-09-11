@@ -484,8 +484,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	@Override
 	public void runtime(
 			String portletProviderClassName,
-			PortletProvider.Action portletProviderAction,
-			String portletInstanceId)
+			PortletProvider.Action portletProviderAction, String instanceId)
 		throws Exception {
 	}
 
@@ -500,7 +499,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	@Override
 	public void runtime(
-			String portletName, String portletInstanceId, String queryString,
+			String portletName, String instanceId, String queryString,
 			String defaultPreferences)
 		throws Exception {
 	}

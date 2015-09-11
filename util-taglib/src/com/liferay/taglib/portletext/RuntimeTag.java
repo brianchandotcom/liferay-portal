@@ -73,10 +73,10 @@ public class RuntimeTag extends TagSupport {
 
 	public static void doTag(
 			String portletProviderClassName,
-			PortletProvider.Action portletProviderAction,
-			String portletInstanceId, String queryString,
-			String defaultPreferences, PageContext pageContext,
-			HttpServletRequest request, HttpServletResponse response)
+			PortletProvider.Action portletProviderAction, String instanceId,
+			String queryString, String defaultPreferences,
+			PageContext pageContext, HttpServletRequest request,
+			HttpServletResponse response)
 		throws Exception {
 
 		String portletId = PortletProviderUtil.getPortletId(
@@ -84,9 +84,8 @@ public class RuntimeTag extends TagSupport {
 
 		if (Validator.isNotNull(portletId)) {
 			doTag(
-				portletId, portletInstanceId, queryString,
-				_SETTINGS_SCOPE_DEFAULT, defaultPreferences, pageContext,
-				request, response);
+				portletId, instanceId, queryString, _SETTINGS_SCOPE_DEFAULT,
+				defaultPreferences, pageContext, request, response);
 		}
 		else {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -133,19 +132,18 @@ public class RuntimeTag extends TagSupport {
 	}
 
 	public static void doTag(
-			String portletName, String portletInstanceId, String queryString,
+			String portletName, String instanceId, String queryString,
 			String defaultPreferences, PageContext pageContext,
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		doTag(
-			portletName, portletInstanceId, queryString,
-			_SETTINGS_SCOPE_DEFAULT, defaultPreferences, pageContext, request,
-			response);
+			portletName, instanceId, queryString, _SETTINGS_SCOPE_DEFAULT,
+			defaultPreferences, pageContext, request, response);
 	}
 
 	public static void doTag(
-			String portletName, String portletInstanceId, String queryString,
+			String portletName, String instanceId, String queryString,
 			String settingsScope, String defaultPreferences,
 			PageContext pageContext, HttpServletRequest request,
 			HttpServletResponse response)
@@ -157,7 +155,7 @@ public class RuntimeTag extends TagSupport {
 		}
 
 		PortletInstance portletInstance = new PortletInstance(
-			portletName, portletInstanceId);
+			portletName, instanceId);
 
 		RestrictPortletServletRequest restrictPortletServletRequest =
 			new RestrictPortletServletRequest(
@@ -281,14 +279,13 @@ public class RuntimeTag extends TagSupport {
 				(_portletProviderAction != null)) {
 					doTag(
 						_portletProviderClassName, _portletProviderAction,
-						_portletInstanceId, _queryString, _defaultPreferences,
+						_instanceId, _queryString, _defaultPreferences,
 						pageContext, request, response);
 			}
 			else {
 				doTag(
-					_portletName, _portletInstanceId, _queryString,
-					_settingsScope, _defaultPreferences, pageContext, request,
-					response);
+					_portletName, _instanceId, _queryString, _settingsScope,
+					_defaultPreferences, pageContext, request, response);
 			}
 
 			return EVAL_PAGE;
@@ -304,8 +301,8 @@ public class RuntimeTag extends TagSupport {
 		_defaultPreferences = defaultPreferences;
 	}
 
-	public void setPortletInstanceId(String portletInstanceId) {
-		_portletInstanceId = portletInstanceId;
+	public void setInstanceId(String instanceId) {
+		_instanceId = instanceId;
 	}
 
 	public void setPortletName(String portletName) {
@@ -389,7 +386,7 @@ public class RuntimeTag extends TagSupport {
 	private static final Log _log = LogFactoryUtil.getLog(RuntimeTag.class);
 
 	private String _defaultPreferences;
-	private String _portletInstanceId;
+	private String _instanceId;
 	private String _portletName;
 	private PortletProvider.Action _portletProviderAction;
 	private String _portletProviderClassName;

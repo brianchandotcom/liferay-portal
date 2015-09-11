@@ -612,8 +612,16 @@ public class PoshiRunnerExecutor {
 					}
 				}
 				else if (i == 2) {
-					argument = PoshiRunnerVariablesUtil.getValueFromCommandMap(
-						"locator2");
+					if (selenium.equals("assertCssValue")) {
+						argument =
+							PoshiRunnerVariablesUtil.getValueFromCommandMap(
+							"value1");
+					}
+					else {
+						argument =
+							PoshiRunnerVariablesUtil.getValueFromCommandMap(
+							"locator2");
+					}
 				}
 			}
 			else {

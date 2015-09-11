@@ -1,0 +1,47 @@
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
+
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.cache", version: "latest.release"
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "latest.release"
+	}
+}
+
+apply plugin: "com.liferay.cache"
+apply plugin: "com.liferay.node"
+apply plugin: "java"
+
+task buildBabelCore(type: Copy)
+task downloadBabelCore(type: DownloadNodeModuleTask)
+
+buildBabelCore {
+	dependsOn downloadBabelCore
+	from new File(node.nodeDir, "node_modules/babel-core/browser-polyfill.min.js")
+	into new File(sourceSets.main.output.resourcesDir, "META-INF/resources")
+}
+
+cache {
+	task(classes) {
+		baseDir = sourceSets.main.output.resourcesDir
+		include "META-INF/resources/**"
+		skipTaskDependency buildBabelCore
+		testFile "build.gradle"
+	}
+}
+
+classes {
+	dependsOn buildBabelCore
+}
+
+downloadBabelCore {
+	moduleName = "babel-core"
+	moduleVersion = "5.8.24"
+}

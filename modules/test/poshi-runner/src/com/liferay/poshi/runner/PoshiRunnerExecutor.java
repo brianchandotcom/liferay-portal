@@ -615,12 +615,12 @@ public class PoshiRunnerExecutor {
 					if (selenium.equals("assertCssValue")) {
 						argument =
 							PoshiRunnerVariablesUtil.getValueFromCommandMap(
-							"value1");
+								"value1");
 					}
 					else {
 						argument =
 							PoshiRunnerVariablesUtil.getValueFromCommandMap(
-							"locator2");
+								"locator2");
 					}
 				}
 			}

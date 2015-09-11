@@ -1685,7 +1685,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	protected Folder addCoverImageFolder(long userId, long groupId)
 		throws PortalException {
 
-		return doAddFolder(userId, groupId, BlogsConstants.BLOGS_COVER_IMAGE);
+		return doAddFolder(userId, groupId, _COVER_IMAGE_FOLDER_NAME);
 	}
 
 	protected void addDiscussion(BlogsEntry entry, long userId, long groupId)
@@ -2281,6 +2281,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	protected CommentManager commentManager =
 		CommentManagerUtil.getCommentManager();
+
+	private static final String _COVER_IMAGE_FOLDER_NAME = "CoverImage";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BlogsEntryLocalServiceImpl.class);

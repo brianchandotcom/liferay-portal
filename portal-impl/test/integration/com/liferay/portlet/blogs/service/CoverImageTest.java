@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -88,10 +90,15 @@ public class CoverImageTest {
 			PortletFileRepositoryUtil.getPortletFileEntry(
 				entry.getCoverImageFileEntryId());
 
+		Repository repository = RepositoryLocalServiceUtil.getRepository(
+			coverImageFileEntry.getRepositoryId());
+
+		Assert.assertEquals(BlogsConstants.SERVICE_NAME, repository.getName());
+
 		Folder coverImageFolder = coverImageFileEntry.getFolder();
 
-		Assert.assertEquals(
-			BlogsConstants.BLOGS_COVER_IMAGE, coverImageFolder.getName());
+		Assert.assertNotEquals(
+			BlogsConstants.SERVICE_NAME, coverImageFolder.getName());
 		Assert.assertEquals("image.jpg", coverImageFileEntry.getTitle());
 	}
 

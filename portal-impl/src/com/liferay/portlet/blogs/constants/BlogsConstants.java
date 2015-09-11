@@ -19,8 +19,6 @@ package com.liferay.portlet.blogs.constants;
  */
 public class BlogsConstants {
 
-	public static final String BLOGS_COVER_IMAGE = "blogs.cover.image";
-
 	public static final String SERVICE_NAME = "com.liferay.portlet.blogs";
 
 }

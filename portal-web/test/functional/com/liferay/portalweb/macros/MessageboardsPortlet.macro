@@ -1,5 +1,7 @@
 <definition>
 	<command name="configureAnonymousPostingCP">
+		<execute function="Pause" locator1="10000" />
+
 		<execute function="SelectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 
 		<if>
@@ -26,6 +28,8 @@
 
 		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
 		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute function="Pause" locator1="10000" />
 
 		<execute function="SelectFrame" locator1="CPMessageboardsConfiguration#MESSAGE_BOARDS_IFRAME" />
 

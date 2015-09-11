@@ -1,6 +1,6 @@
 <#assign rootNavigationItems = navItem.fromLayouts(request, themeDisplay.getLayouts(), null) />
 
-<ul aria-label="#language ("site-pages")" class="nav nav-tabs nav-justified" role="menubar">
+<ul aria-label="#language ("site-pages")" class="nav nav-tabs" role="menubar">
 	<#list rootNavigationItems as rootNavigationItem>
 		<#if rootNavigationItem.isBrowsable() || rootNavigationItem.hasBrowsableChildren() >
 			<#assign nav_item_attr_has_popup = "" />

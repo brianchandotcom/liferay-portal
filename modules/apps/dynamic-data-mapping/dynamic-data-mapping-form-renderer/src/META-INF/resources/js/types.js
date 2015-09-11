@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-ddm-form-renderer-types',
 	function(A) {
 		var AArray = A.Array;
-		var ALang = A.Lang;
 
 		var _fieldTypes = [];
 

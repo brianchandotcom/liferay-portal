@@ -68,19 +68,6 @@ Team team = (Team)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.ASSIGN_MEMBERS) %>">
-		<portlet:renderURL var="assignMembersURL">
-			<portlet:param name="mvcPath" value="/edit_team_assignments.jsp" />
-			<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			iconCssClass="icon-plus"
-			message="assign-members"
-			url="<%= assignMembersURL %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteTeam" var="deleteTeamURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

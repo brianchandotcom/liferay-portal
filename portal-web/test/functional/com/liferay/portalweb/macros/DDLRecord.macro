@@ -378,6 +378,7 @@
 				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
 
 				<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_NESTED" value1="${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}" />
+				<execute function="AssertCssValue" locator1="DDLRecord#FIELD_NESTED" locator2="margin-left" value1="15px" />
 			</then>
 		</if>
 	</command>

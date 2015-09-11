@@ -131,9 +131,26 @@ body {
 		}
 	}
 
-	#content .row {
-		margin-left: -15px;
-		margin-right: -15px;
+	#content{
+		.navbar-nav > li {
+			& > a {
+				color: $solid-color;
+			}
+
+			&:hover > a, &.hover > a, &.active > a {
+				background-color: none;
+				color: #000;
+			}
+
+			.dropdown-menu .active > a {
+				color: #FFF;
+			}
+		}
+
+		.row {
+			margin-left: -15px;
+			margin-right: -15px;
+		}
 	}
 
 	.portlet-layout {

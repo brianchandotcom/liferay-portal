@@ -735,7 +735,6 @@
 				<execute function="AssertElementNotPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="Comments#BE_THE_FIRST_LINK" />
 				<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
 			</else>
 		</if>

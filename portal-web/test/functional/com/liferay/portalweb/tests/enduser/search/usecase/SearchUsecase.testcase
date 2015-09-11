@@ -88,10 +88,6 @@
 			<var name="entryTitle" value="Blogs User Entry Title" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${searchPortletName}" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -193,10 +189,6 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${searchPageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${searchPortletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -359,10 +351,6 @@
 			<var name="pageName" value="${searchPageName}" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${searchPortletName}" />
-		</execute>
-
 		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="${searchTerm}" />
 		</execute>
@@ -456,10 +444,6 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${searchPageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${searchPortletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

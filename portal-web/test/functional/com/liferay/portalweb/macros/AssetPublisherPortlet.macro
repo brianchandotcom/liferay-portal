@@ -725,8 +725,6 @@
 			</else>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="Icon#TWITTER" />
-		<execute function="AssertElementPresent" locator1="Icon#GOOGLE_PLUS" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL" />
 
@@ -741,6 +739,12 @@
 				<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
 			</else>
 		</if>
+
+		<execute function="AssertClick" locator1="Button#SHARE" value1="Share" />
+
+		<execute function="AssertElementPresent" locator1="Icon#TWITTER" />
+		<execute function="AssertElementPresent" locator1="Icon#FACEBOOK" />
+		<execute function="AssertElementPresent" locator1="Icon#GOOGLE_PLUS" />
 	</command>
 
 	<command name="viewDefaultWithAllDisplaySettingsCheckboxesPG">

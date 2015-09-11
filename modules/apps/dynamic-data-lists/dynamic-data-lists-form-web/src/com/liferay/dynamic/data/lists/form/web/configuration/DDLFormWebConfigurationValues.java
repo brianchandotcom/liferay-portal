@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/admin/init.jsp" %>
+package com.liferay.dynamic.data.lists.form.web.configuration;
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-util:include page="/admin/display_style_buttons.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
+import com.liferay.portal.kernel.util.GetterUtil;
 
-	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/admin/sort_buttons.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+/**
+ * @author Rafael Praxedes
+ */
+public class DDLFormWebConfigurationValues {
+
+	public static final String DEFAULT_DISPLAY_VIEW = GetterUtil.getString(
+		DDLFormWebConfigurationUtil.get("default.display.view"));
+
+	public static String[] DISPLAY_VIEWS = DDLFormWebConfigurationUtil.getArray(
+		"display.views");
+
+}

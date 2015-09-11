@@ -16,12 +16,15 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-util:include page="/admin/display_style_buttons.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
+<aui:nav-bar cssClass="collapse-basic-search" id="toolbar" markupView="lexicon">
+	<aui:nav-bar-search>
 
-	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/admin/sort_buttons.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+		<%
+		PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
+		%>
+
+		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+			<liferay-util:include page="/admin/record_set_search.jsp" servletContext="<%= application %>" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>

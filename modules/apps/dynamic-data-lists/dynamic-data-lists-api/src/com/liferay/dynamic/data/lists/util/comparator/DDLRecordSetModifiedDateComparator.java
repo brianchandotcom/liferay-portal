@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/admin/init.jsp" %>
+package com.liferay.dynamic.data.lists.util.comparator;
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-util:include page="/admin/display_style_buttons.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 
-	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/admin/sort_buttons.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+/**
+ * @author Rafael Praxedes
+ */
+public class DDLRecordSetModifiedDateComparator
+	extends StagedModelModifiedDateComparator<DDLRecordSet> {
+
+	public DDLRecordSetModifiedDateComparator() {
+		this(false);
+	}
+
+	public DDLRecordSetModifiedDateComparator(boolean ascending) {
+		super(ascending);
+	}
+
+}

@@ -91,7 +91,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 					data.put("portletURL", currentURL);
 				}
 				else {
-					data.put("portletURL", itemSelectorViewRenderer.getPortletURL());
+					data.put("portletURL", curItemSelectorViewRenderer.getPortletURL());
 				}
 
 				data.put("showSearch", itemSelectorView.isShowSearch());
@@ -134,6 +134,8 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 					formSearch.toggle(showSearch === 'true');
 
 					var searchFm = A.one('#<portlet:namespace />searchFm');
+
+					debugger;
 
 					searchFm.setAttribute('action', tabSection.getData('portletURL'));
 				}

@@ -4,6 +4,8 @@ AUI.add(
 		var AArray = A.Array;
 		var Renderer = Liferay.DDM.Renderer;
 
+		var TPL_CONTAINER = '<div class="lfr-ddm-form-container"></div>';
+
 		var Form = A.Component.create(
 			{
 				ATTRS: {
@@ -128,7 +130,7 @@ AUI.add(
 					_valueContainer: function() {
 						var instance = this;
 
-						return A.Node.create('<div class="lfr-ddm-form-container"></div>');
+						return A.Node.create(TPL_CONTAINER);
 					}
 				}
 			}

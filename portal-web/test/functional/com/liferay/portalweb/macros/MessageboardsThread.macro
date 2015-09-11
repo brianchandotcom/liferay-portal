@@ -588,7 +588,7 @@
 			<equals arg1="${markAsQuestion}" arg2="true" />
 			<then>
 				<var name="key_threadSubject" value="${threadSubject}" />
-				<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_FLAG" value1="Waiting for an Answer" />
+				<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_ADMIN_FLAG" value1="Waiting for an Answer" />
 			</then>
 		</if>
 

@@ -25,5 +25,5 @@ page import="com.liferay.util.PropertyComparator" %>
 <%
 String direction = (String)request.getAttribute("liferay-ui:icon:direction");
 boolean showArrow = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:showArrow"));
-String view = (String)request.getAttribute("liferay-ui:icon:view");
+String markupView = (String)request.getAttribute("liferay-ui:icon:markupView");
 %>

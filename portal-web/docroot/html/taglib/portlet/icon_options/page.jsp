@@ -21,7 +21,7 @@
 	direction="<%= direction %>"
 	extended="<%= false %>"
 	icon="../aui/cog"
-	markupView="<%= view %>"
+	markupView="<%= markupView %>"
 	message="options"
 	showArrow="<%= showArrow %>"
 	showWhenSingleIcon="<%= true %>"

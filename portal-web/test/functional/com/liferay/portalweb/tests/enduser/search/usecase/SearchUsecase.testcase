@@ -67,7 +67,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Super Admin Entry Content" />
 			<var name="entryTitle" value="Blogs Super Admin Entry Title" />
 		</execute>
@@ -83,13 +83,9 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs User Entry Content" />
 			<var name="entryTitle" value="Blogs User Entry Title" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${searchPortletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -195,10 +191,6 @@
 			<var name="pageName" value="${searchPageName}" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${searchPortletName}" />
-		</execute>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${searchPageName}" />
 		</execute>
@@ -260,7 +252,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#addCP">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry1 AssetContent" />
 			<var name="entryTitle" value="Blogs Entry1 Title" />
 		</execute>
@@ -269,7 +261,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#addCP">
+		<execute macro="Blogs#addEntry">
 			<var name="entryContent" value="Blogs Entry2 Content" />
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
@@ -357,10 +349,6 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${searchPageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${searchPortletName}" />
 		</execute>
 
 		<execute macro="Search#searchPG">
@@ -456,10 +444,6 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${searchPageName}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${searchPortletName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

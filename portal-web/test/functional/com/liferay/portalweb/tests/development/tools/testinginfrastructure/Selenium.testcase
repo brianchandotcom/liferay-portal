@@ -83,7 +83,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
@@ -103,7 +103,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<var method="selenium#getCurrentDay()" name="int" />
 
@@ -118,7 +118,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<var locator="CPBlogsAdd#DISPLAY_DATE" name="int" />
 
@@ -136,7 +136,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<var method="selenium#getCurrentYear()" name="int" />
 
@@ -151,7 +151,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<var method="selenium#getFirstNumber('//input[@id=\'__161__displayDateYear\']')" name="string" />
 
@@ -166,7 +166,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<var method="selenium#getFirstNumberIncrement('//input[@id=\'__161__displayDateYear\']')" name="string" />
 		<execute macro="TestUtils#assertEquals">
@@ -299,7 +299,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
@@ -348,7 +348,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />

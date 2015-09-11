@@ -1884,7 +1884,7 @@
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#PERMISSIONS_BUTTON" />
 
-		<execute macro="BlogsEntry#addPGViaAP">
+		<execute macro="Blogs#addViaAP">
 			<var name="entryContent" value="This is a movie blog by usersn2" />
 			<var name="entryTitle" value="Movie Blog" />
 		</execute>

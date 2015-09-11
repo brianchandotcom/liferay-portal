@@ -107,9 +107,7 @@ public class CoverImageTest {
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 			_user.getUserId(), _group.getGroupId());
 
-		int initialFolderFileEntriesCount = 0;
-
-		initialFolderFileEntriesCount =
+		int initialFolderFileEntriesCount =
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
 				_group.getGroupId(), folder.getFolderId());
 

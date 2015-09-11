@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.user.personal.bar.web.portlet;
+package com.liferay.product.navigation.user.personal.bar.web.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portlet.admin.util.PortalUserPersonalBarApplicationType;
-import com.liferay.user.personal.bar.web.contants.UserPersonalBarPortletKeys;
+import com.liferay.product.navigation.user.personal.bar.web.contants.ProductNavigationUserPersonalBarPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,12 +31,14 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ViewPortletProvider.class
 )
-public class UserPersonalBarViewPortletProvider
+public class ProductNavigationUserPersonalBarViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return UserPersonalBarPortletKeys.USER_PERSONAL_BAR;
+		return
+			ProductNavigationUserPersonalBarPortletKeys.
+				PRODUCT_NAVIGATION_USER_PERSONAL_BAR;
 	}
 
 }

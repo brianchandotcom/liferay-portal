@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.user.personal.bar.web.contants;
+package com.liferay.product.navigation.user.personal.bar.web.contants;
 
 /**
  * @author Eudaldo Alonso
  */
-public class UserPersonalBarPortletKeys {
+public class ProductNavigationUserPersonalBarPortletKeys {
 
-	public static final String USER_PERSONAL_BAR =
-		"com_liferay_user_personal_bar_web_portlet_UserPersonalBarPortlet";
+	public static final String PRODUCT_NAVIGATION_USER_PERSONAL_BAR =
+		"com_liferay_product_navigation_user_personal_bar_web_portlet_" +
+			"ProductNavigationUserPersonalBarPortlet";
 
 }

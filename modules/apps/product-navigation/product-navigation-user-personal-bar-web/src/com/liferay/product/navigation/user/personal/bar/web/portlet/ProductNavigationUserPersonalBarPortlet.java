@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.personal.bar.web.portlet;
+package com.liferay.product.navigation.user.personal.bar.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
@@ -42,5 +42,5 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = Portlet.class
 )
-public class UserPersonalBarPortlet extends MVCPortlet {
+public class ProductNavigationUserPersonalBarPortlet extends MVCPortlet {
 }

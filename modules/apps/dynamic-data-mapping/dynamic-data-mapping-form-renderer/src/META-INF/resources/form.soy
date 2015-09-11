@@ -36,6 +36,8 @@
  * @param values
  */
 {template .form_renderer_js}
+	<link href="/o/ddm-form-renderer/css/main.css" rel="stylesheet" type="text/css" />
+
 	<script type="text/javascript">
 		AUI().use(
 			'liferay-ddm-form-renderer',
@@ -106,88 +108,97 @@
 /**
  * Prints a form with pagination.
  *
+ * @param containerId
  * @param pages
  */
 {template .paginated_form}
-	<div class="lfr-ddm-form-wizard">
-		<ul class="multi-step-progress-bar">
+	<div class="lfr-ddm-form-container" id="{$containerId}">
+		<div class="lfr-ddm-form-wizard">
+			<ul class="multi-step-progress-bar">
+				{foreach $page in $pages}
+					<li {if isFirst($page)}class="active"{/if}>
+						<div class="progress-bar-title">{$page.title|noAutoescape}</div>
+
+						<div class="divider"></div>
+
+						<div class="progress-bar-step">{index($page) + 1}</div>
+					</li>
+				{/foreach}
+			</ul>
+		</div>
+
+		<div class="lfr-ddm-form-pages">
 			{foreach $page in $pages}
-				<li {if isFirst($page)}class="active"{/if}>
-					<div class="progress-bar-title">{$page.title|noAutoescape}</div>
+				<div class="{if isFirst($page)}active{/if} lfr-ddm-form-page">
+					{if isNonnull($page.title)}
+						<h3>{$page.title|noAutoescape}</h3>
+					{/if}
 
-					<div class="divider"></div>
+					{if isNonnull($page.description)}
+						<h4>{$page.description|noAutoescape}</h4>
+					{/if}
 
-					<div class="progress-bar-step">{index($page) + 1}</div>
-				</li>
+					{call ddm.form_rows data="all"}
+						{param rows: $page.rows /}
+					{/call}
+				</div>
 			{/foreach}
-		</ul>
-	</div>
+		</div>
 
-	<div class="lfr-ddm-form-pages">
-		{foreach $page in $pages}
-			<div class="{if isFirst($page)}active{/if} lfr-ddm-form-page">
-				{if isNonnull($page.title)}
-					<h3>{$page.title|noAutoescape}</h3>
-				{/if}
+		<div class="lfr-ddm-form-pagination-controls">
+			<button class="btn btn-primary hide lfr-ddm-form-pagination-prev" type="button">Prev</button>
 
-				{if isNonnull($page.description)}
-					<h4>{$page.description|noAutoescape}</h4>
-				{/if}
+			<button class="btn btn-primary{if length($pages) == 1} hide{/if} lfr-ddm-form-pagination-next pull-right" type="button">Next</button>
 
-				{call ddm.form_rows data="all"}
-					{param rows: $page.rows /}
-				{/call}
-			</div>
-		{/foreach}
-	</div>
-
-	<div class="lfr-ddm-form-pagination-controls">
-		<button class="btn btn-primary hide lfr-ddm-form-pagination-prev" type="button">Prev</button>
-
-		<button class="btn btn-primary{if length($pages) == 1} hide{/if} lfr-ddm-form-pagination-next pull-right" type="button">Next</button>
-
-		<button class="btn btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">Submit</button>
+			<button class="btn btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">Submit</button>
+		</div>
 	</div>
 {/template}
 
 /**
  * Prints a simple form with just one page.
  *
- * @param fields
+ * @param containerId
+ * @param pages
  */
 {template .simple_form}
-	<div class="lfr-ddm-form-fields">
-		{foreach $field in $fields}
-			{call ddm.field data="all"}
-				{param field: $field /}
-			{/call}
-		{/foreach}
+	<div class="lfr-ddm-form-container" id="{$containerId}">
+		<div class="lfr-ddm-form-fields">
+			{foreach $page in $pages}
+				{call ddm.form_rows data="all"}
+					{param rows: $page.rows /}
+				{/call}
+			{/foreach}
+		</div>
 	</div>
 {/template}
 
 /**
  * Prints a form with tabs.
  *
+ * @param containerId
  * @param pages
  */
 {template .tabbed_form}
-	<div class="lfr-ddm-form-tabs">
-		<ul class="nav nav-tabs">
-			{foreach $page in $pages}
-				<li>
-					<a href="javascript:;">{$page.title}</a>
-				</li>
-			{/foreach}
-		</ul>
+	<div class="lfr-ddm-form-container" id="{$containerId}">
+		<div class="lfr-ddm-form-tabs">
+			<ul class="nav nav-tabs">
+				{foreach $page in $pages}
+					<li>
+						<a href="javascript:;">{$page.title}</a>
+					</li>
+				{/foreach}
+			</ul>
 
-		<div class="tab-content">
-			{foreach $page in $pages}
-				<div class="tab-pane {if isFirst($page)}active{/if}">
-					{call ddm.form_rows data="all"}
-						{param rows: $page.rows /}
-					{/call}
-				</div>
-			{/foreach}
+			<div class="tab-content">
+				{foreach $page in $pages}
+					<div class="tab-pane {if isFirst($page)}active{/if}">
+						{call ddm.form_rows data="all"}
+							{param rows: $page.rows /}
+						{/call}
+					</div>
+				{/foreach}
+			</div>
 		</div>
 	</div>
 {/template}
@@ -195,16 +206,19 @@
 /**
  * Prints the settings form.
  *
+ * @param containerId
  * @param pages
  */
 {template .settings_form}
-	<div class="lfr-ddm-settings-form">
-		{foreach $page in $pages}
-			<div class="lfr-ddm-form-page{if isFirst($page)} active basic{/if}{if isLast($page)} advanced{/if}">
-				{call ddm.form_rows data="all"}
-					{param rows: $page.rows /}
-				{/call}
-			</div>
-		{/foreach}
+	<div class="lfr-ddm-form-container" id="{$containerId}">
+		<div class="lfr-ddm-settings-form">
+			{foreach $page in $pages}
+				<div class="lfr-ddm-form-page{if isFirst($page)} active basic{/if}{if isLast($page)} advanced{/if}">
+					{call ddm.form_rows data="all"}
+						{param rows: $page.rows /}
+					{/call}
+				</div>
+			{/foreach}
+		</div>
 	</div>
 {/template}

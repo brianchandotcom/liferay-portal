@@ -132,7 +132,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_containerType = null;
 		_cssClass = null;
 		_description = null;
-		_escape = false;
+		_escape = true;
 		_fileEntryRelatedSearchResults = null;
 		_highlightEnabled = _HIGHLIGHT_ENABLED;
 		_locked = false;

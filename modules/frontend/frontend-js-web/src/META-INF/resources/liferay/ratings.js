@@ -386,6 +386,7 @@ AUI.add(
 						var instance = this;
 
 						var positiveVotes = Math.floor(score);
+
 						var negativeVotes = entries - positiveVotes;
 
 						return {

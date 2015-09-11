@@ -263,7 +263,7 @@ public interface VelocityTaglib {
 
 	public void portletIconOptions() throws Exception;
 
-	public void portletIconOptions(String direction, String view)
+	public void portletIconOptions(String direction, String markupView)
 		throws Exception;
 
 	public void portletIconPortlet() throws Exception;

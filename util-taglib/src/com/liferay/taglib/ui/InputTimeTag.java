@@ -120,8 +120,7 @@ public class InputTimeTag extends IncludeTag {
 			"liferay-ui:input-time:minuteValue", String.valueOf(_minuteValue));
 		request.setAttribute("liferay-ui:input-time:name", _name);
 		request.setAttribute(
-				"liferay-ui:input-time:timeFormat",
-				String.valueOf(_timeFormat));
+			"liferay-ui:input-time:timeFormat", String.valueOf(_timeFormat));
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/input_time/page.jsp";

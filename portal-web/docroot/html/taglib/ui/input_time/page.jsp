@@ -34,6 +34,7 @@ String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:inpu
 String timeFormat = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:timeFormat"));
 
 boolean amPm = DateUtil.isFormatAmPm(locale);
+
 if (timeFormat.equals("ampm")) {
 	amPm = true;
 }

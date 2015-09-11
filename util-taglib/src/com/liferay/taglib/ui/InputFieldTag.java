@@ -157,6 +157,8 @@ public class InputFieldTag extends IncludeTag {
 			"liferay-ui:input-field:defaultValue", _defaultValue);
 		request.setAttribute(
 			"liferay-ui:input-field:disabled", String.valueOf(_disabled));
+		request.setAttribute(
+			"liferay-ui:input-field:dynamicAttributes", getDynamicAttributes());
 		request.setAttribute("liferay-ui:input-field:field", _field);
 		request.setAttribute("liferay-ui:input-field:fieldParam", fieldParam);
 		request.setAttribute("liferay-ui:input-field:id", id);
@@ -169,9 +171,6 @@ public class InputFieldTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-field:model", _model.getName());
 		request.setAttribute(
 			"liferay-ui:input-field:placeholder", _placeholder);
-		request.setAttribute(
-				"liferay-ui:input-field:dynamicAttributes",
-				getDynamicAttributes());
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/input_field/page.jsp";

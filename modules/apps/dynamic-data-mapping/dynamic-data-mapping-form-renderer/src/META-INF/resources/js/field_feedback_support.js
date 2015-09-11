@@ -5,13 +5,13 @@ AUI.add(
 
 		var TPL_FEEDBACK = '<span aria-hidden="true" class="form-control-feedback"><span class="icon-{icon}"></span></span>';
 
-		var TPL_VALIDATION_MESSAGE = '<div class="validation-message">{message}</div>';
+		var TPL_ERROR_MESSAGE = '<div class="validation-message">{errorMessage}</div>';
 
 		var FieldFeedbackSupport = function() {
 		};
 
 		FieldFeedbackSupport.ATTRS = {
-			validationMessages: {
+			errorMessage: {
 				value: []
 			}
 		};
@@ -21,25 +21,21 @@ AUI.add(
 				var instance = this;
 
 				instance._eventHandlers.push(
-					instance.after('validationMessagesChange', instance._afterValidationMessagesChange),
-					instance.after(instance._renderValidationMessages, instance, 'render')
+					instance.after('errorMessageChange', instance._afterErrorMessageChange),
+					instance.after(instance._renderErrorMessage, instance, 'render')
 				);
 			},
 
-			addValidationMessage: function(message) {
+			showErrorMessage: function(errorMessage) {
 				var instance = this;
 
-				var validationMessages = instance.get('validationMessages');
-
-				validationMessages.push(message);
-
-				instance.set('validationMessages', validationMessages);
+				instance.set('errorMessage', errorMessage);
 			},
 
-			clearValidationMessages: function() {
+			hideErrorMessage: function() {
 				var instance = this;
 
-				instance.set('validationMessages', []);
+				instance.set('errorMessage', '');
 			},
 
 			clearValidationStatus: function() {
@@ -101,36 +97,28 @@ AUI.add(
 				}
 			},
 
-			_afterValidationMessagesChange: function() {
+			_afterErrorMessageChange: function() {
 				var instance = this;
 
-				instance._renderValidationMessages();
+				instance._renderErrorMessage();
 			},
 
-			_appendValidationMessage: function(message) {
-				var instance = this;
-
-				instance.getInputNode().insert(
-					Lang.sub(
-						TPL_VALIDATION_MESSAGE,
-						{
-							message: message
-						}
-					),
-					'after'
-				);
-			},
-
-			_renderValidationMessages: function() {
+			_renderErrorMessage: function() {
 				var instance = this;
 
 				var container = instance.get('container');
 
 				container.all('.validation-message').remove();
 
-				var messages = instance.get('validationMessages');
-
-				messages.forEach(A.bind('_appendValidationMessage', instance));
+				instance.getInputNode().insert(
+					Lang.sub(
+						TPL_ERROR_MESSAGE,
+						{
+							errorMessage: instance.get('errorMessage')
+						}
+					),
+					'after'
+				);
 			},
 
 			_showFeedback: function(icon) {

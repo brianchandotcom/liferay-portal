@@ -1,13 +1,6 @@
 #wrapper {
 	padding: 0;
 
-	.container-inner-decoration {
-		background-color: #FFF;
-		margin-top: 20px;
-		min-height: 200px;
-		@include box-shadow(0 1px 3px 0 rgba(0, 0, 0, .2));
-	}
-
 	.portlet-layout {
 		margin-left: 0;
 		margin-right: 0;
@@ -15,5 +8,14 @@
 		.portlet-column {
 			padding: 0;
 		}
+	}
+
+	.taglib-empty-message {
+		background-color: #FFF;
+
+		@include box-shadow(0 1px 3px 0 rgba(0, 0, 0, 0.2));
+
+		margin-top: 20px;
+		min-height: 200px;
 	}
 }

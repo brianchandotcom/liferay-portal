@@ -81,14 +81,12 @@ public class RubySassCompilerTest {
 
 		Assert.assertNotNull(sassCompiler);
 
-		Class<?> clazz = getClass();
-
-		File sourceMapsDir = new File(
+		File inputDir = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
-				"/internal/dependencies/sourcemaps");
+				"/internal/dependencies/sass-spec/14_imports");
 
-		File inputFile = new File(sourceMapsDir, "input.scss");
-		File sourceMapFile = new File(sourceMapsDir, "input.css.map");
+		File inputFile = new File(inputDir, "input.scss");
+		File sourceMapFile = new File(inputDir, "input.css.map");
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
@@ -100,7 +98,8 @@ public class RubySassCompilerTest {
 		Assert.assertTrue(sourceMapFile.exists());
 
 		File expectedOutputFile = new File(
-			sourceMapsDir, "expected_output.css");
+			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
+				"/internal/dependencies/sourcemaps", "expected_output.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
 
@@ -128,15 +127,13 @@ public class RubySassCompilerTest {
 
 		Assert.assertNotNull(sassCompiler);
 
-		Class<?> clazz = getClass();
-
-		File sourceMapsDir = new File(
+		File inputDir = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
-				"/internal/dependencies/sourcemaps");
+				"/internal/dependencies/sass-spec/14_imports");
 
-		File inputFile = new File(sourceMapsDir, "input.scss");
+		File inputFile = new File(inputDir, "input.scss");
 		File sourceMapFile = new File(
-			sourceMapsDir, ".sass-cache/input.css.map");
+			inputDir, ".sass-cache/input.css.map");
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
@@ -151,7 +148,9 @@ public class RubySassCompilerTest {
 		Assert.assertTrue(sourceMapFile.exists());
 
 		File expectedOutputFile = new File(
-			sourceMapsDir, "expected_custom_output.css");
+			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
+				"/internal/dependencies/sourcemaps",
+			"expected_custom_output.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
 

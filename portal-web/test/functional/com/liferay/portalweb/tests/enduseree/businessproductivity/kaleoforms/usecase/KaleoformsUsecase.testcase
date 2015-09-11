@@ -1877,7 +1877,7 @@
 		<execute macro="KaleoFormsPortlet#viewMyCompletedRequestsTasks" />
 	</command>
 
-	<command known-issues="LRQA-13709" name="CompleteProcessAndViewEmailNotifications" priority="4">
+	<command name="CompleteProcessAndViewEmailNotifications" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="field" value="Text" />
@@ -7741,7 +7741,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-13709" name="ViewEmailNotificationSentToTaskAssignees" priority="4">
+	<command name="ViewEmailNotificationSentToTaskAssignees" priority="4">
 		<description message="This is a use case for LPS-50688 and LPS-35263." />
 
 		<property name="test.assert.javascript.errors" value="false" />

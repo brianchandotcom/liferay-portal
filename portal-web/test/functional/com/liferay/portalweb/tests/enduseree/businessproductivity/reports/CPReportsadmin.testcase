@@ -193,7 +193,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-13709" name="DeliverReportToEmail" priority="4">
+	<command name="DeliverReportToEmail" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="emailAddress1" property-value="email.address.1" />
@@ -542,7 +542,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-13709" name="ViewEmailNotificationDelivery" priority="4">
+	<command name="ViewEmailNotificationDelivery" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="emailAddress1" property-value="email.address.1" />
@@ -621,7 +621,7 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
-	<command known-issues="LRQA-13709" name="ViewEmailRecipientDelivery" priority="4">
+	<command name="ViewEmailRecipientDelivery" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="emailAddress1" property-value="email.address.1" />

@@ -109,7 +109,7 @@
 		<execute function="AssertElementNotPresent" locator1="ReportsAdmin#DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME" />
 	</command>
 
-	<command known-issues="LRQA-13709" name="ViewReportEmailNewConfiguration" priority="4">
+	<command name="ViewReportEmailNewConfiguration" priority="4">
 		<description message="This is a use case for LPS-51009." />
 
 		<var name="emailAddress1" property-value="email.address.1" />

@@ -30,7 +30,9 @@
  * @param containerId
  * @param definition
  * @param fieldTypes
+ * @param layout
  * @param portletNamespace
+ * @param templateNamespace
  * @param values
  */
 {template .form_renderer_js}
@@ -45,7 +47,13 @@
 					{lb}
 						container: '#{$containerId}',
 						definition: {$definition|noAutoescape},
+
+						{if $layout}
+							layout: {$layout|noAutoescape},
+						{/if}
+
 						portletNamespace: '{$portletNamespace}',
+						templateNamespace: '{$templateNamespace}',
 						values: {$values|noAutoescape}
 					{rb}
 				).render();

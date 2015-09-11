@@ -101,10 +101,10 @@
 		delta="<%= feedDelta %>"
 		displayStyle="<%= feedDisplayStyle %>"
 		feedType="<%= feedType %>"
-		message="<%= feedLinkMessage %>"
+		message="<%= feedURLMessage %>"
 		name="<%= feedTitle %>"
 		resourceURL="<%= feedResourceURL %>"
-		url="<%= feedLink %>"
+		url="<%= feedURL %>"
 	/>
 </c:if>
 

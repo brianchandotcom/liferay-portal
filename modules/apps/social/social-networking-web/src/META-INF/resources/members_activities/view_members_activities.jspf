@@ -27,7 +27,7 @@ else if (group.isRegularSite()) {
 String rssURL = themeDisplay.getPathMain() + "/activities/rss";
 
 String taglibFeedTitle = LanguageUtil.format(request, "subscribe-to-x's-activities", group.getDescriptiveName(locale), false);
-String taglibFeedLinkMessage = LanguageUtil.format(request, "subscribe-to-x's-activities", group.getDescriptiveName(locale), false);
+String taglibFeedURLMessage = LanguageUtil.format(request, "subscribe-to-x's-activities", group.getDescriptiveName(locale), false);
 %>
 
 <liferay-ui:social-activities
@@ -35,8 +35,8 @@ String taglibFeedLinkMessage = LanguageUtil.format(request, "subscribe-to-x's-ac
 	feedDelta="<%= rssDelta %>"
 	feedDisplayStyle="<%= rssDisplayStyle %>"
 	feedEnabled="<%= enableRSS %>"
-	feedLink="<%= rssURL.toString() %>"
-	feedLinkMessage="<%= taglibFeedLinkMessage %>"
 	feedTitle="<%= taglibFeedTitle %>"
 	feedType="<%= rssFeedType %>"
+	feedURL="<%= rssURL.toString() %>"
+	feedURLMessage="<%= taglibFeedURLMessage %>"
 />

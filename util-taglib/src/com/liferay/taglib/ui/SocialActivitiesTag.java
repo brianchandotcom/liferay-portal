@@ -57,12 +57,20 @@ public class SocialActivitiesTag extends IncludeTag {
 		_feedEnabled = feedEnabled;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setFeedURL(String)}
+	 */
+	@Deprecated
 	public void setFeedLink(String feedLink) {
-		_feedLink = feedLink;
+		_feedURL = feedLink;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setFeedURLMessage(String)}
+	 */
+	@Deprecated
 	public void setFeedLinkMessage(String feedLinkMessage) {
-		_feedLinkMessage = feedLinkMessage;
+		_feedURLMessage = feedLinkMessage;
 	}
 
 	public void setFeedResourceURL(ResourceURL feedResourceURL) {
@@ -77,6 +85,14 @@ public class SocialActivitiesTag extends IncludeTag {
 		_feedType = feedType;
 	}
 
+	public void setFeedURL(String url) {
+		_feedURL = url;
+	}
+
+	public void setFeedURLMessage(String feedURLMessage) {
+		_feedURLMessage = feedURLMessage;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_activities = null;
@@ -86,11 +102,11 @@ public class SocialActivitiesTag extends IncludeTag {
 		_feedDelta = 0;
 		_feedDisplayStyle = null;
 		_feedEnabled = false;
-		_feedLink = StringPool.BLANK;
-		_feedLinkMessage = StringPool.BLANK;
 		_feedResourceURL = null;
 		_feedTitle = null;
 		_feedType = null;
+		_feedURL = StringPool.BLANK;
+		_feedURLMessage = StringPool.BLANK;
 	}
 
 	@Override
@@ -118,15 +134,14 @@ public class SocialActivitiesTag extends IncludeTag {
 			"liferay-ui:social-activities:feedEnabled",
 			String.valueOf(_feedEnabled));
 		request.setAttribute(
-			"liferay-ui:social-activities:feedLink", _feedLink);
-		request.setAttribute(
-			"liferay-ui:social-activities:feedLinkMessage", _feedLinkMessage);
-		request.setAttribute(
 			"liferay-ui:social-activities:feedResourceURL", _feedResourceURL);
 		request.setAttribute(
 			"liferay-ui:social-activities:feedTitle", _feedTitle);
 		request.setAttribute(
 			"liferay-ui:social-activities:feedType", _feedType);
+		request.setAttribute("liferay-ui:social-activities:feedURL", _feedURL);
+		request.setAttribute(
+			"liferay-ui:social-activities:feedURLMessage", _feedURLMessage);
 	}
 
 	private static final String _PAGE =
@@ -139,10 +154,10 @@ public class SocialActivitiesTag extends IncludeTag {
 	private int _feedDelta;
 	private String _feedDisplayStyle;
 	private boolean _feedEnabled;
-	private String _feedLink = StringPool.BLANK;
-	private String _feedLinkMessage = StringPool.BLANK;
 	private ResourceURL _feedResourceURL;
 	private String _feedTitle;
 	private String _feedType;
+	private String _feedURL = StringPool.BLANK;
+	private String _feedURLMessage = StringPool.BLANK;
 
 }

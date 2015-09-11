@@ -5016,11 +5016,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>feedURL</code>]]>.</description>
 			<name>feedLink</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Deprecated as of 7.0.0, replaced by the attribute <![CDATA[<code>feedURLMessage</code>]]>.</description>
 			<name>feedLinkMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -5038,6 +5040,16 @@
 		</attribute>
 		<attribute>
 			<name>feedType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>feedURL</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>feedURLMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

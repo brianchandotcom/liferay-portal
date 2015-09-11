@@ -45,8 +45,8 @@ String taglibFeedTitle = LanguageUtil.format(request, "subscribe-to-x's-activiti
 	activities="<%= socialActivities %>"
 	feedDisplayStyle="<%= rssDisplayStyle %>"
 	feedEnabled="<%= enableRSS %>"
-	feedLinkMessage="<%= taglibFeedTitle %>"
 	feedResourceURL="<%= rssURL %>"
 	feedTitle="<%= taglibFeedTitle %>"
 	feedType="<%= rssFeedType %>"
+	feedURLMessage="<%= taglibFeedTitle %>"
 />

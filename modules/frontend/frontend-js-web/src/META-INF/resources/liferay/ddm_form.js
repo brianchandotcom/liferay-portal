@@ -430,7 +430,7 @@ AUI.add(
 
 						var labelNode = instance.getLabelNode();
 
-						if (Lang.isValue(label)) {
+						if (Lang.isValue(label) && !Lang.isNull(labelNode)) {
 							labelNode.html(A.Escape.html(label));
 						}
 					},
@@ -700,7 +700,7 @@ AUI.add(
 
 						var inputNode = instance.getInputNode();
 
-						if (Lang.isValue(label)) {
+						if (Lang.isValue(label) && !Lang.isNull(labelNode)) {
 							labelNode.html('&nbsp;' + A.Escape.html(label));
 
 							labelNode.prepend(inputNode);

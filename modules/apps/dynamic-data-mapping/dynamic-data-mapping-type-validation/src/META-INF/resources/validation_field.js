@@ -146,13 +146,18 @@ AUI.add(
 
 						var nameField = root.getField('name');
 
-						return Lang.sub(
+						var expression = Lang.sub(
 							selectedValidation.template,
 							{
 								name: nameField && nameField.getValue() || '',
 								parameter: instance.get('parameterValue')
 							}
 						);
+
+						return {
+							errorMessage: instance._getMessageValue(),
+							expression: expression
+						};
 					},
 
 					setValue: function(expression) {
@@ -205,6 +210,16 @@ AUI.add(
 						instance._eventHandlers.push(
 							container.delegate('change', A.bind(instance._onChangeSelects, instance), 'select')
 						);
+					},
+
+					_getMessageValue: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var messageNode = container.one('.message-input');
+
+						return messageNode.val();
 					},
 
 					_getParameterValue: function() {

@@ -17,13 +17,13 @@ AUI.add(
 
 			strings: {
 				value: {
-					defaultValidationMessage: Liferay.Language.get('unknown-error'),
+					defaultErrorMessage: Liferay.Language.get('unknown-error'),
 					requestErrorMessage: Liferay.Language.get('there-was-an-error-when-trying-to-validate-your-form')
 				}
 			},
 
-			validationExpression: {
-				value: ''
+			validation: {
+				value: {}
 			}
 		};
 
@@ -40,15 +40,17 @@ AUI.add(
 			hasErrors: function() {
 				var instance = this;
 
-				return instance.get('validationMessages').length > 0;
+				return !!instance.get('errorMessage');
 			},
 
 			hasValidation: function() {
 				var instance = this;
 
-				var validationExpression = instance.get('validationExpression');
+				var validation = instance.get('validation');
 
-				return !!validationExpression && validationExpression !== 'true';
+				var expression = validation.expression;
+
+				return !!expression && expression !== 'true';
 			},
 
 			processEvaluation: function(result) {
@@ -76,16 +78,16 @@ AUI.add(
 				var validation = Util.getFieldByKey(result, instanceId, 'instanceId');
 
 				if (validation) {
-					var messages = validation.messages;
+					var errorMessage = validation.errorMessage;
 
-					if (!messages && !validation.valid) {
+					if (!errorMessage && !validation.valid) {
 						var strings = instance.get('strings');
 
-						messages = [strings.defaultValidationMessage];
+						errorMessage = strings.defaultErrorMessage;
 					}
 
-					if (messages && messages.length) {
-						instance.set('validationMessages', messages);
+					if (errorMessage) {
+						instance.set('errorMessage', errorMessage);
 					}
 					else {
 						instance.clearValidationMessages();

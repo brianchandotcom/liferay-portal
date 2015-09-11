@@ -170,7 +170,7 @@
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
 
-		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="AssertClick" locator1="NavPill#PAGE" value1="Page" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${pageName}" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Button#ADD_PAGE" value1="Add Page" />
 

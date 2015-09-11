@@ -650,9 +650,9 @@
 	<command name="viewOnlyAddOptionViaSiteAdminCP">
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
 
-		<execute function="AssertElementNotPresent" locator1="DockbarAddpanelpage#NAVIGATION_CONTENT" />
-		<execute function="AssertElementNotPresent" locator1="DockbarAddpanelpage#NAVIGATION_APPLICATIONS" />
-		<execute function="AssertElementPresent" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" />
+		<execute function="AssertElementNotPresent" locator1="NavPill#CONTENT" />
+		<execute function="AssertElementNotPresent" locator1="NavPill#APPLICATIONS" />
+		<execute function="AssertElementPresent" locator1="NavPill#PAGE" />
 
 		<execute function="Refresh" />
 	</command>

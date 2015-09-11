@@ -110,12 +110,12 @@
 </tr>
 <tr>
 	<td>BASIC_DOCUMENT</td>
-	<td>//a[@role='menuitem' and @title='Basic Document']</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Basic Document')] | //li[contains(@class,'open')]//a[contains(.,'Basic Document')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_WEB_CONTENT</td>
-	<td>//ul[contains(@class,'dropdown-menu-left-side-bottom')]/li/a[contains(.,'Basic Web Content')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Basic Web Content')] | //li[contains(@class,'open')]//a[contains(.,'Basic Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -325,7 +325,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>

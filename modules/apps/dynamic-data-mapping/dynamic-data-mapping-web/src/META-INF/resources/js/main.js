@@ -613,6 +613,8 @@ AUI.add(
 				var instance = this;
 
 				if (isString(str)) {
+					str = str.trim();
+					
 					for (var i = 0; i < str.length; i++) {
 						var item = str[i];
 
@@ -652,7 +654,7 @@ AUI.add(
 			},
 
 			validateFieldName: function(fieldName) {
-				return (/^[\w]+$/).test(fieldName);
+				return (/^[\w]+$/).test(fieldName) && !fieldName.includes('\u005F');
 			}
 		};
 

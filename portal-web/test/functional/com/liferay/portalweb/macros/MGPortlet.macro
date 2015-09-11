@@ -1,7 +1,7 @@
 <definition>
 	<command name="configureShowAllPG">
 		<execute function="AssertElementPresent" locator1="Icon#COG" />
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="Icon#COG" value1="" />
+		<execute function="Click#pauseClickAt" locator1="Icon#COG" />
 		<execute function="AssertClick" locator1="MenuItem#CONFIGURATION" value1="Configuration" />
 
 		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />

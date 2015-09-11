@@ -531,7 +531,7 @@ else {
 
 		var className = 'alert alert-danger';
 
-		var fileTitleErrorNode = $('#<portlet:namespace /fileTitleError');
+		var fileTitleErrorNode = $('#<portlet:namespace />fileTitleError');
 
 		var form = $(document.<portlet:namespace />fm);
 

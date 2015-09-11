@@ -38,7 +38,7 @@ public class RestoreEntryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/portlet/message_boards/restore_entry.jsp";
+		return "/message_boards/restore_entry.jsp";
 	}
 
 }

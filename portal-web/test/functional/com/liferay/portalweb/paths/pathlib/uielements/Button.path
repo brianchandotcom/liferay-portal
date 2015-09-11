@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>ADD_TEAM</td>
-	<td>//a[contains(.,'Add Team')]</td>
+	<td>//a[contains(@id,'teams') and contains(@class,'btn-action')]</td>
 	<td></td>
 </tr>
 <tr>

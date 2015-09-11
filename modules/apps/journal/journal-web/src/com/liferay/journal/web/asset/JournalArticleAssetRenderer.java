@@ -40,6 +40,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -350,14 +351,17 @@ public class JournalArticleAssetRenderer
 				_article.getGroupId(), layout.isPrivateLayout(),
 				_article.getArticleId());
 
-		if (!hitLayoutIds.isEmpty()) {
-			Long hitLayoutId = hitLayoutIds.get(0);
-
+		for (Long hitLayoutId : hitLayoutIds) {
 			Layout hitLayout = LayoutLocalServiceUtil.getLayout(
 				_article.getGroupId(), layout.isPrivateLayout(),
 				hitLayoutId.longValue());
 
-			return PortalUtil.getLayoutURL(hitLayout, themeDisplay);
+			if (LayoutPermissionUtil.contains(
+					themeDisplay.getPermissionChecker(), layout,
+					ActionKeys.VIEW)) {
+
+				return PortalUtil.getLayoutURL(hitLayout, themeDisplay);
+			}
 		}
 
 		return noSuchEntryRedirect;

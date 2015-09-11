@@ -947,7 +947,7 @@
 
 				<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
 
-				<execute function="AssertTextEquals" locator1="Comments#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 			<elseif>
 				<equals arg1="${deactivateType}" arg2="Deactivate Button" />
@@ -960,7 +960,7 @@
 
 					<execute function="Confirm" value1="Are you sure you want to deactivate the selected users?" />
 
-					<execute function="AssertTextEquals" locator1="Comments#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 				</then>
 			</elseif>
 			<elseif>
@@ -972,7 +972,7 @@
 
 					<execute function="Confirm" value1="Are you sure you want to deactivate the selected users?" />
 
-					<execute function="AssertTextEquals" locator1="Comments#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 				</then>
 			</elseif>
 		</if>
@@ -992,7 +992,7 @@
 				<execute function="Check" locator1="UsersAndOrganizations#USER_TABLE_ALL_CHECKBOX" />
 				<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
 				<execute function="Confirm" value1="Are you sure you want to permanently delete the selected users?" />
-				<execute function="AssertTextEquals" locator1="Comments#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 			</then>
 		</if>
 

@@ -184,6 +184,8 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:description", _description);
 		request.setAttribute(
+			"liferay-ui:app-view-search-entry:escape", _escape);
+		request.setAttribute(
 			"liferay-ui:app-view-search-entry:fileEntryRelatedSearchResults",
 			_fileEntryRelatedSearchResults);
 		request.setAttribute(

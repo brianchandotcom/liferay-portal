@@ -40,15 +40,13 @@ AUI.add(
 
 				var queue = new A.Queue();
 
-				var addToQueue = function(item) {
-					item.getRepeatedSiblings().forEach(
-						function(field) {
-							queue.add(field);
-						}
-					);
+				var addToQueue = A.fn(1, 'add', queue);
+
+				var addSiblingsToQueue = function(item) {
+					item.getRepeatedSiblings().forEach(addToQueue);
 				};
 
-				instance.get('fields').forEach(addToQueue);
+				instance.get('fields').forEach(addSiblingsToQueue);
 
 				while (queue.size() > 0) {
 					var field = queue.next();
@@ -59,7 +57,7 @@ AUI.add(
 						break;
 					}
 
-					field.get('fields').forEach(addToQueue);
+					field.get('fields').forEach(addSiblingsToQueue);
 				}
 			},
 

@@ -122,13 +122,11 @@ AUI.add(
 				settingsForm.clearValidationMessages();
 				settingsForm.clearValidationStatus();
 
-				settingsForm.submit(
-					function() {
-						if (callback) {
-							callback.apply(instance, arguments);
-						}
-					}
-				);
+				if (callback) {
+					callback = A.bind(callback, instance);
+				}
+
+				settingsForm.submit(callback);
 
 				return false;
 			},

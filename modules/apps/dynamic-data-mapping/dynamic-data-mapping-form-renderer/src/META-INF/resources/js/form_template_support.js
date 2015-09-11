@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var AObject = A.Object;
 
+		var TPL_DIV = '<div></div>';
+
 		var FormTemplateSupport = function() {
 		};
 
@@ -97,7 +99,7 @@ AUI.add(
 				return A.merge(
 					layout,
 					{
-						pages: pages.map(A.bind(instance._normalizeLayoutPage, instance))
+						pages: pages.map(A.bind('_normalizeLayoutPage', instance))
 					}
 				);
 			},
@@ -108,7 +110,7 @@ AUI.add(
 				return A.merge(
 					column,
 					{
-						fields: column.fieldNames.map(A.bind(instance._renderFieldTemplate, instance))
+						fields: column.fieldNames.map(A.bind('_renderFieldTemplate', instance))
 					}
 				);
 			},
@@ -122,7 +124,7 @@ AUI.add(
 					page,
 					{
 						description: page.description && page.description[locale] || '',
-						rows: page.rows.map(A.bind(instance._normalizeLayoutRow, instance)),
+						rows: page.rows.map(A.bind('_normalizeLayoutRow', instance)),
 						title: page.title && page.title[locale] || ''
 					}
 				);
@@ -134,7 +136,7 @@ AUI.add(
 				return A.merge(
 					row,
 					{
-						columns: row.columns.map(A.bind(instance._normalizeLayoutColumn, instance))
+						columns: row.columns.map(A.bind('_normalizeLayoutColumn', instance))
 					}
 				);
 			},
@@ -148,7 +150,7 @@ AUI.add(
 
 				return repeatedSiblings.map(
 					function(sibling) {
-						var fragment = A.Node.create('<div></div>');
+						var fragment = A.Node.create(TPL_DIV);
 
 						var container = field._createContainer();
 

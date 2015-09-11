@@ -100,8 +100,18 @@ public class MediaWikiImporter implements WikiImporter {
 		}
 
 		InputStream pagesInputStream = inputStreams[0];
-		InputStream usersInputStream = inputStreams[1];
-		InputStream imagesInputStream = inputStreams[2];
+
+		InputStream usersInputStream = null;
+
+		if (inputStreams.length > 1) {
+			usersInputStream = inputStreams[1];
+		}
+
+		InputStream imagesInputStream = null;
+
+		if (inputStreams.length > 2) {
+			imagesInputStream = inputStreams[2];
+		}
 
 		try {
 			Document document = SAXReaderUtil.read(pagesInputStream);

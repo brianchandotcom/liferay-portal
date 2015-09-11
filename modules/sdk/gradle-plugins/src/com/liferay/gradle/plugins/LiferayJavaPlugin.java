@@ -135,6 +135,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String CLEAN_DEPLOYED_PROPERTY_NAME = "cleanDeployed";
 
+	public static final String DELETE_LIFERAY_HOME_PROPERTY_NAME =
+		"deleteLiferayHome";
+
 	public static final String DEPLOY_TASK_NAME = "deploy";
 
 	public static final String FORMAT_WSDL_TASK_NAME = "formatWSDL";
@@ -601,6 +604,13 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Task task) {
+					boolean deleteLiferayHome = GradleUtil.getProperty(
+						task, DELETE_LIFERAY_HOME_PROPERTY_NAME, true);
+
+					if (!deleteLiferayHome) {
+						return;
+					}
+
 					Project project = task.getProject();
 
 					LiferayExtension liferayExtension = GradleUtil.getExtension(

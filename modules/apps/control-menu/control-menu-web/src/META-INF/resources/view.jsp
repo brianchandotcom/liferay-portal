@@ -17,6 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
+List<ControlMenuCategory> controlMenuCategories = (List<ControlMenuCategory>)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_CATEGORIES);
+ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_ENTRY_REGISTRY);
+
 Group group = null;
 LayoutSet layoutSet = null;
 
@@ -62,6 +65,31 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 		<div class="control-menu-level-1">
 			<div class="container-fluid-1280">
 				<ul class="control-menu-nav" data-namespace="<portlet:namespace />" id="<portlet:namespace />controlMenu">
+
+					<%
+					for (ControlMenuCategory controlMenuCategory : controlMenuCategories) {
+						List<ControlMenuEntry> controlMenuEntries = controlMenuEntryRegistry.getControlMenuEntries(controlMenuCategory, request);
+
+						for (ControlMenuEntry controlMenuEntry : controlMenuEntries) {
+							if (controlMenuEntry.include(request, new PipingServletResponse(pageContext))) {
+								continue;
+							}
+					%>
+
+							<li>
+								<liferay-ui:icon
+									iconCssClass='<%= controlMenuEntry.getIconCssClass(request) + " icon-monospaced" %>'
+									label="<%= false %>"
+									linkCssClass="control-menu-icon"
+									message="<%= controlMenuEntry.getLabel(locale) %>"
+									url="<%= controlMenuEntry.getURL(request) %>"
+								/>
+							</li>
+
+					<%
+						}
+					}
+					%>
 
 					<%
 					String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");

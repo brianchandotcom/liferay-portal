@@ -78,13 +78,25 @@ AUI.add(
 				var definition = instance.get('definition');
 				var portletNamespace = instance.get('portletNamespace');
 
-				return A.map(
-					values.fieldValues,
+				var fields = [];
+
+				var getField = function(name) {
+					return AArray.find(
+						fields,
+						function(item) {
+							return item.get('name') === name;
+						}
+					);
+				};
+
+				values.fieldValues.forEach(
 					function(item) {
-						var siblings = Util.searchFieldsByKey(values, item.name);
+						var name = item.name;
+
+						var siblings = Util.searchFieldsByKey(values, name);
 
 						var config = A.merge(
-							Util.getFieldByKey(definition, item.name),
+							Util.getFieldByKey(definition, name),
 							{
 								parent: instance,
 								portletNamespace: portletNamespace,
@@ -94,9 +106,24 @@ AUI.add(
 
 						var fieldClass = Util.getFieldClass(config.type);
 
-						return new fieldClass(A.merge(config, item));
+						var fieldInstance = new fieldClass(A.merge(config, item));
+
+						var createdField = getField(name);
+
+						if (createdField) {
+							var repetitions = createdField.get('repetitions');
+
+							repetitions.push(fieldInstance);
+
+							fieldInstance.set('repetitions', repetitions);
+						}
+						else {
+							fields.push(fieldInstance);
+						}
 					}
 				);
+
+				return fields;
 			},
 
 			_valueFields: function(val) {

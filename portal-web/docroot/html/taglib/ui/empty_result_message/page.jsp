@@ -21,7 +21,7 @@ String message = GetterUtil.getString((String)request.getAttribute("liferay-ui:e
 %>
 
 <c:if test="<%= Validator.isNotNull(message) %>">
-	<div class="text-center white-box">
+	<div class="taglib-empty-message text-center">
 		<span><liferay-ui:message key="<%= message %>" /></span>
 	</div>
 </c:if>

@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var CSS_FIELD_SETTINGS_SAVE = A.getClassName('form', 'builder', 'field', 'settings', 'save');
 
-		var TPL_SETTINGS_FORM = '<form class="lfr-ddm-form-container" action="javascript:;"></form>';
+		var TPL_SETTINGS_FORM = '<form action="javascript:;"></form>';
 
 		var FormBuilderSettingsForm = A.Component.create(
 			{

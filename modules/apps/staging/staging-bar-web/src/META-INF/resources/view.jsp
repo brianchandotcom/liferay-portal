@@ -77,18 +77,30 @@ if (layout != null) {
 	%>
 
 	<c:if test="<%= liveGroup != null %>">
-		<aui:button-row>
+		<li class="control-menu-nav-item">
 			<c:choose>
 				<c:when test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
 					<c:if test="<%= stagingGroup != null %>">
-						<aui:button cssClass="active" id="stagingLink" value="staging" />
+						<a class="active control-menu-icon sidenav-toggler" id="stagingLink" value="staging">
+							<span class="icon-fb-radio icon-monospaced"></span>
+							<span class="control-menu-icon-label">
+								<liferay-ui:message key="staging" />
+							</span>
+						</a>
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<aui:button cssClass='<%= ((layoutSetBranches != null) ? " active" : StringPool.BLANK) %>' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" value="staging" />
+					<a class='<%= ((layoutSetBranches != null) ? " active control-menu-icon sidenav-toggler" : StringPool.BLANK) %>' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" value="staging">
+						<span class="icon-fb-radio icon-monospaced"></span>
+						<span class="control-menu-icon-label">
+							<liferay-ui:message key="staging" />
+						</span>
+					</a>
 				</c:otherwise>
 			</c:choose>
+		</li>
 
+		<li class="active control-menu-nav-item">
 			<c:choose>
 				<c:when test="<%= group.isStagedRemotely() %>">
 
@@ -104,18 +116,34 @@ if (layout != null) {
 					String remoteURL = StagingUtil.buildRemoteURL(remoteAddress, remotePort, remotePathContext, secureConnection, remoteGroupId, layout.isPrivateLayout());
 					%>
 
-					<aui:button href="<%= remoteURL %>" icon="icon-external-link-sign" value="go-to-remote-live" />
+					<a href="<%= remoteURL %>" icon="icon-external-link-sign" value="go-to-remote-live">
+						<liferay-ui:message key="go-to-remote-live" />
+					</a>
 				</c:when>
 				<c:when test="<%= group.isStagingGroup() %>">
 					<c:if test="<%= Validator.isNotNull(liveFriendlyURL) %>">
-						<aui:button href="<%= liveFriendlyURL %>" value="live" />
+						<a class="control-menu-icon taglib-icon" href="<%= liveFriendlyURL %>" value="live">
+							<i class="icon-circle-blank icon-monospaced"></i>
+
+							<span class="hide-accessible taglib-text"></span>
+							<span class="control-menu-icon-label">
+								<liferay-ui:message key="live" />
+							</span>
+						</a>
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<aui:button cssClass="active" id="liveLink" value="live" />
+					<a class="control-menu-icon taglib-icon" id="liveLink" value="live">
+						<i class="icon-circle-blank icon-monospaced"></i>
+
+						<span class="hide-accessible taglib-text"></span>
+						<span class="control-menu-icon-label">
+							<liferay-ui:message key="live" />
+						</span>
+					</a>
 				</c:otherwise>
 			</c:choose>
-		</aui:button-row>
+		</li>
 
 		<c:if test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && (stagingGroup != null) %>">
 			<c:choose>
@@ -173,7 +201,7 @@ if (layout != null) {
 		</c:if>
 
 		<c:if test="<%= !group.isStagedRemotely() && !group.isStagingGroup() %>">
-			<div class="staging-details">
+			<li class="control-menu-nav-item">
 				<div class="alert alert-warning hide warning-content" id="<portlet:namespace />warningMessage">
 					<liferay-ui:message key="an-inital-staging-publication-is-in-progress" />
 				</div>
@@ -183,7 +211,7 @@ if (layout != null) {
 				%>
 
 				<liferay-util:include page="/last_publication_date_message.jsp" servletContext="<%= application %>" />
-			</div>
+			</li>
 		</c:if>
 	</c:if>
 

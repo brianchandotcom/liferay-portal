@@ -14,7 +14,9 @@
 
 package com.liferay.asset.publisher.layout.prototype.action;
 
+import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavigationPortletKeys;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -28,6 +30,7 @@ import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutPrototypeLocalService;
 import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
+import com.liferay.search.web.constants.SearchPortletKeys;
 
 import java.util.List;
 
@@ -73,6 +76,18 @@ public class AddLayoutPrototypeAction {
 			return;
 		}
 
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION,
+			"column-1");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout,
+			AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION,
+			"column-1");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, SearchPortletKeys.SEARCH, "column-2");
+
 		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			layout, AssetPublisherPortletKeys.ASSET_PUBLISHER, "column-2");
 
@@ -86,6 +101,24 @@ public class AddLayoutPrototypeAction {
 		_layoutLocalService.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetCategoriesNavigationPortletKeys.ASSET_CATEGORIES_NAVIGATION + ")"
+	)
+	protected void setAssetCategoriesNavigationPortlet(Portlet portlet) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER + ")"
+	)
+	protected void setAssetPublisherPortlet(Portlet portlet) {
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_NAVIGATION + ")"
+	)
+	protected void setAssetTagsNavigationPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")
@@ -114,10 +147,8 @@ public class AddLayoutPrototypeAction {
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
-	@Reference(
-		target = "(javax.portlet.name=" + AssetPublisherPortletKeys.ASSET_PUBLISHER + ")"
-	)
-	protected void setPortlet(Portlet portlet) {
+	@Reference(target = "(javax.portlet.name=" + SearchPortletKeys.SEARCH + ")")
+	protected void setSearchPortlet(Portlet portlet) {
 	}
 
 	@Reference(unbind = "-")

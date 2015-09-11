@@ -1,4 +1,9 @@
 Bundle-Name: Liferay Asset Publisher Layout Prototype
 Bundle-SymbolicName: com.liferay.asset.publisher.layout.prototype
 Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.asset.categories.navigation.web.constants,\
+	com.liferay.asset.tags.navigation.web.constants,\
+    com.liferay.search.web.constants,\
+	*
 Include-Resource: classes

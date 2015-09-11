@@ -422,6 +422,24 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 	}
 
 	@Test
+	public void testSearchByKeywords2() throws Exception {
+		DDMStructure structure = addStructure(_CLASS_NAME_ID, "To Do");
+
+		addStructure(_CLASS_NAME_ID, "To Doing");
+
+		List<DDMStructure> structures = DDMStructureLocalServiceUtil.search(
+			structure.getCompanyId(), new long[] {structure.getGroupId()},
+			structure.getClassNameId(), "To Do",
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new StructureIdComparator(true));
+
+		Assert.assertEquals(2, structures.size());
+
+		Assert.assertEquals("To Do", getStructureName(structures.get(0)));
+		Assert.assertEquals("To Doing", getStructureName(structures.get(1)));
+	}
+
+	@Test
 	public void testSearchByName() throws Exception {
 		addStructure(_CLASS_NAME_ID, "Contact");
 		addStructure(_CLASS_NAME_ID, "Event");

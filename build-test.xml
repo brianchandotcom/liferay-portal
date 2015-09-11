@@ -2650,6 +2650,16 @@ create database lportal${database.index} character set utf8;</echo>
 						</replace>
 					</then>
 					<elseif>
+						<equals arg1="${database.type}" arg2="oracle" />
+						<then>
+							<replace file="create.sql">
+								<replacetoken>grant connect,resource to &amp;1;</replacetoken>
+								<replacevalue>grant connect,resource to &amp;1;
+	grant unlimited tablespace to &amp;1;</replacevalue>
+							</replace>
+						</then>
+					</elseif>
+					<elseif>
 						<equals arg1="${database.type}" arg2="sybase" />
 						<then>
 							<replace file="create.sql">
@@ -2668,17 +2678,6 @@ go]]></replacevalue>
 							</replace>
 						</then>
 					</elseif>
-				</if>
-
-				<if>
-					<equals arg1="${database.type}" arg2="oracle" />
-					<then>
-						<replace file="create.sql">
-							<replacetoken>grant connect,resource to &amp;1;</replacetoken>
-							<replacevalue>grant connect,resource to &amp;1;
-grant unlimited tablespace to &amp;1;</replacevalue>
-						</replace>
-					</then>
 				</if>
 
 				<get-database-property property.name="database.schema" />

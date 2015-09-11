@@ -1,5 +1,5 @@
 ;(function() {
-	var PATH_CONTROL_MENU_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/control-menu-web';
+	var PATH_CONTROL_MENU_WEB = Liferay.ThemeDisplay.getPathContext() + '/o/product-navigation-control-menu-web';
 
 	AUI().applyConfig(
 		{

@@ -1,10 +1,15 @@
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.OSDetector
 
+configurations {
+	archives.artifacts.removeAll {
+		it.archiveTask in [jarSources, zipJavadoc]
+	}
+}
+
 ext {
 	mockMockGitHash = "1e88530f74aea4efa139fec7214f395d25a4032b"
 	mockMockSrcUrl = "https://github.com/tweakers-dev/MockMock/archive/${mockMockGitHash}.zip"
-	mockMockSrcVersion = "1.3"
 }
 
 sourceCompatibility = "1.6"
@@ -15,11 +20,6 @@ File srcDir = new File(buildDir, "MockMock-${mockMockGitHash}")
 task compileJavaMvn(type: Exec)
 task downloadSrc(type: Copy)
 task jarMvn(type: Exec)
-
-compileJava {
-	deleteAllActions()
-	dependsOn compileJavaMvn
-}
 
 compileJavaMvn {
 	commandLine _getMvnCommand("compile")
@@ -47,8 +47,12 @@ jarMvn {
 	doLast {
 		copy {
 			from new File(srcDir, "target")
-			include "MockMock-${mockMockSrcVersion}.one-jar.jar"
+			include "MockMock-${project.version}.one-jar.jar"
 			into distsDir
+
+			rename {
+				jar.archiveName
+			}
 		}
 	}
 

@@ -7,8 +7,10 @@ buildService {
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "1.0.2"
 	compile group: "com.liferay", name: "org.freemarker", version: "2.3.17.LIFERAY-PATCHED-1"
+	compile group: "commons-lang", name: "commons-lang", version: "2.6"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	compile group: "rome", name: "rome", transitive: false, version: "1.0"	
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:portlet-display-template:portlet-display-template")

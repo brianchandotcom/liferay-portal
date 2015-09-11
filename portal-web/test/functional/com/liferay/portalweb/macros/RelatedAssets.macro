@@ -47,6 +47,9 @@
 
 		<execute function="AssertClick" locator1="WCEditWebContent#MENU_RELATED_ASSETS" value1="Related Assets" />
 		<execute function="AssertClick" locator1="WCEditWebContent#RELATED_ASSETS_SELECT" value1="Select" />
+
+		<var method="StringUtil#replace('${assetType}', ' ', '_')" name="assetTypeLocator" />
+		<var method="StringUtil#upperCase('${assetTypeLocator}')" name="assetTypeLocator" />
 		<execute function="AssertClick" locator1="WCEditWebContent#RELATED_ASSETS_SELECT" value1="${assetType}" />
 	</command>
 

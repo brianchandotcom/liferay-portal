@@ -49,6 +49,10 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 
 		Parameters parameters = analyzer.parseHeader(property);
 
+		if (parameters.isEmpty()) {
+			return false;
+		}
+
 		Jar jar = analyzer.getJar();
 
 		Collection<Clazz> classes = analyzer.getClasses();

@@ -406,7 +406,9 @@ public class MediaWikiImporter implements WikiImporter {
 
 					percentage = Math.min(50 + (i * 50) / total, 99);
 
-					progressTracker.setPercent(percentage);
+					if (progressTracker != null) {
+						progressTracker.setPercent(percentage);
+					}
 				}
 			}
 

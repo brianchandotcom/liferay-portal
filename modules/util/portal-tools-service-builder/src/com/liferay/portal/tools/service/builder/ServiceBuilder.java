@@ -3892,6 +3892,7 @@ public class ServiceBuilder {
 			for (int i = 0; i < pkList.size(); i++) {
 				EntityColumn col = pkList.get(i);
 
+				String colName = col.getName();
 				String colType = col.getType();
 
 				sb.append("\t");
@@ -3919,8 +3920,7 @@ public class ServiceBuilder {
 				}
 				else if (colType.equals("String")) {
 					int maxLength = getMaxLength(
-						_packagePath + ".model." + entity.getName(),
-						entity.getName());
+						_packagePath + ".model." + entity.getName(), colName);
 
 					if (col.isLocalized()) {
 						maxLength = 4000;

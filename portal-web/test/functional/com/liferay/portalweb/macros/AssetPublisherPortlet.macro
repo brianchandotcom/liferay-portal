@@ -714,17 +714,7 @@
 		<execute function="AssertElementPresent" locator1="Link#READ_MORE" />
 		<execute function="AssertElementPresent" locator1="Icon#PRINT" />
 		<execute function="AssertElementPresent" locator1="Icon#FLAG" />
-
-		<if>
-			<equals arg1="${pageStaging}" arg2="true" />
-			<then>
-				<execute function="AssertElementNotPresent" locator1="Icon#EDIT" />
-			</then>
-			<else>
-				<execute function="AssertElementPresent" locator1="Icon#EDIT" />
-			</else>
-		</if>
-
+		<execute function="AssertElementPresent" locator1="Icon#EDIT" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL" />
 

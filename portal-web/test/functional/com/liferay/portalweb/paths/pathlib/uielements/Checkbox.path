@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_IMMEDIATELY</td>
+	<td>//input[contains(@name,'displayImmediately')]</td>
+	<td></td>	
+</tr>
+<tr>
 	<td>ENABLE_COMMENTS</td>
 	<td>//label[contains(.,'Enable Comments')]/input[@type='checkbox']</td>
 	<td></td>

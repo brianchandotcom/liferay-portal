@@ -41,12 +41,12 @@ public class DoIncludeJSPDynamicInclude extends BaseDynamicInclude {
 			(ComponentContext)request.getAttribute(
 				ComponentConstants.COMPONENT_CONTEXT);
 
-		if (componentContext == null) {
-			return;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (componentContext == null) {
+			themeDisplay.setTilesSelectable(true);
+		}
 
 		String tilesContent = (String)componentContext.getAttribute("content");
 

@@ -836,12 +836,14 @@ public class TemplateContextHelper {
 			(ComponentContext)request.getAttribute(
 				ComponentConstants.COMPONENT_CONTEXT);
 
-		if (componentContext == null) {
-			return;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		if (componentContext == null) {
+			themeDisplay.setTilesSelectable(true);
+
+			return;
+		}
 
 		String tilesTitle = (String)componentContext.getAttribute("title");
 

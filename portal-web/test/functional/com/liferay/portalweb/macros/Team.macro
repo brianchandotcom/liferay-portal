@@ -2,7 +2,7 @@
 	<command name="addCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="AssertClick" locator1="Button#ADD_TEAM" value1="Add Team" />
+		<execute function="Click" locator1="Button#ADD_TEAM" />
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${teamName}" />
@@ -17,7 +17,7 @@
 		<var name="key_userScreenName" value="${userScreenName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${teamName}" />
-		<execute function="AssertClick" locator1="Icon#BASIC_SEARCH" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
 		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />

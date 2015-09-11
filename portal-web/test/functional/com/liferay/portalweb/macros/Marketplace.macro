@@ -163,7 +163,7 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="assetTitle" value="${assetTitle}" />
 			<var name="assetType" value="${assetType}" />
 			<var name="categoryName" value="${categoryName}" />
@@ -216,7 +216,7 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="assetTitle" value="${assetTitle}" />
 			<var name="assetType" value="${assetType}" />
 			<var name="categoryName" value="${categoryName}" />
@@ -269,7 +269,7 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Blogs#addEntry">
 			<var name="assetTitle" value="${assetTitle}" />
 			<var name="assetType" value="${assetType}" />
 			<var name="categoryName" value="${categoryName}" />

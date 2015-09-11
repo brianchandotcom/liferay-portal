@@ -23,9 +23,9 @@ DisplayTerms displayTerms = ddlFormViewRecordsDisplayContext.getRecordSearchCont
 %>
 
 <aui:form action="<%= currentURL.toString() %>" method="post" name="fm">
-	<aui:nav-bar cssClass="collapse-basic-search" view="lexicon">
+	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 		<aui:nav-bar-search>
-			<liferay-ui:input-search autoFocus="<%= true %>" view="lexicon" />
+			<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 </aui:form>
@@ -70,7 +70,7 @@ DisplayTerms displayTerms = ddlFormViewRecordsDisplayContext.getRecordSearchCont
 
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= ddlFormViewRecordsDisplayContext.getDisplayStyle() %>" paginate="<%= false %>" searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>" view="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= ddlFormViewRecordsDisplayContext.getDisplayStyle() %>" paginate="<%= false %>" searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>" markupView="lexicon" />
 
 	</liferay-ui:search-container>
 </div>

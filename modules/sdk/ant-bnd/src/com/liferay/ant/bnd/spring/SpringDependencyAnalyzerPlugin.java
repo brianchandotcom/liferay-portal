@@ -71,7 +71,11 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 				serviceReferenceCollector.getServiceReferences());
 		}
 
-		serviceReferences.add(getReleaseInfo(analyzer));
+		String releaseInfo = getReleaseInfo(analyzer);
+
+		if (!releaseInfo.equals("")) {
+			serviceReferences.add(releaseInfo);
+		}
 
 		jar.putResource(
 			"OSGI-INF/context/context.dependencies",

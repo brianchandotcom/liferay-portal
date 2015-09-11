@@ -33,8 +33,7 @@
 
 		<execute function="AssertClick" locator1="CPBookmarksAddsubfolder#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPBookmarksAddsubfolder#NAME_FIELD_REQUIRED" value1="Name" />
-		<execute function="AssertTextEquals" locator1="CPBookmarksAddsubfolder#NAME_FIELD_REQUIRED" value1="Required" />
+		<execute function="AssertTextEquals" locator1="CPBookmarksAddsubfolder#NAME_FIELD_LABEL" value1="Name Required" />
 		<execute function="AssertTextEquals" locator1="CPBookmarksAddsubfolder#NAME_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 

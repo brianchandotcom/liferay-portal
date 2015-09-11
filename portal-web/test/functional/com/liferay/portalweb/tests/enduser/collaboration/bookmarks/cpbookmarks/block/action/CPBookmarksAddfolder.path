@@ -14,8 +14,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAME_FIELD_LABEL</td>
+	<td>//label[contains(.,'Name')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME_FIELD_REQUIRED</td>
-	<td>//div[contains(@class,'has-error')]</td>
+	<td>//div[contains(@class,'has-error')]/div[contains(.,'This field is required.')]</td>
 	<td></td>
 </tr>
 <tr>

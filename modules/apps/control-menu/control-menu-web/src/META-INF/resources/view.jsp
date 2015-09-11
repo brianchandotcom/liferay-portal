@@ -92,16 +92,6 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					%>
 
 					<%
-					String productMenuState = SessionClicks.get(request, "com.liferay.control.menu.web_productMenuState", "closed");
-					%>
-
-					<li class="<%= Validator.equals(productMenuState, "open") ? "active" : StringPool.BLANK %>">
-						<a class="control-menu-icon sidenav-toggler" data-content="body" data-toggle="sidenav" data-type="fixed-push" data-type-mobile="fixed" href="#sidenavSliderId" id="sidenavToggleId">
-							<span class="icon-align-justify icon-monospaced"></span>
-						</a>
-					</li>
-
-					<%
 					boolean hasLayoutAddPermission = false;
 
 					if (layout.getParentLayoutId() == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {

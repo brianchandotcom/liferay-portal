@@ -4,6 +4,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:application-list:application-list-api")
 	compile project(":apps:application-list:application-list-taglib")
+	compile project(":apps:control-menu:control-menu-api")
 }
 
 liferay {

@@ -40,12 +40,12 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a lexicon based card component. Could be a vertical or an horizontal tag.</description>
+		<description>Creates a lexicon-based card component. It can be a vertical or horizontal card.</description>
 		<name>card</name>
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.CardTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The path to an action JSP page. Generally is the jsp for the card dropdown menu.</description>
+			<description>The path to an action JSP. It is generally the JSP for the card dropdown menu.</description>
 			<name>actionJsp</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -57,13 +57,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Check the card checkbox or not. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether to select the card checkbox. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>checkboxChecked</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>CSS Class to add to the checkbox input.</description>
+			<description>A CSS class for styling the checkbox input.</description>
 			<name>checkboxCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -75,79 +75,79 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Disable the checkbox input or not. The default value is false.</description>
-			<name>checkboxDisabled</name>
+			<description>Whether to disable the checkbox input. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<name>checkboxDisabled</name>                                 
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Id attribute to add to the checkbox input.</description>
+			<description>An ID for the checkbox input.</description>
 			<name>checkboxId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Name attribute to add to the checkbox input.</description>
+			<description>A name for the checkbox input.</description>
 			<name>checkboxName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Value to add to the checkbox input.</description>
+			<description>A value for the checkbox input.</description>
 			<name>checkboxValue</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>CSS Class to add to the card main container.</description>
+			<description>A CSS class for styling the card's main container.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Data attributes to add to the card main container. This data is stored via a map.</description>
+			<description>Data attributes to add to the card's main container. This data is stored via a map.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to add to the card text zone footer when is a vertical card.</description>
+			<description>Text to add to the card text zone footer, if the card is vertical.</description>
 			<name>footer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to add to the card text zone header when is a vertical card.</description>
+			<description>Text to add to the card text zone header, if the card is vertical.</description>
 			<name>header</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Set the card type between horizontal or vertical. The default value is <![CDATA[<code>false</code>]]>.</description>
+			<description>Whether the card type is horizontal. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>horizontal</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>CSS Class to add to the card image.</description>
+			<description>A CSS class for styling the card image.</description>
 			<name>imageCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Url of the card image.</description>
+			<description>A URL for the card's image.</description>
 			<name>imageUrl</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>When you pass a rowChecker the resultRow is mandatory. (com.liferay.portal.kernel.dao.search.ResultRow)</description>
+			<description>If you pass in a <![CDATA[<code>rowChecker</code>]]> value, a result row is mandatory. A result row is of type <![CDATA[<code>com.liferay.portal.kernel.dao.search.ResultRow</code>]]>.</description>
 			<name>resultRow</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Opcionally you can pass a rowChecker object to manage all the options realted with the checkbox. The other checkbox options overwrite the rowChecker options. (com.liferay.portal.kernel.dao.search.RowChecker) </description>
+			<description>You can optionally pass in a row checker object to manage all the options related to the checkbox. All other checkbox options overwrite the row checker options. A row checker is of type <![CDATA[<code>com.liferay.portal.kernel.dao.search.RowChecker</code>]]>. </description>
 			<name>rowChecker</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -159,31 +159,31 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>CSS Class to add to the small image in vertical card.</description>
+			<description>A CSS class for styling the small image.</description>
 			<name>smallImageCSSClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Url of the small image in vertical card.</description>
+			<description>A URL for the card's small image, if the card is vertical.</description>
 			<name>smallImageUrl</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Text to add as a subtitle in the text zone when is a vertical card-</description>
+			<description>Text to add as a subtitle in the text zone, if the card is vertical.</description>
 			<name>subtitle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Main text of the card.</description>
+			<description>A title for the card.</description>
 			<name>title</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Url to view the full content.</description>
+			<description>A URL to view the full content.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -55,8 +55,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
@@ -87,29 +85,10 @@ public class AssetRSSUtil {
 		String format = RSSUtil.getFeedTypeFormat(rssFeedType);
 		double version = RSSUtil.getFeedTypeVersion(rssFeedType);
 
-		List<AssetEntry> assetEntries = new ArrayList<>();
-
-		if (selectionStyle.equals("dynamic")) {
-			AssetPublisherDisplayContext displayContext =
-				new AssetPublisherDisplayContext(
-					PortalUtil.getHttpServletRequest(portletRequest),
-					portletPreferences);
-
-			List<AssetEntryResult> assetEntryResults =
-				displayContext.getAssetEntryResults(
-					0, displayContext.getRSSDelta(), null);
-
-			for (AssetEntryResult assetEntryResult : assetEntryResults) {
-				assetEntries.addAll(assetEntryResult.getAssetEntries());
-			}
-		}
-		else {
-			assetEntries = getAssetEntries(portletRequest, portletPreferences);
-		}
-
 		String rss = exportToRSS(
 			portletRequest, portletResponse, rssName, null, format, version,
-			rssDisplayStyle, assetLinkBehavior, assetEntries);
+			rssDisplayStyle, assetLinkBehavior,
+			getAssetEntries(portletRequest, portletPreferences));
 
 		return rss.getBytes(StringPool.UTF8);
 	}
@@ -206,15 +185,22 @@ public class AssetRSSUtil {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		List<AssetEntry> assetEntries = new ArrayList<>();
 
-		int rssDelta = GetterUtil.getInteger(
-			portletPreferences.getValue("rssDelta", "20"));
+		AssetPublisherDisplayContext displayContext =
+			new AssetPublisherDisplayContext(
+				PortalUtil.getHttpServletRequest(portletRequest),
+				portletPreferences);
 
-		return AssetPublisherUtil.getAssetEntries(
-			portletPreferences, themeDisplay.getLayout(),
-			themeDisplay.getScopeGroupId(), rssDelta, true);
+		List<AssetEntryResult> assetEntryResults =
+			displayContext.getAssetEntryResults(
+				0, displayContext.getRSSDelta(), null);
+
+		for (AssetEntryResult assetEntryResult : assetEntryResults) {
+			assetEntries.addAll(assetEntryResult.getAssetEntries());
+		}
+
+		return assetEntries;
 	}
 
 	protected static String getAssetPublisherURL(PortletRequest portletRequest)

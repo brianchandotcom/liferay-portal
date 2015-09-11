@@ -97,12 +97,12 @@ public class JniSassCompilerTest {
 
 		Class<?> clazz = getClass();
 
-		URL url = clazz.getResource("dependencies/sourcemaps");
+		URL url = clazz.getResource("dependencies/sass-spec/14_imports");
 
-		File sourceMapsDir = new File(url.toURI());
+		File inputDir = new File(url.toURI());
 
-		File inputFile = new File(sourceMapsDir, "input.scss");
-		File sourceMapFile = new File(sourceMapsDir, "input.css.map");
+		File inputFile = new File(inputDir, "input.scss");
+		File sourceMapFile = new File(inputDir, "input.css.map");
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
@@ -113,8 +113,12 @@ public class JniSassCompilerTest {
 		Assert.assertNotNull(actualOutput);
 		Assert.assertTrue(sourceMapFile.exists());
 
+		url = clazz.getResource("dependencies/sourcemaps");
+
+		File expectedOutputDir = new File(url.toURI());
+
 		File expectedOutputFile = new File(
-			sourceMapsDir, "expected_output.css");
+			expectedOutputDir, "expected_output.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
 
@@ -144,13 +148,13 @@ public class JniSassCompilerTest {
 
 		Class<?> clazz = getClass();
 
-		URL url = clazz.getResource("dependencies/sourcemaps");
+		URL url = clazz.getResource("dependencies/sass-spec/14_imports");
 
-		File sourceMapsDir = new File(url.toURI());
+		File inputDir = new File(url.toURI());
 
-		File inputFile = new File(sourceMapsDir, "input.scss");
+		File inputFile = new File(inputDir, "input.scss");
 		File sourceMapFile = new File(
-			sourceMapsDir, ".sass-cache/input.css.map");
+			inputDir, ".sass-cache/input.css.map");
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
@@ -164,8 +168,12 @@ public class JniSassCompilerTest {
 		Assert.assertNotNull(actualOutput);
 		Assert.assertTrue(sourceMapFile.exists());
 
+		url = clazz.getResource("dependencies/sourcemaps");
+
+		File expectedOutputDir = new File(url.toURI());
+
 		File expectedOutputFile = new File(
-			sourceMapsDir, "expected_custom_output.css");
+			expectedOutputDir, "expected_custom_output.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
 

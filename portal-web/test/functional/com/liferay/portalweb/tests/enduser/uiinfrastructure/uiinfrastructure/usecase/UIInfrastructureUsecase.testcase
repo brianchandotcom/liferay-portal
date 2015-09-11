@@ -76,7 +76,7 @@
 		<take-screenshot />
 	</command>
 
-	<command name="Smoke" priority="5">
+	<command description="Ensure that a user can access portlet options and drag and drop portlets." name="Smoke" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Page#addPG">
@@ -87,29 +87,35 @@
 			<var name="portletName" value="Hello World" />
 		</execute>
 
-		<execute function="Click" locator1="Icon#CLOSE" />
+		<task summary="Close the Add Panel">
+			<execute function="Click" locator1="Icon#CLOSE" />
+		</task>
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Hello World" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
+		<task summary="Assert the 'Configuration' iframe of the Hello World portlet">
+			<execute macro="Portlet#gotoPortletOptions">
+				<var name="portletName" value="Hello World" />
+				<var name="portletOption" value="Configuration" />
+			</execute>
 
-		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+			<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="AssertTextEquals" locator1="NavPill#PERMISSIONS" value1="Permissions" />
+			<execute function="AssertTextEquals" locator1="NavPill#PERMISSIONS" value1="Permissions" />
 
-		<execute function="SelectFrame" value1="relative=top" />
+			<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="Click" locator1="Icon#CLOSE" />
+			<execute function="Click" locator1="Icon#CLOSE" />
+		</task>
 
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Hello World" />
-			<var name="portletOption" value="Look and Feel" />
-		</execute>
+		<task summary="Assert the 'Look and Feel' modal of the Hello World portlet">
+			<execute macro="Portlet#gotoPortletOptions">
+				<var name="portletName" value="Hello World" />
+				<var name="portletOption" value="Look and Feel" />
+			</execute>
 
-		<execute function="AssertTextEquals" locator1="NavTab#PORTLET_CONFIGURATION" value1="Portlet Configuration" />
+			<execute function="AssertTextEquals" locator1="NavTab#PORTLET_CONFIGURATION" value1="Portlet Configuration" />
 
-		<execute function="Click" locator1="Icon#CLOSE" />
+			<execute function="Click" locator1="Icon#CLOSE" />
+		</task>
 
 		<execute macro="Portlet#dragAndDropPortletToColumnPG">
 			<var name="columnNumberFrom" value="1" />

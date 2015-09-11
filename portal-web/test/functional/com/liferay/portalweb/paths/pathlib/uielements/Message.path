@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_5</td>
+	<td>//div[contains(@class,'text') and contains(@class,'white-box')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_ADD_EXPLANATION</td>
 	<td>//div[contains(@id,'explanationPost')]/div[@class='alert alert-info']</td>
 	<td></td>

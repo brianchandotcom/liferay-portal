@@ -6,7 +6,7 @@
 				<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 			</then>
 			<else>
-				<execute function="Click#clickAtAndWait" locator1="Button#PLUS" />
+				<execute function="Click" locator1="Button#PLUS" />
 			</else>
 		</if>
 	</command>

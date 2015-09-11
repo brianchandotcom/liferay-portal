@@ -3,7 +3,7 @@
 #wrapper #banner {
 	padding: 20px 0;
 
-	@include media-query(sm) {
+	@include sm {
 		padding: 40px 0 30px;
 	}
 
@@ -18,7 +18,7 @@
 			font-size: 16px;
 			padding-right: 40px;
 
-			@include media-query(sm) {
+			@include sm {
 				height: auto;
 				max-width: 200px;
 			}
@@ -53,7 +53,7 @@
 	right: 4px;
 	top: 50%;
 
-	@include media-query(sm) {
+	@include sm {
 		display: none;
 	}
 }

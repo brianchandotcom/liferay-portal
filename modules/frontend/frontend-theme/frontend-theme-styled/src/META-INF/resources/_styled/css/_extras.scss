@@ -345,14 +345,14 @@ body:first-of-type {
 
 	.portlet-borderless-container {
 		.portlet-borderless-bar {
-			@include media-query(md) {
+			@include md {
 				@include transition(opacity, 0.5s, ease, 0s);
 			}
 
 			.portlet-actions {
 				max-width: 500px;
 
-				@include media-query(md) {
+				@include md {
 					max-width: 0;
 				}
 			}
@@ -388,7 +388,7 @@ body:first-of-type {
 
 				max-width: 200px;
 
-				@include media-query(md) {
+				@include md {
 					max-width: none;
 				}
 			}

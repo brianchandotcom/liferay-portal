@@ -13,7 +13,7 @@
 
 	.lfr-discussion-details {
 		.taglib-user-display {
-			@include media-query(sm) {
+			@include sm {
 				word-wrap: break-word;
 			}
 

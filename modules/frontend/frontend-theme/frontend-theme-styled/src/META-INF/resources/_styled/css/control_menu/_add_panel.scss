@@ -44,7 +44,7 @@
 	}
 }
 
-@include media-query(md) {
+@include md {
 	.lfr-has-add-content {
 		padding-right: $addContentPanelWidth;
 
@@ -85,7 +85,7 @@
 
 	@include prefixer(overflow-scrolling, touch, 'webkit');
 
-	@include media-query(md) {
+	@include md {
 		height: 100%;
 		position: fixed;
 		width: 100%;

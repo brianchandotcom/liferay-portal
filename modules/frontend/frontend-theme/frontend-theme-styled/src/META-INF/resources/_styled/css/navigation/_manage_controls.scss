@@ -55,14 +55,14 @@
 
 	.lfr-nav-updateable {
 		.add-page-editor {
-			@include media-query(md) {
+			@include md {
 				margin-top: 7px;
 			}
 
 			.add-page-editor-input, .btn {
 				height: 32px;
 
-				@include media-query(md) {
+				@include md {
 					height: auto;
 				}
 			}
@@ -71,7 +71,7 @@
 				left: 5px;
 				width: 70%;
 
-				@include media-query(md) {
+				@include md {
 					width: 150px;
 				}
 			}
@@ -83,7 +83,7 @@
 				padding-top: 0;
 				width: 30%;
 
-				@include media-query(md) {
+				@include md {
 					padding-bottom: 6px;
 					padding-top: 6px;
 					width: auto;
@@ -94,7 +94,7 @@
 				margin: 6px 0 7px;
 				width: 100%;
 
-				@include media-query(md) {
+				@include md {
 					margin-bottom: 0;
 					margin-top: 0;
 					width: auto;
@@ -123,7 +123,7 @@
 		padding-left: 28px;
 	}
 
-	@include media-query(md) {
+	@include md {
 		.lfr-nav-sortable > a > span {
 			padding-left: 0;
 		}

@@ -46,7 +46,7 @@ body {
 		}
 
 		.navbar-form {
-			@include media-query(sm) {
+			@include sm {
 				margin-left: 30px;
 			}
 
@@ -94,7 +94,7 @@ body {
 		}
 
 		.user-personal-bar {
-			@include media-query(sm) {
+			@include sm {
 				position: absolute;
 				right: 20px;
 				top: 0;
@@ -116,7 +116,7 @@ body {
 				width: 32px;
 			}
 
-			@include media-query(sm) {
+			@include sm {
 				.icon-caret-down, .user-full-name {
 					display: none;
 				}

@@ -4,7 +4,7 @@
 	.navbar-search {
 		background-color: #F3F3F3;
 
-		@include media-query(sm) {
+		@include sm {
 			background-color: transparent;
 		}
 	}

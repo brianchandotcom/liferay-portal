@@ -49,7 +49,7 @@
 				margin: 0;
 				padding: 11px 14px;
 
-				@include media-query(md) {
+				@include md {
 					padding: 11px;
 				}
 			}

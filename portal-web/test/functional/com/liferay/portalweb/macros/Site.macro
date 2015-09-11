@@ -796,6 +796,8 @@
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
+
+		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_SUMMARY" value1="Summary" />
 	</command>
 
 	<command name="selectPageType">

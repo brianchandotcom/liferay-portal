@@ -5,6 +5,8 @@ AUI.add(
 
 		var TPL_SETTINGS_FORM = '<form action="javascript:;"></form>';
 
+		var TPL_SUBMIT_BUTTON = '<button class="hide" type="submit" />';
+
 		var FormBuilderSettingsForm = A.Component.create(
 			{
 				ATTRS: {
@@ -73,7 +75,7 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						container.append('<button class="hide" type="submit" />');
+						container.append(TPL_SUBMIT_BUTTON);
 
 						instance._renderModeToggler();
 
@@ -143,11 +145,11 @@ AUI.add(
 
 						var advancedSettingsNode = instance.getPageNode(2);
 
+						advancedSettingsNode.toggleClass('active');
+
 						var field = instance.get('field');
 
 						var settingsModal = field.getSettingsModal();
-
-						advancedSettingsNode.toggleClass('active');
 
 						settingsModal._modal.align();
 
@@ -167,11 +169,13 @@ AUI.add(
 
 						var basicSettingsNode = instance.getPageNode(1);
 
-						instance.modeToggler = A.Node.create('<a class="settings-toggler" href="javascript:;"></a>');
+						var modeToggler = A.Node.create('<a class="settings-toggler" href="javascript:;"></a>');
 
-						instance.modeToggler.on('click', A.bind(instance._onClickModeToggler, instance));
+						modeToggler.on('click', A.bind('_onClickModeToggler', instance));
 
-						basicSettingsNode.insert(instance.modeToggler, 'after');
+						basicSettingsNode.insert(modeToggler, 'after');
+
+						instance.modeToggler = modeToggler;
 
 						instance._syncModeToggler();
 					},
@@ -181,11 +185,13 @@ AUI.add(
 
 						var advancedSettingsNode = instance.getPageNode(2);
 
+						var modeToggler = instance.modeToggler;
+
 						if (advancedSettingsNode.hasClass('active')) {
-							instance.modeToggler.html(Liferay.Language.get('hide-advanced-options'));
+							modeToggler.html(Liferay.Language.get('hide-advanced-options'));
 						}
 						else {
-							instance.modeToggler.html(Liferay.Language.get('show-advanced-options'));
+							modeToggler.html(Liferay.Language.get('show-advanced-options'));
 						}
 					},
 

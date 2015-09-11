@@ -9,6 +9,10 @@ AUI.add(
 		var FieldTypes = Renderer.FieldTypes;
 		var Util = Renderer.Util;
 
+		var TPL_DIV = '<div></div>';
+
+		var TPL_FORM_FIELD_CONTAINER = '<div class="lfr-ddm-form-field-container"></div>';
+
 		var Field = A.Component.create(
 			{
 				ATTRS: {
@@ -154,7 +158,7 @@ AUI.add(
 
 						return instance.get('fields').map(
 							function(field) {
-								var fragment = A.Node.create('<div></div>');
+								var fragment = A.Node.create(TPL_DIV);
 
 								var container = field._createContainer();
 
@@ -185,7 +189,6 @@ AUI.add(
 						var instance = this;
 
 						var label = instance.get('label');
-
 						var locale = instance.get('locale');
 
 						if (Lang.isObject(label) && locale in label) {
@@ -367,7 +370,7 @@ AUI.add(
 					_createContainer: function() {
 						var instance = this;
 
-						var container = A.Node.create('<div class="lfr-ddm-form-field-container"></div>');
+						var container = A.Node.create(TPL_FORM_FIELD_CONTAINER);
 
 						container.html(instance.getTemplate());
 

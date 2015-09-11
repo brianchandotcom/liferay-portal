@@ -79,13 +79,7 @@ AUI.add(
 			_valueVisible: function() {
 				var instance = this;
 
-				var visible = true;
-
-				if (instance.get('visibilityExpression') === 'false') {
-					visible = false;
-				}
-
-				return visible;
+				return instance.get('visibilityExpression') !== 'false';
 			}
 		};
 

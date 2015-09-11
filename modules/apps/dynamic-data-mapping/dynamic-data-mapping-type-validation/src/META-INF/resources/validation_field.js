@@ -208,7 +208,7 @@ AUI.add(
 						var container = instance.get('container');
 
 						instance._eventHandlers.push(
-							container.delegate('change', A.bind(instance._onChangeSelects, instance), 'select')
+							container.delegate('change', A.bind('_onChangeSelects', instance), 'select')
 						);
 					},
 

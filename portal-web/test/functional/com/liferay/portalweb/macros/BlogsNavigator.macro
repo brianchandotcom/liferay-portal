@@ -1,4 +1,16 @@
 <definition>
+	<command name="gotoAddEntry">
+		<if>
+			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+			<then>
+				<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+			</then>
+			<else>
+				<execute function="Click#clickAtAndWait" locator1="Button#PLUS" />
+			</else>
+		</if>
+	</command>
+
 	<command name="gotoCommentPG">
 		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="${entryContent}" />

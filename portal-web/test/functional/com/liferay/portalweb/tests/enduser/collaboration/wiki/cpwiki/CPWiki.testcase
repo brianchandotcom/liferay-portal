@@ -330,7 +330,7 @@
 		</execute>
 	</command>
 
-	<command name="MovePageWithChildrenUnderNewNode" priority="4">
+	<command name="MovePageWithChildrenPagesToNewNode" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>

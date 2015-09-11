@@ -194,7 +194,7 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			_blogsEntryAttachmentFileEntryHelper.
 				addBlogsEntryAttachmentFileEntries(
 					_group.getGroupId(), _user.getUserId(), entry.getEntryId(),
-					folder, tempFileEntries);
+					folder.getFolderId(), tempFileEntries);
 	}
 
 	protected String getContent(String tempFileEntryImgTag) {

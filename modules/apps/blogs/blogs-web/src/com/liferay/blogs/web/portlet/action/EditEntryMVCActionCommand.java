@@ -530,7 +530,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					blogsEntryAttachmentFileEntryHelper.
 						addBlogsEntryAttachmentFileEntries(
 							entry.getGroupId(), themeDisplay.getUserId(),
-							entry.getEntryId(), folder,
+							entry.getEntryId(), folder.getFolderId(),
 							tempBlogsEntryAttachments);
 
 				content = blogsEntryAttachmentFileEntryHelper.updateContent(
@@ -583,7 +583,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					blogsEntryAttachmentHelper.
 						addBlogsEntryAttachmentFileEntries(
 							entry.getGroupId(), themeDisplay.getUserId(),
-							entry.getEntryId(), folder,
+							entry.getEntryId(), folder.getFolderId(),
 							tempBlogsEntryAttachmentFileEntries);
 
 				content = blogsEntryAttachmentHelper.updateContent(

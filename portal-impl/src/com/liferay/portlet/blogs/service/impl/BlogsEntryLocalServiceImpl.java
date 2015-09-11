@@ -1635,8 +1635,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			blogsEntryAttachmentFileEntryHelper.
 				addBlogsEntryAttachmentFileEntry(
-					groupId, userId, entryId, folder, fileEntry.getTitle(),
-					fileEntry.getMimeType(), fileEntry.getContentStream());
+					groupId, userId, entryId, folder.getFolderId(),
+					fileEntry.getTitle(), fileEntry.getMimeType(),
+					fileEntry.getContentStream());
 		}
 
 		File file = null;
@@ -1650,7 +1651,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 			file = FileUtil.createTempFile(bytes);
 
-			String title = fileEntry.getTitle();
+			String title = coverImageImageSelector.getTitle();
 
 			if (Validator.isNull(title)) {
 				title =
@@ -1662,8 +1663,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			FileEntry coverImageFileEntry =
 				blogsEntryAttachmentFileEntryHelper.
 					addBlogsEntryAttachmentFileEntry(
-						groupId, userId, entryId, folder, title,
-						fileEntry.getMimeType(), file);
+						groupId, userId, entryId, folder.getFolderId(), title,
+						coverImageImageSelector.getMimeType(), file);
 
 			return coverImageFileEntry.getFileEntryId();
 		}
@@ -1711,7 +1712,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		FileEntry fileEntry =
 			blogsEntryAttachmentFileEntryHelper.
 				addBlogsEntryAttachmentFileEntry(
-					groupId, userId, entryId, folder, title, mimeType, is);
+					groupId, userId, entryId, folder.getFolderId(), title,
+					mimeType, is);
 
 		return fileEntry.getFileEntryId();
 	}

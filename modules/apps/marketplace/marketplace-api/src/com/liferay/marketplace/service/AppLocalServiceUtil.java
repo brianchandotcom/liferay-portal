@@ -319,6 +319,12 @@ public class AppLocalServiceUtil {
 	}
 
 	public static com.liferay.marketplace.model.App updateApp(long userId,
+		java.io.File file)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateApp(userId, file);
+	}
+
+	public static com.liferay.marketplace.model.App updateApp(long userId,
 		long remoteAppId, java.lang.String title, java.lang.String description,
 		java.lang.String category, java.lang.String iconURL,
 		java.lang.String version, java.io.File file)
@@ -326,12 +332,6 @@ public class AppLocalServiceUtil {
 		return getService()
 				   .updateApp(userId, remoteAppId, title, description,
 			category, iconURL, version, file);
-	}
-
-	public static com.liferay.marketplace.model.App updateApp(long userId,
-		long remoteAppId, java.lang.String version, java.io.File file)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().updateApp(userId, remoteAppId, version, file);
 	}
 
 	public static AppLocalService getService() {

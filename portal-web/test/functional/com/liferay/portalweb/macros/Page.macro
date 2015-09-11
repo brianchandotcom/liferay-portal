@@ -757,7 +757,7 @@
 		</if>
 	</command>
 
-	<command name="gotoPublishingtools">
+	<command name="gotoPublishingTools">
 		<description message="Navigate to Site Administration > Publishing tools > ${portletName}." />
 
 		<execute macro="Page#gotoCmdCP">

@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a[contains(@id,'editLayoutPanel') and i[contains(@class,'icon-edit')]]</td>
+	<td>//a[contains(@id,'ControlMenuPortlet') and i[contains(@class,'icon-cog')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,6 +96,11 @@
 <tr>
 	<td>FLAG</td>
 	<td>//div[contains(@class,'asset-actions')]/div[@title='Flag']/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACEBOOK</td>
+	<td>//i[contains(@class,'icon-facebook')]</td>
 	<td></td>
 </tr>
 <tr>

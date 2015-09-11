@@ -28,7 +28,7 @@
 			<var name="sitePagePrivacy" value="${sitePagePrivacy}" />
 		</execute>
 
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="${siteName}" />
 		</execute>

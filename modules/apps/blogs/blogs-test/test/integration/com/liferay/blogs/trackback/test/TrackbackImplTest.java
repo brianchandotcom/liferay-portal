@@ -104,6 +104,6 @@ public class TrackbackImplTest {
 	}
 
 	@DeleteAfterTestRun
-	private BlogsEntry _blogsEntry = null;
+	private BlogsEntry _blogsEntry;
 
 }

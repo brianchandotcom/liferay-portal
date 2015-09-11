@@ -47,7 +47,7 @@ List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("lifera
 	</c:when>
 	<c:otherwise>
 		<div class="btn-action-secondary btn-bottom-right dropdown">
-			<button aria-expanded="false" aria-label="<liferay-ui:message key="add" />" class="btn btn-primary" data-toggle="dropdown" type="button">
+			<button aria-expanded="false" aria-label='<liferay-ui:message key="add" />' class="btn btn-primary" data-toggle="dropdown" type="button">
 				<span class="icon-plus"></span>
 			</button>
 

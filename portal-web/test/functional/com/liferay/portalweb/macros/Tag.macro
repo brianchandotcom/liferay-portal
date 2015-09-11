@@ -1,6 +1,6 @@
 <definition>
 	<command name="addAutoAssertionTagViaBlogsPG">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -75,7 +75,7 @@
 	</command>
 
 	<command name="addMultipleViaBlogsPG">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addTitle">
 			<var name="entryTitle" value="${entryTitle}" />
@@ -98,7 +98,7 @@
 	</command>
 
 	<command name="addSelectTagMultipleViaBlogsPG">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -126,7 +126,7 @@
 	</command>
 
 	<command name="addViaBlogsPG">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addTitle">
 			<var name="entryTitle" value="${entryTitle}" />

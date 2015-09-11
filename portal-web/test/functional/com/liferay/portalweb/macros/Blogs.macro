@@ -1,6 +1,6 @@
 <definition>
 	<command name="addDraft">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -12,7 +12,7 @@
 	</command>
 
 	<command name="addDraftViaAutoSave">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -36,7 +36,7 @@
 	</command>
 
 	<command name="addScheduled">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -92,7 +92,7 @@
 	</command>
 
 	<command name="addWithCategory">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -111,7 +111,7 @@
 	</command>
 
 	<command name="addWithCustomAbstract">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -133,7 +133,7 @@
 	</command>
 
 	<command name="addWithCustomAbstractImage">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -160,7 +160,7 @@
 	</command>
 
 	<command name="addWithDefaultAbstract">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -178,7 +178,7 @@
 	</command>
 
 	<command name="addWithInvalidContent">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryInvalidContent}" />
@@ -190,7 +190,7 @@
 	</command>
 
 	<command name="addWithInvalidTitle">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -202,7 +202,7 @@
 	</command>
 
 	<command name="addWithInvalidTitleLength">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -214,7 +214,7 @@
 	</command>
 
 	<command name="addWithNullCustomAbstract">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -235,7 +235,7 @@
 	</command>
 
 	<command name="addWithTag">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -268,7 +268,7 @@
 	</command>
 
 	<command name="addWithWorkflow">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />

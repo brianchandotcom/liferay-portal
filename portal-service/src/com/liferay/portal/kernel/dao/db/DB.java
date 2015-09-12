@@ -88,6 +88,8 @@ public interface DB {
 
 	public List<Index> getIndexes(Connection con) throws SQLException;
 
+	public int getStringIndexMaxLength();
+
 	public String getTemplateFalse();
 
 	public String getTemplateTrue();

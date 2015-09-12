@@ -99,7 +99,8 @@ public class RubySassCompilerTest {
 
 		File expectedOutputFile = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
-				"/internal/dependencies/sourcemaps", "expected_output.css");
+				"/internal/dependencies/sourcemaps",
+			"expected_output.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
 
@@ -132,8 +133,7 @@ public class RubySassCompilerTest {
 				"/internal/dependencies/sass-spec/14_imports");
 
 		File inputFile = new File(inputDir, "input.scss");
-		File sourceMapFile = new File(
-			inputDir, ".sass-cache/input.css.map");
+		File sourceMapFile = new File(inputDir, ".sass-cache/input.css.map");
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());

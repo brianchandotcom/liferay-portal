@@ -153,8 +153,7 @@ public class JniSassCompilerTest {
 		File inputDir = new File(url.toURI());
 
 		File inputFile = new File(inputDir, "input.scss");
-		File sourceMapFile = new File(
-			inputDir, ".sass-cache/input.css.map");
+		File sourceMapFile = new File(inputDir, ".sass-cache/input.css.map");
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());

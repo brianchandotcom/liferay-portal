@@ -56,6 +56,24 @@ public class PermissionCheckerTest {
 	}
 
 	@Test
+	public void testHasPermission() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+		try {
+			Assert.assertFalse(
+				permissionChecker.hasPermission(
+					_group.getGroupId(),
+					"com_liferay_blogs_web_portlet_BlogsAdminPortlet",
+					_group.getGroupId(), "ADD_TO_PAGE"));
+		}
+		catch (Exception e) {
+			Assert.fail();
+		}
+	}
+
+	@Test
 	public void testIsCompanyAdminWithCompanyAdmin() throws Exception {
 		PermissionChecker permissionChecker = _getPermissionChecker(
 			TestPropsValues.getUser());

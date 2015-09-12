@@ -44,36 +44,7 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 
 		_columnNames = columnNames;
 
-		StringBundler sb = new StringBundler(8 + columnNames.length * 2);
-
-		if (unique) {
-			sb.append("create unique ");
-		}
-		else {
-			sb.append("create ");
-		}
-
-		sb.append("index ");
-		sb.append(indexName);
-		sb.append(" on ");
-		sb.append(tableName);
-
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-
-		for (String columnName : columnNames) {
-			sb.append(columnName);
-			sb.append(StringPool.COMMA_AND_SPACE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-		sb.append(StringPool.SEMICOLON);
-
-		_createSQL = sb.toString();
-
-		sb.setIndex(0);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("drop index ");
 		sb.append(indexName);
@@ -119,8 +90,48 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 		return _columnNames;
 	}
 
-	public String getCreateSQL() {
-		return _createSQL;
+	public String getCreateSQL(int[] lengths) {
+		int sbSize = 8 + _columnNames.length * 2;
+
+		if (lengths != null) {
+			sbSize += _columnNames.length * 3;
+		}
+
+		StringBundler sb = new StringBundler(sbSize);
+
+		if (isUnique()) {
+			sb.append("create unique ");
+		}
+		else {
+			sb.append("create ");
+		}
+
+		sb.append("index ");
+		sb.append(getIndexName());
+		sb.append(" on ");
+		sb.append(getTableName());
+
+		sb.append(StringPool.SPACE);
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (int i = 0; i < _columnNames.length; i++) {
+			sb.append(_columnNames[i]);
+
+			if ((lengths != null) && (lengths[i] > 0)) {
+				sb.append("[$COLUMN_LENGTH:");
+				sb.append(lengths[i]);
+				sb.append("$]");
+			}
+
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(StringPool.SEMICOLON);
+
+		return sb.toString();
 	}
 
 	public String getDropSQL() {
@@ -167,11 +178,10 @@ public class IndexMetadata extends Index implements Comparable<IndexMetadata> {
 
 	@Override
 	public String toString() {
-		return _createSQL;
+		return getCreateSQL(null);
 	}
 
 	private final String[] _columnNames;
-	private final String _createSQL;
 	private final String _dropSQL;
 
 }

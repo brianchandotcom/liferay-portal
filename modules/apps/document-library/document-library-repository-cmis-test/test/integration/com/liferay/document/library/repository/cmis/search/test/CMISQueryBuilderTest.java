@@ -61,6 +61,8 @@ public class CMISQueryBuilderTest {
 	public void setUp() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
+		// Test
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 

@@ -112,6 +112,14 @@ public class IndexMetadataFactoryUtil {
 		String[] columnNames = StringUtil.split(
 			createSQL.substring(start, end), StringPool.COMMA_AND_SPACE);
 
+		for (int i = 0; i < columnNames.length; i++) {
+			int index = columnNames[i].indexOf("[$COLUMN_LENGTH:");
+
+			if (index > 0) {
+				columnNames[i] = columnNames[i].substring(0, index);
+			}
+		}
+
 		return new IndexMetadata(indexName, tableName, unique, columnNames);
 	}
 

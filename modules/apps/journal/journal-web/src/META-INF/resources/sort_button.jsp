@@ -18,17 +18,37 @@
 
 <%
 String navigation = ParamUtil.getString(request, "navigation", "home");
+
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+
+String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
+
+String orderByCol = ParamUtil.getString(request, "orderByCol");
+String orderByType = ParamUtil.getString(request, "orderByType");
+
+if (Validator.isNull(orderByCol)) {
+	orderByCol = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-col", "modified-date");
+	orderByType = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-type", "asc");
+}
+else {
+	boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
+
+	if (saveOrderBy) {
+		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-col", orderByCol);
+		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-type", orderByType);
+	}
+}
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
 	<portlet:param name="navigation" value="<%= navigation %>" />
-	<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
-	<portlet:param name="ddmStructureKey" value="<%= journalDisplayContext.getDDMStructureKey() %>" />
+	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+	<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
 </liferay-portlet:renderURL>
 
 <liferay-frontend:management-bar-sort
-	orderByCol="<%= journalDisplayContext.getOrderByCol() %>"
-	orderByType="<%= journalDisplayContext.getOrderByType() %>"
+	orderByCol="<%= orderByCol %>"
+	orderByType="<%= orderByType %>"
 	orderColumns='<%= new String[]{"display-date", "modified-date"} %>'
 	portletURL="<%= portletURL %>"
 />

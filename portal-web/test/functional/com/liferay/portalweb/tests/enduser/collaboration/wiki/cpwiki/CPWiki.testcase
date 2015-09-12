@@ -330,6 +330,116 @@
 		</execute>
 	</command>
 
+	<command name="MovePageWithChildrenPagesToNewNode" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#ADD_WIKI" value1="Add Wiki" />
+
+		<execute macro="WikiNode#addName">
+			<var name="wikiNodeName" value="Main Node 2" />
+		</execute>
+
+		<execute macro="WikiNode#publish" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiTable#gotoNode">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+
+		<execute macro="WikiEntry#addPageTitle">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiEntry#addPageContent">
+			<var name="wikiPageContent" value="Wiki Page Content 1" />
+		</execute>
+
+		<execute macro="WikiEntry#publish" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiTable#gotoNode">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute macro="WikiTable#gotoEntry">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="Wiki Child Page Content 1" />
+			<var name="wikiChildPageTitle" value="Wiki Child Page Title 1" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="Wiki Child Page Content 2" />
+			<var name="wikiChildPageTitle" value="Wiki Child Page Title 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiTable#gotoNode">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute macro="WikiTable#gotoEntryMove">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoChangeNode" />
+
+		<execute macro="WikiPage#selectNewNode">
+			<var name="wikiNodeName" value="Main Node 2" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiTable#viewNode">
+			<var name="numberOfWikiPages" value="3" />
+			<var name="wikiNodeName" value="Main Node 2" />
+		</execute>
+
+		<execute macro="WikiTable#gotoNode">
+			<var name="wikiNodeName" value="Main Node 2" />
+		</execute>
+
+		<execute macro="WikiTable#viewEntry">
+			<var name="draftStatus" value="Approved" />
+			<var name="wikiPageTitle" value="Wiki Child Page Title 1" />
+		</execute>
+
+		<execute macro="WikiTable#viewEntry">
+			<var name="draftStatus" value="Approved" />
+			<var name="wikiPageTitle" value="Wiki Child Page Title 2" />
+		</execute>
+
+		<execute macro="WikiTable#viewEntry">
+			<var name="draftStatus" value="Approved" />
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiTable#gotoEntry">
+			<var name="wikiPageTitle" value="Wiki Child Page Title 1" />
+		</execute>
+
+		<execute macro="WikiPage#viewPageContentBody">
+			<var name="wikiPageContent" value="Wiki Child Page Content 1" />
+		</execute>
+	</command>
+
 	<command name="MoveToRecycleBinFrontPage" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />

@@ -40,17 +40,17 @@
 </tr>
 <tr>
 	<td>PREVIEW_CUSTOM_WIDTH_FIELD</td>
-	<td>//input[@id='_145_width']</td>
+	<td>//input[contains(@id,'_width')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_CUSTOM_HEIGHT_FIELD</td>
-	<td>//input[@id='_145_height']</td>
+	<td>//input[contains(@id,'_height')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW_MESSAGE</td>
-	<td>//div[@id='_145_devicePreviewContainer']/div[contains(@class,'alert-warning')]</td>
+	<td>//div[contains(@id,'_devicePreviewContainer')]/div[contains(@class,'alert-warning')]</td>
 	<td></td>
 </tr>
 </tbody>

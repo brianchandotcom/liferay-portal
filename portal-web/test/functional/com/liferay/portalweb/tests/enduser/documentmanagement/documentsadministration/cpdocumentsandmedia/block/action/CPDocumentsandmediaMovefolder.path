@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//a[@id='_199_TabsBack']</td>
+	<td>//a[contains(@id,'TabsBack')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>NEW_FOLDER</td>
-	<td>//input[@id='_199_folderName']</td>
+	<td>//input[contains(@id,'folderName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SELECT_BUTTON</td>
-	<td>//button[@id='_199_selectFolderButton']</td>
+	<td>//button[contains(@id,'selectFolderButton')]</td>
 	<td></td>
 </tr>
 <tr>

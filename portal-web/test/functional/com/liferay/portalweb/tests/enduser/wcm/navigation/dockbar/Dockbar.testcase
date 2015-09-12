@@ -50,7 +50,7 @@
 	<command name="SearchCollapsedPortlet" priority="4">
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" />
 
-		<execute function="AssertClick" locator1="DockbarAddpanelapplications#NAVIGATION_APPLICATIONS" value1="Applications" />
+		<execute function="AssertClick" locator1="NavPill#APPLICATIONS" value1="Applications" />
 
 		<var name="portletLocator" value="//span[@data-title=&quot;Bookmarks&quot; and contains(@class,'drag-content-item')]" />
 
@@ -64,7 +64,7 @@
 	<command name="ViewAddPageField" priority="4">
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" />
 
-		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="AssertClick" locator1="NavPill#PAGE" value1="Page" />
 
 		<execute macro="Dockbar#viewLocalizationOptionsAdd">
 			<var name="localizationOptions" value="en_US,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,iw_IL,hu_HU,ja_JP,pt_BR,es_ES" />
@@ -76,12 +76,12 @@
 	<command name="ViewAddPageFieldEditable" priority="4">
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" />
 
-		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="AssertClick" locator1="NavPill#PAGE" value1="Page" />
 
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" />
 		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" />
 
-		<execute function="AssertClick" locator1="DockbarAddpanelpage#NAVIGATION_PAGE" value1="Page" />
+		<execute function="AssertClick" locator1="NavPill#PAGE" value1="Page" />
 		<execute function="Type" locator1="TextInput#NAME" value1="Dockbar Test Page" />
 
 		<execute macro="Page#addLocalizedNamePG">

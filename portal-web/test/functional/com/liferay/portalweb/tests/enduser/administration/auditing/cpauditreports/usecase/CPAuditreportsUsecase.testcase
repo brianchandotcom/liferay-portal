@@ -1,7 +1,7 @@
 <definition component-name="portal-core-infrastructure-portal-services">
 	<property name="hook.plugins.includes" value="audit-hook" />
 	<property name="portlet.plugins.includes" value="audit-portlet" />
-	<property name="testray.main.component.name" value="Administration" />
+	<property name="testray.main.component.name" value="Auditing" />
 	<property name="testray.testcase.product.edition" value="EE" />
 
 	<set-up>

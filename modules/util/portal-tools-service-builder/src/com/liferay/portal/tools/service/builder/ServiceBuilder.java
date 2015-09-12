@@ -3249,6 +3249,16 @@ public class ServiceBuilder {
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(indexSQL);
 
+				Entity entity = _getEntityByTableName(
+					indexMetadata.getTableName());
+
+				if (entity != null) {
+					indexMetadata = new IndexMetadata(
+						indexMetadata.getIndexName(),
+						indexMetadata.getTableName(), indexMetadata.isUnique(),
+						indexMetadata.getColumnNames());
+				}
+
 				_addIndexMetadata(
 					indexMetadataMap, indexMetadata.getTableName(),
 					indexMetadata);
@@ -3317,7 +3327,9 @@ public class ServiceBuilder {
 			Collections.sort(indexMetadataList);
 
 			for (IndexMetadata indexMetadata : indexMetadataList) {
-				sb.append(indexMetadata.getCreateSQL());
+				sb.append(
+					indexMetadata.getCreateSQL(
+						_getColumnLengths(indexMetadata)));
 
 				sb.append(StringPool.NEW_LINE);
 			}
@@ -3780,6 +3792,33 @@ public class ServiceBuilder {
 		return javaFields.toArray(new JavaField[javaFields.size()]);
 	}
 
+	private int[] _getColumnLengths(IndexMetadata indexMetadata) {
+		Entity entity = _getEntityByTableName(indexMetadata.getTableName());
+
+		if (entity == null) {
+			return null;
+		}
+
+		String[] columnNames = indexMetadata.getColumnNames();
+
+		int[] columnLengths = new int[columnNames.length];
+
+		for (int i = 0; i < columnNames.length; i++) {
+			EntityColumn entityColumn = _getEntityColumnByColumnDBName(
+				entity, columnNames[i]);
+
+			String colType = entityColumn.getType();
+
+			if (colType.equals("String")) {
+				columnLengths[i] = getMaxLength(
+					_packagePath + ".model." + entity.getName(),
+					entityColumn.getName());
+			}
+		}
+
+		return columnLengths;
+	}
+
 	private Map<String, Object> _getContext() throws TemplateModelException {
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
@@ -4117,6 +4156,30 @@ public class ServiceBuilder {
 		}
 
 		return dimensions;
+	}
+
+	private Entity _getEntityByTableName(String tableName) {
+		for (Entity entity : _ejbList) {
+			if (tableName.equals(entity.getTable())) {
+				return entity;
+			}
+		}
+
+		return null;
+	}
+
+	private EntityColumn _getEntityColumnByColumnDBName(
+		Entity entity, String columnDBName) {
+
+		for (EntityColumn entityColumn : entity.getFinderColumnsList()) {
+			if (columnDBName.equals(entityColumn.getDBName())) {
+				return entityColumn;
+			}
+		}
+
+		throw new IllegalArgumentException(
+			"No entity column exist with db name :" + columnDBName +
+				" on entity :" + entity.getName());
 	}
 
 	private JavaClass _getJavaClass(String fileName) throws IOException {

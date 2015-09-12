@@ -197,8 +197,9 @@ public class BaseDDMServiceTestCase {
 		throws Exception {
 
 		return addTemplate(
-			classNameId, classPK, classNameId, templateKey, name,
-			StringPool.BLANK, type, mode, language, script);
+			classNameId, classPK,
+			PortalUtil.getClassNameId(DDL_RECORD_SET_CLASS_NAME), templateKey,
+			name, StringPool.BLANK, type, mode, language, script);
 	}
 
 	protected String getBasePath() {
@@ -235,6 +236,9 @@ public class BaseDDMServiceTestCase {
 		return StringUtil.read(
 			clazz.getClassLoader(), getBasePath() + fileName);
 	}
+
+	protected static final String DDL_RECORD_CLASS_NAME =
+		"com.liferay.dynamic.data.lists.model.DDLRecord";
 
 	protected static final String DDL_RECORD_SET_CLASS_NAME =
 		"com.liferay.dynamic.data.lists.model.DDLRecordSet";

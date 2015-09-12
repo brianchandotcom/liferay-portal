@@ -17,6 +17,7 @@ package com.liferay.blogs.trackback.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -28,6 +29,8 @@ import com.liferay.portal.service.IdentityServiceContextFunction;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumer;
+import com.liferay.portlet.blogs.linkback.LinkbackConsumerUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.trackback.Trackback;
@@ -60,7 +63,7 @@ public class TrackbackImplTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
-		BlogsEntry blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
+		_blogsEntry = BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
 			StringUtil.randomString(), new Date(), serviceContext);
 
@@ -69,11 +72,11 @@ public class TrackbackImplTest {
 
 		CommentManagerUtil.addComment(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			BlogsEntry.class.getName(), blogsEntry.getEntryId(),
+			BlogsEntry.class.getName(), _blogsEntry.getEntryId(),
 			StringUtil.randomString(), serviceContextFunction);
 
 		int initialCommentsCount = CommentManagerUtil.getCommentsCount(
-			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+			BlogsEntry.class.getName(), _blogsEntry.getEntryId());
 
 		Trackback trackback = new TrackbackImpl();
 
@@ -85,14 +88,22 @@ public class TrackbackImplTest {
 		themeDisplay.setCompany(company);
 
 		trackback.addTrackback(
-			blogsEntry, themeDisplay, StringUtil.randomString(),
+			_blogsEntry, themeDisplay, StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), serviceContextFunction);
 
 		Assert.assertEquals(
 			initialCommentsCount + 1,
 			CommentManagerUtil.getCommentsCount(
-				BlogsEntry.class.getName(), blogsEntry.getEntryId()));
+				BlogsEntry.class.getName(), _blogsEntry.getEntryId()));
+
+		LinkbackConsumer linkbackConsumer =
+			LinkbackConsumerUtil.getLinkbackConsumer();
+
+		linkbackConsumer.verifyNewTrackbacks();
 	}
+
+	@DeleteAfterTestRun
+	private BlogsEntry _blogsEntry;
 
 }

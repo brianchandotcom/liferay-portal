@@ -172,14 +172,10 @@ public class FileUtil {
 			return false;
 		}
 
-		AntBuilder antBuilder = project.getAnt();
+		long sourceLastModified = _getLastModified(sourceFile);
+		long targetLastModified = _getLastModified(targetFile);
 
-		_invokeAntMethodUpToDate(
-			antBuilder, "uptodate", sourceFile, targetFile);
-
-		Map<String, Object> antProperties = antBuilder.getProperties();
-
-		if (antProperties.containsKey("uptodate")) {
+		if (targetLastModified >= sourceLastModified) {
 			return true;
 		}
 
@@ -319,6 +315,30 @@ public class FileUtil {
 		project.ant(closure);
 	}
 
+	private static long _getLastModified(File file) {
+		if (file.isFile()) {
+			return file.lastModified();
+		}
+
+		long lastModified = 0;
+
+		File[] dirFiles = file.listFiles();
+
+		for (File dirFile : dirFiles) {
+			long dirFileLastModified = dirFile.lastModified();
+
+			if (dirFileLastModified > lastModified) {
+				lastModified = dirFileLastModified;
+			}
+		}
+
+		if (lastModified == 0) {
+			lastModified = file.lastModified();
+		}
+
+		return lastModified;
+	}
+
 	private static File _getMirrorsCacheDir() {
 		String userHome = System.getProperty("user.home");
 
@@ -358,19 +378,6 @@ public class FileUtil {
 		};
 
 		antBuilder.invokeMethod("jar", new Object[] {args, closure});
-	}
-
-	private static void _invokeAntMethodUpToDate(
-		AntBuilder antBuilder, String property, File sourceFile,
-		File targetFile) {
-
-		Map<String, Object> args = new HashMap<>();
-
-		args.put("property", property);
-		args.put("srcfile", sourceFile);
-		args.put("targetfile", targetFile);
-
-		antBuilder.invokeMethod("uptodate", args);
 	}
 
 }

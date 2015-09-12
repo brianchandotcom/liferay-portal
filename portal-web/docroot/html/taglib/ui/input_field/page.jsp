@@ -26,6 +26,7 @@ String dateTogglerCheckboxLabel = GetterUtil.getString((String)request.getAttrib
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-field:defaultLanguageId");
 Object defaultValue = request.getAttribute("liferay-ui:input-field:defaultValue");
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:disabled"));
+Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ui:input-field:dynamicAttributes");
 String field = (String)request.getAttribute("liferay-ui:input-field:field");
 String fieldParam = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:fieldParam"));
 Format format = (Format)request.getAttribute("liferay-ui:input-field:format");
@@ -207,6 +208,8 @@ if (hints != null) {
 			if (hints != null) {
 				showTime = GetterUtil.getBoolean(hints.get("show-time"), showTime);
 			}
+
+			String timeFormat = GetterUtil.getString((String)dynamicAttributes.get("timeFormat"));
 			%>
 
 			<div class="clearfix">
@@ -236,6 +239,7 @@ if (hints != null) {
 						minuteParam='<%= fieldParam + "Minute" %>'
 						minuteValue="<%= minute %>"
 						name='<%= fieldParam + "Time" %>'
+						timeFormat="<%= timeFormat %>"
 					/>
 				</c:if>
 			</div>

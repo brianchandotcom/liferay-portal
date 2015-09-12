@@ -14,23 +14,20 @@
 
 package com.liferay.portal.test.rule;
 
-import com.liferay.portal.kernel.test.rule.BaseTestRule;
-import com.liferay.portal.test.log.CaptureAppender;
-import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
-
-import java.util.List;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
- * @author Shuyang Zhou
+ * @author Matthew Tambara
  */
-public class LogAssertionTestRule
-	extends BaseTestRule<List<CaptureAppender>, List<CaptureAppender>> {
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface ExpectedMultipleLogs {
 
-	public static final LogAssertionTestRule INSTANCE =
-		new LogAssertionTestRule();
-
-	private LogAssertionTestRule() {
-		super(LogAssertionTestCallback.INSTANCE);
-	}
+	public ExpectedLogs[] expectedMultipleLogs();
 
 }

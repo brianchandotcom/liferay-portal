@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.ratings.test.BaseRatingsTestCase;
 
 import java.util.HashSet;
@@ -65,7 +66,8 @@ public class DDLRecordRatingsTest extends BaseRatingsTestCase {
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 
 		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(group);
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(DDLRecordSet.class), group);
 
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
 			ddmForm, StorageType.JSON.toString());

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
 
 import java.util.List;
 
@@ -61,7 +60,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_CLASS_NAME_ID = PortalUtil.getClassNameId(AssetEntry.class);
+		_CLASS_NAME_ID = PortalUtil.getClassNameId(DDL_RECORD_CLASS_NAME);
 
 		_RESOURCE_CLASS_NAME_ID = PortalUtil.getClassNameId(
 			DDL_RECORD_SET_CLASS_NAME);

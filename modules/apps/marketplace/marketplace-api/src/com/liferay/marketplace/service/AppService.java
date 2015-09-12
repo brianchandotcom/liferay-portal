@@ -70,6 +70,6 @@ public interface AppService extends BaseService {
 
 	public void uninstallApp(long remoteAppId) throws PortalException;
 
-	public com.liferay.marketplace.model.App updateApp(long remoteAppId,
-		java.lang.String version, java.io.File file) throws PortalException;
+	public com.liferay.marketplace.model.App updateApp(java.io.File file)
+		throws PortalException;
 }

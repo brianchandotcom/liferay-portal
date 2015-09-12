@@ -71,10 +71,9 @@ public class AppServiceWrapper implements AppService,
 	}
 
 	@Override
-	public com.liferay.marketplace.model.App updateApp(long remoteAppId,
-		java.lang.String version, java.io.File file)
+	public com.liferay.marketplace.model.App updateApp(java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _appService.updateApp(remoteAppId, version, file);
+		return _appService.updateApp(file);
 	}
 
 	/**

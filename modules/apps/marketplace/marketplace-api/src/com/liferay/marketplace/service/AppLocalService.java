@@ -275,11 +275,10 @@ public interface AppLocalService extends BaseLocalService,
 		com.liferay.marketplace.model.App app);
 
 	public com.liferay.marketplace.model.App updateApp(long userId,
+		java.io.File file) throws PortalException;
+
+	public com.liferay.marketplace.model.App updateApp(long userId,
 		long remoteAppId, java.lang.String title, java.lang.String description,
 		java.lang.String category, java.lang.String iconURL,
 		java.lang.String version, java.io.File file) throws PortalException;
-
-	public com.liferay.marketplace.model.App updateApp(long userId,
-		long remoteAppId, java.lang.String version, java.io.File file)
-		throws PortalException;
 }

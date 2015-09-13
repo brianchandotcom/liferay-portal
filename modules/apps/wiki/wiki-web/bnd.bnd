@@ -55,7 +55,6 @@ Import-Package:\
 	org.apache.struts.util,\
 	*
 Include-Resource:\
-	WEB-INF/classes/META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
 	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
 	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions,\
 	WEB-INF/classes/=@docroot/WEB-INF/lib/util-java.jar!/com/liferay/util/RSSUtil.class,\

@@ -4,7 +4,6 @@ Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
-	META-INF/=../../../portal-impl/src/META-INF/log4j.dtd,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Liferay-Service: true

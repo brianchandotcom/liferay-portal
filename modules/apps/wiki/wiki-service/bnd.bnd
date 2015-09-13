@@ -44,7 +44,6 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
-	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
 	@../../../../lib/portal/antlr2.jar,\
 	@../../../../lib/portal/antlr3.jar,\
 	@../../../../lib/portal/bnd.jar!/aQute/bnd/annotation/metatype/*,\

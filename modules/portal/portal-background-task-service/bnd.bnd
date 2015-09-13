@@ -4,9 +4,7 @@ Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.kernel.backgroundtask,\
 	*
-Include-Resource:\
-	classes,\
-	META-INF/=../../../portal-impl/src/META-INF/log4j.dtd
+Include-Resource: classes
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

@@ -45,6 +45,9 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
@@ -93,6 +96,24 @@ public class Log4JUtil {
 
 		try {
 			SAXReader saxReader = new SAXReader();
+
+			saxReader.setEntityResolver(
+				new EntityResolver() {
+
+					@Override
+					public InputSource resolveEntity(
+						String publicId, String systemId) {
+
+						if (systemId.endsWith("log4j.dtd")) {
+							return new InputSource(
+								DOMConfigurator.class.getResourceAsStream(
+									"log4j.dtd"));
+						}
+
+						return null;
+					}
+
+				});
 
 			Document document = saxReader.read(
 				new UnsyncStringReader(urlContent), url.toExternalForm());

@@ -897,6 +897,10 @@
 						<test-action>
 							<print-test-class-group test.class.group.index="${axis.variable}" />
 
+							<antcall target="prepare-log4j-ext-xml" inheritAll="false">
+								<param name="database.type" value="@{database.type}" />
+							</antcall>
+
 							<antcall target="prepare-portal-ext-properties" inheritAll="false">
 								<param name="database.type" value="@{database.type}" />
 							</antcall>

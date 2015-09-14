@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -424,51 +425,23 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			groupId, classNameId, structureKey, includeAncestorStructures);
 	}
 
-	/**
-	 * Returns all the structures in the group that the user has permission to
-	 * view.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @return the structures in the group that the user has permission to view
-	 */
 	@Override
-	public List<DDMStructure> getStructures(long groupId) {
-		return ddmStructurePersistence.filterFindByGroupId(groupId);
-	}
+	public List<DDMStructure> getStructures(
+		long companyId, long[] groupIds, long classNameId, int status) {
 
-	/**
-	 * Returns all the structures in the groups that the user has permission to
-	 * view.
-	 *
-	 * @param  groupIds the primary key of the groups
-	 * @return the structures in the groups that the user has permission to view
-	 */
-	@Override
-	public List<DDMStructure> getStructures(long[] groupIds) {
-		return ddmStructurePersistence.filterFindByGroupId(groupIds);
-	}
-
-	/**
-	 * Returns all the structures matching the groups and class name ID that the
-	 * user has permission to view.
-	 *
-	 * @param  groupIds the primary keys of the groups
-	 * @param  classNameId the primary key of the class name for the structure's
-	 *         related model
-	 * @return the structures matching the groups and class name ID that the
-	 *         user has permission to view
-	 */
-	@Override
-	public List<DDMStructure> getStructures(long[] groupIds, long classNameId) {
-		return ddmStructurePersistence.filterFindByG_C(groupIds, classNameId);
+		return ddmStructureFinder.filterFindByC_G_C_S(
+			companyId, groupIds, classNameId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	@Override
 	public List<DDMStructure> getStructures(
-		long[] groupIds, long classNameId, int start, int end) {
+		long companyId, long[] groupIds, long classNameId, int status,
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
-		return ddmStructurePersistence.filterFindByG_C(
-			groupIds, classNameId, start, end);
+		return ddmStructureFinder.filterFindByC_G_C_S(
+			companyId, groupIds, classNameId, status, start, end,
+			orderByComparator);
 	}
 
 	@Override

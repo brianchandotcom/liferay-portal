@@ -734,7 +734,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void waitForConfirmation(String pattern) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.waitForConfirmation(this, pattern);
 	}
 
 	@Override

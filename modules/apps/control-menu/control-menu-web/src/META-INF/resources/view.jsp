@@ -31,8 +31,6 @@ if (layout != null) {
 boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE);
 boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
 
-String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "com.liferay.frontend.js.web_toggleControls", "visible"));
-
 boolean userSetupComplete = false;
 
 if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
@@ -90,18 +88,6 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 						}
 					}
 					%>
-
-					<c:if test="<%= !group.isControlPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
-						<li id="<portlet:namespace />toggleControls">
-							<liferay-ui:icon
-								cssClass="toggle-controls"
-								iconCssClass='<%= "controls-state-icon " + (toggleControlsState.equals("visible") ? "icon-eye-open icon-monospaced" : "icon-eye-close icon-monospaced") %>'
-								label="edit-controls"
-								linkCssClass="control-menu-icon"
-								url="javascript:;"
-							/>
-						</li>
-					</c:if>
 
 					<c:if test="<%= !group.isControlPanel() && userSetupComplete && (hasLayoutUpdatePermission || GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE)) %>">
 						<portlet:renderURL var="previewContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">

@@ -490,7 +490,7 @@ String iconMenuId = null;
 </div>
 
 <aui:script use="uploader,liferay-util-window">
-	if (!A.UA.ios && A.Uploader.TYPE != 'none') {
+	if (!A.UA.ios && (A.Uploader.TYPE != 'none')) {
 		var uploadMultipleDocumentsIcon = A.all('.upload-multiple-documents:hidden');
 
 		uploadMultipleDocumentsIcon.show();

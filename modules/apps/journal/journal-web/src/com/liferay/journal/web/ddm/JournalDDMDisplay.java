@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
-import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -52,11 +51,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	@Override
 	public String getAvailableFields() {
 		return "Liferay.FormBuilder.AVAILABLE_FIELDS.WCM_STRUCTURE";
-	}
-
-	@Override
-	public DDMPermissionHandler getDDMPermissionHandler() {
-		return _ddmPermissionHandler;
 	}
 
 	@Override
@@ -168,8 +162,5 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		});
 	private static final Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"mode"});
-
-	private final DDMPermissionHandler _ddmPermissionHandler =
-		new JournalDDMPermissionHandler();
 
 }

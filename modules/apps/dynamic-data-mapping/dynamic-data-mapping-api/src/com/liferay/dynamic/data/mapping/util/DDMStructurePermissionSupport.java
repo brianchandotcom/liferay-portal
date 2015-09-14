@@ -17,14 +17,8 @@ package com.liferay.dynamic.data.mapping.util;
 /**
  * @author Marcellus Tavares
  */
-public interface DDMPermissionHandler {
+public interface DDMStructurePermissionSupport {
 
-	public String getAddStructureActionId();
-
-	public String getAddTemplateActionId();
-
-	public long[] getResourceClassNameIds();
-
-	public String getResourceName(long classNameId);
+	public String getResourceName();
 
 }

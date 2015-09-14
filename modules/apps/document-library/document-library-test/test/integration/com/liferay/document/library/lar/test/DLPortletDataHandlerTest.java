@@ -44,6 +44,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -207,7 +208,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			serviceContext);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			stagingGroup.getGroupId(), DLFileEntryType.class.getName());
+			stagingGroup.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		portletDataContext.isPathProcessed(
 			ExportImportPathUtil.getModelPath(ddmStructure));

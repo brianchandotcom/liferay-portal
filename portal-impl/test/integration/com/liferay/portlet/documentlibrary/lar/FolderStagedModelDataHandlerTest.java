@@ -30,6 +30,7 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -101,7 +102,7 @@ public class FolderStagedModelDataHandlerTest
 		Group companyGroup = company.getGroup();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			companyGroup.getGroupId(), DLFileEntryType.class.getName());
+			companyGroup.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		addDependentStagedModel(
 			dependentStagedModelsMap,
@@ -138,7 +139,7 @@ public class FolderStagedModelDataHandlerTest
 			new HashMap<>();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), DLFileEntryType.class.getName());
+			group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		addDependentStagedModel(
 			dependentStagedModelsMap,

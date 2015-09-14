@@ -36,6 +36,7 @@ import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -134,7 +135,7 @@ public class FileEntryStagedModelDataHandlerTest
 		Group companyGroup = company.getGroup();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			companyGroup.getGroupId(), DLFileEntryType.class.getName());
+			companyGroup.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		addDependentStagedModel(
 			dependentStagedModelsMap,
@@ -171,7 +172,7 @@ public class FileEntryStagedModelDataHandlerTest
 			new LinkedHashMap<>();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), DLFileEntryType.class.getName());
+			group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		DLFileEntryType dlFileEntryType = addDLFileEntryType(
 			group.getGroupId(), ddmStructure.getStructureId());

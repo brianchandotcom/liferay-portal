@@ -57,6 +57,7 @@ import com.liferay.portal.search.test.BaseSearchTestCase;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -270,7 +271,8 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			ddmForm);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
+			serviceContext.getScopeGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		return addArticleWithXmlContent(
 			parentBaseModel, content, ddmStructure, ddmTemplate,
@@ -523,6 +525,11 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 			return addArticleWithXmlContent(
 				parentBaseModel, content, ddmStructure, ddmTemplate,
 				serviceContext);
+		}
+
+		@Override
+		protected long getClassNameId() {
+			return PortalUtil.getClassNameId(JournalArticle.class);
 		}
 
 		@Override

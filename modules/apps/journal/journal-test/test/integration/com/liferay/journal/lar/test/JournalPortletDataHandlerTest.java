@@ -119,13 +119,16 @@ public class JournalPortletDataHandlerTest
 
 		DDMTemplateTestUtil.addTemplate(
 			stagingGroup.getGroupId(),
-			PortalUtil.getClassNameId(DDMStructure.class), -1L);
+			PortalUtil.getClassNameId(DDMStructure.class),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			stagingGroup.getGroupId(), ddmStructure.getStructureId());
+			stagingGroup.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		DDMTemplate rendererDDMTemplate = DDMTemplateTestUtil.addTemplate(
-			stagingGroup.getGroupId(), ddmStructure.getStructureId());
+			stagingGroup.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		JournalTestUtil.addFeed(
 			stagingGroup.getGroupId(), layout.getPlid(),

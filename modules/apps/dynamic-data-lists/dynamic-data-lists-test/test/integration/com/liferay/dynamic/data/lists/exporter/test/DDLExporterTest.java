@@ -56,6 +56,7 @@ import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -181,7 +182,8 @@ public class DDLExporterTest {
 
 	protected DDLRecordSet addRecordSet(DDMForm ddmForm) throws Exception {
 		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(_group);
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(DDLRecordSet.class), _group);
 
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
 			ddmForm, StorageType.JSON.toString());

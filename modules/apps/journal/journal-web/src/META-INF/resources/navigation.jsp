@@ -66,7 +66,7 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 		>
 
 			<%
-			List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(groupIds, PortalUtil.getClassNameId(JournalArticle.class));
+			List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(company.getCompanyId(), groupIds, PortalUtil.getClassNameId(JournalArticle.class), WorkflowConstants.STATUS_APPROVED);
 
 			for (DDMStructure ddmStructure : ddmStructures) {
 			%>

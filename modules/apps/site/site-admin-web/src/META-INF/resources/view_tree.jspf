@@ -57,11 +57,15 @@ if (group != null) {
 			parentGroupName = parentGroup.getDescriptiveName();
 		}
 	}
-	%>
 
-	<portlet:renderURL var="headerBackURL">
-		<portlet:param name="groupId" value="<%= String.valueOf(parentGroupId) %>" />
-	</portlet:renderURL>
+	PortletURL headerBackURL = renderResponse.createRenderURL();
+
+	if (parentGroupId > 0) {
+		headerBackURL.setParameter("groupId", String.valueOf(parentGroupId));
+		headerBackURL.setParameter("mvcPath", "/view.jsp");
+		headerBackURL.setParameter("sitesListView", SiteConstants.LIST_VIEW_TREE);
+	}
+	%>
 
 	<liferay-ui:header
 		backLabel="<%= parentGroupName %>"
@@ -201,7 +205,6 @@ if (group != null) {
 			>
 				<portlet:renderURL var="siteAdministrationURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 					<portlet:param name="mvcPath" value="/edit_site.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
 				</portlet:renderURL>
 

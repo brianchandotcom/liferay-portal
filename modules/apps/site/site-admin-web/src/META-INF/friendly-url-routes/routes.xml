@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/site/{groupId:\d+}/edit</pattern>
+		<implicit-parameter name="mvcPath">/edit_site.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/site/{parentGroupSearchContainerPrimaryKeys:\d+}/new</pattern>
+		<implicit-parameter name="mvcPath">/edit_site.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/sites/new/{layoutSetPrototypeId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/edit_site.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/sites/new</pattern>
+		<implicit-parameter name="mvcPath">/edit_site.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/site/{groupId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/view.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/sites</pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern></pattern>
+		<ignored-parameter name="mvcPath" />
+	</route>
+</routes>

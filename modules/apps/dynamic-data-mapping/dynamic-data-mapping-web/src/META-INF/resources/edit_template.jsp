@@ -67,7 +67,7 @@ if (Validator.isNull(script) && type.equals(DDMTemplateConstants.TEMPLATE_TYPE_D
 DDMTemplateVersion templateVersion = null;
 
 if (template != null) {
-	templateVersion = template.getTemplateVersion();
+	templateVersion = template.getLatestTemplateVersion();
 }
 
 String structureAvailableFields = ParamUtil.getString(request, "structureAvailableFields");

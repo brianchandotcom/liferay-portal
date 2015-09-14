@@ -3,9 +3,9 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var TPL_FEEDBACK = '<span aria-hidden="true" class="form-control-feedback"><span class="icon-{icon}"></span></span>';
-
 		var TPL_ERROR_MESSAGE = '<div class="validation-message">{errorMessage}</div>';
+
+		var TPL_FEEDBACK = '<span aria-hidden="true" class="form-control-feedback"><span class="icon-{icon}"></span></span>';
 
 		var FieldFeedbackSupport = function() {
 		};
@@ -26,18 +26,6 @@ AUI.add(
 				);
 			},
 
-			showErrorMessage: function(errorMessage) {
-				var instance = this;
-
-				instance.set('errorMessage', errorMessage);
-			},
-
-			hideErrorMessage: function() {
-				var instance = this;
-
-				instance.set('errorMessage', '');
-			},
-
 			clearValidationStatus: function() {
 				var instance = this;
 
@@ -47,6 +35,12 @@ AUI.add(
 				container.removeClass('has-success');
 
 				instance.hideFeedback();
+			},
+
+			hideErrorMessage: function() {
+				var instance = this;
+
+				instance.set('errorMessage', '');
 			},
 
 			hideFeedback: function() {
@@ -63,6 +57,12 @@ AUI.add(
 				var instance = this;
 
 				instance._showFeedback('remove');
+			},
+
+			showErrorMessage: function(errorMessage) {
+				var instance = this;
+
+				instance.set('errorMessage', errorMessage);
 			},
 
 			showLoadingFeedback: function() {

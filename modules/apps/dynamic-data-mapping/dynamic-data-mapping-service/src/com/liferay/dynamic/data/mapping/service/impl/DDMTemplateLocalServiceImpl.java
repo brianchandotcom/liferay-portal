@@ -807,11 +807,12 @@ public class DDMTemplateLocalServiceImpl
 	 */
 	@Override
 	public List<DDMTemplate> getTemplatesByStructureClassNameId(
-		long groupId, long structureClassNameId, int start, int end,
+		long groupId, long structureClassNameId, int status, int start, int end,
 		OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.findByG_SC(
-			groupId, structureClassNameId, start, end, orderByComparator);
+		return ddmTemplateFinder.findByG_SC_S(
+			groupId, structureClassNameId, status, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -825,9 +826,10 @@ public class DDMTemplateLocalServiceImpl
 	 */
 	@Override
 	public int getTemplatesByStructureClassNameIdCount(
-		long groupId, long structureClassNameId) {
+		long groupId, long structureClassNameId, int status) {
 
-		return ddmTemplateFinder.countByG_SC(groupId, structureClassNameId);
+		return ddmTemplateFinder.countByG_SC_S(
+			groupId, structureClassNameId, status);
 	}
 
 	/**
@@ -939,11 +941,12 @@ public class DDMTemplateLocalServiceImpl
 	public List<DDMTemplate> search(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, String keywords, String type, String mode,
-		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return ddmTemplateFinder.findByKeywords(
 			companyId, groupId, classNameId, classPK, resourceClassNameId,
-			keywords, type, mode, start, end, orderByComparator);
+			keywords, type, mode, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -991,12 +994,12 @@ public class DDMTemplateLocalServiceImpl
 	public List<DDMTemplate> search(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, String name, String description, String type,
-		String mode, String language, boolean andOperator, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator) {
+		String mode, String language, int status, boolean andOperator,
+		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.findByC_G_C_C_R_N_D_T_M_L(
+		return ddmTemplateFinder.findByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupId, classNameId, classPK, resourceClassNameId, name,
-			description, type, mode, language, andOperator, start, end,
+			description, type, mode, language, status, andOperator, start, end,
 			orderByComparator);
 	}
 
@@ -1039,11 +1042,12 @@ public class DDMTemplateLocalServiceImpl
 	public List<DDMTemplate> search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, String keywords, String type, String mode,
-		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator) {
 
 		return ddmTemplateFinder.findByKeywords(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			keywords, type, mode, start, end, orderByComparator);
+			keywords, type, mode, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -1091,13 +1095,13 @@ public class DDMTemplateLocalServiceImpl
 	public List<DDMTemplate> search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, String name, String description, String type,
-		String mode, String language, boolean andOperator, int start, int end,
-		OrderByComparator<DDMTemplate> orderByComparator) {
+		String mode, String language, int status, boolean andOperator,
+		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		return ddmTemplateFinder.findByC_G_C_C_R_N_D_T_M_L(
+		return ddmTemplateFinder.findByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			name, description, type, mode, language, andOperator, start, end,
-			orderByComparator);
+			name, description, type, mode, language, status, andOperator, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -1123,11 +1127,12 @@ public class DDMTemplateLocalServiceImpl
 	@Override
 	public int searchCount(
 		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, String keywords, String type, String mode) {
+		long resourceClassNameId, String keywords, String type, String mode,
+		int status) {
 
 		return ddmTemplateFinder.countByKeywords(
 			companyId, groupId, classNameId, classPK, resourceClassNameId,
-			keywords, type, mode);
+			keywords, type, mode, status);
 	}
 
 	/**
@@ -1159,11 +1164,11 @@ public class DDMTemplateLocalServiceImpl
 	public int searchCount(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, String name, String description, String type,
-		String mode, String language, boolean andOperator) {
+		String mode, String language, int status, boolean andOperator) {
 
-		return ddmTemplateFinder.countByC_G_C_C_R_N_D_T_M_L(
+		return ddmTemplateFinder.countByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupId, classNameId, classPK, resourceClassNameId, name,
-			description, type, mode, language, andOperator);
+			description, type, mode, language, status, andOperator);
 	}
 
 	/**
@@ -1189,11 +1194,12 @@ public class DDMTemplateLocalServiceImpl
 	@Override
 	public int searchCount(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
-		long resourceClassNameId, String keywords, String type, String mode) {
+		long resourceClassNameId, String keywords, String type, String mode,
+		int status) {
 
 		return ddmTemplateFinder.countByKeywords(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			keywords, type, mode);
+			keywords, type, mode, status);
 	}
 
 	/**
@@ -1225,11 +1231,11 @@ public class DDMTemplateLocalServiceImpl
 	public int searchCount(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, String name, String description, String type,
-		String mode, String language, boolean andOperator) {
+		String mode, String language, int status, boolean andOperator) {
 
-		return ddmTemplateFinder.countByC_G_C_C_R_N_D_T_M_L(
+		return ddmTemplateFinder.countByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
-			name, description, type, mode, language, andOperator);
+			name, description, type, mode, language, status, andOperator);
 	}
 
 	/**

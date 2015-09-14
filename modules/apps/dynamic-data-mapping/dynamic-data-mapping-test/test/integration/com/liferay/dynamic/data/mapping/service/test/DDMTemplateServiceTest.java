@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 
@@ -185,7 +186,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			null, null, _resourceClassNameId, null, "Meeting", null, null, null,
-			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(1, templates.size());
 
@@ -207,8 +209,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			null, null, _resourceClassNameId, "Event", null, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new TemplateIdComparator(true));
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new TemplateIdComparator(true));
 
 		Assert.assertEquals(1, templates.size());
 		Assert.assertEquals(
@@ -217,8 +219,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			null, null, _resourceClassNameId, "Template", null, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new TemplateIdComparator(true));
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new TemplateIdComparator(true));
 
 		Assert.assertEquals(
 			"Event Template", getTemplateName(templates.get(0)));
@@ -238,7 +240,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			null, null, _resourceClassNameId, "Event", null, null, null, null,
-			true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(1, templates.size());
 		Assert.assertEquals("Event", getTemplateName(templates.get(0)));
@@ -255,8 +258,9 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, 0, "Event", "Meeting", null, null, null, true,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			null, null, 0, "Event", "Meeting", null, null, null,
+			WorkflowConstants.STATUS_APPROVED, true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(0, templates.size());
 	}
@@ -273,8 +277,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			null, null, _resourceClassNameId, "Event", "Meeting", null, null,
-			null, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new TemplateIdComparator(true));
+			null, WorkflowConstants.STATUS_APPROVED, false, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new TemplateIdComparator(true));
 
 		Assert.assertEquals("Event", getTemplateName(templates.get(0)));
 		Assert.assertEquals("Meeting", getTemplateName(templates.get(1)));
@@ -284,7 +288,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	public void testSearchCount() throws Exception {
 		int initialCount = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
-			0, "Test Template", null, null, null, null, false);
+			0, "Test Template", null, null, null, null,
+			WorkflowConstants.STATUS_APPROVED, false);
 
 		addDisplayTemplate(
 			_classNameId, 0, _resourceClassNameId, "Test Template",
@@ -293,7 +298,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
 			_resourceClassNameId, "Test Template", null, null, null, null,
-			false);
+			WorkflowConstants.STATUS_APPROVED, false);
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
@@ -320,14 +325,16 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			new long[] {classNameId1}, new long[] {classPK1},
-			_resourceClassNameId, null, null, null);
+			_resourceClassNameId, null, null, null,
+			WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(1, count);
 
 		count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			new long[] {classNameId2}, new long[] {classPK1},
-			_resourceClassNameId, null, null, null);
+			_resourceClassNameId, null, null, null,
+			WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(0, count);
 	}
@@ -360,15 +367,15 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			new long[] {classNameId1}, null,
-			_resourceClassNameId, null, null, null);
+			new long[] {classNameId1}, null, _resourceClassNameId, null, null,
+			null, WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(3, count);
 
 		count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			new long[] {classNameId1, classNameId2}, null,
-			_resourceClassNameId, null, null, null);
+			new long[] {classNameId1, classNameId2}, null, _resourceClassNameId,
+			null, null, null, WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(5, count);
 	}
@@ -396,7 +403,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			null, new long[] {classPK1, classPK2, classPK3},
-			_resourceClassNameId, null, null, null);
+			_resourceClassNameId, null, null, null,
+			WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(3, count);
 	}
@@ -405,7 +413,7 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 	public void testSearchCountByKeywords() throws Exception {
 		int initialCount = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
-			0, null, null, null);
+			0, null, null, null, WorkflowConstants.STATUS_APPROVED);
 
 		addDisplayTemplate(
 			_classNameId, 0, _resourceClassNameId, "Test Template",
@@ -413,7 +421,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), group.getGroupId(), _classNameId, 0,
-			_resourceClassNameId, "Test", null, null);
+			_resourceClassNameId, "Test", null, null,
+			WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(initialCount + 1, count);
 	}
@@ -442,7 +451,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
 			null, null, _resourceClassNameId, null, null, null, null,
-			TemplateConstants.LANG_TYPE_VM, true);
+			TemplateConstants.LANG_TYPE_VM, WorkflowConstants.STATUS_APPROVED,
+			true);
 
 		Assert.assertEquals(2, count);
 	}
@@ -461,7 +471,8 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 
 		int count = DDMTemplateLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), new long[] {group.getGroupId()},
-			null, null, _resourceClassNameId, null, null, null);
+			null, null, _resourceClassNameId, null, null, null,
+			WorkflowConstants.STATUS_APPROVED);
 
 		Assert.assertEquals(3, count);
 	}

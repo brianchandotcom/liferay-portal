@@ -167,12 +167,12 @@ public class JournalArticleIndexer
 		if (Validator.isNotNull(ddmStructureFieldName) &&
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
-			BooleanQuery booleanQuery = DDMIndexerUtil.getBooleanQuery(
-				ddmStructureFieldName, ddmStructureFieldValue,
-				searchContext.getLocale());
+			QueryFilter queryFilter =
+				DDMIndexerUtil.createFieldValueQueryFilter(
+					ddmStructureFieldName, ddmStructureFieldValue,
+					searchContext.getLocale());
 
-			contextBooleanFilter.add(
-				new QueryFilter(booleanQuery), BooleanClauseOccur.MUST);
+			contextBooleanFilter.add(queryFilter, BooleanClauseOccur.MUST);
 		}
 
 		String articleType = (String)searchContext.getAttribute("articleType");

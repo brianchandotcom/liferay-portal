@@ -122,12 +122,12 @@ public class DDLRecordIndexer extends BaseIndexer<DDLRecord> {
 		if (Validator.isNotNull(ddmStructureFieldName) &&
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
-			BooleanQuery booleanQuery = DDMIndexerUtil.getBooleanQuery(
-				ddmStructureFieldName, ddmStructureFieldValue,
-				searchContext.getLocale());
+			QueryFilter queryFilter =
+				DDMIndexerUtil.createFieldValueQueryFilter(
+					ddmStructureFieldName, ddmStructureFieldValue,
+					searchContext.getLocale());
 
-			contextBooleanFilter.add(
-				new QueryFilter(booleanQuery), BooleanClauseOccur.MUST);
+			contextBooleanFilter.add(queryFilter, BooleanClauseOccur.MUST);
 		}
 	}
 

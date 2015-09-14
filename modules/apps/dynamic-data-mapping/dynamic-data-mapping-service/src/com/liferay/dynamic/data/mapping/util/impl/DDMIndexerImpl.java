@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -206,6 +207,36 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 	}
 
+	public QueryFilter createFieldValueQueryFilter(
+			String ddmStructureFieldName, Serializable ddmStructureFieldValue,
+			Locale locale)
+		throws Exception {
+
+		String[] ddmStructureFieldNameParts = StringUtil.split(
+			ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
+
+		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+			GetterUtil.getLong(ddmStructureFieldNameParts[1]));
+
+		String fieldName = StringUtil.replaceLast(
+			ddmStructureFieldNameParts[2],
+			StringPool.UNDERLINE.concat(LocaleUtil.toLanguageId(locale)),
+			StringPool.BLANK);
+
+		if (structure.hasField(fieldName)) {
+			ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
+				ddmStructureFieldValue, structure.getFieldType(fieldName));
+		}
+
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+
+		booleanQuery.addRequiredTerm(
+			ddmStructureFieldName,
+			StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
+
+		return new QueryFilter(booleanQuery);
+	}
+
 	@Override
 	public String encodeName(long ddmStructureId, String fieldName) {
 		return encodeName(ddmStructureId, fieldName, null);
@@ -311,35 +342,6 @@ public class DDMIndexerImpl implements DDMIndexer {
 		}
 
 		return sb.toString();
-	}
-
-	public BooleanQuery getBooleanQuery(
-		String ddmStructureFieldName, Serializable ddmStructureFieldValue,
-		Locale locale) throws Exception {
-
-		String[] ddmStructureFieldNameParts = StringUtil.split(
-			ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
-
-		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
-			GetterUtil.getLong(ddmStructureFieldNameParts[1]));
-
-		String fieldName = StringUtil.replaceLast(
-			ddmStructureFieldNameParts[2],
-			StringPool.UNDERLINE.concat(LocaleUtil.toLanguageId(locale)),
-			StringPool.BLANK);
-
-		if (structure.hasField(fieldName)) {
-			ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
-				ddmStructureFieldValue, structure.getFieldType(fieldName));
-		}
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-		booleanQuery.addRequiredTerm(
-			ddmStructureFieldName,
-			StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
-
-		return booleanQuery;
 	}
 
 	protected Fields toFields(

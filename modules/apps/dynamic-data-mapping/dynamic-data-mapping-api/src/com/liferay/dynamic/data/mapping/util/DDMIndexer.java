@@ -16,8 +16,8 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
@@ -41,6 +41,11 @@ public interface DDMIndexer {
 		Document document, DDMStructure ddmStructure,
 		DDMFormValues ddmFormValues);
 
+	public QueryFilter createFieldValueQueryFilter(
+			String ddmStructureFieldName, Serializable ddmStructureFieldValue,
+			Locale locale)
+		throws Exception;
+
 	public String encodeName(long ddmStructureId, String fieldName);
 
 	public String encodeName(
@@ -48,9 +53,5 @@ public interface DDMIndexer {
 
 	public String extractIndexableAttributes(
 		DDMStructure ddmStructure, DDMFormValues ddmFormValues, Locale locale);
-
-	public BooleanQuery getBooleanQuery(
-		String ddmStructureFieldName, Serializable ddmStructureFieldValue,
-		Locale locale) throws Exception;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.search;
 
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import javax.portlet.PortletRequest;
 
@@ -29,5 +30,15 @@ public class TemplateSearchTerms extends TemplateDisplayTerms {
 		description = DAOParamUtil.getString(portletRequest, DESCRIPTION);
 		name = DAOParamUtil.getString(portletRequest, NAME);
 	}
+
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	private int _status = WorkflowConstants.STATUS_ANY;
 
 }

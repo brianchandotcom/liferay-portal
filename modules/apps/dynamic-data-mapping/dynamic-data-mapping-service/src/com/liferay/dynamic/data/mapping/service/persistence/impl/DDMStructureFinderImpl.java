@@ -101,6 +101,18 @@ public class DDMStructureFinderImpl
 	}
 
 	@Override
+	public int countByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return countByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true);
+	}
+
+	@Override
 	public int filterCountByKeywords(
 		long companyId, long[] groupIds, long classNameId, String keywords,
 		int status) {
@@ -120,6 +132,32 @@ public class DDMStructureFinderImpl
 		return filterCountByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
 			DDMStructureConstants.TYPE_DEFAULT, status, andOperator);
+	}
+
+	@Override
+	public int filterCountByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return filterCountByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true);
+	}
+
+	@Override
+	public List<DDMStructure> filterFindByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status,
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return filterFindByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true, start, end,
+			orderByComparator);
 	}
 
 	@Override
@@ -196,6 +234,20 @@ public class DDMStructureFinderImpl
 		return doFindByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
 			type, status, andOperator, start, end, orderByComparator, true);
+	}
+
+	@Override
+	public List<DDMStructure> findByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status,
+		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return findByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true, start, end,
+			orderByComparator);
 	}
 
 	@Override

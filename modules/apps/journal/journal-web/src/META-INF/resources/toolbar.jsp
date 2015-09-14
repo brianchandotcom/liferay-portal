@@ -26,62 +26,43 @@ boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisp
 boolean search = Validator.isNotNull(keywords) || advancedSearch;
 %>
 
-<div class="management-bar-container">
-	<liferay-frontend:management-bar
-		checkBoxCssClass="select-all-checkboxes"
-		includeCheckBox="<%= !user.isDefaultUser() %>"
-	>
-		<liferay-frontend:management-bar-buttons>
-			<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+<liferay-frontend:management-bar
+	includeCheckBox="<%= !user.isDefaultUser() %>"
+>
+	<liferay-frontend:management-bar-buttons>
+		<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
 
-			<c:if test="<%= !search %>">
-				<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
-			</c:if>
-		</liferay-frontend:management-bar-buttons>
+		<c:if test="<%= !search %>">
+			<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
+		</c:if>
+	</liferay-frontend:management-bar-buttons>
 
-		<liferay-frontend:management-bar-filters>
-			<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
-		</liferay-frontend:management-bar-filters>
-	</liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
 
-	<liferay-frontend:management-bar
-		checkBoxCssClass="select-all-checkboxes"
-		cssClass="management-bar-no-collapse"
-		id="actionsButtonContainer"
-		includeCheckBox="<%= !user.isDefaultUser() %>"
-	>
+	<liferay-frontend:management-bar-action-buttons>
+		<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
 
-		<liferay-frontend:management-bar-buttons>
-			<aui:a cssClass="btn infoPanelToggler" href="javascript:;" iconCssClass="icon-info-sign" />
+		<%
+		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
+		%>
 
-			<%
-			String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
-			%>
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' />
 
-			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' />
+		<%
+		taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'expireEntries'}); void(0);";
+		%>
 
-			<%
-			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'expireEntries'}); void(0);";
-			%>
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-time" />
 
-			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-time" />
+		<%
+		taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'moveEntries'}); void(0);";
+		%>
 
-			<%
-			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: 'moveEntries'}); void(0);";
-			%>
-
-			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-move" />
-		</liferay-frontend:management-bar-buttons>
-
-		<liferay-frontend:management-bar-filters>
-			<li>
-				<span class="management-bar-text">
-					<span class="selected-items-count"></span> <liferay-ui:message key="items-selected" />
-				</span>
-			</li>
-		</liferay-frontend:management-bar-filters>
-	</liferay-frontend:management-bar>
-</div>
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-move" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

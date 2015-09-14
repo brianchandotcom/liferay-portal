@@ -36,29 +36,22 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
-<div class="management-bar-container">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= true %>"
-	>
-		<liferay-frontend:management-bar-buttons>
-			<liferay-frontend:management-bar-display-buttons
-				displayStyleURL="<%= portletURL %>"
-				displayViews='<%= new String[] {"list"} %>'
-				selectedDisplayStyle="<%= displayStyle %>"
-			/>
-		</liferay-frontend:management-bar-buttons>
-	</liferay-frontend:management-bar>
+<liferay-frontend:management-bar
+	checkBoxContainerId="assetVocabulariesSearchContainer"
+	includeCheckBox="<%= true %>"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayStyleURL="<%= portletURL %>"
+			displayViews='<%= new String[]{"list"} %>'
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
-	<liferay-frontend:management-bar
-		cssClass="management-bar-no-collapse"
-		id="vocabulariesActionsButton"
-	>
-
-		<liferay-frontend:management-bar-buttons>
-			<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedVocabularies" />
-		</liferay-frontend:management-bar-buttons>
-	</liferay-frontend:management-bar>
-</div>
+	<liferay-frontend:management-bar-action-buttons>
+		<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedVocabularies" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<aui:input name="deleteVocabularyIds" type="hidden" />
@@ -210,16 +203,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 	var Util = Liferay.Util;
 
 	var form = $(document.<portlet:namespace />fm);
-
-	$('#<portlet:namespace />assetVocabulariesSearchContainer').on(
-		'click',
-		'input[type=checkbox]',
-		function() {
-			var hide = (Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
-
-			$('#<portlet:namespace />vocabulariesActionsButton').toggleClass('on', !hide);
-		}
-	);
 
 	$('#<portlet:namespace />deleteSelectedVocabularies').on(
 		'click',

@@ -91,40 +91,6 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					}
 					%>
 
-					<%
-					boolean customizableLayout = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isStagingGroup() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
-					boolean linkedLayout = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);
-					boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLinkActive() && SitesUtil.isLayoutModifiedSinceLastMerge(layout) && hasLayoutUpdatePermission;
-					boolean hasMessages = modifiedLayout || linkedLayout || customizableLayout;
-					%>
-
-					<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && hasMessages %>">
-						<li>
-							<liferay-ui:icon
-								iconCssClass="icon-info icon-monospaced"
-								id="infoButton"
-								linkCssClass="control-menu-icon"
-								url="javascript:;"
-							/>
-
-							<c:if test="<%= hasMessages %>">
-								<liferay-util:buffer var="infoContainer">
-									<%@ include file="/view_page_customization_bar.jspf" %>
-								</liferay-util:buffer>
-
-								<aui:script sandbox="<%= true %>">
-									$('#<portlet:namespace />infoButton').popover(
-										{
-											content: '<%= HtmlUtil.escapeJS(infoContainer) %>',
-											html: true,
-											placement: 'top'
-										}
-									);
-								</aui:script>
-							</c:if>
-						</li>
-					</c:if>
-
 					<c:if test="<%= !group.isControlPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
 						<li id="<portlet:namespace />toggleControls">
 							<liferay-ui:icon

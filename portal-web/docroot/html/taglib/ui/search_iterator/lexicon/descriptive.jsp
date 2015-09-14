@@ -125,7 +125,7 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 </ul>
 
 <c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_BOTTOM && paginate %>">
-	<div class="taglib-search-iterator-page-iterator-bottom">
+	<div class="taglib-search-iterator-page-iterator-bottom <%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %>">
 		<liferay-ui:search-paginator id='<%= id + "PageIteratorBottom" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />
 	</div>
 </c:if>

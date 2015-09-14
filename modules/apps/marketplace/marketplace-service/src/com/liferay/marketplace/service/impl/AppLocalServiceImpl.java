@@ -255,15 +255,15 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	public List<App> getInstalledApps(String category) {
 		List<App> apps = appPersistence.findByCategory(category);
 
-		List<App> installedMarketplaceApps = new ArrayList<>();
+		List<App> installedApps = new ArrayList<>(apps.size());
 
 		for (App app : apps) {
 			if (app.isInstalled()) {
-				installedMarketplaceApps.add(app);
+				installedApps.add(app);
 			}
 		}
 
-		return installedMarketplaceApps;
+		return installedApps;
 	}
 
 	@Override

@@ -108,10 +108,10 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 
 		<div class="<%= (entry != null) ? "entry-body " : StringPool.BLANK %> row">
 			<div id="<portlet:namespace />editSection">
-				<portlet:actionURL name="/blogs/upload_temp_image" var="uploadTempImageURL" />
+				<portlet:actionURL name="/blogs/upload_cover_image" var="uploadCoverImageURL" />
 
 				<div class="lfr-blogs-cover-image-selector">
-					<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE) %>" paramName="coverImageFileEntry" uploadURL="<%= uploadTempImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+					<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" paramName="coverImageFileEntry" uploadURL="<%= uploadCoverImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 				</div>
 
 				<aui:input name="coverImageCaption" type="hidden" />

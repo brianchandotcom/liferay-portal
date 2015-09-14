@@ -34,6 +34,14 @@ page import="com.liferay.portal.ContactNameException" %><%@
 page import="com.liferay.portal.CookieNotSupportedException" %><%@
 page import="com.liferay.portal.DuplicateOpenIdException" %><%@
 page import="com.liferay.portal.EmailAddressException" %><%@
+page import="com.liferay.portal.GroupFriendlyURLException" %><%@
+page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+page import="com.liferay.portal.kernel.captcha.CaptchaConfigurationException" %><%@
+page import="com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException" %><%@
+page import="com.liferay.portal.kernel.captcha.CaptchaTextException" %><%@
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.NoSuchCountryException" %><%@
 page import="com.liferay.portal.NoSuchListTypeException" %><%@
 page import="com.liferay.portal.NoSuchRegionException" %><%@
@@ -65,12 +73,17 @@ page import="com.liferay.portal.kernel.util.PropsKeys" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.model.CompanyConstants" %><%@
+page import="com.liferay.portal.model.Contact" %><%@
+page import="com.liferay.portal.model.User" %><%@
 page import="com.liferay.portal.security.auth.AuthException" %><%@
 page import="com.liferay.portal.security.auth.FullNameDefinition" %><%@
 page import="com.liferay.portal.security.auth.FullNameDefinitionFactory" %><%@
+page import="com.liferay.portal.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.security.auth.ScreenNameValidator" %><%@
 page import="com.liferay.portal.security.auth.ScreenNameValidatorFactory" %><%@
+page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PortletCategoryKeys" %><%@
 page import="com.liferay.portal.util.PortletKeys" %><%@
@@ -82,6 +95,9 @@ page import="com.liferay.util.ContentUtil" %>
 page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
+
+<%@ page import="java.util.Calendar" %><%@ 
+page import="java.util.Date" %>
 
 <portlet:defineObjects />
 

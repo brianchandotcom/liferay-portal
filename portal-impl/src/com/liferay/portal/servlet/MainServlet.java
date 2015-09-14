@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
-import com.liferay.portal.kernel.servlet.ProtectedServletRequest;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
@@ -66,8 +65,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.server.capabilities.ServerCapabilitiesUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -482,20 +479,6 @@ public class MainServlet extends ActionServlet {
 
 		String remoteUser = getRemoteUser(request, userId);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Protect request");
-		}
-
-		request = protectRequest(request, remoteUser);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Set principal");
-		}
-
-		String password = getPassword(request);
-
-		setPrincipal(companyId, userId, remoteUser, password);
-
 		try {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -713,10 +696,6 @@ public class MainServlet extends ActionServlet {
 
 	protected long getCompanyId(HttpServletRequest request) {
 		return PortalInstances.getCompanyId(request);
-	}
-
-	protected String getPassword(HttpServletRequest request) {
-		return PortalUtil.getUserPassword(request);
 	}
 
 	protected String getRemoteUser(HttpServletRequest request, long userId) {
@@ -1076,12 +1055,7 @@ public class MainServlet extends ActionServlet {
 			return userId;
 		}
 
-		if (PropsValues.PORTAL_JAAS_ENABLE) {
-			userId = JAASHelper.getJaasUserId(companyId, remoteUser);
-		}
-		else {
-			userId = GetterUtil.getLong(remoteUser);
-		}
+		userId = GetterUtil.getLong(remoteUser);
 
 		EventsProcessorUtil.process(
 			PropsKeys.LOGIN_EVENTS_PRE, PropsValues.LOGIN_EVENTS_PRE, request,
@@ -1340,18 +1314,6 @@ public class MainServlet extends ActionServlet {
 		startupAction.run(null);
 	}
 
-	protected HttpServletRequest protectRequest(
-		HttpServletRequest request, String remoteUser) {
-
-		// WebSphere will not return the remote user unless you are
-		// authenticated AND accessing a protected path. Other servers will
-		// return the remote user for all threads associated with an
-		// authenticated user. We use ProtectedServletRequest to ensure we get
-		// similar behavior across all servers.
-
-		return new ProtectedServletRequest(request, remoteUser);
-	}
-
 	protected void registerPortalInitialized() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -1396,40 +1358,6 @@ public class MainServlet extends ActionServlet {
 
 	protected void setPortalInetSocketAddresses(HttpServletRequest request) {
 		PortalUtil.setPortalInetSocketAddresses(request);
-	}
-
-	protected void setPrincipal(
-		long companyId, long userId, String remoteUser, String password) {
-
-		if ((userId == 0) && (remoteUser == null)) {
-			return;
-		}
-
-		String name = String.valueOf(userId);
-
-		if (PropsValues.PORTAL_JAAS_ENABLE) {
-			long remoteUserId = 0;
-
-			try {
-				remoteUserId = JAASHelper.getJaasUserId(companyId, remoteUser);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e);
-				}
-			}
-
-			if (remoteUserId > 0) {
-				name = String.valueOf(remoteUserId);
-			}
-		}
-		else if (remoteUser != null) {
-			name = remoteUser;
-		}
-
-		PrincipalThreadLocal.setName(name);
-
-		PrincipalThreadLocal.setPassword(password);
 	}
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =

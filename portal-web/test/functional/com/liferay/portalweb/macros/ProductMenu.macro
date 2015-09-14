@@ -23,7 +23,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoControlPanelLocalization" summary="NNavigate to Product Menu > Control Panel > ${category} > ${portlet}.">
+	<command name="gotoControlPanelLocalization" summary="Navigate to Product Menu > Control Panel > ${category} > ${portlet}.">
 		<execute macro="ProductMenuHelper#gotoTab">
 			<var name="tab" value="${tab}" />
 		</execute>

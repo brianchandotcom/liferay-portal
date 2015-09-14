@@ -49,6 +49,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
@@ -258,7 +259,8 @@ public class DDLRecordSearchTest {
 			_group);
 
 		DDMStructureTestHelper ddmStructureTestHelper =
-			new DDMStructureTestHelper(_group);
+			new DDMStructureTestHelper(
+				PortalUtil.getClassNameId(DDLRecordSet.class), _group);
 
 		DDMStructure ddmStructure = ddmStructureTestHelper.addStructure(
 			createDDMForm(), StorageType.JSON.toString());

@@ -42,6 +42,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
@@ -131,7 +132,8 @@ public class JournalArticleScheduledTest {
 			groupId, JournalArticle.class.getName(), ddmForm);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			groupId, ddmStructure.getStructureId());
+			groupId, ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		Calendar displayDateCalendar = getCalendar(displayDate, when);
 

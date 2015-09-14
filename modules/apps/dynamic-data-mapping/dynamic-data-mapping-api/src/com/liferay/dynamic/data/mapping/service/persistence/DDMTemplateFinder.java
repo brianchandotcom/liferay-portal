@@ -32,6 +32,10 @@ public interface DDMTemplateFinder {
 
 	public int countByG_SC(long groupId, long structureClassNameId);
 
+	public int countByC_G_C_C_R_T_M(long companyId, long[] groupIds,
+		long classNameId, long classPK, long resourceClassNameId,
+		java.lang.String type, java.lang.String mode);
+
 	public int countByC_G_C_C_R_N_D_T_M_L(long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
 		java.lang.String name, java.lang.String description,
@@ -55,6 +59,22 @@ public interface DDMTemplateFinder {
 		java.lang.String[] names, java.lang.String[] descriptions,
 		java.lang.String[] types, java.lang.String[] modes,
 		java.lang.String[] languages, boolean andOperator);
+
+	public int filterCountByC_G_C_C_R_T_M(long companyId, long[] groupIds,
+		long classNameId, long classPK, long resourceClassNameId,
+		java.lang.String type, java.lang.String mode);
+
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_T_M(
+		long companyId, long[] groupIds, long classNameId, long classPK,
+		long resourceClassNameId, java.lang.String type, java.lang.String mode,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
+
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_T_M(
+		long companyId, long[] groupIds, long classNameId, long classPK,
+		long resourceClassNameId, java.lang.String type, java.lang.String mode,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
 	public int filterCountByKeywords(long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,

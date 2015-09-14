@@ -60,13 +60,11 @@ page import="com.liferay.dynamic.data.mapping.service.DDMStructureVersionService
 page import="com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMTemplateServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.service.DDMTemplateVersionServiceUtil" %><%@
-page import="com.liferay.dynamic.data.mapping.service.permission.DDMPermission" %><%@
 page import="com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission" %><%@
 page import="com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission" %><%@
 page import="com.liferay.dynamic.data.mapping.storage.StorageType" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMDisplay" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMDisplayRegistryUtil" %><%@
-page import="com.liferay.dynamic.data.mapping.util.DDMPermissionHandler" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMTemplateHelperUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationKeys" %><%@
@@ -161,7 +159,6 @@ boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 
 DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
 
-DDMPermissionHandler ddmPermissionHandler = ddmDisplay.getDDMPermissionHandler();
 String scopeAvailableFields = ddmDisplay.getAvailableFields();
 long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 String scopeStorageType = ddmDisplay.getStorageType();

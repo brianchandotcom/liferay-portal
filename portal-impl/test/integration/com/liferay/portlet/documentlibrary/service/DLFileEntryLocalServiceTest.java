@@ -429,7 +429,7 @@ public class DLFileEntryLocalServiceTest {
 		throws Exception {
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), DLFileEntry.class.getName(), "0",
+			_group.getGroupId(), DLFileEntryMetadata.class.getName(), "0",
 			createDDMForm(), LocaleUtil.US, serviceContext);
 
 		DLFileEntryType dlFileEntryType =

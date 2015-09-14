@@ -111,7 +111,8 @@ public class JournalConverterUtilTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_ddmStructureTestHelper = new DDMStructureTestHelper(_group);
+		_ddmStructureTestHelper = new DDMStructureTestHelper(
+			PortalUtil.getClassNameId(JournalArticle.class), _group);
 
 		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
 

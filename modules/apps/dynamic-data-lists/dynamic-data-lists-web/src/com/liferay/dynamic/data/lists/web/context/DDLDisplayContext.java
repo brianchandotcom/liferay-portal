@@ -23,11 +23,9 @@ import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.service.permission.DDMPermission;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistryUtil;
-import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -144,7 +142,7 @@ public class DDLDisplayContext {
 			_portletPreferences, _renderRequest, "editable", true);
 	}
 
-	public boolean isShowAddDDMTemplateIcon() {
+	public boolean isShowAddDDMTemplateIcon() throws PortalException {
 		if (_hasAddDDMTemplatePermission != null) {
 			return _hasAddDDMTemplatePermission;
 		}
@@ -157,12 +155,10 @@ public class DDLDisplayContext {
 			return _hasAddDDMTemplatePermission;
 		}
 
-		DDMPermissionHandler ddmPermissionHandler = getDDMPermissionHandler();
-
-		_hasAddDDMTemplatePermission = DDMPermission.contains(
-			getPermissionChecker(), getScopeGroupId(),
-			ddmPermissionHandler.getResourceName(getStructureTypeClassNameId()),
-			ddmPermissionHandler.getAddTemplateActionId());
+		_hasAddDDMTemplatePermission =
+			DDMTemplatePermission.containsAddTemplatePermission(
+				getPermissionChecker(), getScopeGroupId(),
+				getStructureTypeClassNameId(), getStructureTypeClassNameId());
 
 		return _hasAddDDMTemplatePermission;
 	}
@@ -293,12 +289,6 @@ public class DDLDisplayContext {
 	protected DDMDisplay getDDMDisplay() {
 		return DDMDisplayRegistryUtil.getDDMDisplay(
 			DDLPortletKeys.DYNAMIC_DATA_LISTS);
-	}
-
-	protected DDMPermissionHandler getDDMPermissionHandler() {
-		DDMDisplay ddmDisplay = getDDMDisplay();
-
-		return ddmDisplay.getDDMPermissionHandler();
 	}
 
 	protected Layout getLayout() {

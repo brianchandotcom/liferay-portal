@@ -35,10 +35,7 @@ import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.util.DDM;
-import com.liferay.dynamic.data.mapping.util.DDMDisplay;
-import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistryUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
-import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureIdComparator;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureModifiedDateComparator;
@@ -127,27 +124,6 @@ public class DDMImpl implements DDM {
 	public static final String TYPE_SELECT = "select";
 
 	@Override
-	public DDMDisplay getDDMDisplay(long classNameId) {
-		List<DDMDisplay> ddmDisplays = DDMDisplayRegistryUtil.getDDMDisplays();
-
-		for (DDMDisplay ddmDisplay : ddmDisplays) {
-			DDMPermissionHandler ddmPermissionHandler =
-				ddmDisplay.getDDMPermissionHandler();
-
-			if (ArrayUtil.contains(
-					ddmPermissionHandler.getResourceClassNameIds(),
-					classNameId)) {
-
-				return ddmDisplay;
-			}
-		}
-
-		throw new IllegalArgumentException(
-			"No DDM display registered for " +
-				PortalUtil.getClassName(classNameId));
-	}
-
-	@Override
 	public DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException {
 
@@ -233,13 +209,6 @@ public class DDMImpl implements DDM {
 			ddmStructure.getStructureId(), fieldNamespace, serviceContext);
 
 		return FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
-	}
-
-	@Override
-	public DDMPermissionHandler getDDMPermissionHandler(long classNameId) {
-		DDMDisplay ddmDisplay = getDDMDisplay(classNameId);
-
-		return ddmDisplay.getDDMPermissionHandler();
 	}
 
 	@Override

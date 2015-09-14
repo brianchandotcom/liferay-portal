@@ -14,38 +14,27 @@
 
 package com.liferay.portlet.display.template.web.ddm;
 
-import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
+import com.liferay.dynamic.data.mapping.util.DDMTemplatePermissionSupport;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.display.template.PortletDisplayTemplate;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
  */
-public class PortletDisplayTemplateDDMPermissionHandler
-	implements DDMPermissionHandler {
-
-	public static final long[] RESOURCE_CLASS_NAME_IDS = new long[] {
-		PortalUtil.getClassNameId(PortletDisplayTemplate.class)
-	};
-
-	@Override
-	public String getAddStructureActionId() {
-		throw new UnsupportedOperationException();
+@Component(
+	immediate = true,
+	property = {
+		"add.template.action.id=" + ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE,
+		"default.model.resource.name=true",
+		"model.class.name=com.liferay.portlet.display.template.PortletDisplayTemplate"
 	}
-
-	@Override
-	public String getAddTemplateActionId() {
-		return ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
-	}
-
-	@Override
-	public long[] getResourceClassNameIds() {
-		return RESOURCE_CLASS_NAME_IDS;
-	}
+)
+public class PortletDisplayTemplateDDMPermissionSupport
+	implements DDMTemplatePermissionSupport {
 
 	@Override
 	public String getResourceName(long classNameId) {

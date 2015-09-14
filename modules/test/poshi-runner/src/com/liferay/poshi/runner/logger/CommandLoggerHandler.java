@@ -50,6 +50,10 @@ public final class CommandLoggerHandler {
 		return _commandLogLoggerElement.toString();
 	}
 
+	public static int getErrorLinkId() {
+		return _errorLinkId - 1;
+	}
+
 	public static void logClassCommandName(String classCommandName) {
 		LoggerElement dividerLineLoggerElement = _getDividerLineLoggerElement(
 			classCommandName);

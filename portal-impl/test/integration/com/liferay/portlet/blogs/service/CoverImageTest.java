@@ -79,7 +79,7 @@ public class CoverImageTest {
 		ImageSelector coverImageSelector = new ImageSelector(
 			0, StringPool.BLANK, StringPool.BLANK);
 
-		updateBlogsEntry(entry.getEntryId(), coverImageSelector);
+		entry = updateBlogsEntry(entry.getEntryId(), coverImageSelector);
 
 		Assert.assertEquals(0, entry.getCoverImageFileEntryId());
 
@@ -99,7 +99,7 @@ public class CoverImageTest {
 
 		ImageSelector coverImageSelector = null;
 
-		updateBlogsEntry(entry.getEntryId(), coverImageSelector);
+		entry = updateBlogsEntry(entry.getEntryId(), coverImageSelector);
 
 		Assert.assertEquals(
 			coverImageFileEntry.getFileEntryId(),
@@ -224,7 +224,7 @@ public class CoverImageTest {
 			PortletFileRepositoryUtil.getPortletFileEntry(
 				entry.getCoverImageFileEntryId());
 
-		updateBlogsEntry(entry.getEntryId(), "image2.jpg");
+		entry = updateBlogsEntry(entry.getEntryId(), "image2.jpg");
 
 		FileEntry finalCoverImageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(

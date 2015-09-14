@@ -252,6 +252,21 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<App> getInstalledApps(String category) {
+		List<App> apps = appPersistence.findByCategory(category);
+
+		List<App> installedApps = new ArrayList<>(apps.size());
+
+		for (App app : apps) {
+			if (app.isInstalled()) {
+				installedApps.add(app);
+			}
+		}
+
+		return installedApps;
+	}
+
+	@Override
 	public void installApp(long remoteAppId) throws PortalException {
 		App app = appPersistence.findByRemoteAppId(remoteAppId);
 

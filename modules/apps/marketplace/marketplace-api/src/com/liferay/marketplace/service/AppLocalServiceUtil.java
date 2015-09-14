@@ -276,6 +276,11 @@ public class AppLocalServiceUtil {
 		return getService().getInstalledApps();
 	}
 
+	public static java.util.List<com.liferay.marketplace.model.App> getInstalledApps(
+		java.lang.String category) {
+		return getService().getInstalledApps(category);
+	}
+
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

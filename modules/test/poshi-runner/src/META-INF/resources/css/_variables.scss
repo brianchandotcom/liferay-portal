@@ -1,5 +1,5 @@
-/* ---------- Common Color & Fonts ---------- */
-// Font-stacks
+/* ---------- Common color & fonts ---------- */
+// Font stacks
 
 $monospaced-font: 'Source Code Pro', 'Menlo', 'Lucia Console', Monaco, monospace;
 
@@ -7,12 +7,7 @@ $general-font: 'Open Sans', 'Verdana', 'Geneva', sans-serif;
 
 // General colors
 
-$off-white: #F7F7F7;
-$off-white-subtle: #FBFBFB;
-
-$neutral: #9FA2A6;
-$neutral-light: #E0E0E0;
-$neutral-med: #CDCDCD;
+$black: #222;
 
 $grey: #617484;
 $grey-cool: #9AA8B1;
@@ -21,11 +16,16 @@ $grey-light: #989DA9;
 $grey-lighter: #AEBBC2;
 $grey-subtle: #E1E8EB;
 
+$neutral: #9FA2A6;
+$neutral-light: #E0E0E0;
+$neutral-med: #CDCDCD;
+
+$off-white: #F7F7F7;
+$off-white-subtle: #FBFBFB;
+
 $failed-color: #FF8787;
 $passed-color: #00FEA3;
 $pending-color: #FFFA89;
-
-$black: #222;
 
 /* ---------- Syntax highlight variables ---------- */
 
@@ -47,11 +47,10 @@ $param-value-color: #8B95A0;
 
 // Xml-log
 
+$body-bg-color: $off-white;
 $body-font-size: 11px;
 $body-letter-spacing: 0.06em;
 $body-line-height: 2.2;
-
-$body-bg-color: $off-white;
 
 $xml-log-default-text-color: $grey;
 
@@ -67,11 +66,11 @@ $macro-child-container-box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.04), in
 // Command-logger mode
 
 $line-container-bg-color: $off-white;
-$line-container-current-scope-bg-color: darken($off-white, 1);
 
 $line-container-box-shadow: -2px 0 0 0 rgba(0, 0, 0, 0.03), -1px 0 1px 0 rgba(0, 0, 0, 0.08);
 $line-container-box-shadow-hover: 0 1px 4px 1px rgba(0, 0, 0, 0.04), -1px 1px 3px 1px rgba(0, 0, 0, 0.1);
 
+$line-container-current-scope-bg-color: darken($off-white, 1);
 $line-container-current-scope-border-box-shadow: inset -1px 0 1px 0 $neutral;
 
 $line-group-hover-bg-color: transparentize($neutral-med, 0.88);
@@ -79,13 +78,13 @@ $line-group-hover-bg-color: transparentize($neutral-med, 0.88);
 // Error console & screenshot
 
 $console-bg-color: $off-white-subtle;
-
 $console-border-color: $neutral-light;
 $console-font-color: $neutral;
 
 $console-header-font-color: $neutral;
 
 $console-status-font-color: lighten($neutral, 2);
+
 $console-step-description-font-color: $grey-light;
 $console-step-font-color: $grey-cool;
 

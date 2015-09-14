@@ -41,15 +41,15 @@
 	z-index: 1;
 }
 
-.xml-log .line-container {
-	-webkit-filter: blur(0);
-	-webkit-font-smoothing: subpixel-antialiased;
-	padding-right: 2%;
-	position: relative;
-	width: 102%;
-}
-
 .xml-log {
+	.line-container {
+		-webkit-filter: blur(0);
+		-webkit-font-smoothing: subpixel-antialiased;
+		padding-right: 2%;
+		position: relative;
+		width: 102%;
+	}
+
 	.current-scope > .line-container:nth-child(2) {
 		&:before, &:after {
 			background-color: $neutral;
@@ -83,7 +83,7 @@
 	}
 
 	.transitioning .current-scope > .line-container:nth-child(2) {
-		&:before, &:after {
+		&:after, &:before {
 			display: none;
 			opacity: 0;
 		}
@@ -100,18 +100,20 @@
 	cursor: pointer;
 }
 
-.macro > .child-container {
-	background-color: $macro-child-container-bg-color;
-	box-shadow: $macro-child-container-box-shadow;
-	padding: 1px 0 1px 12px;
-
-	&.in {
-		margin: 40px 0 40px 24px;
+.macro {
+	&.hover {
+		background-color: $line-group-hover-bg-color;
 	}
-}
 
-.macro.hover {
-	background-color: $line-group-hover-bg-color;
+	> .child-container {
+		background-color: $macro-child-container-bg-color;
+		box-shadow: $macro-child-container-box-shadow;
+		padding: 1px 0 1px 12px;
+
+		&.in {
+			margin: 40px 0 40px 24px;
+		}
+	}
 }
 
 .child-container {
@@ -195,7 +197,7 @@
 /* ---------- Command-logger mode ---------- */
 
 .command-logger {
-	.pass, .fail, .pending {
+	.fail, .pass, .pending {
 		&:not(.current-scope) > .line-container {
 			box-shadow: $line-container-box-shadow;
 		}
@@ -220,7 +222,7 @@
 	}
 
 	.function, .macro {
-		&.pass, &.fail, &.pending {
+		&.fail, &.pass, &.pending {
 			&:not(.macro) > .line-container:hover, &.hover > .line-container {
 				-webkit-filter: blur(0);
 				background-color: $line-container-bg-color;
@@ -267,7 +269,7 @@
 			}
 		}
 
-		&.pass, &.pending, &.fail {
+		&.fail, &.pass, &.pending {
 			> .line-container:nth-child(2):before {
 				background-repeat: no-repeat;
 				background-size: calc(100vw - 32px);

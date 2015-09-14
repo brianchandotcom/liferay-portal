@@ -516,7 +516,8 @@ YUI.add(
 							function() {
 								if (collapsing) {
 									targetNode.addClass(CSS_COLLAPSE);
-									targetNode.removeAttribute('Style');
+
+									targetNode.removeAttribute('style');
 								}
 								else {
 									targetNode.height('auto');
@@ -536,8 +537,8 @@ YUI.add(
 						var screenshots = command.one('.screenshots');
 
 						if (screenshots) {
-							screenshots.removeAttribute('Class');
-							screenshots.addClass('screenshots-log');
+							screenshots.attr('class', 'screenshots-log');
+
 							consoleLog.append(screenshots);
 						}
 

@@ -316,8 +316,14 @@ public class UIItemsBuilder {
 			return;
 		}
 
-		PortletURL portletURL = _getRenderURL(
-			"/document_library/edit_file_entry");
+		PortletURL portletURL = null;
+
+		if (_fileShortcut == null) {
+			portletURL = _getRenderURL("/document_library/edit_file_entry");
+		}
+		else {
+			portletURL = _getRenderURL("/document_library/edit_file_shortcut");
+		}
 
 		portletURL.setParameter("backURL", _getCurrentURL());
 
@@ -749,8 +755,16 @@ public class UIItemsBuilder {
 
 		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 		portletURL.setParameter("redirect", _getCurrentURL());
-		portletURL.setParameter(
-			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+		if (_fileShortcut != null) {
+			portletURL.setParameter(
+				"fileShortcutId",
+				String.valueOf(_fileShortcut.getFileShortcutId()));
+		}
+		else {
+			portletURL.setParameter(
+				"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+		}
 
 		return portletURL;
 	}

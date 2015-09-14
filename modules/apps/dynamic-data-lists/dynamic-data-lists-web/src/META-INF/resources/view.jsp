@@ -45,6 +45,7 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
 				escapedModel="<%= true %>"
+				cssClass="entry-display-style"
 				keyProperty="recordSetId"
 				modelVar="recordSet"
 			>
@@ -69,7 +70,7 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 				/>
 			</liferay-ui:search-container-row>
 	
-			<liferay-ui:search-iterator />
+			<liferay-ui:search-iterator markupView="lexicon"/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

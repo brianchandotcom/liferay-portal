@@ -129,6 +129,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 				row.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 				row.setParameter("hasDeletePermission", String.valueOf(hasDeletePermission));
 				row.setParameter("hasUpdatePermission", String.valueOf(hasUpdatePermission));
+				row.setCssClass("entry-display-style");
 	
 				PortletURL rowURL = renderResponse.createRenderURL();
 	
@@ -165,7 +166,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			}
 			%>
 	
-			<liferay-ui:search-iterator />
+			<liferay-ui:search-iterator markupView="lexicon"/>
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

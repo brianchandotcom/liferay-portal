@@ -83,6 +83,18 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		TeamServiceUtil.deleteTeam(teamId);
 	}
 
+	public void deleteTeams(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] teamIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "teamIds"), 0L);
+
+		for (long teamId : teamIds) {
+			TeamServiceUtil.deleteTeam(teamId);
+		}
+	}
+
 	public void editTeam(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

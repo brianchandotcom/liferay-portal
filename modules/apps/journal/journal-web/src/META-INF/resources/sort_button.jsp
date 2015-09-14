@@ -40,55 +40,15 @@ else {
 }
 %>
 
-<li>
-	<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="orderByCol">
-		<aui:option label="display-date" selected='<%= orderByCol.equals("display-date") %>' />
-		<aui:option label="modified-date" selected='<%= orderByCol.equals("modified-date") %>' />
-	</aui:select>
-</li>
+<liferay-portlet:renderURL varImpl="portletURL">
+	<portlet:param name="navigation" value="<%= navigation %>" />
+	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+	<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
+</liferay-portlet:renderURL>
 
-<li class="<%= orderByType.equals("asc") ? "active" : StringPool.BLANK %>">
-	<portlet:renderURL var="orderByColAscURL">
-		<portlet:param name="navigation" value="<%= navigation %>" />
-		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
-		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
-		<portlet:param name="orderByType" value="asc" />
-	</portlet:renderURL>
-
-	<a class="btn hidden-xs" href="<%= orderByColAscURL %>"><span class="icon-caret-up icon-monospaced"></span></a>
-</li>
-
-<li class="<%= orderByType.equals("desc") ? "active" : StringPool.BLANK %>">
-	<portlet:renderURL var="orderByColDescURL">
-		<portlet:param name="navigation" value="<%= navigation %>" />
-		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
-		<portlet:param name="orderByCol" value="<%= orderByCol %>" />
-		<portlet:param name="orderByType" value="desc" />
-	</portlet:renderURL>
-
-	<a class="btn hidden-xs" href="<%= orderByColDescURL %>"><span class="icon-caret-down icon-monospaced"></span></a>
-</li>
-
-<aui:script>
-	<portlet:renderURL var="orderByTypeURL">
-		<portlet:param name="navigation" value="<%= navigation %>" />
-		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
-		<portlet:param name="orderByType" value="<%= orderByType %>" />
-	</portlet:renderURL>
-
-	var orderByCol = $('#<portlet:namespace />orderByCol');
-
-	orderByCol.on(
-		'change',
-		function(event) {
-			var uri = '<%= orderByTypeURL %>';
-
-			uri = Liferay.Util.addParams('<portlet:namespace />orderByCol=' + orderByCol.val(), uri);
-
-			location.href = uri;
-		}
-	);
-</aui:script>
+<liferay-frontend:management-bar-sort
+	orderByCol="<%= orderByCol %>"
+	orderByType="<%= orderByType %>"
+	orderColumns='<%= new String[]{"display-date", "modified-date"} %>'
+	portletURL="<%= portletURL %>"
+/>

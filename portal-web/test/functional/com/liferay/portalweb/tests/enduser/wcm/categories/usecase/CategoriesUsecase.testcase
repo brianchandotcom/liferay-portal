@@ -163,7 +163,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56956" name="AddCategorywithSiteRole" priority="4">
+	<command name="AddCategorywithSiteRole" priority="4">
 		<var name="pageName" value="Test Page Name" />
 		<var name="siteName" value="Test Site Name" />
 
@@ -457,7 +457,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56956" name="DeletePartialCategory" priority="4">
+	<command name="DeletePartialCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

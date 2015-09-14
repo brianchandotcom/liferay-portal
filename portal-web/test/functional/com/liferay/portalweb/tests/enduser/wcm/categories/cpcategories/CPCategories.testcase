@@ -649,7 +649,7 @@
 		<execute macro="Vocabulary#addVocabularyWithNullTitle" />
 	</command>
 
-	<command known-issues="LPS-56956" name="DeleteAssociatedAssetTypeViaVocabulary" priority="3">
+	<command name="DeleteAssociatedAssetTypeViaVocabulary" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

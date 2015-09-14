@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PRIORITY_SELECT</td>
-	<td>//select[contains(@id,'84') and contains(@id,'priority')]</td>
+	<td>//select[contains(@id,'AnnouncementsPortlet') and contains(@id,'priority')]</td>
 	<td></td>
 </tr>
 <tr>

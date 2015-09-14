@@ -65,7 +65,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56922" name="AddFrontPageTag" priority="4">
+	<command name="AddFrontPageTag" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

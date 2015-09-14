@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECYCLE_BIN_RESTORE_SUCCESS</td>
+	<td>//div[contains(@class,'alert-success')][2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECYCLE_BIN_SUCCESS</td>
 	<td>//div[contains(@class,'alert-success') and contains(@class,'trash')]</td>
 	<td></td>

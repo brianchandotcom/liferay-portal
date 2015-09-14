@@ -765,7 +765,7 @@
 			<var name="nodePort" value="${nodePort}" />
 			<var name="pageAccess" value="${pageAccess}" />
 			<var name="pageStaging" value="${pageStaging}" />
-			<var name="portletCategoryName" value="Publishing tools" />
+			<var name="portletCategoryName" value="Publishing Tools" />
 			<var name="portletName" value="${portletName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteNameURL" value="${siteNameURL}" />

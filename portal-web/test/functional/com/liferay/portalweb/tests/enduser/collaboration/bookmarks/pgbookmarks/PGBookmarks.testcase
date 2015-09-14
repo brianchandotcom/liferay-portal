@@ -367,7 +367,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#deletePG" />
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Bookmarks" />
+		</execute>
 	</command>
 
 	<command name="SearchFolderBookmark" priority="4">

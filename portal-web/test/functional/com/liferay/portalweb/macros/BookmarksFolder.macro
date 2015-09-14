@@ -33,8 +33,7 @@
 
 		<execute function="AssertClick" locator1="CPBookmarksAddsubfolder#SAVE_BUTTON" value1="Save" />
 
-		<execute function="AssertTextEquals" locator1="CPBookmarksAddsubfolder#NAME_FIELD_REQUIRED" value1="Name" />
-		<execute function="AssertTextEquals" locator1="CPBookmarksAddsubfolder#NAME_FIELD_REQUIRED" value1="Required" />
+		<execute function="AssertTextEquals" locator1="CPBookmarksAddsubfolder#NAME_FIELD_LABEL" value1="Name Required" />
 		<execute function="AssertTextEquals" locator1="CPBookmarksAddsubfolder#NAME_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 
@@ -129,7 +128,7 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
 		<execute function="Click" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -142,7 +141,7 @@
 		<var name="key_folderName" value="${folderNameEdit}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderNameEdit}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescriptionEdit}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescriptionEdit}" />
 	</command>
 
 	<command name="editSubfolderCP">
@@ -285,6 +284,6 @@
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderDescription}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_DESCRIPTION" value1="${folderDescription}" />
 	</command>
 </definition>

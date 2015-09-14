@@ -449,7 +449,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-58386" name="AssertNoEditLink" priority="4">
+	<command name="AssertNoEditLink" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Blogs Test Page" />
 			<var name="siteName" value="Site Name" />

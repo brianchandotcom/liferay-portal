@@ -787,7 +787,7 @@
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewSearchResultPG">
-			<var name="threadBody" value="MB Thread3 Message Body" />
+			<var name="threadBody" value="MB Thread1 Reply Body" />
 			<var name="threadSubject" value="MB Thread3 Message Subject" />
 			<var name="userName" value="Test Test" />
 		</execute>

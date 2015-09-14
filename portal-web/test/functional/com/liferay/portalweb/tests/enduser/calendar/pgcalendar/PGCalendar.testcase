@@ -146,9 +146,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#addRSVP">
+		<execute macro="CalendarEvent#viewApprovedRSVP">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 			<var name="rsvp" value="Yes" />
 		</execute>
 
@@ -630,10 +629,9 @@
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
-		<execute macro="CalendarEvent#add">
+		<execute macro="CalendarEvent#viewApprovedRSVP">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
-			<var name="pageName" value="${pageName}" />
+			<var name="rsvp" value="Yes" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -995,9 +993,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#addRSVP">
+		<execute macro="CalendarEvent#viewApprovedRSVP">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 			<var name="rsvp" value="Yes" />
 		</execute>
 
@@ -3549,9 +3546,8 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="CalendarEvent#addRSVP">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
+		<execute macro="CalendarEvent#viewApprovedRSVP">
+			<var name="eventTitle" value="${eventTitle}" />
 			<var name="rsvp" value="Yes" />
 		</execute>
 

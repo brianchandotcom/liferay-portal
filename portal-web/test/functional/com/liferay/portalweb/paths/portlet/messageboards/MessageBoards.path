@@ -166,6 +166,57 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--CATEGORY_TABLE_ADMIN-->
+<tr>
+	<td>CATEGORY_TABLE_ADMIN_ALL_CHECKBOX</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ADMIN_CHECKBOX</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[1]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ADMIN_CATEGORY</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[2]/a/span[@class='category-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ADMIN_CATEGORY_DESCRIPTION</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[2]/a/span[@class='category-description']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ADMIN_CATEGORY_SUBCATEGORY</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td/a[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ADMIN_CATEGORIES</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ADMIN_THREADS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ADMIN_POSTS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ADMIN_ACTIONS</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[contains(.,'${key_categoryName}')]/td/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_TABLE_ADMIN_ACTIONS_GENERIC</td>
+	<td>//div[contains(@id,'mbCategoriesSearchContainer')]//tr[1]//div/a</td>
+	<td></td>
+</tr>
 <!--QUESTION_CATEGORY_THREAD_TABLE-->
 <tr>
 	<td>QUESTION_CATEGORY_THREAD_TABLE_STATISTICS_VOTES</td>
@@ -322,6 +373,42 @@
 <tr>
 	<td>THREAD_TABLE_VIEWS</td>
 	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<!--THREAD_TABLE_ADMIN-->
+<tr>
+	<td>THREAD_TABLE_ADMIN_CHECKBOX</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ADMIN_THREAD</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[1]/a | //div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ADMIN_FLAG</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ADMIN_STARTED_BY</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ADMIN_POSTS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ADMIN_VIEWS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ADMIN_LAST_POST</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[7]//span | //div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]//span[contains (@class,'user-name')]</td>
 	<td></td>
 </tr>
 </tbody>

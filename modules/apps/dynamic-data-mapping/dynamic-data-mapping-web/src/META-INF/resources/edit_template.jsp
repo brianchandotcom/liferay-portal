@@ -145,7 +145,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 
 	<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />
 
-	<c:if test="<%= ddmDisplay.isVersioningEnabled() && templateVersion != null %>">
+	<c:if test="<%= (templateVersion != null) && ddmDisplay.isVersioningEnabled() %>">
 		<aui:workflow-status model="<%= DDMTemplate.class %>" status="<%= templateVersion.getStatus() %>" version="<%= templateVersion.getVersion() %>" />
 
 		<div class="template-history-toolbar" id="<portlet:namespace />templateHistoryToolbar"></div>

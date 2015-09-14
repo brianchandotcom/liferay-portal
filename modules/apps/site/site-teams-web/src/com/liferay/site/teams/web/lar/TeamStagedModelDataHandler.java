@@ -102,6 +102,11 @@ public class TeamStagedModelDataHandler
 	}
 
 	@Override
+	public Team fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
+		return TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	public List<Team> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 

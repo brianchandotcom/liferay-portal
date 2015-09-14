@@ -16,7 +16,6 @@ package com.liferay.portlet.blogs.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -549,7 +548,7 @@ public class BlogsEntryLocalServiceTest {
 
 	protected FileEntry getTempFileEntry(
 			long userId, ServiceContext serviceContext)
-		throws PortalException {
+		throws Exception {
 
 		ClassLoader classLoader = getClass().getClassLoader();
 
@@ -856,9 +855,6 @@ public class BlogsEntryLocalServiceTest {
 
 		return sb.toString();
 	}
-
-	private static final String _IMAGE_CROP_REGION =
-		"{\"height\":10,\"width\":10,\"x\":0,\"y\":0}";
 
 	@DeleteAfterTestRun
 	private Group _group;

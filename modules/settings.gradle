@@ -78,6 +78,7 @@ FileTree fileTree = fileTree(rootDir) {
 		include "apps/xsl-content/*/build.gradle"
 		include "core/*/build.gradle"
 		include "frontend/*/build.gradle"
+		include "frontend/frontend-themes/*/build.gradle"
 		include "portal-cache/portal-cache-ehcache-cluster/build.gradle"
 		include "portal-cache/portal-cache-ehcache-provider/build.gradle"
 		include "portal-cache/portal-cache-ehcache/build.gradle"

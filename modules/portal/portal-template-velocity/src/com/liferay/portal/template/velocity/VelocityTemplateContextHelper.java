@@ -86,7 +86,7 @@ public class VelocityTemplateContextHelper extends TemplateContextHelper {
 				"init",
 				themeDisplay.getPathContext() +
 					TemplateConstants.SERVLET_SEPARATOR +
-						"/_unstyled/templates/init.vm");
+						"/classic/templates/init.vm");
 		}
 
 		// Theme

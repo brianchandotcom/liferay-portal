@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.themes.web;
+package com.liferay.frontend.themes.admin.web;
 
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael Bradford
  */
 @Component(immediate = true)
-public class ThemesPortalWebResources implements PortalWebResources {
+public class AdminThemePortalWebResources implements PortalWebResources {
 
 	@Override
 	public String getContextPath() {
@@ -43,7 +43,7 @@ public class ThemesPortalWebResources implements PortalWebResources {
 
 	@Override
 	public String getResourceType() {
-		return PortalWebResourceConstants.RESOURCE_TYPE_THEMES;
+		return PortalWebResourceConstants.RESOURCE_TYPE_ADMIN_THEME;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class ThemesPortalWebResources implements PortalWebResources {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.themes.web)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.themes.admin.web)"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

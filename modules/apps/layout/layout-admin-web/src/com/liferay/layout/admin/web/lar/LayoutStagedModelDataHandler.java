@@ -660,9 +660,7 @@ public class LayoutStagedModelDataHandler
 
 		importAssets(portletDataContext, layout, importedLayout);
 
-		importLayoutFriendlyURLs(portletDataContext, layout);
-
-		deleteMissingLayoutFriendlyURLs(portletDataContext, importedLayout);
+		importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}
@@ -945,7 +943,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	protected void importLayoutFriendlyURLs(
-			PortletDataContext portletDataContext, Layout layout)
+			PortletDataContext portletDataContext, Layout layout,
+			Layout importedLayout)
 		throws Exception {
 
 		List<Element> layoutFriendlyURLElements =
@@ -963,6 +962,8 @@ public class LayoutStagedModelDataHandler
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, layoutFriendlyURL);
 		}
+
+		deleteMissingLayoutFriendlyURLs(portletDataContext, importedLayout);
 	}
 
 	protected void importLayoutIconImage(

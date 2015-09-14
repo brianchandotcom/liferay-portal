@@ -906,7 +906,18 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			long groupId, String name, String primKey, String actionId)
 		throws Exception {
 
-		ResourceActionsUtil.checkAction(name, actionId);
+		try {
+			ResourceActionsUtil.checkAction(name, actionId);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					name + " does not have guest permission to resource:" +
+					actionId);
+			}
+
+			return false;
+		}
 
 		if (name.indexOf(CharPool.PERIOD) != -1) {
 

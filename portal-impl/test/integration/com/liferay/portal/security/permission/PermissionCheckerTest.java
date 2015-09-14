@@ -30,8 +30,15 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+
+import java.util.List;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,6 +60,72 @@ public class PermissionCheckerTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		String loggerName = AdvancedPermissionChecker.class.getName();
+
+		_captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
+			loggerName, Level.ALL);
+	}
+
+	@Test
+	public void testHasPermission() throws Exception {
+		_user = UserTestUtil.addUser();
+
+		PermissionChecker permissionChecker = _getPermissionChecker(_user);
+
+		String exceptionPortledId =
+			"com_liferay_blogs_web_portlet_BlogsAdminPortlet";
+		String exceptionActionId = "ADD_TO_PAGE";
+
+		String nonExceptionPortledId = "11";
+		String nonExceptionActionId = "VIEW";
+
+		/** verify hasPermission does not throw exception **/
+		try {
+			Assert.assertFalse(
+				permissionChecker.hasPermission(
+					_group.getGroupId(), exceptionPortledId,
+					_group.getGroupId(), exceptionActionId));
+
+			Assert.assertFalse(
+				permissionChecker.hasPermission(
+					_group.getGroupId(), nonExceptionPortledId,
+					_group.getGroupId(), nonExceptionActionId));
+		}
+		catch (Exception e) {
+			Assert.fail();
+		}
+
+		/** verify hasPermission correct exception message **/
+
+		String exceptionErrorMessage =
+			exceptionPortledId +
+			" does not have guest permission to resource:" + exceptionActionId;
+
+		String nonExceptionErrorMessage =
+			nonExceptionPortledId +
+			" does not have guest permission to resource:" +
+			nonExceptionActionId;
+
+		boolean foundException = false;
+		boolean foundNonException = false;
+
+		List<LoggingEvent> loggingEvents = _captureAppender.getLoggingEvents();
+
+		for (LoggingEvent loggingEvent : loggingEvents) {
+			String message = loggingEvent.getRenderedMessage();
+
+			if (exceptionErrorMessage.equals(message)) {
+				foundException = true;
+			}
+
+			if (nonExceptionErrorMessage.equals(message)) {
+				foundNonException = true;
+			}
+		}
+
+		Assert.assertTrue(foundException);
+		Assert.assertFalse(foundNonException);
 	}
 
 	@Test
@@ -349,6 +422,8 @@ public class PermissionCheckerTest {
 
 		return PermissionCheckerFactoryUtil.create(user);
 	}
+
+	private CaptureAppender _captureAppender;
 
 	@DeleteAfterTestRun
 	private Group _group;

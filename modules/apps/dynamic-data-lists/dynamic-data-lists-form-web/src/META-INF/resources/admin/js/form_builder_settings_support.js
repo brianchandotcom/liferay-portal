@@ -119,7 +119,7 @@ AUI.add(
 
 				var settingsForm = instance.get('settingsForm');
 
-				settingsForm.clearValidationMessages();
+				settingsForm.hideErrorMessages();
 				settingsForm.clearValidationStatus();
 
 				if (callback) {

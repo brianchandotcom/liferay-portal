@@ -19,22 +19,22 @@ AUI.add(
 				instance._createSpinner();
 			},
 
-			clearValidationMessages: function() {
-				var instance = this;
-
-				instance.eachField(
-					function(field) {
-						field.clearValidationMessages();
-					}
-				);
-			},
-
 			clearValidationStatus: function() {
 				var instance = this;
 
 				instance.eachField(
 					function(field) {
 						field.clearValidationStatus();
+					}
+				);
+			},
+
+			hideErrorMessages: function() {
+				var instance = this;
+
+				instance.eachField(
+					function(field) {
+						field.hideErrorMessage();
 					}
 				);
 			},

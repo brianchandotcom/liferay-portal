@@ -89,28 +89,6 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					}
 					%>
 
-					<c:if test="<%= !group.isControlPanel() && userSetupComplete && (hasLayoutUpdatePermission || GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.PREVIEW_IN_DEVICE)) %>">
-						<portlet:renderURL var="previewContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-							<portlet:param name="mvcPath" value="/preview_panel.jsp" />
-						</portlet:renderURL>
-
-						<%
-						Map<String, Object> data = new HashMap<String, Object>();
-
-						data.put("panelURL", previewContentURL);
-						%>
-
-						<li>
-							<liferay-ui:icon
-								data="<%= data %>"
-								iconCssClass="icon-desktop icon-monospaced"
-								id="previewPanel"
-								label="preview"
-								linkCssClass="control-menu-icon"
-								url="javascript:;"
-							/>
-						</li>
-					</c:if>
 				</ul>
 			</div>
 		</div>

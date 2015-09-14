@@ -14,6 +14,8 @@
 
 package com.liferay.journal.lar;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
@@ -21,6 +23,8 @@ import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -30,6 +34,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -104,6 +109,8 @@ public class JournalFolderStagedModelDataHandler
 
 		Element folderElement = portletDataContext.getExportDataElement(folder);
 
+		exportFolderDDMStructures(portletDataContext, folder);
+
 		portletDataContext.addClassedModel(
 			folderElement, ExportImportPathUtil.getModelPath(folder), folder);
 	}
@@ -154,6 +161,8 @@ public class JournalFolderStagedModelDataHandler
 				folder.getDescription(), serviceContext);
 		}
 
+		importFolderDDMStructures(portletDataContext, folder, importedFolder);
+
 		portletDataContext.importClassedModel(folder, importedFolder);
 	}
 
@@ -176,6 +185,74 @@ public class JournalFolderStagedModelDataHandler
 		if (trashHandler.isRestorable(existingFolder.getFolderId())) {
 			trashHandler.restoreTrashEntry(
 				userId, existingFolder.getFolderId());
+		}
+	}
+
+	protected void exportFolderDDMStructures(
+			PortletDataContext portletDataContext, JournalFolder folder)
+		throws Exception {
+
+		List<DDMStructure> ddmStructures =
+			_journalFolderLocalService.getDDMStructures(
+				new long[] {
+					portletDataContext.getCompanyGroupId(),
+					portletDataContext.getScopeGroupId()
+				},
+				folder.getFolderId(),
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW
+			);
+
+		for (DDMStructure ddmStructure : ddmStructures) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, folder, ddmStructure,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
+		}
+	}
+
+	protected void importFolderDDMStructures(
+			PortletDataContext portletDataContext, JournalFolder folder,
+			JournalFolder importedFolder)
+		throws Exception {
+
+		List<Long> currentFolderDDMStructureIds = new ArrayList<>();
+
+		List<Element> referenceElements =
+			portletDataContext.getReferenceElements(folder, DDMStructure.class);
+
+		for (Element referenceElement : referenceElements) {
+			long referenceDDMStructureId = GetterUtil.getLong(
+				referenceElement.attributeValue("class-pk"));
+
+			Map<Long, Long> ddmStructureIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					DDMStructure.class);
+
+			long ddmStructureId = MapUtil.getLong(
+				ddmStructureIds, referenceDDMStructureId,
+				referenceDDMStructureId);
+
+			DDMStructure existingDDMStructure =
+				DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId);
+
+			if (existingDDMStructure == null) {
+				continue;
+			}
+
+			currentFolderDDMStructureIds.add(
+				existingDDMStructure.getStructureId());
+		}
+
+		if (!currentFolderDDMStructureIds.isEmpty()) {
+			importedFolder.setRestrictionType(
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW);
+
+			_journalFolderLocalService.updateJournalFolder(importedFolder);
+
+			_journalFolderLocalService.updateFolderDDMStructures(
+				importedFolder,
+				ArrayUtil.toLongArray(currentFolderDDMStructureIds));
 		}
 	}
 

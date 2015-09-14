@@ -245,8 +245,6 @@ public interface PropsKeys {
 
 	public static final String BLOGS_IMAGE_MAX_SIZE = "blogs.image.max.size";
 
-	public static final String BLOGS_IMAGE_SMALL_MAX_SIZE = "blogs.image.small.max.size";
-
 	public static final String BLOGS_LINKBACK_EXCERPT_LENGTH = "blogs.linkback.excerpt.length";
 
 	public static final String BLOGS_PAGE_ABSTRACT_LENGTH = "blogs.page.abstract.length";

@@ -62,7 +62,7 @@ import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryDescriptionException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
 import com.liferay.portlet.blogs.EntrySmallImageNameException;
-import com.liferay.portlet.blogs.EntrySmallImageSizeException;
+import com.liferay.portlet.blogs.EntrySmallImageScaleException;
 import com.liferay.portlet.blogs.EntryTitleException;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -335,7 +335,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof EntryDescriptionException ||
 					 e instanceof EntryDisplayDateException ||
 					 e instanceof EntrySmallImageNameException ||
-					 e instanceof EntrySmallImageSizeException ||
+					 e instanceof EntrySmallImageScaleException ||
 					 e instanceof EntryTitleException ||
 					 e instanceof FileSizeException ||
 					 e instanceof LiferayFileItemException ||

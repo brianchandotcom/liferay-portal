@@ -151,23 +151,18 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 				</div>
 
 				<div class="entry-abstract-wrapper">
-
-					<%
-					long smallImageMaxFileSize = PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE);
-					%>
-
 					<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
 						<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
 					</liferay-ui:error>
 
-					<liferay-ui:error exception="<%= EntrySmallImageSizeException.class %>">
-						<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(smallImageMaxFileSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+					<liferay-ui:error exception="<%= EntrySmallImageScaleException.class %>">
+						<liferay-ui:message key="an-error-occurred-while-scaling-the-abstract-image" />
 					</liferay-ui:error>
 
 					<h3><liferay-ui:message key="abstract" /></h3>
 
 					<p class="explanation">
-						<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE), locale) %>" key="an-abstract-is-a-brief-summary-of-a-blog-entry" />
+						<liferay-ui:message key="an-abstract-is-a-brief-summary-of-a-blog-entry" />
 					</p>
 
 					<div class="entry-abstract-options" id="<portlet:namespace />entryAbstractOptions">
@@ -180,7 +175,7 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 						<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
 
 						<div class="lfr-blogs-small-image-selector">
-							<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" maxFileSize="<%= smallImageMaxFileSize %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+							<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
 						</div>
 
 						<div class="entry-description">

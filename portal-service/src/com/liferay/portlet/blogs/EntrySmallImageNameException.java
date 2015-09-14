@@ -14,11 +14,14 @@
 
 package com.liferay.portlet.blogs;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class EntrySmallImageNameException extends PortalException {
 
 	public EntrySmallImageNameException() {

@@ -7,7 +7,7 @@
 			<then>
 				<execute function="Click" locator1="ProductMenu#CATEGORY_COLLAPSED" />
 
-				<execute function="AssertVisible" locator1="ProductMenu#CATEGORY_EXPANDED" />
+				<execute function="AssertElementPresent" locator1="ProductMenu#CATEGORY_EXPANDED" />
 			</then>
 		</if>
 	</command>

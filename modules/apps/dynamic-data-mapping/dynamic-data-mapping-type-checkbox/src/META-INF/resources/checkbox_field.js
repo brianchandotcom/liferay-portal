@@ -43,6 +43,16 @@ AUI.add(
 						return inputNode.attr('checked');
 					},
 
+					_renderErrorMessage: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						CheckboxField.superclass._renderErrorMessage.apply(instance, arguments);
+
+						container.all('.validation-message').appendTo(container);
+					},
+
 					_setValue: function(value) {
 						var instance = this;
 
@@ -56,6 +66,16 @@ AUI.add(
 						}
 
 						return value;
+					},
+
+					_showFeedback: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						CheckboxField.superclass._showFeedback.apply(instance, arguments);
+
+						container.all('.form-control-feedback').appendTo(container);
 					}
 				}
 			}

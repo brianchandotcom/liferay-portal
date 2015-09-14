@@ -101,6 +101,11 @@ public class TeamStagedModelDataHandler
 	}
 
 	@Override
+	public Team fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
+		return TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	public List<Team> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -119,8 +124,9 @@ public class TeamStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(team.getUserUuid());
 
-		Team existingTeam = TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(
-			team.getUuid(), portletDataContext.getScopeGroupId());
+		Team existingTeam = fetchExistingTeam(
+			team.getUuid(), portletDataContext.getScopeGroupId(),
+			team.getName());
 
 		Team importedTeam = null;
 
@@ -182,6 +188,21 @@ public class TeamStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(team, importedTeam);
+	}
+
+	protected Team fetchExistingTeam(String uuid, long groupId, String name) {
+		Team team = fetchStagedModelByUuidAndGroupId(uuid, groupId);
+
+		if (team != null) {
+			return team;
+		}
+
+		try {
+			return TeamLocalServiceUtil.getTeam(groupId, name);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
 	}
 
 	@Override

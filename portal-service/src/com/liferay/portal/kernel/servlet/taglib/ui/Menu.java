@@ -39,6 +39,10 @@ public class Menu extends BaseUIItem {
 		return _label;
 	}
 
+	public String getMarkupView() {
+		return _markupView;
+	}
+
 	public List<MenuItem> getMenuItems() {
 		return _menuItems;
 	}
@@ -49,10 +53,6 @@ public class Menu extends BaseUIItem {
 
 	public String getTriggerCssClass() {
 		return _triggerCssClass;
-	}
-
-	public String getView() {
-		return _view;
 	}
 
 	public boolean isExtended() {
@@ -95,6 +95,10 @@ public class Menu extends BaseUIItem {
 		_label = label;
 	}
 
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
 	public void setMenuItems(List<MenuItem> menuItems) {
 		_menuItems = menuItems;
 	}
@@ -123,15 +127,12 @@ public class Menu extends BaseUIItem {
 		_triggerCssClass = triggerCssClass;
 	}
 
-	public void setView(String view) {
-		_view = view;
-	}
-
 	private String _cssClass = StringPool.BLANK;
 	private String _direction = "left";
 	private boolean _extended = true;
 	private String _icon = StringPool.BLANK;
 	private String _label = StringPool.BLANK;
+	private String _markupView = StringPool.BLANK;
 	private List<MenuItem> _menuItems;
 	private String _message = StringPool.BLANK;
 	private boolean _scroll = true;
@@ -139,6 +140,5 @@ public class Menu extends BaseUIItem {
 	private boolean _showExpanded;
 	private boolean _showWhenSingleIcon;
 	private String _triggerCssClass = StringPool.BLANK;
-	private String _view = StringPool.BLANK;
 
 }

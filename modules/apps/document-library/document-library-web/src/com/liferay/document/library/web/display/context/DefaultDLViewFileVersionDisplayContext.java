@@ -153,7 +153,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		if (!_dlVisualizationHelper.getDisplayStyle().equals("icon")) {
-			menu.setView("lexicon");
+			menu.setMarkupView("lexicon");
 		}
 
 		return menu;

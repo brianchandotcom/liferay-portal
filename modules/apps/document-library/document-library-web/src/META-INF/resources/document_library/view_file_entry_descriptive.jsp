@@ -71,6 +71,7 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 	latestApprovedVersion="<%= fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) ? null : fileVersion.getVersion() %>"
 	latestApprovedVersionAuthor="<%= fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) ? null : fileVersion.getUserName() %>"
 	locked="<%= fileEntry.isCheckedOut() %>"
+	markupView="lexicon"
 	modifiedDate="<%= latestFileVersion.getModifiedDate() %>"
 	shortcut="<%= fileShortcut != null %>"
 	showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"
@@ -78,5 +79,4 @@ rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 	title="<%= latestFileVersion.getTitle() %>"
 	url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 	version="<%= latestFileVersion.getVersion() %>"
-	view="lexicon"
 />

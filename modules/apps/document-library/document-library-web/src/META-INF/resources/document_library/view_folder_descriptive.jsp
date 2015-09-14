@@ -36,9 +36,9 @@ rowURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
 	description="<%= folder.getDescription() %>"
 	displayStyle="descriptive"
 	folder="<%= true %>"
+	markupView="lexicon"
 	modifiedDate="<%= folder.getModifiedDate() %>"
 	showCheckbox="<%= DLFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>"
 	title="<%= folder.getName() %>"
 	url="<%= (rowURL != null) ? rowURL.toString() : null %>"
-	view="lexicon"
 />

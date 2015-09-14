@@ -22,7 +22,7 @@ Menu menu = (Menu)request.getAttribute("liferay-ui:menu:menu");
 List<MenuItem> menuItems = menu.getMenuItems();
 %>
 
-<liferay-ui:icon-menu cssClass="<%= menu.getCssClass() %>" direction="<%= menu.getDirection() %>" extended="<%= menu.isExtended() %>" icon="<%= menu.getIcon() %>" message="<%= menu.getMessage() %>" scroll="<%= menu.isScroll() %>" showArrow="<%= menu.isShowArrow() %>" showExpanded="<%= menu.isShowExpanded() %>" showWhenSingleIcon="<%= menu.isShowWhenSingleIcon() %>" triggerCssClass="<%= menu.getTriggerCssClass() %>" view="<%= menu.getView() %>">
+<liferay-ui:icon-menu cssClass="<%= menu.getCssClass() %>" direction="<%= menu.getDirection() %>" extended="<%= menu.isExtended() %>" icon="<%= menu.getIcon() %>" markupView="<%= menu.getMarkupView() %>" message="<%= menu.getMessage() %>" scroll="<%= menu.isScroll() %>" showArrow="<%= menu.isShowArrow() %>" showExpanded="<%= menu.isShowExpanded() %>" showWhenSingleIcon="<%= menu.isShowWhenSingleIcon() %>" triggerCssClass="<%= menu.getTriggerCssClass() %>">
 
 	<%
 	for (MenuItem menuItem : menuItems) {

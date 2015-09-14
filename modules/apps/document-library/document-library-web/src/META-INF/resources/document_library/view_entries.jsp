@@ -620,7 +620,7 @@ dlSearchContainer.setResults(results);
 					</c:choose>
 				</liferay-ui:search-container-row>
 
-				<liferay-ui:search-iterator displayStyle='<%= displayStyle.equals("descriptive") ? displayStyle : null %>' paginate="<%= false %>" searchContainer="<%= dlSearchContainer %>" view="lexicon" />
+				<liferay-ui:search-iterator displayStyle='<%= displayStyle.equals("descriptive") ? displayStyle : null %>' markupView="lexicon" paginate="<%= false %>" searchContainer="<%= dlSearchContainer %>" />
 			</liferay-ui:search-container>
 		</c:otherwise>
 	</c:choose>

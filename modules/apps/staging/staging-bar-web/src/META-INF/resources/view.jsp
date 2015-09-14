@@ -90,7 +90,7 @@ if (layout != null) {
 					</c:if>
 				</c:when>
 				<c:otherwise>
-					<a class='<%= ((layoutSetBranches != null) ? " active control-menu-icon sidenav-toggler" : StringPool.BLANK) %>' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" value="staging">
+					<a class='<%= ((layoutSetBranches != null) ? "active control-menu-icon sidenav-toggler" : StringPool.BLANK) %>' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" value="staging">
 						<span class="icon-fb-radio icon-monospaced"></span>
 						<span class="control-menu-icon-label">
 							<liferay-ui:message key="staging" />

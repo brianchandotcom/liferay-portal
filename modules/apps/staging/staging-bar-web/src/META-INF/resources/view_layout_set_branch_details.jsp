@@ -25,7 +25,6 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 
 <c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
 	<li class="control-menu-nav-item">
-
 		<label>
 			<liferay-ui:message key="site-pages-variation" />
 		</label>
@@ -65,7 +64,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 					}
 					%>
 
-					</liferay-ui:icon-menu>
+				</liferay-ui:icon-menu>
 			</c:otherwise>
 		</c:choose>
 

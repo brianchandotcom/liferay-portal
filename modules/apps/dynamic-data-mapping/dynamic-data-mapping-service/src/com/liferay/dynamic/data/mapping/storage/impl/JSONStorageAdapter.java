@@ -26,6 +26,7 @@ import com.liferay.dynamic.data.mapping.storage.BaseStorageAdapter;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
@@ -43,7 +44,13 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		validate(ddmFormValues);
+		boolean validationDisabled = GetterUtil.getBoolean(
+				serviceContext.getAttribute("validationDisabled"),
+				Boolean.FALSE);
+
+		if (!validationDisabled) {
+			validate(ddmFormValues);
+		}
 
 		long classNameId = PortalUtil.getClassNameId(
 			DDMContent.class.getName());

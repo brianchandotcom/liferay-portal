@@ -50,7 +50,7 @@
 
 		<var method="StringUtil#replace('${assetType}', ' ', '_')" name="assetTypeLocator" />
 		<var method="StringUtil#upperCase('${assetTypeLocator}')" name="assetTypeLocator" />
-		<execute function="AssertClick" locator1="WCEditWebContent#RELATED_ASSETS_SELECT" value1="${assetType}" />
+		<execute function="AssertClick" locator1="MenuItem#${assetTypeLocator}" value1="${assetType}" />
 	</command>
 
 	<command name="searchAdvancedRelatedAssetsCP">

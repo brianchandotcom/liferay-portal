@@ -17,7 +17,10 @@ package com.liferay.dynamic.data.mapping.util;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.util.StringPool;
+
+import java.io.Serializable;
 
 import java.util.Locale;
 
@@ -37,6 +40,11 @@ public interface DDMIndexer {
 	public void addAttributes(
 		Document document, DDMStructure ddmStructure,
 		DDMFormValues ddmFormValues);
+
+	public QueryFilter createFieldValueQueryFilter(
+			String ddmStructureFieldName, Serializable ddmStructureFieldValue,
+			Locale locale)
+		throws Exception;
 
 	public String encodeName(long ddmStructureId, String fieldName);
 

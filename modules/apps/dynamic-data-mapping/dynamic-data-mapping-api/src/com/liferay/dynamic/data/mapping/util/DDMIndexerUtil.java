@@ -17,7 +17,10 @@ package com.liferay.dynamic.data.mapping.util;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
+import java.io.Serializable;
 
 import java.util.Locale;
 
@@ -31,6 +34,15 @@ public class DDMIndexerUtil {
 		DDMFormValues ddmFormValues) {
 
 		getDDMIndexer().addAttributes(document, ddmStructure, ddmFormValues);
+	}
+
+	public static QueryFilter createFieldValueQueryFilter(
+			String ddmStructureFieldName, Serializable ddmStructureFieldValue,
+			Locale locale)
+		throws Exception {
+
+		return getDDMIndexer().createFieldValueQueryFilter(
+			ddmStructureFieldName, ddmStructureFieldValue, locale);
 	}
 
 	public static String encodeName(long ddmStructureId, String fieldName) {

@@ -1,85 +1,50 @@
 AUI.add(
-	'liferay-app-view-select',
+	'liferay-entry-select',
 	function(A) {
-		var History = Liferay.HistoryManager;
 		var Lang = A.Lang;
 		var Util = Liferay.Util;
 
 		var ATTR_CHECKED = 'checked';
 
-		var CSS_SELECTABLE = 'selectable';
+		var CSS_SELECTED_ITEMS_COUNT_SELECTOR = 'selected-items-count';
 
-		var CSS_SELECTED = 'selected';
-
-		var DISPLAY_STYLE_LIST = 'list';
-
-		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
-
-		var SELECTED_ITEMS_COUNT_SELECTOR = 'selected-items-count';
-
-		var STR_ALL_CHECKBOX = 'allRowIds';
+		var CSS_SELECT_ALL_CHECKBOXES = 'select-all-checkboxes';
 
 		var STR_CLICK = 'click';
 
-		var STR_DISPLAY_STYLE = 'displayStyle';
-
 		var STR_DOT = '.';
 
-		var STR_FOCUS = 'focus';
-
-		var STR_TOGGLE_ACTIONS_BUTTON = 'toggleActionsButton';
-
-		var STR_TR = 'tr';
-
-		var SELECTOR_SELECTABLE = STR_DOT + CSS_SELECTABLE;
-
-		var SELECTOR_TR_SELECTABLE = STR_TR + STR_DOT + CSS_SELECTABLE;
-
-		var WIN = A.config.win;
-
-		var AppViewSelect = A.Component.create(
+		var EntrySelect = A.Component.create(
 			{
 				ATTRS: {
-					checkBoxesId: {
-						validator: Array.isArray
-					},
-
-					displayStyle: {
+					actionsAllCheckBox: {
 						validator: Lang.isString
 					},
 
-					displayStyleCSSClass: {
+					actionButtonsBar: {
 						validator: Lang.isString
 					},
 
-					displayStyleToolbar: {
-						setter: A.one
+					allCheckBox: {
+						validator: Lang.isString
+					},
+
+					checkBoxContainer: {
+						validator: Lang.isString
 					},
 
 					itemsCountSelector: {
 						validator: Lang.isString,
-						value: SELECTED_ITEMS_COUNT_SELECTOR
+						value: CSS_SELECTED_ITEMS_COUNT_SELECTOR
 					},
 
-					portletContainerId: {
+					managementContainer: {
 						validator: Lang.isString
 					},
 
-					selectedCSSClass: {
+					selectAllCheckBoxes: {
 						validator: Lang.isString,
-						value: CSS_SELECTED
-					},
-
-					selectAllCheckbox: {
-						validator: Lang.isString
-					},
-
-					selector: {
-						validator: Lang.isString
-					},
-
-					toggleSelector: {
-						validator: Lang.isString
+						value: CSS_SELECT_ALL_CHECKBOXES
 					}
 				},
 
@@ -87,54 +52,31 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'liferay-app-view-select',
+				NAME: 'liferay-entry-select',
 
 				prototype: {
-					initializer: function(config) {
+					initializer: function() {
 						var instance = this;
 
-						instance._portletContainer = instance.byId(instance.get('portletContainerId'));
+						instance._actionsAllCheckBox = instance.byId(instance.get('actionsAllCheckBox'));
 
-						instance._toggleSelector = instance.get('toggleSelector');
+						instance._actionButtonsBar = instance.byId(instance.get('actionButtonsBar'));
 
-						instance._displayStyle = instance.ns(STR_DISPLAY_STYLE);
+						instance._allCheckBox = instance.byId(instance.get('allCheckBox'));
 
-						instance._displayStyleToolbar = instance.get(DISPLAY_STYLE_TOOLBAR);
+						instance._checkBoxContainer = instance.byId(instance.get('checkBoxContainer'));
 
-						instance._entriesContainer = instance.byId('entriesContainer');
+						instance._managementContainer = instance.byId(instance.get('managementContainer'));
 
-						if (instance.get('selectAllCheckbox')) {
-							instance._selectAllCheckbox = instance.all(instance.get('selectAllCheckbox'));
-						}
-						else {
-							instance._selectAllCheckbox = instance.byId(STR_ALL_CHECKBOX);
-						}
+						instance._managementContainer = instance.byId(instance.get('managementContainer'));
 
-						instance._selectedCSSClass = instance.get('selectedCSSClass');
+						instance._allCheckBoxes = instance._checkBoxContainer.all('input[type=checkbox]');
 
-						instance._selector = instance.get('selector');
+						instance._eventHandles = [];
 
-						instance._checkBoxesId = instance.get('checkBoxesId');
+						instance._initSelectAllCheckbox();
 
-						instance._displayStyleCSSClass = instance.get('displayStyleCSSClass');
-
-						instance._selectedItemsCount = 0;
-
-						instance._selectedItemsCountSelector = instance.get('itemsCountSelector');
-
-						instance._eventHandles = [
-							Liferay.on('liferay-app-view-move:dragStart', instance._onDragStart, instance)
-						];
-
-						instance._initHover();
-
-						if (themeDisplay.isSignedIn()) {
-							if (instance._selectAllCheckbox) {
-								instance._initSelectAllCheckbox();
-							}
-
-							instance._initToggleSelect();
-						}
+						instance._initToggleSelect();
 					},
 
 					destructor: function() {
@@ -143,31 +85,12 @@ AUI.add(
 						A.Array.invoke(instance._eventHandles, 'detach');
 					},
 
-					_getDisplayStyle: function(currentDisplayStyle, style) {
-						var instance = this;
-
-						var displayStyle = History.get(currentDisplayStyle) || instance.get(STR_DISPLAY_STYLE);
-
-						if (style) {
-							displayStyle = displayStyle == style;
-						}
-
-						return displayStyle;
-					},
-
-					_initHover: function() {
-						var instance = this;
-
-						instance._eventHandles.push(
-							instance._entriesContainer.on([STR_FOCUS, 'blur'], instance._toggleHovered, instance)
-						);
-					},
-
 					_initSelectAllCheckbox: function() {
 						var instance = this;
 
 						instance._eventHandles.push(
-							instance._selectAllCheckbox.on(STR_CLICK, instance._toggleEntriesSelection, instance)
+							instance._actionsAllCheckBox.on(STR_CLICK, A.rbind('_toogleBars', instance, false), instance),
+							instance._allCheckBox.on(STR_CLICK, A.rbind('_toogleBars', instance, true), instance)
 						);
 					},
 
@@ -175,153 +98,60 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandles.push(
-							instance._entriesContainer.delegate(
-								'change',
-								instance._onEntrySelectorChange,
-								STR_DOT + instance._selector,
-								instance
-							)
+							instance._allCheckBoxes.on(STR_CLICK, instance._toogleSelect, instance)
+						);
+					},
+
+					_getSelectedItemsCount: function() {
+						var instance = this;
+
+						var totalOn = 0;
+
+						instance._allCheckBoxes.each(
+							function(item, index) {
+								if (item.attr(ATTR_CHECKED)) {
+									totalOn++;
+								}
+							}
 						);
 
-						if (instance._toggleSelector) {
-							instance._eventHandles.push(
-								instance._entriesContainer.delegate(
-									STR_CLICK,
-									A.rbind('_onEntrySelectorChange', instance, false),
-									STR_DOT + instance._toggleSelector,
-									instance
-								)
-							);
-						}
+						return totalOn;
 					},
 
-					_onDragStart: function(event) {
+					_toogleSelect: function() {
 						var instance = this;
 
-						var node = event.node;
+						var hide = (Util.listCheckedExcept(instance._checkBoxContainer, instance._allCheckBox).length == 0);
 
-						if (!node.hasClass(instance._selectedCSSClass)) {
-							instance._unselectAllEntries();
+						instance._actionButtonsBar.toggleClass('on', !hide);
 
-							instance._toggleSelected(node);
-						}
+						var totalBoxes = instance._allCheckBoxes.size();
+						var totalOn = instance._getSelectedItemsCount();
+
+						instance._managementContainer.all(STR_DOT + instance.get('selectAllCheckBoxes')).attr(ATTR_CHECKED, totalBoxes == totalOn);
+
+						instance._managementContainer.all(STR_DOT + instance.get('itemsCountSelector')).html(totalOn);
 					},
 
-					_onEntrySelectorChange: function(event, preventUpdate) {
+					_toogleBars: function(event, checked) {
 						var instance = this;
 
-						if (preventUpdate === undefined) {
-							preventUpdate = true;
-						}
+						instance._allCheckBoxes.attr(ATTR_CHECKED, checked);
 
-						instance._toggleSelected(event.currentTarget, preventUpdate);
+						instance._actionButtonsBar.toggleClass('on', checked);
 
-						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
+						instance._managementContainer.all(STR_DOT + instance.get('selectAllCheckBoxes')).attr(ATTR_CHECKED, checked);
 
-						var selectedItemsCount = Util.checkAllBox(
-							instance._entriesContainer,
-							instance._checkBoxesId,
-							instance._selectAllCheckbox
-						);
-
-						instance._setSelectedItemsCount(selectedItemsCount);
-					},
-
-					_setSelectedItemsCount: function(itemsCount) {
-						var instance = this;
-
-						instance._selectedItemsCount = itemsCount;
-
-						instance.all(STR_DOT + instance._selectedItemsCountSelector).html(itemsCount);
-					},
-
-					_toggleEntriesSelection: function(event) {
-						var instance = this;
-
-						var selectAllCheckbox = event.currentTarget;
-
-						for (var i = 0; i < instance._checkBoxesId.length; i++) {
-							Util.checkAll(
-								instance._portletContainer,
-								instance._checkBoxesId[i],
-								selectAllCheckbox,
-								SELECTOR_TR_SELECTABLE
-							);
-						}
-
-						var selectedItemsCount = Util.checkAllBox(
-							instance._entriesContainer,
-							instance._checkBoxesId,
-							instance._selectAllCheckbox
-						);
-
-						instance._setSelectedItemsCount(selectedItemsCount);
-
-						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
-
-						var articleDisplayStyle = STR_DOT + instance._displayStyleCSSClass + SELECTOR_SELECTABLE;
-
-						if (instance._getDisplayStyle(instance._displayStyle, DISPLAY_STYLE_LIST)) {
-							articleDisplayStyle = SELECTOR_TR_SELECTABLE + STR_DOT + instance._displayStyleCSSClass;
-						}
-
-						var articleDisplayNodes = A.all(articleDisplayStyle);
-
-						articleDisplayNodes.toggleClass(instance._selectedCSSClass, instance._selectAllCheckbox.attr(ATTR_CHECKED));
-					},
-
-					_toggleHovered: function(event) {
-						var instance = this;
-
-						if (!instance._getDisplayStyle(instance._displayStyle, DISPLAY_STYLE_LIST)) {
-							var articleDisplayStyle = event.target.ancestor(STR_DOT + instance._displayStyleCSSClass);
-
-							if (articleDisplayStyle) {
-								articleDisplayStyle.toggleClass('hover', event.type == STR_FOCUS);
-							}
-						}
-					},
-
-					_toggleSelected: function(node, preventUpdate) {
-						var instance = this;
-
-						if (instance._getDisplayStyle(instance._displayStyle, DISPLAY_STYLE_LIST)) {
-							if (!preventUpdate) {
-								var input = node.one('input') || node;
-
-								input.attr(ATTR_CHECKED, !input.attr(ATTR_CHECKED));
-							}
-
-							node = node.ancestor(SELECTOR_TR_SELECTABLE) || node;
-						}
-						else {
-							node = node.ancestor(STR_DOT + instance._displayStyleCSSClass) || node;
-
-							if (!preventUpdate) {
-								var selectElement = node.one(STR_DOT + instance._selector);
-
-								selectElement.attr(ATTR_CHECKED, !selectElement.attr(ATTR_CHECKED));
-							}
-						}
-
-						node.toggleClass(instance._selectedCSSClass);
-					},
-
-					_unselectAllEntries: function() {
-						var instance = this;
-
-						instance._selectAllCheckbox.attr(instance._selectedCSSClass, false);
-
-						instance._toggleEntriesSelection();
+						instance._managementContainer.all(STR_DOT + instance.get('itemsCountSelector')).html(instance._getSelectedItemsCount());
 					}
 				}
 			}
 		);
 
-		Liferay.AppViewSelect = AppViewSelect;
+		Liferay.EntrySelect = EntrySelect;
 	},
 	'',
 	{
-		requires: ['liferay-app-view-move', 'liferay-history-manager', 'liferay-portlet-base']
+		requires: ['liferay-portlet-base']
 	}
 );

@@ -97,7 +97,32 @@ public class PortalPreferencesLocalServiceImpl
 	public PortletPreferences getPreferences(
 		long ownerId, int ownerType, String defaultPreferences) {
 
-		return doGetPreferences(ownerId, ownerType, defaultPreferences);
+		PortalPreferencesWrapper portalPreferencesWrapper =
+			PortalPreferencesWrapperCacheUtil.get(ownerId, ownerType);
+
+		if (portalPreferencesWrapper != null) {
+			return portalPreferencesWrapper.clone();
+		}
+
+		PortalPreferences portalPreferences =
+			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
+
+		if (portalPreferences == null) {
+			portalPreferences =
+				portalPreferencesLocalService.addPortalPreferences(
+					ownerId, ownerType, defaultPreferences);
+		}
+
+		PortalPreferencesImpl portalPreferencesImpl = new PortalPreferencesImpl(
+			portalPreferences, false);
+
+		portalPreferencesWrapper = new PortalPreferencesWrapper(
+			portalPreferencesImpl);
+
+		PortalPreferencesWrapperCacheUtil.put(
+			ownerId, ownerType, portalPreferencesWrapper);
+
+		return portalPreferencesWrapper.clone();
 	}
 
 	/**
@@ -158,37 +183,6 @@ public class PortalPreferencesLocalServiceImpl
 		portalPreferencesPersistence.update(portalPreferences);
 
 		return portalPreferences;
-	}
-
-	protected PortletPreferences doGetPreferences(
-		long ownerId, int ownerType, String defaultPreferences) {
-
-		PortalPreferencesWrapper portalPreferencesWrapper =
-			PortalPreferencesWrapperCacheUtil.get(ownerId, ownerType);
-
-		if (portalPreferencesWrapper != null) {
-			return portalPreferencesWrapper.clone();
-		}
-
-		PortalPreferences portalPreferences =
-			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
-
-		if (portalPreferences == null) {
-			portalPreferences =
-				portalPreferencesLocalService.addPortalPreferences(
-					ownerId, ownerType, defaultPreferences);
-		}
-
-		PortalPreferencesImpl portalPreferencesImpl = new PortalPreferencesImpl(
-			portalPreferences, false);
-
-		portalPreferencesWrapper = new PortalPreferencesWrapper(
-			portalPreferencesImpl);
-
-		PortalPreferencesWrapperCacheUtil.put(
-			ownerId, ownerType, portalPreferencesWrapper);
-
-		return portalPreferencesWrapper.clone();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

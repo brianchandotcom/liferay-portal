@@ -1,11 +1,11 @@
 dependencies {
 	compile group: "com.vividsolutions", name: "jts", transitive: false, version: "1.13"
-	compile group: "org.elasticsearch", name: "elasticsearch", version: "1.6.0"
-	compile group: "org.elasticsearch", name: "elasticsearch-analysis-icu", version: "2.5.0"
-	compile group: "org.elasticsearch", name: "elasticsearch-analysis-kuromoji", version: "2.5.0"
-	compile group: "org.elasticsearch", name: "elasticsearch-analysis-phonetic", version: "2.5.0"
-	compile group: "org.elasticsearch", name: "elasticsearch-analysis-smartcn", version: "2.5.0"
-	compile group: "org.elasticsearch", name: "elasticsearch-analysis-stempel", version: "2.5.0"
+	compile group: "org.elasticsearch", name: "elasticsearch", version: "1.7.2"
+	compile group: "org.elasticsearch", name: "elasticsearch-analysis-icu", version: "2.7.0"
+	compile group: "org.elasticsearch", name: "elasticsearch-analysis-kuromoji", version: "2.7.0"
+	compile group: "org.elasticsearch", name: "elasticsearch-analysis-phonetic", version: "2.7.0"
+	compile group: "org.elasticsearch", name: "elasticsearch-analysis-smartcn", version: "2.7.0"
+	compile group: "org.elasticsearch", name: "elasticsearch-analysis-stempel", version: "2.7.0"
 }
 
 liferay {

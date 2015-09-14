@@ -25,7 +25,8 @@ import javax.servlet.jsp.tagext.BodyTag;
 /**
  * @author Eudaldo Alonso
  */
-public class ManagementBarFiltersTag extends IncludeTag implements BodyTag {
+public class ManagementBarActionButtonsTag extends IncludeTag
+	implements BodyTag {
 
 	@Override
 	public int doEndTag() {
@@ -36,7 +37,7 @@ public class ManagementBarFiltersTag extends IncludeTag implements BodyTag {
 		BodyContent bodyContent = getBodyContent();
 
 		if (bodyContent != null) {
-			managementBarTag.setFilters(bodyContent.getString());
+			managementBarTag.setActionButtons(bodyContent.getString());
 		}
 
 		return EVAL_PAGE;
@@ -62,13 +63,21 @@ public class ManagementBarFiltersTag extends IncludeTag implements BodyTag {
 	}
 
 	@Override
+	protected boolean isCleanUpSetAttributes() {
+		return _CLEAN_UP_SET_ATTRIBUTES;
+	}
+
+	@Override
 	protected int processStartTag() throws Exception {
 		return EVAL_BODY_BUFFERED;
 	}
 
 	private static final String _ATTRIBUTE_NAMESPACE =
-		"liferay-frontend:management-bar-filters:";
+		"liferay-frontend:management-bar-action-buttons:";
 
-	private static final String _PAGE = "/management_bar_filters/page.jsp";
+	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
+
+	private static final String _PAGE =
+		"/management_bar_action_buttons/page.jsp";
 
 }

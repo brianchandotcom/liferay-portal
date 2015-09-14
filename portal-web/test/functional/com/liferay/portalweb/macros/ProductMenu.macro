@@ -111,11 +111,11 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesPublishingTools" summary="Navigate to Product Menu > Sites > Publishing tools > ${portlet}.">
+	<command name="gotoSitesPublishingTools" summary="Navigate to Product Menu > Sites > Publishing Tools > ${portlet}.">
 		<execute macro="ProductMenuHelper#gotoSites" />
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Publishing tools" />
+			<var name="category" value="Publishing Tools" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#gotoPortlet">

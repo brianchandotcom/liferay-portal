@@ -20,9 +20,13 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Project;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -121,12 +125,26 @@ public class NodeExtension {
 		return GradleUtil.toString(_nodeVersion);
 	}
 
+	public List<String> getNpmArgs() {
+		return GradleUtil.toStringList(_npmArgs);
+	}
+
 	public String getNpmUrl() {
 		return GradleUtil.toString(_npmUrl);
 	}
 
 	public String getNpmVersion() {
 		return GradleUtil.toString(_npmVersion);
+	}
+
+	public NodeExtension npmArgs(Iterable<?> npmArgs) {
+		GUtil.addToCollection(_npmArgs, npmArgs);
+
+		return this;
+	}
+
+	public NodeExtension npmArgs(Object ... npmArgs) {
+		return npmArgs(Arrays.asList(npmArgs));
 	}
 
 	public void setNodeDir(Object nodeDir) {
@@ -141,6 +159,16 @@ public class NodeExtension {
 		_nodeVersion = nodeVersion;
 	}
 
+	public void setNpmArgs(Iterable<?> npmArgs) {
+		_npmArgs.clear();
+
+		npmArgs(npmArgs);
+	}
+
+	public void setNpmArgs(Object ... npmArgs) {
+		setNpmArgs(Arrays.asList(npmArgs));
+	}
+
 	public void setNpmUrl(Object npmUrl) {
 		_npmUrl = npmUrl;
 	}
@@ -149,9 +177,11 @@ public class NodeExtension {
 		_npmVersion = npmVersion;
 	}
 
+
 	private Object _nodeDir;
 	private Object _nodeUrl;
 	private Object _nodeVersion = "0.12.6";
+	private final List<Object> _npmArgs = new ArrayList<>();
 	private Object _npmUrl;
 	private Object _npmVersion = "1.4.9";
 	private final Project _project;

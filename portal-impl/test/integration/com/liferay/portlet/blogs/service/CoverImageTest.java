@@ -136,7 +136,7 @@ public class CoverImageTest {
 	}
 
 	@Test
-	public void testOriginalCoverImageNotDeletedWhenNullCoverImageSelector()
+	public void testOriginalCoverImageNotDeletedWhenEmptyCoverImageSelector()
 		throws Exception {
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
@@ -148,7 +148,8 @@ public class CoverImageTest {
 
 		BlogsEntry entry = addBlogsEntry("image.jpg");
 
-		ImageSelector coverImageSelector = null;
+		ImageSelector coverImageSelector = new ImageSelector(
+			0, StringPool.BLANK, StringPool.BLANK);
 
 		updateBlogsEntry(entry.getEntryId(), coverImageSelector);
 
@@ -164,7 +165,7 @@ public class CoverImageTest {
 	}
 
 	@Test
-	public void testOriginalCoverImageNotDeletedWhenEmptyCoverImageSelector()
+	public void testOriginalCoverImageNotDeletedWhenNullCoverImageSelector()
 		throws Exception {
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
@@ -176,8 +177,7 @@ public class CoverImageTest {
 
 		BlogsEntry entry = addBlogsEntry("image.jpg");
 
-		ImageSelector coverImageSelector = new ImageSelector(
-			0, StringPool.BLANK, StringPool.BLANK);
+		ImageSelector coverImageSelector = null;
 
 		updateBlogsEntry(entry.getEntryId(), coverImageSelector);
 
@@ -286,20 +286,19 @@ public class CoverImageTest {
 			smallImageSelector, serviceContext);
 	}
 
-	protected BlogsEntry updateBlogsEntry(long entryId, String coverImageTitle)
-		throws Exception {
+	protected FileEntry getTempFileEntry(
+			long userId, String title, ServiceContext serviceContext)
+		throws PortalException {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
+		ClassLoader classLoader = getClass().getClassLoader();
 
-		FileEntry fileEntry = getTempFileEntry(
-			_user.getUserId(), coverImageTitle, serviceContext);
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portal/util/dependencies/test.jpg");
 
-		ImageSelector coverImageSelector = new ImageSelector(
-			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
-
-		return updateBlogsEntry(entryId, coverImageSelector);
+		return TempFileEntryUtil.addTempFileEntry(
+			serviceContext.getScopeGroupId(), userId,
+			BlogsEntry.class.getName(), title, inputStream,
+			MimeTypesUtil.getContentType(title));
 	}
 
 	protected BlogsEntry updateBlogsEntry(
@@ -320,19 +319,20 @@ public class CoverImageTest {
 			smallImageSelector, serviceContext);
 	}
 
-	protected FileEntry getTempFileEntry(
-			long userId, String title, ServiceContext serviceContext)
-		throws PortalException {
+	protected BlogsEntry updateBlogsEntry(long entryId, String coverImageTitle)
+		throws Exception {
 
-		ClassLoader classLoader = getClass().getClassLoader();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
 
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portal/util/dependencies/test.jpg");
+		FileEntry fileEntry = getTempFileEntry(
+			_user.getUserId(), coverImageTitle, serviceContext);
 
-		return TempFileEntryUtil.addTempFileEntry(
-			serviceContext.getScopeGroupId(), userId,
-			BlogsEntry.class.getName(), title, inputStream,
-			MimeTypesUtil.getContentType(title));
+		ImageSelector coverImageSelector = new ImageSelector(
+			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
+
+		return updateBlogsEntry(entryId, coverImageSelector);
 	}
 
 	private static final String _IMAGE_CROP_REGION =

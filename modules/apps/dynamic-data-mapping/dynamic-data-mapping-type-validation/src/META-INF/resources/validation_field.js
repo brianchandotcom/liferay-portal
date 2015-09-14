@@ -337,6 +337,7 @@ AUI.add(
 											instance.set('errorMessageValue', errorMessage);
 											instance.set('selectedType', type);
 											instance.set('selectedValidation', item.name);
+
 											instance.set(
 												'parameterValue',
 												instance.extractParameterValue(regex, expression)
@@ -355,16 +356,17 @@ AUI.add(
 
 						var newVal = currentTarget.val();
 
+						var selectedValidation = newVal;
+
 						if (currentTarget.hasClass('types-select')) {
 							instance.set('selectedType', newVal);
 
 							var validations = instance.get('validations');
 
-							instance.set('selectedValidation', validations[newVal][0].name);
+							selectedValidation = validations[newVal][0].name;
 						}
-						else {
-							instance.set('selectedValidation', newVal);
-						}
+
+						instance.set('selectedValidation', selectedValidation);
 
 						instance.set('value', instance.getValue());
 					}

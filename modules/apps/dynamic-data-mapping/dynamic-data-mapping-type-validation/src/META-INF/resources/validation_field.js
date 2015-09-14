@@ -6,6 +6,10 @@ AUI.add(
 		var ValidationField = A.Component.create(
 			{
 				ATTRS: {
+					errorMessageValue: {
+						value: ''
+					},
+
 					parameterValue: {
 						value: ''
 					},
@@ -21,6 +25,8 @@ AUI.add(
 
 					strings: {
 						value: {
+							enableValidation: Liferay.Language.get('enable-validation'),
+							errorMessageGoesHere: Liferay.Language.get('error-message-goes-here'),
 							number: Liferay.Language.get('number'),
 							text: Liferay.Language.get('text')
 						}
@@ -98,6 +104,10 @@ AUI.add(
 								}
 							]
 						}
+					},
+
+					value: {
+						setter: '_setValue'
 					}
 				},
 
@@ -128,9 +138,27 @@ AUI.add(
 					getTemplateContext: function() {
 						var instance = this;
 
+						var strings = instance.get('strings');
+
+						var selectedValidation = instance.get('selectedValidation');
+
+						var parameterMessage = '';
+
+						if (selectedValidation) {
+							parameterMessage = selectedValidation.parameterMessage;
+						}
+
+						var value = instance.get('value');
+
 						return A.merge(
 							ValidationField.superclass.getTemplateContext.apply(instance, arguments),
 							{
+								enableValidationMessage: strings.enableValidation,
+								enableValidationValue: !!value.expression,
+								errorMessagePlaceholder: strings.errorMessageGoesHere,
+								errorMessageValue: instance.get('errorMessageValue'),
+								parameterMessagePlaceholder: parameterMessage,
+								parameterValue: instance.get('parameterValue'),
 								typesOptions: instance._getTypesOptions(),
 								validationsOptions: instance._getValidatiionsOptions()
 							}
@@ -140,54 +168,30 @@ AUI.add(
 					getValue: function() {
 						var instance = this;
 
+						var expression = '';
+
 						var selectedValidation = instance.get('selectedValidation');
 
-						var root = instance.getRoot();
+						var validationEnabled = instance._getEnableValidationValue();
 
-						var nameField = root.getField('name');
+						if (selectedValidation && validationEnabled) {
+							var root = instance.getRoot();
 
-						var expression = Lang.sub(
-							selectedValidation.template,
-							{
-								name: nameField && nameField.getValue() || '',
-								parameter: instance.get('parameterValue')
-							}
-						);
+							var nameField = root.getField('name');
+
+							expression = Lang.sub(
+								selectedValidation.template,
+								{
+									name: nameField && nameField.getValue() || '',
+									parameter: instance._getParameterValue()
+								}
+							);
+						}
 
 						return {
 							errorMessage: instance._getMessageValue(),
 							expression: expression
 						};
-					},
-
-					setValue: function(expression) {
-						var instance = this;
-
-						instance.updateValues(expression);
-					},
-
-					updateValues: function(expression) {
-						var instance = this;
-
-						A.each(
-							instance.get('validations'),
-							function(validation, type) {
-								validation.forEach(
-									function(item) {
-										var regex = item.regex;
-
-										if (regex.test(expression)) {
-											instance.set('selectedType', type);
-											instance.set('selectedValidation', item.name);
-											instance.set(
-												'parameterValue',
-												instance.extractParameterValue(regex, expression)
-											);
-										}
-									}
-								);
-							}
-						);
 					},
 
 					_afterValidationContainerChange: function(event) {
@@ -208,8 +212,19 @@ AUI.add(
 						var container = instance.get('container');
 
 						instance._eventHandlers.push(
-							container.delegate('change', A.bind('_onChangeSelects', instance), 'select')
+							container.delegate('change', A.bind('_syncValidationUI', instance), '.enable-validation'),
+							container.delegate('change', A.bind('_syncValidationUI', instance), 'select')
 						);
+					},
+
+					_getEnableValidationValue: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var enableValidationNode = container.one('.enable-validation');
+
+						return !!enableValidationNode.attr('checked');
 					},
 
 					_getMessageValue: function() {
@@ -235,14 +250,22 @@ AUI.add(
 					_getSelectedValidation: function(val) {
 						var instance = this;
 
+						var selectedType = instance.get('selectedType');
+
 						var validations = instance.get('validations');
 
-						return A.Array.find(
-							validations[instance.get('selectedType')],
+						var selectedValidation = A.Array.find(
+							validations[selectedType],
 							function(validation) {
 								return validation.name === val;
 							}
 						);
+
+						if (!selectedValidation) {
+							selectedValidation = validations[selectedType][0];
+						}
+
+						return selectedValidation;
 					},
 
 					_getTypesOptions: function() {
@@ -275,19 +298,57 @@ AUI.add(
 					_getValidatiionsOptions: function() {
 						var instance = this;
 
+						var selectedValidation = instance.get('selectedValidation');
+
 						var validations = instance.get('validations');
 
 						return validations[instance.get('selectedType')].map(
 							function(validation) {
+								var status = '';
+
+								if (selectedValidation && selectedValidation.name === validation.name) {
+									status = 'selected';
+								}
+
 								return {
 									label: validation.label,
+									status: status,
 									value: validation.name
 								};
 							}
 						);
 					},
 
-					_onChangeSelects: function(event) {
+					_setValue: function(validation) {
+						var instance = this;
+
+						var errorMessage = validation.errorMessage;
+
+						var expression = validation.expression;
+
+						A.each(
+							instance.get('validations'),
+							function(validation, type) {
+								validation.forEach(
+									function(item) {
+										var regex = item.regex;
+
+										if (regex.test(expression)) {
+											instance.set('errorMessageValue', errorMessage);
+											instance.set('selectedType', type);
+											instance.set('selectedValidation', item.name);
+											instance.set(
+												'parameterValue',
+												instance.extractParameterValue(regex, expression)
+											);
+										}
+									}
+								);
+							}
+						);
+					},
+
+					_syncValidationUI: function(event) {
 						var instance = this;
 
 						var currentTarget = event.currentTarget;
@@ -305,35 +366,7 @@ AUI.add(
 							instance.set('selectedValidation', newVal);
 						}
 
-						instance.render();
-
-						instance._syncParameterNode();
-					},
-
-					_setParameterValue: function(value) {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var parameterNode = container.one('.parameter-input');
-
-						parameterNode.val(value);
-					},
-
-					_syncParameterNode: function() {
-						var instance = this;
-
-						var container = instance.get('container');
-
-						var parameterNode = container.one('.parameter-input');
-
-						var selectedValidation = instance.get('selectedValidation');
-
-						if (selectedValidation.parameterMessage) {
-							parameterNode.attr('placeholder', selectedValidation.parameterMessage);
-						}
-
-						parameterNode.toggle(!!selectedValidation.parameterMessage);
+						instance.set('value', instance.getValue());
 					}
 				}
 			}

@@ -90,7 +90,7 @@ AUI.add(
 						instance.set('errorMessage', errorMessage);
 					}
 					else {
-						instance.clearValidationMessages();
+						instance.hideErrorMessage();
 					}
 				}
 			},

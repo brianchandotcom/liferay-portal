@@ -467,6 +467,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		blogsEntryPersistence.remove(entry);
 
+		// Cover Image
+
+		PortletFileRepositoryUtil.deletePortletFileEntry(
+			entry.getCoverImageFileEntryId());
+
 		// Resources
 
 		resourceLocalService.deleteResource(

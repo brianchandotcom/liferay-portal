@@ -37,8 +37,6 @@
 	<command name="gotoSites">
 		<execute macro="ProductMenuHelper#openProductMenu" />
 
-		<execute macro="ProductMenuHelper#openProductMenu" />
-
 		<execute macro="ProductMenuHelper#gotoTab">
 			<var name="tab" value="Sites" />
 		</execute>

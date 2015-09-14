@@ -259,7 +259,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_DM</td>
+	<td>FOLDER</td>
 	<td>//a[@role='menuitem' and @title='Folder']</td>
 	<td></td>
 </tr>

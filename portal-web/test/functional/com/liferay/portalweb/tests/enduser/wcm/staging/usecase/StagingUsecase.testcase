@@ -247,7 +247,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-58386" name="EditPublishTemplate" priority="4">
+	<command name="EditPublishTemplate" priority="4">
 		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -759,7 +759,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-58386" name="StagingBlogs" priority="4">
+	<command name="StagingBlogs" priority="4">
 		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -2110,7 +2110,7 @@
 		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_UNAPPROVED" value1="Web Content Title is not approved." />
 	</command>
 
-	<command known-issues="LPS-58386" name="StagingLocalLiveLock" priority="4">
+	<command name="StagingLocalLiveLock" priority="4">
 		<execute macro="Page#gotoPublishingtools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />

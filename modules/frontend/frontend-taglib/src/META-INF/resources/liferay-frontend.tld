@@ -244,4 +244,29 @@
 		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarFiltersTag</tag-class>
 		<body-content>JSP</body-content>
 	</tag>
+	<tag>
+		<name>management-bar-sort</name>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.ManagementBarSortTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>orderColumns</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>orderByCol</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>orderByType</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>portletURL</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

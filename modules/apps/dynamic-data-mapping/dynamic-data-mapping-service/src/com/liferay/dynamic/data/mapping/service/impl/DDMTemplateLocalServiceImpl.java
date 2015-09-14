@@ -1400,7 +1400,7 @@ public class DDMTemplateLocalServiceImpl
 
 		int status = GetterUtil.getInteger(
 			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_DRAFT);
+			WorkflowConstants.STATUS_APPROVED);
 
 		templateVersion.setStatus(status);
 

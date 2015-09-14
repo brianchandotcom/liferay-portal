@@ -91,42 +91,6 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					}
 					%>
 
-					<%
-					boolean hasLayoutAddPermission = false;
-
-					if (layout.getParentLayoutId() == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-						hasLayoutAddPermission = GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ADD_LAYOUT);
-					}
-					else {
-						hasLayoutAddPermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.ADD_LAYOUT);
-					}
-					%>
-
-					<c:if test="<%= !group.isControlPanel() && userSetupComplete && (hasLayoutAddPermission || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
-						<portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-							<portlet:param name="mvcPath" value="/add_panel.jsp" />
-							<portlet:param name="stateMaximized" value="<%= String.valueOf(themeDisplay.isStateMaximized()) %>" />
-							<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
-						</portlet:renderURL>
-
-						<%
-						Map<String, Object> data = new HashMap<String, Object>();
-
-						data.put("panelURL", addURL);
-						%>
-
-						<li>
-							<liferay-ui:icon
-								data="<%= data %>"
-								iconCssClass="icon-plus icon-monospaced"
-								id="addPanel"
-								label="add"
-								linkCssClass="control-menu-icon"
-								url="javascript:;"
-							/>
-						</li>
-					</c:if>
-
 					<c:if test="<%= !group.isControlPanel() && userSetupComplete && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
 
 						<%

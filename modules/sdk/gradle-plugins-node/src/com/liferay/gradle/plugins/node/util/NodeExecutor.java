@@ -42,6 +42,16 @@ public class NodeExecutor {
 		_workingDir = _project.getProjectDir();
 	}
 
+	public NodeExecutor args(Iterable<?> args) {
+		GUtil.addToCollection(_args, args);
+
+		return this;
+	}
+
+	public NodeExecutor args(Object ... args) {
+		return args(Arrays.asList(args));
+	}
+
 	public ExecResult execute() {
 		return _project.exec(
 			new Action<ExecSpec>() {
@@ -83,7 +93,7 @@ public class NodeExecutor {
 	public void setArgs(Iterable<?> args) {
 		_args.clear();
 
-		GUtil.addToCollection(_args, args);
+		args(args);
 	}
 
 	public void setArgs(Object ... args) {

@@ -14,7 +14,6 @@
 
 package com.liferay.marketplace.store.web.portlet;
 
-import com.liferay.marketplace.store.web.constants.MarketplaceStoreWebKeys;
 import com.liferay.marketplace.store.web.oauth.util.OAuthManager;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
@@ -42,7 +41,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -70,14 +68,14 @@ public class RemoteMVCPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		PortletSession portletSession = actionRequest.getPortletSession();
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		OAuthService oAuthService = oAuthManager.getOAuthService();
 
 		Token requestToken = oAuthService.getRequestToken();
 
-		portletSession.setAttribute(
-			MarketplaceStoreWebKeys.OAUTH_REQUEST_TOKEN, requestToken);
+		oAuthManager.updateRequestToken(themeDisplay.getUser(), requestToken);
 
 		String redirect = oAuthService.getAuthorizationUrl(requestToken);
 
@@ -349,10 +347,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletSession portletSession = renderRequest.getPortletSession();
-
-		Token requestToken = (Token)portletSession.getAttribute(
-			MarketplaceStoreWebKeys.OAUTH_REQUEST_TOKEN);
+		Token requestToken = oAuthManager.getRequestToken(
+			themeDisplay.getUser());
 
 		OAuthService oAuthService = oAuthManager.getOAuthService();
 
@@ -361,8 +357,7 @@ public class RemoteMVCPortlet extends MVCPortlet {
 
 		oAuthManager.updateAccessToken(themeDisplay.getUser(), accessToken);
 
-		portletSession.removeAttribute(
-			MarketplaceStoreWebKeys.OAUTH_REQUEST_TOKEN);
+		oAuthManager.deleteRequestToken(themeDisplay.getUser());
 	}
 
 	protected OAuthManager oAuthManager;

@@ -15,6 +15,7 @@
 package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -28,7 +29,7 @@ public abstract class BaseCMISRepositoryDefiner extends BaseRepositoryDefiner {
 	public String getRepositoryTypeLabel(Locale locale) {
 		ClassLoader classLoader = getClass().getClassLoader();
 
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, classLoader);
 
 		return resourceBundle.getString(

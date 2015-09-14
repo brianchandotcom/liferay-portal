@@ -15,8 +15,8 @@
 package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -84,9 +84,8 @@ public class DefaultLayoutPrototypesUtil {
 			List<LayoutPrototype> layoutPrototypes, ClassLoader classLoader)
 		throws Exception {
 
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content.Language", LocaleUtil.getDefault(), classLoader,
-			UTF8Control.INSTANCE);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", LocaleUtil.getDefault(), classLoader);
 
 		String name = LanguageUtil.get(resourceBundle, nameKey);
 		String description = LanguageUtil.get(resourceBundle, descriptionKey);
@@ -105,8 +104,8 @@ public class DefaultLayoutPrototypesUtil {
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			resourceBundle = ResourceBundle.getBundle(
-				"content.Language", locale, classLoader, UTF8Control.INSTANCE);
+			resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, classLoader);
 
 			nameMap.put(locale, LanguageUtil.get(resourceBundle, nameKey));
 			descriptionMap.put(

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.language.UTF8Control;
+
 import java.text.MessageFormat;
 
 import java.util.Locale;
@@ -25,6 +27,20 @@ import java.util.ResourceBundle;
  * @author Neil Griffin
  */
 public class ResourceBundleUtil {
+
+	public static ResourceBundle getBundle(
+		String baseName, ClassLoader loader) {
+
+		return ResourceBundle.getBundle(
+			baseName, Locale.getDefault(), loader, UTF8Control.INSTANCE);
+	}
+
+	public static ResourceBundle getBundle(
+		String baseName, Locale locale, ClassLoader loader) {
+
+		return ResourceBundle.getBundle(
+			baseName, locale, loader, UTF8Control.INSTANCE);
+	}
 
 	public static String getString(
 		ResourceBundle resourceBundle, Locale locale, String key,

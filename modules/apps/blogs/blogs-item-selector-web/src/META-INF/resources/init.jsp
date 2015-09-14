@@ -34,6 +34,7 @@ page import="com.liferay.portal.kernel.search.Hits" %><%@
 page import="com.liferay.portal.kernel.search.SearchContext" %><%@
 page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil" %>
@@ -47,5 +48,5 @@ page import="java.util.ResourceBundle" %>
 <liferay-theme:defineObjects/>
 
 <%
-ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", locale);
+ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass().getClassLoader());
 %>

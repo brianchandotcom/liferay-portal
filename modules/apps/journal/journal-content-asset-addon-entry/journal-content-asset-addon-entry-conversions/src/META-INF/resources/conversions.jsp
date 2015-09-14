@@ -26,6 +26,7 @@
 <%@ page import="com.liferay.portal.kernel.util.Constants" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.portlet.documentlibrary.util.DLUtil" %>
@@ -42,7 +43,7 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 String extension = (String)request.getAttribute("extension");
 String viewMode = ParamUtil.getString(request, "viewMode");
 
-ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", locale);
+ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass().getClassLoader());
 %>
 
 <c:if test="<%= !viewMode.equals(Constants.PRINT) %>">

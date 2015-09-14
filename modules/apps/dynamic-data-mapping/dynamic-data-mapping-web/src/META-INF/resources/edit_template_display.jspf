@@ -49,7 +49,7 @@ if (Validator.isNotNull(scriptContent)) {
 								clazz = templateHandler.getClass();
 							}
 
-							ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", locale, clazz.getClassLoader());
+							ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, clazz.getClassLoader());
 
 							for (TemplateVariableGroup templateVariableGroup : templateVariableGroups.values()) {
 								if (templateVariableGroup.isEmpty()) {

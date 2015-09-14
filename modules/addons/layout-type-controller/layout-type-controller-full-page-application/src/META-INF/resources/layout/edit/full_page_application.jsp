@@ -22,7 +22,7 @@ if (selLayout != null) {
 	selectedPortletId = GetterUtil.getString(selLayout.getTypeSettingsProperty("fullPageApplicationPortlet"));
 }
 
-ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", themeDisplay.getLocale());
+ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", themeDisplay.getLocale(), getClass().getClassLoader());
 %>
 
 <aui:select label='<%= LanguageUtil.get(resourceBundle, "full-page-application") %>' name="TypeSettingsProperties--fullPageApplicationPortlet--" showEmptyOption="<%= true %>">

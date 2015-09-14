@@ -19,10 +19,10 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -195,14 +195,14 @@ public class DDMFormFactoryHelper {
 
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		try {
-			return ResourceBundle.getBundle(
+			return ResourceBundleUtil.getBundle(
 				getResourceBundleBaseName(_clazz), locale,
-				_clazz.getClassLoader(), UTF8Control.INSTANCE);
+				_clazz.getClassLoader());
 		}
 		catch (Exception e) {
-			return ResourceBundle.getBundle(
+			return ResourceBundleUtil.getBundle(
 				getResourceBundleBaseName(_clazz), locale,
-				PortalClassLoaderUtil.getClassLoader(), UTF8Control.INSTANCE);
+				PortalClassLoaderUtil.getClassLoader());
 		}
 	}
 

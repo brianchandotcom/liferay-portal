@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.portlet;
 
-import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Portlet;
 import com.liferay.registry.Filter;
@@ -97,9 +97,9 @@ public class ResourceBundleTracker implements Closeable {
 			return resourceBundle;
 		}
 
-		return ResourceBundle.getBundle(
+		return ResourceBundleUtil.getBundle(
 			_portlet.getResourceBundle(), LocaleUtil.fromLanguageId(languageId),
-			_classLoader, UTF8Control.INSTANCE);
+			_classLoader);
 	}
 
 	private final ClassLoader _classLoader;

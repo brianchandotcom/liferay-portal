@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -229,7 +230,7 @@ public class TemplateHandlerRegistryUtil {
 			Map<Locale, String> map = new HashMap<>();
 
 			for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
-				ResourceBundle resourceBundle = ResourceBundle.getBundle(
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 					"content.Language", locale, classLoader);
 
 				map.put(locale, LanguageUtil.get(resourceBundle, key));

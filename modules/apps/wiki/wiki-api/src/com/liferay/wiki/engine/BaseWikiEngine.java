@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.engine;
 
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 
@@ -56,7 +57,7 @@ public abstract class BaseWikiEngine implements WikiEngine {
 		try {
 			Class<?> clazz = getClass();
 
-			ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 				"content/Language", locale, clazz.getClassLoader());
 
 			return resourceBundle.getString(getFormat());

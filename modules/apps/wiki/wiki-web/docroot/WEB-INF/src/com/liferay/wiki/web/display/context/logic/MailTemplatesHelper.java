@@ -16,6 +16,7 @@ package com.liferay.wiki.web.display.context.logic;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.language.AggregateResourceBundle;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.Company;
@@ -169,8 +170,9 @@ public class MailTemplatesHelper {
 	}
 
 	protected ResourceBundle getResourceBundle() {
-		ResourceBundle bundleResourceBundle = ResourceBundle.getBundle(
-			"content.Language", _wikiRequestHelper.getLocale());
+		ResourceBundle bundleResourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", _wikiRequestHelper.getLocale(),
+			getClass().getClassLoader());
 		ResourceBundle portalResourceBundle =
 			LanguageResources.getResourceBundle(_wikiRequestHelper.getLocale());
 

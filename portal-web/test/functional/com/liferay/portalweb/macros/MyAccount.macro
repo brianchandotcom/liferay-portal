@@ -1,9 +1,5 @@
 <definition>
-	<command name="configureDisplaySettingsLanguage">
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="Account Settings" />
-		</execute>
-
+	<command name="changeUserLanguage">
 		<execute function="Select" locator1="MyAccount#LANGUAGE_SELECT" value1="${languageName}" />
 
 		<var name="key_saveButton" value="${saveButton}" />
@@ -12,7 +8,11 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="${successMessage}" />
 	</command>
 
-	<command name="changeUserLanguage">
+	<command name="configureDisplaySettingsLanguage">
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="Account Settings" />
+		</execute>
+
 		<execute function="Select" locator1="MyAccount#LANGUAGE_SELECT" value1="${languageName}" />
 
 		<var name="key_saveButton" value="${saveButton}" />

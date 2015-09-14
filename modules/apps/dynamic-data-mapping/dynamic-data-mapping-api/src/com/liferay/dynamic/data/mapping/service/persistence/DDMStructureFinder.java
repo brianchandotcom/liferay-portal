@@ -34,8 +34,19 @@ public interface DDMStructureFinder {
 		java.lang.String[] descriptions, java.lang.String storageType,
 		int type, int status, boolean andOperator);
 
+	public int countByC_G_C_S(long companyId, long[] groupIds,
+		long classNameId, int status);
+
 	public int filterCountByKeywords(long companyId, long[] groupIds,
 		long classNameId, java.lang.String keywords, int status);
+
+	public int filterCountByC_G_C_S(long companyId, long[] groupIds,
+		long classNameId, int status);
+
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> filterFindByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator);
 
 	public int filterCountByC_G_C_N_D_S_T_S(long companyId, long[] groupIds,
 		long classNameId, java.lang.String name, java.lang.String description,
@@ -63,6 +74,11 @@ public interface DDMStructureFinder {
 		java.lang.String[] names, java.lang.String[] descriptions,
 		java.lang.String storageType, int type, int status,
 		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator);
+
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> findByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator);
 
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> findByKeywords(

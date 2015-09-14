@@ -373,48 +373,19 @@ public class DDMStructureServiceUtil {
 		return getService().getStructure(structureId);
 	}
 
-	/**
-	* Returns all the structures in the group that the user has permission to
-	* view.
-	*
-	* @param groupId the primary key of the group
-	* @return the structures in the group that the user has permission to view
-	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructures(
-		long groupId) {
-		return getService().getStructures(groupId);
-	}
-
-	/**
-	* Returns all the structures in the groups that the user has permission to
-	* view.
-	*
-	* @param groupIds the primary key of the groups
-	* @return the structures in the groups that the user has permission to view
-	*/
-	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructures(
-		long[] groupIds) {
-		return getService().getStructures(groupIds);
-	}
-
-	/**
-	* Returns all the structures matching the groups and class name ID that the
-	* user has permission to view.
-	*
-	* @param groupIds the primary keys of the groups
-	* @param classNameId the primary key of the class name for the structure's
-	related model
-	* @return the structures matching the groups and class name ID that the
-	user has permission to view
-	*/
-	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructures(
-		long[] groupIds, long classNameId) {
-		return getService().getStructures(groupIds, classNameId);
+		long companyId, long[] groupIds, long classNameId, int status) {
+		return getService()
+				   .getStructures(companyId, groupIds, classNameId, status);
 	}
 
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructures(
-		long[] groupIds, long classNameId, int start, int end) {
-		return getService().getStructures(groupIds, classNameId, start, end);
+		long companyId, long[] groupIds, long classNameId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator) {
+		return getService()
+				   .getStructures(companyId, groupIds, classNameId, status,
+			start, end, orderByComparator);
 	}
 
 	public static void revertStructure(long structureId,

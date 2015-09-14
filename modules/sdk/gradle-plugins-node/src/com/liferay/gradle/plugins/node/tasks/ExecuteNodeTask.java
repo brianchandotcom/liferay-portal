@@ -36,6 +36,18 @@ public class ExecuteNodeTask extends DefaultTask {
 		dependsOn(NodePlugin.DOWNLOAD_NODE_TASK_NAME);
 	}
 
+	public ExecuteNodeTask args(Iterable<?> args) {
+		_nodeExecutor.args(args);
+
+		return this;
+	}
+
+	public ExecuteNodeTask args(Object ... args) {
+		_nodeExecutor.args(args);
+
+		return this;
+	}
+
 	@TaskAction
 	public void executeNode() {
 		_execResult = _nodeExecutor.execute();

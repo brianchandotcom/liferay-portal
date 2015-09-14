@@ -122,17 +122,6 @@ public class DownloadNodeTask extends DefaultTask {
 
 				});
 		}
-
-		_nodeExecutor.setArgs(
-			"config", "set", "cache", getCacheDir(), "--global");
-		_nodeExecutor.setCommand("npm");
-		_nodeExecutor.setWorkingDir(getNodeDir());
-
-		_nodeExecutor.execute();
-	}
-
-	public File getCacheDir() {
-		return new File(getNodeDir(), ".cache");
 	}
 
 	@OutputDirectory

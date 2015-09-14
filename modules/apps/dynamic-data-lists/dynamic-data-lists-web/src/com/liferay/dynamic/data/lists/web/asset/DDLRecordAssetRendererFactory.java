@@ -66,6 +66,7 @@ public class DDLRecordAssetRendererFactory
 		throws PortalException {
 
 		DDLRecord record = DDLRecordLocalServiceUtil.getRecord(classPK);
+
 		DDLRecordVersion recordVersion = record.getRecordVersion();
 
 		DDLRecordAssetRenderer ddlRecordAssetRenderer =

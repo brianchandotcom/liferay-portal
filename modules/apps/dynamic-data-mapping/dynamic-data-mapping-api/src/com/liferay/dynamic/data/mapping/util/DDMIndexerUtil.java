@@ -16,8 +16,8 @@ package com.liferay.dynamic.data.mapping.util;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 import java.io.Serializable;
@@ -36,6 +36,15 @@ public class DDMIndexerUtil {
 		getDDMIndexer().addAttributes(document, ddmStructure, ddmFormValues);
 	}
 
+	public static QueryFilter createFieldValueQueryFilter(
+			String ddmStructureFieldName, Serializable ddmStructureFieldValue,
+			Locale locale)
+		throws Exception {
+
+		return getDDMIndexer().createFieldValueQueryFilter(
+			ddmStructureFieldName, ddmStructureFieldValue, locale);
+	}
+
 	public static String encodeName(long ddmStructureId, String fieldName) {
 		return getDDMIndexer().encodeName(ddmStructureId, fieldName);
 	}
@@ -51,14 +60,6 @@ public class DDMIndexerUtil {
 
 		return getDDMIndexer().extractIndexableAttributes(
 			ddmStructure, ddmFormValues, locale);
-	}
-
-	public static BooleanQuery getBooleanQuery(
-		String ddmStructureFieldName, Serializable ddmStructureFieldValue,
-		Locale locale) throws Exception {
-
-		return getDDMIndexer().getBooleanQuery(
-			ddmStructureFieldName, ddmStructureFieldValue, locale);
 	}
 
 	public static DDMIndexer getDDMIndexer() {

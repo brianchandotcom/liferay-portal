@@ -1,19 +1,10 @@
 import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
 
-dependencies {
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-}
-
-ext {
-	babelCoreVersion = "5.6.14"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
 
 task buildBabelCore(type: Copy)
 task downloadBabelCore(type: DownloadNodeModuleTask)
+
+String babelCoreVersion = "5.6.14"
 
 buildBabelCore {
 	dependsOn downloadBabelCore
@@ -25,7 +16,15 @@ classes {
 	dependsOn buildBabelCore
 }
 
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
 downloadBabelCore {
 	moduleName = "babel-core"
 	moduleVersion = babelCoreVersion
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
 }

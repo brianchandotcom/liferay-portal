@@ -308,6 +308,12 @@
 							'uploader'
 						]
 					},
+					'liferay-entry-select': {
+						path: 'entry_select.js',
+						requires: [
+							'liferay-portlet-base'
+						]
+					},
 					'liferay-form': {
 						path: 'form.js',
 						requires: [

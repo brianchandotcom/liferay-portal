@@ -94,32 +94,6 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddEntryWithCoverImage() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		FileEntry fileEntry = getTempFileEntry(
-			_user.getUserId(), serviceContext);
-
-		ImageSelector coverImageSelector = new ImageSelector(
-			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
-		ImageSelector smallImageSelector = null;
-
-		BlogsEntry expectedEntry = BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, coverImageSelector,
-			smallImageSelector, serviceContext);
-
-		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
-			expectedEntry.getEntryId());
-
-		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);
-	}
-
-	@Test
 	public void testAddEntryWithoutSmallImage() throws Exception {
 		BlogsEntry expectedEntry = testAddEntry(false);
 

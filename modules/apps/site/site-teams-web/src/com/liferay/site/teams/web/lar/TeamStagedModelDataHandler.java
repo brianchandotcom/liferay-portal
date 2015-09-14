@@ -199,6 +199,21 @@ public class TeamStagedModelDataHandler
 		portletDataContext.importClassedModel(team, importedTeam);
 	}
 
+	protected Team fetchExistingTeam(String uuid, long groupId, String name) {
+		Team team = fetchStagedModelByUuidAndGroupId(uuid, groupId);
+
+		if (team != null) {
+			return team;
+		}
+
+		try {
+			return TeamLocalServiceUtil.getTeam(groupId, name);
+		}
+		catch (PortalException pe) {
+			return null;
+		}
+	}
+
 	@Override
 	protected void importReferenceStagedModels(
 			PortletDataContext portletDataContext, Team team)

@@ -330,45 +330,15 @@ public interface DDMStructureService extends BaseService {
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure(
 		long structureId) throws PortalException;
 
-	/**
-	* Returns all the structures in the group that the user has permission to
-	* view.
-	*
-	* @param groupId the primary key of the group
-	* @return the structures in the group that the user has permission to view
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructures(
-		long groupId);
-
-	/**
-	* Returns all the structures in the groups that the user has permission to
-	* view.
-	*
-	* @param groupIds the primary key of the groups
-	* @return the structures in the groups that the user has permission to view
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructures(
-		long[] groupIds);
-
-	/**
-	* Returns all the structures matching the groups and class name ID that the
-	* user has permission to view.
-	*
-	* @param groupIds the primary keys of the groups
-	* @param classNameId the primary key of the class name for the structure's
-	related model
-	* @return the structures matching the groups and class name ID that the
-	user has permission to view
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructures(
-		long[] groupIds, long classNameId);
+		long companyId, long[] groupIds, long classNameId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> getStructures(
-		long[] groupIds, long classNameId, int start, int end);
+		long companyId, long[] groupIds, long classNameId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator);
 
 	public void revertStructure(long structureId, java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)

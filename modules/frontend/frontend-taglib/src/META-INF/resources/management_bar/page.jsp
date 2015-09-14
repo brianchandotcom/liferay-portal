@@ -16,18 +16,73 @@
 
 <%@ include file="/management_bar/init.jsp" %>
 
-<c:if test="<%= Validator.isContent(bodyContentString) %>">
-	<div class="management-bar management-bar-default <%= cssClass %>" id="<%= namespace + id %>">
+<div class="management-bar-container" id="<%= namespace %>managementBarContainerId">
+	<div class="management-bar management-bar-default">
 		<div class="container-fluid-1280">
 			<div class="management-bar-header">
 				<c:if test="<%= includeCheckBox %>">
 					<label class="checkbox-default">
-						<aui:input cssClass="<%= checkBoxCssClass %>" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" title="select-all" type="checkbox" />
+						<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="<%= RowChecker.ALL_ROW_IDS %>" title="select-all" type="checkbox" />
 					</label>
 				</c:if>
 			</div>
 
-			<%= bodyContentString %>
+			<c:if test="<%= Validator.isNotNull(buttons) %>">
+				<div class="management-bar-header-right">
+					<%= buttons %>
+				</div>
+			</c:if>
+
+			<c:if test="<%= Validator.isNotNull(filters) %>">
+				<div class="collapse management-bar-collapse">
+					<ul class="management-bar-nav nav">
+						<%= filters %>
+					</ul>
+				</div>
+			</c:if>
 		</div>
 	</div>
+
+	<c:if test="<%= Validator.isNotNull(actionButtons) %>">
+		<div class="management-bar management-bar-default management-bar-no-collapse" id="<%= namespace %>actionButtons">
+			<div class="container-fluid-1280">
+				<div class="management-bar-header">
+					<c:if test="<%= includeCheckBox %>">
+						<label class="checkbox-default">
+							<aui:input cssClass="select-all-checkboxes" inline="<%= true %>" label="" name="actionsCheckBox" title="select-all" type="checkbox" />
+						</label>
+					</c:if>
+				</div>
+
+				<div class="management-bar-header-right">
+					<%= actionButtons %>
+				</div>
+
+				<div class="collapse management-bar-collapse">
+					<ul class="management-bar-nav nav">
+						<li>
+							<span class="management-bar-text">
+								<span class="selected-items-count"></span> <liferay-ui:message key="items-selected" />
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</c:if>
+</div>
+
+<c:if test="<%= Validator.isNotNull(actionButtons) %>">
+	<aui:script use="liferay-entry-select">
+		new Liferay.EntrySelect(
+			{
+				actionsAllCheckBox: 'actionsCheckBox',
+				actionButtonsBar: 'actionButtons',
+				allCheckBox: '<%= RowChecker.ALL_ROW_IDS %>',
+				checkBoxContainer: '<%= checkBoxContainerId %>',
+				managementContainer: 'managementBarContainerId',
+				namespace: '<%= namespace %>'
+			}
+		);
+	</aui:script>
 </c:if>

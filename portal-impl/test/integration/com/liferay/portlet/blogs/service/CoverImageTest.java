@@ -135,7 +135,7 @@ public class CoverImageTest {
 	}
 
 	@Test
-	public void testCoverImageIsStoredInBlogsRepository() throws Exception {
+	public void testCoverImageStoredInBlogsRepository() throws Exception {
 		BlogsEntry entry = addBlogsEntry("image.jpg");
 
 		FileEntry coverImageFileEntry =
@@ -149,7 +149,7 @@ public class CoverImageTest {
 	}
 
 	@Test
-	public void testCoverImageIsStoredInCoverImageFolder() throws Exception {
+	public void testCoverImageStoredInCoverImageFolder() throws Exception {
 		BlogsEntry entry = addBlogsEntry("image.jpg");
 
 		FileEntry coverImageFileEntry =
@@ -158,7 +158,8 @@ public class CoverImageTest {
 
 		Folder coverImageFolder = coverImageFileEntry.getFolder();
 
-		Assert.assertEquals("CoverImage", coverImageFolder.getName());
+		Assert.assertNotEquals(
+			BlogsConstants.SERVICE_NAME, coverImageFolder.getName());
 	}
 
 	@Test
@@ -190,7 +191,7 @@ public class CoverImageTest {
 	}
 
 	@Test
-	public void testOriginalCoverImageIsStoredInBlogsRepository()
+	public void testOriginalCoverImageStoredInBlogsRepository()
 		throws Exception {
 
 		BlogsEntry entry = addBlogsEntry("image.jpg");
@@ -296,7 +297,7 @@ public class CoverImageTest {
 	}
 
 	@Test
-	public void testUpdateOriginalCoverImage() throws Exception {
+	public void testAddOriginalCoverImageWhenUpdatingBlogEntry() throws Exception {
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 			_user.getUserId(), _group.getGroupId());
 

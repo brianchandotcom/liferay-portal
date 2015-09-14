@@ -67,7 +67,9 @@ public class CoverImageTest {
 	}
 
 	@Test(expected = NoSuchFileEntryException.class)
-	public void testIsCoverImageDeletedWhenZero() throws Exception {
+	public void testCoverImageDeletedWhenEmptyCoverImageSelector()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId());
@@ -86,12 +88,12 @@ public class CoverImageTest {
 			new String[0], StringPool.BLANK, coverImageSelector,
 			smallImageSelector, serviceContext);
 
-		FileEntry initialCoverImageFileEntry =
+		FileEntry coverImageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
 				entry.getCoverImageFileEntryId());
 
 		coverImageSelector = new ImageSelector(
-			0, StringPool.BLANK, _IMAGE_CROP_REGION);
+			0, StringPool.BLANK, StringPool.BLANK);
 
 		entry = BlogsEntryLocalServiceUtil.updateEntry(
 			_user.getUserId(), entry.getEntryId(),
@@ -103,11 +105,13 @@ public class CoverImageTest {
 		Assert.assertEquals(0, entry.getCoverImageFileEntryId());
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
-			initialCoverImageFileEntry.getFileEntryId());
+			coverImageFileEntry.getFileEntryId());
 	}
 
 	@Test
-	public void testIsCoverImageNotChangedWhenNull() throws Exception {
+	public void testCoverImageNotChangedWhenNullCoverImageSelector()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId());
@@ -126,19 +130,21 @@ public class CoverImageTest {
 			new String[0], StringPool.BLANK, coverImageSelector,
 			smallImageSelector, serviceContext);
 
-		FileEntry initialCoverImageFileEntry =
+		FileEntry coverImageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
 				entry.getCoverImageFileEntryId());
+
+		coverImageSelector = null;
 
 		entry = BlogsEntryLocalServiceUtil.updateEntry(
 			_user.getUserId(), entry.getEntryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new Date(), true, true, new String[0], StringPool.BLANK, null,
-			smallImageSelector, serviceContext);
+			new Date(), true, true, new String[0], StringPool.BLANK,
+			coverImageSelector, smallImageSelector, serviceContext);
 
 		Assert.assertEquals(
-			initialCoverImageFileEntry.getFileEntryId(),
+			coverImageFileEntry.getFileEntryId(),
 			entry.getCoverImageFileEntryId());
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
@@ -148,11 +154,11 @@ public class CoverImageTest {
 			_group.getGroupId(), folder.getFolderId(), "image1.jpg");
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
-			initialCoverImageFileEntry.getFileEntryId());
+			coverImageFileEntry.getFileEntryId());
 	}
 
 	@Test
-	public void testIsCoverImageStored() throws Exception {
+	public void testCoverImageStored() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId());
@@ -188,7 +194,9 @@ public class CoverImageTest {
 	}
 
 	@Test
-	public void testIsOriginalCoverImageNotDeletedWhenNull() throws Exception {
+	public void testOriginalCoverImageNotDeletedWhenNullCoverImageSelector()
+		throws Exception {
+
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 			_user.getUserId(), _group.getGroupId());
 
@@ -214,12 +222,14 @@ public class CoverImageTest {
 			new String[0], StringPool.BLANK, coverImageSelector,
 			smallImageSelector, serviceContext);
 
+		coverImageSelector = null;
+
 		BlogsEntryLocalServiceUtil.updateEntry(
 			_user.getUserId(), entry.getEntryId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new Date(), true, true, new String[0], StringPool.BLANK, null,
-			smallImageSelector, serviceContext);
+			new Date(), true, true, new String[0], StringPool.BLANK,
+			coverImageSelector, smallImageSelector, serviceContext);
 
 		int finalPortletFileEntriesCount =
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
@@ -233,7 +243,9 @@ public class CoverImageTest {
 	}
 
 	@Test
-	public void testIsOriginalCoverImageNotDeletedWhenZero() throws Exception {
+	public void testOriginalCoverImageNotDeletedWhenEmptyCoverImageSelector()
+		throws Exception {
+
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 			_user.getUserId(), _group.getGroupId());
 
@@ -260,7 +272,7 @@ public class CoverImageTest {
 			smallImageSelector, serviceContext);
 
 		coverImageSelector = new ImageSelector(
-			0, StringPool.BLANK, _IMAGE_CROP_REGION);
+			0, StringPool.BLANK, StringPool.BLANK);
 
 		BlogsEntryLocalServiceUtil.updateEntry(
 			_user.getUserId(), entry.getEntryId(),
@@ -281,7 +293,7 @@ public class CoverImageTest {
 	}
 
 	@Test
-	public void testIsOriginalCoverImageStored() throws Exception {
+	public void testOriginalCoverImageStored() throws Exception {
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 			_user.getUserId(), _group.getGroupId());
 
@@ -319,7 +331,9 @@ public class CoverImageTest {
 	}
 
 	@Test(expected = NoSuchFileEntryException.class)
-	public void testIsPreviousCoverImageDeletedOnChange() throws Exception {
+	public void testPreviousCoverImageDeletedWhenChangingCoverImage()
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), _user.getUserId());
@@ -366,7 +380,7 @@ public class CoverImageTest {
 	}
 
 	@Test
-	public void testIsPreviousOriginalCoverImageNotDeletedOnChange()
+	public void testPreviousOriginalCoverImageNotDeletedWhenChangingCoverImage()
 		throws Exception {
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(

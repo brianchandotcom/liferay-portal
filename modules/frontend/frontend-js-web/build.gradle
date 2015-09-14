@@ -3,6 +3,7 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
+apply plugin: "com.liferay.cache"
 
 task buildAlloy(type: Copy)
 task buildAlloyBootstrap(type: Copy)
@@ -121,6 +122,14 @@ buildLfrAMDLoader {
 	dependsOn downloadLfrAMDLoader
 	from new File(node.nodeDir, "node_modules/lfr-amd-loader/dist/loader.js")
 	into new File(jsDestinationDir, "loader")
+}
+
+cache {
+	task(buildLfrAMDLoader) {
+		baseDir = buildLfrAMDLoader.destinationDir
+		cacheFile = "lfr-amd-loader.zip"
+		testFile "build.gradle"
+	}
 }
 
 classes {

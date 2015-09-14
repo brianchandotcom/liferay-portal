@@ -247,6 +247,27 @@ public class LayoutStagedModelDataHandler
 		return portletIds;
 	}
 
+	protected void deleteMissingLayoutFriendlyURLs(
+		PortletDataContext portletDataContext, Layout layout) {
+
+		Map<Long, Long> layoutFriendlyURLIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				LayoutFriendlyURL.class);
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				layout.getPlid());
+
+		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			if (!layoutFriendlyURLIds.containsValue(
+					layoutFriendlyURL.getLayoutFriendlyURLId())) {
+
+				LayoutFriendlyURLLocalServiceUtil.deleteLayoutFriendlyURL(
+					layoutFriendlyURL);
+			}
+		}
+	}
+
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Layout layout)
@@ -639,7 +660,7 @@ public class LayoutStagedModelDataHandler
 
 		importAssets(portletDataContext, layout, importedLayout);
 
-		importLayoutFriendlyURLs(portletDataContext, layout);
+		importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}
@@ -922,7 +943,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	protected void importLayoutFriendlyURLs(
-			PortletDataContext portletDataContext, Layout layout)
+			PortletDataContext portletDataContext, Layout layout,
+			Layout importedLayout)
 		throws Exception {
 
 		List<Element> layoutFriendlyURLElements =
@@ -940,6 +962,8 @@ public class LayoutStagedModelDataHandler
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, layoutFriendlyURL);
 		}
+
+		deleteMissingLayoutFriendlyURLs(portletDataContext, importedLayout);
 	}
 
 	protected void importLayoutIconImage(

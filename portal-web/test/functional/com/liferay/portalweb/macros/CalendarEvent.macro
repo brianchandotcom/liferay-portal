@@ -1294,6 +1294,22 @@
 		</execute>
 	</command>
 
+	<command name="viewApprovedRSVP">
+		<execute macro="CalendarNavigator#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_EVENT_TITLE" value1="${eventTitle}" />
+
+		<var name="key_rsvp" value="${rsvp}" />
+
+		<execute function="AssertElementPresent" locator1="Calendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE" value1="${rsvp}" />
+	</command>
+
 	<command name="viewAvailableCalendars">
 		<execute macro="CalendarEvent#_expandDetailsPanel" />
 

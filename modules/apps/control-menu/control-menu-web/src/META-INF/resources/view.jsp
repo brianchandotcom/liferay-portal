@@ -91,30 +91,6 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 					}
 					%>
 
-					<c:if test="<%= !group.isControlPanel() && userSetupComplete && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
-
-						<%
-						String portletId = PortletProviderUtil.getPortletId(Layout.class.getName(), PortletProvider.Action.EDIT);
-
-						PortletURL editPageURL = PortalUtil.getControlPanelPortletURL(request, portletId, 0, PortletRequest.RENDER_PHASE);
-
-						editPageURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
-						editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
-						editPageURL.setParameter("privateLayout", String.valueOf(layout.isPrivateLayout()));
-						editPageURL.setParameter("treeId", "layoutsTree");
-						editPageURL.setParameter("viewLayout", Boolean.TRUE.toString());
-						%>
-
-						<li>
-							<liferay-ui:icon
-								iconCssClass="icon-cog icon-monospaced"
-								label="edit"
-								linkCssClass="control-menu-icon"
-								url="<%= editPageURL.toString() %>"
-							/>
-						</li>
-					</c:if>
-
 					<%
 					boolean customizableLayout = !(group.isLayoutPrototype() || group.isLayoutSetPrototype() || group.isStagingGroup() || group.isUserGroup()) && layoutTypePortlet.isCustomizable() && LayoutPermissionUtil.containsWithoutViewableGroup(permissionChecker, layout, false, ActionKeys.CUSTOMIZE);
 					boolean linkedLayout = (!SitesUtil.isLayoutUpdateable(layout) || (layout.isLayoutPrototypeLinkActive() && !group.hasStagingGroup())) && LayoutPermissionUtil.containsWithoutViewableGroup(themeDisplay.getPermissionChecker(), layout, false, ActionKeys.UPDATE);

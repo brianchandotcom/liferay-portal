@@ -180,6 +180,87 @@ public class LayoutExportController implements ExportController {
 		XStreamAliasRegistryUtil.register(LayoutImpl.class, "Layout");
 	}
 
+	protected void collectLayoutPortlets(
+			PortletDataContext portletDataContext, long[] layoutIds,
+			Map<String, Object[]> portletIds, Layout layout)
+		throws Exception {
+
+		if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
+			return;
+		}
+
+		if (!prepareLayoutStagingHandler(portletDataContext, layout) ||
+			!layout.isSupportsEmbeddedPortlets()) {
+
+			// Only portlet type layouts support page scoping
+
+			return;
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		// The getAllPortlets method returns all effective nonsystem portlets
+		// for any layout type, including embedded portlets, or in the case of
+		// panel type layout, selected portlets
+
+		for (Portlet portlet : layoutTypePortlet.getAllPortlets(false)) {
+			String portletId = portlet.getPortletId();
+
+			Settings portletInstanceSettings = SettingsFactoryUtil.getSettings(
+				new PortletInstanceSettingsLocator(layout, portletId));
+
+			String scopeType = portletInstanceSettings.getValue(
+				"lfrScopeType", null);
+			String scopeLayoutUuid = portletInstanceSettings.getValue(
+				"lfrScopeLayoutUuid", null);
+
+			long scopeGroupId = portletDataContext.getScopeGroupId();
+
+			if (Validator.isNotNull(scopeType)) {
+				Group scopeGroup = null;
+
+				if (scopeType.equals("company")) {
+					scopeGroup = GroupLocalServiceUtil.getCompanyGroup(
+						layout.getCompanyId());
+				}
+				else if (scopeType.equals("layout")) {
+					Layout scopeLayout = null;
+
+					scopeLayout =
+						LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+							scopeLayoutUuid, portletDataContext.getGroupId(),
+							portletDataContext.isPrivateLayout());
+
+					if (scopeLayout == null) {
+						continue;
+					}
+
+					scopeGroup = scopeLayout.getScopeGroup();
+				}
+				else {
+					throw new IllegalArgumentException(
+						"Scope type " + scopeType + " is invalid");
+				}
+
+				if (scopeGroup != null) {
+					scopeGroupId = scopeGroup.getGroupId();
+				}
+			}
+
+			String key = PortletPermissionUtil.getPrimaryKey(
+				layout.getPlid(), portletId);
+
+			portletIds.put(
+				key,
+				new Object[] {
+					portletId, layout.getPlid(), scopeGroupId, scopeType,
+					scopeLayoutUuid
+				}
+			);
+		}
+	}
+
 	protected File doExport(
 			PortletDataContext portletDataContext, long[] layoutIds)
 		throws Exception {
@@ -420,6 +501,26 @@ public class LayoutExportController implements ExportController {
 			}
 		}
 
+		// Collect layout portlets
+
+		for (Layout layout : layouts) {
+			collectLayoutPortlets(
+				portletDataContext, layoutIds, portletIds, layout);
+		}
+
+		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			ManifestSummary manifestSummary =
+				portletDataContext.getManifestSummary();
+
+			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+				"layout", ArrayUtil.toStringArray(portletIds.keySet()),
+				manifestSummary);
+
+			manifestSummary.resetCounters();
+		}
+
+		// Export actual data
+
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Layout.class));
 
@@ -443,18 +544,7 @@ public class LayoutExportController implements ExportController {
 		}
 
 		for (Layout layout : layouts) {
-			exportLayout(portletDataContext, layoutIds, portletIds, layout);
-		}
-
-		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			ManifestSummary manifestSummary =
-				portletDataContext.getManifestSummary();
-
-			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
-				"layout", ArrayUtil.toStringArray(portletIds.keySet()),
-				manifestSummary);
-
-			manifestSummary.resetCounters();
+			exportLayout(portletDataContext, layoutIds, layout);
 		}
 
 		Element portletsElement = rootElement.addElement("portlets");
@@ -591,7 +681,7 @@ public class LayoutExportController implements ExportController {
 
 	protected void exportLayout(
 			PortletDataContext portletDataContext, long[] layoutIds,
-			Map<String, Object[]> portletIds, Layout layout)
+			Layout layout)
 		throws Exception {
 
 		if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
@@ -603,103 +693,12 @@ public class LayoutExportController implements ExportController {
 			return;
 		}
 
-		boolean exportLAR = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(), "exportLAR");
-
-		if (!exportLAR && LayoutStagingUtil.isBranchingLayout(layout)) {
-			long layoutSetBranchId = MapUtil.getLong(
-				portletDataContext.getParameterMap(), "layoutSetBranchId");
-
-			if (layoutSetBranchId <= 0) {
-				return;
-			}
-
-			LayoutRevision layoutRevision =
-				LayoutRevisionLocalServiceUtil.fetchLayoutRevision(
-					layoutSetBranchId, true, layout.getPlid());
-
-			if (layoutRevision == null) {
-				return;
-			}
-
-			LayoutStagingHandler layoutStagingHandler =
-				LayoutStagingUtil.getLayoutStagingHandler(layout);
-
-			layoutStagingHandler.setLayoutRevision(layoutRevision);
+		if (!prepareLayoutStagingHandler(portletDataContext, layout)) {
+			return;
 		}
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layout);
-
-		if (!layout.isSupportsEmbeddedPortlets()) {
-
-			// Only portlet type layouts support page scoping
-
-			return;
-		}
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		// The getAllPortlets method returns all effective nonsystem portlets
-		// for any layout type, including embedded portlets, or in the case of
-		// panel type layout, selected portlets
-
-		for (Portlet portlet : layoutTypePortlet.getAllPortlets(false)) {
-			String portletId = portlet.getPortletId();
-
-			Settings portletInstanceSettings = SettingsFactoryUtil.getSettings(
-				new PortletInstanceSettingsLocator(layout, portletId));
-
-			String scopeType = portletInstanceSettings.getValue(
-				"lfrScopeType", null);
-			String scopeLayoutUuid = portletInstanceSettings.getValue(
-				"lfrScopeLayoutUuid", null);
-
-			long scopeGroupId = portletDataContext.getScopeGroupId();
-
-			if (Validator.isNotNull(scopeType)) {
-				Group scopeGroup = null;
-
-				if (scopeType.equals("company")) {
-					scopeGroup = GroupLocalServiceUtil.getCompanyGroup(
-						layout.getCompanyId());
-				}
-				else if (scopeType.equals("layout")) {
-					Layout scopeLayout = null;
-
-					scopeLayout =
-						LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-							scopeLayoutUuid, portletDataContext.getGroupId(),
-							portletDataContext.isPrivateLayout());
-
-					if (scopeLayout == null) {
-						continue;
-					}
-
-					scopeGroup = scopeLayout.getScopeGroup();
-				}
-				else {
-					throw new IllegalArgumentException(
-						"Scope type " + scopeType + " is invalid");
-				}
-
-				if (scopeGroup != null) {
-					scopeGroupId = scopeGroup.getGroupId();
-				}
-			}
-
-			String key = PortletPermissionUtil.getPrimaryKey(
-				layout.getPlid(), portletId);
-
-			portletIds.put(
-				key,
-				new Object[] {
-					portletId, layout.getPlid(), scopeGroupId, scopeType,
-					scopeLayoutUuid
-				}
-			);
-		}
 	}
 
 	protected PortletDataContext getPortletDataContext(
@@ -737,6 +736,39 @@ public class LayoutExportController implements ExportController {
 		}
 
 		return PROCESS_FLAG_LAYOUT_EXPORT_IN_PROCESS;
+	}
+
+	protected boolean prepareLayoutStagingHandler(
+		PortletDataContext portletDataContext, Layout layout) {
+
+		boolean exportLAR = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(), "exportLAR");
+
+		if (exportLAR || !LayoutStagingUtil.isBranchingLayout(layout)) {
+			return true;
+		}
+
+		long layoutSetBranchId = MapUtil.getLong(
+			portletDataContext.getParameterMap(), "layoutSetBranchId");
+
+		if (layoutSetBranchId <= 0) {
+			return false;
+		}
+
+		LayoutRevision layoutRevision =
+			LayoutRevisionLocalServiceUtil.fetchLayoutRevision(
+				layoutSetBranchId, true, layout.getPlid());
+
+		if (layoutRevision == null) {
+			return false;
+		}
+
+		LayoutStagingHandler layoutStagingHandler =
+			LayoutStagingUtil.getLayoutStagingHandler(layout);
+
+		layoutStagingHandler.setLayoutRevision(layoutRevision);
+
+		return true;
 	}
 
 	@Reference(unbind = "-")

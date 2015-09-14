@@ -8,8 +8,17 @@
 
 		<script>
 			YUI().use(
-				'aui-tabview','aui-toggler',
+				'aui-image-viewer','aui-tabview','aui-toggler',
 				function(Y) {
+					new Y.ImageViewer(
+						{
+					        caption: 'Screenshots',
+					        intervalTime: 10,
+					        links: '.screenshots a',
+					        zIndex: 1
+						}
+					).render();
+
 					new Y.TabView(
 						{
 							srcNode: '#summaries'
@@ -44,6 +53,11 @@
 			.minor-steps > li {
 				left: -20px;
 				position: relative;
+			}
+
+			.screenshots-thumbnail {
+				margin: 20px 0;
+				width: 150px;
 			}
 		</style>
 	</head>

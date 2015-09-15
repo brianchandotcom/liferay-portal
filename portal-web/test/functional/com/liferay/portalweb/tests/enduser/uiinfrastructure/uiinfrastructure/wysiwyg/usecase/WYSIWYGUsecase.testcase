@@ -114,7 +114,7 @@
 		<var name="key_portletName" value="${portlet1Name}" />
 
 		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
-		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
+		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="14" />
 		<execute function="AssertElementPresent" locator1="" value1="//script[contains(@src,'/ckeditor/plugins/bbcode/bbcode_parser.js')]" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
 		<execute function="SelectFrame" locator1="CKEditor#TOOLBAR_FORMAT_IFRAME" />
@@ -138,7 +138,7 @@
 		<execute function="AssertClick" locator1="Wiki#FRONTPAGE_DEFAULT_MESSAGE" value1="This page is empty. Edit it to add some text." />
 
 		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_FONT_BUTTON_PORTLET" value1="Font" />
-		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="Size" />
+		<execute function="AssertTextEquals" locator1="CKEditor#TOOLBAR_SIZE_BUTTON_PORTLET" value1="14" />
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="CKEditor#TOOLBAR_FORMAT_BUTTON_PORTLET" value1="Format" />
 		<execute function="SelectFrame" locator1="CKEditor#TOOLBAR_FORMAT_IFRAME" />
 

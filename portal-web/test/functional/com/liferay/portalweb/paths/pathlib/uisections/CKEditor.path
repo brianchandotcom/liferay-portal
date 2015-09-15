@@ -158,7 +158,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SIZE_BUTTON_PORTLET</td>
-	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_combo_button') and contains(.,'Size')]/span</td>
+	<td>//span[contains(@class,'portlet-title-text') and contains(.,'${key_portletName}')]/../../..//a[contains(@class,'cke_combo_button') and contains(.,'14')]/span</td>
 	<td></td>
 </tr>
 <tr>

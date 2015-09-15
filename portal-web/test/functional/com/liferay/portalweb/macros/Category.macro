@@ -54,7 +54,7 @@
 
 				<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD" value1="${propertiesKeyField}" />
 				<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD" value1="${propertiesValueField}" />
-				<execute function="Click" locator1="CategoriesEditCategory#PROPERTIES_ADD_ROW_BUTTON" />
+				<execute function="Click" locator1="Button#ADD_ROW_LAST" />
 			</then>
 			<else>
 				<while>
@@ -68,7 +68,7 @@
 
 						<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_KEY_FIELD" value1="${propertiesKeyField} ${i}" />
 						<execute function="Type" locator1="CategoriesEditCategory#PROPERTIES_VALUE_FIELD" value1="${propertiesValueField} ${i}" />
-						<execute function="Click" locator1="CategoriesEditCategory#PROPERTIES_ADD_ROW_BUTTON" />
+						<execute function="Click" locator1="Button#ADD_ROW_LAST" />
 					</then>
 				</while>
 			</else>

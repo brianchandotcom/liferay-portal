@@ -5,8 +5,9 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="Pause" locator1="1000" />
-		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY" value1="Add Subcategory" />
+		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
 
 		<var name="key_subcategoryName" value="${subCategoryName}" />
 

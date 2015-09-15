@@ -23,17 +23,23 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class DLWebDAVUtil {
 
+	private static final String _FORBIDDEN_CHAR = StringPool.CARET;
+
 	public static String escapeRawTitle(String title) {
-		return StringUtil.replace(title, StringPool.SLASH, StringPool.CARET);
+		return StringUtil.replace(title, StringPool.SLASH, _FORBIDDEN_CHAR);
 	}
 
 	public static String escapeURLTitle(String title) {
 		return HttpUtil.encodeURL(escapeRawTitle(title), true);
 	}
 
+	public static boolean isRepresentableTitle(String title) {
+		return !title.contains(_FORBIDDEN_CHAR);
+	}
+
 	public static String unescapeRawTitle(String escapedTitle) {
 		return StringUtil.replace(
-			escapedTitle, StringPool.CARET, StringPool.SLASH);
+			escapedTitle, _FORBIDDEN_CHAR, StringPool.SLASH);
 	}
 
 }

@@ -1035,6 +1035,15 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			webDAVRequest.getGroupId(), parentFolderId);
 
 		for (FileEntry fileEntry : fileEntries) {
+			if (!DLWebDAVUtil.isRepresentableTitle(fileEntry.getTitle())) {
+				_log.error(
+					"File entry with title '" + fileEntry.getTitle() + "' " +
+						"cannot be accessed using WebDAV because its " +
+						"title is not representable as a WebDAV URL");
+
+				continue;
+			}
+
 			Resource resource = toResource(webDAVRequest, fileEntry, true);
 
 			resources.add(resource);

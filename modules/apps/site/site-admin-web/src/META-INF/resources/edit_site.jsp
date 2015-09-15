@@ -83,6 +83,28 @@ long layoutSetPrototypeId = ParamUtil.getLong(request, "layoutSetPrototypeId");
 if (layoutSetPrototypeId > 0) {
 	layoutSetPrototype = LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(layoutSetPrototypeId);
 }
+
+if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
+	String title = StringPool.BLANK;
+
+	if (group != null) {
+		title = group.getDescriptiveName(locale);
+	}
+	else if (layoutSetPrototype != null) {
+		title = layoutSetPrototype.getName(locale);
+	}
+	else if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+		title = LanguageUtil.get(request, "new-child-site");
+	}
+	else {
+		title = LanguageUtil.get(request, "new-site");
+	}
+
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL.toString());
+
+	renderResponse.setTitle(HtmlUtil.escape(title));
+}
 %>
 
 <liferay-ui:success key='<%= SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
@@ -104,31 +126,6 @@ if (layoutSetPrototypeId > 0) {
 	<div id="breadcrumb">
 		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 	</div>
-
-	<%
-	boolean localizeTitle = true;
-	String title = "new-site";
-
-	if (group != null) {
-		localizeTitle = false;
-		title = group.getDescriptiveName(locale);
-	}
-	else if (layoutSetPrototype != null) {
-		localizeTitle = false;
-		title = layoutSetPrototype.getName(locale);
-	}
-	else if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-		title = "new-child-site";
-	}
-	%>
-
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		escapeXml="<%= false %>"
-		localizeTitle="<%= localizeTitle %>"
-		showBackURL="<%= showBackURL %>"
-		title="<%= HtmlUtil.escape(title) %>"
-	/>
 </c:if>
 
 <portlet:actionURL name="editGroup" var="editGroupURL">

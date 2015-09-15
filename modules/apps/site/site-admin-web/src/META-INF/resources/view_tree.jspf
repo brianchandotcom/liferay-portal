@@ -44,35 +44,6 @@ if (group != null) {
 			<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 		</div>
 	</c:if>
-
-	<%
-	long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
-	String parentGroupName = LanguageUtil.get(request, "sites-home");
-
-	if (!group.isRoot()) {
-		Group parentGroup = group.getParentGroup();
-
-		if (GroupPermissionUtil.contains(permissionChecker, parentGroup, ActionKeys.VIEW)) {
-			parentGroupId = parentGroup.getGroupId();
-			parentGroupName = parentGroup.getDescriptiveName();
-		}
-	}
-
-	PortletURL headerBackURL = renderResponse.createRenderURL();
-
-	if (parentGroupId > 0) {
-		headerBackURL.setParameter("mvcPath", "/view.jsp");
-		headerBackURL.setParameter("groupId", String.valueOf(parentGroupId));
-		headerBackURL.setParameter("sitesListView", SiteConstants.LIST_VIEW_TREE);
-	}
-	%>
-
-	<liferay-ui:header
-		backLabel="<%= parentGroupName %>"
-		backURL="<%= headerBackURL.toString() %>"
-		localizeTitle="<%= false %>"
-		title="<%= group.getDescriptiveName() %>"
-	/>
 </c:if>
 
 <aui:row>

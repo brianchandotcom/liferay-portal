@@ -35,15 +35,12 @@ if (layoutPrototype == null) {
 	layoutPrototype.setNew(true);
 	layoutPrototype.setActive(true);
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= layoutPrototype.isNew() %>"
-	title='<%= layoutPrototype.isNew() ? "new-page-template" : layoutPrototype.getName(locale) %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
-<%
+renderResponse.setTitle(layoutPrototype.isNew() ? LanguageUtil.get(request, "new-page-template") : layoutPrototype.getName(locale));
+
 request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototype);
 request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 %>
@@ -52,7 +49,7 @@ request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 
 <portlet:actionURL name="editLayoutPrototype" var="editLayoutPrototypeURL" />
 
-<aui:form action="<%= editLayoutPrototypeURL %>" method="post" name="fm">
+<aui:form action="<%= editLayoutPrototypeURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="layoutPrototypeId" type="hidden" value="<%= layoutPrototypeId %>" />
 
@@ -85,9 +82,9 @@ request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+		<aui:button cssClass="btn-lg" type="submit" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

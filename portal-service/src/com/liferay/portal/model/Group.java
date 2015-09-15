@@ -16,6 +16,8 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
+
 /**
  * The extended model interface for the Group service. Represents a row in the &quot;Group_&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,6 +34,23 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.GroupImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Group, Long> GROUP_ID_ACCESSOR = new Accessor<Group, Long>() {
+			@Override
+			public Long get(Group group) {
+				return group.getGroupId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Group> getTypeClass() {
+				return Group.class;
+			}
+		};
+
 	public void clearStagingGroup();
 
 	public javax.portlet.PortletURL getAdministrationURL(

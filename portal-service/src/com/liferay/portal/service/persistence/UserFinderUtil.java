@@ -25,6 +25,11 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class UserFinderUtil {
+	public static java.util.Map<java.lang.Long, java.lang.Integer> countByGroups(
+		long companyId, int status, long[] groupIds) {
+		return getFinder().countByGroups(companyId, status, groupIds);
+	}
+
 	public static int countBySocialUsers(long companyId, long userId,
 		int socialRelationType, java.lang.String socialRelationTypeComparator,
 		int status) {

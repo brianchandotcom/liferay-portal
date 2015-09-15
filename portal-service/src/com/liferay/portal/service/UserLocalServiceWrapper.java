@@ -2370,6 +2370,12 @@ public class UserLocalServiceWrapper implements UserLocalService,
 	}
 
 	@Override
+	public java.util.Map<java.lang.Long, java.lang.Integer> searchCounts(
+		long companyId, int status, long[] groupIds) {
+		return _userLocalService.searchCounts(companyId, status, groupIds);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.model.User> searchSocial(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end) {

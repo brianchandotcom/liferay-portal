@@ -2229,6 +2229,11 @@ public class UserLocalServiceUtil {
 		return getService().searchCount(companyId, keywords, status, params);
 	}
 
+	public static java.util.Map<java.lang.Long, java.lang.Integer> searchCounts(
+		long companyId, int status, long[] groupIds) {
+		return getService().searchCounts(companyId, status, groupIds);
+	}
+
 	public static java.util.List<com.liferay.portal.model.User> searchSocial(
 		long companyId, long[] groupIds, java.lang.String keywords, int start,
 		int end) {

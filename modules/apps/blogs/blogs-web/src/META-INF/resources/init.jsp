@@ -108,6 +108,7 @@ page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.blogs.BlogsGroupServiceSettings" %><%@
 page import="com.liferay.portlet.blogs.EntryContentException" %><%@
+page import="com.liferay.portlet.blogs.EntryCoverImageCropException" %><%@
 page import="com.liferay.portlet.blogs.EntryDescriptionException" %><%@
 page import="com.liferay.portlet.blogs.EntrySmallImageNameException" %><%@
 page import="com.liferay.portlet.blogs.EntrySmallImageScaleException" %><%@

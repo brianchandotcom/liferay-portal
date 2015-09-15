@@ -80,6 +80,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsGroupServiceSettings;
 import com.liferay.portlet.blogs.EntryContentException;
+import com.liferay.portlet.blogs.EntryCoverImageCropException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
 import com.liferay.portlet.blogs.EntrySmallImageNameException;
 import com.liferay.portlet.blogs.EntrySmallImageScaleException;
@@ -329,7 +330,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				coverImageImageSelector.getImageId());
 		}
 
-		if (smallImageImageSelector != null &&
+		if ((smallImageImageSelector != null) &&
 			(smallImageImageSelector.getImageId() != 0)) {
 
 			PortletFileRepositoryUtil.deletePortletFileEntry(
@@ -500,6 +501,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				coverImageFileEntryId);
 		}
 
+		long smallImageFileEntryId = entry.getSmallImageFileEntryId();
+
+		if (smallImageFileEntryId != 0) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				smallImageFileEntryId);
+		}
+
 		// Comment
 
 		deleteDiscussion(entry);
@@ -600,8 +608,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				companyId, displayDate, queryDefinition.getStatus(),
 				queryDefinition.getStart(), queryDefinition.getEnd(),
 				queryDefinition.getOrderByComparator());
-		}
-		else {
+		} else {
 			return blogsEntryPersistence.findByC_LtD_S(
 				companyId, displayDate, queryDefinition.getStatus(),
 				queryDefinition.getStart(), queryDefinition.getEnd(),
@@ -753,8 +760,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				groupId, queryDefinition.getStatus(),
 				queryDefinition.getStart(), queryDefinition.getEnd(),
 				queryDefinition.getOrderByComparator());
-		}
-		else {
+		} else {
 			return blogsEntryPersistence.findByG_S(
 				groupId, queryDefinition.getStatus(),
 				queryDefinition.getStart(), queryDefinition.getEnd(),
@@ -889,8 +895,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				groupId, userId, queryDefinition.getStatus(),
 				queryDefinition.getStart(), queryDefinition.getEnd(),
 				queryDefinition.getOrderByComparator());
-		}
-		else {
+		} else {
 			return blogsEntryPersistence.findByG_U_S(
 				groupId, userId, queryDefinition.getStatus(),
 				queryDefinition.getStart(), queryDefinition.getEnd(),
@@ -1313,8 +1318,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		long smallImageFileEntryId = entry.getSmallImageFileEntryId();
 		String smallImageURL = entry.getSmallImageURL();
 
-		FileEntry tempSmallImageFileEntry = null;
-
 		long deletePreviousSmallImageFileEntryId = 0;
 
 		if (smallImageImageSelector != null) {
@@ -1394,9 +1397,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				coverImageImageSelector.getImageId());
 		}
 
-		if (tempSmallImageFileEntry != null) {
+		if ((smallImageImageSelector != null) &&
+			(smallImageImageSelector.getImageId() != 0) &&
+			(smallImageImageSelector.getImageId() !=
+				entry.getCoverImageFileEntryId())) {
+
 			PortletFileRepositoryUtil.deletePortletFileEntry(
-				tempSmallImageFileEntry.getFileEntryId());
+				smallImageImageSelector.getImageId());
 		}
 
 		return entry;
@@ -1672,17 +1679,11 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return coverImageFileEntry.getFileEntryId();
 		}
 		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get cropped image from image selector image " +
-						imageSelector.getImageId());
-			}
+			throw new EntryCoverImageCropException();
 		}
 		finally {
 			FileUtil.delete(file);
 		}
-
-		return 0;
 	}
 
 	protected Folder addCoverImageFolder(long userId, long groupId)
@@ -1754,10 +1755,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			Folder folder = addSmallImageFolder(userId, groupId);
 
 			FileEntry smallImageFileEntry =
-				PortletFileRepositoryUtil.addPortletFileEntry(
-					groupId, userId, BlogsEntry.class.getName(), entryId,
-					BlogsConstants.SERVICE_NAME, folder.getFolderId(), file,
-					title, imageSelector.getMimeType(), false);
+				blogsEntryAttachmentFileEntryHelper.
+					addBlogsEntryAttachmentFileEntry(
+						groupId, userId, entryId, folder.getFolderId(), title,
+						imageSelector.getMimeType(), file);
 
 			return smallImageFileEntry.getFileEntryId();
 		}
@@ -1767,6 +1768,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		finally {
 			FileUtil.delete(file);
 		}
+	}
+
+	protected Folder addSmallImageFolder(long userId, long groupId)
+		throws PortalException {
+
+		return doAddFolder(userId, groupId, _SMALL_IMAGE_FOLDER_NAME);
 	}
 
 	protected void deleteDiscussion(BlogsEntry entry) throws PortalException {
@@ -2323,12 +2330,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	protected CommentManager commentManager =
 		CommentManagerUtil.getCommentManager();
-
-	private Folder addSmallImageFolder(long userId, long groupId)
-		throws PortalException {
-
-		return doAddFolder(userId, groupId, _SMALL_IMAGE_FOLDER_NAME);
-	}
 
 	private static final String _COVER_IMAGE_FOLDER_NAME = "Cover Image";
 

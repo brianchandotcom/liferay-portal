@@ -233,6 +233,7 @@
 	</entity>
 	<exceptions>
 		<exception>EntryContent</exception>
+		<exception>EntryCoverImageCrop</exception>
 		<exception>EntryDescription</exception>
 		<exception>EntryDisplayDate</exception>
 		<exception>EntryImageName</exception>

@@ -6,9 +6,9 @@ AUI.add(
 
 		var ATTR_CHECKED = 'checked';
 
-		var CSS_SELECTED_ITEMS_COUNT_SELECTOR = 'selected-items-count';
-
 		var CSS_SELECT_ALL_CHECKBOXES = 'select-all-checkboxes';
+
+		var CSS_SELECTED_ITEMS_COUNT_SELECTOR = 'selected-items-count';
 
 		var STR_CLICK = 'click';
 
@@ -85,6 +85,22 @@ AUI.add(
 						A.Array.invoke(instance._eventHandles, 'detach');
 					},
 
+					_getSelectedItemsCount: function() {
+						var instance = this;
+
+						var totalOn = 0;
+
+						instance._allCheckBoxes.each(
+							function(item, index) {
+								if (item.attr(ATTR_CHECKED)) {
+									totalOn++;
+								}
+							}
+						);
+
+						return totalOn;
+					},
+
 					_initSelectAllCheckbox: function() {
 						var instance = this;
 
@@ -102,37 +118,6 @@ AUI.add(
 						);
 					},
 
-					_getSelectedItemsCount: function() {
-						var instance = this;
-
-						var totalOn = 0;
-
-						instance._allCheckBoxes.each(
-							function(item, index) {
-								if (item.attr(ATTR_CHECKED)) {
-									totalOn++;
-								}
-							}
-						);
-
-						return totalOn;
-					},
-
-					_toogleSelect: function() {
-						var instance = this;
-
-						var hide = (Util.listCheckedExcept(instance._checkBoxContainer, instance._allCheckBox).length == 0);
-
-						instance._actionButtonsBar.toggleClass('on', !hide);
-
-						var totalBoxes = instance._allCheckBoxes.size();
-						var totalOn = instance._getSelectedItemsCount();
-
-						instance._managementContainer.all(STR_DOT + instance.get('selectAllCheckBoxes')).attr(ATTR_CHECKED, totalBoxes == totalOn);
-
-						instance._managementContainer.all(STR_DOT + instance.get('itemsCountSelector')).html(totalOn);
-					},
-
 					_toogleBars: function(event, checked) {
 						var instance = this;
 
@@ -143,6 +128,21 @@ AUI.add(
 						instance._managementContainer.all(STR_DOT + instance.get('selectAllCheckBoxes')).attr(ATTR_CHECKED, checked);
 
 						instance._managementContainer.all(STR_DOT + instance.get('itemsCountSelector')).html(instance._getSelectedItemsCount());
+					},
+
+					_toogleSelect: function() {
+						var instance = this;
+
+						var hide = Util.listCheckedExcept(instance._checkBoxContainer, instance._allCheckBox).length == 0;
+
+						instance._actionButtonsBar.toggleClass('on', !hide);
+
+						var totalBoxes = instance._allCheckBoxes.size();
+						var totalOn = instance._getSelectedItemsCount();
+
+						instance._managementContainer.all(STR_DOT + instance.get('selectAllCheckBoxes')).attr(ATTR_CHECKED, totalBoxes == totalOn);
+
+						instance._managementContainer.all(STR_DOT + instance.get('itemsCountSelector')).html(totalOn);
 					}
 				}
 			}

@@ -17,7 +17,23 @@
 <%@ include file="/document_library/init.jsp" %>
 
 <%
-FileEntry fileEntry = (FileEntry)request.getAttribute("view_entries.jsp-fileEntry");
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+FileEntry fileEntry = null;
+FileShortcut fileShortcut = null;
+
+if (row.getObject() instanceof FileEntry) {
+	fileEntry = (FileEntry)row.getObject();
+}
+else if (row.getObject() instanceof FileShortcut) {
+	fileShortcut = (FileShortcut)row.getObject();
+
+	fileShortcut = fileShortcut.toEscapedModel();
+
+	fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
+}
+
+fileEntry = fileEntry.toEscapedModel();
 
 FileVersion fileVersion = fileEntry.getFileVersion();
 
@@ -26,10 +42,6 @@ FileVersion latestFileVersion = fileVersion;
 if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
 	latestFileVersion = fileEntry.getLatestFileVersion();
 }
-
-FileShortcut fileShortcut = (FileShortcut)request.getAttribute("view_entries.jsp-fileShortcut");
-
-PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
 
 long assetClassPK = 0;
 
@@ -40,18 +52,14 @@ else {
 	assetClassPK = fileEntry.getFileEntryId();
 }
 
-String rowCheckerName = FileEntry.class.getSimpleName();
-long rowCheckerId = fileEntry.getFileEntryId();
+PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-if (fileShortcut != null) {
-	rowCheckerName = FileShortcut.class.getSimpleName();
-	rowCheckerId = fileShortcut.getFileShortcutId();
-}
+rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
+rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
+rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 %>
 
 <liferay-ui:app-view-entry
-	actionJsp="/document_library/file_entry_action.jsp"
-	actionJspServletContext="<%= application %>"
 	assetCategoryClassName="<%= DLFileEntryConstants.getClassName() %>"
 	assetCategoryClassPK="<%= assetClassPK %>"
 	assetTagClassName="<%= DLFileEntryConstants.getClassName() %>"
@@ -63,16 +71,12 @@ if (fileShortcut != null) {
 	latestApprovedVersion="<%= fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) ? null : fileVersion.getVersion() %>"
 	latestApprovedVersionAuthor="<%= fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) ? null : fileVersion.getUserName() %>"
 	locked="<%= fileEntry.isCheckedOut() %>"
+	markupView="lexicon"
 	modifiedDate="<%= latestFileVersion.getModifiedDate() %>"
-	rowCheckerId="<%= String.valueOf(rowCheckerId) %>"
-	rowCheckerName="<%= rowCheckerName %>"
 	shortcut="<%= fileShortcut != null %>"
 	showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"
 	status="<%= latestFileVersion.getStatus() %>"
-	thumbnailDivStyle="<%= DLUtil.getThumbnailStyle(false, 9, 128, 128) %>"
-	thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, themeDisplay) %>"
-	thumbnailStyle="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>"
 	title="<%= latestFileVersion.getTitle() %>"
-	url="<%= tempRowURL.toString() %>"
+	url="<%= (rowURL != null) ? rowURL.toString() : null %>"
 	version="<%= latestFileVersion.getVersion() %>"
 />

@@ -223,12 +223,12 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 <liferay-ui:search-container
 	searchContainer="<%= articleSearchContainer %>"
+	total="<%= total %>"
 	totalVar="articleSearchContainerTotal"
 >
 	<liferay-ui:search-container-results
 		results="<%= results %>"
 		resultsVar="articleSearchContainerResults"
-		total="<%= total %>"
 	/>
 
 	<liferay-ui:search-container-row

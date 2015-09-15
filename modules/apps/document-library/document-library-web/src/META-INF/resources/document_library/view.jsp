@@ -226,6 +226,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 					node: A.one(document.<portlet:namespace />fm2)
 				},
 				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
+				selectedCSSClass: 'active',
 				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? ("_" + PortletProviderUtil.getPortletId(PortalProductMenuApplicationType.ProductMenu.CLASS_NAME, PortletProvider.Action.VIEW) + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW)) : StringPool.BLANK %>',
 				updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>
 			},
@@ -244,7 +245,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 				for (Folder mountFolder : mountFolders) {
 				%>
 
-					,{
+					, {
 						id: '<%= mountFolder.getRepositoryId() %>',
 						name: '<%= HtmlUtil.escapeJS(mountFolder.getName()) %>'
 					}
@@ -254,10 +255,11 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(DLPortletKeys.
 				%>
 
 			],
-			rowIds: '<%= RowChecker.ROW_IDS %>',
+			rowIds: '<portlet:namespace /><%= RowChecker.ROW_IDS %>',
 			scopeGroupId: <%= scopeGroupId %>,
 			select: {
-				displayViews: ['<%= StringUtil.merge(escapedDisplayViews, "','") %>']
+				displayStyleCSSClass: 'list-group-item',
+				selectedCSSClass: 'active'
 			},
 			trashEnabled: <%= (scopeGroupId == repositoryId) && TrashUtil.isTrashEnabled(scopeGroupId) %>,
 			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>,

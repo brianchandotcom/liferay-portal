@@ -88,7 +88,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 		<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
 	</c:when>
 	<c:otherwise>
-		<span class="entry-action overlay">
+		<span class="<%= (row != null) ? StringPool.BLANK : "entry-action overlay" %>">
 			<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
 		</span>
 	</c:otherwise>

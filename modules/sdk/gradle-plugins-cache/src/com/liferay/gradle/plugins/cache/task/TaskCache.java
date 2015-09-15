@@ -45,7 +45,7 @@ public class TaskCache implements PatternFilterable {
 
 	public TaskCache(String name, Project project) {
 		_baseDir = project.getProjectDir();
-		_cacheFile = project.file(name + ".zip");
+		_cacheDir = project.file(".cache/" + name);
 		_name = name;
 		_project = project;
 	}
@@ -82,8 +82,8 @@ public class TaskCache implements PatternFilterable {
 		return GradleUtil.toFile(_project, _baseDir);
 	}
 
-	public File getCacheFile() {
-		return GradleUtil.toFile(_project, _cacheFile);
+	public File getCacheDir() {
+		return GradleUtil.toFile(_project, _cacheDir);
 	}
 
 	@Override
@@ -178,10 +178,10 @@ public class TaskCache implements PatternFilterable {
 			throw new GradleException("At least one test file is required");
 		}
 
-		File cacheFile = getCacheFile();
+		File cacheDir = getCacheDir();
 
 		for (File testFile : testFiles) {
-			if (!FileUtil.isUpToDate(_project, testFile, cacheFile)) {
+			if (!FileUtil.isUpToDate(_project, testFile, cacheDir)) {
 				return false;
 			}
 		}
@@ -193,8 +193,8 @@ public class TaskCache implements PatternFilterable {
 		_baseDir = baseDir;
 	}
 
-	public void setCacheFile(Object cacheFile) {
-		_cacheFile = cacheFile;
+	public void setCacheDir(Object cacheDir) {
+		_cacheDir = cacheDir;
 	}
 
 	@Override
@@ -261,7 +261,7 @@ public class TaskCache implements PatternFilterable {
 	}
 
 	private Object _baseDir;
-	private Object _cacheFile;
+	private Object _cacheDir;
 	private boolean _failIfOutOfDate;
 	private final String _name;
 	private final PatternFilterable _patternFilterable = new PatternSet();

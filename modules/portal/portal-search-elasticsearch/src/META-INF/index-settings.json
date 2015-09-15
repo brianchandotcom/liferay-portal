@@ -5,6 +5,15 @@
 					"tokenizer": "keyword",
 					"filter":  "lowercase"
 				}
+			},
+			"analyzer": {
+				"asset_tag_name": {
+					"tokenizer": "whitespace",
+					"filter": "lowercase",
+					"filter": "stop",
+					"filter": "trim",
+					"filter": "word_delimiter"
+				}
 			}
 		}
 }

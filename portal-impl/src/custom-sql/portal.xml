@@ -1467,6 +1467,60 @@
 				) AND (User_.status = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserFinder.findByUsersGroups">
+		<![CDATA[
+			SELECT
+				User_.userId, groupId
+			FROM
+				User_
+			INNER JOIN
+				Users_Groups ON
+					(Users_Groups.userId = User_.userId)
+			WHERE
+				(Users_Groups.groupId IN [$GROUP_ID$]) AND
+				(User_.companyId = ?) AND
+				(User_.defaultUser = ?) AND
+				(User_.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserFinder.findByUsersOrgs">
+		<![CDATA[
+			SELECT
+				User_.userId, groupId
+			FROM
+				User_
+			INNER JOIN
+				Users_Orgs ON
+					(Users_Orgs.userId = User_.userId)
+			INNER JOIN
+				Groups_Orgs ON
+					(Groups_Orgs.organizationId = Users_Orgs.organizationId)
+			WHERE
+				Groups_Orgs.groupId IN [$GROUP_ID$] AND
+				(User_.companyId = ?) AND
+				(User_.defaultUser = ?) AND
+				(User_.status = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserFinder.findByUsersUserGroups">
+		<![CDATA[
+			SELECT
+				User_.userId, groupId
+			FROM
+				User_
+			INNER JOIN
+				Users_UserGroups ON
+					(Users_UserGroups.userId = User_.userId)
+			INNER JOIN
+				Groups_UserGroups ON
+					(Groups_UserGroups.userGroupId = Users_UserGroups.userGroupId)
+			WHERE
+				Groups_UserGroups.groupId IN [$GROUP_ID$] AND
+				(User_.companyId = ?) AND
+				(User_.defaultUser = ?) AND
+				(User_.status = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserFinder.joinByContactTwitterSN">
 		<![CDATA[
 			INNER JOIN

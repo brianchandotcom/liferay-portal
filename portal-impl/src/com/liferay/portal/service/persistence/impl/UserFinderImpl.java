@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.persistence.impl;
 
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.orm.CustomSQLParam;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -45,6 +46,8 @@ import com.liferay.util.dao.orm.CustomSQLUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -81,6 +84,15 @@ public class UserFinderImpl
 
 	public static final String FIND_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".findByC_FN_MN_LN_SN_EA_S";
+
+	public static final String FIND_BY_USERS_GROUPS =
+		UserFinder.class.getName() + ".findByUsersGroups";
+
+	public static final String FIND_BY_USERS_ORGS =
+		UserFinder.class.getName() + ".findByUsersOrgs";
+
+	public static final String FIND_BY_USERS_USER_GROUPS =
+		UserFinder.class.getName() + ".findByUsersUserGroups";
 
 	public static final String JOIN_BY_CONTACT_TWITTER_SN =
 		UserFinder.class.getName() + ".joinByContactTwitterSN";
@@ -132,6 +144,115 @@ public class UserFinderImpl
 
 	public static final String JOIN_BY_SOCIAL_RELATION_TYPE =
 		UserFinder.class.getName() + ".joinBySocialRelationType";
+
+	@Override
+	public Map<Long, Integer> countByGroups(
+		long companyId, int status, long[] groupIds) {
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return Collections.emptyMap();
+		}
+
+		Arrays.sort(groupIds);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DB db = getDB();
+
+			boolean isSybase = DB.TYPE_SYBASE.equals(db.getType());
+
+			StringBundler sb = new StringBundler(19);
+
+			sb.append("SELECT groupId, COUNT(DISTINCT userId) FROM (");
+
+			if (isSybase) {
+				sb.append("SELECT userId, groupId FROM ");
+			}
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(CustomSQLUtil.get(FIND_BY_USERS_GROUPS));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			if (isSybase) {
+				sb.append(" USERS_GROUPS");
+			}
+
+			sb.append(" UNION ALL ");
+
+			if (isSybase) {
+				sb.append("SELECT userId, groupId FROM ");
+			}
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(CustomSQLUtil.get(FIND_BY_USERS_ORGS));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			if (isSybase) {
+				sb.append(" USERS_ORGS");
+			}
+
+			sb.append(" UNION ALL ");
+
+			if (isSybase) {
+				sb.append("SELECT userId, groupId FROM ");
+			}
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(CustomSQLUtil.get(FIND_BY_USERS_USER_GROUPS));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			if (isSybase) {
+				sb.append(" USERS_USER_GROUPS");
+			}
+
+			sb.append(") TEMP_TABLE GROUP BY groupId");
+
+			String sql = StringUtil.replace(
+				sb.toString(), "[$GROUP_ID$]",
+				StringPool.OPEN_PARENTHESIS + StringUtil.merge(groupIds) +
+					StringPool.CLOSE_PARENTHESIS);
+
+			if (status == WorkflowConstants.STATUS_ANY) {
+				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
+			}
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			for (int i = 0; i < 3; i++) {
+				qPos.add(companyId);
+				qPos.add(false);
+
+				if (status != WorkflowConstants.STATUS_ANY) {
+					qPos.add(status);
+				}
+			}
+
+			List<Object[]> list = (List<Object[]>)QueryUtil.list(
+				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			Map<Long, Integer> map = new LinkedHashMap<>(list.size());
+
+			for (Object[] objects : list) {
+				Number groupId = (Number)objects[0];
+				Number count = (Number)objects[1];
+
+				map.put(groupId.longValue(), count.intValue());
+			}
+
+			return map;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	public int countBySocialUsers(

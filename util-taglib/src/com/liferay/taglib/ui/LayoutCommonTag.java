@@ -56,7 +56,7 @@ public class LayoutCommonTag extends IncludeTag {
 			(!_DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP ||
 			 !Validator.equals(
 				 themeDisplay.getControlPanelCategory(),
-				 PortletCategoryKeys.USER))) {
+				 PortletCategoryKeys.USER_MY_ACCOUNT))) {
 
 			_includeStaticPortlets = true;
 		}

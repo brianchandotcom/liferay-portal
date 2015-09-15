@@ -2412,7 +2412,7 @@ public class PortalImpl implements Portal {
 	@Override
 	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay) {
 		List<Portlet> portlets = getControlPanelPortlets(
-			PortletCategoryKeys.USER, themeDisplay);
+			PortletCategoryKeys.USER_MY_ACCOUNT, themeDisplay);
 
 		if (portlets.isEmpty()) {
 			return null;
@@ -7775,7 +7775,9 @@ public class PortalImpl implements Portal {
 
 				return layout;
 			}
-			else if (portletCategory.equals(PortletCategoryKeys.MY)) {
+			else if (portletCategory.equals(
+						PortletCategoryKeys.USER_MY_ACCOUNT)) {
+
 				User user = null;
 
 				try {

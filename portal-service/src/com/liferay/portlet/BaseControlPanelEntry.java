@@ -173,7 +173,9 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 
 		String category = portlet.getControlPanelEntryCategory();
 
-		if ((category != null) && category.equals(PortletCategoryKeys.USER)) {
+		if ((category != null) &&
+			category.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
+
 			return true;
 		}
 

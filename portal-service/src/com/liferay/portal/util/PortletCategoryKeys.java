@@ -52,7 +52,7 @@ public class PortletCategoryKeys {
 	public static final String MARKETPLACE = "marketplace";
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #USER}
+	 * @deprecated As of 7.0.0, replaced by {@link #USER_MY_ACCOUNT}
 	 */
 	@Deprecated
 	public static final String MY = "user";
@@ -99,7 +99,7 @@ public class PortletCategoryKeys {
 
 	public static final String SITES = "sites";
 
-	public static final String USER = "user";
+	public static final String USER_MY_ACCOUNT = "user.my_account";
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_USERS}

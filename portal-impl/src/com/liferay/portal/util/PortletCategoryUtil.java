@@ -49,7 +49,7 @@ public class PortletCategoryUtil {
 			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_APPS;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "my")) {
-			legacyPortletCategoryKey = PortletCategoryKeys.USER;
+			legacyPortletCategoryKey = PortletCategoryKeys.USER_MY_ACCOUNT;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "portal")) {
 			legacyPortletCategoryKey = PortletCategoryKeys.CONTROL_PANEL_USERS;

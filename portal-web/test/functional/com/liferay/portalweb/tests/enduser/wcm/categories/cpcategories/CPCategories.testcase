@@ -809,7 +809,7 @@
 		<execute function="AssertTextNotPresent" locator1="Categories#CATEGORY_DETAILS_PROPERTY_VALUE" value1="Category Property 2 Value" />
 	</command>
 
-	<command name="DeleteSubcategoryViaActions" priority="3">
+	<command name="DeleteSubcategoryViaIcon" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -848,7 +848,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSubcategoryViaArrow" priority="5">
+	<command name="DeleteSubcategoryViaMenu" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

@@ -292,6 +292,12 @@ if (System.getenv("JENKINS_HOME")) {
 		nodeUrl = "https://nodejs.org/dist/v${nodeVersion}/node-v${nodeVersion}-linux-x64.tar.gz"
 	}
 
+	pluginManager.withPlugin("com.liferay.cache") {
+		cache {
+			forcedCache = true
+		}
+	}
+
 	startTestableTomcat {
 		ext {
 			deleteLiferayHome = false

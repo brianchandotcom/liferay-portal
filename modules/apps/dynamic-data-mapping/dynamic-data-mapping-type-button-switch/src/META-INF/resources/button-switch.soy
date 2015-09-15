@@ -1,0 +1,27 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM form button-switch field.
+ *
+ * @param childElementsHTML
+ * @param label
+ * @param name
+ * @param required
+ * @param visible
+ */
+{template .buttonSwitch}
+	<div class="form-group form-inline{$visible ? '' : ' hide'}" data-fieldname="{$name}">
+		<label class="control-label" for="{$name}">
+			<input type="hidden" name="{$name}" />
+			<div class="field" id="{$name}"></div>
+
+			{$label}
+
+			{if $required}
+				<b>*</b>
+			{/if}
+		</label>
+
+		{$childElementsHTML|noAutoescape}
+	</div>
+{/template}

@@ -137,16 +137,14 @@ public class UserInfoFactory {
 
 					cua = customUserAttributes.get(attrCustomClass);
 
+					if (cua == null) {
+						cua = createCustomUserAttributes(attrCustomClass, cua);
+					}
+
 					cua = (CustomUserAttributes)cua.clone();
 				}
 				else {
-					try {
-						cua = (CustomUserAttributes)InstanceFactory.newInstance(
-							attrCustomClass);
-					}
-					catch (Exception e) {
-						_log.error(e, e);
-					}
+					cua = createCustomUserAttributes(attrCustomClass, cua);
 				}
 
 				cuaInstances.put(attrCustomClass, cua);
@@ -162,6 +160,20 @@ public class UserInfoFactory {
 		}
 
 		return userInfo;
+	}
+
+	private static CustomUserAttributes createCustomUserAttributes(
+		String attrCustomClass, CustomUserAttributes cua) {
+
+		try {
+			cua = (CustomUserAttributes)InstanceFactory.newInstance(
+				attrCustomClass);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return cua;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

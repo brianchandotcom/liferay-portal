@@ -1185,7 +1185,7 @@ this task.
 			 />
 		</unzip>
 
-		<property name="app.server.jboss.module.file" value="${app.server.jboss.dir}/modules/sun/jdk/main/module.xml" />
+		<property name="app.server.jboss.module.file" value="${app.server.jboss.dir}/modules/system/layers/base/sun/jdk/main/module.xml" />
 
 		<replace file="${app.server.jboss.module.file}">
 			<replacetoken><![CDATA[<paths>]]></replacetoken>

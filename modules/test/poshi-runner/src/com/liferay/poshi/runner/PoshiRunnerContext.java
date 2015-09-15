@@ -515,6 +515,110 @@ public class PoshiRunnerContext {
 		}
 	}
 
+	private static void _readPoshiFile(String filePath) throws Exception {
+		String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
+			filePath);
+		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
+			filePath);
+
+		if (classType.equals("action") || classType.equals("function") ||
+			classType.equals("macro") || classType.equals("test-case")) {
+
+			Element rootElement =
+				PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
+
+			_rootElements.put(classType + "#" + className, rootElement);
+
+			if (classType.equals("test-case")) {
+				_testCaseClassNames.add(className);
+			}
+
+			if (rootElement.element("set-up") != null) {
+				Element setUpElement = rootElement.element("set-up");
+
+				String classCommandName = className + "#set-up";
+
+				_commandElements.put(
+					classType + "#" + classCommandName, setUpElement);
+			}
+
+			if (rootElement.element("tear-down") != null) {
+				Element tearDownElement = rootElement.element("tear-down");
+
+				String classCommandName = className + "#tear-down";
+
+				_commandElements.put(
+					classType + "#" + classCommandName, tearDownElement);
+			}
+
+			List<Element> commandElements = rootElement.elements("command");
+
+			for (Element commandElement : commandElements) {
+				String classCommandName =
+					className + "#" + commandElement.attributeValue("name");
+
+				if (isCommandElement(classType + "#" + classCommandName)) {
+					throw new Exception(
+						"Duplicate command name\n" + filePath + ":" +
+							commandElement.attributeValue("line-number"));
+				}
+
+				_commandElements.put(
+					classType + "#" + classCommandName, commandElement);
+
+				_commandSummaries.put(
+					classType + "#" + classCommandName,
+					_getCommandSummary(
+						classCommandName, classType, commandElement));
+
+				if (Validator.equals(classType, "test-case") &&
+					Validator.isNotNull(
+						commandElement.attributeValue("description"))) {
+
+					_testCaseDescriptions.put(
+						classCommandName,
+						commandElement.attributeValue("description"));
+				}
+			}
+
+			if (classType.equals("function")) {
+				String defaultClassCommandName =
+					className + "#" + rootElement.attributeValue("default");
+
+				Element defaultCommandElement = getFunctionCommandElement(
+					defaultClassCommandName);
+
+				_commandElements.put(
+					classType + "#" + className, defaultCommandElement);
+
+				_commandSummaries.put(
+					classType + "#" + className,
+					_getCommandSummary(
+						defaultClassCommandName, classType,
+						defaultCommandElement));
+
+				String xml = rootElement.asXML();
+
+				for (int i = 1;; i++) {
+					if (xml.contains("${locator" + i + "}")) {
+						continue;
+					}
+
+					if (i > 1) {
+						i--;
+					}
+
+					_functionLocatorCounts.put(className, i);
+
+					break;
+				}
+			}
+		}
+		else if (classType.equals("path")) {
+			_readPathFile(filePath, className, null);
+		}
+	}
+
 	private static void _readPoshiFiles() throws Exception {
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
@@ -540,107 +644,7 @@ public class PoshiRunnerContext {
 				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
 				filePath);
 
-			String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
-				filePath);
-			String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
-				filePath);
-
-			if (classType.equals("action") || classType.equals("function") ||
-				classType.equals("macro") || classType.equals("test-case")) {
-
-				Element rootElement =
-					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
-
-				_rootElements.put(classType + "#" + className, rootElement);
-
-				if (classType.equals("test-case")) {
-					_testCaseClassNames.add(className);
-				}
-
-				if (rootElement.element("set-up") != null) {
-					Element setUpElement = rootElement.element("set-up");
-
-					String classCommandName = className + "#set-up";
-
-					_commandElements.put(
-						classType + "#" + classCommandName, setUpElement);
-				}
-
-				if (rootElement.element("tear-down") != null) {
-					Element tearDownElement = rootElement.element("tear-down");
-
-					String classCommandName = className + "#tear-down";
-
-					_commandElements.put(
-						classType + "#" + classCommandName, tearDownElement);
-				}
-
-				List<Element> commandElements = rootElement.elements("command");
-
-				for (Element commandElement : commandElements) {
-					String classCommandName =
-						className + "#" + commandElement.attributeValue("name");
-
-					if (isCommandElement(classType + "#" + classCommandName)) {
-						throw new Exception(
-							"Duplicate command name\n" + filePath + ":" +
-								commandElement.attributeValue("line-number"));
-					}
-
-					_commandElements.put(
-						classType + "#" + classCommandName, commandElement);
-
-					_commandSummaries.put(
-						classType + "#" + classCommandName,
-						_getCommandSummary(
-							classCommandName, classType, commandElement));
-
-					if (Validator.equals(classType, "test-case") &&
-						Validator.isNotNull(
-							commandElement.attributeValue("description"))) {
-
-						_testCaseDescriptions.put(
-							classCommandName,
-							commandElement.attributeValue("description"));
-					}
-				}
-
-				if (classType.equals("function")) {
-					String defaultClassCommandName =
-						className + "#" + rootElement.attributeValue("default");
-
-					Element defaultCommandElement = getFunctionCommandElement(
-						defaultClassCommandName);
-
-					_commandElements.put(
-						classType + "#" + className, defaultCommandElement);
-
-					_commandSummaries.put(
-						classType + "#" + className,
-						_getCommandSummary(
-							defaultClassCommandName, classType,
-							defaultCommandElement));
-
-					String xml = rootElement.asXML();
-
-					for (int i = 1;; i++) {
-						if (xml.contains("${locator" + i + "}")) {
-							continue;
-						}
-
-						if (i > 1) {
-							i--;
-						}
-
-						_functionLocatorCounts.put(className, i);
-
-						break;
-					}
-				}
-			}
-			else if (classType.equals("path")) {
-				_readPathFile(filePath, className, null);
-			}
+			_readPoshiFile(filePath);
 		}
 
 		_initComponentCommandNamesMap();

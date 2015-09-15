@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -121,6 +122,21 @@ public class DDMTemplateFinderImpl
 	}
 
 	@Override
+	public int countByC_G_C_C_R_T_M(
+		long companyId, long[] groupIds, long classNameId, long classPK,
+		long resourceClassNameId, String type, String mode) {
+
+		long[] classNameIds = new long[] {classNameId};
+		long[] classPKs = new long[] {classPK};
+		String[] types = CustomSQLUtil.keywords(type, false);
+		String[] modes = CustomSQLUtil.keywords(mode, false);
+
+		return doCountByC_G_C_C_R_N_D_T_M_L(
+			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
+			null, null, types, modes, null, true, false);
+	}
+
+	@Override
 	public int countByC_G_C_C_R_N_D_T_M_L(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, String name, String description, String type,
@@ -180,6 +196,55 @@ public class DDMTemplateFinderImpl
 		return doCountByC_G_C_C_R_N_D_T_M_L(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
 			names, descriptions, types, modes, languages, andOperator, false);
+	}
+
+	@Override
+	public int filterCountByC_G_C_C_R_T_M(
+		long companyId, long[] groupIds, long classNameId, long classPK,
+		long resourceClassNameId, String type, String mode) {
+
+		long[] classNameIds = new long[] {classNameId};
+		long[] classPKs = new long[] {classPK};
+		String[] types = CustomSQLUtil.keywords(type, false);
+		String[] modes = CustomSQLUtil.keywords(mode, false);
+
+		return doCountByC_G_C_C_R_N_D_T_M_L(
+			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
+			null, null, types, modes, null, true, true);
+	}
+
+	@Override
+	public List<DDMTemplate> findByC_G_C_C_R_T_M(
+		long companyId, long[] groupIds, long classNameId, long classPK,
+		long resourceClassNameId, String type, String mode, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator) {
+
+		long[] classNameIds = new long[] {classNameId};
+		long[] classPKs = new long[] {classPK};
+		String[] types = CustomSQLUtil.keywords(type, false);
+		String[] modes = CustomSQLUtil.keywords(mode, false);
+
+		return doFindByC_G_C_C_R_N_D_T_M_L(
+			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
+			null, null, types, modes, null, true, start, end, orderByComparator,
+			false);
+	}
+
+	@Override
+	public List<DDMTemplate> filterFindByC_G_C_C_R_T_M(
+		long companyId, long[] groupIds, long classNameId, long classPK,
+		long resourceClassNameId, String type, String mode, int start, int end,
+		OrderByComparator<DDMTemplate> orderByComparator) {
+
+		long[] classNameIds = new long[] {classNameId};
+		long[] classPKs = new long[] {classPK};
+		String[] types = CustomSQLUtil.keywords(type, false);
+		String[] modes = CustomSQLUtil.keywords(mode, false);
+
+		return doFindByC_G_C_C_R_N_D_T_M_L(
+			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
+			null, null, types, modes, null, true, start, end, orderByComparator,
+			true);
 	}
 
 	@Override
@@ -624,8 +689,10 @@ public class DDMTemplateFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
-					groupIds);
+					sql,
+					DDMTemplatePermission.getTemplateModelResourceName(
+						structureClassNameId),
+					"DDMTemplate.templateId", groupIds);
 			}
 
 			sql = StringUtil.replace(
@@ -685,8 +752,10 @@ public class DDMTemplateFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
-					groupIds);
+					sql,
+					DDMTemplatePermission.getTemplateModelResourceName(
+						resourceClassNameId),
+					"DDMTemplate.templateId", groupIds);
 			}
 
 			sql = StringUtil.replace(
@@ -768,8 +837,10 @@ public class DDMTemplateFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
-					groupIds);
+					sql,
+					DDMTemplatePermission.getTemplateModelResourceName(
+						structureClassNameId),
+					"DDMTemplate.templateId", groupIds);
 			}
 
 			sql = StringUtil.replace(
@@ -825,8 +896,10 @@ public class DDMTemplateFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMTemplate.class.getName(), "DDMTemplate.templateId",
-					groupIds);
+					sql,
+					DDMTemplatePermission.getTemplateModelResourceName(
+						resourceClassNameId),
+					"DDMTemplate.templateId", groupIds);
 			}
 
 			sql = StringUtil.replace(

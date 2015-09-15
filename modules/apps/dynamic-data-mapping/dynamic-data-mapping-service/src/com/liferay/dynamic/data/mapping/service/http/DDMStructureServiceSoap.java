@@ -556,82 +556,32 @@ public class DDMStructureServiceSoap {
 		}
 	}
 
-	/**
-	* Returns all the structures in the group that the user has permission to
-	* view.
-	*
-	* @param groupId the primary key of the group
-	* @return the structures in the group that the user has permission to view
-	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap[] getStructures(
-		long groupId) throws RemoteException {
-		try {
-			java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> returnValue =
-				DDMStructureServiceUtil.getStructures(groupId);
-
-			return com.liferay.dynamic.data.mapping.model.DDMStructureSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* Returns all the structures in the groups that the user has permission to
-	* view.
-	*
-	* @param groupIds the primary key of the groups
-	* @return the structures in the groups that the user has permission to view
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap[] getStructures(
-		long[] groupIds) throws RemoteException {
-		try {
-			java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> returnValue =
-				DDMStructureServiceUtil.getStructures(groupIds);
-
-			return com.liferay.dynamic.data.mapping.model.DDMStructureSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* Returns all the structures matching the groups and class name ID that the
-	* user has permission to view.
-	*
-	* @param groupIds the primary keys of the groups
-	* @param classNameId the primary key of the class name for the structure's
-	related model
-	* @return the structures matching the groups and class name ID that the
-	user has permission to view
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap[] getStructures(
-		long[] groupIds, long classNameId) throws RemoteException {
-		try {
-			java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> returnValue =
-				DDMStructureServiceUtil.getStructures(groupIds, classNameId);
-
-			return com.liferay.dynamic.data.mapping.model.DDMStructureSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap[] getStructures(
-		long[] groupIds, long classNameId, int start, int end)
+		long companyId, long[] groupIds, long classNameId, int status)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> returnValue =
-				DDMStructureServiceUtil.getStructures(groupIds, classNameId,
-					start, end);
+				DDMStructureServiceUtil.getStructures(companyId, groupIds,
+					classNameId, status);
+
+			return com.liferay.dynamic.data.mapping.model.DDMStructureSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMStructureSoap[] getStructures(
+		long companyId, long[] groupIds, long classNameId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> returnValue =
+				DDMStructureServiceUtil.getStructures(companyId, groupIds,
+					classNameId, status, start, end, orderByComparator);
 
 			return com.liferay.dynamic.data.mapping.model.DDMStructureSoap.toSoapModels(returnValue);
 		}

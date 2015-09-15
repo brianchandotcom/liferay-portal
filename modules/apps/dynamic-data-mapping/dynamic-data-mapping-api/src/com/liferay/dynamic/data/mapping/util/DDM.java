@@ -39,8 +39,6 @@ import javax.portlet.PortletRequest;
  */
 public interface DDM {
 
-	public DDMDisplay getDDMDisplay(long classNameId) throws PortalException;
-
 	public DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException;
 
@@ -57,8 +55,6 @@ public interface DDM {
 			long ddmStructureId, String fieldNamespace,
 			ServiceContext serviceContext)
 		throws PortalException;
-
-	public DDMPermissionHandler getDDMPermissionHandler(long classNameId);
 
 	public DDMFormLayout getDefaultDDMFormLayout(DDMForm ddmForm);
 

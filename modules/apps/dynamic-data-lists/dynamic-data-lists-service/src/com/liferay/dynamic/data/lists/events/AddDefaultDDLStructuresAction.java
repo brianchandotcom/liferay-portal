@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.events;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
@@ -97,6 +98,11 @@ public class AddDefaultDDLStructuresAction extends SimpleAction {
 		CompanyLocalService companyLocalService) {
 
 		_companyLocalService = companyLocalService;
+	}
+
+	@Reference
+	protected void setDDLRecordSetLocalService(
+		DDLRecordSetLocalService ddlRecordSetLocalService) {
 	}
 
 	@Reference

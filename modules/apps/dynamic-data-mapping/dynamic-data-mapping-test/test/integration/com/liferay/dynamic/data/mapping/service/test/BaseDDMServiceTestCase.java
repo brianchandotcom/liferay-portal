@@ -53,19 +53,20 @@ public class BaseDDMServiceTestCase {
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
 
-		ddmStructureTestHelper = new DDMStructureTestHelper(group);
+		ddmStructureTestHelper = new DDMStructureTestHelper(
+			PortalUtil.getClassNameId(DDL_RECORD_SET_CLASS_NAME), group);
 		ddmStructureLayoutTestHelper = new DDMStructureLayoutTestHelper(group);
 	}
 
 	protected DDMTemplate addDisplayTemplate(
-			long classNameId, long classPK, long sourceClassNameId, String name,
-			String description)
+			long classNameId, long classPK, long resourceClassNameId,
+			String name, String description)
 		throws Exception {
 
 		String language = TemplateConstants.LANG_TYPE_VM;
 
 		return addTemplate(
-			classNameId, classPK, sourceClassNameId, StringPool.BLANK, name,
+			classNameId, classPK, resourceClassNameId, StringPool.BLANK, name,
 			description, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 			StringPool.BLANK, language, getTestTemplateScript(language));
 	}
@@ -168,16 +169,16 @@ public class BaseDDMServiceTestCase {
 	}
 
 	protected DDMTemplate addTemplate(
-			long classNameId, long classPK, long sourceClassNameId,
+			long classNameId, long classPK, long resourceClassNameId,
 			String templateKey, String name, String description, String type,
 			String mode, String language, String script)
 		throws Exception {
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
 			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
-			classPK, sourceClassNameId, templateKey, getDefaultLocaleMap(name),
-			getDefaultLocaleMap(description), type, mode, language, script,
-			false, false, null, null,
+			classPK, resourceClassNameId, templateKey,
+			getDefaultLocaleMap(name), getDefaultLocaleMap(description), type,
+			mode, language, script, false, false, null, null,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
@@ -196,8 +197,9 @@ public class BaseDDMServiceTestCase {
 		throws Exception {
 
 		return addTemplate(
-			classNameId, classPK, 0, templateKey, name, StringPool.BLANK, type,
-			mode, language, script);
+			classNameId, classPK,
+			PortalUtil.getClassNameId(DDL_RECORD_SET_CLASS_NAME), templateKey,
+			name, StringPool.BLANK, type, mode, language, script);
 	}
 
 	protected String getBasePath() {
@@ -234,6 +236,12 @@ public class BaseDDMServiceTestCase {
 		return StringUtil.read(
 			clazz.getClassLoader(), getBasePath() + fileName);
 	}
+
+	protected static final String DDL_RECORD_CLASS_NAME =
+		"com.liferay.dynamic.data.lists.model.DDLRecord";
+
+	protected static final String DDL_RECORD_SET_CLASS_NAME =
+		"com.liferay.dynamic.data.lists.model.DDLRecordSet";
 
 	protected DDMStructureLayoutTestHelper ddmStructureLayoutTestHelper;
 	protected DDMStructureTestHelper ddmStructureTestHelper;

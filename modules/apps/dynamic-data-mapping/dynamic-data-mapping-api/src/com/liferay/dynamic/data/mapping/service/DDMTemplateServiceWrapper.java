@@ -299,83 +299,76 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		return _ddmTemplateService.getTemplate(templateId);
 	}
 
-	/**
-	* Returns all the templates matching the group and class name ID.
-	*
-	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the class name for template's
-	related model
-	* @return the matching templates
-	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
-		long groupId, long classNameId) {
-		return _ddmTemplateService.getTemplates(groupId, classNameId);
-	}
-
-	/**
-	* Returns all the templates matching the group, class name ID, and class
-	* PK.
-	*
-	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the class name for template's
-	related model
-	* @param classPK the primary key of the template's related entity
-	* @return the matching templates
-	*/
-	@Override
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
-		long groupId, long classNameId, long classPK) {
-		return _ddmTemplateService.getTemplates(groupId, classNameId, classPK);
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId) {
+		return _ddmTemplateService.getTemplates(companyId, groupId,
+			classNameId, classPK, resourceClassNameId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
-		long groupId, long classNameId, long classPK,
-		boolean includeAncestorTemplates)
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId, boolean includeAncestorTemplates)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _ddmTemplateService.getTemplates(groupId, classNameId, classPK,
-			includeAncestorTemplates);
+		return _ddmTemplateService.getTemplates(companyId, groupId,
+			classNameId, classPK, resourceClassNameId, includeAncestorTemplates);
 	}
 
 	/**
 	* Returns all the templates matching the class name ID, class PK, type, and
 	* mode.
 	*
+	* @param companyId the primary key of the template's company
 	* @param groupId the primary key of the group
 	* @param classNameId the primary key of the class name for template's
 	related model
 	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @param type the template's type. For more information, see {@link
 	com.liferay.dynamic.data.mapping.model.DDMTemplateConstants}.
 	* @return the matching templates
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
-		long groupId, long classNameId, long classPK, java.lang.String type) {
-		return _ddmTemplateService.getTemplates(groupId, classNameId, classPK,
-			type);
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId, java.lang.String type) {
+		return _ddmTemplateService.getTemplates(companyId, groupId,
+			classNameId, classPK, resourceClassNameId, type);
 	}
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
-		long groupId, long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode) {
-		return _ddmTemplateService.getTemplates(groupId, classNameId, classPK,
-			type, mode);
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId, java.lang.String type, java.lang.String mode) {
+		return _ddmTemplateService.getTemplates(companyId, groupId,
+			classNameId, classPK, resourceClassNameId, type, mode);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
+		long companyId, long groupId, long classNameId, long resourceClassNameId) {
+		return _ddmTemplateService.getTemplates(companyId, groupId,
+			classNameId, resourceClassNameId);
 	}
 
 	/**
 	* Returns all the templates matching the group and class PK.
 	*
+	* @param companyId the primary key of the template's company
 	* @param groupId the primary key of the group
 	* @param classPK the primary key of the template's related entity
+	* @param resourceClassNameId the primary key of the class name for
+	template's resource model
 	* @return the matching templates
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplatesByClassPK(
-		long groupId, long classPK) {
-		return _ddmTemplateService.getTemplatesByClassPK(groupId, classPK);
+		long companyId, long groupId, long classPK, long resourceClassNameIs) {
+		return _ddmTemplateService.getTemplatesByClassPK(companyId, groupId,
+			classPK, resourceClassNameIs);
 	}
 
 	/**

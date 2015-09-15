@@ -32,6 +32,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.service.base.DDMStructureLocalServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
@@ -373,11 +374,14 @@ public class DDMStructureLocalServiceImpl
 			boolean addGuestPermissions)
 		throws PortalException {
 
+		String resourceName =
+			DDMStructurePermission.getStructureModelResourceName(
+				structure.getClassNameId());
+
 		resourceLocalService.addResources(
 			structure.getCompanyId(), structure.getGroupId(),
-			structure.getUserId(), DDMStructure.class.getName(),
-			structure.getStructureId(), false, addGroupPermissions,
-			addGuestPermissions);
+			structure.getUserId(), resourceName, structure.getStructureId(),
+			false, addGroupPermissions, addGuestPermissions);
 	}
 
 	/**
@@ -392,10 +396,14 @@ public class DDMStructureLocalServiceImpl
 			DDMStructure structure, ModelPermissions modelPermissions)
 		throws PortalException {
 
+		String resourceName =
+			DDMStructurePermission.getStructureModelResourceName(
+				structure.getClassNameId());
+
 		resourceLocalService.addModelResources(
 			structure.getCompanyId(), structure.getGroupId(),
-			structure.getUserId(), DDMStructure.class.getName(),
-			structure.getStructureId(), modelPermissions);
+			structure.getUserId(), resourceName, structure.getStructureId(),
+			modelPermissions);
 	}
 
 	/**

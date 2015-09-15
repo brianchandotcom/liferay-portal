@@ -6337,6 +6337,16 @@ jdbc.default.password=${database.mysql.password}</echo>
 					</then>
 				</if>
 
+				<if>
+					<available file="${liferay.home}/logs/liferay.${current.date}.log" />
+					<then>
+						<copy
+							file="${liferay.home}/logs/liferay.${current.date}.log"
+							tofile="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/liferay.log"
+						/>
+					</then>
+				</if>
+
 				<antcall target="run-poshi-evaluate-console" />
 
 				<antcall target="build-test-results-xml" />

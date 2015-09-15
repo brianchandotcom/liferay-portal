@@ -69,6 +69,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_ROW</td>
+	<td>//button[contains(@class,'add-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ROW_N</td>
+	<td>xpath=(//button[contains(@class,'add-row')])[${key_rowIndexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ROW_LAST</td>
+	<td>xpath=(//button[contains(@class,'add-row')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_SUBFOLDER</td>
 	<td>//a[contains(.,'Add Subfolder')]</td>
 	<td></td>
@@ -211,6 +226,21 @@
 <tr>
 	<td>DELETE</td>
 	<td>//button[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_ROW</td>
+	<td>//button[contains(@class,'delete-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_ROW_N</td>
+	<td>xpath=(//button[contains(@class,'delete-row')])[${key_rowIndexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_ROW_LAST</td>
+	<td>xpath=(//button[contains(@class,'delete-row')])[last()]</td>
 	<td></td>
 </tr>
 <tr>

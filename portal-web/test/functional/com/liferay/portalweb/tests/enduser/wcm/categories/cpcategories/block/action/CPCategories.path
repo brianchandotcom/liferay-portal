@@ -44,6 +44,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_categoryName}')]//input</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBCATEGORY_CHECKBOX</td>
 	<td>//tr[contains(.,'${key_subcategoryName}')]/td[1]/input</td>
 	<td></td>

@@ -67,9 +67,9 @@ public class SoyTemplate extends AbstractTemplate {
 				new TemplatePrivilegedExceptionAction(templateResource));
 		}
 		else {
-			String templateContent = getTemplateContent(templateResource);
-
 			Builder builder = new SoyFileSet.Builder();
+
+			String templateContent = getTemplateContent(templateResource);
 
 			builder.add(templateContent, templateResource.getTemplateId());
 
@@ -173,9 +173,9 @@ public class SoyTemplate extends AbstractTemplate {
 
 		@Override
 		public SoyFileSet run() throws Exception {
-			String templateContent = getTemplateContent(_templateResource);
-
 			Builder builder = new SoyFileSet.Builder();
+
+			String templateContent = getTemplateContent(_templateResource);
 
 			builder.add(templateContent, _templateResource.getTemplateId());
 

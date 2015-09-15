@@ -94,23 +94,16 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddEntryWithoutSmallImage() throws Exception {
-		BlogsEntry expectedEntry = testAddEntry(false);
+	public void testAddEntry() throws Exception {
+		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+			_group.getGroupId(), _statusApprovedQueryDefinition);
 
-		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
-			expectedEntry.getEntryId());
+		addEntry(false);
 
-		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);
-	}
+		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
+			_group.getGroupId(), _statusApprovedQueryDefinition);
 
-	@Test
-	public void testAddEntryWithSmallImage() throws Exception {
-		BlogsEntry expectedEntry = testAddEntry(true);
-
-		BlogsEntry actualEntry = BlogsEntryLocalServiceUtil.getBlogsEntry(
-			expectedEntry.getEntryId());
-
-		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);
+		Assert.assertEquals(initialCount + 1, actualCount);
 	}
 
 	@Test(expected = EntryContentException.class)
@@ -515,29 +508,6 @@ public class BlogsEntryLocalServiceTest {
 		return entry;
 	}
 
-	protected BlogsEntry addEntryWithSmallImage(long userId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), userId);
-
-		FileEntry fileEntry = getTempFileEntry(userId, serviceContext);
-
-		ImageSelector coverImageSelector = null;
-		ImageSelector smallImageSelector = new ImageSelector(
-			fileEntry.getFileEntryId(), StringPool.BLANK, null);
-
-		Calendar displayCalendar = CalendarFactoryUtil.getCalendar(2012, 1, 1);
-
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			userId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), displayCalendar.getTime(), true,
-			true, new String[0], StringPool.BLANK, coverImageSelector,
-			smallImageSelector, serviceContext);
-
-		return entry;
-	}
-
 	protected void assertBlogsEntriesStatus(
 		List<BlogsEntry> entries, boolean statusInTrash) {
 
@@ -554,62 +524,6 @@ public class BlogsEntryLocalServiceTest {
 					WorkflowConstants.STATUS_IN_TRASH, entry.getStatus());
 			}
 		}
-	}
-
-	protected FileEntry getTempFileEntry(
-			long userId, ServiceContext serviceContext)
-		throws Exception {
-
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portal/util/dependencies/test.jpg");
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = TempFileEntryUtil.getTempFileEntry(
-				serviceContext.getScopeGroupId(), userId,
-				BlogsEntry.class.getName(), "image.jpg");
-		}
-		catch (Exception e) {
-			fileEntry = TempFileEntryUtil.addTempFileEntry(
-				serviceContext.getScopeGroupId(), userId,
-				BlogsEntry.class.getName(), "image.jpg", inputStream,
-				MimeTypesUtil.getContentType("image.jpg"));
-		}
-
-		return fileEntry;
-	}
-
-	protected BlogsEntry testAddEntry(boolean smallImage) throws Exception {
-		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-			_group.getGroupId(), _statusApprovedQueryDefinition);
-
-		BlogsEntry entry = null;
-
-		if (smallImage) {
-			entry = addEntryWithSmallImage(_user.getUserId());
-		}
-		else {
-			entry = addEntry(false);
-		}
-
-		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
-			_group.getGroupId(), _statusApprovedQueryDefinition);
-
-		Assert.assertEquals(initialCount + 1, actualCount);
-
-		if (smallImage) {
-			Assert.assertTrue(entry.isSmallImage());
-		}
-		else {
-			Assert.assertFalse(entry.isSmallImage());
-		}
-
-		return entry;
 	}
 
 	protected void testGetCompanyEntries(boolean statusInTrash)

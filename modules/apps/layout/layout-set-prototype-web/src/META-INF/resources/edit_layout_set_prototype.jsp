@@ -73,7 +73,7 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 
 <portlet:actionURL name="updateLayoutSetPrototype" var="updateLayoutSetPrototypeURL" />
 
-<aui:form action="<%= updateLayoutSetPrototypeURL %>" method="post" name="fm">
+<aui:form action="<%= updateLayoutSetPrototypeURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="layoutSetPrototypeId" type="hidden" value="<%= layoutSetPrototypeId %>" />
 
@@ -118,9 +118,9 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 		</c:if>
 
 		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>

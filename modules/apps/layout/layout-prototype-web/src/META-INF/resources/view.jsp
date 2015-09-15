@@ -22,8 +22,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 <liferay-ui:error exception="<%= RequiredLayoutPrototypeException.class %>" message="you-cannot-delete-page-templates-that-are-used-by-a-page" />
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
-
 <aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -90,3 +88,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_PROTOTYPE) %>">
+	<portlet:renderURL var="addLayoutPrototypeURL">
+		<portlet:param name="mvcPath" value="/edit_layout_prototype.jsp" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addLayoutPrototypeURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>

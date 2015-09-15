@@ -32,6 +32,7 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
@@ -83,6 +84,7 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
@@ -208,7 +210,7 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_CATEGORY" value1="${categoryName}" />
-		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="CPCategoriesEdit#NAME_FIELD" value1="${categoryNameEdit}" />
@@ -232,7 +234,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<execute function="Type" locator1="CPCategoriesEdit#NAME_FIELD" value1="${categoryNameEdit}" />
@@ -274,8 +276,8 @@
 		<if>
 			<equals arg1="${propertyNumber}" arg2="0" />
 			<then>
-				<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-				<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
 				<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 				<var name="key_pathNumber" value="${pathNumber}" />
@@ -318,6 +320,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" value1="${categoryName}" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 

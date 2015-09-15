@@ -163,6 +163,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -228,6 +229,7 @@
 		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="false" />
 			<then>
+				<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
 				<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
 				<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 				<execute function="AssertNotChecked" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
@@ -270,6 +272,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
@@ -303,6 +306,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 

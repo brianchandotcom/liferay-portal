@@ -40,6 +40,9 @@ public final class SummaryLoggerHandler {
 
 			_failStepLoggerElement(_majorStepLoggerElement);
 
+			_summaryLogLoggerElement.addChildLoggerElement(
+				_getScreenshotsLoggerElement());
+
 			_stopMajorStep();
 		}
 
@@ -300,6 +303,127 @@ public final class SummaryLoggerHandler {
 
 		loggerElement.setClassName("content minor-steps");
 		loggerElement.setName("ul");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getScreenshotsAfterHeaderLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setText("After Failure:");
+		loggerElement.setName("h5");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getScreenshotsAfterLinkLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("screenshots/after");
+		sb.append(CommandLoggerHandler.getErrorLinkId());
+		sb.append(".jpg");
+
+		loggerElement.setAttribute("href", sb.toString());
+		loggerElement.setAttribute("title", "After Failure");
+		loggerElement.setName("a");
+
+		loggerElement.addChildLoggerElement(
+			_getScreenshotsAfterThumbnailLoggerElement());
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getScreenshotsAfterThumbnailLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("screenshots/after");
+		sb.append(CommandLoggerHandler.getErrorLinkId());
+		sb.append(".jpg");
+
+		loggerElement.setAttribute("alt", "After Failure");
+		loggerElement.setAttribute("src", sb.toString());
+		loggerElement.setClassName("screenshots-thumbnail");
+		loggerElement.setName("img");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getScreenshotsBeforeHeaderLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setText("Before Failure:");
+		loggerElement.setName("h5");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getScreenshotsBeforeLinkLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("screenshots/before");
+		sb.append(CommandLoggerHandler.getErrorLinkId());
+		sb.append(".jpg");
+
+		loggerElement.setAttribute("href", sb.toString());
+		loggerElement.setAttribute("title", "Before Failure");
+		loggerElement.setName("a");
+
+		loggerElement.addChildLoggerElement(
+			_getScreenshotsBeforeThumbnailLoggerElement());
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getScreenshotsBeforeThumbnailLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("screenshots/before");
+		sb.append(CommandLoggerHandler.getErrorLinkId());
+		sb.append(".jpg");
+
+		loggerElement.setAttribute("alt", "Before Failure");
+		loggerElement.setAttribute("src", sb.toString());
+		loggerElement.setClassName("screenshots-thumbnail");
+		loggerElement.setName("img");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getScreenshotsHeaderLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("screenshots-header");
+		loggerElement.setName("h4");
+		loggerElement.setText("Screenshots:");
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getScreenshotsLoggerElement() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("screenshots");
+
+		loggerElement.addChildLoggerElement(
+			_getScreenshotsHeaderLoggerElement());
+
+		loggerElement.addChildLoggerElement(
+			_getScreenshotsBeforeHeaderLoggerElement());
+		loggerElement.addChildLoggerElement(
+			_getScreenshotsBeforeLinkLoggerElement());
+
+		loggerElement.addChildLoggerElement(
+			_getScreenshotsAfterHeaderLoggerElement());
+		loggerElement.addChildLoggerElement(
+			_getScreenshotsAfterLinkLoggerElement());
 
 		return loggerElement;
 	}

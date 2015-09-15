@@ -22,7 +22,7 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 %>
 
-<aui:nav-bar>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 		<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, DDLActionKeys.ADD_RECORD_SET) %>">
 

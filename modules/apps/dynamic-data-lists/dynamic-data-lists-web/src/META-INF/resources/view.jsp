@@ -21,6 +21,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view.jsp");
 %>
+<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
+
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
@@ -35,8 +37,6 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 	
 			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 			%>
-	
-			<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 	
 			<liferay-ui:search-container-results>
 				<%@ include file="/record_set_search_results.jspf" %>

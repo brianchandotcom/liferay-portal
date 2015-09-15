@@ -4554,16 +4554,26 @@ module.framework.properties.osgi.console=11312</echo>
 			<format pattern="yyyy-MM-dd" property="current.date" timezone="GMT" />
 		</tstamp>
 
+		<local name="project.dir.unix" />
+
+		<propertyregex
+			global="true"
+			input="${project.dir}"
+			property="project.dir.unix"
+			regexp="\\"
+			replace="/"
+		/>
+
 		<echo append="true" file="${test.ext.properties.file}">
 			component.names=${component.names}
-			ignore.errors.file.name=${project.dir}/portal-web/test-ignorable-error-lines.xml
+			ignore.errors.file.name=${project.dir.unix}/portal-web/test-ignorable-error-lines.xml
 			product.names=${product.names}
-			project.dir=${project.dir}
+			project.dir=${project.dir.unix}
 			test.case.available.property.names=${test.case.available.property.names}
 			test.console.log.file.name=${liferay.home}/logs/liferay.${current.date}.xml
-			test.console.shut.down.file.name=${project.dir}/console-shut-down
+			test.console.shut.down.file.name=${project.dir.unix}/console-shut-down
 			test.dependencies.dir.name=dependencies
-			test.poshi.warnings.file.name=${project.dir}/poshi-warnings.xml
+			test.poshi.warnings.file.name=${project.dir.unix}/poshi-warnings.xml
 		</echo>
 
 		<if>

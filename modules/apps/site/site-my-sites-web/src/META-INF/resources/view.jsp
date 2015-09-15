@@ -66,6 +66,8 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			groupParams.put("types", types);
 			groupParams.put("active", Boolean.TRUE);
 		}
+
+		Map<Long, Integer> membersCounts = Collections.emptyMap();
 		%>
 
 		<liferay-ui:search-container-results>
@@ -87,6 +89,10 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 			}
 
 			searchContainer.setResults(results);
+
+			long[] groupIds = ListUtil.toLongArray(results, Group.GROUP_ID_ACCESSOR);
+
+			membersCounts = UserLocalServiceUtil.searchCounts(company.getCompanyId(), WorkflowConstants.STATUS_APPROVED, groupIds);
 			%>
 
 		</liferay-ui:search-container-results>
@@ -137,16 +143,9 @@ request.setAttribute("view.jsp-tabs1", tabs1);
 				</c:if>
 			</liferay-ui:search-container-column-text>
 
-			<%
-			LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-			userParams.put("inherit", Boolean.TRUE);
-			userParams.put("usersGroups", Long.valueOf(group.getGroupId()));
-			%>
-
 			<liferay-ui:search-container-column-text
 				name="members"
-				value="<%= String.valueOf(UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams)) %>"
+				value="<%= String.valueOf(membersCounts.get(group.getGroupId())) %>"
 			/>
 
 			<c:if test='<%= tabs1.equals("my-sites") && PropsValues.LIVE_USERS_ENABLED %>'>

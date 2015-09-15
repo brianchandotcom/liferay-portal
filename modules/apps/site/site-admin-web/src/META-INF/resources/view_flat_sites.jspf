@@ -32,6 +32,8 @@
 		groupParams.put("usersGroups", Long.valueOf(user.getUserId()));
 		//groupParams.put("active", Boolean.TRUE);
 	}
+
+	Map<Long, Integer> membersCounts = Collections.emptyMap();
 	%>
 
 	<liferay-ui:search-container-results>
@@ -53,6 +55,10 @@
 		}
 
 		searchContainer.setResults(results);
+
+		long[] groupIds = ListUtil.toLongArray(results, Group.GROUP_ID_ACCESSOR);
+
+		membersCounts = UserLocalServiceUtil.searchCounts(company.getCompanyId(), WorkflowConstants.STATUS_APPROVED, groupIds);
 		%>
 
 	</liferay-ui:search-container-results>

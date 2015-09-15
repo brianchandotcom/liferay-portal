@@ -100,12 +100,7 @@
 >
 
 	<%
-	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
-
-	userParams.put("inherit", Boolean.TRUE);
-	userParams.put("usersGroups", Long.valueOf(curGroup.getGroupId()));
-
-	int usersCount = UserLocalServiceUtil.searchCount(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams);
+	int usersCount = GetterUtil.getInteger(membersCounts.get(curGroup.getGroupId()));
 	%>
 
 	<c:if test="<%= usersCount > 0 %>">

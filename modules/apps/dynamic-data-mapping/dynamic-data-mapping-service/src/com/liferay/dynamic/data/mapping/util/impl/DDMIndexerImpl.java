@@ -248,19 +248,19 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 		String indexType = StringPool.BLANK;
 
-		if (Validator.isNotNull(ddmStructureId)) {
+		if (ddmStructureId > 0) {
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.fetchDDMStructure(ddmStructureId);
 
-			if (Validator.isNotNull(ddmStructure)) {
+			if (ddmStructure != null) {
 				try {
 					indexType = ddmStructure.getFieldProperty(
 						fieldName, "indexType");
 				}
 				catch (PortalException e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(e, e);
-					}
+					throw new IllegalArgumentException(
+						"Cannot obtain indexType for field: " + fieldName +
+							" for ddmStructureId " + ddmStructureId);
 				}
 			}
 		}

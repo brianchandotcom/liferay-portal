@@ -76,12 +76,10 @@
 	<aui:script use="liferay-entry-select">
 		new Liferay.EntrySelect(
 			{
-				actionsAllCheckBox: 'actionsCheckBox',
-				actionButtonsBar: 'actionButtons',
-				allCheckBox: '<%= RowChecker.ALL_ROW_IDS %>',
-				checkBoxContainer: '<%= checkBoxContainerId %>',
-				managementContainer: 'managementBarContainerId',
-				namespace: '<%= namespace %>'
+				actionButtonsBar: '#actionButtons',
+				checkBoxContainer: '#<%= checkBoxContainerId %>',
+				namespace: '<%= namespace %>',
+				selectAllCheckBoxes: '.select-all-checkboxes'
 			}
 		);
 	</aui:script>

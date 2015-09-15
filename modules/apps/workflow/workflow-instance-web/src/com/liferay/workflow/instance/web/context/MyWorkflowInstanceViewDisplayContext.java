@@ -15,10 +15,10 @@
 package com.liferay.workflow.instance.web.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
-import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
 
 import java.util.List;
 
@@ -32,7 +32,8 @@ public class MyWorkflowInstanceViewDisplayContext
 	extends WorkflowInstanceViewDisplayContext {
 
 	public MyWorkflowInstanceViewDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
 
 		super(renderRequest, renderResponse);
 	}
@@ -48,19 +49,19 @@ public class MyWorkflowInstanceViewDisplayContext
 	}
 
 	@Override
-	public List<WorkflowInstance> getSearchContainerResults(int start, int end)
+	protected List<WorkflowInstance> getSearchContainerResults(
+			int start, int end, OrderByComparator<WorkflowInstance> comparator)
 		throws PortalException {
 
 		return WorkflowInstanceManagerUtil.getWorkflowInstances(
 			workflowInstanceRequestHelper.getCompanyId(),
 			workflowInstanceRequestHelper.getUserId(),
 			WorkflowHandlerUtil.getSearchableAssetTypes(),
-			isShowCompletedInstances(), start, end,
-			WorkflowComparatorFactoryUtil.getInstanceStartDateComparator());
+			isShowCompletedInstances(), start, end, comparator);
 	}
 
 	@Override
-	public int getSearchContainerTotal() throws PortalException {
+	protected int getSearchContainerTotal() throws PortalException {
 		return WorkflowInstanceManagerUtil.getWorkflowInstanceCount(
 			workflowInstanceRequestHelper.getCompanyId(),
 			workflowInstanceRequestHelper.getUserId(),

@@ -274,24 +274,20 @@
 		<var name="i" value="0" />
 		<var name="pathNumber" value="0" />
 
-		<if>
-			<equals arg1="${propertyNumber}" arg2="0" />
-			<then>
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-				<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
+		<if>
+			<equals arg1="${propertyNumber}" arg2="0" />
+			<then>
 				<var name="key_pathNumber" value="${pathNumber}" />
 
 				<execute function="AssertTextEquals" locator1="CPCategoriesEdit#PROPERTIES_KEY_FIELD" value1="${propertiesKeyField}" />
 				<execute function="AssertTextEquals" locator1="CPCategoriesEdit#PROPERTIES_VALUE_FIELD" value1="${propertiesValueField}" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-				<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
-				<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
-
 				<while>
 					<not>
 						<equals arg1="${i}" arg2="${propertyNumber}" />

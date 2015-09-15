@@ -52,28 +52,25 @@ if (layoutSetPrototype == null) {
 boolean layoutsUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 
 Group group = themeDisplay.getSiteGroup();
-%>
 
-<liferay-ui:success key='<%= LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed" %>' message="site-template-was-added" />
+if (!group.isLayoutSetPrototype()) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
 
-<c:if test="<%= !group.isLayoutSetPrototype() %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= layoutSetPrototype.isNew() %>"
-		title='<%= layoutSetPrototype.isNew() ? "new-site-template" : layoutSetPrototype.getName(locale) %>'
-	/>
-</c:if>
+	renderResponse.setTitle(layoutSetPrototype.isNew() ? LanguageUtil.get(request, "new-site-template") : layoutSetPrototype.getName(locale));
+}
 
-<%
 request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", layoutSetPrototype);
 request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 %>
+
+<liferay-ui:success key='<%= LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed" %>' message="site-template-was-added" />
 
 <liferay-util:include page="/merge_alert.jsp" servletContext="<%= application %>" />
 
 <portlet:actionURL name="updateLayoutSetPrototype" var="updateLayoutSetPrototypeURL" />
 
-<aui:form action="<%= updateLayoutSetPrototypeURL %>" method="post" name="fm">
+<aui:form action="<%= updateLayoutSetPrototypeURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="layoutSetPrototypeId" type="hidden" value="<%= layoutSetPrototypeId %>" />
 
@@ -118,9 +115,9 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 		</c:if>
 
 		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button cssClass="btn-lg" type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
+			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>

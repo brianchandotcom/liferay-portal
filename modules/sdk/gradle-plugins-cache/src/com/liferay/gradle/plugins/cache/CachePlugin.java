@@ -39,15 +39,15 @@ public class CachePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					applyTaskCaches(cacheExtension.getTasks());
+					applyTaskCaches(cacheExtension);
 				}
 
 			});
 	}
 
-	protected void applyTaskCaches(Iterable<TaskCache> taskCaches) {
-		for (TaskCache taskCache : taskCaches) {
-			_taskCacheApplicator.apply(taskCache);
+	protected void applyTaskCaches(CacheExtension cacheExtension) {
+		for (TaskCache taskCache : cacheExtension.getTasks()) {
+			_taskCacheApplicator.apply(cacheExtension, taskCache);
 		}
 	}
 

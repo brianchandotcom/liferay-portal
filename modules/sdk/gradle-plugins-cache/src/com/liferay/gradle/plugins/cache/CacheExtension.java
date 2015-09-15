@@ -37,6 +37,14 @@ public class CacheExtension {
 		return _taskCaches;
 	}
 
+	public boolean isForcedCache() {
+		return _forcedCache;
+	}
+
+	public void setForcedCache(boolean forcedCache) {
+		_forcedCache = forcedCache;
+	}
+
 	public TaskCache task(String name, Closure<Void> closure) {
 		return _taskCaches.create(name, closure);
 	}
@@ -45,6 +53,7 @@ public class CacheExtension {
 		return task(task.getName(), closure);
 	}
 
+	private boolean _forcedCache;
 	private final NamedDomainObjectContainer<TaskCache> _taskCaches;
 
 }

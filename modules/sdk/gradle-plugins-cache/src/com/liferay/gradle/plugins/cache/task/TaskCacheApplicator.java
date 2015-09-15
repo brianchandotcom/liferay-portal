@@ -14,8 +14,11 @@
 
 package com.liferay.gradle.plugins.cache.task;
 
+import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
+
+import java.io.File;
 
 import java.util.Set;
 
@@ -32,10 +35,25 @@ import org.gradle.api.tasks.Copy;
  */
 public class TaskCacheApplicator {
 
-	public void apply(final TaskCache taskCache) {
+	public void apply(CacheExtension cacheExtension, TaskCache taskCache) {
 		Task task = taskCache.getTask();
 
-		if (taskCache.isUpToDate()) {
+		boolean upToDate = false;
+
+		if (cacheExtension.isForcedCache()) {
+			File cacheDir = taskCache.getCacheDir();
+
+			if (!cacheDir.exists()) {
+				throw new GradleException("Unable to find " + cacheDir);
+			}
+
+			upToDate = true;
+		}
+		else {
+			upToDate = taskCache.isUpToDate();
+		}
+
+		if (upToDate) {
 			applyUpToDate(taskCache, task);
 		}
 		else {

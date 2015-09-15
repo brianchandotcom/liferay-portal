@@ -18,6 +18,7 @@
 
 <%
 long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
+String redirect = ParamUtil.getString(request, "redirect");
 String type = ParamUtil.getString(request, "type");
 
 AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
@@ -29,13 +30,13 @@ long assetEntryVersionId = ParamUtil.getLong(request, "assetEntryVersionId");
 AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetEntryVersionId, AssetRendererFactory.TYPE_LATEST);
 
 request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+portletDisplay.setTitle(assetRenderer.getTitle(locale));
 %>
 
 <c:if test="<%= assetEntry != null %>">
-	<liferay-ui:header
-		localizeTitle="<%= false %>"
-		title="<%= assetRenderer.getTitle(locale) %>"
-	/>
 
 	<liferay-ui:asset-display
 		assetEntry="<%= assetEntry %>"

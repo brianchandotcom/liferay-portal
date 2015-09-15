@@ -145,7 +145,7 @@ portletURL.setParameter("tabs1", "default-configuration");
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 		</liferay-ui:search-container>
 
 		<aui:button-row>
@@ -186,7 +186,7 @@ portletURL.setParameter("tabs1", "default-configuration");
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 		</liferay-ui:search-container>
 
 	</aui:form>

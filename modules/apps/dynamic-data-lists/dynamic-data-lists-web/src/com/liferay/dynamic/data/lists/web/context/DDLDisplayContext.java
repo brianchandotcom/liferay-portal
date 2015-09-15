@@ -21,6 +21,8 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationValues;
+import com.liferay.dynamic.data.lists.web.portlet.DDLPortletUtil;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
@@ -29,6 +31,7 @@ import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -344,6 +347,27 @@ public class DDLDisplayContext {
 		return themeDisplay;
 	}
 
+	public String getDDLRecordSetDisplayStyle() {
+		if (_ddlRecordDisplayStyle == null) {
+			_ddlRecordDisplayStyle = DDLPortletUtil.getDDLRecordSetDisplayStyle(
+				_renderRequest, getDDLRecordSetDisplayViews());
+		}
+
+		return _ddlRecordDisplayStyle;
+	}
+
+	public String[] getDDLRecordSetDisplayViews() {
+		if (_ddlRecordDisplayViews == null) {
+			_ddlRecordDisplayViews = StringUtil.split(
+				PrefsParamUtil.getString(
+					_portletPreferences, _renderRequest, "displayViews",
+					StringUtil.merge(
+						DDLWebConfigurationValues.DISPLAY_VIEWS)));
+		}
+
+		return _ddlRecordDisplayViews;
+	}
+
 	protected boolean hasViewPermission() {
 		if (_hasViewPermission != null) {
 			return _hasViewPermission;
@@ -362,6 +386,8 @@ public class DDLDisplayContext {
 		return _hasViewPermission;
 	}
 
+	private String _ddlRecordDisplayStyle;
+	private String [] _ddlRecordDisplayViews;
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;
 	private Boolean _hasAddDDMTemplatePermission;

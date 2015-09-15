@@ -36,9 +36,7 @@ public interface DefaultDDMFormFieldTypeSettings
 			"%not-indexable", "%indexable-keyword", "%indexable-text"
 		},
 		optionValues = {StringPool.BLANK, "keyword", "text"},
-		properties = {"setting.category=advanced", "setting.weight=0"},
-		type = "select",
-		visibilityExpression = "false"
+		type = "select", visibilityExpression = "false"
 	)
 	public String indexType();
 
@@ -49,11 +47,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public LocalizedValue label();
 
-	@DDMFormField(
-		label = "%localizable",
-		properties = {"setting.category=advanced", "setting.weight=0"},
-		visibilityExpression = "false"
-	)
+	@DDMFormField(label = "%localizable", visibilityExpression = "false")
 	public boolean localizable();
 
 	@DDMFormField(
@@ -63,11 +57,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	)
 	public LocalizedValue predefinedValue();
 
-	@DDMFormField(
-		label = "%read-only",
-		properties = {"setting.category=advanced", "setting.weight=0"},
-		visibilityExpression = "false"
-	)
+	@DDMFormField(label = "%read-only", visibilityExpression = "false")
 	public boolean readOnly();
 
 	@DDMFormField(
@@ -96,8 +86,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	public LocalizedValue tip();
 
 	@DDMFormField(
-		dataType = "ddm-validation",
-		label = "%validation",
+		dataType = "ddm-validation", label = "%validation",
 		properties = {"setting.category=advanced", "setting.weight=0"},
 		type = "validation"
 	)

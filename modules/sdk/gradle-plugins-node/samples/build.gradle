@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: "com.liferay.node"
 
-version = "1.0.0"
+version = "1.0.3"
 
 task downloadBabel(type: DownloadNodeModuleTask)
 task publishNodeModule(type: PublishNodeModuleTask)
@@ -28,8 +28,9 @@ downloadBabel {
 }
 
 publishNodeModule {
-	npmEmailAddress = project.properties["npm.email"]
-	npmPassword = project.properties["npm.password"]
-	npmUserName = project.properties["npm.user"]
+	moduleLicense = "LGPL"
+	npmEmailAddress = project.properties["npm.email"] ?: null
+	npmPassword = project.properties["npm.password"] ?: null
+	npmUserName = project.properties["npm.user"] ?: null
 	workingDir = "src/main/resources"
 }

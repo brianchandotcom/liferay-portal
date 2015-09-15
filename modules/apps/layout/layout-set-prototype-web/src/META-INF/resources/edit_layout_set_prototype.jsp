@@ -52,22 +52,19 @@ if (layoutSetPrototype == null) {
 boolean layoutsUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 
 Group group = themeDisplay.getSiteGroup();
-%>
 
-<liferay-ui:success key='<%= LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed" %>' message="site-template-was-added" />
+if (!group.isLayoutSetPrototype()) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
 
-<c:if test="<%= !group.isLayoutSetPrototype() %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= layoutSetPrototype.isNew() %>"
-		title='<%= layoutSetPrototype.isNew() ? "new-site-template" : layoutSetPrototype.getName(locale) %>'
-	/>
-</c:if>
+	renderResponse.setTitle(layoutSetPrototype.isNew() ? LanguageUtil.get(request, "new-site-template") : layoutSetPrototype.getName(locale));
+}
 
-<%
 request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", layoutSetPrototype);
 request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 %>
+
+<liferay-ui:success key='<%= LayoutSetPrototypePortletKeys.SITE_TEMPLATE_SETTINGS + "requestProcessed" %>' message="site-template-was-added" />
 
 <liferay-util:include page="/merge_alert.jsp" servletContext="<%= application %>" />
 

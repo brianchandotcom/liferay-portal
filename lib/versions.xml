@@ -3315,7 +3315,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/tika-core.jar</file-name>
-				<version>1.6</version>
+				<version>1.10</version>
 				<project-name>Tika</project-name>
 				<project-url>http://tika.apache.org</project-url>
 				<licenses>
@@ -3327,7 +3327,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/tika-parsers.jar</file-name>
-				<version>1.6</version>
+				<version>1.10</version>
 				<project-name>Tika</project-name>
 				<project-url>http://tika.apache.org</project-url>
 				<licenses>
@@ -3336,9 +3336,6 @@
 						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
-				<comments>
-					See LPS-49991.
-				</comments>
 			</library>
 			<library>
 				<file-name>lib/portal/tomcat-jdbc.jar</file-name>

@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>ORGANIZATION_TABLE_NAME</td>
-	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[count(//div[contains(@id,'organizationsSearchContainer')]//th[contains(.,'Name')]/preceding-sibling::th) + 1]/a/strong</td>
 	<td></td>
 </tr>
 <tr>

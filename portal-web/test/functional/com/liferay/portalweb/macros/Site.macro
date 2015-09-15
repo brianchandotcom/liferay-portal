@@ -770,32 +770,34 @@
 		<if>
 			<isset var="userScreenNameSearchValue" />
 			<then>
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenNameSearchValue}" />
+				<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenNameSearchValue}" />
 			</then>
 			<elseif>
 				<isset var="userFirstNameSearchValue" />
 				<then>
-					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userFirstNameSearchValue}" />
+					<execute function="Type" locator1="TextInput#SEARCH" value1="${userFirstNameSearchValue}" />
 				</then>
 			</elseif>
 			<elseif>
 				<isset var="userLastNameSearchValue" />
 				<then>
-					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userLastNameSearchValue}" />
+					<execute function="Type" locator1="TextInput#SEARCH" value1="${userLastNameSearchValue}" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userEmailAddressSearchValue}" />
+				<execute function="Type" locator1="TextInput#SEARCH" value1="${userEmailAddressSearchValue}" />
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 
 		<execute macro="Site#viewMemberCP">
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
+
+		<execute function="AssertClick" locator1="SiteMemberships#NAVIGATION_SUMMARY" value1="Summary" />
 	</command>
 
 	<command name="selectPageType">

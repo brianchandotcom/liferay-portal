@@ -28,8 +28,8 @@ downloadBabel {
 }
 
 publishNodeModule {
-	npmEmailAddress = project.properties["npm.email"]
-	npmPassword = project.properties["npm.password"]
-	npmUserName = project.properties["npm.user"]
+	npmEmailAddress = project.properties["npm.email"] ?: null
+	npmPassword = project.properties["npm.password"] ?: null
+	npmUserName = project.properties["npm.user"] ?: null
 	workingDir = "src/main/resources"
 }

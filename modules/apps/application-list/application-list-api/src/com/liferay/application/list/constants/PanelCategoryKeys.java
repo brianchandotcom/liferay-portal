@@ -14,6 +14,8 @@
 
 package com.liferay.application.list.constants;
 
+import com.liferay.portal.util.PortletCategoryKeys;
+
 /**
  * @author Adolfo Pérez
  */
@@ -21,33 +23,35 @@ public interface PanelCategoryKeys {
 
 	public static final String CONTROL_PANEL = "control_panel";
 
-	public static final String CONTROL_PANEL_APPS = "control_panel.apps";
+	public static final String CONTROL_PANEL_APPS =
+		PortletCategoryKeys.CONTROL_PANEL_APPS;
 
 	public static final String CONTROL_PANEL_CONFIGURATION =
-		"control_panel.configuration";
+		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION;
 
-	public static final String CONTROL_PANEL_USERS = "control_panel.users";
+	public static final String CONTROL_PANEL_USERS =
+		PortletCategoryKeys.CONTROL_PANEL_USERS;
 
 	public static final String ROOT = "root";
 
 	public static final String SITE_ADMINISTRATION = "site_administration";
 
 	public static final String SITE_ADMINISTRATION_CONFIGURATION =
-		"site_administration.configuration";
+		PortletCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION;
 
 	public static final String SITE_ADMINISTRATION_CONTENT =
-		"site_administration.content";
+		PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT;
 
 	public static final String SITE_ADMINISTRATION_PAGES =
-		"site_administration.pages";
+		PortletCategoryKeys.SITE_ADMINISTRATION_PAGES;
 
 	public static final String SITE_ADMINISTRATION_PUBLISHING_TOOLS =
-		"site_administration.publishing_tools";
+		PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS;
 
 	public static final String SITE_ADMINISTRATION_USERS =
-		"site_administration.users";
+		PortletCategoryKeys.SITE_ADMINISTRATION_USERS;
 
-	public static final String SITES = "sites";
+	public static final String SITES = PortletCategoryKeys.SITES;
 
 	public static final String SITES_ADMINISTRATION_MY_SITES =
 		"sites_administration.my_sites";
@@ -59,6 +63,7 @@ public interface PanelCategoryKeys {
 
 	public static final String USER = "user";
 
-	public static final String USER_MY_ACCOUNT = "user.my_account";
+	public static final String USER_MY_ACCOUNT =
+		PortletCategoryKeys.USER_MY_ACCOUNT;
 
 }

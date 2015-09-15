@@ -20,19 +20,35 @@ package com.liferay.portal.util;
 public class PortletCategoryKeys {
 
 	public static final String[] ALL = {
-		PortletCategoryKeys.USERS, PortletCategoryKeys.SITES,
-		PortletCategoryKeys.APPS, PortletCategoryKeys.CONFIGURATION
+		PortletCategoryKeys.CONTROL_PANEL_USERS, PortletCategoryKeys.SITES,
+		PortletCategoryKeys.CONTROL_PANEL_APPS,
+		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION
 	};
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_APPS}
+	 */
+	@Deprecated
 	public static final String APPS = "apps";
 
-	public static final String CONFIGURATION = "configuration";
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_CONFIGURATION}
+	 */
+	@Deprecated
+	public static final String CONFIGURATION = "control_panel.configuration";
 
 	/**
 	 * @deprecated As of 6.2.0
 	 */
 	@Deprecated
 	public static final String CONTENT = "content";
+
+	public static final String CONTROL_PANEL_APPS = "control_panel.apps";
+
+	public static final String CONTROL_PANEL_CONFIGURATION =
+		"control_panel.configuration";
+
+	public static final String CONTROL_PANEL_USERS = "control_panel.users";
 
 	public static final String CURRENT_SITE = "current_site";
 
@@ -42,7 +58,11 @@ public class PortletCategoryKeys {
 	@Deprecated
 	public static final String MARKETPLACE = "marketplace";
 
-	public static final String MY = "my";
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #USER_MY_ACCOUNT}
+	 */
+	@Deprecated
+	public static final String MY = "user";
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #CONFIGURATION}, {@link
@@ -86,6 +106,12 @@ public class PortletCategoryKeys {
 
 	public static final String SITES = "sites";
 
+	public static final String USER_MY_ACCOUNT = "user.my_account";
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #CONTROL_PANEL_USERS}
+	 */
+	@Deprecated
 	public static final String USERS = "users";
 
 }

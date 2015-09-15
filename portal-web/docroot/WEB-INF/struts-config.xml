@@ -131,10 +131,6 @@
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />
 
-		<!-- Control Panel Home -->
-
-		<action path="/control_panel_home/view" forward="portlet.control_panel_home.view" />
-
 		<!-- Directory -->
 
 		<action path="/directory/find_user" type="com.liferay.portlet.usersadmin.action.FindUserAction" />

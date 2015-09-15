@@ -80,7 +80,7 @@ if (layout != null) {
 		}
 		%>
 
-		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.USER_MY_ACCOUNT) %>">
 			<div class="navbar-brand">
 				<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
 					<i class="control-panel-back-icon icon-chevron-sign-left"></i>
@@ -126,7 +126,7 @@ if (layout != null) {
 			</c:if>
 
 			<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-cog" toggleTouch="<%= false %>">
-				<c:if test="<%= group.isControlPanel() && !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
+				<c:if test="<%= group.isControlPanel() && !controlPanelCategory.equals(PortletCategoryKeys.USER_MY_ACCOUNT) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
 
 					<%
 					String[] categories = PortletCategoryKeys.ALL;
@@ -137,11 +137,11 @@ if (layout != null) {
 						String cssClass = StringPool.BLANK;
 						String iconCssClass = StringPool.BLANK;
 
-						if (curCategory.equals(PortletCategoryKeys.APPS)) {
+						if (curCategory.equals(PortletCategoryKeys.CONTROL_PANEL_APPS)) {
 							cssClass = "control-panel-apps";
 							iconCssClass = "icon-th";
 						}
-						else if (curCategory.equals(PortletCategoryKeys.CONFIGURATION)) {
+						else if (curCategory.equals(PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION)) {
 							cssClass = "control-panel-configuration";
 							iconCssClass = "icon-cog";
 						}
@@ -149,7 +149,7 @@ if (layout != null) {
 							cssClass = "control-panel-sites";
 							iconCssClass = "icon-globe";
 						}
-						else if (curCategory.equals(PortletCategoryKeys.USERS)) {
+						else if (curCategory.equals(PortletCategoryKeys.CONTROL_PANEL_USERS)) {
 							cssClass = "control-panel-users";
 							iconCssClass = "icon-user";
 						}

@@ -156,7 +156,7 @@ private String _getActionLabel(HttpServletRequest request, ThemeDisplay themeDis
 		else if (controlPanelCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
 			actionLabel = LanguageUtil.get(request, "access-in-site-administration");
 		}
-		else if (controlPanelCategory.equals(PortletCategoryKeys.MY)) {
+		else if (controlPanelCategory.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
 			actionLabel = LanguageUtil.get(request, "access-in-my-account");
 		}
 	}

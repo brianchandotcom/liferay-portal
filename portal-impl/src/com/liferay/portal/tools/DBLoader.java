@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.FileImpl;
 
-import java.io.FileReader;
+import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,6 +33,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.derby.tools.ij;
 
@@ -45,7 +47,8 @@ public class DBLoader {
 		throws Exception {
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new FileReader(fileName))) {
+				new UnsyncBufferedReader(
+					new UnsyncStringReader(_getFileContent(fileName)))) {
 
 			StringBundler sb = new StringBundler();
 
@@ -114,6 +117,14 @@ public class DBLoader {
 		}
 	}
 
+	private static String _getFileContent(String fileName) throws IOException {
+		String content = _fileUtil.read(fileName);
+
+		Matcher matcher = _columnLengthPattern.matcher(content);
+
+		return matcher.replaceAll(StringPool.BLANK);
+	}
+
 	private void _loadDerby() throws Exception {
 		Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
 
@@ -163,7 +174,7 @@ public class DBLoader {
 	private void _loadDerby(Connection con, String fileName) throws Exception {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(
-					new UnsyncStringReader(_fileUtil.read(fileName)))) {
+					new UnsyncStringReader(_getFileContent(fileName)))) {
 
 			StringBundler sb = new StringBundler();
 
@@ -240,6 +251,8 @@ public class DBLoader {
 		_fileUtil.write(_sqlDir + "/" + _databaseName + ".script", content);
 	}
 
+	private static final Pattern _columnLengthPattern = Pattern.compile(
+		"\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final FileImpl _fileUtil = FileImpl.getInstance();
 
 	private final String _databaseName;

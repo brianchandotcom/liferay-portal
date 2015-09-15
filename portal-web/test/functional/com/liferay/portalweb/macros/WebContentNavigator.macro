@@ -36,7 +36,7 @@
 
 		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
 
-		<execute function="AssertClick" locator1="MenuItem#EDIT_2" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
 	<command name="gotoEditPGViaWCD">

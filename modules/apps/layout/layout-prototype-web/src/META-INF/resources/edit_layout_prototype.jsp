@@ -35,15 +35,12 @@ if (layoutPrototype == null) {
 	layoutPrototype.setNew(true);
 	layoutPrototype.setActive(true);
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= layoutPrototype.isNew() %>"
-	title='<%= layoutPrototype.isNew() ? "new-page-template" : layoutPrototype.getName(locale) %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
 
-<%
+renderResponse.setTitle(layoutPrototype.isNew() ? LanguageUtil.get(request, "new-page-template") : layoutPrototype.getName(locale));
+
 request.setAttribute("edit_layout_prototype.jsp-layoutPrototype", layoutPrototype);
 request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 %>

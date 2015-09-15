@@ -47,6 +47,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryTitleException;
+import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -140,6 +141,15 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntryLocalServiceUtil.addEntry(
 			_user.getUserId(), title, RandomTestUtil.randomString(), new Date(),
 			serviceContext);
+	}
+
+	@Test(expected = NoSuchEntryException.class)
+	public void testDeleteEntry() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		BlogsEntryLocalServiceUtil.deleteEntry(entry);
+
+		BlogsEntryLocalServiceUtil.getEntry(entry.getEntryId());
 	}
 
 	@Test

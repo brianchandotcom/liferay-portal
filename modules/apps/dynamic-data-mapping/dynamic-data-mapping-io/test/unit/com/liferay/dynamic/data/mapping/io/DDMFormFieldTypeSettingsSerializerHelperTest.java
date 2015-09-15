@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.io.impl.DDMFormLayoutJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormFieldTypeSettingsSerializerHelper;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
 import com.liferay.portal.json.JSONFactoryImpl;

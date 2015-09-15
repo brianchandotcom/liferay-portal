@@ -14,7 +14,6 @@
 
 package com.liferay.layout.admin.web.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
@@ -23,7 +22,6 @@ import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -52,26 +50,14 @@ public class LayoutEmbeddedPortletsFormNavigatorEntry
 			return false;
 		}
 
-		try {
-			List<Portlet> embeddedPortlets = new ArrayList<>();
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
 
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
+		List<Portlet> embeddedPortlets =
+			layoutTypePortlet.getEmbeddedPortlets();
 
-			List<String> portletIds = layoutTypePortlet.getPortletIds();
-
-			for (Portlet portlet : layoutTypePortlet.getAllPortlets(false)) {
-				if (!portletIds.contains(portlet.getPortletId())) {
-					embeddedPortlets.add(portlet);
-				}
-			}
-
-			if (!embeddedPortlets.isEmpty()) {
-				return true;
-			}
-		}
-		catch (PortalException pe) {
-			_log.error("Unable to display form for embedded portlets", pe);
+		if (!embeddedPortlets.isEmpty()) {
+			return true;
 		}
 
 		return false;

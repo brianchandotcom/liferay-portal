@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
@@ -140,7 +139,7 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	}
 
 	public PortletPreferences getPortletInstancePortletPreferences(
-		Layout layout, String portletId) {
+		long companyId, long plid, String portletId) {
 
 		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
@@ -151,16 +150,15 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		}
 
 		return PortletPreferencesLocalServiceUtil.getStrictPreferences(
-			layout.getCompanyId(), ownerId, ownerType, layout.getPlid(),
-			portletId);
+			companyId, ownerId, ownerType, plid, portletId);
 	}
 
 	@Override
 	public Settings getPortletInstancePortletPreferencesSettings(
-		Layout layout, String portletId, Settings parentSettings) {
+		long companyId, long plid, String portletId, Settings parentSettings) {
 
 		return new PortletPreferencesSettings(
-			getPortletInstancePortletPreferences(layout, portletId),
+			getPortletInstancePortletPreferences(companyId, plid, portletId),
 			parentSettings);
 	}
 

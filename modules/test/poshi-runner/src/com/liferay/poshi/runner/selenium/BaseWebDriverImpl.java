@@ -863,23 +863,7 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void waitForConfirmation(String pattern) throws Exception {
-		int timeout =
-			PropsValues.TIMEOUT_EXPLICIT_WAIT /
-				PropsValues.TIMEOUT_IMPLICIT_WAIT;
-
-		for (int second = 0;; second++) {
-			if (second >= timeout) {
-				assertConfirmation(pattern);
-			}
-
-			try {
-				if (isConfirmation(pattern)) {
-					break;
-				}
-			}
-			catch (Exception e) {
-			}
-		}
+		LiferaySeleniumHelper.waitForConfirmation(this, pattern);
 	}
 
 	@Override

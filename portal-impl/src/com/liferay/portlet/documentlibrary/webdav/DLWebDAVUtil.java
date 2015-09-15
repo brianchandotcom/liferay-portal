@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class DLWebDAVUtil {
 
-	private static final String _FORBIDDEN_CHAR = StringPool.CARET;
-
 	public static String escapeRawTitle(String title) {
 		return StringUtil.replace(title, StringPool.SLASH, _FORBIDDEN_CHAR);
 	}
@@ -37,9 +35,17 @@ public class DLWebDAVUtil {
 		return !title.contains(_FORBIDDEN_CHAR);
 	}
 
+	public static String makeRepresentableTitle(String title, int i) {
+		return StringUtil.replace(
+			title, _FORBIDDEN_CHAR,
+			StringPool.UNDERLINE + String.valueOf(i) + StringPool.UNDERLINE);
+	}
+
 	public static String unescapeRawTitle(String escapedTitle) {
 		return StringUtil.replace(
 			escapedTitle, _FORBIDDEN_CHAR, StringPool.SLASH);
 	}
+
+	private static final String _FORBIDDEN_CHAR = StringPool.CARET;
 
 }

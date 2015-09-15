@@ -17,9 +17,7 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
-DDLFormViewRecordsDisplayContext ddlFormViewRecordsDisplayContext = new DDLFormViewRecordsDisplayContext(liferayPortletRequest, liferayPortletResponse, ddlFormAdminDisplayContext.getDDMStructure(), ddlFormAdminDisplayContext.getRecordSet());
-
-DisplayTerms displayTerms = ddlFormViewRecordsDisplayContext.getRecordSearchContainer().getDisplayTerms();
+DDLFormViewRecordsDisplayContext ddlFormViewRecordsDisplayContext = new DDLFormViewRecordsDisplayContext(liferayPortletRequest, liferayPortletResponse, ddlFormAdminDisplayContext.getRecordSet());
 %>
 
 <aui:form action="<%= currentURL.toString() %>" method="post" name="fm">
@@ -42,10 +40,11 @@ DisplayTerms displayTerms = ddlFormViewRecordsDisplayContext.getRecordSearchCont
 		<liferay-ui:search-container-row
 			className="com.liferay.dynamic.data.lists.model.DDLRecord"
 			cssClass="entry-display-style selectable"
-			modelVar="ddlRecord">
+			modelVar="record"
+		>
 
 			<%
-			DDMFormValues ddmFormValues = ddlFormViewRecordsDisplayContext.getDDMFormValues(ddlRecord);
+			DDMFormValues ddmFormValues = ddlFormViewRecordsDisplayContext.getDDMFormValues(record);
 
 			for (int i = 0; i < ddlFormViewRecordsDisplayContext.getTotalColumns(); i++) {
 			%>
@@ -61,16 +60,15 @@ DisplayTerms displayTerms = ddlFormViewRecordsDisplayContext.getRecordSearchCont
 
 			<liferay-ui:search-container-column-date
 				name="modified-date"
-				value="<%= ddlRecord.getModifiedDate() %>"
+				value="<%= record.getModifiedDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-jsp
-				path="/admin/view_records_action.jsp"
+				path="/admin/record_action.jsp"
 			/>
-
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator displayStyle="<%= ddlFormViewRecordsDisplayContext.getDisplayStyle() %>" paginate="<%= false %>" searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>" markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= ddlFormViewRecordsDisplayContext.getDisplayStyle() %>" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= ddlFormViewRecordsDisplayContext.getRecordSearchContainer() %>" />
 
 	</liferay-ui:search-container>
 </div>

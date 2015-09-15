@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRenderer;
+import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldValueRenderer;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
@@ -111,7 +112,14 @@ public class DDMFormFieldTypeServicesTrackerImpl
 
 	@Override
 	public DDMFormFieldValueRenderer getDDMFormFieldValueRenderer(String name) {
-		return _ddmFormFieldValueRendererServiceTrackerMap.getService(name);
+		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
+			_ddmFormFieldValueRendererServiceTrackerMap.getService(name);
+
+		if (ddmFormFieldValueRenderer != null) {
+			return ddmFormFieldValueRenderer;
+		}
+
+		return _defaultDDMFormFieldValueRenderer;
 	}
 
 	@Activate
@@ -171,5 +179,8 @@ public class DDMFormFieldTypeServicesTrackerImpl
 		_ddmFormFieldValueAccessorServiceTrackerMap;
 	private ServiceTrackerMap<String, DDMFormFieldValueRenderer>
 		_ddmFormFieldValueRendererServiceTrackerMap;
+	private final DefaultDDMFormFieldValueRenderer
+		_defaultDDMFormFieldValueRenderer =
+			new DefaultDDMFormFieldValueRenderer();
 
 }

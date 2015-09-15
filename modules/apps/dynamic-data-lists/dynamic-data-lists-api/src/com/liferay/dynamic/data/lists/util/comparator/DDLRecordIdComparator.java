@@ -38,14 +38,14 @@ public class DDLRecordIdComparator extends OrderByComparator<DDLRecord> {
 
 	@Override
 	public int compare(DDLRecord record1, DDLRecord record2) {
-		if (record1.getRecordId() > record2.getRecordId()) {
-			return 1;
-		}
-		else if(record1.getRecordId() < record2.getRecordId()) {
-			return -1;
-		}
+		int value = Long.compare(record1.getRecordId(), record2.getRecordId());
 
-		return 0;
+		if (_ascending) {
+			return value;
+		}
+		else {
+			return -value;
+		}
 	}
 
 	@Override

@@ -24,13 +24,12 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
-import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer;
-import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngineUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
-import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -38,8 +37,12 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.PortletDisplay;
@@ -61,9 +64,10 @@ import javax.portlet.PortletURL;
 public class DDLFormViewRecordsDisplayContext {
 
 	public DDLFormViewRecordsDisplayContext(
-		LiferayPortletRequest liferayPortletRequest,
-		LiferayPortletResponse liferayPortletResponse,
-		DDMStructure ddmStructure, DDLRecordSet recordSet) {
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse,
+			DDLRecordSet recordSet)
+		throws PortalException {
 
 		_liferayPortletRequest = liferayPortletRequest;
 		_liferayPortletResponse = liferayPortletResponse;
@@ -80,11 +84,12 @@ public class DDLFormViewRecordsDisplayContext {
 		portletDisplay.setURLBack(
 			ParamUtil.getString(_liferayPortletRequest, "redirect"));
 
-		createRecordSearchContainer(ddmStructure);
+		createRecordSearchContainer(recordSet.getDDMStructure());
 	}
 
 	public String getColumnName(int index, DDMFormValues ddmFormValues) {
 		DDMFormField ddmFormField = _ddmFormFields.get(index);
+
 		return ddmFormField.getName();
 	}
 
@@ -94,13 +99,24 @@ public class DDLFormViewRecordsDisplayContext {
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
 
-		DDMFormFieldValueRenderer ddmFormFieldValueRenderer =
-			DDMFormFieldValueRendererRegistryUtil.getDDMFormFieldValueRenderer(
+		final DDMFormFieldValueRenderer ddmFieldValueRenderer =
+			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldValueRenderer(
 				ddmFormField.getType());
 
-		return ddmFormFieldValueRenderer.render(
+		List<String> renderedDDMFormFielValues = ListUtil.toList(
 			ddmFormFieldValuesMap.get(ddmFormField.getName()),
-			_liferayPortletRequest.getLocale());
+			new Function<DDMFormFieldValue, String>() {
+
+				@Override
+				public String apply(DDMFormFieldValue ddmFormFieldValue) {
+					return ddmFieldValueRenderer.render(
+						ddmFormFieldValue, _liferayPortletRequest.getLocale());
+				}
+
+			});
+
+		return StringUtil.merge(
+			renderedDDMFormFielValues, StringPool.COMMA_AND_SPACE);
 	}
 
 	public DDMFormValues getDDMFormValues(DDLRecord ddlRecord)
@@ -129,7 +145,7 @@ public class DDLFormViewRecordsDisplayContext {
 
 		List<DDMFormField> ddmFormfields = ddmStructure.getDDMFormFields(false);
 
-		int totalColumns = _COLUMS_TO_SHOW_ON_LIST;
+		int totalColumns = _MAX_COLUMNS_SIZE;
 
 		if (ddmFormfields.size() < totalColumns) {
 			totalColumns = ddmFormfields.size();
@@ -151,12 +167,6 @@ public class DDLFormViewRecordsDisplayContext {
 
 		_recordSearchContainer = new RecordSearch(
 			_liferayPortletRequest, currentURLObj, headerNames);
-
-		RowChecker rowChecker = new RowChecker(_liferayPortletResponse);
-
-		rowChecker.setCssClass("entry-selector");
-
-		_recordSearchContainer.setRowChecker(rowChecker);
 
 		String orderByCol = ParamUtil.getString(
 			_liferayPortletRequest, "orderByCol");
@@ -192,10 +202,10 @@ public class DDLFormViewRecordsDisplayContext {
 		_recordSearchContainer.setOrderByComparator(orderByComparator);
 		_recordSearchContainer.setOrderByType(orderByType);
 
-		loadRecordSearchContainer();
+		updateSearchContainerResults();
 	}
 
-	protected void loadRecordSearchContainer() {
+	protected void updateSearchContainerResults() {
 		List<DDLRecord> results = null;
 
 		int total = 0;
@@ -205,16 +215,14 @@ public class DDLFormViewRecordsDisplayContext {
 		int status = WorkflowConstants.STATUS_ANY;
 
 		if (Validator.isNull(displayTerms.getKeywords())) {
-			total = DDLRecordLocalServiceUtil.getRecordsCount(
-				_recordSet.getRecordSetId(), status);
-
-			_recordSearchContainer.setTotal(total);
-
 			results = DDLRecordLocalServiceUtil.getRecords(
 				_recordSet.getRecordSetId(), status,
 				_recordSearchContainer.getStart(),
 				_recordSearchContainer.getEnd(),
 				_recordSearchContainer.getOrderByComparator());
+
+			total = DDLRecordLocalServiceUtil.getRecordsCount(
+				_recordSet.getRecordSetId(), status);
 		}
 		else {
 			SearchContext searchContext = SearchContextFactory.getInstance(
@@ -233,14 +241,14 @@ public class DDLFormViewRecordsDisplayContext {
 			results = baseModelSearchResult.getBaseModels();
 
 			total = baseModelSearchResult.getLength();
-
-			_recordSearchContainer.setTotal(total);
 		}
 
 		_recordSearchContainer.setResults(results);
+
+		_recordSearchContainer.setTotal(total);
 	}
 
-	private static final int _COLUMS_TO_SHOW_ON_LIST = 5;
+	private static final int _MAX_COLUMNS_SIZE = 5;
 
 	private final List<DDMFormField> _ddmFormFields;
 	private final LiferayPortletRequest _liferayPortletRequest;

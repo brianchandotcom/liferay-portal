@@ -22,17 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 DDLRecord record = (DDLRecord)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>" markupView="lexicon">
-	<portlet:renderURL var="viewURL">
-		<portlet:param name="mvcPath" value="/" />
-		<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
-	</portlet:renderURL>
-
-	<liferay-ui:icon
-		message="view"
-		url="<%= viewURL %>"
-	/>
-
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= ddlFormAdminDisplayContext.isShowDeleteRecordSetIcon(ddlFormAdminDisplayContext.getRecordSet()) %>">
 		<portlet:actionURL name="deleteRecord" var="deleteURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

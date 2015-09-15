@@ -60,6 +60,10 @@ public interface Theme extends Comparable<Theme>, Plugin, Serializable {
 
 	public String getName();
 
+	public List<PortletDecorator> getPortletDecorators();
+
+	public Map<String, PortletDecorator> getPortletDecoratorsMap();
+
 	public String getResourcePath(
 		ServletContext servletContext, String portletId, String path);
 

@@ -2,7 +2,7 @@
 
 <portlet-preferences>
 	<preference>
-		<name>portletSetupShowBorders</name>
-		<value>false</value>
+		<name>portletSetupPortletDecoratorId</name>
+		<value>borderless</value>
 	</preference>
 </portlet-preferences>

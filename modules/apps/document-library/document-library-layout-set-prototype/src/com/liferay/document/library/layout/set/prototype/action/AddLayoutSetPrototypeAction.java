@@ -92,7 +92,7 @@ public class AddLayoutSetPrototypeAction {
 
 		Map<String, String> preferences = new HashMap<>();
 
-		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
+		preferences.put("portletSetupPortletDecoratorId", "borderless");
 
 		DefaultLayoutPrototypesUtil.updatePortletSetup(
 			layout, portletId, preferences);

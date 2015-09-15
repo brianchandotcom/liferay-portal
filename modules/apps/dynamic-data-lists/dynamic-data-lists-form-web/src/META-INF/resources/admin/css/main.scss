@@ -134,36 +134,76 @@
 	margin: 0;
 }
 
-.form-builder-field-settings-content {
-	padding: 10px;
+.lfr-ddl-field-settings-modal.form-builder-field-settings {
+	width: 720px;
 
-	.modal-body {
-		max-height: 500px;
-		overflow-y: auto;
-	}
-
-	.lfr-ddm-form-field-container .lfr-form-row {
-		border-width: 0;
-		padding-bottom: 5px;
-		padding-top: 5px;
-
-		&:hover {
-			padding-top: 5px;
+	.form-builder-field-settings-content {
+		.modal-body {
+			background-color: #FFF;
+			max-height: 500px;
+			overflow-x: hidden;
+			overflow-y: auto;
+			padding: 0;
 		}
 
-		.lfr-autorow-controls {
-			bottom: 13px;
+		.lfr-ddm-form-container {
+			padding: 0 50px;
 
-			.add-row {
-				margin-right: 5px;
+			.lfr-ddm-form-field-container {
+				.lfr-form-row {
+					border-width: 0;
+					padding-bottom: 5px;
+					padding-top: 5px;
+
+					&:hover {
+						padding-top: 5px;
+					}
+
+					.lfr-autorow-controls {
+						bottom: 13px;
+
+						.add-row {
+							margin-right: 5px;
+						}
+					}
+				}
+			}
+
+			.lfr-ddm-form-page {
+				display: none;
+
+				&.active {
+					display: block;
+				}
+
+				&.advanced {
+					background-color: #F5F8FA;
+					margin: 0 -50px;
+					padding: 20px 50px;
+				}
+			}
+
+			.settings-toggler {
+				background-color: #F5F8FA;
+				color: #879CB5;
+				display: block;
+				margin: 0 -50px;
+				padding: 10px 50px;
+				text-decoration: none;
 			}
 		}
-	}
 
-	.loading-animation {
-		float: right;
-		margin-top: 0;
-		padding-top: 32px;
-		width: 32px;
+		@include keyframes(spin) {
+			100% {
+				transform: rotate(359deg);
+			}
+		}
+
+		.form-builder-field-settings-save .icon-spinner {
+			@include animation(spin 1000ms infinite linear);
+
+			display: inline-block;
+			margin: -2px 0 0 4px;
+		}
 	}
 }

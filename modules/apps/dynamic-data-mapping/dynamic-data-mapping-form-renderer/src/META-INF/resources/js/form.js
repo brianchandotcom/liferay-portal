@@ -4,6 +4,8 @@ AUI.add(
 		var AArray = A.Array;
 		var Renderer = Liferay.DDM.Renderer;
 
+		var TPL_CONTAINER = '<div class="lfr-ddm-form-container"></div>';
+
 		var Form = A.Component.create(
 			{
 				ATTRS: {
@@ -22,6 +24,7 @@ AUI.add(
 					Renderer.FormFeedbackSupport,
 					Renderer.FormPaginationSupport,
 					Renderer.FormTabsSupport,
+					Renderer.FormTemplateSupport,
 					Renderer.FormValidationSupport,
 					Renderer.NestedFieldsSupport
 				],
@@ -44,6 +47,8 @@ AUI.add(
 								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
 							);
 						}
+
+						instance.after('render', instance._afterFormRender);
 					},
 
 					destructor: function() {
@@ -60,14 +65,6 @@ AUI.add(
 						var container = instance.get('container');
 
 						return container.ancestor('form', true);
-					},
-
-					render: function() {
-						var instance = this;
-
-						instance.fire('render');
-
-						return instance;
 					},
 
 					submit: function() {
@@ -94,6 +91,16 @@ AUI.add(
 							defaultLanguageId: definition.defaultLanguageId,
 							fieldValues: AArray.invoke(instance.get('fields'), 'toJSON')
 						};
+					},
+
+					_afterFormRender: function() {
+						var instance = this;
+
+						instance.eachField(
+							function(field) {
+								field.render();
+							}
+						);
 					},
 
 					_onDOMSubmitForm: function(event) {
@@ -123,7 +130,7 @@ AUI.add(
 					_valueContainer: function() {
 						var instance = this;
 
-						return A.Node.create('<div class="lfr-ddm-form-container"></div>');
+						return A.Node.create(TPL_CONTAINER);
 					}
 				}
 			}
@@ -133,6 +140,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'liferay-ddm-form-renderer-definition', 'liferay-ddm-form-renderer-feedback', 'liferay-ddm-form-renderer-nested-fields', 'liferay-ddm-form-renderer-pagination', 'liferay-ddm-form-renderer-tabs', 'liferay-ddm-form-renderer-validation']
+		requires: ['aui-component', 'liferay-ddm-form-renderer-definition', 'liferay-ddm-form-renderer-feedback', 'liferay-ddm-form-renderer-nested-fields', 'liferay-ddm-form-renderer-pagination', 'liferay-ddm-form-renderer-tabs', 'liferay-ddm-form-renderer-template', 'liferay-ddm-form-renderer-validation', 'liferay-ddm-form-soy']
 	}
 );

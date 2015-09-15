@@ -83,10 +83,8 @@ public class DDMFormFactory {
 			ddmFormFactoryHelper.isDDMFormFieldLocalizable(method));
 		ddmFormField.setDDMFormFieldOptions(
 			ddmFormFactoryHelper.getDDMFormFieldOptions());
-		ddmFormField.setValidationExpression(
-			ddmFormFactoryHelper.getDDMFormFieldValidationExpression());
-		ddmFormField.setValidationMessage(
-			ddmFormFactoryHelper.getDDMFormFieldValidationMessage());
+		ddmFormField.setDDMFormFieldValidation(
+			ddmFormFactoryHelper.getDDMFormFieldValidation());
 		ddmFormField.setVisibilityExpression(
 			ddmFormFactoryHelper.getDDMFormFieldVisibilityExpression());
 

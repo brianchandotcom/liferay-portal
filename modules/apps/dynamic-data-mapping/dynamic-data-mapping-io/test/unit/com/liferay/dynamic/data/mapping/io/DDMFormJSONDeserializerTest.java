@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.io;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONDeserializerImpl;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.junit.Assert;
@@ -48,11 +49,16 @@ public class DDMFormJSONDeserializerTest
 	protected void testBooleanDDMFormField(DDMFormField ddmFormField) {
 		super.testBooleanDDMFormField(ddmFormField);
 
+		DDMFormFieldValidation ddmFormFieldValidation =
+			ddmFormField.getDDMFormFieldValidation();
+
+		Assert.assertNotNull(ddmFormFieldValidation);
+
 		Assert.assertEquals(
-			"Boolean2282", ddmFormField.getValidationExpression());
+			"Boolean2282", ddmFormFieldValidation.getExpression());
 		Assert.assertEquals(
 			"You must check this box to continue.",
-			ddmFormField.getValidationMessage());
+			ddmFormFieldValidation.getErrorMessage());
 		Assert.assertEquals("true", ddmFormField.getVisibilityExpression());
 	}
 

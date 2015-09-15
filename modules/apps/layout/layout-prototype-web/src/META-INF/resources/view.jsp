@@ -79,19 +79,19 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			/>
 
 			<liferay-ui:search-container-column-text
+				cssClass="checkbox-cell"
 				name="active"
 			>
 				<%= LanguageUtil.get(request, layoutPrototype.isActive()? "yes" : "no") %>
 			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
+				cssClass="checkbox-cell entry-action"
 				path="/layout_prototype_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

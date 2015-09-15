@@ -20,6 +20,8 @@
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view.jsp");
+
+String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
 %>
 
 <liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
@@ -56,6 +58,7 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 					<portlet:param name="mvcPath" value="/view_record_set.jsp" />
 					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
 				</liferay-portlet:renderURL>
 
 				<%
@@ -63,17 +66,45 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 					rowURL = null;
 				}
 				%>
+				
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<% request.setAttribute("rowURL", rowURL); %>
+						
+						<liferay-ui:search-container-column-image
+							src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+							toggleRowChecker="<%= true %>"
+						/>
 
-				<%@ include file="/search_columns.jspf" %>
+						<liferay-ui:search-container-column-jsp
+							colspan="2"
+							path="/view_record_set_descriptive.jsp"
+						/>
 
-				<liferay-ui:search-container-column-jsp
-					align="right"
-					cssClass="entry-action"
-					path="/record_set_action.jsp"
-				/>
+						<liferay-ui:search-container-column-jsp
+							path="/record_set_action.jsp"
+						/>
+						
+					</c:when>
+					<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					</c:when>
+					<c:otherwise>
+
+						<%@ include file="/search_columns.jspf" %>
+
+						<liferay-ui:search-container-column-jsp
+							align="right"
+							cssClass="entry-action"
+							path="/record_set_action.jsp"
+						/>
+
+					</c:otherwise>
+				</c:choose>
+
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator markupView="lexicon" />
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

@@ -69,7 +69,7 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="deleteViaActionsCP">
+	<command name="deleteViaIconCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
@@ -88,7 +88,7 @@
 		<execute function="AssertTextNotPresent" value1="${subcategoryName}" />
 	</command>
 
-	<command name="deleteViaArrowCP">
+	<command name="deleteViaMenuCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />

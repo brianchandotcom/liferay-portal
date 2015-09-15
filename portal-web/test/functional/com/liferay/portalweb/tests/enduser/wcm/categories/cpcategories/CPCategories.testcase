@@ -737,7 +737,7 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute macro="Category#deleteByActionsCP">
+		<execute macro="Category#deleteByIconCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -841,7 +841,7 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute macro="Subcategory#deleteViaActionsCP">
+		<execute macro="Subcategory#deleteViaIconCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -876,7 +876,7 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute macro="Subcategory#deleteViaArrowCP">
+		<execute macro="Subcategory#deleteViaMenuCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />

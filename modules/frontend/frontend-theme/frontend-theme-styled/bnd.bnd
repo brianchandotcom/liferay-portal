@@ -1,5 +1,5 @@
 Bundle-Name: Liferay Frontend Theme Styled
-Bundle-SymbolicName: com.liferay.frontend.themes.styled
+Bundle-SymbolicName: com.liferay.frontend.theme.styled
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\

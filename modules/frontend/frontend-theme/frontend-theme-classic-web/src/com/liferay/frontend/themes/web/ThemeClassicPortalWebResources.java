@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.themes.classic.web;
+package com.liferay.frontend.theme.classic.web;
 
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
@@ -57,7 +57,7 @@ public class ThemeClassicPortalWebResources implements PortalWebResources {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.themes.classic.web)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.theme.classic.web)"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

@@ -321,6 +321,10 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 				PortalWebResourceConstants.RESOURCE_TYPE_THEME_CLASSIC);
 		}
 
+		if (Validator.isNull(contextPath)) {
+			return proxyPath;
+		}
+
 		return proxyPath.concat(contextPath);
 	}
 

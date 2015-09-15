@@ -63,7 +63,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 			project, FRONTEND_THEMES_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"Configures com.liferay.frontend.themes.* for compiling themes.");
+			"Configures com.liferay.frontend.theme.* for compiling themes.");
 		configuration.setVisible(false);
 
 		GradleUtil.executeIfEmpty(
@@ -405,10 +405,10 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	}
 
 	private static final String[] _FRONTEND_THEME_DEPENDENCY_NAMES = {
-		"com.liferay.frontend.themes.admin.web",
-		"com.liferay.frontend.themes.classic.web",
-		"com.liferay.frontend.themes.styled",
-		"com.liferay.frontend.themes.unstyled"
+		"com.liferay.frontend.theme.admin.web",
+		"com.liferay.frontend.theme.classic.web",
+		"com.liferay.frontend.theme.styled",
+		"com.liferay.frontend.theme.unstyled"
 	};
 
 	private static final String[] _THEME_RUNTIME_DEPENDENCY_NOTATION_PREFIXES =

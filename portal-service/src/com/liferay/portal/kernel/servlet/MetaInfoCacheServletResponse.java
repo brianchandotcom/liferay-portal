@@ -192,6 +192,10 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		return _metaData._headers.containsKey(name);
 	}
 
+	public void finishResponse() throws IOException {
+		finishResponse(false);
+	}
+
 	public void finishResponse(boolean reapplyMetaData) throws IOException {
 		HttpServletResponse response = (HttpServletResponse)getResponse();
 

@@ -211,7 +211,7 @@ public class AssetPublisherServiceTest {
 
 			JournalArticleLocalServiceUtil.updateAsset(
 				TestPropsValues.getUserId(), article, assetCategoryIds,
-				assetTagNames, null);
+				assetTagNames, null, null);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 				JournalArticle.class.getName(), article.getResourcePrimKey());

@@ -42,7 +42,7 @@ downloadGulp {
 }
 
 npmInstall {
-	args = ["install"]
+	args "install"
 
 	dependsOn downloadBower
 	dependsOn downloadGulp

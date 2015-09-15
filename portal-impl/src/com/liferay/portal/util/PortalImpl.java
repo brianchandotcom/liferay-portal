@@ -7769,7 +7769,8 @@ public class PortalImpl implements Portal {
 
 			if (portletCategory.equals(
 					PortletCategoryKeys.CONTROL_PANEL_APPS) ||
-				portletCategory.equals(PortletCategoryKeys.CONFIGURATION) ||
+				portletCategory.equals(
+					PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION) ||
 				portletCategory.equals(
 					PortletCategoryKeys.CONTROL_PANEL_USERS)) {
 

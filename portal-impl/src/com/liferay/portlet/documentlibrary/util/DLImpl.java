@@ -72,6 +72,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifi
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
+import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
@@ -899,13 +900,9 @@ public class DLImpl implements DL {
 			webDavURL.append(MANUAL_CHECK_IN_REQUIRED_PATH);
 		}
 
-		String fileEntryFileName = null;
-
 		Group group = null;
 
 		if (fileEntry != null) {
-			fileEntryFileName = HtmlUtil.unescape(fileEntry.getFileName());
-
 			group = GroupLocalServiceUtil.getGroup(fileEntry.getGroupId());
 		}
 		else {
@@ -940,7 +937,8 @@ public class DLImpl implements DL {
 
 		if (fileEntry != null) {
 			sb.append(StringPool.SLASH);
-			sb.append(HttpUtil.encodeURL(fileEntryFileName, true));
+
+			sb.append(DLWebDAVUtil.escapeURLTitle(fileEntry.getTitle()));
 		}
 
 		webDavURL.append(sb.toString());

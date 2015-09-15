@@ -63,11 +63,11 @@ public class BaseResourceImpl implements Resource {
 		_displayName = displayName;
 		_size = size;
 
-		if (Validator.isNotNull(name)) {
-			parentPath += StringPool.SLASH + name;
-		}
-
 		_href = HttpUtil.encodePath(parentPath);
+
+		if (Validator.isNotNull(name)) {
+			_href += StringPool.SLASH + HttpUtil.encodeURL(name, true);
+		}
 
 		if (createDate == null) {
 			_createDate = new Date();
@@ -175,7 +175,7 @@ public class BaseResourceImpl implements Resource {
 	private String _className;
 	private final Date _createDate;
 	private final String _displayName;
-	private final String _href;
+	private String _href;
 	private Object _model;
 	private final Date _modifiedDate;
 	private long _primaryKey = -1;

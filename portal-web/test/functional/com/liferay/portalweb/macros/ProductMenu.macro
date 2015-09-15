@@ -23,20 +23,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoLocalizedControlPanel" summary="Navigate to Product Menu > Control Panel > ${category} > ${portlet}.">
-		<execute macro="ProductMenuHelper#gotoTab">
-			<var name="tab" value="${tab}" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="${category}" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
 	<command name="gotoControlPanelUsers" summary="Navigate to Product Menu > Control Panel > Users > ${portlet}.">
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 
@@ -49,11 +35,13 @@
 		</execute>
 	</command>
 
-	<command name="gotoMySpaceMyAccount" summary="Navigate to Product Menu > My Space > My Account > ${portlet}.">
-		<execute macro="ProductMenuHelper#gotoMySpace" />
+	<command name="gotoLocalizedControlPanel" summary="Navigate to Product Menu > Control Panel > ${category} > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoTab">
+			<var name="tab" value="${tab}" />
+		</execute>
 
 		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="My Account" />
+			<var name="category" value="${category}" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#gotoPortlet">
@@ -75,20 +63,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesAdministration" summary="Navigate to Product Menu > Sites > Administration > ${portlet}.">
-		<execute macro="ProductMenuHelper#gotoSites" />
-
-		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
-
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Administration" />
-		</execute>
-
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
-	</command>
-
 	<command name="gotoLocalizedSitesAdministration" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}.">
 		<execute macro="ProductMenuHelper#gotoTab">
 			<var name="tab" value="${tab}" />
@@ -98,6 +72,32 @@
 
 		<execute macro="ProductMenuHelper#expandCategory">
 			<var name="category" value="${category}" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoMySpaceMyAccount" summary="Navigate to Product Menu > My Space > My Account > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoMySpace" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="My Account" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
+	<command name="gotoSitesAdministration" summary="Navigate to Product Menu > Sites > Administration > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoSites" />
+
+		<execute function="Click" locator1="ProductMenu#BACK_ARROW" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Administration" />
 		</execute>
 
 		<execute macro="ProductMenuHelper#gotoPortlet">

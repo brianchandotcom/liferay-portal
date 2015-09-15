@@ -1068,7 +1068,7 @@
 		<execute function="Pause" locator1="5000" />
 	</command>
 
-	<command known-issues="LRQA-16325" name="PublishWCIncludingTextsAndImages" priority="4">
+	<command known-issues="LPS-58641" name="PublishWCIncludingTextsAndImages" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteName" value="Liferay" />

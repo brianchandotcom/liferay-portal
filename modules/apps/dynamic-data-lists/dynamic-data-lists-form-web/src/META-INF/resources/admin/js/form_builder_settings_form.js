@@ -129,7 +129,7 @@ AUI.add(
 						var sameNameField = builder.getField(nameSettingsField.getValue());
 
 						if (!!sameNameField && sameNameField !== field) {
-							nameSettingsField.addValidationMessage(Liferay.Language.get('field-name-already-in-use'));
+							nameSettingsField.addValidationMessage(Liferay.Language.get('field-name-is-already-in-use'));
 							nameSettingsField.showValidationStatus();
 
 							nameSettingsField.focus();

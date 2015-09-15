@@ -54,7 +54,6 @@ import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebAppPool;

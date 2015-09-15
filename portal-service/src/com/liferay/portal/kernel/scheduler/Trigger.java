@@ -14,12 +14,14 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import java.io.Serializable;
+
 import java.util.Date;
 
 /**
  * @author Shuyang Zhou
  */
-public interface Trigger {
+public interface Trigger extends Serializable {
 
 	public Date getEndDate();
 
@@ -27,10 +29,8 @@ public interface Trigger {
 
 	public String getJobName();
 
+	public Serializable getRealTrigger();
+
 	public Date getStartDate();
-
-	public Object getTriggerContent();
-
-	public TriggerType getTriggerType();
 
 }

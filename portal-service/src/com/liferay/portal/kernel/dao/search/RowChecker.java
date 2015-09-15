@@ -176,7 +176,7 @@ public class RowChecker {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder(12);
+		StringBuilder sb = new StringBuilder(14);
 
 		sb.append("<input name=\"");
 		sb.append(name);
@@ -184,12 +184,14 @@ public class RowChecker {
 		sb.append(LanguageUtil.get(getLocale(request), "select-all"));
 		sb.append("\" type=\"checkbox\" ");
 		sb.append(HtmlUtil.buildData(_data));
-		sb.append("onClick=\"Liferay.Util.checkAll(");
-		sb.append("AUI().one(this).ancestor('");
-		sb.append(".table'), ");
-		sb.append(checkBoxRowIds);
-		sb.append(", this, 'tr:not(.lfr-template)'");
-		sb.append(");\">");
+		sb.append("onClick=\"");
+		sb.append("Liferay.Util.checkAll(");
+		sb.append("AUI().one(this).ancestor('.table'),");
+		sb.append(checkBoxRowIds + ",");
+		sb.append("this,");
+		sb.append("'tr:not(.lfr-template)'");
+		sb.append(");");
+		sb.append("\">");
 
 		return sb.toString();
 	}
@@ -231,7 +233,7 @@ public class RowChecker {
 		String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("<input ");
 
@@ -254,15 +256,14 @@ public class RowChecker {
 		sb.append("\" ");
 
 		if (Validator.isNotNull(_allRowIds)) {
-			sb.append("onClick=\"Liferay.Util.checkAllBox(");
-			sb.append("AUI().one(this).ancestor('");
-			sb.append(".table'), ");
-			sb.append(checkBoxRowIds);
-			sb.append(", ");
-			sb.append(checkBoxAllRowIds);
+			sb.append("onClick=\"");
+			sb.append("Liferay.Util.rowCheckerCheckAllBox(");
+				sb.append("AUI().one(this).ancestor('.table'),");
+				sb.append("AUI().one(this).ancestor('tr:not(.lfr-template)'),");
+				sb.append(checkBoxRowIds + ",");
+				sb.append(checkBoxAllRowIds + ",");
+				sb.append("'info'");
 			sb.append(");");
-			sb.append("AUI().one(this).ancestor('tr:not(.lfr-template)').");
-			sb.append("toggleClass('info');");
 
 			if (Validator.isNotNull(checkBoxPostOnClick)) {
 				sb.append(checkBoxPostOnClick);

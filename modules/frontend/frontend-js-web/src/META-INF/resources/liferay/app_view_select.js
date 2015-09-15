@@ -267,7 +267,7 @@ AUI.add(
 
 						var articleDisplayNodes = A.all(articleDisplayStyle);
 
-						articleDisplayNodes.toggleClass(instance._selectedCSSClass, instance._selectAllCheckbox.attr(ATTR_CHECKED));
+						articleDisplayNodes.toggleClass(instance._selectedCSSClass, selectAllCheckbox.attr(ATTR_CHECKED));
 					},
 
 					_toggleHovered: function(event) {

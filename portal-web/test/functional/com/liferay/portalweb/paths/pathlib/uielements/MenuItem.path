@@ -314,11 +314,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>OTHER_SITE</td>
-	<td>//a[@role='menuitem' and contains(.,'Other Site...')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MANAGE</td>
 	<td>//a[@role='menuitem' and contains(.,'Manage')]</td>
 	<td></td>
@@ -411,6 +406,11 @@
 <tr>
 	<td>ORGANIZATION_ROLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Organization Role')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OTHER_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Other Site...')]</td>
 	<td></td>
 </tr>
 <tr>

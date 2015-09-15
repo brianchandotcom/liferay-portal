@@ -192,6 +192,10 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		return _metaData._headers.containsKey(name);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #finishResponse(boolean)}}
+	 */
+	@Deprecated
 	public void finishResponse() throws IOException {
 		finishResponse(false);
 	}

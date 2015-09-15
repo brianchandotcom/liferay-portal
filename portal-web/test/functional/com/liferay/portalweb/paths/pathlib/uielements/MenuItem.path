@@ -239,11 +239,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_2</td>
-	<td>xpath=(//a[@role='menuitem' and contains(.,'Edit')])[2]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>EDIT_DEFAULT_VALUES</td>
 	<td>//a[@role='menuitem' and contains(.,'Edit Default Values')]</td>
 	<td></td>
@@ -321,11 +316,6 @@
 <tr>
 	<td>OTHER_SITE</td>
 	<td>//a[@role='menuitem' and contains(.,'Other Site...')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS</td>
-	<td>//div[contains(@class,'open')]//a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -27,16 +27,22 @@ import java.io.PrintWriter;
 
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.gradle.api.AntBuilder;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 
 /**
@@ -172,14 +178,21 @@ public class FileUtil {
 			return false;
 		}
 
-		long sourceLastModified = _getLastModified(sourceFile);
-		long targetLastModified = _getLastModified(targetFile);
+		boolean upToDate = false;
 
-		if (targetLastModified >= sourceLastModified) {
-			return true;
+		try {
+			long sourceLastModified = _getLastModified(sourceFile);
+			long targetLastModified = _getLastModified(targetFile);
+
+			if (targetLastModified >= sourceLastModified) {
+				upToDate = true;
+			}
+		}
+		catch (IOException ioe) {
+			throw new GradleException(ioe.getMessage(), ioe);
 		}
 
-		return false;
+		return upToDate;
 	}
 
 	public static void jar(
@@ -315,28 +328,36 @@ public class FileUtil {
 		project.ant(closure);
 	}
 
-	private static long _getLastModified(File file) {
+	private static long _getLastModified(File file) throws IOException {
 		if (file.isFile()) {
 			return file.lastModified();
 		}
 
-		long lastModified = 0;
+		final AtomicLong lastModified = new AtomicLong();
 
-		File[] dirFiles = file.listFiles();
+		Files.walkFileTree(
+			file.toPath(),
+			new SimpleFileVisitor<Path>() {
 
-		for (File dirFile : dirFiles) {
-			long dirFileLastModified = dirFile.lastModified();
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-			if (dirFileLastModified > lastModified) {
-				lastModified = dirFileLastModified;
-			}
-		}
+					FileTime fileTime = basicFileAttributes.lastModifiedTime();
 
-		if (lastModified == 0) {
-			lastModified = file.lastModified();
-		}
+					long fileTimeMillis = fileTime.toMillis();
 
-		return lastModified;
+					if (fileTimeMillis > lastModified.longValue()) {
+						lastModified.set(fileTimeMillis);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return lastModified.get();
 	}
 
 	private static File _getMirrorsCacheDir() {

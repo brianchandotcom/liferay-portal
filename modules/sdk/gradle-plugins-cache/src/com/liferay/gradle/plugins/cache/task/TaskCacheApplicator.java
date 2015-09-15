@@ -17,8 +17,6 @@ package com.liferay.gradle.plugins.cache.task;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 
-import java.io.File;
-
 import java.util.Set;
 
 import org.gradle.api.GradleException;
@@ -26,8 +24,8 @@ import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.tasks.Copy;
-import org.gradle.api.tasks.bundling.Zip;
 
 /**
  * @author Andrea Di Giorgi
@@ -56,9 +54,9 @@ public class TaskCacheApplicator {
 					" is out-of-date and failIsOutOfDate is true");
 		}
 
-		Zip zip = createWriteCacheFileTask(taskCache);
+		Copy copy = createSaveCacheTask(taskCache);
 
-		task.finalizedBy(zip);
+		task.finalizedBy(copy);
 	}
 
 	protected void applyUpToDate(final TaskCache taskCache, Task task) {
@@ -68,42 +66,40 @@ public class TaskCacheApplicator {
 
 		removeSkippedTaskDependencies(taskCache, task);
 
-		Copy copy = createRestoreCacheFileTask(taskCache);
+		Copy copy = createRestoreCacheTask(taskCache);
 
 		task.dependsOn(copy);
 
 		task.setEnabled(false);
 	}
 
-	protected Copy createRestoreCacheFileTask(TaskCache taskCache) {
+	protected Copy createRestoreCacheTask(TaskCache taskCache) {
 		Project project = taskCache.getProject();
 
 		String taskName =
-			"restore" + StringUtil.capitalize(taskCache.getName()) +
-				"CacheFile";
+			"restore" + StringUtil.capitalize(taskCache.getName()) + "Cache";
 
 		Copy copy = GradleUtil.addTask(project, taskName, Copy.class);
 
-		copy.from(project.zipTree(taskCache.getCacheFile()));
+		copy.from(taskCache.getCacheDir());
 		copy.into(taskCache.getBaseDir());
 
 		return copy;
 	}
 
-	protected Zip createWriteCacheFileTask(TaskCache taskCache) {
+	protected Copy createSaveCacheTask(TaskCache taskCache) {
 		String taskName =
-			"write" + StringUtil.capitalize(taskCache.getName()) + "CacheFile";
+			"save" + StringUtil.capitalize(taskCache.getName()) + "Cache";
 
-		Zip zip = GradleUtil.addTask(
-			taskCache.getProject(), taskName, Zip.class);
+		Copy copy = GradleUtil.addTask(
+			taskCache.getProject(), taskName, Copy.class);
 
-		File cacheFile = taskCache.getCacheFile();
+		copy.dependsOn(
+			BasePlugin.CLEAN_TASK_NAME + StringUtil.capitalize(taskName));
+		copy.from(taskCache.getFiles());
+		copy.into(taskCache.getCacheDir());
 
-		zip.from(taskCache.getFiles());
-		zip.setArchiveName(cacheFile.getName());
-		zip.setDestinationDir(cacheFile.getParentFile());
-
-		return zip;
+		return copy;
 	}
 
 	protected void removeSkippedTaskDependencies(

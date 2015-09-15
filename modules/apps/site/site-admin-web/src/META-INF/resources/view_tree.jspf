@@ -225,6 +225,8 @@ if (group != null) {
 	</c:if>
 </aui:row>
 
+<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
+
 <%!
 private long _getParentGroupId(HttpServletRequest request, Group group, boolean filterManageableGroups) {
 	if (group != null) {

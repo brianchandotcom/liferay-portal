@@ -14,46 +14,48 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) %>">
 
 	<%
 	List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
-	%>
 
-	<%
 	boolean hasAddLayoutSetPrototypePermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
 	%>
-
-	<portlet:renderURL var="viewSitesURL">
-		<portlet:param name="sitesListView" value="<%= sitesListView %>" />
-	</portlet:renderURL>
 
 	<liferay-portlet:renderURL varImpl="addSiteURL">
 		<portlet:param name="mvcPath" value="/edit_site.jsp" />
 	</liferay-portlet:renderURL>
 
-	<c:choose>
-		<c:when test="<%= layoutSetPrototypes.isEmpty() && !hasAddLayoutSetPrototypePermission %>">
-			<aui:nav-item href="<%= addSiteURL.toString() %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
-		</c:when>
-		<c:otherwise>
-			<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>'>
-
-				<aui:nav-item href="<%= addSiteURL.toString() %>" label="blank-site" />
+	<liferay-frontend:add-menu>
+		<c:choose>
+			<c:when test="<%= layoutSetPrototypes.isEmpty() && !hasAddLayoutSetPrototypePermission %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSiteURL.toString() %>" />
+			</c:when>
+			<c:otherwise>
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "blank-site") %>' url="<%= addSiteURL.toString() %>" />
 
 				<%
 				for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
 					addSiteURL.setParameter("layoutSetPrototypeId", String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()));
 				%>
 
-					<aui:nav-item href="<%= addSiteURL.toString() %>" label="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" />
+					<liferay-frontend:add-menu-item title="<%= HtmlUtil.escape(layoutSetPrototype.getName(locale)) %>" url="<%= addSiteURL.toString() %>" />
 
 				<%
 				}
 				%>
 
 				<c:if test="<%= hasAddLayoutSetPrototypePermission %>">
-					<aui:nav-item cssClass="divider" />
+
+					<%
+					String sitesListView = ParamUtil.get(request, "sitesListView", SiteConstants.LIST_VIEW_TREE);
+					%>
+
+					<portlet:renderURL var="viewSitesURL">
+						<portlet:param name="sitesListView" value="<%= sitesListView %>" />
+					</portlet:renderURL>
 
 					<%
 					Map<String, String> anchorData = new HashMap<>();
@@ -66,9 +68,9 @@
 					manageSiteTemplateURL.setParameter("backURL", viewSitesURL);
 					%>
 
-					<aui:nav-item anchorData="<%= anchorData %>" href="<%= manageSiteTemplateURL.toString() %>" label="manage-site-template" />
+					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "manage-site-template") %>' url="<%= manageSiteTemplateURL.toString() %>" />
 				</c:if>
-			</aui:nav-item>
-		</c:otherwise>
-	</c:choose>
+			</c:otherwise>
+		</c:choose>
+	</liferay-frontend:add-menu>
 </c:if>

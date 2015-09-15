@@ -15,10 +15,6 @@
 --%>
 
 <aui:nav-bar>
-	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-		<%@ include file="/toolbar_content.jspf" %>
-	</aui:nav>
-
 	<aui:nav-bar-search>
 		<liferay-ui:group-search-form />
 	</aui:nav-bar-search>

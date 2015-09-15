@@ -26,7 +26,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= (row == null) %>" showWhenSingleIcon="<%= (row == null) %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= !workflowTask.isCompleted() && workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
 
 		<%
@@ -51,7 +51,6 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 			<liferay-ui:icon
 				cssClass='<%= "workflow-task-" + randomId + " task-change-status-link" %>'
 				data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
-				iconCssClass="icon-random"
 				id='<%= randomId + HtmlUtil.escapeAttribute(transitionName) + "taskChangeStatusLink" %>'
 				message="<%= message %>"
 				method="get"
@@ -76,7 +75,6 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-assign-to-me-link" %>'
 			data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
-			iconCssClass="icon-signin"
 			id='<%= randomId + "taskAssignToMeLink" %>'
 			message="assign-to-me"
 			method="get"
@@ -95,7 +93,6 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-assign-link" %>'
 			data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
-			iconCssClass="icon-signin"
 			id='<%= randomId + "taskAssignLink" %>'
 			message="assign-to-..."
 			method="get"
@@ -113,7 +110,6 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-due-date-link" %>'
 			data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
-			iconCssClass="icon-time"
 			id='<%= randomId + "taskDueDateLink" %>'
 			message="update-due-date"
 			method="get"

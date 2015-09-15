@@ -22,14 +22,15 @@ AssetRenderer assetRenderer = workflowTaskDisplayContext.getAssetRenderer();
 AssetRendererFactory assetRendererFactory = workflowTaskDisplayContext.getAssetRendererFactory();
 
 request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
+
+String redirect = ParamUtil.getString(request, "redirect");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+portletDisplay.setTitle(assetRenderer.getTitle(locale));
 %>
 
 <c:if test="<%= assetEntry != null %>">
-	<liferay-ui:header
-		localizeTitle="<%= false %>"
-		title="<%= assetRenderer.getTitle(locale) %>"
-	/>
-
 	<liferay-ui:asset-display
 		assetEntry="<%= assetEntry %>"
 		assetRenderer="<%= assetRenderer %>"

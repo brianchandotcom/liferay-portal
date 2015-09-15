@@ -18,48 +18,59 @@
 
 <%
 PortletURL portletURL = workflowTaskDisplayContext.getPortletURL();
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, workflowTaskDisplayContext.getTabs1()), currentURL);
 %>
 
-<liferay-ui:tabs
-	names="pending,completed"
-	portletURL="<%= portletURL %>"
+<liferay-ui:breadcrumb
+	showCurrentGroup="<%= false %>"
+	showGuestGroup="<%= false %>"
+	showLayout="<%= false %>"
+	showParentGroups="<%= false %>"
 />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:nav-bar>
+	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 		<aui:nav-bar-search>
 
 			<%
 			WorkflowTaskDisplayTerms workflowTaskDisplayTerms = workflowTaskDisplayContext.getWorkflowTaskDisplayTerms();
 			%>
 
-			<liferay-ui:search-toggle
-				autoFocus="<%= workflowTaskDisplayContext.getWindowState().equals(WindowState.MAXIMIZED) %>"
-				buttonLabel="search"
-				displayTerms="<%= workflowTaskDisplayTerms %>"
-				id="toggle_id_workflow_task_search"
-			>
-				<aui:input inlineField="<%= true %>" label="task" name="name" size="20" value="<%= workflowTaskDisplayTerms.getName() %>" />
+				<liferay-ui:search-toggle
+					autoFocus="<%= workflowTaskDisplayContext.getWindowState().equals(WindowState.MAXIMIZED) %>"
+					buttonLabel="search"
+					displayTerms="<%= workflowTaskDisplayTerms %>"
+					id="toggle_id_workflow_task_search"
+					markupView="lexicon"
+				>
 
-				<aui:fieldset>
-					<aui:select inlineField="<%= true %>" name="type">
+					<aui:fieldset>
+						<aui:input inlineField="<%= true %>" label="task" name="name" size="20" value="<%= workflowTaskDisplayTerms.getName() %>" />
 
-						<%
-						for (WorkflowHandler<?> workflowHandler : workflowTaskDisplayContext.getSearchableAssetsWorkflowHandlers()) {
-							String className = workflowHandler.getClassName();
-						%>
+						<aui:select inlineField="<%= true %>" name="type">
 
-							<aui:option label="<%= workflowHandler.getType(locale) %>" selected="<%= className.equals(workflowTaskDisplayTerms.getType()) %>" value="<%= workflowHandler.getClassName() %>" />
+							<%
+							for (WorkflowHandler<?> workflowHandler : workflowTaskDisplayContext.getSearchableAssetsWorkflowHandlers()) {
+								String className = workflowHandler.getClassName();
+							%>
 
-						<%
-						}
-						%>
+								<aui:option label="<%= workflowHandler.getType(locale) %>" selected="<%= className.equals(workflowTaskDisplayTerms.getType()) %>" value="<%= workflowHandler.getClassName() %>" />
 
-					</aui:select>
-				</aui:fieldset>
-			</liferay-ui:search-toggle>
+							<%
+							}
+							%>
+
+						</aui:select>
+					</aui:fieldset>
+				</liferay-ui:search-toggle>
 		</aui:nav-bar-search>
 	</aui:nav-bar>
+
+	<liferay-ui:tabs
+		names="pending,completed"
+		portletURL="<%= portletURL %>"
+	/>
 
 	<c:choose>
 		<c:when test="<%= workflowTaskDisplayContext.isPendingTabSelected() %>">
@@ -93,8 +104,5 @@ PortletURL portletURL = workflowTaskDisplayContext.getPortletURL();
 			<%@ include file="/workflow_tasks.jspf" %>
 		</c:otherwise>
 	</c:choose>
-</aui:form>
 
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, workflowTaskDisplayContext.getTabs1()), currentURL);
-%>
+</aui:form>

@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<portlet:renderURL var="backURL">
+	<portlet:param name="mvcPath" value="/view.jsp" />
+</portlet:renderURL>
+
 <%
 String randomId = StringUtil.randomId();
 
@@ -39,16 +43,19 @@ if (assetRenderer != null) {
 String headerTitle = workflowTaskDisplayContext.getHeaderTitle(workflowTask);
 
 boolean showEditURL = workflowTaskDisplayContext.showEditURL(workflowTask);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(backURL.toString());
+portletDisplay.setTitle(headerTitle);
+
+PortalUtil.addPortletBreadcrumbEntry(request, headerTitle, currentURL);
 %>
 
-<portlet:renderURL var="backURL">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-</portlet:renderURL>
-
-<liferay-ui:header
-	backURL="<%= backURL.toString() %>"
-	localizeTitle="<%= false %>"
-	title="<%= headerTitle %>"
+<liferay-ui:breadcrumb
+	showCurrentGroup="<%= false %>"
+	showGuestGroup="<%= false %>"
+	showLayout="<%= false %>"
+	showParentGroups="<%= false %>"
 />
 
 <aui:row>
@@ -241,7 +248,3 @@ boolean showEditURL = workflowTaskDisplayContext.showEditURL(workflowTask);
 	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskAssignLink', onTaskClickFn);
 	Liferay.delegateClick('<portlet:namespace /><%= randomId %>taskDueDateLink', onTaskClickFn);
 </aui:script>
-
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, headerTitle, currentURL);
-%>

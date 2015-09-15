@@ -18,9 +18,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
-import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
-import com.liferay.dynamic.data.mapping.util.DDMUtil;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.model.JournalArticle;
@@ -169,31 +167,12 @@ public class JournalArticleIndexer
 		if (Validator.isNotNull(ddmStructureFieldName) &&
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
-			String[] ddmStructureFieldNameParts = StringUtil.split(
-				ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
+			QueryFilter queryFilter =
+				DDMIndexerUtil.createFieldValueQueryFilter(
+					ddmStructureFieldName, ddmStructureFieldValue,
+					searchContext.getLocale());
 
-			DDMStructure structure = _ddmStructureLocalService.getStructure(
-				GetterUtil.getLong(ddmStructureFieldNameParts[1]));
-
-			String fieldName = StringUtil.replaceLast(
-				ddmStructureFieldNameParts[2],
-				StringPool.UNDERLINE.concat(
-					LocaleUtil.toLanguageId(searchContext.getLocale())),
-				StringPool.BLANK);
-
-			if (structure.hasField(fieldName)) {
-				ddmStructureFieldValue = DDMUtil.getIndexedFieldValue(
-					ddmStructureFieldValue, structure.getFieldType(fieldName));
-			}
-
-			BooleanQuery booleanQuery = new BooleanQueryImpl();
-
-			booleanQuery.addRequiredTerm(
-				ddmStructureFieldName,
-				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
-
-			contextBooleanFilter.add(
-				new QueryFilter(booleanQuery), BooleanClauseOccur.MUST);
+			contextBooleanFilter.add(queryFilter, BooleanClauseOccur.MUST);
 		}
 
 		String articleType = (String)searchContext.getAttribute("articleType");

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.scheduler;
 
-import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.util.Date;
 
@@ -23,27 +23,53 @@ import java.util.Date;
  */
 public class TriggerFactoryUtil {
 
-	public static Trigger buildTrigger(
-		TriggerType triggerType, String jobName, String groupName,
-		Date startDate, Date endDate, Object triggerContent) {
+	public static Trigger createTrigger(
+		String jobName, String groupName, Date startDate, Date endDate,
+		int interval, TimeUnit timeUnit) {
 
-		if (triggerType == TriggerType.CRON) {
-			return new CronTrigger(
-				jobName, groupName, startDate, endDate,
-				String.valueOf(triggerContent));
-		}
-
-		if (triggerType == TriggerType.SIMPLE) {
-			ObjectValuePair<Integer, TimeUnit> objectValuePair =
-				(ObjectValuePair<Integer, TimeUnit>)triggerContent;
-
-			return new IntervalTrigger(
-				jobName, groupName, startDate, endDate,
-				objectValuePair.getKey(), objectValuePair.getValue());
-		}
-
-		throw new IllegalArgumentException(
-			"Unknown trigger type " + triggerType);
+		return _triggerFactory.createTrigger(
+			jobName, groupName, startDate, endDate, interval, timeUnit);
 	}
+
+	public static Trigger createTrigger(
+		String jobName, String groupName, Date startDate, Date endDate,
+		String cronExpression) {
+
+		return _triggerFactory.createTrigger(
+			jobName, groupName, startDate, endDate, cronExpression);
+	}
+
+	public static Trigger createTrigger(
+		String jobName, String groupName, Date startDate, int interval,
+		TimeUnit timeUnit) {
+
+		return _triggerFactory.createTrigger(
+			jobName, groupName, startDate, interval, timeUnit);
+	}
+
+	public static Trigger createTrigger(
+		String jobName, String groupName, Date startDate,
+		String cronExpression) {
+
+		return _triggerFactory.createTrigger(
+			jobName, groupName, startDate, cronExpression);
+	}
+
+	public static Trigger createTrigger(
+		String jobName, String groupName, int interval, TimeUnit timeUnit) {
+
+		return _triggerFactory.createTrigger(
+			jobName, groupName, interval, timeUnit);
+	}
+
+	public static Trigger createTrigger(
+		String jobName, String groupName, String cronExpression) {
+
+		return _triggerFactory.createTrigger(
+			jobName, groupName, cronExpression);
+	}
+
+	private static final TriggerFactory _triggerFactory =
+		ProxyFactory.newServiceTrackedInstance(TriggerFactory.class);
 
 }

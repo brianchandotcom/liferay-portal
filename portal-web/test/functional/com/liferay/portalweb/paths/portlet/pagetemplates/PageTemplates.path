@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_TABLE_DESCRITPION</td>
-	<td>//tr[contains(.,'${key_pageTemplateName}')]/td[2]</td>
+	<td>//tr[contains(.,'${key_pageTemplateDescription}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>

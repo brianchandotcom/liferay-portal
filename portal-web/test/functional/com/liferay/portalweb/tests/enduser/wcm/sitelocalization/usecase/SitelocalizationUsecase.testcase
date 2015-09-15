@@ -424,9 +424,15 @@
 			<var name="defaultSiteLanguageKey" value="es_ES" />
 		</execute>
 
-		<execute macro="Page#gotoCPLocalized">
-			<var name="localizedControlPanel" value="Panel de control" />
-			<var name="localizedPortletName" value="Configuración del Portal" />
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Site Page 1" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoLocalizedControlPanel">
+			<var name="category" value="Configuración" />
+			<var name="portlet" value="Configuración del Portal" />
+			<var name="tab" value="Panel de control" />
 		</execute>
 
 		<execute macro="PortalSettings#viewCurrentDefaultPortalLanguageCP">

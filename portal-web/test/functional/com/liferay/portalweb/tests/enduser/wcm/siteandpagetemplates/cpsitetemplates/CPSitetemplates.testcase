@@ -99,41 +99,47 @@
 	</command>
 
 	<command name="LocalizeDefaultSiteTemplates" priority="4">
-		<var name="pageTemplateName" value="Page Template Name" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Site Templates" />
+		<execute macro="ProductMenu#gotoSitesAdministration">
+			<var name="portlet" value="Site Templates" />
 		</execute>
 
-		<execute macro="SiteTemplates#viewDefaultCP" />
+		<execute macro="SiteTemplates#viewDefaultCP">
+			<var name="siteTemplateNameList" value="Community Site,Intranet Site" />
+		</execute>
 
-		<execute macro="MyAccount#configureDisplaySettingsLanguage">
+		<execute macro="ProductMenu#gotoMySpaceMyAccount">
+			<var name="portlet" value="Account Settings" />
+		</execute>
+
+		<execute macro="MyAccount#changeUserLanguage">
 			<var name="languageName" value="español (España)" />
-			<var name="myAccount" value="My Account" />
 			<var name="saveButton" value="Save" />
 			<var name="successMessage" value="Su petición ha terminado con éxito." />
 		</execute>
 
-		<execute macro="Page#gotoCPLocalized">
-			<var name="localizedAdmin" value="Administración" />
-			<var name="localizedControlPanel" value="Panel de control" />\
-			<var name="localizedPortletName" value="Plantillas de sitio web" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
+			<var name="category" value="Administración" />
+			<var name="portlet" value="Plantillas de sitio web" />
+			<var name="tab" value="Sitios Web" />
 		</execute>
 
 		<execute macro="SiteTemplates#viewDefaultDataLocalizedCP">
-			<var name="communitySiteDescriptionTranslation" value="Sitio con foros y Wiki" />
-			<var name="communitySiteTranslation" value="Sitio de la comunidad" />
-			<var name="intranetSiteDescriptionTranslation" value="Sitio con noticias y documentos" />
-			<var name="intranetSiteTranslation" value="Sitio de la intranet" />
+			<var name="siteTemplateDescriptionList" value="Sitio con foros y Wiki,Sitio con noticias y documentos" />
+			<var name="siteTemplateNameList" value="Sitio de la comunidad,Sitio de la intranet" />
 		</execute>
 
-		<execute macro="Page#openURL">
-			<var name="siteName" value="Liferay" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoLocalizedMySpaceMyAccount">
+			<var name="category" value="Mi cuenta" />
+			<var name="portlet" value="Mi cuenta" />
+			<var name="tab" value="Mi espacio" />
 		</execute>
 
-		<execute macro="MyAccount#configureDisplaySettingsLanguage">
+		<execute macro="MyAccount#changeUserLanguage">
 			<var name="languageName" value="English (United States)" />
-			<var name="myAccount" value="Mi cuenta" />
 			<var name="saveButton" value="Guardar" />
 			<var name="successMessage" value="Your request completed successfully." />
 		</execute>
@@ -142,7 +148,9 @@
 			<var name="portletName" value="Site Templates" />
 		</execute>
 
-		<execute macro="SiteTemplates#viewDefaultCP" />
+		<execute macro="SiteTemplates#viewDefaultCP">
+			<var name="siteTemplateNameList" value="Community Site,Intranet Site" />
+		</execute>
 	</command>
 
 	<command known-issues="LPS-58054" name="ResetPageChanges" priority="4">

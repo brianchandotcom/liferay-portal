@@ -237,16 +237,27 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME_1" value1="Community Site" />
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME_2" value1="Intranet Site" />
+		<for list="${siteTemplateNameList}" param="siteTemplateName" >
+			<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
+		</for>
+
 		<execute function="AssertElementNotPresent" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME_3" />
 	</command>
 
 	<command name="viewDefaultDataLocalizedCP">
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME_1" value1="${communitySiteTranslation}" />
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME_2" value1="${intranetSiteTranslation}" />
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION_1" value1="${communitySiteDescriptionTranslation}" />
-		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRIPTION_2" value1="${intranetSiteDescriptionTranslation}" />
+		<for list="${siteTemplateNameList}" param="siteTemplateNameTranslation" >
+			<var name="key_siteTemplateName" value="${siteTemplateNameTranslation}" />
+
+			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateNameTranslation}" />
+		</for>
+
+		<for list="${siteTemplateDescriptionList}" param="DescriptionTranslation" >
+			<var name="key_siteTemplateDescription" value="${DescriptionTranslation}" />
+
+			<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_DESCRITPION" value1="${DescriptionTranslation}" />
+		</for>
 	</command>
 
 	<command name="viewEditCP">

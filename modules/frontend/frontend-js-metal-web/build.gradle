@@ -2,24 +2,15 @@ import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
 import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask
 import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask
 
-dependencies {
-	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-}
-
-ext {
-	bowerVersion = "1.5.2"
-	gulpVersion = "3.9.0"
-}
-
-liferay {
-	deployDir = file("${liferayHome}/osgi/modules")
-}
 
 task downloadBower(type: DownloadNodeModuleTask)
 task downloadGulp(type: DownloadNodeModuleTask)
 task npmInstall(type: ExecuteNpmTask)
 task runGulp(type: ExecuteNodeTask)
 task bowerInstall(type: ExecuteNodeTask)
+
+String bowerVersion = "1.5.2"
+String gulpVersion = "3.9.0"
 
 bowerInstall {
 	args = [new File(node.nodeDir, "node_modules/bower/bin/bower"), "install", "--allow-root"]
@@ -31,6 +22,10 @@ configJSModules {
 	include "**/*.js"
 }
 
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
 downloadBower {
 	moduleName = "bower"
 	moduleVersion = bowerVersion
@@ -39,6 +34,10 @@ downloadBower {
 downloadGulp {
 	moduleName = "gulp"
 	moduleVersion = gulpVersion
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
 }
 
 npmInstall {

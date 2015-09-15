@@ -88,7 +88,7 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 
 	<liferay-ui:search-container
 		id="teams"
-		rowChecker="<%= new RowChecker(renderResponse) %>"
+		rowChecker="<%= new LexiconRowChecker(renderResponse) %>"
 		searchContainer="<%= teamSearchContainer %>"
 	>
 

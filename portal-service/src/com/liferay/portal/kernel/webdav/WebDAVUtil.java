@@ -282,7 +282,7 @@ public class WebDAVUtil {
 			return StringPool.BLANK;
 		}
 		else {
-			return HttpUtil.decodeURL(pathArray[pathArray.length - 1]);
+			return pathArray[pathArray.length - 1];
 		}
 	}
 

@@ -64,7 +64,7 @@ public class BaseResourceImpl implements Resource {
 		_size = size;
 
 		if (Validator.isNotNull(name)) {
-			parentPath += StringPool.SLASH + HttpUtil.encodeURL(name);
+			parentPath += StringPool.SLASH + name;
 		}
 
 		_href = HttpUtil.encodePath(parentPath);

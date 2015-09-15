@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -1072,7 +1071,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		}
 
 		for (int i = 2; i < x; i++) {
-			String name = HttpUtil.decodeURL(pathArray[i]);
+			String name = pathArray[i];
 
 			Folder folder = DLAppServiceUtil.getFolder(groupId, folderId, name);
 

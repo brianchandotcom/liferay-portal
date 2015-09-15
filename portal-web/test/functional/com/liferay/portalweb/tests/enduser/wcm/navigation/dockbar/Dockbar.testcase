@@ -52,7 +52,7 @@
 
 		<execute function="AssertClick" locator1="NavPill#APPLICATIONS" value1="Applications" />
 
-		<var name="portletLocator" value="//span[@data-title=&quot;Bookmarks&quot; and contains(@class,'drag-content-item')]" />
+		<var name="portletLocator" value="//span[@data-title=&quot;Bookmarks&quot; and contains(@class,'add-content-item')]" />
 
 		<execute function="AssertVisible#pauseAssertVisible" locator1="${portletLocator}" />
 

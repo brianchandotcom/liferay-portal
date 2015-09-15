@@ -19,9 +19,9 @@ package com.liferay.portal.kernel.servlet;
  */
 public class PortalWebResourceConstants {
 
-	public static final String RESOURCE_TYPE_ADMIN_THEME = "admin_theme";
+	public static final String RESOURCE_TYPE_THEME_ADMIN = "theme_admin";
 
-	public static final String RESOURCE_TYPE_CLASSIC_THEME = "classic_theme";
+	public static final String RESOURCE_TYPE_THEME_CLASSIC = "theme_classic";
 
 	public static final String RESOURCE_TYPE_CSS = "css";
 

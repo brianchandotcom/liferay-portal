@@ -150,7 +150,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 			long[] categoryIds, String[] tagNames, boolean visible,
 			Date startDate, Date endDate, Date expirationDate, String mimeType,
 			String title, String description, String summary, String url,
-			String layoutUuid, int height, int width, Integer priority)
+			String layoutUuid, int height, int width, Double priority)
 		throws PortalException {
 
 		AssetEntryPermission.check(
@@ -167,7 +167,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 	 * @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
 	 *             Date, String, long, String, long, long[], String[], boolean,
 	 *             Date, Date, Date, String, String, String, String, String,
-	 *             String, int, int, Integer)}
+	 *             String, int, int, Double)}
 	 */
 	@Deprecated
 	@Override

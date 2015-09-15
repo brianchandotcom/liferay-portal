@@ -429,7 +429,7 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoControlPanelLocalization">
+		<execute macro="ProductMenu#gotoLocalizedControlPanel">
 			<var name="category" value="Configuración" />
 			<var name="portlet" value="Configuración del Portal" />
 			<var name="tab" value="Panel de control" />

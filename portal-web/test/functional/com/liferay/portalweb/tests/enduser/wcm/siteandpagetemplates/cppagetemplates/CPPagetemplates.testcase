@@ -124,7 +124,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoSitesAdministrationLocalization">
+		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
 			<var name="category" value="Administración" />
 			<var name="portlet" value="Plantillas de página" />
 			<var name="tab" value="Sitios Web" />
@@ -137,7 +137,7 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoMySpaceMyAccountLocalization">
+		<execute macro="ProductMenu#gotoLocalizedMySpaceMyAccount">
 			<var name="category" value="Mi cuenta" />
 			<var name="portlet" value="Mi cuenta" />
 			<var name="tab" value="Mi espacio" />

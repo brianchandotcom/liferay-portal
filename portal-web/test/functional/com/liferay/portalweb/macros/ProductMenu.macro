@@ -23,7 +23,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoControlPanelLocalization" summary="Navigate to Product Menu > Control Panel > ${category} > ${portlet}.">
+	<command name="gotoLocalizedControlPanel" summary="Navigate to Product Menu > Control Panel > ${category} > ${portlet}.">
 		<execute macro="ProductMenuHelper#gotoTab">
 			<var name="tab" value="${tab}" />
 		</execute>
@@ -61,7 +61,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoMySpaceMyAccountLocalization" summary="Navigate to Product Menu > My Space > My Account > ${portlet}.">
+	<command name="gotoLocalizedMySpaceMyAccount" summary="Navigate to Product Menu > My Space > My Account > ${portlet}.">
 		<execute macro="ProductMenuHelper#gotoTab">
 			<var name="tab" value="${tab}" />
 		</execute>
@@ -89,7 +89,7 @@
 		</execute>
 	</command>
 
-	<command name="gotoSitesAdministrationLocalization" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}.">
+	<command name="gotoLocalizedSitesAdministration" summary="Navigate to Product Menu > Sites > ${category} > ${portlet}.">
 		<execute macro="ProductMenuHelper#gotoTab">
 			<var name="tab" value="${tab}" />
 		</execute>

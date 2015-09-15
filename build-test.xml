@@ -4554,16 +4554,6 @@ module.framework.properties.osgi.console=11312</echo>
 			<format pattern="yyyy-MM-dd" property="current.date" timezone="GMT" />
 		</tstamp>
 
-		<local name="project.dir.unix" />
-
-		<propertyregex
-			global="true"
-			input="${project.dir}"
-			property="project.dir.unix"
-			regexp="\\"
-			replace="/"
-		/>
-
 		<echo append="true" file="${test.ext.properties.file}">
 			component.names=${component.names}
 			ignore.errors.file.name=${project.dir.unix}/portal-web/test-ignorable-error-lines.xml

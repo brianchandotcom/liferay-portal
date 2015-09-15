@@ -95,28 +95,3 @@ $toggle-card-on-border-width: 2px;
 $toggle-card-on-icon-bg: #FFF;
 $toggle-card-on-icon-border: #65B6F0;
 $toggle-card-on-icon-border-width: 0;
-
-/* ---------- Switches ---------- */
-
-$toggle-switch-bar-padding: 0;
-$toggle-switch-button-width: 25px;
-
-$toggle-switch-bar-height: ($toggle-switch-bar-padding * 2) + $toggle-switch-button-width;
-$toggle-switch-bar-width: 50px;
-
-$toggle-switch-bar-border-radius: 3px;
-$toggle-switch-button-border-radius: 3px;
-$toggle-switch-button-off-border-radius: 3px 0 0 3px;
-$toggle-switch-button-on-border-radius: 0 3px 3px 0;
-
-$toggle-switch-bar-border-width: 1px;
-$toggle-switch-bar-font-size: 12px;
-$toggle-switch-button-border-width: 1px;
-$toggle-switch-button-font-size: $toggle-switch-bar-font-size;
-
-$toggle-switch-bar-bg: $input-group-addon-bg;
-$toggle-switch-bar-border-color: $input-group-addon-border-color;
-$toggle-switch-bar-icon-color: $input-color;
-$toggle-switch-button-bg: $input-bg;
-$toggle-switch-button-border-color: $input-group-addon-border-color;
-$toggle-switch-button-icon-color: $input-color;

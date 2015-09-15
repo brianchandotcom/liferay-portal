@@ -39,20 +39,11 @@
 	<liferay-ui:search-container-results>
 
 		<%
-		if (searchTerms.isAdvancedSearch()) {
-			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
+		total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getKeywords(), groupParams);
 
-			searchContainer.setTotal(total);
+		searchContainer.setTotal(total);
 
-			results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		}
-		else {
-			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getKeywords(), groupParams);
-
-			searchContainer.setTotal(total);
-
-			results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		}
+		results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 		searchContainer.setResults(results);
 

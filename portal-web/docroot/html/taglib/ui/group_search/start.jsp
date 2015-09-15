@@ -31,28 +31,14 @@ searchContainer.setRowChecker(rowChecker);
 
 GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
-List<Group> results = null;
-int total = 0;
-%>
+int total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);
 
-<liferay-ui:group-search-form />
+searchContainer.setTotal(total);
 
-<%
-if (searchTerms.isAdvancedSearch()) {
-	total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
-
-	searchContainer.setTotal(total);
-
-	results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-}
-else {
-	total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), groupParams);
-
-	searchContainer.setTotal(total);
-
-	results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-}
+List<Group> results = GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 searchContainer.setResults(results);
 searchContainer.setTotal(total);
 %>
+
+<liferay-ui:input-search />

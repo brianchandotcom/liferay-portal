@@ -60,7 +60,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 		results="<%= GroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 	/>
 
-	<liferay-ui:group-search-form />
+	<liferay-ui:input-search />
 
 	<div class="separator"><!-- --></div>
 

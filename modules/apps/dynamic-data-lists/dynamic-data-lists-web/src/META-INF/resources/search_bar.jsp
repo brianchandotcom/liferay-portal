@@ -20,6 +20,10 @@
 SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+ 
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/view.jsp");
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -31,7 +35,9 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<liferay-util:include page="/record_set_search.jsp" servletContext="<%= application %>" />
+		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+			<liferay-util:include page="/record_set_search.jsp" servletContext="<%= application %>" />
+		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
 

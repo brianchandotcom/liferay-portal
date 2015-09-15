@@ -25,6 +25,7 @@ RecordSetDisplayTerms displayTerms = new RecordSetDisplayTerms(renderRequest);
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_dynamic_data_lists_record_set_search"
+	markupView="lexicon"
 >
 
 	<aui:fieldset>

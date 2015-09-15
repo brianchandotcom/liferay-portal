@@ -41,68 +41,73 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/view_record_set.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
+
+DDMForm ddmForm = ddmStructure.getFullHierarchyDDMForm();
+
+List<String> headerNames = new ArrayList<String>();
+
+List<DDMFormField> ddmFormfields = ddmForm.getDDMFormFields();
+
+for (DDMFormField ddmFormField : ddmFormfields) {
+	LocalizedValue label = ddmFormField.getLabel();
+
+	headerNames.add(label.getString(locale));
+}
+
+if (hasUpdatePermission) {
+	headerNames.add("status");
+	headerNames.add("modified-date");
+	headerNames.add("author");
+}
+
+headerNames.add(StringPool.BLANK);
+
+SearchContainer recordSearchContainer = new SearchContainer(
+	renderRequest, new DisplayTerms(request), null,
+	SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA,
+	portletURL, headerNames, LanguageUtil.format(request, "no-x-records-were-found",
+	HtmlUtil.escape(ddmStructure.getName(locale)), false)); 
 %>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav" searchContainer="<%= recordSearchContainer %>">
+
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
+			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+		</liferay-portlet:resourceURL>
+
+		<%
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("javascript:");
+		sb.append(renderResponse.getNamespace());
+		sb.append("exportRecordSet");
+		sb.append("('");
+		sb.append(exportRecordSetURL);
+		sb.append("');");
+		%>
+
+		<aui:nav-item href="<%= sb.toString() %>" iconCssClass="icon-arrow-down" label="export" />
+	</aui:nav>
+
+	<aui:nav-bar-search searchContainer="<%= recordSearchContainer %>">
+
+		<%
+		request.setAttribute("liferay-ui:search:searchContainer", recordSearchContainer);
+		%>
+		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+			<liferay-util:include page="/record_search.jsp" servletContext="<%= application %>" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	
-		<%
-		List<String> headerNames = new ArrayList<String>();
-	
-		DDMForm ddmForm = ddmStructure.getFullHierarchyDDMForm();
-	
-		List<DDMFormField> ddmFormfields = ddmForm.getDDMFormFields();
-	
-		for (DDMFormField ddmFormField : ddmFormfields) {
-			LocalizedValue label = ddmFormField.getLabel();
-	
-			headerNames.add(label.getString(locale));
-		}
-	
-		if (hasUpdatePermission) {
-			headerNames.add("status");
-			headerNames.add("modified-date");
-			headerNames.add("author");
-		}
-	
-		headerNames.add(StringPool.BLANK);
-		%>
-	
 		<liferay-ui:search-container
-			searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(request, "no-x-records-were-found", HtmlUtil.escape(ddmStructure.getName(locale)), false)) %>'
+			searchContainer='<%=recordSearchContainer %>'
 		>
-	
-			<aui:nav-bar>
-				<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-	
-					<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
-						<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-					</liferay-portlet:resourceURL>
-	
-					<%
-					StringBundler sb = new StringBundler(6);
-	
-					sb.append("javascript:");
-					sb.append(renderResponse.getNamespace());
-					sb.append("exportRecordSet");
-					sb.append("('");
-					sb.append(exportRecordSetURL);
-					sb.append("');");
-					%>
-	
-					<aui:nav-item href="<%= sb.toString() %>" iconCssClass="icon-arrow-down" label="export" />
-				</aui:nav>
-	
-				<aui:nav-bar-search searchContainer="<%= searchContainer %>">
-	
-					<%
-					request.setAttribute("liferay-ui:search:searchContainer", searchContainer);
-					%>
-	
-					<liferay-util:include page="/record_search.jsp" servletContext="<%= application %>" />
-				</aui:nav-bar-search>
-			</aui:nav-bar>
-	
+
 			<liferay-ui:search-container-results>
 				<%@ include file="/record_search_results.jspf" %>
 			</liferay-ui:search-container-results>

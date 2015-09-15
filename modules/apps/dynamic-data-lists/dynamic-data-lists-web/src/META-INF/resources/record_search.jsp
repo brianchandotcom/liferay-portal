@@ -27,6 +27,7 @@ DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_dynamic_data_lists_record_search"
+	markupView="lexicon"
 >
 	<aui:fieldset>
 		<aui:input name="<%= DisplayTerms.KEYWORDS %>" size="30" value="<%= displayTerms.getKeywords() %>" />

@@ -249,6 +249,7 @@ public class DDMImpl implements DDM {
 		Locale defaultLocale = ddmForm.getDefaultLocale();
 
 		ddmFormLayout.setDefaultLocale(defaultLocale);
+		ddmFormLayout.setPaginationMode(DDMFormLayout.SINGLE_PAGE_MODE);
 
 		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
 

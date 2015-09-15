@@ -169,7 +169,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57664" name="AddCategoryViewableByAnyone" priority="4">
+	<command name="AddCategoryViewableByAnyone" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -195,7 +195,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57664" name="AddCategoryViewableByOwner" priority="4">
+	<command name="AddCategoryViewableByOwner" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -221,7 +221,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57664" name="AddCategoryViewableBySiteMembers" priority="4">
+	<command name="AddCategoryViewableBySiteMembers" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -567,7 +567,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57664" name="AddVocabularyViewableByGuest" priority="4">
+	<command name="AddVocabularyViewableByGuest" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -587,7 +587,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57664" name="AddVocabularyViewableByOwner" priority="4">
+	<command name="AddVocabularyViewableByOwner" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -607,7 +607,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57664" name="AddVocabularyViewableBySiteMembers" priority="4">
+	<command name="AddVocabularyViewableBySiteMembers" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

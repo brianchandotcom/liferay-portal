@@ -829,7 +829,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54964,LPS-58386" name="ViewEditTemplate" priority="4">
+	<command name="ViewEditTemplate" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

@@ -1109,7 +1109,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57335" name="ViewContentInLocationOrganizationSite" priority="4">
+	<command name="ViewContentInLocationOrganizationSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>

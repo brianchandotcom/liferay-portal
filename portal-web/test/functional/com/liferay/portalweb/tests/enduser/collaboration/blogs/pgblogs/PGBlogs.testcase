@@ -939,7 +939,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55802" name="SearchBlogsEntryComment" priority="4">
+	<command name="SearchBlogsEntryComment" priority="4">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -1547,7 +1547,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56822" name="ViewBlogsEntryRSS" priority="4">
+	<command name="ViewBlogsEntryRSS" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

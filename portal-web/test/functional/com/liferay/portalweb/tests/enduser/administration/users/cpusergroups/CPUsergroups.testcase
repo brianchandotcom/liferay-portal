@@ -341,7 +341,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56919" name="SearchCurrentMembersAssignedToUserGroup" priority="4">
+	<command name="SearchCurrentMembersAssignedToUserGroup" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="User Groups" />
 		</execute>

@@ -828,7 +828,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54469" name="ViewKBArticleWithAllSocialBookmarkSites" priority="4">
+	<command name="ViewKBArticleWithAllSocialBookmarkSites" priority="4">
 		<property name="hook.plugins.includes" value="social-bookmarks-hook" />
 
 		<var name="socialBookmarkSites" value="twitter,facebook,plusone,addthis,blinklist,delicious,digg,evernote,linkedin,newsvine,reddit,slashdot,stumbleupon,technorati,tuenti" />

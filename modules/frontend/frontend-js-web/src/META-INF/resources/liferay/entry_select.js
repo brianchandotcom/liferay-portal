@@ -2,49 +2,41 @@ AUI.add(
 	'liferay-entry-select',
 	function(A) {
 		var Lang = A.Lang;
-		var Util = Liferay.Util;
 
 		var ATTR_CHECKED = 'checked';
 
-		var CSS_SELECT_ALL_CHECKBOXES = 'select-all-checkboxes';
+		var CSS_CHECKBOX_SELECTOR = 'input[type=checkbox]';
 
-		var CSS_SELECTED_ITEMS_COUNT_SELECTOR = 'selected-items-count';
+		var CSS_SELECT_ALL_CHECKBOXES_SELECTOR = '.select-all-checkboxes';
+
+		var CSS_SELECTED_ITEMS_COUNT_CONTAINER_SELECTOR = '.selected-items-count';
 
 		var STR_CLICK = 'click';
-
-		var STR_DOT = '.';
 
 		var EntrySelect = A.Component.create(
 			{
 				ATTRS: {
-					actionsAllCheckBox: {
-						validator: Lang.isString
-					},
-
 					actionButtonsBar: {
 						validator: Lang.isString
 					},
 
-					allCheckBox: {
-						validator: Lang.isString
+					selectAllCheckBoxes: {
+						validator: Lang.isString,
+						value: CSS_SELECT_ALL_CHECKBOXES_SELECTOR
 					},
 
 					checkBoxContainer: {
 						validator: Lang.isString
 					},
 
-					itemsCountSelector: {
+					checkBoxes: {
 						validator: Lang.isString,
-						value: CSS_SELECTED_ITEMS_COUNT_SELECTOR
+						value: CSS_CHECKBOX_SELECTOR
 					},
 
-					managementContainer: {
-						validator: Lang.isString
-					},
-
-					selectAllCheckBoxes: {
+					itemsCountContainerSelector: {
 						validator: Lang.isString,
-						value: CSS_SELECT_ALL_CHECKBOXES
+						value: CSS_SELECTED_ITEMS_COUNT_CONTAINER_SELECTOR
 					}
 				},
 
@@ -58,25 +50,21 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._actionsAllCheckBox = instance.byId(instance.get('actionsAllCheckBox'));
-
-						instance._actionButtonsBar = instance.byId(instance.get('actionButtonsBar'));
-
-						instance._allCheckBox = instance.byId(instance.get('allCheckBox'));
-
-						instance._checkBoxContainer = instance.byId(instance.get('checkBoxContainer'));
-
-						instance._managementContainer = instance.byId(instance.get('managementContainer'));
-
-						instance._managementContainer = instance.byId(instance.get('managementContainer'));
-
-						instance._allCheckBoxes = instance._checkBoxContainer.all('input[type=checkbox]');
+						instance._checkBoxContainer = instance.all(instance.get('checkBoxContainer'));
 
 						instance._eventHandles = [];
 
+						instance._itemsCountContainer = instance.all(instance.get('itemsCountContainerSelector'));
+
+						instance._secondaryBar = instance.all(instance.get('actionButtonsBar'));
+
+						instance._selectAllCheckBoxes = instance.all(instance.get('selectAllCheckBoxes'));
+
+						instance._checkBoxes = instance._checkBoxContainer.all(instance.get('checkBoxes'));
+
 						instance._initSelectAllCheckbox();
 
-						instance._initToggleSelect();
+						instance._initToggleBars();
 					},
 
 					destructor: function() {
@@ -90,7 +78,7 @@ AUI.add(
 
 						var totalOn = 0;
 
-						instance._allCheckBoxes.each(
+						instance._checkBoxes.each(
 							function(item, index) {
 								if (item.attr(ATTR_CHECKED)) {
 									totalOn++;
@@ -105,44 +93,61 @@ AUI.add(
 						var instance = this;
 
 						instance._eventHandles.push(
-							instance._actionsAllCheckBox.on(STR_CLICK, A.rbind('_toogleBars', instance, false), instance),
-							instance._allCheckBox.on(STR_CLICK, A.rbind('_toogleBars', instance, true), instance)
+							instance._selectAllCheckBoxes.on(STR_CLICK, instance._toggleBars, instance)
 						);
 					},
 
-					_initToggleSelect: function() {
+					_initToggleBars: function() {
 						var instance = this;
 
 						instance._eventHandles.push(
-							instance._allCheckBoxes.on(STR_CLICK, instance._toogleSelect, instance)
+							instance._checkBoxes.on(STR_CLICK, instance._toggleSelect, instance)
 						);
 					},
 
-					_toogleBars: function(event, checked) {
+					_printItemsCount: function(itemsCount) {
 						var instance = this;
 
-						instance._allCheckBoxes.attr(ATTR_CHECKED, checked);
-
-						instance._actionButtonsBar.toggleClass('on', checked);
-
-						instance._managementContainer.all(STR_DOT + instance.get('selectAllCheckBoxes')).attr(ATTR_CHECKED, checked);
-
-						instance._managementContainer.all(STR_DOT + instance.get('itemsCountSelector')).html(instance._getSelectedItemsCount());
+						instance._itemsCountContainer.html(itemsCount);
 					},
 
-					_toogleSelect: function() {
+					_toggleBars: function(event) {
 						var instance = this;
 
-						var hide = Util.listCheckedExcept(instance._checkBoxContainer, instance._allCheckBox).length == 0;
+						var checked = event.currentTarget.attr(ATTR_CHECKED);
 
-						instance._actionButtonsBar.toggleClass('on', !hide);
+						instance._checkBoxes.attr(ATTR_CHECKED, checked);
 
-						var totalBoxes = instance._allCheckBoxes.size();
+						instance._toggleSecondaryBar(checked);
+
+						instance._toggleSelectAllCheckBoxes(checked);
+
+						instance._printItemsCount(instance._getSelectedItemsCount());
+					},
+
+					_toggleSecondaryBar: function(show) {
+						var instance = this;
+
+						instance._secondaryBar.toggleClass('on', show);
+					},
+
+					_toggleSelect: function() {
+						var instance = this;
+
+						var totalBoxes = instance._checkBoxes.size();
 						var totalOn = instance._getSelectedItemsCount();
 
-						instance._managementContainer.all(STR_DOT + instance.get('selectAllCheckBoxes')).attr(ATTR_CHECKED, totalBoxes == totalOn);
+						instance._toggleSecondaryBar(totalOn > 0);
 
-						instance._managementContainer.all(STR_DOT + instance.get('itemsCountSelector')).html(totalOn);
+						instance._toggleSelectAllCheckBoxes(totalBoxes == totalOn);
+
+						instance._printItemsCount(totalOn);
+					},
+
+					_toggleSelectAllCheckBoxes: function(checked) {
+						var instance = this;
+
+						instance._selectAllCheckBoxes.attr(ATTR_CHECKED, checked);
 					}
 				}
 			}

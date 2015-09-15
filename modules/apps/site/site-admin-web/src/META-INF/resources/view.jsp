@@ -39,9 +39,23 @@ pageContext.setAttribute("searchURL", searchURL);
 String searchURLString = searchURL.toString();
 %>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item cssClass="active" label="sites" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= searchURLString %>" name="searchFm">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
 <aui:form action="<%= searchURLString %>" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="searchURL" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
+	<aui:input name="deleteGroupIds" type="hidden" />
 	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 
 	<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
@@ -78,8 +92,6 @@ String searchURLString = searchURL.toString();
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
-			form.attr('method', 'post');
-			form.fm('redirect').val(form.fm('sitesRedirect').val());
 			form.fm('deleteGroupIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 			submitForm(form, '<portlet:actionURL name="deleteGroups" />');

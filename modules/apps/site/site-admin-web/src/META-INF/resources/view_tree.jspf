@@ -155,10 +155,6 @@ if (group != null) {
 
 			</liferay-ui:search-container-results>
 
-			<c:if test="<%= group == null %>">
-				<%@ include file="/toolbar.jspf" %>
-			</c:if>
-
 			<c:if test="<%= !results.isEmpty() %>">
 				<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
 			</c:if>
@@ -185,9 +181,6 @@ if (group != null) {
 
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
-
-		<aui:input disabled="<%= true %>" name="sitesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
-		<aui:input name="deleteGroupIds" type="hidden" />
 	</aui:col>
 
 	<c:if test="<%= group != null %>">

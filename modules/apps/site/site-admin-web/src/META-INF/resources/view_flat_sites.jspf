@@ -18,8 +18,6 @@
 	rowChecker="<%= new SiteChecker(renderResponse) %>"
 	searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 >
-	<aui:input disabled="<%= true %>" name="sitesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="deleteGroupIds" type="hidden" />
 
 	<%
 	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
@@ -53,8 +51,6 @@
 		%>
 
 	</liferay-ui:search-container-results>
-
-	<%@ include file="/toolbar.jspf" %>
 
 	<c:if test="<%= !results.isEmpty() %>">
 		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />

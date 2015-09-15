@@ -48,6 +48,10 @@ public interface ThemeLocalService extends BaseLocalService {
 		long companyId, java.lang.String themeId, java.lang.String colorSchemeId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PortletDecorator fetchPortletDecorator(
+		long companyId, java.lang.String themeId, java.lang.String colorSchemeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Theme fetchTheme(long companyId,
 		java.lang.String themeId);
 
@@ -70,6 +74,11 @@ public interface ThemeLocalService extends BaseLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Theme> getPageThemes(
 		long companyId, long groupId, long userId, boolean wapTheme);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PortletDecorator getPortletDecorator(
+		long companyId, java.lang.String themeId,
+		java.lang.String portletDecoratorId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Theme getTheme(long companyId,

@@ -54,136 +54,140 @@ portletURL.setParameter("tabs1", "default-configuration");
 
 <portlet:actionURL name="updateWorkflowDefinitionLink" var="updateWorkflowDefinitionLinkURL"  />
 
-<aui:form action="<%= updateWorkflowDefinitionLinkURL %>" method="post">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+<div class="container-fluid-1280" id="<portlet:namespace />formContainer">
+	<aui:form action="<%= updateWorkflowDefinitionLinkURL %>" method="post">
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 
-	<liferay-ui:search-container
-		iteratorURL="<%= portletURL %>"
-		total="<%= workflowHandlers.size() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(workflowHandlers, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.workflow.WorkflowHandler"
-			modelVar="workflowHandler"
+		<liferay-ui:search-container
+			iteratorURL="<%= portletURL %>"
+			total="<%= workflowHandlers.size() %>"
 		>
 
-			<liferay-ui:search-container-row-parameter
-				name="workflowHandler"
-				value="<%= workflowHandler %>"
+			<liferay-ui:search-container-results
+				results="<%= ListUtil.subList(workflowHandlers, searchContainer.getStart(), searchContainer.getEnd()) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				name="resource"
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.workflow.WorkflowHandler"
+				modelVar="workflowHandler"
 			>
-				<liferay-ui:icon
-					iconCssClass="<%= workflowHandler.getIconCssClass() %>"
-					label="<%= true %>"
-					message="<%= ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()) %>"
+
+				<liferay-ui:search-container-row-parameter
+					name="workflowHandler"
+					value="<%= workflowHandler %>"
 				/>
-			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				name="workflow"
-			>
-				<aui:select label="" name='<%= "workflowDefinitionName@" + workflowHandler.getClassName() %>' title="workflow-definition">
+				<liferay-ui:search-container-column-text
+					name="resource"
+				>
+					<liferay-ui:icon
+						iconCssClass="<%= workflowHandler.getIconCssClass() %>"
+						label="<%= true %>"
+						message="<%= ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()) %>"
+					/>
+				</liferay-ui:search-container-column-text>
 
-					<%
-					WorkflowDefinitionLink workflowDefinitionLink = null;
+				<liferay-ui:search-container-column-text
+					name="workflow"
+				>
+					<aui:select label="" name='<%= "workflowDefinitionName@" + workflowHandler.getClassName() %>' title="workflow-definition">
 
-					try {
-						if (portletName.equals(WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK_CONTROL_PANEL)) {
-							workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getDefaultWorkflowDefinitionLink(company.getCompanyId(), workflowHandler.getClassName(), 0, 0);
-						}
-						else {
-							workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), groupId, workflowHandler.getClassName(), 0, 0, true);
-						}
-					}
-					catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-					}
+						<%
+						WorkflowDefinitionLink workflowDefinitionLink = null;
 
-					String defaultOptionMessage = null;
-
-					if (!portletName.equals(WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK_CONTROL_PANEL)) {
 						try {
-							WorkflowDefinitionLink defaultWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getDefaultWorkflowDefinitionLink(company.getCompanyId(), workflowHandler.getClassName(), 0, 0);
-
-							defaultOptionMessage = LanguageUtil.get(request, "default") + StringPool.COLON + StringPool.SPACE + defaultWorkflowDefinitionLink.getWorkflowDefinitionName();
+							if (portletName.equals(WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK_CONTROL_PANEL)) {
+								workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getDefaultWorkflowDefinitionLink(company.getCompanyId(), workflowHandler.getClassName(), 0, 0);
+							}
+							else {
+								workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), groupId, workflowHandler.getClassName(), 0, 0, true);
+							}
 						}
 						catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-							defaultOptionMessage = LanguageUtil.get(request, "default") + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, "no-workflow");
 						}
-					}
-					else {
-						defaultOptionMessage = LanguageUtil.get(request, "no-workflow");
-					}
-					%>
 
-					<aui:option><%= defaultOptionMessage %></aui:option>
+						String defaultOptionMessage = null;
 
-					<%
-					for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
-						boolean selected = false;
+						if (!portletName.equals(WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK_CONTROL_PANEL)) {
+							try {
+								WorkflowDefinitionLink defaultWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getDefaultWorkflowDefinitionLink(company.getCompanyId(), workflowHandler.getClassName(), 0, 0);
 
-						if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
-							selected = true;
+								defaultOptionMessage = LanguageUtil.get(request, "default") + StringPool.COLON + StringPool.SPACE + defaultWorkflowDefinitionLink.getWorkflowDefinitionName();
+							}
+							catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+								defaultOptionMessage = LanguageUtil.get(request, "default") + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, "no-workflow");
+							}
 						}
-					%>
+						else {
+							defaultOptionMessage = LanguageUtil.get(request, "no-workflow");
+						}
+						%>
 
-						<aui:option label='<%= HtmlUtil.escape(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
+						<aui:option><%= defaultOptionMessage %></aui:option>
 
-					<%
-					}
-					%>
+						<%
+						for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
+							boolean selected = false;
 
-				</aui:select>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+							if ((workflowDefinitionLink != null) && workflowDefinitionLink.getWorkflowDefinitionName().equals(workflowDefinition.getName()) && (workflowDefinitionLink.getWorkflowDefinitionVersion() == workflowDefinition.getVersion())) {
+								selected = true;
+							}
+						%>
 
-		<liferay-ui:search-iterator />
-	</liferay-ui:search-container>
+							<aui:option label='<%= HtmlUtil.escape(workflowDefinition.getName()) + " (" + LanguageUtil.format(locale, "version-x", workflowDefinition.getVersion(), false) + ")" %>' selected="<%= selected %>" value="<%= HtmlUtil.escapeAttribute(workflowDefinition.getName()) + StringPool.AT + workflowDefinition.getVersion() %>" />
 
-	<aui:button-row>
-		<aui:button type="submit" />
-	</aui:button-row>
+						<%
+						}
+						%>
 
-	<br />
+					</aui:select>
+				</liferay-ui:search-container-column-text>
+			</liferay-ui:search-container-row>
 
-	<div class="alert alert-info">
-		<liferay-ui:message key="the-workflows-for-the-following-resources-can-be-configured-within-their-respective-portlets" />
-	</div>
+			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= searchContainer %>" />
+		</liferay-ui:search-container>
 
-	<liferay-ui:search-container
-		iteratorURL="<%= portletURL %>"
-		total="<%= hiddenWorkflowHandlers.size() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= ListUtil.subList(hiddenWorkflowHandlers, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		/>
+		<aui:button-row>
+			<aui:button type="submit" />
+		</aui:button-row>
 
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.kernel.workflow.WorkflowHandler"
-			modelVar="workflowHandler"
+		<br />
+
+		<div class="alert alert-info">
+			<liferay-ui:message key="the-workflows-for-the-following-resources-can-be-configured-within-their-respective-portlets" />
+		</div>
+
+		<liferay-ui:search-container
+			iteratorURL="<%= portletURL %>"
+			total="<%= hiddenWorkflowHandlers.size() %>"
 		>
-			<liferay-ui:search-container-row-parameter
-				name="workflowHandler"
-				value="<%= workflowHandler %>"
+			<liferay-ui:search-container-results
+				results="<%= ListUtil.subList(hiddenWorkflowHandlers, searchContainer.getStart(), searchContainer.getEnd()) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				name="resource"
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.workflow.WorkflowHandler"
+				modelVar="workflowHandler"
 			>
-				<liferay-ui:icon
-					iconCssClass="<%= workflowHandler.getIconCssClass() %>"
-					label="<%= true %>"
-					message="<%= ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()) %>"
+				<liferay-ui:search-container-row-parameter
+					name="workflowHandler"
+					value="<%= workflowHandler %>"
 				/>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
-	</liferay-ui:search-container>
-</aui:form>
+				<liferay-ui:search-container-column-text
+					name="resource"
+				>
+					<liferay-ui:icon
+						iconCssClass="<%= workflowHandler.getIconCssClass() %>"
+						label="<%= true %>"
+						message="<%= ResourceActionsUtil.getModelResource(locale, workflowHandler.getClassName()) %>"
+					/>
+				</liferay-ui:search-container-column-text>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" searchContainer="<%= searchContainer %>" />
+		</liferay-ui:search-container>
+
+	</aui:form>
+</div>

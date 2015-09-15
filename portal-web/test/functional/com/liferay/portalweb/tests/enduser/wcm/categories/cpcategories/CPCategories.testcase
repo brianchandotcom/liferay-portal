@@ -1092,7 +1092,7 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Categories#ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type" locator1="TextInput#NAME" value1="Vocabulary Name" />
 		<execute function="Click" locator1="Button#CANCEL" />
 

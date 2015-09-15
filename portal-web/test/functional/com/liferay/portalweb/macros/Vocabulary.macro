@@ -63,7 +63,7 @@
 	</command>
 
 	<command name="addViewableByCP">
-		<execute function="AssertClick" locator1="Categories#ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
 		<execute function="Select" locator1="CategoriesEditVocabulary#VIEWABLE_BY_SELECT" value1="${viewableBy}" />
@@ -86,7 +86,7 @@
 	</command>
 
 	<command name="addWithAssociatedAssetTypeCP">
-		<execute function="AssertClick" locator1="Categories#ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
 
 		<if>
@@ -282,8 +282,6 @@
 			<equals arg1="${viewableBy}" arg2="Anyone (Guest Role)" />
 			<then>
 				<execute function="AssertChecked" locator1="AssetPermissions#GUEST_VIEW_CHECKBOX" />
-				<execute function="AssertChecked" locator1="AssetPermissions#OWNER_VIEW_CHECKBOX" />
-				<execute function="AssertChecked" locator1="AssetPermissions#SITE_MEMBER_VIEW_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${viewableBy}" arg2="Owner" />

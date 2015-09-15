@@ -247,6 +247,12 @@ public class DDLFormAdminDisplayContext {
 			ActionKeys.UPDATE);
 	}
 
+	public boolean isShowViewEntriesRecordSetIcon(DDLRecordSet recordSet) {
+		return DDLRecordSetPermission.contains(
+			_ddlFormAdminRequestHelper.getPermissionChecker(), recordSet,
+			ActionKeys.VIEW);
+	}
+
 	private final DDLFormAdminRequestHelper _ddlFormAdminRequestHelper;
 	private DDMStructure _ddmStucture;
 	private String _displayStyle;

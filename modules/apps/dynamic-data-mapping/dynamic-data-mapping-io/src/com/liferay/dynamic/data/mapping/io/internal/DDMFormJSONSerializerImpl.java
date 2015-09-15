@@ -18,10 +18,13 @@ import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldTypeSettings;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -131,13 +134,15 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		DDMFormFieldType ddmFormFieldType =
 			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType(type);
 
-		if (ddmFormFieldType == null) {
-			ddmFormFieldType =
-				DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType("text");
+		Class<? extends DDMFormFieldTypeSettings> ddmFormFieldTypeSettings =
+			DefaultDDMFormFieldTypeSettings.class;
+
+		if (ddmFormFieldType != null) {
+			ddmFormFieldTypeSettings =
+				ddmFormFieldType.getDDMFormFieldTypeSettings();
 		}
 
-		return DDMFormFactory.create(
-			ddmFormFieldType.getDDMFormFieldTypeSettings());
+		return DDMFormFactory.create(ddmFormFieldTypeSettings);
 	}
 
 	protected Object serializeDDMFormFieldProperty(
@@ -154,6 +159,9 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		}
 		else if (Validator.equals(dataType, "ddm-options")) {
 			return toJSONArray((DDMFormFieldOptions)property);
+		}
+		else if (Validator.equals(dataType, "ddm-validation")) {
+			return toJSONObject((DDMFormFieldValidation)property);
 		}
 		else {
 			return String.valueOf(property);
@@ -199,6 +207,22 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		addProperties(jsonObject, ddmFormField);
 
 		addNestedFields(jsonObject, ddmFormField.getNestedDDMFormFields());
+
+		return jsonObject;
+	}
+
+	protected JSONObject toJSONObject(
+		DDMFormFieldValidation ddmFormFieldValidation) {
+
+		if (ddmFormFieldValidation == null) {
+			return null;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("expression", ddmFormFieldValidation.getExpression());
+		jsonObject.put(
+			"errorMessage", ddmFormFieldValidation.getErrorMessage());
 
 		return jsonObject;
 	}

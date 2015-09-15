@@ -1,11 +1,28 @@
 {namespace ddm}
 
 /**
+ * Prints an option.
+ *
+ * @param option
+ */
+{template .validationOption}
+	<option {$option.status} value="{$option.value}">{$option.label}</option>
+{/template}
+
+/**
  * Prints the DDM form validation field.
  *
+ * @param enableValidationMessage
+ * @param enableValidationValue
+ * @param errorMessagePlaceholder
+ * @param errorMessageValue
  * @param label
  * @param name
+ * @param parameterMessagePlaceholder
+ * @param parameterValue
  * @param required
+ * @param typesOptions
+ * @param validationsOptions
  * @param value
  * @param visible
  */
@@ -13,31 +30,49 @@
 	<link href="/o/ddm-type-validation/validation.css" rel="stylesheet"></link>
 
 	<div class="form-group{$visible ? '' : ' hide'} lfr-ddm-form-field-validation" data-fieldname="{$name}">
-		<span class="control-label">
+		<label class="control-label">
 			{$label}
 
 			{if $required}
 				<b>*</b>
 			{/if}
-		</span>
+		</label>
 
-		<div class="row">
+		<div class="checkbox checkbox-default">
+			<label>
+				<input {$enableValidationValue ? 'checked="checked"' : ''} class="enable-validation" type="checkbox" /> {$enableValidationMessage}
+			</label>
+		</div>
+
+		<div class="{$enableValidationValue ? '' : 'hide'} row">
 			<div class="col-md-6">
-				<select class="form-control types-select"></select>
+				<select class="form-control types-select">
+					{foreach $option in $typesOptions}
+						{call ddm.validationOption data="all"}
+							{param option: $option /}
+						{/call}
+					{/foreach}
+				</select>
 			</div>
 
 			<div class="col-md-6">
-				<select class="form-control validations-select"></select>
+				<select class="form-control validations-select">
+					{foreach $option in $validationsOptions}
+						{call ddm.validationOption data="all"}
+							{param option: $option /}
+						{/call}
+					{/foreach}
+				</select>
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="{$enableValidationValue ? '' : 'hide'} row">
 			<div class="col-md-6">
-				<input class="field form-control parameter-input" placeholder="Contains this text" type="text" />
+				<input class="field form-control {$parameterMessagePlaceholder ? '' : ' hide'} parameter-input" placeholder="{$parameterMessagePlaceholder}" type="text" value="{$parameterValue}" />
 			</div>
 
 			<div class="col-md-6">
-				<input class="field form-control message-input" placeholder="Validation message here" type="text" />
+				<input class="field form-control message-input" placeholder="{$errorMessagePlaceholder}" type="text" value="{$errorMessageValue}" />
 			</div>
 		</div>
 

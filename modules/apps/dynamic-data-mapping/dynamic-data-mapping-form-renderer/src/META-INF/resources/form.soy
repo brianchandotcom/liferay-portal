@@ -30,12 +30,13 @@
  * @param containerId
  * @param definition
  * @param fieldTypes
+ * @param layout
  * @param portletNamespace
+ * @param templateNamespace
  * @param values
  */
 {template .form_renderer_js}
 	<link href="/o/ddm-form-renderer/css/main.css" rel="stylesheet" type="text/css" />
-	<script src="/o/ddm-form-renderer/js/modules.js"></script>
 
 	<script type="text/javascript">
 		AUI().use(
@@ -48,7 +49,13 @@
 					{lb}
 						container: '#{$containerId}',
 						definition: {$definition|noAutoescape},
+
+						{if $layout}
+							layout: {$layout|noAutoescape},
+						{/if}
+
 						portletNamespace: '{$portletNamespace}',
+						templateNamespace: '{$templateNamespace}',
 						values: {$values|noAutoescape}
 					{rb}
 				).render();
@@ -102,11 +109,7 @@
  * Prints a form with pagination.
  *
  * @param containerId
- * @param definition
- * @param fieldTypes
  * @param pages
- * @param portletNamespace
- * @param values
  */
 {template .paginated_form}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
@@ -150,55 +153,31 @@
 			<button class="btn btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">Submit</button>
 		</div>
 	</div>
-
-	{call ddm.form_renderer_js data="all"}
-		{param containerId: $containerId /}
-		{param definition: $definition /}
-		{param fieldTypes: $fieldTypes /}
-		{param portletNamespace: $portletNamespace /}
-		{param values: $values /}
-	{/call}
 {/template}
 
 /**
  * Prints a simple form with just one page.
  *
  * @param containerId
- * @param definition
- * @param fields
- * @param fieldTypes
- * @param portletNamespace
- * @param values
+ * @param pages
  */
 {template .simple_form}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
 		<div class="lfr-ddm-form-fields">
-			{foreach $field in $fields}
-				{call ddm.field data="all"}
-					{param field: $field /}
+			{foreach $page in $pages}
+				{call ddm.form_rows data="all"}
+					{param rows: $page.rows /}
 				{/call}
 			{/foreach}
 		</div>
 	</div>
-
-	{call ddm.form_renderer_js data="all"}
-		{param containerId: $containerId /}
-		{param definition: $definition /}
-		{param fieldTypes: $fieldTypes /}
-		{param portletNamespace: $portletNamespace /}
-		{param values: $values /}
-	{/call}
 {/template}
 
 /**
  * Prints a form with tabs.
  *
  * @param containerId
- * @param definition
- * @param fieldTypes
  * @param pages
- * @param portletNamespace
- * @param values
  */
 {template .tabbed_form}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
@@ -222,12 +201,24 @@
 			</div>
 		</div>
 	</div>
+{/template}
 
-	{call ddm.form_renderer_js data="all"}
-		{param containerId: $containerId /}
-		{param definition: $definition /}
-		{param fieldTypes: $fieldTypes /}
-		{param portletNamespace: $portletNamespace /}
-		{param values: $values /}
-	{/call}
+/**
+ * Prints the settings form.
+ *
+ * @param containerId
+ * @param pages
+ */
+{template .settings_form}
+	<div class="lfr-ddm-form-container" id="{$containerId}">
+		<div class="lfr-ddm-settings-form">
+			{foreach $page in $pages}
+				<div class="lfr-ddm-form-page{if isFirst($page)} active basic{/if}{if isLast($page)} advanced{/if}">
+					{call ddm.form_rows data="all"}
+						{param rows: $page.rows /}
+					{/call}
+				</div>
+			{/foreach}
+		</div>
+	</div>
 {/template}

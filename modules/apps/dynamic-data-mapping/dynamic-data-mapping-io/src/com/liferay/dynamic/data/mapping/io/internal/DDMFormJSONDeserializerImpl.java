@@ -18,10 +18,13 @@ import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTrackerUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
+import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldTypeSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -116,9 +119,35 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 			return deserializeDDMFormFieldOptions(
 				serializedDDMFormFieldProperty);
 		}
+		else if (Validator.equals(dataType, "ddm-validation")) {
+			return deserializeDDMFormFieldValidation(
+				serializedDDMFormFieldProperty);
+		}
 		else {
 			return serializedDDMFormFieldProperty;
 		}
+	}
+
+	protected DDMFormFieldValidation deserializeDDMFormFieldValidation(
+			String serializedDDMFormFieldProperty)
+		throws PortalException {
+
+		DDMFormFieldValidation ddmFormFieldValidation =
+			new DDMFormFieldValidation();
+
+		if (Validator.isNull(serializedDDMFormFieldProperty)) {
+			return ddmFormFieldValidation;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			serializedDDMFormFieldProperty);
+
+		ddmFormFieldValidation.setExpression(
+			jsonObject.getString("expression"));
+		ddmFormFieldValidation.setErrorMessage(
+			jsonObject.getString("errorMessage"));
+
+		return ddmFormFieldValidation;
 	}
 
 	protected LocalizedValue deserializeLocalizedValue(
@@ -212,13 +241,15 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 		DDMFormFieldType ddmFormFieldType =
 			DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType(type);
 
-		if (ddmFormFieldType == null) {
-			ddmFormFieldType =
-				DDMFormFieldTypeServicesTrackerUtil.getDDMFormFieldType("text");
+		Class<? extends DDMFormFieldTypeSettings> ddmFormFieldTypeSettings =
+			DefaultDDMFormFieldTypeSettings.class;
+
+		if (ddmFormFieldType != null) {
+			ddmFormFieldTypeSettings =
+				ddmFormFieldType.getDDMFormFieldTypeSettings();
 		}
 
-		return DDMFormFactory.create(
-			ddmFormFieldType.getDDMFormFieldTypeSettings());
+		return DDMFormFactory.create(ddmFormFieldTypeSettings);
 	}
 
 	protected void setDDMFormAvailableLocales(

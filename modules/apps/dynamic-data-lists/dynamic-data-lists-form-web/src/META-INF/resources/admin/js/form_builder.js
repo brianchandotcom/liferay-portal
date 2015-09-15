@@ -9,6 +9,14 @@ AUI.add(
 		var FormBuilder = A.Component.create(
 			{
 				ATTRS: {
+					container: {
+						getter: function() {
+							var instance = this;
+
+							return instance.get('contentBox');
+						}
+					},
+
 					definition: {
 						validator: Lang.isObject
 					},
@@ -18,9 +26,8 @@ AUI.add(
 					},
 
 					fieldTypes: {
-						getter: function() {
-							return FieldTypes.getAll();
-						}
+						setter: '_setFieldTypes',
+						valueFn: '_valueFieldTypes'
 					},
 
 					layouts: {
@@ -38,6 +45,8 @@ AUI.add(
 					}
 				},
 
+				AUGMENTS: [Liferay.DDM.Renderer.NestedFieldsSupport],
+
 				CSS_PREFIX: 'form-builder',
 
 				EXTENDS: A.FormBuilder,
@@ -50,7 +59,9 @@ AUI.add(
 
 						var boundingBox = instance.get('boundingBox');
 
-						boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a');
+						instance._eventHandlers = [
+							boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a')
+						];
 					},
 
 					renderUI: function() {
@@ -187,14 +198,32 @@ AUI.add(
 						pages._uiSetActivePageNumber(pages.get('activePageNumber'));
 					},
 
+					_setFieldTypes: function(fieldTypes) {
+						var instance = this;
+
+						return AArray.filter(
+							fieldTypes,
+							function(item) {
+								return !item.get('system');
+							}
+						);
+					},
+
 					_valueDeserializer: function() {
 						var instance = this;
 
 						return new Liferay.DDL.LayoutDeserializer(
 							{
+								builder: instance,
 								definition: instance.get('definition')
 							}
 						);
+					},
+
+					_valueFieldTypes: function() {
+						var instance = this;
+
+						return FieldTypes.getAll();
 					},
 
 					_valueLayouts: function() {

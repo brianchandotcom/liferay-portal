@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -107,14 +108,20 @@ public class DDMFormEvaluatorHelper {
 			new DDMFormFieldEvaluationResult(
 				ddmFormFieldValue.getName(), ddmFormFieldValue.getInstanceId());
 
+		DDMFormFieldValidation ddmFormFieldValidation =
+			ddmFormField.getDDMFormFieldValidation();
+
+		String validationExpression = getValidationExpression(
+			ddmFormFieldValidation);
+
 		boolean valid = evaluateBooleanExpression(
-			ddmFormField.getValidationExpression(), ancestorDDMFormFieldValues);
+			validationExpression, ancestorDDMFormFieldValues);
 
 		ddmFormFieldEvaluationResult.setValid(valid);
 
 		if (!valid) {
-			ddmFormFieldEvaluationResult.setValidationMessage(
-				ddmFormField.getValidationMessage());
+			ddmFormFieldEvaluationResult.setErrorMessage(
+				ddmFormFieldValidation.getErrorMessage());
 		}
 
 		boolean visible = evaluateBooleanExpression(
@@ -150,6 +157,16 @@ public class DDMFormEvaluatorHelper {
 		}
 
 		return ddmFormFieldEvaluationResults;
+	}
+
+	protected String getValidationExpression(
+		DDMFormFieldValidation ddmFormFieldValidation) {
+
+		if (ddmFormFieldValidation == null) {
+			return null;
+		}
+
+		return ddmFormFieldValidation.getExpression();
 	}
 
 	protected void setExpressionFactory(ExpressionFactory expressionFactory) {

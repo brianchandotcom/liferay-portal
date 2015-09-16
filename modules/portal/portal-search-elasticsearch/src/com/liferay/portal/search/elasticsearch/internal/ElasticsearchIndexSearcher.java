@@ -469,6 +469,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			searchRequestBuilder.setSize(0);
 		}
 
+		if (query.getPostFilter() != null) {
+			FilterBuilder filterBuilder = _filterTranslator.translate(
+				query.getPostFilter(), searchContext);
+
+			searchRequestBuilder.setPostFilter(filterBuilder);
+		}
+
 		QueryBuilder queryBuilder = _queryTranslator.translate(
 			query, searchContext);
 

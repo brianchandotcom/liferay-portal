@@ -70,25 +70,6 @@ SearchContainer recordSearchContainer = new SearchContainer(
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav" searchContainer="<%= recordSearchContainer %>">
-
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
-			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-		</liferay-portlet:resourceURL>
-
-		<%
-		StringBundler sb = new StringBundler(6);
-
-		sb.append("javascript:");
-		sb.append(renderResponse.getNamespace());
-		sb.append("exportRecordSet");
-		sb.append("('");
-		sb.append(exportRecordSetURL);
-		sb.append("');");
-		%>
-
-		<aui:nav-item href="<%= sb.toString() %>" iconCssClass="icon-arrow-down" label="export" />
-	</aui:nav>
 
 	<aui:nav-bar-search searchContainer="<%= recordSearchContainer %>">
 

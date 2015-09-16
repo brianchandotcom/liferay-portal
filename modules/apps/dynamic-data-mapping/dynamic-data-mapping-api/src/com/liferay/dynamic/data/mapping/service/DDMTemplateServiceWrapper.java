@@ -302,18 +302,28 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
 		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId) {
+		long resourceClassNameId, boolean includeAncestorTemplates, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmTemplateService.getTemplates(companyId, groupId,
-			classNameId, classPK, resourceClassNameId);
+			classNameId, classPK, resourceClassNameId,
+			includeAncestorTemplates, status);
 	}
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
 		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, boolean includeAncestorTemplates)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long resourceClassNameId, int status) {
 		return _ddmTemplateService.getTemplates(companyId, groupId,
-			classNameId, classPK, resourceClassNameId, includeAncestorTemplates);
+			classNameId, classPK, resourceClassNameId, status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId, java.lang.String type, java.lang.String mode,
+		int status) {
+		return _ddmTemplateService.getTemplates(companyId, groupId,
+			classNameId, classPK, resourceClassNameId, type, mode, status);
 	}
 
 	/**
@@ -331,24 +341,17 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
 		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, java.lang.String type) {
+		long resourceClassNameId, java.lang.String type, int status) {
 		return _ddmTemplateService.getTemplates(companyId, groupId,
-			classNameId, classPK, resourceClassNameId, type);
+			classNameId, classPK, resourceClassNameId, type, status);
 	}
 
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
-		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, java.lang.String type, java.lang.String mode) {
+		long companyId, long groupId, long classNameId,
+		long resourceClassNameId, int status) {
 		return _ddmTemplateService.getTemplates(companyId, groupId,
-			classNameId, classPK, resourceClassNameId, type, mode);
-	}
-
-	@Override
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplates(
-		long companyId, long groupId, long classNameId, long resourceClassNameId) {
-		return _ddmTemplateService.getTemplates(companyId, groupId,
-			classNameId, resourceClassNameId);
+			classNameId, resourceClassNameId, status);
 	}
 
 	/**
@@ -360,9 +363,10 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplatesByClassPK(
-		long companyId, long groupId, long classPK, long resourceClassNameIs) {
+		long companyId, long groupId, long classPK, long resourceClassNameIs,
+		int status) {
 		return _ddmTemplateService.getTemplatesByClassPK(companyId, groupId,
-			classPK, resourceClassNameIs);
+			classPK, resourceClassNameIs, status);
 	}
 
 	/**
@@ -392,10 +396,11 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	*/
 	@Override
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
-		long groupId, long structureClassNameId, int start, int end,
+		long groupId, long structureClassNameId, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return _ddmTemplateService.getTemplatesByStructureClassNameId(groupId,
-			structureClassNameId, start, end, orderByComparator);
+			structureClassNameId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -411,9 +416,9 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	*/
 	@Override
 	public int getTemplatesByStructureClassNameIdCount(long groupId,
-		long structureClassNameId) {
+		long structureClassNameId, int status) {
 		return _ddmTemplateService.getTemplatesByStructureClassNameIdCount(groupId,
-			structureClassNameId);
+			structureClassNameId, status);
 	}
 
 	@Override
@@ -464,11 +469,12 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> search(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return _ddmTemplateService.search(companyId, groupId, classNameId,
-			classPK, resourceClassNameId, keywords, type, mode, start, end,
-			orderByComparator);
+			classPK, resourceClassNameId, keywords, type, mode, status, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -519,12 +525,12 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
+		java.lang.String mode, java.lang.String language, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return _ddmTemplateService.search(companyId, groupId, classNameId,
 			classPK, resourceClassNameId, name, description, type, mode,
-			language, andOperator, start, end, orderByComparator);
+			language, status, andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -568,11 +574,12 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return _ddmTemplateService.search(companyId, groupIds, classNameIds,
-			classPKs, resourceClassNameId, keywords, type, mode, start, end,
-			orderByComparator);
+			classPKs, resourceClassNameId, keywords, type, mode, status, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -623,12 +630,12 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
+		java.lang.String mode, java.lang.String language, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return _ddmTemplateService.search(companyId, groupIds, classNameIds,
 			classPKs, resourceClassNameId, name, description, type, mode,
-			language, andOperator, start, end, orderByComparator);
+			language, status, andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -656,9 +663,9 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	@Override
 	public int searchCount(long companyId, long groupId, long classNameId,
 		long classPK, long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode) {
+		java.lang.String type, java.lang.String mode, int status) {
 		return _ddmTemplateService.searchCount(companyId, groupId, classNameId,
-			classPK, resourceClassNameId, keywords, type, mode);
+			classPK, resourceClassNameId, keywords, type, mode, status);
 	}
 
 	/**
@@ -692,10 +699,11 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	public int searchCount(long companyId, long groupId, long classNameId,
 		long classPK, long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator) {
+		java.lang.String mode, java.lang.String language, int status,
+		boolean andOperator) {
 		return _ddmTemplateService.searchCount(companyId, groupId, classNameId,
 			classPK, resourceClassNameId, name, description, type, mode,
-			language, andOperator);
+			language, status, andOperator);
 	}
 
 	/**
@@ -723,9 +731,11 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 	@Override
 	public int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type, java.lang.String mode) {
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int status) {
 		return _ddmTemplateService.searchCount(companyId, groupIds,
-			classNameIds, classPKs, resourceClassNameId, keywords, type, mode);
+			classNameIds, classPKs, resourceClassNameId, keywords, type, mode,
+			status);
 	}
 
 	/**
@@ -760,10 +770,10 @@ public class DDMTemplateServiceWrapper implements DDMTemplateService,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator) {
+		java.lang.String language, int status, boolean andOperator) {
 		return _ddmTemplateService.searchCount(companyId, groupIds,
 			classNameIds, classPKs, resourceClassNameId, name, description,
-			type, mode, language, andOperator);
+			type, mode, language, status, andOperator);
 	}
 
 	/**

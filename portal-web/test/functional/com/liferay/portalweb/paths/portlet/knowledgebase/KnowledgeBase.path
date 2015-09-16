@@ -175,7 +175,7 @@
 <!--FOLDER-->
 <tr>
 	<td>FOLDER_BREADCRUMBS</td>
-	<td>//li[contains(@class,'active last') and contains(.,'${kbFolderName}')]</td>
+	<td>//ul[@class='breadcrumb']//a[contains(.,'${kbFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>

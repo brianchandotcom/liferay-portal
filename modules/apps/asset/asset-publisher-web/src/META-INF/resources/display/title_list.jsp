@@ -48,6 +48,7 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 			label="<%= true %>"
 			localizeMessage="<%= false %>"
 			message="<%= HtmlUtil.escape(title) %>"
+			method="get"
 			url="<%= viewURL %>"
 		/>
 

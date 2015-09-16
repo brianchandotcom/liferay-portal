@@ -74,6 +74,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetPublisherDisplayContext {
 
+	public static final String PAGINATION_TYPE_NONE = "none";
+
+	public static final String PAGINATION_TYPE_REGULAR = "regular";
+
+	public static final String PAGINATION_TYPE_SIMPLE = "simple";
+
+	public static final String[] PAGINATION_TYPES = {
+		PAGINATION_TYPE_NONE, PAGINATION_TYPE_REGULAR, PAGINATION_TYPE_SIMPLE
+	};
+
 	public AssetPublisherDisplayContext(
 		HttpServletRequest request, PortletPreferences portletPreferences) {
 
@@ -476,9 +486,7 @@ public class AssetPublisherDisplayContext {
 			_paginationType = GetterUtil.getString(
 				_portletPreferences.getValue("paginationType", "none"));
 
-			if (!_paginationType.equals(PAGINATION_TYPE_NONE) &&
-				!_paginationType.equals(PAGINATION_TYPE_SIMPLE) &&
-				!_paginationType.equals(PAGINATION_TYPE_REGULAR)) {
+			if (!ArrayUtil.contains(PAGINATION_TYPES, _paginationType)) {
 				_paginationType = PAGINATION_TYPE_NONE;
 			}
 		}
@@ -878,16 +886,10 @@ public class AssetPublisherDisplayContext {
 		return paginationType.equals(PAGINATION_TYPE_NONE);
 	}
 
-	public boolean isPaginationTypeRegular() {
-		String paginationType = getPaginationType();
+	public boolean isPaginationTypeSelected(String paginationType) {
+		String curPaginationType = getPaginationType();
 
-		return paginationType.equals(PAGINATION_TYPE_REGULAR);
-	}
-
-	public boolean isPaginationTypeSimple() {
-		String paginationType = getPaginationType();
-
-		return paginationType.equals(PAGINATION_TYPE_SIMPLE);
+		return curPaginationType.equals(paginationType);
 	}
 
 	public boolean isSelectionStyleDynamic() {
@@ -1093,12 +1095,6 @@ public class AssetPublisherDisplayContext {
 	public void setShowContextLink(Boolean showContextLink) {
 		_showContextLink = showContextLink;
 	}
-
-	public final String PAGINATION_TYPE_NONE = "none";
-
-	public final String PAGINATION_TYPE_REGULAR = "regular";
-
-	public final String PAGINATION_TYPE_SIMPLE = "simple";
 
 	protected void configureSubtypeFieldFilter(
 			AssetEntryQuery assetEntryQuery, Locale locale)

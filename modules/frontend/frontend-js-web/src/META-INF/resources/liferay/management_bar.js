@@ -17,7 +17,7 @@ AUI.add(
 			{
 				ATTRS: {
 					checkBoxContainer: {
-						setter: '_setNode'
+						setter: 'one'
 					},
 
 					checkBoxesSelector: {
@@ -26,12 +26,12 @@ AUI.add(
 					},
 
 					itemsCountContainer: {
-						setter: '_setNodes',
+						setter: 'all',
 						value: '.selected-items-count'
 					},
 
 					secondaryBar: {
-						setter: '_setNode'
+						setter: 'one'
 					},
 
 					selectAllCheckBoxesSelector: {
@@ -98,18 +98,6 @@ AUI.add(
 						var instance = this;
 
 						instance.get('itemsCountContainer').html(itemsCount);
-					},
-
-					_setNode: function(val) {
-						var instance = this;
-
-						return instance.one(val);
-					},
-
-					_setNodes: function(val) {
-						var instance = this;
-
-						return instance.all(val);
 					},
 
 					_toggleBars: function(event) {

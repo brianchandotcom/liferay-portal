@@ -285,8 +285,7 @@
 	<command name="exportPortlet">
 		<execute macro="LAR#gotoExportImportCmd" />
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
+		<execute function="AssertElementPresent" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
 
 		<execute macro="LAR#exportCmd">
 			<var name="exportPermissions" value="${exportPermissions}" />
@@ -345,13 +344,11 @@
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
-
-		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="gotoExportSiteCmd">
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletCategoryName" value="Configuration" />
+			<var name="portletCategoryName" value="Publishing Tools" />
 			<var name="portletName" value="Export/Import" />
 			<var name="siteScopeName" value="${siteScopeName}" />
 		</execute>
@@ -360,17 +357,14 @@
 	</command>
 
 	<command name="gotoExportTemplateCP">
-		<execute macro="LAR#gotoExportSiteCmd" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
+		<execute function="AssertClick" locator1="SitePages#TOOLBAR_EXPORT" value1="Export" />
 
 		<execute function="Click" locator1="SitePagesExport#EXPORT_TEMPLATE_BUTTON" />
 	</command>
 
 	<command name="gotoImportSiteCmd">
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletCategoryName" value="Configuration" />
+			<var name="portletCategoryName" value="Publishing Tools" />
 			<var name="portletName" value="Export/Import" />
 		</execute>
 
@@ -494,8 +488,6 @@
 	</command>
 
 	<command name="selectImportFileCmd">
-		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
-
 		<execute function="AssertClick" locator1="ExportImport#NAVIGATION_IMPORT" value1="Import" />
 		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 
@@ -664,7 +656,7 @@
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletNameBorderless" value="${portletNameBorderless}" />
-			<var name="portletOption" value="Configuration" />
+			<var name="portletOption" value="Export/Import" />
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#configureDisplayContent">
@@ -718,7 +710,7 @@
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletNameBorderless" value="${portletNameBorderless}" />
-			<var name="portletOption" value="Configuration" />
+			<var name="portletOption" value="Export/Import" />
 		</execute>
 
 		<execute macro="CampaignDisplayPortlet#configureCampaignRule">

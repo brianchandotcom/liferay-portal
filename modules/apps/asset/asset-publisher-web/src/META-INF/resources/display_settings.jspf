@@ -55,9 +55,17 @@
 	</aui:input>
 
 	<aui:select name="preferences--paginationType--">
-		<aui:option label="none" selected="<%= assetPublisherDisplayContext.isPaginationTypeNone() %>" />
-		<aui:option label="simple" selected="<%= assetPublisherDisplayContext.isPaginationTypeSimple() %>" />
-		<aui:option label="regular" selected="<%= assetPublisherDisplayContext.isPaginationTypeRegular() %>" />
+
+		<%
+		for (String paginationType : assetPublisherDisplayContext.PAGINATION_TYPES) {
+		%>
+
+			<aui:option label="<%= paginationType %>" selected="<%= assetPublisherDisplayContext.isPaginationTypeSelected(paginationType) %>" />
+
+		<%
+		}
+		%>
+
 	</aui:select>
 
 	<c:if test="<%= !AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX %>">

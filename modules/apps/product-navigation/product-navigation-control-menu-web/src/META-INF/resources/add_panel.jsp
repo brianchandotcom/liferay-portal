@@ -23,10 +23,6 @@
 			<%
 			Group group = layout.getGroup();
 
-			long groupClassNameId = group.getClassNameId();
-
-			long layoutPrototypeClassNameId = ClassNameLocalServiceUtil.getClassNameId(LayoutPrototype.class);
-
 			boolean hasLayoutAddPermission = false;
 
 			if (layout.getParentLayoutId() == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
@@ -53,7 +49,7 @@
 
 					boolean hasAddApplicationsPermission = !stateMaximized && layout.isTypePortlet() && !layout.isLayoutPrototypeLinkActive() && !layoutTypeController.isFullPageDisplayable() && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission));
 
-					boolean hasAddContentPermission = hasAddApplicationsPermission && (groupClassNameId != layoutPrototypeClassNameId);
+					boolean hasAddContentPermission = hasAddApplicationsPermission && !group.isLayoutPrototype();
 
 					if (hasAddContentPermission) {
 						tabs1Names = ArrayUtil.append(tabs1Names, "content");

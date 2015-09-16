@@ -38,10 +38,15 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--PAGE-->
+<!--PAGE_CONTROLS-->
 <tr>
-	<td>PAGE_ADD</td>
-	<td>//a[contains(@class,'add-page')]</td>
+	<td>PAGE_CONTROLS_ICON</td>
+	<td>//div[@class='form-builder-page-controls']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_CONTROLS_ADD_AFTER_LAST</td>
+	<td>//ul[@class='form-builder-pages-popover-content']/li[contains(text(),'Add new page after last')]</td>
 	<td></td>
 </tr>
 <tr>

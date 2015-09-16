@@ -26,6 +26,7 @@ import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -143,6 +144,11 @@ public class JournalArticleAssetRendererFactory
 	@Override
 	public String getIconCssClass() {
 		return "icon-file-2";
+	}
+
+	@Override
+	public String getSubTypeTitle(Locale locale) {
+		return LanguageUtil.get(locale, "structures");
 	}
 
 	@Override

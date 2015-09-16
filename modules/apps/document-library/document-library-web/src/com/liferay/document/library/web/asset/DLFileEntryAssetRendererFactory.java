@@ -16,6 +16,7 @@ package com.liferay.document.library.web.asset;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -115,6 +116,11 @@ public class DLFileEntryAssetRendererFactory
 	@Override
 	public String getIconCssClass() {
 		return "icon-file-alt";
+	}
+
+	@Override
+	public String getSubTypeTitle(Locale locale) {
+		return LanguageUtil.get(locale, "type");
 	}
 
 	@Override

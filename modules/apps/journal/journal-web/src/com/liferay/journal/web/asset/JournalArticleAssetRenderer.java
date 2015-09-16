@@ -357,7 +357,7 @@ public class JournalArticleAssetRenderer
 				hitLayoutId.longValue());
 
 			if (LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), layout,
+					themeDisplay.getPermissionChecker(), hitLayout,
 					ActionKeys.VIEW)) {
 
 				return PortalUtil.getLayoutURL(hitLayout, themeDisplay);

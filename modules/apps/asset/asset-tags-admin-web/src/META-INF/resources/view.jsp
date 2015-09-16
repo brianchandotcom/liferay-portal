@@ -59,7 +59,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 	<liferay-ui:search-container
 		emptyResultsMessage="there-are-no-tags"
 		id="assetTags"
-		rowChecker="<%= new LexiconRowChecker(renderResponse) %>"
+		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 	>
 
 		<liferay-ui:search-container-results>

@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.web.portlet.filter;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -61,9 +62,10 @@ public class AssetPublisherRenderParametersPortletFilter
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			renderRequest);
 
-		if ((ParamUtil.getLong(renderRequest, "categoryId") > 0) ||
-			(ParamUtil.getLong(renderRequest, "tagsId") > 0)) {
+		long categoryId = ParamUtil.getLong(renderRequest, "categoryId");
+		String tag = ParamUtil.getString(renderRequest, "tag");
 
+		if ((categoryId > 0) ||	Validator.isNotNull(tag)) {
 			clearRenderRequestParameters(renderRequest, request);
 		}
 

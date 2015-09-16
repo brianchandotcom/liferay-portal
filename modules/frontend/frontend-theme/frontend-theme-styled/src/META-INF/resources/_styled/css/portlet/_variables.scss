@@ -14,9 +14,6 @@ $portlet-topper-border-right-width: 1px !default;
 $portlet-topper-border-top-width: 1px !default;
 $portlet-topper-border-width: $portlet-topper-border-top-width $portlet-topper-border-right-width $portlet-topper-border-bottom-width $portlet-topper-border-left-width !default;
 
-$portlet-topper-height: 40px !default;
-$portlet-topper-line-height: $portlet-topper-height - $portlet-topper-border-top-width - $portlet-topper-border-bottom-width !default;
-
 $portlet-content-border-radius: 0 0 $navbar-border-radius $navbar-border-radius !default;
 
 $portlet-content-border-bottom-width: 1px !default;

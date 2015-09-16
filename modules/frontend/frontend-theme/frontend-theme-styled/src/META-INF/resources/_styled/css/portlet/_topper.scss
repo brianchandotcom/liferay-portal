@@ -59,7 +59,8 @@
 			> .portlet-topper {
 				@include media-query(sm) {
 					opacity: 1;
-					top: -$portlet-topper-height;
+
+					@include transform(translateY(-100%));
 				}
 			}
 		}
@@ -130,7 +131,6 @@
 
 		@include display(flex);
 
-		line-height: $portlet-topper-line-height;
 		padding-left: 10px;
 		padding-right: 10px;
 		position: relative;

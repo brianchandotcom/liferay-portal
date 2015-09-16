@@ -131,6 +131,8 @@
 			<var name="fieldValue" value="RadioLabel" />
 		</execute>
 
+		<execute macro="FormFields#enableAdvancedOptions" />
+
 		<execute macro="FormFields#editOptionsRow">
 			<var name="optionLabel" value="Option 1" />
 			<var name="optionValue" value="Option 1 Value" />

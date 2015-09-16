@@ -25,6 +25,10 @@
 		<execute function="Type" locator1="FormFields#TEXT_FIELD" value1="${fieldValue}" />
 	</command>
 
+	<command name="enableAdvancedOptions">
+		<execute function="AssertClick" locator1="FormFields#ADVANCED_FIELD_SETTINGS_TOGGLE" value1="show-advanced-options" />
+	</command>
+
 	<command name="enableCheckbox">
 		<var name="key_fieldName" value="${fieldName}" />
 

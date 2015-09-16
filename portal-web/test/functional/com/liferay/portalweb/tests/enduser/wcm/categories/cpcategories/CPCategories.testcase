@@ -73,7 +73,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategory" priority="5">
+	<command description="Ensure that a user can add a category." name="AddCategory" priority="5">
 		<property name="portal.acceptance" value="true" />
 
 		<execute macro="Page#gotoContentCP">

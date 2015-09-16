@@ -129,6 +129,12 @@
 		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
 	</command>
 
+	<command name="gotoItemSelector">
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
+	</command>
+
 	<command name="gotoPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 

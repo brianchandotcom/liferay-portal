@@ -41,7 +41,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="AddTagsAdmin" priority="4">
+	<command name="AddTagsAdmin" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -344,7 +344,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="MergeMultipleTags" priority="4">
+	<command name="MergeMultipleTags" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -371,7 +371,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55436,LPS-56754" name="MergeSingleTagWarning" priority="4">
+	<command known-issues="LPS-55436" name="MergeSingleTagWarning" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -385,7 +385,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="SearchTag" priority="5">
+	<command name="SearchTag" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>

@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>EMPTY_MESSAGE</td>
+	<td>//div[contains(@class,'empty-message')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE_CONTENT</td>
 	<td>//div[@class='portlet-body']/div[contains(.,'${key_assetType}')]</td>
 	<td></td>

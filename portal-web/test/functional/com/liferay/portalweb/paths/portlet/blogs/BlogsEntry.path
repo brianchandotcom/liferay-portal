@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_COVER_IMAGE_SELECT_FILE</td>
+	<td>//div[contains(@class,'image-selector')]//a[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE</td>
 	<td>//div[contains(@class,'entry-title')]//h2[contains(.,'${key_entryTitle}')] | //div[contains(@class,'entry-title')]//h1[contains(.,'${key_entryTitle}')]</td>
 	<td></td>

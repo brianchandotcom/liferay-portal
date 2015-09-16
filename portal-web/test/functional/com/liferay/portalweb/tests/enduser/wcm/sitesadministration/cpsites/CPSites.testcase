@@ -250,7 +250,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="DeleteSite" priority="5">
+	<command name="DeleteSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -296,7 +296,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="EditSiteFriendlyURL" priority="4">
+	<command name="EditSiteFriendlyURL" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -472,7 +472,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="ViewDisplayParentSiteViaSitesDirectory" priority="4">
+	<command name="ViewDisplayParentSiteViaSitesDirectory" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -568,7 +568,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="ViewSiteHierarchiesViaSitesDirectory" priority="4">
+	<command name="ViewSiteHierarchiesViaSitesDirectory" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

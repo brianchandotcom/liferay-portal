@@ -119,7 +119,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="AddSiteTeams" priority="5">
+	<command name="AddSiteTeams" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -260,7 +260,7 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />
 	</command>
 
-	<command known-issues="LPS-56754" name="DeleteSiteTeam" priority="5">
+	<command name="DeleteSiteTeam" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -289,7 +289,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="EditSiteTeam" priority="5">
+	<command name="EditSiteTeam" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

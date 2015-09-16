@@ -264,6 +264,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTER</td>
+	<td>//button[contains(.,'Enter')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EXPIRE</td>
 	<td>//button[contains(.,'Expire')]</td>
 	<td></td>

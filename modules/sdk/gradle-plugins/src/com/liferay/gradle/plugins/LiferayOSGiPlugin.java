@@ -159,6 +159,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		directDeployTask.setAppServerDeployDir(
 			directDeployTask.getTemporaryDir());
+		directDeployTask.setAppServerType("tomcat");
 		directDeployTask.setWebAppType("portlet");
 
 		directDeployTask.doFirst(

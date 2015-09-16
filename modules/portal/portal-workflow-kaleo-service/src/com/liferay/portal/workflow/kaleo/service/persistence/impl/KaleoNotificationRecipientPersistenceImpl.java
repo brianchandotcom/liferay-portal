@@ -33,7 +33,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationRecipientException;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationRecipientImpl;
@@ -1679,7 +1679,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 		kaleoNotificationRecipient.setNew(true);
 		kaleoNotificationRecipient.setPrimaryKey(kaleoNotificationRecipientId);
 
-		kaleoNotificationRecipient.setCompanyId(serviceCompanyProvider.getCompanyId());
+		kaleoNotificationRecipient.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return kaleoNotificationRecipient;
 	}
@@ -2314,8 +2314,8 @@ public class KaleoNotificationRecipientPersistenceImpl
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_KALEONOTIFICATIONRECIPIENT = "SELECT kaleoNotificationRecipient FROM KaleoNotificationRecipient kaleoNotificationRecipient";
 	private static final String _SQL_SELECT_KALEONOTIFICATIONRECIPIENT_WHERE_PKS_IN =
 		"SELECT kaleoNotificationRecipient FROM KaleoNotificationRecipient kaleoNotificationRecipient WHERE kaleoNotificationRecipientId IN (";

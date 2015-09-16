@@ -8444,7 +8444,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 		role.setUuid(uuid);
 
-		role.setCompanyId(serviceCompanyProvider.getCompanyId());
+		role.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return role;
 	}
@@ -9669,11 +9669,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void afterPropertiesSet() {
 		roleToGroupTableMapper = TableMapperFactory.getTableMapper("Groups_Roles",
 				"roleId", "groupId", this, groupPersistence,
-				serviceCompanyProvider);
+				companyProviderHolder);
 
 		roleToUserTableMapper = TableMapperFactory.getTableMapper("Users_Roles",
-				"roleId", "userId", this, userPersistence,
-				serviceCompanyProvider);
+				"roleId", "userId", this, userPersistence, companyProviderHolder);
 	}
 
 	public void destroy() {
@@ -9692,8 +9691,8 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	protected TableMapper<Role, com.liferay.portal.model.User> roleToUserTableMapper;
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_ROLE = "SELECT role FROM Role role";
 	private static final String _SQL_SELECT_ROLE_WHERE_PKS_IN = "SELECT role FROM Role role WHERE roleId IN (";
 	private static final String _SQL_SELECT_ROLE_WHERE = "SELECT role FROM Role role WHERE ";

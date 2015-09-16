@@ -7239,7 +7239,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 		user.setUuid(uuid);
 
-		user.setCompanyId(serviceCompanyProvider.getCompanyId());
+		user.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return user;
 	}
@@ -9340,23 +9340,21 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void afterPropertiesSet() {
 		userToGroupTableMapper = TableMapperFactory.getTableMapper("Users_Groups",
 				"userId", "groupId", this, groupPersistence,
-				serviceCompanyProvider);
+				companyProviderHolder);
 
 		userToOrganizationTableMapper = TableMapperFactory.getTableMapper("Users_Orgs",
 				"userId", "organizationId", this, organizationPersistence,
-				serviceCompanyProvider);
+				companyProviderHolder);
 
 		userToRoleTableMapper = TableMapperFactory.getTableMapper("Users_Roles",
-				"userId", "roleId", this, rolePersistence,
-				serviceCompanyProvider);
+				"userId", "roleId", this, rolePersistence, companyProviderHolder);
 
 		userToTeamTableMapper = TableMapperFactory.getTableMapper("Users_Teams",
-				"userId", "teamId", this, teamPersistence,
-				serviceCompanyProvider);
+				"userId", "teamId", this, teamPersistence, companyProviderHolder);
 
 		userToUserGroupTableMapper = TableMapperFactory.getTableMapper("Users_UserGroups",
 				"userId", "userGroupId", this, userGroupPersistence,
-				serviceCompanyProvider);
+				companyProviderHolder);
 	}
 
 	public void destroy() {
@@ -9387,8 +9385,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@BeanReference(type = UserGroupPersistence.class)
 	protected UserGroupPersistence userGroupPersistence;
 	protected TableMapper<User, com.liferay.portal.model.UserGroup> userToUserGroupTableMapper;
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_USER = "SELECT user FROM User user";
 	private static final String _SQL_SELECT_USER_WHERE_PKS_IN = "SELECT user FROM User user WHERE userId IN (";
 	private static final String _SQL_SELECT_USER_WHERE = "SELECT user FROM User user WHERE ";

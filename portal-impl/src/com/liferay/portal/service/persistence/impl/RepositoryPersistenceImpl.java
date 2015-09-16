@@ -2415,7 +2415,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 		repository.setUuid(uuid);
 
-		repository.setCompanyId(serviceCompanyProvider.getCompanyId());
+		repository.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return repository;
 	}
@@ -3042,8 +3042,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_REPOSITORY = "SELECT repository FROM Repository repository";
 	private static final String _SQL_SELECT_REPOSITORY_WHERE_PKS_IN = "SELECT repository FROM Repository repository WHERE repositoryId IN (";
 	private static final String _SQL_SELECT_REPOSITORY_WHERE = "SELECT repository FROM Repository repository WHERE ";

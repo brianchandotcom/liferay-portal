@@ -8135,7 +8135,7 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 
 		layout.setUuid(uuid);
 
-		layout.setCompanyId(serviceCompanyProvider.getCompanyId());
+		layout.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return layout;
 	}
@@ -8897,8 +8897,8 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_LAYOUT = "SELECT layout FROM Layout layout";
 	private static final String _SQL_SELECT_LAYOUT_WHERE_PKS_IN = "SELECT layout FROM Layout layout WHERE plid IN (";
 	private static final String _SQL_SELECT_LAYOUT_WHERE = "SELECT layout FROM Layout layout WHERE ";

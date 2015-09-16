@@ -2687,7 +2687,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 
 		team.setUuid(uuid);
 
-		team.setCompanyId(serviceCompanyProvider.getCompanyId());
+		team.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return team;
 	}
@@ -3825,12 +3825,11 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	 */
 	public void afterPropertiesSet() {
 		teamToUserTableMapper = TableMapperFactory.getTableMapper("Users_Teams",
-				"teamId", "userId", this, userPersistence,
-				serviceCompanyProvider);
+				"teamId", "userId", this, userPersistence, companyProviderHolder);
 
 		teamToUserGroupTableMapper = TableMapperFactory.getTableMapper("UserGroups_Teams",
 				"teamId", "userGroupId", this, userGroupPersistence,
-				serviceCompanyProvider);
+				companyProviderHolder);
 	}
 
 	public void destroy() {
@@ -3849,8 +3848,8 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	@BeanReference(type = UserGroupPersistence.class)
 	protected UserGroupPersistence userGroupPersistence;
 	protected TableMapper<Team, com.liferay.portal.model.UserGroup> teamToUserGroupTableMapper;
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_TEAM = "SELECT team FROM Team team";
 	private static final String _SQL_SELECT_TEAM_WHERE_PKS_IN = "SELECT team FROM Team team WHERE teamId IN (";
 	private static final String _SQL_SELECT_TEAM_WHERE = "SELECT team FROM Team team WHERE ";

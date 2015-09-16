@@ -64,7 +64,7 @@ public class ManifestSummaryTest
 		manifestSummary.addModelAdditionCount(
 			new StagedModelType(JournalArticle.class, DDMTemplate.class), 1);
 
-		// exact matches
+		// Exact matches
 
 		StagedModelType stagedModelType = new StagedModelType(
 			JournalArticle.class);
@@ -94,7 +94,7 @@ public class ManifestSummaryTest
 		Assert.assertEquals(
 			-1, manifestSummary.getModelAdditionCount(stagedModelType));
 
-		// all
+		// All
 
 		stagedModelType = new StagedModelType(
 			JournalArticle.class.getName(),
@@ -117,7 +117,7 @@ public class ManifestSummaryTest
 		Assert.assertEquals(
 			-1, manifestSummary.getModelAdditionCount(stagedModelType));
 
-		// any
+		// Any
 
 		stagedModelType = new StagedModelType(
 			JournalArticle.class.getName(),

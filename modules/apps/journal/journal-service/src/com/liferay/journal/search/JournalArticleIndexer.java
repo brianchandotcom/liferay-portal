@@ -568,7 +568,11 @@ public class JournalArticleIndexer
 		String content = getDDMContentSummary(
 			document, snippetLocale, portletRequest, portletResponse);
 
-		return new Summary(snippetLocale, title, content);
+		Summary summary = new Summary(snippetLocale, title, content);
+
+		summary.setMaxContentLength(200);
+
+		return summary;
 	}
 
 	@Override

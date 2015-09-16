@@ -90,7 +90,9 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 						<%
 						List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), false);
 
-						PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), ExportImportDateUtil.getLastPublishDate(selLayoutSet), new Date());
+						DateRange dateRange = ExportImportDateUtil.getDateRange(exportImportConfiguration);
+
+						PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), dateRange.getStartDate(), dateRange.getEndDate());
 
 						ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 

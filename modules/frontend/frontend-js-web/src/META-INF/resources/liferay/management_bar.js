@@ -102,12 +102,6 @@ AUI.add(
 						return instance._getCheckBoxes().filter(':checked').size();
 					},
 
-					_printItemsCount: function(itemsCount) {
-						var instance = this;
-
-						instance.get('itemsCountContainer').html(itemsCount);
-					},
-
 					_toggleBars: function(event) {
 						var instance = this;
 
@@ -116,10 +110,9 @@ AUI.add(
 						instance._getCheckBoxes().attr(ATTR_CHECKED, checked);
 
 						instance._toggleSecondaryBar(checked);
-
 						instance._toggleSelectAllCheckBoxes(checked);
 
-						instance._printItemsCount(instance._getSelectedItemsCount());
+						instance._updateItemsCount(instance._getSelectedItemsCount());
 					},
 
 					_toggleSecondaryBar: function(show) {
@@ -139,13 +132,19 @@ AUI.add(
 
 						instance._toggleSelectAllCheckBoxes(totalBoxes == totalOn);
 
-						instance._printItemsCount(totalOn);
+						instance._updateItemsCount(totalOn);
 					},
 
 					_toggleSelectAllCheckBoxes: function(checked) {
 						var instance = this;
 
 						instance._getSelectAllCheckBoxes().attr(ATTR_CHECKED, checked);
+					},
+
+					_updateItemsCount: function(itemsCount) {
+						var instance = this;
+
+						instance.get('itemsCountContainer').html(itemsCount);
 					}
 				}
 			}

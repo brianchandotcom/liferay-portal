@@ -180,87 +180,6 @@ public class LayoutExportController implements ExportController {
 		XStreamAliasRegistryUtil.register(LayoutImpl.class, "Layout");
 	}
 
-	protected void collectLayoutPortlets(
-			PortletDataContext portletDataContext, long[] layoutIds,
-			Map<String, Object[]> portletIds, Layout layout)
-		throws Exception {
-
-		if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
-			return;
-		}
-
-		if (!prepareLayoutStagingHandler(portletDataContext, layout) ||
-			!layout.isSupportsEmbeddedPortlets()) {
-
-			// Only portlet type layouts support page scoping
-
-			return;
-		}
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		// The getAllPortlets method returns all effective nonsystem portlets
-		// for any layout type, including embedded portlets, or in the case of
-		// panel type layout, selected portlets
-
-		for (Portlet portlet : layoutTypePortlet.getAllPortlets(false)) {
-			String portletId = portlet.getPortletId();
-
-			Settings portletInstanceSettings = SettingsFactoryUtil.getSettings(
-				new PortletInstanceSettingsLocator(layout, portletId));
-
-			String scopeType = portletInstanceSettings.getValue(
-				"lfrScopeType", null);
-			String scopeLayoutUuid = portletInstanceSettings.getValue(
-				"lfrScopeLayoutUuid", null);
-
-			long scopeGroupId = portletDataContext.getScopeGroupId();
-
-			if (Validator.isNotNull(scopeType)) {
-				Group scopeGroup = null;
-
-				if (scopeType.equals("company")) {
-					scopeGroup = GroupLocalServiceUtil.getCompanyGroup(
-						layout.getCompanyId());
-				}
-				else if (scopeType.equals("layout")) {
-					Layout scopeLayout = null;
-
-					scopeLayout =
-						LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-							scopeLayoutUuid, portletDataContext.getGroupId(),
-							portletDataContext.isPrivateLayout());
-
-					if (scopeLayout == null) {
-						continue;
-					}
-
-					scopeGroup = scopeLayout.getScopeGroup();
-				}
-				else {
-					throw new IllegalArgumentException(
-						"Scope type " + scopeType + " is invalid");
-				}
-
-				if (scopeGroup != null) {
-					scopeGroupId = scopeGroup.getGroupId();
-				}
-			}
-
-			String key = PortletPermissionUtil.getPrimaryKey(
-				layout.getPlid(), portletId);
-
-			portletIds.put(
-				key,
-				new Object[] {
-					portletId, layout.getPlid(), scopeGroupId, scopeType,
-					scopeLayoutUuid
-				}
-			);
-		}
-	}
-
 	protected File doExport(
 			PortletDataContext portletDataContext, long[] layoutIds)
 		throws Exception {
@@ -504,7 +423,7 @@ public class LayoutExportController implements ExportController {
 		// Collect layout portlets
 
 		for (Layout layout : layouts) {
-			collectLayoutPortlets(
+			getLayoutPortlets(
 				portletDataContext, layoutIds, portletIds, layout);
 		}
 
@@ -699,6 +618,87 @@ public class LayoutExportController implements ExportController {
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layout);
+	}
+
+	protected void getLayoutPortlets(
+			PortletDataContext portletDataContext, long[] layoutIds,
+			Map<String, Object[]> portletIds, Layout layout)
+		throws Exception {
+
+		if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
+			return;
+		}
+
+		if (!prepareLayoutStagingHandler(portletDataContext, layout) ||
+			!layout.isSupportsEmbeddedPortlets()) {
+
+			// Only portlet type layouts support page scoping
+
+			return;
+		}
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		// The getAllPortlets method returns all effective nonsystem portlets
+		// for any layout type, including embedded portlets, or in the case of
+		// panel type layout, selected portlets
+
+		for (Portlet portlet : layoutTypePortlet.getAllPortlets(false)) {
+			String portletId = portlet.getPortletId();
+
+			Settings portletInstanceSettings = SettingsFactoryUtil.getSettings(
+				new PortletInstanceSettingsLocator(layout, portletId));
+
+			String scopeType = portletInstanceSettings.getValue(
+				"lfrScopeType", null);
+			String scopeLayoutUuid = portletInstanceSettings.getValue(
+				"lfrScopeLayoutUuid", null);
+
+			long scopeGroupId = portletDataContext.getScopeGroupId();
+
+			if (Validator.isNotNull(scopeType)) {
+				Group scopeGroup = null;
+
+				if (scopeType.equals("company")) {
+					scopeGroup = GroupLocalServiceUtil.getCompanyGroup(
+						layout.getCompanyId());
+				}
+				else if (scopeType.equals("layout")) {
+					Layout scopeLayout = null;
+
+					scopeLayout =
+						LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+							scopeLayoutUuid, portletDataContext.getGroupId(),
+							portletDataContext.isPrivateLayout());
+
+					if (scopeLayout == null) {
+						continue;
+					}
+
+					scopeGroup = scopeLayout.getScopeGroup();
+				}
+				else {
+					throw new IllegalArgumentException(
+						"Scope type " + scopeType + " is invalid");
+				}
+
+				if (scopeGroup != null) {
+					scopeGroupId = scopeGroup.getGroupId();
+				}
+			}
+
+			String key = PortletPermissionUtil.getPrimaryKey(
+				layout.getPlid(), portletId);
+
+			portletIds.put(
+				key,
+				new Object[] {
+					portletId, layout.getPlid(), scopeGroupId, scopeType,
+					scopeLayoutUuid
+				}
+			);
+		}
 	}
 
 	protected PortletDataContext getPortletDataContext(

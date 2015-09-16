@@ -16,15 +16,6 @@ AUI.add(
 		var ManagementBar = A.Component.create(
 			{
 				ATTRS: {
-					secondaryBar: {
-						setter: '_setNode'
-					},
-
-					selectAllCheckBoxesSelector: {
-						validator: Lang.isString,
-						value: '.select-all-checkboxes'
-					},
-
 					checkBoxContainer: {
 						setter: '_setNode'
 					},
@@ -37,6 +28,15 @@ AUI.add(
 					itemsCountContainer: {
 						setter: '_setNodes',
 						value: '.selected-items-count'
+					},
+
+					secondaryBar: {
+						setter: '_setNode'
+					},
+
+					selectAllCheckBoxesSelector: {
+						validator: Lang.isString,
+						value: '.select-all-checkboxes'
 					}
 				},
 

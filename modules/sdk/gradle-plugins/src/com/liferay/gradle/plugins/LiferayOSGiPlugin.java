@@ -56,6 +56,8 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
@@ -207,6 +209,14 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 						deployedPluginDir = new File(
 							directDeployTask.getAppServerDeployDir(),
 							project.getName());
+					}
+
+					if (!deployedPluginDir.exists()) {
+						_logger.warn(
+							"Unable to automatically update web.xml in " +
+								jar.getArchivePath());
+
+						return;
 					}
 
 					deployedPluginDirName = project.relativePath(
@@ -877,6 +887,9 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		bundleExtension.setJarBuilderFactory(
 			new LiferayJarBuilderFactory(project));
 	}
+
+	private static final Logger _logger = Logging.getLogger(
+		LiferayOSGiPlugin.class);
 
 	private static class LiferayJarBuilder extends JarBuilder {
 

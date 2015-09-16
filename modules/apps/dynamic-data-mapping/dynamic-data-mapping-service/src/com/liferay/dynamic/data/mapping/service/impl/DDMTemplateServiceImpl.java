@@ -351,27 +351,18 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	@Override
 	public List<DDMTemplate> getTemplates(
 		long companyId, long groupId, long classNameId,
-		long resourceClassNameId) {
+		long resourceClassNameId, int status) {
 
 		return getTemplates(
 			companyId, new long[] {groupId}, resourceClassNameId, 0,
-			resourceClassNameId, null, null);
-	}
-
-	@Override
-	public List<DDMTemplate> getTemplates(
-		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId) {
-
-		return getTemplates(
-			companyId, new long[] {groupId}, classNameId, classPK,
-			resourceClassNameId, null, null);
+			resourceClassNameId, null, null, status);
 	}
 
 	@Override
 	public List<DDMTemplate> getTemplates(
 			long companyId, long groupId, long classNameId, long classPK,
-			long resourceClassNameId, boolean includeAncestorTemplates)
+			long resourceClassNameId, boolean includeAncestorTemplates,
+			int status)
 		throws PortalException {
 
 		List<DDMTemplate> ddmTemplates = new ArrayList<>();
@@ -379,7 +370,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		ddmTemplates.addAll(
 			getTemplates(
 				companyId, new long[] {groupId}, classNameId, classPK,
-				resourceClassNameId, null, null));
+				resourceClassNameId, null, null, status));
 
 		if (!includeAncestorTemplates) {
 			return ddmTemplates;
@@ -388,9 +379,19 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 		ddmTemplates.addAll(
 			getTemplates(
 				companyId, PortalUtil.getAncestorSiteGroupIds(groupId),
-				classNameId, classPK, resourceClassNameId, null, null));
+				classNameId, classPK, resourceClassNameId, null, null, status));
 
 		return ddmTemplates;
+	}
+
+	@Override
+	public List<DDMTemplate> getTemplates(
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId, int status) {
+
+		return getTemplates(
+			companyId, new long[] {groupId}, classNameId, classPK,
+			resourceClassNameId, null, null, status);
 	}
 
 	/**
@@ -408,21 +409,21 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	@Override
 	public List<DDMTemplate> getTemplates(
 		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, String type) {
+		long resourceClassNameId, String type, int status) {
 
 		return getTemplates(
 			companyId, new long[] {groupId}, classNameId, classPK,
-			resourceClassNameId, type, null);
+			resourceClassNameId, type, null, status);
 	}
 
 	@Override
 	public List<DDMTemplate> getTemplates(
 		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, String type, String mode) {
+		long resourceClassNameId, String type, String mode, int status) {
 
 		return getTemplates(
 			companyId, new long[] {groupId}, classNameId, classPK,
-			resourceClassNameId, type, mode);
+			resourceClassNameId, type, mode, status);
 	}
 
 	/**
@@ -434,11 +435,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMTemplate> getTemplatesByClassPK(
-		long companyId, long groupId, long classPK, long resourceClassNameIs) {
+		long companyId, long groupId, long classPK, long resourceClassNameIs,
+		int status) {
 
 		return getTemplates(
 			companyId, new long[] {groupId}, 0, classPK, resourceClassNameIs,
-			null, null);
+			null, null, status);
 	}
 
 	/**
@@ -946,11 +948,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 
 	protected List<DDMTemplate> getTemplates(
 		long companyId, long[] groupIds, long classNameId, long classPK,
-		long resourceClassNameId, String type, String mode) {
+		long resourceClassNameId, String type, String mode, int status) {
 
-		return ddmTemplateFinder.filterFindByC_G_C_C_R_T_M(
+		return ddmTemplateFinder.filterFindByC_G_C_C_R_T_M_S(
 			companyId, groupIds, classNameId, classPK, resourceClassNameId,
-			type, mode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			type, mode, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 }

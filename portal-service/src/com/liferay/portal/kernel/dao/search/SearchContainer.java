@@ -142,19 +142,27 @@ public class SearchContainer<R> {
 
 		_iteratorURL.setParameter(_curParam, String.valueOf(_cur));
 		_iteratorURL.setParameter(_deltaParam, String.valueOf(_delta));
-		_iteratorURL.setParameter(
-			DisplayTerms.KEYWORDS,
-			ParamUtil.getString(portletRequest, DisplayTerms.KEYWORDS));
-		_iteratorURL.setParameter(
-			DisplayTerms.ADVANCED_SEARCH,
-			String.valueOf(
-				ParamUtil.getBoolean(
-					portletRequest, DisplayTerms.ADVANCED_SEARCH)));
-		_iteratorURL.setParameter(
-			DisplayTerms.AND_OPERATOR,
-			String.valueOf(
-				ParamUtil.getBoolean(
-					portletRequest, DisplayTerms.AND_OPERATOR, true)));
+
+		String keywords = portletRequest.getParameter(DisplayTerms.KEYWORDS);
+
+		if (keywords != null) {
+			_iteratorURL.setParameter(DisplayTerms.KEYWORDS, keywords);
+		}
+
+		String advancedSearch =
+			portletRequest.getParameter(DisplayTerms.ADVANCED_SEARCH);
+
+		if (advancedSearch != null) {
+			_iteratorURL.setParameter(
+				DisplayTerms.ADVANCED_SEARCH, advancedSearch);
+		}
+
+		String andOperator = portletRequest.getParameter(
+			DisplayTerms.AND_OPERATOR);
+
+		if (andOperator != null) {
+			_iteratorURL.setParameter(DisplayTerms.AND_OPERATOR, andOperator);
+		}
 
 		if (headerNames != null) {
 			_headerNames = new ArrayList<>(headerNames.size());

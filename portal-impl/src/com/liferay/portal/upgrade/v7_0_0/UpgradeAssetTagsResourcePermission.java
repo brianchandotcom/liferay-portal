@@ -14,12 +14,9 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portlet.asset.model.AssetTag;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 /**
  * @author Andrew Betts
@@ -28,22 +25,10 @@ public class UpgradeAssetTagsResourcePermission extends UpgradeProcess {
 
 	@Override
 	public void doUpgrade() throws Exception {
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"delete from ResourcePermission where name = ?");
-
-			ps.setString(1, AssetTag.class.getName());
-
-			ps.execute();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
+		runSQL(
+			"delete from ResourcePermission where name = " +
+				AssetTag.class.getName() + " and scope = " +
+					ResourceConstants.SCOPE_INDIVIDUAL);
 	}
 
 }

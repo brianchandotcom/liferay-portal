@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletCategoryUtil;
 
 import java.io.IOException;
 
@@ -153,6 +154,10 @@ public class LegacyPortletPanelAppHotDeployListener
 			if (Validator.isNull(controlPanelEntryCategory)) {
 				continue;
 			}
+
+			controlPanelEntryCategory =
+				PortletCategoryUtil.getPortletCategoryKey(
+					controlPanelEntryCategory);
 
 			Dictionary<String, Object> properties = new HashMapDictionary<>();
 

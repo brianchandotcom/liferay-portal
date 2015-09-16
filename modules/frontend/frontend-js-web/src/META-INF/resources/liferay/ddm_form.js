@@ -808,8 +808,8 @@ AUI.add(
 
 						var portletURL = Liferay.PortletURL.createRenderURL();
 
-						portletURL.setParameter('criteria', criteria);
 						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
+						portletURL.setParameter('criteria', criteria);
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
 
 						var criterionJSON = {

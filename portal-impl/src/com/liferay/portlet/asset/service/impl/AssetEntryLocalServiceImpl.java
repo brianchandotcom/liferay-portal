@@ -425,7 +425,19 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		return search(
 			companyId, groupIds, userId, className, classTypeId, keywords,
-			keywords, keywords, null, null, status, false, start, end);
+			status, start, end, false);
+	}
+
+	@Override
+	public Hits search(
+		long companyId, long[] groupIds, long userId, String className,
+		long classTypeId, String keywords, int status, int start, int end,
+		boolean showNonIndexable) {
+
+		return search(
+			companyId, groupIds, userId, className, classTypeId, keywords,
+			keywords, keywords, null, null, status, false, start, end,
+			showNonIndexable);
 	}
 
 	@Override
@@ -434,6 +446,19 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		long classTypeId, String userName, String title, String description,
 		String assetCategoryIds, String assetTagNames, int status,
 		boolean andSearch, int start, int end) {
+
+		return search(
+			companyId, groupIds, userId, className, classTypeId, userName,
+			title, description, assetCategoryIds, assetTagNames, status,
+			andSearch, start, end, false);
+	}
+
+	@Override
+	public Hits search(
+		long companyId, long[] groupIds, long userId, String className,
+		long classTypeId, String userName, String title, String description,
+		String assetCategoryIds, String assetTagNames, int status,
+		boolean andSearch, int start, int end, boolean showNonIndexable) {
 
 		try {
 			Indexer<?> indexer = AssetSearcher.getInstance();
@@ -451,6 +476,11 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 			searchContext.setAssetCategoryIds(
 				StringUtil.split(assetCategoryIds, 0L));
 			searchContext.setAssetTagNames(StringUtil.split(assetTagNames));
+
+			if (showNonIndexable) {
+				searchContext.setAttribute("showNonIndexable", Boolean.TRUE);
+			}
+
 			searchContext.setAttribute(Field.DESCRIPTION, description);
 			searchContext.setAttribute(Field.TITLE, title);
 			searchContext.setAttribute(Field.USER_NAME, userName);

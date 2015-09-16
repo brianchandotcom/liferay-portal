@@ -32,13 +32,11 @@ if (workflowDefinition != null) {
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view.jsp");
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= (workflowDefinition == null) %>"
-	title='<%= (workflowDefinition == null) ? "upload-definition" : workflowDefinition.getName() %>'
-/>
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+portletDisplay.setTitle((workflowDefinition == null) ? LanguageUtil.get(request, (workflowDefinition == null) ? "upload-definition" : workflowDefinition.getName()) : workflowDefinition.getName());
+%>
 
 <liferay-portlet:actionURL name='<%= (workflowDefinition == null) ? "addWorkflowDefinition" : "updateWorkflowDefinition" %>' var="editWorkflowDefinitionURL">
 	<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
@@ -65,7 +63,3 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>
-
-<%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, (workflowDefinition == null) ? "upload-definition" : workflowDefinition.getName()), currentURL);
-%>

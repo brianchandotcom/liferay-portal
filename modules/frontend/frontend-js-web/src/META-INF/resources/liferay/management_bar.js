@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-entry-select',
+	'liferay-management-bar',
 	function(A) {
 		var Lang = A.Lang;
 
@@ -13,7 +13,7 @@ AUI.add(
 
 		var STR_SELECT_ALL_CHECKBOXES_SELECTOR = 'selectAllCheckBoxesSelector';
 
-		var EntrySelect = A.Component.create(
+		var ManagementBar = A.Component.create(
 			{
 				ATTRS: {
 					secondaryBar: {
@@ -44,7 +44,7 @@ AUI.add(
 
 				EXTENDS: A.Base,
 
-				NAME: 'liferay-entry-select',
+				NAME: 'liferay-management-bar',
 
 				prototype: {
 					initializer: function() {
@@ -155,7 +155,7 @@ AUI.add(
 			}
 		);
 
-		Liferay.EntrySelect = EntrySelect;
+		Liferay.ManagementBar = ManagementBar;
 	},
 	'',
 	{

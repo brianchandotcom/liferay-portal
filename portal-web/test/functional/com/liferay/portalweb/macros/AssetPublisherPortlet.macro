@@ -714,19 +714,7 @@
 		<execute function="AssertElementPresent" locator1="Link#READ_MORE" />
 		<execute function="AssertElementPresent" locator1="Icon#PRINT" />
 		<execute function="AssertElementPresent" locator1="Icon#FLAG" />
-
-		<if>
-			<equals arg1="${pageStaging}" arg2="true" />
-			<then>
-				<execute function="AssertElementNotPresent" locator1="Icon#EDIT" />
-			</then>
-			<else>
-				<execute function="AssertElementPresent" locator1="Icon#EDIT" />
-			</else>
-		</if>
-
-		<execute function="AssertElementPresent" locator1="Icon#TWITTER" />
-		<execute function="AssertElementPresent" locator1="Icon#GOOGLE_PLUS" />
+		<execute function="AssertElementPresent" locator1="Icon#EDIT" />
 		<execute function="AssertElementPresent" locator1="Ratings#YOUR_RATING_LABEL" />
 		<execute function="AssertElementPresent" locator1="Ratings#AVERAGE_LABEL" />
 
@@ -737,10 +725,15 @@
 				<execute function="AssertElementNotPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="Comments#BE_THE_FIRST_LINK" />
 				<execute function="AssertElementPresent" locator1="Comments#SUBSCRIBE_TO_COMMENTS_LINK" />
 			</else>
 		</if>
+
+		<execute function="AssertClick" locator1="Button#SHARE" value1="Share" />
+
+		<execute function="AssertElementPresent" locator1="Icon#TWITTER" />
+		<execute function="AssertElementPresent" locator1="Icon#FACEBOOK" />
+		<execute function="AssertElementPresent" locator1="Icon#GOOGLE_PLUS" />
 	</command>
 
 	<command name="viewDefaultWithAllDisplaySettingsCheckboxesPG">

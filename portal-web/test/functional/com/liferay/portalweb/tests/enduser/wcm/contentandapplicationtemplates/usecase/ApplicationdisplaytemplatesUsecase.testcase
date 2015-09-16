@@ -153,7 +153,7 @@
 	<command name="ADTAssetPublisher" priority="3">
 		<var name="siteName" value="${siteName}" />
 
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -305,7 +305,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -386,7 +386,7 @@
 	<command name="ADTDMMediaGallery" priority="3">
 		<var name="siteName" value="${siteName}" />
 
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -515,7 +515,7 @@
 	<command name="ADTSiteMap" priority="3">
 		<var name="siteName" value="${siteName}" />
 
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -632,7 +632,7 @@
 	<command name="ADTTagsNavigationPortlet" priority="5">
 		<var name="siteName" value="${siteName}" />
 
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -795,7 +795,7 @@
 	<command name="ADTWiki" priority="3">
 		<var name="siteName" value="${siteName}" />
 
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />

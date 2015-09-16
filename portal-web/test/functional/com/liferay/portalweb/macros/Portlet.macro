@@ -175,13 +175,13 @@
 			</then>
 		</if>
 
-		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_PRINT_CHECKBOX" />
-		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_FLAGS_CHECKBOX" />
-		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_RELATED_ASSETS_CHECKBOX" />
-		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_RATINGS_CHECKBOX" />
-		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
-		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_COMMENT_RATINGS_CHECKBOX" />
-		<execute function="Check" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
+		<execute function="Check" locator1="Checkbox#ENABLE_PRINT" />
+		<execute function="Check" locator1="Checkbox#ENABLE_FLAGS" />
+		<execute function="Check" locator1="Checkbox#ENABLE_RELATED_ASSETS" />
+		<execute function="Check" locator1="Checkbox#ENABLE_RATINGS" />
+		<execute function="Check" locator1="Checkbox#ENABLE_COMMENTS" />
+		<execute function="Check" locator1="Checkbox#ENABLE_COMMENT_RATINGS" />
+		<execute function="Check" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrameTop" value1="relative=top" />

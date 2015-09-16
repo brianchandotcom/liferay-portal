@@ -262,7 +262,7 @@
 			<var name="nodePort" value="8080" />
 		</execute>
 
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteURL" value="true" />
 		</execute>

@@ -626,7 +626,7 @@
 
 		<execute function="Copy" locator1="SitesEditSite#SITE_ID" value1="siteID" />
 
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="${siteName}" />
 		</execute>

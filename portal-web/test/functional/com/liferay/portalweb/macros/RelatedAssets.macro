@@ -40,14 +40,17 @@
 	</command>
 
 	<command name="gotoWebContentSelectionCP">
-		<execute function="AssertClick" locator1="Toolbar#ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
 
 		<var name="key_assetType" value="${assetType}" />
 
 		<execute function="AssertClick" locator1="WCEditWebContent#MENU_RELATED_ASSETS" value1="Related Assets" />
 		<execute function="AssertClick" locator1="WCEditWebContent#RELATED_ASSETS_SELECT" value1="Select" />
-		<execute function="AssertClick" locator1="WCEditWebContent#RELATED_ASSETS_SELECT" value1="${assetType}" />
+
+		<var method="StringUtil#replace('${assetType}', ' ', '_')" name="assetTypeLocator" />
+		<var method="StringUtil#upperCase('${assetTypeLocator}')" name="assetTypeLocator" />
+		<execute function="AssertClick" locator1="MenuItem#${assetTypeLocator}" value1="${assetType}" />
 	</command>
 
 	<command name="searchAdvancedRelatedAssetsCP">

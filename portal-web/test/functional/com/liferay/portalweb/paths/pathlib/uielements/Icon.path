@@ -80,7 +80,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a[contains(@id,'editLayoutPanel') and i[contains(@class,'icon-edit')]]</td>
+	<td>//a[contains(@id,'ControlMenuPortlet') and i[contains(@class,'icon-cog')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -99,8 +99,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FACEBOOK</td>
+	<td>//i[contains(@class,'icon-facebook')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GOOGLE_PLUS</td>
-	<td>//span[@class='social-bookmark']//span[contains(.,'Google+')]</td>
+	<td>//i[contains(@class,'icon-google-plus')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -155,7 +160,7 @@
 </tr>
 <tr>
 	<td>TWITTER</td>
-	<td>//span[@class='social-bookmark']//span[contains(.,'Twitter')]</td>
+	<td>//i[contains(@class,'icon-twitter')]</td>
 	<td></td>
 </tr>
 </tbody>

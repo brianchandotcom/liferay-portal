@@ -82,11 +82,11 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -102,11 +102,11 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 
@@ -188,11 +188,11 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -208,11 +208,11 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 
@@ -282,11 +282,11 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -302,11 +302,11 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 
@@ -374,11 +374,11 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -394,11 +394,11 @@
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 

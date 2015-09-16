@@ -1830,7 +1830,7 @@
 	</command>
 
 	<command name="StagingContentTargeting" priority="4">
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
@@ -2091,7 +2091,7 @@
 	</command>
 
 	<command name="StagingCTDeletions" priority="4">
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
@@ -2158,7 +2158,7 @@
 	</command>
 
 	<command name="StagingCTDisabled" priority="4">
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
@@ -2274,7 +2274,7 @@
 	</command>
 
 	<command name="StagingCTEnabled" priority="4">
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
@@ -2413,7 +2413,7 @@
 	</command>
 
 	<command name="StagingUncheckAppAllAndContentCTRefAllAndWC" priority="4">
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
@@ -2519,7 +2519,7 @@
 	</command>
 
 	<command known-issues="LPS-54232" name="StagingUncheckAppCTRefAllAndContentAll" priority="4">
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
@@ -2562,7 +2562,7 @@
 	</command>
 
 	<command known-issues="WCM-345,LPS-54232" name="StagingUncheckAppCTRefAllAndContentAT" priority="4">
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
@@ -2605,7 +2605,7 @@
 	</command>
 
 	<command known-issues="LPS-54232" name="StagingUncheckAppCTRefAllAndContentWC" priority="4">
-		<execute macro="Page#gotoPublishingtools">
+		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>

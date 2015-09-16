@@ -475,6 +475,12 @@ public class AssetPublisherDisplayContext {
 		if (_paginationType == null) {
 			_paginationType = GetterUtil.getString(
 				_portletPreferences.getValue("paginationType", "none"));
+
+			if (!_paginationType.equals(PAGINATION_TYPE_NONE) &&
+				!_paginationType.equals(PAGINATION_TYPE_SIMPLE) &&
+				!_paginationType.equals(PAGINATION_TYPE_REGULAR)) {
+				_paginationType = PAGINATION_TYPE_NONE;
+			}
 		}
 
 		return _paginationType;
@@ -869,19 +875,19 @@ public class AssetPublisherDisplayContext {
 	public boolean isPaginationTypeNone() {
 		String paginationType = getPaginationType();
 
-		return paginationType.equals("none");
+		return paginationType.equals(PAGINATION_TYPE_NONE);
 	}
 
 	public boolean isPaginationTypeRegular() {
 		String paginationType = getPaginationType();
 
-		return paginationType.equals("regular");
+		return paginationType.equals(PAGINATION_TYPE_REGULAR);
 	}
 
 	public boolean isPaginationTypeSimple() {
 		String paginationType = getPaginationType();
 
-		return paginationType.equals("simple");
+		return paginationType.equals(PAGINATION_TYPE_SIMPLE);
 	}
 
 	public boolean isSelectionStyleDynamic() {
@@ -1087,6 +1093,12 @@ public class AssetPublisherDisplayContext {
 	public void setShowContextLink(Boolean showContextLink) {
 		_showContextLink = showContextLink;
 	}
+
+	public final String PAGINATION_TYPE_NONE = "none";
+
+	public final String PAGINATION_TYPE_REGULAR = "regular";
+
+	public final String PAGINATION_TYPE_SIMPLE = "simple";
 
 	protected void configureSubtypeFieldFilter(
 			AssetEntryQuery assetEntryQuery, Locale locale)

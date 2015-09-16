@@ -95,7 +95,7 @@
 <!--SELECT_IMAGE_PREVIEW-->
 <tr>
 	<td>SELECT_IMAGE_PREVIEW</td>
-	<td>//div[contains(@id,'ItemSelectorPortlet') and not(@class='hide')]//a[@title='${key_uploadFileName}']</td>
+	<td>//div[@class='image-viewer-base-image-list']//img</td>
 	<td></td>
 </tr>
 </tbody>

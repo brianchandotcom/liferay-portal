@@ -512,6 +512,10 @@ public class AssetUtil {
 	public static List<AssetEntry> getAssetEntries(Hits hits) {
 		List<AssetEntry> assetEntries = new ArrayList<>();
 
+		if (hits.getDocs() == null) {
+			return assetEntries;
+		}
+
 		for (Document document : hits.getDocs()) {
 			String className = GetterUtil.getString(
 				document.get(Field.ENTRY_CLASS_NAME));

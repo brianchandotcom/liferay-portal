@@ -27,43 +27,9 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-		<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, DDLActionKeys.ADD_RECORD_SET) %>">
-
-			<aui:nav-item anchorId="manageDDMStructuresLink" iconCssClass="icon-cog" label="manage-data-definitions" selected='<%= toolbarItem.equals("manage-data-definitions") %>' />
-		</c:if>
-	</aui:nav>
-
 	<aui:nav-bar-search>
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 			<liferay-util:include page="/record_set_search.jsp" servletContext="<%= application %>" />
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
-
-<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, DDLActionKeys.ADD_RECORD_SET) %>">
-	<aui:script>
-		AUI.$('#<portlet:namespace />manageDDMStructuresLink').on(
-			'click',
-			function() {
-				Liferay.Util.openDDMPortlet(
-					{
-						basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructure.class.getName(), PortletProvider.Action.EDIT), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
-						dialog: {
-							destroyOnHide: true
-						},
-						groupId: <%= scopeGroupId %>,
-
-						<%
-						Portlet portlet = PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-						%>
-
-						refererPortletName: '<%= portlet.getPortletName() %>',
-						refererWebDAVToken: '<%= WebDAVUtil.getStorageToken(portlet) %>',
-						title: '<%= UnicodeLanguageUtil.get(request, "data-definitions") %>'
-					}
-				);
-			}
-		);
-	</aui:script>
-</c:if>

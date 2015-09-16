@@ -141,7 +141,7 @@ buildLexicon {
 				if (line == "// INSERT CUSTOM BASE VARS") {
 					line = """\
 @import \"../../aui_variables\";
-@import \"../alloy-font-awesome/scss/font-awesome\";"""
+@import \"../alloy-font-awesome/scss/variables\";"""
 				}
 				else if (line == "// INSERT CUSTOM VARS") {
 					line = """\

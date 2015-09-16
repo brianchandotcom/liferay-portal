@@ -76,10 +76,9 @@
 	<aui:script use="liferay-entry-select">
 		new Liferay.EntrySelect(
 			{
-				actionButtonsBar: '#actionButtons',
 				checkBoxContainer: '#<%= checkBoxContainerId %>',
 				namespace: '<%= namespace %>',
-				selectAllCheckBoxes: '.select-all-checkboxes'
+				secondaryBar: '#actionButtons'
 			}
 		);
 	</aui:script>

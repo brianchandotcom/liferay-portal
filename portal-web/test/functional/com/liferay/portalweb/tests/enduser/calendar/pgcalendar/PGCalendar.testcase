@@ -629,18 +629,18 @@
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
-		<execute macro="CalendarEvent#viewApprovedRSVP">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="rsvp" value="Yes" />
+			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#addRSVP">
+		<execute macro="CalendarEvent#viewApprovedRSVP">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 			<var name="rsvp" value="Yes" />
 		</execute>
 

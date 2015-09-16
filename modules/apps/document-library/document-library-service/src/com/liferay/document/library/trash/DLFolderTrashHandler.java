@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.trash;
 
-import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.capabilities.UnsupportedCapabilityException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -206,9 +206,9 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 			return dlFolder.isInTrash();
 		}
-		catch (InvalidRepositoryException ire) {
+		catch (UnsupportedCapabilityException uce) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ire, ire);
+				_log.debug(uce, uce);
 			}
 
 			return false;
@@ -222,9 +222,9 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 			return dlFolder.isInTrashContainer();
 		}
-		catch (InvalidRepositoryException ire) {
+		catch (UnsupportedCapabilityException uce) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ire, ire);
+				_log.debug(uce, uce);
 			}
 
 			return false;
@@ -356,9 +356,9 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 			RepositoryProviderUtil.getFolderLocalRepository(classPK);
 
 		if (!localRepository.isCapabilityProvided(TrashCapability.class)) {
-			throw new InvalidRepositoryException(
-				"LocalRepository " + localRepository.getRepositoryId() +
-					" does not support trash operations");
+			throw new UnsupportedCapabilityException(
+				TrashCapability.class,
+				"Repository " + localRepository.getRepositoryId());
 		}
 
 		return localRepository;

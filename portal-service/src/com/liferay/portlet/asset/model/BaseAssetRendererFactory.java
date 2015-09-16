@@ -15,6 +15,7 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.Tuple;
@@ -181,6 +182,11 @@ public abstract class BaseAssetRendererFactory<T>
 	@Override
 	public String getPortletId() {
 		return _portletId;
+	}
+
+	@Override
+	public String getSubTypeTitle(Locale locale) {
+		return LanguageUtil.get(locale, "subtype");
 	}
 
 	@Override

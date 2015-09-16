@@ -71,21 +71,29 @@ AUI.add(
 					_getCheckBoxes: function() {
 						var instance = this;
 
-						if (!instance._checkBoxes) {
-							instance._checkBoxes = instance.get(STR_CHECKBOX_CONTAINER).all(instance.get(STR_CHECKBOXES_SELECTOR));
+						var checkBoxes = instance._checkBoxes;
+
+						if (!checkBoxes) {
+							checkBoxes = instance.get(STR_CHECKBOX_CONTAINER).all(instance.get(STR_CHECKBOXES_SELECTOR));
+
+							instance._checkBoxes = checkBoxes;
 						}
 
-						return instance._checkBoxes;
+						return checkBoxes;
 					},
 
 					_getSelectAllCheckBoxes: function() {
 						var instance = this;
 
-						if (!instance._selectAllCheckBoxes) {
-							instance._selectAllCheckBoxes = instance.all(instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR));
+						var selectAllCheckBoxes = instance._selectAllCheckBoxes;
+
+						if (!selectAllCheckBoxes) {
+							selectAllCheckBoxes = instance.all(instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR));
+
+							instance._selectAllCheckBoxes = selectAllCheckBoxes;
 						}
 
-						return instance._selectAllCheckBoxes;
+						return selectAllCheckBoxes;
 					},
 
 					_getSelectedItemsCount: function() {

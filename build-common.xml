@@ -12,7 +12,7 @@
 		<path location="${project.dir.native}" />
 	</pathconvert>
 
-	<pathconvert pathsep="/" property="project.dir.unix">
+	<pathconvert dirsep="/" property="project.dir.unix">
 		<path location="${project.dir.native}" />
 	</pathconvert>
 

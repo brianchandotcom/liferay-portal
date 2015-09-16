@@ -3559,14 +3559,6 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="SearchPortlet#configureAssetType">
-			<var name="searchAssetType" value="Calendar Event" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
 		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="tag1" />
 		</execute>

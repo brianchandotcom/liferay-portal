@@ -54,9 +54,9 @@
 
 	<command name="openSiteURL">
 		<var method="StringUtil#replace('${siteName}', ' ', '-')" name="siteNameURL" />
-		<var method="StringUtil#lowerCase('/${siteNameURL}')" name="siteNameURL" />
+		<var method="StringUtil#lowerCase('${siteNameURL}')" name="siteNameURL" />
 
-		<execute function="Open" locator1="/web/${siteNameURL}/home" />
+		<execute function="Open" locator1="/web/${siteNameURL}" />
 	</command>
 
 	<command name="openSpecificURL">

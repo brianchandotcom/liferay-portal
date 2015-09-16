@@ -174,7 +174,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 							<c:if test="<%= assetPublisherDisplayContext.isShowSubtypeFieldsFilter() %>">
 								<div class="asset-subtypefields-wrapper-enable hide" id="<portlet:namespace /><%= className %>subtypeFieldsFilterEnableWrapper">
-									<aui:input checked="<%= assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" label="filter-by-field" name='<%= "preferences--subtypeFieldsFilterEnabled" + className + "--" %>' type="checkbox" value="<%= assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" />
+									<aui:input checked="<%= assetPublisherDisplayContext.isSubtypeFieldsFilterEnabled() %>" label="filter-by-field" name='<%= "preferences--subtypeFieldsFilterEnabled" + className + "--" %>' type="checkbox" />
 								</div>
 
 								<span class="asset-subtypefields-message" id="<portlet:namespace /><%= className %>ddmStructureFieldMessage">
@@ -671,8 +671,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					setDDMFields('<%= className %>', '', '', '', '');
 
 					var subtypeFieldsFilterEnabled = $('#<portlet:namespace />subtypeFieldsFilterEnabled<%= className %>');
-
-					subtypeFieldsFilterEnabled.val(false);
 
 					subtypeFieldsFilterEnabled.prop('checked', false);
 

@@ -63,7 +63,7 @@
 	</command>
 
 	<command name="addViewableByCP">
-		<execute function="AssertClick" locator1="Categories#ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
 		<execute function="Select" locator1="CategoriesEditVocabulary#VIEWABLE_BY_SELECT" value1="${viewableBy}" />
@@ -86,7 +86,7 @@
 	</command>
 
 	<command name="addWithAssociatedAssetTypeCP">
-		<execute function="AssertClick" locator1="Categories#ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
 
 		<if>
@@ -163,7 +163,8 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>
@@ -228,7 +229,8 @@
 		<if>
 			<equals arg1="${allowMultipleCategories}" arg2="false" />
 			<then>
-				<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+				<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
+				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 				<execute function="AssertNotChecked" locator1="CategoriesEditVocabulary#ALLOW_MULTIPLE_CATEGORIES_CHECKBOX" />
 			</then>
@@ -270,7 +272,8 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="AssetPermissions#IFRAME" />
@@ -279,8 +282,6 @@
 			<equals arg1="${viewableBy}" arg2="Anyone (Guest Role)" />
 			<then>
 				<execute function="AssertChecked" locator1="AssetPermissions#GUEST_VIEW_CHECKBOX" />
-				<execute function="AssertChecked" locator1="AssetPermissions#OWNER_VIEW_CHECKBOX" />
-				<execute function="AssertChecked" locator1="AssetPermissions#SITE_MEMBER_VIEW_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${viewableBy}" arg2="Owner" />
@@ -303,7 +304,8 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
-		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
 		<if>

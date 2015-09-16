@@ -737,7 +737,7 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute macro="Category#deleteByActionsCP">
+		<execute macro="Category#deleteByIconCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -809,7 +809,7 @@
 		<execute function="AssertTextNotPresent" locator1="Categories#CATEGORY_DETAILS_PROPERTY_VALUE" value1="Category Property 2 Value" />
 	</command>
 
-	<command name="DeleteSubcategoryViaActions" priority="3">
+	<command name="DeleteSubcategoryViaIcon" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -841,14 +841,14 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute macro="Subcategory#deleteViaActionsCP">
+		<execute macro="Subcategory#deleteViaIconCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 	</command>
 
-	<command name="DeleteSubcategoryViaArrow" priority="5">
+	<command name="DeleteSubcategoryViaMenu" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -876,7 +876,7 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute macro="Subcategory#deleteViaArrowCP">
+		<execute macro="Subcategory#deleteViaMenuCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="subcategoryName" value="Subcategory Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
@@ -1092,7 +1092,7 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Categories#ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type" locator1="TextInput#NAME" value1="Vocabulary Name" />
 		<execute function="Click" locator1="Button#CANCEL" />
 

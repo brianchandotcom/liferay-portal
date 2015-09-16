@@ -1,4 +1,5 @@
 ;(function() {
+	/* global Loader */
 	var LiferayAUI = Liferay.AUI;
 
 	var COMBINE = LiferayAUI.getCombine();

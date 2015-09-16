@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.webdav;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Iván Zaera
@@ -24,7 +25,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class DLWebDAVUtil {
 
 	public static String escapeRawTitle(String title) {
-		return StringUtil.replace(title, StringPool.SLASH, _FORBIDDEN_CHAR);
+		return StringUtil.replace(
+			title, StringPool.SLASH, PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR);
 	}
 
 	public static String escapeURLTitle(String title) {
@@ -32,20 +34,19 @@ public class DLWebDAVUtil {
 	}
 
 	public static boolean isRepresentableTitle(String title) {
-		return !title.contains(_FORBIDDEN_CHAR);
+		return !title.contains(PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR);
 	}
 
 	public static String makeRepresentableTitle(String title, int i) {
 		return StringUtil.replace(
-			title, _FORBIDDEN_CHAR,
+			title, PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR,
 			StringPool.UNDERLINE + String.valueOf(i) + StringPool.UNDERLINE);
 	}
 
 	public static String unescapeRawTitle(String escapedTitle) {
 		return StringUtil.replace(
-			escapedTitle, _FORBIDDEN_CHAR, StringPool.SLASH);
+			escapedTitle, PropsValues.DL_WEBDAV_SUBSTITUTION_CHAR,
+			StringPool.SLASH);
 	}
-
-	private static final String _FORBIDDEN_CHAR = StringPool.CARET;
 
 }

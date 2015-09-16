@@ -74,12 +74,22 @@
 
 <c:if test="<%= Validator.isNotNull(actionButtons) %>">
 	<aui:script use="liferay-entry-select">
-		new Liferay.EntrySelect(
+		var managementBar = new Liferay.EntrySelect(
 			{
 				checkBoxContainer: '#<%= checkBoxContainerId %>',
 				namespace: '<%= namespace %>',
 				secondaryBar: '#actionButtons'
 			}
 		);
+
+		var clearManagementBarHandles = function(event) {
+			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+				managementBar.destroy();
+
+				Liferay.detach('destroyPortlet', clearManagementBarHandles);
+			}
+		};
+
+		Liferay.on('destroyPortlet', clearManagementBarHandles);
 	</aui:script>
 </c:if>

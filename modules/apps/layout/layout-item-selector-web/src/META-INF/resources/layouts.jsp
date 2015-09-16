@@ -25,18 +25,12 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 request.setAttribute(WebKeys.GROUP, group);
 
-String tabs1Names = "";
+int publicLayoutsPageCount = group.getPublicLayoutsPageCount();
 
-if (group.getPublicLayoutsPageCount() > 0) {
-	tabs1Names += "public-pages,";
-}
-
-if (group.getPrivateLayoutsPageCount() > 0) {
-	tabs1Names += "private-pages";
-}
+int privateLayoutsPageCount = group.getPrivateLayoutsPageCount();
 %>
 
-<liferay-ui:tabs names="<%= tabs1Names %>" refresh="<%= false %>">
+<liferay-ui:tabs names="<%= ((publicLayoutsPageCount > 0) && (privateLayoutsPageCount > 0)) ? "public-pages,private-pages" : null %>" refresh="<%= false %>">
 
 	<%
 	boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage");

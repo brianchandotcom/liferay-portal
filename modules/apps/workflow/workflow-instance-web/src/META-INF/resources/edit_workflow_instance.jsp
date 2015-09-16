@@ -33,16 +33,7 @@ else {
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 portletDisplay.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
-
-PortalUtil.addPortletBreadcrumbEntry(request, workflowInstanceEditDisplayContext.getHeaderTitle(), currentURL);
 %>
-
-<liferay-ui:breadcrumb
-	showCurrentGroup="<%= false %>"
-	showGuestGroup="<%= false %>"
-	showLayout="<%= false %>"
-	showParentGroups="<%= false %>"
-/>
 
 <aui:row>
 	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">

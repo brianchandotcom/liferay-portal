@@ -27,16 +27,7 @@ else {
 }
 
 PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, workflowInstanceViewDisplayContext.getTabs2()), currentURL);
 %>
-
-<liferay-ui:breadcrumb
-	showCurrentGroup="<%= false %>"
-	showGuestGroup="<%= false %>"
-	showLayout="<%= false %>"
-	showParentGroups="<%= false %>"
-/>
 
 <liferay-ui:tabs
 	names="pending,completed"

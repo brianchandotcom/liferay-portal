@@ -47,16 +47,7 @@ boolean showEditURL = workflowTaskDisplayContext.showEditURL(workflowTask);
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 portletDisplay.setTitle(headerTitle);
-
-PortalUtil.addPortletBreadcrumbEntry(request, headerTitle, currentURL);
 %>
-
-<liferay-ui:breadcrumb
-	showCurrentGroup="<%= false %>"
-	showGuestGroup="<%= false %>"
-	showLayout="<%= false %>"
-	showParentGroups="<%= false %>"
-/>
 
 <aui:row>
 	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= 75 %>">

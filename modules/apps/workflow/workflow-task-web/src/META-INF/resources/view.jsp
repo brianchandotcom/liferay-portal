@@ -18,16 +18,7 @@
 
 <%
 PortletURL portletURL = workflowTaskDisplayContext.getPortletURL();
-
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, workflowTaskDisplayContext.getTabs1()), currentURL);
 %>
-
-<liferay-ui:breadcrumb
-	showCurrentGroup="<%= false %>"
-	showGuestGroup="<%= false %>"
-	showLayout="<%= false %>"
-	showParentGroups="<%= false %>"
-/>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

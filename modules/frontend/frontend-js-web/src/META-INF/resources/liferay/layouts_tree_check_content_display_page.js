@@ -99,6 +99,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-component', 'plugin']
 	}
 );

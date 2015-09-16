@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portlet.asset.model.AssetTag;
 
 import java.sql.Connection;
@@ -35,9 +36,10 @@ public class UpgradeAssetTagsResourcePermission extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"delete from ResourcePermission where name = ?");
+				"delete from ResourcePermission where name = ? and scope = ?");
 
 			ps.setString(1, AssetTag.class.getName());
+			ps.setInt(2, ResourceConstants.SCOPE_INDIVIDUAL);
 
 			ps.execute();
 		}

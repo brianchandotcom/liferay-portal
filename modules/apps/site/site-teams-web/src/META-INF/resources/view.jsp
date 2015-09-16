@@ -136,9 +136,7 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 						colspan="<%= 2 %>"
 					>
 						<h5>
-							<a href="<%= rowURL.toString() %>">
-								<%= team.getName() %>
-							</a>
+							<aui:a href="<%= (rowURL != null) ? rowURL.toString() : null %>"><%= team.getName() %></aui:a>
 						</h5>
 
 						<h6 class="text-default">

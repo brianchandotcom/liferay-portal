@@ -106,6 +106,23 @@ public class TeamServiceWrapper implements TeamService,
 		return _teamService.hasUserTeam(userId, teamId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Team> search(long groupId,
+		java.lang.String name, java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portal.model.Team> obc) {
+		return _teamService.search(groupId, name, description, params, start,
+			end, obc);
+	}
+
+	@Override
+	public int searchCount(long groupId, java.lang.String name,
+		java.lang.String description,
+		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params) {
+		return _teamService.searchCount(groupId, name, description, params);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

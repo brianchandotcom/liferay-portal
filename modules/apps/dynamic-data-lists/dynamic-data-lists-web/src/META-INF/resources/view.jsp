@@ -66,11 +66,11 @@ String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
 					rowURL = null;
 				}
 				%>
-				
+
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
 						<% request.setAttribute("rowURL", rowURL); %>
-						
+
 						<liferay-ui:search-container-column-image
 							src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 							toggleRowChecker="<%= true %>"
@@ -84,26 +84,28 @@ String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
 						<liferay-ui:search-container-column-jsp
 							path="/record_set_action.jsp"
 						/>
-						
+
 					</c:when>
 					<c:when test='<%= displayStyle.equals("icon") %>'>
-					
-						<% row.setCssClass("col-md-3 col-sm-4 col-xs-12");%>
+
+						<% row.setCssClass("col-md-3 col-sm-4 col-xs-12"); %>
 
 						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+
 							<%
 								User userDisplay = UserLocalServiceUtil.fetchUserById(recordSet.getUserId());
 							%>
+
 							<liferay-frontend:card
 								actionJsp="/record_set_action.jsp"
 								actionJspServletContext="<%= application %>"
 								cssClass="entry-display-style"
 								header='<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), HtmlUtil.escape(recordSet.getUserName())}, false) %>'
-								imageUrl='<%=themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+								imageUrl='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 								resultRow="<%= row %>"
+								showCheckbox= "<%= false %>"
 								smallImageCSSClass="user-icon user-icon-lg"
 								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
-								showCheckbox= "<%= false %>" 
 								title="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
 								url="<%= rowURL != null ? rowURL.toString() : null %>"
 							/>

@@ -37,68 +37,73 @@ String version = ParamUtil.getString(request, "version", DDLRecordConstants.VERS
 DDLRecordVersion recordVersion = record.getRecordVersion(version);
 
 DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
+
+String title = LanguageUtil.format(request, "view-x", ddmStructure.getName(locale), false);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(title);
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= LanguageUtil.format(request, "view-x", ddmStructure.getName(locale), false) %>'
-/>
+<div class="container-fluid-1280">
+	<c:if test="<%= recordVersion != null %>">
+		<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />
 
-<c:if test="<%= recordVersion != null %>">
-	<aui:model-context bean="<%= recordVersion %>" model="<%= DDLRecordVersion.class %>" />
+		<aui:workflow-status model="<%= DDLRecord.class %>" status="<%= recordVersion.getStatus() %>" version="<%= recordVersion.getVersion() %>" />
+	</c:if>
 
-	<aui:workflow-status model="<%= DDLRecord.class %>" status="<%= recordVersion.getStatus() %>" version="<%= recordVersion.getVersion() %>" />
-</c:if>
+	<aui:fieldset>
 
-<aui:fieldset>
+		<%
+		DDMFormValues ddmFormValues = null;
 
-	<%
-	DDMFormValues ddmFormValues = null;
+		if (recordVersion != null) {
+			ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
+		}
 
-	if (recordVersion != null) {
-		ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
-	}
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+		long classPK = ddmStructure.getPrimaryKey();
 
-	long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-	long classPK = ddmStructure.getPrimaryKey();
+		if (formDDMTemplateId > 0) {
+			classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
+			classPK = formDDMTemplateId;
+		}
+		%>
 
-	if (formDDMTemplateId > 0) {
-		classNameId = PortalUtil.getClassNameId(DDMTemplate.class);
-		classPK = formDDMTemplateId;
-	}
-	%>
+		<liferay-ddm:html
+			classNameId="<%= classNameId %>"
+			classPK="<%= classPK %>"
+			ddmFormValues="<%= ddmFormValues %>"
+			readOnly="<%= true %>"
+			requestedLocale="<%= locale %>"
+		/>
 
-	<liferay-ddm:html
-		classNameId="<%= classNameId %>"
-		classPK="<%= classPK %>"
-		ddmFormValues="<%= ddmFormValues %>"
-		readOnly="<%= true %>"
-		requestedLocale="<%= locale %>"
-	/>
+		<%
+		boolean pending = false;
 
-	<%
-	boolean pending = false;
+		if (recordVersion != null) {
+			pending = recordVersion.isPending();
+		}
+		%>
 
-	if (recordVersion != null) {
-		pending = recordVersion.isPending();
-	}
-	%>
+		<aui:button-row>
+			<c:if test="<%= editable && DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.UPDATE) && version.equals(latestRecordVersion.getVersion()) %>">
+				<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
+					<portlet:param name="mvcPath" value="/edit_record.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
+					<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
+				</portlet:renderURL>
 
-	<aui:button-row>
-		<c:if test="<%= editable && DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.UPDATE) && version.equals(latestRecordVersion.getVersion()) %>">
-			<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-				<portlet:param name="mvcPath" value="/edit_record.jsp" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
-				<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
-			</portlet:renderURL>
+				<aui:button href="<%= editRecordURL %>" name="edit" value="edit" />
+			</c:if>
 
-			<aui:button href="<%= editRecordURL %>" name="edit" value="edit" />
-		</c:if>
+			<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+		</aui:button-row>
+	</aui:fieldset>
 
-		<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
-	</aui:button-row>
-</aui:fieldset>
+</div>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();

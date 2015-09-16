@@ -32,14 +32,16 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/view_record_history.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
+
+String title = LanguageUtil.format(request, "x-history", ddmStructure.getName(locale), false);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(title);
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	title='<%= LanguageUtil.format(request, "x-history", ddmStructure.getName(locale), false) %>'
-/>
-
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 
 	<%
 	SearchContainer searchContainer = new SearchContainer(renderRequest, portletURL, new ArrayList(), null);

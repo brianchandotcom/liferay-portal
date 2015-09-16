@@ -22,6 +22,17 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/view.jsp");
 
 String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
+
+RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+OrderByComparator<DDLRecordSet> orderByComparator = DDLPortletUtil.getDDLRecordSetOrderByComparator(orderByCol, orderByType);
+
+recordSetSearch.setOrderByCol(orderByCol);
+recordSetSearch.setOrderByComparator(orderByComparator);
+recordSetSearch.setOrderByType(orderByType);
 %>
 
 <liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>" />
@@ -33,7 +44,7 @@ String displayStyle = ddlDisplayContext.getDDLRecordSetDisplayStyle();
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 		<liferay-ui:search-container
-			searchContainer="<%= new RecordSetSearch(renderRequest, portletURL) %>"
+			searchContainer="<%= recordSetSearch %>"
 		>
 
 			<%

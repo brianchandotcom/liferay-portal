@@ -61,8 +61,9 @@ public class DDLPortletUtil {
 		return displayStyle;
 	}
 
-	public static OrderByComparator<DDLRecordSet> getRecordSetOrderByComparator(
-		String orderByCol, String orderByType) {
+	public static OrderByComparator<DDLRecordSet>
+		getDDLRecordSetOrderByComparator(
+			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
 

@@ -214,6 +214,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MAXIMUM_FAILURE</td>
+	<td>//div[label[contains(.,'Maximum Failure')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MIDDLE_NAME</td>
 	<td>//div[label[contains(.,'Middle Name')]]/input[@type='text']</td>
 	<td></td>

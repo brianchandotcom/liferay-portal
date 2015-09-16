@@ -64,11 +64,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MAXIMUM_FAILURE</td>
-	<td>//div[label[contains(.,'Maximum Failure')]]/select</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MINIMUM_AGE</td>
 	<td>//div[label[contains(.,'Minimum Age')]]/select</td>
 	<td></td>

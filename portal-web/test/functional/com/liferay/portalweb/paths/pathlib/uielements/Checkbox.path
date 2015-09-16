@@ -61,7 +61,7 @@
 <tr>
 	<td>DISPLAY_IMMEDIATELY</td>
 	<td>//input[contains(@name,'displayImmediately')]</td>
-	<td></td>	
+	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_COMMENTS</td>
@@ -116,6 +116,11 @@
 <tr>
 	<td>ENABLE_GOOGLE_AUTHENTICATION</td>
 	<td>//input[contains(@id,'google-auth')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_LOCKOUT</td>
+	<td>//label[contains(.,'Enable Lockout')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -196,11 +201,6 @@
 <tr>
 	<td>HISTORY_ENABLED</td>
 	<td>//label[contains(.,'History Enabled')]/input[@type='checkbox']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LOCKOUT_ENABLED</td>
-	<td>//label[contains(.,'Lockout Enabled')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

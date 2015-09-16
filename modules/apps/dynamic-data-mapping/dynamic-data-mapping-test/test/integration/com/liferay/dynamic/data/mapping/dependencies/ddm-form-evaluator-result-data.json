@@ -1,52 +1,52 @@
 {
 	"fields":[
 		{
+			"errorMessage": "This field is never valid.",
 			"instanceId": "gfkm",
 			"name": "Text",
 			"nestedFields": [
 				{
+					"errorMessage": "",
 					"instanceId": "lroa",
 					"name": "Integer",
 					"nestedFields": [],
 					"valid": true,
-					"validationMessage": "",
 					"visible": false
 				}
 			],
 			"valid": false,
-			"validationMessage": "This field is never valid",
 			"visible": true
 		},
 		{
+			"errorMessage": "This field is never valid.",
 			"instanceId": "xucq",
 			"name": "Text",
 			"nestedFields": [
 				{
+					"errorMessage": "Integer must be equal to zero.",
 					"instanceId": "uvwn",
 					"name": "Integer",
 					"nestedFields": [],
 					"valid": false,
-					"validationMessage": "Integer must be equals to zero",
 					"visible": false
 				},
 				{
+					"errorMessage": "Integer must be equal to zero.",
 					"instanceId": "lsky",
 					"name": "Integer",
 					"nestedFields": [],
 					"valid": false,
-					"validationMessage": "Integer must be equals to zero",
 					"visible": false
 				}
 			],
 			"valid": false,
-			"validationMessage": "This field is never valid",
 			"visible": true
 		},
 		{
+			"errorMessage": "",
 			"instanceId": "mnst",
 			"name": "Boolean",
 			"nestedFields": [],
-			"validationMessage": "",
 			"valid": true,
 			"visible": false
 		}

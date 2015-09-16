@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.registry;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
@@ -35,44 +36,66 @@ public interface DefaultDDMFormFieldTypeSettings
 			"%not-indexable", "%indexable-keyword", "%indexable-text"
 		},
 		optionValues = {StringPool.BLANK, "keyword", "text"},
-		type = "select"
+		type = "select", visibilityExpression = "false"
 	)
 	public String indexType();
 
-	@DDMFormField(label = "%label", type = "text")
+	@DDMFormField(
+		label = "%label",
+		properties = {"setting.category=basic", "setting.weight=4"},
+		type = "text"
+	)
 	public LocalizedValue label();
 
-	@DDMFormField(label = "%localizable")
+	@DDMFormField(label = "%localizable", visibilityExpression = "false")
 	public boolean localizable();
 
-	@DDMFormField(label = "%predefined-value", type = "text")
+	@DDMFormField(
+		label = "%predefined-value",
+		properties = {"setting.category=advanced", "setting.weight=0"},
+		type = "text"
+	)
 	public LocalizedValue predefinedValue();
 
-	@DDMFormField(label = "%read-only")
+	@DDMFormField(label = "%read-only", visibilityExpression = "false")
 	public boolean readOnly();
 
-	@DDMFormField(label = "%repeatable")
+	@DDMFormField(
+		label = "%repeatable",
+		properties = {"setting.category=advanced", "setting.weight=0"}
+	)
 	public boolean repeatable();
 
-	@DDMFormField(label = "%required")
+	@DDMFormField(
+		label = "%required",
+		properties = {"setting.category=basic", "setting.weight=1"}
+	)
 	public boolean required();
 
-	@DDMFormField(label = "%show-label")
+	@DDMFormField(
+		label = "%show-label",
+		properties = {"setting.category=advanced", "setting.weight=0"}
+	)
 	public boolean showLabel();
 
-	@DDMFormField(label = "%tip", type = "text")
+	@DDMFormField(
+		label = "%tip",
+		properties = {"setting.category=basic", "setting.weight=2"},
+		type = "text"
+	)
 	public LocalizedValue tip();
 
 	@DDMFormField(
-		label = "%validation", type = "validation",
-		visibilityExpression = "true"
+		dataType = "ddm-validation", label = "%validation",
+		properties = {"setting.category=advanced", "setting.weight=0"},
+		type = "validation"
 	)
-	public String validationExpression();
+	public DDMFormFieldValidation validation();
 
-	@DDMFormField(label = "%validation-message", visibilityExpression = "true")
-	public String validationMessage();
-
-	@DDMFormField(label = "%visibility", visibilityExpression = "true")
+	@DDMFormField(
+		label = "%visibility",
+		properties = {"setting.category=advanced", "setting.weight=0"}
+	)
 	public String visibilityExpression();
 
 }

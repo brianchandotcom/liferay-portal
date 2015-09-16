@@ -10,28 +10,7 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				var controls = instance._getPaginationControlsNode();
-
-				if (controls) {
-					instance._eventHandlers.push(
-						controls.delegate('click', A.bind('_onClickPaginationControls', instance), 'button')
-					);
-
-					instance._syncPaginationControlsUI();
-				}
-
-				var container = instance.get('container');
-
-				var wizardNode = container.one('.lfr-ddm-form-wizard');
-
-				if (wizardNode) {
-					instance.wizard = new Renderer.Wizard(
-						{
-							boundingBox: wizardNode,
-							srcNode: wizardNode.one('> ul')
-						}
-					).render();
-				}
+				instance.after('render', instance._afterPaginatedFormRender);
 			},
 
 			getCurrentPage: function() {
@@ -60,6 +39,14 @@ AUI.add(
 				);
 
 				return firstField;
+			},
+
+			getPageNode: function(page) {
+				var instance = this;
+
+				var pages = instance._getPaginationNodes();
+
+				return pages.item(page - 1);
 			},
 
 			getPagesTotal: function() {
@@ -105,6 +92,45 @@ AUI.add(
 				pagination.prev();
 			},
 
+			showPage: function(page) {
+				var instance = this;
+
+				var pagination = instance.getPagination();
+
+				pagination.setState(
+					{
+						page: page
+					}
+				);
+			},
+
+			_afterPaginatedFormRender: function() {
+				var instance = this;
+
+				var controls = instance._getPaginationControlsNode();
+
+				if (controls) {
+					instance._eventHandlers.push(
+						controls.delegate('click', A.bind('_onClickPaginationControls', instance), 'button')
+					);
+
+					instance._syncPaginationControlsUI();
+				}
+
+				var container = instance.get('container');
+
+				var wizardNode = container.one('.lfr-ddm-form-wizard');
+
+				if (container.inDoc() && wizardNode) {
+					instance.wizard = new Renderer.Wizard(
+						{
+							boundingBox: wizardNode,
+							srcNode: wizardNode.one('> ul')
+						}
+					).render();
+				}
+			},
+
 			_afterPaginationPageChange: function(event) {
 				var instance = this;
 
@@ -113,8 +139,12 @@ AUI.add(
 				pages.item(event.prevVal - 1).removeClass('active');
 				pages.item(event.newVal - 1).addClass('active');
 
-				instance._syncPaginationControlsUI();
-				instance._syncWizardUI(event.prevVal, event.newVal);
+				var controls = instance._getPaginationControlsNode();
+
+				if (controls) {
+					instance._syncPaginationControlsUI();
+					instance._syncWizardUI(event.prevVal, event.newVal);
+				}
 
 				var firstField = instance.getFirstPageField();
 
@@ -126,9 +156,7 @@ AUI.add(
 			_getCurrentPageNode: function() {
 				var instance = this;
 
-				var pages = instance._getPaginationNodes();
-
-				return pages.item(instance.getCurrentPage() - 1);
+				return instance.getPageNode(instance.getCurrentPage());
 			},
 
 			_getPaginationControlsNode: function() {

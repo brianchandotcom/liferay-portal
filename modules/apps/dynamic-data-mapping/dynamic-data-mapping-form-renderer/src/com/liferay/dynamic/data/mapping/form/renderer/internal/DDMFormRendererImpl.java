@@ -19,12 +19,14 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.dynamic.data.mapping.io.DDMFormFieldTypesJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormLayoutJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.portal.expression.ExpressionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -37,6 +39,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Writer;
 
@@ -80,7 +83,9 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		throws DDMFormRenderingException {
 
 		try {
-			return doRender(ddmForm, ddmFormRenderingContext);
+			return doRender(
+				ddmForm, _ddm.getDefaultDDMFormLayout(ddmForm),
+				ddmFormRenderingContext);
 		}
 		catch (DDMFormRenderingException ddmfre) {
 			throw ddmfre;
@@ -105,54 +110,14 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
 
-		String paginationMode = ddmFormLayout.getPaginationMode();
+		populateCommonContext(
+			template, ddmForm, ddmFormLayout, ddmFormRenderingContext);
 
-		if (paginationMode.equals("tabs")) {
-			template.put(TemplateConstants.NAMESPACE, "ddm.tabbed_form");
-		}
-		else {
-			template.put(TemplateConstants.NAMESPACE, "ddm.paginated_form");
-		}
+		String html = render(template, getTemplateNamespace(ddmFormLayout));
 
-		populateCommonContext(template, ddmForm, ddmFormRenderingContext);
+		String javaScript = render(template, "ddm.form_renderer_js");
 
-		List<Object> pages = getPages(
-			ddmForm, ddmFormLayout, ddmFormRenderingContext);
-
-		template.put("pages", pages);
-
-		return render(template);
-	}
-
-	protected String doRender(
-			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
-		throws PortalException {
-
-		Template template = TemplateManagerUtil.getTemplate(
-			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
-
-		template.put(TemplateConstants.NAMESPACE, "ddm.simple_form");
-
-		populateCommonContext(template, ddmForm, ddmFormRenderingContext);
-
-		List<String> fields = getFields(ddmForm, ddmFormRenderingContext);
-
-		template.put("fields", fields);
-
-		return render(template);
-	}
-
-	protected List<String> getFields(
-			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException {
-
-		Map<String, String> renderedDDMFormFieldsMap =
-			getRenderedDDMFormFieldsMap(ddmForm, ddmFormRenderingContext);
-
-		DDMFormTransformer ddmFormTransformer = new DDMFormTransformer(
-			ddmForm, renderedDDMFormFieldsMap);
-
-		return ddmFormTransformer.getFields();
+		return html.concat(javaScript);
 	}
 
 	protected List<Object> getPages(
@@ -186,6 +151,19 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		return ddmFormRendererHelper.getRenderedDDMFormFieldsMap();
 	}
 
+	protected String getTemplateNamespace(DDMFormLayout ddmFormLayout) {
+		String paginationMode = ddmFormLayout.getPaginationMode();
+
+		if (Validator.equals(paginationMode, DDMFormLayout.SINGLE_PAGE_MODE)) {
+			return "ddm.simple_form";
+		}
+		else if (Validator.equals(paginationMode, DDMFormLayout.TABBED_MODE)) {
+			return "ddm.tabbed_form";
+		}
+
+		return "ddm.paginated_form";
+	}
+
 	protected TemplateResource getTemplateResource(String templatePath) {
 		Class<?> clazz = getClass();
 
@@ -197,7 +175,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	}
 
 	protected void populateCommonContext(
-			Template template, DDMForm ddmForm,
+			Template template, DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
 		throws PortalException {
 
@@ -212,7 +190,15 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 			"fieldTypes",
 			DDMFormFieldTypesJSONSerializerUtil.serialize(ddmFormFieldTypes));
 		template.put(
+			"layout", DDMFormLayoutJSONSerializerUtil.serialize(ddmFormLayout));
+
+		List<Object> pages = getPages(
+			ddmForm, ddmFormLayout, ddmFormRenderingContext);
+
+		template.put("pages", pages);
+		template.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
+		template.put("templateNamespace", getTemplateNamespace(ddmFormLayout));
 
 		DDMFormValues ddmFormValues =
 			ddmFormRenderingContext.getDDMFormValues();
@@ -227,12 +213,21 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		}
 	}
 
-	protected String render(Template template) throws TemplateException {
+	protected String render(Template template, String namespace)
+		throws TemplateException {
+
 		Writer writer = new UnsyncStringWriter();
+
+		template.put(TemplateConstants.NAMESPACE, namespace);
 
 		template.processTemplate(writer);
 
 		return writer.toString();
+	}
+
+	@Reference
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
 	}
 
 	@Reference
@@ -247,6 +242,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		_expressionFactory = expressionFactory;
 	}
 
+	private DDM _ddm;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private ExpressionFactory _expressionFactory;
 	private TemplateResource _templateResource;

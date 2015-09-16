@@ -63,6 +63,8 @@ AUI.add(
 								sortableHandle: '.ddm-options-row'
 							}
 						).render();
+
+						return instance;
 					},
 
 					serializeAutoFields: function() {

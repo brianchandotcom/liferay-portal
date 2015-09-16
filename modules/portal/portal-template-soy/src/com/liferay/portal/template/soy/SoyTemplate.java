@@ -48,14 +48,12 @@ public class SoyTemplate extends AbstractTemplate {
 	public SoyTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
-		Builder builder, TemplateContextHelper templateContextHelper,
-		boolean privileged) {
+		TemplateContextHelper templateContextHelper, boolean privileged) {
 
 		super(
 			templateResource, errorTemplateResource, context,
 			templateContextHelper, TemplateConstants.LANG_TYPE_SOY, 0);
 
-		_builder = builder;
 		_privileged = privileged;
 	}
 
@@ -69,11 +67,13 @@ public class SoyTemplate extends AbstractTemplate {
 				new TemplatePrivilegedExceptionAction(templateResource));
 		}
 		else {
+			Builder builder = new SoyFileSet.Builder();
+
 			String templateContent = getTemplateContent(templateResource);
 
-			_builder.add(templateContent, templateResource.getTemplateId());
+			builder.add(templateContent, templateResource.getTemplateId());
 
-			soyFileSet = _builder.build();
+			soyFileSet = builder.build();
 		}
 
 		return soyFileSet;
@@ -160,7 +160,6 @@ public class SoyTemplate extends AbstractTemplate {
 		}
 	}
 
-	private final Builder _builder;
 	private final boolean _privileged;
 
 	private class TemplatePrivilegedExceptionAction
@@ -174,11 +173,13 @@ public class SoyTemplate extends AbstractTemplate {
 
 		@Override
 		public SoyFileSet run() throws Exception {
+			Builder builder = new SoyFileSet.Builder();
+
 			String templateContent = getTemplateContent(_templateResource);
 
-			_builder.add(templateContent, _templateResource.getTemplateId());
+			builder.add(templateContent, _templateResource.getTemplateId());
 
-			return _builder.build();
+			return builder.build();
 		}
 
 		private final TemplateResource _templateResource;

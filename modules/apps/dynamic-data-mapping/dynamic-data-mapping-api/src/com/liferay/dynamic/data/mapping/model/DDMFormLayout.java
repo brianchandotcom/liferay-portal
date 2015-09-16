@@ -25,6 +25,12 @@ import java.util.Locale;
  */
 public class DDMFormLayout implements Serializable {
 
+	public static final String SINGLE_PAGE_MODE = "single-page";
+
+	public static final String TABBED_MODE = "tabbed";
+
+	public static final String WIZARD_MODE = "wizard";
+
 	public DDMFormLayout() {
 	}
 

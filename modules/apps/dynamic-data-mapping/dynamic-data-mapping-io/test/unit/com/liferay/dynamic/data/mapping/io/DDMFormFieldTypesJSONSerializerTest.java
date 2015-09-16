@@ -16,10 +16,12 @@ package com.liferay.dynamic.data.mapping.io;
 
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormFieldTypesJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.io.internal.DDMFormJSONSerializerImpl;
+import com.liferay.dynamic.data.mapping.io.internal.DDMFormLayoutJSONSerializerImpl;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeSettings;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -141,20 +143,42 @@ public class DDMFormFieldTypesJSONSerializerTest extends BaseDDMTestCase {
 	}
 
 	protected void setUpDDMFormFieldTypesJSONSerializer() throws Exception {
+
+		// DDMFormFieldType Services Tracker
+
 		Field field = ReflectionUtil.getDeclaredField(
-			DDMFormFieldTypesJSONSerializerImpl.class,
-			"_ddmFormJSONSerializer");
-
-		field.set(
-			_ddmFormFieldTypesJSONSerializer, new DDMFormJSONSerializerImpl());
-
-		field = ReflectionUtil.getDeclaredField(
 			DDMFormFieldTypesJSONSerializerImpl.class,
 			"_ddmFormFieldTypeServicesTracker");
 
 		field.set(
 			_ddmFormFieldTypesJSONSerializer,
 			getMockedDDMFormFieldTypeServicesTracker());
+
+		// DDMForm JSON Serializer
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormFieldTypesJSONSerializerImpl.class,
+			"_ddmFormJSONSerializer");
+
+		field.set(
+			_ddmFormFieldTypesJSONSerializer, new DDMFormJSONSerializerImpl());
+
+		// DDMFormLayout JSON Serializer
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormFieldTypesJSONSerializerImpl.class,
+			"_ddmFormLayoutJSONSerializer");
+
+		field.set(
+			_ddmFormFieldTypesJSONSerializer,
+			new DDMFormLayoutJSONSerializerImpl());
+
+		// JSON factory
+
+		field = ReflectionUtil.getDeclaredField(
+			DDMFormFieldTypesJSONSerializerImpl.class, "_jsonFactory");
+
+		field.set(_ddmFormFieldTypesJSONSerializer, new JSONFactoryImpl());
 	}
 
 	protected void whenDDMFormFieldRendererGetTemplateNamespace(

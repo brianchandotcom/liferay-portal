@@ -35,6 +35,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>URL</td>
+	<td>//ul[contains(@class,'nav-pills')]/li/a[contains(.,'URL')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAVIGATE_BACK</td>
 	<td>//button[contains(@class,'close') and not(contains(@hidden,'hidden'))]//span[contains(@class,'glyphicon')]</td>
 	<td></td>
@@ -45,6 +50,11 @@
 	<td></td>
 </tr>
 <!--SELECT_FILE-->
+<tr>
+	<td>SELECT_FILE_BLOG_IMAGES</td>
+	<td>//div[contains(@id,'ItemSelectorPortlet') and not(@class='hide')]//a[@title='${key_imageFileName}']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>SELECT_FILE_UPLOAD_IMAGE</td>
 	<td>//div[@id='itemSelectorUploadContainer']//label[contains(.,'Select File')]</td>
@@ -96,6 +106,22 @@
 <tr>
 	<td>SELECT_IMAGE_PREVIEW</td>
 	<td>//div[@class='image-viewer-base-image-list']//img</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--URL-->
+<tr>
+	<td>URL_LABEL</td>
+	<td>//label[contains(.,'Image URL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>URL_IMAGE_SOURCE</td>
+	<td>//div[@class='image-viewer-base-image-list']//img[contains(@src,'${imageSourceURL}')]</td>
 	<td></td>
 </tr>
 </tbody>

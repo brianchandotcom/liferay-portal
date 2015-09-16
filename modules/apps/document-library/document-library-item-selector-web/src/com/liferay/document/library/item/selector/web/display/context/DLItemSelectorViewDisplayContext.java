@@ -18,8 +18,6 @@ import com.liferay.document.library.item.selector.web.DLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -79,14 +77,6 @@ public class DLItemSelectorViewDisplayContext<T extends ItemSelectorCriterion> {
 			"selectedTab", String.valueOf(getTitle(request.getLocale())));
 
 		return portletURL;
-	}
-
-	public long getRepositoryId(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return ParamUtil.getLong(
-			request, "repositoryId", themeDisplay.getScopeGroupId());
 	}
 
 	public String getTitle(Locale locale) {

@@ -181,6 +181,10 @@ TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTe
 </c:if>
 
 <aui:script sandbox="<%= true %>">
+	var Util = Liferay.Util;
+
+	var form = $(document.<portlet:namespace />fm);
+
 	$('#<portlet:namespace />deleteSelectedTeams').on(
 		'click',
 		function() {

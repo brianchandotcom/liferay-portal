@@ -3,10 +3,6 @@
 
 <routes>
 	<route>
-		<pattern>/{instanceId}/rss</pattern>
-		<ignored-parameter name="p_p_cacheability" />
-	</route>
-	<route>
 		<pattern>/{instanceId}/{type}/{urlTitle:(?!id)[^/]+}/{groupId:\d+}</pattern>
 		<ignored-parameter name="assetEntryId" />
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
@@ -36,5 +32,9 @@
 	<route>
 		<pattern>/{instanceId}/{type}/id/{assetEntryId:\d+}/{p_p_state}</pattern>
 		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{instanceId}/rss</pattern>
+		<ignored-parameter name="p_p_cacheability" />
 	</route>
 </routes>

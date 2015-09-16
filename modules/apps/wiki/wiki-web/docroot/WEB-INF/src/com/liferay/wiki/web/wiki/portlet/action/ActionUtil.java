@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Layout;
@@ -268,20 +267,6 @@ public class ActionUtil {
 
 		try {
 			page = WikiPageServiceUtil.getPage(nodeId, title, version);
-
-			if (page.isDraft()) {
-				StringBundler sb = new StringBundler(7);
-
-				sb.append("{nodeId=");
-				sb.append(nodeId);
-				sb.append(", title=");
-				sb.append(title);
-				sb.append(", version=");
-				sb.append(version);
-				sb.append("}");
-
-				throw new NoSuchPageException(sb.toString());
-			}
 		}
 		catch (NoSuchPageException nspe) {
 			if (title.equals(wikiGroupServiceConfiguration.frontPageName()) &&

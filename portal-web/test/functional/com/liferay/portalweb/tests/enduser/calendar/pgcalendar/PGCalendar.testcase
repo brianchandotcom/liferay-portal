@@ -3547,7 +3547,7 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewApprovedRSVP">
-			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="rsvp" value="Yes" />
 		</execute>
 

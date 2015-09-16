@@ -522,10 +522,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				blogsEntryAttachmentFileEntryHelper.
 					getTempBlogsEntryAttachmentFileEntries(content);
 
-			Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-				themeDisplay.getUserId(), entry.getGroupId());
-
 			if (!tempBlogsEntryAttachments.isEmpty()) {
+				Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+					themeDisplay.getUserId(), entry.getGroupId());
+
 				blogsEntryAttachmentFileEntryReferences =
 					blogsEntryAttachmentFileEntryHelper.
 						addBlogsEntryAttachmentFileEntries(
@@ -575,10 +575,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				blogsEntryAttachmentHelper.
 					getTempBlogsEntryAttachmentFileEntries(content);
 
-			Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-				themeDisplay.getUserId(), entry.getGroupId());
-
 			if (!tempBlogsEntryAttachmentFileEntries.isEmpty()) {
+				Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+					themeDisplay.getUserId(), entry.getGroupId());
+
 				blogsEntryAttachmentFileEntryReferences =
 					blogsEntryAttachmentHelper.
 						addBlogsEntryAttachmentFileEntries(

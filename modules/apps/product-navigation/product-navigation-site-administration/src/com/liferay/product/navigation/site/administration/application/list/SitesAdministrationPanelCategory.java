@@ -34,12 +34,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.SITES_ALL_SITES,
+		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL,
 		"service.ranking:Integer=100"
 	},
 	service = PanelCategory.class
 )
-public class AdministrationPanelCategory extends BasePanelCategory {
+public class SitesAdministrationPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
@@ -53,7 +53,7 @@ public class AdministrationPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "administration");
+		return LanguageUtil.get(locale, "sites");
 	}
 
 	@Override

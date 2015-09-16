@@ -54,12 +54,10 @@ public interface PanelCategoryKeys {
 	public static final String SITES = PortletCategoryKeys.SITES;
 
 	public static final String SITES_ADMINISTRATION_MY_SITES =
-		"sites_administration.my_sites";
+		"sites_administration_my_sites";
 
 	public static final String SITES_ADMINISTRATION_SITES =
-		"sites_administration.sites";
-
-	public static final String SITES_ALL_SITES = "sites_all_sites";
+		"sites_administration_sites";
 
 	public static final String USER = "user";
 

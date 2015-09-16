@@ -438,7 +438,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57781" name="DisplayTagUsageStatistics" priority="4">
+	<command name="DisplayTagUsageStatistics" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
@@ -973,7 +973,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57781" name="ViewTagCloudIncrease" priority="5">
+	<command name="ViewTagCloudIncrease" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>

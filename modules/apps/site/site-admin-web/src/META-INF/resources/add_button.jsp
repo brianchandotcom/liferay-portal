@@ -48,14 +48,7 @@
 				%>
 
 				<c:if test="<%= hasAddLayoutSetPrototypePermission %>">
-
-					<%
-					String sitesListView = ParamUtil.get(request, "sitesListView", SiteConstants.LIST_VIEW_TREE);
-					%>
-
-					<portlet:renderURL var="viewSitesURL">
-						<portlet:param name="sitesListView" value="<%= sitesListView %>" />
-					</portlet:renderURL>
+					<portlet:renderURL var="viewSitesURL" />
 
 					<%
 					Map<String, String> anchorData = new HashMap<>();

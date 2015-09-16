@@ -17,22 +17,15 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
-
 long groupId = ParamUtil.getLong(request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
-String sitesListView = ParamUtil.get(request, "sitesListView", SiteConstants.LIST_VIEW_TREE);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("groupId", String.valueOf(groupId));
-portletURL.setParameter("sitesListView", sitesListView);
 
 String portletURLString = portletURL.toString();
 
 PortletURL searchURL = renderResponse.createRenderURL();
-
-searchURL.setParameter("sitesListView", SiteConstants.LIST_VIEW_FLAT_SITES);
-searchURL.setParameter("toolbarItem", "view-all-sites");
 
 pageContext.setAttribute("searchURL", searchURL);
 
@@ -56,7 +49,6 @@ String searchURLString = searchURL.toString();
 <aui:form action="<%= searchURLString %>" method="get" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 	<aui:input name="deleteGroupIds" type="hidden" />
-	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 
 	<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
 
@@ -75,8 +67,12 @@ String searchURLString = searchURL.toString();
 	<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteGroupThatHasChild.class %>" message="you-cannot-delete-sites-that-have-subsites" />
 	<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteSystemGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-it-is-a-required-system-site" />
 
+	<%
+	String keywords = ParamUtil.getString(request, "keywords");
+	%>
+
 	<c:choose>
-		<c:when test="<%= sitesListView.equals(SiteConstants.LIST_VIEW_FLAT_SITES) %>">
+		<c:when test="<%= Validator.isNotNull(keywords) %>">
 			<%@ include file="/search_results.jspf" %>
 		</c:when>
 		<c:otherwise>

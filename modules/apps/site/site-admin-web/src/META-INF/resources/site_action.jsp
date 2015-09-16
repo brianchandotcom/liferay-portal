@@ -78,7 +78,6 @@ if (row == null) {
 			<liferay-portlet:renderURL var="viewSubsitesURL">
 				<portlet:param name="backURL" value="<%= StringPool.SLASH + currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:icon

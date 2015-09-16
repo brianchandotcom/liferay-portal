@@ -4136,12 +4136,26 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	<target name="prepare-portal-ext-properties">
 		<prepare-fix-pack-bundle />
 
+		<delete file="portal-impl/src/portal-ext.properties" />
+
+		<if>
+			<and>
+				<isset property="test.base.dir.name" />
+				<available file="${test.base.dir.name}/portal.properties" />
+			</and>
+			<then>
+				<copy file="${test.base.dir.name}/portal.properties" tofile="portal-impl/src/portal-ext.properties" />
+			</then>
+		</if>
+
 		<get-database-property property.name="database.driver" />
 		<get-database-property property.name="database.password" />
 		<get-database-property property.name="database.url" />
 		<get-database-property property.name="database.username" />
 
-		<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}
+		<echo file="portal-impl/src/portal-ext.properties" append="true">
+
+liferay.home=${liferay.home}
 
 plugin.notifications.enabled=false
 

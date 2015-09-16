@@ -266,10 +266,8 @@
 
 		<execute macro="Page#gotoMyProfile" />
 
-		<execute macro="Page#gotoAdmin">
-			<var name="portletCategoryKey" value="ADMIN_SITE_ADMINISTRATION_PAGES" />
-			<var name="portletCategoryName" value="Pages" />
-			<var name="portletName" value="Site Pages" />
+		<execute macro="ProductMenu#gotoSitesPages">
+			<var name="portlet" value="Site Pages" />
 		</execute>
 
 		<execute macro="SitePageNavigator#gotoAddPage" />

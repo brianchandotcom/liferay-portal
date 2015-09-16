@@ -17,6 +17,7 @@ package com.liferay.document.library.item.selector.web;
 import com.liferay.document.library.item.selector.web.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -56,6 +57,11 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 	@Override
 	public boolean isShowSearch() {
+		return true;
+	}
+
+	@Override
+	public boolean isVisible(ThemeDisplay themeDisplay) {
 		return true;
 	}
 

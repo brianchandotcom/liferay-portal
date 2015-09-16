@@ -21,6 +21,7 @@ import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion
 import com.liferay.item.selector.url.web.display.context.ItemSelectorURLViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -71,6 +72,11 @@ public class ItemSelectorURLView
 	@Override
 	public boolean isShowSearch() {
 		return false;
+	}
+
+	@Override
+	public boolean isVisible(ThemeDisplay themeDisplay) {
+		return true;
 	}
 
 	@Override

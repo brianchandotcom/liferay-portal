@@ -31,9 +31,9 @@ if (row != null) {
 	userGroupUser = GetterUtil.getBoolean(row.getParameter("userGroupUser"));
 }
 else {
-	group = (Group)request.getAttribute("view_tree.jspf-site");
+	group = (Group)request.getAttribute("view_entries.jspf-site");
 
-	GroupSearchTerms searchTerms = (GroupSearchTerms)request.getAttribute("view_tree.jspf-searchTerms");
+	GroupSearchTerms searchTerms = (GroupSearchTerms)request.getAttribute("view_entries.jspf-searchTerms");
 
 	List<String> organizationNames = SitesUtil.getOrganizationNames(group, user);
 

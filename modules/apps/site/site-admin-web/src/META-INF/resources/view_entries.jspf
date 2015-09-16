@@ -201,7 +201,7 @@ if (group != null) {
 			<%
 			request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-			request.setAttribute("view_tree.jspf-site", group);
+			request.setAttribute("view_entries.jspf-site", group);
 			%>
 
 			<liferay-util:include page="/site_action.jsp" servletContext="<%= application %>" />

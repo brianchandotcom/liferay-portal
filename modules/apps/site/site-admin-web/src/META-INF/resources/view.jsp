@@ -77,10 +77,10 @@ String searchURLString = searchURL.toString();
 
 	<c:choose>
 		<c:when test="<%= sitesListView.equals(SiteConstants.LIST_VIEW_FLAT_SITES) %>">
-			<%@ include file="/view_flat_sites.jspf" %>
+			<%@ include file="/search_results.jspf" %>
 		</c:when>
 		<c:otherwise>
-			<%@ include file="/view_tree.jspf" %>
+			<%@ include file="/view_entries.jspf" %>
 		</c:otherwise>
 	</c:choose>
 </aui:form>

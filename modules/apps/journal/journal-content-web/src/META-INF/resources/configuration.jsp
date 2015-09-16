@@ -165,6 +165,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 
 			selectWebContentURL.setParameter("groupId", String.valueOf(scopeGroupId));
 			selectWebContentURL.setParameter("selectedGroupIds", StringUtil.merge(PortalUtil.getSharedContentSiteGroupIds(company.getCompanyId(), scopeGroupId, user.getUserId())));
+			selectWebContentURL.setParameter("showNonIndexable", String.valueOf(Boolean.TRUE));
 			selectWebContentURL.setParameter("refererAssetEntryId", "[$ARTICLE_REFERER_ASSET_ENTRY_ID$]");
 			selectWebContentURL.setParameter("typeSelection", JournalArticle.class.getName());
 			selectWebContentURL.setParameter("eventName", "selectContent");

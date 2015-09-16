@@ -68,14 +68,14 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 			{ "mvccVersion", Types.BIGINT },
 			{ "portletItemId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "portletId", Types.VARCHAR },
-			{ "classNameId", Types.BIGINT }
+			{ "classNameId", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -83,7 +83,6 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -91,9 +90,10 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PortletItem (mvccVersion LONG default 0,portletItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,portletId VARCHAR(200) null,classNameId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table PortletItem (mvccVersion LONG default 0,portletItemId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,portletId VARCHAR(200) null,classNameId LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table PortletItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY portletItem.portletItemId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PortletItem.portletItemId ASC";
@@ -157,7 +157,6 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("portletItemId", getPortletItemId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -165,6 +164,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		attributes.put("name", getName());
 		attributes.put("portletId", getPortletId());
 		attributes.put("classNameId", getClassNameId());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -190,12 +190,6 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -239,6 +233,12 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		if (classNameId != null) {
 			setClassNameId(classNameId);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -281,16 +281,6 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -452,6 +442,16 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		return _originalClassNameId;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -486,7 +486,6 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		portletItemImpl.setMvccVersion(getMvccVersion());
 		portletItemImpl.setPortletItemId(getPortletItemId());
 		portletItemImpl.setGroupId(getGroupId());
-		portletItemImpl.setCompanyId(getCompanyId());
 		portletItemImpl.setUserId(getUserId());
 		portletItemImpl.setUserName(getUserName());
 		portletItemImpl.setCreateDate(getCreateDate());
@@ -494,6 +493,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		portletItemImpl.setName(getName());
 		portletItemImpl.setPortletId(getPortletId());
 		portletItemImpl.setClassNameId(getClassNameId());
+		portletItemImpl.setCompanyId(getCompanyId());
 
 		portletItemImpl.resetOriginalValues();
 
@@ -583,8 +583,6 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 		portletItemCacheModel.groupId = getGroupId();
 
-		portletItemCacheModel.companyId = getCompanyId();
-
 		portletItemCacheModel.userId = getUserId();
 
 		portletItemCacheModel.userName = getUserName();
@@ -631,6 +629,8 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 		portletItemCacheModel.classNameId = getClassNameId();
 
+		portletItemCacheModel.companyId = getCompanyId();
+
 		return portletItemCacheModel;
 	}
 
@@ -644,8 +644,6 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		sb.append(getPortletItemId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -660,6 +658,8 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		sb.append(getPortletId());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -684,10 +684,6 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -717,6 +713,10 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
 		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -732,7 +732,6 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -745,6 +744,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
+	private long _companyId;
 	private long _columnBitmask;
 	private PortletItem _escapedModel;
 }

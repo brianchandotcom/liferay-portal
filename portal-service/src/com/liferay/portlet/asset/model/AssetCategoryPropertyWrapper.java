@@ -55,7 +55,6 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("categoryPropertyId", getCategoryPropertyId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -63,6 +62,7 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 		attributes.put("categoryId", getCategoryId());
 		attributes.put("key", getKey());
 		attributes.put("value", getValue());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -73,12 +73,6 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 
 		if (categoryPropertyId != null) {
 			setCategoryPropertyId(categoryPropertyId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -121,6 +115,12 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 
 		if (value != null) {
 			setValue(value);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

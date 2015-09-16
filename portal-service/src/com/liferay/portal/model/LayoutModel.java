@@ -43,7 +43,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCModel,
-	StagedGroupedModel {
+	PartitionableModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -126,22 +126,6 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this layout.
-	 *
-	 * @return the company ID of this layout
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this layout.
-	 *
-	 * @param companyId the company ID of this layout
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this layout.
@@ -1007,6 +991,22 @@ public interface LayoutModel extends BaseModel<Layout>, LocalizedModel, MVCCMode
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this layout.
+	 *
+	 * @return the company ID of this layout
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this layout.
+	 *
+	 * @param companyId the company ID of this layout
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -75,7 +75,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "addressId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -92,7 +91,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 			{ "typeId", Types.BIGINT },
 			{ "mailing", Types.BOOLEAN },
 			{ "primary_", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -100,7 +100,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("addressId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -118,9 +117,10 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		TABLE_COLUMNS_MAP.put("mailing", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Address (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,addressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,typeId LONG,mailing BOOLEAN,primary_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Address (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,addressId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,regionId LONG,countryId LONG,typeId LONG,mailing BOOLEAN,primary_ BOOLEAN,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Address";
 	public static final String ORDER_BY_JPQL = " ORDER BY address.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Address.createDate ASC";
@@ -161,7 +161,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setAddressId(soapModel.getAddressId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -179,6 +178,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		model.setMailing(soapModel.getMailing());
 		model.setPrimary(soapModel.getPrimary());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -246,7 +246,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("addressId", getAddressId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -264,6 +263,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		attributes.put("mailing", getMailing());
 		attributes.put("primary", getPrimary());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -289,12 +289,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 		if (addressId != null) {
 			setAddressId(addressId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -398,6 +392,12 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -444,29 +444,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	@Override
 	public void setAddressId(long addressId) {
 		_addressId = addressId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -800,6 +777,29 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -840,7 +840,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		addressImpl.setMvccVersion(getMvccVersion());
 		addressImpl.setUuid(getUuid());
 		addressImpl.setAddressId(getAddressId());
-		addressImpl.setCompanyId(getCompanyId());
 		addressImpl.setUserId(getUserId());
 		addressImpl.setUserName(getUserName());
 		addressImpl.setCreateDate(getCreateDate());
@@ -858,6 +857,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		addressImpl.setMailing(getMailing());
 		addressImpl.setPrimary(getPrimary());
 		addressImpl.setLastPublishDate(getLastPublishDate());
+		addressImpl.setCompanyId(getCompanyId());
 
 		addressImpl.resetOriginalValues();
 
@@ -920,10 +920,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 		addressModelImpl._originalUuid = addressModelImpl._uuid;
 
-		addressModelImpl._originalCompanyId = addressModelImpl._companyId;
-
-		addressModelImpl._setOriginalCompanyId = false;
-
 		addressModelImpl._originalUserId = addressModelImpl._userId;
 
 		addressModelImpl._setOriginalUserId = false;
@@ -946,6 +942,10 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 		addressModelImpl._setOriginalPrimary = false;
 
+		addressModelImpl._originalCompanyId = addressModelImpl._companyId;
+
+		addressModelImpl._setOriginalCompanyId = false;
+
 		addressModelImpl._columnBitmask = 0;
 	}
 
@@ -964,8 +964,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		}
 
 		addressCacheModel.addressId = getAddressId();
-
-		addressCacheModel.companyId = getCompanyId();
 
 		addressCacheModel.userId = getUserId();
 
@@ -1058,6 +1056,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 			addressCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		addressCacheModel.companyId = getCompanyId();
+
 		return addressCacheModel;
 	}
 
@@ -1071,8 +1071,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		sb.append(getUuid());
 		sb.append(", addressId=");
 		sb.append(getAddressId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1107,6 +1105,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		sb.append(getPrimary());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1131,10 +1131,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		sb.append(
 			"<column><column-name>addressId</column-name><column-value><![CDATA[");
 		sb.append(getAddressId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1204,6 +1200,10 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1218,9 +1218,6 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	private String _uuid;
 	private String _originalUuid;
 	private long _addressId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -1249,6 +1246,9 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Address _escapedModel;
 }

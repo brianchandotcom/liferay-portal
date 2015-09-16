@@ -79,7 +79,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "entryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -103,14 +102,14 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 			{ "height", Types.INTEGER },
 			{ "width", Types.INTEGER },
 			{ "priority", Types.DOUBLE },
-			{ "viewCount", Types.INTEGER }
+			{ "viewCount", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -135,9 +134,10 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		TABLE_COLUMNS_MAP.put("width", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("viewCount", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetEntry (entryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,classTypeId LONG,listable BOOLEAN,visible BOOLEAN,startDate DATE null,endDate DATE null,publishDate DATE null,expirationDate DATE null,mimeType VARCHAR(75) null,title STRING null,description TEXT null,summary TEXT null,url STRING null,layoutUuid VARCHAR(75) null,height INTEGER,width INTEGER,priority DOUBLE,viewCount INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table AssetEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetEntry.entryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetEntry.entryId ASC";
@@ -179,7 +179,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -204,6 +203,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		model.setWidth(soapModel.getWidth());
 		model.setPriority(soapModel.getPriority());
 		model.setViewCount(soapModel.getViewCount());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -231,21 +231,23 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_NAME = "AssetEntries_AssetCategories";
 	public static final Object[][] MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_COLUMNS =
 		{
+			{ "companyId", Types.BIGINT },
 			{ "categoryId", Types.BIGINT },
 			{ "entryId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_SQL_CREATE =
-		"create table AssetEntries_AssetCategories (categoryId LONG not null,entryId LONG not null,primary key (categoryId, entryId))";
+		"create table AssetEntries_AssetCategories (categoryId LONG not null,entryId LONG not null,companyId LONG not null,primary key (categoryId, entryId, companyId))";
 	public static final boolean FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETCATEGORIES =
 		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.AssetEntries_AssetCategories"),
 			true);
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME = "AssetEntries_AssetTags";
 	public static final Object[][] MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "entryId", Types.BIGINT },
 			{ "tagId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_SQL_CREATE = "create table AssetEntries_AssetTags (entryId LONG not null,tagId LONG not null,primary key (entryId, tagId))";
+	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_SQL_CREATE = "create table AssetEntries_AssetTags (entryId LONG not null,tagId LONG not null,companyId LONG not null,primary key (entryId, tagId, companyId))";
 	public static final boolean FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETTAGS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.AssetEntries_AssetTags"),
 			true);
@@ -291,7 +293,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 		attributes.put("entryId", getEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -316,6 +317,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		attributes.put("width", getWidth());
 		attributes.put("priority", getPriority());
 		attributes.put("viewCount", getViewCount());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -335,12 +337,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -486,6 +482,12 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		if (viewCount != null) {
 			setViewCount(viewCount);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -520,29 +522,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1231,6 +1210,29 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_viewCount = viewCount;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -1366,7 +1368,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 		assetEntryImpl.setEntryId(getEntryId());
 		assetEntryImpl.setGroupId(getGroupId());
-		assetEntryImpl.setCompanyId(getCompanyId());
 		assetEntryImpl.setUserId(getUserId());
 		assetEntryImpl.setUserName(getUserName());
 		assetEntryImpl.setCreateDate(getCreateDate());
@@ -1391,6 +1392,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		assetEntryImpl.setWidth(getWidth());
 		assetEntryImpl.setPriority(getPriority());
 		assetEntryImpl.setViewCount(getViewCount());
+		assetEntryImpl.setCompanyId(getCompanyId());
 
 		assetEntryImpl.resetOriginalValues();
 
@@ -1457,10 +1459,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 		assetEntryModelImpl._setOriginalGroupId = false;
 
-		assetEntryModelImpl._originalCompanyId = assetEntryModelImpl._companyId;
-
-		assetEntryModelImpl._setOriginalCompanyId = false;
-
 		assetEntryModelImpl._setModifiedDate = false;
 
 		assetEntryModelImpl._originalClassNameId = assetEntryModelImpl._classNameId;
@@ -1483,6 +1481,10 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 		assetEntryModelImpl._originalLayoutUuid = assetEntryModelImpl._layoutUuid;
 
+		assetEntryModelImpl._originalCompanyId = assetEntryModelImpl._companyId;
+
+		assetEntryModelImpl._setOriginalCompanyId = false;
+
 		assetEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -1493,8 +1495,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		assetEntryCacheModel.entryId = getEntryId();
 
 		assetEntryCacheModel.groupId = getGroupId();
-
-		assetEntryCacheModel.companyId = getCompanyId();
 
 		assetEntryCacheModel.userId = getUserId();
 
@@ -1634,6 +1634,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 		assetEntryCacheModel.viewCount = getViewCount();
 
+		assetEntryCacheModel.companyId = getCompanyId();
+
 		return assetEntryCacheModel;
 	}
 
@@ -1645,8 +1647,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		sb.append(getEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1695,6 +1695,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		sb.append(getPriority());
 		sb.append(", viewCount=");
 		sb.append(getViewCount());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1715,10 +1717,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1816,6 +1814,10 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 			"<column><column-name>viewCount</column-name><column-value><![CDATA[");
 		sb.append(getViewCount());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1830,9 +1832,6 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1871,6 +1870,9 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	private int _width;
 	private double _priority;
 	private int _viewCount;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private AssetEntry _escapedModel;
 }

@@ -40,6 +40,7 @@ public class JournalArticleImageSoap implements Serializable {
 		soapModel.setElName(model.getElName());
 		soapModel.setLanguageId(model.getLanguageId());
 		soapModel.setTempImage(model.getTempImage());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -163,6 +164,14 @@ public class JournalArticleImageSoap implements Serializable {
 		_tempImage = tempImage;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _articleImageId;
 	private long _groupId;
 	private String _articleId;
@@ -171,4 +180,5 @@ public class JournalArticleImageSoap implements Serializable {
 	private String _elName;
 	private String _languageId;
 	private boolean _tempImage;
+	private long _companyId;
 }

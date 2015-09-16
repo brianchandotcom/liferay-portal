@@ -3,7 +3,6 @@ create table JournalArticle (
 	id_ LONG not null primary key,
 	resourcePrimKey LONG,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -32,7 +31,8 @@ create table JournalArticle (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	companyId LONG
 );
 
 create table JournalArticleImage (
@@ -43,31 +43,32 @@ create table JournalArticleImage (
 	elInstanceId VARCHAR(75) null,
 	elName VARCHAR(75) null,
 	languageId VARCHAR(75) null,
-	tempImage BOOLEAN
+	tempImage BOOLEAN,
+	companyId LONG
 );
 
 create table JournalArticleResource (
 	uuid_ VARCHAR(75) null,
 	resourcePrimKey LONG not null primary key,
 	groupId LONG,
-	articleId VARCHAR(75) null
+	articleId VARCHAR(75) null,
+	companyId LONG
 );
 
 create table JournalContentSearch (
 	contentSearchId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	privateLayout BOOLEAN,
 	layoutId LONG,
 	portletId VARCHAR(200) null,
-	articleId VARCHAR(75) null
+	articleId VARCHAR(75) null,
+	companyId LONG
 );
 
 create table JournalFeed (
 	uuid_ VARCHAR(75) null,
 	id_ LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -86,14 +87,14 @@ create table JournalFeed (
 	contentField VARCHAR(75) null,
 	feedFormat VARCHAR(75) null,
 	feedVersion DOUBLE,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	companyId LONG
 );
 
 create table JournalFolder (
 	uuid_ VARCHAR(75) null,
 	folderId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -107,5 +108,6 @@ create table JournalFolder (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	companyId LONG
 );

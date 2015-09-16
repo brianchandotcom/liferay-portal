@@ -70,7 +70,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 			{ "ownerType", Types.INTEGER },
 			{ "plid", Types.BIGINT },
 			{ "portletId", Types.VARCHAR },
-			{ "preferences", Types.CLOB }
+			{ "preferences", Types.CLOB },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -82,9 +83,10 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("preferences", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PortletPreferences (mvccVersion LONG default 0,portletPreferencesId LONG not null primary key,ownerId LONG,ownerType INTEGER,plid LONG,portletId VARCHAR(200) null,preferences TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table PortletPreferences (mvccVersion LONG default 0,portletPreferencesId LONG not null primary key,ownerId LONG,ownerType INTEGER,plid LONG,portletId VARCHAR(200) null,preferences TEXT null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table PortletPreferences";
 	public static final String ORDER_BY_JPQL = " ORDER BY portletPreferences.portletPreferencesId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PortletPreferences.portletPreferencesId ASC";
@@ -126,6 +128,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		model.setPlid(soapModel.getPlid());
 		model.setPortletId(soapModel.getPortletId());
 		model.setPreferences(soapModel.getPreferences());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -198,6 +201,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		attributes.put("plid", getPlid());
 		attributes.put("portletId", getPortletId());
 		attributes.put("preferences", getPreferences());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -247,6 +251,12 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 		if (preferences != null) {
 			setPreferences(preferences);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -383,13 +393,24 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		_preferences = preferences;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			PortletPreferences.class.getName(), getPrimaryKey());
 	}
 
@@ -421,6 +442,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		portletPreferencesImpl.setPlid(getPlid());
 		portletPreferencesImpl.setPortletId(getPortletId());
 		portletPreferencesImpl.setPreferences(getPreferences());
+		portletPreferencesImpl.setCompanyId(getCompanyId());
 
 		portletPreferencesImpl.resetOriginalValues();
 
@@ -530,12 +552,14 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 			portletPreferencesCacheModel.preferences = null;
 		}
 
+		portletPreferencesCacheModel.companyId = getCompanyId();
+
 		return portletPreferencesCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -551,6 +575,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		sb.append(getPortletId());
 		sb.append(", preferences=");
 		sb.append(getPreferences());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -558,7 +584,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.PortletPreferences");
@@ -592,6 +618,10 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 			"<column><column-name>preferences</column-name><column-value><![CDATA[");
 		sb.append(getPreferences());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -616,6 +646,7 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 	private String _portletId;
 	private String _originalPortletId;
 	private String _preferences;
+	private long _companyId;
 	private long _columnBitmask;
 	private PortletPreferences _escapedModel;
 }

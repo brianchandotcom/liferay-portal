@@ -72,8 +72,6 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 		sb.append(frameworkVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -90,6 +88,8 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 		sb.append(active);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -101,7 +101,6 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 
 		scFrameworkVersionImpl.setFrameworkVersionId(frameworkVersionId);
 		scFrameworkVersionImpl.setGroupId(groupId);
-		scFrameworkVersionImpl.setCompanyId(companyId);
 		scFrameworkVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -141,6 +140,7 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 
 		scFrameworkVersionImpl.setActive(active);
 		scFrameworkVersionImpl.setPriority(priority);
+		scFrameworkVersionImpl.setCompanyId(companyId);
 
 		scFrameworkVersionImpl.resetOriginalValues();
 
@@ -151,7 +151,6 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		frameworkVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -160,6 +159,7 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 		url = objectInput.readUTF();
 		active = objectInput.readBoolean();
 		priority = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -167,7 +167,6 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 		throws IOException {
 		objectOutput.writeLong(frameworkVersionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -196,11 +195,11 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 
 		objectOutput.writeBoolean(active);
 		objectOutput.writeInt(priority);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long frameworkVersionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -209,4 +208,5 @@ public class SCFrameworkVersionCacheModel implements CacheModel<SCFrameworkVersi
 	public String url;
 	public boolean active;
 	public int priority;
+	public long companyId;
 }

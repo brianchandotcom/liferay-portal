@@ -54,12 +54,12 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("webDavPropsId", getWebDavPropsId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("props", getProps());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -76,12 +76,6 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 
 		if (webDavPropsId != null) {
 			setWebDavPropsId(webDavPropsId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -112,6 +106,12 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 
 		if (props != null) {
 			setProps(props);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

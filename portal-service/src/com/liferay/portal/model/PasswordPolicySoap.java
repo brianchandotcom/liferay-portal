@@ -37,7 +37,6 @@ public class PasswordPolicySoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setPasswordPolicyId(model.getPasswordPolicyId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -70,6 +69,7 @@ public class PasswordPolicySoap implements Serializable {
 		soapModel.setResetFailureCount(model.getResetFailureCount());
 		soapModel.setResetTicketMaxAge(model.getResetTicketMaxAge());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -144,14 +144,6 @@ public class PasswordPolicySoap implements Serializable {
 
 	public void setPasswordPolicyId(long passwordPolicyId) {
 		_passwordPolicyId = passwordPolicyId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -446,10 +438,17 @@ public class PasswordPolicySoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _passwordPolicyId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -482,4 +481,5 @@ public class PasswordPolicySoap implements Serializable {
 	private long _resetFailureCount;
 	private long _resetTicketMaxAge;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

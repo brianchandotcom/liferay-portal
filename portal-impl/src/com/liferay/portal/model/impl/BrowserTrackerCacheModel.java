@@ -76,7 +76,7 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -86,6 +86,8 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 		sb.append(userId);
 		sb.append(", browserKey=");
 		sb.append(browserKey);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -99,6 +101,7 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 		browserTrackerImpl.setBrowserTrackerId(browserTrackerId);
 		browserTrackerImpl.setUserId(userId);
 		browserTrackerImpl.setBrowserKey(browserKey);
+		browserTrackerImpl.setCompanyId(companyId);
 
 		browserTrackerImpl.resetOriginalValues();
 
@@ -111,6 +114,7 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 		browserTrackerId = objectInput.readLong();
 		userId = objectInput.readLong();
 		browserKey = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -120,10 +124,12 @@ public class BrowserTrackerCacheModel implements CacheModel<BrowserTracker>,
 		objectOutput.writeLong(browserTrackerId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(browserKey);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long browserTrackerId;
 	public long userId;
 	public long browserKey;
+	public long companyId;
 }

@@ -64,7 +64,7 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -78,6 +78,8 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 		sb.append(fileEntryId);
 		sb.append(", fileVersionId=");
 		sb.append(fileVersionId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -99,6 +101,7 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 		dlFileEntryMetadataImpl.setDDMStructureId(DDMStructureId);
 		dlFileEntryMetadataImpl.setFileEntryId(fileEntryId);
 		dlFileEntryMetadataImpl.setFileVersionId(fileVersionId);
+		dlFileEntryMetadataImpl.setCompanyId(companyId);
 
 		dlFileEntryMetadataImpl.resetOriginalValues();
 
@@ -113,6 +116,7 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 		DDMStructureId = objectInput.readLong();
 		fileEntryId = objectInput.readLong();
 		fileVersionId = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -130,6 +134,7 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 		objectOutput.writeLong(DDMStructureId);
 		objectOutput.writeLong(fileEntryId);
 		objectOutput.writeLong(fileVersionId);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
@@ -138,4 +143,5 @@ public class DLFileEntryMetadataCacheModel implements CacheModel<DLFileEntryMeta
 	public long DDMStructureId;
 	public long fileEntryId;
 	public long fileVersionId;
+	public long companyId;
 }

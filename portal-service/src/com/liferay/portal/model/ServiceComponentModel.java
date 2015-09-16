@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface ServiceComponentModel extends BaseModel<ServiceComponent>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -146,6 +146,22 @@ public interface ServiceComponentModel extends BaseModel<ServiceComponent>,
 	 * @param data the data of this service component
 	 */
 	public void setData(String data);
+
+	/**
+	 * Returns the company ID of this service component.
+	 *
+	 * @return the company ID of this service component
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this service component.
+	 *
+	 * @param companyId the company ID of this service component
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

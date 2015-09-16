@@ -68,7 +68,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 			{ "mvccVersion", Types.BIGINT },
 			{ "workflowDefinitionLinkId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -77,7 +76,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 			{ "classPK", Types.BIGINT },
 			{ "typePK", Types.BIGINT },
 			{ "workflowDefinitionName", Types.VARCHAR },
-			{ "workflowDefinitionVersion", Types.INTEGER }
+			{ "workflowDefinitionVersion", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -85,7 +85,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("workflowDefinitionLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -95,9 +94,10 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		TABLE_COLUMNS_MAP.put("typePK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("workflowDefinitionName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("workflowDefinitionVersion", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WorkflowDefinitionLink (mvccVersion LONG default 0,workflowDefinitionLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,typePK LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table WorkflowDefinitionLink (mvccVersion LONG default 0,workflowDefinitionLinkId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,typePK LONG,workflowDefinitionName VARCHAR(75) null,workflowDefinitionVersion INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table WorkflowDefinitionLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY workflowDefinitionLink.workflowDefinitionName ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WorkflowDefinitionLink.workflowDefinitionName ASC";
@@ -163,7 +163,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("workflowDefinitionLinkId", getWorkflowDefinitionLinkId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -174,6 +173,7 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		attributes.put("workflowDefinitionName", getWorkflowDefinitionName());
 		attributes.put("workflowDefinitionVersion",
 			getWorkflowDefinitionVersion());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -200,12 +200,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -263,6 +257,12 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		if (workflowDefinitionVersion != null) {
 			setWorkflowDefinitionVersion(workflowDefinitionVersion);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -305,28 +305,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -529,6 +507,28 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		return _originalWorkflowDefinitionVersion;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -563,7 +563,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		workflowDefinitionLinkImpl.setMvccVersion(getMvccVersion());
 		workflowDefinitionLinkImpl.setWorkflowDefinitionLinkId(getWorkflowDefinitionLinkId());
 		workflowDefinitionLinkImpl.setGroupId(getGroupId());
-		workflowDefinitionLinkImpl.setCompanyId(getCompanyId());
 		workflowDefinitionLinkImpl.setUserId(getUserId());
 		workflowDefinitionLinkImpl.setUserName(getUserName());
 		workflowDefinitionLinkImpl.setCreateDate(getCreateDate());
@@ -573,6 +572,7 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		workflowDefinitionLinkImpl.setTypePK(getTypePK());
 		workflowDefinitionLinkImpl.setWorkflowDefinitionName(getWorkflowDefinitionName());
 		workflowDefinitionLinkImpl.setWorkflowDefinitionVersion(getWorkflowDefinitionVersion());
+		workflowDefinitionLinkImpl.setCompanyId(getCompanyId());
 
 		workflowDefinitionLinkImpl.resetOriginalValues();
 
@@ -638,10 +638,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 		workflowDefinitionLinkModelImpl._setOriginalGroupId = false;
 
-		workflowDefinitionLinkModelImpl._originalCompanyId = workflowDefinitionLinkModelImpl._companyId;
-
-		workflowDefinitionLinkModelImpl._setOriginalCompanyId = false;
-
 		workflowDefinitionLinkModelImpl._setModifiedDate = false;
 
 		workflowDefinitionLinkModelImpl._originalClassNameId = workflowDefinitionLinkModelImpl._classNameId;
@@ -662,6 +658,10 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 		workflowDefinitionLinkModelImpl._setOriginalWorkflowDefinitionVersion = false;
 
+		workflowDefinitionLinkModelImpl._originalCompanyId = workflowDefinitionLinkModelImpl._companyId;
+
+		workflowDefinitionLinkModelImpl._setOriginalCompanyId = false;
+
 		workflowDefinitionLinkModelImpl._columnBitmask = 0;
 	}
 
@@ -674,8 +674,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		workflowDefinitionLinkCacheModel.workflowDefinitionLinkId = getWorkflowDefinitionLinkId();
 
 		workflowDefinitionLinkCacheModel.groupId = getGroupId();
-
-		workflowDefinitionLinkCacheModel.companyId = getCompanyId();
 
 		workflowDefinitionLinkCacheModel.userId = getUserId();
 
@@ -722,6 +720,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 
 		workflowDefinitionLinkCacheModel.workflowDefinitionVersion = getWorkflowDefinitionVersion();
 
+		workflowDefinitionLinkCacheModel.companyId = getCompanyId();
+
 		return workflowDefinitionLinkCacheModel;
 	}
 
@@ -735,8 +735,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		sb.append(getWorkflowDefinitionLinkId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -755,6 +753,8 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		sb.append(getWorkflowDefinitionName());
 		sb.append(", workflowDefinitionVersion=");
 		sb.append(getWorkflowDefinitionVersion());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -779,10 +779,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -820,6 +816,10 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 			"<column><column-name>workflowDefinitionVersion</column-name><column-value><![CDATA[");
 		sb.append(getWorkflowDefinitionVersion());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -835,9 +835,6 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -857,6 +854,9 @@ public class WorkflowDefinitionLinkModelImpl extends BaseModelImpl<WorkflowDefin
 	private int _workflowDefinitionVersion;
 	private int _originalWorkflowDefinitionVersion;
 	private boolean _setOriginalWorkflowDefinitionVersion;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private WorkflowDefinitionLink _escapedModel;
 }

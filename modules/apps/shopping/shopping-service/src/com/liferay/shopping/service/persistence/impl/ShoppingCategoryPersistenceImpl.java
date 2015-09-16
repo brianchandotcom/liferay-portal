@@ -16,6 +16,7 @@ package com.liferay.shopping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -36,6 +37,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.shopping.exception.NoSuchCategoryException;
 import com.liferay.shopping.model.ShoppingCategory;
@@ -2249,6 +2251,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		shoppingCategory.setNew(true);
 		shoppingCategory.setPrimaryKey(categoryId);
 
+		shoppingCategory.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return shoppingCategory;
 	}
 
@@ -2460,7 +2464,6 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 		shoppingCategoryImpl.setCategoryId(shoppingCategory.getCategoryId());
 		shoppingCategoryImpl.setGroupId(shoppingCategory.getGroupId());
-		shoppingCategoryImpl.setCompanyId(shoppingCategory.getCompanyId());
 		shoppingCategoryImpl.setUserId(shoppingCategory.getUserId());
 		shoppingCategoryImpl.setUserName(shoppingCategory.getUserName());
 		shoppingCategoryImpl.setCreateDate(shoppingCategory.getCreateDate());
@@ -2468,6 +2471,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		shoppingCategoryImpl.setParentCategoryId(shoppingCategory.getParentCategoryId());
 		shoppingCategoryImpl.setName(shoppingCategory.getName());
 		shoppingCategoryImpl.setDescription(shoppingCategory.getDescription());
+		shoppingCategoryImpl.setCompanyId(shoppingCategory.getCompanyId());
 
 		return shoppingCategoryImpl;
 	}
@@ -2845,6 +2849,8 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_SHOPPINGCATEGORY = "SELECT shoppingCategory FROM ShoppingCategory shoppingCategory";
 	private static final String _SQL_SELECT_SHOPPINGCATEGORY_WHERE_PKS_IN = "SELECT shoppingCategory FROM ShoppingCategory shoppingCategory WHERE categoryId IN (";
 	private static final String _SQL_SELECT_SHOPPINGCATEGORY_WHERE = "SELECT shoppingCategory FROM ShoppingCategory shoppingCategory WHERE ";

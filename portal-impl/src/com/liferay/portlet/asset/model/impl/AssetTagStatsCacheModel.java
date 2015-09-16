@@ -63,7 +63,7 @@ public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{tagStatsId=");
 		sb.append(tagStatsId);
@@ -73,6 +73,8 @@ public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats>,
 		sb.append(classNameId);
 		sb.append(", assetCount=");
 		sb.append(assetCount);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -86,6 +88,7 @@ public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats>,
 		assetTagStatsImpl.setTagId(tagId);
 		assetTagStatsImpl.setClassNameId(classNameId);
 		assetTagStatsImpl.setAssetCount(assetCount);
+		assetTagStatsImpl.setCompanyId(companyId);
 
 		assetTagStatsImpl.resetOriginalValues();
 
@@ -98,6 +101,7 @@ public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats>,
 		tagId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		assetCount = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -107,10 +111,12 @@ public class AssetTagStatsCacheModel implements CacheModel<AssetTagStats>,
 		objectOutput.writeLong(tagId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeInt(assetCount);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long tagStatsId;
 	public long tagId;
 	public long classNameId;
 	public int assetCount;
+	public long companyId;
 }

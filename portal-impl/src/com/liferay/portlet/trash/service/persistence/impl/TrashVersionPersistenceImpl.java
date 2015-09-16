@@ -16,6 +16,7 @@ package com.liferay.portlet.trash.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.portlet.trash.NoSuchVersionException;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -1450,6 +1452,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		trashVersion.setNew(true);
 		trashVersion.setPrimaryKey(versionId);
 
+		trashVersion.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return trashVersion;
 	}
 
@@ -1640,6 +1644,7 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		trashVersionImpl.setClassPK(trashVersion.getClassPK());
 		trashVersionImpl.setTypeSettings(trashVersion.getTypeSettings());
 		trashVersionImpl.setStatus(trashVersion.getStatus());
+		trashVersionImpl.setCompanyId(trashVersion.getCompanyId());
 
 		return trashVersionImpl;
 	}
@@ -2015,6 +2020,8 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_TRASHVERSION = "SELECT trashVersion FROM TrashVersion trashVersion";
 	private static final String _SQL_SELECT_TRASHVERSION_WHERE_PKS_IN = "SELECT trashVersion FROM TrashVersion trashVersion WHERE versionId IN (";
 	private static final String _SQL_SELECT_TRASHVERSION_WHERE = "SELECT trashVersion FROM TrashVersion trashVersion WHERE ";

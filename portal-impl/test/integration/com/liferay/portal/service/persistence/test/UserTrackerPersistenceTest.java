@@ -116,8 +116,6 @@ public class UserTrackerPersistenceTest {
 
 		newUserTracker.setMvccVersion(RandomTestUtil.nextLong());
 
-		newUserTracker.setCompanyId(RandomTestUtil.nextLong());
-
 		newUserTracker.setUserId(RandomTestUtil.nextLong());
 
 		newUserTracker.setModifiedDate(RandomTestUtil.nextDate());
@@ -130,6 +128,8 @@ public class UserTrackerPersistenceTest {
 
 		newUserTracker.setUserAgent(RandomTestUtil.randomString());
 
+		newUserTracker.setCompanyId(RandomTestUtil.nextLong());
+
 		_userTrackers.add(_persistence.update(newUserTracker));
 
 		UserTracker existingUserTracker = _persistence.findByPrimaryKey(newUserTracker.getPrimaryKey());
@@ -138,8 +138,6 @@ public class UserTrackerPersistenceTest {
 			newUserTracker.getMvccVersion());
 		Assert.assertEquals(existingUserTracker.getUserTrackerId(),
 			newUserTracker.getUserTrackerId());
-		Assert.assertEquals(existingUserTracker.getCompanyId(),
-			newUserTracker.getCompanyId());
 		Assert.assertEquals(existingUserTracker.getUserId(),
 			newUserTracker.getUserId());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -153,13 +151,8 @@ public class UserTrackerPersistenceTest {
 			newUserTracker.getRemoteHost());
 		Assert.assertEquals(existingUserTracker.getUserAgent(),
 			newUserTracker.getUserAgent());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingUserTracker.getCompanyId(),
+			newUserTracker.getCompanyId());
 	}
 
 	@Test
@@ -176,6 +169,13 @@ public class UserTrackerPersistenceTest {
 		_persistence.countBySessionId(StringPool.NULL);
 
 		_persistence.countBySessionId((String)null);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -202,9 +202,9 @@ public class UserTrackerPersistenceTest {
 
 	protected OrderByComparator<UserTracker> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserTracker",
-			"mvccVersion", true, "userTrackerId", true, "companyId", true,
-			"userId", true, "modifiedDate", true, "sessionId", true,
-			"remoteAddr", true, "remoteHost", true, "userAgent", true);
+			"mvccVersion", true, "userTrackerId", true, "userId", true,
+			"modifiedDate", true, "sessionId", true, "remoteAddr", true,
+			"remoteHost", true, "userAgent", true, "companyId", true);
 	}
 
 	@Test
@@ -410,8 +410,6 @@ public class UserTrackerPersistenceTest {
 
 		userTracker.setMvccVersion(RandomTestUtil.nextLong());
 
-		userTracker.setCompanyId(RandomTestUtil.nextLong());
-
 		userTracker.setUserId(RandomTestUtil.nextLong());
 
 		userTracker.setModifiedDate(RandomTestUtil.nextDate());
@@ -423,6 +421,8 @@ public class UserTrackerPersistenceTest {
 		userTracker.setRemoteHost(RandomTestUtil.randomString());
 
 		userTracker.setUserAgent(RandomTestUtil.randomString());
+
+		userTracker.setCompanyId(RandomTestUtil.nextLong());
 
 		_userTrackers.add(_persistence.update(userTracker));
 

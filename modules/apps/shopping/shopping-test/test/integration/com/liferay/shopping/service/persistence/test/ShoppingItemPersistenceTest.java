@@ -125,8 +125,6 @@ public class ShoppingItemPersistenceTest {
 
 		newShoppingItem.setGroupId(RandomTestUtil.nextLong());
 
-		newShoppingItem.setCompanyId(RandomTestUtil.nextLong());
-
 		newShoppingItem.setUserId(RandomTestUtil.nextLong());
 
 		newShoppingItem.setUserName(RandomTestUtil.randomString());
@@ -189,6 +187,8 @@ public class ShoppingItemPersistenceTest {
 
 		newShoppingItem.setLargeImageURL(RandomTestUtil.randomString());
 
+		newShoppingItem.setCompanyId(RandomTestUtil.nextLong());
+
 		_shoppingItems.add(_persistence.update(newShoppingItem));
 
 		ShoppingItem existingShoppingItem = _persistence.findByPrimaryKey(newShoppingItem.getPrimaryKey());
@@ -197,8 +197,6 @@ public class ShoppingItemPersistenceTest {
 			newShoppingItem.getItemId());
 		Assert.assertEquals(existingShoppingItem.getGroupId(),
 			newShoppingItem.getGroupId());
-		Assert.assertEquals(existingShoppingItem.getCompanyId(),
-			newShoppingItem.getCompanyId());
 		Assert.assertEquals(existingShoppingItem.getUserId(),
 			newShoppingItem.getUserId());
 		Assert.assertEquals(existingShoppingItem.getUserName(),
@@ -263,6 +261,8 @@ public class ShoppingItemPersistenceTest {
 			newShoppingItem.getLargeImageId());
 		Assert.assertEquals(existingShoppingItem.getLargeImageURL(),
 			newShoppingItem.getLargeImageURL());
+		Assert.assertEquals(existingShoppingItem.getCompanyId(),
+			newShoppingItem.getCompanyId());
 	}
 
 	@Test
@@ -327,17 +327,17 @@ public class ShoppingItemPersistenceTest {
 
 	protected OrderByComparator<ShoppingItem> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingItem", "itemId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"categoryId", true, "sku", true, "name", true, "description", true,
-			"properties", true, "fields", true, "fieldsQuantities", true,
-			"minQuantity", true, "maxQuantity", true, "price", true,
-			"discount", true, "taxable", true, "shipping", true,
-			"useShippingFormula", true, "requiresShipping", true,
-			"stockQuantity", true, "featured", true, "sale", true,
-			"smallImage", true, "smallImageId", true, "smallImageURL", true,
-			"mediumImage", true, "mediumImageId", true, "mediumImageURL", true,
-			"largeImage", true, "largeImageId", true, "largeImageURL", true);
+			true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "categoryId", true,
+			"sku", true, "name", true, "description", true, "properties", true,
+			"fields", true, "fieldsQuantities", true, "minQuantity", true,
+			"maxQuantity", true, "price", true, "discount", true, "taxable",
+			true, "shipping", true, "useShippingFormula", true,
+			"requiresShipping", true, "stockQuantity", true, "featured", true,
+			"sale", true, "smallImage", true, "smallImageId", true,
+			"smallImageURL", true, "mediumImage", true, "mediumImageId", true,
+			"mediumImageURL", true, "largeImage", true, "largeImageId", true,
+			"largeImageURL", true, "companyId", true);
 	}
 
 	@Test
@@ -570,8 +570,6 @@ public class ShoppingItemPersistenceTest {
 
 		shoppingItem.setGroupId(RandomTestUtil.nextLong());
 
-		shoppingItem.setCompanyId(RandomTestUtil.nextLong());
-
 		shoppingItem.setUserId(RandomTestUtil.nextLong());
 
 		shoppingItem.setUserName(RandomTestUtil.randomString());
@@ -633,6 +631,8 @@ public class ShoppingItemPersistenceTest {
 		shoppingItem.setLargeImageId(RandomTestUtil.nextLong());
 
 		shoppingItem.setLargeImageURL(RandomTestUtil.randomString());
+
+		shoppingItem.setCompanyId(RandomTestUtil.nextLong());
 
 		_shoppingItems.add(_persistence.update(shoppingItem));
 

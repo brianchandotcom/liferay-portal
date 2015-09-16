@@ -34,13 +34,13 @@ public class ExpandoValueSoap implements Serializable {
 		ExpandoValueSoap soapModel = new ExpandoValueSoap();
 
 		soapModel.setValueId(model.getValueId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setTableId(model.getTableId());
 		soapModel.setColumnId(model.getColumnId());
 		soapModel.setRowId(model.getRowId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setData(model.getData());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -101,14 +101,6 @@ public class ExpandoValueSoap implements Serializable {
 		_valueId = valueId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getTableId() {
 		return _tableId;
 	}
@@ -157,12 +149,20 @@ public class ExpandoValueSoap implements Serializable {
 		_data = data;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _valueId;
-	private long _companyId;
 	private long _tableId;
 	private long _columnId;
 	private long _rowId;
 	private long _classNameId;
 	private long _classPK;
 	private String _data;
+	private long _companyId;
 }

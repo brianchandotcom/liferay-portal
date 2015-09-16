@@ -119,8 +119,6 @@ public class GroupPersistenceTest {
 
 		newGroup.setUuid(RandomTestUtil.randomString());
 
-		newGroup.setCompanyId(RandomTestUtil.nextLong());
-
 		newGroup.setCreatorUserId(RandomTestUtil.nextLong());
 
 		newGroup.setClassNameId(RandomTestUtil.nextLong());
@@ -157,6 +155,8 @@ public class GroupPersistenceTest {
 
 		newGroup.setActive(RandomTestUtil.randomBoolean());
 
+		newGroup.setCompanyId(RandomTestUtil.nextLong());
+
 		_groups.add(_persistence.update(newGroup));
 
 		Group existingGroup = _persistence.findByPrimaryKey(newGroup.getPrimaryKey());
@@ -165,8 +165,6 @@ public class GroupPersistenceTest {
 			newGroup.getMvccVersion());
 		Assert.assertEquals(existingGroup.getUuid(), newGroup.getUuid());
 		Assert.assertEquals(existingGroup.getGroupId(), newGroup.getGroupId());
-		Assert.assertEquals(existingGroup.getCompanyId(),
-			newGroup.getCompanyId());
 		Assert.assertEquals(existingGroup.getCreatorUserId(),
 			newGroup.getCreatorUserId());
 		Assert.assertEquals(existingGroup.getClassNameId(),
@@ -196,6 +194,8 @@ public class GroupPersistenceTest {
 		Assert.assertEquals(existingGroup.getInheritContent(),
 			newGroup.getInheritContent());
 		Assert.assertEquals(existingGroup.getActive(), newGroup.getActive());
+		Assert.assertEquals(existingGroup.getCompanyId(),
+			newGroup.getCompanyId());
 	}
 
 	@Test
@@ -226,6 +226,13 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLiveGroupId() throws Exception {
+		_persistence.countByLiveGroupId(RandomTestUtil.nextLong());
+
+		_persistence.countByLiveGroupId(0L);
+	}
+
+	@Test
 	public void testCountByCompanyId() throws Exception {
 		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
@@ -233,10 +240,11 @@ public class GroupPersistenceTest {
 	}
 
 	@Test
-	public void testCountByLiveGroupId() throws Exception {
-		_persistence.countByLiveGroupId(RandomTestUtil.nextLong());
+	public void testCountByT_A() throws Exception {
+		_persistence.countByT_A(RandomTestUtil.nextInt(),
+			RandomTestUtil.randomBoolean());
 
-		_persistence.countByLiveGroupId(0L);
+		_persistence.countByT_A(0, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -279,14 +287,6 @@ public class GroupPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		_persistence.countByC_S(0L, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
-	public void testCountByT_A() throws Exception {
-		_persistence.countByT_A(RandomTestUtil.nextInt(),
-			RandomTestUtil.randomBoolean());
-
-		_persistence.countByT_A(0, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -376,13 +376,13 @@ public class GroupPersistenceTest {
 
 	protected OrderByComparator<Group> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Group_", "mvccVersion",
-			true, "uuid", true, "groupId", true, "companyId", true,
-			"creatorUserId", true, "classNameId", true, "classPK", true,
-			"parentGroupId", true, "liveGroupId", true, "treePath", true,
-			"groupKey", true, "name", true, "description", true, "type", true,
-			"manualMembership", true, "membershipRestriction", true,
-			"friendlyURL", true, "site", true, "remoteStagingGroupCount", true,
-			"inheritContent", true, "active", true);
+			true, "uuid", true, "groupId", true, "creatorUserId", true,
+			"classNameId", true, "classPK", true, "parentGroupId", true,
+			"liveGroupId", true, "treePath", true, "groupKey", true, "name",
+			true, "description", true, "type", true, "manualMembership", true,
+			"membershipRestriction", true, "friendlyURL", true, "site", true,
+			"remoteStagingGroupCount", true, "inheritContent", true, "active",
+			true, "companyId", true);
 	}
 
 	@Test
@@ -651,8 +651,6 @@ public class GroupPersistenceTest {
 
 		group.setUuid(RandomTestUtil.randomString());
 
-		group.setCompanyId(RandomTestUtil.nextLong());
-
 		group.setCreatorUserId(RandomTestUtil.nextLong());
 
 		group.setClassNameId(RandomTestUtil.nextLong());
@@ -688,6 +686,8 @@ public class GroupPersistenceTest {
 		group.setInheritContent(RandomTestUtil.randomBoolean());
 
 		group.setActive(RandomTestUtil.randomBoolean());
+
+		group.setCompanyId(RandomTestUtil.nextLong());
 
 		_groups.add(_persistence.update(group));
 

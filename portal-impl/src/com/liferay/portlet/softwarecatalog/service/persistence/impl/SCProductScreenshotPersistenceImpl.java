@@ -16,6 +16,7 @@ package com.liferay.portlet.softwarecatalog.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.portlet.softwarecatalog.NoSuchProductScreenshotException;
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
@@ -1474,6 +1476,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		scProductScreenshot.setNew(true);
 		scProductScreenshot.setPrimaryKey(productScreenshotId);
 
+		scProductScreenshot.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return scProductScreenshot;
 	}
 
@@ -1646,12 +1650,12 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		scProductScreenshotImpl.setPrimaryKey(scProductScreenshot.getPrimaryKey());
 
 		scProductScreenshotImpl.setProductScreenshotId(scProductScreenshot.getProductScreenshotId());
-		scProductScreenshotImpl.setCompanyId(scProductScreenshot.getCompanyId());
 		scProductScreenshotImpl.setGroupId(scProductScreenshot.getGroupId());
 		scProductScreenshotImpl.setProductEntryId(scProductScreenshot.getProductEntryId());
 		scProductScreenshotImpl.setThumbnailId(scProductScreenshot.getThumbnailId());
 		scProductScreenshotImpl.setFullImageId(scProductScreenshot.getFullImageId());
 		scProductScreenshotImpl.setPriority(scProductScreenshot.getPriority());
+		scProductScreenshotImpl.setCompanyId(scProductScreenshot.getCompanyId());
 
 		return scProductScreenshotImpl;
 	}
@@ -2030,6 +2034,8 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_SCPRODUCTSCREENSHOT = "SELECT scProductScreenshot FROM SCProductScreenshot scProductScreenshot";
 	private static final String _SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE_PKS_IN = "SELECT scProductScreenshot FROM SCProductScreenshot scProductScreenshot WHERE productScreenshotId IN (";
 	private static final String _SQL_SELECT_SCPRODUCTSCREENSHOT_WHERE = "SELECT scProductScreenshot FROM SCProductScreenshot scProductScreenshot WHERE ";

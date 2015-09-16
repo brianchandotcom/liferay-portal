@@ -5,7 +5,6 @@
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
 		<field name="lockId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -18,5 +17,6 @@
 		</field>
 		<field name="inheritable" type="boolean" />
 		<field name="expirationDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

@@ -16,6 +16,7 @@ package com.liferay.portlet.announcements.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.portlet.announcements.NoSuchFlagException;
 import com.liferay.portlet.announcements.model.AnnouncementsFlag;
@@ -979,6 +981,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		announcementsFlag.setNew(true);
 		announcementsFlag.setPrimaryKey(flagId);
 
+		announcementsFlag.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return announcementsFlag;
 	}
 
@@ -1148,6 +1152,7 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		announcementsFlagImpl.setCreateDate(announcementsFlag.getCreateDate());
 		announcementsFlagImpl.setEntryId(announcementsFlag.getEntryId());
 		announcementsFlagImpl.setValue(announcementsFlag.getValue());
+		announcementsFlagImpl.setCompanyId(announcementsFlag.getCompanyId());
 
 		return announcementsFlagImpl;
 	}
@@ -1525,6 +1530,8 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG = "SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE_PKS_IN = "SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag WHERE flagId IN (";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSFLAG_WHERE = "SELECT announcementsFlag FROM AnnouncementsFlag announcementsFlag WHERE ";

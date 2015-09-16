@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface UserGroupRoleModel extends BaseModel<UserGroupRole>, MVCCModel {
+public interface UserGroupRoleModel extends BaseModel<UserGroupRole>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -129,6 +130,22 @@ public interface UserGroupRoleModel extends BaseModel<UserGroupRole>, MVCCModel 
 	 * @param roleId the role ID of this user group role
 	 */
 	public void setRoleId(long roleId);
+
+	/**
+	 * Returns the company ID of this user group role.
+	 *
+	 * @return the company ID of this user group role
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user group role.
+	 *
+	 * @param companyId the company ID of this user group role
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

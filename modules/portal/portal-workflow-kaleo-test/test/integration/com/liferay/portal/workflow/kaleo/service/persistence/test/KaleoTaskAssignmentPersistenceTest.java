@@ -121,8 +121,6 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		newKaleoTaskAssignment.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoTaskAssignment.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoTaskAssignment.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoTaskAssignment.setUserName(RandomTestUtil.randomString());
@@ -151,6 +149,8 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		newKaleoTaskAssignment.setAssigneeScriptRequiredContexts(RandomTestUtil.randomString());
 
+		newKaleoTaskAssignment.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoTaskAssignments.add(_persistence.update(newKaleoTaskAssignment));
 
 		KaleoTaskAssignment existingKaleoTaskAssignment = _persistence.findByPrimaryKey(newKaleoTaskAssignment.getPrimaryKey());
@@ -159,8 +159,6 @@ public class KaleoTaskAssignmentPersistenceTest {
 			newKaleoTaskAssignment.getKaleoTaskAssignmentId());
 		Assert.assertEquals(existingKaleoTaskAssignment.getGroupId(),
 			newKaleoTaskAssignment.getGroupId());
-		Assert.assertEquals(existingKaleoTaskAssignment.getCompanyId(),
-			newKaleoTaskAssignment.getCompanyId());
 		Assert.assertEquals(existingKaleoTaskAssignment.getUserId(),
 			newKaleoTaskAssignment.getUserId());
 		Assert.assertEquals(existingKaleoTaskAssignment.getUserName(),
@@ -191,13 +189,8 @@ public class KaleoTaskAssignmentPersistenceTest {
 			newKaleoTaskAssignment.getAssigneeScriptLanguage());
 		Assert.assertEquals(existingKaleoTaskAssignment.getAssigneeScriptRequiredContexts(),
 			newKaleoTaskAssignment.getAssigneeScriptRequiredContexts());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingKaleoTaskAssignment.getCompanyId(),
+			newKaleoTaskAssignment.getCompanyId());
 	}
 
 	@Test
@@ -205,6 +198,13 @@ public class KaleoTaskAssignmentPersistenceTest {
 		_persistence.countByKaleoDefinitionId(RandomTestUtil.nextLong());
 
 		_persistence.countByKaleoDefinitionId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -250,13 +250,13 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 	protected OrderByComparator<KaleoTaskAssignment> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTaskAssignment",
-			"kaleoTaskAssignmentId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
-			"kaleoDefinitionId", true, "kaleoNodeId", true,
-			"assigneeClassName", true, "assigneeClassPK", true,
-			"assigneeActionId", true, "assigneeScriptLanguage", true,
-			"assigneeScriptRequiredContexts", true);
+			"kaleoTaskAssignmentId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoClassName", true, "kaleoClassPK", true, "kaleoDefinitionId",
+			true, "kaleoNodeId", true, "assigneeClassName", true,
+			"assigneeClassPK", true, "assigneeActionId", true,
+			"assigneeScriptLanguage", true, "assigneeScriptRequiredContexts",
+			true, "companyId", true);
 	}
 
 	@Test
@@ -464,8 +464,6 @@ public class KaleoTaskAssignmentPersistenceTest {
 
 		kaleoTaskAssignment.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoTaskAssignment.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoTaskAssignment.setUserId(RandomTestUtil.nextLong());
 
 		kaleoTaskAssignment.setUserName(RandomTestUtil.randomString());
@@ -493,6 +491,8 @@ public class KaleoTaskAssignmentPersistenceTest {
 		kaleoTaskAssignment.setAssigneeScriptLanguage(RandomTestUtil.randomString());
 
 		kaleoTaskAssignment.setAssigneeScriptRequiredContexts(RandomTestUtil.randomString());
+
+		kaleoTaskAssignment.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoTaskAssignments.add(_persistence.update(kaleoTaskAssignment));
 

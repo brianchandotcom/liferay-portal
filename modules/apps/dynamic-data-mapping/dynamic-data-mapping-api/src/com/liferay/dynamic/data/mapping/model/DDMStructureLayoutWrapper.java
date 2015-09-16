@@ -56,13 +56,13 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 		attributes.put("uuid", getUuid());
 		attributes.put("structureLayoutId", getStructureLayoutId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("structureVersionId", getStructureVersionId());
 		attributes.put("definition", getDefinition());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -85,12 +85,6 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -127,6 +121,12 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 
 		if (definition != null) {
 			setDefinition(definition);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

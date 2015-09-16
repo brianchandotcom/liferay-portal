@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordSetModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -45,6 +46,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import java.io.Serializable;
 
@@ -3149,6 +3151,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 
 		ddlRecordSet.setUuid(uuid);
 
+		ddlRecordSet.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return ddlRecordSet;
 	}
 
@@ -3382,7 +3386,6 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		ddlRecordSetImpl.setUuid(ddlRecordSet.getUuid());
 		ddlRecordSetImpl.setRecordSetId(ddlRecordSet.getRecordSetId());
 		ddlRecordSetImpl.setGroupId(ddlRecordSet.getGroupId());
-		ddlRecordSetImpl.setCompanyId(ddlRecordSet.getCompanyId());
 		ddlRecordSetImpl.setUserId(ddlRecordSet.getUserId());
 		ddlRecordSetImpl.setUserName(ddlRecordSet.getUserName());
 		ddlRecordSetImpl.setCreateDate(ddlRecordSet.getCreateDate());
@@ -3394,6 +3397,7 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		ddlRecordSetImpl.setMinDisplayRows(ddlRecordSet.getMinDisplayRows());
 		ddlRecordSetImpl.setScope(ddlRecordSet.getScope());
 		ddlRecordSetImpl.setLastPublishDate(ddlRecordSet.getLastPublishDate());
+		ddlRecordSetImpl.setCompanyId(ddlRecordSet.getCompanyId());
 
 		return ddlRecordSetImpl;
 	}
@@ -3774,6 +3778,8 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_DDLRECORDSET = "SELECT ddlRecordSet FROM DDLRecordSet ddlRecordSet";
 	private static final String _SQL_SELECT_DDLRECORDSET_WHERE_PKS_IN = "SELECT ddlRecordSet FROM DDLRecordSet ddlRecordSet WHERE recordSetId IN (";
 	private static final String _SQL_SELECT_DDLRECORDSET_WHERE = "SELECT ddlRecordSet FROM DDLRecordSet ddlRecordSet WHERE ";

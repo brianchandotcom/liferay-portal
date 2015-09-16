@@ -118,8 +118,6 @@ public class SocialActivityAchievementPersistenceTest {
 
 		newSocialActivityAchievement.setGroupId(RandomTestUtil.nextLong());
 
-		newSocialActivityAchievement.setCompanyId(RandomTestUtil.nextLong());
-
 		newSocialActivityAchievement.setUserId(RandomTestUtil.nextLong());
 
 		newSocialActivityAchievement.setCreateDate(RandomTestUtil.nextLong());
@@ -127,6 +125,8 @@ public class SocialActivityAchievementPersistenceTest {
 		newSocialActivityAchievement.setName(RandomTestUtil.randomString());
 
 		newSocialActivityAchievement.setFirstInGroup(RandomTestUtil.randomBoolean());
+
+		newSocialActivityAchievement.setCompanyId(RandomTestUtil.nextLong());
 
 		_socialActivityAchievements.add(_persistence.update(
 				newSocialActivityAchievement));
@@ -137,8 +137,6 @@ public class SocialActivityAchievementPersistenceTest {
 			newSocialActivityAchievement.getActivityAchievementId());
 		Assert.assertEquals(existingSocialActivityAchievement.getGroupId(),
 			newSocialActivityAchievement.getGroupId());
-		Assert.assertEquals(existingSocialActivityAchievement.getCompanyId(),
-			newSocialActivityAchievement.getCompanyId());
 		Assert.assertEquals(existingSocialActivityAchievement.getUserId(),
 			newSocialActivityAchievement.getUserId());
 		Assert.assertEquals(existingSocialActivityAchievement.getCreateDate(),
@@ -147,6 +145,8 @@ public class SocialActivityAchievementPersistenceTest {
 			newSocialActivityAchievement.getName());
 		Assert.assertEquals(existingSocialActivityAchievement.getFirstInGroup(),
 			newSocialActivityAchievement.getFirstInGroup());
+		Assert.assertEquals(existingSocialActivityAchievement.getCompanyId(),
+			newSocialActivityAchievement.getCompanyId());
 	}
 
 	@Test
@@ -224,9 +224,9 @@ public class SocialActivityAchievementPersistenceTest {
 
 	protected OrderByComparator<SocialActivityAchievement> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivityAchievement",
-			"activityAchievementId", true, "groupId", true, "companyId", true,
-			"userId", true, "createDate", true, "name", true, "firstInGroup",
-			true);
+			"activityAchievementId", true, "groupId", true, "userId", true,
+			"createDate", true, "name", true, "firstInGroup", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -462,8 +462,6 @@ public class SocialActivityAchievementPersistenceTest {
 
 		socialActivityAchievement.setGroupId(RandomTestUtil.nextLong());
 
-		socialActivityAchievement.setCompanyId(RandomTestUtil.nextLong());
-
 		socialActivityAchievement.setUserId(RandomTestUtil.nextLong());
 
 		socialActivityAchievement.setCreateDate(RandomTestUtil.nextLong());
@@ -471,6 +469,8 @@ public class SocialActivityAchievementPersistenceTest {
 		socialActivityAchievement.setName(RandomTestUtil.randomString());
 
 		socialActivityAchievement.setFirstInGroup(RandomTestUtil.randomBoolean());
+
+		socialActivityAchievement.setCompanyId(RandomTestUtil.nextLong());
 
 		_socialActivityAchievements.add(_persistence.update(
 				socialActivityAchievement));

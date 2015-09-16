@@ -121,6 +121,8 @@ public class PasswordTrackerPersistenceTest {
 
 		newPasswordTracker.setPassword(RandomTestUtil.randomString());
 
+		newPasswordTracker.setCompanyId(RandomTestUtil.nextLong());
+
 		_passwordTrackers.add(_persistence.update(newPasswordTracker));
 
 		PasswordTracker existingPasswordTracker = _persistence.findByPrimaryKey(newPasswordTracker.getPrimaryKey());
@@ -136,6 +138,8 @@ public class PasswordTrackerPersistenceTest {
 			Time.getShortTimestamp(newPasswordTracker.getCreateDate()));
 		Assert.assertEquals(existingPasswordTracker.getPassword(),
 			newPasswordTracker.getPassword());
+		Assert.assertEquals(existingPasswordTracker.getCompanyId(),
+			newPasswordTracker.getCompanyId());
 	}
 
 	@Test
@@ -170,7 +174,7 @@ public class PasswordTrackerPersistenceTest {
 	protected OrderByComparator<PasswordTracker> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PasswordTracker",
 			"mvccVersion", true, "passwordTrackerId", true, "userId", true,
-			"createDate", true, "password", true);
+			"createDate", true, "password", true, "companyId", true);
 	}
 
 	@Test
@@ -381,6 +385,8 @@ public class PasswordTrackerPersistenceTest {
 		passwordTracker.setCreateDate(RandomTestUtil.nextDate());
 
 		passwordTracker.setPassword(RandomTestUtil.randomString());
+
+		passwordTracker.setCompanyId(RandomTestUtil.nextLong());
 
 		_passwordTrackers.add(_persistence.update(passwordTracker));
 

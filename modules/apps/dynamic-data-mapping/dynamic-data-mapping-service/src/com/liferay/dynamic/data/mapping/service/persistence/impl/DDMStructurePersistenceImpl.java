@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructurePersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -45,6 +46,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import java.io.Serializable;
 
@@ -8582,6 +8584,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 
 		ddmStructure.setUuid(uuid);
 
+		ddmStructure.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return ddmStructure;
 	}
 
@@ -8958,7 +8962,6 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		ddmStructureImpl.setUuid(ddmStructure.getUuid());
 		ddmStructureImpl.setStructureId(ddmStructure.getStructureId());
 		ddmStructureImpl.setGroupId(ddmStructure.getGroupId());
-		ddmStructureImpl.setCompanyId(ddmStructure.getCompanyId());
 		ddmStructureImpl.setUserId(ddmStructure.getUserId());
 		ddmStructureImpl.setUserName(ddmStructure.getUserName());
 		ddmStructureImpl.setVersionUserId(ddmStructure.getVersionUserId());
@@ -8975,6 +8978,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		ddmStructureImpl.setStorageType(ddmStructure.getStorageType());
 		ddmStructureImpl.setType(ddmStructure.getType());
 		ddmStructureImpl.setLastPublishDate(ddmStructure.getLastPublishDate());
+		ddmStructureImpl.setCompanyId(ddmStructure.getCompanyId());
 
 		return ddmStructureImpl;
 	}
@@ -9355,6 +9359,8 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_DDMSTRUCTURE = "SELECT ddmStructure FROM DDMStructure ddmStructure";
 	private static final String _SQL_SELECT_DDMSTRUCTURE_WHERE_PKS_IN = "SELECT ddmStructure FROM DDMStructure ddmStructure WHERE structureId IN (";
 	private static final String _SQL_SELECT_DDMSTRUCTURE_WHERE = "SELECT ddmStructure FROM DDMStructure ddmStructure WHERE ";

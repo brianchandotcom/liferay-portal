@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface SCProductEntryModel extends BaseModel<SCProductEntry>,
-	GroupedModel {
+	GroupedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -93,22 +94,6 @@ public interface SCProductEntryModel extends BaseModel<SCProductEntry>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this s c product entry.
-	 *
-	 * @return the company ID of this s c product entry
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this s c product entry.
-	 *
-	 * @param companyId the company ID of this s c product entry
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this s c product entry.
@@ -325,6 +310,22 @@ public interface SCProductEntryModel extends BaseModel<SCProductEntry>,
 	 * @param repoArtifactId the repo artifact ID of this s c product entry
 	 */
 	public void setRepoArtifactId(String repoArtifactId);
+
+	/**
+	 * Returns the company ID of this s c product entry.
+	 *
+	 * @return the company ID of this s c product entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this s c product entry.
+	 *
+	 * @param companyId the company ID of this s c product entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

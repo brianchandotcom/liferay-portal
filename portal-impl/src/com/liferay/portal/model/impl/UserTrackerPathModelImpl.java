@@ -64,7 +64,8 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 			{ "userTrackerPathId", Types.BIGINT },
 			{ "userTrackerId", Types.BIGINT },
 			{ "path_", Types.VARCHAR },
-			{ "pathDate", Types.TIMESTAMP }
+			{ "pathDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -74,9 +75,10 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		TABLE_COLUMNS_MAP.put("userTrackerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("path_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("pathDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserTrackerPath (mvccVersion LONG default 0,userTrackerPathId LONG not null primary key,userTrackerId LONG,path_ STRING null,pathDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table UserTrackerPath (mvccVersion LONG default 0,userTrackerPathId LONG not null primary key,userTrackerId LONG,path_ STRING null,pathDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table UserTrackerPath";
 	public static final String ORDER_BY_JPQL = " ORDER BY userTrackerPath.userTrackerPathId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserTrackerPath.userTrackerPathId ASC";
@@ -139,6 +141,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		attributes.put("userTrackerId", getUserTrackerId());
 		attributes.put("path", getPath());
 		attributes.put("pathDate", getPathDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -176,6 +179,12 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 		if (pathDate != null) {
 			setPathDate(pathDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -246,13 +255,23 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		_pathDate = pathDate;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			UserTrackerPath.class.getName(), getPrimaryKey());
 	}
 
@@ -282,6 +301,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		userTrackerPathImpl.setUserTrackerId(getUserTrackerId());
 		userTrackerPathImpl.setPath(getPath());
 		userTrackerPathImpl.setPathDate(getPathDate());
+		userTrackerPathImpl.setCompanyId(getCompanyId());
 
 		userTrackerPathImpl.resetOriginalValues();
 
@@ -378,12 +398,14 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 			userTrackerPathCacheModel.pathDate = Long.MIN_VALUE;
 		}
 
+		userTrackerPathCacheModel.companyId = getCompanyId();
+
 		return userTrackerPathCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -395,6 +417,8 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 		sb.append(getPath());
 		sb.append(", pathDate=");
 		sb.append(getPathDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -402,7 +426,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserTrackerPath");
@@ -428,6 +452,10 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 			"<column><column-name>pathDate</column-name><column-value><![CDATA[");
 		sb.append(getPathDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -445,6 +473,7 @@ public class UserTrackerPathModelImpl extends BaseModelImpl<UserTrackerPath>
 	private boolean _setOriginalUserTrackerId;
 	private String _path;
 	private Date _pathDate;
+	private long _companyId;
 	private long _columnBitmask;
 	private UserTrackerPath _escapedModel;
 }

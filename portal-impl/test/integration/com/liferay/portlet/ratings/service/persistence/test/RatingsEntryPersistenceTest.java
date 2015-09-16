@@ -119,8 +119,6 @@ public class RatingsEntryPersistenceTest {
 
 		newRatingsEntry.setUuid(RandomTestUtil.randomString());
 
-		newRatingsEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		newRatingsEntry.setUserId(RandomTestUtil.nextLong());
 
 		newRatingsEntry.setUserName(RandomTestUtil.randomString());
@@ -137,6 +135,8 @@ public class RatingsEntryPersistenceTest {
 
 		newRatingsEntry.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newRatingsEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		_ratingsEntries.add(_persistence.update(newRatingsEntry));
 
 		RatingsEntry existingRatingsEntry = _persistence.findByPrimaryKey(newRatingsEntry.getPrimaryKey());
@@ -145,8 +145,6 @@ public class RatingsEntryPersistenceTest {
 			newRatingsEntry.getUuid());
 		Assert.assertEquals(existingRatingsEntry.getEntryId(),
 			newRatingsEntry.getEntryId());
-		Assert.assertEquals(existingRatingsEntry.getCompanyId(),
-			newRatingsEntry.getCompanyId());
 		Assert.assertEquals(existingRatingsEntry.getUserId(),
 			newRatingsEntry.getUserId());
 		Assert.assertEquals(existingRatingsEntry.getUserName(),
@@ -166,6 +164,8 @@ public class RatingsEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingRatingsEntry.getLastPublishDate()),
 			Time.getShortTimestamp(newRatingsEntry.getLastPublishDate()));
+		Assert.assertEquals(existingRatingsEntry.getCompanyId(),
+			newRatingsEntry.getCompanyId());
 	}
 
 	@Test
@@ -234,10 +234,10 @@ public class RatingsEntryPersistenceTest {
 
 	protected OrderByComparator<RatingsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("RatingsEntry", "uuid",
-			true, "entryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "score", true,
-			"lastPublishDate", true);
+			true, "entryId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "score", true, "lastPublishDate", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -460,8 +460,6 @@ public class RatingsEntryPersistenceTest {
 
 		ratingsEntry.setUuid(RandomTestUtil.randomString());
 
-		ratingsEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		ratingsEntry.setUserId(RandomTestUtil.nextLong());
 
 		ratingsEntry.setUserName(RandomTestUtil.randomString());
@@ -477,6 +475,8 @@ public class RatingsEntryPersistenceTest {
 		ratingsEntry.setScore(RandomTestUtil.nextDouble());
 
 		ratingsEntry.setLastPublishDate(RandomTestUtil.nextDate());
+
+		ratingsEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		_ratingsEntries.add(_persistence.update(ratingsEntry));
 

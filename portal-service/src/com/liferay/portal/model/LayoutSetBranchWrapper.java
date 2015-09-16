@@ -55,7 +55,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("layoutSetBranchId", getLayoutSetBranchId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -74,6 +73,7 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
 		attributes.put("layoutSetPrototypeLinkEnabled",
 			getLayoutSetPrototypeLinkEnabled());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -96,12 +96,6 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -206,6 +200,12 @@ public class LayoutSetBranchWrapper implements LayoutSetBranch,
 
 		if (layoutSetPrototypeLinkEnabled != null) {
 			setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

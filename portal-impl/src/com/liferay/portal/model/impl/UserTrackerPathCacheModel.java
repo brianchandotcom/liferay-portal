@@ -79,7 +79,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -91,6 +91,8 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 		sb.append(path);
 		sb.append(", pathDate=");
 		sb.append(pathDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -118,6 +120,8 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 			userTrackerPathImpl.setPathDate(new Date(pathDate));
 		}
 
+		userTrackerPathImpl.setCompanyId(companyId);
+
 		userTrackerPathImpl.resetOriginalValues();
 
 		return userTrackerPathImpl;
@@ -130,6 +134,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 		userTrackerId = objectInput.readLong();
 		path = objectInput.readUTF();
 		pathDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -147,6 +152,7 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 		}
 
 		objectOutput.writeLong(pathDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
@@ -154,4 +160,5 @@ public class UserTrackerPathCacheModel implements CacheModel<UserTrackerPath>,
 	public long userTrackerId;
 	public String path;
 	public long pathDate;
+	public long companyId;
 }

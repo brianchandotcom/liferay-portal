@@ -123,8 +123,6 @@ public class CalEventPersistenceTest {
 
 		newCalEvent.setGroupId(RandomTestUtil.nextLong());
 
-		newCalEvent.setCompanyId(RandomTestUtil.nextLong());
-
 		newCalEvent.setUserId(RandomTestUtil.nextLong());
 
 		newCalEvent.setUserName(RandomTestUtil.randomString());
@@ -163,6 +161,8 @@ public class CalEventPersistenceTest {
 
 		newCalEvent.setSecondReminder(RandomTestUtil.nextInt());
 
+		newCalEvent.setCompanyId(RandomTestUtil.nextLong());
+
 		_calEvents.add(_persistence.update(newCalEvent));
 
 		CalEvent existingCalEvent = _persistence.findByPrimaryKey(newCalEvent.getPrimaryKey());
@@ -172,8 +172,6 @@ public class CalEventPersistenceTest {
 			newCalEvent.getEventId());
 		Assert.assertEquals(existingCalEvent.getGroupId(),
 			newCalEvent.getGroupId());
-		Assert.assertEquals(existingCalEvent.getCompanyId(),
-			newCalEvent.getCompanyId());
 		Assert.assertEquals(existingCalEvent.getUserId(),
 			newCalEvent.getUserId());
 		Assert.assertEquals(existingCalEvent.getUserName(),
@@ -214,6 +212,8 @@ public class CalEventPersistenceTest {
 			newCalEvent.getFirstReminder());
 		Assert.assertEquals(existingCalEvent.getSecondReminder(),
 			newCalEvent.getSecondReminder());
+		Assert.assertEquals(existingCalEvent.getCompanyId(),
+			newCalEvent.getCompanyId());
 	}
 
 	@Test
@@ -251,17 +251,17 @@ public class CalEventPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByNotRemindBy() throws Exception {
 		_persistence.countByNotRemindBy(RandomTestUtil.nextInt());
 
 		_persistence.countByNotRemindBy(0);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -335,12 +335,13 @@ public class CalEventPersistenceTest {
 
 	protected OrderByComparator<CalEvent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CalEvent", "uuid", true,
-			"eventId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"title", true, "location", true, "startDate", true, "endDate",
-			true, "durationHour", true, "durationMinute", true, "allDay", true,
+			"eventId", true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "title", true,
+			"location", true, "startDate", true, "endDate", true,
+			"durationHour", true, "durationMinute", true, "allDay", true,
 			"timeZoneSensitive", true, "type", true, "repeating", true,
-			"remindBy", true, "firstReminder", true, "secondReminder", true);
+			"remindBy", true, "firstReminder", true, "secondReminder", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -562,8 +563,6 @@ public class CalEventPersistenceTest {
 
 		calEvent.setGroupId(RandomTestUtil.nextLong());
 
-		calEvent.setCompanyId(RandomTestUtil.nextLong());
-
 		calEvent.setUserId(RandomTestUtil.nextLong());
 
 		calEvent.setUserName(RandomTestUtil.randomString());
@@ -601,6 +600,8 @@ public class CalEventPersistenceTest {
 		calEvent.setFirstReminder(RandomTestUtil.nextInt());
 
 		calEvent.setSecondReminder(RandomTestUtil.nextInt());
+
+		calEvent.setCompanyId(RandomTestUtil.nextLong());
 
 		_calEvents.add(_persistence.update(calEvent));
 

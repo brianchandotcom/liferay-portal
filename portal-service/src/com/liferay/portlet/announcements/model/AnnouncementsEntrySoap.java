@@ -36,7 +36,6 @@ public class AnnouncementsEntrySoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setEntryId(model.getEntryId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -51,6 +50,7 @@ public class AnnouncementsEntrySoap implements Serializable {
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setAlert(model.getAlert());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -120,14 +120,6 @@ public class AnnouncementsEntrySoap implements Serializable {
 
 	public void setEntryId(long entryId) {
 		_entryId = entryId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -246,9 +238,16 @@ public class AnnouncementsEntrySoap implements Serializable {
 		_alert = alert;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _entryId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -263,4 +262,5 @@ public class AnnouncementsEntrySoap implements Serializable {
 	private Date _expirationDate;
 	private int _priority;
 	private boolean _alert;
+	private long _companyId;
 }

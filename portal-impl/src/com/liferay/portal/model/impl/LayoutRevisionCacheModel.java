@@ -87,8 +87,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		sb.append(layoutRevisionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -143,6 +141,8 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -155,7 +155,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		layoutRevisionImpl.setMvccVersion(mvccVersion);
 		layoutRevisionImpl.setLayoutRevisionId(layoutRevisionId);
 		layoutRevisionImpl.setGroupId(groupId);
-		layoutRevisionImpl.setCompanyId(companyId);
 		layoutRevisionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -283,6 +282,8 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 			layoutRevisionImpl.setStatusDate(new Date(statusDate));
 		}
 
+		layoutRevisionImpl.setCompanyId(companyId);
+
 		layoutRevisionImpl.resetOriginalValues();
 
 		return layoutRevisionImpl;
@@ -293,7 +294,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		mvccVersion = objectInput.readLong();
 		layoutRevisionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -321,6 +321,7 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -329,7 +330,6 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(layoutRevisionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -439,12 +439,12 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long layoutRevisionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -472,4 +472,5 @@ public class LayoutRevisionCacheModel implements CacheModel<LayoutRevision>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

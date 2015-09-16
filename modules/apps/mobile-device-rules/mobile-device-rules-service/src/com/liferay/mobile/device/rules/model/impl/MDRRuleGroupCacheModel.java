@@ -74,8 +74,6 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		sb.append(ruleGroupId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -90,6 +88,8 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		sb.append(description);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -108,7 +108,6 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 
 		mdrRuleGroupImpl.setRuleGroupId(ruleGroupId);
 		mdrRuleGroupImpl.setGroupId(groupId);
-		mdrRuleGroupImpl.setCompanyId(companyId);
 		mdrRuleGroupImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -153,6 +152,8 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 			mdrRuleGroupImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		mdrRuleGroupImpl.setCompanyId(companyId);
+
 		mdrRuleGroupImpl.resetOriginalValues();
 
 		return mdrRuleGroupImpl;
@@ -163,7 +164,6 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		uuid = objectInput.readUTF();
 		ruleGroupId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -171,6 +171,7 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -185,7 +186,6 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 
 		objectOutput.writeLong(ruleGroupId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -213,12 +213,12 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long ruleGroupId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -226,4 +226,5 @@ public class MDRRuleGroupCacheModel implements CacheModel<MDRRuleGroup>,
 	public String name;
 	public String description;
 	public long lastPublishDate;
+	public long companyId;
 }

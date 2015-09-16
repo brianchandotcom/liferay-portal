@@ -117,8 +117,6 @@ public class ResourceTypePermissionPersistenceTest {
 
 		newResourceTypePermission.setMvccVersion(RandomTestUtil.nextLong());
 
-		newResourceTypePermission.setCompanyId(RandomTestUtil.nextLong());
-
 		newResourceTypePermission.setGroupId(RandomTestUtil.nextLong());
 
 		newResourceTypePermission.setName(RandomTestUtil.randomString());
@@ -126,6 +124,8 @@ public class ResourceTypePermissionPersistenceTest {
 		newResourceTypePermission.setRoleId(RandomTestUtil.nextLong());
 
 		newResourceTypePermission.setActionIds(RandomTestUtil.nextLong());
+
+		newResourceTypePermission.setCompanyId(RandomTestUtil.nextLong());
 
 		_resourceTypePermissions.add(_persistence.update(
 				newResourceTypePermission));
@@ -136,8 +136,6 @@ public class ResourceTypePermissionPersistenceTest {
 			newResourceTypePermission.getMvccVersion());
 		Assert.assertEquals(existingResourceTypePermission.getResourceTypePermissionId(),
 			newResourceTypePermission.getResourceTypePermissionId());
-		Assert.assertEquals(existingResourceTypePermission.getCompanyId(),
-			newResourceTypePermission.getCompanyId());
 		Assert.assertEquals(existingResourceTypePermission.getGroupId(),
 			newResourceTypePermission.getGroupId());
 		Assert.assertEquals(existingResourceTypePermission.getName(),
@@ -146,6 +144,8 @@ public class ResourceTypePermissionPersistenceTest {
 			newResourceTypePermission.getRoleId());
 		Assert.assertEquals(existingResourceTypePermission.getActionIds(),
 			newResourceTypePermission.getActionIds());
+		Assert.assertEquals(existingResourceTypePermission.getCompanyId(),
+			newResourceTypePermission.getCompanyId());
 	}
 
 	@Test
@@ -201,8 +201,8 @@ public class ResourceTypePermissionPersistenceTest {
 
 	protected OrderByComparator<ResourceTypePermission> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourceTypePermission",
-			"mvccVersion", true, "resourceTypePermissionId", true, "companyId",
-			true, "groupId", true, "name", true, "roleId", true, "actionIds",
+			"mvccVersion", true, "resourceTypePermissionId", true, "groupId",
+			true, "name", true, "roleId", true, "actionIds", true, "companyId",
 			true);
 	}
 
@@ -446,8 +446,6 @@ public class ResourceTypePermissionPersistenceTest {
 
 		resourceTypePermission.setMvccVersion(RandomTestUtil.nextLong());
 
-		resourceTypePermission.setCompanyId(RandomTestUtil.nextLong());
-
 		resourceTypePermission.setGroupId(RandomTestUtil.nextLong());
 
 		resourceTypePermission.setName(RandomTestUtil.randomString());
@@ -455,6 +453,8 @@ public class ResourceTypePermissionPersistenceTest {
 		resourceTypePermission.setRoleId(RandomTestUtil.nextLong());
 
 		resourceTypePermission.setActionIds(RandomTestUtil.nextLong());
+
+		resourceTypePermission.setCompanyId(RandomTestUtil.nextLong());
 
 		_resourceTypePermissions.add(_persistence.update(resourceTypePermission));
 

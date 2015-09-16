@@ -115,13 +115,13 @@ public class ExpandoRowPersistenceTest {
 
 		ExpandoRow newExpandoRow = _persistence.create(pk);
 
-		newExpandoRow.setCompanyId(RandomTestUtil.nextLong());
-
 		newExpandoRow.setModifiedDate(RandomTestUtil.nextDate());
 
 		newExpandoRow.setTableId(RandomTestUtil.nextLong());
 
 		newExpandoRow.setClassPK(RandomTestUtil.nextLong());
+
+		newExpandoRow.setCompanyId(RandomTestUtil.nextLong());
 
 		_expandoRows.add(_persistence.update(newExpandoRow));
 
@@ -129,8 +129,6 @@ public class ExpandoRowPersistenceTest {
 
 		Assert.assertEquals(existingExpandoRow.getRowId(),
 			newExpandoRow.getRowId());
-		Assert.assertEquals(existingExpandoRow.getCompanyId(),
-			newExpandoRow.getCompanyId());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingExpandoRow.getModifiedDate()),
 			Time.getShortTimestamp(newExpandoRow.getModifiedDate()));
@@ -138,6 +136,8 @@ public class ExpandoRowPersistenceTest {
 			newExpandoRow.getTableId());
 		Assert.assertEquals(existingExpandoRow.getClassPK(),
 			newExpandoRow.getClassPK());
+		Assert.assertEquals(existingExpandoRow.getCompanyId(),
+			newExpandoRow.getCompanyId());
 	}
 
 	@Test
@@ -186,8 +186,8 @@ public class ExpandoRowPersistenceTest {
 
 	protected OrderByComparator<ExpandoRow> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExpandoRow", "rowId", true,
-			"companyId", true, "modifiedDate", true, "tableId", true,
-			"classPK", true);
+			"modifiedDate", true, "tableId", true, "classPK", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -405,13 +405,13 @@ public class ExpandoRowPersistenceTest {
 
 		ExpandoRow expandoRow = _persistence.create(pk);
 
-		expandoRow.setCompanyId(RandomTestUtil.nextLong());
-
 		expandoRow.setModifiedDate(RandomTestUtil.nextDate());
 
 		expandoRow.setTableId(RandomTestUtil.nextLong());
 
 		expandoRow.setClassPK(RandomTestUtil.nextLong());
+
+		expandoRow.setCompanyId(RandomTestUtil.nextLong());
 
 		_expandoRows.add(_persistence.update(expandoRow));
 

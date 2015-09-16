@@ -77,7 +77,7 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -91,6 +91,8 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 		sb.append(buildDate);
 		sb.append(", data=");
 		sb.append(data);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -120,6 +122,8 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 			serviceComponentImpl.setData(data);
 		}
 
+		serviceComponentImpl.setCompanyId(companyId);
+
 		serviceComponentImpl.resetOriginalValues();
 
 		return serviceComponentImpl;
@@ -133,6 +137,7 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 		buildNumber = objectInput.readLong();
 		buildDate = objectInput.readLong();
 		data = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -157,6 +162,8 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 		else {
 			objectOutput.writeUTF(data);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
@@ -165,4 +172,5 @@ public class ServiceComponentCacheModel implements CacheModel<ServiceComponent>,
 	public long buildNumber;
 	public long buildDate;
 	public String data;
+	public long companyId;
 }

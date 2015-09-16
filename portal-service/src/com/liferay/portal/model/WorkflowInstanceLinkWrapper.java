@@ -56,7 +56,6 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("workflowInstanceLinkId", getWorkflowInstanceLinkId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -64,6 +63,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("workflowInstanceId", getWorkflowInstanceId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -87,12 +87,6 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -135,6 +129,12 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 
 		if (workflowInstanceId != null) {
 			setWorkflowInstanceId(workflowInstanceId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

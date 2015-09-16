@@ -120,8 +120,6 @@ public class UserGroupPersistenceTest {
 
 		newUserGroup.setUuid(RandomTestUtil.randomString());
 
-		newUserGroup.setCompanyId(RandomTestUtil.nextLong());
-
 		newUserGroup.setUserId(RandomTestUtil.nextLong());
 
 		newUserGroup.setUserName(RandomTestUtil.randomString());
@@ -140,6 +138,8 @@ public class UserGroupPersistenceTest {
 
 		newUserGroup.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newUserGroup.setCompanyId(RandomTestUtil.nextLong());
+
 		_userGroups.add(_persistence.update(newUserGroup));
 
 		UserGroup existingUserGroup = _persistence.findByPrimaryKey(newUserGroup.getPrimaryKey());
@@ -149,8 +149,6 @@ public class UserGroupPersistenceTest {
 		Assert.assertEquals(existingUserGroup.getUuid(), newUserGroup.getUuid());
 		Assert.assertEquals(existingUserGroup.getUserGroupId(),
 			newUserGroup.getUserGroupId());
-		Assert.assertEquals(existingUserGroup.getCompanyId(),
-			newUserGroup.getCompanyId());
 		Assert.assertEquals(existingUserGroup.getUserId(),
 			newUserGroup.getUserId());
 		Assert.assertEquals(existingUserGroup.getUserName(),
@@ -171,6 +169,8 @@ public class UserGroupPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingUserGroup.getLastPublishDate()),
 			Time.getShortTimestamp(newUserGroup.getLastPublishDate()));
+		Assert.assertEquals(existingUserGroup.getCompanyId(),
+			newUserGroup.getCompanyId());
 	}
 
 	@Test
@@ -239,10 +239,10 @@ public class UserGroupPersistenceTest {
 
 	protected OrderByComparator<UserGroup> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserGroup", "mvccVersion",
-			true, "uuid", true, "userGroupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "parentUserGroupId", true, "name", true,
-			"description", true, "addedByLDAPImport", true, "lastPublishDate",
+			true, "uuid", true, "userGroupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"parentUserGroupId", true, "name", true, "description", true,
+			"addedByLDAPImport", true, "lastPublishDate", true, "companyId",
 			true);
 	}
 
@@ -465,8 +465,6 @@ public class UserGroupPersistenceTest {
 
 		userGroup.setUuid(RandomTestUtil.randomString());
 
-		userGroup.setCompanyId(RandomTestUtil.nextLong());
-
 		userGroup.setUserId(RandomTestUtil.nextLong());
 
 		userGroup.setUserName(RandomTestUtil.randomString());
@@ -484,6 +482,8 @@ public class UserGroupPersistenceTest {
 		userGroup.setAddedByLDAPImport(RandomTestUtil.randomBoolean());
 
 		userGroup.setLastPublishDate(RandomTestUtil.nextDate());
+
+		userGroup.setCompanyId(RandomTestUtil.nextLong());
 
 		_userGroups.add(_persistence.update(userGroup));
 

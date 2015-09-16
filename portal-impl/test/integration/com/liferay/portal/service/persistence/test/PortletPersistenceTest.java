@@ -117,13 +117,13 @@ public class PortletPersistenceTest {
 
 		newPortlet.setMvccVersion(RandomTestUtil.nextLong());
 
-		newPortlet.setCompanyId(RandomTestUtil.nextLong());
-
 		newPortlet.setPortletId(RandomTestUtil.randomString());
 
 		newPortlet.setRoles(RandomTestUtil.randomString());
 
 		newPortlet.setActive(RandomTestUtil.randomBoolean());
+
+		newPortlet.setCompanyId(RandomTestUtil.nextLong());
 
 		_portlets.add(_persistence.update(newPortlet));
 
@@ -132,12 +132,12 @@ public class PortletPersistenceTest {
 		Assert.assertEquals(existingPortlet.getMvccVersion(),
 			newPortlet.getMvccVersion());
 		Assert.assertEquals(existingPortlet.getId(), newPortlet.getId());
-		Assert.assertEquals(existingPortlet.getCompanyId(),
-			newPortlet.getCompanyId());
 		Assert.assertEquals(existingPortlet.getPortletId(),
 			newPortlet.getPortletId());
 		Assert.assertEquals(existingPortlet.getRoles(), newPortlet.getRoles());
 		Assert.assertEquals(existingPortlet.getActive(), newPortlet.getActive());
+		Assert.assertEquals(existingPortlet.getCompanyId(),
+			newPortlet.getCompanyId());
 	}
 
 	@Test
@@ -180,8 +180,8 @@ public class PortletPersistenceTest {
 
 	protected OrderByComparator<Portlet> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Portlet", "mvccVersion",
-			true, "id", true, "companyId", true, "portletId", true, "roles",
-			true, "active", true);
+			true, "id", true, "portletId", true, "roles", true, "active", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -397,13 +397,13 @@ public class PortletPersistenceTest {
 
 		portlet.setMvccVersion(RandomTestUtil.nextLong());
 
-		portlet.setCompanyId(RandomTestUtil.nextLong());
-
 		portlet.setPortletId(RandomTestUtil.randomString());
 
 		portlet.setRoles(RandomTestUtil.randomString());
 
 		portlet.setActive(RandomTestUtil.randomBoolean());
+
+		portlet.setCompanyId(RandomTestUtil.nextLong());
 
 		_portlets.add(_persistence.update(portlet));
 

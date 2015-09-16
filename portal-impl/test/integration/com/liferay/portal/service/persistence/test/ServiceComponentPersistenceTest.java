@@ -125,6 +125,8 @@ public class ServiceComponentPersistenceTest {
 
 		newServiceComponent.setData(RandomTestUtil.randomString());
 
+		newServiceComponent.setCompanyId(RandomTestUtil.nextLong());
+
 		_serviceComponents.add(_persistence.update(newServiceComponent));
 
 		ServiceComponent existingServiceComponent = _persistence.findByPrimaryKey(newServiceComponent.getPrimaryKey());
@@ -141,6 +143,8 @@ public class ServiceComponentPersistenceTest {
 			newServiceComponent.getBuildDate());
 		Assert.assertEquals(existingServiceComponent.getData(),
 			newServiceComponent.getData());
+		Assert.assertEquals(existingServiceComponent.getCompanyId(),
+			newServiceComponent.getCompanyId());
 	}
 
 	@Test
@@ -186,7 +190,7 @@ public class ServiceComponentPersistenceTest {
 	protected OrderByComparator<ServiceComponent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ServiceComponent",
 			"mvccVersion", true, "serviceComponentId", true, "buildNamespace",
-			true, "buildNumber", true, "buildDate", true);
+			true, "buildNumber", true, "buildDate", true, "companyId", true);
 	}
 
 	@Test
@@ -417,6 +421,8 @@ public class ServiceComponentPersistenceTest {
 		serviceComponent.setBuildDate(RandomTestUtil.nextLong());
 
 		serviceComponent.setData(RandomTestUtil.randomString());
+
+		serviceComponent.setCompanyId(RandomTestUtil.nextLong());
 
 		_serviceComponents.add(_persistence.update(serviceComponent));
 

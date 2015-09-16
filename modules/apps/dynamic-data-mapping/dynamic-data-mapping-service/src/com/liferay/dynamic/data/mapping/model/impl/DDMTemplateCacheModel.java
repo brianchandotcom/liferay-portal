@@ -74,8 +74,6 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		sb.append(templateId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -120,6 +118,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		sb.append(smallImageURL);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,7 +138,6 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 
 		ddmTemplateImpl.setTemplateId(templateId);
 		ddmTemplateImpl.setGroupId(groupId);
-		ddmTemplateImpl.setCompanyId(companyId);
 		ddmTemplateImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -249,6 +248,8 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 			ddmTemplateImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		ddmTemplateImpl.setCompanyId(companyId);
+
 		ddmTemplateImpl.resetOriginalValues();
 
 		return ddmTemplateImpl;
@@ -259,7 +260,6 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		uuid = objectInput.readUTF();
 		templateId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		versionUserId = objectInput.readLong();
@@ -282,6 +282,7 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		smallImageId = objectInput.readLong();
 		smallImageURL = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -296,7 +297,6 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 
 		objectOutput.writeLong(templateId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -389,12 +389,12 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long templateId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long versionUserId;
@@ -417,4 +417,5 @@ public class DDMTemplateCacheModel implements CacheModel<DDMTemplate>,
 	public long smallImageId;
 	public String smallImageURL;
 	public long lastPublishDate;
+	public long companyId;
 }

@@ -16,6 +16,7 @@ package com.liferay.portlet.trash.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.portlet.trash.NoSuchEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -2468,6 +2470,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		trashEntry.setNew(true);
 		trashEntry.setPrimaryKey(entryId);
 
+		trashEntry.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return trashEntry;
 	}
 
@@ -2672,7 +2676,6 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 
 		trashEntryImpl.setEntryId(trashEntry.getEntryId());
 		trashEntryImpl.setGroupId(trashEntry.getGroupId());
-		trashEntryImpl.setCompanyId(trashEntry.getCompanyId());
 		trashEntryImpl.setUserId(trashEntry.getUserId());
 		trashEntryImpl.setUserName(trashEntry.getUserName());
 		trashEntryImpl.setCreateDate(trashEntry.getCreateDate());
@@ -2681,6 +2684,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		trashEntryImpl.setSystemEventSetKey(trashEntry.getSystemEventSetKey());
 		trashEntryImpl.setTypeSettings(trashEntry.getTypeSettings());
 		trashEntryImpl.setStatus(trashEntry.getStatus());
+		trashEntryImpl.setCompanyId(trashEntry.getCompanyId());
 
 		return trashEntryImpl;
 	}
@@ -3056,6 +3060,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_TRASHENTRY = "SELECT trashEntry FROM TrashEntry trashEntry";
 	private static final String _SQL_SELECT_TRASHENTRY_WHERE_PKS_IN = "SELECT trashEntry FROM TrashEntry trashEntry WHERE entryId IN (";
 	private static final String _SQL_SELECT_TRASHENTRY_WHERE = "SELECT trashEntry FROM TrashEntry trashEntry WHERE ";

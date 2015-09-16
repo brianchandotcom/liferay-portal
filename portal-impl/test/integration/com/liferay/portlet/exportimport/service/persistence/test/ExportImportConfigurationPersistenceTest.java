@@ -118,8 +118,6 @@ public class ExportImportConfigurationPersistenceTest {
 
 		newExportImportConfiguration.setGroupId(RandomTestUtil.nextLong());
 
-		newExportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
-
 		newExportImportConfiguration.setUserId(RandomTestUtil.nextLong());
 
 		newExportImportConfiguration.setUserName(RandomTestUtil.randomString());
@@ -144,6 +142,8 @@ public class ExportImportConfigurationPersistenceTest {
 
 		newExportImportConfiguration.setStatusDate(RandomTestUtil.nextDate());
 
+		newExportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
+
 		_exportImportConfigurations.add(_persistence.update(
 				newExportImportConfiguration));
 
@@ -155,8 +155,6 @@ public class ExportImportConfigurationPersistenceTest {
 			newExportImportConfiguration.getExportImportConfigurationId());
 		Assert.assertEquals(existingExportImportConfiguration.getGroupId(),
 			newExportImportConfiguration.getGroupId());
-		Assert.assertEquals(existingExportImportConfiguration.getCompanyId(),
-			newExportImportConfiguration.getCompanyId());
 		Assert.assertEquals(existingExportImportConfiguration.getUserId(),
 			newExportImportConfiguration.getUserId());
 		Assert.assertEquals(existingExportImportConfiguration.getUserName(),
@@ -185,6 +183,8 @@ public class ExportImportConfigurationPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingExportImportConfiguration.getStatusDate()),
 			Time.getShortTimestamp(newExportImportConfiguration.getStatusDate()));
+		Assert.assertEquals(existingExportImportConfiguration.getCompanyId(),
+			newExportImportConfiguration.getCompanyId());
 	}
 
 	@Test
@@ -251,10 +251,10 @@ public class ExportImportConfigurationPersistenceTest {
 	protected OrderByComparator<ExportImportConfiguration> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExportImportConfiguration",
 			"mvccVersion", true, "exportImportConfigurationId", true,
-			"groupId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "name", true,
-			"description", true, "type", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"groupId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "name", true, "description", true,
+			"type", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true, "companyId", true);
 	}
 
 	@Test
@@ -473,8 +473,6 @@ public class ExportImportConfigurationPersistenceTest {
 
 		exportImportConfiguration.setGroupId(RandomTestUtil.nextLong());
 
-		exportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
-
 		exportImportConfiguration.setUserId(RandomTestUtil.nextLong());
 
 		exportImportConfiguration.setUserName(RandomTestUtil.randomString());
@@ -498,6 +496,8 @@ public class ExportImportConfigurationPersistenceTest {
 		exportImportConfiguration.setStatusByUserName(RandomTestUtil.randomString());
 
 		exportImportConfiguration.setStatusDate(RandomTestUtil.nextDate());
+
+		exportImportConfiguration.setCompanyId(RandomTestUtil.nextLong());
 
 		_exportImportConfigurations.add(_persistence.update(
 				exportImportConfiguration));

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface SocialActivitySetModel extends AttachedModel,
-	BaseModel<SocialActivitySet> {
+	BaseModel<SocialActivitySet>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,20 +89,6 @@ public interface SocialActivitySetModel extends AttachedModel,
 	 * @param groupId the group ID of this social activity set
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this social activity set.
-	 *
-	 * @return the company ID of this social activity set
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this social activity set.
-	 *
-	 * @param companyId the company ID of this social activity set
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this social activity set.
@@ -242,6 +229,22 @@ public interface SocialActivitySetModel extends AttachedModel,
 	 * @param activityCount the activity count of this social activity set
 	 */
 	public void setActivityCount(int activityCount);
+
+	/**
+	 * Returns the company ID of this social activity set.
+	 *
+	 * @return the company ID of this social activity set
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this social activity set.
+	 *
+	 * @param companyId the company ID of this social activity set
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

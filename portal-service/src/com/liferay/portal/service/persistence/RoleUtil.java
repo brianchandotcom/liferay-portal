@@ -542,217 +542,6 @@ public class RoleUtil {
 	}
 
 	/**
-	* Returns all the roles where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching roles
-	*/
-	public static List<Role> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	* Returns a range of all the roles where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of roles
-	* @param end the upper bound of the range of roles (not inclusive)
-	* @return the range of matching roles
-	*/
-	public static List<Role> findByCompanyId(long companyId, int start, int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the roles where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of roles
-	* @param end the upper bound of the range of roles (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching roles
-	*/
-	public static List<Role> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<Role> orderByComparator) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first role in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching role
-	* @throws NoSuchRoleException if a matching role could not be found
-	*/
-	public static Role findByCompanyId_First(long companyId,
-		OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.NoSuchRoleException {
-		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the first role in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching role, or <code>null</code> if a matching role could not be found
-	*/
-	public static Role fetchByCompanyId_First(long companyId,
-		OrderByComparator<Role> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last role in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching role
-	* @throws NoSuchRoleException if a matching role could not be found
-	*/
-	public static Role findByCompanyId_Last(long companyId,
-		OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.NoSuchRoleException {
-		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last role in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching role, or <code>null</code> if a matching role could not be found
-	*/
-	public static Role fetchByCompanyId_Last(long companyId,
-		OrderByComparator<Role> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the roles before and after the current role in the ordered set where companyId = &#63;.
-	*
-	* @param roleId the primary key of the current role
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next role
-	* @throws NoSuchRoleException if a role with the primary key could not be found
-	*/
-	public static Role[] findByCompanyId_PrevAndNext(long roleId,
-		long companyId, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.NoSuchRoleException {
-		return getPersistence()
-				   .findByCompanyId_PrevAndNext(roleId, companyId,
-			orderByComparator);
-	}
-
-	/**
-	* Returns all the roles that the user has permission to view where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching roles that the user has permission to view
-	*/
-	public static List<Role> filterFindByCompanyId(long companyId) {
-		return getPersistence().filterFindByCompanyId(companyId);
-	}
-
-	/**
-	* Returns a range of all the roles that the user has permission to view where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of roles
-	* @param end the upper bound of the range of roles (not inclusive)
-	* @return the range of matching roles that the user has permission to view
-	*/
-	public static List<Role> filterFindByCompanyId(long companyId, int start,
-		int end) {
-		return getPersistence().filterFindByCompanyId(companyId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the roles that the user has permissions to view where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of roles
-	* @param end the upper bound of the range of roles (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching roles that the user has permission to view
-	*/
-	public static List<Role> filterFindByCompanyId(long companyId, int start,
-		int end, OrderByComparator<Role> orderByComparator) {
-		return getPersistence()
-				   .filterFindByCompanyId(companyId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where companyId = &#63;.
-	*
-	* @param roleId the primary key of the current role
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next role
-	* @throws NoSuchRoleException if a role with the primary key could not be found
-	*/
-	public static Role[] filterFindByCompanyId_PrevAndNext(long roleId,
-		long companyId, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.NoSuchRoleException {
-		return getPersistence()
-				   .filterFindByCompanyId_PrevAndNext(roleId, companyId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the roles where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of roles where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching roles
-	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of roles that the user has permission to view where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching roles that the user has permission to view
-	*/
-	public static int filterCountByCompanyId(long companyId) {
-		return getPersistence().filterCountByCompanyId(companyId);
-	}
-
-	/**
 	* Returns all the roles where name = &#63;.
 	*
 	* @param name the name
@@ -1365,6 +1154,441 @@ public class RoleUtil {
 	}
 
 	/**
+	* Returns all the roles where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching roles
+	*/
+	public static List<Role> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the roles where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of roles
+	* @param end the upper bound of the range of roles (not inclusive)
+	* @return the range of matching roles
+	*/
+	public static List<Role> findByCompanyId(long companyId, int start, int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the roles where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of roles
+	* @param end the upper bound of the range of roles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching roles
+	*/
+	public static List<Role> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<Role> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first role in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching role
+	* @throws NoSuchRoleException if a matching role could not be found
+	*/
+	public static Role findByCompanyId_First(long companyId,
+		OrderByComparator<Role> orderByComparator)
+		throws com.liferay.portal.NoSuchRoleException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first role in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching role, or <code>null</code> if a matching role could not be found
+	*/
+	public static Role fetchByCompanyId_First(long companyId,
+		OrderByComparator<Role> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last role in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching role
+	* @throws NoSuchRoleException if a matching role could not be found
+	*/
+	public static Role findByCompanyId_Last(long companyId,
+		OrderByComparator<Role> orderByComparator)
+		throws com.liferay.portal.NoSuchRoleException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last role in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching role, or <code>null</code> if a matching role could not be found
+	*/
+	public static Role fetchByCompanyId_Last(long companyId,
+		OrderByComparator<Role> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the roles before and after the current role in the ordered set where companyId = &#63;.
+	*
+	* @param roleId the primary key of the current role
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next role
+	* @throws NoSuchRoleException if a role with the primary key could not be found
+	*/
+	public static Role[] findByCompanyId_PrevAndNext(long roleId,
+		long companyId, OrderByComparator<Role> orderByComparator)
+		throws com.liferay.portal.NoSuchRoleException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(roleId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the roles that the user has permission to view where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching roles that the user has permission to view
+	*/
+	public static List<Role> filterFindByCompanyId(long companyId) {
+		return getPersistence().filterFindByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the roles that the user has permission to view where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of roles
+	* @param end the upper bound of the range of roles (not inclusive)
+	* @return the range of matching roles that the user has permission to view
+	*/
+	public static List<Role> filterFindByCompanyId(long companyId, int start,
+		int end) {
+		return getPersistence().filterFindByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the roles that the user has permissions to view where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of roles
+	* @param end the upper bound of the range of roles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching roles that the user has permission to view
+	*/
+	public static List<Role> filterFindByCompanyId(long companyId, int start,
+		int end, OrderByComparator<Role> orderByComparator) {
+		return getPersistence()
+				   .filterFindByCompanyId(companyId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where companyId = &#63;.
+	*
+	* @param roleId the primary key of the current role
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next role
+	* @throws NoSuchRoleException if a role with the primary key could not be found
+	*/
+	public static Role[] filterFindByCompanyId_PrevAndNext(long roleId,
+		long companyId, OrderByComparator<Role> orderByComparator)
+		throws com.liferay.portal.NoSuchRoleException {
+		return getPersistence()
+				   .filterFindByCompanyId_PrevAndNext(roleId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the roles where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of roles where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching roles
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of roles that the user has permission to view where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching roles that the user has permission to view
+	*/
+	public static int filterCountByCompanyId(long companyId) {
+		return getPersistence().filterCountByCompanyId(companyId);
+	}
+
+	/**
+	* Returns all the roles where type = &#63; and subtype = &#63;.
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @return the matching roles
+	*/
+	public static List<Role> findByT_S(int type, java.lang.String subtype) {
+		return getPersistence().findByT_S(type, subtype);
+	}
+
+	/**
+	* Returns a range of all the roles where type = &#63; and subtype = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @param start the lower bound of the range of roles
+	* @param end the upper bound of the range of roles (not inclusive)
+	* @return the range of matching roles
+	*/
+	public static List<Role> findByT_S(int type, java.lang.String subtype,
+		int start, int end) {
+		return getPersistence().findByT_S(type, subtype, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the roles where type = &#63; and subtype = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @param start the lower bound of the range of roles
+	* @param end the upper bound of the range of roles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching roles
+	*/
+	public static List<Role> findByT_S(int type, java.lang.String subtype,
+		int start, int end, OrderByComparator<Role> orderByComparator) {
+		return getPersistence()
+				   .findByT_S(type, subtype, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first role in the ordered set where type = &#63; and subtype = &#63;.
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching role
+	* @throws NoSuchRoleException if a matching role could not be found
+	*/
+	public static Role findByT_S_First(int type, java.lang.String subtype,
+		OrderByComparator<Role> orderByComparator)
+		throws com.liferay.portal.NoSuchRoleException {
+		return getPersistence().findByT_S_First(type, subtype, orderByComparator);
+	}
+
+	/**
+	* Returns the first role in the ordered set where type = &#63; and subtype = &#63;.
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching role, or <code>null</code> if a matching role could not be found
+	*/
+	public static Role fetchByT_S_First(int type, java.lang.String subtype,
+		OrderByComparator<Role> orderByComparator) {
+		return getPersistence()
+				   .fetchByT_S_First(type, subtype, orderByComparator);
+	}
+
+	/**
+	* Returns the last role in the ordered set where type = &#63; and subtype = &#63;.
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching role
+	* @throws NoSuchRoleException if a matching role could not be found
+	*/
+	public static Role findByT_S_Last(int type, java.lang.String subtype,
+		OrderByComparator<Role> orderByComparator)
+		throws com.liferay.portal.NoSuchRoleException {
+		return getPersistence().findByT_S_Last(type, subtype, orderByComparator);
+	}
+
+	/**
+	* Returns the last role in the ordered set where type = &#63; and subtype = &#63;.
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching role, or <code>null</code> if a matching role could not be found
+	*/
+	public static Role fetchByT_S_Last(int type, java.lang.String subtype,
+		OrderByComparator<Role> orderByComparator) {
+		return getPersistence().fetchByT_S_Last(type, subtype, orderByComparator);
+	}
+
+	/**
+	* Returns the roles before and after the current role in the ordered set where type = &#63; and subtype = &#63;.
+	*
+	* @param roleId the primary key of the current role
+	* @param type the type
+	* @param subtype the subtype
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next role
+	* @throws NoSuchRoleException if a role with the primary key could not be found
+	*/
+	public static Role[] findByT_S_PrevAndNext(long roleId, int type,
+		java.lang.String subtype, OrderByComparator<Role> orderByComparator)
+		throws com.liferay.portal.NoSuchRoleException {
+		return getPersistence()
+				   .findByT_S_PrevAndNext(roleId, type, subtype,
+			orderByComparator);
+	}
+
+	/**
+	* Returns all the roles that the user has permission to view where type = &#63; and subtype = &#63;.
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @return the matching roles that the user has permission to view
+	*/
+	public static List<Role> filterFindByT_S(int type, java.lang.String subtype) {
+		return getPersistence().filterFindByT_S(type, subtype);
+	}
+
+	/**
+	* Returns a range of all the roles that the user has permission to view where type = &#63; and subtype = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @param start the lower bound of the range of roles
+	* @param end the upper bound of the range of roles (not inclusive)
+	* @return the range of matching roles that the user has permission to view
+	*/
+	public static List<Role> filterFindByT_S(int type,
+		java.lang.String subtype, int start, int end) {
+		return getPersistence().filterFindByT_S(type, subtype, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the roles that the user has permissions to view where type = &#63; and subtype = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @param start the lower bound of the range of roles
+	* @param end the upper bound of the range of roles (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching roles that the user has permission to view
+	*/
+	public static List<Role> filterFindByT_S(int type,
+		java.lang.String subtype, int start, int end,
+		OrderByComparator<Role> orderByComparator) {
+		return getPersistence()
+				   .filterFindByT_S(type, subtype, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where type = &#63; and subtype = &#63;.
+	*
+	* @param roleId the primary key of the current role
+	* @param type the type
+	* @param subtype the subtype
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next role
+	* @throws NoSuchRoleException if a role with the primary key could not be found
+	*/
+	public static Role[] filterFindByT_S_PrevAndNext(long roleId, int type,
+		java.lang.String subtype, OrderByComparator<Role> orderByComparator)
+		throws com.liferay.portal.NoSuchRoleException {
+		return getPersistence()
+				   .filterFindByT_S_PrevAndNext(roleId, type, subtype,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the roles where type = &#63; and subtype = &#63; from the database.
+	*
+	* @param type the type
+	* @param subtype the subtype
+	*/
+	public static void removeByT_S(int type, java.lang.String subtype) {
+		getPersistence().removeByT_S(type, subtype);
+	}
+
+	/**
+	* Returns the number of roles where type = &#63; and subtype = &#63;.
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @return the number of matching roles
+	*/
+	public static int countByT_S(int type, java.lang.String subtype) {
+		return getPersistence().countByT_S(type, subtype);
+	}
+
+	/**
+	* Returns the number of roles that the user has permission to view where type = &#63; and subtype = &#63;.
+	*
+	* @param type the type
+	* @param subtype the subtype
+	* @return the number of matching roles that the user has permission to view
+	*/
+	public static int filterCountByT_S(int type, java.lang.String subtype) {
+		return getPersistence().filterCountByT_S(type, subtype);
+	}
+
+	/**
 	* Returns the role where companyId = &#63; and name = &#63; or throws a {@link NoSuchRoleException} if it could not be found.
 	*
 	* @param companyId the company ID
@@ -1774,230 +1998,6 @@ public class RoleUtil {
 	*/
 	public static int filterCountByC_T(long companyId, int[] types) {
 		return getPersistence().filterCountByC_T(companyId, types);
-	}
-
-	/**
-	* Returns all the roles where type = &#63; and subtype = &#63;.
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @return the matching roles
-	*/
-	public static List<Role> findByT_S(int type, java.lang.String subtype) {
-		return getPersistence().findByT_S(type, subtype);
-	}
-
-	/**
-	* Returns a range of all the roles where type = &#63; and subtype = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @param start the lower bound of the range of roles
-	* @param end the upper bound of the range of roles (not inclusive)
-	* @return the range of matching roles
-	*/
-	public static List<Role> findByT_S(int type, java.lang.String subtype,
-		int start, int end) {
-		return getPersistence().findByT_S(type, subtype, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the roles where type = &#63; and subtype = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @param start the lower bound of the range of roles
-	* @param end the upper bound of the range of roles (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching roles
-	*/
-	public static List<Role> findByT_S(int type, java.lang.String subtype,
-		int start, int end, OrderByComparator<Role> orderByComparator) {
-		return getPersistence()
-				   .findByT_S(type, subtype, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first role in the ordered set where type = &#63; and subtype = &#63;.
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching role
-	* @throws NoSuchRoleException if a matching role could not be found
-	*/
-	public static Role findByT_S_First(int type, java.lang.String subtype,
-		OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.NoSuchRoleException {
-		return getPersistence().findByT_S_First(type, subtype, orderByComparator);
-	}
-
-	/**
-	* Returns the first role in the ordered set where type = &#63; and subtype = &#63;.
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching role, or <code>null</code> if a matching role could not be found
-	*/
-	public static Role fetchByT_S_First(int type, java.lang.String subtype,
-		OrderByComparator<Role> orderByComparator) {
-		return getPersistence()
-				   .fetchByT_S_First(type, subtype, orderByComparator);
-	}
-
-	/**
-	* Returns the last role in the ordered set where type = &#63; and subtype = &#63;.
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching role
-	* @throws NoSuchRoleException if a matching role could not be found
-	*/
-	public static Role findByT_S_Last(int type, java.lang.String subtype,
-		OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.NoSuchRoleException {
-		return getPersistence().findByT_S_Last(type, subtype, orderByComparator);
-	}
-
-	/**
-	* Returns the last role in the ordered set where type = &#63; and subtype = &#63;.
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching role, or <code>null</code> if a matching role could not be found
-	*/
-	public static Role fetchByT_S_Last(int type, java.lang.String subtype,
-		OrderByComparator<Role> orderByComparator) {
-		return getPersistence().fetchByT_S_Last(type, subtype, orderByComparator);
-	}
-
-	/**
-	* Returns the roles before and after the current role in the ordered set where type = &#63; and subtype = &#63;.
-	*
-	* @param roleId the primary key of the current role
-	* @param type the type
-	* @param subtype the subtype
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next role
-	* @throws NoSuchRoleException if a role with the primary key could not be found
-	*/
-	public static Role[] findByT_S_PrevAndNext(long roleId, int type,
-		java.lang.String subtype, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.NoSuchRoleException {
-		return getPersistence()
-				   .findByT_S_PrevAndNext(roleId, type, subtype,
-			orderByComparator);
-	}
-
-	/**
-	* Returns all the roles that the user has permission to view where type = &#63; and subtype = &#63;.
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @return the matching roles that the user has permission to view
-	*/
-	public static List<Role> filterFindByT_S(int type, java.lang.String subtype) {
-		return getPersistence().filterFindByT_S(type, subtype);
-	}
-
-	/**
-	* Returns a range of all the roles that the user has permission to view where type = &#63; and subtype = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @param start the lower bound of the range of roles
-	* @param end the upper bound of the range of roles (not inclusive)
-	* @return the range of matching roles that the user has permission to view
-	*/
-	public static List<Role> filterFindByT_S(int type,
-		java.lang.String subtype, int start, int end) {
-		return getPersistence().filterFindByT_S(type, subtype, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the roles that the user has permissions to view where type = &#63; and subtype = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RoleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @param start the lower bound of the range of roles
-	* @param end the upper bound of the range of roles (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching roles that the user has permission to view
-	*/
-	public static List<Role> filterFindByT_S(int type,
-		java.lang.String subtype, int start, int end,
-		OrderByComparator<Role> orderByComparator) {
-		return getPersistence()
-				   .filterFindByT_S(type, subtype, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the roles before and after the current role in the ordered set of roles that the user has permission to view where type = &#63; and subtype = &#63;.
-	*
-	* @param roleId the primary key of the current role
-	* @param type the type
-	* @param subtype the subtype
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next role
-	* @throws NoSuchRoleException if a role with the primary key could not be found
-	*/
-	public static Role[] filterFindByT_S_PrevAndNext(long roleId, int type,
-		java.lang.String subtype, OrderByComparator<Role> orderByComparator)
-		throws com.liferay.portal.NoSuchRoleException {
-		return getPersistence()
-				   .filterFindByT_S_PrevAndNext(roleId, type, subtype,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the roles where type = &#63; and subtype = &#63; from the database.
-	*
-	* @param type the type
-	* @param subtype the subtype
-	*/
-	public static void removeByT_S(int type, java.lang.String subtype) {
-		getPersistence().removeByT_S(type, subtype);
-	}
-
-	/**
-	* Returns the number of roles where type = &#63; and subtype = &#63;.
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @return the number of matching roles
-	*/
-	public static int countByT_S(int type, java.lang.String subtype) {
-		return getPersistence().countByT_S(type, subtype);
-	}
-
-	/**
-	* Returns the number of roles that the user has permission to view where type = &#63; and subtype = &#63;.
-	*
-	* @param type the type
-	* @param subtype the subtype
-	* @return the number of matching roles that the user has permission to view
-	*/
-	public static int filterCountByT_S(int type, java.lang.String subtype) {
-		return getPersistence().filterCountByT_S(type, subtype);
 	}
 
 	/**

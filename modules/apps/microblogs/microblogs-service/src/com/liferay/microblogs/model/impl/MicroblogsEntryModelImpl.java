@@ -72,7 +72,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	public static final String TABLE_NAME = "MicroblogsEntry";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "microblogsEntryId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -82,13 +81,13 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 			{ "content", Types.VARCHAR },
 			{ "type_", Types.INTEGER },
 			{ "parentMicroblogsEntryId", Types.BIGINT },
-			{ "socialRelationType", Types.INTEGER }
+			{ "socialRelationType", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("microblogsEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -99,9 +98,10 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("parentMicroblogsEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("socialRelationType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MicroblogsEntry (microblogsEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creatorClassNameId LONG,creatorClassPK LONG,content STRING null,type_ INTEGER,parentMicroblogsEntryId LONG,socialRelationType INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table MicroblogsEntry (microblogsEntryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,creatorClassNameId LONG,creatorClassPK LONG,content STRING null,type_ INTEGER,parentMicroblogsEntryId LONG,socialRelationType INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MicroblogsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY microblogsEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MicroblogsEntry.createDate DESC";
@@ -140,7 +140,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		MicroblogsEntry model = new MicroblogsEntryImpl();
 
 		model.setMicroblogsEntryId(soapModel.getMicroblogsEntryId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -151,6 +150,7 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		model.setType(soapModel.getType());
 		model.setParentMicroblogsEntryId(soapModel.getParentMicroblogsEntryId());
 		model.setSocialRelationType(soapModel.getSocialRelationType());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -217,7 +217,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("microblogsEntryId", getMicroblogsEntryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -228,6 +227,7 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		attributes.put("type", getType());
 		attributes.put("parentMicroblogsEntryId", getParentMicroblogsEntryId());
 		attributes.put("socialRelationType", getSocialRelationType());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -241,12 +241,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 
 		if (microblogsEntryId != null) {
 			setMicroblogsEntryId(microblogsEntryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -310,6 +304,12 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		if (socialRelationType != null) {
 			setSocialRelationType(socialRelationType);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -321,29 +321,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	@Override
 	public void setMicroblogsEntryId(long microblogsEntryId) {
 		_microblogsEntryId = microblogsEntryId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -570,6 +547,29 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		return _originalSocialRelationType;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -602,7 +602,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		MicroblogsEntryImpl microblogsEntryImpl = new MicroblogsEntryImpl();
 
 		microblogsEntryImpl.setMicroblogsEntryId(getMicroblogsEntryId());
-		microblogsEntryImpl.setCompanyId(getCompanyId());
 		microblogsEntryImpl.setUserId(getUserId());
 		microblogsEntryImpl.setUserName(getUserName());
 		microblogsEntryImpl.setCreateDate(getCreateDate());
@@ -613,6 +612,7 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		microblogsEntryImpl.setType(getType());
 		microblogsEntryImpl.setParentMicroblogsEntryId(getParentMicroblogsEntryId());
 		microblogsEntryImpl.setSocialRelationType(getSocialRelationType());
+		microblogsEntryImpl.setCompanyId(getCompanyId());
 
 		microblogsEntryImpl.resetOriginalValues();
 
@@ -676,10 +676,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	public void resetOriginalValues() {
 		MicroblogsEntryModelImpl microblogsEntryModelImpl = this;
 
-		microblogsEntryModelImpl._originalCompanyId = microblogsEntryModelImpl._companyId;
-
-		microblogsEntryModelImpl._setOriginalCompanyId = false;
-
 		microblogsEntryModelImpl._originalUserId = microblogsEntryModelImpl._userId;
 
 		microblogsEntryModelImpl._setOriginalUserId = false;
@@ -708,6 +704,10 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 
 		microblogsEntryModelImpl._setOriginalSocialRelationType = false;
 
+		microblogsEntryModelImpl._originalCompanyId = microblogsEntryModelImpl._companyId;
+
+		microblogsEntryModelImpl._setOriginalCompanyId = false;
+
 		microblogsEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -716,8 +716,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		MicroblogsEntryCacheModel microblogsEntryCacheModel = new MicroblogsEntryCacheModel();
 
 		microblogsEntryCacheModel.microblogsEntryId = getMicroblogsEntryId();
-
-		microblogsEntryCacheModel.companyId = getCompanyId();
 
 		microblogsEntryCacheModel.userId = getUserId();
 
@@ -765,6 +763,8 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 
 		microblogsEntryCacheModel.socialRelationType = getSocialRelationType();
 
+		microblogsEntryCacheModel.companyId = getCompanyId();
+
 		return microblogsEntryCacheModel;
 	}
 
@@ -774,8 +774,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 
 		sb.append("{microblogsEntryId=");
 		sb.append(getMicroblogsEntryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -796,6 +794,8 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		sb.append(getParentMicroblogsEntryId());
 		sb.append(", socialRelationType=");
 		sb.append(getSocialRelationType());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -812,10 +812,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 		sb.append(
 			"<column><column-name>microblogsEntryId</column-name><column-value><![CDATA[");
 		sb.append(getMicroblogsEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -857,6 +853,10 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 			"<column><column-name>socialRelationType</column-name><column-value><![CDATA[");
 		sb.append(getSocialRelationType());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -868,9 +868,6 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 			MicroblogsEntry.class
 		};
 	private long _microblogsEntryId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -895,6 +892,9 @@ public class MicroblogsEntryModelImpl extends BaseModelImpl<MicroblogsEntry>
 	private int _socialRelationType;
 	private int _originalSocialRelationType;
 	private boolean _setOriginalSocialRelationType;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private MicroblogsEntry _escapedModel;
 }

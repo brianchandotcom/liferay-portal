@@ -55,7 +55,6 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 
 		attributes.put("frameworkVersionId", getFrameworkVersionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -64,6 +63,7 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 		attributes.put("url", getUrl());
 		attributes.put("active", getActive());
 		attributes.put("priority", getPriority());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -80,12 +80,6 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -134,6 +128,12 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

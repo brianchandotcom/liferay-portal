@@ -89,8 +89,6 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		sb.append(backgroundTaskId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -115,6 +113,8 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		sb.append(status);
 		sb.append(", statusMessage=");
 		sb.append(statusMessage);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -127,7 +127,6 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		backgroundTaskImpl.setMvccVersion(mvccVersion);
 		backgroundTaskImpl.setBackgroundTaskId(backgroundTaskId);
 		backgroundTaskImpl.setGroupId(groupId);
-		backgroundTaskImpl.setCompanyId(companyId);
 		backgroundTaskImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -191,6 +190,8 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 			backgroundTaskImpl.setStatusMessage(statusMessage);
 		}
 
+		backgroundTaskImpl.setCompanyId(companyId);
+
 		backgroundTaskImpl.resetOriginalValues();
 
 		return backgroundTaskImpl;
@@ -202,7 +203,6 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		mvccVersion = objectInput.readLong();
 		backgroundTaskId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -215,6 +215,7 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		completionDate = objectInput.readLong();
 		status = objectInput.readInt();
 		statusMessage = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -223,7 +224,6 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(backgroundTaskId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -268,12 +268,13 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		else {
 			objectOutput.writeUTF(statusMessage);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long backgroundTaskId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -286,4 +287,5 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	public long completionDate;
 	public int status;
 	public String statusMessage;
+	public long companyId;
 }

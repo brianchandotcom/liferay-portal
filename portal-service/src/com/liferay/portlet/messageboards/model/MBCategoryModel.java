@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -49,7 +50,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
-	StagedGroupedModel, TrashedModel, WorkflowedModel {
+	PartitionableModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -116,22 +117,6 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this message boards category.
-	 *
-	 * @return the company ID of this message boards category
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this message boards category.
-	 *
-	 * @param companyId the company ID of this message boards category
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this message boards category.
@@ -411,6 +396,22 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the company ID of this message boards category.
+	 *
+	 * @return the company ID of this message boards category
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this message boards category.
+	 *
+	 * @param companyId the company ID of this message boards category
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the trash entry created when this message boards category was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards category.

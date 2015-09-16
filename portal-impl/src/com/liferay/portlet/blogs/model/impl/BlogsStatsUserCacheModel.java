@@ -71,8 +71,6 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 		sb.append(statsUserId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", entryCount=");
@@ -85,6 +83,8 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 		sb.append(ratingsTotalScore);
 		sb.append(", ratingsAverageScore=");
 		sb.append(ratingsAverageScore);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,7 +96,6 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 
 		blogsStatsUserImpl.setStatsUserId(statsUserId);
 		blogsStatsUserImpl.setGroupId(groupId);
-		blogsStatsUserImpl.setCompanyId(companyId);
 		blogsStatsUserImpl.setUserId(userId);
 		blogsStatsUserImpl.setEntryCount(entryCount);
 
@@ -110,6 +109,7 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 		blogsStatsUserImpl.setRatingsTotalEntries(ratingsTotalEntries);
 		blogsStatsUserImpl.setRatingsTotalScore(ratingsTotalScore);
 		blogsStatsUserImpl.setRatingsAverageScore(ratingsAverageScore);
+		blogsStatsUserImpl.setCompanyId(companyId);
 
 		blogsStatsUserImpl.resetOriginalValues();
 
@@ -120,13 +120,13 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		statsUserId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		entryCount = objectInput.readInt();
 		lastPostDate = objectInput.readLong();
 		ratingsTotalEntries = objectInput.readInt();
 		ratingsTotalScore = objectInput.readDouble();
 		ratingsAverageScore = objectInput.readDouble();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -134,22 +134,22 @@ public class BlogsStatsUserCacheModel implements CacheModel<BlogsStatsUser>,
 		throws IOException {
 		objectOutput.writeLong(statsUserId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeInt(entryCount);
 		objectOutput.writeLong(lastPostDate);
 		objectOutput.writeInt(ratingsTotalEntries);
 		objectOutput.writeDouble(ratingsTotalScore);
 		objectOutput.writeDouble(ratingsAverageScore);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long statsUserId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public int entryCount;
 	public long lastPostDate;
 	public int ratingsTotalEntries;
 	public double ratingsTotalScore;
 	public double ratingsAverageScore;
+	public long companyId;
 }

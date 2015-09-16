@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchPortletItemException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1706,6 +1707,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		portletItem.setNew(true);
 		portletItem.setPrimaryKey(portletItemId);
 
+		portletItem.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return portletItem;
 	}
 
@@ -1922,7 +1925,6 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		portletItemImpl.setMvccVersion(portletItem.getMvccVersion());
 		portletItemImpl.setPortletItemId(portletItem.getPortletItemId());
 		portletItemImpl.setGroupId(portletItem.getGroupId());
-		portletItemImpl.setCompanyId(portletItem.getCompanyId());
 		portletItemImpl.setUserId(portletItem.getUserId());
 		portletItemImpl.setUserName(portletItem.getUserName());
 		portletItemImpl.setCreateDate(portletItem.getCreateDate());
@@ -1930,6 +1932,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		portletItemImpl.setName(portletItem.getName());
 		portletItemImpl.setPortletId(portletItem.getPortletId());
 		portletItemImpl.setClassNameId(portletItem.getClassNameId());
+		portletItemImpl.setCompanyId(portletItem.getCompanyId());
 
 		return portletItemImpl;
 	}
@@ -2305,6 +2308,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_PORTLETITEM = "SELECT portletItem FROM PortletItem portletItem";
 	private static final String _SQL_SELECT_PORTLETITEM_WHERE_PKS_IN = "SELECT portletItem FROM PortletItem portletItem WHERE portletItemId IN (";
 	private static final String _SQL_SELECT_PORTLETITEM_WHERE = "SELECT portletItem FROM PortletItem portletItem WHERE ";

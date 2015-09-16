@@ -123,8 +123,6 @@ public class KaleoTransitionPersistenceTest {
 
 		newKaleoTransition.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoTransition.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoTransition.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoTransition.setUserName(RandomTestUtil.randomString());
@@ -151,6 +149,8 @@ public class KaleoTransitionPersistenceTest {
 
 		newKaleoTransition.setDefaultTransition(RandomTestUtil.randomBoolean());
 
+		newKaleoTransition.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoTransitions.add(_persistence.update(newKaleoTransition));
 
 		KaleoTransition existingKaleoTransition = _persistence.findByPrimaryKey(newKaleoTransition.getPrimaryKey());
@@ -159,8 +159,6 @@ public class KaleoTransitionPersistenceTest {
 			newKaleoTransition.getKaleoTransitionId());
 		Assert.assertEquals(existingKaleoTransition.getGroupId(),
 			newKaleoTransition.getGroupId());
-		Assert.assertEquals(existingKaleoTransition.getCompanyId(),
-			newKaleoTransition.getCompanyId());
 		Assert.assertEquals(existingKaleoTransition.getUserId(),
 			newKaleoTransition.getUserId());
 		Assert.assertEquals(existingKaleoTransition.getUserName(),
@@ -189,13 +187,8 @@ public class KaleoTransitionPersistenceTest {
 			newKaleoTransition.getTargetKaleoNodeName());
 		Assert.assertEquals(existingKaleoTransition.getDefaultTransition(),
 			newKaleoTransition.getDefaultTransition());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingKaleoTransition.getCompanyId(),
+			newKaleoTransition.getCompanyId());
 	}
 
 	@Test
@@ -210,6 +203,13 @@ public class KaleoTransitionPersistenceTest {
 		_persistence.countByKaleoNodeId(RandomTestUtil.nextLong());
 
 		_persistence.countByKaleoNodeId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -253,12 +253,13 @@ public class KaleoTransitionPersistenceTest {
 
 	protected OrderByComparator<KaleoTransition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTransition",
-			"kaleoTransitionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionId", true, "kaleoNodeId",
-			true, "name", true, "description", true, "sourceKaleoNodeId", true,
+			"kaleoTransitionId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoDefinitionId", true, "kaleoNodeId", true, "name", true,
+			"description", true, "sourceKaleoNodeId", true,
 			"sourceKaleoNodeName", true, "targetKaleoNodeId", true,
-			"targetKaleoNodeName", true, "defaultTransition", true);
+			"targetKaleoNodeName", true, "defaultTransition", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -490,8 +491,6 @@ public class KaleoTransitionPersistenceTest {
 
 		kaleoTransition.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoTransition.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoTransition.setUserId(RandomTestUtil.nextLong());
 
 		kaleoTransition.setUserName(RandomTestUtil.randomString());
@@ -517,6 +516,8 @@ public class KaleoTransitionPersistenceTest {
 		kaleoTransition.setTargetKaleoNodeName(RandomTestUtil.randomString());
 
 		kaleoTransition.setDefaultTransition(RandomTestUtil.randomBoolean());
+
+		kaleoTransition.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoTransitions.add(_persistence.update(kaleoTransition));
 

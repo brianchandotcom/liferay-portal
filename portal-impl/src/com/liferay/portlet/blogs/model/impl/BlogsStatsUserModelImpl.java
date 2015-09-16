@@ -66,29 +66,29 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "statsUserId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "entryCount", Types.INTEGER },
 			{ "lastPostDate", Types.TIMESTAMP },
 			{ "ratingsTotalEntries", Types.INTEGER },
 			{ "ratingsTotalScore", Types.DOUBLE },
-			{ "ratingsAverageScore", Types.DOUBLE }
+			{ "ratingsAverageScore", Types.DOUBLE },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("statsUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("entryCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPostDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("ratingsTotalEntries", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("ratingsTotalScore", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("ratingsAverageScore", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table BlogsStatsUser (statsUserId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,entryCount INTEGER,lastPostDate DATE null,ratingsTotalEntries INTEGER,ratingsTotalScore DOUBLE,ratingsAverageScore DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table BlogsStatsUser (statsUserId LONG not null primary key,groupId LONG,userId LONG,entryCount INTEGER,lastPostDate DATE null,ratingsTotalEntries INTEGER,ratingsTotalScore DOUBLE,ratingsAverageScore DOUBLE,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table BlogsStatsUser";
 	public static final String ORDER_BY_JPQL = " ORDER BY blogsStatsUser.entryCount DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY BlogsStatsUser.entryCount DESC";
@@ -151,13 +151,13 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 		attributes.put("statsUserId", getStatsUserId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("entryCount", getEntryCount());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("ratingsTotalEntries", getRatingsTotalEntries());
 		attributes.put("ratingsTotalScore", getRatingsTotalScore());
 		attributes.put("ratingsAverageScore", getRatingsAverageScore());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -177,12 +177,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -221,6 +215,12 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 		if (ratingsAverageScore != null) {
 			setRatingsAverageScore(ratingsAverageScore);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -270,28 +270,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -404,6 +382,28 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		_ratingsAverageScore = ratingsAverageScore;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -437,13 +437,13 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 		blogsStatsUserImpl.setStatsUserId(getStatsUserId());
 		blogsStatsUserImpl.setGroupId(getGroupId());
-		blogsStatsUserImpl.setCompanyId(getCompanyId());
 		blogsStatsUserImpl.setUserId(getUserId());
 		blogsStatsUserImpl.setEntryCount(getEntryCount());
 		blogsStatsUserImpl.setLastPostDate(getLastPostDate());
 		blogsStatsUserImpl.setRatingsTotalEntries(getRatingsTotalEntries());
 		blogsStatsUserImpl.setRatingsTotalScore(getRatingsTotalScore());
 		blogsStatsUserImpl.setRatingsAverageScore(getRatingsAverageScore());
+		blogsStatsUserImpl.setCompanyId(getCompanyId());
 
 		blogsStatsUserImpl.resetOriginalValues();
 
@@ -518,10 +518,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 		blogsStatsUserModelImpl._setOriginalGroupId = false;
 
-		blogsStatsUserModelImpl._originalCompanyId = blogsStatsUserModelImpl._companyId;
-
-		blogsStatsUserModelImpl._setOriginalCompanyId = false;
-
 		blogsStatsUserModelImpl._originalUserId = blogsStatsUserModelImpl._userId;
 
 		blogsStatsUserModelImpl._setOriginalUserId = false;
@@ -531,6 +527,10 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		blogsStatsUserModelImpl._setOriginalEntryCount = false;
 
 		blogsStatsUserModelImpl._originalLastPostDate = blogsStatsUserModelImpl._lastPostDate;
+
+		blogsStatsUserModelImpl._originalCompanyId = blogsStatsUserModelImpl._companyId;
+
+		blogsStatsUserModelImpl._setOriginalCompanyId = false;
 
 		blogsStatsUserModelImpl._columnBitmask = 0;
 	}
@@ -542,8 +542,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		blogsStatsUserCacheModel.statsUserId = getStatsUserId();
 
 		blogsStatsUserCacheModel.groupId = getGroupId();
-
-		blogsStatsUserCacheModel.companyId = getCompanyId();
 
 		blogsStatsUserCacheModel.userId = getUserId();
 
@@ -564,6 +562,8 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 
 		blogsStatsUserCacheModel.ratingsAverageScore = getRatingsAverageScore();
 
+		blogsStatsUserCacheModel.companyId = getCompanyId();
+
 		return blogsStatsUserCacheModel;
 	}
 
@@ -575,8 +575,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		sb.append(getStatsUserId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", entryCount=");
@@ -589,6 +587,8 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		sb.append(getRatingsTotalScore());
 		sb.append(", ratingsAverageScore=");
 		sb.append(getRatingsAverageScore());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -609,10 +609,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -638,6 +634,10 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 			"<column><column-name>ratingsAverageScore</column-name><column-value><![CDATA[");
 		sb.append(getRatingsAverageScore());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -652,9 +652,6 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -666,6 +663,9 @@ public class BlogsStatsUserModelImpl extends BaseModelImpl<BlogsStatsUser>
 	private int _ratingsTotalEntries;
 	private double _ratingsTotalScore;
 	private double _ratingsAverageScore;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private BlogsStatsUser _escapedModel;
 }

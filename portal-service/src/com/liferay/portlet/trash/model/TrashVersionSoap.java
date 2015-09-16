@@ -38,6 +38,7 @@ public class TrashVersionSoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setStatus(model.getStatus());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -138,10 +139,19 @@ public class TrashVersionSoap implements Serializable {
 		_status = status;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _versionId;
 	private long _entryId;
 	private long _classNameId;
 	private long _classPK;
 	private String _typeSettings;
 	private int _status;
+	private long _companyId;
 }

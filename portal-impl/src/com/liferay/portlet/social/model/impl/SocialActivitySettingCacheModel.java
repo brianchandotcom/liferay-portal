@@ -70,8 +70,6 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 		sb.append(activitySettingId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", activityType=");
@@ -80,6 +78,8 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 		sb.append(name);
 		sb.append(", value=");
 		sb.append(value);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -91,7 +91,6 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 
 		socialActivitySettingImpl.setActivitySettingId(activitySettingId);
 		socialActivitySettingImpl.setGroupId(groupId);
-		socialActivitySettingImpl.setCompanyId(companyId);
 		socialActivitySettingImpl.setClassNameId(classNameId);
 		socialActivitySettingImpl.setActivityType(activityType);
 
@@ -109,6 +108,8 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 			socialActivitySettingImpl.setValue(value);
 		}
 
+		socialActivitySettingImpl.setCompanyId(companyId);
+
 		socialActivitySettingImpl.resetOriginalValues();
 
 		return socialActivitySettingImpl;
@@ -118,11 +119,11 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		activitySettingId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		activityType = objectInput.readInt();
 		name = objectInput.readUTF();
 		value = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -130,7 +131,6 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 		throws IOException {
 		objectOutput.writeLong(activitySettingId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeInt(activityType);
 
@@ -147,13 +147,15 @@ public class SocialActivitySettingCacheModel implements CacheModel<SocialActivit
 		else {
 			objectOutput.writeUTF(value);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long activitySettingId;
 	public long groupId;
-	public long companyId;
 	public long classNameId;
 	public int activityType;
 	public String name;
 	public String value;
+	public long companyId;
 }

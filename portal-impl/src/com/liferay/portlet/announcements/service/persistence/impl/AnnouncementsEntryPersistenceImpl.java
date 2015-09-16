@@ -16,6 +16,7 @@ package com.liferay.portlet.announcements.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -44,6 +45,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.portlet.announcements.NoSuchEntryException;
 import com.liferay.portlet.announcements.model.AnnouncementsEntry;
@@ -4817,6 +4819,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		announcementsEntry.setUuid(uuid);
 
+		announcementsEntry.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return announcementsEntry;
 	}
 
@@ -5118,7 +5122,6 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 		announcementsEntryImpl.setUuid(announcementsEntry.getUuid());
 		announcementsEntryImpl.setEntryId(announcementsEntry.getEntryId());
-		announcementsEntryImpl.setCompanyId(announcementsEntry.getCompanyId());
 		announcementsEntryImpl.setUserId(announcementsEntry.getUserId());
 		announcementsEntryImpl.setUserName(announcementsEntry.getUserName());
 		announcementsEntryImpl.setCreateDate(announcementsEntry.getCreateDate());
@@ -5133,6 +5136,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		announcementsEntryImpl.setExpirationDate(announcementsEntry.getExpirationDate());
 		announcementsEntryImpl.setPriority(announcementsEntry.getPriority());
 		announcementsEntryImpl.setAlert(announcementsEntry.isAlert());
+		announcementsEntryImpl.setCompanyId(announcementsEntry.getCompanyId());
 
 		return announcementsEntryImpl;
 	}
@@ -5516,6 +5520,8 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_ANNOUNCEMENTSENTRY = "SELECT announcementsEntry FROM AnnouncementsEntry announcementsEntry";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE_PKS_IN = "SELECT announcementsEntry FROM AnnouncementsEntry announcementsEntry WHERE entryId IN (";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSENTRY_WHERE = "SELECT announcementsEntry FROM AnnouncementsEntry announcementsEntry WHERE ";

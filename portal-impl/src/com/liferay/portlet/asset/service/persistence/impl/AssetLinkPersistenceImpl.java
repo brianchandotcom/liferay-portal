@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.portlet.asset.NoSuchLinkException;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -2983,6 +2985,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		assetLink.setNew(true);
 		assetLink.setPrimaryKey(linkId);
 
+		assetLink.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return assetLink;
 	}
 
@@ -3225,7 +3229,6 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		assetLinkImpl.setPrimaryKey(assetLink.getPrimaryKey());
 
 		assetLinkImpl.setLinkId(assetLink.getLinkId());
-		assetLinkImpl.setCompanyId(assetLink.getCompanyId());
 		assetLinkImpl.setUserId(assetLink.getUserId());
 		assetLinkImpl.setUserName(assetLink.getUserName());
 		assetLinkImpl.setCreateDate(assetLink.getCreateDate());
@@ -3233,6 +3236,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		assetLinkImpl.setEntryId2(assetLink.getEntryId2());
 		assetLinkImpl.setType(assetLink.getType());
 		assetLinkImpl.setWeight(assetLink.getWeight());
+		assetLinkImpl.setCompanyId(assetLink.getCompanyId());
 
 		return assetLinkImpl;
 	}
@@ -3612,6 +3616,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_ASSETLINK = "SELECT assetLink FROM AssetLink assetLink";
 	private static final String _SQL_SELECT_ASSETLINK_WHERE_PKS_IN = "SELECT assetLink FROM AssetLink assetLink WHERE linkId IN (";
 	private static final String _SQL_SELECT_ASSETLINK_WHERE = "SELECT assetLink FROM AssetLink assetLink WHERE ";

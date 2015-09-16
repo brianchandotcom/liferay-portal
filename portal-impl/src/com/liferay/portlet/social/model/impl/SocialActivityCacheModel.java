@@ -70,8 +70,6 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		sb.append(activityId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -94,6 +92,8 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		sb.append(extraData);
 		sb.append(", receiverUserId=");
 		sb.append(receiverUserId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -105,7 +105,6 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 
 		socialActivityImpl.setActivityId(activityId);
 		socialActivityImpl.setGroupId(groupId);
-		socialActivityImpl.setCompanyId(companyId);
 		socialActivityImpl.setUserId(userId);
 		socialActivityImpl.setCreateDate(createDate);
 		socialActivityImpl.setActivitySetId(activitySetId);
@@ -124,6 +123,7 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		}
 
 		socialActivityImpl.setReceiverUserId(receiverUserId);
+		socialActivityImpl.setCompanyId(companyId);
 
 		socialActivityImpl.resetOriginalValues();
 
@@ -134,7 +134,6 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		activityId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		activitySetId = objectInput.readLong();
@@ -146,6 +145,7 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		type = objectInput.readInt();
 		extraData = objectInput.readUTF();
 		receiverUserId = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -153,7 +153,6 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		throws IOException {
 		objectOutput.writeLong(activityId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(activitySetId);
@@ -172,11 +171,11 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 		}
 
 		objectOutput.writeLong(receiverUserId);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long activityId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long createDate;
 	public long activitySetId;
@@ -188,4 +187,5 @@ public class SocialActivityCacheModel implements CacheModel<SocialActivity>,
 	public int type;
 	public String extraData;
 	public long receiverUserId;
+	public long companyId;
 }

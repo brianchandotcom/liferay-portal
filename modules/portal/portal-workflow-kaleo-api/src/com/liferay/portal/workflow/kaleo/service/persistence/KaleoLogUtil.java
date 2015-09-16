@@ -111,144 +111,6 @@ public class KaleoLogUtil {
 	}
 
 	/**
-	* Returns all the kaleo logs where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching kaleo logs
-	*/
-	public static List<KaleoLog> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	* Returns a range of all the kaleo logs where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of kaleo logs
-	* @param end the upper bound of the range of kaleo logs (not inclusive)
-	* @return the range of matching kaleo logs
-	*/
-	public static List<KaleoLog> findByCompanyId(long companyId, int start,
-		int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the kaleo logs where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of kaleo logs
-	* @param end the upper bound of the range of kaleo logs (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching kaleo logs
-	*/
-	public static List<KaleoLog> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<KaleoLog> orderByComparator) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first kaleo log in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kaleo log
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchLogException if a matching kaleo log could not be found
-	*/
-	public static KaleoLog findByCompanyId_First(long companyId,
-		OrderByComparator<KaleoLog> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchLogException {
-		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the first kaleo log in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kaleo log, or <code>null</code> if a matching kaleo log could not be found
-	*/
-	public static KaleoLog fetchByCompanyId_First(long companyId,
-		OrderByComparator<KaleoLog> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last kaleo log in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kaleo log
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchLogException if a matching kaleo log could not be found
-	*/
-	public static KaleoLog findByCompanyId_Last(long companyId,
-		OrderByComparator<KaleoLog> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchLogException {
-		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last kaleo log in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kaleo log, or <code>null</code> if a matching kaleo log could not be found
-	*/
-	public static KaleoLog fetchByCompanyId_Last(long companyId,
-		OrderByComparator<KaleoLog> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the kaleo logs before and after the current kaleo log in the ordered set where companyId = &#63;.
-	*
-	* @param kaleoLogId the primary key of the current kaleo log
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next kaleo log
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchLogException if a kaleo log with the primary key could not be found
-	*/
-	public static KaleoLog[] findByCompanyId_PrevAndNext(long kaleoLogId,
-		long companyId, OrderByComparator<KaleoLog> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchLogException {
-		return getPersistence()
-				   .findByCompanyId_PrevAndNext(kaleoLogId, companyId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the kaleo logs where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of kaleo logs where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching kaleo logs
-	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
 	* Returns all the kaleo logs where kaleoDefinitionId = &#63;.
 	*
 	* @param kaleoDefinitionId the kaleo definition ID
@@ -694,6 +556,144 @@ public class KaleoLogUtil {
 		long kaleoTaskInstanceTokenId) {
 		return getPersistence()
 				   .countByKaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);
+	}
+
+	/**
+	* Returns all the kaleo logs where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching kaleo logs
+	*/
+	public static List<KaleoLog> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the kaleo logs where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo logs
+	* @param end the upper bound of the range of kaleo logs (not inclusive)
+	* @return the range of matching kaleo logs
+	*/
+	public static List<KaleoLog> findByCompanyId(long companyId, int start,
+		int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the kaleo logs where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo logs
+	* @param end the upper bound of the range of kaleo logs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching kaleo logs
+	*/
+	public static List<KaleoLog> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<KaleoLog> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first kaleo log in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo log
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchLogException if a matching kaleo log could not be found
+	*/
+	public static KaleoLog findByCompanyId_First(long companyId,
+		OrderByComparator<KaleoLog> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchLogException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first kaleo log in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo log, or <code>null</code> if a matching kaleo log could not be found
+	*/
+	public static KaleoLog fetchByCompanyId_First(long companyId,
+		OrderByComparator<KaleoLog> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last kaleo log in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo log
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchLogException if a matching kaleo log could not be found
+	*/
+	public static KaleoLog findByCompanyId_Last(long companyId,
+		OrderByComparator<KaleoLog> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchLogException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last kaleo log in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo log, or <code>null</code> if a matching kaleo log could not be found
+	*/
+	public static KaleoLog fetchByCompanyId_Last(long companyId,
+		OrderByComparator<KaleoLog> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the kaleo logs before and after the current kaleo log in the ordered set where companyId = &#63;.
+	*
+	* @param kaleoLogId the primary key of the current kaleo log
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next kaleo log
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchLogException if a kaleo log with the primary key could not be found
+	*/
+	public static KaleoLog[] findByCompanyId_PrevAndNext(long kaleoLogId,
+		long companyId, OrderByComparator<KaleoLog> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchLogException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(kaleoLogId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the kaleo logs where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of kaleo logs where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching kaleo logs
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

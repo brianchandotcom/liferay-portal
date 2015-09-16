@@ -115,8 +115,6 @@ public class AccountPersistenceTest {
 
 		newAccount.setMvccVersion(RandomTestUtil.nextLong());
 
-		newAccount.setCompanyId(RandomTestUtil.nextLong());
-
 		newAccount.setUserId(RandomTestUtil.nextLong());
 
 		newAccount.setUserName(RandomTestUtil.randomString());
@@ -145,6 +143,8 @@ public class AccountPersistenceTest {
 
 		newAccount.setSize(RandomTestUtil.randomString());
 
+		newAccount.setCompanyId(RandomTestUtil.nextLong());
+
 		_accounts.add(_persistence.update(newAccount));
 
 		Account existingAccount = _persistence.findByPrimaryKey(newAccount.getPrimaryKey());
@@ -153,8 +153,6 @@ public class AccountPersistenceTest {
 			newAccount.getMvccVersion());
 		Assert.assertEquals(existingAccount.getAccountId(),
 			newAccount.getAccountId());
-		Assert.assertEquals(existingAccount.getCompanyId(),
-			newAccount.getCompanyId());
 		Assert.assertEquals(existingAccount.getUserId(), newAccount.getUserId());
 		Assert.assertEquals(existingAccount.getUserName(),
 			newAccount.getUserName());
@@ -181,6 +179,8 @@ public class AccountPersistenceTest {
 			newAccount.getIndustry());
 		Assert.assertEquals(existingAccount.getType(), newAccount.getType());
 		Assert.assertEquals(existingAccount.getSize(), newAccount.getSize());
+		Assert.assertEquals(existingAccount.getCompanyId(),
+			newAccount.getCompanyId());
 	}
 
 	@Test
@@ -207,11 +207,11 @@ public class AccountPersistenceTest {
 
 	protected OrderByComparator<Account> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Account_", "mvccVersion",
-			true, "accountId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"parentAccountId", true, "name", true, "legalName", true,
-			"legalId", true, "legalType", true, "sicCode", true,
-			"tickerSymbol", true, "industry", true, "type", true, "size", true);
+			true, "accountId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "parentAccountId", true,
+			"name", true, "legalName", true, "legalId", true, "legalType",
+			true, "sicCode", true, "tickerSymbol", true, "industry", true,
+			"type", true, "size", true, "companyId", true);
 	}
 
 	@Test
@@ -413,8 +413,6 @@ public class AccountPersistenceTest {
 
 		account.setMvccVersion(RandomTestUtil.nextLong());
 
-		account.setCompanyId(RandomTestUtil.nextLong());
-
 		account.setUserId(RandomTestUtil.nextLong());
 
 		account.setUserName(RandomTestUtil.randomString());
@@ -442,6 +440,8 @@ public class AccountPersistenceTest {
 		account.setType(RandomTestUtil.randomString());
 
 		account.setSize(RandomTestUtil.randomString());
+
+		account.setCompanyId(RandomTestUtil.nextLong());
 
 		_accounts.add(_persistence.update(account));
 

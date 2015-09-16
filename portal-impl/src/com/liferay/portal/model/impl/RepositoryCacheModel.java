@@ -89,8 +89,6 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		sb.append(repositoryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -113,6 +111,8 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		sb.append(dlFolderId);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -133,7 +133,6 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 
 		repositoryImpl.setRepositoryId(repositoryId);
 		repositoryImpl.setGroupId(groupId);
-		repositoryImpl.setCompanyId(companyId);
 		repositoryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -196,6 +195,8 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 			repositoryImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		repositoryImpl.setCompanyId(companyId);
+
 		repositoryImpl.resetOriginalValues();
 
 		return repositoryImpl;
@@ -207,7 +208,6 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		uuid = objectInput.readUTF();
 		repositoryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -219,6 +219,7 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 		typeSettings = objectInput.readUTF();
 		dlFolderId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -235,7 +236,6 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 
 		objectOutput.writeLong(repositoryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -279,13 +279,13 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 
 		objectOutput.writeLong(dlFolderId);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long repositoryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -297,4 +297,5 @@ public class RepositoryCacheModel implements CacheModel<Repository>,
 	public String typeSettings;
 	public long dlFolderId;
 	public long lastPublishDate;
+	public long companyId;
 }

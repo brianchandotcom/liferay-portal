@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoActionModel extends BaseModel<KaleoAction>, GroupedModel {
+public interface KaleoActionModel extends BaseModel<KaleoAction>, GroupedModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -92,22 +94,6 @@ public interface KaleoActionModel extends BaseModel<KaleoAction>, GroupedModel {
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this kaleo action.
-	 *
-	 * @return the company ID of this kaleo action
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this kaleo action.
-	 *
-	 * @param companyId the company ID of this kaleo action
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this kaleo action.
@@ -351,6 +337,22 @@ public interface KaleoActionModel extends BaseModel<KaleoAction>, GroupedModel {
 	 * @param priority the priority of this kaleo action
 	 */
 	public void setPriority(int priority);
+
+	/**
+	 * Returns the company ID of this kaleo action.
+	 *
+	 * @return the company ID of this kaleo action
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this kaleo action.
+	 *
+	 * @param companyId the company ID of this kaleo action
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -16,6 +16,7 @@ package com.liferay.shopping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.shopping.exception.NoSuchOrderItemException;
 import com.liferay.shopping.model.ShoppingOrderItem;
@@ -661,6 +663,8 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingOrderItem.setNew(true);
 		shoppingOrderItem.setPrimaryKey(orderItemId);
 
+		shoppingOrderItem.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return shoppingOrderItem;
 	}
 
@@ -833,6 +837,7 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingOrderItemImpl.setPrice(shoppingOrderItem.getPrice());
 		shoppingOrderItemImpl.setQuantity(shoppingOrderItem.getQuantity());
 		shoppingOrderItemImpl.setShippedDate(shoppingOrderItem.getShippedDate());
+		shoppingOrderItemImpl.setCompanyId(shoppingOrderItem.getCompanyId());
 
 		return shoppingOrderItemImpl;
 	}
@@ -1210,6 +1215,8 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_SHOPPINGORDERITEM = "SELECT shoppingOrderItem FROM ShoppingOrderItem shoppingOrderItem";
 	private static final String _SQL_SELECT_SHOPPINGORDERITEM_WHERE_PKS_IN = "SELECT shoppingOrderItem FROM ShoppingOrderItem shoppingOrderItem WHERE orderItemId IN (";
 	private static final String _SQL_SELECT_SHOPPINGORDERITEM_WHERE = "SELECT shoppingOrderItem FROM ShoppingOrderItem shoppingOrderItem WHERE ";

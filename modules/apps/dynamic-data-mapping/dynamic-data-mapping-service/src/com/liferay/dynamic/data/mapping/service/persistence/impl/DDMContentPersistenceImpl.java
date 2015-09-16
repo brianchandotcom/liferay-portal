@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMContentImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMContentModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMContentPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -41,6 +42,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import java.io.Serializable;
 
@@ -2530,6 +2532,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 		ddmContent.setUuid(uuid);
 
+		ddmContent.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return ddmContent;
 	}
 
@@ -2780,7 +2784,6 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		ddmContentImpl.setUuid(ddmContent.getUuid());
 		ddmContentImpl.setContentId(ddmContent.getContentId());
 		ddmContentImpl.setGroupId(ddmContent.getGroupId());
-		ddmContentImpl.setCompanyId(ddmContent.getCompanyId());
 		ddmContentImpl.setUserId(ddmContent.getUserId());
 		ddmContentImpl.setUserName(ddmContent.getUserName());
 		ddmContentImpl.setCreateDate(ddmContent.getCreateDate());
@@ -2788,6 +2791,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		ddmContentImpl.setName(ddmContent.getName());
 		ddmContentImpl.setDescription(ddmContent.getDescription());
 		ddmContentImpl.setData(ddmContent.getData());
+		ddmContentImpl.setCompanyId(ddmContent.getCompanyId());
 
 		return ddmContentImpl;
 	}
@@ -3168,6 +3172,8 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_DDMCONTENT = "SELECT ddmContent FROM DDMContent ddmContent";
 	private static final String _SQL_SELECT_DDMCONTENT_WHERE_PKS_IN = "SELECT ddmContent FROM DDMContent ddmContent WHERE contentId IN (";
 	private static final String _SQL_SELECT_DDMCONTENT_WHERE = "SELECT ddmContent FROM DDMContent ddmContent WHERE ";

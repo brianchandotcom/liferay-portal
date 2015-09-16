@@ -88,8 +88,6 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 		sb.append(exportImportConfigurationId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -114,6 +112,8 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,7 +126,6 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 		exportImportConfigurationImpl.setMvccVersion(mvccVersion);
 		exportImportConfigurationImpl.setExportImportConfigurationId(exportImportConfigurationId);
 		exportImportConfigurationImpl.setGroupId(groupId);
-		exportImportConfigurationImpl.setCompanyId(companyId);
 		exportImportConfigurationImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -190,6 +189,8 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 			exportImportConfigurationImpl.setStatusDate(new Date(statusDate));
 		}
 
+		exportImportConfigurationImpl.setCompanyId(companyId);
+
 		exportImportConfigurationImpl.resetOriginalValues();
 
 		return exportImportConfigurationImpl;
@@ -200,7 +201,6 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 		mvccVersion = objectInput.readLong();
 		exportImportConfigurationId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -213,6 +213,7 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -221,7 +222,6 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(exportImportConfigurationId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -268,12 +268,12 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long exportImportConfigurationId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -286,4 +286,5 @@ public class ExportImportConfigurationCacheModel implements CacheModel<ExportImp
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

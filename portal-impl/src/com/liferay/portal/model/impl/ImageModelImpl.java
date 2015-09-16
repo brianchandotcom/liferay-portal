@@ -70,7 +70,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 			{ "type_", Types.VARCHAR },
 			{ "height", Types.INTEGER },
 			{ "width", Types.INTEGER },
-			{ "size_", Types.INTEGER }
+			{ "size_", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -82,9 +83,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		TABLE_COLUMNS_MAP.put("height", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("width", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("size_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Image (mvccVersion LONG default 0,imageId LONG not null primary key,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table Image (mvccVersion LONG default 0,imageId LONG not null primary key,modifiedDate DATE null,type_ VARCHAR(75) null,height INTEGER,width INTEGER,size_ INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Image";
 	public static final String ORDER_BY_JPQL = " ORDER BY image.imageId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Image.imageId ASC";
@@ -123,6 +125,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		model.setHeight(soapModel.getHeight());
 		model.setWidth(soapModel.getWidth());
 		model.setSize(soapModel.getSize());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -194,6 +197,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		attributes.put("height", getHeight());
 		attributes.put("width", getWidth());
 		attributes.put("size", getSize());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -243,6 +247,12 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		if (size != null) {
 			setSize(size);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -342,13 +352,24 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		return _originalSize;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			Image.class.getName(), getPrimaryKey());
 	}
 
@@ -380,6 +401,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		imageImpl.setHeight(getHeight());
 		imageImpl.setWidth(getWidth());
 		imageImpl.setSize(getSize());
+		imageImpl.setCompanyId(getCompanyId());
 
 		imageImpl.resetOriginalValues();
 
@@ -486,12 +508,14 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 		imageCacheModel.size = getSize();
 
+		imageCacheModel.companyId = getCompanyId();
+
 		return imageCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -507,6 +531,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		sb.append(getWidth());
 		sb.append(", size=");
 		sb.append(getSize());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -514,7 +540,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Image");
@@ -548,6 +574,10 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 			"<column><column-name>size</column-name><column-value><![CDATA[");
 		sb.append(getSize());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -567,6 +597,7 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 	private int _size;
 	private int _originalSize;
 	private boolean _setOriginalSize;
+	private long _companyId;
 	private long _columnBitmask;
 	private Image _escapedModel;
 }

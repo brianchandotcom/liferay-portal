@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchPasswordPolicyException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -3531,6 +3532,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 
 		passwordPolicy.setUuid(uuid);
 
+		passwordPolicy.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return passwordPolicy;
 	}
 
@@ -3767,7 +3770,6 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		passwordPolicyImpl.setMvccVersion(passwordPolicy.getMvccVersion());
 		passwordPolicyImpl.setUuid(passwordPolicy.getUuid());
 		passwordPolicyImpl.setPasswordPolicyId(passwordPolicy.getPasswordPolicyId());
-		passwordPolicyImpl.setCompanyId(passwordPolicy.getCompanyId());
 		passwordPolicyImpl.setUserId(passwordPolicy.getUserId());
 		passwordPolicyImpl.setUserName(passwordPolicy.getUserName());
 		passwordPolicyImpl.setCreateDate(passwordPolicy.getCreateDate());
@@ -3800,6 +3802,7 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		passwordPolicyImpl.setResetFailureCount(passwordPolicy.getResetFailureCount());
 		passwordPolicyImpl.setResetTicketMaxAge(passwordPolicy.getResetTicketMaxAge());
 		passwordPolicyImpl.setLastPublishDate(passwordPolicy.getLastPublishDate());
+		passwordPolicyImpl.setCompanyId(passwordPolicy.getCompanyId());
 
 		return passwordPolicyImpl;
 	}
@@ -4181,6 +4184,8 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_PASSWORDPOLICY = "SELECT passwordPolicy FROM PasswordPolicy passwordPolicy";
 	private static final String _SQL_SELECT_PASSWORDPOLICY_WHERE_PKS_IN = "SELECT passwordPolicy FROM PasswordPolicy passwordPolicy WHERE passwordPolicyId IN (";
 	private static final String _SQL_SELECT_PASSWORDPOLICY_WHERE = "SELECT passwordPolicy FROM PasswordPolicy passwordPolicy WHERE ";

@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
-	StagedAuditedModel {
+	PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -107,22 +107,6 @@ public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
 	 * @param phoneId the phone ID of this phone
 	 */
 	public void setPhoneId(long phoneId);
-
-	/**
-	 * Returns the company ID of this phone.
-	 *
-	 * @return the company ID of this phone
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this phone.
-	 *
-	 * @param companyId the company ID of this phone
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this phone.
@@ -327,6 +311,22 @@ public interface PhoneModel extends AttachedModel, BaseModel<Phone>, MVCCModel,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this phone.
+	 *
+	 * @return the company ID of this phone
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this phone.
+	 *
+	 * @param companyId the company ID of this phone
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

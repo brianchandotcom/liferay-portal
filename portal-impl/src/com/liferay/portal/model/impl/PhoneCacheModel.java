@@ -87,8 +87,6 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		sb.append(uuid);
 		sb.append(", phoneId=");
 		sb.append(phoneId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -111,6 +109,8 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		sb.append(primary);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -130,7 +130,6 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		}
 
 		phoneImpl.setPhoneId(phoneId);
-		phoneImpl.setCompanyId(companyId);
 		phoneImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -181,6 +180,8 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 			phoneImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		phoneImpl.setCompanyId(companyId);
+
 		phoneImpl.resetOriginalValues();
 
 		return phoneImpl;
@@ -191,7 +192,6 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		phoneId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -203,6 +203,7 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		typeId = objectInput.readLong();
 		primary = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -218,7 +219,6 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		}
 
 		objectOutput.writeLong(phoneId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -250,12 +250,12 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 		objectOutput.writeLong(typeId);
 		objectOutput.writeBoolean(primary);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long phoneId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -267,4 +267,5 @@ public class PhoneCacheModel implements CacheModel<Phone>, Externalizable,
 	public long typeId;
 	public boolean primary;
 	public long lastPublishDate;
+	public long companyId;
 }

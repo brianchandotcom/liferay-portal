@@ -72,8 +72,6 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		sb.append(entryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -90,6 +88,8 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		sb.append(typeSettings);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -101,7 +101,6 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 
 		trashEntryImpl.setEntryId(entryId);
 		trashEntryImpl.setGroupId(groupId);
-		trashEntryImpl.setCompanyId(companyId);
 		trashEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -130,6 +129,7 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		}
 
 		trashEntryImpl.setStatus(status);
+		trashEntryImpl.setCompanyId(companyId);
 
 		trashEntryImpl.resetOriginalValues();
 
@@ -140,7 +140,6 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		entryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -149,6 +148,7 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		systemEventSetKey = objectInput.readLong();
 		typeSettings = objectInput.readUTF();
 		status = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -156,7 +156,6 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		throws IOException {
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -179,11 +178,11 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 		}
 
 		objectOutput.writeInt(status);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long entryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -192,4 +191,5 @@ public class TrashEntryCacheModel implements CacheModel<TrashEntry>,
 	public long systemEventSetKey;
 	public String typeSettings;
 	public int status;
+	public long companyId;
 }

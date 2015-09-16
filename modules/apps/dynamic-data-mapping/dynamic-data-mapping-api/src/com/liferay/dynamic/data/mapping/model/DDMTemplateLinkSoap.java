@@ -36,6 +36,7 @@ public class DDMTemplateLinkSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setTemplateId(model.getTemplateId());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -122,8 +123,17 @@ public class DDMTemplateLinkSoap implements Serializable {
 		_templateId = templateId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _templateLinkId;
 	private long _classNameId;
 	private long _classPK;
 	private long _templateId;
+	private long _companyId;
 }

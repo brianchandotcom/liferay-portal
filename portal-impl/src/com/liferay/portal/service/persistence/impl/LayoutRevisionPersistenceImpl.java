@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchLayoutRevisionException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -5740,6 +5741,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevision.setNew(true);
 		layoutRevision.setPrimaryKey(layoutRevisionId);
 
+		layoutRevision.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return layoutRevision;
 	}
 
@@ -6104,7 +6107,6 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevisionImpl.setMvccVersion(layoutRevision.getMvccVersion());
 		layoutRevisionImpl.setLayoutRevisionId(layoutRevision.getLayoutRevisionId());
 		layoutRevisionImpl.setGroupId(layoutRevision.getGroupId());
-		layoutRevisionImpl.setCompanyId(layoutRevision.getCompanyId());
 		layoutRevisionImpl.setUserId(layoutRevision.getUserId());
 		layoutRevisionImpl.setUserName(layoutRevision.getUserName());
 		layoutRevisionImpl.setCreateDate(layoutRevision.getCreateDate());
@@ -6132,6 +6134,7 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		layoutRevisionImpl.setStatusByUserId(layoutRevision.getStatusByUserId());
 		layoutRevisionImpl.setStatusByUserName(layoutRevision.getStatusByUserName());
 		layoutRevisionImpl.setStatusDate(layoutRevision.getStatusDate());
+		layoutRevisionImpl.setCompanyId(layoutRevision.getCompanyId());
 
 		return layoutRevisionImpl;
 	}
@@ -6508,6 +6511,8 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_LAYOUTREVISION = "SELECT layoutRevision FROM LayoutRevision layoutRevision";
 	private static final String _SQL_SELECT_LAYOUTREVISION_WHERE_PKS_IN = "SELECT layoutRevision FROM LayoutRevision layoutRevision WHERE layoutRevisionId IN (";
 	private static final String _SQL_SELECT_LAYOUTREVISION_WHERE = "SELECT layoutRevision FROM LayoutRevision layoutRevision WHERE ";

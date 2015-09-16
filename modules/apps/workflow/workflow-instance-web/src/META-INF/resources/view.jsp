@@ -25,15 +25,35 @@ if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
 else {
 	workflowInstanceViewDisplayContext = new MyWorkflowInstanceViewDisplayContext(renderRequest, renderResponse);
 }
-
-PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 %>
 
-<liferay-ui:tabs
-	names="pending,completed"
-	param="tabs2"
-	portletURL="<%= portletURL %>"
-/>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<portlet:renderURL var="viewPendingURL">
+			<portlet:param name="mvcPath" value="/view.jsp" />
+			<portlet:param name="tabs2" value="pending" />
+		</portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= viewPendingURL %>"
+			label="pending"
+			selected='<%= ParamUtil.getString(renderRequest, "tabs2", "pending").equals("pending") %>'
+		/>
+
+		<portlet:renderURL var="viewCompletedURL">
+			<portlet:param name="mvcPath" value="/view.jsp" />
+			<portlet:param name="tabs2" value="completed" />
+		</portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= viewCompletedURL %>"
+			label="completed"
+			selected='<%= ParamUtil.getString(renderRequest, "tabs2", "pending").equals("completed") %>'
+		/>
+
+	</aui:nav>
+</aui:nav-bar>
 
 <div class="container-fluid-1280">
 

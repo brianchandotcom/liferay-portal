@@ -22,6 +22,31 @@ PortletURL portletURL = workflowTaskDisplayContext.getPortletURL();
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+		<aui:nav cssClass="navbar-nav">
+
+			<portlet:renderURL var="viewPendingURL">
+				<portlet:param name="mvcPath" value="/view.jsp" />
+				<portlet:param name="tabs1" value="pending" />
+			</portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewPendingURL %>"
+				label="pending"
+				selected='<%= ParamUtil.getString(renderRequest, "tabs1", "pending").equals("pending") %>'
+			/>
+
+			<portlet:renderURL var="viewCompletedURL">
+				<portlet:param name="mvcPath" value="/view.jsp" />
+				<portlet:param name="tabs1" value="completed" />
+			</portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= viewCompletedURL %>"
+				label="completed"
+				selected='<%= ParamUtil.getString(renderRequest, "tabs1", "pending").equals("completed") %>'
+			/>
+
+		</aui:nav>
 		<aui:nav-bar-search>
 
 			<%
@@ -57,11 +82,6 @@ PortletURL portletURL = workflowTaskDisplayContext.getPortletURL();
 				</liferay-ui:search-toggle>
 		</aui:nav-bar-search>
 	</aui:nav-bar>
-
-	<liferay-ui:tabs
-		names="pending,completed"
-		portletURL="<%= portletURL %>"
-	/>
 
 	<c:choose>
 		<c:when test="<%= workflowTaskDisplayContext.isPendingTabSelected() %>">

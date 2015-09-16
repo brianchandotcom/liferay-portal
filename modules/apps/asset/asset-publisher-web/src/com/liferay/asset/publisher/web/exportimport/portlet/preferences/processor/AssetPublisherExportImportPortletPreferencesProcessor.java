@@ -40,6 +40,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CompanyLocalService;
@@ -49,6 +50,8 @@ import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalService;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalService;
@@ -109,6 +112,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		throws PortletDataException {
 
 		try {
+			exportAssetObjects(portletDataContext, portletPreferences);
+
 			return updateExportPortletPreferences(
 				portletDataContext, portletDataContext.getPortletId(),
 				portletPreferences);
@@ -130,6 +135,44 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		}
 		catch (Exception e) {
 			return portletPreferences;
+		}
+	}
+
+	protected void exportAssetObject(
+			PortletDataContext portletDataContext, AssetEntry assetEntry)
+		throws PortletDataException {
+
+		AssetRenderer assetRenderer = assetEntry.getAssetRenderer();
+
+		if ((assetRenderer == null) ||
+			!(assetRenderer.getAssetObject() instanceof StagedModel)) {
+
+			return;
+		}
+
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, portletDataContext.getPortletId(),
+			(StagedModel)assetRenderer.getAssetObject());
+	}
+
+	protected void exportAssetObjects(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			portletDataContext.getPlid());
+
+		long[] groupIds = AssetPublisherUtil.getGroupIds(
+			portletPreferences, portletDataContext.getScopeGroupId(), layout);
+
+		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
+			null, portletPreferences,
+			PermissionThreadLocal.getPermissionChecker(), groupIds, false,
+			false);
+
+		for (AssetEntry assetEntry : assetEntries) {
+			exportAssetObject(portletDataContext, assetEntry);
 		}
 	}
 

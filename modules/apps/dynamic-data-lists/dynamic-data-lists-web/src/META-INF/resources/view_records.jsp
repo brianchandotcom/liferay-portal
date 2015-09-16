@@ -67,6 +67,15 @@ SearchContainer recordSearchContainer = new SearchContainer(
 	SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA,
 	portletURL, headerNames, LanguageUtil.format(request, "no-x-records-were-found",
 	HtmlUtil.escape(ddmStructure.getName(locale)), false));
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+OrderByComparator<DDLRecord> orderByComparator = DDLPortletUtil.getDDLRecordOrderByComparator(orderByCol, orderByType);
+
+recordSearchContainer.setOrderByCol(orderByCol);
+recordSearchContainer.setOrderByComparator(orderByComparator);
+recordSearchContainer.setOrderByType(orderByType);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -82,6 +91,12 @@ SearchContainer recordSearchContainer = new SearchContainer(
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/view_records_sort_buttons.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">

@@ -15,7 +15,10 @@
 package com.liferay.dynamic.data.lists.web.portlet;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordCreateDateComparator;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordModifiedDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetCreateDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetModifiedDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator;
@@ -33,6 +36,27 @@ import javax.portlet.PortletRequest;
  * @author Rafael Praxedes
  */
 public class DDLPortletUtil {
+
+	public static OrderByComparator<DDLRecord> getDDLRecordOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<DDLRecord> orderByComparator = null;
+
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new DDLRecordModifiedDateComparator(orderByAsc);
+		}
+		else {
+			orderByComparator = new DDLRecordCreateDateComparator(orderByAsc);
+		}
+
+		return orderByComparator;
+	}
 
 	public static String getDDLRecordSetDisplayStyle(
 		PortletRequest portletRequest, String[] displayViews) {

@@ -123,7 +123,7 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 		emptyResultsMessage="there-are-no-categories"
 		id="assetCategories"
 		iteratorURL="<%= portletURL %>"
-		rowChecker="<%= new LexiconRowChecker(renderResponse) %>"
+		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 	>
 
 		<liferay-ui:search-container-results>

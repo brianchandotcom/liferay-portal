@@ -23,6 +23,7 @@ import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -76,6 +77,11 @@ public class BlogsItemSelectorView
 
 	@Override
 	public boolean isShowSearch() {
+		return true;
+	}
+
+	@Override
+	public boolean isVisible(ThemeDisplay themeDisplay) {
 		return true;
 	}
 

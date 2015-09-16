@@ -20,6 +20,7 @@ import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.web.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext;
 
@@ -78,6 +79,11 @@ public class WikiAttachmentItemSelectorView
 
 	@Override
 	public boolean isShowSearch() {
+		return true;
+	}
+
+	@Override
+	public boolean isVisible(ThemeDisplay themeDisplay) {
 		return true;
 	}
 

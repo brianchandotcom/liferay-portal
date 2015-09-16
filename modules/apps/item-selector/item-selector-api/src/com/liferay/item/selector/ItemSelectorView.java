@@ -14,6 +14,8 @@
 
 package com.liferay.item.selector;
 
+import com.liferay.portal.theme.ThemeDisplay;
+
 import java.io.IOException;
 
 import java.util.List;
@@ -37,6 +39,8 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	public String getTitle(Locale locale);
 
 	public boolean isShowSearch();
+
+	public boolean isVisible(ThemeDisplay themeDisplay);
 
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,

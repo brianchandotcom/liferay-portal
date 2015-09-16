@@ -809,8 +809,8 @@ AUI.add(
 						var portletURL = Liferay.PortletURL.createRenderURL();
 
 						portletURL.setParameter('criteria', criteria);
+						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
-						portletURL.setParameter('repositoryId', instance.get('doAsGroupId'));
 
 						var criterionJSON = {
 							desiredItemSelectorReturnTypes: 'com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType,com.liferay.item.selector.criteria.UploadableFileReturnType'

@@ -503,7 +503,8 @@
 					'liferay-layouts-tree-check-content-display-page': {
 						path: 'layouts_tree_check_content_display_page.js',
 						requires: [
-							'aui-base'
+							'aui-component',
+							'plugin'
 						]
 					},
 					'liferay-layouts-tree-node-task': {

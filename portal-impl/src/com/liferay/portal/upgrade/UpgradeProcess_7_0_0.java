@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAddress;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeAsset;
+import com.liferay.portal.upgrade.v7_0_0.UpgradeAssetTagsResourcePermission;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeBackgroundTask;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeCalEvent;
 import com.liferay.portal.upgrade.v7_0_0.UpgradeContact;
@@ -59,6 +60,7 @@ public class UpgradeProcess_7_0_0 extends UpgradeProcess {
 
 		upgrade(UpgradeAddress.class);
 		upgrade(UpgradeAsset.class);
+		upgrade(UpgradeAssetTagsResourcePermission.class);
 		upgrade(UpgradeBackgroundTask.class);
 		upgrade(UpgradeCalEvent.class);
 		upgrade(UpgradeContact.class);

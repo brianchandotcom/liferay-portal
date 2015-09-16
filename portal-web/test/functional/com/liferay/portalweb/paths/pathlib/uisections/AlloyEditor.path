@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>CONTENT_ADD_BUTTON</td>
-	<td>//button[contains(@class,'alloy-editor') and contains(@class,'add')]</td>
+	<td>//button[contains(@class,'ae-button') and contains(@class,'add')]</td>
 	<td></td>
 </tr>
 <tr>

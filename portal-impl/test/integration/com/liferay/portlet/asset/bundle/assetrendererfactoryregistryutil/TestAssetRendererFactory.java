@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.bundle.assetrendererfactoryregistryutil;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -130,6 +131,11 @@ public class TestAssetRendererFactory
 	@Override
 	public String getPortletId() {
 		return null;
+	}
+
+	@Override
+	public String getSubtypeTitle(Locale locale) {
+		return StringPool.BLANK;
 	}
 
 	@Override

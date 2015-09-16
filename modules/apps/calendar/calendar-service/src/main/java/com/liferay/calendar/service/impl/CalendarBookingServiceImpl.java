@@ -748,7 +748,12 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 
 				if (!CalendarPermission.contains(
 						getPermissionChecker(), calendarBooking.getCalendarId(),
-						actionId)) {
+						actionId) ||
+					(calendarBooking.isPending() &&
+					 !CalendarPermission.contains(
+						 getPermissionChecker(),
+						 calendarBooking.getCalendarId(),
+						 CalendarActionKeys.MANAGE_BOOKINGS))) {
 
 					itr.remove();
 				}

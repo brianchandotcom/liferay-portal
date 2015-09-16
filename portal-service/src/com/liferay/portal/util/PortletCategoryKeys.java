@@ -20,9 +20,9 @@ package com.liferay.portal.util;
 public class PortletCategoryKeys {
 
 	public static final String[] ALL = {
-		PortletCategoryKeys.CONTROL_PANEL_USERS, PortletCategoryKeys.SITES,
 		PortletCategoryKeys.CONTROL_PANEL_APPS,
-		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION
+		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION,
+		PortletCategoryKeys.CONTROL_PANEL_USERS, PortletCategoryKeys.SITES
 	};
 
 	/**
@@ -82,11 +82,11 @@ public class PortletCategoryKeys {
 	public static final String SITE_ADMINISTRATION = "site_administration.";
 
 	public static final String[] SITE_ADMINISTRATION_ALL = {
-		PortletCategoryKeys.SITE_ADMINISTRATION_PAGES,
-		PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT,
-		PortletCategoryKeys.SITE_ADMINISTRATION_USERS,
 		PortletCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION,
-		PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS
+		PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT,
+		PortletCategoryKeys.SITE_ADMINISTRATION_PAGES,
+		PortletCategoryKeys.SITE_ADMINISTRATION_PUBLISHING_TOOLS,
+		PortletCategoryKeys.SITE_ADMINISTRATION_USERS
 	};
 
 	public static final String SITE_ADMINISTRATION_CONFIGURATION =

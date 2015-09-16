@@ -1265,9 +1265,14 @@ public class LiferaySeleniumHelper {
 
 		keyboard.keyUp(Key.CTRL);
 
-		sikuliType(
-			liferaySelenium, image,
-			_TEST_BASE_DIR_NAME + "/" + _TEST_DEPENDENCIES_DIR_NAME + value);
+		String fileName =
+			_TEST_BASE_DIR_NAME + "/" + _TEST_DEPENDENCIES_DIR_NAME + value;
+
+		if (OSDetector.isWindows()) {
+			fileName = StringUtil.replace(fileName, "/", "\\");
+		}
+
+		sikuliType(liferaySelenium, image, fileName);
 
 		keyboard.type(Key.ENTER);
 	}
@@ -1276,14 +1281,13 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image, String value)
 		throws Exception {
 
-		String tCatAdminFileName =
-			PropsValues.TCAT_ADMIN_REPOSITORY + "/" + value;
+		String fileName = PropsValues.TCAT_ADMIN_REPOSITORY + "/" + value;
 
 		if (OSDetector.isWindows()) {
-			tCatAdminFileName = tCatAdminFileName.replace("/", "\\");
+			fileName = StringUtil.replace(fileName, "/", "\\");
 		}
 
-		sikuliType(liferaySelenium, image, tCatAdminFileName);
+		sikuliType(liferaySelenium, image, fileName);
 
 		Keyboard keyboard = new DesktopKeyboard();
 
@@ -1304,15 +1308,13 @@ public class LiferaySeleniumHelper {
 
 		keyboard.keyUp(Key.CTRL);
 
-		String slash = "/";
+		String fileName = liferaySelenium.getOutputDirName() + "/" + value;
 
 		if (OSDetector.isWindows()) {
-			slash = "\\";
+			fileName = StringUtil.replace(fileName, "/", "\\");
 		}
 
-		sikuliType(
-			liferaySelenium, image,
-			liferaySelenium.getOutputDirName() + slash + value);
+		sikuliType(liferaySelenium, image, fileName);
 
 		keyboard.type(Key.ENTER);
 	}

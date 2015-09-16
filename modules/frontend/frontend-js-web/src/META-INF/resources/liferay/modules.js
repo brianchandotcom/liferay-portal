@@ -308,12 +308,6 @@
 							'uploader'
 						]
 					},
-					'liferay-entry-select': {
-						path: 'entry_select.js',
-						requires: [
-							'liferay-portlet-base'
-						]
-					},
 					'liferay-form': {
 						path: 'form.js',
 						requires: [
@@ -554,6 +548,12 @@
 						path: 'logo_selector.js',
 						requires: [
 							'aui-base'
+						]
+					},
+					'liferay-management-bar': {
+						path: 'management_bar.js',
+						requires: [
+							'liferay-portlet-base'
 						]
 					},
 					'liferay-map-base': {

@@ -73,8 +73,8 @@
 </div>
 
 <c:if test="<%= Validator.isNotNull(actionButtons) %>">
-	<aui:script use="liferay-entry-select">
-		var managementBar = new Liferay.EntrySelect(
+	<aui:script use="liferay-management-bar">
+		var managementBar = new Liferay.ManagementBar(
 			{
 				checkBoxContainer: '#<%= checkBoxContainerId %>',
 				namespace: '<%= namespace %>',

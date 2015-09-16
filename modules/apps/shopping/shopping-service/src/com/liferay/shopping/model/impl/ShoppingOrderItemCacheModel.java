@@ -66,7 +66,7 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{orderItemId=");
 		sb.append(orderItemId);
@@ -88,6 +88,8 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 		sb.append(quantity);
 		sb.append(", shippedDate=");
 		sb.append(shippedDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -145,6 +147,8 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 			shoppingOrderItemImpl.setShippedDate(new Date(shippedDate));
 		}
 
+		shoppingOrderItemImpl.setCompanyId(companyId);
+
 		shoppingOrderItemImpl.resetOriginalValues();
 
 		return shoppingOrderItemImpl;
@@ -162,6 +166,7 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 		price = objectInput.readDouble();
 		quantity = objectInput.readInt();
 		shippedDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -208,6 +213,7 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 		objectOutput.writeDouble(price);
 		objectOutput.writeInt(quantity);
 		objectOutput.writeLong(shippedDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long orderItemId;
@@ -220,4 +226,5 @@ public class ShoppingOrderItemCacheModel implements CacheModel<ShoppingOrderItem
 	public double price;
 	public int quantity;
 	public long shippedDate;
+	public long companyId;
 }

@@ -89,8 +89,6 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		sb.append(repositoryEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -107,6 +105,8 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		sb.append(manualCheckInRequired);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -127,7 +127,6 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 
 		repositoryEntryImpl.setRepositoryEntryId(repositoryEntryId);
 		repositoryEntryImpl.setGroupId(groupId);
-		repositoryEntryImpl.setCompanyId(companyId);
 		repositoryEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -169,6 +168,8 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 			repositoryEntryImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		repositoryEntryImpl.setCompanyId(companyId);
+
 		repositoryEntryImpl.resetOriginalValues();
 
 		return repositoryEntryImpl;
@@ -180,7 +181,6 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		uuid = objectInput.readUTF();
 		repositoryEntryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -189,6 +189,7 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 		mappedId = objectInput.readUTF();
 		manualCheckInRequired = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -205,7 +206,6 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 
 		objectOutput.writeLong(repositoryEntryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -228,13 +228,13 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 
 		objectOutput.writeBoolean(manualCheckInRequired);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long repositoryEntryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -243,4 +243,5 @@ public class RepositoryEntryCacheModel implements CacheModel<RepositoryEntry>,
 	public String mappedId;
 	public boolean manualCheckInRequired;
 	public long lastPublishDate;
+	public long companyId;
 }

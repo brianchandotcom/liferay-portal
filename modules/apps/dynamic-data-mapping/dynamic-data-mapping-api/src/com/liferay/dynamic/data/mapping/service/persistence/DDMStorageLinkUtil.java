@@ -247,6 +247,157 @@ public class DDMStorageLinkUtil {
 	}
 
 	/**
+	* Returns all the d d m storage links where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the matching d d m storage links
+	*/
+	public static List<DDMStorageLink> findByUuid_C(java.lang.String uuid,
+		long companyId) {
+		return getPersistence().findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of all the d d m storage links where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of d d m storage links
+	* @param end the upper bound of the range of d d m storage links (not inclusive)
+	* @return the range of matching d d m storage links
+	*/
+	public static List<DDMStorageLink> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
+		return getPersistence().findByUuid_C(uuid, companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m storage links where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStorageLinkModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of d d m storage links
+	* @param end the upper bound of the range of d d m storage links (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m storage links
+	*/
+	public static List<DDMStorageLink> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<DDMStorageLink> orderByComparator) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m storage link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m storage link
+	* @throws com.liferay.dynamic.data.mapping.NoSuchStorageLinkException if a matching d d m storage link could not be found
+	*/
+	public static DDMStorageLink findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<DDMStorageLink> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException {
+		return getPersistence()
+				   .findByUuid_C_First(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m storage link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
+	*/
+	public static DDMStorageLink fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<DDMStorageLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m storage link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m storage link
+	* @throws com.liferay.dynamic.data.mapping.NoSuchStorageLinkException if a matching d d m storage link could not be found
+	*/
+	public static DDMStorageLink findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<DDMStorageLink> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException {
+		return getPersistence()
+				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m storage link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
+	*/
+	public static DDMStorageLink fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<DDMStorageLink> orderByComparator) {
+		return getPersistence()
+				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the d d m storage links before and after the current d d m storage link in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param storageLinkId the primary key of the current d d m storage link
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m storage link
+	* @throws com.liferay.dynamic.data.mapping.NoSuchStorageLinkException if a d d m storage link with the primary key could not be found
+	*/
+	public static DDMStorageLink[] findByUuid_C_PrevAndNext(
+		long storageLinkId, java.lang.String uuid, long companyId,
+		OrderByComparator<DDMStorageLink> orderByComparator)
+		throws com.liferay.dynamic.data.mapping.exception.NoSuchStorageLinkException {
+		return getPersistence()
+				   .findByUuid_C_PrevAndNext(storageLinkId, uuid, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m storage links where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	*/
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+		getPersistence().removeByUuid_C(uuid, companyId);
+	}
+
+	/**
+	* Returns the number of d d m storage links where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching d d m storage links
+	*/
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+		return getPersistence().countByUuid_C(uuid, companyId);
+	}
+
+	/**
 	* Returns the d d m storage link where classPK = &#63; or throws a {@link com.liferay.dynamic.data.mapping.NoSuchStorageLinkException} if it could not be found.
 	*
 	* @param classPK the class p k

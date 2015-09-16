@@ -69,14 +69,14 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 			{ "mvccVersion", Types.BIGINT },
 			{ "workflowInstanceLinkId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "workflowInstanceId", Types.BIGINT }
+			{ "workflowInstanceId", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -84,7 +84,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("workflowInstanceLinkId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -92,9 +91,10 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("workflowInstanceId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WorkflowInstanceLink (mvccVersion LONG default 0,workflowInstanceLinkId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,workflowInstanceId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table WorkflowInstanceLink (mvccVersion LONG default 0,workflowInstanceLinkId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,workflowInstanceId LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table WorkflowInstanceLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY workflowInstanceLink.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY WorkflowInstanceLink.createDate DESC";
@@ -158,7 +158,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("workflowInstanceLinkId", getWorkflowInstanceLinkId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -166,6 +165,7 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("workflowInstanceId", getWorkflowInstanceId());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -192,12 +192,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -241,6 +235,12 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		if (workflowInstanceId != null) {
 			setWorkflowInstanceId(workflowInstanceId);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -283,28 +283,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -450,6 +428,28 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		_workflowInstanceId = workflowInstanceId;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -484,7 +484,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		workflowInstanceLinkImpl.setMvccVersion(getMvccVersion());
 		workflowInstanceLinkImpl.setWorkflowInstanceLinkId(getWorkflowInstanceLinkId());
 		workflowInstanceLinkImpl.setGroupId(getGroupId());
-		workflowInstanceLinkImpl.setCompanyId(getCompanyId());
 		workflowInstanceLinkImpl.setUserId(getUserId());
 		workflowInstanceLinkImpl.setUserName(getUserName());
 		workflowInstanceLinkImpl.setCreateDate(getCreateDate());
@@ -492,6 +491,7 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		workflowInstanceLinkImpl.setClassNameId(getClassNameId());
 		workflowInstanceLinkImpl.setClassPK(getClassPK());
 		workflowInstanceLinkImpl.setWorkflowInstanceId(getWorkflowInstanceId());
+		workflowInstanceLinkImpl.setCompanyId(getCompanyId());
 
 		workflowInstanceLinkImpl.resetOriginalValues();
 
@@ -559,10 +559,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 
 		workflowInstanceLinkModelImpl._setOriginalGroupId = false;
 
-		workflowInstanceLinkModelImpl._originalCompanyId = workflowInstanceLinkModelImpl._companyId;
-
-		workflowInstanceLinkModelImpl._setOriginalCompanyId = false;
-
 		workflowInstanceLinkModelImpl._setModifiedDate = false;
 
 		workflowInstanceLinkModelImpl._originalClassNameId = workflowInstanceLinkModelImpl._classNameId;
@@ -572,6 +568,10 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		workflowInstanceLinkModelImpl._originalClassPK = workflowInstanceLinkModelImpl._classPK;
 
 		workflowInstanceLinkModelImpl._setOriginalClassPK = false;
+
+		workflowInstanceLinkModelImpl._originalCompanyId = workflowInstanceLinkModelImpl._companyId;
+
+		workflowInstanceLinkModelImpl._setOriginalCompanyId = false;
 
 		workflowInstanceLinkModelImpl._columnBitmask = 0;
 	}
@@ -585,8 +585,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		workflowInstanceLinkCacheModel.workflowInstanceLinkId = getWorkflowInstanceLinkId();
 
 		workflowInstanceLinkCacheModel.groupId = getGroupId();
-
-		workflowInstanceLinkCacheModel.companyId = getCompanyId();
 
 		workflowInstanceLinkCacheModel.userId = getUserId();
 
@@ -622,6 +620,8 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 
 		workflowInstanceLinkCacheModel.workflowInstanceId = getWorkflowInstanceId();
 
+		workflowInstanceLinkCacheModel.companyId = getCompanyId();
+
 		return workflowInstanceLinkCacheModel;
 	}
 
@@ -635,8 +635,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		sb.append(getWorkflowInstanceLinkId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -651,6 +649,8 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		sb.append(getClassPK());
 		sb.append(", workflowInstanceId=");
 		sb.append(getWorkflowInstanceId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -675,10 +675,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -708,6 +704,10 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 			"<column><column-name>workflowInstanceId</column-name><column-value><![CDATA[");
 		sb.append(getWorkflowInstanceId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -723,9 +723,6 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -738,6 +735,9 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private long _workflowInstanceId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private WorkflowInstanceLink _escapedModel;
 }

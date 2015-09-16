@@ -58,7 +58,8 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 			{ "mvccVersion", Types.BIGINT },
 			{ "organizationId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "roleId", Types.BIGINT }
+			{ "roleId", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -67,9 +68,10 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		TABLE_COLUMNS_MAP.put("organizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OrgGroupRole (mvccVersion LONG default 0,organizationId LONG not null,groupId LONG not null,roleId LONG not null,primary key (organizationId, groupId, roleId))";
+	public static final String TABLE_SQL_CREATE = "create table OrgGroupRole (mvccVersion LONG default 0,organizationId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG,primary key (organizationId, groupId, roleId))";
 	public static final String TABLE_SQL_DROP = "drop table OrgGroupRole";
 	public static final String ORDER_BY_JPQL = " ORDER BY orgGroupRole.id.organizationId ASC, orgGroupRole.id.groupId ASC, orgGroupRole.id.roleId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OrgGroupRole.organizationId ASC, OrgGroupRole.groupId ASC, OrgGroupRole.roleId ASC";
@@ -134,6 +136,7 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		attributes.put("organizationId", getOrganizationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -165,6 +168,12 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 		if (roleId != null) {
 			setRoleId(roleId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -232,6 +241,16 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		return _originalRoleId;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -254,6 +273,7 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		orgGroupRoleImpl.setOrganizationId(getOrganizationId());
 		orgGroupRoleImpl.setGroupId(getGroupId());
 		orgGroupRoleImpl.setRoleId(getRoleId());
+		orgGroupRoleImpl.setCompanyId(getCompanyId());
 
 		orgGroupRoleImpl.resetOriginalValues();
 
@@ -333,12 +353,14 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 		orgGroupRoleCacheModel.roleId = getRoleId();
 
+		orgGroupRoleCacheModel.companyId = getCompanyId();
+
 		return orgGroupRoleCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -348,6 +370,8 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 		sb.append(getGroupId());
 		sb.append(", roleId=");
 		sb.append(getRoleId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -355,7 +379,7 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.OrgGroupRole");
@@ -377,6 +401,10 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 			"<column><column-name>roleId</column-name><column-value><![CDATA[");
 		sb.append(getRoleId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -395,6 +423,7 @@ public class OrgGroupRoleModelImpl extends BaseModelImpl<OrgGroupRole>
 	private long _roleId;
 	private long _originalRoleId;
 	private boolean _setOriginalRoleId;
+	private long _companyId;
 	private long _columnBitmask;
 	private OrgGroupRole _escapedModel;
 }

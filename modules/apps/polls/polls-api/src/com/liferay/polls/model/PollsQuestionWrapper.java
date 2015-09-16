@@ -58,7 +58,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		attributes.put("uuid", getUuid());
 		attributes.put("questionId", getQuestionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -68,6 +67,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("lastVoteDate", getLastVoteDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -90,12 +90,6 @@ public class PollsQuestionWrapper implements PollsQuestion,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -150,6 +144,12 @@ public class PollsQuestionWrapper implements PollsQuestion,
 
 		if (lastVoteDate != null) {
 			setLastVoteDate(lastVoteDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

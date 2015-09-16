@@ -119,8 +119,6 @@ public class LayoutBranchPersistenceTest {
 
 		newLayoutBranch.setGroupId(RandomTestUtil.nextLong());
 
-		newLayoutBranch.setCompanyId(RandomTestUtil.nextLong());
-
 		newLayoutBranch.setUserId(RandomTestUtil.nextLong());
 
 		newLayoutBranch.setUserName(RandomTestUtil.randomString());
@@ -135,6 +133,8 @@ public class LayoutBranchPersistenceTest {
 
 		newLayoutBranch.setMaster(RandomTestUtil.randomBoolean());
 
+		newLayoutBranch.setCompanyId(RandomTestUtil.nextLong());
+
 		_layoutBranchs.add(_persistence.update(newLayoutBranch));
 
 		LayoutBranch existingLayoutBranch = _persistence.findByPrimaryKey(newLayoutBranch.getPrimaryKey());
@@ -145,8 +145,6 @@ public class LayoutBranchPersistenceTest {
 			newLayoutBranch.getLayoutBranchId());
 		Assert.assertEquals(existingLayoutBranch.getGroupId(),
 			newLayoutBranch.getGroupId());
-		Assert.assertEquals(existingLayoutBranch.getCompanyId(),
-			newLayoutBranch.getCompanyId());
 		Assert.assertEquals(existingLayoutBranch.getUserId(),
 			newLayoutBranch.getUserId());
 		Assert.assertEquals(existingLayoutBranch.getUserName(),
@@ -161,6 +159,8 @@ public class LayoutBranchPersistenceTest {
 			newLayoutBranch.getDescription());
 		Assert.assertEquals(existingLayoutBranch.getMaster(),
 			newLayoutBranch.getMaster());
+		Assert.assertEquals(existingLayoutBranch.getCompanyId(),
+			newLayoutBranch.getCompanyId());
 	}
 
 	@Test
@@ -221,9 +221,9 @@ public class LayoutBranchPersistenceTest {
 	protected OrderByComparator<LayoutBranch> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutBranch",
 			"mvccVersion", true, "layoutBranchId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true,
-			"layoutSetBranchId", true, "plid", true, "name", true,
-			"description", true, "master", true);
+			"userId", true, "userName", true, "layoutSetBranchId", true,
+			"plid", true, "name", true, "description", true, "master", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -451,8 +451,6 @@ public class LayoutBranchPersistenceTest {
 
 		layoutBranch.setGroupId(RandomTestUtil.nextLong());
 
-		layoutBranch.setCompanyId(RandomTestUtil.nextLong());
-
 		layoutBranch.setUserId(RandomTestUtil.nextLong());
 
 		layoutBranch.setUserName(RandomTestUtil.randomString());
@@ -466,6 +464,8 @@ public class LayoutBranchPersistenceTest {
 		layoutBranch.setDescription(RandomTestUtil.randomString());
 
 		layoutBranch.setMaster(RandomTestUtil.randomBoolean());
+
+		layoutBranch.setCompanyId(RandomTestUtil.nextLong());
 
 		_layoutBranchs.add(_persistence.update(layoutBranch));
 

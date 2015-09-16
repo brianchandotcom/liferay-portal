@@ -55,7 +55,6 @@ public class KaleoActionWrapper implements KaleoAction,
 
 		attributes.put("kaleoActionId", getKaleoActionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -71,6 +70,7 @@ public class KaleoActionWrapper implements KaleoAction,
 		attributes.put("scriptLanguage", getScriptLanguage());
 		attributes.put("scriptRequiredContexts", getScriptRequiredContexts());
 		attributes.put("priority", getPriority());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -87,12 +87,6 @@ public class KaleoActionWrapper implements KaleoAction,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -184,6 +178,12 @@ public class KaleoActionWrapper implements KaleoAction,
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

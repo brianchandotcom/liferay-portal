@@ -120,8 +120,6 @@ public class SocialRequestPersistenceTest {
 
 		newSocialRequest.setGroupId(RandomTestUtil.nextLong());
 
-		newSocialRequest.setCompanyId(RandomTestUtil.nextLong());
-
 		newSocialRequest.setUserId(RandomTestUtil.nextLong());
 
 		newSocialRequest.setCreateDate(RandomTestUtil.nextLong());
@@ -140,6 +138,8 @@ public class SocialRequestPersistenceTest {
 
 		newSocialRequest.setStatus(RandomTestUtil.nextInt());
 
+		newSocialRequest.setCompanyId(RandomTestUtil.nextLong());
+
 		_socialRequests.add(_persistence.update(newSocialRequest));
 
 		SocialRequest existingSocialRequest = _persistence.findByPrimaryKey(newSocialRequest.getPrimaryKey());
@@ -150,8 +150,6 @@ public class SocialRequestPersistenceTest {
 			newSocialRequest.getRequestId());
 		Assert.assertEquals(existingSocialRequest.getGroupId(),
 			newSocialRequest.getGroupId());
-		Assert.assertEquals(existingSocialRequest.getCompanyId(),
-			newSocialRequest.getCompanyId());
 		Assert.assertEquals(existingSocialRequest.getUserId(),
 			newSocialRequest.getUserId());
 		Assert.assertEquals(existingSocialRequest.getCreateDate(),
@@ -170,6 +168,8 @@ public class SocialRequestPersistenceTest {
 			newSocialRequest.getReceiverUserId());
 		Assert.assertEquals(existingSocialRequest.getStatus(),
 			newSocialRequest.getStatus());
+		Assert.assertEquals(existingSocialRequest.getCompanyId(),
+			newSocialRequest.getCompanyId());
 	}
 
 	@Test
@@ -200,13 +200,6 @@ public class SocialRequestPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByUserId() throws Exception {
 		_persistence.countByUserId(RandomTestUtil.nextLong());
 
@@ -218,6 +211,13 @@ public class SocialRequestPersistenceTest {
 		_persistence.countByReceiverUserId(RandomTestUtil.nextLong());
 
 		_persistence.countByReceiverUserId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -295,10 +295,10 @@ public class SocialRequestPersistenceTest {
 
 	protected OrderByComparator<SocialRequest> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialRequest", "uuid",
-			true, "requestId", true, "groupId", true, "companyId", true,
-			"userId", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "type", true, "extraData",
-			true, "receiverUserId", true, "status", true);
+			true, "requestId", true, "groupId", true, "userId", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "type", true, "extraData", true, "receiverUserId",
+			true, "status", true, "companyId", true);
 	}
 
 	@Test
@@ -537,8 +537,6 @@ public class SocialRequestPersistenceTest {
 
 		socialRequest.setGroupId(RandomTestUtil.nextLong());
 
-		socialRequest.setCompanyId(RandomTestUtil.nextLong());
-
 		socialRequest.setUserId(RandomTestUtil.nextLong());
 
 		socialRequest.setCreateDate(RandomTestUtil.nextLong());
@@ -556,6 +554,8 @@ public class SocialRequestPersistenceTest {
 		socialRequest.setReceiverUserId(RandomTestUtil.nextLong());
 
 		socialRequest.setStatus(RandomTestUtil.nextInt());
+
+		socialRequest.setCompanyId(RandomTestUtil.nextLong());
 
 		_socialRequests.add(_persistence.update(socialRequest));
 

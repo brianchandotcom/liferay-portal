@@ -117,8 +117,6 @@ public class AssetCategoryPropertyPersistenceTest {
 
 		AssetCategoryProperty newAssetCategoryProperty = _persistence.create(pk);
 
-		newAssetCategoryProperty.setCompanyId(RandomTestUtil.nextLong());
-
 		newAssetCategoryProperty.setUserId(RandomTestUtil.nextLong());
 
 		newAssetCategoryProperty.setUserName(RandomTestUtil.randomString());
@@ -133,6 +131,8 @@ public class AssetCategoryPropertyPersistenceTest {
 
 		newAssetCategoryProperty.setValue(RandomTestUtil.randomString());
 
+		newAssetCategoryProperty.setCompanyId(RandomTestUtil.nextLong());
+
 		_assetCategoryProperties.add(_persistence.update(
 				newAssetCategoryProperty));
 
@@ -140,8 +140,6 @@ public class AssetCategoryPropertyPersistenceTest {
 
 		Assert.assertEquals(existingAssetCategoryProperty.getCategoryPropertyId(),
 			newAssetCategoryProperty.getCategoryPropertyId());
-		Assert.assertEquals(existingAssetCategoryProperty.getCompanyId(),
-			newAssetCategoryProperty.getCompanyId());
 		Assert.assertEquals(existingAssetCategoryProperty.getUserId(),
 			newAssetCategoryProperty.getUserId());
 		Assert.assertEquals(existingAssetCategoryProperty.getUserName(),
@@ -158,13 +156,8 @@ public class AssetCategoryPropertyPersistenceTest {
 			newAssetCategoryProperty.getKey());
 		Assert.assertEquals(existingAssetCategoryProperty.getValue(),
 			newAssetCategoryProperty.getValue());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingAssetCategoryProperty.getCompanyId(),
+			newAssetCategoryProperty.getCompanyId());
 	}
 
 	@Test
@@ -175,12 +168,10 @@ public class AssetCategoryPropertyPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_K() throws Exception {
-		_persistence.countByC_K(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-		_persistence.countByC_K(0L, StringPool.NULL);
-
-		_persistence.countByC_K(0L, (String)null);
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -190,6 +181,15 @@ public class AssetCategoryPropertyPersistenceTest {
 		_persistence.countByCA_K(0L, StringPool.NULL);
 
 		_persistence.countByCA_K(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByC_K() throws Exception {
+		_persistence.countByC_K(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByC_K(0L, StringPool.NULL);
+
+		_persistence.countByC_K(0L, (String)null);
 	}
 
 	@Test
@@ -217,9 +217,9 @@ public class AssetCategoryPropertyPersistenceTest {
 
 	protected OrderByComparator<AssetCategoryProperty> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetCategoryProperty",
-			"categoryPropertyId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"categoryId", true, "key", true, "value", true);
+			"categoryPropertyId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "categoryId", true,
+			"key", true, "value", true, "companyId", true);
 	}
 
 	@Test
@@ -448,8 +448,6 @@ public class AssetCategoryPropertyPersistenceTest {
 
 		AssetCategoryProperty assetCategoryProperty = _persistence.create(pk);
 
-		assetCategoryProperty.setCompanyId(RandomTestUtil.nextLong());
-
 		assetCategoryProperty.setUserId(RandomTestUtil.nextLong());
 
 		assetCategoryProperty.setUserName(RandomTestUtil.randomString());
@@ -463,6 +461,8 @@ public class AssetCategoryPropertyPersistenceTest {
 		assetCategoryProperty.setKey(RandomTestUtil.randomString());
 
 		assetCategoryProperty.setValue(RandomTestUtil.randomString());
+
+		assetCategoryProperty.setCompanyId(RandomTestUtil.nextLong());
 
 		_assetCategoryProperties.add(_persistence.update(assetCategoryProperty));
 

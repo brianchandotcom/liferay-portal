@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchBrowserTrackerException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -426,6 +427,8 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		browserTracker.setNew(true);
 		browserTracker.setPrimaryKey(browserTrackerId);
 
+		browserTracker.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return browserTracker;
 	}
 
@@ -575,6 +578,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		browserTrackerImpl.setBrowserTrackerId(browserTracker.getBrowserTrackerId());
 		browserTrackerImpl.setUserId(browserTracker.getUserId());
 		browserTrackerImpl.setBrowserKey(browserTracker.getBrowserKey());
+		browserTrackerImpl.setCompanyId(browserTracker.getCompanyId());
 
 		return browserTrackerImpl;
 	}
@@ -951,6 +955,8 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_BROWSERTRACKER = "SELECT browserTracker FROM BrowserTracker browserTracker";
 	private static final String _SQL_SELECT_BROWSERTRACKER_WHERE_PKS_IN = "SELECT browserTracker FROM BrowserTracker browserTracker WHERE browserTrackerId IN (";
 	private static final String _SQL_SELECT_BROWSERTRACKER_WHERE = "SELECT browserTracker FROM BrowserTracker browserTracker WHERE ";

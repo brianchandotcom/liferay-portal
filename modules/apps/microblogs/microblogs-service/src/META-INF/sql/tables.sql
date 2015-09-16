@@ -1,6 +1,5 @@
 create table MicroblogsEntry (
 	microblogsEntryId LONG not null primary key,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -10,5 +9,6 @@ create table MicroblogsEntry (
 	content STRING null,
 	type_ INTEGER,
 	parentMicroblogsEntryId LONG,
-	socialRelationType INTEGER
+	socialRelationType INTEGER,
+	companyId LONG
 );

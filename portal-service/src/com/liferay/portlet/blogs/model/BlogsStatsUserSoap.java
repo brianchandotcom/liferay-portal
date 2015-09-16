@@ -35,13 +35,13 @@ public class BlogsStatsUserSoap implements Serializable {
 
 		soapModel.setStatsUserId(model.getStatsUserId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setEntryCount(model.getEntryCount());
 		soapModel.setLastPostDate(model.getLastPostDate());
 		soapModel.setRatingsTotalEntries(model.getRatingsTotalEntries());
 		soapModel.setRatingsTotalScore(model.getRatingsTotalScore());
 		soapModel.setRatingsAverageScore(model.getRatingsAverageScore());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -110,14 +110,6 @@ public class BlogsStatsUserSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -166,13 +158,21 @@ public class BlogsStatsUserSoap implements Serializable {
 		_ratingsAverageScore = ratingsAverageScore;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _statsUserId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private int _entryCount;
 	private Date _lastPostDate;
 	private int _ratingsTotalEntries;
 	private double _ratingsTotalScore;
 	private double _ratingsAverageScore;
+	private long _companyId;
 }

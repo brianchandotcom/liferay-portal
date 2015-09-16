@@ -72,8 +72,6 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		sb.append(uuid);
 		sb.append(", entryId=");
 		sb.append(entryId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -90,6 +88,8 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		sb.append(score);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -107,7 +107,6 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		}
 
 		ratingsEntryImpl.setEntryId(entryId);
-		ratingsEntryImpl.setCompanyId(companyId);
 		ratingsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -142,6 +141,8 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 			ratingsEntryImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		ratingsEntryImpl.setCompanyId(companyId);
+
 		ratingsEntryImpl.resetOriginalValues();
 
 		return ratingsEntryImpl;
@@ -151,7 +152,6 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		entryId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -160,6 +160,7 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		classPK = objectInput.readLong();
 		score = objectInput.readDouble();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -173,7 +174,6 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		}
 
 		objectOutput.writeLong(entryId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -189,11 +189,11 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 		objectOutput.writeLong(classPK);
 		objectOutput.writeDouble(score);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long entryId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -202,4 +202,5 @@ public class RatingsEntryCacheModel implements CacheModel<RatingsEntry>,
 	public long classPK;
 	public double score;
 	public long lastPublishDate;
+	public long companyId;
 }

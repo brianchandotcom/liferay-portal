@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface MBThreadFlagModel extends BaseModel<MBThreadFlag>,
-	StagedGroupedModel {
+	PartitionableModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -110,22 +111,6 @@ public interface MBThreadFlagModel extends BaseModel<MBThreadFlag>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this message boards thread flag.
-	 *
-	 * @return the company ID of this message boards thread flag
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this message boards thread flag.
-	 *
-	 * @param companyId the company ID of this message boards thread flag
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this message boards thread flag.
@@ -237,6 +222,22 @@ public interface MBThreadFlagModel extends BaseModel<MBThreadFlag>,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this message boards thread flag.
+	 *
+	 * @return the company ID of this message boards thread flag
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this message boards thread flag.
+	 *
+	 * @param companyId the company ID of this message boards thread flag
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

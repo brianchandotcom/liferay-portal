@@ -126,8 +126,6 @@ public class PollsChoicePersistenceTest {
 
 		newPollsChoice.setGroupId(RandomTestUtil.nextLong());
 
-		newPollsChoice.setCompanyId(RandomTestUtil.nextLong());
-
 		newPollsChoice.setUserId(RandomTestUtil.nextLong());
 
 		newPollsChoice.setUserName(RandomTestUtil.randomString());
@@ -144,6 +142,8 @@ public class PollsChoicePersistenceTest {
 
 		newPollsChoice.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newPollsChoice.setCompanyId(RandomTestUtil.nextLong());
+
 		_pollsChoices.add(_persistence.update(newPollsChoice));
 
 		PollsChoice existingPollsChoice = _persistence.findByPrimaryKey(newPollsChoice.getPrimaryKey());
@@ -154,8 +154,6 @@ public class PollsChoicePersistenceTest {
 			newPollsChoice.getChoiceId());
 		Assert.assertEquals(existingPollsChoice.getGroupId(),
 			newPollsChoice.getGroupId());
-		Assert.assertEquals(existingPollsChoice.getCompanyId(),
-			newPollsChoice.getCompanyId());
 		Assert.assertEquals(existingPollsChoice.getUserId(),
 			newPollsChoice.getUserId());
 		Assert.assertEquals(existingPollsChoice.getUserName(),
@@ -175,6 +173,8 @@ public class PollsChoicePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingPollsChoice.getLastPublishDate()),
 			Time.getShortTimestamp(newPollsChoice.getLastPublishDate()));
+		Assert.assertEquals(existingPollsChoice.getCompanyId(),
+			newPollsChoice.getCompanyId());
 	}
 
 	@Test
@@ -244,10 +244,10 @@ public class PollsChoicePersistenceTest {
 
 	protected OrderByComparator<PollsChoice> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PollsChoice", "uuid", true,
-			"choiceId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"questionId", true, "name", true, "description", true,
-			"lastPublishDate", true);
+			"choiceId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "questionId", true,
+			"name", true, "description", true, "lastPublishDate", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -476,8 +476,6 @@ public class PollsChoicePersistenceTest {
 
 		pollsChoice.setGroupId(RandomTestUtil.nextLong());
 
-		pollsChoice.setCompanyId(RandomTestUtil.nextLong());
-
 		pollsChoice.setUserId(RandomTestUtil.nextLong());
 
 		pollsChoice.setUserName(RandomTestUtil.randomString());
@@ -493,6 +491,8 @@ public class PollsChoicePersistenceTest {
 		pollsChoice.setDescription(RandomTestUtil.randomString());
 
 		pollsChoice.setLastPublishDate(RandomTestUtil.nextDate());
+
+		pollsChoice.setCompanyId(RandomTestUtil.nextLong());
 
 		_pollsChoices.add(_persistence.update(pollsChoice));
 

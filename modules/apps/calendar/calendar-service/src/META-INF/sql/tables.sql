@@ -2,7 +2,6 @@ create table Calendar (
 	uuid_ VARCHAR(75) null,
 	calendarId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -16,14 +15,14 @@ create table Calendar (
 	defaultCalendar BOOLEAN,
 	enableComments BOOLEAN,
 	enableRatings BOOLEAN,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	companyId LONG
 );
 
 create table CalendarBooking (
 	uuid_ VARCHAR(75) null,
 	calendarBookingId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -48,14 +47,14 @@ create table CalendarBooking (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	companyId LONG
 );
 
 create table CalendarNotificationTemplate (
 	uuid_ VARCHAR(75) null,
 	calendarNotificationTemplateId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -66,14 +65,14 @@ create table CalendarNotificationTemplate (
 	notificationTemplateType VARCHAR(75) null,
 	subject VARCHAR(75) null,
 	body TEXT null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	companyId LONG
 );
 
 create table CalendarResource (
 	uuid_ VARCHAR(75) null,
 	calendarResourceId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -86,5 +85,6 @@ create table CalendarResource (
 	name STRING null,
 	description STRING null,
 	active_ BOOLEAN,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	companyId LONG
 );

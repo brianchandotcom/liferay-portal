@@ -119,8 +119,6 @@ public class MicroblogsEntryPersistenceTest {
 
 		MicroblogsEntry newMicroblogsEntry = _persistence.create(pk);
 
-		newMicroblogsEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		newMicroblogsEntry.setUserId(RandomTestUtil.nextLong());
 
 		newMicroblogsEntry.setUserName(RandomTestUtil.randomString());
@@ -141,14 +139,14 @@ public class MicroblogsEntryPersistenceTest {
 
 		newMicroblogsEntry.setSocialRelationType(RandomTestUtil.nextInt());
 
+		newMicroblogsEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		_microblogsEntries.add(_persistence.update(newMicroblogsEntry));
 
 		MicroblogsEntry existingMicroblogsEntry = _persistence.findByPrimaryKey(newMicroblogsEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingMicroblogsEntry.getMicroblogsEntryId(),
 			newMicroblogsEntry.getMicroblogsEntryId());
-		Assert.assertEquals(existingMicroblogsEntry.getCompanyId(),
-			newMicroblogsEntry.getCompanyId());
 		Assert.assertEquals(existingMicroblogsEntry.getUserId(),
 			newMicroblogsEntry.getUserId());
 		Assert.assertEquals(existingMicroblogsEntry.getUserName(),
@@ -171,13 +169,8 @@ public class MicroblogsEntryPersistenceTest {
 			newMicroblogsEntry.getParentMicroblogsEntryId());
 		Assert.assertEquals(existingMicroblogsEntry.getSocialRelationType(),
 			newMicroblogsEntry.getSocialRelationType());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingMicroblogsEntry.getCompanyId(),
+			newMicroblogsEntry.getCompanyId());
 	}
 
 	@Test
@@ -185,6 +178,13 @@ public class MicroblogsEntryPersistenceTest {
 		_persistence.countByUserId(RandomTestUtil.nextLong());
 
 		_persistence.countByUserId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -273,11 +273,11 @@ public class MicroblogsEntryPersistenceTest {
 
 	protected OrderByComparator<MicroblogsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MicroblogsEntry",
-			"microblogsEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"creatorClassNameId", true, "creatorClassPK", true, "content",
-			true, "type", true, "parentMicroblogsEntryId", true,
-			"socialRelationType", true);
+			"microblogsEntryId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "creatorClassNameId",
+			true, "creatorClassPK", true, "content", true, "type", true,
+			"parentMicroblogsEntryId", true, "socialRelationType", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -481,8 +481,6 @@ public class MicroblogsEntryPersistenceTest {
 
 		MicroblogsEntry microblogsEntry = _persistence.create(pk);
 
-		microblogsEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		microblogsEntry.setUserId(RandomTestUtil.nextLong());
 
 		microblogsEntry.setUserName(RandomTestUtil.randomString());
@@ -502,6 +500,8 @@ public class MicroblogsEntryPersistenceTest {
 		microblogsEntry.setParentMicroblogsEntryId(RandomTestUtil.nextLong());
 
 		microblogsEntry.setSocialRelationType(RandomTestUtil.nextInt());
+
+		microblogsEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		_microblogsEntries.add(_persistence.update(microblogsEntry));
 

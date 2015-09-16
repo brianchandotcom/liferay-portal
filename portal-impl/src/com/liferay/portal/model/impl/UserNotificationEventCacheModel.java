@@ -85,8 +85,6 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		sb.append(uuid);
 		sb.append(", userNotificationEventId=");
 		sb.append(userNotificationEventId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", type=");
@@ -105,6 +103,8 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		sb.append(actionRequired);
 		sb.append(", archived=");
 		sb.append(archived);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -124,7 +124,6 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		}
 
 		userNotificationEventImpl.setUserNotificationEventId(userNotificationEventId);
-		userNotificationEventImpl.setCompanyId(companyId);
 		userNotificationEventImpl.setUserId(userId);
 
 		if (type == null) {
@@ -148,6 +147,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 
 		userNotificationEventImpl.setActionRequired(actionRequired);
 		userNotificationEventImpl.setArchived(archived);
+		userNotificationEventImpl.setCompanyId(companyId);
 
 		userNotificationEventImpl.resetOriginalValues();
 
@@ -159,7 +159,6 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		userNotificationEventId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		type = objectInput.readUTF();
 		timestamp = objectInput.readLong();
@@ -169,6 +168,7 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		payload = objectInput.readUTF();
 		actionRequired = objectInput.readBoolean();
 		archived = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -184,7 +184,6 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 		}
 
 		objectOutput.writeLong(userNotificationEventId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (type == null) {
@@ -208,12 +207,12 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 
 		objectOutput.writeBoolean(actionRequired);
 		objectOutput.writeBoolean(archived);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long userNotificationEventId;
-	public long companyId;
 	public long userId;
 	public String type;
 	public long timestamp;
@@ -223,4 +222,5 @@ public class UserNotificationEventCacheModel implements CacheModel<UserNotificat
 	public String payload;
 	public boolean actionRequired;
 	public boolean archived;
+	public long companyId;
 }

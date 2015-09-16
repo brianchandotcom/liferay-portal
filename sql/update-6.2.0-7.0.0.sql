@@ -54,7 +54,6 @@ create table ExportImportConfiguration (
 	mvccVersion LONG default 0,
 	exportImportConfigurationId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -66,7 +65,8 @@ create table ExportImportConfiguration (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	companyId LONG
 );
 
 alter table Group_ add groupKey STRING;

@@ -87,8 +87,6 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		sb.append(uuid);
 		sb.append(", emailAddressId=");
 		sb.append(emailAddressId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -109,6 +107,8 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		sb.append(primary);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -128,7 +128,6 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		}
 
 		emailAddressImpl.setEmailAddressId(emailAddressId);
-		emailAddressImpl.setCompanyId(companyId);
 		emailAddressImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -172,6 +171,8 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 			emailAddressImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		emailAddressImpl.setCompanyId(companyId);
+
 		emailAddressImpl.resetOriginalValues();
 
 		return emailAddressImpl;
@@ -182,7 +183,6 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		emailAddressId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -193,6 +193,7 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		typeId = objectInput.readLong();
 		primary = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -208,7 +209,6 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		}
 
 		objectOutput.writeLong(emailAddressId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -233,12 +233,12 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 		objectOutput.writeLong(typeId);
 		objectOutput.writeBoolean(primary);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long emailAddressId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -249,4 +249,5 @@ public class EmailAddressCacheModel implements CacheModel<EmailAddress>,
 	public long typeId;
 	public boolean primary;
 	public long lastPublishDate;
+	public long companyId;
 }

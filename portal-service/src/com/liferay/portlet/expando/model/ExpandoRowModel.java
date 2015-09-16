@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
@@ -38,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ExpandoRowModel extends BaseModel<ExpandoRow> {
+public interface ExpandoRowModel extends BaseModel<ExpandoRow>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -72,20 +74,6 @@ public interface ExpandoRowModel extends BaseModel<ExpandoRow> {
 	 * @param rowId the row ID of this expando row
 	 */
 	public void setRowId(long rowId);
-
-	/**
-	 * Returns the company ID of this expando row.
-	 *
-	 * @return the company ID of this expando row
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this expando row.
-	 *
-	 * @param companyId the company ID of this expando row
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the modified date of this expando row.
@@ -128,6 +116,22 @@ public interface ExpandoRowModel extends BaseModel<ExpandoRow> {
 	 * @param classPK the class p k of this expando row
 	 */
 	public void setClassPK(long classPK);
+
+	/**
+	 * Returns the company ID of this expando row.
+	 *
+	 * @return the company ID of this expando row
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this expando row.
+	 *
+	 * @param companyId the company ID of this expando row
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

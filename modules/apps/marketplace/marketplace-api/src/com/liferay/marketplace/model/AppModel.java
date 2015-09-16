@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AppModel extends AuditedModel, BaseModel<App> {
+public interface AppModel extends AuditedModel, BaseModel<App>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -91,22 +93,6 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 * @param appId the app ID of this app
 	 */
 	public void setAppId(long appId);
-
-	/**
-	 * Returns the company ID of this app.
-	 *
-	 * @return the company ID of this app
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this app.
-	 *
-	 * @param companyId the company ID of this app
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this app.
@@ -277,6 +263,22 @@ public interface AppModel extends AuditedModel, BaseModel<App> {
 	 * @param version the version of this app
 	 */
 	public void setVersion(String version);
+
+	/**
+	 * Returns the company ID of this app.
+	 *
+	 * @return the company ID of this app
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this app.
+	 *
+	 * @param companyId the company ID of this app
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

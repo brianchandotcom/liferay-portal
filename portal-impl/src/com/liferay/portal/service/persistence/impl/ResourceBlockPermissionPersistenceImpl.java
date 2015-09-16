@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchResourceBlockPermissionException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1453,6 +1454,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		resourceBlockPermission.setNew(true);
 		resourceBlockPermission.setPrimaryKey(resourceBlockPermissionId);
 
+		resourceBlockPermission.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return resourceBlockPermission;
 	}
 
@@ -1647,6 +1650,7 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		resourceBlockPermissionImpl.setResourceBlockId(resourceBlockPermission.getResourceBlockId());
 		resourceBlockPermissionImpl.setRoleId(resourceBlockPermission.getRoleId());
 		resourceBlockPermissionImpl.setActionIds(resourceBlockPermission.getActionIds());
+		resourceBlockPermissionImpl.setCompanyId(resourceBlockPermission.getCompanyId());
 
 		return resourceBlockPermissionImpl;
 	}
@@ -2027,6 +2031,8 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION = "SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission";
 	private static final String _SQL_SELECT_RESOURCEBLOCKPERMISSION_WHERE_PKS_IN =
 		"SELECT resourceBlockPermission FROM ResourceBlockPermission resourceBlockPermission WHERE resourceBlockPermissionId IN (";

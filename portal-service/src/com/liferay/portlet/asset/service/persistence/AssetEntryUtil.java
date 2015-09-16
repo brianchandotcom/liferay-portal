@@ -244,144 +244,6 @@ public class AssetEntryUtil {
 	}
 
 	/**
-	* Returns all the asset entries where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching asset entries
-	*/
-	public static List<AssetEntry> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	* Returns a range of all the asset entries where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of asset entries
-	* @param end the upper bound of the range of asset entries (not inclusive)
-	* @return the range of matching asset entries
-	*/
-	public static List<AssetEntry> findByCompanyId(long companyId, int start,
-		int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the asset entries where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of asset entries
-	* @param end the upper bound of the range of asset entries (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching asset entries
-	*/
-	public static List<AssetEntry> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<AssetEntry> orderByComparator) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first asset entry in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching asset entry
-	* @throws NoSuchEntryException if a matching asset entry could not be found
-	*/
-	public static AssetEntry findByCompanyId_First(long companyId,
-		OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchEntryException {
-		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the first asset entry in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	*/
-	public static AssetEntry fetchByCompanyId_First(long companyId,
-		OrderByComparator<AssetEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last asset entry in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching asset entry
-	* @throws NoSuchEntryException if a matching asset entry could not be found
-	*/
-	public static AssetEntry findByCompanyId_Last(long companyId,
-		OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchEntryException {
-		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last asset entry in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	*/
-	public static AssetEntry fetchByCompanyId_Last(long companyId,
-		OrderByComparator<AssetEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the asset entries before and after the current asset entry in the ordered set where companyId = &#63;.
-	*
-	* @param entryId the primary key of the current asset entry
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next asset entry
-	* @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	*/
-	public static AssetEntry[] findByCompanyId_PrevAndNext(long entryId,
-		long companyId, OrderByComparator<AssetEntry> orderByComparator)
-		throws com.liferay.portlet.asset.NoSuchEntryException {
-		return getPersistence()
-				   .findByCompanyId_PrevAndNext(entryId, companyId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the asset entries where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of asset entries where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching asset entries
-	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
 	* Returns all the asset entries where visible = &#63;.
 	*
 	* @param visible the visible
@@ -948,6 +810,144 @@ public class AssetEntryUtil {
 	*/
 	public static int countByLayoutUuid(java.lang.String layoutUuid) {
 		return getPersistence().countByLayoutUuid(layoutUuid);
+	}
+
+	/**
+	* Returns all the asset entries where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching asset entries
+	*/
+	public static List<AssetEntry> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the asset entries where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of asset entries
+	* @param end the upper bound of the range of asset entries (not inclusive)
+	* @return the range of matching asset entries
+	*/
+	public static List<AssetEntry> findByCompanyId(long companyId, int start,
+		int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the asset entries where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of asset entries
+	* @param end the upper bound of the range of asset entries (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching asset entries
+	*/
+	public static List<AssetEntry> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<AssetEntry> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first asset entry in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset entry
+	* @throws NoSuchEntryException if a matching asset entry could not be found
+	*/
+	public static AssetEntry findByCompanyId_First(long companyId,
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchEntryException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first asset entry in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	*/
+	public static AssetEntry fetchByCompanyId_First(long companyId,
+		OrderByComparator<AssetEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset entry in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset entry
+	* @throws NoSuchEntryException if a matching asset entry could not be found
+	*/
+	public static AssetEntry findByCompanyId_Last(long companyId,
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchEntryException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last asset entry in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	*/
+	public static AssetEntry fetchByCompanyId_Last(long companyId,
+		OrderByComparator<AssetEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the asset entries before and after the current asset entry in the ordered set where companyId = &#63;.
+	*
+	* @param entryId the primary key of the current asset entry
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next asset entry
+	* @throws NoSuchEntryException if a asset entry with the primary key could not be found
+	*/
+	public static AssetEntry[] findByCompanyId_PrevAndNext(long entryId,
+		long companyId, OrderByComparator<AssetEntry> orderByComparator)
+		throws com.liferay.portlet.asset.NoSuchEntryException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(entryId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the asset entries where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of asset entries where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching asset entries
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

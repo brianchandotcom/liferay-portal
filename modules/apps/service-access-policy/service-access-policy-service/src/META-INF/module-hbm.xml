@@ -8,7 +8,6 @@
 			<generator class="assigned" />
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -17,5 +16,6 @@
 		<property name="defaultSAPEntry" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

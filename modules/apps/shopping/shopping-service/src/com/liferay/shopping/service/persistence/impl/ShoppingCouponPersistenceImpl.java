@@ -16,6 +16,7 @@ package com.liferay.shopping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,6 +35,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.shopping.exception.NoSuchCouponException;
 import com.liferay.shopping.model.ShoppingCoupon;
@@ -943,6 +945,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		shoppingCoupon.setNew(true);
 		shoppingCoupon.setPrimaryKey(couponId);
 
+		shoppingCoupon.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return shoppingCoupon;
 	}
 
@@ -1131,7 +1135,6 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 
 		shoppingCouponImpl.setCouponId(shoppingCoupon.getCouponId());
 		shoppingCouponImpl.setGroupId(shoppingCoupon.getGroupId());
-		shoppingCouponImpl.setCompanyId(shoppingCoupon.getCompanyId());
 		shoppingCouponImpl.setUserId(shoppingCoupon.getUserId());
 		shoppingCouponImpl.setUserName(shoppingCoupon.getUserName());
 		shoppingCouponImpl.setCreateDate(shoppingCoupon.getCreateDate());
@@ -1147,6 +1150,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		shoppingCouponImpl.setMinOrder(shoppingCoupon.getMinOrder());
 		shoppingCouponImpl.setDiscount(shoppingCoupon.getDiscount());
 		shoppingCouponImpl.setDiscountType(shoppingCoupon.getDiscountType());
+		shoppingCouponImpl.setCompanyId(shoppingCoupon.getCompanyId());
 
 		return shoppingCouponImpl;
 	}
@@ -1528,6 +1532,8 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_SHOPPINGCOUPON = "SELECT shoppingCoupon FROM ShoppingCoupon shoppingCoupon";
 	private static final String _SQL_SELECT_SHOPPINGCOUPON_WHERE_PKS_IN = "SELECT shoppingCoupon FROM ShoppingCoupon shoppingCoupon WHERE couponId IN (";
 	private static final String _SQL_SELECT_SHOPPINGCOUPON_WHERE = "SELECT shoppingCoupon FROM ShoppingCoupon shoppingCoupon WHERE ";

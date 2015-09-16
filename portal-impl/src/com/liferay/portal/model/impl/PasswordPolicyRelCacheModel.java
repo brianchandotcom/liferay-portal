@@ -76,7 +76,7 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -88,6 +88,8 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -102,6 +104,7 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 		passwordPolicyRelImpl.setPasswordPolicyId(passwordPolicyId);
 		passwordPolicyRelImpl.setClassNameId(classNameId);
 		passwordPolicyRelImpl.setClassPK(classPK);
+		passwordPolicyRelImpl.setCompanyId(companyId);
 
 		passwordPolicyRelImpl.resetOriginalValues();
 
@@ -115,6 +118,7 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 		passwordPolicyId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -125,6 +129,7 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 		objectOutput.writeLong(passwordPolicyId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
@@ -132,4 +137,5 @@ public class PasswordPolicyRelCacheModel implements CacheModel<PasswordPolicyRel
 	public long passwordPolicyId;
 	public long classNameId;
 	public long classPK;
+	public long companyId;
 }

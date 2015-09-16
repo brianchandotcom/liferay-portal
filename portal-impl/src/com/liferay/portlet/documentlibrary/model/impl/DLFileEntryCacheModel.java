@@ -74,8 +74,6 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		sb.append(fileEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -128,6 +126,8 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		sb.append(manualCheckInRequired);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -146,7 +146,6 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 
 		dlFileEntryImpl.setFileEntryId(fileEntryId);
 		dlFileEntryImpl.setGroupId(groupId);
-		dlFileEntryImpl.setCompanyId(companyId);
 		dlFileEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -255,6 +254,8 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 			dlFileEntryImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		dlFileEntryImpl.setCompanyId(companyId);
+
 		dlFileEntryImpl.resetOriginalValues();
 
 		return dlFileEntryImpl;
@@ -265,7 +266,6 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		uuid = objectInput.readUTF();
 		fileEntryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -292,6 +292,7 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		custom2ImageId = objectInput.readLong();
 		manualCheckInRequired = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -306,7 +307,6 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 
 		objectOutput.writeLong(fileEntryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -396,12 +396,12 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		objectOutput.writeLong(custom2ImageId);
 		objectOutput.writeBoolean(manualCheckInRequired);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long fileEntryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -428,4 +428,5 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 	public long custom2ImageId;
 	public boolean manualCheckInRequired;
 	public long lastPublishDate;
+	public long companyId;
 }

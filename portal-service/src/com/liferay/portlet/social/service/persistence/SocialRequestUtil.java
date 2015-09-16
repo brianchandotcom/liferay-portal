@@ -455,144 +455,6 @@ public class SocialRequestUtil {
 	}
 
 	/**
-	* Returns all the social requests where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching social requests
-	*/
-	public static List<SocialRequest> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	* Returns a range of all the social requests where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of social requests
-	* @param end the upper bound of the range of social requests (not inclusive)
-	* @return the range of matching social requests
-	*/
-	public static List<SocialRequest> findByCompanyId(long companyId,
-		int start, int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the social requests where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of social requests
-	* @param end the upper bound of the range of social requests (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching social requests
-	*/
-	public static List<SocialRequest> findByCompanyId(long companyId,
-		int start, int end, OrderByComparator<SocialRequest> orderByComparator) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first social request in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching social request
-	* @throws NoSuchRequestException if a matching social request could not be found
-	*/
-	public static SocialRequest findByCompanyId_First(long companyId,
-		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
-		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the first social request in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching social request, or <code>null</code> if a matching social request could not be found
-	*/
-	public static SocialRequest fetchByCompanyId_First(long companyId,
-		OrderByComparator<SocialRequest> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last social request in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching social request
-	* @throws NoSuchRequestException if a matching social request could not be found
-	*/
-	public static SocialRequest findByCompanyId_Last(long companyId,
-		OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
-		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last social request in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching social request, or <code>null</code> if a matching social request could not be found
-	*/
-	public static SocialRequest fetchByCompanyId_Last(long companyId,
-		OrderByComparator<SocialRequest> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the social requests before and after the current social request in the ordered set where companyId = &#63;.
-	*
-	* @param requestId the primary key of the current social request
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next social request
-	* @throws NoSuchRequestException if a social request with the primary key could not be found
-	*/
-	public static SocialRequest[] findByCompanyId_PrevAndNext(long requestId,
-		long companyId, OrderByComparator<SocialRequest> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRequestException {
-		return getPersistence()
-				   .findByCompanyId_PrevAndNext(requestId, companyId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the social requests where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of social requests where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching social requests
-	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
 	* Returns all the social requests where userId = &#63;.
 	*
 	* @param userId the user ID
@@ -866,6 +728,144 @@ public class SocialRequestUtil {
 	*/
 	public static int countByReceiverUserId(long receiverUserId) {
 		return getPersistence().countByReceiverUserId(receiverUserId);
+	}
+
+	/**
+	* Returns all the social requests where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching social requests
+	*/
+	public static List<SocialRequest> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the social requests where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of social requests
+	* @param end the upper bound of the range of social requests (not inclusive)
+	* @return the range of matching social requests
+	*/
+	public static List<SocialRequest> findByCompanyId(long companyId,
+		int start, int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the social requests where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRequestModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of social requests
+	* @param end the upper bound of the range of social requests (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching social requests
+	*/
+	public static List<SocialRequest> findByCompanyId(long companyId,
+		int start, int end, OrderByComparator<SocialRequest> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first social request in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching social request
+	* @throws NoSuchRequestException if a matching social request could not be found
+	*/
+	public static SocialRequest findByCompanyId_First(long companyId,
+		OrderByComparator<SocialRequest> orderByComparator)
+		throws com.liferay.portlet.social.NoSuchRequestException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first social request in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching social request, or <code>null</code> if a matching social request could not be found
+	*/
+	public static SocialRequest fetchByCompanyId_First(long companyId,
+		OrderByComparator<SocialRequest> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last social request in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching social request
+	* @throws NoSuchRequestException if a matching social request could not be found
+	*/
+	public static SocialRequest findByCompanyId_Last(long companyId,
+		OrderByComparator<SocialRequest> orderByComparator)
+		throws com.liferay.portlet.social.NoSuchRequestException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last social request in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching social request, or <code>null</code> if a matching social request could not be found
+	*/
+	public static SocialRequest fetchByCompanyId_Last(long companyId,
+		OrderByComparator<SocialRequest> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the social requests before and after the current social request in the ordered set where companyId = &#63;.
+	*
+	* @param requestId the primary key of the current social request
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next social request
+	* @throws NoSuchRequestException if a social request with the primary key could not be found
+	*/
+	public static SocialRequest[] findByCompanyId_PrevAndNext(long requestId,
+		long companyId, OrderByComparator<SocialRequest> orderByComparator)
+		throws com.liferay.portlet.social.NoSuchRequestException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(requestId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the social requests where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of social requests where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching social requests
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

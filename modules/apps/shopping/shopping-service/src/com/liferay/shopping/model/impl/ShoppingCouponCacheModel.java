@@ -72,8 +72,6 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 		sb.append(couponId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -104,6 +102,8 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 		sb.append(discount);
 		sb.append(", discountType=");
 		sb.append(discountType);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -115,7 +115,6 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 
 		shoppingCouponImpl.setCouponId(couponId);
 		shoppingCouponImpl.setGroupId(groupId);
-		shoppingCouponImpl.setCompanyId(companyId);
 		shoppingCouponImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -200,6 +199,8 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 			shoppingCouponImpl.setDiscountType(discountType);
 		}
 
+		shoppingCouponImpl.setCompanyId(companyId);
+
 		shoppingCouponImpl.resetOriginalValues();
 
 		return shoppingCouponImpl;
@@ -209,7 +210,6 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		couponId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -225,6 +225,7 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 		minOrder = objectInput.readDouble();
 		discount = objectInput.readDouble();
 		discountType = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -232,7 +233,6 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 		throws IOException {
 		objectOutput.writeLong(couponId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -293,11 +293,12 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 		else {
 			objectOutput.writeUTF(discountType);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long couponId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -313,4 +314,5 @@ public class ShoppingCouponCacheModel implements CacheModel<ShoppingCoupon>,
 	public double minOrder;
 	public double discount;
 	public String discountType;
+	public long companyId;
 }

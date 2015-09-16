@@ -71,8 +71,6 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 		sb.append(kaleoTimerId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -101,6 +99,8 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 		sb.append(recurrenceDuration);
 		sb.append(", recurrenceScale=");
 		sb.append(recurrenceScale);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -112,7 +112,6 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 
 		kaleoTimerImpl.setKaleoTimerId(kaleoTimerId);
 		kaleoTimerImpl.setGroupId(groupId);
-		kaleoTimerImpl.setCompanyId(companyId);
 		kaleoTimerImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -180,6 +179,8 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 			kaleoTimerImpl.setRecurrenceScale(recurrenceScale);
 		}
 
+		kaleoTimerImpl.setCompanyId(companyId);
+
 		kaleoTimerImpl.resetOriginalValues();
 
 		return kaleoTimerImpl;
@@ -189,7 +190,6 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoTimerId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -204,6 +204,7 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 		scale = objectInput.readUTF();
 		recurrenceDuration = objectInput.readDouble();
 		recurrenceScale = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -211,7 +212,6 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 		throws IOException {
 		objectOutput.writeLong(kaleoTimerId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -267,11 +267,12 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 		else {
 			objectOutput.writeUTF(recurrenceScale);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoTimerId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -286,4 +287,5 @@ public class KaleoTimerCacheModel implements CacheModel<KaleoTimer>,
 	public String scale;
 	public double recurrenceDuration;
 	public String recurrenceScale;
+	public long companyId;
 }

@@ -72,8 +72,6 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		sb.append(entryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -122,6 +120,8 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		sb.append(priority);
 		sb.append(", viewCount=");
 		sb.append(viewCount);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -133,7 +133,6 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 
 		assetEntryImpl.setEntryId(entryId);
 		assetEntryImpl.setGroupId(groupId);
-		assetEntryImpl.setCompanyId(companyId);
 		assetEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -245,6 +244,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		assetEntryImpl.setWidth(width);
 		assetEntryImpl.setPriority(priority);
 		assetEntryImpl.setViewCount(viewCount);
+		assetEntryImpl.setCompanyId(companyId);
 
 		assetEntryImpl.resetOriginalValues();
 
@@ -255,7 +255,6 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		entryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -280,6 +279,7 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		width = objectInput.readInt();
 		priority = objectInput.readDouble();
 		viewCount = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -287,7 +287,6 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		throws IOException {
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -363,11 +362,11 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 		objectOutput.writeInt(width);
 		objectOutput.writeDouble(priority);
 		objectOutput.writeInt(viewCount);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long entryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -392,4 +391,5 @@ public class AssetEntryCacheModel implements CacheModel<AssetEntry>,
 	public int width;
 	public double priority;
 	public int viewCount;
+	public long companyId;
 }

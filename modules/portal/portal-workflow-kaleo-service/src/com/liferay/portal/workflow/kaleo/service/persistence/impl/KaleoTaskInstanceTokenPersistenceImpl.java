@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,6 +35,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskInstanceTokenException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenImpl;
@@ -87,493 +89,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoTaskInstanceTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskInstanceTokenModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskInstanceTokenImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskInstanceTokenModelImpl.FINDER_CACHE_ENABLED,
-			KaleoTaskInstanceTokenImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] { Long.class.getName() },
-			KaleoTaskInstanceTokenModelImpl.COMPANYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
-			KaleoTaskInstanceTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] { Long.class.getName() });
-
-	/**
-	 * Returns all the kaleo task instance tokens where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching kaleo task instance tokens
-	 */
-	@Override
-	public List<KaleoTaskInstanceToken> findByCompanyId(long companyId) {
-		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the kaleo task instance tokens where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTaskInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kaleo task instance tokens
-	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
-	 * @return the range of matching kaleo task instance tokens
-	 */
-	@Override
-	public List<KaleoTaskInstanceToken> findByCompanyId(long companyId,
-		int start, int end) {
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the kaleo task instance tokens where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTaskInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of kaleo task instance tokens
-	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching kaleo task instance tokens
-	 */
-	@Override
-	public List<KaleoTaskInstanceToken> findByCompanyId(long companyId,
-		int start, int end,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
-			finderArgs = new Object[] { companyId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
-			finderArgs = new Object[] { companyId, start, end, orderByComparator };
-		}
-
-		List<KaleoTaskInstanceToken> list = (List<KaleoTaskInstanceToken>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (KaleoTaskInstanceToken kaleoTaskInstanceToken : list) {
-				if ((companyId != kaleoTaskInstanceToken.getCompanyId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE);
-
-			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(KaleoTaskInstanceTokenModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				if (!pagination) {
-					list = (List<KaleoTaskInstanceToken>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<KaleoTaskInstanceToken>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first kaleo task instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching kaleo task instance token
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken findByCompanyId_First(long companyId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws NoSuchTaskInstanceTokenException {
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByCompanyId_First(companyId,
-				orderByComparator);
-
-		if (kaleoTaskInstanceToken != null) {
-			return kaleoTaskInstanceToken;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTaskInstanceTokenException(msg.toString());
-	}
-
-	/**
-	 * Returns the first kaleo task instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken fetchByCompanyId_First(long companyId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-		List<KaleoTaskInstanceToken> list = findByCompanyId(companyId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken findByCompanyId_Last(long companyId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws NoSuchTaskInstanceTokenException {
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByCompanyId_Last(companyId,
-				orderByComparator);
-
-		if (kaleoTaskInstanceToken != null) {
-			return kaleoTaskInstanceToken;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTaskInstanceTokenException(msg.toString());
-	}
-
-	/**
-	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken fetchByCompanyId_Last(long companyId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<KaleoTaskInstanceToken> list = findByCompanyId(companyId,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the kaleo task instance tokens before and after the current kaleo task instance token in the ordered set where companyId = &#63;.
-	 *
-	 * @param kaleoTaskInstanceTokenId the primary key of the current kaleo task instance token
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next kaleo task instance token
-	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException if a kaleo task instance token with the primary key could not be found
-	 */
-	@Override
-	public KaleoTaskInstanceToken[] findByCompanyId_PrevAndNext(
-		long kaleoTaskInstanceTokenId, long companyId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
-		throws NoSuchTaskInstanceTokenException {
-		KaleoTaskInstanceToken kaleoTaskInstanceToken = findByPrimaryKey(kaleoTaskInstanceTokenId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			KaleoTaskInstanceToken[] array = new KaleoTaskInstanceTokenImpl[3];
-
-			array[0] = getByCompanyId_PrevAndNext(session,
-					kaleoTaskInstanceToken, companyId, orderByComparator, true);
-
-			array[1] = kaleoTaskInstanceToken;
-
-			array[2] = getByCompanyId_PrevAndNext(session,
-					kaleoTaskInstanceToken, companyId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected KaleoTaskInstanceToken getByCompanyId_PrevAndNext(
-		Session session, KaleoTaskInstanceToken kaleoTaskInstanceToken,
-		long companyId,
-		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE);
-
-		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(KaleoTaskInstanceTokenModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(companyId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(kaleoTaskInstanceToken);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<KaleoTaskInstanceToken> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the kaleo task instance tokens where companyId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 */
-	@Override
-	public void removeByCompanyId(long companyId) {
-		for (KaleoTaskInstanceToken kaleoTaskInstanceToken : findByCompanyId(
-				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(kaleoTaskInstanceToken);
-		}
-	}
-
-	/**
-	 * Returns the number of kaleo task instance tokens where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the number of matching kaleo task instance tokens
-	 */
-	@Override
-	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
-
-		Object[] finderArgs = new Object[] { companyId };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_KALEOTASKINSTANCETOKEN_WHERE);
-
-			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "kaleoTaskInstanceToken.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_KALEODEFINITIONID =
 		new FinderPath(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoTaskInstanceTokenModelImpl.FINDER_CACHE_ENABLED,
@@ -1572,6 +1087,493 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 
 	private static final String _FINDER_COLUMN_KALEOINSTANCEID_KALEOINSTANCEID_2 =
 		"kaleoTaskInstanceToken.kaleoInstanceId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+			KaleoTaskInstanceTokenModelImpl.FINDER_CACHE_ENABLED,
+			KaleoTaskInstanceTokenImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+			KaleoTaskInstanceTokenModelImpl.FINDER_CACHE_ENABLED,
+			KaleoTaskInstanceTokenImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] { Long.class.getName() },
+			KaleoTaskInstanceTokenModelImpl.COMPANYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
+			KaleoTaskInstanceTokenModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the kaleo task instance tokens where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching kaleo task instance tokens
+	 */
+	@Override
+	public List<KaleoTaskInstanceToken> findByCompanyId(long companyId) {
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the kaleo task instance tokens where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTaskInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kaleo task instance tokens
+	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
+	 * @return the range of matching kaleo task instance tokens
+	 */
+	@Override
+	public List<KaleoTaskInstanceToken> findByCompanyId(long companyId,
+		int start, int end) {
+		return findByCompanyId(companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the kaleo task instance tokens where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTaskInstanceTokenModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of kaleo task instance tokens
+	 * @param end the upper bound of the range of kaleo task instance tokens (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching kaleo task instance tokens
+	 */
+	@Override
+	public List<KaleoTaskInstanceToken> findByCompanyId(long companyId,
+		int start, int end,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+		}
+
+		List<KaleoTaskInstanceToken> list = (List<KaleoTaskInstanceToken>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (KaleoTaskInstanceToken kaleoTaskInstanceToken : list) {
+				if ((companyId != kaleoTaskInstanceToken.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(KaleoTaskInstanceTokenModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (!pagination) {
+					list = (List<KaleoTaskInstanceToken>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<KaleoTaskInstanceToken>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first kaleo task instance token in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo task instance token
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
+	 */
+	@Override
+	public KaleoTaskInstanceToken findByCompanyId_First(long companyId,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
+		throws NoSuchTaskInstanceTokenException {
+		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByCompanyId_First(companyId,
+				orderByComparator);
+
+		if (kaleoTaskInstanceToken != null) {
+			return kaleoTaskInstanceToken;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTaskInstanceTokenException(msg.toString());
+	}
+
+	/**
+	 * Returns the first kaleo task instance token in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
+	 */
+	@Override
+	public KaleoTaskInstanceToken fetchByCompanyId_First(long companyId,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
+		List<KaleoTaskInstanceToken> list = findByCompanyId(companyId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo task instance token
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException if a matching kaleo task instance token could not be found
+	 */
+	@Override
+	public KaleoTaskInstanceToken findByCompanyId_Last(long companyId,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
+		throws NoSuchTaskInstanceTokenException {
+		KaleoTaskInstanceToken kaleoTaskInstanceToken = fetchByCompanyId_Last(companyId,
+				orderByComparator);
+
+		if (kaleoTaskInstanceToken != null) {
+			return kaleoTaskInstanceToken;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTaskInstanceTokenException(msg.toString());
+	}
+
+	/**
+	 * Returns the last kaleo task instance token in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching kaleo task instance token, or <code>null</code> if a matching kaleo task instance token could not be found
+	 */
+	@Override
+	public KaleoTaskInstanceToken fetchByCompanyId_Last(long companyId,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator) {
+		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<KaleoTaskInstanceToken> list = findByCompanyId(companyId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the kaleo task instance tokens before and after the current kaleo task instance token in the ordered set where companyId = &#63;.
+	 *
+	 * @param kaleoTaskInstanceTokenId the primary key of the current kaleo task instance token
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next kaleo task instance token
+	 * @throws com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException if a kaleo task instance token with the primary key could not be found
+	 */
+	@Override
+	public KaleoTaskInstanceToken[] findByCompanyId_PrevAndNext(
+		long kaleoTaskInstanceTokenId, long companyId,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator)
+		throws NoSuchTaskInstanceTokenException {
+		KaleoTaskInstanceToken kaleoTaskInstanceToken = findByPrimaryKey(kaleoTaskInstanceTokenId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			KaleoTaskInstanceToken[] array = new KaleoTaskInstanceTokenImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(session,
+					kaleoTaskInstanceToken, companyId, orderByComparator, true);
+
+			array[1] = kaleoTaskInstanceToken;
+
+			array[2] = getByCompanyId_PrevAndNext(session,
+					kaleoTaskInstanceToken, companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected KaleoTaskInstanceToken getByCompanyId_PrevAndNext(
+		Session session, KaleoTaskInstanceToken kaleoTaskInstanceToken,
+		long companyId,
+		OrderByComparator<KaleoTaskInstanceToken> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(KaleoTaskInstanceTokenModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(kaleoTaskInstanceToken);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<KaleoTaskInstanceToken> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the kaleo task instance tokens where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	@Override
+	public void removeByCompanyId(long companyId) {
+		for (KaleoTaskInstanceToken kaleoTaskInstanceToken : findByCompanyId(
+				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(kaleoTaskInstanceToken);
+		}
+	}
+
+	/**
+	 * Returns the number of kaleo task instance tokens where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching kaleo task instance tokens
+	 */
+	@Override
+	public int countByCompanyId(long companyId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
+
+		Object[] finderArgs = new Object[] { companyId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_KALEOTASKINSTANCETOKEN_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "kaleoTaskInstanceToken.companyId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_KII_KTI = new FinderPath(KaleoTaskInstanceTokenModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoTaskInstanceTokenModelImpl.FINDER_CACHE_ENABLED,
 			KaleoTaskInstanceTokenImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -2539,6 +2541,8 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 		kaleoTaskInstanceToken.setNew(true);
 		kaleoTaskInstanceToken.setPrimaryKey(kaleoTaskInstanceTokenId);
 
+		kaleoTaskInstanceToken.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return kaleoTaskInstanceToken;
 	}
 
@@ -2690,27 +2694,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 
 		else {
 			if ((kaleoTaskInstanceTokenModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						kaleoTaskInstanceTokenModelImpl.getOriginalCompanyId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
-					args);
-
-				args = new Object[] {
-						kaleoTaskInstanceTokenModelImpl.getCompanyId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
-					args);
-			}
-
-			if ((kaleoTaskInstanceTokenModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEODEFINITIONID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						kaleoTaskInstanceTokenModelImpl.getOriginalKaleoDefinitionId()
@@ -2749,6 +2732,27 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KALEOINSTANCEID,
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_KALEOINSTANCEID,
+					args);
+			}
+
+			if ((kaleoTaskInstanceTokenModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						kaleoTaskInstanceTokenModelImpl.getOriginalCompanyId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] {
+						kaleoTaskInstanceTokenModelImpl.getCompanyId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 
@@ -2800,7 +2804,6 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 
 		kaleoTaskInstanceTokenImpl.setKaleoTaskInstanceTokenId(kaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 		kaleoTaskInstanceTokenImpl.setGroupId(kaleoTaskInstanceToken.getGroupId());
-		kaleoTaskInstanceTokenImpl.setCompanyId(kaleoTaskInstanceToken.getCompanyId());
 		kaleoTaskInstanceTokenImpl.setUserId(kaleoTaskInstanceToken.getUserId());
 		kaleoTaskInstanceTokenImpl.setUserName(kaleoTaskInstanceToken.getUserName());
 		kaleoTaskInstanceTokenImpl.setCreateDate(kaleoTaskInstanceToken.getCreateDate());
@@ -2817,6 +2820,7 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 		kaleoTaskInstanceTokenImpl.setCompletionDate(kaleoTaskInstanceToken.getCompletionDate());
 		kaleoTaskInstanceTokenImpl.setDueDate(kaleoTaskInstanceToken.getDueDate());
 		kaleoTaskInstanceTokenImpl.setWorkflowContext(kaleoTaskInstanceToken.getWorkflowContext());
+		kaleoTaskInstanceTokenImpl.setCompanyId(kaleoTaskInstanceToken.getCompanyId());
 
 		return kaleoTaskInstanceTokenImpl;
 	}
@@ -3196,6 +3200,8 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_KALEOTASKINSTANCETOKEN = "SELECT kaleoTaskInstanceToken FROM KaleoTaskInstanceToken kaleoTaskInstanceToken";
 	private static final String _SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE_PKS_IN = "SELECT kaleoTaskInstanceToken FROM KaleoTaskInstanceToken kaleoTaskInstanceToken WHERE kaleoTaskInstanceTokenId IN (";
 	private static final String _SQL_SELECT_KALEOTASKINSTANCETOKEN_WHERE = "SELECT kaleoTaskInstanceToken FROM KaleoTaskInstanceToken kaleoTaskInstanceToken WHERE ";

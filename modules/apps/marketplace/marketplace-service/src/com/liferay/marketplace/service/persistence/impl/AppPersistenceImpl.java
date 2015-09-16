@@ -22,6 +22,7 @@ import com.liferay.marketplace.model.impl.AppImpl;
 import com.liferay.marketplace.model.impl.AppModelImpl;
 import com.liferay.marketplace.service.persistence.AppPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -42,6 +43,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import java.io.Serializable;
 
@@ -2492,6 +2494,8 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 
 		app.setUuid(uuid);
 
+		app.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return app;
 	}
 
@@ -2731,7 +2735,6 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 
 		appImpl.setUuid(app.getUuid());
 		appImpl.setAppId(app.getAppId());
-		appImpl.setCompanyId(app.getCompanyId());
 		appImpl.setUserId(app.getUserId());
 		appImpl.setUserName(app.getUserName());
 		appImpl.setCreateDate(app.getCreateDate());
@@ -2742,6 +2745,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		appImpl.setCategory(app.getCategory());
 		appImpl.setIconURL(app.getIconURL());
 		appImpl.setVersion(app.getVersion());
+		appImpl.setCompanyId(app.getCompanyId());
 
 		return appImpl;
 	}
@@ -3119,6 +3123,8 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_APP = "SELECT app FROM App app";
 	private static final String _SQL_SELECT_APP_WHERE_PKS_IN = "SELECT app FROM App app WHERE appId IN (";
 	private static final String _SQL_SELECT_APP_WHERE = "SELECT app FROM App app WHERE ";

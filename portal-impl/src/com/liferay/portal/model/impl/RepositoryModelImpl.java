@@ -75,7 +75,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 			{ "uuid_", Types.VARCHAR },
 			{ "repositoryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -86,7 +85,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 			{ "portletId", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB },
 			{ "dlFolderId", Types.BIGINT },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -95,7 +95,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("repositoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -107,9 +106,10 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("dlFolderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Repository (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,repositoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,name VARCHAR(75) null,description STRING null,portletId VARCHAR(200) null,typeSettings TEXT null,dlFolderId LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Repository (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,repositoryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,name VARCHAR(75) null,description STRING null,portletId VARCHAR(200) null,typeSettings TEXT null,dlFolderId LONG,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Repository";
 	public static final String ORDER_BY_JPQL = " ORDER BY repository.repositoryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Repository.repositoryId ASC";
@@ -149,7 +149,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		model.setUuid(soapModel.getUuid());
 		model.setRepositoryId(soapModel.getRepositoryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -161,6 +160,7 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setDlFolderId(soapModel.getDlFolderId());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -229,7 +229,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		attributes.put("uuid", getUuid());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -241,6 +240,7 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("dlFolderId", getDlFolderId());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -272,12 +272,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -344,6 +338,12 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -414,29 +414,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -647,6 +624,29 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -688,7 +688,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		repositoryImpl.setUuid(getUuid());
 		repositoryImpl.setRepositoryId(getRepositoryId());
 		repositoryImpl.setGroupId(getGroupId());
-		repositoryImpl.setCompanyId(getCompanyId());
 		repositoryImpl.setUserId(getUserId());
 		repositoryImpl.setUserName(getUserName());
 		repositoryImpl.setCreateDate(getCreateDate());
@@ -700,6 +699,7 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		repositoryImpl.setTypeSettings(getTypeSettings());
 		repositoryImpl.setDlFolderId(getDlFolderId());
 		repositoryImpl.setLastPublishDate(getLastPublishDate());
+		repositoryImpl.setCompanyId(getCompanyId());
 
 		repositoryImpl.resetOriginalValues();
 
@@ -768,15 +768,15 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 
 		repositoryModelImpl._setOriginalGroupId = false;
 
-		repositoryModelImpl._originalCompanyId = repositoryModelImpl._companyId;
-
-		repositoryModelImpl._setOriginalCompanyId = false;
-
 		repositoryModelImpl._setModifiedDate = false;
 
 		repositoryModelImpl._originalName = repositoryModelImpl._name;
 
 		repositoryModelImpl._originalPortletId = repositoryModelImpl._portletId;
+
+		repositoryModelImpl._originalCompanyId = repositoryModelImpl._companyId;
+
+		repositoryModelImpl._setOriginalCompanyId = false;
 
 		repositoryModelImpl._columnBitmask = 0;
 	}
@@ -798,8 +798,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		repositoryCacheModel.repositoryId = getRepositoryId();
 
 		repositoryCacheModel.groupId = getGroupId();
-
-		repositoryCacheModel.companyId = getCompanyId();
 
 		repositoryCacheModel.userId = getUserId();
 
@@ -874,6 +872,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 			repositoryCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		repositoryCacheModel.companyId = getCompanyId();
+
 		return repositoryCacheModel;
 	}
 
@@ -889,8 +889,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		sb.append(getRepositoryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -913,6 +911,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		sb.append(getDlFolderId());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -941,10 +941,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -990,6 +986,10 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1007,9 +1007,6 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1024,6 +1021,9 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 	private String _typeSettings;
 	private long _dlFolderId;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Repository _escapedModel;
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchWorkflowInstanceLinkException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -786,6 +787,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		workflowInstanceLink.setNew(true);
 		workflowInstanceLink.setPrimaryKey(workflowInstanceLinkId);
 
+		workflowInstanceLink.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return workflowInstanceLink;
 	}
 
@@ -985,7 +988,6 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		workflowInstanceLinkImpl.setMvccVersion(workflowInstanceLink.getMvccVersion());
 		workflowInstanceLinkImpl.setWorkflowInstanceLinkId(workflowInstanceLink.getWorkflowInstanceLinkId());
 		workflowInstanceLinkImpl.setGroupId(workflowInstanceLink.getGroupId());
-		workflowInstanceLinkImpl.setCompanyId(workflowInstanceLink.getCompanyId());
 		workflowInstanceLinkImpl.setUserId(workflowInstanceLink.getUserId());
 		workflowInstanceLinkImpl.setUserName(workflowInstanceLink.getUserName());
 		workflowInstanceLinkImpl.setCreateDate(workflowInstanceLink.getCreateDate());
@@ -993,6 +995,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		workflowInstanceLinkImpl.setClassNameId(workflowInstanceLink.getClassNameId());
 		workflowInstanceLinkImpl.setClassPK(workflowInstanceLink.getClassPK());
 		workflowInstanceLinkImpl.setWorkflowInstanceId(workflowInstanceLink.getWorkflowInstanceId());
+		workflowInstanceLinkImpl.setCompanyId(workflowInstanceLink.getCompanyId());
 
 		return workflowInstanceLinkImpl;
 	}
@@ -1371,6 +1374,8 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_WORKFLOWINSTANCELINK = "SELECT workflowInstanceLink FROM WorkflowInstanceLink workflowInstanceLink";
 	private static final String _SQL_SELECT_WORKFLOWINSTANCELINK_WHERE_PKS_IN = "SELECT workflowInstanceLink FROM WorkflowInstanceLink workflowInstanceLink WHERE workflowInstanceLinkId IN (";
 	private static final String _SQL_SELECT_WORKFLOWINSTANCELINK_WHERE = "SELECT workflowInstanceLink FROM WorkflowInstanceLink workflowInstanceLink WHERE ";

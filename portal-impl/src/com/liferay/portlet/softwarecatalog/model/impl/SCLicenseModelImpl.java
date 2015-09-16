@@ -70,7 +70,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 			{ "url", Types.VARCHAR },
 			{ "openSource", Types.BOOLEAN },
 			{ "active_", Types.BOOLEAN },
-			{ "recommended", Types.BOOLEAN }
+			{ "recommended", Types.BOOLEAN },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -81,9 +82,10 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		TABLE_COLUMNS_MAP.put("openSource", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("recommended", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SCLicense (licenseId LONG not null primary key,name VARCHAR(75) null,url STRING null,openSource BOOLEAN,active_ BOOLEAN,recommended BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table SCLicense (licenseId LONG not null primary key,name VARCHAR(75) null,url STRING null,openSource BOOLEAN,active_ BOOLEAN,recommended BOOLEAN,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SCLicense";
 	public static final String ORDER_BY_JPQL = " ORDER BY scLicense.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SCLicense.name ASC";
@@ -122,6 +124,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		model.setOpenSource(soapModel.getOpenSource());
 		model.setActive(soapModel.getActive());
 		model.setRecommended(soapModel.getRecommended());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -149,11 +152,12 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	public static final String MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME = "SCLicenses_SCProductEntries";
 	public static final Object[][] MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_COLUMNS =
 		{
+			{ "companyId", Types.BIGINT },
 			{ "licenseId", Types.BIGINT },
 			{ "productEntryId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_SQL_CREATE =
-		"create table SCLicenses_SCProductEntries (licenseId LONG not null,productEntryId LONG not null,primary key (licenseId, productEntryId))";
+		"create table SCLicenses_SCProductEntries (companyId LONG not null,licenseId LONG not null,productEntryId LONG not null,primary key (companyId, licenseId, productEntryId))";
 	public static final boolean FINDER_CACHE_ENABLED_SCLICENSES_SCPRODUCTENTRIES =
 		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.SCLicenses_SCProductEntries"),
@@ -204,6 +208,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		attributes.put("openSource", getOpenSource());
 		attributes.put("active", getActive());
 		attributes.put("recommended", getRecommended());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -247,6 +252,12 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 		if (recommended != null) {
 			setRecommended(recommended);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -367,13 +378,24 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		return _originalRecommended;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			SCLicense.class.getName(), getPrimaryKey());
 	}
 
@@ -404,6 +426,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		scLicenseImpl.setOpenSource(getOpenSource());
 		scLicenseImpl.setActive(getActive());
 		scLicenseImpl.setRecommended(getRecommended());
+		scLicenseImpl.setCompanyId(getCompanyId());
 
 		scLicenseImpl.resetOriginalValues();
 
@@ -503,12 +526,14 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 		scLicenseCacheModel.recommended = getRecommended();
 
+		scLicenseCacheModel.companyId = getCompanyId();
+
 		return scLicenseCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{licenseId=");
 		sb.append(getLicenseId());
@@ -522,6 +547,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		sb.append(getActive());
 		sb.append(", recommended=");
 		sb.append(getRecommended());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -529,7 +556,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.softwarecatalog.model.SCLicense");
@@ -559,6 +586,10 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 			"<column><column-name>recommended</column-name><column-value><![CDATA[");
 		sb.append(getRecommended());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -579,6 +610,7 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 	private boolean _recommended;
 	private boolean _originalRecommended;
 	private boolean _setOriginalRecommended;
+	private long _companyId;
 	private long _columnBitmask;
 	private SCLicense _escapedModel;
 }

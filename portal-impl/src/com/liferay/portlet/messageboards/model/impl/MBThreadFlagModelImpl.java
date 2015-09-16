@@ -69,13 +69,13 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 			{ "uuid_", Types.VARCHAR },
 			{ "threadFlagId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "threadId", Types.BIGINT },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -83,16 +83,16 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("threadFlagId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("threadId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBThreadFlag (uuid_ VARCHAR(75) null,threadFlagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,threadId LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBThreadFlag (uuid_ VARCHAR(75) null,threadFlagId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,threadId LONG,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MBThreadFlag";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbThreadFlag.threadFlagId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBThreadFlag.threadFlagId ASC";
@@ -157,13 +157,13 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		attributes.put("uuid", getUuid());
 		attributes.put("threadFlagId", getThreadFlagId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("threadId", getThreadId());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -189,12 +189,6 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -231,6 +225,12 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -287,28 +287,6 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -423,6 +401,28 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				MBThreadFlag.class.getName()));
@@ -462,13 +462,13 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		mbThreadFlagImpl.setUuid(getUuid());
 		mbThreadFlagImpl.setThreadFlagId(getThreadFlagId());
 		mbThreadFlagImpl.setGroupId(getGroupId());
-		mbThreadFlagImpl.setCompanyId(getCompanyId());
 		mbThreadFlagImpl.setUserId(getUserId());
 		mbThreadFlagImpl.setUserName(getUserName());
 		mbThreadFlagImpl.setCreateDate(getCreateDate());
 		mbThreadFlagImpl.setModifiedDate(getModifiedDate());
 		mbThreadFlagImpl.setThreadId(getThreadId());
 		mbThreadFlagImpl.setLastPublishDate(getLastPublishDate());
+		mbThreadFlagImpl.setCompanyId(getCompanyId());
 
 		mbThreadFlagImpl.resetOriginalValues();
 
@@ -537,10 +537,6 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 
 		mbThreadFlagModelImpl._setOriginalGroupId = false;
 
-		mbThreadFlagModelImpl._originalCompanyId = mbThreadFlagModelImpl._companyId;
-
-		mbThreadFlagModelImpl._setOriginalCompanyId = false;
-
 		mbThreadFlagModelImpl._originalUserId = mbThreadFlagModelImpl._userId;
 
 		mbThreadFlagModelImpl._setOriginalUserId = false;
@@ -550,6 +546,10 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		mbThreadFlagModelImpl._originalThreadId = mbThreadFlagModelImpl._threadId;
 
 		mbThreadFlagModelImpl._setOriginalThreadId = false;
+
+		mbThreadFlagModelImpl._originalCompanyId = mbThreadFlagModelImpl._companyId;
+
+		mbThreadFlagModelImpl._setOriginalCompanyId = false;
 
 		mbThreadFlagModelImpl._columnBitmask = 0;
 	}
@@ -569,8 +569,6 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		mbThreadFlagCacheModel.threadFlagId = getThreadFlagId();
 
 		mbThreadFlagCacheModel.groupId = getGroupId();
-
-		mbThreadFlagCacheModel.companyId = getCompanyId();
 
 		mbThreadFlagCacheModel.userId = getUserId();
 
@@ -611,6 +609,8 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 			mbThreadFlagCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		mbThreadFlagCacheModel.companyId = getCompanyId();
+
 		return mbThreadFlagCacheModel;
 	}
 
@@ -624,8 +624,6 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		sb.append(getThreadFlagId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -638,6 +636,8 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		sb.append(getThreadId());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -664,10 +664,6 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
@@ -691,6 +687,10 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -707,9 +707,6 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -721,6 +718,9 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	private long _originalThreadId;
 	private boolean _setOriginalThreadId;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private MBThreadFlag _escapedModel;
 }

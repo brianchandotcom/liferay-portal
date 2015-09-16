@@ -11,7 +11,6 @@
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -20,6 +19,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.polls.model.impl.PollsQuestionImpl" table="PollsQuestion">
 		<id name="questionId" type="long">
@@ -27,7 +27,6 @@
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -37,6 +36,7 @@
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastVoteDate" type="org.hibernate.type.TimestampType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.polls.model.impl.PollsVoteImpl" table="PollsVote">
 		<id name="voteId" type="long">
@@ -44,7 +44,6 @@
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -53,5 +52,6 @@
 		<property name="choiceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 		<property name="voteDate" type="org.hibernate.type.TimestampType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

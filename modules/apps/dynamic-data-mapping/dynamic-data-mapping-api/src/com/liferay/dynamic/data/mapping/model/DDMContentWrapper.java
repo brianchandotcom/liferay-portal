@@ -55,7 +55,6 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 		attributes.put("uuid", getUuid());
 		attributes.put("contentId", getContentId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -63,6 +62,7 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("data", getData());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -85,12 +85,6 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -133,6 +127,12 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 
 		if (data != null) {
 			setData(data);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

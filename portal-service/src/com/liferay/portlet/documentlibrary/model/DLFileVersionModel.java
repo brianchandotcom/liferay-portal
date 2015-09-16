@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
-	StagedGroupedModel, WorkflowedModel {
+	PartitionableModel, StagedGroupedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -111,22 +112,6 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this document library file version.
-	 *
-	 * @return the company ID of this document library file version
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this document library file version.
-	 *
-	 * @param companyId the company ID of this document library file version
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this document library file version.
@@ -525,6 +510,22 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the company ID of this document library file version.
+	 *
+	 * @return the company ID of this document library file version
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this document library file version.
+	 *
+	 * @param companyId the company ID of this document library file version
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}

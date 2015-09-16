@@ -2,7 +2,6 @@ create table MDRAction (
 	uuid_ VARCHAR(75) null,
 	actionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -14,14 +13,14 @@ create table MDRAction (
 	description STRING null,
 	type_ VARCHAR(255) null,
 	typeSettings TEXT null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	companyId LONG
 );
 
 create table MDRRule (
 	uuid_ VARCHAR(75) null,
 	ruleId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -31,28 +30,28 @@ create table MDRRule (
 	description STRING null,
 	type_ VARCHAR(255) null,
 	typeSettings TEXT null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	companyId LONG
 );
 
 create table MDRRuleGroup (
 	uuid_ VARCHAR(75) null,
 	ruleGroupId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,
 	description STRING null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	companyId LONG
 );
 
 create table MDRRuleGroupInstance (
 	uuid_ VARCHAR(75) null,
 	ruleGroupInstanceId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -61,5 +60,6 @@ create table MDRRuleGroupInstance (
 	classPK LONG,
 	ruleGroupId LONG,
 	priority INTEGER,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	companyId LONG
 );

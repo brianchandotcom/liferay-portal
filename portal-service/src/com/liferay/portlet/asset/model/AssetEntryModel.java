@@ -23,6 +23,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -48,7 +49,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
-	GroupedModel, LocalizedModel {
+	GroupedModel, LocalizedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -98,22 +99,6 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this asset entry.
-	 *
-	 * @return the company ID of this asset entry
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this asset entry.
-	 *
-	 * @param companyId the company ID of this asset entry
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this asset entry.
@@ -765,6 +750,22 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	 * @param viewCount the view count of this asset entry
 	 */
 	public void setViewCount(int viewCount);
+
+	/**
+	 * Returns the company ID of this asset entry.
+	 *
+	 * @return the company ID of this asset entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this asset entry.
+	 *
+	 * @param companyId the company ID of this asset entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

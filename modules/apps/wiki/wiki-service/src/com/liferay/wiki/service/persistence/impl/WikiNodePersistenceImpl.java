@@ -16,6 +16,7 @@ package com.liferay.wiki.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -37,6 +38,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.model.WikiNode;
@@ -4583,6 +4585,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 
 		wikiNode.setUuid(uuid);
 
+		wikiNode.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return wikiNode;
 	}
 
@@ -4872,7 +4876,6 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		wikiNodeImpl.setUuid(wikiNode.getUuid());
 		wikiNodeImpl.setNodeId(wikiNode.getNodeId());
 		wikiNodeImpl.setGroupId(wikiNode.getGroupId());
-		wikiNodeImpl.setCompanyId(wikiNode.getCompanyId());
 		wikiNodeImpl.setUserId(wikiNode.getUserId());
 		wikiNodeImpl.setUserName(wikiNode.getUserName());
 		wikiNodeImpl.setCreateDate(wikiNode.getCreateDate());
@@ -4885,6 +4888,7 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		wikiNodeImpl.setStatusByUserId(wikiNode.getStatusByUserId());
 		wikiNodeImpl.setStatusByUserName(wikiNode.getStatusByUserName());
 		wikiNodeImpl.setStatusDate(wikiNode.getStatusDate());
+		wikiNodeImpl.setCompanyId(wikiNode.getCompanyId());
 
 		return wikiNodeImpl;
 	}
@@ -5263,6 +5267,8 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_WIKINODE = "SELECT wikiNode FROM WikiNode wikiNode";
 	private static final String _SQL_SELECT_WIKINODE_WHERE_PKS_IN = "SELECT wikiNode FROM WikiNode wikiNode WHERE nodeId IN (";
 	private static final String _SQL_SELECT_WIKINODE_WHERE = "SELECT wikiNode FROM WikiNode wikiNode WHERE ";

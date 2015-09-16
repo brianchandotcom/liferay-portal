@@ -57,6 +57,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 		attributes.put("resourcePrimKey", getResourcePrimKey());
 		attributes.put("groupId", getGroupId());
 		attributes.put("articleId", getArticleId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -86,6 +87,12 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 		if (articleId != null) {
 			setArticleId(articleId);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -107,6 +114,16 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	@Override
 	public java.lang.String getArticleId() {
 		return _journalArticleResource.getArticleId();
+	}
+
+	/**
+	* Returns the company ID of this journal article resource.
+	*
+	* @return the company ID of this journal article resource
+	*/
+	@Override
+	public long getCompanyId() {
+		return _journalArticleResource.getCompanyId();
 	}
 
 	@Override
@@ -197,6 +214,16 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_journalArticleResource.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this journal article resource.
+	*
+	* @param companyId the company ID of this journal article resource
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_journalArticleResource.setCompanyId(companyId);
 	}
 
 	@Override

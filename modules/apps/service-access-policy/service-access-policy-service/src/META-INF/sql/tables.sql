@@ -1,7 +1,6 @@
 create table SAPEntry (
 	uuid_ VARCHAR(75) null,
 	sapEntryId LONG not null primary key,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -9,5 +8,6 @@ create table SAPEntry (
 	allowedServiceSignatures STRING null,
 	defaultSAPEntry BOOLEAN,
 	name VARCHAR(75) null,
-	title STRING null
+	title STRING null,
+	companyId LONG
 );

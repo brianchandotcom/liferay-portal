@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface KaleoTransitionModel extends BaseModel<KaleoTransition>,
-	GroupedModel {
+	GroupedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -93,22 +94,6 @@ public interface KaleoTransitionModel extends BaseModel<KaleoTransition>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this kaleo transition.
-	 *
-	 * @return the company ID of this kaleo transition
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this kaleo transition.
-	 *
-	 * @param companyId the company ID of this kaleo transition
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this kaleo transition.
@@ -327,6 +312,22 @@ public interface KaleoTransitionModel extends BaseModel<KaleoTransition>,
 	 * @param defaultTransition the default transition of this kaleo transition
 	 */
 	public void setDefaultTransition(boolean defaultTransition);
+
+	/**
+	 * Returns the company ID of this kaleo transition.
+	 *
+	 * @return the company ID of this kaleo transition
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this kaleo transition.
+	 *
+	 * @param companyId the company ID of this kaleo transition
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

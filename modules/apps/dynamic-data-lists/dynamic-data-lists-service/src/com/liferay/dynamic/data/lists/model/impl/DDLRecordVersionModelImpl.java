@@ -73,7 +73,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "recordVersionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -85,14 +84,14 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("recordVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -105,9 +104,10 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDLRecordVersion (recordVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,DDMStorageId LONG,recordSetId LONG,recordId LONG,version VARCHAR(75) null,displayIndex INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDLRecordVersion (recordVersionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,DDMStorageId LONG,recordSetId LONG,recordId LONG,version VARCHAR(75) null,displayIndex INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DDLRecordVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddlRecordVersion.recordVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDLRecordVersion.recordVersionId ASC";
@@ -143,7 +143,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 		model.setRecordVersionId(soapModel.getRecordVersionId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -156,6 +155,7 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -223,7 +223,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 		attributes.put("recordVersionId", getRecordVersionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -236,6 +235,7 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -255,12 +255,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -334,6 +328,12 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -356,17 +356,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -582,6 +571,17 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		_statusDate = statusDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved}
 	 */
@@ -704,7 +704,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 		ddlRecordVersionImpl.setRecordVersionId(getRecordVersionId());
 		ddlRecordVersionImpl.setGroupId(getGroupId());
-		ddlRecordVersionImpl.setCompanyId(getCompanyId());
 		ddlRecordVersionImpl.setUserId(getUserId());
 		ddlRecordVersionImpl.setUserName(getUserName());
 		ddlRecordVersionImpl.setCreateDate(getCreateDate());
@@ -717,6 +716,7 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		ddlRecordVersionImpl.setStatusByUserId(getStatusByUserId());
 		ddlRecordVersionImpl.setStatusByUserName(getStatusByUserName());
 		ddlRecordVersionImpl.setStatusDate(getStatusDate());
+		ddlRecordVersionImpl.setCompanyId(getCompanyId());
 
 		ddlRecordVersionImpl.resetOriginalValues();
 
@@ -800,8 +800,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 
 		ddlRecordVersionCacheModel.groupId = getGroupId();
 
-		ddlRecordVersionCacheModel.companyId = getCompanyId();
-
 		ddlRecordVersionCacheModel.userId = getUserId();
 
 		ddlRecordVersionCacheModel.userName = getUserName();
@@ -858,6 +856,8 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 			ddlRecordVersionCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		ddlRecordVersionCacheModel.companyId = getCompanyId();
+
 		return ddlRecordVersionCacheModel;
 	}
 
@@ -869,8 +869,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		sb.append(getRecordVersionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -895,6 +893,8 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -915,10 +915,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -968,6 +964,10 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -980,7 +980,6 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 		};
 	private long _recordVersionId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -998,6 +997,7 @@ public class DDLRecordVersionModelImpl extends BaseModelImpl<DDLRecordVersion>
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _companyId;
 	private long _columnBitmask;
 	private DDLRecordVersion _escapedModel;
 }

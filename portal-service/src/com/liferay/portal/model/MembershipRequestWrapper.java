@@ -55,7 +55,6 @@ public class MembershipRequestWrapper implements MembershipRequest,
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("membershipRequestId", getMembershipRequestId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("comments", getComments());
@@ -63,6 +62,7 @@ public class MembershipRequestWrapper implements MembershipRequest,
 		attributes.put("replyDate", getReplyDate());
 		attributes.put("replierUserId", getReplierUserId());
 		attributes.put("statusId", getStatusId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -85,12 +85,6 @@ public class MembershipRequestWrapper implements MembershipRequest,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -133,6 +127,12 @@ public class MembershipRequestWrapper implements MembershipRequest,
 
 		if (statusId != null) {
 			setStatusId(statusId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

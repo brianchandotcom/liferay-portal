@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchImageException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -630,6 +631,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		image.setNew(true);
 		image.setPrimaryKey(imageId);
 
+		image.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return image;
 	}
 
@@ -773,6 +776,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		imageImpl.setHeight(image.getHeight());
 		imageImpl.setWidth(image.getWidth());
 		imageImpl.setSize(image.getSize());
+		imageImpl.setCompanyId(image.getCompanyId());
 
 		return imageImpl;
 	}
@@ -1151,6 +1155,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_IMAGE = "SELECT image FROM Image image";
 	private static final String _SQL_SELECT_IMAGE_WHERE_PKS_IN = "SELECT image FROM Image image WHERE imageId IN (";
 	private static final String _SQL_SELECT_IMAGE_WHERE = "SELECT image FROM Image image WHERE ";

@@ -115,8 +115,6 @@ public class AssetLinkPersistenceTest {
 
 		AssetLink newAssetLink = _persistence.create(pk);
 
-		newAssetLink.setCompanyId(RandomTestUtil.nextLong());
-
 		newAssetLink.setUserId(RandomTestUtil.nextLong());
 
 		newAssetLink.setUserName(RandomTestUtil.randomString());
@@ -131,14 +129,14 @@ public class AssetLinkPersistenceTest {
 
 		newAssetLink.setWeight(RandomTestUtil.nextInt());
 
+		newAssetLink.setCompanyId(RandomTestUtil.nextLong());
+
 		_assetLinks.add(_persistence.update(newAssetLink));
 
 		AssetLink existingAssetLink = _persistence.findByPrimaryKey(newAssetLink.getPrimaryKey());
 
 		Assert.assertEquals(existingAssetLink.getLinkId(),
 			newAssetLink.getLinkId());
-		Assert.assertEquals(existingAssetLink.getCompanyId(),
-			newAssetLink.getCompanyId());
 		Assert.assertEquals(existingAssetLink.getUserId(),
 			newAssetLink.getUserId());
 		Assert.assertEquals(existingAssetLink.getUserName(),
@@ -153,6 +151,8 @@ public class AssetLinkPersistenceTest {
 		Assert.assertEquals(existingAssetLink.getType(), newAssetLink.getType());
 		Assert.assertEquals(existingAssetLink.getWeight(),
 			newAssetLink.getWeight());
+		Assert.assertEquals(existingAssetLink.getCompanyId(),
+			newAssetLink.getCompanyId());
 	}
 
 	@Test
@@ -225,8 +225,8 @@ public class AssetLinkPersistenceTest {
 
 	protected OrderByComparator<AssetLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetLink", "linkId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "entryId1", true, "entryId2", true, "type", true, "weight",
+			"userId", true, "userName", true, "createDate", true, "entryId1",
+			true, "entryId2", true, "type", true, "weight", true, "companyId",
 			true);
 	}
 
@@ -448,8 +448,6 @@ public class AssetLinkPersistenceTest {
 
 		AssetLink assetLink = _persistence.create(pk);
 
-		assetLink.setCompanyId(RandomTestUtil.nextLong());
-
 		assetLink.setUserId(RandomTestUtil.nextLong());
 
 		assetLink.setUserName(RandomTestUtil.randomString());
@@ -463,6 +461,8 @@ public class AssetLinkPersistenceTest {
 		assetLink.setType(RandomTestUtil.nextInt());
 
 		assetLink.setWeight(RandomTestUtil.nextInt());
+
+		assetLink.setCompanyId(RandomTestUtil.nextLong());
 
 		_assetLinks.add(_persistence.update(assetLink));
 

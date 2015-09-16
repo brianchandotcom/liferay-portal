@@ -85,8 +85,6 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		sb.append(mvccVersion);
 		sb.append(", userTrackerId=");
 		sb.append(userTrackerId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", modifiedDate=");
@@ -99,6 +97,8 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		sb.append(remoteHost);
 		sb.append(", userAgent=");
 		sb.append(userAgent);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,7 +110,6 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 
 		userTrackerImpl.setMvccVersion(mvccVersion);
 		userTrackerImpl.setUserTrackerId(userTrackerId);
-		userTrackerImpl.setCompanyId(companyId);
 		userTrackerImpl.setUserId(userId);
 
 		if (modifiedDate == Long.MIN_VALUE) {
@@ -148,6 +147,8 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 			userTrackerImpl.setUserAgent(userAgent);
 		}
 
+		userTrackerImpl.setCompanyId(companyId);
+
 		userTrackerImpl.resetOriginalValues();
 
 		return userTrackerImpl;
@@ -157,13 +158,13 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		userTrackerId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		sessionId = objectInput.readUTF();
 		remoteAddr = objectInput.readUTF();
 		remoteHost = objectInput.readUTF();
 		userAgent = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -171,7 +172,6 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(userTrackerId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(modifiedDate);
 
@@ -202,15 +202,17 @@ public class UserTrackerCacheModel implements CacheModel<UserTracker>,
 		else {
 			objectOutput.writeUTF(userAgent);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long userTrackerId;
-	public long companyId;
 	public long userId;
 	public long modifiedDate;
 	public String sessionId;
 	public String remoteAddr;
 	public String remoteHost;
 	public String userAgent;
+	public long companyId;
 }

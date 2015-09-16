@@ -118,8 +118,6 @@ public class SocialActivityCounterPersistenceTest {
 
 		newSocialActivityCounter.setGroupId(RandomTestUtil.nextLong());
 
-		newSocialActivityCounter.setCompanyId(RandomTestUtil.nextLong());
-
 		newSocialActivityCounter.setClassNameId(RandomTestUtil.nextLong());
 
 		newSocialActivityCounter.setClassPK(RandomTestUtil.nextLong());
@@ -140,6 +138,8 @@ public class SocialActivityCounterPersistenceTest {
 
 		newSocialActivityCounter.setActive(RandomTestUtil.randomBoolean());
 
+		newSocialActivityCounter.setCompanyId(RandomTestUtil.nextLong());
+
 		_socialActivityCounters.add(_persistence.update(
 				newSocialActivityCounter));
 
@@ -149,8 +149,6 @@ public class SocialActivityCounterPersistenceTest {
 			newSocialActivityCounter.getActivityCounterId());
 		Assert.assertEquals(existingSocialActivityCounter.getGroupId(),
 			newSocialActivityCounter.getGroupId());
-		Assert.assertEquals(existingSocialActivityCounter.getCompanyId(),
-			newSocialActivityCounter.getCompanyId());
 		Assert.assertEquals(existingSocialActivityCounter.getClassNameId(),
 			newSocialActivityCounter.getClassNameId());
 		Assert.assertEquals(existingSocialActivityCounter.getClassPK(),
@@ -171,6 +169,8 @@ public class SocialActivityCounterPersistenceTest {
 			newSocialActivityCounter.getEndPeriod());
 		Assert.assertEquals(existingSocialActivityCounter.getActive(),
 			newSocialActivityCounter.getActive());
+		Assert.assertEquals(existingSocialActivityCounter.getCompanyId(),
+			newSocialActivityCounter.getCompanyId());
 	}
 
 	@Test
@@ -244,10 +244,10 @@ public class SocialActivityCounterPersistenceTest {
 
 	protected OrderByComparator<SocialActivityCounter> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivityCounter",
-			"activityCounterId", true, "groupId", true, "companyId", true,
-			"classNameId", true, "classPK", true, "name", true, "ownerType",
-			true, "currentValue", true, "totalValue", true, "graceValue", true,
-			"startPeriod", true, "endPeriod", true, "active", true);
+			"activityCounterId", true, "groupId", true, "classNameId", true,
+			"classPK", true, "name", true, "ownerType", true, "currentValue",
+			true, "totalValue", true, "graceValue", true, "startPeriod", true,
+			"endPeriod", true, "active", true, "companyId", true);
 	}
 
 	@Test
@@ -517,8 +517,6 @@ public class SocialActivityCounterPersistenceTest {
 
 		socialActivityCounter.setGroupId(RandomTestUtil.nextLong());
 
-		socialActivityCounter.setCompanyId(RandomTestUtil.nextLong());
-
 		socialActivityCounter.setClassNameId(RandomTestUtil.nextLong());
 
 		socialActivityCounter.setClassPK(RandomTestUtil.nextLong());
@@ -538,6 +536,8 @@ public class SocialActivityCounterPersistenceTest {
 		socialActivityCounter.setEndPeriod(RandomTestUtil.nextInt());
 
 		socialActivityCounter.setActive(RandomTestUtil.randomBoolean());
+
+		socialActivityCounter.setCompanyId(RandomTestUtil.nextLong());
 
 		_socialActivityCounters.add(_persistence.update(socialActivityCounter));
 

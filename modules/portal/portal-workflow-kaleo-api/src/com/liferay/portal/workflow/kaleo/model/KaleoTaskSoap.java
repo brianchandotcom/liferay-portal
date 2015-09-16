@@ -35,7 +35,6 @@ public class KaleoTaskSoap implements Serializable {
 
 		soapModel.setKaleoTaskId(model.getKaleoTaskId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -44,6 +43,7 @@ public class KaleoTaskSoap implements Serializable {
 		soapModel.setKaleoNodeId(model.getKaleoNodeId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -112,14 +112,6 @@ public class KaleoTaskSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -184,9 +176,16 @@ public class KaleoTaskSoap implements Serializable {
 		_description = description;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _kaleoTaskId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -195,4 +194,5 @@ public class KaleoTaskSoap implements Serializable {
 	private long _kaleoNodeId;
 	private String _name;
 	private String _description;
+	private long _companyId;
 }

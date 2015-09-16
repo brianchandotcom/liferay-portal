@@ -119,8 +119,6 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		newWorkflowDefinitionLink.setGroupId(RandomTestUtil.nextLong());
 
-		newWorkflowDefinitionLink.setCompanyId(RandomTestUtil.nextLong());
-
 		newWorkflowDefinitionLink.setUserId(RandomTestUtil.nextLong());
 
 		newWorkflowDefinitionLink.setUserName(RandomTestUtil.randomString());
@@ -139,6 +137,8 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		newWorkflowDefinitionLink.setWorkflowDefinitionVersion(RandomTestUtil.nextInt());
 
+		newWorkflowDefinitionLink.setCompanyId(RandomTestUtil.nextLong());
+
 		_workflowDefinitionLinks.add(_persistence.update(
 				newWorkflowDefinitionLink));
 
@@ -150,8 +150,6 @@ public class WorkflowDefinitionLinkPersistenceTest {
 			newWorkflowDefinitionLink.getWorkflowDefinitionLinkId());
 		Assert.assertEquals(existingWorkflowDefinitionLink.getGroupId(),
 			newWorkflowDefinitionLink.getGroupId());
-		Assert.assertEquals(existingWorkflowDefinitionLink.getCompanyId(),
-			newWorkflowDefinitionLink.getCompanyId());
 		Assert.assertEquals(existingWorkflowDefinitionLink.getUserId(),
 			newWorkflowDefinitionLink.getUserId());
 		Assert.assertEquals(existingWorkflowDefinitionLink.getUserName(),
@@ -172,6 +170,8 @@ public class WorkflowDefinitionLinkPersistenceTest {
 			newWorkflowDefinitionLink.getWorkflowDefinitionName());
 		Assert.assertEquals(existingWorkflowDefinitionLink.getWorkflowDefinitionVersion(),
 			newWorkflowDefinitionLink.getWorkflowDefinitionVersion());
+		Assert.assertEquals(existingWorkflowDefinitionLink.getCompanyId(),
+			newWorkflowDefinitionLink.getCompanyId());
 	}
 
 	@Test
@@ -234,10 +234,10 @@ public class WorkflowDefinitionLinkPersistenceTest {
 	protected OrderByComparator<WorkflowDefinitionLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WorkflowDefinitionLink",
 			"mvccVersion", true, "workflowDefinitionLinkId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "typePK", true, "workflowDefinitionName", true,
-			"workflowDefinitionVersion", true);
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"typePK", true, "workflowDefinitionName", true,
+			"workflowDefinitionVersion", true, "companyId", true);
 	}
 
 	@Test
@@ -486,8 +486,6 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		workflowDefinitionLink.setGroupId(RandomTestUtil.nextLong());
 
-		workflowDefinitionLink.setCompanyId(RandomTestUtil.nextLong());
-
 		workflowDefinitionLink.setUserId(RandomTestUtil.nextLong());
 
 		workflowDefinitionLink.setUserName(RandomTestUtil.randomString());
@@ -505,6 +503,8 @@ public class WorkflowDefinitionLinkPersistenceTest {
 		workflowDefinitionLink.setWorkflowDefinitionName(RandomTestUtil.randomString());
 
 		workflowDefinitionLink.setWorkflowDefinitionVersion(RandomTestUtil.nextInt());
+
+		workflowDefinitionLink.setCompanyId(RandomTestUtil.nextLong());
 
 		_workflowDefinitionLinks.add(_persistence.update(workflowDefinitionLink));
 

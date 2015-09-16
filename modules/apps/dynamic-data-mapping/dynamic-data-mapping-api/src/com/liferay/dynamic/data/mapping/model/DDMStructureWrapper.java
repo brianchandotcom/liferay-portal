@@ -58,7 +58,6 @@ public class DDMStructureWrapper implements DDMStructure,
 		attributes.put("uuid", getUuid());
 		attributes.put("structureId", getStructureId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("versionUserId", getVersionUserId());
@@ -75,6 +74,7 @@ public class DDMStructureWrapper implements DDMStructure,
 		attributes.put("storageType", getStorageType());
 		attributes.put("type", getType());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -97,12 +97,6 @@ public class DDMStructureWrapper implements DDMStructure,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -199,6 +193,12 @@ public class DDMStructureWrapper implements DDMStructure,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

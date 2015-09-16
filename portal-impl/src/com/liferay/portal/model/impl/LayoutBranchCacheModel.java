@@ -85,8 +85,6 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		sb.append(layoutBranchId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -101,6 +99,8 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		sb.append(description);
 		sb.append(", master=");
 		sb.append(master);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -113,7 +113,6 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		layoutBranchImpl.setMvccVersion(mvccVersion);
 		layoutBranchImpl.setLayoutBranchId(layoutBranchId);
 		layoutBranchImpl.setGroupId(groupId);
-		layoutBranchImpl.setCompanyId(companyId);
 		layoutBranchImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -141,6 +140,7 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		}
 
 		layoutBranchImpl.setMaster(master);
+		layoutBranchImpl.setCompanyId(companyId);
 
 		layoutBranchImpl.resetOriginalValues();
 
@@ -152,7 +152,6 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		mvccVersion = objectInput.readLong();
 		layoutBranchId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		layoutSetBranchId = objectInput.readLong();
@@ -160,6 +159,7 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		master = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -168,7 +168,6 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(layoutBranchId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -196,12 +195,12 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 		}
 
 		objectOutput.writeBoolean(master);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long layoutBranchId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long layoutSetBranchId;
@@ -209,4 +208,5 @@ public class LayoutBranchCacheModel implements CacheModel<LayoutBranch>,
 	public String name;
 	public String description;
 	public boolean master;
+	public long companyId;
 }

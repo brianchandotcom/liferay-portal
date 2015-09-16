@@ -16,6 +16,7 @@ package com.liferay.shopping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -37,6 +38,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.shopping.exception.NoSuchItemException;
 import com.liferay.shopping.model.ShoppingItem;
@@ -2130,6 +2132,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		shoppingItem.setNew(true);
 		shoppingItem.setPrimaryKey(itemId);
 
+		shoppingItem.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return shoppingItem;
 	}
 
@@ -2321,7 +2325,6 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 		shoppingItemImpl.setItemId(shoppingItem.getItemId());
 		shoppingItemImpl.setGroupId(shoppingItem.getGroupId());
-		shoppingItemImpl.setCompanyId(shoppingItem.getCompanyId());
 		shoppingItemImpl.setUserId(shoppingItem.getUserId());
 		shoppingItemImpl.setUserName(shoppingItem.getUserName());
 		shoppingItemImpl.setCreateDate(shoppingItem.getCreateDate());
@@ -2353,6 +2356,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		shoppingItemImpl.setLargeImage(shoppingItem.isLargeImage());
 		shoppingItemImpl.setLargeImageId(shoppingItem.getLargeImageId());
 		shoppingItemImpl.setLargeImageURL(shoppingItem.getLargeImageURL());
+		shoppingItemImpl.setCompanyId(shoppingItem.getCompanyId());
 
 		return shoppingItemImpl;
 	}
@@ -2733,6 +2737,8 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_SHOPPINGITEM = "SELECT shoppingItem FROM ShoppingItem shoppingItem";
 	private static final String _SQL_SELECT_SHOPPINGITEM_WHERE_PKS_IN = "SELECT shoppingItem FROM ShoppingItem shoppingItem WHERE itemId IN (";
 	private static final String _SQL_SELECT_SHOPPINGITEM_WHERE = "SELECT shoppingItem FROM ShoppingItem shoppingItem WHERE ";

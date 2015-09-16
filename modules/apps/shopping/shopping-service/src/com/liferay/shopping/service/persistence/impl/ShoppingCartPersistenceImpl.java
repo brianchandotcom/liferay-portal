@@ -16,6 +16,7 @@ package com.liferay.shopping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -32,6 +33,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.shopping.exception.NoSuchCartException;
 import com.liferay.shopping.model.ShoppingCart;
@@ -1414,6 +1416,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		shoppingCart.setNew(true);
 		shoppingCart.setPrimaryKey(cartId);
 
+		shoppingCart.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return shoppingCart;
 	}
 
@@ -1618,7 +1622,6 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 
 		shoppingCartImpl.setCartId(shoppingCart.getCartId());
 		shoppingCartImpl.setGroupId(shoppingCart.getGroupId());
-		shoppingCartImpl.setCompanyId(shoppingCart.getCompanyId());
 		shoppingCartImpl.setUserId(shoppingCart.getUserId());
 		shoppingCartImpl.setUserName(shoppingCart.getUserName());
 		shoppingCartImpl.setCreateDate(shoppingCart.getCreateDate());
@@ -1627,6 +1630,7 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		shoppingCartImpl.setCouponCodes(shoppingCart.getCouponCodes());
 		shoppingCartImpl.setAltShipping(shoppingCart.getAltShipping());
 		shoppingCartImpl.setInsure(shoppingCart.isInsure());
+		shoppingCartImpl.setCompanyId(shoppingCart.getCompanyId());
 
 		return shoppingCartImpl;
 	}
@@ -2002,6 +2006,8 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_SHOPPINGCART = "SELECT shoppingCart FROM ShoppingCart shoppingCart";
 	private static final String _SQL_SELECT_SHOPPINGCART_WHERE_PKS_IN = "SELECT shoppingCart FROM ShoppingCart shoppingCart WHERE cartId IN (";
 	private static final String _SQL_SELECT_SHOPPINGCART_WHERE = "SELECT shoppingCart FROM ShoppingCart shoppingCart WHERE ";

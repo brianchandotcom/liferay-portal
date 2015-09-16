@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchResourceBlockException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1754,6 +1755,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		resourceBlock.setNew(true);
 		resourceBlock.setPrimaryKey(resourceBlockId);
 
+		resourceBlock.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return resourceBlock;
 	}
 
@@ -1947,11 +1950,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 		resourceBlockImpl.setMvccVersion(resourceBlock.getMvccVersion());
 		resourceBlockImpl.setResourceBlockId(resourceBlock.getResourceBlockId());
-		resourceBlockImpl.setCompanyId(resourceBlock.getCompanyId());
 		resourceBlockImpl.setGroupId(resourceBlock.getGroupId());
 		resourceBlockImpl.setName(resourceBlock.getName());
 		resourceBlockImpl.setPermissionsHash(resourceBlock.getPermissionsHash());
 		resourceBlockImpl.setReferenceCount(resourceBlock.getReferenceCount());
+		resourceBlockImpl.setCompanyId(resourceBlock.getCompanyId());
 
 		return resourceBlockImpl;
 	}
@@ -2327,6 +2330,8 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_RESOURCEBLOCK = "SELECT resourceBlock FROM ResourceBlock resourceBlock";
 	private static final String _SQL_SELECT_RESOURCEBLOCK_WHERE_PKS_IN = "SELECT resourceBlock FROM ResourceBlock resourceBlock WHERE resourceBlockId IN (";
 	private static final String _SQL_SELECT_RESOURCEBLOCK_WHERE = "SELECT resourceBlock FROM ResourceBlock resourceBlock WHERE ";

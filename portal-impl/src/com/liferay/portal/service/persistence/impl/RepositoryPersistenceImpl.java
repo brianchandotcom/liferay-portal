@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchRepositoryException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2414,6 +2415,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 
 		repository.setUuid(uuid);
 
+		repository.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return repository;
 	}
 
@@ -2647,7 +2650,6 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		repositoryImpl.setUuid(repository.getUuid());
 		repositoryImpl.setRepositoryId(repository.getRepositoryId());
 		repositoryImpl.setGroupId(repository.getGroupId());
-		repositoryImpl.setCompanyId(repository.getCompanyId());
 		repositoryImpl.setUserId(repository.getUserId());
 		repositoryImpl.setUserName(repository.getUserName());
 		repositoryImpl.setCreateDate(repository.getCreateDate());
@@ -2659,6 +2661,7 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		repositoryImpl.setTypeSettings(repository.getTypeSettings());
 		repositoryImpl.setDlFolderId(repository.getDlFolderId());
 		repositoryImpl.setLastPublishDate(repository.getLastPublishDate());
+		repositoryImpl.setCompanyId(repository.getCompanyId());
 
 		return repositoryImpl;
 	}
@@ -3039,6 +3042,8 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_REPOSITORY = "SELECT repository FROM Repository repository";
 	private static final String _SQL_SELECT_REPOSITORY_WHERE_PKS_IN = "SELECT repository FROM Repository repository WHERE repositoryId IN (";
 	private static final String _SQL_SELECT_REPOSITORY_WHERE = "SELECT repository FROM Repository repository WHERE ";

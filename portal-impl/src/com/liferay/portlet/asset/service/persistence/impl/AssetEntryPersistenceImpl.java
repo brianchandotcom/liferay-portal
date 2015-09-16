@@ -36,6 +36,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
@@ -569,486 +570,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "assetEntry.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
-		new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
-			new String[] { Long.class.getName() },
-			AssetEntryModelImpl.COMPANYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
-			AssetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
-			new String[] { Long.class.getName() });
-
-	/**
-	 * Returns all the asset entries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByCompanyId(long companyId) {
-		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the asset entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @return the range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByCompanyId(long companyId, int start, int end) {
-		return findByCompanyId(companyId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entries where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of asset entries
-	 * @param end the upper bound of the range of asset entries (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entries
-	 */
-	@Override
-	public List<AssetEntry> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator<AssetEntry> orderByComparator) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
-			finderArgs = new Object[] { companyId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
-			finderArgs = new Object[] { companyId, start, end, orderByComparator };
-		}
-
-		List<AssetEntry> list = (List<AssetEntry>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (AssetEntry assetEntry : list) {
-				if ((companyId != assetEntry.getCompanyId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_ASSETENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(AssetEntryModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				if (!pagination) {
-					list = (List<AssetEntry>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<AssetEntry>)QueryUtil.list(q, getDialect(),
-							start, end);
-				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first asset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByCompanyId_First(long companyId,
-		OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-		AssetEntry assetEntry = fetchByCompanyId_First(companyId,
-				orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchEntryException(msg.toString());
-	}
-
-	/**
-	 * Returns the first asset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByCompanyId_First(long companyId,
-		OrderByComparator<AssetEntry> orderByComparator) {
-		List<AssetEntry> list = findByCompanyId(companyId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry
-	 * @throws NoSuchEntryException if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry findByCompanyId_Last(long companyId,
-		OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-		AssetEntry assetEntry = fetchByCompanyId_Last(companyId,
-				orderByComparator);
-
-		if (assetEntry != null) {
-			return assetEntry;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchEntryException(msg.toString());
-	}
-
-	/**
-	 * Returns the last asset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
-	 */
-	@Override
-	public AssetEntry fetchByCompanyId_Last(long companyId,
-		OrderByComparator<AssetEntry> orderByComparator) {
-		int count = countByCompanyId(companyId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntry> list = findByCompanyId(companyId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the asset entries before and after the current asset entry in the ordered set where companyId = &#63;.
-	 *
-	 * @param entryId the primary key of the current asset entry
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry
-	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
-	 */
-	@Override
-	public AssetEntry[] findByCompanyId_PrevAndNext(long entryId,
-		long companyId, OrderByComparator<AssetEntry> orderByComparator)
-		throws NoSuchEntryException {
-		AssetEntry assetEntry = findByPrimaryKey(entryId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetEntry[] array = new AssetEntryImpl[3];
-
-			array[0] = getByCompanyId_PrevAndNext(session, assetEntry,
-					companyId, orderByComparator, true);
-
-			array[1] = assetEntry;
-
-			array[2] = getByCompanyId_PrevAndNext(session, assetEntry,
-					companyId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected AssetEntry getByCompanyId_PrevAndNext(Session session,
-		AssetEntry assetEntry, long companyId,
-		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_ASSETENTRY_WHERE);
-
-		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(AssetEntryModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(companyId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(assetEntry);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<AssetEntry> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the asset entries where companyId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 */
-	@Override
-	public void removeByCompanyId(long companyId) {
-		for (AssetEntry assetEntry : findByCompanyId(companyId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(assetEntry);
-		}
-	}
-
-	/**
-	 * Returns the number of asset entries where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the number of matching asset entries
-	 */
-	@Override
-	public int countByCompanyId(long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
-
-		Object[] finderArgs = new Object[] { companyId };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_ASSETENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "assetEntry.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_VISIBLE = new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByVisible",
@@ -3084,6 +2605,486 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	private static final String _FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_1 = "assetEntry.layoutUuid IS NULL";
 	private static final String _FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_2 = "assetEntry.layoutUuid = ?";
 	private static final String _FINDER_COLUMN_LAYOUTUUID_LAYOUTUUID_3 = "(assetEntry.layoutUuid IS NULL OR assetEntry.layoutUuid = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCompanyId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] { Long.class.getName() },
+			AssetEntryModelImpl.COMPANYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the asset entries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByCompanyId(long companyId) {
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the asset entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @return the range of matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByCompanyId(long companyId, int start, int end) {
+		return findByCompanyId(companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of asset entries
+	 * @param end the upper bound of the range of asset entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset entries
+	 */
+	@Override
+	public List<AssetEntry> findByCompanyId(long companyId, int start, int end,
+		OrderByComparator<AssetEntry> orderByComparator) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+		}
+
+		List<AssetEntry> list = (List<AssetEntry>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (AssetEntry assetEntry : list) {
+				if ((companyId != assetEntry.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_ASSETENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AssetEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (!pagination) {
+					list = (List<AssetEntry>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetEntry>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry
+	 * @throws NoSuchEntryException if a matching asset entry could not be found
+	 */
+	@Override
+	public AssetEntry findByCompanyId_First(long companyId,
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetEntry assetEntry = fetchByCompanyId_First(companyId,
+				orderByComparator);
+
+		if (assetEntry != null) {
+			return assetEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	 */
+	@Override
+	public AssetEntry fetchByCompanyId_First(long companyId,
+		OrderByComparator<AssetEntry> orderByComparator) {
+		List<AssetEntry> list = findByCompanyId(companyId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset entry
+	 * @throws NoSuchEntryException if a matching asset entry could not be found
+	 */
+	@Override
+	public AssetEntry findByCompanyId_Last(long companyId,
+		OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetEntry assetEntry = fetchByCompanyId_Last(companyId,
+				orderByComparator);
+
+		if (assetEntry != null) {
+			return assetEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset entry, or <code>null</code> if a matching asset entry could not be found
+	 */
+	@Override
+	public AssetEntry fetchByCompanyId_Last(long companyId,
+		OrderByComparator<AssetEntry> orderByComparator) {
+		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AssetEntry> list = findByCompanyId(companyId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset entries before and after the current asset entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param entryId the primary key of the current asset entry
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset entry
+	 * @throws NoSuchEntryException if a asset entry with the primary key could not be found
+	 */
+	@Override
+	public AssetEntry[] findByCompanyId_PrevAndNext(long entryId,
+		long companyId, OrderByComparator<AssetEntry> orderByComparator)
+		throws NoSuchEntryException {
+		AssetEntry assetEntry = findByPrimaryKey(entryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetEntry[] array = new AssetEntryImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(session, assetEntry,
+					companyId, orderByComparator, true);
+
+			array[1] = assetEntry;
+
+			array[2] = getByCompanyId_PrevAndNext(session, assetEntry,
+					companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetEntry getByCompanyId_PrevAndNext(Session session,
+		AssetEntry assetEntry, long companyId,
+		OrderByComparator<AssetEntry> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ASSETENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AssetEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(assetEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AssetEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the asset entries where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 */
+	@Override
+	public void removeByCompanyId(long companyId) {
+		for (AssetEntry assetEntry : findByCompanyId(companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(assetEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of asset entries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching asset entries
+	 */
+	@Override
+	public int countByCompanyId(long companyId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
+
+		Object[] finderArgs = new Object[] { companyId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ASSETENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "assetEntry.companyId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_G_CU = new FinderPath(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryModelImpl.FINDER_CACHE_ENABLED, AssetEntryImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByG_CU",
@@ -3770,6 +3771,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		assetEntry.setNew(true);
 		assetEntry.setPrimaryKey(entryId);
 
+		assetEntry.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return assetEntry;
 	}
 
@@ -3937,25 +3940,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 			}
 
 			if ((assetEntryModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						assetEntryModelImpl.getOriginalCompanyId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
-					args);
-
-				args = new Object[] { assetEntryModelImpl.getCompanyId() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
-					args);
-			}
-
-			if ((assetEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VISIBLE.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						assetEntryModelImpl.getOriginalVisible()
@@ -4028,6 +4012,25 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_LAYOUTUUID,
 					args);
 			}
+
+			if ((assetEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						assetEntryModelImpl.getOriginalCompanyId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] { assetEntryModelImpl.getCompanyId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(AssetEntryModelImpl.ENTITY_CACHE_ENABLED,
@@ -4053,7 +4056,6 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 
 		assetEntryImpl.setEntryId(assetEntry.getEntryId());
 		assetEntryImpl.setGroupId(assetEntry.getGroupId());
-		assetEntryImpl.setCompanyId(assetEntry.getCompanyId());
 		assetEntryImpl.setUserId(assetEntry.getUserId());
 		assetEntryImpl.setUserName(assetEntry.getUserName());
 		assetEntryImpl.setCreateDate(assetEntry.getCreateDate());
@@ -4078,6 +4080,7 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		assetEntryImpl.setWidth(assetEntry.getWidth());
 		assetEntryImpl.setPriority(assetEntry.getPriority());
 		assetEntryImpl.setViewCount(assetEntry.getViewCount());
+		assetEntryImpl.setCompanyId(assetEntry.getCompanyId());
 
 		return assetEntryImpl;
 	}
@@ -4994,10 +4997,12 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	 */
 	public void afterPropertiesSet() {
 		assetEntryToAssetCategoryTableMapper = TableMapperFactory.getTableMapper("AssetEntries_AssetCategories",
-				"entryId", "categoryId", this, assetCategoryPersistence);
+				"entryId", "categoryId", this, assetCategoryPersistence,
+				serviceCompanyProvider);
 
 		assetEntryToAssetTagTableMapper = TableMapperFactory.getTableMapper("AssetEntries_AssetTags",
-				"entryId", "tagId", this, assetTagPersistence);
+				"entryId", "tagId", this, assetTagPersistence,
+				serviceCompanyProvider);
 	}
 
 	public void destroy() {
@@ -5016,6 +5021,8 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	@BeanReference(type = AssetTagPersistence.class)
 	protected AssetTagPersistence assetTagPersistence;
 	protected TableMapper<AssetEntry, com.liferay.portlet.asset.model.AssetTag> assetEntryToAssetTagTableMapper;
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_ASSETENTRY = "SELECT assetEntry FROM AssetEntry assetEntry";
 	private static final String _SQL_SELECT_ASSETENTRY_WHERE_PKS_IN = "SELECT assetEntry FROM AssetEntry assetEntry WHERE entryId IN (";
 	private static final String _SQL_SELECT_ASSETENTRY_WHERE = "SELECT assetEntry FROM AssetEntry assetEntry WHERE ";

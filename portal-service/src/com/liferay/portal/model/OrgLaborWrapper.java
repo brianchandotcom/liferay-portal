@@ -68,6 +68,7 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 		attributes.put("friClose", getFriClose());
 		attributes.put("satOpen", getSatOpen());
 		attributes.put("satClose", getSatClose());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -181,6 +182,12 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 		if (satClose != null) {
 			setSatClose(satClose);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -191,6 +198,16 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	@Override
 	public int compareTo(com.liferay.portal.model.OrgLabor orgLabor) {
 		return _orgLabor.compareTo(orgLabor);
+	}
+
+	/**
+	* Returns the company ID of this org labor.
+	*
+	* @return the company ID of this org labor
+	*/
+	@Override
+	public long getCompanyId() {
+		return _orgLabor.getCompanyId();
 	}
 
 	@Override
@@ -427,6 +444,16 @@ public class OrgLaborWrapper implements OrgLabor, ModelWrapper<OrgLabor> {
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_orgLabor.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this org labor.
+	*
+	* @param companyId the company ID of this org labor
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_orgLabor.setCompanyId(companyId);
 	}
 
 	@Override

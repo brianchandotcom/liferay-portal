@@ -136,6 +136,8 @@ public class JournalArticleImagePersistenceTest {
 
 		newJournalArticleImage.setTempImage(RandomTestUtil.randomBoolean());
 
+		newJournalArticleImage.setCompanyId(RandomTestUtil.nextLong());
+
 		_journalArticleImages.add(_persistence.update(newJournalArticleImage));
 
 		JournalArticleImage existingJournalArticleImage = _persistence.findByPrimaryKey(newJournalArticleImage.getPrimaryKey());
@@ -156,6 +158,8 @@ public class JournalArticleImagePersistenceTest {
 			newJournalArticleImage.getLanguageId());
 		Assert.assertEquals(existingJournalArticleImage.getTempImage(),
 			newJournalArticleImage.getTempImage());
+		Assert.assertEquals(existingJournalArticleImage.getCompanyId(),
+			newJournalArticleImage.getCompanyId());
 	}
 
 	@Test
@@ -221,7 +225,7 @@ public class JournalArticleImagePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("JournalArticleImage",
 			"articleImageId", true, "groupId", true, "articleId", true,
 			"version", true, "elInstanceId", true, "elName", true,
-			"languageId", true, "tempImage", true);
+			"languageId", true, "tempImage", true, "companyId", true);
 	}
 
 	@Test
@@ -472,6 +476,8 @@ public class JournalArticleImagePersistenceTest {
 		journalArticleImage.setLanguageId(RandomTestUtil.randomString());
 
 		journalArticleImage.setTempImage(RandomTestUtil.randomBoolean());
+
+		journalArticleImage.setCompanyId(RandomTestUtil.nextLong());
 
 		_journalArticleImages.add(_persistence.update(journalArticleImage));
 

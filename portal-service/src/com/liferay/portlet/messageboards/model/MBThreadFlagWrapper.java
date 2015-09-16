@@ -58,13 +58,13 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 		attributes.put("uuid", getUuid());
 		attributes.put("threadFlagId", getThreadFlagId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("threadId", getThreadId());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -87,12 +87,6 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -129,6 +123,12 @@ public class MBThreadFlagWrapper implements MBThreadFlag,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

@@ -71,7 +71,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "appId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -81,14 +80,14 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 			{ "description", Types.VARCHAR },
 			{ "category", Types.VARCHAR },
 			{ "iconURL", Types.VARCHAR },
-			{ "version", Types.VARCHAR }
+			{ "version", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("appId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -99,9 +98,10 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		TABLE_COLUMNS_MAP.put("category", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("iconURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Marketplace_App (uuid_ VARCHAR(75) null,appId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,remoteAppId LONG,title VARCHAR(75) null,description STRING null,category VARCHAR(75) null,iconURL STRING null,version VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Marketplace_App (uuid_ VARCHAR(75) null,appId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,remoteAppId LONG,title VARCHAR(75) null,description STRING null,category VARCHAR(75) null,iconURL STRING null,version VARCHAR(75) null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Marketplace_App";
 	public static final String ORDER_BY_JPQL = " ORDER BY app.appId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Marketplace_App.appId ASC";
@@ -138,7 +138,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 		model.setUuid(soapModel.getUuid());
 		model.setAppId(soapModel.getAppId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -149,6 +148,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		model.setCategory(soapModel.getCategory());
 		model.setIconURL(soapModel.getIconURL());
 		model.setVersion(soapModel.getVersion());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -215,7 +215,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("appId", getAppId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -226,6 +225,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		attributes.put("category", getCategory());
 		attributes.put("iconURL", getIconURL());
 		attributes.put("version", getVersion());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -245,12 +245,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 		if (appId != null) {
 			setAppId(appId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -312,6 +306,12 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		if (version != null) {
 			setVersion(version);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -347,29 +347,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	@Override
 	public void setAppId(long appId) {
 		_appId = appId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -556,6 +533,29 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		_version = version;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -589,7 +589,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 		appImpl.setUuid(getUuid());
 		appImpl.setAppId(getAppId());
-		appImpl.setCompanyId(getCompanyId());
 		appImpl.setUserId(getUserId());
 		appImpl.setUserName(getUserName());
 		appImpl.setCreateDate(getCreateDate());
@@ -600,6 +599,7 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		appImpl.setCategory(getCategory());
 		appImpl.setIconURL(getIconURL());
 		appImpl.setVersion(getVersion());
+		appImpl.setCompanyId(getCompanyId());
 
 		appImpl.resetOriginalValues();
 
@@ -664,10 +664,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 
 		appModelImpl._originalUuid = appModelImpl._uuid;
 
-		appModelImpl._originalCompanyId = appModelImpl._companyId;
-
-		appModelImpl._setOriginalCompanyId = false;
-
 		appModelImpl._setModifiedDate = false;
 
 		appModelImpl._originalRemoteAppId = appModelImpl._remoteAppId;
@@ -675,6 +671,10 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		appModelImpl._setOriginalRemoteAppId = false;
 
 		appModelImpl._originalCategory = appModelImpl._category;
+
+		appModelImpl._originalCompanyId = appModelImpl._companyId;
+
+		appModelImpl._setOriginalCompanyId = false;
 
 		appModelImpl._columnBitmask = 0;
 	}
@@ -692,8 +692,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		}
 
 		appCacheModel.appId = getAppId();
-
-		appCacheModel.companyId = getCompanyId();
 
 		appCacheModel.userId = getUserId();
 
@@ -765,6 +763,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 			appCacheModel.version = null;
 		}
 
+		appCacheModel.companyId = getCompanyId();
+
 		return appCacheModel;
 	}
 
@@ -776,8 +776,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		sb.append(getUuid());
 		sb.append(", appId=");
 		sb.append(getAppId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -798,6 +796,8 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		sb.append(getIconURL());
 		sb.append(", version=");
 		sb.append(getVersion());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -818,10 +818,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 		sb.append(
 			"<column><column-name>appId</column-name><column-value><![CDATA[");
 		sb.append(getAppId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -863,6 +859,10 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 			"<column><column-name>version</column-name><column-value><![CDATA[");
 		sb.append(getVersion());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -876,9 +876,6 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	private String _uuid;
 	private String _originalUuid;
 	private long _appId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -893,6 +890,9 @@ public class AppModelImpl extends BaseModelImpl<App> implements AppModel {
 	private String _originalCategory;
 	private String _iconURL;
 	private String _version;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private App _escapedModel;
 }

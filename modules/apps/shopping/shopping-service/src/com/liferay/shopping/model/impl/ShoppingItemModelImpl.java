@@ -72,7 +72,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "itemId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -103,14 +102,14 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 			{ "mediumImageURL", Types.VARCHAR },
 			{ "largeImage", Types.BOOLEAN },
 			{ "largeImageId", Types.BIGINT },
-			{ "largeImageURL", Types.VARCHAR }
+			{ "largeImageURL", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("itemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -142,9 +141,10 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		TABLE_COLUMNS_MAP.put("largeImage", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("largeImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("largeImageURL", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ShoppingItem (itemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,sku VARCHAR(75) null,name VARCHAR(200) null,description STRING null,properties STRING null,fields_ BOOLEAN,fieldsQuantities STRING null,minQuantity INTEGER,maxQuantity INTEGER,price DOUBLE,discount DOUBLE,taxable BOOLEAN,shipping DOUBLE,useShippingFormula BOOLEAN,requiresShipping BOOLEAN,stockQuantity INTEGER,featured_ BOOLEAN,sale_ BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,mediumImage BOOLEAN,mediumImageId LONG,mediumImageURL STRING null,largeImage BOOLEAN,largeImageId LONG,largeImageURL STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table ShoppingItem (itemId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,categoryId LONG,sku VARCHAR(75) null,name VARCHAR(200) null,description STRING null,properties STRING null,fields_ BOOLEAN,fieldsQuantities STRING null,minQuantity INTEGER,maxQuantity INTEGER,price DOUBLE,discount DOUBLE,taxable BOOLEAN,shipping DOUBLE,useShippingFormula BOOLEAN,requiresShipping BOOLEAN,stockQuantity INTEGER,featured_ BOOLEAN,sale_ BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,mediumImage BOOLEAN,mediumImageId LONG,mediumImageURL STRING null,largeImage BOOLEAN,largeImageId LONG,largeImageURL STRING null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY shoppingItem.itemId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ShoppingItem.itemId ASC";
@@ -184,7 +184,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 		model.setItemId(soapModel.getItemId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -216,6 +215,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		model.setLargeImage(soapModel.getLargeImage());
 		model.setLargeImageId(soapModel.getLargeImageId());
 		model.setLargeImageURL(soapModel.getLargeImageURL());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -282,7 +282,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 		attributes.put("itemId", getItemId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -314,6 +313,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		attributes.put("largeImage", getLargeImage());
 		attributes.put("largeImageId", getLargeImageId());
 		attributes.put("largeImageURL", getLargeImageURL());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -333,12 +333,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -527,6 +521,12 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		if (largeImageURL != null) {
 			setLargeImageURL(largeImageURL);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -563,29 +563,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1099,6 +1076,29 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		_largeImageURL = largeImageURL;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -1132,7 +1132,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 		shoppingItemImpl.setItemId(getItemId());
 		shoppingItemImpl.setGroupId(getGroupId());
-		shoppingItemImpl.setCompanyId(getCompanyId());
 		shoppingItemImpl.setUserId(getUserId());
 		shoppingItemImpl.setUserName(getUserName());
 		shoppingItemImpl.setCreateDate(getCreateDate());
@@ -1164,6 +1163,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		shoppingItemImpl.setLargeImage(getLargeImage());
 		shoppingItemImpl.setLargeImageId(getLargeImageId());
 		shoppingItemImpl.setLargeImageURL(getLargeImageURL());
+		shoppingItemImpl.setCompanyId(getCompanyId());
 
 		shoppingItemImpl.resetOriginalValues();
 
@@ -1236,10 +1236,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 		shoppingItemModelImpl._setOriginalGroupId = false;
 
-		shoppingItemModelImpl._originalCompanyId = shoppingItemModelImpl._companyId;
-
-		shoppingItemModelImpl._setOriginalCompanyId = false;
-
 		shoppingItemModelImpl._setModifiedDate = false;
 
 		shoppingItemModelImpl._originalCategoryId = shoppingItemModelImpl._categoryId;
@@ -1260,6 +1256,10 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 		shoppingItemModelImpl._setOriginalLargeImageId = false;
 
+		shoppingItemModelImpl._originalCompanyId = shoppingItemModelImpl._companyId;
+
+		shoppingItemModelImpl._setOriginalCompanyId = false;
+
 		shoppingItemModelImpl._columnBitmask = 0;
 	}
 
@@ -1270,8 +1270,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		shoppingItemCacheModel.itemId = getItemId();
 
 		shoppingItemCacheModel.groupId = getGroupId();
-
-		shoppingItemCacheModel.companyId = getCompanyId();
 
 		shoppingItemCacheModel.userId = getUserId();
 
@@ -1403,6 +1401,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 			shoppingItemCacheModel.largeImageURL = null;
 		}
 
+		shoppingItemCacheModel.companyId = getCompanyId();
+
 		return shoppingItemCacheModel;
 	}
 
@@ -1414,8 +1414,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append(getItemId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1478,6 +1476,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append(getLargeImageId());
 		sb.append(", largeImageURL=");
 		sb.append(getLargeImageURL());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1498,10 +1498,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1627,6 +1623,10 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 			"<column><column-name>largeImageURL</column-name><column-value><![CDATA[");
 		sb.append(getLargeImageURL());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1641,9 +1641,6 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1685,6 +1682,9 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	private long _originalLargeImageId;
 	private boolean _setOriginalLargeImageId;
 	private String _largeImageURL;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private ShoppingItem _escapedModel;
 }

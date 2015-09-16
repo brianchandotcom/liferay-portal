@@ -22,6 +22,7 @@ import com.liferay.journal.model.impl.JournalFeedImpl;
 import com.liferay.journal.model.impl.JournalFeedModelImpl;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -43,6 +44,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import java.io.Serializable;
 
@@ -2715,6 +2717,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 		journalFeed.setUuid(uuid);
 
+		journalFeed.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return journalFeed;
 	}
 
@@ -2947,7 +2951,6 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		journalFeedImpl.setUuid(journalFeed.getUuid());
 		journalFeedImpl.setId(journalFeed.getId());
 		journalFeedImpl.setGroupId(journalFeed.getGroupId());
-		journalFeedImpl.setCompanyId(journalFeed.getCompanyId());
 		journalFeedImpl.setUserId(journalFeed.getUserId());
 		journalFeedImpl.setUserName(journalFeed.getUserName());
 		journalFeedImpl.setCreateDate(journalFeed.getCreateDate());
@@ -2967,6 +2970,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		journalFeedImpl.setFeedFormat(journalFeed.getFeedFormat());
 		journalFeedImpl.setFeedVersion(journalFeed.getFeedVersion());
 		journalFeedImpl.setLastPublishDate(journalFeed.getLastPublishDate());
+		journalFeedImpl.setCompanyId(journalFeed.getCompanyId());
 
 		return journalFeedImpl;
 	}
@@ -3346,6 +3350,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_JOURNALFEED = "SELECT journalFeed FROM JournalFeed journalFeed";
 	private static final String _SQL_SELECT_JOURNALFEED_WHERE_PKS_IN = "SELECT journalFeed FROM JournalFeed journalFeed WHERE id_ IN (";
 	private static final String _SQL_SELECT_JOURNALFEED_WHERE = "SELECT journalFeed FROM JournalFeed journalFeed WHERE ";

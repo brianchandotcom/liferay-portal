@@ -84,7 +84,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 			{ "uuid_", Types.VARCHAR },
 			{ "nodeId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -96,7 +95,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -104,7 +104,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("nodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -117,9 +116,10 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WikiNode (uuid_ VARCHAR(75) null,nodeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table WikiNode (uuid_ VARCHAR(75) null,nodeId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table WikiNode";
 	public static final String ORDER_BY_JPQL = " ORDER BY wikiNode.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY WikiNode.name ASC";
@@ -157,7 +157,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		model.setUuid(soapModel.getUuid());
 		model.setNodeId(soapModel.getNodeId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -170,6 +169,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -237,7 +237,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		attributes.put("uuid", getUuid());
 		attributes.put("nodeId", getNodeId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -250,6 +249,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -275,12 +275,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -354,6 +348,12 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -412,29 +412,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -647,6 +624,29 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+	}
+
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -928,7 +928,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		wikiNodeImpl.setUuid(getUuid());
 		wikiNodeImpl.setNodeId(getNodeId());
 		wikiNodeImpl.setGroupId(getGroupId());
-		wikiNodeImpl.setCompanyId(getCompanyId());
 		wikiNodeImpl.setUserId(getUserId());
 		wikiNodeImpl.setUserName(getUserName());
 		wikiNodeImpl.setCreateDate(getCreateDate());
@@ -941,6 +940,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		wikiNodeImpl.setStatusByUserId(getStatusByUserId());
 		wikiNodeImpl.setStatusByUserName(getStatusByUserName());
 		wikiNodeImpl.setStatusDate(getStatusDate());
+		wikiNodeImpl.setCompanyId(getCompanyId());
 
 		wikiNodeImpl.resetOriginalValues();
 
@@ -1007,10 +1007,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 		wikiNodeModelImpl._setOriginalGroupId = false;
 
-		wikiNodeModelImpl._originalCompanyId = wikiNodeModelImpl._companyId;
-
-		wikiNodeModelImpl._setOriginalCompanyId = false;
-
 		wikiNodeModelImpl._setModifiedDate = false;
 
 		wikiNodeModelImpl._originalName = wikiNodeModelImpl._name;
@@ -1018,6 +1014,10 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		wikiNodeModelImpl._originalStatus = wikiNodeModelImpl._status;
 
 		wikiNodeModelImpl._setOriginalStatus = false;
+
+		wikiNodeModelImpl._originalCompanyId = wikiNodeModelImpl._companyId;
+
+		wikiNodeModelImpl._setOriginalCompanyId = false;
 
 		wikiNodeModelImpl._columnBitmask = 0;
 	}
@@ -1037,8 +1037,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		wikiNodeCacheModel.nodeId = getNodeId();
 
 		wikiNodeCacheModel.groupId = getGroupId();
-
-		wikiNodeCacheModel.companyId = getCompanyId();
 
 		wikiNodeCacheModel.userId = getUserId();
 
@@ -1123,6 +1121,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 			wikiNodeCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		wikiNodeCacheModel.companyId = getCompanyId();
+
 		return wikiNodeCacheModel;
 	}
 
@@ -1136,8 +1136,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		sb.append(getNodeId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1162,6 +1160,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1186,10 +1186,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1239,6 +1235,10 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1255,9 +1255,6 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1274,6 +1271,9 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private WikiNode _escapedModel;
 }

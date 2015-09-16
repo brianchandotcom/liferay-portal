@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface KaleoTaskInstanceTokenModel extends BaseModel<KaleoTaskInstanceToken>,
-	GroupedModel {
+	GroupedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -93,22 +94,6 @@ public interface KaleoTaskInstanceTokenModel extends BaseModel<KaleoTaskInstance
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this kaleo task instance token.
-	 *
-	 * @return the company ID of this kaleo task instance token
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this kaleo task instance token.
-	 *
-	 * @param companyId the company ID of this kaleo task instance token
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this kaleo task instance token.
@@ -382,6 +367,22 @@ public interface KaleoTaskInstanceTokenModel extends BaseModel<KaleoTaskInstance
 	 * @param workflowContext the workflow context of this kaleo task instance token
 	 */
 	public void setWorkflowContext(String workflowContext);
+
+	/**
+	 * Returns the company ID of this kaleo task instance token.
+	 *
+	 * @return the company ID of this kaleo task instance token
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this kaleo task instance token.
+	 *
+	 * @param companyId the company ID of this kaleo task instance token
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

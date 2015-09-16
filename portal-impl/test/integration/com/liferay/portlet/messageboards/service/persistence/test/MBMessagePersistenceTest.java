@@ -122,8 +122,6 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setGroupId(RandomTestUtil.nextLong());
 
-		newMBMessage.setCompanyId(RandomTestUtil.nextLong());
-
 		newMBMessage.setUserId(RandomTestUtil.nextLong());
 
 		newMBMessage.setUserName(RandomTestUtil.randomString());
@@ -168,6 +166,8 @@ public class MBMessagePersistenceTest {
 
 		newMBMessage.setStatusDate(RandomTestUtil.nextDate());
 
+		newMBMessage.setCompanyId(RandomTestUtil.nextLong());
+
 		_mbMessages.add(_persistence.update(newMBMessage));
 
 		MBMessage existingMBMessage = _persistence.findByPrimaryKey(newMBMessage.getPrimaryKey());
@@ -177,8 +177,6 @@ public class MBMessagePersistenceTest {
 			newMBMessage.getMessageId());
 		Assert.assertEquals(existingMBMessage.getGroupId(),
 			newMBMessage.getGroupId());
-		Assert.assertEquals(existingMBMessage.getCompanyId(),
-			newMBMessage.getCompanyId());
 		Assert.assertEquals(existingMBMessage.getUserId(),
 			newMBMessage.getUserId());
 		Assert.assertEquals(existingMBMessage.getUserName(),
@@ -226,6 +224,8 @@ public class MBMessagePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBMessage.getStatusDate()),
 			Time.getShortTimestamp(newMBMessage.getStatusDate()));
+		Assert.assertEquals(existingMBMessage.getCompanyId(),
+			newMBMessage.getCompanyId());
 	}
 
 	@Test
@@ -263,13 +263,6 @@ public class MBMessagePersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByUserId() throws Exception {
 		_persistence.countByUserId(RandomTestUtil.nextLong());
 
@@ -288,6 +281,13 @@ public class MBMessagePersistenceTest {
 		_persistence.countByThreadReplies(RandomTestUtil.nextLong());
 
 		_persistence.countByThreadReplies(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -312,14 +312,6 @@ public class MBMessagePersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByG_S(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_S() throws Exception {
-		_persistence.countByC_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
@@ -374,6 +366,14 @@ public class MBMessagePersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByTR_S(0L, 0);
+	}
+
+	@Test
+	public void testCountByC_S() throws Exception {
+		_persistence.countByC_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_S(0L, 0);
 	}
 
 	@Test
@@ -488,14 +488,14 @@ public class MBMessagePersistenceTest {
 
 	protected OrderByComparator<MBMessage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBMessage", "uuid", true,
-			"messageId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "categoryId", true,
-			"threadId", true, "rootMessageId", true, "parentMessageId", true,
-			"subject", true, "format", true, "anonymous", true, "priority",
-			true, "allowPingbacks", true, "answer", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"messageId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId",
+			true, "classPK", true, "categoryId", true, "threadId", true,
+			"rootMessageId", true, "parentMessageId", true, "subject", true,
+			"format", true, "anonymous", true, "priority", true,
+			"allowPingbacks", true, "answer", true, "lastPublishDate", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true, "companyId", true);
 	}
 
 	@Test
@@ -717,8 +717,6 @@ public class MBMessagePersistenceTest {
 
 		mbMessage.setGroupId(RandomTestUtil.nextLong());
 
-		mbMessage.setCompanyId(RandomTestUtil.nextLong());
-
 		mbMessage.setUserId(RandomTestUtil.nextLong());
 
 		mbMessage.setUserName(RandomTestUtil.randomString());
@@ -762,6 +760,8 @@ public class MBMessagePersistenceTest {
 		mbMessage.setStatusByUserName(RandomTestUtil.randomString());
 
 		mbMessage.setStatusDate(RandomTestUtil.nextDate());
+
+		mbMessage.setCompanyId(RandomTestUtil.nextLong());
 
 		_mbMessages.add(_persistence.update(mbMessage));
 

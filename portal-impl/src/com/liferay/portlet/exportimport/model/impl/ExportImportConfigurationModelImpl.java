@@ -82,7 +82,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 			{ "mvccVersion", Types.BIGINT },
 			{ "exportImportConfigurationId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -94,7 +93,8 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -102,7 +102,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("exportImportConfigurationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -115,9 +114,10 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ExportImportConfiguration (mvccVersion LONG default 0,exportImportConfigurationId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,description STRING null,type_ INTEGER,settings_ TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table ExportImportConfiguration (mvccVersion LONG default 0,exportImportConfigurationId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(200) null,description STRING null,type_ INTEGER,settings_ TEXT null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ExportImportConfiguration";
 	public static final String ORDER_BY_JPQL = " ORDER BY exportImportConfiguration.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ExportImportConfiguration.createDate ASC";
@@ -156,7 +156,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setExportImportConfigurationId(soapModel.getExportImportConfigurationId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -169,6 +168,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -238,7 +238,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		attributes.put("exportImportConfigurationId",
 			getExportImportConfigurationId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -251,6 +250,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -277,12 +277,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -356,6 +350,12 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -401,29 +401,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -645,6 +622,29 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+	}
+
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -896,7 +896,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		exportImportConfigurationImpl.setMvccVersion(getMvccVersion());
 		exportImportConfigurationImpl.setExportImportConfigurationId(getExportImportConfigurationId());
 		exportImportConfigurationImpl.setGroupId(getGroupId());
-		exportImportConfigurationImpl.setCompanyId(getCompanyId());
 		exportImportConfigurationImpl.setUserId(getUserId());
 		exportImportConfigurationImpl.setUserName(getUserName());
 		exportImportConfigurationImpl.setCreateDate(getCreateDate());
@@ -909,6 +908,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		exportImportConfigurationImpl.setStatusByUserId(getStatusByUserId());
 		exportImportConfigurationImpl.setStatusByUserName(getStatusByUserName());
 		exportImportConfigurationImpl.setStatusDate(getStatusDate());
+		exportImportConfigurationImpl.setCompanyId(getCompanyId());
 
 		exportImportConfigurationImpl.resetOriginalValues();
 
@@ -974,10 +974,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 
 		exportImportConfigurationModelImpl._setOriginalGroupId = false;
 
-		exportImportConfigurationModelImpl._originalCompanyId = exportImportConfigurationModelImpl._companyId;
-
-		exportImportConfigurationModelImpl._setOriginalCompanyId = false;
-
 		exportImportConfigurationModelImpl._setModifiedDate = false;
 
 		exportImportConfigurationModelImpl._originalType = exportImportConfigurationModelImpl._type;
@@ -987,6 +983,10 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		exportImportConfigurationModelImpl._originalStatus = exportImportConfigurationModelImpl._status;
 
 		exportImportConfigurationModelImpl._setOriginalStatus = false;
+
+		exportImportConfigurationModelImpl._originalCompanyId = exportImportConfigurationModelImpl._companyId;
+
+		exportImportConfigurationModelImpl._setOriginalCompanyId = false;
 
 		exportImportConfigurationModelImpl._columnBitmask = 0;
 	}
@@ -1000,8 +1000,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		exportImportConfigurationCacheModel.exportImportConfigurationId = getExportImportConfigurationId();
 
 		exportImportConfigurationCacheModel.groupId = getGroupId();
-
-		exportImportConfigurationCacheModel.companyId = getCompanyId();
 
 		exportImportConfigurationCacheModel.userId = getUserId();
 
@@ -1078,6 +1076,8 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 			exportImportConfigurationCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		exportImportConfigurationCacheModel.companyId = getCompanyId();
+
 		return exportImportConfigurationCacheModel;
 	}
 
@@ -1091,8 +1091,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		sb.append(getExportImportConfigurationId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1117,6 +1115,8 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1142,10 +1142,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1195,6 +1191,10 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1210,9 +1210,6 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1230,6 +1227,9 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private ExportImportConfiguration _escapedModel;
 }

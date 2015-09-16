@@ -36,7 +36,6 @@ public class AssetEntrySoap implements Serializable {
 
 		soapModel.setEntryId(model.getEntryId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -61,6 +60,7 @@ public class AssetEntrySoap implements Serializable {
 		soapModel.setWidth(model.getWidth());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setViewCount(model.getViewCount());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -127,14 +127,6 @@ public class AssetEntrySoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -337,9 +329,16 @@ public class AssetEntrySoap implements Serializable {
 		_viewCount = viewCount;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _entryId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -364,4 +363,5 @@ public class AssetEntrySoap implements Serializable {
 	private int _width;
 	private double _priority;
 	private int _viewCount;
+	private long _companyId;
 }

@@ -53,13 +53,13 @@ public class ExpandoValueWrapper implements ExpandoValue,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("valueId", getValueId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("tableId", getTableId());
 		attributes.put("columnId", getColumnId());
 		attributes.put("rowId", getRowId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("data", getData());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -70,12 +70,6 @@ public class ExpandoValueWrapper implements ExpandoValue,
 
 		if (valueId != null) {
 			setValueId(valueId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long tableId = (Long)attributes.get("tableId");
@@ -112,6 +106,12 @@ public class ExpandoValueWrapper implements ExpandoValue,
 
 		if (data != null) {
 			setData(data);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

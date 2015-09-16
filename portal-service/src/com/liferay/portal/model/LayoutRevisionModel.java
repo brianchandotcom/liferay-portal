@@ -43,7 +43,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
-	GroupedModel, LocalizedModel, MVCCModel, WorkflowedModel {
+	GroupedModel, LocalizedModel, MVCCModel, PartitionableModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,22 +109,6 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this layout revision.
-	 *
-	 * @return the company ID of this layout revision
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this layout revision.
-	 *
-	 * @param companyId the company ID of this layout revision
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this layout revision.
@@ -1008,6 +992,22 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the company ID of this layout revision.
+	 *
+	 * @return the company ID of this layout revision
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this layout revision.
+	 *
+	 * @param companyId the company ID of this layout revision
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}

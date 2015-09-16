@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
+public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -90,20 +92,6 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
 	 * @param groupId the group ID of this trash entry
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this trash entry.
-	 *
-	 * @return the company ID of this trash entry
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this trash entry.
-	 *
-	 * @param companyId the company ID of this trash entry
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this trash entry.
@@ -246,6 +234,22 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
 	 * @param status the status of this trash entry
 	 */
 	public void setStatus(int status);
+
+	/**
+	 * Returns the company ID of this trash entry.
+	 *
+	 * @return the company ID of this trash entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this trash entry.
+	 *
+	 * @param companyId the company ID of this trash entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

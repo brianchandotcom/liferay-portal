@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -39,6 +40,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -9523,6 +9525,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 
 		mbCategory.setUuid(uuid);
 
+		mbCategory.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return mbCategory;
 	}
 
@@ -9859,7 +9863,6 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		mbCategoryImpl.setUuid(mbCategory.getUuid());
 		mbCategoryImpl.setCategoryId(mbCategory.getCategoryId());
 		mbCategoryImpl.setGroupId(mbCategory.getGroupId());
-		mbCategoryImpl.setCompanyId(mbCategory.getCompanyId());
 		mbCategoryImpl.setUserId(mbCategory.getUserId());
 		mbCategoryImpl.setUserName(mbCategory.getUserName());
 		mbCategoryImpl.setCreateDate(mbCategory.getCreateDate());
@@ -9876,6 +9879,7 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		mbCategoryImpl.setStatusByUserId(mbCategory.getStatusByUserId());
 		mbCategoryImpl.setStatusByUserName(mbCategory.getStatusByUserName());
 		mbCategoryImpl.setStatusDate(mbCategory.getStatusDate());
+		mbCategoryImpl.setCompanyId(mbCategory.getCompanyId());
 
 		return mbCategoryImpl;
 	}
@@ -10256,6 +10260,8 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_MBCATEGORY = "SELECT mbCategory FROM MBCategory mbCategory";
 	private static final String _SQL_SELECT_MBCATEGORY_WHERE_PKS_IN = "SELECT mbCategory FROM MBCategory mbCategory WHERE categoryId IN (";
 	private static final String _SQL_SELECT_MBCATEGORY_WHERE = "SELECT mbCategory FROM MBCategory mbCategory WHERE ";

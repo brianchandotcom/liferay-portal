@@ -123,8 +123,6 @@ public class JournalContentSearchPersistenceTest {
 
 		newJournalContentSearch.setGroupId(RandomTestUtil.nextLong());
 
-		newJournalContentSearch.setCompanyId(RandomTestUtil.nextLong());
-
 		newJournalContentSearch.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		newJournalContentSearch.setLayoutId(RandomTestUtil.nextLong());
@@ -132,6 +130,8 @@ public class JournalContentSearchPersistenceTest {
 		newJournalContentSearch.setPortletId(RandomTestUtil.randomString());
 
 		newJournalContentSearch.setArticleId(RandomTestUtil.randomString());
+
+		newJournalContentSearch.setCompanyId(RandomTestUtil.nextLong());
 
 		_journalContentSearchs.add(_persistence.update(newJournalContentSearch));
 
@@ -141,8 +141,6 @@ public class JournalContentSearchPersistenceTest {
 			newJournalContentSearch.getContentSearchId());
 		Assert.assertEquals(existingJournalContentSearch.getGroupId(),
 			newJournalContentSearch.getGroupId());
-		Assert.assertEquals(existingJournalContentSearch.getCompanyId(),
-			newJournalContentSearch.getCompanyId());
 		Assert.assertEquals(existingJournalContentSearch.getPrivateLayout(),
 			newJournalContentSearch.getPrivateLayout());
 		Assert.assertEquals(existingJournalContentSearch.getLayoutId(),
@@ -151,6 +149,8 @@ public class JournalContentSearchPersistenceTest {
 			newJournalContentSearch.getPortletId());
 		Assert.assertEquals(existingJournalContentSearch.getArticleId(),
 			newJournalContentSearch.getArticleId());
+		Assert.assertEquals(existingJournalContentSearch.getCompanyId(),
+			newJournalContentSearch.getCompanyId());
 	}
 
 	@Test
@@ -259,9 +259,9 @@ public class JournalContentSearchPersistenceTest {
 
 	protected OrderByComparator<JournalContentSearch> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalContentSearch",
-			"contentSearchId", true, "groupId", true, "companyId", true,
-			"privateLayout", true, "layoutId", true, "portletId", true,
-			"articleId", true);
+			"contentSearchId", true, "groupId", true, "privateLayout", true,
+			"layoutId", true, "portletId", true, "articleId", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -500,8 +500,6 @@ public class JournalContentSearchPersistenceTest {
 
 		journalContentSearch.setGroupId(RandomTestUtil.nextLong());
 
-		journalContentSearch.setCompanyId(RandomTestUtil.nextLong());
-
 		journalContentSearch.setPrivateLayout(RandomTestUtil.randomBoolean());
 
 		journalContentSearch.setLayoutId(RandomTestUtil.nextLong());
@@ -509,6 +507,8 @@ public class JournalContentSearchPersistenceTest {
 		journalContentSearch.setPortletId(RandomTestUtil.randomString());
 
 		journalContentSearch.setArticleId(RandomTestUtil.randomString());
+
+		journalContentSearch.setCompanyId(RandomTestUtil.nextLong());
 
 		_journalContentSearchs.add(_persistence.update(journalContentSearch));
 

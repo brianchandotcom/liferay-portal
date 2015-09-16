@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchPasswordTrackerException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -659,6 +660,8 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		passwordTracker.setNew(true);
 		passwordTracker.setPrimaryKey(passwordTrackerId);
 
+		passwordTracker.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return passwordTracker;
 	}
 
@@ -825,6 +828,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		passwordTrackerImpl.setUserId(passwordTracker.getUserId());
 		passwordTrackerImpl.setCreateDate(passwordTracker.getCreateDate());
 		passwordTrackerImpl.setPassword(passwordTracker.getPassword());
+		passwordTrackerImpl.setCompanyId(passwordTracker.getCompanyId());
 
 		return passwordTrackerImpl;
 	}
@@ -1206,6 +1210,8 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_PASSWORDTRACKER = "SELECT passwordTracker FROM PasswordTracker passwordTracker";
 	private static final String _SQL_SELECT_PASSWORDTRACKER_WHERE_PKS_IN = "SELECT passwordTracker FROM PasswordTracker passwordTracker WHERE passwordTrackerId IN (";
 	private static final String _SQL_SELECT_PASSWORDTRACKER_WHERE = "SELECT passwordTracker FROM PasswordTracker passwordTracker WHERE ";

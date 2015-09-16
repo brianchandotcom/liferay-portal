@@ -55,6 +55,7 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 		attributes.put("userId", getUserId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -84,6 +85,12 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 		if (roleId != null) {
 			setRoleId(roleId);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -94,6 +101,16 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	@Override
 	public int compareTo(com.liferay.portal.model.UserGroupRole userGroupRole) {
 		return _userGroupRole.compareTo(userGroupRole);
+	}
+
+	/**
+	* Returns the company ID of this user group role.
+	*
+	* @return the company ID of this user group role
+	*/
+	@Override
+	public long getCompanyId() {
+		return _userGroupRole.getCompanyId();
 	}
 
 	@Override
@@ -212,6 +229,16 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_userGroupRole.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this user group role.
+	*
+	* @param companyId the company ID of this user group role
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_userGroupRole.setCompanyId(companyId);
 	}
 
 	@Override

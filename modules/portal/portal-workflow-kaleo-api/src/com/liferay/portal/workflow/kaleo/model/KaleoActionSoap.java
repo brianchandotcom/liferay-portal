@@ -35,7 +35,6 @@ public class KaleoActionSoap implements Serializable {
 
 		soapModel.setKaleoActionId(model.getKaleoActionId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -51,6 +50,7 @@ public class KaleoActionSoap implements Serializable {
 		soapModel.setScriptLanguage(model.getScriptLanguage());
 		soapModel.setScriptRequiredContexts(model.getScriptRequiredContexts());
 		soapModel.setPriority(model.getPriority());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -117,14 +117,6 @@ public class KaleoActionSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -247,9 +239,16 @@ public class KaleoActionSoap implements Serializable {
 		_priority = priority;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _kaleoActionId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -265,4 +264,5 @@ public class KaleoActionSoap implements Serializable {
 	private String _scriptLanguage;
 	private String _scriptRequiredContexts;
 	private int _priority;
+	private long _companyId;
 }

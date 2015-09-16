@@ -58,7 +58,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		attributes.put("pageId", getPageId());
 		attributes.put("resourcePrimKey", getResourcePrimKey());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -78,6 +77,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -106,12 +106,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -226,6 +220,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

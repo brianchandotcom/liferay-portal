@@ -54,7 +54,6 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("microblogsEntryId", getMicroblogsEntryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -65,6 +64,7 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 		attributes.put("type", getType());
 		attributes.put("parentMicroblogsEntryId", getParentMicroblogsEntryId());
 		attributes.put("socialRelationType", getSocialRelationType());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -75,12 +75,6 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 
 		if (microblogsEntryId != null) {
 			setMicroblogsEntryId(microblogsEntryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -143,6 +137,12 @@ public class MicroblogsEntryWrapper implements MicroblogsEntry,
 
 		if (socialRelationType != null) {
 			setSocialRelationType(socialRelationType);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

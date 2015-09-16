@@ -35,11 +35,11 @@ public class JournalContentSearchSoap implements Serializable {
 
 		soapModel.setContentSearchId(model.getContentSearchId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setPrivateLayout(model.getPrivateLayout());
 		soapModel.setLayoutId(model.getLayoutId());
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setArticleId(model.getArticleId());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -111,14 +111,6 @@ public class JournalContentSearchSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public boolean getPrivateLayout() {
 		return _privateLayout;
 	}
@@ -155,11 +147,19 @@ public class JournalContentSearchSoap implements Serializable {
 		_articleId = articleId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _contentSearchId;
 	private long _groupId;
-	private long _companyId;
 	private boolean _privateLayout;
 	private long _layoutId;
 	private String _portletId;
 	private String _articleId;
+	private long _companyId;
 }

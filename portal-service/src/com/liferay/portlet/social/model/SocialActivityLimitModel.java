@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,7 +42,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface SocialActivityLimitModel extends AttachedModel,
-	BaseModel<SocialActivityLimit> {
+	BaseModel<SocialActivityLimit>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -89,20 +90,6 @@ public interface SocialActivityLimitModel extends AttachedModel,
 	 * @param groupId the group ID of this social activity limit
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this social activity limit.
-	 *
-	 * @return the company ID of this social activity limit
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this social activity limit.
-	 *
-	 * @param companyId the company ID of this social activity limit
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this social activity limit.
@@ -217,6 +204,22 @@ public interface SocialActivityLimitModel extends AttachedModel,
 	 * @param value the value of this social activity limit
 	 */
 	public void setValue(String value);
+
+	/**
+	 * Returns the company ID of this social activity limit.
+	 *
+	 * @return the company ID of this social activity limit
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this social activity limit.
+	 *
+	 * @param companyId the company ID of this social activity limit
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

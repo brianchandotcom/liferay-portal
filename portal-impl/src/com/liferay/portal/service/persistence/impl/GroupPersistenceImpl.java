@@ -1415,6 +1415,217 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "group_.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(group_.uuid IS NULL OR group_.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "group_.companyId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_LIVEGROUPID = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByLiveGroupId",
+			new String[] { Long.class.getName() },
+			GroupModelImpl.LIVEGROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_LIVEGROUPID = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLiveGroupId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns the group where liveGroupId = &#63; or throws a {@link NoSuchGroupException} if it could not be found.
+	 *
+	 * @param liveGroupId the live group ID
+	 * @return the matching group
+	 * @throws NoSuchGroupException if a matching group could not be found
+	 */
+	@Override
+	public Group findByLiveGroupId(long liveGroupId)
+		throws NoSuchGroupException {
+		Group group = fetchByLiveGroupId(liveGroupId);
+
+		if (group == null) {
+			StringBundler msg = new StringBundler(4);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("liveGroupId=");
+			msg.append(liveGroupId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchGroupException(msg.toString());
+		}
+
+		return group;
+	}
+
+	/**
+	 * Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param liveGroupId the live group ID
+	 * @return the matching group, or <code>null</code> if a matching group could not be found
+	 */
+	@Override
+	public Group fetchByLiveGroupId(long liveGroupId) {
+		return fetchByLiveGroupId(liveGroupId, true);
+	}
+
+	/**
+	 * Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param liveGroupId the live group ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching group, or <code>null</code> if a matching group could not be found
+	 */
+	@Override
+	public Group fetchByLiveGroupId(long liveGroupId, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { liveGroupId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
+					finderArgs, this);
+		}
+
+		if (result instanceof Group) {
+			Group group = (Group)result;
+
+			if ((liveGroupId != group.getLiveGroupId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_SELECT_GROUP__WHERE);
+
+			query.append(_FINDER_COLUMN_LIVEGROUPID_LIVEGROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(liveGroupId);
+
+				List<Group> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
+						finderArgs, list);
+				}
+				else {
+					if ((list.size() > 1) && _log.isWarnEnabled()) {
+						_log.warn(
+							"GroupPersistenceImpl.fetchByLiveGroupId(long, boolean) with parameters (" +
+							StringUtil.merge(finderArgs) +
+							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+					}
+
+					Group group = list.get(0);
+
+					result = group;
+
+					cacheResult(group);
+
+					if ((group.getLiveGroupId() != liveGroupId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
+							finderArgs, group);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (Group)result;
+		}
+	}
+
+	/**
+	 * Removes the group where liveGroupId = &#63; from the database.
+	 *
+	 * @param liveGroupId the live group ID
+	 * @return the group that was removed
+	 */
+	@Override
+	public Group removeByLiveGroupId(long liveGroupId)
+		throws NoSuchGroupException {
+		Group group = findByLiveGroupId(liveGroupId);
+
+		return remove(group);
+	}
+
+	/**
+	 * Returns the number of groups where liveGroupId = &#63;.
+	 *
+	 * @param liveGroupId the live group ID
+	 * @return the number of matching groups
+	 */
+	@Override
+	public int countByLiveGroupId(long liveGroupId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_LIVEGROUPID;
+
+		Object[] finderArgs = new Object[] { liveGroupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_GROUP__WHERE);
+
+			query.append(_FINDER_COLUMN_LIVEGROUPID_LIVEGROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(liveGroupId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_LIVEGROUPID_LIVEGROUPID_2 = "group_.liveGroupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
 		new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
@@ -1890,91 +2101,132 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	}
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "group_.companyId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_LIVEGROUPID = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_T_A = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByLiveGroupId",
-			new String[] { Long.class.getName() },
-			GroupModelImpl.LIVEGROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_LIVEGROUPID = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_A",
+			new String[] {
+				Integer.class.getName(), Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
+			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_A",
+			new String[] { Integer.class.getName(), Boolean.class.getName() },
+			GroupModelImpl.TYPE_COLUMN_BITMASK |
+			GroupModelImpl.ACTIVE_COLUMN_BITMASK |
+			GroupModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_T_A = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByLiveGroupId",
-			new String[] { Long.class.getName() });
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_A",
+			new String[] { Integer.class.getName(), Boolean.class.getName() });
 
 	/**
-	 * Returns the group where liveGroupId = &#63; or throws a {@link NoSuchGroupException} if it could not be found.
+	 * Returns all the groups where type = &#63; and active = &#63;.
 	 *
-	 * @param liveGroupId the live group ID
-	 * @return the matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
+	 * @param type the type
+	 * @param active the active
+	 * @return the matching groups
 	 */
 	@Override
-	public Group findByLiveGroupId(long liveGroupId)
-		throws NoSuchGroupException {
-		Group group = fetchByLiveGroupId(liveGroupId);
-
-		if (group == null) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("liveGroupId=");
-			msg.append(liveGroupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchGroupException(msg.toString());
-		}
-
-		return group;
+	public List<Group> findByT_A(int type, boolean active) {
+		return findByT_A(type, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	/**
-	 * Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the groups where type = &#63; and active = &#63;.
 	 *
-	 * @param liveGroupId the live group ID
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param type the type
+	 * @param active the active
+	 * @param start the lower bound of the range of groups
+	 * @param end the upper bound of the range of groups (not inclusive)
+	 * @return the range of matching groups
 	 */
 	@Override
-	public Group fetchByLiveGroupId(long liveGroupId) {
-		return fetchByLiveGroupId(liveGroupId, true);
+	public List<Group> findByT_A(int type, boolean active, int start, int end) {
+		return findByT_A(type, active, start, end, null);
 	}
 
 	/**
-	 * Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the groups where type = &#63; and active = &#63;.
 	 *
-	 * @param liveGroupId the live group ID
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param type the type
+	 * @param active the active
+	 * @param start the lower bound of the range of groups
+	 * @param end the upper bound of the range of groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching groups
 	 */
 	@Override
-	public Group fetchByLiveGroupId(long liveGroupId, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { liveGroupId };
+	public List<Group> findByT_A(int type, boolean active, int start, int end,
+		OrderByComparator<Group> orderByComparator) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
 
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
-					finderArgs, this);
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A;
+			finderArgs = new Object[] { type, active };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_T_A;
+			finderArgs = new Object[] {
+					type, active,
+					
+					start, end, orderByComparator
+				};
 		}
 
-		if (result instanceof Group) {
-			Group group = (Group)result;
+		List<Group> list = (List<Group>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
 
-			if ((liveGroupId != group.getLiveGroupId())) {
-				result = null;
+		if ((list != null) && !list.isEmpty()) {
+			for (Group group : list) {
+				if ((type != group.getType()) || (active != group.getActive())) {
+					list = null;
+
+					break;
+				}
 			}
 		}
 
-		if (result == null) {
-			StringBundler query = new StringBundler(3);
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
 
 			query.append(_SQL_SELECT_GROUP__WHERE);
 
-			query.append(_FINDER_COLUMN_LIVEGROUPID_LIVEGROUPID_2);
+			query.append(_FINDER_COLUMN_T_A_TYPE_2);
+
+			query.append(_FINDER_COLUMN_T_A_ACTIVE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(GroupModelImpl.ORDER_BY_JPQL);
+			}
 
 			String sql = query.toString();
 
@@ -1987,37 +2239,29 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(liveGroupId);
+				qPos.add(type);
 
-				List<Group> list = q.list();
+				qPos.add(active);
 
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
-						finderArgs, list);
+				if (!pagination) {
+					list = (List<Group>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
 				}
 				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"GroupPersistenceImpl.fetchByLiveGroupId(long, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-					}
-
-					Group group = list.get(0);
-
-					result = group;
-
-					cacheResult(group);
-
-					if ((group.getLiveGroupId() != liveGroupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
-							finderArgs, group);
-					}
+					list = (List<Group>)QueryUtil.list(q, getDialect(), start,
+							end);
 				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_LIVEGROUPID,
-					finderArgs);
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2026,49 +2270,310 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			}
 		}
 
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Group)result;
-		}
+		return list;
 	}
 
 	/**
-	 * Removes the group where liveGroupId = &#63; from the database.
+	 * Returns the first group in the ordered set where type = &#63; and active = &#63;.
 	 *
-	 * @param liveGroupId the live group ID
-	 * @return the group that was removed
+	 * @param type the type
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching group
+	 * @throws NoSuchGroupException if a matching group could not be found
 	 */
 	@Override
-	public Group removeByLiveGroupId(long liveGroupId)
-		throws NoSuchGroupException {
-		Group group = findByLiveGroupId(liveGroupId);
+	public Group findByT_A_First(int type, boolean active,
+		OrderByComparator<Group> orderByComparator) throws NoSuchGroupException {
+		Group group = fetchByT_A_First(type, active, orderByComparator);
 
-		return remove(group);
+		if (group != null) {
+			return group;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("type=");
+		msg.append(type);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchGroupException(msg.toString());
 	}
 
 	/**
-	 * Returns the number of groups where liveGroupId = &#63;.
+	 * Returns the first group in the ordered set where type = &#63; and active = &#63;.
 	 *
-	 * @param liveGroupId the live group ID
+	 * @param type the type
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching group, or <code>null</code> if a matching group could not be found
+	 */
+	@Override
+	public Group fetchByT_A_First(int type, boolean active,
+		OrderByComparator<Group> orderByComparator) {
+		List<Group> list = findByT_A(type, active, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last group in the ordered set where type = &#63; and active = &#63;.
+	 *
+	 * @param type the type
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching group
+	 * @throws NoSuchGroupException if a matching group could not be found
+	 */
+	@Override
+	public Group findByT_A_Last(int type, boolean active,
+		OrderByComparator<Group> orderByComparator) throws NoSuchGroupException {
+		Group group = fetchByT_A_Last(type, active, orderByComparator);
+
+		if (group != null) {
+			return group;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("type=");
+		msg.append(type);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchGroupException(msg.toString());
+	}
+
+	/**
+	 * Returns the last group in the ordered set where type = &#63; and active = &#63;.
+	 *
+	 * @param type the type
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching group, or <code>null</code> if a matching group could not be found
+	 */
+	@Override
+	public Group fetchByT_A_Last(int type, boolean active,
+		OrderByComparator<Group> orderByComparator) {
+		int count = countByT_A(type, active);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Group> list = findByT_A(type, active, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the groups before and after the current group in the ordered set where type = &#63; and active = &#63;.
+	 *
+	 * @param groupId the primary key of the current group
+	 * @param type the type
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next group
+	 * @throws NoSuchGroupException if a group with the primary key could not be found
+	 */
+	@Override
+	public Group[] findByT_A_PrevAndNext(long groupId, int type,
+		boolean active, OrderByComparator<Group> orderByComparator)
+		throws NoSuchGroupException {
+		Group group = findByPrimaryKey(groupId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Group[] array = new GroupImpl[3];
+
+			array[0] = getByT_A_PrevAndNext(session, group, type, active,
+					orderByComparator, true);
+
+			array[1] = group;
+
+			array[2] = getByT_A_PrevAndNext(session, group, type, active,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected Group getByT_A_PrevAndNext(Session session, Group group,
+		int type, boolean active, OrderByComparator<Group> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_GROUP__WHERE);
+
+		query.append(_FINDER_COLUMN_T_A_TYPE_2);
+
+		query.append(_FINDER_COLUMN_T_A_ACTIVE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(GroupModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(type);
+
+		qPos.add(active);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(group);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<Group> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the groups where type = &#63; and active = &#63; from the database.
+	 *
+	 * @param type the type
+	 * @param active the active
+	 */
+	@Override
+	public void removeByT_A(int type, boolean active) {
+		for (Group group : findByT_A(type, active, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(group);
+		}
+	}
+
+	/**
+	 * Returns the number of groups where type = &#63; and active = &#63;.
+	 *
+	 * @param type the type
+	 * @param active the active
 	 * @return the number of matching groups
 	 */
 	@Override
-	public int countByLiveGroupId(long liveGroupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_LIVEGROUPID;
+	public int countByT_A(int type, boolean active) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_T_A;
 
-		Object[] finderArgs = new Object[] { liveGroupId };
+		Object[] finderArgs = new Object[] { type, active };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_GROUP__WHERE);
 
-			query.append(_FINDER_COLUMN_LIVEGROUPID_LIVEGROUPID_2);
+			query.append(_FINDER_COLUMN_T_A_TYPE_2);
+
+			query.append(_FINDER_COLUMN_T_A_ACTIVE_2);
 
 			String sql = query.toString();
 
@@ -2081,7 +2586,9 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(liveGroupId);
+				qPos.add(type);
+
+				qPos.add(active);
 
 				count = (Long)q.uniqueResult();
 
@@ -2100,7 +2607,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_LIVEGROUPID_LIVEGROUPID_2 = "group_.liveGroupId = ?";
+	private static final String _FINDER_COLUMN_T_A_TYPE_2 = "group_.type = ? AND ";
+	private static final String _FINDER_COLUMN_T_A_ACTIVE_2 = "group_.active = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
@@ -4147,514 +4655,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "group_.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_S_SITE_2 = "group_.site = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_T_A = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_A",
-			new String[] {
-				Integer.class.getName(), Boolean.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_A",
-			new String[] { Integer.class.getName(), Boolean.class.getName() },
-			GroupModelImpl.TYPE_COLUMN_BITMASK |
-			GroupModelImpl.ACTIVE_COLUMN_BITMASK |
-			GroupModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_T_A = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
-			GroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_A",
-			new String[] { Integer.class.getName(), Boolean.class.getName() });
-
-	/**
-	 * Returns all the groups where type = &#63; and active = &#63;.
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @return the matching groups
-	 */
-	@Override
-	public List<Group> findByT_A(int type, boolean active) {
-		return findByT_A(type, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the groups where type = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @return the range of matching groups
-	 */
-	@Override
-	public List<Group> findByT_A(int type, boolean active, int start, int end) {
-		return findByT_A(type, active, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the groups where type = &#63; and active = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @param start the lower bound of the range of groups
-	 * @param end the upper bound of the range of groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching groups
-	 */
-	@Override
-	public List<Group> findByT_A(int type, boolean active, int start, int end,
-		OrderByComparator<Group> orderByComparator) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A;
-			finderArgs = new Object[] { type, active };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_T_A;
-			finderArgs = new Object[] {
-					type, active,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<Group> list = (List<Group>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (Group group : list) {
-				if ((type != group.getType()) || (active != group.getActive())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_GROUP__WHERE);
-
-			query.append(_FINDER_COLUMN_T_A_TYPE_2);
-
-			query.append(_FINDER_COLUMN_T_A_ACTIVE_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(GroupModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(type);
-
-				qPos.add(active);
-
-				if (!pagination) {
-					list = (List<Group>)QueryUtil.list(q, getDialect(), start,
-							end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Group>)QueryUtil.list(q, getDialect(), start,
-							end);
-				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first group in the ordered set where type = &#63; and active = &#63;.
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	@Override
-	public Group findByT_A_First(int type, boolean active,
-		OrderByComparator<Group> orderByComparator) throws NoSuchGroupException {
-		Group group = fetchByT_A_First(type, active, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("type=");
-		msg.append(type);
-
-		msg.append(", active=");
-		msg.append(active);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchGroupException(msg.toString());
-	}
-
-	/**
-	 * Returns the first group in the ordered set where type = &#63; and active = &#63;.
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching group, or <code>null</code> if a matching group could not be found
-	 */
-	@Override
-	public Group fetchByT_A_First(int type, boolean active,
-		OrderByComparator<Group> orderByComparator) {
-		List<Group> list = findByT_A(type, active, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last group in the ordered set where type = &#63; and active = &#63;.
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
-	 */
-	@Override
-	public Group findByT_A_Last(int type, boolean active,
-		OrderByComparator<Group> orderByComparator) throws NoSuchGroupException {
-		Group group = fetchByT_A_Last(type, active, orderByComparator);
-
-		if (group != null) {
-			return group;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("type=");
-		msg.append(type);
-
-		msg.append(", active=");
-		msg.append(active);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchGroupException(msg.toString());
-	}
-
-	/**
-	 * Returns the last group in the ordered set where type = &#63; and active = &#63;.
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching group, or <code>null</code> if a matching group could not be found
-	 */
-	@Override
-	public Group fetchByT_A_Last(int type, boolean active,
-		OrderByComparator<Group> orderByComparator) {
-		int count = countByT_A(type, active);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<Group> list = findByT_A(type, active, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the groups before and after the current group in the ordered set where type = &#63; and active = &#63;.
-	 *
-	 * @param groupId the primary key of the current group
-	 * @param type the type
-	 * @param active the active
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next group
-	 * @throws NoSuchGroupException if a group with the primary key could not be found
-	 */
-	@Override
-	public Group[] findByT_A_PrevAndNext(long groupId, int type,
-		boolean active, OrderByComparator<Group> orderByComparator)
-		throws NoSuchGroupException {
-		Group group = findByPrimaryKey(groupId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			Group[] array = new GroupImpl[3];
-
-			array[0] = getByT_A_PrevAndNext(session, group, type, active,
-					orderByComparator, true);
-
-			array[1] = group;
-
-			array[2] = getByT_A_PrevAndNext(session, group, type, active,
-					orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected Group getByT_A_PrevAndNext(Session session, Group group,
-		int type, boolean active, OrderByComparator<Group> orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_GROUP__WHERE);
-
-		query.append(_FINDER_COLUMN_T_A_TYPE_2);
-
-		query.append(_FINDER_COLUMN_T_A_ACTIVE_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(GroupModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(type);
-
-		qPos.add(active);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(group);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<Group> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the groups where type = &#63; and active = &#63; from the database.
-	 *
-	 * @param type the type
-	 * @param active the active
-	 */
-	@Override
-	public void removeByT_A(int type, boolean active) {
-		for (Group group : findByT_A(type, active, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
-			remove(group);
-		}
-	}
-
-	/**
-	 * Returns the number of groups where type = &#63; and active = &#63;.
-	 *
-	 * @param type the type
-	 * @param active the active
-	 * @return the number of matching groups
-	 */
-	@Override
-	public int countByT_A(int type, boolean active) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_T_A;
-
-		Object[] finderArgs = new Object[] { type, active };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_GROUP__WHERE);
-
-			query.append(_FINDER_COLUMN_T_A_TYPE_2);
-
-			query.append(_FINDER_COLUMN_T_A_ACTIVE_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(type);
-
-				qPos.add(active);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_T_A_TYPE_2 = "group_.type = ? AND ";
-	private static final String _FINDER_COLUMN_T_A_ACTIVE_2 = "group_.active = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_P = new FinderPath(GroupModelImpl.ENTITY_CACHE_ENABLED,
 			GroupModelImpl.FINDER_CACHE_ENABLED, GroupImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_P",
@@ -8008,6 +8008,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 		group.setUuid(uuid);
 
+		group.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return group;
 	}
 
@@ -8198,6 +8200,26 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 			}
 
 			if ((groupModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						groupModelImpl.getOriginalType(),
+						groupModelImpl.getOriginalActive()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A,
+					args);
+
+				args = new Object[] {
+						groupModelImpl.getType(), groupModelImpl.getActive()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A,
+					args);
+			}
+
+			if ((groupModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						groupModelImpl.getOriginalCompanyId(),
@@ -8256,26 +8278,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_S, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_S,
-					args);
-			}
-
-			if ((groupModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						groupModelImpl.getOriginalType(),
-						groupModelImpl.getOriginalActive()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A,
-					args);
-
-				args = new Object[] {
-						groupModelImpl.getType(), groupModelImpl.getActive()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_A,
 					args);
 			}
 
@@ -8375,7 +8377,6 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		groupImpl.setMvccVersion(group.getMvccVersion());
 		groupImpl.setUuid(group.getUuid());
 		groupImpl.setGroupId(group.getGroupId());
-		groupImpl.setCompanyId(group.getCompanyId());
 		groupImpl.setCreatorUserId(group.getCreatorUserId());
 		groupImpl.setClassNameId(group.getClassNameId());
 		groupImpl.setClassPK(group.getClassPK());
@@ -8394,6 +8395,7 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		groupImpl.setRemoteStagingGroupCount(group.getRemoteStagingGroupCount());
 		groupImpl.setInheritContent(group.isInheritContent());
 		groupImpl.setActive(group.isActive());
+		groupImpl.setCompanyId(group.getCompanyId());
 
 		return groupImpl;
 	}
@@ -9828,16 +9830,20 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	 */
 	public void afterPropertiesSet() {
 		groupToOrganizationTableMapper = TableMapperFactory.getTableMapper("Groups_Orgs",
-				"groupId", "organizationId", this, organizationPersistence);
+				"groupId", "organizationId", this, organizationPersistence,
+				serviceCompanyProvider);
 
 		groupToRoleTableMapper = TableMapperFactory.getTableMapper("Groups_Roles",
-				"groupId", "roleId", this, rolePersistence);
+				"groupId", "roleId", this, rolePersistence,
+				serviceCompanyProvider);
 
 		groupToUserGroupTableMapper = TableMapperFactory.getTableMapper("Groups_UserGroups",
-				"groupId", "userGroupId", this, userGroupPersistence);
+				"groupId", "userGroupId", this, userGroupPersistence,
+				serviceCompanyProvider);
 
 		groupToUserTableMapper = TableMapperFactory.getTableMapper("Users_Groups",
-				"groupId", "userId", this, userPersistence);
+				"groupId", "userId", this, userPersistence,
+				serviceCompanyProvider);
 	}
 
 	public void destroy() {
@@ -9864,6 +9870,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	protected TableMapper<Group, com.liferay.portal.model.User> groupToUserTableMapper;
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_GROUP_ = "SELECT group_ FROM Group group_";
 	private static final String _SQL_SELECT_GROUP__WHERE_PKS_IN = "SELECT group_ FROM Group group_ WHERE groupId IN (";
 	private static final String _SQL_SELECT_GROUP__WHERE = "SELECT group_ FROM Group group_ WHERE ";

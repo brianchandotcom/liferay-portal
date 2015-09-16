@@ -36,7 +36,6 @@ public class KaleoTaskInstanceTokenSoap implements Serializable {
 
 		soapModel.setKaleoTaskInstanceTokenId(model.getKaleoTaskInstanceTokenId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -53,6 +52,7 @@ public class KaleoTaskInstanceTokenSoap implements Serializable {
 		soapModel.setCompletionDate(model.getCompletionDate());
 		soapModel.setDueDate(model.getDueDate());
 		soapModel.setWorkflowContext(model.getWorkflowContext());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -122,14 +122,6 @@ public class KaleoTaskInstanceTokenSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -264,9 +256,16 @@ public class KaleoTaskInstanceTokenSoap implements Serializable {
 		_workflowContext = workflowContext;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _kaleoTaskInstanceTokenId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -283,4 +282,5 @@ public class KaleoTaskInstanceTokenSoap implements Serializable {
 	private Date _completionDate;
 	private Date _dueDate;
 	private String _workflowContext;
+	private long _companyId;
 }

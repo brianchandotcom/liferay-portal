@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
+public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -92,22 +94,6 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this kaleo timer.
-	 *
-	 * @return the company ID of this kaleo timer
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this kaleo timer.
-	 *
-	 * @param companyId the company ID of this kaleo timer
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this kaleo timer.
@@ -341,6 +327,22 @@ public interface KaleoTimerModel extends BaseModel<KaleoTimer>, GroupedModel {
 	 * @param recurrenceScale the recurrence scale of this kaleo timer
 	 */
 	public void setRecurrenceScale(String recurrenceScale);
+
+	/**
+	 * Returns the company ID of this kaleo timer.
+	 *
+	 * @return the company ID of this kaleo timer
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this kaleo timer.
+	 *
+	 * @param companyId the company ID of this kaleo timer
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -64,7 +64,7 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{articleImageId=");
 		sb.append(articleImageId);
@@ -82,6 +82,8 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 		sb.append(languageId);
 		sb.append(", tempImage=");
 		sb.append(tempImage);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -125,6 +127,7 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 		}
 
 		journalArticleImageImpl.setTempImage(tempImage);
+		journalArticleImageImpl.setCompanyId(companyId);
 
 		journalArticleImageImpl.resetOriginalValues();
 
@@ -141,6 +144,7 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 		elName = objectInput.readUTF();
 		languageId = objectInput.readUTF();
 		tempImage = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -180,6 +184,7 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 		}
 
 		objectOutput.writeBoolean(tempImage);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long articleImageId;
@@ -190,4 +195,5 @@ public class JournalArticleImageCacheModel implements CacheModel<JournalArticleI
 	public String elName;
 	public String languageId;
 	public boolean tempImage;
+	public long companyId;
 }

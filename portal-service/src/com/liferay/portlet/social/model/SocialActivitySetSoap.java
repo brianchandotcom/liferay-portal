@@ -34,7 +34,6 @@ public class SocialActivitySetSoap implements Serializable {
 
 		soapModel.setActivitySetId(model.getActivitySetId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
@@ -43,6 +42,7 @@ public class SocialActivitySetSoap implements Serializable {
 		soapModel.setType(model.getType());
 		soapModel.setExtraData(model.getExtraData());
 		soapModel.setActivityCount(model.getActivityCount());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -114,14 +114,6 @@ public class SocialActivitySetSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -186,9 +178,16 @@ public class SocialActivitySetSoap implements Serializable {
 		_activityCount = activityCount;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _activitySetId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private long _createDate;
 	private long _modifiedDate;
@@ -197,4 +196,5 @@ public class SocialActivitySetSoap implements Serializable {
 	private int _type;
 	private String _extraData;
 	private int _activityCount;
+	private long _companyId;
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -47,7 +48,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface CalendarModel extends BaseModel<Calendar>, LocalizedModel,
-	StagedGroupedModel {
+	PartitionableModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -114,22 +115,6 @@ public interface CalendarModel extends BaseModel<Calendar>, LocalizedModel,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this calendar.
-	 *
-	 * @return the company ID of this calendar
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this calendar.
-	 *
-	 * @param companyId the company ID of this calendar
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this calendar.
@@ -547,6 +532,22 @@ public interface CalendarModel extends BaseModel<Calendar>, LocalizedModel,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this calendar.
+	 *
+	 * @return the company ID of this calendar
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this calendar.
+	 *
+	 * @param companyId the company ID of this calendar
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

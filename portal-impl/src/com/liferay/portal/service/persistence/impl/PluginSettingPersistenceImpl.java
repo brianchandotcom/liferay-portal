@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchPluginSettingException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1041,6 +1042,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		pluginSetting.setNew(true);
 		pluginSetting.setPrimaryKey(pluginSettingId);
 
+		pluginSetting.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return pluginSetting;
 	}
 
@@ -1209,11 +1212,11 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 
 		pluginSettingImpl.setMvccVersion(pluginSetting.getMvccVersion());
 		pluginSettingImpl.setPluginSettingId(pluginSetting.getPluginSettingId());
-		pluginSettingImpl.setCompanyId(pluginSetting.getCompanyId());
 		pluginSettingImpl.setPluginId(pluginSetting.getPluginId());
 		pluginSettingImpl.setPluginType(pluginSetting.getPluginType());
 		pluginSettingImpl.setRoles(pluginSetting.getRoles());
 		pluginSettingImpl.setActive(pluginSetting.isActive());
+		pluginSettingImpl.setCompanyId(pluginSetting.getCompanyId());
 
 		return pluginSettingImpl;
 	}
@@ -1594,6 +1597,8 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_PLUGINSETTING = "SELECT pluginSetting FROM PluginSetting pluginSetting";
 	private static final String _SQL_SELECT_PLUGINSETTING_WHERE_PKS_IN = "SELECT pluginSetting FROM PluginSetting pluginSetting WHERE pluginSettingId IN (";
 	private static final String _SQL_SELECT_PLUGINSETTING_WHERE = "SELECT pluginSetting FROM PluginSetting pluginSetting WHERE ";

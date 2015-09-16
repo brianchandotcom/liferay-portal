@@ -53,7 +53,6 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ticketId", getTicketId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -61,6 +60,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 		attributes.put("type", getType());
 		attributes.put("extraInfo", getExtraInfo());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -77,12 +77,6 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 
 		if (ticketId != null) {
 			setTicketId(ticketId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -125,6 +119,12 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

@@ -35,7 +35,6 @@ public class KaleoConditionSoap implements Serializable {
 
 		soapModel.setKaleoConditionId(model.getKaleoConditionId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -45,6 +44,7 @@ public class KaleoConditionSoap implements Serializable {
 		soapModel.setScript(model.getScript());
 		soapModel.setScriptLanguage(model.getScriptLanguage());
 		soapModel.setScriptRequiredContexts(model.getScriptRequiredContexts());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -111,14 +111,6 @@ public class KaleoConditionSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -193,9 +185,16 @@ public class KaleoConditionSoap implements Serializable {
 		_scriptRequiredContexts = scriptRequiredContexts;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _kaleoConditionId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -205,4 +204,5 @@ public class KaleoConditionSoap implements Serializable {
 	private String _script;
 	private String _scriptLanguage;
 	private String _scriptRequiredContexts;
+	private long _companyId;
 }

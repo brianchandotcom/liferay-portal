@@ -56,11 +56,11 @@ public class SocialActivityAchievementWrapper
 
 		attributes.put("activityAchievementId", getActivityAchievementId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("name", getName());
 		attributes.put("firstInGroup", getFirstInGroup());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -78,12 +78,6 @@ public class SocialActivityAchievementWrapper
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -108,6 +102,12 @@ public class SocialActivityAchievementWrapper
 
 		if (firstInGroup != null) {
 			setFirstInGroup(firstInGroup);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

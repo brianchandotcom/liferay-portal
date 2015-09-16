@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ShoppingItemModel extends BaseModel<ShoppingItem>, GroupedModel {
+public interface ShoppingItemModel extends BaseModel<ShoppingItem>, GroupedModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -92,22 +94,6 @@ public interface ShoppingItemModel extends BaseModel<ShoppingItem>, GroupedModel
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this shopping item.
-	 *
-	 * @return the company ID of this shopping item
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this shopping item.
-	 *
-	 * @param companyId the company ID of this shopping item
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this shopping item.
@@ -638,6 +624,22 @@ public interface ShoppingItemModel extends BaseModel<ShoppingItem>, GroupedModel
 	 * @param largeImageURL the large image u r l of this shopping item
 	 */
 	public void setLargeImageURL(String largeImageURL);
+
+	/**
+	 * Returns the company ID of this shopping item.
+	 *
+	 * @return the company ID of this shopping item
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this shopping item.
+	 *
+	 * @param companyId the company ID of this shopping item
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

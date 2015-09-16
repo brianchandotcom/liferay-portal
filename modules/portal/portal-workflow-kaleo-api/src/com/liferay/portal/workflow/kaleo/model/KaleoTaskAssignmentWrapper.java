@@ -55,7 +55,6 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 
 		attributes.put("kaleoTaskAssignmentId", getKaleoTaskAssignmentId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -71,6 +70,7 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 		attributes.put("assigneeScriptLanguage", getAssigneeScriptLanguage());
 		attributes.put("assigneeScriptRequiredContexts",
 			getAssigneeScriptRequiredContexts());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -88,12 +88,6 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -180,6 +174,12 @@ public class KaleoTaskAssignmentWrapper implements KaleoTaskAssignment,
 
 		if (assigneeScriptRequiredContexts != null) {
 			setAssigneeScriptRequiredContexts(assigneeScriptRequiredContexts);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

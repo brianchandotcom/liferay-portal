@@ -121,8 +121,6 @@ public class MBCategoryPersistenceTest {
 
 		newMBCategory.setGroupId(RandomTestUtil.nextLong());
 
-		newMBCategory.setCompanyId(RandomTestUtil.nextLong());
-
 		newMBCategory.setUserId(RandomTestUtil.nextLong());
 
 		newMBCategory.setUserName(RandomTestUtil.randomString());
@@ -155,6 +153,8 @@ public class MBCategoryPersistenceTest {
 
 		newMBCategory.setStatusDate(RandomTestUtil.nextDate());
 
+		newMBCategory.setCompanyId(RandomTestUtil.nextLong());
+
 		_mbCategories.add(_persistence.update(newMBCategory));
 
 		MBCategory existingMBCategory = _persistence.findByPrimaryKey(newMBCategory.getPrimaryKey());
@@ -165,8 +165,6 @@ public class MBCategoryPersistenceTest {
 			newMBCategory.getCategoryId());
 		Assert.assertEquals(existingMBCategory.getGroupId(),
 			newMBCategory.getGroupId());
-		Assert.assertEquals(existingMBCategory.getCompanyId(),
-			newMBCategory.getCompanyId());
 		Assert.assertEquals(existingMBCategory.getUserId(),
 			newMBCategory.getUserId());
 		Assert.assertEquals(existingMBCategory.getUserName(),
@@ -204,6 +202,8 @@ public class MBCategoryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBCategory.getStatusDate()),
 			Time.getShortTimestamp(newMBCategory.getStatusDate()));
+		Assert.assertEquals(existingMBCategory.getCompanyId(),
+			newMBCategory.getCompanyId());
 	}
 
 	@Test
@@ -354,12 +354,12 @@ public class MBCategoryPersistenceTest {
 
 	protected OrderByComparator<MBCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBCategory", "uuid", true,
-			"categoryId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"parentCategoryId", true, "name", true, "description", true,
-			"displayStyle", true, "threadCount", true, "messageCount", true,
-			"lastPostDate", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"categoryId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "parentCategoryId",
+			true, "name", true, "description", true, "displayStyle", true,
+			"threadCount", true, "messageCount", true, "lastPostDate", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true, "companyId", true);
 	}
 
 	@Test
@@ -581,8 +581,6 @@ public class MBCategoryPersistenceTest {
 
 		mbCategory.setGroupId(RandomTestUtil.nextLong());
 
-		mbCategory.setCompanyId(RandomTestUtil.nextLong());
-
 		mbCategory.setUserId(RandomTestUtil.nextLong());
 
 		mbCategory.setUserName(RandomTestUtil.randomString());
@@ -614,6 +612,8 @@ public class MBCategoryPersistenceTest {
 		mbCategory.setStatusByUserName(RandomTestUtil.randomString());
 
 		mbCategory.setStatusDate(RandomTestUtil.nextDate());
+
+		mbCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		_mbCategories.add(_persistence.update(mbCategory));
 

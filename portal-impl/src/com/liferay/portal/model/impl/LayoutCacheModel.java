@@ -89,8 +89,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		sb.append(plid);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -145,6 +143,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		sb.append(sourcePrototypeLayoutUuid);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -165,7 +165,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 
 		layoutImpl.setPlid(plid);
 		layoutImpl.setGroupId(groupId);
-		layoutImpl.setCompanyId(companyId);
 		layoutImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -313,6 +312,8 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 			layoutImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		layoutImpl.setCompanyId(companyId);
+
 		layoutImpl.resetOriginalValues();
 
 		return layoutImpl;
@@ -324,7 +325,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		uuid = objectInput.readUTF();
 		plid = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -352,6 +352,7 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		layoutPrototypeLinkEnabled = objectInput.readBoolean();
 		sourcePrototypeLayoutUuid = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -368,7 +369,6 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 
 		objectOutput.writeLong(plid);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -498,13 +498,13 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long plid;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -532,4 +532,5 @@ public class LayoutCacheModel implements CacheModel<Layout>, Externalizable,
 	public boolean layoutPrototypeLinkEnabled;
 	public String sourcePrototypeLayoutUuid;
 	public long lastPublishDate;
+	public long companyId;
 }

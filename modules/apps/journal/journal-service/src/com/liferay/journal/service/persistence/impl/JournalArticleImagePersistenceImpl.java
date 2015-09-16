@@ -22,6 +22,7 @@ import com.liferay.journal.model.impl.JournalArticleImageImpl;
 import com.liferay.journal.model.impl.JournalArticleImageModelImpl;
 import com.liferay.journal.service.persistence.JournalArticleImagePersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import java.io.Serializable;
 
@@ -2293,6 +2295,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		journalArticleImage.setNew(true);
 		journalArticleImage.setPrimaryKey(articleImageId);
 
+		journalArticleImage.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return journalArticleImage;
 	}
 
@@ -2510,6 +2514,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		journalArticleImageImpl.setElName(journalArticleImage.getElName());
 		journalArticleImageImpl.setLanguageId(journalArticleImage.getLanguageId());
 		journalArticleImageImpl.setTempImage(journalArticleImage.isTempImage());
+		journalArticleImageImpl.setCompanyId(journalArticleImage.getCompanyId());
 
 		return journalArticleImageImpl;
 	}
@@ -2888,6 +2893,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_JOURNALARTICLEIMAGE = "SELECT journalArticleImage FROM JournalArticleImage journalArticleImage";
 	private static final String _SQL_SELECT_JOURNALARTICLEIMAGE_WHERE_PKS_IN = "SELECT journalArticleImage FROM JournalArticleImage journalArticleImage WHERE articleImageId IN (";
 	private static final String _SQL_SELECT_JOURNALARTICLEIMAGE_WHERE = "SELECT journalArticleImage FROM JournalArticleImage journalArticleImage WHERE ";

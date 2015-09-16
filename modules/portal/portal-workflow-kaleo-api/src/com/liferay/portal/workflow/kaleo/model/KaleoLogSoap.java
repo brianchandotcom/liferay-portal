@@ -35,7 +35,6 @@ public class KaleoLogSoap implements Serializable {
 
 		soapModel.setKaleoLogId(model.getKaleoLogId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -63,6 +62,7 @@ public class KaleoLogSoap implements Serializable {
 		soapModel.setEndDate(model.getEndDate());
 		soapModel.setDuration(model.getDuration());
 		soapModel.setWorkflowContext(model.getWorkflowContext());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -129,14 +129,6 @@ public class KaleoLogSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -359,9 +351,16 @@ public class KaleoLogSoap implements Serializable {
 		_workflowContext = workflowContext;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _kaleoLogId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -389,4 +388,5 @@ public class KaleoLogSoap implements Serializable {
 	private Date _endDate;
 	private long _duration;
 	private String _workflowContext;
+	private long _companyId;
 }

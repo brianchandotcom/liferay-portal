@@ -126,8 +126,6 @@ public class MDRActionPersistenceTest {
 
 		newMDRAction.setGroupId(RandomTestUtil.nextLong());
 
-		newMDRAction.setCompanyId(RandomTestUtil.nextLong());
-
 		newMDRAction.setUserId(RandomTestUtil.nextLong());
 
 		newMDRAction.setUserName(RandomTestUtil.randomString());
@@ -152,6 +150,8 @@ public class MDRActionPersistenceTest {
 
 		newMDRAction.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newMDRAction.setCompanyId(RandomTestUtil.nextLong());
+
 		_mdrActions.add(_persistence.update(newMDRAction));
 
 		MDRAction existingMDRAction = _persistence.findByPrimaryKey(newMDRAction.getPrimaryKey());
@@ -161,8 +161,6 @@ public class MDRActionPersistenceTest {
 			newMDRAction.getActionId());
 		Assert.assertEquals(existingMDRAction.getGroupId(),
 			newMDRAction.getGroupId());
-		Assert.assertEquals(existingMDRAction.getCompanyId(),
-			newMDRAction.getCompanyId());
 		Assert.assertEquals(existingMDRAction.getUserId(),
 			newMDRAction.getUserId());
 		Assert.assertEquals(existingMDRAction.getUserName(),
@@ -188,6 +186,8 @@ public class MDRActionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMDRAction.getLastPublishDate()),
 			Time.getShortTimestamp(newMDRAction.getLastPublishDate()));
+		Assert.assertEquals(existingMDRAction.getCompanyId(),
+			newMDRAction.getCompanyId());
 	}
 
 	@Test
@@ -248,11 +248,11 @@ public class MDRActionPersistenceTest {
 
 	protected OrderByComparator<MDRAction> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MDRAction", "uuid", true,
-			"actionId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "ruleGroupInstanceId", true,
-			"name", true, "description", true, "type", true, "lastPublishDate",
-			true);
+			"actionId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId",
+			true, "classPK", true, "ruleGroupInstanceId", true, "name", true,
+			"description", true, "type", true, "lastPublishDate", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -474,8 +474,6 @@ public class MDRActionPersistenceTest {
 
 		mdrAction.setGroupId(RandomTestUtil.nextLong());
 
-		mdrAction.setCompanyId(RandomTestUtil.nextLong());
-
 		mdrAction.setUserId(RandomTestUtil.nextLong());
 
 		mdrAction.setUserName(RandomTestUtil.randomString());
@@ -499,6 +497,8 @@ public class MDRActionPersistenceTest {
 		mdrAction.setTypeSettings(RandomTestUtil.randomString());
 
 		mdrAction.setLastPublishDate(RandomTestUtil.nextDate());
+
+		mdrAction.setCompanyId(RandomTestUtil.nextLong());
 
 		_mdrActions.add(_persistence.update(mdrAction));
 

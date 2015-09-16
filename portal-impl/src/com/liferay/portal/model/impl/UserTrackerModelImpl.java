@@ -65,29 +65,29 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
 			{ "userTrackerId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "sessionId", Types.VARCHAR },
 			{ "remoteAddr", Types.VARCHAR },
 			{ "remoteHost", Types.VARCHAR },
-			{ "userAgent", Types.VARCHAR }
+			{ "userAgent", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userTrackerId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("sessionId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("remoteAddr", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("remoteHost", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("userAgent", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserTracker (mvccVersion LONG default 0,userTrackerId LONG not null primary key,companyId LONG,userId LONG,modifiedDate DATE null,sessionId VARCHAR(200) null,remoteAddr VARCHAR(75) null,remoteHost VARCHAR(75) null,userAgent VARCHAR(200) null)";
+	public static final String TABLE_SQL_CREATE = "create table UserTracker (mvccVersion LONG default 0,userTrackerId LONG not null primary key,userId LONG,modifiedDate DATE null,sessionId VARCHAR(200) null,remoteAddr VARCHAR(75) null,remoteHost VARCHAR(75) null,userAgent VARCHAR(200) null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table UserTracker";
 	public static final String ORDER_BY_JPQL = " ORDER BY userTracker.userTrackerId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserTracker.userTrackerId ASC";
@@ -149,13 +149,13 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("userTrackerId", getUserTrackerId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("sessionId", getSessionId());
 		attributes.put("remoteAddr", getRemoteAddr());
 		attributes.put("remoteHost", getRemoteHost());
 		attributes.put("userAgent", getUserAgent());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -175,12 +175,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 		if (userTrackerId != null) {
 			setUserTrackerId(userTrackerId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -218,6 +212,12 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		if (userAgent != null) {
 			setUserAgent(userAgent);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -238,28 +238,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	@Override
 	public void setUserTrackerId(long userTrackerId) {
 		_userTrackerId = userTrackerId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -380,6 +358,28 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		_userAgent = userAgent;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -413,13 +413,13 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 
 		userTrackerImpl.setMvccVersion(getMvccVersion());
 		userTrackerImpl.setUserTrackerId(getUserTrackerId());
-		userTrackerImpl.setCompanyId(getCompanyId());
 		userTrackerImpl.setUserId(getUserId());
 		userTrackerImpl.setModifiedDate(getModifiedDate());
 		userTrackerImpl.setSessionId(getSessionId());
 		userTrackerImpl.setRemoteAddr(getRemoteAddr());
 		userTrackerImpl.setRemoteHost(getRemoteHost());
 		userTrackerImpl.setUserAgent(getUserAgent());
+		userTrackerImpl.setCompanyId(getCompanyId());
 
 		userTrackerImpl.resetOriginalValues();
 
@@ -482,15 +482,15 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	public void resetOriginalValues() {
 		UserTrackerModelImpl userTrackerModelImpl = this;
 
-		userTrackerModelImpl._originalCompanyId = userTrackerModelImpl._companyId;
-
-		userTrackerModelImpl._setOriginalCompanyId = false;
-
 		userTrackerModelImpl._originalUserId = userTrackerModelImpl._userId;
 
 		userTrackerModelImpl._setOriginalUserId = false;
 
 		userTrackerModelImpl._originalSessionId = userTrackerModelImpl._sessionId;
+
+		userTrackerModelImpl._originalCompanyId = userTrackerModelImpl._companyId;
+
+		userTrackerModelImpl._setOriginalCompanyId = false;
 
 		userTrackerModelImpl._columnBitmask = 0;
 	}
@@ -502,8 +502,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		userTrackerCacheModel.mvccVersion = getMvccVersion();
 
 		userTrackerCacheModel.userTrackerId = getUserTrackerId();
-
-		userTrackerCacheModel.companyId = getCompanyId();
 
 		userTrackerCacheModel.userId = getUserId();
 
@@ -548,6 +546,8 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 			userTrackerCacheModel.userAgent = null;
 		}
 
+		userTrackerCacheModel.companyId = getCompanyId();
+
 		return userTrackerCacheModel;
 	}
 
@@ -559,8 +559,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		sb.append(getMvccVersion());
 		sb.append(", userTrackerId=");
 		sb.append(getUserTrackerId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", modifiedDate=");
@@ -573,6 +571,8 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		sb.append(getRemoteHost());
 		sb.append(", userAgent=");
 		sb.append(getUserAgent());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -593,10 +593,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		sb.append(
 			"<column><column-name>userTrackerId</column-name><column-value><![CDATA[");
 		sb.append(getUserTrackerId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -622,6 +618,10 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 			"<column><column-name>userAgent</column-name><column-value><![CDATA[");
 		sb.append(getUserAgent());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -634,9 +634,6 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 		};
 	private long _mvccVersion;
 	private long _userTrackerId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -646,6 +643,9 @@ public class UserTrackerModelImpl extends BaseModelImpl<UserTracker>
 	private String _remoteAddr;
 	private String _remoteHost;
 	private String _userAgent;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private UserTracker _escapedModel;
 }

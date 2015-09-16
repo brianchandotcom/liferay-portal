@@ -74,7 +74,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "entryId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -88,14 +87,14 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "priority", Types.INTEGER },
-			{ "alert", Types.BOOLEAN }
+			{ "alert", Types.BOOLEAN },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -110,9 +109,10 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("alert", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AnnouncementsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,title VARCHAR(75) null,content TEXT null,url STRING null,type_ VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,priority INTEGER,alert BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table AnnouncementsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,title VARCHAR(75) null,content TEXT null,url STRING null,type_ VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,priority INTEGER,alert BOOLEAN,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table AnnouncementsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY announcementsEntry.priority ASC, announcementsEntry.modifiedDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AnnouncementsEntry.priority ASC, AnnouncementsEntry.modifiedDate ASC";
@@ -152,7 +152,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 		model.setUuid(soapModel.getUuid());
 		model.setEntryId(soapModel.getEntryId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -167,6 +166,7 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setPriority(soapModel.getPriority());
 		model.setAlert(soapModel.getAlert());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -234,7 +234,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 		attributes.put("uuid", getUuid());
 		attributes.put("entryId", getEntryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -249,6 +248,7 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("priority", getPriority());
 		attributes.put("alert", getAlert());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -268,12 +268,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 		if (entryId != null) {
 			setEntryId(entryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -359,6 +353,12 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		if (alert != null) {
 			setAlert(alert);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -394,29 +394,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	@Override
 	public void setEntryId(long entryId) {
 		_entryId = entryId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -697,6 +674,29 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		return _originalAlert;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -730,7 +730,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 		announcementsEntryImpl.setUuid(getUuid());
 		announcementsEntryImpl.setEntryId(getEntryId());
-		announcementsEntryImpl.setCompanyId(getCompanyId());
 		announcementsEntryImpl.setUserId(getUserId());
 		announcementsEntryImpl.setUserName(getUserName());
 		announcementsEntryImpl.setCreateDate(getCreateDate());
@@ -745,6 +744,7 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		announcementsEntryImpl.setExpirationDate(getExpirationDate());
 		announcementsEntryImpl.setPriority(getPriority());
 		announcementsEntryImpl.setAlert(getAlert());
+		announcementsEntryImpl.setCompanyId(getCompanyId());
 
 		announcementsEntryImpl.resetOriginalValues();
 
@@ -822,10 +822,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 		announcementsEntryModelImpl._originalUuid = announcementsEntryModelImpl._uuid;
 
-		announcementsEntryModelImpl._originalCompanyId = announcementsEntryModelImpl._companyId;
-
-		announcementsEntryModelImpl._setOriginalCompanyId = false;
-
 		announcementsEntryModelImpl._originalUserId = announcementsEntryModelImpl._userId;
 
 		announcementsEntryModelImpl._setOriginalUserId = false;
@@ -844,6 +840,10 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 		announcementsEntryModelImpl._setOriginalAlert = false;
 
+		announcementsEntryModelImpl._originalCompanyId = announcementsEntryModelImpl._companyId;
+
+		announcementsEntryModelImpl._setOriginalCompanyId = false;
+
 		announcementsEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -860,8 +860,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		}
 
 		announcementsEntryCacheModel.entryId = getEntryId();
-
-		announcementsEntryCacheModel.companyId = getCompanyId();
 
 		announcementsEntryCacheModel.userId = getUserId();
 
@@ -949,6 +947,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 
 		announcementsEntryCacheModel.alert = getAlert();
 
+		announcementsEntryCacheModel.companyId = getCompanyId();
+
 		return announcementsEntryCacheModel;
 	}
 
@@ -960,8 +960,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		sb.append(getUuid());
 		sb.append(", entryId=");
 		sb.append(getEntryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -990,6 +988,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		sb.append(getPriority());
 		sb.append(", alert=");
 		sb.append(getAlert());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1010,10 +1010,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		sb.append(
 			"<column><column-name>entryId</column-name><column-value><![CDATA[");
 		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1071,6 +1067,10 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 			"<column><column-name>alert</column-name><column-value><![CDATA[");
 		sb.append(getAlert());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1084,9 +1084,6 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -1110,6 +1107,9 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 	private boolean _alert;
 	private boolean _originalAlert;
 	private boolean _setOriginalAlert;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private AnnouncementsEntry _escapedModel;
 }

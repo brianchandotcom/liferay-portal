@@ -58,6 +58,7 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		attributes.put("height", getHeight());
 		attributes.put("width", getWidth());
 		attributes.put("size", getSize());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -105,6 +106,12 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 		if (size != null) {
 			setSize(size);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -115,6 +122,16 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	@Override
 	public int compareTo(com.liferay.portal.model.Image image) {
 		return _image.compareTo(image);
+	}
+
+	/**
+	* Returns the company ID of this image.
+	*
+	* @return the company ID of this image
+	*/
+	@Override
+	public long getCompanyId() {
+		return _image.getCompanyId();
 	}
 
 	@Override
@@ -240,6 +257,16 @@ public class ImageWrapper implements Image, ModelWrapper<Image> {
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_image.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this image.
+	*
+	* @param companyId the company ID of this image
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_image.setCompanyId(companyId);
 	}
 
 	@Override

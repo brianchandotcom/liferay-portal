@@ -53,7 +53,6 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("creatorUserId", getCreatorUserId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -72,6 +71,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		attributes.put("remoteStagingGroupCount", getRemoteStagingGroupCount());
 		attributes.put("inheritContent", getInheritContent());
 		attributes.put("active", getActive());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -94,12 +94,6 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long creatorUserId = (Long)attributes.get("creatorUserId");
@@ -210,6 +204,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

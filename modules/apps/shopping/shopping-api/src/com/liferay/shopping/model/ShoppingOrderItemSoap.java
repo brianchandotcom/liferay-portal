@@ -43,6 +43,7 @@ public class ShoppingOrderItemSoap implements Serializable {
 		soapModel.setPrice(model.getPrice());
 		soapModel.setQuantity(model.getQuantity());
 		soapModel.setShippedDate(model.getShippedDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -178,6 +179,14 @@ public class ShoppingOrderItemSoap implements Serializable {
 		_shippedDate = shippedDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _orderItemId;
 	private long _orderId;
 	private String _itemId;
@@ -188,4 +197,5 @@ public class ShoppingOrderItemSoap implements Serializable {
 	private double _price;
 	private int _quantity;
 	private Date _shippedDate;
+	private long _companyId;
 }

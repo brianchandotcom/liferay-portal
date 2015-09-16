@@ -54,7 +54,6 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("layoutBranchId", getLayoutBranchId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("layoutSetBranchId", getLayoutSetBranchId());
@@ -62,6 +61,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("master", getMaster());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -84,12 +84,6 @@ public class LayoutBranchWrapper implements LayoutBranch,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -132,6 +126,12 @@ public class LayoutBranchWrapper implements LayoutBranch,
 
 		if (master != null) {
 			setMaster(master);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

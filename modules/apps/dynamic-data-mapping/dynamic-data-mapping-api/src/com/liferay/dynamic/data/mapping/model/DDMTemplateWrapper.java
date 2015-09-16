@@ -58,7 +58,6 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		attributes.put("uuid", getUuid());
 		attributes.put("templateId", getTemplateId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("versionUserId", getVersionUserId());
@@ -81,6 +80,7 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -103,12 +103,6 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -241,6 +235,12 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel {
+public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -87,20 +88,6 @@ public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel 
 	 * @param pluginSettingId the plugin setting ID of this plugin setting
 	 */
 	public void setPluginSettingId(long pluginSettingId);
-
-	/**
-	 * Returns the company ID of this plugin setting.
-	 *
-	 * @return the company ID of this plugin setting
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this plugin setting.
-	 *
-	 * @param companyId the company ID of this plugin setting
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the plugin ID of this plugin setting.
@@ -167,6 +154,22 @@ public interface PluginSettingModel extends BaseModel<PluginSetting>, MVCCModel 
 	 * @param active the active of this plugin setting
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the company ID of this plugin setting.
+	 *
+	 * @return the company ID of this plugin setting
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this plugin setting.
+	 *
+	 * @param companyId the company ID of this plugin setting
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

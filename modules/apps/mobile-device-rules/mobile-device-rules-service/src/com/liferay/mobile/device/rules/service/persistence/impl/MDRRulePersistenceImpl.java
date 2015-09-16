@@ -22,6 +22,7 @@ import com.liferay.mobile.device.rules.model.impl.MDRRuleImpl;
 import com.liferay.mobile.device.rules.model.impl.MDRRuleModelImpl;
 import com.liferay.mobile.device.rules.service.persistence.MDRRulePersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -41,6 +42,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
 
 import java.io.Serializable;
 
@@ -2049,6 +2051,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 
 		mdrRule.setUuid(uuid);
 
+		mdrRule.setCompanyId(serviceCompanyProvider.getCompanyId());
+
 		return mdrRule;
 	}
 
@@ -2278,7 +2282,6 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		mdrRuleImpl.setUuid(mdrRule.getUuid());
 		mdrRuleImpl.setRuleId(mdrRule.getRuleId());
 		mdrRuleImpl.setGroupId(mdrRule.getGroupId());
-		mdrRuleImpl.setCompanyId(mdrRule.getCompanyId());
 		mdrRuleImpl.setUserId(mdrRule.getUserId());
 		mdrRuleImpl.setUserName(mdrRule.getUserName());
 		mdrRuleImpl.setCreateDate(mdrRule.getCreateDate());
@@ -2289,6 +2292,7 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		mdrRuleImpl.setType(mdrRule.getType());
 		mdrRuleImpl.setTypeSettings(mdrRule.getTypeSettings());
 		mdrRuleImpl.setLastPublishDate(mdrRule.getLastPublishDate());
+		mdrRuleImpl.setCompanyId(mdrRule.getCompanyId());
 
 		return mdrRuleImpl;
 	}
@@ -2667,6 +2671,8 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = ServiceCompanyProvider.class)
+	protected ServiceCompanyProvider serviceCompanyProvider;
 	private static final String _SQL_SELECT_MDRRULE = "SELECT mdrRule FROM MDRRule mdrRule";
 	private static final String _SQL_SELECT_MDRRULE_WHERE_PKS_IN = "SELECT mdrRule FROM MDRRule mdrRule WHERE ruleId IN (";
 	private static final String _SQL_SELECT_MDRRULE_WHERE = "SELECT mdrRule FROM MDRRule mdrRule WHERE ";

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface MBBanModel extends BaseModel<MBBan>, StagedGroupedModel {
+public interface MBBanModel extends BaseModel<MBBan>, PartitionableModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,22 +111,6 @@ public interface MBBanModel extends BaseModel<MBBan>, StagedGroupedModel {
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this message boards ban.
-	 *
-	 * @return the company ID of this message boards ban
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this message boards ban.
-	 *
-	 * @param companyId the company ID of this message boards ban
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this message boards ban.
@@ -250,6 +236,22 @@ public interface MBBanModel extends BaseModel<MBBan>, StagedGroupedModel {
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this message boards ban.
+	 *
+	 * @return the company ID of this message boards ban
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this message boards ban.
+	 *
+	 * @param companyId the company ID of this message boards ban
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

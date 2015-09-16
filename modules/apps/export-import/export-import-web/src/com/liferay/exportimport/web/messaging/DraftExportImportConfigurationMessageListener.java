@@ -16,6 +16,8 @@ package com.liferay.exportimport.web.messaging;
 
 import com.liferay.exportimport.web.configuration.ExportImportWebConfigurationValues;
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
+import com.liferay.portal.background.task.model.BackgroundTask;
+import com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
@@ -29,6 +31,9 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
@@ -42,6 +47,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Levente Hudák
+ * @author Daniel Kocsis
  */
 @Component(
 	immediate = true,
@@ -91,9 +97,52 @@ public class DraftExportImportConfigurationMessageListener
 		for (ExportImportConfiguration exportImportConfiguration :
 				exportImportConfigurations) {
 
-			ExportImportConfigurationLocalServiceUtil.
-				deleteExportImportConfiguration(exportImportConfiguration);
+			List<BackgroundTask> backgroundTasks = getParentBackgroundTasks(
+				exportImportConfiguration);
+
+			if (ListUtil.isEmpty(backgroundTasks)) {
+				ExportImportConfigurationLocalServiceUtil.
+					deleteExportImportConfiguration(exportImportConfiguration);
+
+				continue;
+			}
+
+			// BackgroundTaskModelListener deletes the linked configuration
+			// automatically
+
+			for (BackgroundTask backgroundTask : backgroundTasks) {
+				BackgroundTaskLocalServiceUtil.deleteBackgroundTask(
+					backgroundTask.getBackgroundTaskId());
+			}
 		}
+	}
+
+	protected List<BackgroundTask> getParentBackgroundTasks(
+			ExportImportConfiguration exportImportConfiguration)
+		throws PortalException {
+
+		DynamicQuery dynamicQuery =
+			BackgroundTaskLocalServiceUtil.dynamicQuery();
+
+		Property property = PropertyFactoryUtil.forName("taskContextMap");
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(StringPool.PERCENT);
+		sb.append(StringPool.QUOTE);
+		sb.append("exportImportConfigurationId");
+		sb.append(StringPool.QUOTE);
+		sb.append(StringPool.COLON);
+		sb.append(exportImportConfiguration.getExportImportConfigurationId());
+		sb.append(StringPool.PERCENT);
+
+		dynamicQuery.add(property.like(sb.toString()));
+
+		property = PropertyFactoryUtil.forName("completed");
+
+		dynamicQuery.add(property.eq(Boolean.TRUE));
+
+		return BackgroundTaskLocalServiceUtil.dynamicQuery(dynamicQuery);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

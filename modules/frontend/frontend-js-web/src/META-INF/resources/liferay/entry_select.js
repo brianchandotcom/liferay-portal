@@ -5,38 +5,38 @@ AUI.add(
 
 		var ATTR_CHECKED = 'checked';
 
-		var CSS_CHECKBOX_SELECTOR = 'input[type=checkbox]';
+		var STR_CHECKBOX_CONTAINER = 'checkBoxContainer';
 
-		var CSS_SELECT_ALL_CHECKBOXES_SELECTOR = '.select-all-checkboxes';
-
-		var CSS_SELECTED_ITEMS_COUNT_CONTAINER_SELECTOR = '.selected-items-count';
+		var STR_CHECKBOXES_SELECTOR = 'checkBoxesSelector';
 
 		var STR_CLICK = 'click';
+
+		var STR_SELECT_ALL_CHECKBOXES_SELECTOR = 'selectAllCheckBoxesSelector';
 
 		var EntrySelect = A.Component.create(
 			{
 				ATTRS: {
-					actionButtonsBar: {
-						validator: Lang.isString
+					secondaryBar: {
+						setter: '_setNode'
 					},
 
-					selectAllCheckBoxes: {
+					selectAllCheckBoxesSelector: {
 						validator: Lang.isString,
-						value: CSS_SELECT_ALL_CHECKBOXES_SELECTOR
+						value: '.select-all-checkboxes'
 					},
 
 					checkBoxContainer: {
-						validator: Lang.isString
+						setter: '_setNode'
 					},
 
-					checkBoxes: {
+					checkBoxesSelector: {
 						validator: Lang.isString,
-						value: CSS_CHECKBOX_SELECTOR
+						value: 'input[type=checkbox]'
 					},
 
-					itemsCountContainerSelector: {
-						validator: Lang.isString,
-						value: CSS_SELECTED_ITEMS_COUNT_CONTAINER_SELECTOR
+					itemsCountContainer: {
+						setter: '_setNodes',
+						value: '.selected-items-count'
 					}
 				},
 
@@ -50,21 +50,7 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						instance._checkBoxContainer = instance.all(instance.get('checkBoxContainer'));
-
-						instance._eventHandles = [];
-
-						instance._itemsCountContainer = instance.all(instance.get('itemsCountContainerSelector'));
-
-						instance._secondaryBar = instance.all(instance.get('actionButtonsBar'));
-
-						instance._selectAllCheckBoxes = instance.all(instance.get('selectAllCheckBoxes'));
-
-						instance._checkBoxes = instance._checkBoxContainer.all(instance.get('checkBoxes'));
-
-						instance._initSelectAllCheckbox();
-
-						instance._initToggleBars();
+						instance._bindUI();
 					},
 
 					destructor: function() {
@@ -73,42 +59,57 @@ AUI.add(
 						A.Array.invoke(instance._eventHandles, 'detach');
 					},
 
+					_bindUI: function() {
+						var instance = this;
+
+						instance._eventHandles = [
+							instance.get('rootNode').delegate(STR_CLICK, instance._toggleBars, instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR), instance),
+							instance.get(STR_CHECKBOX_CONTAINER).delegate(STR_CLICK, instance._toggleSelect, instance.get(STR_CHECKBOXES_SELECTOR), instance)
+						];
+					},
+
+					_getCheckBoxes: function() {
+						var instance = this;
+
+						if (!instance._checkBoxes) {
+							instance._checkBoxes = instance.get(STR_CHECKBOX_CONTAINER).all(instance.get(STR_CHECKBOXES_SELECTOR));
+						}
+
+						return instance._checkBoxes;
+					},
+
+					_getSelectAllCheckBoxes: function() {
+						var instance = this;
+
+						if (!instance._selectAllCheckBoxes) {
+							instance._selectAllCheckBoxes = instance.all(instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR));
+						}
+
+						return instance._selectAllCheckBoxes;
+					},
+
 					_getSelectedItemsCount: function() {
 						var instance = this;
 
-						var totalOn = 0;
-
-						instance._checkBoxes.each(
-							function(item, index) {
-								if (item.attr(ATTR_CHECKED)) {
-									totalOn++;
-								}
-							}
-						);
-
-						return totalOn;
-					},
-
-					_initSelectAllCheckbox: function() {
-						var instance = this;
-
-						instance._eventHandles.push(
-							instance._selectAllCheckBoxes.on(STR_CLICK, instance._toggleBars, instance)
-						);
-					},
-
-					_initToggleBars: function() {
-						var instance = this;
-
-						instance._eventHandles.push(
-							instance._checkBoxes.on(STR_CLICK, instance._toggleSelect, instance)
-						);
+						return instance._getCheckBoxes().filter(':checked').size();
 					},
 
 					_printItemsCount: function(itemsCount) {
 						var instance = this;
 
-						instance._itemsCountContainer.html(itemsCount);
+						instance.get('itemsCountContainer').html(itemsCount);
+					},
+
+					_setNode: function(val) {
+						var instance = this;
+
+						return instance.one(val);
+					},
+
+					_setNodes: function(val) {
+						var instance = this;
+
+						return instance.all(val);
 					},
 
 					_toggleBars: function(event) {
@@ -116,7 +117,7 @@ AUI.add(
 
 						var checked = event.currentTarget.attr(ATTR_CHECKED);
 
-						instance._checkBoxes.attr(ATTR_CHECKED, checked);
+						instance._getCheckBoxes().attr(ATTR_CHECKED, checked);
 
 						instance._toggleSecondaryBar(checked);
 
@@ -128,13 +129,14 @@ AUI.add(
 					_toggleSecondaryBar: function(show) {
 						var instance = this;
 
-						instance._secondaryBar.toggleClass('on', show);
+						instance.get('secondaryBar').toggleClass('on', show);
 					},
 
 					_toggleSelect: function() {
 						var instance = this;
 
-						var totalBoxes = instance._checkBoxes.size();
+						var totalBoxes = instance._getCheckBoxes().size();
+
 						var totalOn = instance._getSelectedItemsCount();
 
 						instance._toggleSecondaryBar(totalOn > 0);
@@ -147,7 +149,7 @@ AUI.add(
 					_toggleSelectAllCheckBoxes: function(checked) {
 						var instance = this;
 
-						instance._selectAllCheckBoxes.attr(ATTR_CHECKED, checked);
+						instance._getSelectAllCheckBoxes().attr(ATTR_CHECKED, checked);
 					}
 				}
 			}

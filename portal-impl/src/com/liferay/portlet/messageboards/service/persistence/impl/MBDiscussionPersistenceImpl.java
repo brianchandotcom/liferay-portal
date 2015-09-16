@@ -36,7 +36,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -2569,7 +2569,7 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 
 		mbDiscussion.setUuid(uuid);
 
-		mbDiscussion.setCompanyId(serviceCompanyProvider.getCompanyId());
+		mbDiscussion.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return mbDiscussion;
 	}
@@ -3195,8 +3195,8 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MBDISCUSSION = "SELECT mbDiscussion FROM MBDiscussion mbDiscussion";
 	private static final String _SQL_SELECT_MBDISCUSSION_WHERE_PKS_IN = "SELECT mbDiscussion FROM MBDiscussion mbDiscussion WHERE discussionId IN (";
 	private static final String _SQL_SELECT_MBDISCUSSION_WHERE = "SELECT mbDiscussion FROM MBDiscussion mbDiscussion WHERE ";

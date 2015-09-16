@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.announcements.NoSuchDeliveryException;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
@@ -985,7 +985,7 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		announcementsDelivery.setNew(true);
 		announcementsDelivery.setPrimaryKey(deliveryId);
 
-		announcementsDelivery.setCompanyId(serviceCompanyProvider.getCompanyId());
+		announcementsDelivery.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return announcementsDelivery;
 	}
@@ -1544,8 +1544,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY = "SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE_PKS_IN = "SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery WHERE deliveryId IN (";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE = "SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery WHERE ";

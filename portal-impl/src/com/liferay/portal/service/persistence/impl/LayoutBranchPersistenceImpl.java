@@ -2080,7 +2080,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		layoutBranch.setNew(true);
 		layoutBranch.setPrimaryKey(layoutBranchId);
 
-		layoutBranch.setCompanyId(serviceCompanyProvider.getCompanyId());
+		layoutBranch.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return layoutBranch;
 	}
@@ -2678,8 +2678,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_LAYOUTBRANCH = "SELECT layoutBranch FROM LayoutBranch layoutBranch";
 	private static final String _SQL_SELECT_LAYOUTBRANCH_WHERE_PKS_IN = "SELECT layoutBranch FROM LayoutBranch layoutBranch WHERE layoutBranchId IN (";
 	private static final String _SQL_SELECT_LAYOUTBRANCH_WHERE = "SELECT layoutBranch FROM LayoutBranch layoutBranch WHERE ";

@@ -1128,7 +1128,7 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		orgGroupRole.setNew(true);
 		orgGroupRole.setPrimaryKey(orgGroupRolePK);
 
-		orgGroupRole.setCompanyId(serviceCompanyProvider.getCompanyId());
+		orgGroupRole.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return orgGroupRole;
 	}
@@ -1616,8 +1616,8 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_ORGGROUPROLE = "SELECT orgGroupRole FROM OrgGroupRole orgGroupRole";
 	private static final String _SQL_SELECT_ORGGROUPROLE_WHERE = "SELECT orgGroupRole FROM OrgGroupRole orgGroupRole WHERE ";
 	private static final String _SQL_COUNT_ORGGROUPROLE = "SELECT COUNT(orgGroupRole) FROM OrgGroupRole orgGroupRole";

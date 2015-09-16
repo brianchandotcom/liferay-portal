@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -1504,7 +1504,7 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		ddmTemplateVersion.setNew(true);
 		ddmTemplateVersion.setPrimaryKey(templateVersionId);
 
-		ddmTemplateVersion.setCompanyId(serviceCompanyProvider.getCompanyId());
+		ddmTemplateVersion.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return ddmTemplateVersion;
 	}
@@ -2091,8 +2091,8 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_DDMTEMPLATEVERSION = "SELECT ddmTemplateVersion FROM DDMTemplateVersion ddmTemplateVersion";
 	private static final String _SQL_SELECT_DDMTEMPLATEVERSION_WHERE_PKS_IN = "SELECT ddmTemplateVersion FROM DDMTemplateVersion ddmTemplateVersion WHERE templateVersionId IN (";
 	private static final String _SQL_SELECT_DDMTEMPLATEVERSION_WHERE = "SELECT ddmTemplateVersion FROM DDMTemplateVersion ddmTemplateVersion WHERE ";

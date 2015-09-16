@@ -41,7 +41,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
@@ -4622,7 +4622,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 		assetTag.setUuid(uuid);
 
-		assetTag.setCompanyId(serviceCompanyProvider.getCompanyId());
+		assetTag.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return assetTag;
 	}
@@ -5506,7 +5506,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	public void afterPropertiesSet() {
 		assetTagToAssetEntryTableMapper = TableMapperFactory.getTableMapper("AssetEntries_AssetTags",
 				"tagId", "entryId", this, assetEntryPersistence,
-				serviceCompanyProvider);
+				companyProviderHolder);
 	}
 
 	public void destroy() {
@@ -5521,8 +5521,8 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
 	protected TableMapper<AssetTag, com.liferay.portlet.asset.model.AssetEntry> assetTagToAssetEntryTableMapper;
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_ASSETTAG = "SELECT assetTag FROM AssetTag assetTag";
 	private static final String _SQL_SELECT_ASSETTAG_WHERE_PKS_IN = "SELECT assetTag FROM AssetTag assetTag WHERE tagId IN (";
 	private static final String _SQL_SELECT_ASSETTAG_WHERE = "SELECT assetTag FROM AssetTag assetTag WHERE ";

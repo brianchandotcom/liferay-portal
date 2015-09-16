@@ -36,7 +36,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.messageboards.NoSuchBanException;
 import com.liferay.portlet.messageboards.model.MBBan;
@@ -3249,7 +3249,7 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 
 		mbBan.setUuid(uuid);
 
-		mbBan.setCompanyId(serviceCompanyProvider.getCompanyId());
+		mbBan.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return mbBan;
 	}
@@ -3894,8 +3894,8 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MBBAN = "SELECT mbBan FROM MBBan mbBan";
 	private static final String _SQL_SELECT_MBBAN_WHERE_PKS_IN = "SELECT mbBan FROM MBBan mbBan WHERE banId IN (";
 	private static final String _SQL_SELECT_MBBAN_WHERE = "SELECT mbBan FROM MBBan mbBan WHERE ";

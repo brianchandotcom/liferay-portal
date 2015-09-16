@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -1986,7 +1986,7 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		ddmStructureLink.setNew(true);
 		ddmStructureLink.setPrimaryKey(structureLinkId);
 
-		ddmStructureLink.setCompanyId(serviceCompanyProvider.getCompanyId());
+		ddmStructureLink.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return ddmStructureLink;
 	}
@@ -2577,8 +2577,8 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_DDMSTRUCTURELINK = "SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink";
 	private static final String _SQL_SELECT_DDMSTRUCTURELINK_WHERE_PKS_IN = "SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink WHERE structureLinkId IN (";
 	private static final String _SQL_SELECT_DDMSTRUCTURELINK_WHERE = "SELECT ddmStructureLink FROM DDMStructureLink ddmStructureLink WHERE ";

@@ -3858,7 +3858,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 
 		phone.setUuid(uuid);
 
-		phone.setCompanyId(serviceCompanyProvider.getCompanyId());
+		phone.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return phone;
 	}
@@ -4558,8 +4558,8 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_PHONE = "SELECT phone FROM Phone phone";
 	private static final String _SQL_SELECT_PHONE_WHERE_PKS_IN = "SELECT phone FROM Phone phone WHERE phoneId IN (";
 	private static final String _SQL_SELECT_PHONE_WHERE = "SELECT phone FROM Phone phone WHERE ";

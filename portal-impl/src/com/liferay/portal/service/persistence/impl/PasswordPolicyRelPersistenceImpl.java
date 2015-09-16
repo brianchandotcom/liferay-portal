@@ -961,7 +961,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		passwordPolicyRel.setNew(true);
 		passwordPolicyRel.setPrimaryKey(passwordPolicyRelId);
 
-		passwordPolicyRel.setCompanyId(serviceCompanyProvider.getCompanyId());
+		passwordPolicyRel.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return passwordPolicyRel;
 	}
@@ -1515,8 +1515,8 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_PASSWORDPOLICYREL = "SELECT passwordPolicyRel FROM PasswordPolicyRel passwordPolicyRel";
 	private static final String _SQL_SELECT_PASSWORDPOLICYREL_WHERE_PKS_IN = "SELECT passwordPolicyRel FROM PasswordPolicyRel passwordPolicyRel WHERE passwordPolicyRelId IN (";
 	private static final String _SQL_SELECT_PASSWORDPOLICYREL_WHERE = "SELECT passwordPolicyRel FROM PasswordPolicyRel passwordPolicyRel WHERE ";

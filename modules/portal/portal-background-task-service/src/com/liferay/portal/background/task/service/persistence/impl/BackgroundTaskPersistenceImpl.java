@@ -42,7 +42,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -7119,7 +7119,7 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		backgroundTask.setNew(true);
 		backgroundTask.setPrimaryKey(backgroundTaskId);
 
-		backgroundTask.setCompanyId(serviceCompanyProvider.getCompanyId());
+		backgroundTask.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return backgroundTask;
 	}
@@ -7890,8 +7890,8 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_BACKGROUNDTASK = "SELECT backgroundTask FROM BackgroundTask backgroundTask";
 	private static final String _SQL_SELECT_BACKGROUNDTASK_WHERE_PKS_IN = "SELECT backgroundTask FROM BackgroundTask backgroundTask WHERE backgroundTaskId IN (";
 	private static final String _SQL_SELECT_BACKGROUNDTASK_WHERE = "SELECT backgroundTask FROM BackgroundTask backgroundTask WHERE ";

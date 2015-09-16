@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
@@ -1899,7 +1899,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		scLicense.setNew(true);
 		scLicense.setPrimaryKey(licenseId);
 
-		scLicense.setCompanyId(serviceCompanyProvider.getCompanyId());
+		scLicense.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return scLicense;
 	}
@@ -2742,7 +2742,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void afterPropertiesSet() {
 		scLicenseToSCProductEntryTableMapper = TableMapperFactory.getTableMapper("SCLicenses_SCProductEntries",
 				"licenseId", "productEntryId", this, scProductEntryPersistence,
-				serviceCompanyProvider);
+				companyProviderHolder);
 	}
 
 	public void destroy() {
@@ -2757,8 +2757,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@BeanReference(type = SCProductEntryPersistence.class)
 	protected SCProductEntryPersistence scProductEntryPersistence;
 	protected TableMapper<SCLicense, com.liferay.portlet.softwarecatalog.model.SCProductEntry> scLicenseToSCProductEntryTableMapper;
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_SCLICENSE = "SELECT scLicense FROM SCLicense scLicense";
 	private static final String _SQL_SELECT_SCLICENSE_WHERE_PKS_IN = "SELECT scLicense FROM SCLicense scLicense WHERE licenseId IN (";
 	private static final String _SQL_SELECT_SCLICENSE_WHERE = "SELECT scLicense FROM SCLicense scLicense WHERE ";

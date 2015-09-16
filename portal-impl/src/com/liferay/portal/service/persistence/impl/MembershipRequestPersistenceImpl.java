@@ -2218,7 +2218,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		membershipRequest.setNew(true);
 		membershipRequest.setPrimaryKey(membershipRequestId);
 
-		membershipRequest.setCompanyId(serviceCompanyProvider.getCompanyId());
+		membershipRequest.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return membershipRequest;
 	}
@@ -2831,8 +2831,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MEMBERSHIPREQUEST = "SELECT membershipRequest FROM MembershipRequest membershipRequest";
 	private static final String _SQL_SELECT_MEMBERSHIPREQUEST_WHERE_PKS_IN = "SELECT membershipRequest FROM MembershipRequest membershipRequest WHERE membershipRequestId IN (";
 	private static final String _SQL_SELECT_MEMBERSHIPREQUEST_WHERE = "SELECT membershipRequest FROM MembershipRequest membershipRequest WHERE ";

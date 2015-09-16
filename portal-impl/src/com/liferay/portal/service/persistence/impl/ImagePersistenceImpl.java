@@ -631,7 +631,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		image.setNew(true);
 		image.setPrimaryKey(imageId);
 
-		image.setCompanyId(serviceCompanyProvider.getCompanyId());
+		image.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return image;
 	}
@@ -1155,8 +1155,8 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_IMAGE = "SELECT image FROM Image image";
 	private static final String _SQL_SELECT_IMAGE_WHERE_PKS_IN = "SELECT image FROM Image image WHERE imageId IN (";
 	private static final String _SQL_SELECT_IMAGE_WHERE = "SELECT image FROM Image image WHERE ";

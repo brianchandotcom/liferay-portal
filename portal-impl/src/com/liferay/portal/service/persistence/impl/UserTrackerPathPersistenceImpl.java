@@ -667,7 +667,7 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		userTrackerPath.setNew(true);
 		userTrackerPath.setPrimaryKey(userTrackerPathId);
 
-		userTrackerPath.setCompanyId(serviceCompanyProvider.getCompanyId());
+		userTrackerPath.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return userTrackerPath;
 	}
@@ -1219,8 +1219,8 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_USERTRACKERPATH = "SELECT userTrackerPath FROM UserTrackerPath userTrackerPath";
 	private static final String _SQL_SELECT_USERTRACKERPATH_WHERE_PKS_IN = "SELECT userTrackerPath FROM UserTrackerPath userTrackerPath WHERE userTrackerPathId IN (";
 	private static final String _SQL_SELECT_USERTRACKERPATH_WHERE = "SELECT userTrackerPath FROM UserTrackerPath userTrackerPath WHERE ";

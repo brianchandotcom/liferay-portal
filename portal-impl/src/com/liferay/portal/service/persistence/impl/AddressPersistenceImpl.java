@@ -4479,7 +4479,7 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 
 		address.setUuid(uuid);
 
-		address.setCompanyId(serviceCompanyProvider.getCompanyId());
+		address.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return address;
 	}
@@ -5216,8 +5216,8 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_ADDRESS = "SELECT address FROM Address address";
 	private static final String _SQL_SELECT_ADDRESS_WHERE_PKS_IN = "SELECT address FROM Address address WHERE addressId IN (";
 	private static final String _SQL_SELECT_ADDRESS_WHERE = "SELECT address FROM Address address WHERE ";

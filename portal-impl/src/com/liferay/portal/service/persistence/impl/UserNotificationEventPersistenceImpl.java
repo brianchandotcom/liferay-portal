@@ -6825,7 +6825,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 
 		userNotificationEvent.setUuid(uuid);
 
-		userNotificationEvent.setCompanyId(serviceCompanyProvider.getCompanyId());
+		userNotificationEvent.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return userNotificationEvent;
 	}
@@ -7636,8 +7636,8 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT = "SELECT userNotificationEvent FROM UserNotificationEvent userNotificationEvent";
 	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT_WHERE_PKS_IN = "SELECT userNotificationEvent FROM UserNotificationEvent userNotificationEvent WHERE userNotificationEventId IN (";
 	private static final String _SQL_SELECT_USERNOTIFICATIONEVENT_WHERE = "SELECT userNotificationEvent FROM UserNotificationEvent userNotificationEvent WHERE ";

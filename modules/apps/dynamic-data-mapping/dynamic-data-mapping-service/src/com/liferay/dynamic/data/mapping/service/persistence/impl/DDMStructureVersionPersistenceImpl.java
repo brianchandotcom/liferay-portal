@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -1508,7 +1508,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		ddmStructureVersion.setNew(true);
 		ddmStructureVersion.setPrimaryKey(structureVersionId);
 
-		ddmStructureVersion.setCompanyId(serviceCompanyProvider.getCompanyId());
+		ddmStructureVersion.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return ddmStructureVersion;
 	}
@@ -2103,8 +2103,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_DDMSTRUCTUREVERSION = "SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion";
 	private static final String _SQL_SELECT_DDMSTRUCTUREVERSION_WHERE_PKS_IN = "SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion WHERE structureVersionId IN (";
 	private static final String _SQL_SELECT_DDMSTRUCTUREVERSION_WHERE = "SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion WHERE ";

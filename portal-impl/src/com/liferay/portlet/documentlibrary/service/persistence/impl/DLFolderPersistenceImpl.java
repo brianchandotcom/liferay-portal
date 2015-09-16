@@ -39,7 +39,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
@@ -10946,7 +10946,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 
 		dlFolder.setUuid(uuid);
 
-		dlFolder.setCompanyId(serviceCompanyProvider.getCompanyId());
+		dlFolder.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return dlFolder;
 	}
@@ -12053,7 +12053,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	public void afterPropertiesSet() {
 		dlFolderToDLFileEntryTypeTableMapper = TableMapperFactory.getTableMapper("DLFileEntryTypes_DLFolders",
 				"folderId", "fileEntryTypeId", this,
-				dlFileEntryTypePersistence, serviceCompanyProvider);
+				dlFileEntryTypePersistence, companyProviderHolder);
 	}
 
 	public void destroy() {
@@ -12068,8 +12068,8 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	@BeanReference(type = DLFileEntryTypePersistence.class)
 	protected DLFileEntryTypePersistence dlFileEntryTypePersistence;
 	protected TableMapper<DLFolder, com.liferay.portlet.documentlibrary.model.DLFileEntryType> dlFolderToDLFileEntryTypeTableMapper;
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_DLFOLDER = "SELECT dlFolder FROM DLFolder dlFolder";
 	private static final String _SQL_SELECT_DLFOLDER_WHERE_PKS_IN = "SELECT dlFolder FROM DLFolder dlFolder WHERE folderId IN (";
 	private static final String _SQL_SELECT_DLFOLDER_WHERE = "SELECT dlFolder FROM DLFolder dlFolder WHERE ";

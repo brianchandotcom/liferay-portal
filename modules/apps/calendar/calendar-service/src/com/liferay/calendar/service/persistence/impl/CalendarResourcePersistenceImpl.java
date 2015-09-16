@@ -46,7 +46,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -6470,7 +6470,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 		calendarResource.setUuid(uuid);
 
-		calendarResource.setCompanyId(serviceCompanyProvider.getCompanyId());
+		calendarResource.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return calendarResource;
 	}
@@ -7183,8 +7183,8 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_CALENDARRESOURCE = "SELECT calendarResource FROM CalendarResource calendarResource";
 	private static final String _SQL_SELECT_CALENDARRESOURCE_WHERE_PKS_IN = "SELECT calendarResource FROM CalendarResource calendarResource WHERE calendarResourceId IN (";
 	private static final String _SQL_SELECT_CALENDARRESOURCE_WHERE = "SELECT calendarResource FROM CalendarResource calendarResource WHERE ";

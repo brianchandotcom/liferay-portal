@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.social.NoSuchActivityCounterException;
 import com.liferay.portlet.social.model.SocialActivityCounter;
@@ -2657,7 +2657,7 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		socialActivityCounter.setNew(true);
 		socialActivityCounter.setPrimaryKey(activityCounterId);
 
-		socialActivityCounter.setCompanyId(serviceCompanyProvider.getCompanyId());
+		socialActivityCounter.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return socialActivityCounter;
 	}
@@ -3268,8 +3268,8 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_SOCIALACTIVITYCOUNTER = "SELECT socialActivityCounter FROM SocialActivityCounter socialActivityCounter";
 	private static final String _SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE_PKS_IN = "SELECT socialActivityCounter FROM SocialActivityCounter socialActivityCounter WHERE activityCounterId IN (";
 	private static final String _SQL_SELECT_SOCIALACTIVITYCOUNTER_WHERE = "SELECT socialActivityCounter FROM SocialActivityCounter socialActivityCounter WHERE ";

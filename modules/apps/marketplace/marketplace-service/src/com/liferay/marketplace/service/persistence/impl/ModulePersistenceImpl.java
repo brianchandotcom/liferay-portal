@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -3486,7 +3486,7 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 
 		module.setUuid(uuid);
 
-		module.setCompanyId(serviceCompanyProvider.getCompanyId());
+		module.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return module;
 	}
@@ -4111,8 +4111,8 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MODULE = "SELECT module FROM Module module";
 	private static final String _SQL_SELECT_MODULE_WHERE_PKS_IN = "SELECT module FROM Module module WHERE moduleId IN (";
 	private static final String _SQL_SELECT_MODULE_WHERE = "SELECT module FROM Module module WHERE ";

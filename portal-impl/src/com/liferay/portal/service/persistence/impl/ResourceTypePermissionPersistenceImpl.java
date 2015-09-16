@@ -1651,7 +1651,7 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		resourceTypePermission.setNew(true);
 		resourceTypePermission.setPrimaryKey(resourceTypePermissionId);
 
-		resourceTypePermission.setCompanyId(serviceCompanyProvider.getCompanyId());
+		resourceTypePermission.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return resourceTypePermission;
 	}
@@ -2231,8 +2231,8 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_RESOURCETYPEPERMISSION = "SELECT resourceTypePermission FROM ResourceTypePermission resourceTypePermission";
 	private static final String _SQL_SELECT_RESOURCETYPEPERMISSION_WHERE_PKS_IN = "SELECT resourceTypePermission FROM ResourceTypePermission resourceTypePermission WHERE resourceTypePermissionId IN (";
 	private static final String _SQL_SELECT_RESOURCETYPEPERMISSION_WHERE = "SELECT resourceTypePermission FROM ResourceTypePermission resourceTypePermission WHERE ";

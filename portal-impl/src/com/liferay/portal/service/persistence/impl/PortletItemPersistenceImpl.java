@@ -1707,7 +1707,7 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		portletItem.setNew(true);
 		portletItem.setPrimaryKey(portletItemId);
 
-		portletItem.setCompanyId(serviceCompanyProvider.getCompanyId());
+		portletItem.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return portletItem;
 	}
@@ -2308,8 +2308,8 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_PORTLETITEM = "SELECT portletItem FROM PortletItem portletItem";
 	private static final String _SQL_SELECT_PORTLETITEM_WHERE_PKS_IN = "SELECT portletItem FROM PortletItem portletItem WHERE portletItemId IN (";
 	private static final String _SQL_SELECT_PORTLETITEM_WHERE = "SELECT portletItem FROM PortletItem portletItem WHERE ";

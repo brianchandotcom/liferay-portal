@@ -4119,7 +4119,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		userGroup.setUuid(uuid);
 
-		userGroup.setCompanyId(serviceCompanyProvider.getCompanyId());
+		userGroup.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return userGroup;
 	}
@@ -5552,15 +5552,15 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public void afterPropertiesSet() {
 		userGroupToGroupTableMapper = TableMapperFactory.getTableMapper("Groups_UserGroups",
 				"userGroupId", "groupId", this, groupPersistence,
-				serviceCompanyProvider);
+				companyProviderHolder);
 
 		userGroupToTeamTableMapper = TableMapperFactory.getTableMapper("UserGroups_Teams",
 				"userGroupId", "teamId", this, teamPersistence,
-				serviceCompanyProvider);
+				companyProviderHolder);
 
 		userGroupToUserTableMapper = TableMapperFactory.getTableMapper("Users_UserGroups",
 				"userGroupId", "userId", this, userPersistence,
-				serviceCompanyProvider);
+				companyProviderHolder);
 	}
 
 	public void destroy() {
@@ -5583,8 +5583,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	protected TableMapper<UserGroup, com.liferay.portal.model.User> userGroupToUserTableMapper;
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_USERGROUP = "SELECT userGroup FROM UserGroup userGroup";
 	private static final String _SQL_SELECT_USERGROUP_WHERE_PKS_IN = "SELECT userGroup FROM UserGroup userGroup WHERE userGroupId IN (";
 	private static final String _SQL_SELECT_USERGROUP_WHERE = "SELECT userGroup FROM UserGroup userGroup WHERE ";

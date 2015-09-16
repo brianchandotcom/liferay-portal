@@ -38,7 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -2295,7 +2295,7 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		journalArticleImage.setNew(true);
 		journalArticleImage.setPrimaryKey(articleImageId);
 
-		journalArticleImage.setCompanyId(serviceCompanyProvider.getCompanyId());
+		journalArticleImage.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return journalArticleImage;
 	}
@@ -2893,8 +2893,8 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_JOURNALARTICLEIMAGE = "SELECT journalArticleImage FROM JournalArticleImage journalArticleImage";
 	private static final String _SQL_SELECT_JOURNALARTICLEIMAGE_WHERE_PKS_IN = "SELECT journalArticleImage FROM JournalArticleImage journalArticleImage WHERE articleImageId IN (";
 	private static final String _SQL_SELECT_JOURNALARTICLEIMAGE_WHERE = "SELECT journalArticleImage FROM JournalArticleImage journalArticleImage WHERE ";

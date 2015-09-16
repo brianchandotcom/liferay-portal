@@ -2648,7 +2648,7 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		userGroupRole.setNew(true);
 		userGroupRole.setPrimaryKey(userGroupRolePK);
 
-		userGroupRole.setCompanyId(serviceCompanyProvider.getCompanyId());
+		userGroupRole.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return userGroupRole;
 	}
@@ -3195,8 +3195,8 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_USERGROUPROLE = "SELECT userGroupRole FROM UserGroupRole userGroupRole";
 	private static final String _SQL_SELECT_USERGROUPROLE_WHERE = "SELECT userGroupRole FROM UserGroupRole userGroupRole WHERE ";
 	private static final String _SQL_COUNT_USERGROUPROLE = "SELECT COUNT(userGroupRole) FROM UserGroupRole userGroupRole";

@@ -34,7 +34,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentInstanceException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentInstanceImpl;
@@ -3845,7 +3845,7 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		kaleoTaskAssignmentInstance.setNew(true);
 		kaleoTaskAssignmentInstance.setPrimaryKey(kaleoTaskAssignmentInstanceId);
 
-		kaleoTaskAssignmentInstance.setCompanyId(serviceCompanyProvider.getCompanyId());
+		kaleoTaskAssignmentInstance.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return kaleoTaskAssignmentInstance;
 	}
@@ -4567,8 +4567,8 @@ public class KaleoTaskAssignmentInstancePersistenceImpl
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE = "SELECT kaleoTaskAssignmentInstance FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance";
 	private static final String _SQL_SELECT_KALEOTASKASSIGNMENTINSTANCE_WHERE_PKS_IN =
 		"SELECT kaleoTaskAssignmentInstance FROM KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance WHERE kaleoTaskAssignmentInstanceId IN (";

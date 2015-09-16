@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.social.NoSuchActivityAchievementException;
 import com.liferay.portlet.social.model.SocialActivityAchievement;
@@ -3210,7 +3210,7 @@ public class SocialActivityAchievementPersistenceImpl
 		socialActivityAchievement.setNew(true);
 		socialActivityAchievement.setPrimaryKey(activityAchievementId);
 
-		socialActivityAchievement.setCompanyId(serviceCompanyProvider.getCompanyId());
+		socialActivityAchievement.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return socialActivityAchievement;
 	}
@@ -3855,8 +3855,8 @@ public class SocialActivityAchievementPersistenceImpl
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_SOCIALACTIVITYACHIEVEMENT = "SELECT socialActivityAchievement FROM SocialActivityAchievement socialActivityAchievement";
 	private static final String _SQL_SELECT_SOCIALACTIVITYACHIEVEMENT_WHERE_PKS_IN =
 		"SELECT socialActivityAchievement FROM SocialActivityAchievement socialActivityAchievement WHERE activityAchievementId IN (";

@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.ServiceCompanyProvider;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.asset.NoSuchLinkException;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -2985,7 +2985,7 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		assetLink.setNew(true);
 		assetLink.setPrimaryKey(linkId);
 
-		assetLink.setCompanyId(serviceCompanyProvider.getCompanyId());
+		assetLink.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return assetLink;
 	}
@@ -3616,8 +3616,8 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_ASSETLINK = "SELECT assetLink FROM AssetLink assetLink";
 	private static final String _SQL_SELECT_ASSETLINK_WHERE_PKS_IN = "SELECT assetLink FROM AssetLink assetLink WHERE linkId IN (";
 	private static final String _SQL_SELECT_ASSETLINK_WHERE = "SELECT assetLink FROM AssetLink assetLink WHERE ";

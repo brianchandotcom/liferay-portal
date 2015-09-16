@@ -3853,7 +3853,7 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 
 		layoutSetPrototype.setUuid(uuid);
 
-		layoutSetPrototype.setCompanyId(serviceCompanyProvider.getCompanyId());
+		layoutSetPrototype.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return layoutSetPrototype;
 	}
@@ -4505,8 +4505,8 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_LAYOUTSETPROTOTYPE = "SELECT layoutSetPrototype FROM LayoutSetPrototype layoutSetPrototype";
 	private static final String _SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE_PKS_IN = "SELECT layoutSetPrototype FROM LayoutSetPrototype layoutSetPrototype WHERE layoutSetPrototypeId IN (";
 	private static final String _SQL_SELECT_LAYOUTSETPROTOTYPE_WHERE = "SELECT layoutSetPrototype FROM LayoutSetPrototype layoutSetPrototype WHERE ";

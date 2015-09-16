@@ -1014,7 +1014,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		ticket.setNew(true);
 		ticket.setPrimaryKey(ticketId);
 
-		ticket.setCompanyId(serviceCompanyProvider.getCompanyId());
+		ticket.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return ticket;
 	}
@@ -1569,8 +1569,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = ServiceCompanyProvider.class)
-	protected ServiceCompanyProvider serviceCompanyProvider;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_TICKET = "SELECT ticket FROM Ticket ticket";
 	private static final String _SQL_SELECT_TICKET_WHERE_PKS_IN = "SELECT ticket FROM Ticket ticket WHERE ticketId IN (";
 	private static final String _SQL_SELECT_TICKET_WHERE = "SELECT ticket FROM Ticket ticket WHERE ";

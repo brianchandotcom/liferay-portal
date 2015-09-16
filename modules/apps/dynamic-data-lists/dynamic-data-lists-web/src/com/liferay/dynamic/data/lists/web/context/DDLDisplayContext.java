@@ -80,6 +80,26 @@ public class DDLDisplayContext {
 			_recordSet.getDDMStructure(), null, getLocale());
 	}
 
+	public String getDDLRecordSetDisplayStyle() {
+		if (_ddlRecordDisplayStyle == null) {
+			_ddlRecordDisplayStyle = DDLPortletUtil.getDDLRecordSetDisplayStyle(
+				_renderRequest, getDDLRecordSetDisplayViews());
+		}
+
+		return _ddlRecordDisplayStyle;
+	}
+
+	public String[] getDDLRecordSetDisplayViews() {
+		if (_ddlRecordDisplayViews == null) {
+			_ddlRecordDisplayViews = StringUtil.split(
+				PrefsParamUtil.getString(
+					_portletPreferences, _renderRequest, "displayViews",
+					StringUtil.merge(DDLWebConfigurationValues.DISPLAY_VIEWS)));
+		}
+
+		return _ddlRecordDisplayViews;
+	}
+
 	public long getDisplayDDMTemplateId() {
 		return PrefsParamUtil.getLong(
 			_portletPreferences, _renderRequest, "displayDDMTemplateId");
@@ -347,27 +367,6 @@ public class DDLDisplayContext {
 		return themeDisplay;
 	}
 
-	public String getDDLRecordSetDisplayStyle() {
-		if (_ddlRecordDisplayStyle == null) {
-			_ddlRecordDisplayStyle = DDLPortletUtil.getDDLRecordSetDisplayStyle(
-				_renderRequest, getDDLRecordSetDisplayViews());
-		}
-
-		return _ddlRecordDisplayStyle;
-	}
-
-	public String[] getDDLRecordSetDisplayViews() {
-		if (_ddlRecordDisplayViews == null) {
-			_ddlRecordDisplayViews = StringUtil.split(
-				PrefsParamUtil.getString(
-					_portletPreferences, _renderRequest, "displayViews",
-					StringUtil.merge(
-						DDLWebConfigurationValues.DISPLAY_VIEWS)));
-		}
-
-		return _ddlRecordDisplayViews;
-	}
-
 	protected boolean hasViewPermission() {
 		if (_hasViewPermission != null) {
 			return _hasViewPermission;
@@ -387,7 +386,7 @@ public class DDLDisplayContext {
 	}
 
 	private String _ddlRecordDisplayStyle;
-	private String [] _ddlRecordDisplayViews;
+	private String[] _ddlRecordDisplayViews;
 	private DDMTemplate _displayDDMTemplate;
 	private DDMTemplate _formDDMTemplate;
 	private Boolean _hasAddDDMTemplatePermission;

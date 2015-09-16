@@ -19,11 +19,13 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
-
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
-DDMStructure ddmStructure = recordSet.getDDMStructure(formDDMTemplateId);
+DDLViewRecordsDisplayContext ddlViewRecordsDisplayContext = new DDLViewRecordsDisplayContext(liferayPortletRequest, liferayPortletResponse, formDDMTemplateId);
+
+DDLRecordSet recordSet = ddlViewRecordsDisplayContext.getDDLRecordSet();
+
+DDMStructure ddmStructure = ddlViewRecordsDisplayContext.getDDMStructure();
 
 boolean editable = ParamUtil.getBoolean(request, "editable", true);
 boolean hasDeletePermission = false;
@@ -42,11 +44,9 @@ portletURL.setParameter("mvcPath", "/view_record_set.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
 
-DDMForm ddmForm = ddmStructure.getFullHierarchyDDMForm();
-
 List<String> headerNames = new ArrayList<String>();
 
-List<DDMFormField> ddmFormfields = ddmForm.getDDMFormFields();
+List<DDMFormField> ddmFormfields = ddlViewRecordsDisplayContext.getDDMFormFields();
 
 for (DDMFormField ddmFormField : ddmFormfields) {
 	LocalizedValue label = ddmFormField.getLabel();
@@ -66,7 +66,7 @@ SearchContainer recordSearchContainer = new SearchContainer(
 	renderRequest, new DisplayTerms(request), null,
 	SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA,
 	portletURL, headerNames, LanguageUtil.format(request, "no-x-records-were-found",
-	HtmlUtil.escape(ddmStructure.getName(locale)), false)); 
+	HtmlUtil.escape(ddmStructure.getName(locale)), false));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -76,6 +76,7 @@ SearchContainer recordSearchContainer = new SearchContainer(
 		<%
 		request.setAttribute("liferay-ui:search:searchContainer", recordSearchContainer);
 		%>
+
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
 			<liferay-util:include page="/record_search.jsp" servletContext="<%= application %>" />
 		</aui:form>
@@ -84,75 +85,75 @@ SearchContainer recordSearchContainer = new SearchContainer(
 
 <div class="container-fluid-1280" id="<portlet:namespace />formContainer">
 	<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	
+
 		<liferay-ui:search-container
-			searchContainer='<%=recordSearchContainer %>'
+			searchContainer="<%= recordSearchContainer %>"
 		>
 
 			<liferay-ui:search-container-results>
 				<%@ include file="/record_search_results.jspf" %>
 			</liferay-ui:search-container-results>
-	
+
 			<%
 			List resultRows = searchContainer.getResultRows();
-	
+
 			for (int i = 0; i < results.size(); i++) {
 				DDLRecord record = (DDLRecord)results.get(i);
-	
+
 				DDLRecordVersion recordVersion = record.getRecordVersion();
-	
+
 				if (editable) {
 					recordVersion = record.getLatestRecordVersion();
 				}
-	
+
 				DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(recordVersion.getDDMStorageId());
-	
+
 				Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
-	
+
 				ResultRow row = new ResultRow(record, record.getRecordId(), i);
-	
+
 				row.setParameter("editable", String.valueOf(editable));
 				row.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 				row.setParameter("hasDeletePermission", String.valueOf(hasDeletePermission));
 				row.setParameter("hasUpdatePermission", String.valueOf(hasUpdatePermission));
 				row.setCssClass("entry-display-style");
-	
+
 				PortletURL rowURL = renderResponse.createRenderURL();
-	
+
 				rowURL.setParameter("mvcPath", "/view_record.jsp");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 				rowURL.setParameter("version", recordVersion.getVersion());
 				rowURL.setParameter("editable", String.valueOf(editable));
 				rowURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
-	
+
 				// Columns
-	
+
 				for (DDMFormField ddmFormField : ddmFormfields) {
 				%>
-	
+
 					<%@ include file="/record_row_value.jspf" %>
-	
+
 				<%
 				}
-	
+
 				if (hasUpdatePermission) {
 					row.addStatus(recordVersion.getStatus(), recordVersion.getStatusByUserId(), recordVersion.getStatusDate(), rowURL);
 					row.addDate(record.getModifiedDate(), rowURL);
 					row.addText(HtmlUtil.escape(PortalUtil.getUserName(recordVersion)), rowURL);
 				}
-	
+
 				// Action
-	
+
 				row.addJSP("/record_action.jsp", "entry-action", application, request, response);
-	
+
 				// Add result row
-	
+
 				resultRows.add(row);
 			}
 			%>
-	
-			<liferay-ui:search-iterator markupView="lexicon"/>
+
+			<liferay-ui:search-iterator displayStyle="<%= ddlViewRecordsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
 </div>

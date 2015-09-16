@@ -21,9 +21,9 @@ import javax.portlet.PortletResponse;
 /**
  * @author Eudaldo Alonso
  */
-public class LexiconRowChecker extends RowChecker {
+public class EmptyOnClickRowChecker extends RowChecker {
 
-	public LexiconRowChecker(PortletResponse portletResponse) {
+	public EmptyOnClickRowChecker(PortletResponse portletResponse) {
 		super(portletResponse);
 	}
 

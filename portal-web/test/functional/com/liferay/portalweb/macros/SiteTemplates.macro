@@ -25,7 +25,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${siteTemplateName}" />
 

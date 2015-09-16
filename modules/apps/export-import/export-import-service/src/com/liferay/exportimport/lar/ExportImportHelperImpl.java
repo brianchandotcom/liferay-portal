@@ -1196,10 +1196,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		Property referrerClassNameIdProperty = PropertyFactoryUtil.forName(
 			"referrerClassNameId");
 
-		if ((referrerClassNameId
-				!= StagedModelType.REFERRER_CLASS_NAME_ID_ALL) &&
-			(referrerClassNameId
-				!= StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
+		if ((referrerClassNameId !=
+				StagedModelType.REFERRER_CLASS_NAME_ID_ALL) &&
+			(referrerClassNameId !=
+				StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
 
 			dynamicQuery.add(
 				referrerClassNameIdProperty.eq(

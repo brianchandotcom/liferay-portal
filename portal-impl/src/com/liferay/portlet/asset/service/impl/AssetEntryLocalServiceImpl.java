@@ -421,19 +421,31 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	public Hits search(
 		long companyId, long[] groupIds, long userId, String className,
+		long classTypeId, String keywords, boolean showNonIndexable, int status,
+		int start, int end) {
+
+		return search(
+			companyId, groupIds, userId, className, classTypeId, keywords,
+			keywords, keywords, null, null, showNonIndexable, status, false,
+			start, end);
+	}
+
+	@Override
+	public Hits search(
+		long companyId, long[] groupIds, long userId, String className,
 		long classTypeId, String keywords, int status, int start, int end) {
 
 		return search(
 			companyId, groupIds, userId, className, classTypeId, keywords,
-			keywords, keywords, null, null, status, false, start, end);
+			false, status, start, end);
 	}
 
 	@Override
 	public Hits search(
 		long companyId, long[] groupIds, long userId, String className,
 		long classTypeId, String userName, String title, String description,
-		String assetCategoryIds, String assetTagNames, int status,
-		boolean andSearch, int start, int end) {
+		String assetCategoryIds, String assetTagNames, boolean showNonIndexable,
+		int status, boolean andSearch, int start, int end) {
 
 		try {
 			Indexer<?> indexer = AssetSearcher.getInstance();
@@ -461,6 +473,10 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 				searchContext.setClassTypeIds(new long[] {classTypeId});
 			}
 
+			if (showNonIndexable) {
+				searchContext.setAttribute("showNonIndexable", Boolean.TRUE);
+			}
+
 			searchContext.setCompanyId(companyId);
 			searchContext.setEnd(end);
 			searchContext.setGroupIds(groupIds);
@@ -479,6 +495,19 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+	}
+
+	@Override
+	public Hits search(
+		long companyId, long[] groupIds, long userId, String className,
+		long classTypeId, String userName, String title, String description,
+		String assetCategoryIds, String assetTagNames, int status,
+		boolean andSearch, int start, int end) {
+
+		return search(
+			companyId, groupIds, userId, className, classTypeId, userName,
+			title, description, assetCategoryIds, assetTagNames, false, status,
+			andSearch, start, end);
 	}
 
 	/**

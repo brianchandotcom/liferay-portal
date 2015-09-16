@@ -199,11 +199,19 @@ public class JournalArticleIndexer
 
 		boolean head = GetterUtil.getBoolean(
 			searchContext.getAttribute("head"), Boolean.TRUE);
+
+		boolean showNonIndexable = GetterUtil.getBoolean(
+			searchContext.getAttribute("showNonIndexable"), Boolean.FALSE);
+
 		boolean relatedClassName = GetterUtil.getBoolean(
 			searchContext.getAttribute("relatedClassName"));
 
-		if (head && !relatedClassName) {
+		if (!showNonIndexable && head && !relatedClassName) {
 			contextBooleanFilter.addRequiredTerm("head", Boolean.TRUE);
+		}
+
+		if (!relatedClassName && showNonIndexable) {
+			contextBooleanFilter.addRequiredTerm("headListable", Boolean.TRUE);
 		}
 	}
 
@@ -510,6 +518,7 @@ public class JournalArticleIndexer
 			StringUtil.split(journalArticle.getTreePath(), CharPool.SLASH));
 		document.addKeyword(Field.VERSION, journalArticle.getVersion());
 
+		document.addKeyword("headListable", isHeadListable(journalArticle));
 		document.addKeyword(
 			"ddmStructureKey", journalArticle.getDDMStructureKey());
 		document.addKeyword(
@@ -676,10 +685,8 @@ public class JournalArticleIndexer
 		if (JournalServiceConfigurationValues.
 				JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 
-			articles =
-				_journalArticleLocalService.
-					getIndexableArticlesByResourcePrimKey(
-						article.getResourcePrimKey());
+			articles = _journalArticleLocalService.getArticlesByResourcePrimKey(
+				article.getResourcePrimKey());
 		}
 		else {
 			articles = new ArrayList<>();
@@ -758,6 +765,24 @@ public class JournalArticleIndexer
 		}
 		else if ((latestArticle != null) &&
 				 (article.getId() == latestArticle.getId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isHeadListable(JournalArticle article) {
+		JournalArticle latestArticle =
+			_journalArticleLocalService.fetchLatestArticle(
+				article.getResourcePrimKey(),
+				new int[] {
+					WorkflowConstants.STATUS_APPROVED,
+					WorkflowConstants.STATUS_IN_TRASH
+				});
+
+		if ((latestArticle != null) &&
+			(article.getId() == latestArticle.getId())) {
 
 			return true;
 		}

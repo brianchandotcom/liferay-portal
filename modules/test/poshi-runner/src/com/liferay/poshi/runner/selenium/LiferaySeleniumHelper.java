@@ -707,6 +707,30 @@ public class LiferaySeleniumHelper {
 		return EmailCommands.getEmailSubject(GetterUtil.getInteger(index));
 	}
 
+	public static String getFullPathNameFromRelativePathName(
+		String[] baseDirNames, String fileName) throws Exception {
+
+		String filePath = null;
+
+		for (String baseDirName : baseDirNames) {
+			String uncheckedFilePath = PoshiRunnerGetterUtil.getCanonicalPath(
+				baseDirName + FileUtil.getSeparator() + fileName);
+
+			if (FileUtil.exists(uncheckedFilePath)) {
+				if (filePath != null) {
+					throw new Exception("Duplicate file names found at\n" +
+						fileName + "\n" + uncheckedFilePath);
+				}
+				filePath = uncheckedFilePath;
+			}
+		}
+
+		if (fileName == null) {
+			throw new Exception("File not found " + fileName);
+		}
+		return filePath;
+	}
+
 	public static ImageTarget getImageTarget(
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {

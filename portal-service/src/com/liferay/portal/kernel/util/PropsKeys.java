@@ -749,6 +749,8 @@ public interface PropsKeys {
 
 	public static final String DL_TABS_VISIBLE = "dl.tabs.visible";
 
+	public static final String DL_WEBDAV_SUBSTITUTION_CHAR = "dl.webdav.substitution.char";
+
 	public static final String DOCKBAR_ADD_PORTLETS = "dockbar.add.portlets";
 
 	public static final String DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP = "dockbar.administrative.links.show.in.pop.up";

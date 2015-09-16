@@ -33,7 +33,8 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
-portletDisplay.setTitle(assetRenderer.getTitle(locale));
+
+renderResponse.setTitle(assetRenderer.getTitle(locale));
 %>
 
 <c:if test="<%= assetEntry != null %>">

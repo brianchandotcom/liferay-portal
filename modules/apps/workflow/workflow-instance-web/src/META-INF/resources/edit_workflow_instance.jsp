@@ -32,7 +32,8 @@ else {
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
-portletDisplay.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
+
+renderResponse.setTitle(workflowInstanceEditDisplayContext.getHeaderTitle());
 %>
 
 <aui:row>

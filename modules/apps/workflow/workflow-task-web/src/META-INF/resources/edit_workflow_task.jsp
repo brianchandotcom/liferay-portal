@@ -46,7 +46,8 @@ boolean showEditURL = workflowTaskDisplayContext.showEditURL(workflowTask);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
-portletDisplay.setTitle(headerTitle);
+
+renderResponse.setTitle(headerTitle);
 %>
 
 <aui:row>
@@ -97,7 +98,7 @@ portletDisplay.setTitle(headerTitle);
 			<aui:col width="<%= 50 %>">
 				<aui:input name="createDate" type="resource" value="<%= workflowTaskDisplayContext.getCreateDate(workflowTask) %>" />
 
-				<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value="<%= workflowTaskDisplayContext.getDueDate(workflowTask) %>" />
+				<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value="<%= workflowTaskDisplayContext.getDueDateAsString(workflowTask) %>" />
 
 				<c:if test="<%= !workflowTask.isCompleted() %>">
 					<portlet:actionURL name="updateWorkflowTask" var="updateDueDateURL">

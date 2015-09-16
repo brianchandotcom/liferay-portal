@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
+SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
 
 String redirect = searchContainer.getIteratorURL().toString();
 
@@ -30,7 +30,7 @@ DDLRecordSet selRecordSet = (DDLRecordSet)request.getAttribute("record_set_actio
 boolean hasViewPermission = portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.VIEW);
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= hasViewPermission %>">
 		<portlet:renderURL var="viewRecordSetURL">
 			<portlet:param name="mvcPath" value="/view_record_set.jsp" />
@@ -39,7 +39,6 @@ boolean hasViewPermission = portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-search"
 			message="view[action]"
 			url="<%= viewRecordSetURL %>"
 		/>
@@ -52,7 +51,6 @@ boolean hasViewPermission = portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-table"
 			message="spreadsheet-view"
 			url="<%= viewRecordSetURL %>"
 		/>
@@ -66,7 +64,6 @@ boolean hasViewPermission = portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS
 		</liferay-portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editRecordSetURL %>"
 		/>
@@ -89,7 +86,6 @@ boolean hasViewPermission = portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-arrow-down"
 			message="export"
 			url="<%= sb.toString() %>"
 		/>
@@ -105,7 +101,6 @@ boolean hasViewPermission = portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			method="get"
 			url="<%= permissionsRecordSetURL %>"
@@ -119,6 +114,9 @@ boolean hasViewPermission = portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</liferay-portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteRecordSetURL %>" />
+		<liferay-ui:icon
+			message="export"
+			url="<%= deleteRecordSetURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

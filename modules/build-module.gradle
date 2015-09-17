@@ -47,8 +47,12 @@ afterEvaluate {
 		it.class.name.startsWith "com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask"
 	}
 
-	configure(publishNodeModuleTasks) {
-		dependsOn jar
+	publishNodeModuleTasks.each {
+		it.dependsOn jar
+
+		if (!project.version.endsWith("-SNAPSHOT")) {
+			uploadArchives.dependsOn it
+		}
 	}
 
 	javadoc {

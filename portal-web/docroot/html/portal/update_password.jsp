@@ -55,10 +55,6 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 			<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
 			<aui:input name="ticketKey" type="hidden" value="<%= ticketKey %>" />
 
-			<div class="alert alert-info">
-				<liferay-ui:message key="please-set-a-new-password" />
-			</div>
-
 			<c:if test="<%= !SessionErrors.isEmpty(request) %>">
 				<div class="alert alert-danger">
 					<c:choose>
@@ -115,10 +111,16 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 				</div>
 			</c:if>
 
-			<aui:fieldset label="new-password">
-				<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="password" name="password1" type="password" />
+			<aui:fieldset>
+				<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="password" name="password1" showRequiredLabel="<%= false %>" type="password">
+					<aui:validator name="required" />
+				</aui:input>
 
-				<aui:input class="lfr-input-text-container" label="enter-again" name="password2" type="password" />
+				<aui:input class="lfr-input-text-container" label="enter-again" name="password2" showRequiredLabel="<%= false %>" type="password">
+					<aui:validator name="equalTo">
+						'#<portlet:namespace />password1'
+					</aui:validator>
+				</aui:input>
 			</aui:fieldset>
 
 			<aui:button-row>

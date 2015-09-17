@@ -32,17 +32,13 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
 
-	<div class="alert alert-info">
-		<liferay-ui:message key="please-choose-a-reminder-query" />
-	</div>
-
 	<c:if test="<%= SessionErrors.contains(request, UserReminderQueryException.class.getName()) %>">
 		<div class="alert alert-danger">
 			<liferay-ui:message key="reminder-query-and-answer-cannot-be-empty" />
 		</div>
 	</c:if>
 
-	<aui:fieldset label="password-reminder">
+	<aui:fieldset>
 		<%@ include file="/html/portal/update_reminder_query_question.jspf" %>
 
 		<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
@@ -51,7 +47,9 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 			</div>
 		</c:if>
 
-		<aui:input cssClass="reminder-query-answer" label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" size="50" type="text" value="<%= user.getReminderQueryAnswer() %>" />
+		<aui:input cssClass="reminder-query-answer" label="answer" maxlength="<%= ModelHintsConstants.TEXT_MAX_LENGTH %>" name="reminderQueryAnswer" showRequiredLabel="<%= false %>" size="50" type="text" value="<%= user.getReminderQueryAnswer() %>">
+			<aui:validator name="required" />
+		</aui:input>
 	</aui:fieldset>
 
 	<aui:button-row>

@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCExtension;
 import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
+import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
@@ -755,6 +756,44 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		};
 
 		copy.rename(closure);
+	}
+
+	@Override
+	protected void configureTaskPublishNodeModule(
+		PublishNodeModuleTask publishNodeModuleTask) {
+
+		super.configureTaskPublishNodeModule(publishNodeModuleTask);
+
+		configureTaskPublishNodeModuleDescription(publishNodeModuleTask);
+		configureTaskPublishNodeModuleName(publishNodeModuleTask);
+	}
+
+	protected void configureTaskPublishNodeModuleDescription(
+		PublishNodeModuleTask publishNodeModuleTask) {
+
+		if (Validator.isNotNull(publishNodeModuleTask.getModuleDescription())) {
+			return;
+		}
+
+		String bundleName = getBundleInstruction(
+			publishNodeModuleTask.getProject(), Constants.BUNDLE_NAME);
+
+		publishNodeModuleTask.setModuleDescription(bundleName);
+	}
+
+	protected void configureTaskPublishNodeModuleName(
+		PublishNodeModuleTask publishNodeModuleTask) {
+
+		String bundleSymbolicName = getBundleInstruction(
+			publishNodeModuleTask.getProject(), Constants.BUNDLE_SYMBOLICNAME);
+
+		int pos = bundleSymbolicName.indexOf('.');
+
+		String moduleName = bundleSymbolicName.substring(pos + 1);
+
+		moduleName = moduleName.replace('.', '-');
+
+		publishNodeModuleTask.setModuleName(moduleName);
 	}
 
 	@Override

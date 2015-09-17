@@ -37,6 +37,7 @@ import java.util.Map;
 import org.codehaus.groovy.runtime.EncodingGroovyMethods;
 
 import org.gradle.api.GradleException;
+import org.gradle.api.Project;
 import org.gradle.api.logging.Logger;
 import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.Input;
@@ -50,14 +51,11 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 
 	@Override
 	public void executeNode() {
-		setArgs(getCompleteArgs());
-
-		File npmrcFile = null;
-		File packageJsonFile = null;
-
 		try {
-			npmrcFile = createNpmrcFile();
-			packageJsonFile = createPackageJsonFile();
+			setArgs(getCompleteArgs());
+
+			createNpmrcFile();
+			createPackageJsonFile();
 
 			super.executeNode();
 		}
@@ -65,13 +63,9 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 			throw new GradleException(ioe.getMessage(), ioe);
 		}
 		finally {
-			if (npmrcFile != null) {
-				npmrcFile.delete();
-			}
+			Project project = getProject();
 
-			if (packageJsonFile != null) {
-				packageJsonFile.delete();
-			}
+			project.delete(getNpmrcFile(), getPackageJsonFile());
 		}
 	}
 
@@ -79,6 +73,10 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 	@Optional
 	public String getModuleAuthor() {
 		return GradleUtil.toString(_moduleAuthor);
+	}
+
+	public String getModuleBugsUrl() {
+		return GradleUtil.toString(_moduleBugsUrl);
 	}
 
 	@Input
@@ -139,6 +137,10 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 		_moduleAuthor = moduleAuthor;
 	}
 
+	public void setModuleBugsUrl(Object moduleBugsUrl) {
+		_moduleBugsUrl = moduleBugsUrl;
+	}
+
 	public void setModuleDescription(Object moduleDescription) {
 		_moduleDescription = moduleDescription;
 	}
@@ -179,28 +181,29 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 		_npmUserName = npmUserName;
 	}
 
-	protected File createNpmrcFile() throws IOException {
-		File npmrcFile = new File(getWorkingDir(), ".npmrc");
-
+	protected void createNpmrcFile() throws IOException {
 		List<String> npmrcContents = new ArrayList<>(2);
 
 		npmrcContents.add("_auth = " + getNpmAuth());
 		npmrcContents.add("email = " + getNpmEmailAddress());
+		npmrcContents.add("username = " + getNpmUserName());
 
-		FileUtil.write(npmrcFile, npmrcContents);
-
-		return npmrcFile;
+		FileUtil.write(getNpmrcFile(), npmrcContents);
 	}
 
-	protected File createPackageJsonFile() throws IOException {
-		File packageJsonFile = new File(getWorkingDir(), "package.json");
-
+	protected void createPackageJsonFile() throws IOException {
 		Map<String, Object> map = new HashMap<>();
 
 		String author = getModuleAuthor();
 
 		if (Validator.isNotNull(author)) {
 			map.put("author", author);
+		}
+
+		String bugsUrl = getModuleBugsUrl();
+
+		if (Validator.isNotNull(bugsUrl)) {
+			map.put("bugs", bugsUrl);
 		}
 
 		String description = getModuleDescription();
@@ -237,16 +240,19 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 			_logger.info(json);
 		}
 
+		File packageJsonFile = getPackageJsonFile();
+
 		Files.write(
 			packageJsonFile.toPath(), json.getBytes(StandardCharsets.UTF_8));
-
-		return packageJsonFile;
 	}
 
 	protected List<Object> getCompleteArgs() {
 		List<Object> completeArgs = new ArrayList<>();
 
 		completeArgs.add("publish");
+
+		completeArgs.add("--userconfig");
+		completeArgs.add(FileUtil.getAbsolutePath(getNpmrcFile()));
 
 		completeArgs.addAll(getArgs());
 
@@ -261,10 +267,19 @@ public class PublishNodeModuleTask extends ExecuteNpmTask {
 		return writable.toString();
 	}
 
+	protected File getNpmrcFile() {
+		return new File(getTemporaryDir(), "npmrc");
+	}
+
+	protected File getPackageJsonFile() {
+		return new File(getWorkingDir(), "package.json");
+	}
+
 	private static final Logger _logger = Logging.getLogger(
 		PublishNodeModuleTask.class);
 
 	private Object _moduleAuthor;
+	private Object _moduleBugsUrl;
 	private Object _moduleDescription;
 	private final List<Object> _moduleKeywords = new ArrayList<>();
 	private Object _moduleLicense;

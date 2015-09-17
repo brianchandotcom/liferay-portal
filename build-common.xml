@@ -1483,6 +1483,9 @@ rerun your task.
 				liferay.home=${liferay.home}
 				microsoft.translator.client.id=${microsoft.translator.client.id}
 				microsoft.translator.client.secret=${microsoft.translator.client.secret}
+				nodejs.npm.email=${nodejs.npm.email}
+				nodejs.npm.password=${nodejs.npm.password}
+				nodejs.npm.user=${nodejs.npm.user}
 				sass.compiler.class.name=${sass.compiler.class.name}
 				upgrade.table.dir=${upgrade.table.dir}
 			</echo>

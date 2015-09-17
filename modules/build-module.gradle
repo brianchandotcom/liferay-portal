@@ -54,11 +54,6 @@ buildCSS {
 	sassCompilerClassName = project.properties["sass.compiler.class.name"]
 }
 
-buildLang {
-	translateClientId = project.properties["microsoft.translator.client.id"]
-	translateClientSecret = project.properties["microsoft.translator.client.secret"]
-}
-
 buildService {
 	doFirst {
 		if (project.name.endsWith("-service")) {

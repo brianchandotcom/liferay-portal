@@ -115,7 +115,7 @@ boolean hasViewPermission = portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS
 		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
-			message="export"
+			message="delete"
 			url="<%= deleteRecordSetURL %>"
 		/>
 	</c:if>

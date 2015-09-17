@@ -3507,7 +3507,7 @@
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewRSVPPending">
+		<execute macro="CalendarEvent#viewRSVPAccepted">
 			<var name="resourceName" value="Liferay" />
 		</execute>
 

@@ -78,23 +78,21 @@ recordSearchContainer.setOrderByComparator(orderByComparator);
 recordSearchContainer.setOrderByType(orderByType);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+<portlet:renderURL var="addRecordURL">
+	<portlet:param name="mvcPath" value="/edit_record.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+	<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
+</portlet:renderURL>
 
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<c:if test="<%= showAddRecordButton && portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY) %>">
 		<aui:nav cssClass="navbar-nav" searchContainer="<%= recordSearchContainer %>">
-			<portlet:renderURL var="addRecordURL">
-				<portlet:param name="mvcPath" value="/edit_record.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-				<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
-			</portlet:renderURL>
-
 			<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
 		</aui:nav>
 	</c:if>
 
 	<aui:nav-bar-search searchContainer="<%= recordSearchContainer %>">
-
 		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="searchURL">
 			<portlet:param name="mvcPath" value="/view_record_set.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -194,13 +192,6 @@ recordSearchContainer.setOrderByType(orderByType);
 </div>
 
 <c:if test="<%= showAddRecordButton && portletName.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS) %>">
-	<portlet:renderURL var="addRecordURL">
-		<portlet:param name="mvcPath" value="/edit_record.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-		<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
-	</portlet:renderURL>
-
 	<liferay-frontend:add-menu>
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' url="<%= addRecordURL.toString() %>" />
 	</liferay-frontend:add-menu>

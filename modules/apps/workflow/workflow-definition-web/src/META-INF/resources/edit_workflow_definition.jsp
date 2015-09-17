@@ -43,24 +43,26 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
 </liferay-portlet:actionURL>
 
-<aui:form action="<%= editWorkflowDefinitionURL %>" enctype="multipart/form-data" method="post">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="name" type="hidden" value="<%= name %>" />
-	<aui:input name="version" type="hidden" value="<%= version %>" />
+<div class="container-fluid-1280">
+	<aui:form action="<%= editWorkflowDefinitionURL %>" enctype="multipart/form-data" method="post">
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="name" type="hidden" value="<%= name %>" />
+		<aui:input name="version" type="hidden" value="<%= version %>" />
 
-	<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>" message="please-enter-a-valid-file" />
+		<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>" message="please-enter-a-valid-file" />
 
-	<aui:fieldset>
-		<aui:field-wrapper label="title">
-			<liferay-ui:input-localized name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
-		</aui:field-wrapper>
+		<aui:fieldset>
+			<aui:field-wrapper label="title">
+				<liferay-ui:input-localized name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
+			</aui:field-wrapper>
 
-		<aui:input name="file" type="file" />
+			<aui:input name="file" type="file" />
 
-		<aui:button-row>
-			<aui:button type="submit" />
+			<aui:button-row>
+				<aui:button type="submit" />
 
-			<aui:button href="<%= redirect %>" type="cancel" />
-		</aui:button-row>
-	</aui:fieldset>
-</aui:form>
+				<aui:button href="<%= redirect %>" type="cancel" />
+			</aui:button-row>
+		</aui:fieldset>
+	</aui:form>
+</div>

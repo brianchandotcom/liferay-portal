@@ -188,6 +188,5 @@ portletURL.setParameter("tabs1", "default-configuration");
 
 			<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 		</liferay-ui:search-container>
-
 	</aui:form>
 </div>

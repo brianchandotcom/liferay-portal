@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String tabs2 = ParamUtil.getString(renderRequest, "tabs2", "pending");
+
 WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
 
 if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
@@ -38,7 +40,7 @@ else {
 		<aui:nav-item
 			href="<%= viewPendingURL %>"
 			label="pending"
-			selected='<%= ParamUtil.getString(renderRequest, "tabs2", "pending").equals("pending") %>'
+			selected='<%= tabs2.equals("pending") %>'
 		/>
 
 		<portlet:renderURL var="viewCompletedURL">
@@ -49,14 +51,13 @@ else {
 		<aui:nav-item
 			href="<%= viewCompletedURL %>"
 			label="completed"
-			selected='<%= ParamUtil.getString(renderRequest, "tabs2", "pending").equals("completed") %>'
+			selected='<%= tabs2.equals("completed") %>'
 		/>
 
 	</aui:nav>
 </aui:nav-bar>
 
 <div class="container-fluid-1280">
-
 	<liferay-ui:search-container
 		searchContainer="<%= workflowInstanceViewDisplayContext.getSearchContainer() %>"
 	>
@@ -76,6 +77,7 @@ else {
 				<portlet:param name="mvcPath" value="/edit_workflow_instance.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="workflowInstanceId" value="<%= String.valueOf(workflowInstance.getWorkflowInstanceId()) %>" />
+				<portlet:param name="tabs2" value="<%= tabs2 %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text

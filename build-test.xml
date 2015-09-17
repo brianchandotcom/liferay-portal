@@ -30,15 +30,6 @@
 		<sequential>
 			<if>
 				<not>
-					<isset property="app.server.type" />
-				</not>
-				<then>
-					<property name="app.server.type" value="tomcat" />
-				</then>
-			</if>
-
-			<if>
-				<not>
 					<or>
 						<equals arg1="${app.server.type}" arg2="glassfish" />
 						<equals arg1="${app.server.type}" arg2="jboss" />
@@ -59,32 +50,16 @@
 
 			<if>
 				<not>
-					<isset property="browser.type" />
-				</not>
-				<then>
-					<property name="browser.type" value="firefox" />
-				</then>
-			</if>
-
-			<if>
-				<not>
 					<or>
+						<equals arg1="${browser.type}" arg2="chrome" />
+						<equals arg1="${browser.type}" arg2="edge" />
 						<equals arg1="${browser.type}" arg2="firefox" />
-						<equals arg1="${browser.type}" arg2="googlechrome" />
-						<equals arg1="${browser.type}" arg2="ie" />
+						<equals arg1="${browser.type}" arg2="internetexplorer" />
+						<equals arg1="${browser.type}" arg2="safari" />
 					</or>
 				</not>
 				<then>
-					<fail>Please set "browser.type" to one of the following:${line.separator}firefox, googlechrome, ie.</fail>
-				</then>
-			</if>
-
-			<if>
-				<not>
-					<isset property="database.type" />
-				</not>
-				<then>
-					<property name="database.type" value="mysql" />
+					<fail>Please set "browser.type" to one of the following:${line.separator}chrome, edge, firefox, internetexplorer, safari.</fail>
 				</then>
 			</if>
 
@@ -556,7 +531,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 
 	<macrodef name="get-test-url">
 		<sequential>
-			<get-testcase-property property.name="mobile.device.enabled" />
+			<get-testcase-property property.name="mobile.device.type" />
 
 			<get-testcase-property property.name="testcase.url" />
 
@@ -566,7 +541,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<var name="test.url" value="${test.url}" />
 				</then>
 				<elseif>
-					<equals arg1="${mobile.device.enabled}" arg2="true" />
+					<isset property="${mobile.device.type}" />
 					<then>
 						<get-ip-address />
 
@@ -2125,7 +2100,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				hw.keyboard=yes
 			</echo>
 
-			<exec executable="/bin/bash" os="${os.unix}" spawn="true">
+			<exec executable="/bin/bash" os="${os.apple},${os.unix}" spawn="true">
 				<arg value="-c" />
 				<arg value="${mobile.android.home}/tools/emulator -avd deviceName -no-boot-anim" />
 			</exec>
@@ -2272,23 +2247,43 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="start-appium">
 		<sequential>
-			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
+			<if>
+				<equals arg1="${mobile.device.type}" arg2="android" />
+				<then>
+					<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
 
-			<parallel>
-				<daemons>
-					<exec executable="/bin/bash" os="${os.unix}">
-						<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
-						<arg value="-c" />
-						<arg value="${appium.unix.cmd}" />
-					</exec>
+					<parallel>
+						<daemons>
+							<exec executable="/bin/bash" os="${os.apple},${os.unix}">
+								<env key="ANDROID_HOME" value="${mobile.android.home}" />
+								<env key="PATH" value="${env.PATH}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
+								<arg value="-c" />
+								<arg value="${appium.unix.cmd}" />
+							</exec>
 
-					<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
-						<env key="Path" value="${env.Path}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
-						<arg value="/c" />
-						<arg value="${appium.win32.cmd}" />
-					</exec>
-				</daemons>
-			</parallel>
+							<exec dir="${appium.win32.dir}" executable="cmd.exe" os="${os.windows}">
+								<env key="ANDROID_HOME" value="${mobile.android.home}" />
+								<env key="Path" value="${env.Path}:${mobile.android.home}/tools:${mobile.android.home}/platform-tools" />
+								<arg value="/c" />
+								<arg value="${appium.win32.cmd}" />
+							</exec>
+						</daemons>
+					</parallel>
+				</then>
+				<elseif>
+					<equals arg1="${mobile.device.type}" arg2="ios" />
+					<then>
+						<parallel>
+							<daemons>
+								<exec executable="/bin/bash" os="${os.apple}">
+									<arg value="-c" />
+									<arg value="${appium.unix.cmd}" />
+								</exec>
+							</daemons>
+						</parallel>
+					</then>
+				</elseif>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -2429,7 +2424,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="stop-appium">
 		<sequential>
-			<exec executable="/bin/bash" os="${os.unix}" >
+			<exec executable="/bin/bash" os="${os.apple},${os.unix}" >
 				<arg value="-c" />
 				<arg value="killall node" />
 			</exec>
@@ -3064,6 +3059,38 @@ go]]></replacevalue>
 
 	<target name="clean-up-logs">
 		<delete failonerror="false" file="${project.dir}/console-shut-down" />
+	</target>
+
+	<target name="clean-up-mobile-device">
+		<if>
+			<equals arg1="${mobile.device.type}" arg2="android" />
+			<then>
+				<stop-android-device />
+			</then>
+		</if>
+	</target>
+
+	<target name="clean-up-selenium-driver">
+		<if>
+			<equals arg1="${browser.type}" arg2="chrome" />
+			<then>
+				<stop-chrome-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="internetexplorer" />
+			<then>
+				<stop-ie-driver />
+			</then>
+		</if>
+
+		<if>
+			<isset property="${mobile.device.type}" />
+			<then>
+				<stop-appium />
+			</then>
+		</if>
 	</target>
 
 	<target name="clean-up-sikuli-temp-files">
@@ -4092,6 +4119,15 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		</if>
 	</target>
 
+	<target name="prepare-mobile-device">
+		<if>
+			<equals arg1="${mobile.device.type}" arg2="android" />
+			<then>
+				<start-android-device />
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-portal-ext-properties">
 		<prepare-fix-pack-bundle />
 
@@ -4216,10 +4252,10 @@ javascript.fast.load=false</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="mobile.device.enabled" />
+		<get-testcase-property property.name="mobile.device.type" />
 
 		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<isset property="${mobile.device.type}" />
 			<then>
 				<get-ip-address />
 
@@ -4606,7 +4642,9 @@ module.framework.properties.osgi.console=11312</echo>
 		<antcall target="prepare-selenium-app-server-properties" />
 		<antcall target="prepare-selenium-browser-properties" />
 		<antcall target="prepare-selenium-database-properties" />
+		<antcall target="prepare-selenium-driver" />
 		<antcall target="prepare-selenium-email-properties" />
+		<antcall target="prepare-selenium-mobile-properties" />
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
@@ -4633,15 +4671,6 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					liferay.portal.bundle=${liferay.portal.bundle}
-				</echo>
-			</then>
-		</if>
-
-		<if>
-			<isset property="mobile.android.home" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					mobile.android.home=${mobile.android.home}
 				</echo>
 			</then>
 		</if>
@@ -4773,64 +4802,17 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 	</target>
 
-	<target name="prepare-selenium-browser-driver">
-		<if>
-			<equals arg1="${browser.type}" arg2="googlechrome" />
-			<then>
-				<prepare-chrome-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="ie" />
-			<then>
-				<prepare-ie-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="safari" />
-			<then>
-				<prepare-safari-driver />
-			</then>
-		</if>
-	</target>
-
 	<target name="prepare-selenium-browser-properties">
-		<if>
-			<equals arg1="${browser.type}" arg2="edge" />
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					browser.type=*edge
-				</echo>
-			</then>
-			<elseif>
-				<equals arg1="${browser.type}" arg2="firefox" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						browser.type=*chrome
-					</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${browser.type}" arg2="googlechrome" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						browser.type=*googlechrome
-						selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
-					</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${browser.type}" arg2="ie" />
-				<then>
-					<echo append="true" file="${test.ext.properties.file}">
-						browser.type=*iehta
-						selenium.ie.driver.executable=${selenium.ie.driver.executable}
-					</echo>
-				</then>
-			</elseif>
-		</if>
+		<echo append="true" file="${test.ext.properties.file}">
+			browser.type=${browser.type}
+			selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
+			selenium.chrome.driver.version=${selenium.chrome.driver.version}
+			selenium.executable.dir.name=${selenium.executable.dir.name}
+			selenium.ie.driver.executable=${selenium.ie.driver.executable}
+			selenium.ie.driver.version=${selenium.ie.driver.version}
+			selenium.remote.driver.enabled=${selenium.remote.driver.enabled}
+			selenium.remote.driver.hub=${selenium.remote.driver.hub}
+		</echo>
 	</target>
 
 	<target name="prepare-selenium-database-properties">
@@ -5056,6 +5038,36 @@ module.framework.properties.osgi.console=11312</echo>
 				<echo append="true" file="${test.ext.properties.file}">
 					database.type=${database.type}
 				</echo>
+			</then>
+		</if>
+	</target>
+
+	<target name="prepare-selenium-driver">
+		<if>
+			<equals arg1="${browser.type}" arg2="chrome" />
+			<then>
+				<prepare-chrome-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="internetexplorer" />
+			<then>
+				<prepare-ie-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="safari" />
+			<then>
+				<prepare-safari-driver />
+			</then>
+		</if>
+
+		<if>
+			<isset property="${mobile.device.type}" />
+			<then>
+				<start-appium />
 			</then>
 		</if>
 	</target>
@@ -5323,6 +5335,18 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 	</target>
 
+	<target name="prepare-selenium-mobile-properties">
+		<if>
+			<isset property="mobile.device.type" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					mobile.android.home=${mobile.android.home}
+					mobile.device.type=${mobile.device.type}
+				</echo>
+			</then>
+		</if>
+	</target>
+
 	<target name="prepare-selenium-required-properties">
 		<get-test-url />
 
@@ -5357,13 +5381,13 @@ module.framework.properties.osgi.console=11312</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="mobile.device.enabled" />
+		<get-testcase-property property.name="mobile.device.type" />
 
 		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
+			<isset property="${mobile.device.type}" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					mobile.device.enabled=${mobile.device.enabled}
+					mobile.device.type=${mobile.device.type}
 				</echo>
 			</then>
 		</if>
@@ -6184,6 +6208,8 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="run-selenium-test" depends="prepare-selenium">
+		<antcall target="prepare-mobile-device" />
+
 		<if>
 			<and>
 				<equals arg1="${test.class}" arg2="PortalWebTestSuite" />
@@ -6381,17 +6407,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="mobile.device.enabled" />
-
-		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
-			<then>
-				<start-android-device />
-
-				<start-appium />
-			</then>
-		</if>
-
 		<get-testcase-property property.name="web.xml.timeout" />
 
 		<if>
@@ -6536,8 +6551,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 		<remake-dir dir="${selenium.output.dir}" />
 
-		<antcall target="prepare-selenium-browser-driver" />
-
 		<antcall target="copy-sikuli-temp-files" />
 
 		<start-app-server />
@@ -6644,34 +6657,13 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="mobile.device.enabled" />
+		<antcall target="clean-up-mobile-device" />
 
-		<if>
-			<equals arg1="${mobile.device.enabled}" arg2="true" />
-			<then>
-				<stop-android-device />
-
-				<stop-appium />
-			</then>
-		</if>
+		<antcall target="clean-up-selenium-driver" />
 
 		<antcall target="clean-up-sikuli-temp-files" />
 
 		<antcall target="clean-up-web-xml" />
-
-		<if>
-			<equals arg1="${browser.type}" arg2="googlechrome" />
-			<then>
-				<stop-chrome-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="ie" />
-			<then>
-				<stop-ie-driver />
-			</then>
-		</if>
 	</target>
 
 	<target name="set-portal-impl-portal-ext-properties">

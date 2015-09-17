@@ -154,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE</td>
+	<td>//a/i[@class='icon-remove']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REORDER</td>
 	<td>//a/i[@class='icon-reorder']</td>
 	<td></td>

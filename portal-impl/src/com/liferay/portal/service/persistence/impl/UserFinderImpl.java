@@ -242,7 +242,7 @@ public class UserFinderImpl
 			List<Object[]> list = (List<Object[]>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			Map<Long, Integer> map = new LinkedHashMap<>(list.size());
+			Map<Long, Integer> map = new LinkedHashMap<>();
 
 			for (Object[] objects : list) {
 				Number groupId = (Number)objects[0];

@@ -95,7 +95,7 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="addCP">
+	<command name="addCP" summary="Add a category named '${categoryName}' to the vocabulary named '${vocabularyName}'">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
@@ -346,7 +346,7 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
-	<command name="viewCP">
+	<command name="viewCP" summary="Assert that the category named '${categoryName}' has been added to the vocabulary named '${vocabularyName}'">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 

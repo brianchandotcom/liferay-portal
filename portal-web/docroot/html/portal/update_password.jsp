@@ -120,6 +120,7 @@ PasswordPolicy passwordPolicy = user.getPasswordPolicy();
 					<aui:validator name="equalTo">
 						'#<portlet:namespace />password1'
 					</aui:validator>
+					<aui:validator name="required" />
 				</aui:input>
 			</aui:fieldset>
 

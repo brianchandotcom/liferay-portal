@@ -59,6 +59,8 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 			Field.COMPANY_ID, Field.ENTRY_CLASS_NAME, Field.ENTRY_CLASS_PK,
 			Field.UID);
 		setDefaultSelectedLocalizedFieldNames(Field.DESCRIPTION, Field.TITLE);
+		setFilterSearch(true);
+		setPermissionAware(true);
 	}
 
 	@Override

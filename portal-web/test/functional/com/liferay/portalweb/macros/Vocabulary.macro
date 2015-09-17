@@ -82,7 +82,6 @@
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="Your request failed to complete." />
-		<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="Please enter a valid name." />
 	</command>
 
 	<command name="addWithAssociatedAssetTypeCP">

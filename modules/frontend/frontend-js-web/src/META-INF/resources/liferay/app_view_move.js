@@ -10,7 +10,6 @@ AUI.add(
 
 		var History = Liferay.HistoryManager;
 		var Lang = A.Lang;
-		var UA = A.UA;
 		var Util = Liferay.Util;
 
 		var CSS_ACTIVE_AREA = 'active-area';
@@ -52,8 +51,6 @@ AUI.add(
 		var STR_NODE = 'node';
 
 		var STR_PORTLET_GROUP = 'portletGroup';
-
-		var TOUCH = UA.touch;
 
 		/**
 		 * A base class for `A.AppViewMove`.

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String tabs1 = ParamUtil.getString(request, "tabs1");
+
 String randomId = workflowTaskDisplayContext.getWorkflowTaskRandomId();
 
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
@@ -26,7 +28,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= (row == null) %>" showWhenSingleIcon="<%= (row == null) %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showExpanded="<%= (row == null) %>">
 	<c:if test="<%= !workflowTask.isCompleted() && workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
 
 		<%
@@ -39,6 +41,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 			<liferay-portlet:actionURL name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">
 				<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="tabs1" value="<%= tabs1 %>" />
 				<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 				<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 				<portlet:param name="assigneeUserId" value="<%= StringUtil.valueOf(workflowTask.getAssigneeUserId()) %>" />
@@ -51,7 +54,6 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 			<liferay-ui:icon
 				cssClass='<%= "workflow-task-" + randomId + " task-change-status-link" %>'
 				data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
-				iconCssClass="icon-random"
 				id='<%= randomId + HtmlUtil.escapeAttribute(transitionName) + "taskChangeStatusLink" %>'
 				message="<%= message %>"
 				method="get"
@@ -76,7 +78,6 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-assign-to-me-link" %>'
 			data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
-			iconCssClass="icon-signin"
 			id='<%= randomId + "taskAssignToMeLink" %>'
 			message="assign-to-me"
 			method="get"
@@ -95,7 +96,6 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-assign-link" %>'
 			data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
-			iconCssClass="icon-signin"
 			id='<%= randomId + "taskAssignLink" %>'
 			message="assign-to-..."
 			method="get"
@@ -113,7 +113,6 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-due-date-link" %>'
 			data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
-			iconCssClass="icon-time"
 			id='<%= randomId + "taskDueDateLink" %>'
 			message="update-due-date"
 			method="get"

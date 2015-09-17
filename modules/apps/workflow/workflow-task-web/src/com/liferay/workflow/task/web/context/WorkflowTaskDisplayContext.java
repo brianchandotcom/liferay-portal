@@ -65,6 +65,7 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -226,7 +227,11 @@ public class WorkflowTaskDisplayContext {
 		return HtmlUtil.escape(workflowTask.getDescription());
 	}
 
-	public String getDueDate(WorkflowTask workflowTask) {
+	public Date getDueDate(WorkflowTask workflowTask) {
+		return workflowTask.getDueDate();
+	}
+
+	public String getDueDateAsString(WorkflowTask workflowTask) {
 		if (workflowTask.getDueDate() == null) {
 			return LanguageUtil.get(
 				_workflowTaskRequestHelper.getRequest(), "never");
@@ -270,18 +275,16 @@ public class WorkflowTaskDisplayContext {
 		return taskName + ": " + title;
 	}
 
-	public String getLastActivityDate(WorkflowTask workflowTask)
+	public Date getLastActivityDate(WorkflowTask workflowTask)
 		throws PortalException {
 
 		WorkflowLog workflowLog = getWorkflowLog(workflowTask);
 
-		if (workflowLog == null) {
-			return LanguageUtil.get(
-				_workflowTaskRequestHelper.getRequest(), "never");
+		if (workflowLog != null) {
+			return workflowLog.getCreateDate();
 		}
-		else {
-			return _dateFormatDateTime.format(workflowLog.getCreateDate());
-		}
+
+		return null;
 	}
 
 	public String[] getMetadataFields() {

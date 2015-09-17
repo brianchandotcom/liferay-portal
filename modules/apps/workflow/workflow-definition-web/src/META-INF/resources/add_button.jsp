@@ -16,36 +16,38 @@
 
 <%@ include file="/init.jsp" %>
 
+<portlet:renderURL var="viewDefinitionsURL">
+	<portlet:param name="mvcPath" value="/view.jsp" />
+	<portlet:param name="tabs1" value="workflow-definitions" />
+</portlet:renderURL>
+
+<portlet:renderURL var="addWorkflowDefinitionURL">
+	<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
+	<portlet:param name="tabs1" value="workflow-definitions" />
+	<portlet:param name="redirect" value="<%= viewDefinitionsURL %>" />
+	<portlet:param name="backURL" value="<%= viewDefinitionsURL %>" />
+</portlet:renderURL>
+
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+List<AddMenuItem> addMenuItems = new ArrayList<>();
+
+addMenuItems.add(new AddMenuItem(HtmlUtil.escape(LanguageUtil.get(request, "upload-definition")), addWorkflowDefinitionURL.toString()));
 %>
 
-<aui:nav-bar>
-	<aui:nav cssClass="navbar-nav">
-		<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
+<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
 
-			<%
-			String taglibHREF = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('', '0', '', Liferay.Util.getWindowName());";
-			%>
+	<%
+	String taglibHREF = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('', '0', '', Liferay.Util.getWindowName());";
+	addMenuItems.add(new AddMenuItem(LanguageUtil.format(request, "add-new-x", "definition"), taglibHREF));
+	%>
 
-			<aui:nav-item href="<%= taglibHREF %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-new-x", "definition") %>' />
-		</c:if>
+</c:if>
 
-		<portlet:renderURL var="viewDefinitionsURL">
-			<portlet:param name="mvcPath" value="/view.jsp" />
-			<portlet:param name="tabs1" value="workflow-definitions" />
-		</portlet:renderURL>
-
-		<portlet:renderURL var="addWorkflowDefinitionURL">
-			<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
-			<portlet:param name="tabs1" value="workflow-definitions" />
-			<portlet:param name="redirect" value="<%= viewDefinitionsURL %>" />
-			<portlet:param name="backURL" value="<%= viewDefinitionsURL %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item href="<%= addWorkflowDefinitionURL %>" iconCssClass="icon-upload" label="upload-definition" selected='<%= toolbarItem.equals("add") %>' />
-	</aui:nav>
-</aui:nav-bar>
+<c:if test="<%= !addMenuItems.isEmpty() %>">
+	<liferay-frontend:add-menu
+		addMenuItems="<%= addMenuItems %>"
+	/>
+</c:if>
 
 <c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
 	<aui:script>

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -28,9 +29,12 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowLog;
 import com.liferay.portal.kernel.workflow.WorkflowLogManagerUtil;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
+import com.liferay.portlet.PortletURLUtil;
+import com.liferay.workflow.instance.web.search.WorkflowInstanceSearch;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -45,9 +49,25 @@ public class WorkflowInstanceViewDisplayContext
 	extends BaseWorkflowInstanceDisplayContext {
 
 	public WorkflowInstanceViewDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortalException {
 
 		super(renderRequest, renderResponse);
+
+		PortletURL currentURLObj = PortletURLUtil.getCurrent(
+			renderRequest, renderResponse);
+
+		_searchContainer = new WorkflowInstanceSearch(
+			renderRequest, currentURLObj);
+		_searchContainer.setEmptyResultsMessage(
+			getSearchContainerEmptyResultsMessage());
+
+		_searchContainer.setResults(
+			getSearchContainerResults(
+				_searchContainer.getStart(), _searchContainer.getEnd(),
+				_searchContainer.getOrderByComparator()));
+
+		_searchContainer.setTotal(getSearchContainerTotal());
 	}
 
 	public String getAssetTitle(WorkflowInstance workflowInstance) {
@@ -76,52 +96,24 @@ public class WorkflowInstanceViewDisplayContext
 			HtmlUtil.escape(workflowInstance.getWorkflowDefinitionName()));
 	}
 
-	public String getEndDate(WorkflowInstance workflowInstance) {
-		if (workflowInstance.getEndDate() == null) {
-			return LanguageUtil.get(
-				workflowInstanceRequestHelper.getRequest(), "never");
-		}
-
-		return dateFormatDateTime.format(workflowInstance.getEndDate());
+	public Date getEndDate(WorkflowInstance workflowInstance) {
+		return workflowInstance.getEndDate();
 	}
 
-	public String getLastActivityDate(WorkflowInstance workflowInstance)
+	public Date getLastActivityDate(WorkflowInstance workflowInstance)
 		throws PortalException {
 
 		WorkflowLog workflowLog = getLatestWorkflowLog(workflowInstance);
 
 		if (workflowLog == null) {
-			return LanguageUtil.get(
-				workflowInstanceRequestHelper.getRequest(), "never");
+			return null;
 		}
 
-		return dateFormatDateTime.format(workflowLog.getCreateDate());
+		return workflowLog.getCreateDate();
 	}
 
-	public String getSearchContainerEmptyResultsMessage() {
-		if (isShowCompletedInstances()) {
-			return "there-are-no-completed-instances";
-		}
-		else {
-			return "there-are-no-pending-instances";
-		}
-	}
-
-	public List<WorkflowInstance> getSearchContainerResults(int start, int end)
-		throws PortalException {
-
-		return WorkflowInstanceManagerUtil.getWorkflowInstances(
-			workflowInstanceRequestHelper.getCompanyId(), null,
-			WorkflowHandlerUtil.getSearchableAssetTypes(),
-			isShowCompletedInstances(), start, end,
-			WorkflowComparatorFactoryUtil.getInstanceStartDateComparator());
-	}
-
-	public int getSearchContainerTotal() throws PortalException {
-		return WorkflowInstanceManagerUtil.getWorkflowInstanceCount(
-			workflowInstanceRequestHelper.getCompanyId(), null,
-			WorkflowHandlerUtil.getSearchableAssetTypes(),
-			isShowCompletedInstances());
+	public WorkflowInstanceSearch getSearchContainer() {
+		return _searchContainer;
 	}
 
 	public String getStatus(WorkflowInstance workflowInstance) {
@@ -168,6 +160,32 @@ public class WorkflowInstanceViewDisplayContext
 		return workflowLogs.get(0);
 	}
 
+	protected String getSearchContainerEmptyResultsMessage() {
+		if (isShowCompletedInstances()) {
+			return "there-are-no-completed-instances";
+		}
+		else {
+			return "there-are-no-pending-instances";
+		}
+	}
+
+	protected List<WorkflowInstance> getSearchContainerResults(
+			int start, int end, OrderByComparator<WorkflowInstance> comparator)
+		throws PortalException {
+
+		return WorkflowInstanceManagerUtil.getWorkflowInstances(
+			workflowInstanceRequestHelper.getCompanyId(), null,
+			WorkflowHandlerUtil.getSearchableAssetTypes(),
+			isShowCompletedInstances(), start, end, comparator);
+	}
+
+	protected int getSearchContainerTotal() throws PortalException {
+		return WorkflowInstanceManagerUtil.getWorkflowInstanceCount(
+			workflowInstanceRequestHelper.getCompanyId(), null,
+			WorkflowHandlerUtil.getSearchableAssetTypes(),
+			isShowCompletedInstances());
+	}
+
 	protected String getWorkflowContextEntryClassName(
 		Map<String, Serializable> workflowContext) {
 
@@ -201,5 +219,7 @@ public class WorkflowInstanceViewDisplayContext
 
 		return false;
 	}
+
+	private final WorkflowInstanceSearch _searchContainer;
 
 }

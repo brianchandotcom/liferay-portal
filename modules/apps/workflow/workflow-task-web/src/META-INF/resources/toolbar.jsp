@@ -27,6 +27,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "assigned-to-me
 			<portlet:param name="toolbarItem" value="my-completed-tasks" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= completedURL %>" iconCssClass="icon-plus" label="my-completed-tasks" selected='<%= toolbarItem.equals("my-completed-tasks") %>' />
+		<aui:nav-item href="<%= completedURL %>" label="my-completed-tasks" selected='<%= toolbarItem.equals("my-completed-tasks") %>' />
 	</aui:nav>
 </aui:nav-bar>

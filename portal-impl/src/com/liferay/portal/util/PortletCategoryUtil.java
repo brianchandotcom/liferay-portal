@@ -39,13 +39,14 @@ public class PortletCategoryUtil {
 		String legacyPortletCategoryKey) {
 
 		if (Validator.equals(legacyPortletCategoryKey, "apps") ||
-			Validator.equals(legacyPortletCategoryKey, "marketplace") ||
-			Validator.equals(legacyPortletCategoryKey, "portal") ||
-			Validator.equals(legacyPortletCategoryKey, "server")) {
+			Validator.equals(legacyPortletCategoryKey, "marketplace")) {
 
 			return PortletCategoryKeys.CONTROL_PANEL_APPS;
 		}
-		else if (Validator.equals(legacyPortletCategoryKey, "configuration")) {
+		else if (Validator.equals(legacyPortletCategoryKey, "configuration") ||
+				 Validator.equals(legacyPortletCategoryKey, "portal") ||
+				 Validator.equals(legacyPortletCategoryKey, "server")) {
+
 			return PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION;
 		}
 		else if (Validator.equals(legacyPortletCategoryKey, "content")) {

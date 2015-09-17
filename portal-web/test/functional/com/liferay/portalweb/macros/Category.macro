@@ -3,6 +3,7 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
@@ -128,6 +129,7 @@
 	<command name="addWithNullTitleCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
 		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
@@ -248,7 +250,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="Select" locator1="CPCategoriesEdit#VOCABULARY_SELECT" value1="${vocabularyName2}" />

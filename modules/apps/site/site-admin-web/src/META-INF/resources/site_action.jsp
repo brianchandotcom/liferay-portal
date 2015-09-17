@@ -33,8 +33,6 @@ if (row != null) {
 else {
 	group = (Group)request.getAttribute("view_entries.jspf-site");
 
-	GroupSearchTerms searchTerms = (GroupSearchTerms)request.getAttribute("view_entries.jspf-searchTerms");
-
 	List<String> organizationNames = SitesUtil.getOrganizationNames(group, user);
 
 	organizationUser = !organizationNames.isEmpty();
@@ -45,12 +43,6 @@ else {
 }
 
 boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.UPDATE);
-
-boolean view = false;
-
-if (row == null) {
-	view = true;
-}
 %>
 
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= true %>">

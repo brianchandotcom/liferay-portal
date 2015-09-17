@@ -91,11 +91,7 @@ if (group != null) {
 			<liferay-ui:search-container-results>
 
 				<%
-				long parentGroupId = _getParentGroupId(request, group, filterManageableGroups);
-
-				if (group != null) {
-					parentGroupId = group.getGroupId();
-				}
+				long parentGroupId = _getParentGroupId(group, filterManageableGroups);
 				%>
 
 				<c:choose>
@@ -212,7 +208,7 @@ if (group != null) {
 <liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 
 <%!
-private long _getParentGroupId(HttpServletRequest request, Group group, boolean filterManageableGroups) {
+private long _getParentGroupId(Group group, boolean filterManageableGroups) {
 	if (group != null) {
 		return group.getGroupId();
 	}

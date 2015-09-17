@@ -28,7 +28,6 @@ if (Validator.isNull(redirect)) {
 }
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
-boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
 long groupId = ParamUtil.getLong(request, "groupId", portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS) ? themeDisplay.getSiteGroupId() : 0);
 

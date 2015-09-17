@@ -130,32 +130,34 @@ public class UserFinderTest {
 
 	@Test
 	public void testCountByGroups() throws Exception {
+		long groupId = _group.getGroupId();
+
 		Map<Long, Integer> counts = UserFinderUtil.countByGroups(
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
-			new long[] {_group.getGroupId()});
+			new long[] {groupId});
 
 		Assert.assertEquals(1, counts.size());
-		Assert.assertEquals(2, (int)counts.get(_group.getGroupId()));
+		Assert.assertEquals(2, (int)counts.get(groupId));
 
 		GroupLocalServiceUtil.addOrganizationGroup(
-			_organization.getOrganizationId(), _group.getGroupId());
+			_organization.getOrganizationId(), groupId);
 
 		counts = UserFinderUtil.countByGroups(
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
-			new long[] {_group.getGroupId()});
+			new long[] {groupId});
 
 		Assert.assertEquals(1, counts.size());
-		Assert.assertEquals(3, (int)counts.get(_group.getGroupId()));
+		Assert.assertEquals(3, (int)counts.get(groupId));
 
 		GroupLocalServiceUtil.addUserGroupGroup(
-			_userGroup.getUserGroupId(), _group.getGroupId());
+			_userGroup.getUserGroupId(), groupId);
 
 		counts = UserFinderUtil.countByGroups(
 			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
-			new long[] {_group.getGroupId()});
+			new long[] {groupId});
 
 		Assert.assertEquals(1, counts.size());
-		Assert.assertEquals(4, (int)counts.get(_group.getGroupId()));
+		Assert.assertEquals(4, (int)counts.get(groupId));
 	}
 
 	@Test

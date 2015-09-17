@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -573,6 +576,25 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 
 		portletURL.setPortletMode(PortletMode.VIEW);
 		portletURL.setWindowState(WindowState.MAXIMIZED);
+
+		return portletURL;
+	}
+
+	protected PortletURL getPortletURL(
+			HttpServletRequest request, String className,
+			PortletProvider.Action action, long scopeGroupId)
+		throws Exception {
+
+		LiferayPortletURL portletURL =
+			(LiferayPortletURL)PortletProviderUtil.getPortletURL(
+				request, className, action);
+
+		portletURL.setPortletMode(PortletMode.VIEW);
+		portletURL.setWindowState(WindowState.MAXIMIZED);
+
+		long plid = getPlid(request, portletURL.getPortletId(), scopeGroupId);
+
+		portletURL.setPlid(plid);
 
 		return portletURL;
 	}

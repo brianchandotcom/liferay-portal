@@ -1566,12 +1566,10 @@ public class DDMTemplateLocalServiceImpl
 			throw new TemplateSmallImageNameException(smallImageName);
 		}
 
-		String smallImageMaxSizeKey =
-				DDMServiceConfigurationKeys.
-					DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE;
-
 		long smallImageMaxSize = GetterUtil.getLong(
-					DDMServiceConfigurationUtil.get(smallImageMaxSizeKey), 0L);
+			DDMServiceConfigurationUtil.get(
+				DDMServiceConfigurationKeys.
+					DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE));
 
 		if ((smallImageMaxSize > 0) &&
 			(smallImageBytes.length > smallImageMaxSize)) {

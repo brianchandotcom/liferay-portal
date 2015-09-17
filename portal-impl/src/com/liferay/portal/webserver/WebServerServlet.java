@@ -270,10 +270,6 @@ public class WebServerServlet extends HttpServlet {
 				sendGroups(
 					response, user,
 					request.getServletPath() + StringPool.SLASH + path);
-
-				if (response.getStatus() == HttpServletResponse.SC_FORBIDDEN) {
-					throw new PrincipalException();
-				}
 			}
 			else {
 				if (Validator.isNumber(pathArray[0])) {
@@ -1129,7 +1125,7 @@ public class WebServerServlet extends HttpServlet {
 		if (!PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED) {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
-			return;
+			throw new PrincipalException();
 		}
 
 		List<WebServerEntry> webServerEntries = new ArrayList<>();

@@ -34,7 +34,7 @@
 
 		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY" value1="Add Subcategory" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${subcategoryName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -51,7 +51,7 @@
 
 		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
-		<execute function="AssertClick" locator1="Categories#CATEGORY_ENTRY_MENULIST_ADD_SUBCATEGORY" value1="Add Subcategory" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />
 
 		<var name="key_subcategoryName" value="${subCategoryName}" />
 

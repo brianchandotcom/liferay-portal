@@ -377,7 +377,7 @@
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${categoryName}" />
 
-		<execute function="Click" locator1="Categories#BACK_BUTTON" />
+		<execute function="Click" locator1="Icon#BACK" />
 
 		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${vocabularyName}" />
 	</command>

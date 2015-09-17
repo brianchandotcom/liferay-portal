@@ -51,7 +51,7 @@ List<PanelCategory> childPanelCategories = panelCategoryRegistry.getChildPanelCa
 		%>
 
 			<li class="col-xs-4 <%= (sitesPanelCategoryKey.equals(childPanelCategory.getKey())) ? "active" : StringPool.BLANK %>">
-				<a aria-expanded="true" data-toggle="tab" href="#<portlet:namespace /><%= childPanelCategory.getKey() %>" id="<portlet:namespace /><%= childPanelCategory.getKey() %>TabLink">
+				<a aria-expanded="true" data-toggle="tab" href="#<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>TabLink">
 					<div class="product-menu-tab-text">
 						<%= childPanelCategory.getLabel(locale) %>
 					</div>
@@ -70,7 +70,7 @@ List<PanelCategory> childPanelCategories = panelCategoryRegistry.getChildPanelCa
 		for (PanelCategory childPanelCategory : childPanelCategories) {
 		%>
 
-			<div class="fade in tab-pane <%= (sitesPanelCategoryKey.equals(childPanelCategory.getKey())) ? "active" : StringPool.BLANK %>" id="<portlet:namespace /><%= childPanelCategory.getKey() %>">
+			<div class="fade in tab-pane <%= (sitesPanelCategoryKey.equals(childPanelCategory.getKey())) ? "active" : StringPool.BLANK %>" id="<portlet:namespace /><%= AUIUtil.normalizeId(childPanelCategory.getKey()) %>">
 				<liferay-application-list:panel-content panelCategory="<%= childPanelCategory %>" />
 			</div>
 

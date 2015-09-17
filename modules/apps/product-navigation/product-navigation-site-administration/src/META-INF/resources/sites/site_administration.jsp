@@ -35,7 +35,7 @@ Group group = themeDisplay.getSiteGroup();
 			$('#<portlet:namespace />mySitesLink').on(
 				'click',
 				function(event) {
-					$('#<portlet:namespace /><%= mySitesPanelCategory.getKey() %>TabLink').tab('show');
+					$('#<portlet:namespace /><%= AUIUtil.normalizeId(mySitesPanelCategory.getKey()) %>TabLink').tab('show');
 				}
 			);
 		</aui:script>

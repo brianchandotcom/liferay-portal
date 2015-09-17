@@ -23,7 +23,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(new String[] {Company.class.getN
 %>
 
 <c:if test="<%= !mySiteGroups.isEmpty() %>">
-	<ul aria-labelledby="<%= panelCategory.getKey() %>" class="nav nav-equal-height" role="menu">
+	<ul aria-labelledby="<%= AUIUtil.normalizeId(panelCategory.getKey()) %>" class="nav nav-equal-height" role="menu">
 
 	<%
 	for (Group mySiteGroup : mySiteGroups) {

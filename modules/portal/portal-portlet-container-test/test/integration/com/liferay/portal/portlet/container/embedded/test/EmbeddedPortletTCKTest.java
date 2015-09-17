@@ -29,6 +29,7 @@ import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.portlet.container.test.BasePortletContainerTestCase;
+import com.liferay.portal.portlet.container.test.TestPortlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -36,10 +37,26 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portlet.PortletURLImpl;
+
+import java.io.IOException;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -311,6 +328,94 @@ public class EmbeddedPortletTCKTest {
 		}
 
 		private TestNonEmbeddedPortlet _nonEmbeddedPortlet;
+
+	}
+
+	@RunWith(Arquillian.class)
+	public static class WhenEmbeddingPortletUsingRuntimeTag
+		extends BasePortletContainerTestCase {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(),
+				TransactionalTestRule.INSTANCE);
+
+		@Before
+		public void setUp() throws Exception {
+			super.setUp();
+
+			_layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
+
+			_layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
+		}
+
+		@Test
+		public void shouldRenderEmbeddedAndRuntimePortlets() throws Exception {
+			TestPortlet embeddedPortlet = new TestPortlet() {
+
+				@Override
+				public void serveResource(
+						ResourceRequest resourceRequest,
+						ResourceResponse resourceResponse)
+					throws IOException, PortletException {
+
+					map.put("resource", Boolean.TRUE.toString());
+
+					PortletContext portletContext = getPortletContext();
+
+					PortletRequestDispatcher portletRequestDispatcher =
+						portletContext.getRequestDispatcher(
+							"/runtime_portlet.jsp");
+
+					portletRequestDispatcher.include(
+						resourceRequest, resourceResponse);
+				}
+
+			};
+
+			setUpPortlet(embeddedPortlet, properties, TEST_PORTLET_ID, false);
+
+			PortletPreferencesLocalServiceUtil.addPortletPreferences(
+				TestPropsValues.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
+				TEST_PORTLET_ID, null, null);
+
+			HttpServletRequest httpServletRequest = getHttpServletRequest();
+
+			PortletURL portletURL = new PortletURLImpl(
+				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
+				PortletRequest.RESOURCE_PHASE);
+
+			String testRuntimePortletId = "testRuntimePortletId";
+
+			TestPortlet testRuntimePortlet = new TestPortlet(map) {
+
+				@Override
+				public void render(
+					RenderRequest renderRequest, RenderResponse renderResponse)
+				throws IOException, PortletException {
+
+					map.put("runtime", Boolean.TRUE.toString());
+				}
+
+			};
+
+			setUpPortlet(
+				testRuntimePortlet, properties, testRuntimePortletId, false);
+
+			portletURL.setParameter(
+				"testRuntimePortletId", testRuntimePortletId);
+
+			Map<String, List<String>> responseMap = request(
+				portletURL.toString());
+
+			Assert.assertEquals("200", getString(responseMap, "code"));
+			Assert.assertTrue(map.containsKey("resource"));
+			Assert.assertTrue(map.containsKey("runtime"));
+		}
 
 	}
 

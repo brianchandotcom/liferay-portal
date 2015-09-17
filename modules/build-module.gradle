@@ -43,6 +43,14 @@ afterEvaluate {
 		project.version = project.version + "-SNAPSHOT"
 	}
 
+	Iterable<Task> publishNodeModuleTasks = tasks.matching {
+		it.class.name.startsWith "com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask"
+	}
+
+	configure(publishNodeModuleTasks) {
+		dependsOn jar
+	}
+
 	javadoc {
 		classpath = sourceSets.main.output + sourceSets.main.compileClasspath
 	}

@@ -27,6 +27,7 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 %>
 
 <liferay-frontend:management-bar
+	checkBoxContainerId="entriesContainer"
 	includeCheckBox="<%= !user.isDefaultUser() %>"
 >
 	<liferay-frontend:management-bar-buttons>

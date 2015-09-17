@@ -60,11 +60,8 @@ public class ServiceComponentLocalServiceImpl
 		ServiceComponentConfiguration serviceComponentConfiguration,
 		ClassLoader classLoader) {
 
-		try {
-			clearCacheRegistry(serviceComponentConfiguration);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		if (PropsValues.CACHE_CLEAR_ON_PLUGIN_UNDEPLOY) {
+			CacheRegistryUtil.clear();
 		}
 	}
 
@@ -274,15 +271,6 @@ public class ServiceComponentLocalServiceImpl
 					doUpgradeDBPrivilegedExceptionAction)
 			throws Exception;
 
-	}
-
-	protected void clearCacheRegistry(
-			ServiceComponentConfiguration serviceComponentConfiguration)
-		throws DocumentException {
-
-		if (PropsValues.CACHE_CLEAR_ON_PLUGIN_UNDEPLOY) {
-			CacheRegistryUtil.clear();
-		}
 	}
 
 	protected void doUpgradeDB(

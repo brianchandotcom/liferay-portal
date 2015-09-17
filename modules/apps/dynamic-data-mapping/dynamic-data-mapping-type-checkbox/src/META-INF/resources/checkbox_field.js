@@ -4,12 +4,12 @@ AUI.add(
 		var CheckboxField = A.Component.create(
 			{
 				ATTRS: {
-					type: {
-						value: 'checkbox'
-					},
-
 					showAsSwitcher: {
 						value: false
+					},
+
+					type: {
+						value: 'checkbox'
 					},
 
 					value: {

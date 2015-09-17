@@ -13,6 +13,16 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>ADVANCED_FIELD_SETTINGS_TOGGLE</td>
+	<td>//a[@class='settings-toggler']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CHECKBOX-->
 <tr>
 	<td>CHECKBOX</td>

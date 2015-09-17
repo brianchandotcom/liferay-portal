@@ -47,7 +47,7 @@ article = JournalArticleLocalServiceUtil.fetchLatestArticle(groupId, articleId, 
 		<c:choose>
 			<c:when test="<%= (articleDisplay != null) && !expired %>">
 				<div class="journal-content-article">
-					<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>
+					<%= articleDisplay.getContent() %>
 				</div>
 			</c:when>
 			<c:otherwise>

@@ -29,6 +29,9 @@ public interface PanelCategoryKeys {
 	public static final String CONTROL_PANEL_CONFIGURATION =
 		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION;
 
+	public static final String CONTROL_PANEL_SITES =
+		PortletCategoryKeys.CONTROL_PANEL_SITES;
+
 	public static final String CONTROL_PANEL_USERS =
 		PortletCategoryKeys.CONTROL_PANEL_USERS;
 
@@ -50,8 +53,6 @@ public interface PanelCategoryKeys {
 
 	public static final String SITE_ADMINISTRATION_USERS =
 		PortletCategoryKeys.SITE_ADMINISTRATION_USERS;
-
-	public static final String SITES = PortletCategoryKeys.SITES;
 
 	public static final String SITES_ADMINISTRATION_MY_SITES =
 		"sites_administration.my_sites";

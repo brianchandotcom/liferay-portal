@@ -145,7 +145,7 @@ if (layout != null) {
 							cssClass = "control-panel-configuration";
 							iconCssClass = "icon-cog";
 						}
-						else if (curCategory.equals(PortletCategoryKeys.SITES)) {
+						else if (curCategory.equals(PortletCategoryKeys.CONTROL_PANEL_SITES)) {
 							cssClass = "control-panel-sites";
 							iconCssClass = "icon-globe";
 						}

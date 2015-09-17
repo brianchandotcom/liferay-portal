@@ -404,7 +404,7 @@ public class ServicePreAction extends Action {
 						PortletCategoryKeys.SITE_ADMINISTRATION)) {
 
 					portletControlPanelEntryCategory =
-						PortletCategoryKeys.SITES;
+						PortletCategoryKeys.CONTROL_PANEL_SITES;
 				}
 
 				if (!controlPanelCategory.startsWith(
@@ -1772,7 +1772,8 @@ public class ServicePreAction extends Action {
 
 			if (controlPanelCategory.startsWith(
 					PortletCategoryKeys.CURRENT_SITE) ||
-				controlPanelCategory.startsWith(PortletCategoryKeys.SITES)) {
+				controlPanelCategory.startsWith(
+					PortletCategoryKeys.CONTROL_PANEL_SITES)) {
 
 				if (doAsGroupId <= 0) {
 					doAsGroupId = layout.getGroupId();

@@ -5030,7 +5030,7 @@ public class PortalImpl implements Portal {
 			liferayPortletResponse.createRenderURL(portletName);
 
 		siteAdministrationURL.setControlPanelCategory(
-			PortletCategoryKeys.SITES);
+			PortletCategoryKeys.CONTROL_PANEL_SITES);
 		siteAdministrationURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
 		siteAdministrationURL.setParameter(
 			"redirect", themeDisplay.getURLCurrent());

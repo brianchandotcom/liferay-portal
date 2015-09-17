@@ -55,8 +55,6 @@ public class PoshiRunnerValidation {
 		List<String> filePathNames = PoshiRunnerContext.getFilePathsNames();
 
 		for (String filePath : filePathNames) {
-			filePath = _TEST_BASE_DIR_NAME + "/" + filePath;
-
 			if (OSDetector.isWindows()) {
 				filePath = filePath.replace("/", "\\");
 			}

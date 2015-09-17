@@ -496,9 +496,6 @@ public class PoshiRunnerContext {
 					}
 
 					if (extendFilePath.endsWith(expectedExtendedPath)) {
-						extendFilePath =
-							_TEST_BASE_DIR_NAME + "/" + extendFilePath;
-
 						_readPathFile(
 							extendFilePath, className,
 							PoshiRunnerGetterUtil.getClassNameFromFilePath(
@@ -631,15 +628,16 @@ public class PoshiRunnerContext {
 
 		directoryScanner.scan();
 
-		_filePathsNames.addAll(
-			Arrays.asList(directoryScanner.getIncludedFiles()));
+		String[] filePathsArray = directoryScanner.getIncludedFiles();
 
-		for (String filePath : _filePathsNames) {
+		for (String filePath : filePathsArray) {
 			filePath = _TEST_BASE_DIR_NAME + "/" + filePath;
 
 			if (OSDetector.isWindows()) {
 				filePath = filePath.replace("/", "\\");
 			}
+
+			_filePathsNames.add(filePath);
 
 			_filePaths.put(
 				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),

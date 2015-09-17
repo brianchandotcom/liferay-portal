@@ -74,7 +74,7 @@ public abstract class BaseMobileDriverImpl
 			String locator, String cssAttribute, String cssValue)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		WebDriverHelper.assertCssValue(this, locator, cssAttribute, cssValue);
 	}
 
 	@Override

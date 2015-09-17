@@ -117,14 +117,7 @@ public abstract class BaseWebDriverImpl
 			String locator, String cssAttribute, String cssValue)
 		throws Exception {
 
-		WebElement webElement = getWebElement(locator);
-
-		String value = webElement.getCssValue(cssAttribute);
-
-		if (!value.equals(cssValue)) {
-			throw new Exception(
-				"CSS Value " + value + " does not match " + cssValue);
-		}
+		WebDriverHelper.assertCssValue(this, locator, cssAttribute, cssValue);
 	}
 
 	@Override

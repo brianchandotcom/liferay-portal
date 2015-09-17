@@ -112,16 +112,6 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 			width: 320
 		}
 	);
-
-	function <portlet:namespace />toggleActionsButton() {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0;
-
-		AUI.$('#<portlet:namespace />actionButtons').toggleClass('on', !hide);
-	}
-
-	<portlet:namespace />toggleActionsButton();
 </aui:script>
 
 <aui:script use="liferay-journal-navigation">

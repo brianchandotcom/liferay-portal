@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -63,6 +64,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -90,6 +92,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	protected void doVerify() throws Exception {
 		verifyArticleAssets();
 		verifyArticleContents();
+		verifyArticleExpirationDate();
 		verifyArticleLayouts();
 		verifyArticleStructures();
 		verifyContentSearch();
@@ -614,6 +617,62 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 							article.getId(),
 						e);
 				}
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void verifyArticleExpirationDate() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(17);
+
+			sb.append("select JournalArticle.* from JournalArticle ");
+			sb.append("left join JournalArticle tempJournalArticle ");
+			sb.append("on (JournalArticle.status = ");
+			sb.append(WorkflowConstants.STATUS_APPROVED);
+			sb.append(") and (tempJournalArticle.status = ");
+			sb.append(WorkflowConstants.STATUS_APPROVED);
+			sb.append(") and (JournalArticle.groupId = ");
+			sb.append(" tempJournalArticle.groupId) and ");
+			sb.append("(JournalArticle.articleId = ");
+			sb.append("tempJournalArticle.articleId) and ");
+			sb.append("(JournalArticle.version < tempJournalArticle.version) ");
+			sb.append("where (JournalArticle.classNameId = ");
+			sb.append(JournalArticleConstants.CLASSNAME_ID_DEFAULT);
+			sb.append(") and (JournalArticle.status =");
+			sb.append(WorkflowConstants.STATUS_APPROVED);
+			sb.append(") and (JournalArticle.expirationDate is not null) ");
+			sb.append("and (tempJournalArticle.version is null)");
+
+			ps = con.prepareStatement(sb.toString());
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long articleId = rs.getLong("articleId");
+				long groupId = rs.getLong("groupId");
+				Timestamp expirationDate = rs.getTimestamp("expirationDate");
+
+				sb = new StringBundler(8);
+
+				sb.append("update JournalArticle set expirationDate = '");
+				sb.append(expirationDate);
+				sb.append("' where articleId = ");
+				sb.append(articleId);
+				sb.append(" and groupId = ");
+				sb.append(groupId);
+				sb.append(" and status = ");
+				sb.append(WorkflowConstants.STATUS_APPROVED);
+
+				runSQL(sb.toString());
 			}
 		}
 		finally {

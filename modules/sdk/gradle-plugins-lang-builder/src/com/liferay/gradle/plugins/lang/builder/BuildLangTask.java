@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.lang.builder;
 
+import com.liferay.gradle.util.GradleUtil;
 import com.liferay.lang.builder.LangBuilderArgs;
 
 import java.io.File;
@@ -22,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.Project;
-import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.process.JavaExecSpec;
@@ -75,13 +75,8 @@ public class BuildLangTask extends JavaExec {
 
 	@Override
 	public FileCollection getClasspath() {
-		Project project = getProject();
-
-		ConfigurationContainer configurationContainer =
-			project.getConfigurations();
-
-		return configurationContainer.getByName(
-			LangBuilderPlugin.CONFIGURATION_NAME);
+		return GradleUtil.getConfiguration(
+			getProject(), LangBuilderPlugin.CONFIGURATION_NAME);
 	}
 
 	public String getLangDirName() {

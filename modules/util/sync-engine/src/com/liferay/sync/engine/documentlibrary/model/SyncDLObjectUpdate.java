@@ -31,6 +31,10 @@ public class SyncDLObjectUpdate {
 		return lastAccessTime;
 	}
 
+	public int getResultsTotal() {
+		return resultsTotal;
+	}
+
 	public List<SyncFile> getSyncFiles() {
 		return syncFiles;
 	}
@@ -39,11 +43,16 @@ public class SyncDLObjectUpdate {
 		this.lastAccessTime = lastAccessTime;
 	}
 
+	public void setResultsTotal(int resultsTotal) {
+		this.resultsTotal = resultsTotal;
+	}
+
 	public void setSyncFiles(List<SyncFile> syncFiles) {
 		this.syncFiles = syncFiles;
 	}
 
 	protected long lastAccessTime;
+	protected int resultsTotal;
 
 	@JsonProperty("syncDLObjects")
 	protected List<SyncFile> syncFiles;

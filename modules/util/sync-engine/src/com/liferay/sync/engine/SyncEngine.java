@@ -16,7 +16,6 @@ package com.liferay.sync.engine;
 
 import com.j256.ormlite.support.ConnectionSource;
 
-import com.liferay.sync.engine.documentlibrary.event.GetSyncDLObjectUpdateEvent;
 import com.liferay.sync.engine.documentlibrary.util.BatchDownloadEvent;
 import com.liferay.sync.engine.documentlibrary.util.BatchEventManager;
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
@@ -200,6 +199,10 @@ public class SyncEngine {
 		List<SyncSite> syncSites = SyncSiteService.findSyncSites(syncAccountId);
 
 		for (SyncSite syncSite : syncSites) {
+			syncSite.setState(SyncSite.STATE_SYNCED);
+
+			SyncSiteService.update(syncSite);
+
 			if (!syncSite.isActive() || (syncSite.getRemoteSyncTime() == -1)) {
 				continue;
 			}
@@ -354,17 +357,13 @@ public class SyncEngine {
 					SyncSite syncSite = SyncSiteService.fetchSyncSite(
 						syncSiteId);
 
-					Map<String, Object> parameters = new HashMap<>();
+					if (syncSite.getState() == SyncSite.STATE_IN_PROGRESS) {
+						continue;
+					}
 
-					parameters.put("companyId", syncSite.getCompanyId());
-					parameters.put("repositoryId", syncSite.getGroupId());
-					parameters.put("syncSite", syncSite);
-
-					GetSyncDLObjectUpdateEvent getSyncDLObjectUpdateEvent =
-						new GetSyncDLObjectUpdateEvent(
-							syncAccount.getSyncAccountId(), parameters);
-
-					getSyncDLObjectUpdateEvent.run();
+					FileEventUtil.getUpdates(
+						syncSite.getCompanyId(), syncSite.getGroupId(),
+						syncAccount.getSyncAccountId(), syncSite);
 				}
 
 				BatchDownloadEvent batchDownloadEvent =

@@ -369,7 +369,7 @@
 
 		<!-- PK fields -->
 
-		<column accessor="true" name="groupId" type="long" primary="true" />
+		<column name="groupId" type="long" primary="true" accessor="true" />
 
 		<!-- Audit fields -->
 

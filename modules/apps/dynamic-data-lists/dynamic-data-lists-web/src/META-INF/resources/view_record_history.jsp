@@ -107,5 +107,5 @@ renderResponse.setTitle(title);
 	}
 	%>
 
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+	<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= searchContainer %>" />
 </aui:form>

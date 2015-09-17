@@ -16,7 +16,7 @@ AUI.add(
 				'<div class="input-group"></div>' +
 			'</div>';
 
-		var TPL_FIELD_INPUT = '<input class="add-page-editor-input" type="text" value="{0}" />';
+		var TPL_FIELD_INPUT = '<input class="add-page-editor-input form-control" type="text" value="{0}" />';
 
 		var TPL_LINK = '<a href="{url}">{pageTitle}</a>';
 

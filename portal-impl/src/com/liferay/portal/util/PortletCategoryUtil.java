@@ -54,6 +54,9 @@ public class PortletCategoryUtil {
 		else if (Validator.equals(legacyPortletCategoryKey, "my")) {
 			return PortletCategoryKeys.USER_MY_ACCOUNT;
 		}
+		else if (Validator.equals(legacyPortletCategoryKey, "sites")) {
+			return PortletCategoryKeys.CONTROL_PANEL_SITES;
+		}
 		else if (Validator.equals(legacyPortletCategoryKey, "users")) {
 			return PortletCategoryKeys.CONTROL_PANEL_USERS;
 		}

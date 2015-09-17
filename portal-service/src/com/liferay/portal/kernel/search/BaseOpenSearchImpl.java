@@ -533,7 +533,7 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 		return getPortletURL(request, portletId, 0);
 	}
 
-	protected PortletURL getPortletURL(
+	protected long getPlid(
 			HttpServletRequest request, String portletId, long scopeGroupId)
 		throws Exception {
 
@@ -558,6 +558,15 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 				plid = layout.getPlid();
 			}
 		}
+
+		return plid;
+	}
+
+	protected PortletURL getPortletURL(
+			HttpServletRequest request, String portletId, long scopeGroupId)
+		throws Exception {
+
+		long plid = getPlid(request, portletId, scopeGroupId);
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			request, portletId, plid, PortletRequest.RENDER_PHASE);

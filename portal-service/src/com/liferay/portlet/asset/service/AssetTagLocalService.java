@@ -86,31 +86,6 @@ public interface AssetTagLocalService extends BaseLocalService,
 		throws PortalException;
 
 	/**
-	* Adds resources for the asset tag.
-	*
-	* @param tag the asset tag for which to add resources
-	* @param addGroupPermissions whether to add group permissions
-	* @param addGuestPermissions whether to add guest permissions
-	* @throws PortalException if resources could not be added for the asset tag
-	or if a portal exception occurred
-	*/
-	public void addTagResources(com.liferay.portlet.asset.model.AssetTag tag,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
-
-	/**
-	* Adds resources for the asset tag using the group and guest permissions.
-	*
-	* @param tag the asset tag for which to add resources
-	* @param modelPermissions the model permissions to be applied
-	* @throws PortalException if resources could not be added for the asset tag
-	or if a portal exception occurred
-	*/
-	public void addTagResources(com.liferay.portlet.asset.model.AssetTag tag,
-		com.liferay.portal.service.permission.ModelPermissions modelPermissions)
-		throws PortalException;
-
-	/**
 	* Returns the asset tags matching the group and names, creating new asset
 	* tags matching the names if the group doesn't already have them.
 	*

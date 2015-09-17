@@ -164,30 +164,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/derby.jar</file-name>
-				<version>10.4.1.3</version>
-				<project-name>Derby</project-name>
-				<project-url>http://db.apache.org/derby</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/development/derbytools.jar</file-name>
-				<version>10.4.1.3</version>
-				<project-name>Derby</project-name>
-				<project-url>http://db.apache.org/derby</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/dtddoc.jar</file-name>
 				<version>1.1.0</version>
 				<project-name>DTDDoc</project-name>

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.util.PropsValues;
 
 import org.hibernate.dialect.DB2Dialect;
-import org.hibernate.dialect.DerbyDialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.FirebirdDialect;
 import org.hibernate.dialect.HSQLDialect;
@@ -83,12 +82,7 @@ public class DBFactoryImpl implements DBFactory {
 		}
 
 		if (dialect instanceof DB2Dialect) {
-			if (dialect instanceof DerbyDialect) {
-				db = DerbyDB.getInstance();
-			}
-			else {
-				db = DB2DB.getInstance();
-			}
+			db = DB2DB.getInstance();
 		}
 		else if (dialect instanceof HSQLDialect) {
 			db = HypersonicDB.getInstance();
@@ -144,9 +138,6 @@ public class DBFactoryImpl implements DBFactory {
 
 		if (type.equals(DB.TYPE_DB2)) {
 			db = DB2DB.getInstance();
-		}
-		else if (type.equals(DB.TYPE_DERBY)) {
-			db = DerbyDB.getInstance();
 		}
 		else if (type.equals(DB.TYPE_FIREBIRD)) {
 			db = FirebirdDB.getInstance();

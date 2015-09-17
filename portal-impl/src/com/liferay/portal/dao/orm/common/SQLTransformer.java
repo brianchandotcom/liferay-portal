@@ -63,7 +63,6 @@ public class SQLTransformer {
 		}
 
 		_vendorDB2 = false;
-		_vendorDerby = false;
 		_vendorFirebird = false;
 		_vendorHypersonic = false;
 		_vendorInformix = false;
@@ -83,9 +82,6 @@ public class SQLTransformer {
 
 		if (dbType.equals(DB.TYPE_DB2)) {
 			_vendorDB2 = true;
-		}
-		else if (dbType.equals(DB.TYPE_DERBY)) {
-			_vendorDerby = true;
 		}
 		else if (dbType.equals(DB.TYPE_FIREBIRD)) {
 			_vendorFirebird = true;
@@ -162,10 +158,7 @@ public class SQLTransformer {
 	private String _replaceBitwiseCheck(String sql) {
 		Matcher matcher = _bitwiseCheckPattern.matcher(sql);
 
-		if (_vendorDerby) {
-			return matcher.replaceAll("MOD($1 / $2, 2) != 0");
-		}
-		else if (_vendorInformix || _vendorIngres) {
+		if (_vendorInformix || _vendorIngres) {
 			return matcher.replaceAll("BIT_AND($1, $2)");
 		}
 		else if (_vendorFirebird || _vendorInterbase) {
@@ -214,9 +207,6 @@ public class SQLTransformer {
 	private String _replaceCastText(Matcher matcher) {
 		if (_vendorDB2) {
 			return matcher.replaceAll("CAST($1 AS VARCHAR(254))");
-		}
-		else if (_vendorDerby) {
-			return matcher.replaceAll("CAST($1 AS CHAR(254))");
 		}
 		else if (_vendorHypersonic) {
 			return matcher.replaceAll("CONVERT($1, SQL_VARCHAR)");
@@ -318,9 +308,6 @@ public class SQLTransformer {
 
 		if (_vendorDB2) {
 			newSQL = _replaceLike(newSQL);
-		}
-		else if (_vendorDerby) {
-			newSQL = _replaceUnion(newSQL);
 		}
 		else if (_vendorMySQL) {
 			DB db = DBFactoryUtil.getDB();
@@ -463,7 +450,6 @@ public class SQLTransformer {
 	private DB _db;
 	private Map<String, String> _transformedSqls;
 	private boolean _vendorDB2;
-	private boolean _vendorDerby;
 	private boolean _vendorFirebird;
 	private boolean _vendorHypersonic;
 	private boolean _vendorInformix;

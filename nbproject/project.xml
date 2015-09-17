@@ -261,8 +261,6 @@
 				<classpath mode="compile">lib/development/com.liferay.ant.build.logger.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.heap.dump.jar</classpath>
 				<classpath mode="compile">lib/development/deployment.jar</classpath>
-				<classpath mode="compile">lib/development/derby.jar</classpath>
-				<classpath mode="compile">lib/development/derbytools.jar</classpath>
 				<classpath mode="compile">lib/development/dtddoc.jar</classpath>
 				<classpath mode="compile">lib/development/dtdparser.jar</classpath>
 				<classpath mode="compile">lib/development/dumbster.jar</classpath>

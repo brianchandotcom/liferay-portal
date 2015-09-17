@@ -807,7 +807,6 @@ public class ResourcePermissionLocalServiceImpl
 		if ((roleIds.length >
 				PropsValues.
 					PERMISSIONS_ROLE_RESOURCE_PERMISSION_QUERY_THRESHOLD) &&
-			!dbType.equals(DB.TYPE_DERBY) &&
 			!dbType.equals(DB.TYPE_JDATASTORE) && !dbType.equals(DB.TYPE_SAP)) {
 
 			int count = resourcePermissionFinder.countByC_N_S_P_R_A(

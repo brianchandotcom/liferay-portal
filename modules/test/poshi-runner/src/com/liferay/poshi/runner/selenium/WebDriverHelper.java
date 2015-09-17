@@ -72,6 +72,21 @@ public class WebDriverHelper {
 		}
 	}
 
+	public static void assertCssValue(
+			WebDriver webDriver, String locator, String cssAttribute,
+			String cssValue)
+		throws Exception {
+
+		WebElement webElement = getWebElement(webDriver, locator);
+
+		String actualCssValue = webElement.getCssValue(cssAttribute);
+
+		if (!actualCssValue.equals(cssValue)) {
+			throw new Exception(
+				"CSS Value " + actualCssValue + " does not match " + cssValue);
+		}
+	}
+
 	public static void assertJavaScriptErrors(
 			WebDriver webDriver, String ignoreJavaScriptError)
 		throws Exception {

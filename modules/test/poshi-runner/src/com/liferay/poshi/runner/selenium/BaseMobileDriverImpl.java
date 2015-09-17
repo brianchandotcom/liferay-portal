@@ -70,6 +70,14 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void assertCssValue(
+			String locator, String cssAttribute, String cssValue)
+		throws Exception {
+
+		WebDriverHelper.assertCssValue(this, locator, cssAttribute, cssValue);
+	}
+
+	@Override
 	public void assertEditable(String locator) throws Exception {
 		LiferaySeleniumHelper.assertEditable(this, locator);
 	}

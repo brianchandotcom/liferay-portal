@@ -18,8 +18,6 @@ import com.liferay.portal.OldServiceComponentException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -282,11 +280,8 @@ public class ServiceComponentLocalServiceImpl
 			ServiceComponentConfiguration serviceComponentConfiguration)
 		throws DocumentException {
 
-		CacheRegistryUtil.clear();
-
 		if (PropsValues.CACHE_CLEAR_ON_PLUGIN_UNDEPLOY) {
-			EntityCacheUtil.clearCache();
-			FinderCacheUtil.clearCache();
+			CacheRegistryUtil.clear();
 		}
 	}
 

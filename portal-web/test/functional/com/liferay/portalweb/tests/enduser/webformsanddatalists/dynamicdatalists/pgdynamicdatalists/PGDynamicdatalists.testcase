@@ -1701,19 +1701,15 @@
 		<var name="ddlDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
 		<var name="ddlDisplayTemplateScript">
 			<![CDATA[
-				#set ($ddlRecordLocalService = $serviceLocator.findService("com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService"))${line.separator}${line.separator}
-
-				#set ($records = $ddlRecordLocalService.getRecords($reserved_record_set_id))${line.separator}${line.separator}
+				#set ($records = $ddlDisplayTemplateHelper.getRecords($reserved_record_set_id))${line.separator}${line.separator}
 
 				#if (!$records.isEmpty())${line.separator}
-					#foreach ($cur_record in $records)${line.separator}${line.separator}
+					#foreach ($cur_record in $records)${line.separator}
 
-	   				 $cur_record.getFieldValue("Name", $locale)${line.separator}${line.separator}
-
-					<br/> <br/>${line.separator}${line.separator}
+						<div class="ddl-record">$ddlDisplayTemplateHelper.renderRecordFieldValue($cur_record.getDDMFormFieldValues("Name").get(0), $locale)</div>${line.separator}
 
 					#end${line.separator}
-				#end
+				#end${line.separator}
 			]]>
 		</var>
 		<var name="ddlListDescription" value="List Description" />

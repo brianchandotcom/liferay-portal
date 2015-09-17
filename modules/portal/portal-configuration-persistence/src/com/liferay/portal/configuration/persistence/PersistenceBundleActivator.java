@@ -17,6 +17,7 @@ package com.liferay.portal.configuration.persistence;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import javax.sql.DataSource;
 
@@ -43,7 +44,10 @@ public class PersistenceBundleActivator implements BundleActivator {
 			throw new IllegalStateException("LiferayDataSource is needed");
 		}
 
-		_dataSourceServiceReference = serviceReferences.iterator().next();
+		Iterator<ServiceReference<DataSource>> iterator =
+			serviceReferences.iterator();
+
+		_dataSourceServiceReference = iterator.next();
 
 		_configurationPersistenceManager =
 			new ConfigurationPersistenceManager();

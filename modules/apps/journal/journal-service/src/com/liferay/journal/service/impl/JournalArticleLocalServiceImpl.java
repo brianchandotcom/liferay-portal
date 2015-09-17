@@ -5809,6 +5809,24 @@ public class JournalArticleLocalServiceImpl
 
 		journalArticlePersistence.update(article);
 
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(article.getExpirationDate() != null) &&
+			(JournalServiceConfigurationValues.
+				JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS)) {
+
+			List<JournalArticle> currentArticles =
+				journalArticlePersistence.findByG_A(
+					article.getGroupId(), article.getArticleId(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					new ArticleVersionComparator(true));
+
+			for (JournalArticle currentArticle : currentArticles) {
+				currentArticle.setExpirationDate(article.getExpirationDate());
+
+				journalArticlePersistence.update(currentArticle);
+			}
+		}
+
 		if (hasModifiedLatestApprovedVersion(
 				article.getGroupId(), article.getArticleId(),
 				article.getVersion())) {

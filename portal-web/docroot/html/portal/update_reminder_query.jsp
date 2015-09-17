@@ -58,8 +58,8 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 </aui:form>
 
 <aui:script sandbox="<%= true %>">
-	var reminderQueryQuestion = $('#reminderQueryQuestion');
 	var customQuestionContainer = $('#customQuestionContainer');
+	var reminderQueryQuestion = $('#reminderQueryQuestion');
 
 	customQuestionContainer.toggleClass('hide', reminderQueryQuestion.val() != '<%= UsersAdmin.CUSTOM_QUESTION %>');
 

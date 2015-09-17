@@ -16,8 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+long recordSetId = ParamUtil.getLong(request, renderResponse.getNamespace() + "recordSetId");
+%>
+
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
-	<portlet:param name="recordSetId" value="<%= String.valueOf(ParamUtil.getLong(request, renderResponse.getNamespace() + "recordSetId")) %>" />
+	<portlet:param name="recordSetId" value="<%= String.valueOf(recordSetId) %>" />
 </liferay-portlet:resourceURL>
 
 <%

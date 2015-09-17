@@ -201,7 +201,7 @@
 
 	<command name="searchCP">
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${vocabularySearchEntry}" />
-		<execute function="Click" locator1="Button#SEARCH" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 	</command>
 
 	<command name="tearDownCP">

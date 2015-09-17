@@ -171,7 +171,7 @@
 		<var name="key_subcategoryName" value="${subcategoryName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${subcategorySearchEntry}" />
-		<execute function="Click" locator1="Button#SEARCH" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 	</command>
 
 	<command name="viewCategoryPropertyCP">

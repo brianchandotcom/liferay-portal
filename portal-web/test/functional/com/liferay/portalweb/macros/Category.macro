@@ -266,7 +266,7 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${categorySearchEntry}" />
-		<execute function="Click" locator1="Button#SEARCH" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 	</command>
 
 	<command name="viewCategoryPropertyCP">

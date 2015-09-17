@@ -42,12 +42,12 @@
 <!--TEMPLATES-->
 <tr>
 	<td>TEMPLATES_DISPLAY_TEMPLATE_SELECT</td>
-	<td>//select[contains(@id,'displayTemplateId')]</td>
+	<td>//select[contains(@id,'displayDDMTemplateId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATES_FORM_TEMPLATE_SELECT</td>
-	<td>//select[contains(@id,'formTemplateId')]</td>
+	<td>//select[contains(@id,'formDDMTemplateId')]</td>
 	<td></td>
 </tr>
 <tr>

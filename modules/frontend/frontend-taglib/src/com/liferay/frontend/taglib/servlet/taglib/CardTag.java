@@ -161,7 +161,7 @@ public class CardTag extends IncludeTag {
 		_imageCSSClass = null;
 		_resultRow = null;
 		_rowChecker = null;
-		_showCheckbox = true;
+		_showCheckbox = false;
 		_smallImageCSSClass = null;
 		_smallImageUrl = null;
 		_subtitle = null;

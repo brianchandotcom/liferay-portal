@@ -101,8 +101,7 @@ public class JournalPortletUtil {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		if (actionName.equals("selectFolder")) {
-			portletURL.setParameter(
-				"mvcPath", "/html/portlet/journal/select_folder.jsp");
+			portletURL.setParameter("mvcPath", "/select_folder.jsp");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(

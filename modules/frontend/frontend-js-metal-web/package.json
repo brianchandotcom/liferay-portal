@@ -1,7 +1,7 @@
 {
 	"devDependencies": {
 		"gulp": "^3.8.11",
-		"gulp-metal": "^0.2.4"
+		"gulp-metal": "^0.4.1"
 	},
 	"engines": {
 		"node": ">=0.12.0"

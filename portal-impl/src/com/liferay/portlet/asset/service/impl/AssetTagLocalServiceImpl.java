@@ -23,11 +23,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.DuplicateTagException;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -98,58 +96,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		assetTagPersistence.update(tag);
 
-		// Resources
-
-		if (serviceContext.isAddGroupPermissions() ||
-			serviceContext.isAddGuestPermissions()) {
-
-			addTagResources(
-				tag, serviceContext.isAddGroupPermissions(),
-				serviceContext.isAddGuestPermissions());
-		}
-		else {
-			addTagResources(tag, serviceContext.getModelPermissions());
-		}
-
 		return tag;
-	}
-
-	/**
-	 * Adds resources for the asset tag.
-	 *
-	 * @param  tag the asset tag for which to add resources
-	 * @param  addGroupPermissions whether to add group permissions
-	 * @param  addGuestPermissions whether to add guest permissions
-	 * @throws PortalException if resources could not be added for the asset tag
-	 *         or if a portal exception occurred
-	 */
-	@Override
-	public void addTagResources(
-			AssetTag tag, boolean addGroupPermissions,
-			boolean addGuestPermissions)
-		throws PortalException {
-
-		resourceLocalService.addResources(
-			tag.getCompanyId(), tag.getGroupId(), tag.getUserId(),
-			AssetTag.class.getName(), tag.getTagId(), false,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	/**
-	 * Adds resources for the asset tag using the group and guest permissions.
-	 *
-	 * @param  tag the asset tag for which to add resources
-	 * @param  modelPermissions the model permissions to be applied
-	 * @throws PortalException if resources could not be added for the asset tag
-	 *         or if a portal exception occurred
-	 */
-	@Override
-	public void addTagResources(AssetTag tag, ModelPermissions modelPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			tag.getCompanyId(), tag.getGroupId(), tag.getUserId(),
-			AssetTag.class.getName(), tag.getTagId(), modelPermissions);
 	}
 
 	/**
@@ -277,12 +224,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		// Tag
 
 		assetTagPersistence.remove(tag);
-
-		// Resources
-
-		resourceLocalService.deleteResource(
-			tag.getCompanyId(), AssetTag.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, tag.getTagId());
 
 		// Stats
 

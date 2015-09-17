@@ -183,6 +183,10 @@ public class AssetCategoryStagedModelDataHandler
 
 		AssetCategory existingCategory = fetchMissingReference(uuid, groupId);
 
+		if (existingCategory == null) {
+			return;
+		}
+
 		Map<Long, Long> categoryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				AssetCategory.class);

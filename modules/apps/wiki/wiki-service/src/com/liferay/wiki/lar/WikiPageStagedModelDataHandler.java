@@ -155,6 +155,10 @@ public class WikiPageStagedModelDataHandler
 
 		WikiPage existingPage = fetchMissingReference(uuid, groupId);
 
+		if (existingPage == null) {
+			return;
+		}
+
 		Map<Long, Long> pageIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				WikiPage.class);

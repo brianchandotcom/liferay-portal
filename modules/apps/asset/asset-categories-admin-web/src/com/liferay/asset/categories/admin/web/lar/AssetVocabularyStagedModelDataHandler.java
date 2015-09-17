@@ -145,6 +145,10 @@ public class AssetVocabularyStagedModelDataHandler
 		AssetVocabulary existingVocabulary = fetchMissingReference(
 			uuid, groupId);
 
+		if (existingVocabulary == null) {
+			return;
+		}
+
 		Map<Long, Long> vocabularyIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				AssetVocabulary.class);

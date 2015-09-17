@@ -111,6 +111,25 @@ public class BookmarksEntryStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long entryId)
+		throws Exception {
+
+		BookmarksEntry existingEntry = fetchMissingReference(uuid, groupId);
+
+		if (existingEntry == null) {
+			return;
+		}
+
+		Map<Long, Long> entryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				BookmarksEntry.class);
+
+		entryIds.put(entryId, existingEntry.getEntryId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, BookmarksEntry entry)
 		throws Exception {

@@ -22,6 +22,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalService;
 
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -77,6 +78,25 @@ public class MBThreadStagedModelDataHandler
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, MBThread thread)
 		throws Exception {
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long threadId)
+		throws Exception {
+
+		MBThread existingThread = fetchMissingReference(uuid, groupId);
+
+		if (existingThread == null) {
+			return;
+		}
+
+		Map<Long, Long> threadIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				MBThread.class);
+
+		threadIds.put(threadId, existingThread.getThreadId());
 	}
 
 	@Override

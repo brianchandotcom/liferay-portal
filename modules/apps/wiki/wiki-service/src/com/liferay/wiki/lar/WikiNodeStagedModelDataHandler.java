@@ -99,6 +99,10 @@ public class WikiNodeStagedModelDataHandler
 
 		WikiNode existingNode = fetchMissingReference(uuid, groupId);
 
+		if (existingNode == null) {
+			return;
+		}
+
 		Map<Long, Long> nodeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				WikiNode.class);

@@ -115,6 +115,25 @@ public class CalendarStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long calendarId)
+		throws Exception {
+
+		Calendar existingCalendar = fetchMissingReference(uuid, groupId);
+
+		if (existingCalendar == null) {
+			return;
+		}
+
+		Map<Long, Long> calendarIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Calendar.class);
+
+		calendarIds.put(calendarId, existingCalendar.getCalendarId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, Calendar calendar)
 		throws Exception {

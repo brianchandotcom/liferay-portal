@@ -49,6 +49,7 @@ import java.io.InputStream;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -163,6 +164,25 @@ public class BlogsEntryStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			entryElement, ExportImportPathUtil.getModelPath(entry), entry);
+	}
+
+	@Override
+	protected void doImportMissingReference(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			long entryId)
+		throws Exception {
+
+		BlogsEntry existingEntry = fetchMissingReference(uuid, groupId);
+
+		if (existingEntry == null) {
+			return;
+		}
+
+		Map<Long, Long> entryIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				BlogsEntry.class);
+
+		entryIds.put(entryId, existingEntry.getEntryId());
 	}
 
 	@Override

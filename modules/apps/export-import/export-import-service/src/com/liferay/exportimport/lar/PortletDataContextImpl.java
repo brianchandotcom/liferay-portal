@@ -1190,6 +1190,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public Element getReferenceElement(Class<?> clazz, long classPK) {
+		return getReferenceElement(clazz.getName(), classPK);
+	}
+
+	@Override
 	public Element getReferenceElement(
 		Element parentElement, Class<?> clazz, long groupId, String uuid,
 		String referenceType) {
@@ -1219,6 +1224,20 @@ public class PortletDataContextImpl implements PortletDataContext {
 			parentStagedModel, className, classPK, null);
 
 		if (!referenceElements.isEmpty()) {
+			return referenceElements.get(0);
+		}
+
+		return null;
+	}
+
+	@Override
+	public Element getReferenceElement(String className, long classPK) {
+		Element parentElement = getImportDataRootElement();
+
+		List<Element> referenceElements = getReferenceElements(
+			parentElement, className, 0, null, classPK, null);
+
+		if (ListUtil.isNotEmpty(referenceElements)) {
 			return referenceElements.get(0);
 		}
 

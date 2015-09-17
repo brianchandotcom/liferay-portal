@@ -48,7 +48,7 @@ public class UsersPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.users");
+		return LanguageUtil.get(locale, "category.control_panel.users");
 	}
 
 }

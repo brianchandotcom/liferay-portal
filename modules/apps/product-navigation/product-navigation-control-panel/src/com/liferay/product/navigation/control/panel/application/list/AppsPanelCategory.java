@@ -48,7 +48,7 @@ public class AppsPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.apps");
+		return LanguageUtil.get(locale, "category.control_panel.apps");
 	}
 
 }

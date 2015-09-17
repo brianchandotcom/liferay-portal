@@ -48,7 +48,7 @@ public class ConfigurationPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.configuration");
+		return LanguageUtil.get(locale, "category.control_panel.configuration");
 	}
 
 }

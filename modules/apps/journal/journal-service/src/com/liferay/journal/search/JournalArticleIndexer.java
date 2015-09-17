@@ -558,11 +558,13 @@ public class JournalArticleIndexer
 		String localizedTitleName = DocumentImpl.getLocalizedName(
 			locale, Field.TITLE);
 
+		Locale defaultLanguageId = LocaleUtil.fromLanguageId(
+			document.get("defaultLanguageId"));
+
 		if ((snippetLocale == null) &&
 			(document.getField(localizedTitleName) == null)) {
 
-			snippetLocale = LocaleUtil.fromLanguageId(
-				document.get("defaultLanguageId"));
+			snippetLocale = defaultLanguageId;
 		}
 		else {
 			snippetLocale = locale;
@@ -572,8 +574,24 @@ public class JournalArticleIndexer
 			snippetLocale, Field.SNIPPET + StringPool.UNDERLINE + Field.TITLE,
 			Field.TITLE);
 
+		if (Validator.isNull(title) &&
+			!snippetLocale.equals(defaultLanguageId)) {
+
+			title = document.get(
+				defaultLanguageId,
+				Field.SNIPPET + StringPool.UNDERLINE + Field.TITLE,
+				Field.TITLE);
+		}
+
 		String content = getDDMContentSummary(
 			document, snippetLocale, portletRequest, portletResponse);
+
+		if (Validator.isNull(content) &&
+			!snippetLocale.equals(defaultLanguageId)) {
+
+			content = getDDMContentSummary(
+				document, defaultLanguageId, portletRequest, portletResponse);
+		}
 
 		Summary summary = new Summary(snippetLocale, title, content);
 

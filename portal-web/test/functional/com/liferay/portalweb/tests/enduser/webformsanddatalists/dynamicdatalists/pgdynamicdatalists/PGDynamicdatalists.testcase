@@ -1475,7 +1475,7 @@
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="Text ${ddlRecordFieldData}" />
 	</command>
 
-	<command known-issues="LPS-51615" name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="4">
+	<command name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="4">
 		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}velocity.engine.restricted.variables=" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
@@ -1586,7 +1586,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51615" name="ViewListRecordWithUploadedVelocityDisplayTemplate" priority="4">
+	<command name="ViewListRecordWithUploadedVelocityDisplayTemplate" priority="4">
 		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}velocity.engine.restricted.variables=" />
 
 		<var name="ddlDataDefinitionName" value="Data Definition" />
@@ -1692,7 +1692,7 @@
 		<execute function="AssertTextEquals" locator1="xPath=(//div[@class='ddl-record'])[2]" value1="Name2" />
 	</command>
 
-	<command known-issues="LPS-51615" name="ViewListRecordWithVelocityDisplayTemplate" priority="4">
+	<command name="ViewListRecordWithVelocityDisplayTemplate" priority="4">
 		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}velocity.engine.restricted.variables=" />
 
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
@@ -1701,19 +1701,15 @@
 		<var name="ddlDisplayTemplateName" value="Data Definition Velocity Display Template Name" />
 		<var name="ddlDisplayTemplateScript">
 			<![CDATA[
-				#set ($ddlRecordLocalService = $serviceLocator.findService("com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService"))${line.separator}${line.separator}
-
-				#set ($records = $ddlRecordLocalService.getRecords($reserved_record_set_id))${line.separator}${line.separator}
+				#set ($records = $ddlDisplayTemplateHelper.getRecords($reserved_record_set_id))${line.separator}${line.separator}
 
 				#if (!$records.isEmpty())${line.separator}
-					#foreach ($cur_record in $records)${line.separator}${line.separator}
+					#foreach ($cur_record in $records)${line.separator}
 
-	   				 $cur_record.getFieldValue("Name", $locale)${line.separator}${line.separator}
-
-					<br/> <br/>${line.separator}${line.separator}
+						<div class="ddl-record">$ddlDisplayTemplateHelper.renderRecordFieldValue($cur_record.getDDMFormFieldValues("Name").get(0), $locale)</div>${line.separator}
 
 					#end${line.separator}
-				#end
+				#end${line.separator}
 			]]>
 		</var>
 		<var name="ddlListDescription" value="List Description" />

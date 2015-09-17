@@ -127,8 +127,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RECORD_TABLE_NAME</td>
-	<td>//form[contains(@class,'form')]//div[contains(.,'${key_ddlRecordFieldData}')]</td>
+	<td>RECORD_TABLE_DISPLAY_FIELD</td>
+	<td>//div[@class='ddl-record' and contains(.,'${key_ddlRecordFieldData}')]</td>
 	<td></td>
 </tr>
 <tr>

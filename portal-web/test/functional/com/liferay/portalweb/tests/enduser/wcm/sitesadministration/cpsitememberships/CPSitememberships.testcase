@@ -485,6 +485,17 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name 1" />
+			<var name="userFirstName" value="Test" />
+			<var name="userLastName" value="Test" />
+			<var name="userScreenName" value="test" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="Organization#manageMembershipOptionsInSites">
 			<var name="allowManualMembershipManagement" value="true" />
 			<var name="orgName" value="Organization Name 1" />

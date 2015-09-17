@@ -22,6 +22,6 @@
 	<command name="viewDDLTemplateRecordFieldData">
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 
-		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_TABLE_NAME" value1="${key_ddlRecordFieldData}" />
+		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_TABLE_DISPLAY_FIELD" value1="${key_ddlRecordFieldData}" />
 	</command>
 </definition>

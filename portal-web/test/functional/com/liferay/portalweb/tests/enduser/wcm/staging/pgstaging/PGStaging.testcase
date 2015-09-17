@@ -387,7 +387,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="AssertEditWebContentStaging" priority="4">
+	<command name="AssertEditWebContentStaging" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -1338,7 +1338,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingPublishPortlet" priority="4">
+	<command known-issues="LRQA-17954" name="StagingPublishPortlet" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />

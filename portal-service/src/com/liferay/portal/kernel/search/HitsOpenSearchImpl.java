@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -147,11 +146,9 @@ public abstract class HitsOpenSearchImpl extends BaseOpenSearchImpl {
 					className = result.get(Field.ENTRY_CLASS_NAME);
 				}
 
-				String portletId = PortletProviderUtil.getPortletId(
-					className, PortletProvider.Action.VIEW);
-
 				PortletURL portletURL = getPortletURL(
-					request, portletId, resultScopeGroupId);
+					request, className, PortletProvider.Action.VIEW,
+					resultScopeGroupId);
 
 				Summary summary = getSummary(
 					indexer, result, themeDisplay.getLocale(), snippet);

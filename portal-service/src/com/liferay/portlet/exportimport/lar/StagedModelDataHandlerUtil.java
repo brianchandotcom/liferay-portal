@@ -183,6 +183,27 @@ public class StagedModelDataHandlerUtil {
 			portletDataContext, stagedModel);
 	}
 
+	public static void importReferenceStagedModel(
+			PortletDataContext portletDataContext, Class<?> stagedModelClass,
+			long classPK)
+		throws PortletDataException {
+
+		importReferenceStagedModel(
+			portletDataContext, stagedModelClass.getName(), classPK);
+	}
+
+	public static void importReferenceStagedModel(
+			PortletDataContext portletDataContext, String stagedModelClassName,
+			long classPK)
+		throws PortletDataException {
+
+		Element referenceElement = portletDataContext.getReferenceElement(
+			stagedModelClassName, classPK);
+
+		doImportReferenceStagedModel(
+			portletDataContext, referenceElement, stagedModelClassName);
+	}
+
 	public static <T extends StagedModel> void importReferenceStagedModel(
 			PortletDataContext portletDataContext, T referrerStagedModel,
 			Class<?> stagedModelClass, long classPK)
@@ -201,29 +222,8 @@ public class StagedModelDataHandlerUtil {
 		Element referenceElement = portletDataContext.getReferenceElement(
 			referrerStagedModel, stagedModelClassName, classPK);
 
-		if (referenceElement == null) {
-			return;
-		}
-
-		boolean missing = GetterUtil.getBoolean(
-			referenceElement.attributeValue("missing"));
-
-		StagedModelDataHandler<?> stagedModelDataHandler =
-			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-				stagedModelClassName);
-
-		if (stagedModelDataHandler == null) {
-			return;
-		}
-
-		if (missing) {
-			stagedModelDataHandler.importMissingReference(
-				portletDataContext, referenceElement);
-
-			return;
-		}
-
-		importStagedModel(portletDataContext, referenceElement);
+		doImportReferenceStagedModel(
+			portletDataContext, referenceElement, stagedModelClassName);
 	}
 
 	public static void importReferenceStagedModels(
@@ -314,6 +314,36 @@ public class StagedModelDataHandlerUtil {
 			portletDataContext, stagedModel);
 
 		LastSessionRecorderHelperUtil.syncLastSessionState();
+	}
+
+	protected static void doImportReferenceStagedModel(
+			PortletDataContext portletDataContext, Element referenceElement,
+			String stagedModelClassName)
+		throws PortletDataException {
+
+		if (referenceElement == null) {
+			return;
+		}
+
+		boolean missing = GetterUtil.getBoolean(
+			referenceElement.attributeValue("missing"));
+
+		StagedModelDataHandler<?> stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				stagedModelClassName);
+
+		if (stagedModelDataHandler == null) {
+			return;
+		}
+
+		if (missing) {
+			stagedModelDataHandler.importMissingReference(
+				portletDataContext, referenceElement);
+
+			return;
+		}
+
+		importStagedModel(portletDataContext, referenceElement);
 	}
 
 	private static StagedModel _getReferenceStagedModel(

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')]</td>
+	<td>//a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')] | //span[contains(@class,'icon-angle-left')]</td>
 	<td></td>
 </tr>
 <tr>

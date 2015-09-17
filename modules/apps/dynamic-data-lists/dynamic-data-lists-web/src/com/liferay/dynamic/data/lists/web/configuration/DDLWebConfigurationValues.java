@@ -21,6 +21,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class DDLWebConfigurationValues {
 
+	public static final String DEFAULT_DISPLAY_VIEW = GetterUtil.getString(
+		DDLWebConfigurationUtil.get("default.display.view"));
+
+	public static String[] DISPLAY_VIEWS = DDLWebConfigurationUtil.getArray(
+		"display.views");
+
 	public static final String DYNAMIC_DATA_LISTS_STORAGE_TYPE =
 		GetterUtil.getString(
 			DDLWebConfigurationUtil.get(

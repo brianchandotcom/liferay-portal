@@ -21,8 +21,6 @@ int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(renderRequest, renderResponse);
-
 DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 %>
 

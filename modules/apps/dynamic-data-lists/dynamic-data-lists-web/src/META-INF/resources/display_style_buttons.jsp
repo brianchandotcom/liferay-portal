@@ -16,12 +16,12 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
+<%
+PortletURL displayStyleURL = renderResponse.createRenderURL();
+%>
 
-	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/sort_buttons.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+<liferay-frontend:management-bar-display-buttons
+	displayStyleURL="<%= displayStyleURL %>"
+	displayViews="<%= ddlDisplayContext.getDDLRecordSetDisplayViews() %>"
+	selectedDisplayStyle="<%= ddlDisplayContext.getDDLRecordSetDisplayStyle() %>"
+/>

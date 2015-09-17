@@ -17,19 +17,26 @@
 <%@ include file="/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
-
-DisplayTerms displayTerms = searchContainer.getDisplayTerms();
+long recordSetId = ParamUtil.getLong(request, renderResponse.getNamespace() + "recordSetId");
 %>
 
-<liferay-ui:search-toggle
-	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
-	buttonLabel="search"
-	displayTerms="<%= displayTerms %>"
-	id="toggle_id_dynamic_data_lists_record_search"
-	markupView="lexicon"
->
-	<aui:fieldset>
-		<aui:input name="<%= DisplayTerms.KEYWORDS %>" size="30" value="<%= displayTerms.getKeywords() %>" />
-	</aui:fieldset>
-</liferay-ui:search-toggle>
+<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
+	<portlet:param name="recordSetId" value="<%= String.valueOf(recordSetId) %>" />
+</liferay-portlet:resourceURL>
+
+<%
+StringBundler sb = new StringBundler(6);
+
+sb.append("javascript:");
+sb.append(renderResponse.getNamespace());
+sb.append("exportRecordSet");
+sb.append("('");
+sb.append(exportRecordSetURL);
+sb.append("');");
+%>
+
+<liferay-ui:icon
+	iconCssClass="icon-arrow-down"
+	message="export"
+	url="<%= sb.toString() %>"
+/>

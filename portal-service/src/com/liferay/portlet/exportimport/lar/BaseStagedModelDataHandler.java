@@ -72,6 +72,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		throws PortalException;
 
 	@Override
+	public abstract void deleteStagedModel(T stagedModel)
+		throws PortalException;
+
+	@Override
 	public void exportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {

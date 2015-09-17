@@ -170,7 +170,7 @@
 </tr>
 <tr>
 	<td>COPY</td>
-	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Copy')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -375,7 +375,7 @@
 </tr>
 <tr>
 	<td>MOVE</td>
-	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>

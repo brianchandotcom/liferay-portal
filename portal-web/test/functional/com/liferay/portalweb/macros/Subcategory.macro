@@ -26,12 +26,10 @@
 	</command>
 
 	<command name="addDuplicateCP">
+		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-
-		<var name="key_categoryName" value="${categoryName}" />
-
 		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_SUBCATEGORY" value1="Add Subcategory" />

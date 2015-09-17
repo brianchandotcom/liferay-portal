@@ -179,7 +179,7 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_CATEGORY_COPY</td>
-	<td>xpath=(/li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')])[2]</td>
+	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//span[contains(@class,'asset-category') and contains(.,'${key_categoryName}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

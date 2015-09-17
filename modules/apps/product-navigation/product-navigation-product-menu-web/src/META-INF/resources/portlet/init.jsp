@@ -34,7 +34,8 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.Group" %><%@
-page import="com.liferay.portal.model.User" %>
+page import="com.liferay.portal.model.User" %><%@
+page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.List" %>
 

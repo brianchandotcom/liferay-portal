@@ -47,7 +47,8 @@ page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.exportimport.staging.StagingUtil" %>
+page import="com.liferay.portlet.exportimport.staging.StagingUtil" %><%@
+page import="com.liferay.taglib.aui.AUIUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@

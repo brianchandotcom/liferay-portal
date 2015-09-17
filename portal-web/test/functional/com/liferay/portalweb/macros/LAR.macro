@@ -389,9 +389,6 @@
 	<command name="importPortlet">
 		<execute macro="LAR#gotoExportImportCmd" />
 
-		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
-
 		<execute macro="LAR#selectImportFileCmd">
 			<var name="cannotImport" value="${cannotImport}" />
 			<var name="importPermissions" value="${importPermissions}" />
@@ -488,6 +485,8 @@
 	</command>
 
 	<command name="selectImportFileCmd">
+		<execute function="SelectFrame" locator1="ExportImport#EXPORT_IMPORT_IFRAME" />
+
 		<execute function="AssertClick" locator1="ExportImport#NAVIGATION_IMPORT" value1="Import" />
 		<execute function="AssertClick" locator1="Button#SELECT_FILE" value1="Select File" />
 

@@ -164,7 +164,14 @@ public class UserFinderImpl
 
 			boolean isSybase = DB.TYPE_SYBASE.equals(db.getType());
 
-			StringBundler sb = new StringBundler(19);
+			StringBundler sb = null;
+
+			if (isSybase) {
+				sb = new StringBundler(19);
+			}
+			else {
+				sb = new StringBundler(13);
+			}
 
 			sb.append("SELECT groupId, COUNT(DISTINCT userId) FROM (");
 

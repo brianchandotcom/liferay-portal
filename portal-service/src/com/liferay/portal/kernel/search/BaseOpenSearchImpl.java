@@ -529,13 +529,6 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 		return themeDisplay.getPortalURL() + searchPath;
 	}
 
-	protected PortletURL getPortletURL(
-			HttpServletRequest request, String portletId)
-		throws Exception {
-
-		return getPortletURL(request, portletId, 0);
-	}
-
 	protected long getPlid(
 			HttpServletRequest request, String portletId, long scopeGroupId)
 		throws Exception {
@@ -563,6 +556,13 @@ public abstract class BaseOpenSearchImpl implements OpenSearch {
 		}
 
 		return plid;
+	}
+
+	protected PortletURL getPortletURL(
+			HttpServletRequest request, String portletId)
+		throws Exception {
+
+		return getPortletURL(request, portletId, 0);
 	}
 
 	protected PortletURL getPortletURL(

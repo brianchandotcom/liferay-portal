@@ -109,8 +109,8 @@ public class PoshiRunnerContext {
 		return _filePaths.get(fileName);
 	}
 
-	public static String[] getFilePathsArray() {
-		return _filePathsArray;
+	public static List<String> getFilePathsNames() {
+		return _filePathsNames;
 	}
 
 	public static Element getFunctionCommandElement(String classCommandName) {
@@ -488,7 +488,7 @@ public class PoshiRunnerContext {
 			String locator = locatorElement.getText();
 
 			if (locatorKey.equals("EXTEND_ACTION_PATH")) {
-				for (String extendFilePath : _filePathsArray) {
+				for (String extendFilePath : _filePathsNames) {
 					String expectedExtendedPath = "/" + locator + ".path";
 
 					if (OSDetector.isWindows()) {
@@ -631,9 +631,10 @@ public class PoshiRunnerContext {
 
 		directoryScanner.scan();
 
-		_filePathsArray = directoryScanner.getIncludedFiles();
+		_filePathsNames.addAll(
+			Arrays.asList(directoryScanner.getIncludedFiles()));
 
-		for (String filePath : _filePathsArray) {
+		for (String filePath : _filePathsNames) {
 			filePath = _TEST_BASE_DIR_NAME + "/" + filePath;
 
 			if (OSDetector.isWindows()) {
@@ -878,7 +879,7 @@ public class PoshiRunnerContext {
 		new TreeMap<>();
 	private static final Set<String> _componentNames = new TreeSet<>();
 	private static final Map<String, String> _filePaths = new HashMap<>();
-	private static String[] _filePathsArray;
+	private static final List<String> _filePathsNames = new ArrayList<>();
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();

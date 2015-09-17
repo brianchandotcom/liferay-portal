@@ -65,13 +65,13 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					selectAllCheckbox: {
+						validator: Lang.isString
+					},
+
 					selectedCSSClass: {
 						validator: Lang.isString,
 						value: CSS_SELECTED
-					},
-
-					selectAllCheckbox: {
-						validator: Lang.isString
 					},
 
 					selector: {

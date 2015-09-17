@@ -43,7 +43,6 @@ import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
@@ -282,25 +281,6 @@ public class ServiceComponentLocalServiceImpl
 	protected void clearCacheRegistry(
 			ServiceComponentConfiguration serviceComponentConfiguration)
 		throws DocumentException {
-
-		InputStream inputStream =
-			serviceComponentConfiguration.getHibernateInputStream();
-
-		if (inputStream == null) {
-			return;
-		}
-
-		Document document = UnsecureSAXReaderUtil.read(inputStream);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> classElements = rootElement.elements("class");
-
-		for (Element classElement : classElements) {
-			String name = classElement.attributeValue("name");
-
-			CacheRegistryUtil.unregister(name);
-		}
 
 		CacheRegistryUtil.clear();
 

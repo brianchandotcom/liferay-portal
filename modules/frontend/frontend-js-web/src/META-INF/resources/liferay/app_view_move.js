@@ -385,6 +385,7 @@ AUI.add(
 
 						dd.set('offsetNode', false);
 
+						dd.addInvalid('.dropdown-menu');
 						dd.removeInvalid('a');
 
 						dd.set('groups', [instance.get(STR_PORTLET_GROUP)]);

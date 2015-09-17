@@ -48,6 +48,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -242,7 +243,7 @@ public class UserFinderImpl
 			List<Object[]> list = (List<Object[]>)QueryUtil.list(
 				q, getDialect(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			Map<Long, Integer> map = new LinkedHashMap<>();
+			Map<Long, Integer> map = new HashMap<>();
 
 			for (Object[] objects : list) {
 				Number groupId = (Number)objects[0];

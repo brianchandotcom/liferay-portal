@@ -648,32 +648,29 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _readPoshiFiles() throws Exception {
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(_TEST_BASE_DIR_NAME);
-		directoryScanner.setIncludes(
-			new String[] {
-				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
-				"**\\*.testcase"
+		List<String> testBasePathsFiles = _findPoshiFiles(
+			_TEST_BASE_DIR_NAME, new String[] {
+			"action", "function", "macro", "path", "testcase"
 			});
 
-		directoryScanner.scan();
+		_filePathsNames.addAll(testBasePathsFiles);
 
-		String[] filePathsArray = directoryScanner.getIncludedFiles();
+		for (String testIncludeDirName : _TEST_INCLUDE_DIR_NAMES) {
+			List<String> testIncludePathsFiles = _findPoshiFiles(
+				testIncludeDirName, new String[] {
+				"action", "function", "macro", "path"
+			});
 
-		for (String filePath : filePathsArray) {
-			filePath = _TEST_BASE_DIR_NAME + "/" + filePath;
+			_filePathsNames.addAll(testIncludePathsFiles);
+		}
 
-			if (OSDetector.isWindows()) {
-				filePath = filePath.replace("/", "\\");
-			}
-
-			_filePathsNames.add(filePath);
-
+		for (String filePath : _filePathsNames) {
 			_filePaths.put(
 				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
 				filePath);
+		}	
 
+		for (String filePath : _filePathsNames) {
 			_readPoshiFile(filePath);
 		}
 
@@ -897,6 +894,9 @@ public class PoshiRunnerContext {
 
 	private static final String _TEST_BASE_DIR_NAME =
 		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
+
+	private static final String[] _TEST_INCLUDE_DIR_NAMES =
+		PoshiRunnerGetterUtil.getTestIncludeDirNames();
 
 	private static final Map<String, String> _actionExtendClassName =
 		new HashMap<>();

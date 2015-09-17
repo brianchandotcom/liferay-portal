@@ -47,7 +47,7 @@ AUI.add(
 			all: function(selector, root) {
 				var instance = this;
 
-				root = root || instance.rootNode || A;
+				root = A.one(root) || instance.rootNode || A;
 
 				return root.allNS(instance.NS, selector);
 			},
@@ -67,7 +67,7 @@ AUI.add(
 			one: function(selector, root) {
 				var instance = this;
 
-				root = root || instance.rootNode || A;
+				root = A.one(root) || instance.rootNode || A;
 
 				return root.oneNS(instance.NS, selector);
 			},

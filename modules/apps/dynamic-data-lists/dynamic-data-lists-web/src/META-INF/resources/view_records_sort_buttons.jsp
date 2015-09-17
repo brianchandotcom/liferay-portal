@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect", PortalUtil.getCurrentURL(request));
 
-long recordSetId = ParamUtil.getLong(request, "recordSetId");
+long recordSetId = PrefsParamUtil.getLong(renderRequest.getPreferences(), renderRequest, "recordSetId");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");

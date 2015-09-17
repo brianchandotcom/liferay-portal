@@ -95,11 +95,17 @@ recordSearchContainer.setOrderByType(orderByType);
 
 	<aui:nav-bar-search searchContainer="<%= recordSearchContainer %>">
 
+		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="searchURL">
+			<portlet:param name="mvcPath" value="/view_record_set.jsp" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+		</portlet:renderURL>
+
 		<%
 		request.setAttribute("liferay-ui:search:searchContainer", recordSearchContainer);
 		%>
 
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+		<aui:form action="<%= searchURL.toString() %>" method="post" name="fm1">
 			<liferay-util:include page="/record_search.jsp" servletContext="<%= application %>" />
 		</aui:form>
 	</aui:nav-bar-search>

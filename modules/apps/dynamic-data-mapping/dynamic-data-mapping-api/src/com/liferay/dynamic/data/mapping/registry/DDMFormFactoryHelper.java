@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.lang.reflect.Method;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
@@ -173,6 +175,19 @@ public class DDMFormFactoryHelper {
 		}
 
 		return StringPool.TRUE;
+	}
+
+	public Map<String, String> getProperties() {
+		Map<String, String> propertiesMap = new HashMap<>();
+
+		for (String property : _ddmFormField.properties()) {
+			String key = StringUtil.extractFirst(property, StringPool.EQUAL);
+			String value = StringUtil.extractLast(property, StringPool.EQUAL);
+
+			propertiesMap.put(key, value);
+		}
+
+		return propertiesMap;
 	}
 
 	public boolean isDDMFormFieldLocalizable(Method method) {

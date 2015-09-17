@@ -4,6 +4,10 @@ AUI.add(
 		var CheckboxField = A.Component.create(
 			{
 				ATTRS: {
+					showAsSwitcher: {
+						value: false
+					},
+
 					type: {
 						value: 'checkbox'
 					},
@@ -30,6 +34,7 @@ AUI.add(
 						return A.merge(
 							CheckboxField.superclass.getTemplateContext.apply(instance, arguments),
 							{
+								showAsSwitcher: instance.get('showAsSwitcher'),
 								status: value ? 'checked' : ''
 							}
 						);

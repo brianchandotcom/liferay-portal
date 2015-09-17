@@ -7,20 +7,31 @@
  * @param label
  * @param name
  * @param required
+ * @param showAsSwitcher
  * @param status
  * @param visible
  */
 {template .checkbox}
 	<div class="form-group form-inline{$visible ? '' : ' hide'}" data-fieldname="{$name}">
-		<div class="checkbox checkbox-default">
+		{if $showAsSwitcher}
 			<label class="control-label" for="{$name}">
-				<input id="{$name}" name="{$name}" type="checkbox" {$status} value="true" /> {$label}
+				<input class="toggle-switch" id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
 
-				{if $required}
-					<b>*</b>
-				{/if}
+				<span aria-hidden="true" class="toggle-switch-bar">
+					<span class="toggle-switch-handle" data-label-off="{$label}" data-label-on="{$label}"></span>
+				</span>
 			</label>
-		</div>
+		{else}
+			<div class="checkbox checkbox-default">
+				<label class="control-label" for="{$name}">
+					<input id="{$name}" name="{$name}" type="checkbox" {$status} value="true" /> {$label}
+
+					{if $required}
+						<b>*</b>
+					{/if}
+				</label>
+			</div>
+		{/if}
 
 		{$childElementsHTML|noAutoescape}
 	</div>

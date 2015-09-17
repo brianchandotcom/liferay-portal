@@ -38,9 +38,13 @@
 			{/if}
 		</label>
 
-		<div class="checkbox checkbox-default">
-			<label>
-				<input {$enableValidationValue ? 'checked="checked"' : ''} class="enable-validation" type="checkbox" /> {$enableValidationMessage}
+		<div class="form-group">
+			<label class="control-label" for="{$name}EnableValidation">
+				<input class="enable-validation toggle-switch" {$enableValidationValue ? 'checked="checked"' : ''} id="{$name}EnableValidation" type="checkbox" value="true" />
+
+				<span aria-hidden="true" class="toggle-switch-bar">
+					<span class="toggle-switch-handle" data-label-off="{$enableValidationMessage}" data-label-on="{$enableValidationMessage}"></span>
+				</span>
 			</label>
 		</div>
 

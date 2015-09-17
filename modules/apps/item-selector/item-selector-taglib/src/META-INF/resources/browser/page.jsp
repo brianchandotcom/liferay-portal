@@ -36,15 +36,15 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 </liferay-util:html-top>
 
 <div class="lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
-	<aui:nav-bar>
-		<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
-			<liferay-ui:app-view-display-style
-				displayStyle="<%= displayStyle %>"
-				displayStyles="<%= BrowserTag.DISPLAY_STYLES %>"
+	<liferay-frontend:management-bar>
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
 				displayStyleURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
+				displayViews="<%= BrowserTag.DISPLAY_STYLES %>"
+				selectedDisplayStyle="<%= displayStyle %>"
 			/>
-		</aui:nav>
-	</aui:nav-bar>
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
 
 	<%
 	long folderId = ParamUtil.getLong(request, "folderId");

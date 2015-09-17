@@ -76,6 +76,13 @@ public class ClassNameLocalServiceImpl
 	}
 
 	@Override
+	public void destroy() {
+		super.destroy();
+
+		CacheRegistryUtil.unregister(getRegistryName());
+	}
+
+	@Override
 	public ClassName fetchClassName(String value) {
 		if (Validator.isNull(value)) {
 			return _nullClassName;

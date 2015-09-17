@@ -60,6 +60,10 @@ public class RepositoryProviderImpl
 		CacheRegistryUtil.register(this);
 	}
 
+	public void destroy() {
+		CacheRegistryUtil.unregister(getRegistryName());
+	}
+
 	@Override
 	public LocalRepository getFileEntryLocalRepository(long fileEntryId)
 		throws PortalException {

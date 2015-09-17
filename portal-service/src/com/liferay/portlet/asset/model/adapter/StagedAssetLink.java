@@ -21,4 +21,13 @@ import com.liferay.portlet.asset.model.AssetLink;
  * @author Mate Thurzo
  */
 public interface StagedAssetLink extends AssetLink, StagedModel {
+
+	public String getEntry1ClassName();
+
+	public String getEntry1Uuid();
+
+	public String getEntry2ClassName();
+
+	public String getEntry2Uuid();
+
 }

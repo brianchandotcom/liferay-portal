@@ -15,6 +15,7 @@
 package com.liferay.portlet.asset.model.adapter.impl;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.adapter.StagedAssetLink;
@@ -30,8 +31,60 @@ import java.util.Date;
 public class StagedAssetLinkImpl extends AssetLinkImpl
 	implements StagedAssetLink {
 
+	public StagedAssetLinkImpl() {
+	}
+
 	public StagedAssetLinkImpl(AssetLink assetLink) {
 		_assetLink = assetLink;
+
+		populateEntry1Attributes();
+		populateEntry2Attributes();
+
+		populateUuid();
+	}
+
+	@Override
+	public String getEntry1ClassName() {
+		if (Validator.isNotNull(_entry1ClassName)) {
+			return _entry1ClassName;
+		}
+
+		populateEntry1Attributes();
+
+		return _entry1ClassName;
+	}
+
+	@Override
+	public String getEntry1Uuid() {
+		if (Validator.isNotNull(_entry1Uuid)) {
+			return _entry1Uuid;
+		}
+
+		populateEntry1Attributes();
+
+		return _entry1Uuid;
+	}
+
+	@Override
+	public String getEntry2ClassName() {
+		if (Validator.isNotNull(_entry2ClassName)) {
+			return _entry2ClassName;
+		}
+
+		populateEntry2Attributes();
+
+		return _entry2ClassName;
+	}
+
+	@Override
+	public String getEntry2Uuid() {
+		if (Validator.isNotNull(_entry2Uuid)) {
+			return _entry2Uuid;
+		}
+
+		populateEntry2Attributes();
+
+		return _entry2Uuid;
 	}
 
 	@Override
@@ -51,17 +104,17 @@ public class StagedAssetLinkImpl extends AssetLinkImpl
 
 	@Override
 	public String getUuid() {
-		AssetEntry assetEntry1 = AssetEntryLocalServiceUtil.fetchAssetEntry(
-			_assetLink.getEntryId1());
-		AssetEntry assetEntry2 = AssetEntryLocalServiceUtil.fetchAssetEntry(
-			_assetLink.getEntryId2());
-
-		if ((assetEntry1 == null) || (assetEntry2 == null)) {
-			return null;
+		if (Validator.isNotNull(_uuid)) {
+			return _uuid;
 		}
 
-		return assetEntry1.getClassUuid() + StringPool.POUND +
-			assetEntry2.getClassUuid();
+		populateUuid();
+
+		return _uuid;
+	}
+
+	public void setAssetLink(AssetLink assetLink) {
+		_assetLink = assetLink;
 	}
 
 	@Override
@@ -79,6 +132,62 @@ public class StagedAssetLinkImpl extends AssetLinkImpl
 		throw new UnsupportedOperationException();
 	}
 
-	private final AssetLink _assetLink;
+	protected void populateEntry1Attributes() {
+		if (Validator.isNotNull(_entry1ClassName) &&
+			Validator.isNotNull(_entry1Uuid)) {
+
+			return;
+		}
+
+		AssetEntry entry1 = AssetEntryLocalServiceUtil.fetchAssetEntry(
+			_assetLink.getEntryId1());
+
+		if (entry1 == null) {
+			return;
+		}
+
+		_entry1ClassName = entry1.getClassName();
+		_entry1Uuid = entry1.getClassUuid();
+	}
+
+	protected void populateEntry2Attributes() {
+		if (Validator.isNotNull(_entry2ClassName) &&
+			Validator.isNotNull(_entry2Uuid)) {
+
+			return;
+		}
+
+		AssetEntry entry2 = AssetEntryLocalServiceUtil.fetchAssetEntry(
+			_assetLink.getEntryId2());
+
+		if (entry2 == null) {
+			return;
+		}
+
+		_entry2ClassName = entry2.getClassName();
+		_entry2Uuid = entry2.getClassUuid();
+	}
+
+	protected void populateUuid() {
+		if (Validator.isNotNull(_uuid)) {
+			return;
+		}
+
+		String entry1Uuid = getEntry1Uuid();
+		String entry2Uuid = getEntry2Uuid();
+
+		if (Validator.isNotNull(entry1Uuid) &&
+			Validator.isNotNull(entry2Uuid)) {
+
+			_uuid = entry1Uuid + StringPool.POUND + entry2Uuid;
+		}
+	}
+
+	private AssetLink _assetLink;
+	private String _entry1ClassName;
+	private String _entry1Uuid;
+	private String _entry2ClassName;
+	private String _entry2Uuid;
+	private String _uuid;
 
 }

@@ -22,8 +22,8 @@
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
+
+		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
 		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#AVAILABLE" value1="Available" />
 		<execute function="Type" locator1="TextInput#KEYWORDS" value1="${userScreenName}" />
@@ -54,8 +54,8 @@
 		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
 
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
-		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#ASSIGN_MEMBERS" value1="Assign Members" />
+
+		<execute function="AssertClick" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 
 		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#USER_GROUPS" value1="User Groups" />
 		<execute function="AssertClick" locator1="SiteTeamsAssignMembers#AVAILABLE" value1="Available" />

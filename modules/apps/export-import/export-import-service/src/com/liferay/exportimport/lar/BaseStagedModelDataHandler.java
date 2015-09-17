@@ -16,13 +16,106 @@ package com.liferay.exportimport.lar;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
+import com.liferay.exportimport.stagedmodel.repository.StagedModelRepository;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Daniel Kocsis
  */
 public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	extends com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler<T> {
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
+
+		StagedModelRepository<T> stagedModelRepository =
+			getStagedModelRepository();
+
+		if (stagedModelRepository == null) {
+			return;
+		}
+
+		stagedModelRepository.deleteStagedModel(
+			uuid, groupId, className, extraData);
+	}
+
+	@Override
+	public void deleteStagedModel(T stagedModel) throws PortalException {
+		StagedModelRepository<T> stagedModelRepository =
+			getStagedModelRepository();
+
+		if (stagedModelRepository == null) {
+			return;
+		}
+
+		stagedModelRepository.deleteStagedModel(stagedModel);
+	}
+
+	@Override
+	public T fetchMissingReference(String uuid, long groupId) {
+		StagedModelRepository<T> stagedModelRepository =
+			getStagedModelRepository();
+
+		if (stagedModelRepository == null) {
+			return super.fetchMissingReference(uuid, groupId);
+		}
+
+		return stagedModelRepository.fetchMissingReference(uuid, groupId);
+	}
+
+	@Override
+	public T fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
+		StagedModelRepository<T> stagedModelRepository =
+			getStagedModelRepository();
+
+		if (stagedModelRepository == null) {
+			return super.fetchStagedModelByUuidAndGroupId(uuid, groupId);
+		}
+
+		return stagedModelRepository.fetchStagedModelByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
+	public List<T> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		StagedModelRepository<T> stagedModelRepository =
+			getStagedModelRepository();
+
+		if (stagedModelRepository == null) {
+			return Collections.<T>emptyList();
+		}
+
+		return stagedModelRepository.fetchStagedModelsByUuidAndCompanyId(
+			uuid, companyId);
+	}
+
+	@Override
+	public void restoreStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
+
+		StagedModelRepository<T> stagedModelRepository =
+			getStagedModelRepository();
+
+		if (stagedModelRepository == null) {
+			super.restoreStagedModel(portletDataContext, stagedModel);
+
+			return;
+		}
+
+		stagedModelRepository.restoreStagedModel(
+			portletDataContext, stagedModel);
+	}
 
 	protected ExportImportContentProcessor getExportImportContentProcessor(
 		Class<T> clazz) {
@@ -32,6 +125,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				getExportImportContentProcessor(clazz.getName());
 
 		return exportImportContentProcessor;
+	}
+
+	protected StagedModelRepository<T> getStagedModelRepository() {
+		return null;
 	}
 
 }

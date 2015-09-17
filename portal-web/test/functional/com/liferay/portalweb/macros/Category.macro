@@ -4,7 +4,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
-		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
@@ -130,7 +130,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
-		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1=" " />
@@ -251,6 +251,7 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="Select" locator1="CPCategoriesEdit#VOCABULARY_SELECT" value1="${vocabularyName2}" />

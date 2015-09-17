@@ -1,3 +1,5 @@
+import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
+
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
@@ -5,4 +7,10 @@ dependencies {
 
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+task publishNodeModule(type: PublishNodeModuleTask)
+
+publishNodeModule {
+	workingDir = "src/META-INF/resources/_styled"
 }

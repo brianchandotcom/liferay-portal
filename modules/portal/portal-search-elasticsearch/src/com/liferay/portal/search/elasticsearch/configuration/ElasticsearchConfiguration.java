@@ -41,7 +41,7 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean clientTransportSniff();
 
-	@Meta.AD(deflt = "LiferayElasticSearch", required = false)
+	@Meta.AD(deflt = "LiferayElasticsearchCluster", required = false)
 	public String clusterName();
 
 	@Meta.AD(deflt = "9300-9400", required = false)

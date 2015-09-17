@@ -33,6 +33,11 @@ Bundle-ClassPath: \
 Bundle-Name: Liferay Portal Search Elasticsearch
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch
 Bundle-Version: 1.0.0
+Export-Package:\
+	!org.elasticsearch,\
+	!org.elasticsearch.*,\
+	com.liferay.portal.search.elasticsearch.settings,\
+	org.elasticsearch.common.settings
 Import-Package:\
 	!com.google.protobuf.*,\
 	!com.sun.jna.*,\

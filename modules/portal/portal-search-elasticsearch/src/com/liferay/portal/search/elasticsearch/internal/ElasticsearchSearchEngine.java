@@ -117,12 +117,12 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		if (PortalRunMode.isTestMode()) {
 			clusterHealthResponse =
 				_elasticsearchConnectionManager.getClusterHealthResponse(
-					Time.HOUR, 1);
+					Time.HOUR);
 		}
 		else {
 			clusterHealthResponse =
 				_elasticsearchConnectionManager.getClusterHealthResponse(
-					30 * Time.SECOND, 2);
+					30 * Time.SECOND);
 		}
 
 		if (clusterHealthResponse.getStatus() == ClusterHealthStatus.RED) {
@@ -238,12 +238,12 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		if (PortalRunMode.isTestMode()) {
 			clusterHealthResponse =
 				_elasticsearchConnectionManager.getClusterHealthResponse(
-					Time.HOUR, 1);
+					Time.HOUR);
 		}
 		else {
 			clusterHealthResponse =
 				_elasticsearchConnectionManager.getClusterHealthResponse(
-					30 * Time.SECOND, 2);
+					30 * Time.SECOND);
 		}
 
 		if (clusterHealthResponse.getStatus() == ClusterHealthStatus.RED) {

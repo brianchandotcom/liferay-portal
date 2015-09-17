@@ -86,9 +86,7 @@ public abstract class BaseElasticsearchConnection
 	}
 
 	@Override
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount) {
-
+	public ClusterHealthResponse getClusterHealthResponse(long timeout) {
 		Client client = getClient();
 
 		AdminClient adminClient = client.admin();
@@ -101,8 +99,7 @@ public abstract class BaseElasticsearchConnection
 		clusterHealthRequestBuilder.setTimeout(
 			TimeValue.timeValueMillis(timeout));
 
-		clusterHealthRequestBuilder.setWaitForGreenStatus();
-		clusterHealthRequestBuilder.setWaitForNodes(">" + (nodesCount - 1));
+		clusterHealthRequestBuilder.setWaitForYellowStatus();
 
 		Future<ClusterHealthResponse> future =
 			clusterHealthRequestBuilder.execute();

@@ -4591,11 +4591,13 @@
 			<var name="viewTypeLocalized" value="Mes" />
 		</execute>
 
-		<execute macro="MyAccount#configureDisplaySettingsLanguage">
+		<execute macro="MyAccount#configureDisplaySettingsLanguageLocalized">
+			<var name="category" value="Mi cuenta" />
 			<var name="languageName" value="English (United States)" />
-			<var name="myAccount" value="Mi cuenta" />
+			<var name="portlet" value="Mi cuenta" />
 			<var name="saveButton" value="Guardar" />
 			<var name="successMessage" value="Your request completed successfully." />
+			<var name="tab" value="Mi espacio" />
 		</execute>
 	</command>
 

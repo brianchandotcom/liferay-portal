@@ -273,6 +273,22 @@ public class PoshiRunnerGetterUtil {
 		return testIncludeDirNames;
 	}
 
+	public static String[] getTestSearchDirNames() {
+		String[] testIncludeDirNames = getTestIncludeDirNames();
+
+		int length = testIncludeDirNames.length + 1;
+
+		String[] testSearchDirNames = new String[length];
+
+		testSearchDirNames[0] = PropsValues.TEST_BASE_DIR_NAME;
+
+		for (int i = 1; i < length; i++) {
+			testSearchDirNames[i] = testIncludeDirNames[i-1];
+		}
+
+		return testSearchDirNames;
+	}
+
 	public static String getVarMethodValue(String classCommandName)
 		throws Exception {
 

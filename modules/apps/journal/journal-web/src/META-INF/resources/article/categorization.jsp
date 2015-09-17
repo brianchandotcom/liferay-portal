@@ -53,6 +53,13 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 				priority = assetEntry.getPriority();
 			}
 		}
+		else {
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(JournalArticle.class.getName(), article.getResourcePrimKey());
+
+			if (assetEntry != null) {
+				priority = assetEntry.getPriority();
+			}
+		}
 	}
 	%>
 

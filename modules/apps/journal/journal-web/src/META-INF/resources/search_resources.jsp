@@ -223,7 +223,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 								commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 								containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, article.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= article.getDescription(locale) %>"
+								description="<%= LocalizationUtil.getLocalization(article.getContent(), themeDisplay.getLanguageId()) %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
 								rowCheckerId="<%= HtmlUtil.escape(article.getArticleId()) %>"
 								rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
@@ -323,7 +323,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 								actionJspServletContext="<%= application %>"
 								containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, curArticle.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= curArticle.getDescription(locale) %>"
+								description="<%= LocalizationUtil.getLocalization(curArticle.getContent(), themeDisplay.getLanguageId()) %>"
 								queryTerms="<%= queryTerms %>"
 								rowCheckerId="<%= HtmlUtil.escape(curArticle.getArticleId()) %>"
 								rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"

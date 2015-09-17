@@ -62,19 +62,19 @@ public interface DefaultDDMFormFieldTypeSettings
 
 	@DDMFormField(
 		label = "%repeatable",
-		properties = {"setting.category=advanced", "setting.weight=0"}
+		properties = {"setting.category=advanced", "setting.weight=0", "showAsSwitcher=true"}
 	)
 	public boolean repeatable();
 
 	@DDMFormField(
 		label = "%required",
-		properties = {"setting.category=basic", "setting.weight=1"}
+		properties = {"setting.category=basic", "setting.weight=1", "showAsSwitcher=true" }
 	)
 	public boolean required();
 
 	@DDMFormField(
 		label = "%show-label",
-		properties = {"setting.category=advanced", "setting.weight=0"}
+		properties = {"setting.category=advanced", "setting.weight=0", "showAsSwitcher=true"}
 	)
 	public boolean showLabel();
 

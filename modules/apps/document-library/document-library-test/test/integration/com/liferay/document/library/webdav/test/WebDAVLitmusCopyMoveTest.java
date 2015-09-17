@@ -16,6 +16,8 @@ package com.liferay.document.library.webdav.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -35,6 +37,7 @@ import org.junit.runner.RunWith;
  * @author Alexander Chow
  */
 @RunWith(Arquillian.class)
+@Sync
 public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 
 	@ClassRule
@@ -42,6 +45,7 @@ public class WebDAVLitmusCopyMoveTest extends BaseWebDAVTestCase {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
+			SynchronousDestinationTestRule.INSTANCE,
 			WebDAVEnvironmentConfigTestRule.INSTANCE);
 
 	@Test

@@ -8,6 +8,10 @@ AUI.add(
 						value: 'checkbox'
 					},
 
+					showAsSwitcher: {
+						value: false
+					},
+
 					value: {
 						setter: '_setValue'
 					}
@@ -30,6 +34,7 @@ AUI.add(
 						return A.merge(
 							CheckboxField.superclass.getTemplateContext.apply(instance, arguments),
 							{
+								showAsSwitcher: instance.get('showAsSwitcher'),
 								status: value ? 'checked' : ''
 							}
 						);

@@ -127,11 +127,12 @@ recordSearchContainer.setOrderByType(orderByType);
 
 				ResultRow row = new ResultRow(record, record.getRecordId(), i);
 
+				row.setCssClass("entry-display-style");
+
 				row.setParameter("editable", String.valueOf(editable));
 				row.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 				row.setParameter("hasDeletePermission", String.valueOf(hasDeletePermission));
 				row.setParameter("hasUpdatePermission", String.valueOf(hasUpdatePermission));
-				row.setCssClass("entry-display-style");
 
 				PortletURL rowURL = renderResponse.createRenderURL();
 

@@ -96,7 +96,7 @@ renderResponse.setTitle(title);
 					<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 				</portlet:renderURL>
 
-				<aui:button href="<%= editRecordURL %>" name="edit" value="edit" />
+				<aui:button href="<%= editRecordURL %>" name="edit" primary="<%= true %>" value="edit" />
 			</c:if>
 
 			<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />

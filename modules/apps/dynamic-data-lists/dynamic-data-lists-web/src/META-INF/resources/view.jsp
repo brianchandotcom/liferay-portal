@@ -80,7 +80,10 @@ recordSetSearch.setOrderByType(orderByType);
 
 				<c:choose>
 					<c:when test='<%= displayStyle.equals("descriptive") %>'>
-						<% request.setAttribute("rowURL", rowURL); %>
+
+						<%
+						request.setAttribute("rowURL", rowURL);
+						%>
 
 						<liferay-ui:search-container-column-image
 							src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
@@ -106,7 +109,6 @@ recordSetSearch.setOrderByType(orderByType);
 							cssClass="entry-action"
 							path="/record_set_action.jsp"
 						/>
-
 					</c:otherwise>
 				</c:choose>
 

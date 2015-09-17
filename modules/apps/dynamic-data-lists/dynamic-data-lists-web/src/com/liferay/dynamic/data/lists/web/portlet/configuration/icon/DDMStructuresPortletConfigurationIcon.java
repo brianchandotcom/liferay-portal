@@ -62,9 +62,8 @@ public class DDMStructuresPortletConfigurationIcon
 
 		if (rootPortletId.equals(DDLPortletKeys.DYNAMIC_DATA_LISTS)) {
 			return DDLPermission.contains(
-					themeDisplay.getPermissionChecker(),
-					themeDisplay.getScopeGroupId(),
-					DDLActionKeys.ADD_RECORD_SET);
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), DDLActionKeys.ADD_RECORD_SET);
 		}
 
 		return false;

@@ -429,11 +429,11 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 
 							long modelAdditionCount = super.performCount();
 
-							manifestSummary.addModelAdditionCount(stagedModelType.toString(), modelAdditionCount);
+							manifestSummary.addModelAdditionCount(stagedModelType, modelAdditionCount);
 
 							long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext, stagedModelType);
 
-							manifestSummary.addModelDeletionCount(stagedModelType.toString(), modelDeletionCount);
+							manifestSummary.addModelDeletionCount(stagedModelType, modelDeletionCount);
 
 							return modelAdditionCount;
 						}
@@ -472,10 +472,15 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 								<#if entity.isTypedModel()>
 									StagedModelType stagedModelType = exportActionableDynamicQuery.getStagedModelType();
 
-									if (stagedModelType.getReferrerClassNameId() >= 0) {
-										Property classNameIdProperty = PropertyFactoryUtil.forName("classNameId");
+									long referrerClassNameId = stagedModelType.getReferrerClassNameId();
 
+									Property classNameIdProperty = PropertyFactoryUtil.forName("classNameId");
+
+									if ((referrerClassNameId != StagedModelType.REFERRER_CLASS_NAME_ID_ALL) && (referrerClassNameId != StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
 										dynamicQuery.add(classNameIdProperty.eq(stagedModelType.getReferrerClassNameId()));
+									}
+									else if (referrerClassNameId == StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
+										dynamicQuery.add(classNameIdProperty.isNotNull());
 									}
 								</#if>
 
@@ -512,7 +517,11 @@ import ${packagePath}.service.${entity.name}${sessionTypeName}Service;
 							}
 
 						});
-					exportActionableDynamicQuery.setStagedModelType(new StagedModelType(PortalUtil.getClassNameId(${entity.name}.class.getName())));
+					<#if entity.isTypedModel()>
+						exportActionableDynamicQuery.setStagedModelType(new StagedModelType(PortalUtil.getClassNameId(${entity.name}.class.getName()), StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
+					<#else>
+						exportActionableDynamicQuery.setStagedModelType(new StagedModelType(PortalUtil.getClassNameId(${entity.name}.class.getName())));
+					</#if>
 
 					return exportActionableDynamicQuery;
 				}

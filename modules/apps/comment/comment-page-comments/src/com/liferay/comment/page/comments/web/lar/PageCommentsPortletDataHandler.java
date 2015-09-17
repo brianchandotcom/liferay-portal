@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -63,8 +64,11 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 			return new StagedModelType[0];
 		}
 
+		Class<? extends StagedModel> clazz =
+			discussionStagingHandler.getStagedModelClass();
+
 		StagedModelType stagedModelType = new StagedModelType(
-			discussionStagingHandler.getStagedModelClass());
+			clazz.getName(), StagedModelType.REFERRER_CLASS_NAME_ANY);
 
 		return new StagedModelType[] {stagedModelType};
 	}
@@ -81,7 +85,8 @@ public class PageCommentsPortletDataHandler extends BasePortletDataHandler {
 		PortletDataHandlerBoolean portletDataHandlerBoolean =
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "comment", true, false, null,
-				discussionStagingHandler.getClassName());
+				discussionStagingHandler.getClassName(),
+				StagedModelType.REFERRER_CLASS_NAME_ANY);
 
 		return new PortletDataHandlerControl[] {portletDataHandlerBoolean};
 	}

@@ -35,6 +35,7 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -150,14 +151,27 @@ public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected void checkManifestSummary(
-		Map<String, LongWrapper> expectedModelAdditionCounters) {
+		ManifestSummary expectedManifestSummary) {
 
 		String manifestSummaryKey = ManifestSummary.getManifestSummaryKey(
-			MBThread.class.getName(), null);
+			new StagedModelType(MBThread.class.getName()));
 
-		expectedModelAdditionCounters.remove(manifestSummaryKey);
+		Collection<String> manifestSummaryKeys =
+			expectedManifestSummary.getManifestSummaryKeys();
 
-		super.checkManifestSummary(expectedModelAdditionCounters);
+		manifestSummaryKeys.remove(manifestSummaryKey);
+
+		Map<String, LongWrapper> modelAdditionCounters =
+			expectedManifestSummary.getModelAdditionCounters();
+
+		modelAdditionCounters.remove(manifestSummaryKey);
+
+		Map<String, LongWrapper> modelDeletionCounters =
+			expectedManifestSummary.getModelDeletionCounters();
+
+		modelDeletionCounters.remove(manifestSummaryKey);
+
+		super.checkManifestSummary(expectedManifestSummary);
 	}
 
 	@Override

@@ -143,6 +143,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.FullNameGenerator;
 import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -5569,7 +5570,21 @@ public class PortalImpl implements Portal {
 				return null;
 			}
 
-			userId = GetterUtil.getLong(remoteUser);
+			if (PropsValues.PORTAL_JAAS_ENABLE) {
+				long companyId = getCompanyId(request);
+
+				try {
+					userId = JAASHelper.getJaasUserId(companyId, remoteUser);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(e);
+					}
+				}
+			}
+			else {
+				userId = GetterUtil.getLong(remoteUser);
+			}
 		}
 
 		if (userId > 0) {

@@ -77,8 +77,7 @@ public class JournalPortletUtil {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/view_article.jsp");
+		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter(
 			"groupId", String.valueOf(article.getGroupId()));
 		portletURL.setParameter(

@@ -88,22 +88,22 @@ public class UpgradeSharding extends UpgradeProcess {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBuilder sbSelect = new StringBuilder();
+			StringBuilder sb = new StringBuilder(2 * columnNames.length + 4);
 
-			sbSelect.append("select ");
+			sb.append("select ");
 
 			for (String columnName : columnNames) {
-				sbSelect.append(columnName);
-				sbSelect.append(", ");
+				sb.append(columnName);
+				sb.append(", ");
 			}
 
-			sbSelect.setLength(sbSelect.length() - 2);
+			sb.setLength(sb.length() - 2);
 
-			sbSelect.append(" from ");
-			sbSelect.append(tableName);
-			sbSelect.append(" where companyId IS NULL");
+			sb.append(" from ");
+			sb.append(tableName);
+			sb.append(" where companyId IS NULL");
 
-			ps = con.prepareStatement(sbSelect.toString());
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -111,11 +111,11 @@ public class UpgradeSharding extends UpgradeProcess {
 				return;
 			}
 
-			StringBuilder sb = new StringBuilder();
+			sb = new StringBuilder(4 * columnNames.length + 3);
 
-			sb.append("Has not be posible to update the companyId of ");
-			sb.append("the following rows in the table ");
+			sb.append("Unable to update the companyId column in table ");
 			sb.append(tableName);
+			sb.append(" for the following rows:");
 
 			while (rs.next()) {
 				sb.append(" {");
@@ -131,7 +131,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 				sb.setLength(sb.length() - 2);
 
-				sb.append("}");
+				sb.append(" }");
 			}
 
 			if (_log.isWarnEnabled()) {
@@ -151,7 +151,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateAnnouncementsFlags() throws Exception {
 		String select =
 			"select a.flagId, a.userId, u.companyId from AnnouncementsFlag a," +
-				" User_ u where a.userId=u.userId";
+				" User_ u where a.userId = u.userId";
 
 		String update =
 			"update AnnouncementsFlag set companyId = ? where flagId = ?";
@@ -166,7 +166,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select a.categoryId, c.companyId, a.entryId from " +
 				"AssetEntries_AssetCategories a, AssetCategory c where " +
-				"a.categoryId=c.categoryId";
+				"a.categoryId = c.categoryId";
 
 		String update =
 			"update AssetEntries_AssetCategories set companyId = ? " +
@@ -183,7 +183,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateAssetEntriesAssetTags() throws Exception {
 		String select =
 			"select t.companyId, a.entryId, a.tagId from " +
-				"AssetEntries_AssetTags a, AssetTag t where a.tagId=t.tagId";
+				"AssetEntries_AssetTags a, AssetTag t where a.tagId = t.tagId";
 
 		String update =
 			"update AssetEntries_AssetTags set companyId = ? " +
@@ -199,7 +199,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateAssetTagStats() throws Exception {
 		String select =
 			"select t.companyId, a.tagStatsId from AssetTagStats a, " +
-				"AssetTag t where a.tagId=t.tagId";
+				"AssetTag t where a.tagId = t.tagId";
 
 		String update =
 			"update AssetTagStats set companyId = ? where tagStatsId = ?";
@@ -213,7 +213,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateBrowserTracker() throws Exception {
 		String select =
 			"select b.browserTrackerId, u.companyId from BrowserTracker b, " +
-				"User_ u where b.userId=u.userId";
+				"User_ u where b.userId = u.userId";
 
 		String update =
 			"update BrowserTracker set companyId = ? " +
@@ -295,7 +295,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateDDMStorageLink() throws Exception {
 		String select =
 			"select ds.companyId, dsl.structureId from DDMStructure ds, " +
-				"DDMStorageLink dsl where ds.structureId=dsl.structureId";
+				"DDMStorageLink dsl where ds.structureId = dsl.structureId";
 
 		String update =
 			"update DDMStorageLink set companyId = ? where structureId = ?";
@@ -323,7 +323,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateDDMTemplateLink() throws Exception {
 		String select =
 			"select dt.companyId, dtl.templateId from DDMTemplate dt, " +
-				"DDMTemplateLink dtl where dt.templateId=dtl.templateId";
+				"DDMTemplateLink dtl where dt.templateId = dtl.templateId";
 
 		String update =
 			"update DDMTemplateLink set companyId = ? where templateId = ?";
@@ -356,9 +356,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			"select dlfet.companyId, dlfetdlf.fileEntryTypeId, " +
 				"dlfetdlf.folderId from DLFileEntryTypes_DLFolders dlfetdlf, " +
 				"DLFileEntryType dlfet, DLFolder dlf " +
-				"where dlf.companyId=dlfet.companyId and " +
-				"dlfet.fileEntryTypeId=dlfetdlf.fileEntryTypeId and " +
-				"dlf.folderId=dlfetdlf.folderId";
+				"where dlf.companyId = dlfet.companyId and " +
+				"dlfet.fileEntryTypeId = dlfetdlf.fileEntryTypeId and " +
+				"dlf.folderId = dlfetdlf.folderId";
 
 		String update =
 			"update DLFileEntryTypes_DLFolders set companyId = ? " +
@@ -378,10 +378,10 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		String select =
 			"(select dlfe.companyId, dlse.syncEventId from DLFileEntry dlfe, " +
-				"DLSyncEvent dlse where dlse.type_='file' and " +
-				"dlfe.fileEntryId=dlse.typePK) UNION (select re.companyId, " +
+				"DLSyncEvent dlse where dlse.type_ = 'file' and " +
+				"dlfe.fileEntryId = dlse.typePK) UNION (select re.companyId, " +
 				"dlse.syncEventId from DLSyncEvent dlse, RepositoryEntry re " +
-				"where dlse.type_='file' and dlse.typePK=re.repositoryId)";
+				"where dlse.type_ = 'file' and dlse.typePK = re.repositoryId)";
 
 		String update =
 			"update DLSyncEvent set companyId = ? where syncEventId = ?";
@@ -394,10 +394,10 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select =
 			"(select dlf.companyId, dlse.syncEventId from DLFolder dlf, " +
-				"DLSyncEvent dlse where dlse.type_='folder' and " +
-				"dlf.folderId=dlse.typePK) UNION (select re.companyId, " +
-				"dlse.syncEventId from DLSyncEvent dlse, RepositoryEntry re " +
-				"where dlse.type_='folder' and dlse.typePK=re.repositoryId)";
+				"DLSyncEvent dlse where dlse.type_ = 'folder' and " +
+					"dlf.folderId = dlse.typePK) UNION (select re.companyId, " +
+						"dlse.syncEventId from DLSyncEvent dlse, RepositoryEntry re " +
+							"where dlse.type_ = 'folder' and dlse.typePK=re.repositoryId)";
 
 		update = "update DLSyncEvent set companyId = ? where syncEventId = ?";
 
@@ -411,8 +411,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, go.groupId, go.organizationId from " +
 				"Group_ g, Groups_Orgs go, Organization_ o " +
-				"where g.groupId=go.groupId and " +
-				"go.organizationId=o.organizationId";
+					"where g.groupId = go.groupId and " +
+						"go.organizationId = o.organizationId";
 
 		String update =
 			"update Groups_Orgs set companyId = ? " +
@@ -429,7 +429,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, gr.groupId, gr.roleId from " +
 				"Group_ g, Groups_Roles gr, Role_ r " +
-				"where g.groupId=gr.groupId and gr.roleId=r.roleId";
+				"where g.groupId = gr.groupId and gr.roleId = r.roleId";
 
 		String update =
 			"update Groups_Roles set companyId = ? " +
@@ -445,8 +445,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, gug.groupId, gug.userGroupId from " +
 				"Group_ g, Groups_UserGroups gug, UserGroup ug " +
-				"where g.groupId=gug.groupId " +
-				"and gug.userGroupId=ug.userGroupId";
+				"where g.groupId = gug.groupId " +
+				"and gug.userGroupId = ug.userGroupId";
 
 		String update =
 			"update Groups_UserGroups set companyId = ? " +
@@ -493,7 +493,9 @@ public class UpgradeSharding extends UpgradeProcess {
 		}
 		catch (SQLException sqle) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("The companyId was not updated in Image table", sqle);
+				_log.warn(
+					"companyId field has not been updated in the Image table",
+					sqle);
 			}
 		}
 		finally {
@@ -514,7 +516,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		_updateCompanyColumnOnTable(
 			"JournalArticleImage", select, update, "companyId",
-			"articleImageId");
+				"articleImageId");
 
 		_checkNotUpdated("JournalArticleImage", "articleImageId");
 	}
@@ -523,7 +525,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, jar.resourcePrimKey from " +
 				"Group_ g, JournalArticleResource jar " +
-				"where g.groupId=jar.groupId";
+				"where g.groupId = jar.groupId";
 
 		String update =
 			"update JournalArticleResource set companyId = ? " +
@@ -540,7 +542,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select ma.companyId, mm.moduleId from " +
 				"Marketplace_App ma, Marketplace_Module mm " +
-				"where ma.appId=mm.appId";
+				"where ma.appId = mm.appId";
 
 		String update =
 			"update Marketplace_Module set companyId = ? where moduleId = ?";
@@ -554,7 +556,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateMBStatsUser() throws Exception {
 		String select =
 			"select g.companyId, mbsu.statsUserId from Group_ g, " +
-				"MBStatsUser mbsu where g.groupId=mbsu.groupId";
+				"MBStatsUser mbsu where g.groupId = mbsu.groupId";
 
 		String update =
 			"update MBStatsUser set companyId = ? where statsUserId = ?";
@@ -569,8 +571,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, ogr.organizationId, ogr.groupId, ogr.roleId " +
 				"from OrgGroupRole ogr, Group_ g, Organization_ o, Role_ r " +
-					"where ogr.organizationId=o.organizationId and " +
-						"ogr.groupId=g.groupId and ogr.roleId=r.roleId;";
+				"where ogr.organizationId = o.organizationId and " +
+				"ogr.groupId = g.groupId and ogr.roleId = r.roleId;";
 
 		String update =
 			"update OrgGroupRole set companyId = ? " +
@@ -586,7 +588,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateOrgLabor() throws Exception {
 		String select =
 			"select o.companyId, ol.orgLaborId from Organization_ o, " +
-				"OrgLabor ol where o.organizationId=ol.organizationId";
+				"OrgLabor ol where o.organizationId = ol.organizationId";
 
 		String update =
 			"update OrgLabor set companyId = ? where orgLaborId = ?";
@@ -601,7 +603,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select pp.companyId, ppr.passwordPolicyRelId " +
 				"from PasswordPolicy pp, PasswordPolicyRel ppr " +
-					"where pp.passwordPolicyId=ppr.passwordPolicyId";
+				"where pp.passwordPolicyId = ppr.passwordPolicyId";
 
 		String update =
 			"update PasswordPolicyRel set companyId = ? " +
@@ -617,7 +619,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updatePasswordTracker() throws Exception {
 		String select =
 			"select u.companyId, pt.passwordTrackerId " +
-				"from PasswordTracker pt, User_ u where pt.userId=u.userId";
+				"from PasswordTracker pt, User_ u where pt.userId = u.userId";
 
 		String update =
 			"update PasswordTracker set companyId = ? " +
@@ -634,7 +636,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select p.companyId, pp.portletPreferencesId " +
 				"from Portlet p, PortletPreferences pp where " +
-				"p.portletId=pp.portletId";
+					"p.portletId = pp.portletId";
 
 		String update =
 			"update PortletPreferences set companyId = ? " +
@@ -647,7 +649,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		select =
 			"select l.companyId, pp.portletPreferencesId " +
 				"from Layout l, PortletPreferences pp where " +
-				"l.plid=pp.plid";
+				"l.plid = pp.plid";
 
 		update =
 			"update PortletPreferences set companyId = ? " +
@@ -661,13 +663,13 @@ public class UpgradeSharding extends UpgradeProcess {
 	}
 
 	private void _updateRatingsStats() throws Exception {
-		StringBuilder select = new StringBuilder();
+		StringBuilder select = new StringBuilder(23);
 
 		// BookmarksEntry
 
 		select.append(
 			"(select be.companyId, r.statsId from BookmarksEntry be, " +
-				"RatingsStats r where be.entryId=r.classPK)");
+				"RatingsStats r where be.entryId = r.classPK)");
 
 		select.append(" union ");
 
@@ -675,7 +677,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select bf.companyId, r.statsId from BookmarksFolder bf, " +
-				"RatingsStats r where bf.folderId=r.classPK)");
+				"RatingsStats r where bf.folderId = r.classPK)");
 
 		select.append(" union ");
 
@@ -683,7 +685,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select be.companyId, r.statsId from BlogsEntry be, " +
-				"RatingsStats r where be.entryId=r.classPK)");
+				"RatingsStats r where be.entryId = r.classPK)");
 
 		select.append(" union ");
 
@@ -691,7 +693,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select cb.companyId, r.statsId from CalendarBooking cb, " +
-				"RatingsStats r where cb.calendarBookingId=r.classPK)");
+				"RatingsStats r where cb.calendarBookingId = r.classPK)");
 
 		select.append(" union ");
 
@@ -699,7 +701,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select ddlr.companyId, r.statsId from DDLRecord ddlr, " +
-				"RatingsStats r where ddlr.recordId=r.classPK)");
+				"RatingsStats r where ddlr.recordId = r.classPK)");
 
 		select.append(" union ");
 
@@ -707,7 +709,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select dlfe.companyId, r.statsId from DLFileEntry dlfe, " +
-				"RatingsStats r where dlfe.fileEntryId=r.classPK)");
+				"RatingsStats r where dlfe.fileEntryId = r.classPK)");
 
 		select.append(" union ");
 
@@ -715,7 +717,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select dlf.companyId, r.statsId from DLFolder dlf, " +
-				"RatingsStats r where dlf.folderId=r.classPK)");
+				"RatingsStats r where dlf.folderId = r.classPK)");
 
 		select.append(" union ");
 
@@ -723,7 +725,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select ja.companyId, r.statsId from JournalArticle ja, " +
-				"RatingsStats r where ja.articleId=r.classPK)");
+				"RatingsStats r where ja.articleId = r.classPK)");
 
 		select.append(" union ");
 
@@ -731,7 +733,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select jf.companyId, r.statsId from JournalFolder jf, " +
-				"RatingsStats r where jf.folderId=r.classPK)");
+				"RatingsStats r where jf.folderId = r.classPK)");
 
 		select.append(" union ");
 
@@ -739,7 +741,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select mbd.companyId, r.statsId from MBDiscussion mbd, " +
-				"RatingsStats r where mbd.discussionId=r.classPK)");
+				"RatingsStats r where mbd.discussionId = r.classPK)");
 
 		select.append(" union ");
 
@@ -747,7 +749,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select mbm.companyId, r.statsId from MBMessage mbm, " +
-				"RatingsStats r where mbm.messageId=r.classPK)");
+				"RatingsStats r where mbm.messageId = r.classPK)");
 
 		select.append(" union ");
 
@@ -755,7 +757,7 @@ public class UpgradeSharding extends UpgradeProcess {
 
 		select.append(
 			"(select wp.companyId, r.statsId from WikiPage wp, " +
-				"RatingsStats r where wp.pageId=r.classPK)");
+				"RatingsStats r where wp.pageId = r.classPK)");
 
 		String update =
 			"update RatingsStats set companyId = ? where statsId = ?";
@@ -770,7 +772,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select r.companyId, rbp.resourceBlockPermissionId " +
 				"from ResourceBlockPermission rbp, Role_ r " +
-					"where r.roleId=rbp.roleId";
+					"where r.roleId = rbp.roleId";
 
 		String update =
 			"update ResourceBlockPermission set companyId = ? " +
@@ -789,8 +791,9 @@ public class UpgradeSharding extends UpgradeProcess {
 			"select fv.companyId, fvpv.frameworkVersionId, " +
 				"fvpv.productVersionId from SCFrameworkVersion fv, " +
 					"SCProductVersion pv, SCFrameworkVersi_SCProductVers fvpv" +
-						" where fv.frameworkVersionId=fvpv.frameworkVersionId" +
-							" and pv.productVersionId=fvpv.productVersionId";
+						" where fv.frameworkVersionId = " +
+							" fvpv.frameworkVersionId and " +
+								" pv.productVersionId = fvpv.productVersionId";
 
 		String update =
 			"update SCFrameworkVersi_SCProductVers set companyId = ? " +
@@ -810,8 +813,8 @@ public class UpgradeSharding extends UpgradeProcess {
 			"select pe.companyId, lpe.licenseId, " +
 				"lpe.productEntryId from SCLicense l, " +
 					"SCLicenses_SCProductEntries lpe, SCProductEntry pe " +
-						"where l.licenseId=lpe.licenseId and " +
-							"lpe.productEntryId=pe.productEntryId";
+						"where l.licenseId = lpe.licenseId and " +
+							"lpe.productEntryId = pe.productEntryId";
 
 		String update =
 			"update SCLicenses_SCProductEntries set companyId = ? " +
@@ -837,7 +840,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateShoppingItemField() throws Exception {
 		String select =
 			"select si.companyId, sif.itemFieldId from ShoppingItem si, " +
-				"ShoppingItemField sif where si.itemId=sif.itemId";
+				"ShoppingItemField sif where si.itemId = sif.itemId";
 
 		String update =
 			"update ShoppingItemField set companyId = ? where itemFieldId = ?";
@@ -851,7 +854,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateShoppingItemPrice() throws Exception {
 		String select =
 			"select si.companyId, sip.itemPriceId from ShoppingItem si, " +
-				"ShoppingItemPrice sip where si.itemId=sip.itemId";
+				"ShoppingItemPrice sip where si.itemId = sip.itemId";
 
 		String update =
 			"update ShoppingItemPrice set companyId = ? where itemPriceId = ?";
@@ -865,7 +868,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateShoppingOrderItem() throws Exception {
 		String select =
 			"select si.companyId, soi.orderItemId from ShoppingItem si, " +
-				"ShoppingOrderItem soi where si.itemId=soi.itemId";
+				"ShoppingOrderItem soi where si.itemId = soi.itemId";
 
 		String update =
 			"update ShoppingOrderItem set companyId = ? where orderItemId = ?";
@@ -879,7 +882,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateTrashVersion() throws Exception {
 		String select =
 			"select te.companyId, tv.versionId from TrashEntry te, " +
-				"TrashVersion tv where te.entryId=tv.entryId";
+				"TrashVersion tv where te.entryId = tv.entryId";
 
 		String update =
 			"update TrashVersion set companyId = ? where versionId = ?";
@@ -894,9 +897,9 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, uggr.userGroupId, uggr.groupId, uggr.roleId " +
 				"from Group_ g, Role_ r, UserGroup ug, " +
-					"UserGroupGroupRole uggr where g.groupId=uggr.groupId" +
-						" and ug.userGroupId=uggr.userGroupId and " +
-							"r.roleId=uggr.roleId";
+					"UserGroupGroupRole uggr where g.groupId = uggr.groupId" +
+						" and ug.userGroupId = uggr.userGroupId and " +
+							"r.roleId = uggr.roleId";
 
 		String update =
 			"update UserGroupGroupRole set companyId = ? " +
@@ -914,8 +917,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, ugr.userId, ugr.groupId, ugr.roleId from " +
 				"Group_ g, Role_ r, User_ u, UserGroupRole ugr where " +
-					"g.groupId=ugr.groupId and u.userId=ugr.userId and " +
-						"r.roleId=ugr.roleId";
+					"g.groupId = ugr.groupId and u.userId = ugr.userId and " +
+						"r.roleId = ugr.roleId";
 
 		String update =
 			"update UserGroupRole set companyId = ? " +
@@ -932,7 +935,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select t.companyId, ugt.teamId, ugt.userGroupId from Team t, " +
 				"UserGroup ug, UserGroups_Teams ugt where " +
-					"t.teamId=ugt.teamId and ug.userGroupId=ugt.userGroupId";
+					"t.teamId = ugt.teamId and " +
+						"ug.userGroupId = ugt.userGroupId";
 
 		String update =
 			"update UserGroups_Teams set companyId = ? " +
@@ -948,7 +952,7 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateUserIdMapper() throws Exception {
 		String select =
 			"select u.companyId, uim.userIdMapperId from User_ u, " +
-				"UserIdMapper uim where u.userId=uim.userId";
+				"UserIdMapper uim where u.userId = uim.userId";
 
 		String update =
 			"update UserIdMapper set companyId = ? where userIdMapperId = ?";
@@ -962,8 +966,8 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateUsersGroups() throws Exception {
 		String select =
 			"select u.companyId, ug.userId, ug.groupId from Group_ g, " +
-				"User_ u, Users_Groups ug where g.groupId=ug.groupId and " +
-					"u.userId=ug.userId";
+				"User_ u, Users_Groups ug where g.groupId = ug.groupId and " +
+					"u.userId = ug.userId";
 
 		String update =
 			"update Users_Groups set companyId = ? where userId = ? " +
@@ -979,7 +983,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select u.companyId, uo.userId, uo.organizationId from " +
 				"Organization_ o, User_ u, Users_Orgs uo where " +
-					"o.organizationId=uo.organizationId and u.userId=uo.userId";
+					"o.organizationId = uo.organizationId and " +
+						"u.userId=uo.userId";
 
 		String update =
 			"update Users_Orgs set companyId = ? where userId = ? and " +
@@ -995,8 +1000,8 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateUsersRoles() throws Exception {
 		String select =
 			"select u.companyId, ur.userId, ur.roleId from Role_ r, User_ u, " +
-				"Users_Roles ur where r.roleId=ur.roleId and " +
-					"u.userId=ur.userId";
+				"Users_Roles ur where r.roleId = ur.roleId and " +
+					"u.userId = ur.userId";
 
 		String update =
 			"update Users_Roles set companyId = ? where userId = ? and " +
@@ -1011,8 +1016,8 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateUsersTeams() throws Exception {
 		String select =
 			"select u.companyId, ut.userId, ut.teamId from Team t, User_ u, " +
-				"Users_Teams ut where t.teamId=ut.teamId and " +
-					"u.userId=ut.userId";
+				"Users_Teams ut where t.teamId = ut.teamId and " +
+					"u.userId = ut.userId";
 
 		String update =
 			"update Users_Teams set companyId = ? where userId = ? and " +
@@ -1028,7 +1033,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select u.companyId, uug.userId, uug.userGroupId from " +
 				"UserGroup ug, User_ u, Users_UserGroups uug where " +
-					"ug.userGroupId=uug.userGroupId and u.userId=uug.userId";
+					"ug.userGroupId = uug.userGroupId and " +
+						"u.userId = uug.userId";
 
 		String update =
 			"update Users_UserGroups set companyId = ? where userId = ? and " +
@@ -1044,7 +1050,8 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateUserTrackerPath() throws Exception {
 		String select =
 			"select ut.companyId, utp.userTrackerPathId from UserTracker ut, " +
-				"UserTrackerPath utp where ut.userTrackerId=utp.userTrackerId";
+				"UserTrackerPath utp where " +
+					"ut.userTrackerId = utp.userTrackerId";
 
 		String update =
 			"update UserTrackerPath set companyId = ? where " +
@@ -1060,7 +1067,8 @@ public class UpgradeSharding extends UpgradeProcess {
 	private void _updateWikiPageResource() throws Exception {
 		String select =
 			"select wn.companyId, wpr.resourcePrimKey from " +
-				" WikiNode wn, WikiPageResource wpr where wn.nodeId=wpr.nodeId";
+				" WikiNode wn, WikiPageResource wpr where " +
+					"wn.nodeId = wpr.nodeId";
 
 		String update =
 			"update WikiPageResource set companyId = ? where " +

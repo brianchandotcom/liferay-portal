@@ -82,6 +82,8 @@
 		<task summary="Add a web content article with '${webContentTitle}' as the title and '${webContentContent}' as the content">
 			<execute macro="WebContentNavigator#gotoAddCP" />
 
+			<execute function="Pause" locator1="30000" />
+
 			<execute macro="WebContent#addCP">
 				<var name="webContentContent" value="${webContentContent}" />
 				<var name="webContentTitle" value="${webContentTitle}" />

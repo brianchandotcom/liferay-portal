@@ -20,7 +20,7 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="addCP">
+	<command name="addCP" summary="Add a vocabulary named '${vocabularyName}'">
 		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${vocabularyName}" />
 

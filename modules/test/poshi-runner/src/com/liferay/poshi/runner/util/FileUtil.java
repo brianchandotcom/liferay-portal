@@ -48,6 +48,10 @@ public class FileUtil {
 		return exists(file);
 	}
 
+	public static String getSeparator() {
+		return File.separator;
+	}
+
 	public static String read(File file) throws IOException {
 		return FileUtils.readFileToString(file);
 	}

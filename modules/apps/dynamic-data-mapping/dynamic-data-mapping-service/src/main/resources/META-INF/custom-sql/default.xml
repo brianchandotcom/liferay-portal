@@ -27,12 +27,12 @@
 			FROM
 				DDMStructure
 			WHERE
-				(companyId = ?) AND
+				(DDMStructure.companyId = ?) AND
 				[$GROUP_ID$]
 				(classNameId = ?) AND
 				(
-					(lower(CAST_TEXT(name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$])
+					(lower(CAST_TEXT(DDMStructure.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMStructure.description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(storageType = ? OR ? IS NULL) AND
 				(type_ = ?)
@@ -118,14 +118,14 @@
 			FROM
 				DDMTemplate
 			WHERE
-				(companyId = ?) AND
+				(DDMTemplate.companyId = ?) AND
 				[$GROUP_ID$]
 				[$CLASSNAME_ID$]
 				[$CLASS_PK$]
 				(resourceClassNameId = ?) AND
 				(
-					(lower(CAST_TEXT(name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
-					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(CAST_TEXT(DDMTemplate.name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDMTemplate.description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(language LIKE ? [$AND_OR_NULL_CHECK$])

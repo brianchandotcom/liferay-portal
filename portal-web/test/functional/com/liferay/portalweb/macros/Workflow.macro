@@ -71,6 +71,8 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_APPROVE" value1="Approve" />
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
@@ -91,8 +93,12 @@
 
 		<execute function="SelectFrame" locator1="MyWorkflowTasksTask#MANAGE_MY_ACCOUNT_IFRAME" />
 		<execute function="AssertTextEquals#assertValue" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="${userName}" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_APPROVE" value1="Approve" />
+
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+
 		<execute function="AssertTextEquals#assertText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -157,9 +163,13 @@
 		<if>
 			<equals arg1="${assignToMeKey}" arg2="ASSIGN_TO_ME" />
 			<then>
+				<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 				<execute function="AssertClick" locator1="MyWorkflowTasksTask#ASSIGN_TO_ME" value1="Assign to Me" />
 			</then>
 			<else>
+				<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 				<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN_TO_ME" value1="Assign to Me" />
 			</else>
 		</if>
@@ -182,8 +192,12 @@
 
 		<execute function="SelectFrame" locator1="MyWorkflowTasksTask#MANAGE_MY_ACCOUNT_IFRAME" />
 		<execute function="AssertTextEquals#assertValue" locator1="MyWorkflowTasksTask#ASSIGNED_TO" value1="Nobody" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_ASSIGN_TO_ME" value1="Assign to Me" />
+
 		<execute function="AssertClick" locator1="Button#OK" value1="OK" />
+
 		<execute function="AssertTextEquals#assertText" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
@@ -342,6 +356,8 @@
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
 
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+
 		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_REJECT" value1="Reject" />
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
@@ -397,6 +413,8 @@
 			<var name="workflowAssignedTo" value="${workflowAssignedTo}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
+
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
 		<execute function="AssertClick" locator1="MyWorkflowTasksTask#MENU_RESUBMIT" value1="Resubmit" />
 

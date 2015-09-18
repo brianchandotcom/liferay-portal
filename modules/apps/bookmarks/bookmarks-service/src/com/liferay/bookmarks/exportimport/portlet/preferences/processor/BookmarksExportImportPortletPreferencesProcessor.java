@@ -68,21 +68,22 @@ public class BookmarksExportImportPortletPreferencesProcessor
 		long rootFolderId = GetterUtil.getLong(
 			portletPreferences.getValue("rootFolderId", null));
 
-		if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			BookmarksFolder folder =
-				BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(
-					rootFolderId);
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				portletDataContext.getCompanyId(),
-				portletDataContext.getPortletId());
-
-			portletDataContext.addReferenceElement(
-				portlet, portletDataContext.getExportDataRootElement(), folder,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(
-					BookmarksPortletDataHandler.NAMESPACE, "entries"));
+		if (rootFolderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return portletPreferences;
 		}
+
+		BookmarksFolder folder =
+			BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(rootFolderId);
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(),
+			portletDataContext.getPortletId());
+
+		portletDataContext.addReferenceElement(
+			portlet, portletDataContext.getExportDataRootElement(), folder,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
+			!portletDataContext.getBooleanParameter(
+				BookmarksPortletDataHandler.NAMESPACE, "entries"));
 
 		return portletPreferences;
 	}
@@ -96,33 +97,33 @@ public class BookmarksExportImportPortletPreferencesProcessor
 		long rootFolderId = GetterUtil.getLong(
 			portletPreferences.getValue("rootFolderId", null));
 
-		if (rootFolderId > 0) {
-			String rootFolderPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, BookmarksFolder.class.getName(),
-				rootFolderId);
+		if (rootFolderId <= 0) {
+			return portletPreferences;
+		}
 
-			BookmarksFolder folder =
-				(BookmarksFolder)portletDataContext.getZipEntryAsObject(
-					rootFolderPath);
+		String rootFolderPath = ExportImportPathUtil.getModelPath(
+			portletDataContext, BookmarksFolder.class.getName(), rootFolderId);
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folder);
+		BookmarksFolder folder =
+			(BookmarksFolder)portletDataContext.getZipEntryAsObject(
+				rootFolderPath);
 
-			Map<Long, Long> folderIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					BookmarksFolder.class);
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, folder);
 
-			rootFolderId = MapUtil.getLong(
-				folderIds, rootFolderId, rootFolderId);
+		Map<Long, Long> folderIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				BookmarksFolder.class);
 
-			try {
-				portletPreferences.setValue(
-					"rootFolderId", String.valueOf(rootFolderId));
-			}
-			catch (ReadOnlyException roe) {
-				throw new PortletDataException(
-					"Could not update rootFolderId preference value", roe);
-			}
+		rootFolderId = MapUtil.getLong(folderIds, rootFolderId, rootFolderId);
+
+		try {
+			portletPreferences.setValue(
+				"rootFolderId", String.valueOf(rootFolderId));
+		}
+		catch (ReadOnlyException roe) {
+			throw new PortletDataException(
+				"Could not update rootFolderId preference value", roe);
 		}
 
 		return portletPreferences;

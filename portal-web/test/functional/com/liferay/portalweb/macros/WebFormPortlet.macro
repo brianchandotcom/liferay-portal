@@ -53,7 +53,16 @@
 	<command name="editField">
 		<var name="key_wfFieldName" value="${wfFieldName}" />
 
-		<execute function="Type" locator1="WebFormConfiguration#SETUP_FORM_FIELDS_NAME_FIELD" value1="${wfNewFieldName}" />
+		<if>
+			<equals arg1="${wfFieldName}" arg2="New Item" />
+			<then>
+				<execute function="Type" locator1="WebFormConfiguration#SETUP_FORM_FIELDS_NAME_FIELD_NEW" value1="${wfNewFieldName}" />
+			</then>
+			<else>
+				<execute function="Type" locator1="WebFormConfiguration#SETUP_FORM_FIELDS_NAME_FIELD" value1="${wfNewFieldName}" />
+			</else>
+		</if>
+
 		<execute function="Click" locator1="WebFormConfiguration#SETUP_FORM_FIELDS" />
 
 		<if>

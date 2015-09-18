@@ -347,6 +347,35 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		}
 	}
 
+	protected void updateExpirationDate(
+			Timestamp expirationDate, long articleId, long groupId, int status)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(2);
+
+			sb.append("update JournalArticle set expirationDate = ?");
+			sb.append(" where articleId = ? and groupId = ? and status = ?");
+
+			ps = con.prepareStatement(sb.toString());
+
+			ps.setTimestamp(1, expirationDate);
+			ps.setLong(2, articleId);
+			ps.setLong(3, groupId);
+			ps.setInt(4, status);
+
+			ps.executeUpdate();
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
 	protected void updateImageElement(Element element, String name, int index) {
 		Element dynamicContentElement = element.element("dynamic-content");
 
@@ -657,22 +686,13 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
+				Timestamp expirationDate = rs.getTimestamp("expirationDate");
 				long articleId = rs.getLong("articleId");
 				long groupId = rs.getLong("groupId");
-				Timestamp expirationDate = rs.getTimestamp("expirationDate");
+				int status = rs.getInt("status");
 
-				sb = new StringBundler(8);
-
-				sb.append("update JournalArticle set expirationDate = '");
-				sb.append(expirationDate);
-				sb.append("' where articleId = ");
-				sb.append(articleId);
-				sb.append(" and groupId = ");
-				sb.append(groupId);
-				sb.append(" and status = ");
-				sb.append(WorkflowConstants.STATUS_APPROVED);
-
-				runSQL(sb.toString());
+				updateExpirationDate(
+					expirationDate, articleId, groupId, status);
 			}
 		}
 		finally {

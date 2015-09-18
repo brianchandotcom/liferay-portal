@@ -52,7 +52,25 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 }
 
 String portletId = PortletProviderUtil.getPortletId(MembershipRequest.class.getName(), PortletProvider.Action.VIEW);
+
+LayoutSet layoutSet = group.getPublicLayoutSet();
 %>
+
+<div class="lfr-asset-summary">
+	<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName()) %>" class="avatar" src='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>' />
+
+	<div class="lfr-asset-name">
+		<h4><%= HtmlUtil.escape(group.getDescriptiveName()) %></h4>
+	</div>
+</div>
+
+<%
+request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+request.setAttribute("view_entries.jspf-site", group);
+%>
+
+<liferay-util:include page="/site_action.jsp" servletContext="<%= application %>" />
 
 <c:if test="<%= group.isOrganization() %>">
 
@@ -119,4 +137,22 @@ String portletId = PortletProviderUtil.getPortletId(MembershipRequest.class.getN
 			<%= LanguageUtil.get(request, GroupConstants.getTypeLabel(group.getType())) %>
 		</dd>
 	</dl>
+</div>
+
+<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
+	<div class="description">
+		<%= HtmlUtil.escape(group.getDescription()) %>
+	</div>
+</c:if>
+
+<div class="site-categorization">
+	<liferay-ui:asset-categories-summary
+		className="<%= Group.class.getName() %>"
+		classPK="<%= groupId %>"
+		/>
+
+	<liferay-ui:asset-tags-summary
+		className="<%= Group.class.getName() %>"
+		classPK="<%= groupId %>"
+		/>
 </div>

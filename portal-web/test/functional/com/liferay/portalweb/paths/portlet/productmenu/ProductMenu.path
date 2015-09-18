@@ -107,12 +107,12 @@
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_CONTROL_PANEL_PANEL_TITLE</td>
-	<td>//div[contains(@id,'control_panel')]//a[contains(@href,'manage-control_panel') and contains(.,'${key_portletCategoryName}')]</td>
+	<td>//div[contains(@id,'control_panel') and contains(@class,'active')]//a[contains(.,'${key_portletCategoryName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PRODUCT_MENU_PANEL_MENU_ITEM</td>
-	<td>//div[contains(@class,'collapse in')]//a[.='${key_portletName}']</td>
+	<td>//div[contains(@class,'active')]//a[.='${key_portletName}']</td>
 	<td></td>
 </tr>
 <tr>

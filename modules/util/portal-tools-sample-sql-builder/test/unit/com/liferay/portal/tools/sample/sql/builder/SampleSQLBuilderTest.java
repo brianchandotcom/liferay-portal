@@ -52,6 +52,8 @@ public class SampleSQLBuilderTest {
 	public void testGenerateAndInsertSampleSQL() throws Exception {
 		ToolDependencies.wireBasic();
 
+		DBFactoryUtil.setDB(DB.TYPE_HYPERSONIC);
+
 		Properties properties = new SortedProperties();
 
 		File tempDir = new File(

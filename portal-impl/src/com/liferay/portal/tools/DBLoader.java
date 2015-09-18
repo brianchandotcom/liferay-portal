@@ -14,24 +14,25 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.dao.db.HypersonicDB;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.FileImpl;
 
-import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.Statement;
 
+import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -41,41 +42,23 @@ public class DBLoader {
 	public static void loadHypersonic(Connection con, String fileName)
 		throws Exception {
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new UnsyncStringReader(_read(fileName)))) {
+		List<String> lines = Files.readAllLines(
+			Paths.get(fileName), StandardCharsets.UTF_8);
 
-			StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(lines.size() * 2);
 
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.startsWith("//")) {
-					continue;
-				}
-
-				sb.append(line);
-
-				if (line.endsWith(";")) {
-					String sql = sb.toString();
-
-					sql = StringUtil.replace(
-						sql, new String[] {"\\\"", "\\\\", "\\n", "\\r"},
-						new String[] {"\"", "\\", "\\u000a", "\\u000a"});
-
-					sb.setIndex(0);
-
-					try (PreparedStatement ps = con.prepareStatement(sql)) {
-						ps.executeUpdate();
-					}
-					catch (Exception e) {
-						System.out.println(sql);
-
-						throw e;
-					}
-				}
+		for (String line : lines) {
+			if (line.isEmpty() || line.startsWith(StringPool.DOUBLE_SLASH)) {
+				continue;
 			}
+
+			sb.append(line);
+			sb.append(StringPool.NEW_LINE);
 		}
+
+		DB db = HypersonicDB.getInstance();
+
+		db.runSQLTemplateString(con, sb.toString(), false, true);
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -105,16 +88,12 @@ public class DBLoader {
 		_fileNames = fileNames;
 
 		if (_databaseType.equals("hypersonic")) {
+			ToolDependencies.wireBasic();
+
+			DBFactoryUtil.setDB(_databaseType);
+
 			_loadHypersonic();
 		}
-	}
-
-	private static String _read(String fileName) throws IOException {
-		String content = _fileUtil.read(fileName);
-
-		Matcher matcher = _columnLengthPattern.matcher(content);
-
-		return matcher.replaceAll(StringPool.BLANK);
 	}
 
 	private void _loadHypersonic() throws Exception {
@@ -154,8 +133,6 @@ public class DBLoader {
 		_fileUtil.write(_sqlDir + "/" + _databaseName + ".script", content);
 	}
 
-	private static final Pattern _columnLengthPattern = Pattern.compile(
-		"\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final FileImpl _fileUtil = FileImpl.getInstance();
 
 	private final String _databaseName;

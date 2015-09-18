@@ -48,6 +48,7 @@ public class MicroblogsEntryAssetRendererFactory
 	public MicroblogsEntryAssetRendererFactory() {
 		setClassName(CLASS_NAME);
 		setPortletId(MicroblogsPortletKeys.MICROBLOGS);
+		setSelectable(false);
 	}
 
 	@Override

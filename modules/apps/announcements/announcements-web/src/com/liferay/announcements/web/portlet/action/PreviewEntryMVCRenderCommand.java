@@ -16,8 +16,19 @@ package com.liferay.announcements.web.portlet.action;
 
 import com.liferay.announcements.web.constants.AnnouncementsPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.announcements.model.AnnouncementsEntry;
+import com.liferay.portlet.announcements.model.impl.AnnouncementsEntryImpl;
+
+import java.util.Date;
 
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -40,7 +51,61 @@ public class PreviewEntryMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
+		renderRequest.setAttribute(
+			WebKeys.ANNOUNCEMENTS_ENTRY, getAnnouncementsEntry(renderRequest));
+
 		return "/preview_entry.jsp";
+	}
+
+	private AnnouncementsEntry getAnnouncementsEntry(
+		PortletRequest portletRequest) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		User user = themeDisplay.getUser();
+		Date now = new Date();
+
+		String[] distributionScopeParts = StringUtil.split(
+			ParamUtil.getString(portletRequest, "distributionScope"));
+
+		long classNameId = 0;
+		long classPK = 0;
+
+		if (distributionScopeParts.length == 2) {
+			classNameId = GetterUtil.getLong(distributionScopeParts[0]);
+
+			if (classNameId > 0) {
+				classPK = GetterUtil.getLong(distributionScopeParts[1]);
+			}
+		}
+
+		String title = ParamUtil.getString(portletRequest, "title");
+		String content = ParamUtil.getString(portletRequest, "content");
+		String url = ParamUtil.getString(portletRequest, "url");
+		String type = ParamUtil.getString(portletRequest, "type");
+		int priority = ParamUtil.getInteger(portletRequest, "priority");
+		boolean alert = ParamUtil.getBoolean(portletRequest, "alert");
+
+		AnnouncementsEntry entry = new AnnouncementsEntryImpl();
+
+		entry.setCompanyId(user.getCompanyId());
+		entry.setUserId(user.getUserId());
+		entry.setUserName(user.getFullName());
+		entry.setCreateDate(now);
+		entry.setModifiedDate(now);
+		entry.setClassNameId(classNameId);
+		entry.setClassPK(classPK);
+		entry.setTitle(title);
+		entry.setContent(content);
+		entry.setUrl(url);
+		entry.setType(type);
+		entry.setDisplayDate(now);
+		entry.setExpirationDate(now);
+		entry.setPriority(priority);
+		entry.setAlert(alert);
+
+		return entry;
 	}
 
 }

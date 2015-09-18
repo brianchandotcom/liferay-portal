@@ -448,6 +448,12 @@ public class DLFileShortcutLocalServiceWrapper
 	}
 
 	@Override
+	public void setFileShortcutsEnabled(long toFileEntryId, boolean enabled) {
+		_dlFileShortcutLocalService.setFileShortcutsEnabled(toFileEntryId,
+			enabled);
+	}
+
+	@Override
 	public void setTreePaths(long folderId, java.lang.String treePath)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlFileShortcutLocalService.setTreePaths(folderId, treePath);

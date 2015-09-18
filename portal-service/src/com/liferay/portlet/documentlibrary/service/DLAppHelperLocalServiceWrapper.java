@@ -144,7 +144,7 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#moveDependentsToTrash(DLFolder, long)}
+	#moveDependentsToTrash(DLFolder)}
 	*/
 	@Deprecated
 	@Override
@@ -158,10 +158,9 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 
 	@Override
 	public void moveDependentsToTrash(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
-		long trashEntryId)
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_dlAppHelperLocalService.moveDependentsToTrash(dlFolder, trashEntryId);
+		_dlAppHelperLocalService.moveDependentsToTrash(dlFolder);
 	}
 
 	@Override

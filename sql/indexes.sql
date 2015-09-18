@@ -147,6 +147,7 @@ create index IX_95E9E44E on DLFileVersion (uuid_[$COLUMN_LENGTH:75$], companyId)
 create unique index IX_C99B2650 on DLFileVersion (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_E79BE432 on DLFolder (companyId, status);
+create index IX_650AFAA3 on DLFolder (groupId, mountPoint, hidden_, treePath[$COLUMN_LENGTH:4000$]);
 create index IX_C88430AB on DLFolder (groupId, mountPoint, parentFolderId, hidden_, status);
 create index IX_CE360BF6 on DLFolder (groupId, parentFolderId, hidden_, status);
 create unique index IX_902FD874 on DLFolder (groupId, parentFolderId, name[$COLUMN_LENGTH:255$]);

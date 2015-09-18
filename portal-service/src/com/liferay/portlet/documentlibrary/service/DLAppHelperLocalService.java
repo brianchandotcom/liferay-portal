@@ -115,7 +115,7 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#moveDependentsToTrash(DLFolder, long)}
+	#moveDependentsToTrash(DLFolder)}
 	*/
 	@java.lang.Deprecated
 	public void moveDependentsToTrash(
@@ -123,8 +123,8 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		long trashEntryId) throws PortalException;
 
 	public void moveDependentsToTrash(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
-		long trashEntryId) throws PortalException;
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws PortalException;
 
 	public com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
 		long userId,

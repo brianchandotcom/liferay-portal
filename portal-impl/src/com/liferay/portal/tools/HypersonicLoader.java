@@ -37,7 +37,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
-public class DBLoader {
+public class HypersonicLoader {
 
 	public static void loadHypersonic(Connection con, String fileName)
 		throws Exception {
@@ -70,14 +70,14 @@ public class DBLoader {
 		String fileNames = arguments.get("db.file.names");
 
 		try {
-			new DBLoader(databaseName, databaseType, sqlDir, fileNames);
+			new HypersonicLoader(databaseName, databaseType, sqlDir, fileNames);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
 		}
 	}
 
-	public DBLoader(
+	public HypersonicLoader(
 			String databaseName, String databaseType, String sqlDir,
 			String fileNames)
 		throws Exception {

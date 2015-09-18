@@ -97,7 +97,7 @@
 		<delete file="${database.name}.script" failonerror="false" />
 
 		<java
-			classname="com.liferay.portal.tools.DBLoader"
+			classname="com.liferay.portal.tools.HypersonicLoader"
 			classpathref="project.classpath"
 			fork="${fork.mode}"
 		>

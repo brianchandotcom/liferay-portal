@@ -20,13 +20,17 @@
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 %>
 
+<liferay-portlet:renderURL varImpl="portletURL" />
+
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="tags" />
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<liferay-ui:input-search markupView="lexicon" />
+		<aui:form action="<%= portletURL %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
@@ -35,8 +39,6 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 		includeCheckBox="<%= true %>"
 	>
 		<liferay-frontend:management-bar-buttons>
-			<liferay-portlet:renderURL varImpl="portletURL" />
-
 			<liferay-frontend:management-bar-display-buttons
 				displayStyleURL="<%= portletURL %>"
 				displayViews='<%= new String[]{"list"} %>'

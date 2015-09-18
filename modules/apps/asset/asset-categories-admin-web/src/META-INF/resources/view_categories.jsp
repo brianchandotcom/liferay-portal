@@ -72,7 +72,9 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(vocabulary, category, request, rende
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<liferay-ui:input-search markupView="lexicon" />
+		<aui:form action="<%= portletURL %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
 

@@ -22,13 +22,17 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
+<liferay-portlet:renderURL varImpl="portletURL" />
+
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item cssClass="active" label="vocabularies" />
 	</aui:nav>
 
 	<aui:nav-bar-search>
-		<liferay-ui:input-search markupView="lexicon" />
+		<aui:form action="<%= portletURL %>" name="searchFm">
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
 
@@ -37,7 +41,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 		includeCheckBox="<%= true %>"
 	>
 		<liferay-frontend:management-bar-buttons>
-			<liferay-portlet:renderURL varImpl="portletURL" />
 
 			<liferay-frontend:management-bar-display-buttons
 				displayStyleURL="<%= portletURL %>"

@@ -65,12 +65,11 @@ public class HypersonicLoader {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
 		String databaseName = arguments.get("db.database.name");
-		String databaseType = arguments.get("db.database.type");
 		String sqlDir = arguments.get("db.sql.dir");
 		String fileNames = arguments.get("db.file.names");
 
 		try {
-			new HypersonicLoader(databaseName, databaseType, sqlDir, fileNames);
+			new HypersonicLoader(databaseName, sqlDir, fileNames);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -78,22 +77,18 @@ public class HypersonicLoader {
 	}
 
 	public HypersonicLoader(
-			String databaseName, String databaseType, String sqlDir,
-			String fileNames)
+			String databaseName, String sqlDir, String fileNames)
 		throws Exception {
 
 		_databaseName = databaseName;
-		_databaseType = databaseType;
 		_sqlDir = sqlDir;
 		_fileNames = fileNames;
 
-		if (_databaseType.equals("hypersonic")) {
-			ToolDependencies.wireBasic();
+		ToolDependencies.wireBasic();
 
-			DBFactoryUtil.setDB(_databaseType);
+		DBFactoryUtil.setDB(DB.TYPE_HYPERSONIC);
 
-			_loadHypersonic();
-		}
+		_loadHypersonic();
 	}
 
 	private void _loadHypersonic() throws Exception {
@@ -136,7 +131,6 @@ public class HypersonicLoader {
 	private static final FileImpl _fileUtil = FileImpl.getInstance();
 
 	private final String _databaseName;
-	private final String _databaseType;
 	private final String _fileNames;
 	private final String _sqlDir;
 

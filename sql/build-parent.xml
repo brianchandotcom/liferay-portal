@@ -105,7 +105,6 @@
 			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="-Dfile.encoding=UTF-8" />
 			<arg value="db.database.name=${database.name}" />
-			<arg value="db.database.type=hypersonic" />
 			<arg value="db.sql.dir=${basedir}" />
 			<arg value="db.file.name=portal${database.create.suffix}/portal${database.create.suffix}-hypersonic.sql,indexes.sql" />
 		</java>

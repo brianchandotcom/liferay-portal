@@ -39,6 +39,9 @@ import java.io.InputStream;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -143,8 +146,10 @@ public class LangBuilder {
 			_renameKeys = null;
 		}
 
-		String content = _orderProperties(
-			new File(_langDirName + "/" + _langFileName + ".properties"));
+		File propertiesFile = new File(
+			_langDirName + "/" + _langFileName + ".properties");
+
+		String content = _orderProperties(propertiesFile);
 
 		// Locales that are not invoked by _createProperties should still be
 		// rewritten to use the right line separator
@@ -155,6 +160,8 @@ public class LangBuilder {
 			new File(_langDirName + "/" + _langFileName + "_en_GB.properties"));
 		_orderProperties(
 			new File(_langDirName + "/" + _langFileName + "_fr_CA.properties"));
+
+		_copyProperties(propertiesFile, "en");
 
 		_createProperties(content, "ar"); // Arabic
 		_createProperties(content, "eu"); // Basque
@@ -198,6 +205,15 @@ public class LangBuilder {
 		_createProperties(content, "tr"); // Turkish
 		_createProperties(content, "uk"); // Ukrainian
 		_createProperties(content, "vi"); // Vietnamese
+	}
+
+	private void _copyProperties(File file, String languageId)
+		throws IOException {
+
+		Path path = Paths.get(
+			_langDirName, _langFileName + "_" + languageId + ".properties");
+
+		Files.copy(file.toPath(), path, StandardCopyOption.REPLACE_EXISTING);
 	}
 
 	private void _createProperties(String content, String languageId)

@@ -64,6 +64,8 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</liferay-util:include>
+		
+		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 	</c:if>
 
 	<liferay-ui:search-container
@@ -155,14 +157,6 @@ portletURL.setParameter("tabs1", tabs1);
 			/>
 		</liferay-ui:search-container-row>
 
-		<c:if test="<%= total > 0 %>">
-			<aui:button-row>
-				<aui:button cssClass="delete-structures-button" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteStructures();" %>' value="delete" />
-			</aui:button-row>
-
-			<div class="separator"><!-- --></div>
-		</c:if>
-
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 
@@ -185,8 +179,6 @@ portletURL.setParameter("tabs1", tabs1);
 </aui:form>
 
 <aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
 	function <portlet:namespace />copyStructure(uri) {
 		Liferay.Util.openWindow(
 			{
@@ -197,15 +189,16 @@ portletURL.setParameter("tabs1", tabs1);
 			}
 		);
 	}
-
-	function <portlet:namespace />deleteStructures() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+	
+	AUI.$(document.<portlet:namespace />fm).on(
+		'click',
+		'input[type=checkbox]',
+		function() {
 			var form = AUI.$(document.<portlet:namespace />fm);
-
-			form.attr('method', 'post');
-			form.fm('deleteStructureIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form, '<portlet:actionURL name="deleteStructure"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		
+			var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds').length == 0;
+			
+			AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
 		}
-	}
+	);
 </aui:script>

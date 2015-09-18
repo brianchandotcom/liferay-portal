@@ -70,8 +70,8 @@ public class AddRecordSetMVCActionCommand
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String structureKey = ParamUtil.getString(
 			actionRequest, "structureKey");
-		String storageType = ParamUtil.getString(actionRequest, "storageType",
-			"json");
+		String storageType = ParamUtil.getString(
+			actionRequest, "storageType", "json");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		DDMForm ddmForm = getDDMForm(actionRequest);

@@ -122,7 +122,7 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 	<portlet:param name="mvcPath" value="/edit_site.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editGroupURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
+<aui:form action="<%= editGroupURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveGroup();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />

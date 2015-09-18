@@ -73,7 +73,7 @@
 		<%@ include file="/site_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />

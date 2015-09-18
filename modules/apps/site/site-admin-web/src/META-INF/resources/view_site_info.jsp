@@ -54,105 +54,93 @@ if (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED) {
 String portletId = PortletProviderUtil.getPortletId(MembershipRequest.class.getName(), PortletProvider.Action.VIEW);
 
 LayoutSet layoutSet = group.getPublicLayoutSet();
-%>
 
-<div class="lfr-asset-summary">
-	<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName()) %>" class="avatar" src='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>' />
-
-	<div class="lfr-asset-name">
-		<h4><%= HtmlUtil.escape(group.getDescriptiveName()) %></h4>
-	</div>
-</div>
-
-<%
 request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 request.setAttribute("view_entries.jspf-site", group);
 %>
 
-<liferay-util:include page="/site_action.jsp" servletContext="<%= application %>" />
+<div class="sidebar-header">
+	<ul class="list-inline list-unstyled sidebar-header-actions">
+		<li>
+			<liferay-util:include page="/site_action.jsp" servletContext="<%= application %>" />
+		</li>
+	</ul>
 
-<c:if test="<%= group.isOrganization() %>">
-
-	<%
-	Organization groupOrganization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
-	%>
-
-	<div class="organizations-msg-info portlet-msg">
-		<i class="icon-group"></i>
-
-		<liferay-ui:message arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(request, groupOrganization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" translateArguments="<%= false %>" />
-	</div>
-</c:if>
-
-<div class="membership-info">
-	<dl>
-		<dt class="first">
-			<liferay-ui:message key="members" />:
-		</dt>
-
-		<dd class="members-info">
-			<c:if test="<%= (usersCount == 0) && (organizationsCount == 0) && (userGroupsCount == 0) %>">
-				<liferay-ui:message key="none" />
-			</c:if>
-
-			<liferay-portlet:renderURL doAsGroupId="<%= groupId %>" portletName="<%= portletId %>" var="assignMembersURL">
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-			</liferay-portlet:renderURL>
-
-			<c:if test="<%= usersCount > 0 %>">
-				<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(request, (usersCount == 1) ? "x-user" : "x-users", usersCount, false) %>' />
-			</c:if>
-
-			<c:if test="<%= organizationsCount > 0 %>">
-				<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>' label='<%= LanguageUtil.format(request, (organizationsCount == 1) ? "x-organization" : "x-organizations", organizationsCount, false) %>' />
-			</c:if>
-
-			<c:if test="<%= userGroupsCount > 0 %>">
-				<aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>' label='<%= LanguageUtil.format(request, (userGroupsCount == 1) ? "x-user-groups" : "x-user-groups", userGroupsCount, false) %>' />
-			</c:if>
-		</dd>
-
-		<c:if test="<%= pendingRequests > 0 %>">
-			<dt class="hide-accessible">
-				<liferay-ui:message key="request-pending" />
-			</dt>
-
-			<dd class="membership-requests">
-				<liferay-portlet:renderURL portletName="<%= portletId %>" var="viewMembershipRequestsURL">
-					<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-				</liferay-portlet:renderURL>
-
-				<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(request, (pendingRequests == 1) ? "x-request-pending" : "x-requests-pending", pendingRequests, false) %>' />
-			</dd>
-		</c:if>
-
-		<dt>
-			<liferay-ui:message key="membership-type" />:
-		</dt>
-
-		<dd class="last">
-			<%= LanguageUtil.get(request, GroupConstants.getTypeLabel(group.getType())) %>
-		</dd>
-	</dl>
+	<h4><%= HtmlUtil.escape(group.getDescriptiveName()) %></h4>
 </div>
 
-<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
-	<div class="description">
-		<%= HtmlUtil.escape(group.getDescription()) %>
-	</div>
-</c:if>
+<aui:nav-bar>
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item cssClass="active" label="details" selected="<%= true %>" />
+	</aui:nav>
+</aui:nav-bar>
 
-<div class="site-categorization">
+<div class="sidebar-body">
+	<img alt="<%= HtmlUtil.escapeAttribute(group.getDescriptiveName()) %>" class="center-block img-responsive" src='<%= themeDisplay.getPathImage() + "/layout_set_logo?img_id=" + layoutSet.getLogoId() + "&t=" + WebServerServletTokenUtil.getToken(layoutSet.getLogoId()) %>' />
+
+	<c:if test="<%= group.isOrganization() %>">
+
+		<%
+		Organization groupOrganization = OrganizationLocalServiceUtil.getOrganization(group.getOrganizationId());
+		%>
+
+		<p><liferay-ui:message arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(request, groupOrganization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" translateArguments="<%= false %>" /></p>
+	</c:if>
+
+	<h5><liferay-ui:message key="members" /></h5>
+
+	<c:if test="<%= (usersCount == 0) && (organizationsCount == 0) && (userGroupsCount == 0) %>">
+		<p><liferay-ui:message key="none" /></p>
+	</c:if>
+
+	<liferay-portlet:renderURL doAsGroupId="<%= groupId %>" portletName="<%= portletId %>" var="assignMembersURL">
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</liferay-portlet:renderURL>
+
+	<c:if test="<%= usersCount > 0 %>">
+		<p><aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "users") %>' label='<%= LanguageUtil.format(request, (usersCount == 1) ? "x-user" : "x-users", usersCount, false) %>' /></p>
+	</c:if>
+
+	<c:if test="<%= organizationsCount > 0 %>">
+		<p><aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "organizations") %>' label='<%= LanguageUtil.format(request, (organizationsCount == 1) ? "x-organization" : "x-organizations", organizationsCount, false) %>' /></p>
+	</c:if>
+
+	<c:if test="<%= userGroupsCount > 0 %>">
+		<p><aui:a href='<%= HttpUtil.addParameter(assignMembersURL.toString(), "tabs1", "user-groups") %>' label='<%= LanguageUtil.format(request, (userGroupsCount == 1) ? "x-user-groups" : "x-user-groups", userGroupsCount, false) %>' /></p>
+	</c:if>
+
+	<c:if test="<%= pendingRequests > 0 %>">
+		<h5><liferay-ui:message key="request-pending" /></h5>
+
+		<liferay-portlet:renderURL portletName="<%= portletId %>" var="viewMembershipRequestsURL">
+			<portlet:param name="mvcPath" value="/view_membership_requests.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+		</liferay-portlet:renderURL>
+
+		<p>
+			<aui:a href="<%= viewMembershipRequestsURL %>" label='<%= LanguageUtil.format(request, (pendingRequests == 1) ? "x-request-pending" : "x-requests-pending", pendingRequests, false) %>' />
+		</p>
+	</c:if>
+
+	<h5><liferay-ui:message key="membership-type" /></h5>
+
+	<p><liferay-ui:message key="<%= GroupConstants.getTypeLabel(group.getType()) %>" /></p>
+
+	<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
+		<h5><liferay-ui:message key="description" /></h5>
+
+		<p><%= HtmlUtil.escape(group.getDescription()) %></p>
+	</c:if>
+
 	<liferay-ui:asset-categories-summary
 		className="<%= Group.class.getName() %>"
 		classPK="<%= groupId %>"
-		/>
+	/>
 
 	<liferay-ui:asset-tags-summary
 		className="<%= Group.class.getName() %>"
 		classPK="<%= groupId %>"
-		/>
+	/>
 </div>

@@ -30,6 +30,8 @@ alter table BrowserTracker add companyId LONG;
 
 alter table ClusterGroup add companyId LONG;
 
+drop index IX_C803899D on DDMStructureLink;
+
 alter table DLFileEntryMetadata add companyId LONG;
 
 alter table DLFileEntryMetadata drop column fileEntryTypeId;

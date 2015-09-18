@@ -86,7 +86,7 @@ AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactory
 						</div>
 
 						<div class="journal-content-article">
-							<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>
+							<%= articleDisplay.getContent() %>
 						</div>
 
 						<c:if test="<%= articleDisplay.isPaginate() %>">

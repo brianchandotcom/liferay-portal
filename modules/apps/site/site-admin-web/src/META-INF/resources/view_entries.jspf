@@ -71,7 +71,8 @@ if (group != null) {
 		</c:if>
 
 		<liferay-ui:search-container
-			searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+			id="sites"
+			searchContainer="<%= groupSearch %>"
 		>
 
 			<%
@@ -150,10 +151,6 @@ if (group != null) {
 				%>
 
 			</liferay-ui:search-container-results>
-
-			<c:if test="<%= !results.isEmpty() %>">
-				<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
-			</c:if>
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.model.Group"

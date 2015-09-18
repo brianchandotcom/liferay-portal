@@ -19,6 +19,8 @@
 <%
 long groupId = ParamUtil.getLong(request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
+String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("groupId", String.valueOf(groupId));
@@ -30,6 +32,8 @@ PortletURL searchURL = renderResponse.createRenderURL();
 pageContext.setAttribute("searchURL", searchURL);
 
 String searchURLString = searchURL.toString();
+
+SearchContainer groupSearch = new GroupSearch(renderRequest, portletURL);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -45,6 +49,32 @@ String searchURLString = searchURL.toString();
 		</aui:form>
 	</aui:nav-bar-search>
 </aui:nav-bar>
+
+<liferay-frontend:management-bar
+	checkBoxContainerId="sitesSearchContainer"
+	includeCheckBox="<%= true %>"
+>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayStyleURL="<%= portletURL %>"
+			displayViews='<%= new String[]{"list"} %>'
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= groupSearch.getOrderByCol() %>"
+			orderByType="<%= groupSearch.getOrderByType() %>"
+			orderColumns='<%= new String[]{"name"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSites" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
 <aui:form action="<%= searchURLString %>" method="get" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
@@ -82,15 +112,16 @@ String searchURLString = searchURL.toString();
 </aui:form>
 
 <aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	$('#<portlet:namespace />deleteSites').on(
+		'click',
+		function() {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+				var form = AUI.$(document.<portlet:namespace />fm);
 
-	function <portlet:namespace />deleteSites() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
-			var form = AUI.$(document.<portlet:namespace />fm);
+				form.fm('deleteGroupIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			form.fm('deleteGroupIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
-
-			submitForm(form, '<portlet:actionURL name="deleteGroups" />');
+				submitForm(form, '<portlet:actionURL name="deleteGroups" />');
+			}
 		}
-	}
+	);
 </aui:script>

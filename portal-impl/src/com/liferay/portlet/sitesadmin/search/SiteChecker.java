@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.sitesadmin.search;
 
-import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Group;
@@ -25,7 +25,7 @@ import javax.portlet.PortletResponse;
 /**
  * @author Jorge Ferrer
  */
-public class SiteChecker extends RowChecker {
+public class SiteChecker extends EmptyOnClickRowChecker {
 
 	public SiteChecker(PortletResponse portletResponse) {
 		super(portletResponse);

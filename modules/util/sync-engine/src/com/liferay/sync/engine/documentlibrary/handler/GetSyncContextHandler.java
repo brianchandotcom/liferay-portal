@@ -59,6 +59,39 @@ public class GetSyncContextHandler extends BaseJSONHandler {
 		SyncUser localSyncUser = SyncUserService.fetchSyncUser(
 			syncAccount.getSyncAccountId());
 
+		if ((localSyncUser.getUserId() > 0) &&
+			(localSyncUser.getUserId() != remoteSyncUser.getUserId())) {
+
+			syncAccount.setState(SyncAccount.STATE_DISCONNECTED);
+			syncAccount.setUiEvent(
+				SyncAccount.UI_EVENT_AUTHENTICATION_EXCEPTION);
+
+			SyncAccountService.update(syncAccount);
+
+			return syncContext;
+		}
+
+		String login = syncAccount.getLogin();
+
+		String authType = syncContext.getAuthType();
+
+		if (authType.equals(SyncContext.AUTH_TYPE_EMAIL_ADDRESS)) {
+			if (!login.equals(remoteSyncUser.getEmailAddress())) {
+				syncAccount.setLogin(remoteSyncUser.getEmailAddress());
+			}
+		}
+		else if (authType.equals(SyncContext.AUTH_TYPE_SCREEN_NAME)) {
+			if (!login.equals(remoteSyncUser.getScreenName())) {
+				syncAccount.setLogin(remoteSyncUser.getScreenName());
+			}
+		}
+		else if (authType.equals(SyncContext.AUTH_TYPE_USER_ID)) {
+			if (!login.equals(String.valueOf(remoteSyncUser.getUserId()))) {
+				syncAccount.setLogin(
+					String.valueOf(remoteSyncUser.getUserId()));
+			}
+		}
+
 		remoteSyncUser.setSyncAccountId(localSyncUser.getSyncAccountId());
 		remoteSyncUser.setSyncUserId(localSyncUser.getSyncUserId());
 

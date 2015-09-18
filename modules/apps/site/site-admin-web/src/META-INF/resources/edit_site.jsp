@@ -103,14 +103,7 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 	portletDisplay.setURLBack(backURL.toString());
 
 	renderResponse.setTitle(HtmlUtil.escape(title));
-}
-%>
 
-<liferay-ui:success key='<%= SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
-
-<c:if test="<%= !portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS) %>">
-
-	<%
 	if (group != null) {
 		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
@@ -120,12 +113,10 @@ if (!portletName.equals(SiteAdminPortletKeys.SITE_SETTINGS)) {
 
 		PortalUtil.addPortletBreadcrumbEntry(request, parentGroup.getDescriptiveName(locale), null);
 	}
-	%>
+}
+%>
 
-	<div id="breadcrumb">
-		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-	</div>
-</c:if>
+<liferay-ui:success key='<%= SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed" %>' message="site-was-added" />
 
 <portlet:actionURL name="editGroup" var="editGroupURL">
 	<portlet:param name="mvcPath" value="/edit_site.jsp" />

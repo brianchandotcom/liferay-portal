@@ -63,26 +63,9 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 request.setAttribute(WebKeys.SEARCH_CONTAINER, templateSearch);
 
 String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale);
-
-String searchContainerClass = null;
-
-if (classNameId == PortalUtil.getClassNameId(DDMStructure.class)) {
-	searchContainerClass = "";
-}
-else
-{
-	searchContainerClass = "container-fluid-1280";
-}
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
-
-<c:if test="<%= showHeader %>">
-	<liferay-ui:header
-		backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
-		title="<%= title %>"
-	/>
-</c:if>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
@@ -105,32 +88,31 @@ else
 	%>
 
 	<liferay-util:include page="/template_search_bar.jsp" servletContext="<%= application %>" />
-	
+
 	<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>" />
 
-	<div class="<%= searchContainerClass %>">
+	<div class="container-fluid-1280">
 		<liferay-ui:search-container
-			cssClass="<%= searchContainerClass %>"
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
 			orderByType="<%= orderByType %>"
 			rowChecker="<%= new RowChecker(renderResponse) %>"
 			searchContainer="<%= templateSearch %>"
 		>
-	
+
 			<liferay-ui:search-container-results>
 				<%@ include file="/template_search_results.jspf" %>
 			</liferay-ui:search-container-results>
-	
+
 			<liferay-ui:search-container-row
 				className="com.liferay.dynamic.data.mapping.model.DDMTemplate"
 				keyProperty="templateId"
 				modelVar="template"
 			>
-	
+
 				<%
 				PortletURL rowURL = renderResponse.createRenderURL();
-	
+
 				rowURL.setParameter("mvcPath", "/edit_template.jsp");
 				rowURL.setParameter("redirect", currentURL);
 				rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
@@ -139,19 +121,19 @@ else
 				rowURL.setParameter("classPK", String.valueOf(template.getClassPK()));
 				rowURL.setParameter("type", template.getType());
 				rowURL.setParameter("structureAvailableFields", renderResponse.getNamespace() + "getAvailableFields");
-	
+
 				String rowHREF = rowURL.toString();
 				%>
-	
+
 				<liferay-ui:search-container-row-parameter
 					name="rowHREF"
 					value="<%= rowHREF %>"
 				/>
-	
+
 				<%
 				Set<String> excludedColumnNames = ddmDisplay.getViewTemplatesExcludedColumnNames();
 				%>
-	
+
 				<c:if test='<%= !excludedColumnNames.contains("id") %>'>
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
@@ -161,7 +143,7 @@ else
 						property="templateId"
 					/>
 				</c:if>
-	
+
 				<c:if test='<%= !excludedColumnNames.contains("name") %>'>
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
@@ -169,31 +151,31 @@ else
 						value="<%= HtmlUtil.escape(template.getName(locale)) %>"
 					/>
 				</c:if>
-	
+
 				<liferay-ui:search-container-column-jsp
 					name="description"
 					path="/template_description.jsp"
 				/>
-	
+
 				<c:if test='<%= !excludedColumnNames.contains("structure") && (structure == null) %>'>
-	
+
 					<%
 					String structureName = StringPool.BLANK;
-	
+
 					if (template.getClassPK() > 0) {
 						DDMStructure templateStructure = DDMStructureLocalServiceUtil.getStructure(template.getClassPK());
-	
+
 						structureName = templateStructure.getName(locale);
 					}
 					%>
-	
+
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
 						name="structure"
 						value="<%= structureName %>"
 					/>
 				</c:if>
-	
+
 				<c:if test='<%= !excludedColumnNames.contains("type") && (classNameId == 0) %>'>
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
@@ -201,7 +183,7 @@ else
 						value="<%= ddmDisplay.getTemplateType(template, locale) %>"
 					/>
 				</c:if>
-	
+
 				<c:if test='<%= !excludedColumnNames.contains("mode") %>'>
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
@@ -209,7 +191,7 @@ else
 						value="<%= LanguageUtil.get(request, template.getMode()) %>"
 					/>
 				</c:if>
-	
+
 				<c:if test='<%= !excludedColumnNames.contains("language") %>'>
 					<liferay-ui:search-container-column-text
 						href="<%= rowHREF %>"
@@ -217,19 +199,19 @@ else
 						value='<%= LanguageUtil.get(request, template.getLanguage() + "[stands-for]") %>'
 					/>
 				</c:if>
-	
+
 				<c:if test='<%= !excludedColumnNames.contains("scope") %>'>
-	
+
 					<%
 					Group group = GroupLocalServiceUtil.getGroup(template.getGroupId());
 					%>
-	
+
 					<liferay-ui:search-container-column-text
 						name="scope"
 						value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
 					/>
 				</c:if>
-	
+
 				<c:if test='<%= !excludedColumnNames.contains("modified-date") %>'>
 					<liferay-ui:search-container-column-date
 						href="<%= rowHREF %>"
@@ -239,14 +221,14 @@ else
 						value="<%= template.getModifiedDate() %>"
 					/>
 				</c:if>
-	
+
 				<liferay-ui:search-container-column-jsp
 					align="right"
 					cssClass="entry-action"
 					path="/template_action.jsp"
 				/>
 			</liferay-ui:search-container-row>
-	
+
 			<liferay-ui:search-iterator markupView="lexicon" />
 		</liferay-ui:search-container>
 	</div>
@@ -272,17 +254,17 @@ else
 			}
 		);
 	}
-	
+
 	AUI.$(document.<portlet:namespace />fm).on(
 		'click',
 		'input[type=checkbox]',
 		function() {
 			var form = AUI.$(document.<portlet:namespace />fm);
-		
+
 			var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds').length == 0;
-			
+
 			AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
 		}
 	);
-	
+
 </aui:script>

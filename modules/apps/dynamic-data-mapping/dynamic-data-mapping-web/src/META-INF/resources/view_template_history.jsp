@@ -41,7 +41,7 @@ backURL.setParameter("templateId", String.valueOf(templateId));
 	title='<%= LanguageUtil.format(request, "x-history", template.getName(locale), false) %>'
 />
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container
 		searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
 		total="<%= DDMTemplateVersionServiceUtil.getTemplateVersionsCount(templateId) %>"

@@ -90,177 +90,179 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 }
 %>
 
-<aui:form action="<%= (structure == null) ? addStructureURL : updateStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
-	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
-	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
-	<aui:input name="scopeClassNameId" type="hidden" value="<%= scopeClassNameId %>" />
-	<aui:input name="definition" type="hidden" />
-	<aui:input name="status" type="hidden" />
-	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
+<div class="container-fluid-1280">
+	<aui:form action="<%= (structure == null) ? addStructureURL : updateStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
+		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+		<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
+		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+		<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
+		<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
+		<aui:input name="scopeClassNameId" type="hidden" value="<%= scopeClassNameId %>" />
+		<aui:input name="definition" type="hidden" />
+		<aui:input name="status" type="hidden" />
+		<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
-	<liferay-ui:error exception="<%= LocaleException.class %>">
+		<liferay-ui:error exception="<%= LocaleException.class %>">
+
+			<%
+			LocaleException le = (LocaleException)errorException;
+			%>
+
+			<c:if test="<%= le.getType() == LocaleException.TYPE_CONTENT %>">
+				<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
+			</c:if>
+		</liferay-ui:error>
+
+		<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
+		<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
+		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 
 		<%
-		LocaleException le = (LocaleException)errorException;
+		boolean localizeTitle = true;
+		String title = "new-structure";
+
+		if (structure != null) {
+			localizeTitle = false;
+			title = structure.getName(locale);
+		}
+		else {
+			title = LanguageUtil.format(request, "new-x", ddmDisplay.getStructureName(locale), false);
+		}
+
+		if (showBackURL) {
+			portletDisplay.setShowBackIcon(true);
+			portletDisplay.setURLBack(redirect);
+
+			renderResponse.setTitle(title);
+		}
 		%>
 
-		<c:if test="<%= le.getType() == LocaleException.TYPE_CONTENT %>">
-			<liferay-ui:message arguments="<%= new String[] {StringUtil.merge(le.getSourceAvailableLocales(), StringPool.COMMA_AND_SPACE), StringUtil.merge(le.getTargetAvailableLocales(), StringPool.COMMA_AND_SPACE)} %>" key="the-default-language-x-does-not-match-the-portal's-available-languages-x" />
-		</c:if>
-	</liferay-ui:error>
+		<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
 
-	<liferay-ui:error exception="<%= StructureDefinitionException.class %>" message="please-enter-a-valid-definition" />
-	<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
-	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
+		<c:if test="<%= (structureVersion != null) && ddmDisplay.isVersioningEnabled() %>">
+			<aui:workflow-status model="<%= DDMStructure.class %>" status="<%= structureVersion.getStatus() %>" version="<%= structureVersion.getVersion() %>" />
 
-	<%
-	boolean localizeTitle = true;
-	String title = "new-structure";
+			<div class="structure-history-toolbar" id="<portlet:namespace />structureHistoryToolbar"></div>
 
-	if (structure != null) {
-		localizeTitle = false;
-		title = structure.getName(locale);
-	}
-	else {
-		title = LanguageUtil.format(request, "new-x", ddmDisplay.getStructureName(locale), false);
-	}
-	%>
+			<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
+				var toolbarChildren = [
+					<portlet:renderURL var="viewHistoryURL">
+						<portlet:param name="mvcPath" value="/view_structure_history.jsp" />
+						<portlet:param name="redirect" value="<%= redirect %>" />
+						<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
+					</portlet:renderURL>
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= localizeTitle %>"
-		showBackURL="<%= showBackURL %>"
-		title="<%= title %>"
-	/>
+					{
+						icon: 'icon-time',
+						label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
+						on: {
+							click: function(event) {
+								event.domEvent.preventDefault();
 
-	<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
-
-	<c:if test="<%= (structureVersion != null) && ddmDisplay.isVersioningEnabled() %>">
-		<aui:workflow-status model="<%= DDMStructure.class %>" status="<%= structureVersion.getStatus() %>" version="<%= structureVersion.getVersion() %>" />
-
-		<div class="structure-history-toolbar" id="<portlet:namespace />structureHistoryToolbar"></div>
-
-		<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
-			var toolbarChildren = [
-				<portlet:renderURL var="viewHistoryURL">
-					<portlet:param name="mvcPath" value="/view_structure_history.jsp" />
-					<portlet:param name="redirect" value="<%= redirect %>" />
-					<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
-				</portlet:renderURL>
-
-				{
-					icon: 'icon-time',
-					label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
-					on: {
-						click: function(event) {
-							event.domEvent.preventDefault();
-
-							window.location.href = '<%= viewHistoryURL %>';
+								window.location.href = '<%= viewHistoryURL %>';
+							}
 						}
 					}
-				}
-			];
+				];
 
-			new A.Toolbar(
-				{
-					boundingBox: '#<portlet:namespace />structureHistoryToolbar',
-					children: toolbarChildren
-				}
-			).render();
-		</aui:script>
-	</c:if>
+				new A.Toolbar(
+					{
+						boundingBox: '#<portlet:namespace />structureHistoryToolbar',
+						children: toolbarChildren
+					}
+				).render();
+			</aui:script>
+		</c:if>
 
-	<aui:fieldset>
-		<aui:field-wrapper>
-			<c:if test="<%= (structure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(classPK) > 0) %>">
-				<div class="alert alert-warning">
-					<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
-				</div>
-			</c:if>
-			<c:if test="<%= (classPK > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(groupId, classNameId, classPK) > 0) %>">
-				<div class="alert alert-info">
-					<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
-				</div>
-			</c:if>
-		</aui:field-wrapper>
+		<aui:fieldset>
+			<aui:field-wrapper>
+				<c:if test="<%= (structure != null) && (DDMStorageLinkLocalServiceUtil.getStructureStorageLinksCount(classPK) > 0) %>">
+					<div class="alert alert-warning">
+						<liferay-ui:message key="there-are-content-references-to-this-structure.-you-may-lose-data-if-a-field-name-is-renamed-or-removed" />
+					</div>
+				</c:if>
+				<c:if test="<%= (classPK > 0) && (DDMTemplateLocalServiceUtil.getTemplatesCount(groupId, classNameId, classPK) > 0) %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-are-template-references-to-this-structure.-please-update-them-if-a-field-name-is-renamed-or-removed" />
+					</div>
+				</c:if>
+			</aui:field-wrapper>
 
-		<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
+			<aui:input autoFocus="<%= windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />
 
-		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="structureDetailsPanelContainer" persistState="<%= true %>">
-			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="structureDetailsSectionPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "details") %>'>
-				<aui:row cssClass="lfr-ddm-types-form-column">
-					<c:choose>
-						<c:when test="<%= Validator.isNull(storageTypeValue) %>">
-							<aui:col width="<%= 50 %>">
-								<aui:field-wrapper>
-									<aui:select disabled="<%= structure != null %>" name="storageType">
+			<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="structureDetailsPanelContainer" persistState="<%= true %>">
+				<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="structureDetailsSectionPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "details") %>'>
+					<aui:row cssClass="lfr-ddm-types-form-column">
+						<c:choose>
+							<c:when test="<%= Validator.isNull(storageTypeValue) %>">
+								<aui:col width="<%= 50 %>">
+									<aui:field-wrapper>
+										<aui:select disabled="<%= structure != null %>" name="storageType">
 
-									<%
-									for (StorageType storageType : StorageType.values()) {
-									%>
+										<%
+										for (StorageType storageType : StorageType.values()) {
+										%>
 
-										<aui:option label="<%= storageType %>" value="<%= storageType %>" />
+											<aui:option label="<%= storageType %>" value="<%= storageType %>" />
 
-									<%
-									}
-									%>
+										<%
+										}
+										%>
 
-									</aui:select>
-								</aui:field-wrapper>
-							</aui:col>
-						</c:when>
-						<c:otherwise>
-							<aui:input name="storageType" type="hidden" value="<%= storageTypeValue %>" />
-						</c:otherwise>
-					</c:choose>
-				</aui:row>
+										</aui:select>
+									</aui:field-wrapper>
+								</aui:col>
+							</c:when>
+							<c:otherwise>
+								<aui:input name="storageType" type="hidden" value="<%= storageTypeValue %>" />
+							</c:otherwise>
+						</c:choose>
+					</aui:row>
 
 				<c:if test="<%= !ddmServiceConfiguration.autogenerateStructureKey() %>">
 					<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", ddmDisplay.getStructureName(locale), false) %>' name="structureKey" />
 				</c:if>
 
-				<aui:input name="description" />
+					<aui:input name="description" />
 
-				<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
-					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
+					<aui:field-wrapper label='<%= LanguageUtil.format(request, "parent-x", ddmDisplay.getStructureName(locale), false) %>'>
+						<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
-					<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentStructureName" type="text" value="<%= parentStructureName %>" />
+						<aui:input cssClass="lfr-input-text" disabled="<%= true %>" label="" name="parentStructureName" type="text" value="<%= parentStructureName %>" />
 
-					<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
+						<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
 
-					<aui:button disabled="<%= Validator.isNull(parentStructureName) %>" name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
-				</aui:field-wrapper>
+						<aui:button disabled="<%= Validator.isNull(parentStructureName) %>" name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
+					</aui:field-wrapper>
 
-				<c:if test="<%= structure != null %>">
-					<portlet:resourceURL id="getStructure" var="getStructureURL">
-						<portlet:param name="structureId" value="<%= String.valueOf(classPK) %>" />
-					</portlet:resourceURL>
+					<c:if test="<%= structure != null %>">
+						<portlet:resourceURL id="getStructure" var="getStructureURL">
+							<portlet:param name="structureId" value="<%= String.valueOf(classPK) %>" />
+						</portlet:resourceURL>
 
-					<aui:input name="url" type="resource" value="<%= getStructureURL.toString() %>" />
+						<aui:input name="url" type="resource" value="<%= getStructureURL.toString() %>" />
 
-					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
-						<aui:input name="webDavURL" type="resource" value="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
+						<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
+							<aui:input name="webDavURL" type="resource" value="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
+						</c:if>
 					</c:if>
-				</c:if>
-			</liferay-ui:panel>
-		</liferay-ui:panel-container>
-	</aui:fieldset>
-</aui:form>
+				</liferay-ui:panel>
+			</liferay-ui:panel-container>
+		</aui:fieldset>
+	</aui:form>
 
-<%@ include file="/form_builder.jspf" %>
+	<%@ include file="/form_builder.jspf" %>
 
-<aui:button-row>
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(false);" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
+	<aui:button-row>
+		<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(false);" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
 
-	<c:if test="<%= ddmDisplay.isVersioningEnabled() %>">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(true);" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
-	</c:if>
+		<c:if test="<%= ddmDisplay.isVersioningEnabled() %>">
+			<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(true);" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
+		</c:if>
 
-	<aui:button href="<%= redirect %>" type="cancel" />
-</aui:button-row>
+		<aui:button href="<%= redirect %>" type="cancel" />
+	</aui:button-row>
+</div>
 
 <aui:script>
 	function <portlet:namespace />openParentStructureSelector() {

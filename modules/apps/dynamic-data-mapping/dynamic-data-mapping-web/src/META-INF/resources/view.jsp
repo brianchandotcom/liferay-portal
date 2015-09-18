@@ -64,101 +64,103 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</liferay-util:include>
-		
+
 		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<liferay-ui:search-container
-		orderByCol="<%= orderByCol %>"
-		orderByComparator="<%= orderByComparator %>"
-		orderByType="<%= orderByType %>"
-		rowChecker="<%= new RowChecker(renderResponse) %>"
-		searchContainer="<%= structureSearchContainer %>"
-	>
-
-		<liferay-ui:search-container-results>
-			<%@ include file="/structure_search_results.jspf" %>
-		</liferay-ui:search-container-results>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
-			keyProperty="structureId"
-			modelVar="structure"
+	<div class="container-fluid-1280">
+		<liferay-ui:search-container
+			orderByCol="<%= orderByCol %>"
+			orderByComparator="<%= orderByComparator %>"
+			orderByType="<%= orderByType %>"
+			rowChecker="<%= new RowChecker(renderResponse) %>"
+			searchContainer="<%= structureSearchContainer %>"
 		>
 
-			<%
-			PortletURL rowURL = renderResponse.createRenderURL();
+			<liferay-ui:search-container-results>
+				<%@ include file="/structure_search_results.jspf" %>
+			</liferay-ui:search-container-results>
 
-			rowURL.setParameter("mvcPath", "/edit_structure.jsp");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
-			rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
+			<liferay-ui:search-container-row
+				className="com.liferay.dynamic.data.mapping.model.DDMStructure"
+				keyProperty="structureId"
+				modelVar="structure"
+			>
 
-			String rowHREF = rowURL.toString();
-			%>
+				<%
+				PortletURL rowURL = renderResponse.createRenderURL();
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="id"
-				orderable="<%= true %>"
-				orderableProperty="id"
-				property="structureId"
-			/>
+				rowURL.setParameter("mvcPath", "/edit_structure.jsp");
+				rowURL.setParameter("redirect", currentURL);
+				rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
+				rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="name"
-				value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
-			/>
+				String rowHREF = rowURL.toString();
+				%>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
-				name="description"
-				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
-			/>
-
-			<c:if test="<%= Validator.isNull(storageTypeValue) %>">
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
-					name="storage-type"
-					value="<%= LanguageUtil.get(request, structure.getStorageType()) %>"
+					name="id"
+					orderable="<%= true %>"
+					orderableProperty="id"
+					property="structureId"
 				/>
-			</c:if>
 
-			<c:if test="<%= scopeClassNameId == 0 %>">
 				<liferay-ui:search-container-column-text
 					href="<%= rowHREF %>"
-					name="type"
-					value="<%= ResourceActionsUtil.getModelResource(locale, structure.getClassName()) %>"
+					name="name"
+					value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
 				/>
-			</c:if>
 
-			<%
-			Group group = GroupLocalServiceUtil.getGroup(structure.getGroupId());
-			%>
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="description"
+					value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
+				/>
 
-			<liferay-ui:search-container-column-text
-				name="scope"
-				value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
-			/>
+				<c:if test="<%= Validator.isNull(storageTypeValue) %>">
+					<liferay-ui:search-container-column-text
+						href="<%= rowHREF %>"
+						name="storage-type"
+						value="<%= LanguageUtil.get(request, structure.getStorageType()) %>"
+					/>
+				</c:if>
 
-			<liferay-ui:search-container-column-date
-				href="<%= rowHREF %>"
-				name="modified-date"
-				orderable="<%= true %>"
-				orderableProperty="modified-date"
-				value="<%= structure.getModifiedDate() %>"
-			/>
+				<c:if test="<%= scopeClassNameId == 0 %>">
+					<liferay-ui:search-container-column-text
+						href="<%= rowHREF %>"
+						name="type"
+						value="<%= ResourceActionsUtil.getModelResource(locale, structure.getClassName()) %>"
+					/>
+				</c:if>
 
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
-				path="/structure_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				<%
+				Group group = GroupLocalServiceUtil.getGroup(structure.getGroupId());
+				%>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
+				<liferay-ui:search-container-column-text
+					name="scope"
+					value="<%= LanguageUtil.get(request, group.getScopeLabel(themeDisplay)) %>"
+				/>
+
+				<liferay-ui:search-container-column-date
+					href="<%= rowHREF %>"
+					name="modified-date"
+					orderable="<%= true %>"
+					orderableProperty="modified-date"
+					value="<%= structure.getModifiedDate() %>"
+				/>
+
+				<liferay-ui:search-container-column-jsp
+					align="right"
+					cssClass="entry-action"
+					path="/structure_action.jsp"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator markupView="lexicon" />
+		</liferay-ui:search-container>
+	</div>
 
 	<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
 		<liferay-portlet:renderURL var="viewStructuresURL">
@@ -189,15 +191,15 @@ portletURL.setParameter("tabs1", tabs1);
 			}
 		);
 	}
-	
+
 	AUI.$(document.<portlet:namespace />fm).on(
 		'click',
 		'input[type=checkbox]',
 		function() {
 			var form = AUI.$(document.<portlet:namespace />fm);
-		
+
 			var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds').length == 0;
-			
+
 			AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
 		}
 	);

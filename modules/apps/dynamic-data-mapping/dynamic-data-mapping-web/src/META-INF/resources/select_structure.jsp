@@ -20,8 +20,6 @@
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
-
-SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED);
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
@@ -29,6 +27,10 @@ SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL,
 	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 	<portlet:param name="eventName" value="<%= eventName %>" />
 </liferay-portlet:renderURL>
+
+<%
+SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED);
+%>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="selectStructureFm">
 	<c:if test="<%= !showToolbar %>">
@@ -46,61 +48,60 @@ SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL,
 
 		<liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>" />
 	</c:if>
-
-	<liferay-ui:search-container
-		searchContainer="<%= structureSearch %>"
-	>
-
-		<div class="separator"><!-- --></div>
-
-		<liferay-ui:search-container-results>
-			<%@ include file="/structure_search_results.jspf" %>
-		</liferay-ui:search-container-results>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.dynamic.data.mapping.model.DDMStructure"
-			keyProperty="structureId"
-			modelVar="structure"
+	<div class="container-fluid-1280">
+		<liferay-ui:search-container
+			searchContainer="<%= structureSearch %>"
 		>
 
-			<liferay-ui:search-container-column-text
-				name="id"
-				value="<%= String.valueOf(structure.getStructureId()) %>"
-			/>
+			<liferay-ui:search-container-results>
+				<%@ include file="/structure_search_results.jspf" %>
+			</liferay-ui:search-container-results>
 
-			<liferay-ui:search-container-column-text
-				name="name"
-				value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
-			/>
+			<liferay-ui:search-container-row
+				className="com.liferay.dynamic.data.mapping.model.DDMStructure"
+				keyProperty="structureId"
+				modelVar="structure"
+			>
 
-			<liferay-ui:search-container-column-text
-				name="description"
-				value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
-			/>
+				<liferay-ui:search-container-column-text
+					name="id"
+					value="<%= String.valueOf(structure.getStructureId()) %>"
+				/>
 
-			<liferay-ui:search-container-column-date
-				name="modified-date"
-				value="<%= structure.getModifiedDate() %>"
-			/>
+				<liferay-ui:search-container-column-text
+					name="name"
+					value="<%= HtmlUtil.escape(structure.getName(locale)) %>"
+				/>
 
-			<liferay-ui:search-container-column-text cssClass="entry-action">
-				<c:if test="<%= (structure.getStructureId() != classPK) && ((classPK == 0) || (structure.getParentStructureId() == 0) || (structure.getParentStructureId() != classPK)) %>">
+				<liferay-ui:search-container-column-text
+					name="description"
+					value="<%= HtmlUtil.escape(structure.getDescription(locale)) %>"
+				/>
 
-					<%
-					Map<String, Object> data = new HashMap<String, Object>();
+				<liferay-ui:search-container-column-date
+					name="modified-date"
+					value="<%= structure.getModifiedDate() %>"
+				/>
 
-					data.put("ddmstructureid", structure.getStructureId());
-					data.put("ddmstructurekey", structure.getStructureKey());
-					data.put("name", structure.getName(locale));
-					%>
+				<liferay-ui:search-container-column-text cssClass="entry-action">
+					<c:if test="<%= (structure.getStructureId() != classPK) && ((classPK == 0) || (structure.getParentStructureId() == 0) || (structure.getParentStructureId() != classPK)) %>">
 
-					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-				</c:if>
-			</liferay-ui:search-container-column-text>
-		</liferay-ui:search-container-row>
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
 
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
+						data.put("ddmstructureid", structure.getStructureId());
+						data.put("ddmstructurekey", structure.getStructureKey());
+						data.put("name", structure.getName(locale));
+						%>
+
+						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+					</c:if>
+				</liferay-ui:search-container-column-text>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator markupView="lexicon" />
+		</liferay-ui:search-container>
+	</div>
 
 	<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
 		<portlet:renderURL var="viewStructureURL">

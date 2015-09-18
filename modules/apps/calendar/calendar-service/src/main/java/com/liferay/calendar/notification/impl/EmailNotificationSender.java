@@ -14,11 +14,9 @@
 
 package com.liferay.calendar.notification.impl;
 
-import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.model.CalendarNotificationTemplateConstants;
 import com.liferay.calendar.notification.NotificationField;
-import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.mail.service.MailServiceUtil;
 import com.liferay.portal.kernel.mail.MailMessage;
 import com.liferay.portal.model.User;
@@ -41,20 +39,14 @@ public class EmailNotificationSender implements NotificationSender {
 			CalendarNotificationTemplate calendarNotificationTemplate =
 				notificationTemplateContext.getCalendarNotificationTemplate();
 
-			Calendar calendar = CalendarLocalServiceUtil.getCalendar(
-				notificationTemplateContext.getCalendarId());
-
-			User defaultSenderUser = NotificationUtil.getDefaultSenderUser(
-				calendar);
-
 			String fromAddress = NotificationUtil.getTemplatePropertyValue(
 				calendarNotificationTemplate,
 				CalendarNotificationTemplateConstants.PROPERTY_FROM_ADDRESS,
-				defaultSenderUser.getEmailAddress());
+				sender.getEmailAddress());
 			String fromName = NotificationUtil.getTemplatePropertyValue(
 				calendarNotificationTemplate,
 				CalendarNotificationTemplateConstants.PROPERTY_FROM_NAME,
-				defaultSenderUser.getFullName());
+				sender.getFullName());
 
 			notificationTemplateContext.setFromAddress(fromAddress);
 			notificationTemplateContext.setFromName(fromName);

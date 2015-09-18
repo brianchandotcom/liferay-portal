@@ -824,6 +824,13 @@
 				</then>
 			</elseif>
 			<elseif>
+				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE" />
+				<then>
+					<var name="permissionNavigationKey" value="CONTROL_PANEL_SITES_SITES" />
+					<var name="permissionNavigationValue" value="Site Memberships" />
+				</then>
+			</elseif>
+			<elseif>
 				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES" />
 				<then>
 					<var name="permissionNavigationKey" value="CONTROL_PANEL_SITES_SITES" />

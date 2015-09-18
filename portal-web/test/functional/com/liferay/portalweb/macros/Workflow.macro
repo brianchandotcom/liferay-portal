@@ -562,7 +562,7 @@
 	</command>
 
 	<command name="uploadDefinition">
-		<execute function="AssertClick" locator1="WorkflowDefinition#TOOLBAR_UPLOAD_DEFINITION" value1="Upload Definition" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${workflowDefinitionTitle}" />
 		<execute function="UploadCommonFile" locator1="WorkflowUpload#FILE_UPLOAD" value1="${workflowDefinitionFile}" />

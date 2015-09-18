@@ -845,17 +845,22 @@ public class ServiceBuilder {
 			Object value = entry.getValue();
 
 			if (value instanceof List) {
-				List<String> stringValues = (List<String>)entry.getValue();
+				List<?> values = (List<?>)entry.getValue();
 
 				sb.append(StringPool.OPEN_CURLY_BRACE);
 
-				for (String stringValue : stringValues) {
-					sb.append(stringValue);
+				for (Object listValue : values) {
+					if (listValue instanceof Annotation) {
+						sb.append(annotationToString((Annotation)listValue));
+					}
+					else {
+						sb.append(listValue);
+					}
 
 					sb.append(StringPool.COMMA_AND_SPACE);
 				}
 
-				if (!stringValues.isEmpty()) {
+				if (!values.isEmpty()) {
 					sb.setIndex(sb.index() - 1);
 				}
 

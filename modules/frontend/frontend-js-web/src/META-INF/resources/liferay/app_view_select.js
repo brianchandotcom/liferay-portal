@@ -65,13 +65,13 @@ AUI.add(
 						validator: Lang.isString
 					},
 
+					selectAllCheckbox: {
+						validator: Lang.isString
+					},
+
 					selectedCSSClass: {
 						validator: Lang.isString,
 						value: CSS_SELECTED
-					},
-
-					selectAllCheckbox: {
-						validator: Lang.isString
 					},
 
 					selector: {
@@ -238,7 +238,7 @@ AUI.add(
 					_toggleEntriesSelection: function(event) {
 						var instance = this;
 
-						var selectAllCheckbox = event.currentTarget;
+						var selectAllCheckbox = event ? event.currentTarget : instance._selectAllCheckbox;
 
 						for (var i = 0; i < instance._checkBoxesId.length; i++) {
 							Util.checkAll(

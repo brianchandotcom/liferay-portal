@@ -1,10 +1,5 @@
-@import "aui/bootstrap/variables";
-@import "aui/alloy-font-awesome/scss/variables";
-@import "bourbon";
-@import "mixins";
-
-@import "application/variables";
 @import "application/variables_custom";
+@import "application/variables";
 
 @import "application/autocomplete";
 @import "application/color_picker";

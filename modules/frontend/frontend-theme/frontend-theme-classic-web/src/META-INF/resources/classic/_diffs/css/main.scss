@@ -1,6 +1,11 @@
 @import "bourbon";
 @import "mixins";
 
+@import "aui/lexicon/atlas-variables";
+
+@import "aui/bootstrap/mixins";
+@import "aui/lexicon/atlas-theme/mixins";
+
 @import "base";
 
 @import "portal";

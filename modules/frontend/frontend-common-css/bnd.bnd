@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Frontend Common CSS
 Bundle-SymbolicName: com.liferay.frontend.common.css
-Bundle-Version: 1.0.0
+Bundle-Version: 1.0.1
 Include-Resource:\
 	classes,\
 	META-INF/resources=tmp/META-INF/resources

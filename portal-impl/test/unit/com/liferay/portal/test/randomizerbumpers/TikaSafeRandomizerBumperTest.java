@@ -15,7 +15,6 @@
 package com.liferay.portal.test.randomizerbumpers;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 
 import org.junit.Assert;
@@ -37,11 +36,7 @@ public class TikaSafeRandomizerBumperTest {
 			TikaSafeRandomizerBumper.INSTANCE;
 
 		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_EXE_BYTE_ARRAY));
-
-		String randomString = getRegularRandomString();
-
-		Assert.assertTrue(
-			tikaSafeRandomizerBumper.accept(randomString.getBytes()));
+		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_TEXT_BYTE_ARRAY));
 		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_BROKEN_EXE_BYTES));
 	}
 
@@ -51,37 +46,18 @@ public class TikaSafeRandomizerBumperTest {
 			new TikaSafeRandomizerBumper("application/x-msdownload");
 
 		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_EXE_BYTE_ARRAY));
-
-		String randomString = getRegularRandomString();
-
-		Assert.assertFalse(
-			tikaSafeRandomizerBumper.accept(randomString.getBytes()));
+		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_TEXT_BYTE_ARRAY));
+		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_BROKEN_EXE_BYTES));
 	}
 
 	@Test
 	public void testAcceptText() {
-		String randomString = getRegularRandomString();
-
 		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
 			new TikaSafeRandomizerBumper(ContentTypes.TEXT_PLAIN);
 
-		Assert.assertTrue(
-			tikaSafeRandomizerBumper.accept(randomString.getBytes()));
-
-		randomString = _EXE_MAGIC_HEADER.concat(RandomTestUtil.randomString(6));
-
-		Assert.assertFalse(
-			tikaSafeRandomizerBumper.accept(randomString.getBytes()));
-	}
-
-	protected static String getRegularRandomString() {
-		String randomString = RandomTestUtil.randomString();
-
-		while (randomString.startsWith(_EXE_MAGIC_HEADER)) {
-			randomString = RandomTestUtil.randomString();
-		}
-
-		return randomString;
+		Assert.assertTrue(tikaSafeRandomizerBumper.accept(_TEXT_BYTE_ARRAY));
+		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_EXE_BYTE_ARRAY));
+		Assert.assertFalse(tikaSafeRandomizerBumper.accept(_BROKEN_EXE_BYTES));
 	}
 
 	private static final byte[] _BROKEN_EXE_BYTES = "MZ5gFGQt".getBytes();
@@ -96,6 +72,6 @@ public class TikaSafeRandomizerBumperTest {
 		0, 0, 0, 0, 0, 0, 2
 	};
 
-	private static final String _EXE_MAGIC_HEADER = "MZ";
+	private static final byte[] _TEXT_BYTE_ARRAY = "WHz5WKch".getBytes();
 
 }

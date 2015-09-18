@@ -150,7 +150,7 @@ public class NotificationUtil {
 					user);
 
 			notificationSender.sendNotification(
-				notificationRecipient, notificationTemplateContext);
+				notificationRecipient, notificationTemplateContext, sender);
 		}
 	}
 
@@ -203,7 +203,7 @@ public class NotificationUtil {
 					calendarBooking, user);
 
 			notificationSender.sendNotification(
-				notificationRecipient, notificationTemplateContext);
+				notificationRecipient, notificationTemplateContext, user);
 		}
 	}
 

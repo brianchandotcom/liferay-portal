@@ -33,7 +33,8 @@ public class EmailNotificationSender implements NotificationSender {
 	@Override
 	public void sendNotification(
 			NotificationRecipient notificationRecipient,
-			NotificationTemplateContext notificationTemplateContext)
+			NotificationTemplateContext notificationTemplateContext,
+			User sender)
 		throws NotificationSenderException {
 
 		try {

@@ -125,7 +125,7 @@
 		<field name="expirationDate" type="Date" />
 		<field name="mimeType" type="String" />
 		<field name="title" type="String" localized="true">
-			<hint name="max-length">4000</hint>
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="description" type="String" localized="true">
 			<hint-collection name="CLOB" />
@@ -1871,7 +1871,7 @@
 		<field name="parentClassPK" type="long" />
 		<field name="type" type="int" />
 		<field name="extraData" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 			<hint name="auto-escape">false</hint>
 		</field>
 		<field name="receiverUserId" type="long" />

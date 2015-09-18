@@ -531,32 +531,15 @@
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
 		<if>
-			<equals arg1="${portletCategoryName}" arg2="Administration" />
+			<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
 			<then>
-				<if>
-					<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
-					<then>
-						<execute function="Click" locator1="ProductMenu#TOGGLE" />
-					</then>
-				</if>
-
-				<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_SELECTOR" />
-
-				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_ALL_SITES_PANEL_TITLE" value1="Administration" />
+				<execute function="Click" locator1="ProductMenu#TOGGLE" />
 			</then>
-			<else>
-				<if>
-					<condition function="IsElementNotPresent" locator1="ProductMenu#PRODUCT_MENU_OPENED" />
-					<then>
-						<execute function="Click" locator1="ProductMenu#TOGGLE" />
-					</then>
-				</if>
-
-				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_CONTROL_PANEL_NAVIGATION" value1="Control Panel" />
-
-				<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_CONTROL_PANEL_PANEL_TITLE" value1="${portletCategoryName}" />
-			</else>
 		</if>
+
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_TABS_CONTROL_PANEL_NAVIGATION" value1="Control Panel" />
+
+		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_CONTROL_PANEL_PANEL_TITLE" value1="${portletCategoryName}" />
 
 		<if>
 			<isset var="portletName" />

@@ -3152,4 +3152,11 @@ plugins.includes=</echo>
 			/>
 		</zip>
 	</target>
+
+	<target name="zip-wildfly">
+		<antcall target="zip-executable">
+			<param name="zip.executable.file" value="liferay-portal-wildfly" />
+			<param name="zip.executable.dir" value="${app.server.wildfly.dir}" />
+		</antcall>
+	</target>
 </project>

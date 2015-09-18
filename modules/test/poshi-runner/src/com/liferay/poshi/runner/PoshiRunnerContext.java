@@ -244,6 +244,37 @@ public class PoshiRunnerContext {
 		_componentClassCommandNames.put(componentName, classCommandNames);
 	}
 
+	private static List<String> _findPoshiFiles(
+		String baseDir, String[] includes) throws Exception {
+
+		for (int i = 0; i < includes.length; i++) {
+			includes[i] = "**\\*." + includes[i];
+		}
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(baseDir);
+		directoryScanner.setIncludes(includes);
+
+		directoryScanner.scan();
+
+		List<String> filePathsNames = new ArrayList<>();
+
+		String[] filePathsArray = directoryScanner.getIncludedFiles();
+
+		for (String filePath : filePathsArray) {
+			filePath = baseDir + "/" + filePath;
+
+			if (OSDetector.isWindows()) {
+				filePath = filePath.replace("/", "\\");
+			}
+
+			filePathsNames.add(filePath);
+		}
+
+		return filePathsNames;
+	}
+
 	private static String _getCommandSummary(
 		String classCommandName, String classType, Element commandElement) {
 

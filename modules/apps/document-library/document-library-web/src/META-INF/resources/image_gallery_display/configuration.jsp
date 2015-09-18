@@ -113,6 +113,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 					<liferay-portlet:renderURL portletName="<%= portletResource %>" var="selectFolderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 						<portlet:param name="mvcRenderCommandName" value='<%= "/document_library/select_folder" %>' />
+						<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
+						<portlet:param name="ignoreRootFolder" value="<%= Boolean.TRUE.toString() %>" />
 					</liferay-portlet:renderURL>
 
 					uri: '<%= selectFolderURL.toString() %>'

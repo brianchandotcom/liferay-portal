@@ -144,6 +144,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY_RECYCLE_BIN_INFO</td>
+	<td>//div[contains(@class,'empty-message') and contains(@class,'text-center')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECYCLE_BIN_RESTORE_SUCCESS</td>
 	<td>//div[contains(@class,'alert-success')][2]</td>
 	<td></td>

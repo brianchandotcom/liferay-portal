@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 
 import java.util.Locale;
 import java.util.Map;
@@ -65,6 +66,15 @@ public class UpdateRecordSetMVCActionCommand
 		DDLRecordSetService ddlRecordSetService) {
 
 		_ddlRecordSetService = ddlRecordSetService;
+	}
+
+	@Override
+	@Reference
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		this.workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 	}
 
 	protected DDLRecordSet updateRecordSet(ActionRequest actionRequest)

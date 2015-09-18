@@ -395,9 +395,9 @@ public class UpgradeSharding extends UpgradeProcess {
 		select =
 			"(select dlf.companyId, dlse.syncEventId from DLFolder dlf, " +
 				"DLSyncEvent dlse where dlse.type_ = 'folder' and " +
-					"dlf.folderId = dlse.typePK) UNION (select re.companyId, " +
-						"dlse.syncEventId from DLSyncEvent dlse, RepositoryEntry re " +
-							"where dlse.type_ = 'folder' and dlse.typePK=re.repositoryId)";
+				"dlf.folderId = dlse.typePK) UNION (select re.companyId, " +
+				"dlse.syncEventId from DLSyncEvent dlse, RepositoryEntry re " +
+				"where dlse.type_ = 'folder' and dlse.typePK=re.repositoryId)";
 
 		update = "update DLSyncEvent set companyId = ? where syncEventId = ?";
 
@@ -411,8 +411,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, go.groupId, go.organizationId from " +
 				"Group_ g, Groups_Orgs go, Organization_ o " +
-					"where g.groupId = go.groupId and " +
-						"go.organizationId = o.organizationId";
+				"where g.groupId = go.groupId and " +
+				"go.organizationId = o.organizationId";
 
 		String update =
 			"update Groups_Orgs set companyId = ? " +
@@ -790,10 +790,9 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select fv.companyId, fvpv.frameworkVersionId, " +
 				"fvpv.productVersionId from SCFrameworkVersion fv, " +
-					"SCProductVersion pv, SCFrameworkVersi_SCProductVers fvpv" +
-						" where fv.frameworkVersionId = " +
-							" fvpv.frameworkVersionId and " +
-								" pv.productVersionId = fvpv.productVersionId";
+				"SCProductVersion pv, SCFrameworkVersi_SCProductVers fvpv " +
+				"where fv.frameworkVersionId = fvpv.frameworkVersionId " +
+				"and pv.productVersionId = fvpv.productVersionId";
 
 		String update =
 			"update SCFrameworkVersi_SCProductVers set companyId = ? " +
@@ -812,9 +811,9 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select pe.companyId, lpe.licenseId, " +
 				"lpe.productEntryId from SCLicense l, " +
-					"SCLicenses_SCProductEntries lpe, SCProductEntry pe " +
-						"where l.licenseId = lpe.licenseId and " +
-							"lpe.productEntryId = pe.productEntryId";
+				"SCLicenses_SCProductEntries lpe, SCProductEntry pe " +
+				"where l.licenseId = lpe.licenseId and " +
+				"lpe.productEntryId = pe.productEntryId";
 
 		String update =
 			"update SCLicenses_SCProductEntries set companyId = ? " +
@@ -897,9 +896,9 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, uggr.userGroupId, uggr.groupId, uggr.roleId " +
 				"from Group_ g, Role_ r, UserGroup ug, " +
-					"UserGroupGroupRole uggr where g.groupId = uggr.groupId" +
-						" and ug.userGroupId = uggr.userGroupId and " +
-							"r.roleId = uggr.roleId";
+				"UserGroupGroupRole uggr where g.groupId = uggr.groupId " +
+				"and ug.userGroupId = uggr.userGroupId and " +
+				"r.roleId = uggr.roleId";
 
 		String update =
 			"update UserGroupGroupRole set companyId = ? " +
@@ -917,8 +916,8 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select g.companyId, ugr.userId, ugr.groupId, ugr.roleId from " +
 				"Group_ g, Role_ r, User_ u, UserGroupRole ugr where " +
-					"g.groupId = ugr.groupId and u.userId = ugr.userId and " +
-						"r.roleId = ugr.roleId";
+				"g.groupId = ugr.groupId and u.userId = ugr.userId and " +
+				"r.roleId = ugr.roleId";
 
 		String update =
 			"update UserGroupRole set companyId = ? " +
@@ -935,8 +934,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select t.companyId, ugt.teamId, ugt.userGroupId from Team t, " +
 				"UserGroup ug, UserGroups_Teams ugt where " +
-					"t.teamId = ugt.teamId and " +
-						"ug.userGroupId = ugt.userGroupId";
+				"t.teamId = ugt.teamId and ug.userGroupId = ugt.userGroupId";
 
 		String update =
 			"update UserGroups_Teams set companyId = ? " +
@@ -967,7 +965,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select u.companyId, ug.userId, ug.groupId from Group_ g, " +
 				"User_ u, Users_Groups ug where g.groupId = ug.groupId and " +
-					"u.userId = ug.userId";
+				"u.userId = ug.userId";
 
 		String update =
 			"update Users_Groups set companyId = ? where userId = ? " +
@@ -983,8 +981,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select u.companyId, uo.userId, uo.organizationId from " +
 				"Organization_ o, User_ u, Users_Orgs uo where " +
-					"o.organizationId = uo.organizationId and " +
-						"u.userId=uo.userId";
+				"o.organizationId = uo.organizationId and u.userId = uo.userId";
 
 		String update =
 			"update Users_Orgs set companyId = ? where userId = ? and " +
@@ -1001,7 +998,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select u.companyId, ur.userId, ur.roleId from Role_ r, User_ u, " +
 				"Users_Roles ur where r.roleId = ur.roleId and " +
-					"u.userId = ur.userId";
+				"u.userId = ur.userId";
 
 		String update =
 			"update Users_Roles set companyId = ? where userId = ? and " +
@@ -1017,7 +1014,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select u.companyId, ut.userId, ut.teamId from Team t, User_ u, " +
 				"Users_Teams ut where t.teamId = ut.teamId and " +
-					"u.userId = ut.userId";
+				"u.userId = ut.userId";
 
 		String update =
 			"update Users_Teams set companyId = ? where userId = ? and " +
@@ -1033,8 +1030,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select u.companyId, uug.userId, uug.userGroupId from " +
 				"UserGroup ug, User_ u, Users_UserGroups uug where " +
-					"ug.userGroupId = uug.userGroupId and " +
-						"u.userId = uug.userId";
+				"ug.userGroupId = uug.userGroupId and u.userId = uug.userId";
 
 		String update =
 			"update Users_UserGroups set companyId = ? where userId = ? and " +
@@ -1051,7 +1047,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select ut.companyId, utp.userTrackerPathId from UserTracker ut, " +
 				"UserTrackerPath utp where " +
-					"ut.userTrackerId = utp.userTrackerId";
+				"ut.userTrackerId = utp.userTrackerId";
 
 		String update =
 			"update UserTrackerPath set companyId = ? where " +
@@ -1068,7 +1064,7 @@ public class UpgradeSharding extends UpgradeProcess {
 		String select =
 			"select wn.companyId, wpr.resourcePrimKey from " +
 				" WikiNode wn, WikiPageResource wpr where " +
-					"wn.nodeId = wpr.nodeId";
+				"wn.nodeId = wpr.nodeId";
 
 		String update =
 			"update WikiPageResource set companyId = ? where " +

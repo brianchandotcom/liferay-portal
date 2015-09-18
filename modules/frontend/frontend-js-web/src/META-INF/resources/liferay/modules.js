@@ -1,4 +1,5 @@
 ;(function() {
+	/* global Loader */
 	var LiferayAUI = Liferay.AUI;
 
 	var COMBINE = LiferayAUI.getCombine();
@@ -548,6 +549,12 @@
 						path: 'logo_selector.js',
 						requires: [
 							'aui-base'
+						]
+					},
+					'liferay-management-bar': {
+						path: 'management_bar.js',
+						requires: [
+							'liferay-portlet-base'
 						]
 					},
 					'liferay-map-base': {

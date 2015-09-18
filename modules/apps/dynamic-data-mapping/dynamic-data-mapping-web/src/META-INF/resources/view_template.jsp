@@ -253,6 +253,14 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 	</liferay-ui:search-container>
 </aui:form>
 
+<liferay-util:include page="/template_add_buttons.jsp" servletContext="<%= application %>">
+	<liferay-util:param name="redirect" value="<%= currentURL %>" />
+	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+	<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+	<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
+</liferay-util:include>
+
 <aui:script>
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 

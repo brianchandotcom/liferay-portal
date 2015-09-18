@@ -163,6 +163,23 @@ portletURL.setParameter("tabs1", tabs1);
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
+	
+	<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
+		<liferay-portlet:renderURL var="viewStructuresURL">
+			<portlet:param name="mvcPath" value="/view.jsp" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		</liferay-portlet:renderURL>
+
+		<liferay-portlet:renderURL var="addStructureURL">
+			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+			<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		</liferay-portlet:renderURL>
+		
+		<liferay-frontend:add-menu>
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
+		</liferay-frontend:add-menu>
+	</c:if>
 </aui:form>
 
 <aui:script>

@@ -18,30 +18,9 @@
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
-
-String toolbarItem = ParamUtil.getString(request, "toolbarItem");
-
-long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 %>
 
 <aui:nav-bar>
-	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
-			<liferay-portlet:renderURL var="viewStructuresURL">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</liferay-portlet:renderURL>
-
-			<liferay-portlet:renderURL var="addStructureURL">
-				<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-				<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</liferay-portlet:renderURL>
-
-			<aui:nav-item href="<%= addStructureURL %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
-		</c:if>
-	</aui:nav>
-
 	<aui:nav-bar-search searchContainer="<%= searchContainer %>">
 		<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
 	</aui:nav-bar-search>

@@ -400,10 +400,10 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the template's company
 	 * @param  groupId the primary key of the group
-	 * @param  classNameId the primary key of the class name for template's
+	 * @param  classNameId the primary key of the class name for the template's
 	 *         related model
 	 * @param  classPK the primary key of the template's related entity
-	 * @param  resourceClassNameId the primary key of the class name for
+	 * @param  resourceClassNameId the primary key of the class name for the
 	 *         template's resource model
 	 * @param  type the template's type. For more information, see {@link
 	 *         com.liferay.dynamic.data.mapping.model.DDMTemplateConstants}.
@@ -435,7 +435,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * @param  companyId the primary key of the template's company
 	 * @param  groupId the primary key of the group
 	 * @param  classPK the primary key of the template's related entity
-	 * @param  resourceClassNameId the primary key of the class name for
+	 * @param  resourceClassNameId the primary key of the class name for the
 	 *         template's resource model
 	 * @return the matching templates
 	 */

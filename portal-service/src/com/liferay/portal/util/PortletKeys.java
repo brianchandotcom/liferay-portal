@@ -80,7 +80,9 @@ public class PortletKeys {
 	public static final String MOBILE_DEVICE_RULES =
 		"com_liferay_mobile_device_rules_web_portlet_MDRPortlet";
 
-	public static final String MONITORING = "131";
+	public static final String MONITORING_INVOKER =
+		"com_liferay_monitoring_web_portlet_" +
+			"MonitoringInvokerPortletFactoryImpl";
 
 	public static final String MY_ACCOUNT =
 		"com_liferay_my_account_web_portlet_MyAccountPortlet";

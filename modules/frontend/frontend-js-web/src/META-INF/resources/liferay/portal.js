@@ -6,12 +6,9 @@
 
 	var BODY_CONTENT = 'bodyContent';
 
-	var REGION = 'region';
-
 	var TRIGGER = 'trigger';
 
 	Liferay.Portal.Tabs._show = function(event) {
-		var id = event.id;
 		var names = event.names;
 		var namespace = event.namespace;
 

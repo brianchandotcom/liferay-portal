@@ -159,6 +159,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMPLETED</td>
+	<td>//a[@role='menuitem' and contains(.,'Completed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIGURATION</td>
 	<td>//a[@role='menuitem']//span[contains(.,'Configuration')] | //a[@role='menuitem' and .='Configuration']</td>
 	<td></td>

@@ -8,7 +8,7 @@
 		<if>
 			<equals arg1="${workflowTaskCompleted}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="NavTab#COMPLETED" value1="Completed" />
+				<execute function="AssertClick" locator1="MenuItem#COMPLETED" value1="Completed" />
 
 				<execute function="AssertClick" locator1="CPMyworkflowtasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
 			</then>
@@ -37,7 +37,7 @@
 		<if>
 			<equals arg1="${workflowTaskCompleted}" arg2="true" />
 			<then>
-				<execute function="AssertClick" locator1="NavTab#COMPLETED" value1="Completed" />
+				<execute function="AssertClick" locator1="MenuItem#COMPLETED" value1="Completed" />
 
 				<execute function="AssertClick" locator1="CPMyworkflowtasks#TABLE_GENERIC_ASSET_TITLE" value1="${workflowAssetTitle}" />
 			</then>

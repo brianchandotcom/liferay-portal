@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -65,6 +64,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.documentlibrary.webdav.DLFileEntryResourceImpl;
+import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -209,7 +209,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			long groupId = WebDAVUtil.getGroupId(companyId, destination);
 			String mimeType = fileEntry.getMimeType();
-			String title = WebDAVUtil.getResourceName(destinationArray);
+			String title = getTitle(destinationArray);
 			String description = fileEntry.getDescription();
 			String changeLog = StringPool.BLANK;
 
@@ -378,11 +378,10 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				}
 
 				try {
-					String titleWithExtension = name;
+					String title = getTitle(pathArray);
 
 					FileEntry fileEntry = DLAppServiceUtil.getFileEntry(
-						webDAVRequest.getGroupId(), parentFolderId,
-						titleWithExtension);
+						webDAVRequest.getGroupId(), parentFolderId, title);
 
 					return toResource(webDAVRequest, fileEntry, false);
 				}
@@ -452,7 +451,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				long companyId = webDAVRequest.getCompanyId();
 				long groupId = webDAVRequest.getGroupId();
 				long parentFolderId = getParentFolderId(companyId, pathArray);
-				String title = WebDAVUtil.getResourceName(pathArray);
+				String title = getTitle(pathArray);
 				String extension = FileUtil.getExtension(title);
 
 				String contentType = getContentType(
@@ -679,9 +678,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			long groupId = WebDAVUtil.getGroupId(companyId, destinationArray);
 			long newParentFolderId = getParentFolderId(
 				companyId, destinationArray);
-			String sourceFileName = WebDAVUtil.getResourceName(
-				destinationArray);
-			String title = WebDAVUtil.getResourceName(destinationArray);
+			String title = getTitle(destinationArray);
 			String description = fileEntry.getDescription();
 			String changeLog = StringPool.BLANK;
 
@@ -731,9 +728,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			}
 
 			DLAppServiceUtil.updateFileEntry(
-				fileEntry.getFileEntryId(), sourceFileName,
-				fileEntry.getMimeType(), title, description, changeLog, false,
-				file, serviceContext);
+				fileEntry.getFileEntryId(), title, fileEntry.getMimeType(),
+				title, description, changeLog, false, file, serviceContext);
 
 			if (fileEntry.getFolderId() != newParentFolderId) {
 				fileEntry = DLAppServiceUtil.moveFileEntry(
@@ -791,7 +787,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			long companyId = webDAVRequest.getCompanyId();
 			long groupId = webDAVRequest.getGroupId();
 			long parentFolderId = getParentFolderId(companyId, pathArray);
-			String title = WebDAVUtil.getResourceName(pathArray);
+			String title = getTitle(pathArray);
 			String description = StringPool.BLANK;
 			String changeLog = StringPool.BLANK;
 
@@ -1039,6 +1035,15 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			webDAVRequest.getGroupId(), parentFolderId);
 
 		for (FileEntry fileEntry : fileEntries) {
+			if (!DLWebDAVUtil.isRepresentableTitle(fileEntry.getTitle())) {
+				_log.error(
+					"File entry with title '" + fileEntry.getTitle() + "' " +
+						"cannot be accessed using WebDAV because its " +
+							"title is not representable as a WebDAV URL");
+
+				continue;
+			}
+
 			Resource resource = toResource(webDAVRequest, fileEntry, true);
 
 			resources.add(resource);
@@ -1072,7 +1077,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		}
 
 		for (int i = 2; i < x; i++) {
-			String name = HttpUtil.decodeURL(pathArray[i]);
+			String name = pathArray[i];
 
 			Folder folder = DLAppServiceUtil.getFolder(groupId, folderId, name);
 
@@ -1108,6 +1113,11 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		throws Exception {
 
 		return getFolderId(companyId, pathArray, true);
+	}
+
+	protected String getTitle(String[] pathArray) {
+		return DLWebDAVUtil.unescapeRawTitle(
+			WebDAVUtil.getResourceName(pathArray));
 	}
 
 	protected boolean hasLock(FileEntry fileEntry, String lockUuid)
@@ -1173,16 +1183,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	protected Resource toResource(
 		WebDAVRequest webDAVRequest, FileEntry fileEntry, boolean appendPath) {
 
-		String parentPath = getRootPath() + webDAVRequest.getPath();
-
-		String name = StringPool.BLANK;
-
-		if (appendPath) {
-			name = fileEntry.getTitle();
-		}
-
 		return new DLFileEntryResourceImpl(
-			webDAVRequest, fileEntry, parentPath, name);
+			webDAVRequest, fileEntry, appendPath);
 	}
 
 	protected Resource toResource(

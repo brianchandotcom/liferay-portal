@@ -58,6 +58,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileVersionVersionComparator;
+import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 
 import java.io.InputStream;
 
@@ -361,6 +362,24 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 						}
 					}
 
+					if (!DLWebDAVUtil.isRepresentableTitle(
+							dlFileEntry.getTitle())) {
+
+						try {
+							dlFileEntry = makeTitleRepresentable(dlFileEntry);
+						}
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to rename file entry " +
+										dlFileEntry.getFileEntryId() +
+											" which has a non-representable" +
+												" title for WebDAV",
+									e);
+							}
+						}
+					}
+
 					try {
 						DLFileEntryLocalServiceUtil.validateFile(
 							dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
@@ -496,6 +515,22 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 		}
 
 		return mimeType;
+	}
+
+	protected DLFileEntry makeTitleRepresentable(DLFileEntry dlFileEntry)
+		throws PortalException {
+
+		String title = dlFileEntry.getTitle();
+
+		for (int i = 0;; i++) {
+			String newTitle = DLWebDAVUtil.makeRepresentableTitle(title, i);
+
+			try {
+				return renameTitle(dlFileEntry, newTitle);
+			}
+			catch (DuplicateFileException dfe) {
+			}
+		}
 	}
 
 	protected void renameDuplicateTitle(DLFileEntry dlFileEntry)

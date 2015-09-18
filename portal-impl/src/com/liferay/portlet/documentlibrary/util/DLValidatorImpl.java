@@ -28,6 +28,7 @@ import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
+import com.liferay.portlet.documentlibrary.webdav.DLWebDAVUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -117,6 +118,12 @@ public final class DLValidatorImpl implements DLValidator {
 	public void validateFileName(String fileName) throws FileNameException {
 		if (!isValidName(fileName)) {
 			throw new FileNameException(fileName);
+		}
+
+		if (!DLWebDAVUtil.isRepresentableTitle(fileName)) {
+			throw new FileNameException(
+				"File name '" + fileName + "' " +
+					"cannot be represented using WebDAV");
 		}
 	}
 

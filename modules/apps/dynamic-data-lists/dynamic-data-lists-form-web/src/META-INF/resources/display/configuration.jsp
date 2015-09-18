@@ -45,14 +45,14 @@ DDLRecordSet selRecordSet = ddlFormDisplayContext.getRecordSet();
 		<liferay-ui:search-container
 			emptyResultsMessage="no-forms-were-found"
 			iteratorURL="<%= configurationRenderURL %>"
-			total="<%= DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) %>"
+			total="<%= DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_FORMS) %>"
 		>
 			<div class="form-search input-append">
 				<liferay-ui:input-search autoFocus="<%= true %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>'/>
 			</div>
 
 			<liferay-ui:search-container-results
-				results="<%= DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+				results="<%= DDLRecordSetServiceUtil.search(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_FORMS, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 			/>
 
 			<liferay-ui:search-container-row

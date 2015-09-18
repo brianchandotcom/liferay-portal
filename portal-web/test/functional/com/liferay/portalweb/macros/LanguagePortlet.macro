@@ -26,6 +26,7 @@
 			<condition function="IsElementPresent" locator1="LanguageConfiguration#LANGUAGES_CURRENT_SELECT" />
 			<then>
 				<execute function="Click" locator1="LanguageConfiguration#LANGUAGES_CURRENT_SELECT" />
+
 				<execute function="Click" locator1="LanguageConfiguration#MOVE_CURRENT_TO_AVAILABLE_BUTTON" />
 			</then>
 		</while>
@@ -36,11 +37,14 @@
 			<var name="key_currentLanguage" value="${currentLanguage}" />
 
 			<execute function="Select" locator1="LanguageConfiguration#LANGUAGES_AVAILABLE" value1="${currentLanguage}" />
+
 			<execute function="Click" locator1="LanguageConfiguration#MOVE_AVAILABLE_TO_CURRENT_BUTTON" />
+
 			<execute function="AssertTextEquals#assertPartialText" locator1="LanguageConfiguration#LANGUAGES_CURRENT" value1="${currentLanguage}" />
 		</for>
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
 		<execute function="SelectFrame" value1="relative=top" />

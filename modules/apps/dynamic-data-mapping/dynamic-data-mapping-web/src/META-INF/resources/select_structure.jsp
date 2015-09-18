@@ -32,6 +32,15 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED);
 %>
 
+<c:if test="<%= showToolbar %>">
+
+	<%
+	request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
+	%>
+
+	<liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>" />
+</c:if>
+
 <aui:form action="<%= portletURL.toString() %>" method="post" name="selectStructureFm">
 	<c:if test="<%= !showToolbar %>">
 		<liferay-ui:header
@@ -40,14 +49,6 @@ SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL,
 		/>
 	</c:if>
 
-	<c:if test="<%= showToolbar %>">
-
-		<%
-		request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
-		%>
-
-		<liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>" />
-	</c:if>
 	<div class="container-fluid-1280">
 		<liferay-ui:search-container
 			searchContainer="<%= structureSearch %>"

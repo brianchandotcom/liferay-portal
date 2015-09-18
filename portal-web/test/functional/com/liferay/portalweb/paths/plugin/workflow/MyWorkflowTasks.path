@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>ASSIGNED_TO_ME_INFO_MESSAGE</td>
-	<td>//div[@id='workflowMyTasksPanel']//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td>//div[@id='workflowMyTasksPanelContent']//div[contains(@class,'empty-message')]/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_INFO_MESSAGE</td>
-	<td>//div[@id='workflowMyRolesTasksPanel']//div[contains(@class,'alert') and contains(@class,'alert-info')]</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//div[contains(@class,'empty-message')]/span</td>
 	<td></td>
 </tr>
 <tr>

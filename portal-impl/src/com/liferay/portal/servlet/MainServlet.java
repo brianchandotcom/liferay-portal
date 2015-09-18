@@ -1057,15 +1057,24 @@ public class MainServlet extends ActionServlet {
 
 		userId = GetterUtil.getLong(remoteUser);
 
+		User user = UserLocalServiceUtil.getUserById(userId);
+
+		if (user.isDefaultUser()) {
+			HttpSession session = request.getSession();
+
+			session.setAttribute(WebKeys.USER, user);
+			session.setAttribute(WebKeys.USER_ID, Long.valueOf(userId));
+			session.setAttribute(Globals.LOCALE_KEY, user.getLocale());
+
+			return userId;
+		}
+
 		EventsProcessorUtil.process(
 			PropsKeys.LOGIN_EVENTS_PRE, PropsValues.LOGIN_EVENTS_PRE, request,
 			response);
 
-		User user = UserLocalServiceUtil.getUserById(userId);
-
-		if (!user.isDefaultUser() &&
-			(PropsValues.USERS_UPDATE_LAST_LOGIN ||
-			 (user.getLastLoginDate() == null))) {
+		if (PropsValues.USERS_UPDATE_LAST_LOGIN ||
+			(user.getLastLoginDate() == null)) {
 
 			user = UserLocalServiceUtil.updateLastLogin(
 				userId, request.getRemoteAddr());

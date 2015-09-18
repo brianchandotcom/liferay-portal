@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service.impl;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordLocalServiceBaseImpl;
 import com.liferay.dynamic.data.lists.util.DDL;
@@ -483,33 +484,37 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 		DDLRecordSet recordSet = record.getRecordSet();
 
-		DDMStructure ddmStructure = recordSet.getDDMStructure();
+		if (recordSet.getScope() ==
+				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) {
 
-		String ddmStructureName = ddmStructure.getName(locale);
+			DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		String recordSetName = recordSet.getName(locale);
+			String ddmStructureName = ddmStructure.getName(locale);
 
-		String title = LanguageUtil.format(
-			locale, "new-x-for-list-x",
-			new Object[] {ddmStructureName, recordSetName}, false);
+			String recordSetName = recordSet.getName(locale);
 
-		if (addDraftAssetEntry) {
-			assetEntryLocalService.updateEntry(
-				userId, record.getGroupId(), record.getCreateDate(),
-				record.getModifiedDate(), DDLRecordConstants.getClassName(),
-				recordVersion.getRecordVersionId(), record.getUuid(), 0,
-				assetCategoryIds, assetTagNames, false, null, null, null,
-				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-				null, 0, 0, null);
-		}
-		else {
-			assetEntryLocalService.updateEntry(
-				userId, record.getGroupId(), record.getCreateDate(),
-				record.getModifiedDate(), DDLRecordConstants.getClassName(),
-				record.getRecordId(), record.getUuid(), 0, assetCategoryIds,
-				assetTagNames, visible, null, null, null,
-				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-				null, 0, 0, null);
+			String title = LanguageUtil.format(
+				locale, "new-x-for-list-x",
+				new Object[] {ddmStructureName, recordSetName}, false);
+
+			if (addDraftAssetEntry) {
+				assetEntryLocalService.updateEntry(
+					userId, record.getGroupId(), record.getCreateDate(),
+					record.getModifiedDate(), DDLRecordConstants.getClassName(),
+					recordVersion.getRecordVersionId(), record.getUuid(), 0,
+					assetCategoryIds, assetTagNames, false, null, null, null,
+					ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
+					null, 0, 0, null);
+			}
+			else {
+				assetEntryLocalService.updateEntry(
+					userId, record.getGroupId(), record.getCreateDate(),
+					record.getModifiedDate(), DDLRecordConstants.getClassName(),
+					record.getRecordId(), record.getUuid(), 0, assetCategoryIds,
+					assetTagNames, visible, null, null, null,
+					ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
+					null, 0, 0, null);
+			}
 		}
 	}
 

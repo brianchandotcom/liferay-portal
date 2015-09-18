@@ -1,6 +1,3 @@
-@import "bourbon";
-@import "mixins";
-
 @import "custom_responsive";
 
 $bg-color: #F5F7F8;
@@ -124,7 +121,7 @@ body {
 		}
 	}
 
-	#content{
+	#content {
 		.navbar-nav > li {
 			& > a {
 				color: $solid-color;

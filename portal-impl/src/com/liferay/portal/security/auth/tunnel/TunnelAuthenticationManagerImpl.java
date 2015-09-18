@@ -57,6 +57,10 @@ public class TunnelAuthenticationManagerImpl
 		HttpAuthorizationHeader httpAuthorizationHeader =
 			HttpAuthManagerUtil.parse(httpServletRequest);
 
+		if (httpAuthorizationHeader == null) {
+			return 0;
+		}
+
 		String scheme = httpAuthorizationHeader.getScheme();
 
 		if (!StringUtil.equalsIgnoreCase(

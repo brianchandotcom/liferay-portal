@@ -88,6 +88,10 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 		HttpAuthorizationHeader httpAuthorizationHeader =
 			HttpAuthManagerUtil.parse(request);
 
+		if (httpAuthorizationHeader == null) {
+			return null;
+		}
+
 		String scheme = httpAuthorizationHeader.getScheme();
 
 		// We only handle HTTP Basic authentication

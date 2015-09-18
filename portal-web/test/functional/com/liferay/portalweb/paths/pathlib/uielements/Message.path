@@ -150,12 +150,12 @@
 </tr>
 <tr>
 	<td>RECYCLE_BIN_RESTORE_SUCCESS</td>
-	<td>//div[contains(@class,'alert-success')][2]</td>
+	<td>//div[contains(.,'${key_assetType}') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECYCLE_BIN_SUCCESS</td>
-	<td>//div[contains(@class,'alert-success') and contains(@class,'trash')]</td>
+	<td>//div[contains(.,'${key_assetType}') and contains(@class,'alert-success')]//a</td>
 	<td></td>
 </tr>
 <tr>

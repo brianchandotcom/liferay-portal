@@ -124,7 +124,8 @@ public class DraftExportImportConfigurationMessageListener
 		DynamicQuery dynamicQuery =
 			BackgroundTaskLocalServiceUtil.dynamicQuery();
 
-		Property property = PropertyFactoryUtil.forName("taskContextMap");
+		Property taskContextMapProperty = PropertyFactoryUtil.forName(
+			"taskContextMap");
 
 		StringBundler sb = new StringBundler(7);
 
@@ -136,11 +137,11 @@ public class DraftExportImportConfigurationMessageListener
 		sb.append(exportImportConfiguration.getExportImportConfigurationId());
 		sb.append(StringPool.PERCENT);
 
-		dynamicQuery.add(property.like(sb.toString()));
+		dynamicQuery.add(taskContextMapProperty.like(sb.toString()));
 
-		property = PropertyFactoryUtil.forName("completed");
+		Property completedProperty = PropertyFactoryUtil.forName("completed");
 
-		dynamicQuery.add(property.eq(Boolean.TRUE));
+		dynamicQuery.add(completedProperty.eq(Boolean.TRUE));
 
 		return BackgroundTaskLocalServiceUtil.dynamicQuery(dynamicQuery);
 	}

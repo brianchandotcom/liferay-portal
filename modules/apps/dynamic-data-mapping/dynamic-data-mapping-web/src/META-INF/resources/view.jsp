@@ -51,26 +51,28 @@ portletURL.setParameter("tabs1", tabs1);
 	}
 
 	OrderByComparator<DDMStructure> orderByComparator = DDMUtil.getStructureOrderByComparator(orderByCol, orderByType);
+
+	SearchContainer structureSearchContainer = new StructureSearch(renderRequest, portletURL);
 	%>
+
+	<c:if test="<%= showToolbar %>">
+
+		<%
+		request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearchContainer);
+		%>
+
+		<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>">
+			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		</liferay-util:include>
+	</c:if>
 
 	<liferay-ui:search-container
 		orderByCol="<%= orderByCol %>"
 		orderByComparator="<%= orderByComparator %>"
 		orderByType="<%= orderByType %>"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
-		searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= structureSearchContainer %>"
 	>
-
-		<c:if test="<%= showToolbar %>">
-
-			<%
-			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-			%>
-
-			<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</liferay-util:include>
-		</c:if>
 
 		<liferay-ui:search-container-results>
 			<%@ include file="/structure_search_results.jspf" %>
@@ -163,7 +165,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
-	
+
 	<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
 		<liferay-portlet:renderURL var="viewStructuresURL">
 			<portlet:param name="mvcPath" value="/view.jsp" />
@@ -175,7 +177,7 @@ portletURL.setParameter("tabs1", tabs1);
 			<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</liferay-portlet:renderURL>
-		
+
 		<liferay-frontend:add-menu>
 			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
 		</liferay-frontend:add-menu>

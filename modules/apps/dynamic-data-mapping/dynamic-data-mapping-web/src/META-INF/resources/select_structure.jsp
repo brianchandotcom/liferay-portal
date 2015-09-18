@@ -20,6 +20,8 @@
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
+
+SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED);
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
@@ -36,19 +38,18 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 		/>
 	</c:if>
 
+	<c:if test="<%= showToolbar %>">
+
+		<%
+		request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
+		%>
+
+		<liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>" />
+	</c:if>
+
 	<liferay-ui:search-container
-		searchContainer="<%= new StructureSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED) %>"
+		searchContainer="<%= structureSearch %>"
 	>
-		<c:if test="<%= showToolbar %>">
-
-			<%
-			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-			%>
-
-			<liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>">
-				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</liferay-util:include>
-		</c:if>
 
 		<div class="separator"><!-- --></div>
 
@@ -100,6 +101,24 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
+
+	<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
+		<portlet:renderURL var="viewStructureURL">
+			<portlet:param name="mvcPath" value="/select_structure.jsp" />
+			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+			<portlet:param name="eventName" value="<%= eventName %>" />
+		</portlet:renderURL>
+
+		<portlet:renderURL var="addStructureURL">
+			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+			<portlet:param name="redirect" value="<%= viewStructureURL %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		</portlet:renderURL>
+
+		<liferay-frontend:add-menu>
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addStructureURL %>" />
+		</liferay-frontend:add-menu>
+	</c:if>
 </aui:form>
 
 <aui:script>

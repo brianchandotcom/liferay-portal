@@ -24,6 +24,7 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_ddm_structure_search"
+	markupView="lexicon"
 >
 	<aui:fieldset cssClass="lfr-ddm-search-form">
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" name="<%= StructureDisplayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />

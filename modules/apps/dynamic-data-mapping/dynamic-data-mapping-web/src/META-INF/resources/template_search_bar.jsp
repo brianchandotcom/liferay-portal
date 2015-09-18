@@ -18,18 +18,9 @@
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
-
-String toolbarItem = ParamUtil.getString(request, "toolbarItem");
-
-String redirect = ParamUtil.getString(request, "redirect");
-
-long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
-long classNameId = ParamUtil.getLong(request, "classNameId");
-long classPK = ParamUtil.getLong(request, "classPK");
-long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 %>
 
-<aui:nav-bar>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav-bar-search searchContainer="<%= searchContainer %>">
 		<liferay-util:include page="/template_search.jsp" servletContext="<%= application %>" />
 	</aui:nav-bar-search>

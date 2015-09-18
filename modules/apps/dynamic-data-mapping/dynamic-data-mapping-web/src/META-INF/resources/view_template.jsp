@@ -60,7 +60,19 @@ TemplateSearch templateSearch = new TemplateSearch(renderRequest, PortletURLUtil
 
 TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.getSearchTerms();
 
+request.setAttribute(WebKeys.SEARCH_CONTAINER, templateSearch);
+
 String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale);
+
+String searchContainerClass = null;
+
+if (classNameId == PortalUtil.getClassNameId(DDMStructure.class)) {
+	searchContainerClass = "";
+}
+else
+{
+	searchContainerClass = "container-fluid-1280";
+}
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
@@ -92,25 +104,16 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 	OrderByComparator<DDMTemplate> orderByComparator = DDMUtil.getTemplateOrderByComparator(orderByCol, orderByType);
 	%>
 
+	<liferay-util:include page="/template_search_bar.jsp" servletContext="<%= application %>" />
+
 	<liferay-ui:search-container
+		cssClass="<%= searchContainerClass %>"
 		orderByCol="<%= orderByCol %>"
 		orderByComparator="<%= orderByComparator %>"
 		orderByType="<%= orderByType %>"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 		searchContainer="<%= templateSearch %>"
 	>
-
-		<%
-		request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-		%>
-
-		<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="redirect" value="<%= currentURL %>" />
-			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-			<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-			<liferay-util:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
-		</liferay-util:include>
 
 		<liferay-ui:search-container-results>
 			<%@ include file="/template_search_results.jspf" %>

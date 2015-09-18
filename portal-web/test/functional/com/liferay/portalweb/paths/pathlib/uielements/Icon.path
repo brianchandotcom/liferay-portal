@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')]</td>
+	<td>//a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')] | //span[contains(@class,'icon-angle-left')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,6 +56,11 @@
 <tr>
 	<td>DELETE</td>
 	<td>//a/span[contains(@class,'icon-trash')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_VERTICAL_ELLIPSIS</td>
+	<td>//li[contains(@class,'selectable') and contains(@class,'active')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>

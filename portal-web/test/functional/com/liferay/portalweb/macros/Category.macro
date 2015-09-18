@@ -3,7 +3,8 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1="${categoryName}" />
@@ -128,13 +129,13 @@
 	<command name="addWithNullTitleCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute function="Click" locator1="Categories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+		<execute function="Check" locator1="CPCategories#VOCABULARY_CHECKBOX" />
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
 		<execute function="Type" locator1="TextInput#TITLE" value1=" " />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="Name Required" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="TextInput#REQUIRED_ALERT" value1="This field is required." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_FIELD_REQUIRED" value1="This field is required." />
 	</command>
 
 	<command name="deleteByIconCP">
@@ -249,7 +250,8 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
-		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_MENULIST_ARROW" />
+		<execute function="Check" locator1="CPCategories#CATEGORY_CHECKBOX" />
+		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
 		<execute function="Select" locator1="CPCategoriesEdit#VOCABULARY_SELECT" value1="${vocabularyName2}" />
@@ -264,7 +266,7 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<execute function="Type" locator1="TextInput#SEARCH" value1="${categorySearchEntry}" />
-		<execute function="Click" locator1="Button#SEARCH" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 	</command>
 
 	<command name="viewCategoryPropertyCP">
@@ -373,11 +375,11 @@
 
 		<execute function="Click" locator1="Categories#CATEGORY_ENTRY_LINK" />
 
-		<execute function="AssertTextEquals" locator1="Categories#ENTRY_HEADER" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${categoryName}" />
 
-		<execute function="Click" locator1="Categories#BACK_BUTTON" />
+		<execute function="Click" locator1="Icon#BACK" />
 
-		<execute function="AssertTextEquals" locator1="Categories#ENTRY_HEADER" value1="${vocabularyName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${vocabularyName}" />
 	</command>
 
 	<command name="viewRemoveFilterViaCategoriesNavigationPG">

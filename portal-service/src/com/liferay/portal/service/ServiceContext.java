@@ -1125,8 +1125,8 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Sets the priority an asset entry if this service context is being passed
-	 * as a parameter to a method which manipulates the asset entry.
+	 * Sets the priority of an asset entry if this service context is being
+	 * passed as a parameter to a method which manipulates the asset entry.
 	 *
 	 * @param assetPriority the priority of an asset entry
 	 */

@@ -24,6 +24,9 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface FreeMarkerEngineConfiguration {
 
+	@Meta.AD(required = false)
+	public String[] allowedClasses();
+
 	@Meta.AD(deflt = "false", required = false)
 	public boolean localizedLookup();
 
@@ -38,9 +41,6 @@ public interface FreeMarkerEngineConfiguration {
 		required = false
 	)
 	public String[] restrictedClasses();
-
-	@Meta.AD(deflt = "", required = false)
-	public String[] restrictedPackages();
 
 	@Meta.AD(deflt = "serviceLocator", required = false)
 	public String[] restrictedVariables();

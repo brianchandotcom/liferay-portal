@@ -213,6 +213,13 @@ public class GroupImpl extends GroupBaseImpl {
 
 		String name = getName(locale);
 
+		if (Validator.isNull(name)) {
+			Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(
+				getGroupId());
+
+			name = getName(siteDefaultLocale);
+		}
+
 		if (isCompany() && !isCompanyStagingGroup()) {
 			name = LanguageUtil.get(locale, "global");
 		}

@@ -177,7 +177,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			/>
 		</c:if>
 
-		<c:if test="<%= Validator.isNotNull(assetRenderer.getDiscussionPath()) && assetPublisherDisplayContext.isEnableComments() %>">
+		<c:if test="<%= assetRenderer.isEnableComments() && assetPublisherDisplayContext.isEnableComments() %>">
 			<br />
 
 			<liferay-ui:discussion

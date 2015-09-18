@@ -335,6 +335,10 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	@Override
 	public Boolean isEnableComments() {
+		if (Validator.isNull(getDiscussionPath())) {
+			return false;
+		}
+
 		return true;
 	}
 

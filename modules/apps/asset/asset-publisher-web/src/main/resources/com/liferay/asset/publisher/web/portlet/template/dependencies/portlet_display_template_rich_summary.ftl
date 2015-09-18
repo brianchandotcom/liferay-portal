@@ -188,7 +188,7 @@
 </#macro>
 
 <#macro getRatings>
-	<#if getterUtil.getBoolean(enableRatings)>
+	<#if assetRenderer.isEnableRatings() && getterUtil.getBoolean(enableRatings)>
 		<div class="asset-ratings">
 			<@liferay_ui["ratings"]
 				className=entry.getClassName()

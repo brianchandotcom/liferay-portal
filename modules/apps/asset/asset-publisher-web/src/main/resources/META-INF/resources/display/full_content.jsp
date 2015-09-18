@@ -154,7 +154,7 @@ request.setAttribute("view.jsp-showIconLabel", true);
 			/>
 		</c:if>
 
-		<c:if test="<%= assetPublisherDisplayContext.isEnableRatings() %>">
+		<c:if test="<%= assetRenderer.isEnableRatings() && assetPublisherDisplayContext.isEnableRatings() %>">
 			<div class="asset-ratings">
 				<liferay-ui:ratings
 					className="<%= assetEntry.getClassName() %>"

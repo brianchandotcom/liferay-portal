@@ -77,8 +77,7 @@ public class JournalPortletUtil {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"mvcPath", "/html/portlet/journal/view_article.jsp");
+		portletURL.setParameter("mvcPath", "/edit_article.jsp");
 		portletURL.setParameter(
 			"groupId", String.valueOf(article.getGroupId()));
 		portletURL.setParameter(
@@ -102,8 +101,7 @@ public class JournalPortletUtil {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		if (actionName.equals("selectFolder")) {
-			portletURL.setParameter(
-				"mvcPath", "/html/portlet/journal/select_folder.jsp");
+			portletURL.setParameter("mvcPath", "/select_folder.jsp");
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(

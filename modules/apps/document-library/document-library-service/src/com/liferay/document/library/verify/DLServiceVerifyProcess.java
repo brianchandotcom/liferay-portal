@@ -224,7 +224,7 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 								_log.warn(
 									"Unable to find file entry associated " +
 										"with file version " +
-										dlFileVersion.getFileVersionId(),
+											dlFileVersion.getFileVersionId(),
 									e);
 							}
 							else {
@@ -373,8 +373,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 								_log.warn(
 									"Unable to rename file entry " +
 										dlFileEntry.getFileEntryId() +
-										" which has a non-representable" +
-										" title for WebDAV",
+											" which has a non-representable" +
+												" title for WebDAV",
 									e);
 							}
 						}

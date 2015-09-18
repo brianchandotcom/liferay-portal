@@ -486,6 +486,27 @@ public class JournalArticleLocalServiceUtil {
 	}
 
 	/**
+	* Deletes all web content articles and their resources matching the group,
+	* class name and class PK
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param className the DDMStructure class name if the web content article
+	is related to a DDM structure, the primary key of the class name
+	associated with the article, or {@link
+	JournalArticleConstants#CLASSNAME_ID_DEFAULT} otherwise
+	* @param classPK the primary key of the DDM structure, if the the
+	DDMStructure class name is given as the <code>className</code>
+	parameter, the primary key of the class associated with the web
+	content article, or <code>0</code> otherwise
+	* @throws PortalException if a portal exception occurred
+	*/
+	public static void deleteArticles(long groupId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteArticles(groupId, className, classPK);
+	}
+
+	/**
 	* Deletes all the group's web content articles and resources in the folder,
 	* including recycled articles.
 	*

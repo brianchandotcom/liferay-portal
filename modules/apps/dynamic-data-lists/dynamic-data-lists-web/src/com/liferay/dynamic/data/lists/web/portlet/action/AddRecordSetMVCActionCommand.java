@@ -67,15 +67,14 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		int scope = ParamUtil.getInteger(actionRequest, "scope");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
 
 		return ddlRecordSetService.addRecordSet(
 			groupId, ddmStructureId, null, nameMap, descriptionMap,
-			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, scope,
-			serviceContext);
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
+			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, serviceContext);
 	}
 
 	@Override

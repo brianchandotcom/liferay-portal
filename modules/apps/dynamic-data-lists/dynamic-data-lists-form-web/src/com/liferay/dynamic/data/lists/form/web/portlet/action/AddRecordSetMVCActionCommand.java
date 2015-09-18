@@ -100,7 +100,6 @@ public class AddRecordSetMVCActionCommand
 			actionRequest, "recordSetKey");
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
-		int scope = ParamUtil.getInteger(actionRequest, "scope");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
@@ -109,8 +108,8 @@ public class AddRecordSetMVCActionCommand
 			groupId, ddmStructureId, recordSetKey,
 			getLocalizedMap(themeDisplay.getLocale(), name),
 			getLocalizedMap(themeDisplay.getLocale(), description),
-			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, scope,
-			serviceContext);
+			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT,
+			DDLRecordSetConstants.SCOPE_FORMS, serviceContext);
 	}
 
 	@Override

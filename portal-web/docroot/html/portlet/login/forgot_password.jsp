@@ -91,9 +91,7 @@ if (reminderAttempts == null) {
 				</aui:input>
 
 				<c:if test="<%= PropsValues.CAPTCHA_CHECK_PORTAL_SEND_PASSWORD %>">
-					<portlet:resourceURL var="captchaURL">
-						<portlet:param name="mvcRenderCommandName" value="/login/captcha" />
-					</portlet:resourceURL>
+					<portlet:resourceURL id="/login/captcha" var="captchaURL" />
 
 					<liferay-ui:captcha url="<%= captchaURL %>" />
 				</c:if>
@@ -138,9 +136,7 @@ if (reminderAttempts == null) {
 					</c:when>
 					<c:otherwise>
 						<c:if test="<%= reminderAttempts >= 3 %>">
-							<portlet:resourceURL var="captchaURL">
-								<portlet:param name="mvcRenderCommandName" value="/login/captcha" />
-							</portlet:resourceURL>
+							<portlet:resourceURL id="/login/captcha" var="captchaURL" />
 
 							<liferay-ui:captcha url="<%= captchaURL %>" />
 						</c:if>

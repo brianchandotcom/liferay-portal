@@ -595,6 +595,7 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.login.action.CaptchaMVCResourceCommand" class="com.liferay.portlet.login.action.CaptchaMVCResourceCommand" />
 	<bean id="com.liferay.portlet.login.action.CreateAccountMVCActionCommand" class="com.liferay.portlet.login.action.CreateAccountMVCActionCommand" />
 	<bean id="com.liferay.portlet.login.action.CreateAccountMVCRenderCommand" class="com.liferay.portlet.login.action.CreateAccountMVCRenderCommand" />
 	<bean id="com.liferay.portlet.login.action.CreateAnonymousAccountMVCActionCommand" class="com.liferay.portlet.login.action.CreateAnonymousAccountMVCActionCommand" />

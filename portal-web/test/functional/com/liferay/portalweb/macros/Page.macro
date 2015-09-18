@@ -215,10 +215,6 @@
 
 		<execute function="Click" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_SELECTOR" />
 
-		<var name="key_portletCategoryName" value="${portletCategoryName}" />
-
-		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_ALL_SITES_PANEL_TITLE" value1="${portletCategoryName}" />
-
 		<var name="key_portletName" value="${siteName}" />
 
 		<execute function="AssertClick" locator1="ProductMenu#PRODUCT_MENU_PANEL_MENU_ITEM" value1="${siteName}" />
@@ -329,7 +325,6 @@
 			<isset var="siteScopeName" />
 			<then>
 				<execute macro="Page#changeSiteScope">
-					<var name="portletCategoryName" value="My Sites" />
 					<var name="siteName" value="${siteScopeName}" />
 				</execute>
 			</then>

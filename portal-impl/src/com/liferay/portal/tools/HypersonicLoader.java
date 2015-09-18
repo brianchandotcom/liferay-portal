@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.FileImpl;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -36,6 +35,7 @@ import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class HypersonicLoader {
 
@@ -108,17 +108,6 @@ public class HypersonicLoader {
 				statement.execute("SHUTDOWN COMPACT");
 			}
 		}
-
-		// Hypersonic will encode unicode characters twice, this will undo it
-
-		String content = _fileUtil.read(
-			sqlDir + "/" + databaseName + ".script");
-
-		content = StringUtil.replace(content, "\\u005cu", "\\u");
-
-		_fileUtil.write(sqlDir + "/" + databaseName + ".script", content);
 	}
-
-	private static final FileImpl _fileUtil = FileImpl.getInstance();
 
 }

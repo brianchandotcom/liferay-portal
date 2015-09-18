@@ -7,7 +7,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoSettingsTab" />
+		<execute macro="BlogsNavigator#gotoSettings" />
 
 		<var name="key_tagName" value="${tagName}" />
 
@@ -105,7 +105,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoSettingsTab" />
+		<execute macro="BlogsNavigator#gotoSettings" />
 
 		<execute macro="BlogsEntry#addTagList">
 			<var name="tagNameList" value="${tagNameList}" />
@@ -271,7 +271,7 @@
 
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
 
-		<execute macro="BlogsNavigator#gotoSettingsTab" />
+		<execute macro="BlogsNavigator#gotoSettings" />
 
 		<execute function="AssertClick" locator1="AssetCategorization#TAGS_SELECT_BUTTON" value1="Select" />
 

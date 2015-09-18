@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys" %><%@
+<%@ page import="com.liferay.dynamic.data.mapping.configuration.DDMConfiguration" %><%@
+page import="com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMWebKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.exception.NoSuchStructureException" %><%@
@@ -69,7 +70,7 @@ page import="com.liferay.dynamic.data.mapping.util.DDMTemplateHelperUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationUtil" %><%@
-page import="com.liferay.dynamic.data.mapping.web.configuration.DDMWebConfigurationValues" %><%@
+page import="com.liferay.dynamic.data.mapping.web.context.util.DDMWebRequestHelper" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.PortletPreferencesException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
@@ -149,6 +150,10 @@ PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, life
 String currentURL = currentURLObj.toString();
 
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+DDMWebRequestHelper ddmWebRequestHelper = new DDMWebRequestHelper(request);
+
+DDMConfiguration ddmConfiguration = ddmWebRequestHelper.getDDMConfiguration();
 
 String refererPortletName = ParamUtil.getString(request, "refererPortletName", portletName);
 String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));

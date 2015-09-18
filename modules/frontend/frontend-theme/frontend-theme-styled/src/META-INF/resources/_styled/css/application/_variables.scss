@@ -1,22 +1,22 @@
 /* ---------- Dialogs ---------- */
 
-$dialog-footer-padding: 20px;
-$dialog-iframe-padding: 20px;
+$dialog-footer-padding: 20px !default;
+$dialog-iframe-padding: 20px !default;
 
 /* ---------- Labels ---------- */
 
-$label-circle-border-radius: 20px;
-$label-rounded-border-radius: 3px;
-$label-square-border-radius: 0;
+$label-circle-border-radius: 20px !default;
+$label-rounded-border-radius: 3px !default;
+$label-square-border-radius: 0 !default;
 
-$label-entry-bg: #FFF;
-$label-entry-border-color: #000;
-$label-entry-border-width: 1px;
-$label-entry-button-height: $input-height-base;
-$label-entry-button-width: $input-height-base;
-$label-entry-color: #000;
-$label-entry-font-size: 14px;
-$label-entry-padding: 0 0 0 12px;
+$label-entry-bg: #FFF !default;
+$label-entry-border-color: #000 !default;
+$label-entry-border-width: 1px !default;
+$label-entry-button-height: $input-height-base !default;
+$label-entry-button-width: $input-height-base !default;
+$label-entry-color: #000 !default;
+$label-entry-font-size: 14px !default;
+$label-entry-padding: 0 0 0 12px !default;
 
 /* ---------- Product menu ---------- */
 
@@ -70,28 +70,28 @@ $product-menu-user-signout-icon-color: #FFF !default;
 
 /* ---------- Toggle card ---------- */
 
-$toggle-card-height: 104px;
-$toggle-card-width: 92px;
+$toggle-card-height: 104px !default;
+$toggle-card-width: 92px !default;
 
-$toggle-card-padding-horizontal: 12px;
-$toggle-card-padding-vertical: 12px;
+$toggle-card-padding-horizontal: 12px !default;
+$toggle-card-padding-vertical: 12px !default;
 
-$toggle-card-border-radius: 2px;
+$toggle-card-border-radius: 2px !default;
 
-$toggle-card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+$toggle-card-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15) !default;
 
-$toggle-card-icon-border-radius: 30px;
-$toggle-card-icon-height: 32px;
-$toggle-card-icon-width: 32px;
+$toggle-card-icon-border-radius: 30px !default;
+$toggle-card-icon-height: 32px !default;
+$toggle-card-icon-width: 32px !default;
 
-$toggle-card-border: #DCE0E3;
-$toggle-card-border-width: 1px;
-$toggle-card-icon-bg: #FFF;
-$toggle-card-icon-border: #869CAD;
-$toggle-card-icon-border-width: 0;
+$toggle-card-border: #DCE0E3 !default;
+$toggle-card-border-width: 1px !default;
+$toggle-card-icon-bg: #FFF !default;
+$toggle-card-icon-border: #869CAD !default;
+$toggle-card-icon-border-width: 0 !default;
 
-$toggle-card-on-border: #65B6F0;
-$toggle-card-on-border-width: 2px;
-$toggle-card-on-icon-bg: #FFF;
-$toggle-card-on-icon-border: #65B6F0;
-$toggle-card-on-icon-border-width: 0;
+$toggle-card-on-border: #65B6F0 !default;
+$toggle-card-on-border-width: 2px !default;
+$toggle-card-on-icon-bg: #FFF !default;
+$toggle-card-on-icon-border: #65B6F0 !default;
+$toggle-card-on-icon-border-width: 0 !default;

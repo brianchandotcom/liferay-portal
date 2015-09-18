@@ -15,6 +15,7 @@
 package com.liferay.bookmarks.exportimport.portlet.preferences.processor;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.lar.BookmarksPortletDataHandler;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -67,16 +69,19 @@ public class BookmarksExportImportPortletPreferencesProcessor
 			portletPreferences.getValue("rootFolderId", null));
 
 		if (rootFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
-				rootFolderId);
+			BookmarksFolder folder =
+				BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(
+					rootFolderId);
 
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				portletDataContext.getCompanyId(), portletId);
+				portletDataContext.getCompanyId(),
+				portletDataContext.getPortletId());
 
 			portletDataContext.addReferenceElement(
 				portlet, portletDataContext.getExportDataRootElement(), folder,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(NAMESPACE, "entries"));
+				!portletDataContext.getBooleanParameter(
+					BookmarksPortletDataHandler.NAMESPACE, "entries"));
 		}
 
 		return portletPreferences;
@@ -110,8 +115,14 @@ public class BookmarksExportImportPortletPreferencesProcessor
 			rootFolderId = MapUtil.getLong(
 				folderIds, rootFolderId, rootFolderId);
 
-			portletPreferences.setValue(
-				"rootFolderId", String.valueOf(rootFolderId));
+			try {
+				portletPreferences.setValue(
+					"rootFolderId", String.valueOf(rootFolderId));
+			}
+			catch (ReadOnlyException roe) {
+				throw new PortletDataException(
+					"Could not update rootFolderId preference value", roe);
+			}
 		}
 
 		return portletPreferences;

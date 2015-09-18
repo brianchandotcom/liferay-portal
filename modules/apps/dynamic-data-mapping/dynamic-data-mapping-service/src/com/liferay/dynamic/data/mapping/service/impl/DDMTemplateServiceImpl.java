@@ -441,11 +441,11 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public List<DDMTemplate> getTemplatesByClassPK(
-		long companyId, long groupId, long classPK, long resourceClassNameIs,
+		long companyId, long groupId, long classPK, long resourceClassNameId,
 		int status) {
 
 		return getTemplates(
-			companyId, new long[] {groupId}, 0, classPK, resourceClassNameIs,
+			companyId, new long[] {groupId}, 0, classPK, resourceClassNameId,
 			null, null, status);
 	}
 

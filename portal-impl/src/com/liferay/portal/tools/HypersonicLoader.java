@@ -80,34 +80,25 @@ public class HypersonicLoader {
 			String databaseName, String sqlDir, String fileNames)
 		throws Exception {
 
-		_databaseName = databaseName;
-		_sqlDir = sqlDir;
-		_fileNames = fileNames;
-
 		ToolDependencies.wireBasic();
 
 		DBFactoryUtil.setDB(DB.TYPE_HYPERSONIC);
 
-		_loadHypersonic();
-	}
-
-	private void _loadHypersonic() throws Exception {
-
 		// See LEP-2927. Appending ;shutdown=true to the database connection URL
-		// guarantees that ${_databaseName}.log is purged.
+		// guarantees that ${databaseName}.log is purged.
 
 		try (Connection con = DriverManager.getConnection(
-				"jdbc:hsqldb:" + _sqlDir + "/" + _databaseName +
+				"jdbc:hsqldb:" + sqlDir + "/" + databaseName +
 					";shutdown=true",
 				"sa", "")) {
 
-			if (Validator.isNull(_fileNames)) {
-				loadHypersonic(con, _sqlDir + "/portal/portal-hypersonic.sql");
-				loadHypersonic(con, _sqlDir + "/indexes.sql");
+			if (Validator.isNull(fileNames)) {
+				loadHypersonic(con, sqlDir + "/portal/portal-hypersonic.sql");
+				loadHypersonic(con, sqlDir + "/indexes.sql");
 			}
 			else {
-				for (String fileName : StringUtil.split(_fileNames)) {
-					loadHypersonic(con, _sqlDir + "/" + fileName);
+				for (String fileName : StringUtil.split(fileNames)) {
+					loadHypersonic(con, sqlDir + "/" + fileName);
 				}
 			}
 
@@ -121,17 +112,13 @@ public class HypersonicLoader {
 		// Hypersonic will encode unicode characters twice, this will undo it
 
 		String content = _fileUtil.read(
-			_sqlDir + "/" + _databaseName + ".script");
+			sqlDir + "/" + databaseName + ".script");
 
 		content = StringUtil.replace(content, "\\u005cu", "\\u");
 
-		_fileUtil.write(_sqlDir + "/" + _databaseName + ".script", content);
+		_fileUtil.write(sqlDir + "/" + databaseName + ".script", content);
 	}
 
 	private static final FileImpl _fileUtil = FileImpl.getInstance();
-
-	private final String _databaseName;
-	private final String _fileNames;
-	private final String _sqlDir;
 
 }

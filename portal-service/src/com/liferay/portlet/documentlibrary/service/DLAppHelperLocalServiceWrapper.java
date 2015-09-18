@@ -142,6 +142,11 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		return _dlAppHelperLocalService.getNoAssetFileEntries();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#moveDependentsToTrash(DLFolder, long)}
+	*/
+	@Deprecated
 	@Override
 	public void moveDependentsToTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
@@ -149,6 +154,14 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.moveDependentsToTrash(dlFileEntriesAndDLFolders,
 			trashEntryId);
+	}
+
+	@Override
+	public void moveDependentsToTrash(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
+		long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppHelperLocalService.moveDependentsToTrash(dlFolder, trashEntryId);
 	}
 
 	@Override
@@ -231,6 +244,10 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		return _dlAppHelperLocalService.moveFolderToTrash(userId, folder);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#restoreDependentsFromTrash(DLFolder)}
+	*/
 	@Override
 	public void restoreDependentsFromTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders)
@@ -250,6 +267,13 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_dlAppHelperLocalService.restoreDependentsFromTrash(dlFileEntriesAndDLFolders,
 			trashEntryId);
+	}
+
+	@Override
+	public void restoreDependentsFromTrash(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlAppHelperLocalService.restoreDependentsFromTrash(dlFolder);
 	}
 
 	@Override

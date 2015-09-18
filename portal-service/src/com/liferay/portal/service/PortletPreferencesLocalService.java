@@ -286,6 +286,10 @@ public interface PortletPreferencesLocalService extends BaseLocalService,
 	public javax.portlet.PortletPreferences getPreferences(long companyId,
 		long ownerId, int ownerType, long plid, java.lang.String portletId);
 
+	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAdviceAcceptor.class, properties =  {
+		@com.liferay.portal.kernel.spring.aop.Property(propName = ExceptionRetryAdviceAcceptor.EXCEPTION_NAME, propValue = "org.springframework.dao.DataIntegrityViolationException")
+	}
+	)
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public javax.portlet.PortletPreferences getPreferences(long companyId,
 		long ownerId, int ownerType, long plid, java.lang.String portletId,

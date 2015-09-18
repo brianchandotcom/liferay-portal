@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 DDMTemplate template = (DDMTemplate)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
+<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
 	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_template.jsp" />
@@ -34,7 +34,6 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
 		/>
@@ -49,7 +48,6 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 
 		<liferay-ui:icon
-			iconCssClass="icon-lock"
 			message="permissions"
 			url="<%= permissionsURL %>"
 		/>
@@ -74,7 +72,6 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		%>
 
 		<liferay-ui:icon
-			iconCssClass="icon-copy"
 			message="copy"
 			url="<%= sb.toString() %>"
 		/>
@@ -86,6 +83,9 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon
+			message="delete"
+			url="<%= deleteURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

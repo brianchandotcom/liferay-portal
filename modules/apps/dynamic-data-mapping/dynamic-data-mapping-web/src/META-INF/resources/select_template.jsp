@@ -117,7 +117,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

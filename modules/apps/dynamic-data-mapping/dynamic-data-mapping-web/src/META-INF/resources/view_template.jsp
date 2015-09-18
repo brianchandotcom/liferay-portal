@@ -249,7 +249,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 			<div class="separator"><!-- --></div>
 		</c:if>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

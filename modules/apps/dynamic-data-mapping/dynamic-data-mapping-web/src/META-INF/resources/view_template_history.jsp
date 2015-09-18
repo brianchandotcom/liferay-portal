@@ -34,12 +34,31 @@ PortletURL backURL = renderResponse.createRenderURL();
 backURL.setParameter("mvcPath", "/edit_template.jsp");
 backURL.setParameter("redirect", redirect);
 backURL.setParameter("templateId", String.valueOf(templateId));
+
+String title = LanguageUtil.format(request, "x-history", template.getName(locale), false);
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL.toString() %>"
-	title='<%= LanguageUtil.format(request, "x-history", template.getName(locale), false) %>'
-/>
+<c:choose>
+	<c:when test="<%= ddmDisplay.isShowBackUrlInTitleBar() %>">
+
+		<%
+			portletDisplay.setShowBackIcon(true);
+			portletDisplay.setURLBack(backURL.toString());
+
+			renderResponse.setTitle(title);
+		%>
+
+	</c:when>
+	<c:otherwise>
+
+		<liferay-ui:header
+			backURL="<%= backURL.toString() %>"
+			cssClass="container-fluid-1280"
+			title="<%= title %>"
+		/>
+
+	</c:otherwise>
+</c:choose>
 
 <aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<liferay-ui:search-container

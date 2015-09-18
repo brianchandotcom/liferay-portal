@@ -30,44 +30,65 @@ PortletURL backURL = renderResponse.createRenderURL();
 backURL.setParameter("mvcPath", "/view_template_history.jsp");
 backURL.setParameter("redirect", redirect);
 backURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
+
+String title = LanguageUtil.format(request, "x-version-x", new Object[] {templateVersion.getName(locale), templateVersion.getVersion()});
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL.toString() %>"
-	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.format(request, "x-version-x", new Object[] {templateVersion.getName(locale), templateVersion.getVersion()}) %>'
-/>
+<div class="container-fluid-1280">
 
-<aui:model-context bean="<%= templateVersion %>" model="<%= DDMTemplateVersion.class %>" />
+	<c:choose>
+		<c:when test="<%= ddmDisplay.isShowBackUrlInTitleBar() %>">
 
-<aui:input disabled="<%= true %>" name="name" />
+			<%
+				portletDisplay.setShowBackIcon(true);
+				portletDisplay.setURLBack(backURL.toString());
 
-<aui:input disabled="<%= true %>" name="language" />
+				renderResponse.setTitle(title);
+			%>
 
-<aui:input disabled="<%= true %>" name="description" />
+		</c:when>
+		<c:otherwise>
 
-<c:choose>
-	<c:when test="<%= template.getType().equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
+			<liferay-ui:header
+				backURL="<%= backURL.toString() %>"
+				localizeTitle="<%= false %>"
+				title="<%= title %>"
+			/>
 
-		<%
-		DDMStructure structure = DDMTemplateHelperUtil.fetchStructure(template);
+		</c:otherwise>
+	</c:choose>
 
-		String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace", renderResponse.getNamespace());
+	<aui:model-context bean="<%= templateVersion %>" model="<%= DDMTemplateVersion.class %>" />
 
-		String script = templateVersion.getScript();
+	<aui:input disabled="<%= true %>" name="name" />
 
-		JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
+	<aui:input disabled="<%= true %>" name="language" />
 
-		String fieldsJSONArrayString = fieldsJSONArray.toString();
-		%>
+	<aui:input disabled="<%= true %>" name="description" />
 
-		<%@ include file="/form_builder.jspf" %>
-	</c:when>
-	<c:otherwise>
-		<aui:input cssClass="script" disabled="<%= true %>" name="script" type="textarea" />
-	</c:otherwise>
-</c:choose>
+	<c:choose>
+		<c:when test="<%= template.getType().equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
 
-<aui:button-row>
-	<aui:button href="<%= backURL.toString() %>" type="cancel" />
-</aui:button-row>
+			<%
+			DDMStructure structure = DDMTemplateHelperUtil.fetchStructure(template);
+
+			String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace", renderResponse.getNamespace());
+
+			String script = templateVersion.getScript();
+
+			JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
+
+			String fieldsJSONArrayString = fieldsJSONArray.toString();
+			%>
+
+			<%@ include file="/form_builder.jspf" %>
+		</c:when>
+		<c:otherwise>
+			<aui:input cssClass="script" disabled="<%= true %>" name="script" type="textarea" />
+		</c:otherwise>
+	</c:choose>
+
+	<aui:button-row>
+		<aui:button href="<%= backURL.toString() %>" type="cancel" />
+	</aui:button-row>
+</div>

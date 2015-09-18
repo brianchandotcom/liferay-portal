@@ -124,23 +124,44 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 		</liferay-ui:error>
 
-		<%
-		String title = StringPool.BLANK;
+		<c:if test="<%= showHeader %>">
 
-		if ((structure != null) || (template != null)) {
-			title = ddmDisplay.getEditTemplateTitle(structure, template, locale);
-		}
-		else {
-			title = ddmDisplay.getEditTemplateTitle(classNameId, locale);
-		}
+			<%
+				String title = StringPool.BLANK;
 
-		if (showHeader) {
-			portletDisplay.setShowBackIcon(true);
-			portletDisplay.setURLBack(ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource));
+				if ((structure != null) || (template != null)) {
+					title = ddmDisplay.getEditTemplateTitle(structure, template, locale);
+				}
+				else {
+					title = ddmDisplay.getEditTemplateTitle(classNameId, locale);
+				}
 
-			renderResponse.setTitle(title);
-		}
-		%>
+				String backUrl = ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource);
+			%>
+
+			<c:choose>
+				<c:when test="<%= ddmDisplay.isShowBackUrlInTitleBar() %>">
+
+					<%
+						portletDisplay.setShowBackIcon(true);
+						portletDisplay.setURLBack(backUrl);
+
+						renderResponse.setTitle(title);
+					%>
+
+				</c:when>
+				<c:otherwise>
+
+					<liferay-ui:header
+						backURL="<%= backUrl %>"
+						localizeTitle="<%= false %>"
+						showBackURL="<%= showBackURL %>"
+						title="<%= title %>"
+					/>
+
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 
 		<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />
 

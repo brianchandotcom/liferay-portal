@@ -117,25 +117,44 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 		<liferay-ui:error exception="<%= StructureDuplicateElementException.class %>" message="please-enter-unique-structure-field-names-(including-field-names-inherited-from-the-parent-structure)" />
 		<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 
-		<%
-		boolean localizeTitle = true;
-		String title = "new-structure";
+		<c:if test="<%= showBackURL %>">
 
-		if (structure != null) {
-			localizeTitle = false;
-			title = structure.getName(locale);
-		}
-		else {
-			title = LanguageUtil.format(request, "new-x", ddmDisplay.getStructureName(locale), false);
-		}
+			<%
+				boolean localizeTitle = true;
+				String title = "new-structure";
 
-		if (showBackURL) {
-			portletDisplay.setShowBackIcon(true);
-			portletDisplay.setURLBack(redirect);
+				if (structure != null) {
+					localizeTitle = false;
+					title = structure.getName(locale);
+				}
+				else {
+					title = LanguageUtil.format(request, "new-x", ddmDisplay.getStructureName(locale), false);
+				}
+			%>
 
-			renderResponse.setTitle(title);
-		}
-		%>
+			<c:choose>
+				<c:when test="<%= ddmDisplay.isShowBackUrlInTitleBar() %>">
+
+					<%
+					portletDisplay.setShowBackIcon(true);
+					portletDisplay.setURLBack(redirect);
+
+					renderResponse.setTitle(title);
+					%>
+
+				</c:when>
+				<c:otherwise>
+
+					<liferay-ui:header
+						backURL="<%= redirect %>"
+						localizeTitle="<%= localizeTitle %>"
+						showBackURL="<%= showBackURL %>"
+						title="<%= title %>"
+					/>
+
+				</c:otherwise>
+			</c:choose>
+		</c:if>
 
 		<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
 

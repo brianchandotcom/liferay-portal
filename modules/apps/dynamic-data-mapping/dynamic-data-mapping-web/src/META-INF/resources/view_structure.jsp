@@ -39,22 +39,43 @@ PortletURL backURL = renderResponse.createRenderURL();
 backURL.setParameter("mvcPath", "/view_structure_history.jsp");
 backURL.setParameter("redirect", redirect);
 backURL.setParameter("structureId", String.valueOf(structureVersion.getStructureId()));
+
+String title = LanguageUtil.format(request, "x-version-x", new Object[] {structureVersion.getName(locale), structureVersion.getVersion()});
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL.toString() %>"
-	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.format(request, "x-version-x", new Object[] {structureVersion.getName(locale), structureVersion.getVersion()}) %>'
-/>
+<div class="container-fluid-1280">
 
-<aui:model-context bean="<%= structureVersion %>" model="<%= DDMStructureVersion.class %>" />
+	<c:choose>
+		<c:when test="<%= ddmDisplay.isShowBackUrlInTitleBar() %>">
 
-<aui:input disabled="<%= true %>" name="name" />
+			<%
+				portletDisplay.setShowBackIcon(true);
+				portletDisplay.setURLBack(backURL.toString());
 
-<aui:input disabled="<%= true %>" name="description" />
+				renderResponse.setTitle(title);
+			%>
 
-<%@ include file="/form_builder.jspf" %>
+		</c:when>
+		<c:otherwise>
 
-<aui:button-row>
-	<aui:button href="<%= backURL.toString() %>" type="cancel" />
-</aui:button-row>
+			<liferay-ui:header
+				backURL="<%= backURL.toString() %>"
+				localizeTitle="<%= false %>"
+				title="<%= title %>"
+			/>
+
+		</c:otherwise>
+	</c:choose>
+
+	<aui:model-context bean="<%= structureVersion %>" model="<%= DDMStructureVersion.class %>" />
+
+	<aui:input disabled="<%= true %>" name="name" />
+
+	<aui:input disabled="<%= true %>" name="description" />
+
+	<%@ include file="/form_builder.jspf" %>
+
+	<aui:button-row>
+		<aui:button href="<%= backURL.toString() %>" type="cancel" />
+	</aui:button-row>
+</div>

@@ -81,10 +81,10 @@
 		<if>
 			<equals arg1="${multipleAssets}" arg2="true" />
 			<then>
-				<execute function="AssertTextNotPresent" locator1="Message#INFO" value1="The Recycle Bin is empty." />
+				<execute function="AssertTextNotPresent" locator1="Message#EMPTY_RECYCLE_BIN_INFO" value1="The Recycle Bin is empty." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="The Recycle Bin is empty." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_RECYCLE_BIN_INFO" value1="The Recycle Bin is empty." />
 			</else>
 		</if>
 
@@ -154,7 +154,7 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="The Recycle Bin is empty." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_RECYCLE_BIN_INFO" value1="The Recycle Bin is empty." />
 		<execute function="AssertTextNotPresent" value1="${assetName}" />
 	</command>
 

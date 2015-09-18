@@ -176,16 +176,8 @@
 		</execute>
 
 		<execute macro="Blogs#addEntryWithCategory">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#addCategoryCP">
 			<var name="categoryName" value="Category Name" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -259,17 +251,9 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#addCategoryCP">
+		<execute macro="Blogs#addEntryWithCategory">
 			<var name="categoryName" value="Category Name" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -499,16 +483,8 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#addTagCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="tagName" value="tag name" />
 		</execute>
@@ -569,16 +545,8 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#addEntry">
+		<execute macro="Blogs#addEntryWithTag">
 			<var name="entryContent" value="Blogs Entry Content" />
-			<var name="entryTitle" value="Blogs Entry Title" />
-		</execute>
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute macro="BlogsEntry#addTagCP">
 			<var name="entryTitle" value="Blogs Entry Title" />
 			<var name="tagName" value="tag name" />
 		</execute>

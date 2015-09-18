@@ -102,9 +102,27 @@
 
 		<execute macro="BlogsNavigator#gotoSettings" />
 
-		<execute macro="BlogsEntry#addCategory">
+		<execute macro="AssetCategorization#addCategory">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="addEntryWithTag">
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettings" />
+
+		<execute macro="AssetCategorization#addTag">
+			<var name="tagName" value="${tagName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#publish" />

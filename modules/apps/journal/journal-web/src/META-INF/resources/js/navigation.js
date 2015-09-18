@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-journal-navigation',
 	function(A) {
-		var DISPLAY_STYLE_TOOLBAR = 'displayStyleToolbar';
-
 		var STR_ROW_IDS_JOURNAL_ARTICLE_CHECKBOX = 'rowIdsJournalArticle';
 
 		var STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX = 'rowIdsJournalFolder';
@@ -28,31 +26,11 @@ AUI.add(
 							instance.ns(STR_ROW_IDS_JOURNAL_FOLDER_CHECKBOX)
 						];
 
-						var displayStyle = A.clone(config.displayStyle);
-
 						var displayStyleCSSClass = 'entry-display-style';
-
-						var displayStyleToolbar = instance.byId(DISPLAY_STYLE_TOOLBAR);
 
 						var namespace = instance.NS;
 
 						var portletContainerId = instance.ns('journalContainer');
-
-						var selectConfig = A.merge(
-							{
-								checkBoxesId: checkBoxesId,
-								displayStyle: displayStyle,
-								displayStyleCSSClass: displayStyleCSSClass,
-								displayStyleToolbar: displayStyleToolbar,
-								namespace: namespace,
-								portletContainerId: portletContainerId,
-								selector: 'entry-selector',
-								toggleSelector: 'click-selector'
-							},
-							config.select
-						);
-
-						instance._appViewSelect = new Liferay.AppViewSelect(selectConfig);
 
 						var moveConfig = A.merge(
 							{
@@ -80,7 +58,6 @@ AUI.add(
 						var instance = this;
 
 						instance._appViewMove.destroy();
-						instance._appViewSelect.destroy();
 
 						instance._journalContainer.purge(true);
 					}
@@ -92,6 +69,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-app-view-move', 'liferay-app-view-select', 'liferay-portlet-base']
+		requires: ['liferay-app-view-move', 'liferay-portlet-base']
 	}
 );

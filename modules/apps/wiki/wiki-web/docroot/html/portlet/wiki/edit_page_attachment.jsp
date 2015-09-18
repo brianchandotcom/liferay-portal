@@ -142,7 +142,7 @@ Ticket ticket = TicketLocalServiceUtil.addTicket(user.getCompanyId(), User.class
 			metadataExplanationContainer: '#<portlet:namespace />metadataExplanationContainer',
 			namespace: '<portlet:namespace />',
 			tempFileURL: {
-				method: Liferay.Service.bind('/wikipage/get-temp-file-names'),
+				method: Liferay.Service.bind('/wiki.wikipage/get-temp-file-names'),
 				params: {
 					folderName: 'com.liferay.wiki.web.wiki.portlet.action.EditPageAttachmentsAction',
 					nodeId: <%= node.getNodeId() %>

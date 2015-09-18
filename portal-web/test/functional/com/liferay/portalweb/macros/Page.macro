@@ -505,7 +505,7 @@
 			<if>
 				<equals arg1="${portletName}" arg2="${sitesPortletName}" />
 				<then>
-					<var name="portletCategoryName" value="Administration" />
+					<var name="portletCategoryName" value="Sites" />
 				</then>
 			</if>
 		</for>

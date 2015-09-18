@@ -77,7 +77,7 @@
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="MyWorkflowTasksTask#BACK" value1="Back" />
+		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -176,7 +176,7 @@
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="MyWorkflowTasksTask#BACK" value1="Back" />
+		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
@@ -362,7 +362,7 @@
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="MyWorkflowTasksTask#BACK" value1="Back" />
+		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
@@ -420,7 +420,7 @@
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaDetails" />
 
-		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="MyWorkflowTasksTask#BACK" value1="Back" />
+		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />

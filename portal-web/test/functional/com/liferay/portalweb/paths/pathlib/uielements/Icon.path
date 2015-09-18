@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANGLE_LEFT_BACK</td>
+	<td>//div[contains(@class,'toolbar-group-content')]//span[contains(@class,'icon-angle-left')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BACK</td>
 	<td>//a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')] | //span[contains(@class,'icon-angle-left')]</td>
 	<td></td>

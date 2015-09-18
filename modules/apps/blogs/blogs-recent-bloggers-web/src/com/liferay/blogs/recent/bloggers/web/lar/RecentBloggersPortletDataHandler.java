@@ -17,10 +17,7 @@ package com.liferay.blogs.recent.bloggers.web.lar;
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
-import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
-
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,26 +36,6 @@ public class RecentBloggersPortletDataHandler
 	public RecentBloggersPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setPublishToLiveByDefault(true);
-	}
-
-	@Override
-	protected PortletPreferences doProcessExportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return updateExportPortletPreferences(
-			portletDataContext, portletId, portletPreferences);
-	}
-
-	@Override
-	protected PortletPreferences doProcessImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		return updateImportPortletPreferences(
-			portletDataContext, portletId, portletPreferences);
 	}
 
 }

@@ -69,7 +69,15 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		return null;
+		try {
+			return updateExportPortletPreferences(
+				portletDataContext, portletDataContext.getPortletId(),
+				portletPreferences);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(
+				"Could not update portlet preferences during export", e);
+		}
 	}
 
 	@Override
@@ -78,7 +86,14 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		return null;
+		try {
+			return updateImportPortletPreferences(
+				portletDataContext, portletPreferences);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(
+				"Could not update portlet preferences during import", e);
+		}
 	}
 
 	@Override
@@ -154,7 +169,7 @@ public class RecentBloggersExportImportPortletPreferencesProcessor
 	}
 
 	protected PortletPreferences updateImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
+			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences)
 		throws Exception {
 

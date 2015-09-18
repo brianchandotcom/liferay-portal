@@ -11,7 +11,9 @@
 	</command>
 
 	<command name="addDisplayTemplateCP">
-		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_DATA_DEFINTIONS" value1="Manage Data Definitions" />
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />

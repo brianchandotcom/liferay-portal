@@ -14,7 +14,17 @@
  */
 --%>
 
+<%@ include file="/init.jsp" %>
+
 <%
+long groupId = ParamUtil.getLong(request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+Group group = null;
+
+if (groupId > 0) {
+	group = GroupServiceUtil.getGroup(groupId);
+}
+
 LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 userParams.put("inherit", Boolean.TRUE);

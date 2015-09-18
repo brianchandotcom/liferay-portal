@@ -31,8 +31,6 @@ if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 <aui:row>
 	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= (group != null) ? 75 : 100 %>">
 		<c:if test="<%= group != null %>">
-			<%@ include file="/view_site_info.jspf" %>
-
 			<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
 				<div class="description">
 					<%= HtmlUtil.escape(group.getDescription()) %>

@@ -1,3 +1,4 @@
+import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask
 import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.ReplaceLeadingPathAction
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
@@ -26,6 +27,7 @@ task buildAlloyFontAwesome(type: Copy)
 task buildAlloyTheme(type: Copy)
 task buildLexicon(type: Copy)
 task buildTheme
+task publishNodeModule(type: PublishNodeModuleTask)
 
 buildAlloyBootstrapTheme {
 	File alloyBootstrapDestinationDir = new File(themeDestinationDir, "css/aui")
@@ -173,4 +175,8 @@ buildTheme {
 
 classes {
 	dependsOn buildTheme
+}
+
+publishNodeModule {
+	workingDir = "src/META-INF/resources/_unstyled"
 }

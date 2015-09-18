@@ -75,7 +75,7 @@
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Blogs Entry 1" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowTask" value="task1" />
+			<var name="workflowTask" value="task2" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -95,7 +95,7 @@
 			<var name="workflowAssetTitle" value="Blogs Entry 1" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDefinitionTitle" value="Join Xor" />
-			<var name="workflowTask" value="task1" />
+			<var name="workflowTask" value="task2" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -207,7 +207,7 @@
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Blogs Entry 3" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowTask" value="task1" />
+			<var name="workflowTask" value="task2" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -218,7 +218,7 @@
 			<var name="workflowAssetTitle" value="Blogs Entry 3" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDefinitionTitle" value="Join Xor" />
-			<var name="workflowTask" value="task1" />
+			<var name="workflowTask" value="task2" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -228,7 +228,7 @@
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Blogs Entry 3" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowTask" value="task2" />
+			<var name="workflowTask" value="task1" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -239,7 +239,7 @@
 			<var name="workflowAssetTitle" value="Blogs Entry 3" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDefinitionTitle" value="Join Xor" />
-			<var name="workflowTask" value="task2" />
+			<var name="workflowTask" value="task1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">

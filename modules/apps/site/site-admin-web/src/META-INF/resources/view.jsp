@@ -90,11 +90,9 @@ if (group != null) {
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 	<aui:input name="deleteGroupIds" type="hidden" />
 
-	<c:if test="<%= layout.isTypeControlPanel() %>">
-		<div id="breadcrumb">
-			<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-		</div>
-	</c:if>
+	<div id="breadcrumb">
+		<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+	</div>
 
 	<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
 

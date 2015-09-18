@@ -232,6 +232,12 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _assetLinkEntryIds;
 	}
 
+	/**
+	 * Returns the priority of an asset entry if this service context is being
+	 * passed as a parameter to a method which manipulates the asset entry.
+	 *
+	 * @return the asset entry's priority
+	 */
 	public double getAssetPriority() {
 		return _assetPriority;
 	}

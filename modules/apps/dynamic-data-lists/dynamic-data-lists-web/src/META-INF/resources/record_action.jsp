@@ -38,7 +38,7 @@ if (hasUpdatePermission) {
 }
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.VIEW) %>">
 		<portlet:renderURL var="viewRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="mvcPath" value="/view_record.jsp" />
@@ -50,7 +50,6 @@ if (hasUpdatePermission) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-search"
 			message="view[action]"
 			url="<%= viewRecordURL %>"
 		/>
@@ -65,7 +64,6 @@ if (hasUpdatePermission) {
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editRecordURL %>"
 		/>
@@ -77,6 +75,10 @@ if (hasUpdatePermission) {
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteRecordURL %>" />
+		<liferay-ui:icon
+			message="delete"
+			url="<%= deleteRecordURL %>"
+		/>
+
 	</c:if>
 </liferay-ui:icon-menu>

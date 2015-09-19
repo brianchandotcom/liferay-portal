@@ -71,13 +71,14 @@ if (!defaultLanguageId.equals(languageId)) {
 if (translating) {
 	redirect = currentURL;
 }
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	showBackURL="<%= !translating %>"
-	title='<%= (record != null) ? LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.format(request, "new-x", ddmStructure.getName(locale), false) %>'
-/>
+String title = (record != null) ? LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.format(request, "new-x", ddmStructure.getName(locale), false);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(title);
+%>
 
 <portlet:actionURL name="addRecord" var="addRecordURL">
 	<portlet:param name="mvcPath" value="/edit_record.jsp" />
@@ -87,7 +88,7 @@ if (translating) {
 	<portlet:param name="mvcPath" value="/edit_record.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= (record == null) ? addRecordURL : updateRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm">
+<aui:form action="<%= (record == null) ? addRecordURL : updateRecordURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="recordId" type="hidden" value="<%= recordId %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />

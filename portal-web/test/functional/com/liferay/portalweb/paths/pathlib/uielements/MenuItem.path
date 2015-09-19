@@ -344,6 +344,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MANAGE_DATA_DEFINTIONS</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Manage Data Definitions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MANAGE_TEMPLATES</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage Templates')]</td>
 	<td></td>

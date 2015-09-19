@@ -16,12 +16,20 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-util:include page="/display_style_buttons.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-buttons>
+<%
+SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
 
-	<liferay-frontend:management-bar-filters>
-		<liferay-util:include page="/sort_buttons.jsp" servletContext="<%= application %>" />
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
+String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/view.jsp");
+%>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+			<liferay-util:include page="/record_set_search.jsp" servletContext="<%= application %>" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>

@@ -36,7 +36,9 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="DDL#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MANAGE_DATA_DEFINTIONS" value1="Manage Data Definitions" />
 
 		<execute macro="DDLDataDefinition#_add">
 			<var name="ddlDataDefinitionDescription" value="${ddlDataDefinitionDescription}" />

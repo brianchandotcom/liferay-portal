@@ -24,13 +24,14 @@ DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(DDLWebKeys.DYNAMIC_D
 long displayDDMTemplateId = ParamUtil.getLong(request, "displayDDMTemplateId");
 
 boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
-%>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title="<%= recordSet.getName(locale) %>"
-/>
+String title = recordSet.getName(locale);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(title);
+%>
 
 <c:choose>
 	<c:when test="<%= displayDDMTemplateId > 0 %>">

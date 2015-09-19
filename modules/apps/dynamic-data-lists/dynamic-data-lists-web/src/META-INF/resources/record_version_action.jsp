@@ -24,7 +24,7 @@ DDLRecordVersion recordVersion = (DDLRecordVersion)row.getObject();
 long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTemplateId"));
 %>
 
-<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
+<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>">
 	<liferay-portlet:renderURL portletName="<%= DDLPortletKeys.DYNAMIC_DATA_LISTS %>" var="viewRecordVersionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcPath" value="/view_record.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -34,7 +34,6 @@ long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTem
 	</liferay-portlet:renderURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-search"
 		message="view[action]"
 		url="<%= viewRecordVersionURL %>"
 	/>
@@ -47,7 +46,6 @@ long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTem
 	</portlet:actionURL>
 
 	<liferay-ui:icon
-		iconCssClass="icon-undo"
 		message="revert"
 		url="<%= revertURL %>"
 	/>

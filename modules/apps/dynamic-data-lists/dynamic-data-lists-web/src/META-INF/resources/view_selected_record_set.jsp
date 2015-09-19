@@ -19,8 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect", currentURL);
 
-DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(renderRequest, renderResponse);
-
 DDLRecordSet recordSet = ddlDisplayContext.getRecordSet();
 %>
 

@@ -58,6 +58,7 @@ import com.liferay.portal.util.PortletCategoryUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.CustomUserAttributes;
 import com.liferay.portlet.InvokerPortlet;
 import com.liferay.portlet.PortletBagFactory;
 import com.liferay.portlet.PortletContextBag;
@@ -300,6 +301,10 @@ public class PortletTracker
 
 		PortletContextBag portletContextBag = new PortletContextBag(
 			bundlePortletApp.getServletContextName());
+
+		initPortletContextBagCustomUserAttributes(
+			portletName, bundlePortletApp, bundleWiring.getClassLoader(),
+			portletContextBag);
 
 		PortletContextBagPool.put(
 			bundlePortletApp.getServletContextName(), portletContextBag);
@@ -1249,6 +1254,37 @@ public class PortletTracker
 	protected void initLogger(ClassLoader classLoader) {
 		Log4JUtil.configureLog4J(
 			classLoader.getResource("META-INF/portal-log4j.xml"));
+	}
+
+	protected void initPortletContextBagCustomUserAttributes(
+		String portletName, BundlePortletApp portletApp,
+		ClassLoader classLoader, PortletContextBag portletContextBag) {
+
+		Map<String, String> customUserAttributes =
+			portletApp.getCustomUserAttributes();
+
+		for (Map.Entry<String, String> entry :
+				customUserAttributes.entrySet()) {
+
+			String attrCustomClass = entry.getValue();
+
+			try {
+				Class<?> clazz = classLoader.loadClass(attrCustomClass);
+
+				CustomUserAttributes customUserAttributesInstance =
+					(CustomUserAttributes)clazz.newInstance();
+
+				portletContextBag.getCustomUserAttributes().put(
+					attrCustomClass, customUserAttributesInstance);
+			}
+			catch (Exception e) {
+				if (!_log.isDebugEnabled()) {
+					_log.debug(
+						portletName + " unable to instantiate " +
+						attrCustomClass);
+				}
+			}
+		}
 	}
 
 	protected void readResourceActions(

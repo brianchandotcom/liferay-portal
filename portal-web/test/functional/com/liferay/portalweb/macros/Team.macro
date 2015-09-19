@@ -2,7 +2,7 @@
 	<command name="addCP">
 		<var name="key_teamName" value="${teamName}" />
 
-		<execute function="Click" locator1="Button#ADD_TEAM" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${teamName}" />

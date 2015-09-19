@@ -450,7 +450,9 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
+		<var method="StringUtil#upperCase('${dmFolderName}')" name="dmFolderNameUpperCase" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderNameUpperCase}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="commentBody" value="${commentBody}" />
@@ -1149,7 +1151,9 @@
 
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderName}" />
+		<var method="StringUtil#upperCase('${dmFolderName}')" name="dmFolderNameUpperCase" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="DocumentsAndMedia#BREADCRUMB_FOLDER_NAME" value1="${dmFolderNameUpperCase}" />
 
 		<execute macro="DMDocument#viewAllPG">
 			<var name="dmDocumentAuthor" value="${adminName}" />

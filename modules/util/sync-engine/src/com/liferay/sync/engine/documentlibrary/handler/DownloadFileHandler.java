@@ -40,6 +40,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import org.apache.commons.io.input.CountingInputStream;
+import org.apache.http.ConnectionClosedException;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -60,41 +61,53 @@ public class DownloadFileHandler extends BaseHandler {
 
 	@Override
 	public void handleException(Exception e) {
-		if (!(e instanceof HttpResponseException)) {
-			super.handleException(e);
+		if (e instanceof ConnectionClosedException) {
+			String message = e.getMessage();
+
+			if (message.startsWith("Premature end of Content-Length")) {
+				_logger.error(message, e);
+
+				FileEventUtil.downloadFile(
+					getSyncAccountId(), getLocalSyncFile(), false);
+
+				return;
+			}
+		}
+		else if (e instanceof HttpResponseException) {
+			_logger.error(e.getMessage(), e);
+
+			HttpResponseException hre = (HttpResponseException)e;
+
+			int statusCode = hre.getStatusCode();
+
+			if (statusCode != HttpStatus.SC_NOT_FOUND) {
+				super.handleException(e);
+
+				return;
+			}
+
+			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+				getSyncAccountId());
+
+			if (syncAccount.getState() != SyncAccount.STATE_CONNECTED) {
+				super.handleException(e);
+
+				return;
+			}
+
+			SyncFile syncFile = getLocalSyncFile();
+
+			if ((Boolean)getParameterValue("patch")) {
+				FileEventUtil.downloadFile(getSyncAccountId(), syncFile, false);
+			}
+			else {
+				SyncFileService.deleteSyncFile(syncFile, false);
+			}
 
 			return;
 		}
 
-		_logger.error(e.getMessage(), e);
-
-		HttpResponseException hre = (HttpResponseException)e;
-
-		int statusCode = hre.getStatusCode();
-
-		if (statusCode != HttpStatus.SC_NOT_FOUND) {
-			super.handleException(e);
-
-			return;
-		}
-
-		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-			getSyncAccountId());
-
-		if (syncAccount.getState() != SyncAccount.STATE_CONNECTED) {
-			super.handleException(e);
-
-			return;
-		}
-
-		SyncFile syncFile = getLocalSyncFile();
-
-		if ((Boolean)getParameterValue("patch")) {
-			FileEventUtil.downloadFile(getSyncAccountId(), syncFile);
-		}
-		else {
-			SyncFileService.deleteSyncFile(syncFile, false);
-		}
+		super.handleException(e);
 	}
 
 	@Override

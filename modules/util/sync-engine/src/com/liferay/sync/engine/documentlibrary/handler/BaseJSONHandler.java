@@ -126,6 +126,12 @@ public class BaseJSONHandler extends BaseHandler {
 			return false;
 		}
 
+		int pos = exception.indexOf("$");
+
+		if (pos > 0) {
+			exception = exception.substring(0, pos);
+		}
+
 		boolean retryInProgress = ConnectionRetryUtil.retryInProgress(
 			getSyncAccountId());
 

@@ -273,7 +273,7 @@ public class ServiceContextFactory {
 			serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 		}
 
-		Double assetPriority = ParamUtil.getDouble(request, "assetPriority");
+		Double assetPriority = ParamUtil.getDouble(request, "priority");
 
 		serviceContext.setAssetPriority(assetPriority);
 
@@ -486,7 +486,7 @@ public class ServiceContextFactory {
 			serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 		}
 
-		Double assetPriority = ParamUtil.getDouble(request, "assetPriority");
+		Double assetPriority = ParamUtil.getDouble(request, "priority");
 
 		serviceContext.setAssetPriority(assetPriority);
 

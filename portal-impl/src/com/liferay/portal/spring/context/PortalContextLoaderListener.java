@@ -246,10 +246,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		ClassPathUtil.initializeClassPaths(servletContext);
 
-		CacheRegistryUtil.clear();
-		PortletContextBagPool.clear();
-		WebAppPool.clear();
-
 		File tempDir = (File)servletContext.getAttribute(
 			JavaConstants.JAVAX_SERVLET_CONTEXT_TEMPDIR);
 
@@ -324,6 +320,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 
 		if (PropsValues.CACHE_CLEAR_ON_CONTEXT_INITIALIZATION) {
+			CacheRegistryUtil.clear();
+			PortletContextBagPool.clear();
+			WebAppPool.clear();
+
 			FinderCacheUtil.clearCache();
 			FinderCacheUtil.clearLocalCache();
 			EntityCacheUtil.clearCache();

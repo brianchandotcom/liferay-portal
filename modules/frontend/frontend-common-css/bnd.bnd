@@ -4,4 +4,4 @@ Bundle-Version: 1.0.1
 Include-Resource:\
 	classes,\
 	META-INF/resources=tmp/META-INF/resources
--donotcopy: (\.npmignore|package\.json)
+-donotcopy: (\.npmignore|npm-debug\.log|package\.json)

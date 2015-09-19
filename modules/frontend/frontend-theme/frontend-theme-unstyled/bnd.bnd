@@ -4,3 +4,4 @@ Bundle-Version: 1.0.1
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources
+-donotcopy: (npm-debug\.log)

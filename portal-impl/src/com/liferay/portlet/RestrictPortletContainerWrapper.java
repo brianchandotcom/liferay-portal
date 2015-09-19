@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.ActionResult;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.RestrictPortletServletRequest;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -40,10 +39,7 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 	public static PortletContainer createRestrictPortletContainerWrapper(
 		PortletContainer portletContainer) {
 
-		if ((PropsValues.LAYOUT_PARALLEL_RENDER_ENABLE &&
-			 ServerDetector.isTomcat()) ||
-			PropsValues.PORTLET_CONTAINER_RESTRICT) {
-
+		if (PropsValues.PORTLET_CONTAINER_RESTRICT) {
 			portletContainer = new RestrictPortletContainerWrapper(
 				portletContainer);
 		}
@@ -137,19 +133,7 @@ public class RestrictPortletContainerWrapper implements PortletContainer {
 			restrictPortletServletRequest.removeAttribute(
 				WebKeys.RENDER_PORTLET_COLUMN_POS);
 
-			// Don't merge when parallel rendering a portlet. The caller (worker
-			// thread) should decide whether or not to merge shared attributes.
-			// If we did merge here and the caller cancelled the parallel
-			// rendering, then we would have corrupted the set of shared
-			// attributes. The only safe way to merge shared attributes is for
-			// the caller to merge after it has the render result.
-
-			Object lock = request.getAttribute(
-				WebKeys.PARALLEL_RENDERING_MERGE_LOCK);
-
-			if (lock == null) {
-				restrictPortletServletRequest.mergeSharedAttributes();
-			}
+			restrictPortletServletRequest.mergeSharedAttributes();
 		}
 	}
 

@@ -190,12 +190,6 @@ boolean showPrintIcon = portlet.hasPortletMode(responseContentType, LiferayPortl
 boolean showRefreshIcon = portlet.isAjaxable() && (portlet.getRenderWeight() == 0);
 boolean showStagingIcon = false;
 
-Boolean portletParallelRender = (Boolean)request.getAttribute(WebKeys.PORTLET_PARALLEL_RENDER);
-
-if ((portletParallelRender != null) && (portletParallelRender.booleanValue() == false)) {
-	showRefreshIcon = false;
-}
-
 Layout curLayout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
 
 if ((!group.hasStagingGroup() || group.isStagingGroup()) &&
@@ -763,7 +757,7 @@ if ((invokerPortlet != null) && (invokerPortlet.isStrutsPortlet() || invokerPort
 
 // Render portlet
 
-boolean portletException = GetterUtil.getBoolean(request.getAttribute(WebKeys.PARALLEL_RENDERING_TIMEOUT_ERROR));
+boolean portletException = false;
 Boolean portletVisibility = null;
 
 if (portlet.isActive() && portlet.isReady() && supportsMimeType && (invokerPortlet != null)) {
@@ -787,15 +781,6 @@ if (portlet.isActive() && portlet.isReady() && supportsMimeType && (invokerPortl
 	}
 	catch (Exception e) {
 		portletException = true;
-
-		// Under parallel rendering context. An interrupted state means the call
-		// was cancelled and so we should terminate the render process.
-
-		Thread currentThread = Thread.currentThread();
-
-		if (currentThread.isInterrupted()) {
-			return;
-		}
 
 		LogUtil.log(_log, e);
 	}

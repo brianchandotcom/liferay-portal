@@ -67,6 +67,12 @@ public interface LDAPConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean importUserPasswordEnabled();
 
+	@Meta.AD(
+		deflt = "auth-type", optionValues = {"auth-type", "uuid"},
+		required = false
+	)
+	public String importUserSyncStrategy();
+
 	@Meta.AD(deflt = "1000", required = false)
 	public int pageSize();
 

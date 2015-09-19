@@ -41,10 +41,10 @@ import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.security.ldap.LDAPGroup;
 import com.liferay.portal.security.ldap.LDAPToPortalConverter;
 import com.liferay.portal.security.ldap.LDAPUser;
-import com.liferay.portal.service.ListTypeServiceUtil;
+import com.liferay.portal.service.ListTypeService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.persistence.ContactUtil;
-import com.liferay.portal.service.persistence.UserUtil;
+import com.liferay.portal.service.persistence.ContactPersistence;
+import com.liferay.portal.service.persistence.UserPersistence;
 
 import java.text.ParseException;
 
@@ -60,6 +60,7 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Edward Han
@@ -152,7 +153,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		ldapUser.setAutoPassword(password.equals(StringPool.BLANK));
 		ldapUser.setAutoScreenName(autoScreenName);
 
-		Contact contact = ContactUtil.create(0);
+		Contact contact = _contactPersistence.create(0);
 
 		long prefixId = getListTypeId(
 			attributes, contactMappings, ContactConverterKeys.PREFIX,
@@ -266,7 +267,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 
 		ldapUser.setUpdatePassword(!password.equals(StringPool.BLANK));
 
-		User user = UserUtil.create(0);
+		User user = _userPersistence.create(0);
 
 		user.setCompanyId(companyId);
 		user.setEmailAddress(emailAddress);
@@ -332,8 +333,8 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 			String contactMappingsKey, String listTypeType)
 		throws Exception {
 
-		List<ListType> contactPrefixListTypes =
-			ListTypeServiceUtil.getListTypes(listTypeType);
+		List<ListType> contactPrefixListTypes = _listTypeService.getListTypes(
+			listTypeType);
 
 		String name = LDAPUtil.getAttributeString(
 			attributes, contactMappings, contactMappingsKey);
@@ -347,7 +348,28 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		return 0;
 	}
 
+	@Reference(unbind = "-")
+	protected void setContactPersistence(
+		ContactPersistence contactPersistence) {
+
+		_contactPersistence = contactPersistence;
+	}
+
+	@Reference(unbind = "-")
+	protected void setListTypeService(ListTypeService listTypeService) {
+		_listTypeService = listTypeService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserPersistence(UserPersistence userPersistence) {
+		_userPersistence = userPersistence;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultLDAPToPortalConverter.class);
+
+	private ContactPersistence _contactPersistence;
+	private ListTypeService _listTypeService;
+	private UserPersistence _userPersistence;
 
 }

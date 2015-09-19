@@ -109,7 +109,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	public void delete(String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -139,7 +139,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -181,7 +181,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return null;
 		}
 
@@ -240,7 +240,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	public List<SchedulerResponse> getScheduledJobs(StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return Collections.emptyList();
 		}
 
@@ -269,7 +269,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return Collections.emptyList();
 		}
 
@@ -288,7 +288,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	public void pause(String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -317,7 +317,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	public void pause(String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -346,7 +346,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	public void resume(String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -376,7 +376,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -408,7 +408,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -507,7 +507,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -534,7 +534,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 	public void unschedule(String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -562,7 +562,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			String jobName, String groupName, StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -591,7 +591,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			StorageType storageType)
 		throws SchedulerException {
 
-		if (!isEnabled(storageType)) {
+		if (!isEnabled()) {
 			return;
 		}
 
@@ -991,27 +991,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 	protected boolean isEnabled() {
 		return GetterUtil.getBoolean(_props.get(PropsKeys.SCHEDULER_ENABLED));
-	}
-
-	protected boolean isEnabled(StorageType storageType)
-		throws SchedulerException {
-
-		if (!isEnabled()) {
-			return false;
-		}
-
-		Scheduler scheduler = getScheduler(storageType);
-
-		try {
-			if (scheduler.isShutdown() || scheduler.isInStandbyMode()) {
-				return false;
-			}
-		}
-		catch (org.quartz.SchedulerException se) {
-			throw new SchedulerException(se);
-		}
-
-		return true;
 	}
 
 	protected void registerMessageListeners(

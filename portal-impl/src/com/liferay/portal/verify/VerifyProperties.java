@@ -1273,6 +1273,10 @@ public class VerifyProperties extends VerifyProcess {
 			"ldap.import.user.password.enabled", "import.user.password.enabled",
 			"com.liferay.portal.ldap"
 		},
+		new String[] {
+			"ldap.import.user.sync.strategy", "import.user.sync.strategy",
+			"com.liferay.portal.ldap"
+		},
 		new String[] {"ldap.page.size", "page.size", "com.liferay.portal.ldap"},
 		new String[] {
 			"ldap.password.policy.enabled", "password.policy.enabled",

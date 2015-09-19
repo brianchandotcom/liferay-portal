@@ -12,24 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.admin.messaging;
-
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.plugin.PluginPackageUtil;
+package com.liferay.portal.ldap.settings;
 
 /**
- * @author Shuyang Zhou
+ * @author Michael C. Han
  */
-public class PluginRepositoriesMessageListener extends BaseMessageListener {
+public class SettingsConstants {
 
-	@Override
-	protected void doReceive(Message message) throws Exception {
-		SearchEngineUtil.initialize(CompanyConstants.SYSTEM);
-
-		PluginPackageUtil.reloadRepositories();
-	}
+	public static final String SERVICE_NAME = "com.liferay.portal.ldap";
 
 }

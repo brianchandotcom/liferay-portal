@@ -14,15 +14,6 @@
 				</simple>
 			</trigger>
 		</scheduler-entry>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.admin.messaging.LDAPImportMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<property-key>ldap.import.interval</property-key>
-					<time-unit>minute</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>

@@ -34,12 +34,13 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.exportimport.UserOperation;
-import com.liferay.portal.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.security.ldap.LDAPSettings;
 import com.liferay.portal.security.ldap.Modifications;
-import com.liferay.portal.security.ldap.PortalLDAPUtil;
+import com.liferay.portal.security.ldap.PortalLDAP;
 import com.liferay.portal.security.ldap.PortalToLDAPConverter;
+import com.liferay.portal.security.pwd.PasswordEncryptor;
 import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
-import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.service.ImageLocalService;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoConverterUtil;
 
@@ -60,6 +61,7 @@ import javax.naming.directory.DirContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -89,11 +91,11 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			long ldapServerId, UserGroup userGroup, Properties groupMappings)
 		throws Exception {
 
-		Binding groupBinding = PortalLDAPUtil.getGroup(
+		Binding groupBinding = _portalLDAP.getGroup(
 			ldapServerId, userGroup.getCompanyId(), userGroup.getName());
 
 		if (groupBinding != null) {
-			return PortalLDAPUtil.getNameInNamespace(
+			return _portalLDAP.getNameInNamespace(
 				ldapServerId, userGroup.getCompanyId(), groupBinding);
 		}
 
@@ -107,7 +109,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		sb.append(userGroup.getName());
 		sb.append(StringPool.COMMA);
 		sb.append(
-			PortalLDAPUtil.getGroupsDN(ldapServerId, userGroup.getCompanyId()));
+			_portalLDAP.getGroupsDN(ldapServerId, userGroup.getCompanyId()));
 
 		return sb.toString();
 	}
@@ -142,7 +144,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		Attribute objectClassAttribute = new BasicAttribute(_OBJECT_CLASS);
 
-		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
+		String postfix = _ldapSettings.getPropertyPostfix(ldapServerId);
 
 		String[] defaultObjectClassNames = PrefsPropsUtil.getStringArray(
 			userGroup.getCompanyId(),
@@ -180,7 +182,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		String groupDN = getGroupDNName(ldapServerId, userGroup, groupMappings);
 		String userDN = getUserDNName(ldapServerId, user, userMappings);
 
-		if (PortalLDAPUtil.isGroupMember(
+		if (_portalLDAP.isGroupMember(
 				ldapServerId, user.getCompanyId(), groupDN, userDN)) {
 
 			if (userOperation == UserOperation.REMOVE) {
@@ -208,7 +210,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 
 		Attribute objectClassAttribute = new BasicAttribute(_OBJECT_CLASS);
 
-		String postfix = LDAPSettingsUtil.getPropertyPostfix(ldapServerId);
+		String postfix = _ldapSettings.getPropertyPostfix(ldapServerId);
 
 		String[] defaultObjectClassNames = PrefsPropsUtil.getStringArray(
 			user.getCompanyId(),
@@ -273,7 +275,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			return modifications;
 		}
 
-		Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
+		Properties groupMappings = _ldapSettings.getGroupMappings(
 			ldapServerId, user.getCompanyId());
 
 		String userDN = getUserDNName(ldapServerId, user, userMappings);
@@ -282,7 +284,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			String groupDN = getGroupDNName(
 				ldapServerId, userGroup, groupMappings);
 
-			if (PortalLDAPUtil.isUserGroupMember(
+			if (_portalLDAP.isUserGroupMember(
 					ldapServerId, user.getCompanyId(), groupDN, userDN)) {
 
 				continue;
@@ -337,12 +339,12 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			long ldapServerId, User user, Properties userMappings)
 		throws Exception {
 
-		Binding userBinding = PortalLDAPUtil.getUser(
+		Binding userBinding = _portalLDAP.getUser(
 			ldapServerId, user.getCompanyId(), user.getScreenName(),
 			user.getEmailAddress());
 
 		if (userBinding != null) {
-			return PortalLDAPUtil.getNameInNamespace(
+			return _portalLDAP.getNameInNamespace(
 				ldapServerId, user.getCompanyId(), userBinding);
 		}
 
@@ -354,7 +356,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		sb.append(StringPool.EQUAL);
 		sb.append(BeanPropertiesUtil.getStringSilent(user, _userDNFieldName));
 		sb.append(StringPool.COMMA);
-		sb.append(PortalLDAPUtil.getUsersDN(ldapServerId, user.getCompanyId()));
+		sb.append(_portalLDAP.getUsersDN(ldapServerId, user.getCompanyId()));
 
 		return sb.toString();
 	}
@@ -448,7 +450,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 				sb.append(StringPool.CLOSE_CURLY_BRACE);
 			}
 
-			sb.append(PasswordEncryptorUtil.encrypt(algorithm, password, null));
+			sb.append(_passwordEncryptor.encrypt(algorithm, password, null));
 
 			String passwordKey = userMappings.getProperty(
 				UserConverterKeys.PASSWORD);
@@ -517,7 +519,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		Image image = null;
 
 		try {
-			image = ImageLocalServiceUtil.getImage(user.getPortraitId());
+			image = _imageLocalService.getImage(user.getPortraitId());
 
 			if (image != null) {
 				bytes = image.getTextObj();
@@ -572,6 +574,26 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setImageLocalService(ImageLocalService imageLocalService) {
+		_imageLocalService = imageLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLdapSettings(LDAPSettings ldapSettings) {
+		_ldapSettings = ldapSettings;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPasswordEncryptor(PasswordEncryptor passwordEncryptor) {
+		_passwordEncryptor = passwordEncryptor;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortalLDAP(PortalLDAP portalLDAP) {
+		_portalLDAP = portalLDAP;
+	}
+
 	private static final String _DEFAULT_DN = "cn";
 
 	private static final String _OBJECT_CLASS = "objectclass";
@@ -579,7 +601,11 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultPortalToLDAPConverter.class);
 
+	private ImageLocalService _imageLocalService;
 	private volatile LDAPAuthConfiguration _ldapAuthConfiguration;
+	private LDAPSettings _ldapSettings;
+	private PasswordEncryptor _passwordEncryptor;
+	private PortalLDAP _portalLDAP;
 	private final Map<String, String> _reservedContactFieldNames =
 		new HashMap<>();
 	private final Map<String, String> _reservedUserFieldNames = new HashMap<>();

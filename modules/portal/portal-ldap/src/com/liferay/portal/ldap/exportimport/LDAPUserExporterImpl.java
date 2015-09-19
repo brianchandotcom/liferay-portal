@@ -31,12 +31,12 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.exportimport.UserExporter;
 import com.liferay.portal.security.exportimport.UserOperation;
-import com.liferay.portal.security.ldap.LDAPSettingsUtil;
+import com.liferay.portal.security.ldap.LDAPSettings;
 import com.liferay.portal.security.ldap.Modifications;
-import com.liferay.portal.security.ldap.PortalLDAPUtil;
+import com.liferay.portal.security.ldap.PortalLDAP;
 import com.liferay.portal.security.ldap.PortalToLDAPConverter;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserGroupLocalService;
+import com.liferay.portal.service.UserLocalService;
 
 import java.io.Serializable;
 
@@ -83,12 +83,12 @@ public class LDAPUserExporterImpl implements UserExporter {
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_AUTH_ENABLED,
 				_ldapAuthConfiguration.enabled()) ||
-			!LDAPSettingsUtil.isExportEnabled(companyId)) {
+			!_ldapSettings.isExportEnabled(companyId)) {
 
 			return;
 		}
 
-		User user = UserLocalServiceUtil.getUserByContactId(
+		User user = _userLocalService.getUserByContactId(
 			contact.getContactId());
 
 		if (user.isDefaultUser() ||
@@ -97,10 +97,10 @@ public class LDAPUserExporterImpl implements UserExporter {
 			return;
 		}
 
-		long ldapServerId = PortalLDAPUtil.getLdapServerId(
+		long ldapServerId = _portalLDAP.getLdapServerId(
 			companyId, user.getScreenName(), user.getEmailAddress());
 
-		LdapContext ldapContext = PortalLDAPUtil.getContext(
+		LdapContext ldapContext = _portalLDAP.getContext(
 			ldapServerId, companyId);
 
 		try {
@@ -108,18 +108,18 @@ public class LDAPUserExporterImpl implements UserExporter {
 				return;
 			}
 
-			Properties contactMappings = LDAPSettingsUtil.getContactMappings(
+			Properties contactMappings = _ldapSettings.getContactMappings(
 				ldapServerId, companyId);
 			Properties contactExpandoMappings =
-				LDAPSettingsUtil.getContactExpandoMappings(
+				_ldapSettings.getContactExpandoMappings(
 					ldapServerId, companyId);
 
-			Binding binding = PortalLDAPUtil.getUser(
+			Binding binding = _portalLDAP.getUser(
 				ldapServerId, contact.getCompanyId(), user.getScreenName(),
 				user.getEmailAddress());
 
 			if (binding == null) {
-				Properties userMappings = LDAPSettingsUtil.getUserMappings(
+				Properties userMappings = _ldapSettings.getUserMappings(
 					ldapServerId, companyId);
 
 				binding = addUser(
@@ -129,7 +129,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 			Name name = new CompositeName();
 
 			name.add(
-				PortalLDAPUtil.getNameInNamespace(
+				_portalLDAP.getNameInNamespace(
 					ldapServerId, companyId, binding));
 
 			Modifications modifications =
@@ -157,38 +157,37 @@ public class LDAPUserExporterImpl implements UserExporter {
 			long userId, long userGroupId, UserOperation userOperation)
 		throws Exception {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = _userLocalService.getUser(userId);
 
 		long companyId = user.getCompanyId();
 
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_AUTH_ENABLED,
 				_ldapAuthConfiguration.enabled()) ||
-			!LDAPSettingsUtil.isExportEnabled(companyId) ||
-			!LDAPSettingsUtil.isExportGroupEnabled(companyId)) {
+			!_ldapSettings.isExportEnabled(companyId) ||
+			!_ldapSettings.isExportGroupEnabled(companyId)) {
 
 			return;
 		}
 
-		long ldapServerId = PortalLDAPUtil.getLdapServerId(
+		long ldapServerId = _portalLDAP.getLdapServerId(
 			companyId, user.getScreenName(), user.getEmailAddress());
 
-		LdapContext ldapContext = PortalLDAPUtil.getContext(
+		LdapContext ldapContext = _portalLDAP.getContext(
 			ldapServerId, companyId);
 
 		if (ldapContext == null) {
 			return;
 		}
 
-		UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
-			userGroupId);
+		UserGroup userGroup = _userGroupLocalService.getUserGroup(userGroupId);
 
-		Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
+		Properties groupMappings = _ldapSettings.getGroupMappings(
 			ldapServerId, companyId);
-		Properties userMappings = LDAPSettingsUtil.getUserMappings(
+		Properties userMappings = _ldapSettings.getUserMappings(
 			ldapServerId, companyId);
 
-		Binding binding = PortalLDAPUtil.getGroup(
+		Binding binding = _portalLDAP.getGroup(
 			ldapServerId, companyId, userGroup.getName());
 
 		try {
@@ -205,7 +204,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 			Name name = new CompositeName();
 
 			name.add(
-				PortalLDAPUtil.getNameInNamespace(
+				_portalLDAP.getNameInNamespace(
 					ldapServerId, companyId, binding));
 
 			Modifications modifications =
@@ -218,10 +217,10 @@ public class LDAPUserExporterImpl implements UserExporter {
 			ldapContext.modifyAttributes(name, modificationItems);
 		}
 		catch (SchemaViolationException sve) {
-			String fullGroupDN = PortalLDAPUtil.getNameInNamespace(
+			String fullGroupDN = _portalLDAP.getNameInNamespace(
 				ldapServerId, companyId, binding);
 
-			Attributes attributes = PortalLDAPUtil.getGroupAttributes(
+			Attributes attributes = _portalLDAP.getGroupAttributes(
 				ldapServerId, companyId, ldapContext, fullGroupDN, true);
 
 			Attribute groupMembers = attributes.get(
@@ -254,15 +253,15 @@ public class LDAPUserExporterImpl implements UserExporter {
 		if (!PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.LDAP_AUTH_ENABLED,
 				_ldapAuthConfiguration.enabled()) ||
-			!LDAPSettingsUtil.isExportEnabled(companyId)) {
+			!_ldapSettings.isExportEnabled(companyId)) {
 
 			return;
 		}
 
-		long ldapServerId = PortalLDAPUtil.getLdapServerId(
+		long ldapServerId = _portalLDAP.getLdapServerId(
 			companyId, user.getScreenName(), user.getEmailAddress());
 
-		LdapContext ldapContext = PortalLDAPUtil.getContext(
+		LdapContext ldapContext = _portalLDAP.getContext(
 			ldapServerId, companyId);
 
 		try {
@@ -270,13 +269,12 @@ public class LDAPUserExporterImpl implements UserExporter {
 				return;
 			}
 
-			Properties userMappings = LDAPSettingsUtil.getUserMappings(
+			Properties userMappings = _ldapSettings.getUserMappings(
 				ldapServerId, companyId);
 			Properties userExpandoMappings =
-				LDAPSettingsUtil.getUserExpandoMappings(
-					ldapServerId, companyId);
+				_ldapSettings.getUserExpandoMappings(ldapServerId, companyId);
 
-			Binding binding = PortalLDAPUtil.getUser(
+			Binding binding = _portalLDAP.getUser(
 				ldapServerId, user.getCompanyId(), user.getScreenName(),
 				user.getEmailAddress(), true);
 
@@ -285,9 +283,9 @@ public class LDAPUserExporterImpl implements UserExporter {
 					ldapServerId, ldapContext, user, userMappings);
 			}
 			else {
-				Attributes attributes = PortalLDAPUtil.getUserAttributes(
+				Attributes attributes = _portalLDAP.getUserAttributes(
 					ldapServerId, companyId, ldapContext,
-					PortalLDAPUtil.getNameInNamespace(
+					_portalLDAP.getNameInNamespace(
 						ldapServerId, companyId, binding));
 
 				String modifyTimestamp = LDAPUtil.getAttributeString(
@@ -311,7 +309,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 			Name name = new CompositeName();
 
 			name.add(
-				PortalLDAPUtil.getNameInNamespace(
+				_portalLDAP.getNameInNamespace(
 					ldapServerId, companyId, binding));
 
 			Modifications modifications =
@@ -327,12 +325,12 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 			ldapContext.modifyAttributes(name, modificationItems);
 
-			if (!LDAPSettingsUtil.isExportGroupEnabled(companyId)) {
+			if (!_ldapSettings.isExportGroupEnabled(companyId)) {
 				return;
 			}
 
 			List<UserGroup> userGroups =
-				UserGroupLocalServiceUtil.getUserUserGroups(user.getUserId());
+				_userGroupLocalService.getUserUserGroups(user.getUserId());
 
 			for (UserGroup userGroup : userGroups) {
 				exportUser(
@@ -398,7 +396,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 		ldapContext.bind(name, new PortalLDAPContext(attributes));
 
-		Binding binding = PortalLDAPUtil.getGroup(
+		Binding binding = _portalLDAP.getGroup(
 			ldapServerId, userGroup.getCompanyId(), userGroup.getName());
 
 		return binding;
@@ -420,17 +418,43 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 		ldapContext.bind(name, new PortalLDAPContext(attributes));
 
-		Binding binding = PortalLDAPUtil.getUser(
+		Binding binding = _portalLDAP.getUser(
 			ldapServerId, user.getCompanyId(), user.getScreenName(),
 			user.getEmailAddress());
 
 		return binding;
 	}
 
+	@Reference(unbind = "-")
+	protected void setLdapSettings(LDAPSettings ldapSettings) {
+		_ldapSettings = ldapSettings;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortalLDAP(PortalLDAP portalLDAP) {
+		_portalLDAP = portalLDAP;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupLocalService(
+		UserGroupLocalService userGroupLocalService) {
+
+		_userGroupLocalService = userGroupLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPUserExporterImpl.class);
 
 	private volatile LDAPAuthConfiguration _ldapAuthConfiguration;
+	private LDAPSettings _ldapSettings;
+	private PortalLDAP _portalLDAP;
 	private PortalToLDAPConverter _portalToLDAPConverter;
+	private UserGroupLocalService _userGroupLocalService;
+	private UserLocalService _userLocalService;
 
 }

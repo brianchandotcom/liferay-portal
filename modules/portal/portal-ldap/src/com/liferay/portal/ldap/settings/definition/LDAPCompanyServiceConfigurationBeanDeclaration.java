@@ -12,24 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.admin.messaging;
+package com.liferay.portal.ldap.settings.definition;
 
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
-import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.plugin.PluginPackageUtil;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.portal.ldap.configuration.LDAPConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Shuyang Zhou
+ * @author Michael C. Han
  */
-public class PluginRepositoriesMessageListener extends BaseMessageListener {
+@Component(immediate = true, service = ConfigurationBeanDeclaration.class)
+public class LDAPCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
-	protected void doReceive(Message message) throws Exception {
-		SearchEngineUtil.initialize(CompanyConstants.SYSTEM);
-
-		PluginPackageUtil.reloadRepositories();
+	public Class<?> getConfigurationBeanClass() {
+		return LDAPConfiguration.class;
 	}
 
 }

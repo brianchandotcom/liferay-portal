@@ -72,7 +72,7 @@
 		<if>
 			<isset var="assetRestoreLocation" />
 			<then>
-				<var name="key_assetRestoreLocation" value="${assetRestoreLocation}" />
+				<var name="key_assetType" value="${assetType}" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="${assetRestoreLocation}" />
 			</then>

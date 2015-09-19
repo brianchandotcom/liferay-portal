@@ -233,6 +233,7 @@
 			<var name="portletName" value="Bookmarks" />
 		</execute>
 
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_folderName" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_NAME" value1="${folderName}" />
@@ -260,6 +261,8 @@
 		<while>
 			<condition function="IsElementPresent" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN_GENERIC" />
 			<then>
+				<var name="key_assetType" value="${assetType}" />
+				
 				<execute function="Click" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN_GENERIC" />
 				<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />

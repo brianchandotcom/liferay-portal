@@ -723,6 +723,7 @@
 	</command>
 
 	<command name="deletePGViaMG">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
 		<execute function="AssertClick" locator1="MediaGallery#ENTRY_TITLE" value1="${mgDocumentTitle}" />

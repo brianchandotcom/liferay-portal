@@ -655,6 +655,7 @@
 	</command>
 
 	<command name="deleteFrontPagePGViaWD">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" />
@@ -666,6 +667,7 @@
 	</command>
 
 	<command name="deletePG">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" />
@@ -968,6 +970,7 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
 		<execute function="Click" locator1="Wiki#ALL_PAGES_TABLE_ACTIONS_DROPDOWN" />

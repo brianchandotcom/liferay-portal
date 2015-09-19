@@ -156,8 +156,8 @@
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 	</command>
 
-	<command name="gotoSettingsTab">
-		<execute function="AssertClick" locator1="BlogsEditEntry#SETTINGS_TAB" value1="Settings" />
+	<command name="gotoSettings">
+		<execute function="Click" locator1="Button#COG" />
 	</command>
 
 	<command name="moveToRecycleBinCP">

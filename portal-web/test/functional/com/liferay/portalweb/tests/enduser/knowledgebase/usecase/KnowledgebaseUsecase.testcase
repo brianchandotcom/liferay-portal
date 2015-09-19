@@ -1348,6 +1348,10 @@
 			<var name="pageName" value="Knowledge Base Display Page" />
 		</execute>
 
+		<execute macro="KBFolder#gotoViaKBDisplayPG">
+			<var name="kbFolderName" value="KB Folder 2" />
+		</execute>
+
 		<execute macro="KBArticle#viewViaKBDisplayPG">
 			<var name="kbArticleContent" value="Knowledge Base Article Folder 2 Content 1" />
 			<var name="kbArticleTitle" value="Knowledge Base Article Folder 2 Title 1" />

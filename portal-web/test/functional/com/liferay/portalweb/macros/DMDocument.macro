@@ -2281,7 +2281,7 @@
 
 	<command name="viewStagingDetailsPG">
 		<execute function="Click" locator1="Toolbar#ADD" />
-		<execute function="AssertTextEquals" locator1="MenuItem#FOLDER_DM" value1="Folder" />
+		<execute function="AssertTextEquals" locator1="MenuItem#FOLDER" value1="Folder" />
 		<execute function="AssertTextEquals" locator1="MenuItem#SHORTCUT" value1="Shortcut" />
 		<execute function="AssertTextEquals" locator1="MenuItem#REPOSITORY" value1="Repository" />
 		<execute function="AssertTextEquals" locator1="MenuItem#MULTIPLE_DOCUMENTS" value1="Multiple Documents" />

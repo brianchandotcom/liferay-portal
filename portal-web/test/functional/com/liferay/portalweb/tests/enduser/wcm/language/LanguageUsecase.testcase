@@ -35,31 +35,7 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addCP">
-			<var name="webContentContent" value="WC Content" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="WebContent#addTranslation">
-			<var name="localizedContent" value="WC Contenido" />
-			<var name="localizedLanguage" value="Spanish (Spain)" />
-			<var name="localizedTitle" value="WC Titulo" />
-			<var name="webContentTitle" value="WC Title" />
-		</execute>
-
-		<execute macro="WebContent#addTranslation">
-			<var name="localizedContent" value="WC Inhalt" />
-			<var name="localizedLanguage" value="German (Germany)" />
-			<var name="localizedTitle" value="WC Titel" />
-			<var name="webContentTitle" value="WC Titulo" />
-		</execute>
-
-		<execute macro="WebContent#addTranslation">
-			<var name="localizedContent" value="WC Pitoisuus" />
-			<var name="localizedLanguage" value="Finnish (Finland)" />
-			<var name="localizedTitle" value="WC Otsikko" />
-			<var name="webContentTitle" value="WC Titel" />
-		</execute>
+		<execute macro="WebContent#addWithThreeTranslations" />
 
 		<execute macro="WebContent#publish" />
 
@@ -220,6 +196,142 @@
 		<execute macro="WebContent#viewTranslationPGViaWCD">
 			<var name="localizedTitle" value="WC Titulo" />
 			<var name="webContentTranslationLanguage" value="español (España)" />
+		</execute>
+	</command>
+
+	<command name="MoveCurrentLanguagesToAvailable" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="LanguagePortlet#moveLanguagesToAvailable" />
+
+		<execute macro="LanguagePortlet#moveLanguagesToCurrent">
+			<var name="currentLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewLanguagesAbsent">
+			<var name="missingLanguages" value="ARABIC,CHINESE,FRENCH,HUNGARIAN,JAPANESE,PORTUGUESE" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewLanguagesPresent">
+			<var name="currentLanguages" value="ENGLISH,GERMAN,SPANISH" />
+		</execute>
+	</command>
+
+	<command name="ViewRemovedCurrentPortalLanguagesViaLanguagePortlet" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#configureCurrentLanguagesCP">
+			<var name="currentPortalLanguages" value="Chinese (China),English (United States),French (France)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewLanguagesAbsent">
+			<var name="missingLanguages" value="ARABIC,GERMAN,HUNGARIAN,JAPANESE,PORTUGUESE,SPANISH" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewLanguagesPresent">
+			<var name="currentLanguages" value="CHINESE,FRENCH,ENGLISH" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="LanguagePortlet#configureViewCurrentLanguages">
+			<var name="currentLanguages" value="Chinese (China),French (France),English (United States)" />
+		</execute>
+
+		<execute macro="LanguagePortlet#configureViewAvailableLanguages">
+			<var name="availableLanguages" value="Arabic (Saudi Arabia),German (Germany),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil),Spanish (Spain)" />
+		</execute>
+	</command>
+
+	<command name="ViewRemovedCurrentSiteLanguagesViaLanguagePortlet" priority="4">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#configureCurrentLanguagesCP">
+			<var name="currentSiteLanguages" value="Arabic (Saudi Arabia),English (United States),German (Germany),Spanish (Spain)" />
+			<var name="defaultSiteLanguage" value="English (United States)" />
+			<var name="displaySettings" value="Display Settings" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewLanguagesAbsent">
+			<var name="missingLanguages" value="CHINESE,FRENCH,HUNGARIAN,JAPANESE,PORTUGUESE" />
+		</execute>
+
+		<execute macro="LanguagePortlet#viewLanguagesPresent">
+			<var name="currentLanguages" value="ARABIC,ENGLISH,GERMAN,SPANISH" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="LanguagePortlet#configureViewCurrentLanguages">
+			<var name="currentLanguages" value="Arabic (Saudi Arabia),English (United States),German (Germany),Spanish (Spain)" />
+		</execute>
+
+		<execute macro="LanguagePortlet#configureViewAvailableLanguages">
+			<var name="availableLanguages" value="Chinese (China),French (France),Hungarian (Hungary),Japanese (Japan),Portuguese (Brazil)" />
 		</execute>
 	</command>
 </definition>

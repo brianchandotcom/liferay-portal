@@ -629,18 +629,18 @@
 
 		<execute macro="CalendarNavigator#gotoAddEvent" />
 
-		<execute macro="CalendarEvent#viewApprovedRSVP">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="rsvp" value="Yes" />
+			<var name="eventType" value="${eventType}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarEvent#addRSVP">
+		<execute macro="CalendarEvent#viewApprovedRSVP">
 			<var name="eventTitle" value="${eventTitle}" />
-			<var name="eventType" value="${eventType}" />
 			<var name="rsvp" value="Yes" />
 		</execute>
 
@@ -3507,7 +3507,7 @@
 			<var name="eventTitle" value="Calendar Event Title" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewRSVPPending">
+		<execute macro="CalendarEvent#viewRSVPAccepted">
 			<var name="resourceName" value="Liferay" />
 		</execute>
 
@@ -3547,20 +3547,12 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewApprovedRSVP">
-			<var name="eventTitle" value="${eventTitle}" />
+			<var name="eventTitle" value="Calendar Event Title" />
 			<var name="rsvp" value="Yes" />
 		</execute>
 
 		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Calendar Page" />
-		</execute>
-
-		<execute macro="SearchPortlet#configureAssetType">
-			<var name="searchAssetType" value="Calendar Event" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -4599,11 +4591,13 @@
 			<var name="viewTypeLocalized" value="Mes" />
 		</execute>
 
-		<execute macro="MyAccount#configureDisplaySettingsLanguage">
+		<execute macro="MyAccount#configureDisplaySettingsLanguageLocalized">
+			<var name="category" value="Mi cuenta" />
 			<var name="languageName" value="English (United States)" />
-			<var name="myAccount" value="Mi cuenta" />
+			<var name="portlet" value="Mi cuenta" />
 			<var name="saveButton" value="Guardar" />
 			<var name="successMessage" value="Your request completed successfully." />
+			<var name="tab" value="Mi espacio" />
 		</execute>
 	</command>
 

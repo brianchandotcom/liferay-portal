@@ -2276,7 +2276,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsPG">
+		<execute macro="PermissionsInline#gotoBlogsCP">
 			<var name="pageName" value="${pageName}" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURLTemp" value="true" />

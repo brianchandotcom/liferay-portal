@@ -175,7 +175,7 @@
 	</command>
 
 	<command name="viewAsSiteMemberPG">
-		<execute function="AssertTextEquals" locator1="PGBlogs#PORTLET_TITLE" value1="Blogs" />
+		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE" />
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
 		<execute function="AssertTextEquals" locator1="PGBlogs#SUBSCRIBE_LINK" value1="Subscribe" />
@@ -212,7 +212,7 @@
 	</command>
 
 	<command name="viewNoPermissionPG">
-		<execute function="AssertTextEquals" locator1="PGBlogs#PORTLET_TITLE" value1="Blogs" />
+		<execute function="AssertElementNotPresent" locator1="Portlet#TITLE" />
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#SUBSCRIBE_LINK" />

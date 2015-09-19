@@ -38,6 +38,7 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -125,6 +126,38 @@ public class UserFinderTest {
 		GroupLocalServiceUtil.clearOrganizationGroups(
 			_organization.getOrganizationId());
 		GroupLocalServiceUtil.clearUserGroupGroups(_userGroup.getUserGroupId());
+	}
+
+	@Test
+	public void testCountByGroups() throws Exception {
+		long groupId = _group.getGroupId();
+
+		Map<Long, Integer> counts = UserFinderUtil.countByGroups(
+			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
+			new long[] {groupId});
+
+		Assert.assertEquals(1, counts.size());
+		Assert.assertEquals(2, (int)counts.get(groupId));
+
+		GroupLocalServiceUtil.addOrganizationGroup(
+			_organization.getOrganizationId(), groupId);
+
+		counts = UserFinderUtil.countByGroups(
+			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
+			new long[] {groupId});
+
+		Assert.assertEquals(1, counts.size());
+		Assert.assertEquals(3, (int)counts.get(groupId));
+
+		GroupLocalServiceUtil.addUserGroupGroup(
+			_userGroup.getUserGroupId(), groupId);
+
+		counts = UserFinderUtil.countByGroups(
+			TestPropsValues.getCompanyId(), WorkflowConstants.STATUS_APPROVED,
+			new long[] {groupId});
+
+		Assert.assertEquals(1, counts.size());
+		Assert.assertEquals(4, (int)counts.get(groupId));
 	}
 
 	@Test

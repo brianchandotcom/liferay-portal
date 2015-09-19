@@ -113,6 +113,8 @@ if (group != null) {
 			GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
 
 			request.setAttribute("view_tree.jspf-searchTerms", searchTerms);
+
+			Map<Long, Integer> membersCounts = Collections.emptyMap();
 			%>
 
 			<liferay-ui:search-container-results>
@@ -183,6 +185,10 @@ if (group != null) {
 
 				<%
 				searchContainer.setResults(results);
+
+				long[] groupIds = ListUtil.toLongArray(results, Group.GROUP_ID_ACCESSOR);
+
+				membersCounts = UserLocalServiceUtil.searchCounts(company.getCompanyId(), WorkflowConstants.STATUS_APPROVED, groupIds);
 				%>
 
 			</liferay-ui:search-container-results>

@@ -3397,6 +3397,13 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Map<Long, Integer> searchCounts(
+		long companyId, int status, long[] groupIds) {
+
+		return userFinder.countByGroups(companyId, status, groupIds);
+	}
+
+	@Override
 	public List<User> searchSocial(
 			long userId, int[] socialRelationTypes, String keywords, int start,
 			int end)

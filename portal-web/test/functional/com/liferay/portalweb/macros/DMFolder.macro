@@ -404,7 +404,7 @@
 			<condition function="IsElementPresent" locator1="MediaGallery#ENTRIES_FOLDER" />
 			<then>
 				<var name="key_assetType" value="${assetType}" />
-				
+
 				<execute function="Click" locator1="MediaGallery#ENTRIES_FOLDER" />
 				<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />

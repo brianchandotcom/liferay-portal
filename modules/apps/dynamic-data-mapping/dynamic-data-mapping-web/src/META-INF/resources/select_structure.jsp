@@ -124,7 +124,7 @@ SearchContainer structureSearch = new StructureSearch(renderRequest, portletURL,
 </aui:form>
 
 <aui:script>
-	Liferay.Util.focusFormField(document.<portlet:namespace />selectStructureFm.<portlet:namespace />keywords);
+	Liferay.Util.focusFormField(document.<portlet:namespace />searchForm.<portlet:namespace />keywords);
 </aui:script>
 
 <aui:script>

@@ -67,7 +67,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 	<aui:input classPK="<%= classPK %>" ignoreRequestValue="<%= changeStructure %>" name="tags" type="assetTags" />
 
-	<aui:input name="priority" type="text" value="<%= priority %>">
+	<aui:input label="priority" name="assetPriority" type="text" value="<%= priority %>">
 		<aui:validator name="number" />
 
 		<aui:validator name="min">[0]</aui:validator>

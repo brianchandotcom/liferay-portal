@@ -23,6 +23,13 @@ WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = wikiAt
 
 SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse), null, LanguageUtil.get(request, "there-are-no-wiki-attachments"));
 
+String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+OrderByComparator<?> orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
+
+searchContainer.setOrderByComparator(orderByComparator);
+
 WikiPage wikiPage = wikiAttachmentItemSelectorViewDisplayContext.getWikiPage();
 
 int total = 0;
@@ -67,7 +74,7 @@ if (wikiPage.getAttachmentsFolderId() != DLFolderConstants.DEFAULT_PARENT_FOLDER
 	}
 	else {
 		total = wikiPage.getAttachmentsFileEntriesCount();
-		results = wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd());
+		results = wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 	}
 }
 

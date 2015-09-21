@@ -238,7 +238,7 @@ public class PortalUtil {
 
 	/**
 	 * Adds the preserved parameters doAsUserId, doAsUserLanguageId,
-	 * doAsGroupId, refererPlid, and controlPanelCategory to the URL.
+	 * doAsGroupId, and refererPlid to the URL.
 	 *
 	 * @param  themeDisplay the current theme display
 	 * @param  url the URL

@@ -797,7 +797,6 @@ public class ServicePreAction extends Action {
 		themeDisplay.setCompanyLogo(companyLogo);
 		themeDisplay.setCompanyLogoHeight(companyLogoHeight);
 		themeDisplay.setCompanyLogoWidth(companyLogoWidth);
-		themeDisplay.setControlPanelCategory(controlPanelCategory);
 		themeDisplay.setDoAsGroupId(doAsGroupId);
 		themeDisplay.setDoAsUserId(doAsUserId);
 		themeDisplay.setDoAsUserLanguageId(doAsUserLanguageId);

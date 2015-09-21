@@ -19,7 +19,7 @@
 		<var name="appName" value="WSRP" />
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP" />
+			<var name="portletName" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

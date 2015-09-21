@@ -65,7 +65,7 @@
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_RESTORE_SUCCESS" value1="${assetType}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="The item was restored." />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS_1" value1="The item was restored." />
 			</else>
 		</if>
 

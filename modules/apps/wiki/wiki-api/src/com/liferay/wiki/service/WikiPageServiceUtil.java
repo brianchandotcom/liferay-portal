@@ -110,12 +110,6 @@ public class WikiPageServiceUtil {
 			inputStream, mimeType);
 	}
 
-	public static void changeNode(long nodeId, java.lang.String title,
-		long newNodeId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().changeNode(nodeId, title, newNodeId, serviceContext);
-	}
-
 	public static void changeParent(long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)

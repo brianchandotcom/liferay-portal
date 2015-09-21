@@ -122,20 +122,6 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static void changeNode(long nodeId, java.lang.String title,
-		long newNodeId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			WikiPageServiceUtil.changeNode(nodeId, title, newNodeId,
-				serviceContext);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
 	public static void changeParent(long nodeId, java.lang.String title,
 		java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)

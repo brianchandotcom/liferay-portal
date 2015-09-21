@@ -153,14 +153,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public void changeNode(long userId, long nodeId, java.lang.String title,
-		long newNodeId, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.changeNode(userId, nodeId, title, newNodeId,
-			serviceContext);
-	}
-
-	@Override
 	public com.liferay.wiki.model.WikiPage changeParent(long userId,
 		long nodeId, java.lang.String title, java.lang.String newParentTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)

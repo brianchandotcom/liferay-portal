@@ -480,9 +480,6 @@ public interface Portal {
 
 	public String getComputerName();
 
-	public Map<String, List<Portlet>> getControlPanelCategoriesMap(
-		HttpServletRequest request);
-
 	public String getControlPanelCategory(
 		String portletId, ThemeDisplay themeDisplay);
 

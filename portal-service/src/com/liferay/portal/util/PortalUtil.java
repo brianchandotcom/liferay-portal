@@ -621,12 +621,6 @@ public class PortalUtil {
 		return getPortal().getComputerName();
 	}
 
-	public static Map<String, List<Portlet>> getControlPanelCategoriesMap(
-		HttpServletRequest request) {
-
-		return getPortal().getControlPanelCategoriesMap(request);
-	}
-
 	public static String getControlPanelCategory(
 		String portletId, ThemeDisplay themeDisplay) {
 

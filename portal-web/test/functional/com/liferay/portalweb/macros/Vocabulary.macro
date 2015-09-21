@@ -133,7 +133,7 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
-	<command name="deleteByActionsCP">
+	<command name="deleteByIconCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />
@@ -144,7 +144,7 @@
 		<execute function="AssertTextNotPresent" value1="${vocabularyName}" />
 	</command>
 
-	<command name="deleteByDetailsCP">
+	<command name="deleteByMenuCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute function="AssertTextEquals" locator1="Categories#VOCABULARY_ENTRY" value1="${vocabularyName}" />

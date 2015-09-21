@@ -163,7 +163,7 @@
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no categories." />
 	</command>
 
-	<command name="deleteCategoryByArrowCP">
+	<command name="deleteCategoryByMenuCP">
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 

@@ -61,11 +61,12 @@ public class UpdateRecordSetMVCActionCommand
 		updatePortletPreferences(actionRequest, recordSet);
 	}
 
+	@Override
 	@Reference
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
-		_ddlRecordSetService = ddlRecordSetService;
+		this.ddlRecordSetService = ddlRecordSetService;
 	}
 
 	@Override
@@ -92,11 +93,9 @@ public class UpdateRecordSetMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
 
-		return _ddlRecordSetService.updateRecordSet(
+		return ddlRecordSetService.updateRecordSet(
 			recordSetId, ddmStructureId, nameMap, descriptionMap,
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, serviceContext);
 	}
-
-	private DDLRecordSetService _ddlRecordSetService;
 
 }

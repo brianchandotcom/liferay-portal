@@ -72,7 +72,7 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
 
-		return _ddlRecordSetService.addRecordSet(
+		return ddlRecordSetService.addRecordSet(
 			groupId, ddmStructureId, null, nameMap, descriptionMap,
 			DDLRecordSetConstants.MIN_DISPLAY_ROWS_DEFAULT, scope,
 			serviceContext);
@@ -126,7 +126,7 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
-		_ddlRecordSetService = ddlRecordSetService;
+		this.ddlRecordSetService = ddlRecordSetService;
 	}
 
 	@Reference
@@ -176,9 +176,8 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 			workflowDefinition);
 	}
 
+	protected DDLRecordSetService ddlRecordSetService;
 	protected WorkflowDefinitionLinkLocalService
 		workflowDefinitionLinkLocalService;
-
-	private DDLRecordSetService _ddlRecordSetService;
 
 }

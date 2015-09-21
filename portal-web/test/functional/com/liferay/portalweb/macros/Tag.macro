@@ -187,7 +187,8 @@
 		<if>
 			<equals arg1="${deleteMethod}" arg2="From List" />
 			<then>
-				<execute function="Click" locator1="Tags#TAG_ENTRY_TABLE_ACTIONS_ARROW" />
+				<var name="key_assetEntry" value="${tagName}" />
+				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 			</then>
 			<elseif>

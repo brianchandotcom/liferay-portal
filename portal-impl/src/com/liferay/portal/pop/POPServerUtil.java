@@ -22,7 +22,8 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.TriggerType;
+import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.pop.messaging.POPNotificationsMessageListener;
 import com.liferay.portal.util.PropsValues;
@@ -120,14 +121,19 @@ public class POPServerUtil {
 		}
 
 		try {
+			String eventListenerClass =
+				POPNotificationsMessageListener.class.getName();
+
+			Trigger trigger = TriggerFactoryUtil.createTrigger(
+				eventListenerClass, eventListenerClass,
+				PropsValues.POP_SERVER_NOTIFICATIONS_INTERVAL, TimeUnit.MINUTE);
+
 			SchedulerEntry schedulerEntry = new SchedulerEntryImpl();
 
 			schedulerEntry.setEventListenerClass(
 				POPNotificationsMessageListener.class.getName());
-			schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
-			schedulerEntry.setTriggerType(TriggerType.SIMPLE);
-			schedulerEntry.setTriggerValue(
-				PropsValues.POP_SERVER_NOTIFICATIONS_INTERVAL);
+			schedulerEntry.setTrigger(trigger);
+			schedulerEntry.setEventListenerClass(eventListenerClass);
 
 			SchedulerEngineHelperUtil.schedule(
 				schedulerEntry, StorageType.MEMORY_CLUSTERED, null, 0);

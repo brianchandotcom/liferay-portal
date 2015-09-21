@@ -34,7 +34,7 @@ import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.TriggerType;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -1312,15 +1312,16 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			SchedulerEntry schedulerEntry = new SchedulerEntryImpl();
 
-			schedulerEntry.setDescription(
-				GetterUtil.getString(
-					schedulerEntryElement.elementText(
-						"scheduler-description")));
-			schedulerEntry.setEventListenerClass(
-				GetterUtil.getString(
-					schedulerEntryElement.elementText(
-						"scheduler-event-listener-class"),
-					schedulerEntry.getEventListenerClass()));
+			String description = GetterUtil.getString(
+				schedulerEntryElement.elementText("scheduler-description"));
+
+			schedulerEntry.setDescription(description);
+
+			String eventListenerClass = GetterUtil.getString(
+				schedulerEntryElement.elementText(
+					"scheduler-event-listener-class"));
+
+			schedulerEntry.setEventListenerClass(eventListenerClass);
 
 			Element triggerElement = schedulerEntryElement.element("trigger");
 
@@ -1328,46 +1329,51 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			Element simpleElement = triggerElement.element("simple");
 
 			if (cronElement != null) {
-				schedulerEntry.setTriggerType(TriggerType.CRON);
-
 				Element propertyKeyElement = cronElement.element(
 					"property-key");
 
+				String cronException = null;
+
 				if (propertyKeyElement != null) {
-					schedulerEntry.setTriggerValue(
-						_getTriggerValue(
-							portletModel, propertyKeyElement.getTextTrim()));
+					cronException = _getTriggerValue(
+						portletModel, propertyKeyElement.getTextTrim());
 				}
 				else {
-					schedulerEntry.setTriggerValue(
-						cronElement.elementText("cron-trigger-value"));
+					cronException = cronElement.elementText(
+						"cron-trigger-value");
 				}
+
+				schedulerEntry.setTrigger(
+					TriggerFactoryUtil.createTrigger(
+						eventListenerClass, eventListenerClass, cronException));
 			}
 			else if (simpleElement != null) {
-				schedulerEntry.setTriggerType(TriggerType.SIMPLE);
-
 				Element propertyKeyElement = simpleElement.element(
 					"property-key");
 
+				String intervalString = null;
+
 				if (propertyKeyElement != null) {
-					schedulerEntry.setTriggerValue(
-						_getTriggerValue(
-							portletModel, propertyKeyElement.getTextTrim()));
+					intervalString = _getTriggerValue(
+						portletModel, propertyKeyElement.getTextTrim());
 				}
 				else {
 					Element simpleTriggerValueElement = simpleElement.element(
 						"simple-trigger-value");
 
-					schedulerEntry.setTriggerValue(
-						simpleTriggerValueElement.getTextTrim());
+					intervalString = simpleTriggerValueElement.getTextTrim();
 				}
 
-				String timeUnit = GetterUtil.getString(
-					simpleElement.elementText("time-unit"),
-					TimeUnit.SECOND.getValue());
+				String timeUnitString = StringUtil.toUpperCase(
+					GetterUtil.getString(
+						simpleElement.elementText("time-unit"),
+						TimeUnit.SECOND.getValue()));
 
-				schedulerEntry.setTimeUnit(
-					TimeUnit.valueOf(StringUtil.toUpperCase(timeUnit)));
+				schedulerEntry.setTrigger(
+					TriggerFactoryUtil.createTrigger(
+						eventListenerClass, eventListenerClass,
+						Integer.parseInt(intervalString),
+						TimeUnit.valueOf(timeUnitString)));
 			}
 
 			portletModel.addSchedulerEntry(schedulerEntry);

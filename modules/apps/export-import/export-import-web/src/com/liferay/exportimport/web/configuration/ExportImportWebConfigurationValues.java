@@ -21,10 +21,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class ExportImportWebConfigurationValues {
 
-	public static final String
-		DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL = GetterUtil.getString(
-			ExportImportWebConfigurationUtil.get(
-				"draft.export.import.configuration.check.interval"));
+	public static final int
+		DRAFT_EXPORT_IMPORT_CONFIGURATION_CHECK_INTERVAL =
+			GetterUtil.getInteger(
+				ExportImportWebConfigurationUtil.get(
+					"draft.export.import.configuration.check.interval"));
 
 	public static int DRAFT_EXPORT_IMPORT_CONFIGURATION_CLEAN_UP_COUNT =
 		GetterUtil.getInteger(

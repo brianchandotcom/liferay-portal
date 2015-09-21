@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
-import com.liferay.portal.kernel.scheduler.TriggerType;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
@@ -59,10 +59,11 @@ public class TempFileEntriesMessageListener
 		_dlConfiguration = Configurable.createConfigurable(
 			DLConfiguration.class, properties);
 
-		schedulerEntry.setTimeUnit(TimeUnit.HOUR);
-		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
-		schedulerEntry.setTriggerValue(
-			_dlConfiguration.temporaryFileEntriesCheckInterval());
+		schedulerEntry.setTrigger(
+			_triggerFactory.createTrigger(
+				getEventListenerClass(), getEventListenerClass(),
+				_dlConfiguration.temporaryFileEntriesCheckInterval(),
+				TimeUnit.HOUR));
 	}
 
 	protected void deleteExpiredTemporaryFileEntries(Repository repository) {
@@ -136,9 +137,15 @@ public class TempFileEntriesMessageListener
 	protected void setPortlet(Portlet portlet) {
 	}
 
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
+		_triggerFactory = triggerFactory;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		TempFileEntriesMessageListener.class);
 
 	private volatile DLConfiguration _dlConfiguration;
+	private TriggerFactory _triggerFactory;
 
 }

@@ -352,7 +352,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no tags." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tags." />
 	</command>
 
 	<command name="viewCP">

@@ -52,8 +52,6 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		}
 
 		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(selectedTab);
-
-		ItemSelectorView<ItemSelectorCriterion> initialItemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
 		%>
 
 		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -63,13 +61,13 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 				for (String title : titles) {
 					ItemSelectorViewRenderer curItemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
 
-					ItemSelectorView<ItemSelectorCriterion> itemSelectorView = curItemSelectorViewRenderer.getItemSelectorView();
+					PortletURL curItemSelectorPortletURL = curItemSelectorViewRenderer.getPortletURL();
 				%>
 
 					<aui:nav-item
-						href="<%= curItemSelectorViewRenderer.getPortletURL().toString() %>"
+						href="<%= curItemSelectorPortletURL.toString() %>"
 						label="<%= title %>"
-						selected="<%= selectedTab.equals(itemSelectorView.getTitle(locale)) %>"
+						selected="<%= selectedTab.equals(title) %>"
 					/>
 
 				<%
@@ -78,7 +76,11 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 			</aui:nav>
 
-			<c:if test="<%= initialItemSelectorView.isShowSearch() %>">
+			<%
+			ItemSelectorView<ItemSelectorCriterion> itemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
+			%>
+
+			<c:if test="<%= itemSelectorView.isShowSearch() %>">
 				<aui:nav-bar-search>
 					<aui:form action="<%= currentURL %>" name="searchFm">
 						<liferay-ui:input-search markupView="lexicon" />

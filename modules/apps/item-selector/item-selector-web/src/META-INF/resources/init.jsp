@@ -39,6 +39,8 @@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="java.util.List" %><%@
 page import="java.util.ResourceBundle" %>
 
+<%@ page import="javax.portlet.PortletURL" %>
+
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />

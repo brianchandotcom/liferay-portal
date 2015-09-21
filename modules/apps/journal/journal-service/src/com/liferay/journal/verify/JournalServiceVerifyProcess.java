@@ -665,15 +665,12 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(17);
+			StringBundler sb = new StringBundler(14);
 
 			sb.append("select JournalArticle.* from JournalArticle ");
 			sb.append("left join JournalArticle tempJournalArticle on ");
-			sb.append("(JournalArticle.status = ");
-			sb.append(WorkflowConstants.STATUS_APPROVED);
-			sb.append(") and (tempJournalArticle.status = ");
-			sb.append(WorkflowConstants.STATUS_APPROVED);
-			sb.append(") and (JournalArticle.groupId = ");
+			sb.append("(JournalArticle.status = tempJournalArticle.status) ");
+			sb.append("and (JournalArticle.groupId = ");
 			sb.append("tempJournalArticle.groupId) and ");
 			sb.append("(JournalArticle.articleId = ");
 			sb.append("tempJournalArticle.articleId) and ");

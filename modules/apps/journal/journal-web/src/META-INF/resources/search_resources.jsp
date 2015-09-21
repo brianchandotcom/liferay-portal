@@ -185,6 +185,8 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 
 					Summary summary = searchResult.getSummary();
 
+					summary.setQueryTerms(hits.getQueryTerms());
+
 					JournalArticle article = null;
 					JournalFolder curFolder = null;
 
@@ -223,7 +225,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 								commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 								containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, article.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= LocalizationUtil.getLocalization(article.getContent(), themeDisplay.getLanguageId()) %>"
+								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : article.getDescription(locale) %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
 								rowCheckerId="<%= HtmlUtil.escape(article.getArticleId()) %>"
 								rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"

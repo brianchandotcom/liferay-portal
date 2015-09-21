@@ -17,6 +17,7 @@ package com.liferay.portal.util.test;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upload.FileItem;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -34,7 +35,6 @@ import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -77,40 +77,6 @@ import org.springframework.mock.web.MockMultipartHttpServletRequest;
  * @author Manuel de la Peña
  */
 public class PortletContainerTestUtil {
-
-	public static void addGroupAndLayoutToServletRequest(
-			LiferayServletRequest liferayServletRequest, Layout layout)
-		throws Exception {
-
-		if ((liferayServletRequest == null) || (layout == null)) {
-			throw new IllegalArgumentException("Arguments cannot be null.");
-		}
-
-		HttpServletRequest httpServletRequest =
-			(HttpServletRequest)liferayServletRequest.getRequest();
-
-		httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
-
-		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			layout.getCompanyId());
-
-		themeDisplay.setCompany(company);
-
-		themeDisplay.setLayout(layout);
-		themeDisplay.setPlid(layout.getPlid());
-		themeDisplay.setPortalURL(TestPropsValues.PORTAL_URL);
-		themeDisplay.setRequest(httpServletRequest);
-
-		Group group = layout.getGroup();
-
-		themeDisplay.setScopeGroupId(group.getGroupId());
-		themeDisplay.setSiteGroupId(group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-	}
 
 	public static HttpServletRequest getHttpServletRequest(
 			Group group, Layout layout)
@@ -236,7 +202,7 @@ public class PortletContainerTestUtil {
 			postMethod.addRequestHeader(new Header("Cookie", cookie));
 		}
 
-		byte[] bytes = toByteArray(
+		byte[] bytes = FileUtil.getBytes(
 			mockMultipartHttpServletRequest.getInputStream());
 
 		Part[] parts = {
@@ -296,7 +262,7 @@ public class PortletContainerTestUtil {
 
 		InputStream inputStream = clazz.getResourceAsStream(dependency);
 
-		byte[] bytes = toByteArray(inputStream);
+		byte[] bytes = FileUtil.getBytes(inputStream);
 
 		int currentIndex = fileParameters.size();
 
@@ -413,28 +379,13 @@ public class PortletContainerTestUtil {
 		}
 	}
 
-	public static byte[] toByteArray(InputStream is) throws IOException {
-		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-
-		int nRead = 0;
-		byte[] data = new byte[16384];
-
-		while ((nRead = is.read(data, 0, data.length)) != -1) {
-			buffer.write(data, 0, nRead);
-		}
-
-		buffer.flush();
-
-		return buffer.toByteArray();
-	}
-
 	public static class PortalAuthentication {
 
 		public PortalAuthentication(
 			String portalAuthenticationToken, List<String> cookies) {
 
-			this._portalAuthenticationToken = portalAuthenticationToken;
-			this._cookies = cookies;
+			_portalAuthenticationToken = portalAuthenticationToken;
+			_cookies = cookies;
 		}
 
 		public List<String> getCookies() {

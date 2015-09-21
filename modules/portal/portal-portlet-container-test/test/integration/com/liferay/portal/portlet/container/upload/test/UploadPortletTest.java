@@ -21,10 +21,19 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.portlet.container.test.BasePortletContainerTestCase;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.theme.ThemeDisplayFactory;
 import com.liferay.portal.upload.LiferayServletRequest;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -46,6 +55,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -113,7 +123,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 			"/com/liferay/portal/portlet/container/upload/test/dependencies/" +
 				"file_upload.txt");
 
-		byte[] bytes = PortletContainerTestUtil.toByteArray(inputStream);
+		byte[] bytes = FileUtil.getBytes(inputStream);
 
 		Map<String, List<String>> responseMap = testUpload(bytes);
 
@@ -136,7 +146,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 
 		Assert.assertNotNull(actualTestFileEntry);
 
-		byte[] actualBytes = PortletContainerTestUtil.toByteArray(
+		byte[] actualBytes = FileUtil.getBytes(
 			actualTestFileEntry.getInputStream());
 
 		Assert.assertArrayEquals(bytes, actualBytes);
@@ -150,7 +160,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 			"/com/liferay/portal/portlet/container/upload/test/dependencies/" +
 				"zero-bits");
 
-		byte[] bytes = PortletContainerTestUtil.toByteArray(inputStream);
+		byte[] bytes = FileUtil.getBytes(inputStream);
 
 		Map<String, List<String>> responseMap = testUpload(bytes);
 
@@ -250,8 +260,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 			PortletContainerTestUtil.mockLiferayServletRequest(
 				TestUploadPortlet.TEST_UPLOAD_FILE_NAME_PARAMETER, bytes);
 
-		PortletContainerTestUtil.addGroupAndLayoutToServletRequest(
-			liferayServletRequest, layout);
+		_addGroupAndLayoutToServletRequest(liferayServletRequest, layout);
 
 		ServletRequest servletRequest = liferayServletRequest.getRequest();
 
@@ -284,6 +293,40 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		return PortletContainerTestUtil.postMultipart(
 			url, mockServletRequest,
 			TestUploadPortlet.TEST_UPLOAD_FILE_NAME_PARAMETER);
+	}
+
+	private void _addGroupAndLayoutToServletRequest(
+			LiferayServletRequest liferayServletRequest, Layout layout)
+		throws Exception {
+
+		if ((liferayServletRequest == null) || (layout == null)) {
+			throw new IllegalArgumentException("Arguments cannot be null.");
+		}
+
+		HttpServletRequest httpServletRequest =
+			(HttpServletRequest)liferayServletRequest.getRequest();
+
+		httpServletRequest.setAttribute(WebKeys.LAYOUT, layout);
+
+		ThemeDisplay themeDisplay = ThemeDisplayFactory.create();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			layout.getCompanyId());
+
+		themeDisplay.setCompany(company);
+
+		themeDisplay.setLayout(layout);
+		themeDisplay.setPlid(layout.getPlid());
+		themeDisplay.setPortalURL(TestPropsValues.PORTAL_URL);
+		themeDisplay.setRequest(httpServletRequest);
+
+		Group group = layout.getGroup();
+
+		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
 	private TestUploadPortlet _testUploadPortlet;

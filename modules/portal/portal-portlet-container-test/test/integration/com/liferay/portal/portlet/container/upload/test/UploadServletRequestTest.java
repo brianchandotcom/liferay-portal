@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.ServletInputStreamAdapter;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ProgressTracker;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -75,7 +76,7 @@ public class UploadServletRequestTest {
 		InputStream inputStream = getClass().getResourceAsStream(
 			_TXT_DEPENDENCY);
 
-		_bytes = PortletContainerTestUtil.toByteArray(inputStream);
+		_bytes = FileUtil.getBytes(inputStream);
 	}
 
 	@Test

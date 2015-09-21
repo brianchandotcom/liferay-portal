@@ -46,9 +46,20 @@
 
 		<antcall target="start-selenium" />
 
-		<antcall target="run-tomcat" inheritAll="false">
-			<param name="test.class" value="${test.class}" />
-		</antcall>
+		<if>
+			<isset property="test.base.dir.name" />
+			<then>
+				<antcall target="run-tomcat" inheritAll="false">
+					<param name="test.base.dir.name" value="${test.base.dir.name}" />
+					<param name="test.class" value="${test.class}" />
+				</antcall>
+			</then>
+			<else>
+				<antcall target="run-tomcat" inheritAll="false">
+					<param name="test.class" value="${test.class}" />
+				</antcall>
+			</else>
+		</if>
 
 		<antcall target="stop-selenium" />
 	</target>

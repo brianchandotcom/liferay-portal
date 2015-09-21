@@ -78,13 +78,13 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 			</aui:nav>
 
-			<aui:nav-bar-search>
-				<div class="<%= initialItemSelectorView.isShowSearch() ? "" : "hide" %>" id="<portlet:namespace />formSearch">
+			<c:if test="<%= initialItemSelectorView.isShowSearch() %>">
+				<aui:nav-bar-search>
 					<aui:form action="<%= currentURL %>" name="searchFm">
 						<liferay-ui:input-search markupView="lexicon" />
 					</aui:form>
-				</div>
-			</aui:nav-bar-search>
+				</aui:nav-bar-search>
+			</c:if>
 		</aui:nav-bar>
 
 		<%

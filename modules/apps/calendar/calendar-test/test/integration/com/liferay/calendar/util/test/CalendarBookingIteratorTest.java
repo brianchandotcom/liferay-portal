@@ -43,10 +43,11 @@ public class CalendarBookingIteratorTest {
 
 	@Test
 	public void testCount() throws ParseException {
-		CalendarBooking calendarBooking = new CalendarBookingImpl();
-
 		Calendar calendar = Calendar.getInstance();
+
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+		CalendarBooking calendarBooking = new CalendarBookingImpl();
 
 		calendarBooking.setStartTime(calendar.getTimeInMillis());
 		calendarBooking.setRecurrence(
@@ -54,10 +55,12 @@ public class CalendarBookingIteratorTest {
 
 		CalendarBookingIterator iterator = new CalendarBookingIterator(
 			calendarBooking);
+
 		int count = 0;
 
 		while (iterator.hasNext()) {
 			iterator.next();
+
 			count++;
 		}
 
@@ -68,10 +71,11 @@ public class CalendarBookingIteratorTest {
 	public void testCountIncludesStartDayOutOfWeeklyRepeatingDays()
 		throws ParseException {
 
-		CalendarBooking calendarBooking = new CalendarBookingImpl();
-
 		Calendar calendar = Calendar.getInstance();
+
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+
+		CalendarBooking calendarBooking = new CalendarBookingImpl();
 
 		calendarBooking.setStartTime(calendar.getTimeInMillis());
 		calendarBooking.setRecurrence(
@@ -79,10 +83,12 @@ public class CalendarBookingIteratorTest {
 
 		CalendarBookingIterator iterator = new CalendarBookingIterator(
 			calendarBooking);
+
 		int count = 0;
 
 		while (iterator.hasNext()) {
 			iterator.next();
+
 			count++;
 		}
 
@@ -91,19 +97,21 @@ public class CalendarBookingIteratorTest {
 
 	@Test
 	public void testNoRecurrence() throws ParseException {
-		CalendarBooking calendarBooking = new CalendarBookingImpl();
-
 		Calendar calendar = Calendar.getInstance();
+
+		CalendarBooking calendarBooking = new CalendarBookingImpl();
 
 		calendarBooking.setStartTime(calendar.getTimeInMillis());
 		calendarBooking.setRecurrence(null);
 
 		CalendarBookingIterator iterator = new CalendarBookingIterator(
 			calendarBooking);
+
 		int count = 0;
 
 		while (iterator.hasNext()) {
 			iterator.next();
+
 			count++;
 		}
 

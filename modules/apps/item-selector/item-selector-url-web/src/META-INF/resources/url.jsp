@@ -20,7 +20,7 @@
 ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelectorURLViewDisplayContext)request.getAttribute(ItemSelectorURLView.ITEM_SELECTOR_URL_VIEW_DISPLAY_CONTEXT);
 %>
 
-<aui:row cssClass="lfr-item-viewer" id="itemSelectorUrlContainer">
+<aui:row cssClass="container-fluid-1280 lfr-item-viewer" id="itemSelectorUrlContainer">
 	<aui:col cssClass="url-view" width="<%= 60 %>">
 		<aui:input helpMessage='<%= LanguageUtil.format(request, "for-example-x", "http://www.liferay.com/liferay.png", false) %>' label='<%= LanguageUtil.get(resourceBundle, "image-url") %>' name="urlInput" placeholder="http://" />
 

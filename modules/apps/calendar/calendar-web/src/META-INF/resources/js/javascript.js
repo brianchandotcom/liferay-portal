@@ -1910,7 +1910,7 @@ AUI.add(
 									render: true
 								}
 							],
-							'header'
+							'body'
 						);
 
 						if (instance.popover.headerNode) {

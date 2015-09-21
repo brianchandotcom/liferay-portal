@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
@@ -1310,18 +1309,18 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		for (Element schedulerEntryElement :
 				portletElement.elements("scheduler-entry")) {
 
-			SchedulerEntry schedulerEntry = new SchedulerEntryImpl();
+			SchedulerEntryImpl schedulerEntryImpl = new SchedulerEntryImpl();
 
 			String description = GetterUtil.getString(
 				schedulerEntryElement.elementText("scheduler-description"));
 
-			schedulerEntry.setDescription(description);
+			schedulerEntryImpl.setDescription(description);
 
 			String eventListenerClass = GetterUtil.getString(
 				schedulerEntryElement.elementText(
 					"scheduler-event-listener-class"));
 
-			schedulerEntry.setEventListenerClass(eventListenerClass);
+			schedulerEntryImpl.setEventListenerClass(eventListenerClass);
 
 			Element triggerElement = schedulerEntryElement.element("trigger");
 
@@ -1343,7 +1342,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 						"cron-trigger-value");
 				}
 
-				schedulerEntry.setTrigger(
+				schedulerEntryImpl.setTrigger(
 					TriggerFactoryUtil.createTrigger(
 						eventListenerClass, eventListenerClass, cronException));
 			}
@@ -1369,14 +1368,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 						simpleElement.elementText("time-unit"),
 						TimeUnit.SECOND.getValue()));
 
-				schedulerEntry.setTrigger(
+				schedulerEntryImpl.setTrigger(
 					TriggerFactoryUtil.createTrigger(
 						eventListenerClass, eventListenerClass,
 						Integer.parseInt(intervalString),
 						TimeUnit.valueOf(timeUnitString)));
 			}
 
-			portletModel.addSchedulerEntry(schedulerEntry);
+			portletModel.addSchedulerEntry(schedulerEntryImpl);
 		}
 
 		portletModel.setPortletURLClass(

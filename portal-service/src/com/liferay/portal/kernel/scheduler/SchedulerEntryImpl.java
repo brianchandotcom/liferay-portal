@@ -37,17 +37,14 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 		return _trigger;
 	}
 
-	@Override
 	public void setDescription(String description) {
 		_description = description;
 	}
 
-	@Override
 	public void setEventListenerClass(String eventListenerClass) {
 		_eventListenerClass = eventListenerClass;
 	}
 
-	@Override
 	public void setTrigger(Trigger trigger) {
 		_trigger = trigger;
 	}

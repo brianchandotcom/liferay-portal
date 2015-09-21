@@ -27,39 +27,24 @@ public abstract class BaseSchedulerEntryMessageListener
 	public BaseSchedulerEntryMessageListener() {
 		Class<?> clazz = getClass();
 
-		schedulerEntry.setEventListenerClass(clazz.getName());
+		schedulerEntryImpl.setEventListenerClass(clazz.getName());
 	}
 
 	@Override
 	public String getDescription() {
-		return schedulerEntry.getDescription();
+		return schedulerEntryImpl.getDescription();
 	}
 
 	@Override
 	public String getEventListenerClass() {
-		return schedulerEntry.getEventListenerClass();
+		return schedulerEntryImpl.getEventListenerClass();
 	}
 
 	@Override
 	public Trigger getTrigger() {
-		return schedulerEntry.getTrigger();
+		return schedulerEntryImpl.getTrigger();
 	}
 
-	@Override
-	public void setDescription(String description) {
-		schedulerEntry.setDescription(description);
-	}
-
-	@Override
-	public void setEventListenerClass(String eventListenerClass) {
-		schedulerEntry.setEventListenerClass(eventListenerClass);
-	}
-
-	@Override
-	public void setTrigger(Trigger trigger) {
-		schedulerEntry.setTrigger(trigger);
-	}
-
-	protected SchedulerEntry schedulerEntry = new SchedulerEntryImpl();
+	protected SchedulerEntryImpl schedulerEntryImpl = new SchedulerEntryImpl();
 
 }

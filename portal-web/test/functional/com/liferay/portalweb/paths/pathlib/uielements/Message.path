@@ -160,7 +160,7 @@
 </tr>
 <tr>
 	<td>RECYCLE_BIN_SUCCESS</td>
-	<td>//div[contains(.,'${key_assetType}') and contains(@class,'alert-success')]//a</td>
+	<td>//div[contains(.,'${key_assetType}') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -215,7 +215,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_RESTORE_LOCATION</td>
-	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')] </td>
+	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')]</td>
 	<td></td>
 </tr>
 <tr>

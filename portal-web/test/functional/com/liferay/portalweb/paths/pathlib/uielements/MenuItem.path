@@ -380,7 +380,7 @@
 </tr>
 <tr>
 	<td>MOVE</td>
-	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Move')] | //li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>

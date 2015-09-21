@@ -6338,40 +6338,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public boolean isCompanyControlPanelVisible(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (permissionChecker.isCompanyAdmin()) {
-			return true;
-		}
-
-		long scopeGroupId = themeDisplay.getScopeGroupId();
-
-		try {
-			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-				themeDisplay.getCompanyId());
-
-			themeDisplay.setScopeGroupId(companyGroup.getGroupId());
-
-			List<Portlet> controlPanelPortlets = getControlPanelPortlets(
-				PortletCategoryKeys.SITE_ADMINISTRATION, themeDisplay);
-
-			if (!controlPanelPortlets.isEmpty()) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-		finally {
-			themeDisplay.setScopeGroupId(scopeGroupId);
-		}
-	}
-
-	@Override
 	public boolean isControlPanelPortlet(
 		String portletId, String category, ThemeDisplay themeDisplay) {
 

@@ -16,8 +16,6 @@ package com.liferay.portlet.blogs.service;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -29,10 +27,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ModelHintsUtil;
@@ -51,8 +46,6 @@ import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-
-import java.io.InputStream;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -81,15 +74,6 @@ public class BlogsEntryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		_statusAnyQueryDefinition = new QueryDefinition<BlogsEntry>(
-			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-		_statusApprovedQueryDefinition = new QueryDefinition<BlogsEntry>(
-			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-		_statusInTrashQueryDefinition = new QueryDefinition<BlogsEntry>(
-			WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
 		_user = TestPropsValues.getUser();
 	}
 
@@ -785,9 +769,18 @@ public class BlogsEntryLocalServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private QueryDefinition<BlogsEntry> _statusAnyQueryDefinition;
-	private QueryDefinition<BlogsEntry> _statusApprovedQueryDefinition;
-	private QueryDefinition<BlogsEntry> _statusInTrashQueryDefinition;
+	private final QueryDefinition<BlogsEntry> _statusAnyQueryDefinition =
+		new QueryDefinition<BlogsEntry>(
+			WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	private final QueryDefinition<BlogsEntry> _statusApprovedQueryDefinition =
+		new QueryDefinition<BlogsEntry>(
+			WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	private final QueryDefinition<BlogsEntry> _statusInTrashQueryDefinition =
+		new QueryDefinition<BlogsEntry>(
+			WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	private User _user;
 
 }

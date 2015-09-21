@@ -573,8 +573,7 @@ public class WebDriverHelper {
 			try {
 				webDriver.get(targetURL);
 
-				if (PropsValues.BROWSER_TYPE.equals("*iehta") ||
-					PropsValues.BROWSER_TYPE.equals("*iexplore")) {
+				if (PropsValues.BROWSER_TYPE.equals("internetexplorer")) {
 
 					refresh(webDriver);
 				}

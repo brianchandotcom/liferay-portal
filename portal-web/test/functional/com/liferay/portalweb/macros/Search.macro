@@ -216,7 +216,6 @@
 
 	<command name="viewUserFacetPG">
 		<var name="key_facetFrequency" value="${facetFrequency}" />
-		<var name="key_userLoginFullName" value="${userLoginFullName}" />
 
 		<execute function="AssertElementPresent" locator1="SearchResults#USER_FACET_SEARCH_USERS_BOX" />
 		<execute function="AssertTextEquals" locator1="SearchResults#USER_FACET_ANY_USER" value1="Any User" />

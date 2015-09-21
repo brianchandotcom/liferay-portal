@@ -27,7 +27,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletPreferencesIds;
-import com.liferay.portal.service.ExceptionRetryAdviceAcceptor;
+import com.liferay.portal.service.ExceptionRetryAcceptor;
 import com.liferay.portal.service.base.PortletPreferencesLocalServiceBaseImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
@@ -284,11 +284,11 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	@Retry(
-		acceptor = ExceptionRetryAdviceAcceptor.class,
+		acceptor = ExceptionRetryAcceptor.class,
 		properties = {
 			@Property(
-				propName = ExceptionRetryAdviceAcceptor.EXCEPTION_NAME,
-				propValue =
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value =
 					"org.springframework.dao.DataIntegrityViolationException"
 			)
 		}

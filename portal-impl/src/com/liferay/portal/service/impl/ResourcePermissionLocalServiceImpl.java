@@ -44,7 +44,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.security.permission.PermissionUpdateHandlerRegistryUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.ExceptionRetryAdviceAcceptor;
+import com.liferay.portal.service.ExceptionRetryAcceptor;
 import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.ResourcePermissionsThreadLocal;
@@ -122,11 +122,11 @@ public class ResourcePermissionLocalServiceImpl
 	 */
 	@Override
 	@Retry(
-		acceptor = ExceptionRetryAdviceAcceptor.class,
+		acceptor = ExceptionRetryAcceptor.class,
 		properties = {
 			@Property(
-				propName = ExceptionRetryAdviceAcceptor.EXCEPTION_NAME,
-				propValue =
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value =
 					"org.springframework.dao.DataIntegrityViolationException"
 			)
 		}
@@ -1119,11 +1119,11 @@ public class ResourcePermissionLocalServiceImpl
 	 */
 	@Override
 	@Retry(
-		acceptor = ExceptionRetryAdviceAcceptor.class,
+		acceptor = ExceptionRetryAcceptor.class,
 		properties = {
 			@Property(
-				propName = ExceptionRetryAdviceAcceptor.EXCEPTION_NAME,
-				propValue =
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value =
 					"org.springframework.dao.DataIntegrityViolationException"
 			)
 		}
@@ -1166,11 +1166,11 @@ public class ResourcePermissionLocalServiceImpl
 	 */
 	@Override
 	@Retry(
-		acceptor = ExceptionRetryAdviceAcceptor.class,
+		acceptor = ExceptionRetryAcceptor.class,
 		properties = {
 			@Property(
-				propName = ExceptionRetryAdviceAcceptor.EXCEPTION_NAME,
-				propValue =
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value =
 					"org.springframework.dao.DataIntegrityViolationException"
 			)
 		}
@@ -1212,11 +1212,11 @@ public class ResourcePermissionLocalServiceImpl
 	 */
 	@Override
 	@Retry(
-		acceptor = ExceptionRetryAdviceAcceptor.class,
+		acceptor = ExceptionRetryAcceptor.class,
 		properties = {
 			@Property(
-				propName = ExceptionRetryAdviceAcceptor.EXCEPTION_NAME,
-				propValue =
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value =
 					"org.springframework.dao.DataIntegrityViolationException"
 			)
 		}

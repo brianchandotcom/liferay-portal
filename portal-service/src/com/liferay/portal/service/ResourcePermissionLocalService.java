@@ -84,8 +84,8 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	with the primary key or a resource action with the name and
 	action ID could not be found
 	*/
-	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAdviceAcceptor.class, properties =  {
-		@com.liferay.portal.kernel.spring.aop.Property(propName = ExceptionRetryAdviceAcceptor.EXCEPTION_NAME, propValue = "org.springframework.dao.DataIntegrityViolationException")
+	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAcceptor.class, properties =  {
+		@com.liferay.portal.kernel.spring.aop.Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
 	}
 	)
 	public void addResourcePermission(long companyId, java.lang.String name,
@@ -736,8 +736,8 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @throws PortalException if a role with the primary key or a resource
 	action with the name and action ID could not be found
 	*/
-	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAdviceAcceptor.class, properties =  {
-		@com.liferay.portal.kernel.spring.aop.Property(propName = ExceptionRetryAdviceAcceptor.EXCEPTION_NAME, propValue = "org.springframework.dao.DataIntegrityViolationException")
+	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAcceptor.class, properties =  {
+		@com.liferay.portal.kernel.spring.aop.Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
 	}
 	)
 	public void setOwnerResourcePermissions(long companyId,
@@ -771,8 +771,8 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @throws PortalException if a role with the primary key or a resource
 	action with the name and action ID could not be found
 	*/
-	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAdviceAcceptor.class, properties =  {
-		@com.liferay.portal.kernel.spring.aop.Property(propName = ExceptionRetryAdviceAcceptor.EXCEPTION_NAME, propValue = "org.springframework.dao.DataIntegrityViolationException")
+	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAcceptor.class, properties =  {
+		@com.liferay.portal.kernel.spring.aop.Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
 	}
 	)
 	public void setResourcePermissions(long companyId, java.lang.String name,
@@ -804,8 +804,8 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	* @throws PortalException if a role with the primary key or a resource
 	action with the name and action ID could not be found
 	*/
-	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAdviceAcceptor.class, properties =  {
-		@com.liferay.portal.kernel.spring.aop.Property(propName = ExceptionRetryAdviceAcceptor.EXCEPTION_NAME, propValue = "org.springframework.dao.DataIntegrityViolationException")
+	@com.liferay.portal.kernel.spring.aop.Retry(acceptor = com.liferay.portal.service.ExceptionRetryAcceptor.class, properties =  {
+		@com.liferay.portal.kernel.spring.aop.Property(name = ExceptionRetryAcceptor.EXCEPTION_NAME, value = "org.springframework.dao.DataIntegrityViolationException")
 	}
 	)
 	public void setResourcePermissions(long companyId, java.lang.String name,

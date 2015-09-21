@@ -951,16 +951,14 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			return true;
 		}
-		catch (Exception e) {
-			if (e instanceof InvalidLockException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e.getMessage());
-				}
+		catch (InvalidLockException ile) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(ile.getMessage());
 			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to unlock file entry", e);
-				}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to unlock file entry", e);
 			}
 		}
 

@@ -386,12 +386,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 							dlFileEntry.getFileEntryId(),
 							dlFileEntry.getFileName(), dlFileEntry.getTitle());
 					}
-					catch (PortalException pe) {
-						if (!(pe instanceof DuplicateFileEntryException) &&
-							!(pe instanceof DuplicateFolderNameException)) {
-
-							return;
-						}
+					catch (DuplicateFileEntryException |
+						DuplicateFolderNameException pe) {
 
 						try {
 							renameDuplicateTitle(dlFileEntry);
@@ -406,8 +402,10 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 							}
 						}
 					}
+					catch (PortalException pe) {
+						return;
+					}
 				}
-
 			});
 
 		actionableDynamicQuery.performActions();
@@ -553,12 +551,8 @@ public class DLServiceVerifyProcess extends VerifyProcess {
 
 				return;
 			}
-			catch (PortalException pe) {
-				if (!(pe instanceof DuplicateFolderNameException) &&
-					 !(pe instanceof DuplicateFileEntryException)) {
-
-					throw pe;
-				}
+			catch (DuplicateFileEntryException |
+					DuplicateFolderNameException e) {
 
 				i++;
 			}

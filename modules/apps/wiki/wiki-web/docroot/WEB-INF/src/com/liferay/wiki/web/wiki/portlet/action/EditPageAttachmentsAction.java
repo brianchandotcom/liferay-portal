@@ -164,19 +164,16 @@ public class EditPageAttachmentsAction extends PortletAction {
 				sendRedirect(actionRequest, actionResponse);
 			}
 		}
+		catch (NoSuchNodeException | NoSuchPageException |
+				PrincipalException e) {
+
+			SessionErrors.add(actionRequest, e.getClass());
+
+			setForward(actionRequest, "portlet.wiki.error");
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof NoSuchPageException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.wiki.error");
-			}
-			else {
-				handleUploadException(
-					portletConfig, actionRequest, actionResponse, cmd, e);
-			}
+			handleUploadException(
+				portletConfig, actionRequest, actionResponse, cmd, e);
 		}
 	}
 
@@ -191,18 +188,12 @@ public class EditPageAttachmentsAction extends PortletAction {
 			ActionUtil.getNode(renderRequest);
 			ActionUtil.getPage(renderRequest);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchNodeException ||
-				e instanceof NoSuchPageException ||
-				e instanceof PrincipalException) {
+		catch (NoSuchNodeException | NoSuchPageException |
+				PrincipalException e) {
 
-				SessionErrors.add(renderRequest, e.getClass());
+			SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward("portlet.wiki.error");
-			}
-			else {
-				throw e;
-			}
+			return actionMapping.findForward("portlet.wiki.error");
 		}
 
 		return actionMapping.findForward(

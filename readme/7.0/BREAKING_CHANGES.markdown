@@ -2290,34 +2290,38 @@ AUI URI declaration.
 
 ---------------------------------------
 
-### <runtime-portlet> tag can't be used anymore in the body of Web Content Articles
+### Removed Support for runtime-portlet Tag in Body of Web Content Articles
 - **Date:** 2015-Sep-17
 - **JIRA Ticket:** LPS-58736
 
 #### What changed?
 
-The tag <runtime-portlet> won't be replaced by a portlet if it is found in the 
-body of a web content anymore.
+The tag `runtime-portlet` is no longer replaced by a portlet if it is found in
+the body of a web content article.
 
 #### Who is affected?
 
-Any Web Content in the database (JournalArticle table) which uses this taglib.
+This affects any web content in the database (`JournalArticle` table) that uses
+this tag.
 
 #### How should I update my code?
 
-Embeding another portlet is only supported from a template. You should embed
-the portlet using the call to theme.runtime.
+Embedding another portlet is only supported from a template. You should embed
+the portlet using the call to `theme.runtime`.
+
+**Example**
 
 In Velocity:
-`$theme.runtime("145")`
 
-In Freemarker:
-`${theme.runtime("145")}``
+    $theme.runtime("145")
 
+In FreeMarker:
+
+    ${theme.runtime("145")
 
 #### Why was this change made?
 
-To improve the performance of web content articles while enforcing a single
-way to embed portlets into the page in order to test it better.
+This change improves the performance of web content articles while enforcing a
+single way to embed portlets into the page for better testing.
 
 ---------------------------------------

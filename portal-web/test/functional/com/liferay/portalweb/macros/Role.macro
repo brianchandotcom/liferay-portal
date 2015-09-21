@@ -440,7 +440,7 @@
 				</not>
 				<then>
 					<execute function="Type" locator1="RolesPermissionsNavigation#SEARCH_FIELD" value1="${permissionNavigationValue}" />
-					<execute function="AssertClick" locator1="CPRolesDefinepermissions#${permissionNavigationKey}" value1="${permissionNavigationValue}" />
+					<execute function="AssertClick" locator1="RolesPermissionsNavigation#${permissionNavigationKey}" value1="${permissionNavigationValue}" />
 
 					<execute function="AssertTextEquals" locator1="RolesPermissions#PERMISSION_HEADER" value1="${permissionNavigationValue}" />
 				</then>
@@ -821,6 +821,13 @@
 				<then>
 					<var name="permissionNavigationKey" value="CONTROL_PANEL_USERS_ROLES" />
 					<var name="permissionNavigationValue" value="Roles" />
+				</then>
+			</elseif>
+			<elseif>
+				<contains string="${permissionDefinitionKey}" substring="CONTROL_PANEL_SITES_SITES_RESOURCE_PERMISSIONS_SITE" />
+				<then>
+					<var name="permissionNavigationKey" value="CONTROL_PANEL_SITES_SITES" />
+					<var name="permissionNavigationValue" value="Site Memberships" />
 				</then>
 			</elseif>
 			<elseif>

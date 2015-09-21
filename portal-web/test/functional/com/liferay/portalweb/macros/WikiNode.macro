@@ -36,6 +36,7 @@
 	</command>
 
 	<command name="deleteCP">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
 		<execute function="AssertTextEquals" locator1="Wiki#NODE_TABLE_WIKI_NAME" value1="${wikiNodeName}" />

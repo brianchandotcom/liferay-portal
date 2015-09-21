@@ -378,6 +378,7 @@
 				<var name="key_fieldFieldLabel" value="${nestedFieldFieldLabel}" />
 
 				<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_NESTED" value1="${nestedFieldFieldLabel} ${ddlRecordNestedFieldData}" />
+				<execute function="AssertCssValue" locator1="DDLRecord#FIELD_NESTED" locator2="margin-left" value1="15px" />
 			</then>
 		</if>
 	</command>
@@ -614,6 +615,10 @@
 		<execute function="AssertClick" locator1="PGDynamicdatalists#RECORD_MENULIST_VIEW" value1="View" />
 
 		<execute function="AssertTextEquals" locator1="DDLRecord#FIELD_1" value1="${fieldFieldLabel} ${ddlRecordFieldData}" />
+	</command>
+
+	<command name="viewRepeatableNestedFieldsVisualGrouping">
+		<execute function="SikuliAssertElementPresent" locator1="DDLRecord#NESTED_FIELD_REPEATABLE_VISUAL_GROUPING_PNG" />
 	</command>
 
 	<command name="viewSecondRecordViaDDLDisplayTemplate">

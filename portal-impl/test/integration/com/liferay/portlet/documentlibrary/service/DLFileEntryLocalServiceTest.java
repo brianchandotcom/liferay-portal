@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
@@ -41,12 +43,15 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.DDMFormField;
@@ -68,6 +73,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -232,6 +238,87 @@ public class DLFileEntryLocalServiceTest {
 			_group.getGroupId(), folder.getFolderId());
 
 		Assert.assertEquals(20, fileEntriesCount);
+	}
+
+	@Test
+	public void testDuplicateFileIsIgnored() throws Exception {
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		InputStream inputStream = new ByteArrayInputStream(new byte[0]);
+
+		Map<String, DDMFormValues> ddmFormValuesMap = Collections.emptyMap();
+
+		DLFileEntry fileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), dlFolder.getGroupId(),
+			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			ddmFormValuesMap, null, inputStream, 0, serviceContext);
+
+		DLFileVersion fileVersion = fileEntry.getLatestFileVersion(true);
+
+		DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
+
+		DLStoreUtil.updateFile(
+			fileEntry.getCompanyId(), fileEntry.getRepositoryId(),
+			fileEntry.getName(), fileEntry.getExtension(), false, "2.0",
+			StringUtil.randomString(), inputStream);
+
+		fileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
+			TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, true,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			ddmFormValuesMap, null, inputStream, 0, serviceContext);
+
+		fileVersion = fileEntry.getLatestFileVersion(true);
+
+		DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
+
+		fileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
+			fileEntry.getFileEntryId());
+
+		Assert.assertEquals("2.0", fileEntry.getVersion());
+	}
+
+	@Test(expected = DuplicateFileEntryException.class)
+	public void testDuplicateTitleFileEntry() throws Exception {
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		String title = StringUtil.randomString();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		InputStream inputStream = new ByteArrayInputStream(new byte[0]);
+
+		Map<String, DDMFormValues> ddmFormValuesMap = Collections.emptyMap();
+
+		DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), dlFolder.getGroupId(),
+			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
+			StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			ddmFormValuesMap, null, inputStream, 0, serviceContext);
+
+		DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), dlFolder.getGroupId(),
+			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN, title,
+			StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			ddmFormValuesMap, null, inputStream, 0, serviceContext);
 	}
 
 	@Test

@@ -1,8 +1,8 @@
 {
-	"defaultLanguageId":"en_US",
 	"availableLanguageIds": [
 		"en_US"
 	],
+	"defaultLanguageId":"en_US",
 	"fields": [
 		{
 			"validation":{},

@@ -56,34 +56,33 @@ public class QuartzTriggerFactory implements TriggerFactory {
 			return null;
 		}
 
-		ScheduleBuilder<?> scheduleBuilder = null;
-
-		if (interval > 0) {
-			if (timeUnit == TimeUnit.MILLISECOND) {
-				SimpleScheduleBuilder simpleScheduleBuilder =
-					SimpleScheduleBuilder.simpleSchedule();
-
-				simpleScheduleBuilder.withIntervalInMilliseconds(interval);
-				simpleScheduleBuilder.withRepeatCount(
-					SimpleTrigger.REPEAT_INDEFINITELY);
-
-				scheduleBuilder = simpleScheduleBuilder;
-			}
-			else {
-				CalendarIntervalScheduleBuilder
-					calendarIntervalScheduleBuilder =
-						CalendarIntervalScheduleBuilder.
-							calendarIntervalSchedule();
-
-				calendarIntervalScheduleBuilder.withInterval(
-					interval, IntervalUnit.valueOf(timeUnit.name()));
-
-				scheduleBuilder = calendarIntervalScheduleBuilder;
-			}
+		if (interval <= 0) {
+			return createTrigger(
+				jobName, groupName, startDate, endDate, (ScheduleBuilder)null);
 		}
 
+		if (timeUnit == TimeUnit.MILLISECOND) {
+			SimpleScheduleBuilder simpleScheduleBuilder =
+				SimpleScheduleBuilder.simpleSchedule();
+
+			simpleScheduleBuilder.withIntervalInMilliseconds(interval);
+			simpleScheduleBuilder.withRepeatCount(
+				SimpleTrigger.REPEAT_INDEFINITELY);
+
+			return createTrigger(
+				jobName, groupName, startDate, endDate, simpleScheduleBuilder);
+		}
+
+		CalendarIntervalScheduleBuilder
+			calendarIntervalScheduleBuilder =
+				CalendarIntervalScheduleBuilder.calendarIntervalSchedule();
+
+		calendarIntervalScheduleBuilder.withInterval(
+			interval, IntervalUnit.valueOf(timeUnit.name()));
+
 		return createTrigger(
-			jobName, groupName, startDate, endDate, scheduleBuilder);
+			jobName, groupName, startDate, endDate,
+			calendarIntervalScheduleBuilder);
 	}
 
 	@Override
@@ -116,9 +115,7 @@ public class QuartzTriggerFactory implements TriggerFactory {
 			triggerBuilder.withSchedule(scheduleBuilder);
 		}
 
-		org.quartz.Trigger trigger = triggerBuilder.build();
-
-		return new QuartzTrigger(trigger);
+		return new QuartzTrigger(triggerBuilder.build());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

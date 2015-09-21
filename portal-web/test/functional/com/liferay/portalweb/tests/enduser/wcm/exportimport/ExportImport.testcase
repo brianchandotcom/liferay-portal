@@ -780,7 +780,7 @@
 
 	<command known-issues="LRQA-16325" name="ExportImportWSRPUnitConverter" priority="4">
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP" />
+			<var name="portletName" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addProducerCP">
@@ -789,7 +789,7 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP" />
+			<var name="portletName" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addConsumerCP">
@@ -798,7 +798,7 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP" />
+			<var name="portletName" value="WSRP Admin" />
 		</execute>
 
 		<execute macro="WSRP#addConsumerPortletCP">

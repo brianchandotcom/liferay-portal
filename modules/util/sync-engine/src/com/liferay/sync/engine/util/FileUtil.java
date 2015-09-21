@@ -15,7 +15,9 @@
 package com.liferay.sync.engine.util;
 
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
+import com.liferay.sync.engine.model.SyncAccount;
 import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 
 import java.io.IOException;
@@ -338,6 +340,15 @@ public class FileUtil {
 		}
 
 		return fileName;
+	}
+
+	public static Path getTempFilePath(SyncFile syncFile) {
+		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
+			syncFile.getSyncAccountId());
+
+		return getFilePath(
+			syncAccount.getFilePathName(), ".data",
+			String.valueOf(syncFile.getSyncFileId()));
 	}
 
 	public static boolean isHidden(Path filePath) {

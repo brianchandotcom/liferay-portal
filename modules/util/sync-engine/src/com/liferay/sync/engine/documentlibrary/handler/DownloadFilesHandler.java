@@ -131,7 +131,7 @@ public class DownloadFilesHandler extends BaseHandler {
 				try {
 					downloadFileHandler.copyFile(
 						syncFile, Paths.get(syncFile.getFilePathName()),
-						new CloseShieldInputStream(zipInputStream));
+						new CloseShieldInputStream(zipInputStream), false);
 				}
 				catch (Exception e) {
 					_logger.error(e.getMessage(), e);

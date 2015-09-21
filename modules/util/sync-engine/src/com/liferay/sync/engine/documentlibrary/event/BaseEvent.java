@@ -56,10 +56,10 @@ public abstract class BaseEvent implements Event {
 		}
 	}
 
-	public void executeAsynchronousGet(String urlPath) throws Exception {
+	public void executeAsynchronousGet(HttpGet httpGet) throws Exception {
 		Session session = SessionManager.getSession(_syncAccountId);
 
-		_httpGet = new HttpGet(urlPath);
+		_httpGet = httpGet;
 
 		session.asynchronousExecute(_httpGet, _handler);
 	}

@@ -275,12 +275,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				targetSyncFile.getFilePathName());
 		}
 
-		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-			sourceSyncFile.getSyncAccountId());
-
-		Path tempFilePath = FileUtil.getFilePath(
-			syncAccount.getFilePathName(), ".data",
-			String.valueOf(targetSyncFile.getSyncFileId()));
+		Path tempFilePath = FileUtil.getTempFilePath(targetSyncFile);
 
 		Files.copy(
 			Paths.get(sourceSyncFile.getFilePathName()), tempFilePath,

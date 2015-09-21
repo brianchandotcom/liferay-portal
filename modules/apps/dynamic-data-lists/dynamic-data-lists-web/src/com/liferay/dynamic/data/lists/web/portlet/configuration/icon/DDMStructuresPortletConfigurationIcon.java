@@ -40,7 +40,7 @@ public class DDMStructuresPortletConfigurationIcon
 
 	@Override
 	public String getMessage() {
-		return "manage-data-definitions";
+		return "data-definitions";
 	}
 
 	@Override

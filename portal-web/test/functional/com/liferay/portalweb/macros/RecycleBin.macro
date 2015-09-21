@@ -8,7 +8,7 @@
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_RECYCLE_BIN_INFO" value1="The Recycle Bin is empty." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
 		<execute function="AssertTextNotPresent" value1="${assetName}" />
 	</command>
 
@@ -26,7 +26,7 @@
 			<then>
 				<execute function="AssertClickNoError" locator1="RecycleBin#EMPTY_RECYCLE_BIN" value1="Empty the Recycle Bin" />
 				<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to empty the Recycle Bin?" />
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_RECYCLE_BIN_INFO" value1="The Recycle Bin is empty." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
 			</then>
 		</if>
 	</command>
@@ -81,10 +81,10 @@
 		<if>
 			<equals arg1="${multipleAssets}" arg2="true" />
 			<then>
-				<execute function="AssertTextNotPresent" locator1="Message#EMPTY_RECYCLE_BIN_INFO" value1="The Recycle Bin is empty." />
+				<execute function="AssertTextNotPresent" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="Message#EMPTY_RECYCLE_BIN_INFO" value1="The Recycle Bin is empty." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
 			</else>
 		</if>
 
@@ -124,7 +124,7 @@
 		<var name="key_assetRestoreLocation" value="${assetRestoreLocation}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RESTORE_LOCATION" value1="${assetRestoreLocation}" />
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_RECYCLE_BIN_INFO" value1="The Recycle Bin is empty." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
 		<execute function="AssertElementNotPresent" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" />
 	</command>
 
@@ -154,7 +154,7 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute function="AssertTextEquals" locator1="Message#EMPTY_RECYCLE_BIN_INFO" value1="The Recycle Bin is empty." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="The Recycle Bin is empty." />
 		<execute function="AssertTextNotPresent" value1="${assetName}" />
 	</command>
 

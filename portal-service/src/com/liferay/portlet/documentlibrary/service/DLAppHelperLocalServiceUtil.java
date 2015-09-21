@@ -133,12 +133,24 @@ public class DLAppHelperLocalServiceUtil {
 		return getService().getNoAssetFileEntries();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#moveDependentsToTrash(DLFolder, long)}
+	*/
+	@Deprecated
 	public static void moveDependentsToTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
 		long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.moveDependentsToTrash(dlFileEntriesAndDLFolders, trashEntryId);
+	}
+
+	public static void moveDependentsToTrash(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
+		long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().moveDependentsToTrash(dlFolder, trashEntryId);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(
@@ -217,6 +229,10 @@ public class DLAppHelperLocalServiceUtil {
 		return getService().moveFolderToTrash(userId, folder);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#restoreDependentsFromTrash(DLFolder)}
+	*/
 	public static void restoreDependentsFromTrash(
 		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -234,6 +250,12 @@ public class DLAppHelperLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.restoreDependentsFromTrash(dlFileEntriesAndDLFolders, trashEntryId);
+	}
+
+	public static void restoreDependentsFromTrash(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().restoreDependentsFromTrash(dlFolder);
 	}
 
 	public static void restoreFileEntryFromTrash(long userId,

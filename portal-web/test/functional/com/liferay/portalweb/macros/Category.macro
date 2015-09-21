@@ -4,6 +4,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<var name="key_assetEntry" value="${vocabularyName}" />
+
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
@@ -34,6 +35,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<var name="key_assetEntry" value="${vocabularyName}" />
+
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
@@ -86,6 +88,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<var name="key_assetEntry" value="${vocabularyName}" />
+
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
@@ -107,6 +110,7 @@
 			</then>
 			<else>
 				<var name="key_assetEntry" value="${vocabularyName}" />
+
 				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 			</else>
@@ -130,6 +134,7 @@
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<var name="key_assetEntry" value="${vocabularyName}" />
+
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#ADD_CATEGORY" value1="Add Category" />
 
@@ -170,6 +175,7 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<var name="key_assetEntry" value="${categoryName}" />
+
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -212,6 +218,7 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_CATEGORY" value1="${categoryName}" />
 
 		<var name="key_assetEntry" value="${categoryName}" />
+		
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -238,6 +245,7 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<var name="key_assetEntry" value="${categoryName}" />
+
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -254,6 +262,7 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<var name="key_assetEntry" value="${categoryName}" />
+
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
@@ -282,6 +291,7 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<var name="key_assetEntry" value="${categoryName}" />
+
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
@@ -326,6 +336,7 @@
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 
 		<var name="key_assetEntry" value="${categoryName}" />
+
 		<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#PERMISSIONS" value1="Permissions" />
 

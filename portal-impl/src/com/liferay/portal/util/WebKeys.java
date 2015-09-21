@@ -277,6 +277,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String PORTLET_CONTENT_JSP = "PORTLET_CONTENT_JSP";
 
+	public static final String PORTLET_PARALLEL_RENDER = "PORTLET_PARALLEL_RENDER";
+
 	public static final String PORTLET_STRUTS_ACTION = "PORTLET_STRUTS_ACTION";
 
 	public static final String PORTLET_STRUTS_ATTRIBUTES = "PORTLET_STRUTS_ATTRIBUTES";

@@ -73,6 +73,46 @@
 		</constructor-arg>
 	</bean>
 
+	<!-- Server side parallel rendering -->
+
+	<bean class="com.liferay.portal.kernel.executor.PortalExecutorConfig">
+		<constructor-arg name="name">
+			<bean class="com.liferay.portal.kernel.spring.util.ClassNameUtil" factory-method="getClassName">
+				<constructor-arg value="com.liferay.portal.layoutconfiguration.util.RuntimePageImpl" />
+			</bean>
+		</constructor-arg>
+		<constructor-arg name="corePoolSize">
+			<util:constant static-field="com.liferay.portal.util.PropsValues.LAYOUT_PARALLEL_RENDER_THREAD_POOL_CORE_THREAD_COUNT" />
+		</constructor-arg>
+		<constructor-arg name="maxPoolSize">
+			<util:constant static-field="com.liferay.portal.util.PropsValues.LAYOUT_PARALLEL_RENDER_THREAD_POOL_MAX_THREAD_COUNT" />
+		</constructor-arg>
+		<constructor-arg name="keepAliveTime">
+			<util:constant static-field="com.liferay.portal.util.PropsValues.LAYOUT_PARALLEL_RENDER_THREAD_POOL_KEEP_ALIVE_TIME" />
+		</constructor-arg>
+		<constructor-arg name="timeUnit">
+			<util:constant static-field="java.util.concurrent.TimeUnit.SECONDS" />
+		</constructor-arg>
+		<constructor-arg name="allowCoreThreadTimeout">
+			<util:constant static-field="com.liferay.portal.util.PropsValues.LAYOUT_PARALLEL_RENDER_THREAD_POOL_ALLOW_CORE_THREAD_TIMEOUT" />
+		</constructor-arg>
+		<constructor-arg name="maxQueueSize">
+			<util:constant static-field="com.liferay.portal.util.PropsValues.LAYOUT_PARALLEL_RENDER_THREAD_POOL_MAX_QUEUE_SIZE" />
+		</constructor-arg>
+		<constructor-arg name="rejectedExecutionHandler">
+			<bean class="com.liferay.portal.kernel.concurrent.DiscardWithCancelPolicy" />
+		</constructor-arg>
+		<constructor-arg name="threadPoolHandler">
+			<bean class="com.liferay.portal.kernel.concurrent.ClearThreadLocalThreadPoolHandler" />
+		</constructor-arg>
+		<constructor-arg name="priority">
+			<util:constant static-field="java.lang.Thread.NORM_PRIORITY" />
+		</constructor-arg>
+		<constructor-arg name="contextClassLoader">
+			<bean class="com.liferay.portal.kernel.util.PortalClassLoaderUtil" factory-method="getClassLoader" />
+		</constructor-arg>
+	</bean>
+
 	<!-- Process executor -->
 
 	<bean id="com.liferay.portal.kernel.process.ProcessExecutorUtil" class="com.liferay.portal.kernel.process.ProcessExecutorUtil">

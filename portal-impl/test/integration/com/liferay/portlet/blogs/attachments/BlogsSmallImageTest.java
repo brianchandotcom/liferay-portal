@@ -42,7 +42,7 @@ import org.junit.Rule;
 /**
  * @author Roberto Díaz
  */
-public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
+public class BlogsSmallImageTest extends BaseBlogsImageTestCase {
 
 	@ClassRule
 	@Rule
@@ -58,7 +58,6 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 
 	@Override
 	protected BlogsEntry addBlogsEntry(String imageTitle) throws Exception {
-
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), user.getUserId());
@@ -67,19 +66,19 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 			user.getUserId(), imageTitle, serviceContext);
 
 		ImageSelector imageSelector = new ImageSelector(
-			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
+			fileEntry.getFileEntryId());
 
 		return BlogsEntryLocalServiceUtil.addEntry(
 			user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, imageSelector, null,
+			new String[0], StringPool.BLANK, null, imageSelector,
 			serviceContext);
 	}
 
 	@Override
 	protected long getImageFileEntry(BlogsEntry blogsEntry) {
-		return blogsEntry.getCoverImageFileEntryId();
+		return blogsEntry.getSmallImageFileEntryId();
 	}
 
 	@Override
@@ -111,7 +110,7 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 			user.getUserId(), blogsEntryId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, imageSelector, null,
+			new String[0], StringPool.BLANK, null, imageSelector,
 			serviceContext);
 	}
 
@@ -128,12 +127,9 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 			user.getUserId(), coverImageTitle, serviceContext);
 
 		ImageSelector imageSelector = new ImageSelector(
-			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
+			fileEntry.getFileEntryId());
 
 		return updateBlogsEntry(blogsEntryId, imageSelector);
 	}
-
-	private static final String _IMAGE_CROP_REGION =
-		"{\"height\": 10, \"width\": 10, \"x\": 0, \"y\": 0}";
 
 }

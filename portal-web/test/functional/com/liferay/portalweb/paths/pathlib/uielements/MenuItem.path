@@ -44,8 +44,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_DISPLAY_TEMPLATE</td>
+	<td>//div[contains(@class,'open')]//a[contains(@id,'menuItem') and contains(.,'add-display-template')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_FOLDER</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FORM_TEMPLATE</td>
+	<td>//div[contains(@class,'open')]//a[contains(@id,'menuItem') and contains(.,'add-form-template')]</td>
 	<td></td>
 </tr>
 <tr>

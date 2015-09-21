@@ -21,7 +21,9 @@
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_ACTIONS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute function="Click" locator1="Button#PLUS" value1="Add Display Template" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_DISPLAY_TEMPLATE" value1="add-display-template" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDisplayTemplateName}" />
 
@@ -66,7 +68,10 @@
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_ACTIONS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
-		<execute function="Click" locator1="Button#PLUS" value1="Add Form Template" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_FORM_TEMPLATE" value1="add-form-template" />
+
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
 
 		<execute function="SelectFrame" value1="relative=top" />

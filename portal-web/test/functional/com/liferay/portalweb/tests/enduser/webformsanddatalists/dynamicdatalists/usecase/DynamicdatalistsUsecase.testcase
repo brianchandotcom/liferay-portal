@@ -2033,7 +2033,9 @@
 
 		<execute function="Click" locator1="DDMEditStructure#BACK_TAB" />
 
-		<execute function="Click" locator1="Button#PLUS" value1="Add Form Template" />
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ADD_FORM_TEMPLATE" value1="add-form-template" />
 
 		<execute macro="DynamicDataMapping#viewCannotAddField">
 			<var name="field" value="Text Box" />

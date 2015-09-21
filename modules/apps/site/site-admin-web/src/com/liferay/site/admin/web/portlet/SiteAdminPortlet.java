@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -213,15 +212,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 			actionRequest, group, SiteAdminPortletKeys.SITE_SETTINGS, 0,
 			PortletRequest.RENDER_PHASE);
 
-		String controlPanelURL = HttpUtil.setParameter(
-			themeDisplay.getURLControlPanel(), "p_p_id",
-			SiteAdminPortletKeys.SITE_ADMIN);
-
-		controlPanelURL = HttpUtil.setParameter(
-			controlPanelURL, "controlPanelCategory",
-			themeDisplay.getControlPanelCategory());
-
-		siteAdministrationURL.setParameter("redirect", controlPanelURL);
+		siteAdministrationURL.setParameter(
+			"redirect", siteAdministrationURL.toString());
 
 		if (liveGroupId <= 0) {
 			hideDefaultSuccessMessage(actionRequest);

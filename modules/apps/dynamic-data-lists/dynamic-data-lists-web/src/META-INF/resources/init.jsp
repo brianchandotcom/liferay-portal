@@ -112,7 +112,7 @@ page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
+page import="com.liferay.portlet.documentlibrary.DuplicateFileEntryException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 

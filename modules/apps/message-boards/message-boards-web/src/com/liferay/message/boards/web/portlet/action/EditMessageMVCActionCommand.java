@@ -47,7 +47,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
@@ -172,7 +172,7 @@ public class EditMessageMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (AntivirusScannerException | CaptchaConfigurationException |
 				CaptchaMaxChallengesException | CaptchaTextException |
-				DuplicateFileException | FileExtensionException |
+				DuplicateFileEntryException | FileExtensionException |
 				FileNameException | FileSizeException |
 				LiferayFileItemException | LockedThreadException |
 				MessageBodyException | MessageSubjectException |

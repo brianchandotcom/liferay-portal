@@ -39,7 +39,7 @@ import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -565,7 +565,7 @@ public class FileEntryStagedModelDataHandler
 					fileEntry.getTitle(), fileEntry.getDescription(), null, is,
 					fileEntry.getSize(), serviceContext);
 			}
-			catch (DuplicateFileException dfe) {
+			catch (DuplicateFileEntryException dfe) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(dfe, dfe);
 				}

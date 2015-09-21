@@ -177,7 +177,6 @@ AUI.add(
 				var portletURL = Liferay.PortletURL.createResourceURL();
 
 				portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
-				portletURL.setParameter('controlPanelCategory', 'portlet');
 				portletURL.setParameter('definition', JSON.stringify(instance.get('definition')));
 				portletURL.setParameter('fieldName', instance.get('name'));
 				portletURL.setParameter('mode', instance.get('mode'));

@@ -153,7 +153,6 @@ import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
@@ -749,12 +748,6 @@ public class PortalImpl implements Portal {
 			if (themeDisplay.getRefererPlid() != LayoutConstants.DEFAULT_PLID) {
 				url = HttpUtil.setParameter(
 					url, "refererPlid", themeDisplay.getRefererPlid());
-			}
-
-			if (Validator.isNotNull(themeDisplay.getControlPanelCategory())) {
-				url = HttpUtil.setParameter(
-					url, "controlPanelCategory",
-					themeDisplay.getControlPanelCategory());
 			}
 		}
 
@@ -4990,8 +4983,6 @@ public class PortalImpl implements Portal {
 		LiferayPortletURL siteAdministrationURL =
 			liferayPortletResponse.createRenderURL(portletName);
 
-		siteAdministrationURL.setControlPanelCategory(
-			PortletCategoryKeys.CONTROL_PANEL_SITES);
 		siteAdministrationURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
 		siteAdministrationURL.setParameter(
 			"redirect", themeDisplay.getURLCurrent());

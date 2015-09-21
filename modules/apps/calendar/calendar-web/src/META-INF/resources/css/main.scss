@@ -402,8 +402,10 @@
 	border-color: #FC0;
 }
 
-.scheduler-event-recorder-popover .popover-title .close {
-	margin-top: 5px;
+.scheduler-event-recorder-popover .popover-content .close {
+	position: absolute;
+	right: 10px;
+	top: 5px;
 }
 
 .scheduler-view-agenda {

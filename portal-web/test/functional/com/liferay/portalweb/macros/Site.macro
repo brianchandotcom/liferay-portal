@@ -183,8 +183,8 @@
 
 		<execute function="AssertClick" locator1="SiteMemberships#TOOLBAR_ADD_MEMBERS" value1="Add Members" />
 		<execute function="AssertClick" locator1="MenuItem#ORGANIZATION" value1="Organization" />
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="${orgName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${orgName}" />
+		<execute function="AssertClick" locator1="Search#SEARCH_BUTTON" value1="Search" />
 		<execute function="AssertTextEquals" locator1="SiteMembershipsAddMembers#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute function="Check" locator1="SiteMembershipsAddMembers#ORGANIZATION_TABLE_CHECKBOX" />
 		<execute function="Click" locator1="Button#SAVE" />

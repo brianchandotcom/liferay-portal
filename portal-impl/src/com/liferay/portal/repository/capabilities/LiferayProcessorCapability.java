@@ -50,8 +50,10 @@ public class LiferayProcessorCapability
 	}
 
 	@Override
-	public void copyPrevious(FileVersion fileVersion) throws PortalException {
-		registerDLProcessorCallback(fileVersion.getFileEntry(), fileVersion);
+	public void copy(FileEntry fileEntry, FileVersion fileVersion)
+		throws PortalException {
+
+		registerDLProcessorCallback(fileEntry, fileVersion);
 	}
 
 	@Override

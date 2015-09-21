@@ -15,11 +15,10 @@
 --%>
 
 <liferay-ui:search-container
+	id="sites"
 	rowChecker="<%= new SiteChecker(renderResponse) %>"
-	searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+	searchContainer="<%= groupSearch %>"
 >
-	<aui:input disabled="<%= true %>" name="sitesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="deleteGroupIds" type="hidden" />
 
 	<%
 	GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
@@ -39,20 +38,11 @@
 	<liferay-ui:search-container-results>
 
 		<%
-		if (searchTerms.isAdvancedSearch()) {
-			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
+		total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getKeywords(), groupParams);
 
-			searchContainer.setTotal(total);
+		searchContainer.setTotal(total);
 
-			results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		}
-		else {
-			total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), classNameIds, searchTerms.getKeywords(), groupParams);
-
-			searchContainer.setTotal(total);
-
-			results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		}
+		results = GroupLocalServiceUtil.search(company.getCompanyId(), classNameIds, searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
 		searchContainer.setResults(results);
 
@@ -62,12 +52,6 @@
 		%>
 
 	</liferay-ui:search-container-results>
-
-	<%@ include file="/toolbar.jspf" %>
-
-	<c:if test="<%= !results.isEmpty() %>">
-		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
-	</c:if>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.Group"
@@ -89,5 +73,7 @@
 		<%@ include file="/site_columns.jspf" %>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
+
+<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />

@@ -614,6 +614,31 @@
 		<execute macro="WebContent#publish" />
 	</command>
 
+	<command name="addWithThreeTranslations">
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="WC Contenido" />
+			<var name="localizedLanguage" value="Spanish (Spain)" />
+			<var name="localizedTitle" value="WC Titulo" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="WC Inhalt" />
+			<var name="localizedLanguage" value="German (Germany)" />
+			<var name="localizedTitle" value="WC Titel" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="WC Pitoisuus" />
+			<var name="localizedLanguage" value="Finnish (Finland)" />
+			<var name="localizedTitle" value="WC Otsikko" />
+		</execute>
+	</command>
+
 	<command name="addWithWorkflowCP">
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />

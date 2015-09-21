@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORIES_CATEGORY_CHECKBOX_CHECKED</td>
+	<td>//li[contains(@id,'category') and contains(.,'${key_categoryName}')]/div[contains(@class,'checked')]//span[contains(@class,'tree-node-checkbox')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORIES_CLOSE_BUTTON</td>
 	<td>//button[contains(@class,'btn-default close')]</td>
 	<td></td>

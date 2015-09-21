@@ -76,9 +76,9 @@
 			<isset var="currentPortalLanguages" />
 			<then>
 				<while>
-					<condition function="IsElementPresent" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" />
+					<condition function="IsElementPresent" locator1="PortalSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_PRESENT" />
 					<then>
-						<execute function="Click" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" />
+						<execute function="AddSelection" locator1="PortalSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="index=0" />
 						<execute function="Click" locator1="Button#MOVE_CURRENT_TO_AVAILABLE" />
 					</then>
 				</while>
@@ -86,9 +86,9 @@
 				<for list="${currentPortalLanguages}" param="currentPortalLanguage">
 					<var name="currentPortalLanguage" value="${currentPortalLanguage}" />
 
-					<execute function="Select" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${currentPortalLanguage}" />
+					<execute function="AddSelection" locator1="PortalSettingsDisplaySettings#AVAILABLE_LANGUAGES_AVAILABLE_SELECT" value1="${currentPortalLanguage}" />
 					<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
-					<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsDisplaySettings#DEFAULT_LANGUAGE_SELECT" value1="${currentPortalLanguage}" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="PortalSettingsDisplaySettings#AVAILABLE_LANGUAGES_CURRENT_SELECT" value1="${currentPortalLanguage}" />
 				</for>
 			</then>
 		</if>

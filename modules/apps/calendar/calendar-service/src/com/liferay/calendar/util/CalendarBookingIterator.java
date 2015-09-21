@@ -93,7 +93,11 @@ public class CalendarBookingIterator implements Iterator<CalendarBooking> {
 
 		int count = recurrence.getCount();
 
-		return (count != 0) && (_instanceIndex >= count);
+		if ((count != 0) && (_instanceIndex >= count)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private Calendar _getStartTimeJCalendar(DateValue dateValue) {

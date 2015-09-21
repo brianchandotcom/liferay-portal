@@ -70,8 +70,6 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 
 		sb.append("{meetupsEntryId=");
 		sb.append(meetupsEntryId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -96,6 +94,8 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 		sb.append(price);
 		sb.append(", thumbnailId=");
 		sb.append(thumbnailId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -106,7 +106,6 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 		MeetupsEntryImpl meetupsEntryImpl = new MeetupsEntryImpl();
 
 		meetupsEntryImpl.setMeetupsEntryId(meetupsEntryId);
-		meetupsEntryImpl.setCompanyId(companyId);
 		meetupsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -162,6 +161,7 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 		meetupsEntryImpl.setMaxAttendees(maxAttendees);
 		meetupsEntryImpl.setPrice(price);
 		meetupsEntryImpl.setThumbnailId(thumbnailId);
+		meetupsEntryImpl.setCompanyId(companyId);
 
 		meetupsEntryImpl.resetOriginalValues();
 
@@ -171,7 +171,6 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		meetupsEntryId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -184,13 +183,13 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 		maxAttendees = objectInput.readInt();
 		price = objectInput.readDouble();
 		thumbnailId = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(meetupsEntryId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -223,10 +222,10 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 		objectOutput.writeInt(maxAttendees);
 		objectOutput.writeDouble(price);
 		objectOutput.writeLong(thumbnailId);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long meetupsEntryId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -239,4 +238,5 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry>,
 	public int maxAttendees;
 	public double price;
 	public long thumbnailId;
+	public long companyId;
 }

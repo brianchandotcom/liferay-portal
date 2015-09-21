@@ -68,27 +68,27 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "wallEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "comments", Types.VARCHAR }
+			{ "comments", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("wallEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table WallEntry (wallEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,comments VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table WallEntry (wallEntryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,comments VARCHAR(75) null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table WallEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY wallEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY WallEntry.createDate DESC";
@@ -149,12 +149,12 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 
 		attributes.put("wallEntryId", getWallEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("comments", getComments());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -174,12 +174,6 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -210,6 +204,12 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 
 		if (comments != null) {
 			setComments(comments);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -243,16 +243,6 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -351,6 +341,16 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		_comments = comments;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -384,12 +384,12 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 
 		wallEntryImpl.setWallEntryId(getWallEntryId());
 		wallEntryImpl.setGroupId(getGroupId());
-		wallEntryImpl.setCompanyId(getCompanyId());
 		wallEntryImpl.setUserId(getUserId());
 		wallEntryImpl.setUserName(getUserName());
 		wallEntryImpl.setCreateDate(getCreateDate());
 		wallEntryImpl.setModifiedDate(getModifiedDate());
 		wallEntryImpl.setComments(getComments());
+		wallEntryImpl.setCompanyId(getCompanyId());
 
 		wallEntryImpl.resetOriginalValues();
 
@@ -473,8 +473,6 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 
 		wallEntryCacheModel.groupId = getGroupId();
 
-		wallEntryCacheModel.companyId = getCompanyId();
-
 		wallEntryCacheModel.userId = getUserId();
 
 		wallEntryCacheModel.userName = getUserName();
@@ -511,6 +509,8 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 			wallEntryCacheModel.comments = null;
 		}
 
+		wallEntryCacheModel.companyId = getCompanyId();
+
 		return wallEntryCacheModel;
 	}
 
@@ -522,8 +522,6 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		sb.append(getWallEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -534,6 +532,8 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		sb.append(getModifiedDate());
 		sb.append(", comments=");
 		sb.append(getComments());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -556,10 +556,6 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
@@ -579,6 +575,10 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 			"<column><column-name>comments</column-name><column-value><![CDATA[");
 		sb.append(getComments());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -593,7 +593,6 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -602,6 +601,7 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _comments;
+	private long _companyId;
 	private long _columnBitmask;
 	private WallEntry _escapedModel;
 }

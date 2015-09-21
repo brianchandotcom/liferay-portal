@@ -16,6 +16,7 @@ package com.liferay.social.networking.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -32,6 +33,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.social.networking.exception.NoSuchWallEntryException;
 import com.liferay.social.networking.model.WallEntry;
@@ -1643,6 +1645,8 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 		wallEntry.setNew(true);
 		wallEntry.setPrimaryKey(wallEntryId);
 
+		wallEntry.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return wallEntry;
 	}
 
@@ -1864,12 +1868,12 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 		wallEntryImpl.setWallEntryId(wallEntry.getWallEntryId());
 		wallEntryImpl.setGroupId(wallEntry.getGroupId());
-		wallEntryImpl.setCompanyId(wallEntry.getCompanyId());
 		wallEntryImpl.setUserId(wallEntry.getUserId());
 		wallEntryImpl.setUserName(wallEntry.getUserName());
 		wallEntryImpl.setCreateDate(wallEntry.getCreateDate());
 		wallEntryImpl.setModifiedDate(wallEntry.getModifiedDate());
 		wallEntryImpl.setComments(wallEntry.getComments());
+		wallEntryImpl.setCompanyId(wallEntry.getCompanyId());
 
 		return wallEntryImpl;
 	}
@@ -2245,6 +2249,8 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_WALLENTRY = "SELECT wallEntry FROM WallEntry wallEntry";
 	private static final String _SQL_SELECT_WALLENTRY_WHERE_PKS_IN = "SELECT wallEntry FROM WallEntry wallEntry WHERE wallEntryId IN (";
 	private static final String _SQL_SELECT_WALLENTRY_WHERE = "SELECT wallEntry FROM WallEntry wallEntry WHERE ";

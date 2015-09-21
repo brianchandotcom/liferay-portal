@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface MeetupsRegistrationModel extends AuditedModel,
-	BaseModel<MeetupsRegistration> {
+	BaseModel<MeetupsRegistration>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -77,22 +78,6 @@ public interface MeetupsRegistrationModel extends AuditedModel,
 	 * @param meetupsRegistrationId the meetups registration ID of this meetups registration
 	 */
 	public void setMeetupsRegistrationId(long meetupsRegistrationId);
-
-	/**
-	 * Returns the company ID of this meetups registration.
-	 *
-	 * @return the company ID of this meetups registration
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this meetups registration.
-	 *
-	 * @param companyId the company ID of this meetups registration
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this meetups registration.
@@ -217,6 +202,22 @@ public interface MeetupsRegistrationModel extends AuditedModel,
 	 * @param comments the comments of this meetups registration
 	 */
 	public void setComments(String comments);
+
+	/**
+	 * Returns the company ID of this meetups registration.
+	 *
+	 * @return the company ID of this meetups registration
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this meetups registration.
+	 *
+	 * @param companyId the company ID of this meetups registration
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -54,12 +54,12 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 
 		attributes.put("wallEntryId", getWallEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("comments", getComments());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -76,12 +76,6 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -112,6 +106,12 @@ public class WallEntryWrapper implements WallEntry, ModelWrapper<WallEntry> {
 
 		if (comments != null) {
 			setComments(comments);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

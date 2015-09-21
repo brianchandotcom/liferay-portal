@@ -558,8 +558,8 @@
 
 		<execute function="AssertClick" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_MENULIST_UPDATE_DUE_DATE" value1="Update Due Date" />
 
-		<execute function="Type#clickAtSendKeys" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
-		<execute function="Type#clickAtSendKeys" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
+		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
+		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
 

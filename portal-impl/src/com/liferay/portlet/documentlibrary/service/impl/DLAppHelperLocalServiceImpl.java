@@ -329,7 +329,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	@Override
-	public void moveDependentsToTrash(DLFolder dlFolder, long trashEntryId)
+	public void moveDependentsToTrash(DLFolder dlFolder)
 		throws PortalException {
 
 		trashOrRestoreFolder(dlFolder, true);
@@ -337,7 +337,7 @@ public class DLAppHelperLocalServiceImpl
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #moveDependentsToTrash(DLFolder, long)}
+	 *             #moveDependentsToTrash(DLFolder)}
 	 */
 	@Deprecated
 	@Override
@@ -371,7 +371,7 @@ public class DLAppHelperLocalServiceImpl
 
 		DLFolder dlFolder = dlFolderLocalService.getDLFolder(folderId);
 
-		moveDependentsToTrash(dlFolder, trashEntryId);
+		moveDependentsToTrash(dlFolder);
 	}
 
 	@Override
@@ -1475,7 +1475,7 @@ public class DLAppHelperLocalServiceImpl
 
 		// Folders, file entries, and file shortcuts
 
-		moveDependentsToTrash(dlFolder, trashEntry.getEntryId());
+		moveDependentsToTrash(dlFolder);
 
 		// Sync
 

@@ -16,7 +16,6 @@ package com.liferay.wiki.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -222,49 +221,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext);
 
 		pageExportActionableDynamicQuery.performCount();
-	}
-
-	@Override
-	protected PortletPreferences doProcessExportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		String hiddenNodeNames = portletPreferences.getValue(
-			"hiddenNodes", null);
-
-		for (String hiddenNodeName : StringUtil.split(hiddenNodeNames)) {
-			WikiNode wikiNode = WikiNodeLocalServiceUtil.getNode(
-				portletDataContext.getScopeGroupId(), hiddenNodeName);
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, wikiNode);
-		}
-
-		String visibleNodeNames = portletPreferences.getValue(
-			"visibleNodes", null);
-
-		for (String visibleNodeName : StringUtil.split(visibleNodeNames)) {
-			WikiNode wikiNode = WikiNodeLocalServiceUtil.getNode(
-				portletDataContext.getScopeGroupId(), visibleNodeName);
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, wikiNode);
-		}
-
-		return portletPreferences;
-	}
-
-	@Override
-	protected PortletPreferences doProcessImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, WikiNode.class);
-
-		return portletPreferences;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

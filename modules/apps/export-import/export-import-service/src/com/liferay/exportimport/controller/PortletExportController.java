@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -911,9 +912,11 @@ public class PortletExportController implements ExportController {
 						exportImportPortletPreferencesProcessor.
 							getExportCapabilities();
 
-					for (Capability exportCapability : exportCapabilities) {
-						exportCapability.process(
-							portletDataContext, jxPortletPreferences);
+					if (ListUtil.isNotEmpty(exportCapabilities)) {
+						for (Capability exportCapability : exportCapabilities) {
+							exportCapability.process(
+								portletDataContext, jxPortletPreferences);
+						}
 					}
 
 					exportImportPortletPreferencesProcessor.

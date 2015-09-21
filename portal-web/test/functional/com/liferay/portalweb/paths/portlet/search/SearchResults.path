@@ -51,8 +51,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ASSET_TYPE_FACET_EVERYTHING</td>
-	<td>//div[contains(@class,'search-asset_entries')]/ul/li[contains(@class,'facet-value') and contains(@class,'default') and contains(.,'Everything')]/a</td>
+	<td>ASSET_TYPE_FACET_ANY_ASSET</td>
+	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(@class,'default')]/a[contains(.,'Any Asset')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -462,6 +462,14 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			long[] assetCategoryIds, String[] assetTagNames, Locale locale)
 		throws PortalException {
 
+		DDLRecordSet recordSet = record.getRecordSet();
+
+		if (recordSet.getScope() !=
+				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) {
+
+			return;
+		}
+
 		boolean addDraftAssetEntry = false;
 		boolean visible = true;
 
@@ -482,39 +490,33 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			visible = false;
 		}
 
-		DDLRecordSet recordSet = record.getRecordSet();
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
-		if (recordSet.getScope() ==
-				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) {
+		String ddmStructureName = ddmStructure.getName(locale);
 
-			DDMStructure ddmStructure = recordSet.getDDMStructure();
+		String recordSetName = recordSet.getName(locale);
 
-			String ddmStructureName = ddmStructure.getName(locale);
+		String title = LanguageUtil.format(
+			locale, "new-x-for-list-x",
+			new Object[] {ddmStructureName, recordSetName}, false);
 
-			String recordSetName = recordSet.getName(locale);
-
-			String title = LanguageUtil.format(
-				locale, "new-x-for-list-x",
-				new Object[] {ddmStructureName, recordSetName}, false);
-
-			if (addDraftAssetEntry) {
-				assetEntryLocalService.updateEntry(
-					userId, record.getGroupId(), record.getCreateDate(),
-					record.getModifiedDate(), DDLRecordConstants.getClassName(),
-					recordVersion.getRecordVersionId(), record.getUuid(), 0,
-					assetCategoryIds, assetTagNames, false, null, null, null,
-					ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-					null, 0, 0, null);
-			}
-			else {
-				assetEntryLocalService.updateEntry(
-					userId, record.getGroupId(), record.getCreateDate(),
-					record.getModifiedDate(), DDLRecordConstants.getClassName(),
-					record.getRecordId(), record.getUuid(), 0, assetCategoryIds,
-					assetTagNames, visible, null, null, null,
-					ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
-					null, 0, 0, null);
-			}
+		if (addDraftAssetEntry) {
+			assetEntryLocalService.updateEntry(
+				userId, record.getGroupId(), record.getCreateDate(),
+				record.getModifiedDate(), DDLRecordConstants.getClassName(),
+				recordVersion.getRecordVersionId(), record.getUuid(), 0,
+				assetCategoryIds, assetTagNames, false, null, null, null,
+				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
+				null, 0, 0, null);
+		}
+		else {
+			assetEntryLocalService.updateEntry(
+				userId, record.getGroupId(), record.getCreateDate(),
+				record.getModifiedDate(), DDLRecordConstants.getClassName(),
+				record.getRecordId(), record.getUuid(), 0, assetCategoryIds,
+				assetTagNames, visible, null, null, null,
+				ContentTypes.TEXT_HTML, title, null, StringPool.BLANK, null,
+				null, 0, 0, null);
 		}
 	}
 

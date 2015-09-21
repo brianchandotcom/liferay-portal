@@ -64,10 +64,10 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 			String displayDate = StringPool.BLANK;
 
 			if (assetEntry.getPublishDate() != null) {
-				displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
+				displayDate = LanguageUtil.format(request, "modified-x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
 			}
 			else if (assetEntry.getModifiedDate() != null) {
-				displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
+				displayDate = LanguageUtil.format(request, "modified-x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
 			}
 			%>
 
@@ -81,6 +81,11 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 				<span class="date-info"><%= displayDate %></span>
 			</div>
 		</div>
+
+		<%
+		metadataFields = ArrayUtil.remove(metadataFields, String.valueOf("author"));
+		%>
+
 	</c:if>
 
 	<div class="asset-content">
@@ -96,10 +101,37 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 		</div>
 	</div>
 
-	<liferay-ui:asset-metadata
-		className="<%= assetEntry.getClassName() %>"
-		classPK="<%= assetEntry.getClassPK() %>"
-		filterByMetadata="<%= true %>"
-		metadataFields="<%= metadataFields %>"
-	/>
+	<c:if test="<%= metadataFields.length > 0 %>">
+		<div class="asset-metadata-toggler" id="<portlet:namespace /><%= assetEntry.getEntryId() %>_toggler">
+			<span class="text-primary toggler-header toggler-header-collapsed">
+
+				<%= LanguageUtil.get(request, "more-details") %>
+
+			</span>
+
+			<div class="toggler-content toggler-content-collapsed">
+				<liferay-ui:asset-metadata
+					className="<%= assetEntry.getClassName() %>"
+					classPK="<%= assetEntry.getClassPK() %>"
+					filterByMetadata="<%= true %>"
+					metadataFields="<%= metadataFields %>"
+				/>
+			</div>
+		</div>
+
+		<aui:script use="aui-toggler">
+			new A.TogglerDelegate(
+				{
+					animated: true,
+					container: '#<portlet:namespace /><%= assetEntry.getEntryId() %>_toggler',
+					content: '.toggler-content',
+					expanded: false,
+					header: '.toggler-header',
+					transition: {
+						duration: 0.2,
+						easing: 'cubic-bezier(0, 0.1, 0, 1)'
+					}
+				});
+		</aui:script>
+	</c:if>
 </div>

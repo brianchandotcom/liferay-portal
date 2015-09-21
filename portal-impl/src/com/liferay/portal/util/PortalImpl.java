@@ -4945,15 +4945,6 @@ public class PortalImpl implements Portal {
 		return groupIds;
 	}
 
-	@Override
-	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
-		HttpServletRequest request) {
-
-		return getCategoriesMap(
-			request, WebKeys.SITE_ADMINISTRATION_CATEGORIES_MAP,
-			PortletCategoryKeys.SITE_ADMINISTRATION_ALL);
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getControlPanelPortletURL(PortletRequest, Group, String,

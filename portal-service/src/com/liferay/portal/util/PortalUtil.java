@@ -1808,12 +1808,6 @@ public class PortalUtil {
 			companyId, groupId, userId);
 	}
 
-	public static Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
-		HttpServletRequest request) {
-
-		return getPortal().getSiteAdministrationCategoriesMap(request);
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getControlPanelPortletURL(PortletRequest, Group, String,

@@ -29,18 +29,4 @@ public interface TriggerFactory {
 		String jobName, String groupName, Date startDate, Date endDate,
 		String cronExpression);
 
-	public Trigger createTrigger(
-		String jobName, String groupName, Date startDate, int interval,
-		TimeUnit timeUnit);
-
-	public Trigger createTrigger(
-		String jobName, String groupName, Date startDate,
-		String cronExpression);
-
-	public Trigger createTrigger(
-		String jobName, String groupName, int interval, TimeUnit timeUnit);
-
-	public Trigger createTrigger(
-		String jobName, String groupName, String cronExpression);
-
 }

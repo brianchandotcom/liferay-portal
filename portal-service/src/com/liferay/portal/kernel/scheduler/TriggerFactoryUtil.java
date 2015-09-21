@@ -44,7 +44,7 @@ public class TriggerFactoryUtil {
 		TimeUnit timeUnit) {
 
 		return _triggerFactory.createTrigger(
-			jobName, groupName, startDate, interval, timeUnit);
+			jobName, groupName, startDate, null, interval, timeUnit);
 	}
 
 	public static Trigger createTrigger(
@@ -52,21 +52,21 @@ public class TriggerFactoryUtil {
 		String cronExpression) {
 
 		return _triggerFactory.createTrigger(
-			jobName, groupName, startDate, cronExpression);
+			jobName, groupName, startDate, null, cronExpression);
 	}
 
 	public static Trigger createTrigger(
 		String jobName, String groupName, int interval, TimeUnit timeUnit) {
 
 		return _triggerFactory.createTrigger(
-			jobName, groupName, interval, timeUnit);
+			jobName, groupName, null, null, interval, timeUnit);
 	}
 
 	public static Trigger createTrigger(
 		String jobName, String groupName, String cronExpression) {
 
 		return _triggerFactory.createTrigger(
-			jobName, groupName, cronExpression);
+			jobName, groupName, null, null, cronExpression);
 	}
 
 	private static final TriggerFactory _triggerFactory =

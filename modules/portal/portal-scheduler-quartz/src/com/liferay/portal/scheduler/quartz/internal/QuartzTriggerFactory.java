@@ -16,7 +16,6 @@ package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.scheduler.AbstractTriggerFactory;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
@@ -40,7 +39,7 @@ import org.quartz.TriggerBuilder;
 	immediate = true,
 	service = {QuartzTriggerFactory.class, TriggerFactory.class}
 )
-public class QuartzTriggerFactory extends AbstractTriggerFactory {
+public class QuartzTriggerFactory implements TriggerFactory {
 
 	public Trigger createTrigger(org.quartz.Trigger trigger) {
 		return new QuartzTrigger(trigger);

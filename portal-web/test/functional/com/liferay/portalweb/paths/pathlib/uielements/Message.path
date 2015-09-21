@@ -95,7 +95,7 @@
 </tr>
 <tr>
 	<td>INFO_5</td>
-	<td>//div[contains(@class,'text') and contains(@class,'white-box')]/span</td>
+	<td>//div[contains(@class,'text') and contains(@class,'empty-message')]/span</td>
 	<td></td>
 </tr>
 <tr>

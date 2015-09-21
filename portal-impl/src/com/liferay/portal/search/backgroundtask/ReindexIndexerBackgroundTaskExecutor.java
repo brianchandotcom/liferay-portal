@@ -37,8 +37,15 @@ public class ReindexIndexerBackgroundTaskExecutor
 		}
 
 		for (long companyId : companyIds) {
-			SearchEngineUtil.deleteEntityDocuments(
-				indexer.getSearchEngineId(), companyId, className, true);
+			try {
+				SearchEngineUtil.deleteEntityDocuments(
+					indexer.getSearchEngineId(), companyId, className, true);
+
+				indexer.reindex(new String[] {String.valueOf(companyId)});
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
 		}
 	}
 

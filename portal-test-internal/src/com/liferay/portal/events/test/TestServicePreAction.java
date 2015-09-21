@@ -170,14 +170,6 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public void processControlPanelRedirects(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception {
-
-		super.processControlPanelRedirects(request, response);
-	}
-
-	@Override
 	public void rememberVisitedGroupIds(
 		HttpServletRequest request, long currentGroupId) {
 

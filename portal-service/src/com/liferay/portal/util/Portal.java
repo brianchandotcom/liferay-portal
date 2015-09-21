@@ -1115,9 +1115,6 @@ public interface Portal {
 			long companyId, long groupId, long userId)
 		throws PortalException;
 
-	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
-		HttpServletRequest request);
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getControlPanelPortletURL(PortletRequest, Group, String,

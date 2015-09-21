@@ -887,8 +887,12 @@ public class ThemeDisplay
 		return _unfilteredLayouts;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public String getURLAddContent() {
-		return _urlAddContent;
+		return StringPool.BLANK;
 	}
 
 	public String getURLControlPanel() {
@@ -1076,12 +1080,20 @@ public class ThemeDisplay
 		return _secure;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public boolean isShowAddContentIcon() {
-		return _showAddContentIcon;
+		return false;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public boolean isShowAddContentIconPermission() {
-		return _showAddContentIconPermission;
+		return false;
 	}
 
 	public boolean isShowControlPanelIcon() {
@@ -1592,14 +1604,17 @@ public class ThemeDisplay
 		_sessionId = sessionId;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
 	public void setShowAddContentIcon(boolean showAddContentIcon) {
-		_showAddContentIcon = showAddContentIcon;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
 	public void setShowAddContentIconPermission(
 		boolean showAddContentIconPermission) {
-
-		_showAddContentIconPermission = showAddContentIconPermission;
 	}
 
 	public void setShowControlPanelIcon(boolean showControlPanelIcon) {
@@ -1737,8 +1752,11 @@ public class ThemeDisplay
 		_unfilteredLayouts = unfilteredLayouts;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setURLAddContent(String urlAddContent) {
-		_urlAddContent = urlAddContent;
 	}
 
 	public void setURLControlPanel(String urlControlPanel) {
@@ -1897,8 +1915,6 @@ public class ThemeDisplay
 	private String _serverName;
 	private int _serverPort;
 	private String _sessionId = StringPool.BLANK;
-	private boolean _showAddContentIcon;
-	private boolean _showAddContentIconPermission;
 	private boolean _showControlPanelIcon;
 	private boolean _showHomeIcon;
 	private boolean _showLayoutTemplatesIcon;
@@ -1930,7 +1946,6 @@ public class ThemeDisplay
 	private String _tilesTitle = StringPool.BLANK;
 	private TimeZone _timeZone;
 	private List<Layout> _unfilteredLayouts;
-	private String _urlAddContent = StringPool.BLANK;
 	private String _urlControlPanel = StringPool.BLANK;
 	private String _urlCurrent = StringPool.BLANK;
 	private String _urlHome = StringPool.BLANK;

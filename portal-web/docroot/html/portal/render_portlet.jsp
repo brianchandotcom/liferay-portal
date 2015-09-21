@@ -237,14 +237,12 @@ if (portlet.hasPortletMode(responseContentType, PortletMode.EDIT)) {
 	}
 }
 
-if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_DEFAULTS)) {
-	if (showEditIcon && themeDisplay.isShowAddContentIcon()) {
-		showEditDefaultsIcon = true;
-	}
+if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_DEFAULTS) && showEditIcon) {
+	showEditDefaultsIcon = true;
 }
 
 if (portlet.hasPortletMode(responseContentType, LiferayPortletMode.EDIT_GUEST)) {
-	if (showEditIcon && !layout.isPrivateLayout() && themeDisplay.isShowAddContentIcon()) {
+	if (showEditIcon && !layout.isPrivateLayout()) {
 		showEditGuestIcon = true;
 	}
 }

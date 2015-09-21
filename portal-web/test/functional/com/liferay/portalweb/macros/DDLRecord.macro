@@ -5,7 +5,7 @@
 		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
 		<execute function="AssertTextEquals" locator1="DDL#HEADER_TITLE" value1="${ddlListName}" />
-		<execute function="AssertClick" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
+		<execute function="Click" locator1="Button#PLUS" />
 	</command>
 
 	<command name="addRepeatableField">

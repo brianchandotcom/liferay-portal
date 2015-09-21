@@ -53,7 +53,7 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="AssertClick" locator1="DDL#TOOLBAR_ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlListName}" />
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
@@ -538,7 +538,7 @@
 
 		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME_1" />
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="AssertClick" locator1="DDMSelectStructure#SEARCH_BUTTON" />
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_TABLE_ACTIONS_1" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
@@ -2033,7 +2033,7 @@
 
 		<execute function="Click" locator1="DDMEditStructure#BACK_TAB" />
 
-		<execute function="AssertClick" locator1="DDMSelectTemplate#TOOLBAR_ADD_FORM_TEMPLATE" value1="Add Form Template" />
+		<execute function="Click" locator1="Button#PLUS" value1="Add Form Template" />
 
 		<execute macro="DynamicDataMapping#viewCannotAddField">
 			<var name="field" value="Text Box" />

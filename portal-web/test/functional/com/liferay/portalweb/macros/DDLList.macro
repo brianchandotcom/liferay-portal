@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="AssertClick" locator1="DDL#TOOLBAR_ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlListName}" />
 

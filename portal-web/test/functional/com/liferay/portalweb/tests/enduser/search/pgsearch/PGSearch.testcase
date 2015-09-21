@@ -861,7 +861,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Search Pagef" />
+			<var name="pageName" value="Search Page" />
 		</execute>
 
 		<execute macro="Search#searchPG">

@@ -18,9 +18,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.exportimport.stagedmodel.repository.StagedModelRepository;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -28,12 +26,11 @@ import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
-import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 
-import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -45,44 +42,6 @@ public class BookmarksFolderStagedModelDataHandler
 
 	public static final String[] CLASS_NAMES =
 		{BookmarksFolder.class.getName()};
-
-	@Override
-	public void deleteStagedModel(BookmarksFolder folder)
-		throws PortalException {
-
-		BookmarksFolderLocalServiceUtil.deleteFolder(folder);
-	}
-
-	@Override
-	public void deleteStagedModel(
-			String uuid, long groupId, String className, String extraData)
-		throws PortalException {
-
-		BookmarksFolder folder = fetchStagedModelByUuidAndGroupId(
-			uuid, groupId);
-
-		if (folder != null) {
-			deleteStagedModel(folder);
-		}
-	}
-
-	@Override
-	public BookmarksFolder fetchStagedModelByUuidAndGroupId(
-		String uuid, long groupId) {
-
-		return BookmarksFolderLocalServiceUtil.
-			fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
-	}
-
-	@Override
-	public List<BookmarksFolder> fetchStagedModelsByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		return BookmarksFolderLocalServiceUtil.
-			getBookmarksFoldersByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<BookmarksFolder>());
-	}
 
 	@Override
 	public String[] getClassNames() {
@@ -146,8 +105,7 @@ public class BookmarksFolderStagedModelDataHandler
 			else {
 				importedFolder = BookmarksFolderLocalServiceUtil.updateFolder(
 					userId, existingFolder.getFolderId(), parentFolderId,
-					folder.getName(), folder.getDescription(), false,
-					serviceContext);
+					folder.getName(), folder.getDescription(), serviceContext);
 			}
 		}
 		else {
@@ -160,25 +118,23 @@ public class BookmarksFolderStagedModelDataHandler
 	}
 
 	@Override
-	protected void doRestoreStagedModel(
-			PortletDataContext portletDataContext, BookmarksFolder folder)
-		throws Exception {
+	protected StagedModelRepository<BookmarksFolder>
+		getStagedModelRepository() {
 
-		long userId = portletDataContext.getUserId(folder.getUserUuid());
-
-		BookmarksFolder existingFolder = fetchStagedModelByUuidAndGroupId(
-			folder.getUuid(), portletDataContext.getScopeGroupId());
-
-		if ((existingFolder == null) || !existingFolder.isInTrash()) {
-			return;
-		}
-
-		TrashHandler trashHandler = existingFolder.getTrashHandler();
-
-		if (trashHandler.isRestorable(existingFolder.getFolderId())) {
-			trashHandler.restoreTrashEntry(
-				userId, existingFolder.getFolderId());
-		}
+		return _stagedModelRepository;
 	}
+
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)",
+		unbind = "-"
+	)
+	protected void setStagedModelRepository(
+		StagedModelRepository<BookmarksFolder> stagedModelRepository) {
+
+		_stagedModelRepository = stagedModelRepository;
+	}
+
+	private StagedModelRepository<BookmarksFolder> _stagedModelRepository;
 
 }

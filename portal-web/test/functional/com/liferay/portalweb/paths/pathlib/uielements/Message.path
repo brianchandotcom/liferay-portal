@@ -149,7 +149,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMPTY_RECYCLE_BIN_INFO</td>
+	<td>EMPTY_INFO</td>
 	<td>//div[contains(@class,'empty-message') and contains(@class,'text-center')]/span</td>
 	<td></td>
 </tr>

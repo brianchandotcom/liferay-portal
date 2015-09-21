@@ -601,262 +601,6 @@ public class DLAppHelperLocalServiceImpl
 		trashOrRestoreFolder(dlFolder, false);
 	}
 
-	protected void trashOrRestoreFolder(DLFolder dlFolder, boolean moveToTrash)
-		throws PortalException {
-
-		TrashEntry trashEntry = null;
-
-		if (moveToTrash) {
-			trashEntry = trashEntryLocalService.getEntry(
-				DLFolderConstants.getClassName(), dlFolder.getFolderId());
-		}
-
-		List<DLFolder> dlFolders = dlFolderPersistence.findByG_M_T_H(
-			dlFolder.getGroupId(), false,
-			CustomSQLUtil.keywords(dlFolder.getTreePath())[0], false);
-
-		for (DLFolder curFolder : dlFolders) {
-			List<DLFileEntry> dlFileEntries =
-				dlFileEntryLocalService.getFileEntries(
-					curFolder.getGroupId(), curFolder.getFolderId());
-
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				if (moveToTrash) {
-					if (dlFileEntry.isInTrashExplicitly()) {
-						continue;
-					}
-				}
-				else if (!dlFileEntry.isInTrashImplicitly()) {
-					continue;
-				}
-
-				// File shortcut
-
-				dlFileShortcutLocalService.setFileShortcutsEnabled(
-					dlFileEntry.getFileEntryId(), !moveToTrash);
-
-				// File versions
-
-				List<DLFileVersion> dlFileVersions = null;
-
-				if (moveToTrash) {
-					dlFileVersions = dlFileVersionLocalService.getFileVersions(
-						dlFileEntry.getFileEntryId(),
-						WorkflowConstants.STATUS_ANY);
-				}
-				else {
-					dlFileVersions = dlFileVersionLocalService.getFileVersions(
-						dlFileEntry.getFileEntryId(),
-						WorkflowConstants.STATUS_IN_TRASH);
-				}
-
-				for (DLFileVersion dlFileVersion : dlFileVersions) {
-
-					// File version
-
-					if (moveToTrash) {
-						int oldStatus = dlFileVersion.getStatus();
-
-						dlFileVersion.setStatus(
-							WorkflowConstants.STATUS_IN_TRASH);
-
-						dlFileVersionPersistence.update(dlFileVersion);
-
-						// Trash
-
-						if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-							int newStatus = oldStatus;
-
-							if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-								newStatus = WorkflowConstants.STATUS_DRAFT;
-							}
-
-							trashVersionLocalService.addTrashVersion(
-								trashEntry.getEntryId(),
-								DLFileVersion.class.getName(),
-								dlFileVersion.getFileVersionId(), newStatus,
-								null);
-						}
-
-						// Workflow
-
-						if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-							workflowInstanceLinkLocalService.
-								deleteWorkflowInstanceLink(
-									dlFileVersion.getCompanyId(),
-									dlFileVersion.getGroupId(),
-									DLFileEntryConstants.getClassName(),
-									dlFileVersion.getFileVersionId());
-						}
-					}
-					else {
-						TrashVersion trashVersion =
-							trashVersionLocalService.fetchVersion(
-								DLFileVersion.class.getName(),
-								dlFileVersion.getFileVersionId());
-
-						int oldStatus = WorkflowConstants.STATUS_APPROVED;
-
-						if (trashVersion != null) {
-							oldStatus = trashVersion.getStatus();
-						}
-
-						dlFileVersion.setStatus(oldStatus);
-
-						dlFileVersionPersistence.update(dlFileVersion);
-
-						// Trash
-
-						if (trashVersion != null) {
-							trashVersionLocalService.deleteTrashVersion(
-								trashVersion);
-						}
-					}
-				}
-
-				// Asset
-
-				if (moveToTrash) {
-					assetEntryLocalService.updateVisible(
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId(), false);
-				}
-				else {
-					DLFileVersion latestDlFileVersion =
-						dlFileEntry.getLatestFileVersion(false);
-
-					if (latestDlFileVersion.isApproved()) {
-						assetEntryLocalService.updateVisible(
-							DLFileEntryConstants.getClassName(),
-							dlFileEntry.getFileEntryId(), true);
-					}
-				}
-
-				// Index
-
-				Indexer<DLFileEntry> indexer =
-					IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
-
-				indexer.reindex(dlFileEntry);
-			}
-
-			List<DLFileShortcut> dlFileShortcuts =
-				dlFileShortcutPersistence.findByG_F(
-					curFolder.getGroupId(), curFolder.getFolderId());
-
-			for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
-				if (moveToTrash) {
-					if (dlFileShortcut.isInTrashExplicitly()) {
-						continue;
-					}
-
-					int oldStatus = dlFileShortcut.getStatus();
-
-					dlFileShortcut.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-					dlFileShortcutPersistence.update(dlFileShortcut);
-
-					// Trash
-
-					if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-						trashVersionLocalService.addTrashVersion(
-							trashEntry.getEntryId(),
-							DLFileShortcutConstants.getClassName(),
-							dlFileShortcut.getFileShortcutId(), oldStatus,
-							null);
-					}
-				}
-				else {
-					if (!dlFileShortcut.isInTrashImplicitly()) {
-						continue;
-					}
-
-					TrashVersion trashVersion =
-						trashVersionLocalService.fetchVersion(
-							DLFileShortcutConstants.getClassName(),
-							dlFileShortcut.getFileShortcutId());
-
-					int oldStatus = WorkflowConstants.STATUS_APPROVED;
-
-					if (trashVersion != null) {
-						oldStatus = trashVersion.getStatus();
-					}
-
-					dlFileShortcut.setStatus(oldStatus);
-
-					dlFileShortcutPersistence.update(dlFileShortcut);
-
-					if (trashVersion != null) {
-						trashVersionLocalService.deleteTrashVersion(
-							trashVersion);
-					}
-				}
-			}
-
-			if (curFolder.equals(dlFolder)) {
-				continue;
-			}
-
-			if (moveToTrash) {
-				if (curFolder.isInTrashExplicitly()) {
-					continue;
-				}
-
-				int oldStatus = curFolder.getStatus();
-
-				curFolder.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-				dlFolderPersistence.update(curFolder);
-
-				// Trash
-
-				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
-					trashVersionLocalService.addTrashVersion(
-						trashEntry.getEntryId(), DLFolder.class.getName(),
-						curFolder.getFolderId(), oldStatus, null);
-				}
-			}
-			else {
-				if (!curFolder.isInTrashImplicitly()) {
-					continue;
-				}
-
-				TrashVersion trashVersion =
-					trashVersionLocalService.fetchVersion(
-						DLFolder.class.getName(), curFolder.getFolderId());
-
-				int oldStatus = WorkflowConstants.STATUS_APPROVED;
-
-				if (trashVersion != null) {
-					oldStatus = trashVersion.getStatus();
-				}
-
-				curFolder.setStatus(oldStatus);
-
-				dlFolderPersistence.update(curFolder);
-
-				// Trash
-
-				if (trashVersion != null) {
-					trashVersionLocalService.deleteTrashVersion(trashVersion);
-				}
-			}
-
-			// Asset
-
-			assetEntryLocalService.updateVisible(
-				DLFolderConstants.getClassName(), curFolder.getFolderId(),
-				!moveToTrash);
-
-			// Index
-
-			Indexer<DLFolder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				DLFolder.class);
-
-			indexer.reindex(curFolder);
-		}
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #restoreDependentsFromTrash(DLFolder)}
@@ -1949,6 +1693,262 @@ public class DLAppHelperLocalServiceImpl
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected void trashOrRestoreFolder(DLFolder dlFolder, boolean moveToTrash)
+		throws PortalException {
+
+		TrashEntry trashEntry = null;
+
+		if (moveToTrash) {
+			trashEntry = trashEntryLocalService.getEntry(
+				DLFolderConstants.getClassName(), dlFolder.getFolderId());
+		}
+
+		List<DLFolder> dlFolders = dlFolderPersistence.findByG_M_T_H(
+			dlFolder.getGroupId(), false,
+			CustomSQLUtil.keywords(dlFolder.getTreePath())[0], false);
+
+		for (DLFolder curFolder : dlFolders) {
+			List<DLFileEntry> dlFileEntries =
+				dlFileEntryLocalService.getFileEntries(
+					curFolder.getGroupId(), curFolder.getFolderId());
+
+			for (DLFileEntry dlFileEntry : dlFileEntries) {
+				if (moveToTrash) {
+					if (dlFileEntry.isInTrashExplicitly()) {
+						continue;
+					}
+				}
+				else if (!dlFileEntry.isInTrashImplicitly()) {
+					continue;
+				}
+
+				// File shortcut
+
+				dlFileShortcutLocalService.setFileShortcutsEnabled(
+					dlFileEntry.getFileEntryId(), !moveToTrash);
+
+				// File versions
+
+				List<DLFileVersion> dlFileVersions = null;
+
+				if (moveToTrash) {
+					dlFileVersions = dlFileVersionLocalService.getFileVersions(
+						dlFileEntry.getFileEntryId(),
+						WorkflowConstants.STATUS_ANY);
+				}
+				else {
+					dlFileVersions = dlFileVersionLocalService.getFileVersions(
+						dlFileEntry.getFileEntryId(),
+						WorkflowConstants.STATUS_IN_TRASH);
+				}
+
+				for (DLFileVersion dlFileVersion : dlFileVersions) {
+
+					// File version
+
+					if (moveToTrash) {
+						int oldStatus = dlFileVersion.getStatus();
+
+						dlFileVersion.setStatus(
+							WorkflowConstants.STATUS_IN_TRASH);
+
+						dlFileVersionPersistence.update(dlFileVersion);
+
+						// Trash
+
+						if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+							int newStatus = oldStatus;
+
+							if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+								newStatus = WorkflowConstants.STATUS_DRAFT;
+							}
+
+							trashVersionLocalService.addTrashVersion(
+								trashEntry.getEntryId(),
+								DLFileVersion.class.getName(),
+								dlFileVersion.getFileVersionId(), newStatus,
+								null);
+						}
+
+						// Workflow
+
+						if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+							workflowInstanceLinkLocalService.
+								deleteWorkflowInstanceLink(
+									dlFileVersion.getCompanyId(),
+									dlFileVersion.getGroupId(),
+									DLFileEntryConstants.getClassName(),
+									dlFileVersion.getFileVersionId());
+						}
+					}
+					else {
+						TrashVersion trashVersion =
+							trashVersionLocalService.fetchVersion(
+								DLFileVersion.class.getName(),
+								dlFileVersion.getFileVersionId());
+
+						int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+						if (trashVersion != null) {
+							oldStatus = trashVersion.getStatus();
+						}
+
+						dlFileVersion.setStatus(oldStatus);
+
+						dlFileVersionPersistence.update(dlFileVersion);
+
+						// Trash
+
+						if (trashVersion != null) {
+							trashVersionLocalService.deleteTrashVersion(
+								trashVersion);
+						}
+					}
+				}
+
+				// Asset
+
+				if (moveToTrash) {
+					assetEntryLocalService.updateVisible(
+						DLFileEntryConstants.getClassName(),
+						dlFileEntry.getFileEntryId(), false);
+				}
+				else {
+					DLFileVersion latestDlFileVersion =
+						dlFileEntry.getLatestFileVersion(false);
+
+					if (latestDlFileVersion.isApproved()) {
+						assetEntryLocalService.updateVisible(
+							DLFileEntryConstants.getClassName(),
+							dlFileEntry.getFileEntryId(), true);
+					}
+				}
+
+				// Index
+
+				Indexer<DLFileEntry> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
+
+				indexer.reindex(dlFileEntry);
+			}
+
+			List<DLFileShortcut> dlFileShortcuts =
+				dlFileShortcutPersistence.findByG_F(
+					curFolder.getGroupId(), curFolder.getFolderId());
+
+			for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
+				if (moveToTrash) {
+					if (dlFileShortcut.isInTrashExplicitly()) {
+						continue;
+					}
+
+					int oldStatus = dlFileShortcut.getStatus();
+
+					dlFileShortcut.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+					dlFileShortcutPersistence.update(dlFileShortcut);
+
+					// Trash
+
+					if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+						trashVersionLocalService.addTrashVersion(
+							trashEntry.getEntryId(),
+							DLFileShortcutConstants.getClassName(),
+							dlFileShortcut.getFileShortcutId(), oldStatus,
+							null);
+					}
+				}
+				else {
+					if (!dlFileShortcut.isInTrashImplicitly()) {
+						continue;
+					}
+
+					TrashVersion trashVersion =
+						trashVersionLocalService.fetchVersion(
+							DLFileShortcutConstants.getClassName(),
+							dlFileShortcut.getFileShortcutId());
+
+					int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+					if (trashVersion != null) {
+						oldStatus = trashVersion.getStatus();
+					}
+
+					dlFileShortcut.setStatus(oldStatus);
+
+					dlFileShortcutPersistence.update(dlFileShortcut);
+
+					if (trashVersion != null) {
+						trashVersionLocalService.deleteTrashVersion(
+							trashVersion);
+					}
+				}
+			}
+
+			if (curFolder.equals(dlFolder)) {
+				continue;
+			}
+
+			if (moveToTrash) {
+				if (curFolder.isInTrashExplicitly()) {
+					continue;
+				}
+
+				int oldStatus = curFolder.getStatus();
+
+				curFolder.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+				dlFolderPersistence.update(curFolder);
+
+				// Trash
+
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+					trashVersionLocalService.addTrashVersion(
+						trashEntry.getEntryId(), DLFolder.class.getName(),
+						curFolder.getFolderId(), oldStatus, null);
+				}
+			}
+			else {
+				if (!curFolder.isInTrashImplicitly()) {
+					continue;
+				}
+
+				TrashVersion trashVersion =
+					trashVersionLocalService.fetchVersion(
+						DLFolder.class.getName(), curFolder.getFolderId());
+
+				int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+				if (trashVersion != null) {
+					oldStatus = trashVersion.getStatus();
+				}
+
+				curFolder.setStatus(oldStatus);
+
+				dlFolderPersistence.update(curFolder);
+
+				// Trash
+
+				if (trashVersion != null) {
+					trashVersionLocalService.deleteTrashVersion(trashVersion);
+				}
+			}
+
+			// Asset
+
+			assetEntryLocalService.updateVisible(
+				DLFolderConstants.getClassName(), curFolder.getFolderId(),
+				!moveToTrash);
+
+			// Index
+
+			Indexer<DLFolder> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				DLFolder.class);
+
+			indexer.reindex(curFolder);
+		}
 	}
 
 	protected <T extends RepositoryModel<T>> void triggerRepositoryEvent(

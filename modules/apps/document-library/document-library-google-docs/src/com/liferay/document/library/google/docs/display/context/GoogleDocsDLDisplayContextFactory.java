@@ -69,15 +69,19 @@ public class GoogleDocsDLDisplayContextFactory
 		HttpServletRequest request, HttpServletResponse response,
 		FileEntry fileEntry) {
 
-		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper(
-				_ddmStructureLocalService, (DLFileEntry)fileEntry.getModel(),
-				_dlFileEntryMetadataLocalService, _storageEngine);
+		Object model = fileEntry.getModel();
 
-		if (googleDocsMetadataHelper.isGoogleDocs()) {
-			return new GoogleDocsDLEditFileEntryDisplayContext(
-				parentDLEditFileEntryDisplayContext, request, response,
-				fileEntry);
+		if (model instanceof DLFileEntry) {
+			GoogleDocsMetadataHelper googleDocsMetadataHelper =
+				new GoogleDocsMetadataHelper(
+					_ddmStructureLocalService, (DLFileEntry)model,
+					_dlFileEntryMetadataLocalService, _storageEngine);
+
+			if (googleDocsMetadataHelper.isGoogleDocs()) {
+				return new GoogleDocsDLEditFileEntryDisplayContext(
+					parentDLEditFileEntryDisplayContext, request, response,
+					fileEntry);
+			}
 		}
 
 		return parentDLEditFileEntryDisplayContext;
@@ -120,19 +124,17 @@ public class GoogleDocsDLDisplayContextFactory
 
 		Object model = fileVersion.getModel();
 
-		if (!(model instanceof DLFileVersion)) {
-			return parentDLViewFileVersionDisplayContext;
-		}
+		if (model instanceof DLFileVersion) {
+			GoogleDocsMetadataHelper googleDocsMetadataHelper =
+				new GoogleDocsMetadataHelper(
+					_ddmStructureLocalService, (DLFileVersion)model,
+					_dlFileEntryMetadataLocalService, _storageEngine);
 
-		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper(
-				_ddmStructureLocalService, (DLFileVersion)model,
-				_dlFileEntryMetadataLocalService, _storageEngine);
-
-		if (googleDocsMetadataHelper.isGoogleDocs()) {
-			return new GoogleDocsDLViewFileVersionDisplayContext(
-				parentDLViewFileVersionDisplayContext, request, response,
-				fileVersion, googleDocsMetadataHelper);
+			if (googleDocsMetadataHelper.isGoogleDocs()) {
+				return new GoogleDocsDLViewFileVersionDisplayContext(
+					parentDLViewFileVersionDisplayContext, request, response,
+					fileVersion, googleDocsMetadataHelper);
+			}
 		}
 
 		return parentDLViewFileVersionDisplayContext;

@@ -516,7 +516,7 @@
 			<var name="siteScopeName" value="Organization Name 1" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_LABEL" value1="1 User" />
+		<execute function="AssertTextEquals" locator1="SiteMemberships#USER_TABLE_LABEL" value1="2 Users" />
 
 		<execute macro="Site#viewMemberOrganizationCP">
 			<var name="orgName" value="Organization Name 1" />

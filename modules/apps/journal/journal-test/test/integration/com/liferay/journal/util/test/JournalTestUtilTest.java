@@ -22,7 +22,6 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.exception.NoSuchArticleException;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -249,12 +248,12 @@ public class JournalTestUtilTest {
 
 		try {
 			Assert.assertNull(
-				"Default values of deleted DDMStructure were not removed", 
+				"Default values of deleted DDMStructure were not removed",
 				JournalArticleLocalServiceUtil.getArticle(
 					ddmStructure.getGroupId(), DDMStructure.class.getName(),
 					ddmStructure.getStructureId()));
 		}
-		catch(NoSuchArticleException e) {
+		catch (NoSuchArticleException e) {
 		}
 	}
 

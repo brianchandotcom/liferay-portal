@@ -423,6 +423,20 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
+			long groupId, long folderId, long classNameId, long classPK,
+			String xml, String ddmStructureKey, String ddmTemplateKey,
+			Locale defaultLocale)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		return addArticleWithXMLContent(
+			folderId, classNameId, classPK, xml, ddmStructureKey,
+			ddmTemplateKey, defaultLocale, null, serviceContext);
+	}
+
+	public static JournalArticle addArticleWithXMLContent(
 			long groupId, long folderId, long classNameId, String xml,
 			String ddmStructureKey, String ddmTemplateKey)
 		throws Exception {
@@ -443,34 +457,9 @@ public class JournalTestUtil {
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
-			long groupId, long folderId, long classNameId, long classPK,
-			String xml, String ddmStructureKey, String ddmTemplateKey,
-			Locale defaultLocale)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return addArticleWithXMLContent(
-			folderId, classNameId, classPK, xml, ddmStructureKey,
-			ddmTemplateKey, defaultLocale, null, serviceContext);
-	}
-
-	public static JournalArticle addArticleWithXMLContent(
-			long folderId, long classNameId, String xml, String ddmStructureKey,
-			String ddmTemplateKey, Locale defaultLocale,
+			long folderId, long classNameId, long classPK, String xml,
+			String ddmStructureKey, String ddmTemplateKey, Locale defaultLocale,
 			Map<String, byte[]> images, ServiceContext serviceContext)
-		throws Exception {
-
-		return addArticleWithXMLContent(
-			folderId, classNameId, 0, xml, ddmStructureKey, ddmTemplateKey,
-			defaultLocale, images, serviceContext);
-	}
-	public static JournalArticle addArticleWithXMLContent(
-			long folderId, long classNameId, long classPK,
-			String xml, String ddmStructureKey, String ddmTemplateKey,
-			Locale defaultLocale, Map<String, byte[]> images,
-			ServiceContext serviceContext)
 		throws Exception {
 
 		Map<Locale, String> titleMap = new HashMap<>();
@@ -483,6 +472,17 @@ public class JournalTestUtil {
 			null, xml, ddmStructureKey, ddmTemplateKey, null, 1, 1, 1965, 0, 0,
 			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null,
 			images, null, serviceContext);
+	}
+
+	public static JournalArticle addArticleWithXMLContent(
+			long folderId, long classNameId, String xml, String ddmStructureKey,
+			String ddmTemplateKey, Locale defaultLocale,
+			Map<String, byte[]> images, ServiceContext serviceContext)
+		throws Exception {
+
+		return addArticleWithXMLContent(
+			folderId, classNameId, 0, xml, ddmStructureKey, ddmTemplateKey,
+			defaultLocale, images, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(

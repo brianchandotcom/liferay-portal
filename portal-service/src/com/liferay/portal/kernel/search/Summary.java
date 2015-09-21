@@ -46,6 +46,12 @@ public class Summary {
 			return StringPool.BLANK;
 		}
 
+		if ((_maxContentLength > 0) &&
+			(_content.length() > _maxContentLength)) {
+
+			_content = StringUtil.shorten(_content, _maxContentLength);
+		}
+
 		return _content;
 	}
 
@@ -87,12 +93,6 @@ public class Summary {
 
 	public void setContent(String content) {
 		_content = content;
-
-		if ((_content != null) && (_maxContentLength > 0) &&
-			(_content.length() > _maxContentLength)) {
-
-			_content = StringUtil.shorten(_content, _maxContentLength);
-		}
 	}
 
 	public void setEscape(boolean escape) {
@@ -109,8 +109,6 @@ public class Summary {
 
 	public void setMaxContentLength(int maxContentLength) {
 		_maxContentLength = maxContentLength;
-
-		setContent(_content);
 	}
 
 	public void setQueryTerms(String[] queryTerms) {

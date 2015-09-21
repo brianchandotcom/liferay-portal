@@ -46,6 +46,11 @@
 </tr>
 <!--DDM_STRUCTURE_TABLE-->
 <tr>
+	<td>DDM_STRUCTURE_ELLIPSIS</td>
+	<td>//td[contains(@class,'entry-action')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DDM_STRUCTURE_TABLE</td>
 	<td>//div[contains(@id,'ddmStructuresSearchContainer')]/table/tbody/tr[1]</td>
 	<td></td>

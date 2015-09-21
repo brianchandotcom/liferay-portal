@@ -4666,10 +4666,6 @@ public class PortalImpl implements Portal {
 			}
 
 			if (group.isControlPanel()) {
-				if (doAsGroup == null) {
-					doAsGroupId = getDefaultScopeGroupId(group.getCompanyId());
-				}
-
 				if (doAsGroupId > 0) {
 					scopeGroupId = doAsGroupId;
 				}
@@ -7717,34 +7713,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return new VirtualLayout(layout, group);
-	}
-
-	protected long getDefaultScopeGroupId(long companyId)
-		throws PortalException {
-
-		long doAsGroupId = 0;
-
-		Collection<Portlet> portlets = getControlPanelPortlets(
-			companyId, PortletCategoryKeys.SITE_ADMINISTRATION);
-
-		List<Group> groups = GroupServiceUtil.getManageableSiteGroups(
-			portlets, 1);
-
-		if (!groups.isEmpty()) {
-			Group group = groups.get(0);
-
-			doAsGroupId = group.getGroupId();
-		}
-		else {
-			Group guestGroup = GroupLocalServiceUtil.fetchGroup(
-				companyId, GroupConstants.GUEST);
-
-			if (guestGroup != null) {
-				doAsGroupId = guestGroup.getGroupId();
-			}
-		}
-
-		return doAsGroupId;
 	}
 
 	protected long getDoAsUserId(

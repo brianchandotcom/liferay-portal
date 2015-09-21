@@ -29,92 +29,109 @@ AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 %>
 
 <div class="taglib-asset-metadata">
+	<aui:layout>
 
-	<%
-	for (String metadataField : metadataFields) {
-		String iconCssClass = StringPool.BLANK;
-		String value = null;
+		<%
+		for (String metadataField : metadataFields) {
+			String iconCssClass = StringPool.BLANK;
 
-		if (metadataField.equals("create-date")) {
-			iconCssClass = "icon-calendar";
-			value = dateFormatDate.format(assetEntry.getCreateDate());
-		}
-		else if (metadataField.equals("modified-date")) {
-			iconCssClass = "icon-calendar";
-			value = dateFormatDate.format(assetEntry.getModifiedDate());
-		}
-		else if (metadataField.equals("publish-date")) {
-			iconCssClass = "icon-calendar";
+			String label = LanguageUtil.get(request, metadataField);
 
-			if (assetEntry.getPublishDate() == null) {
-				value = StringPool.BLANK;
+			String metadataFieldCssClass = "metadata-" + metadataField;
+
+			String value = null;
+
+			if (metadataField.equals("create-date")) {
+				iconCssClass = "icon-calendar";
+
+				value = dateFormatDate.format(assetEntry.getCreateDate());
 			}
-			else {
-				value = dateFormatDate.format(assetEntry.getPublishDate());
+			else if (metadataField.equals("modified-date")) {
+				iconCssClass = "icon-calendar";
+
+				value = dateFormatDate.format(assetEntry.getModifiedDate());
+			}
+			else if (metadataField.equals("publish-date")) {
+				iconCssClass = "icon-calendar";
+
+				if (assetEntry.getPublishDate() == null) {
+					value = StringPool.BLANK;
+				}
+				else {
+					value = dateFormatDate.format(assetEntry.getPublishDate());
+				}
+			}
+			else if (metadataField.equals("expiration-date")) {
+				iconCssClass = "icon-calendar";
+
+				if (assetEntry.getExpirationDate() == null) {
+					value = StringPool.BLANK;
+				}
+				else {
+					value = dateFormatDate.format(assetEntry.getExpirationDate());
+				}
+			}
+			else if (metadataField.equals("priority")) {
+				iconCssClass = "icon-long-arrow-up";
+
+				value = LanguageUtil.get(request, "priority") + StringPool.COLON + StringPool.SPACE + assetEntry.getPriority();
+			}
+			else if (metadataField.equals("author")) {
+				iconCssClass = "icon-user";
+
+				metadataFieldCssClass = StringPool.BLANK;
+
+				String userName = PortalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName());
+
+				value = LanguageUtil.get(request, "by") + StringPool.SPACE + HtmlUtil.escape(userName);
+			}
+			else if (metadataField.equals("view-count")) {
+				int viewCount = assetEntry.getViewCount();
+
+				value = viewCount + StringPool.SPACE + LanguageUtil.get(request, (viewCount == 1) ? "view" : "views");
+			}
+			else if (metadataField.equals("categories")) {
+				value = "categories";
+			}
+			else if (metadataField.equals("tags")) {
+				value = "tags";
+			}
+
+			if (Validator.isNotNull(value)) {
+		%>
+
+				<aui:column cssClass="help-block">
+					<div>
+						<%= label %>
+					</div>
+
+					<span class="metadata-entry <%= metadataFieldCssClass %> <%= iconCssClass %>">
+						<c:choose>
+							<c:when test='<%= value.equals("categories") %>' >
+								<liferay-ui:asset-categories-summary
+									className="<%= assetEntry.getClassName() %>"
+									classPK="<%= assetEntry.getClassPK () %>"
+									portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
+								/>
+							</c:when>
+							<c:when test='<%= value.equals("tags") %>' >
+								<liferay-ui:asset-tags-summary
+									className="<%= assetEntry.getClassName() %>"
+									classPK="<%= assetEntry.getClassPK () %>"
+									portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
+								/>
+							</c:when>
+							<c:otherwise>
+								<%= value %>
+							</c:otherwise>
+						</c:choose>
+					</span>
+				</aui:column>
+
+		<%
 			}
 		}
-		else if (metadataField.equals("expiration-date")) {
-			iconCssClass = "icon-calendar";
+		%>
 
-			if (assetEntry.getExpirationDate() == null) {
-				value = StringPool.BLANK;
-			}
-			else {
-				value = dateFormatDate.format(assetEntry.getExpirationDate());
-			}
-		}
-		else if (metadataField.equals("priority")) {
-			iconCssClass = "icon-long-arrow-up";
-
-			value = LanguageUtil.get(request, "priority") + StringPool.COLON + StringPool.SPACE + assetEntry.getPriority();
-		}
-		else if (metadataField.equals("author")) {
-			iconCssClass = "icon-user";
-
-			String userName = PortalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName());
-
-			value = LanguageUtil.get(request, "by") + StringPool.SPACE + HtmlUtil.escape(userName);
-		}
-		else if (metadataField.equals("view-count")) {
-			int viewCount = assetEntry.getViewCount();
-
-			value = viewCount + StringPool.SPACE + LanguageUtil.get(request, (viewCount == 1) ? "view" : "views");
-		}
-		else if (metadataField.equals("categories")) {
-			value = "categories";
-		}
-		else if (metadataField.equals("tags")) {
-			value = "tags";
-		}
-
-		if (Validator.isNotNull(value)) {
-	%>
-
-			<span class="metadata-entry <%= "metadata-" + metadataField %> <%= iconCssClass %>">
-				<c:choose>
-					<c:when test='<%= value.equals("categories") %>'>
-						<liferay-ui:asset-categories-summary
-							className="<%= assetEntry.getClassName() %>"
-							classPK="<%= assetEntry.getClassPK () %>"
-							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
-						/>
-					</c:when>
-					<c:when test='<%= value.equals("tags") %>'>
-						<liferay-ui:asset-tags-summary
-							className="<%= assetEntry.getClassName() %>"
-							classPK="<%= assetEntry.getClassPK () %>"
-							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
-						/>
-					</c:when>
-					<c:otherwise>
-						<%= value %>
-					</c:otherwise>
-				</c:choose>
-			</span>
-
-	<%
-		}
-	}
-	%>
-
+	</aui:layout>
 </div>

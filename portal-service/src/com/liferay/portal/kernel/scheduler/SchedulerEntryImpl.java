@@ -45,13 +45,13 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 		}
 
 		if (_triggerType.equals(TriggerType.CRON)) {
-			_trigger = new CronTrigger(
+			_trigger = TriggerFactoryUtil.createTrigger(
 				_eventListenerClass, _eventListenerClass, _triggerValue);
 		}
 		else if (_triggerType.equals(TriggerType.SIMPLE)) {
 			int interval = GetterUtil.getInteger(_triggerValue);
 
-			_trigger = new IntervalTrigger(
+			_trigger = TriggerFactoryUtil.createTrigger(
 				_eventListenerClass, _eventListenerClass, interval, _timeUnit);
 		}
 		else {

@@ -57,26 +57,28 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 	}
 
 	@Override
-	protected BlogsEntry addBlogsEntry(String coverImageTitle)
-		throws Exception {
-
+	protected BlogsEntry addBlogsEntry(String imageTitle) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), user.getUserId());
 
 		FileEntry fileEntry = getTempFileEntry(
-			user.getUserId(), coverImageTitle, serviceContext);
+			user.getUserId(), imageTitle, serviceContext);
 
-		ImageSelector coverImageSelector = new ImageSelector(
+		ImageSelector imageSelector = new ImageSelector(
 			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
-		ImageSelector smallImageSelector = null;
 
 		return BlogsEntryLocalServiceUtil.addEntry(
 			user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, coverImageSelector,
-			smallImageSelector, serviceContext);
+			new String[0], StringPool.BLANK, imageSelector, null,
+			serviceContext);
+	}
+
+	@Override
+	protected long getImageFileEntry(BlogsEntry blogsEntry) {
+		return blogsEntry.getCoverImageFileEntryId();
 	}
 
 	@Override
@@ -97,21 +99,19 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 
 	@Override
 	protected BlogsEntry updateBlogsEntry(
-			long blogsEntryId, ImageSelector coverImageSelector)
+			long blogsEntryId, ImageSelector imageSelector)
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), user.getUserId());
 
-		ImageSelector smallImageSelector = null;
-
 		return BlogsEntryLocalServiceUtil.updateEntry(
 			user.getUserId(), blogsEntryId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, coverImageSelector,
-			smallImageSelector, serviceContext);
+			new String[0], StringPool.BLANK, imageSelector, null,
+			serviceContext);
 	}
 
 	@Override
@@ -126,10 +126,10 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 		FileEntry fileEntry = getTempFileEntry(
 			user.getUserId(), coverImageTitle, serviceContext);
 
-		ImageSelector coverImageSelector = new ImageSelector(
+		ImageSelector imageSelector = new ImageSelector(
 			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
 
-		return updateBlogsEntry(blogsEntryId, coverImageSelector);
+		return updateBlogsEntry(blogsEntryId, imageSelector);
 	}
 
 	private static final String _IMAGE_CROP_REGION =

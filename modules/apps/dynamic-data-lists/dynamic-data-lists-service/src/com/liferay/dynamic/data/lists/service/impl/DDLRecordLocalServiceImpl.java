@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.lists.service.impl;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordLocalServiceBaseImpl;
 import com.liferay.dynamic.data.lists.util.DDL;
@@ -461,6 +462,14 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 			long[] assetCategoryIds, String[] assetTagNames, Locale locale)
 		throws PortalException {
 
+		DDLRecordSet recordSet = record.getRecordSet();
+
+		if (recordSet.getScope() !=
+				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) {
+
+			return;
+		}
+
 		boolean addDraftAssetEntry = false;
 		boolean visible = true;
 
@@ -480,8 +489,6 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 			visible = false;
 		}
-
-		DDLRecordSet recordSet = record.getRecordSet();
 
 		DDMStructure ddmStructure = recordSet.getDDMStructure();
 

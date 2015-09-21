@@ -25,4 +25,8 @@ public class DDLRecordSetConstants {
 
 	public static final int SCOPE_DYNAMIC_DATA_LISTS = 0;
 
+	public static final int SCOPE_FORMS = 2;
+
+	public static final int SCOPE_KALEO_FORMS = 1;
+
 }

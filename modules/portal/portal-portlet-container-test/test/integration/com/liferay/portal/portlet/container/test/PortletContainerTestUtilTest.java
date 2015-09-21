@@ -104,7 +104,7 @@ public class PortletContainerTestUtilTest {
 	}
 
 	@Test
-	public void testGetHttpServletRequestWithWrongArguments() {
+	public void testGetHttpServletRequestWithNullGroup() {
 		try {
 			PortletContainerTestUtil.getHttpServletRequest(null, _layout);
 		}
@@ -112,7 +112,10 @@ public class PortletContainerTestUtilTest {
 			Assert.assertTrue(e instanceof IllegalArgumentException);
 			Assert.assertEquals("Arguments cannot be null.", e.getMessage());
 		}
+	}
 
+	@Test
+	public void testGetHttpServletRequestWithNullLayout() {
 		try {
 			PortletContainerTestUtil.getHttpServletRequest(_group, null);
 		}

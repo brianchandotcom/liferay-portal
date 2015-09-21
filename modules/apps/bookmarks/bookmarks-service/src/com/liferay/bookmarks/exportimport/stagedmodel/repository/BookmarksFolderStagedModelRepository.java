@@ -41,10 +41,10 @@ public class BookmarksFolderStagedModelRepository
 	extends BaseStagedModelRepository<BookmarksFolder> {
 
 	@Override
-	public void deleteStagedModel(BookmarksFolder folder)
+	public void deleteStagedModel(BookmarksFolder bookmarksFolder)
 		throws PortalException {
 
-		BookmarksFolderLocalServiceUtil.deleteFolder(folder);
+		BookmarksFolderLocalServiceUtil.deleteFolder(bookmarksFolder);
 	}
 
 	@Override
@@ -52,11 +52,11 @@ public class BookmarksFolderStagedModelRepository
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		BookmarksFolder folder = fetchStagedModelByUuidAndGroupId(
+		BookmarksFolder bookmarksFolder = fetchStagedModelByUuidAndGroupId(
 			uuid, groupId);
 
-		if (folder != null) {
-			deleteStagedModel(folder);
+		if (bookmarksFolder != null) {
+			deleteStagedModel(bookmarksFolder);
 		}
 	}
 
@@ -80,13 +80,15 @@ public class BookmarksFolderStagedModelRepository
 
 	@Override
 	public void restoreStagedModel(
-			PortletDataContext portletDataContext, BookmarksFolder folder)
+			PortletDataContext portletDataContext,
+			BookmarksFolder bookmarksFolder)
 		throws PortletDataException {
 
-		long userId = portletDataContext.getUserId(folder.getUserUuid());
+		long userId = portletDataContext.getUserId(
+			bookmarksFolder.getUserUuid());
 
 		BookmarksFolder existingFolder = fetchStagedModelByUuidAndGroupId(
-			folder.getUuid(), portletDataContext.getScopeGroupId());
+			bookmarksFolder.getUuid(), portletDataContext.getScopeGroupId());
 
 		if ((existingFolder == null) || !isStagedModelInTrash(existingFolder)) {
 			return;

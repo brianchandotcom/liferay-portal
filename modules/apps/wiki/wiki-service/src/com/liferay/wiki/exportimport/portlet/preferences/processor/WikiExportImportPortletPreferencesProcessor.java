@@ -62,11 +62,13 @@ public class WikiExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
+		String portletId = portletDataContext.getPortletId();
+
 		String hiddenNodeNames = portletPreferences.getValue(
 			"hiddenNodes", null);
 
 		for (String hiddenNodeName : StringUtil.split(hiddenNodeNames)) {
-			WikiNode wikiNode = WikiNodeLocalServiceUtil.getNode(
+			WikiNode wikiNode = WikiNodeLocalServiceUtil.fetchNode(
 				portletDataContext.getScopeGroupId(), hiddenNodeName);
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -77,7 +79,7 @@ public class WikiExportImportPortletPreferencesProcessor
 			"visibleNodes", null);
 
 		for (String visibleNodeName : StringUtil.split(visibleNodeNames)) {
-			WikiNode wikiNode = WikiNodeLocalServiceUtil.getNode(
+			WikiNode wikiNode = WikiNodeLocalServiceUtil.fetchNode(
 				portletDataContext.getScopeGroupId(), visibleNodeName);
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(

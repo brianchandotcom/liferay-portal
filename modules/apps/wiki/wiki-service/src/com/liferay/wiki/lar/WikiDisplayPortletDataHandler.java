@@ -14,23 +14,13 @@
 
 package com.liferay.wiki.lar;
 
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
 import javax.portlet.PortletPreferences;
 
@@ -72,55 +62,9 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 		return portletPreferences;
 	}
 
-	protected ActionableDynamicQuery getPageActionableDynamicQuery(
-		final PortletDataContext portletDataContext, final long nodeId,
-		final String portletId) {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			WikiPageLocalServiceUtil.getExportActionableDynamicQuery(
-				portletDataContext);
-
-		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			actionableDynamicQuery.getAddCriteriaMethod();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					addCriteriaMethod.addCriteria(dynamicQuery);
-
-					Property property = PropertyFactoryUtil.forName("nodeId");
-
-					dynamicQuery.add(property.eq(nodeId));
-				}
-
-			});
-
-		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod() {
-
-				@Override
-				public void performAction(Object object)
-					throws PortalException {
-
-					WikiPage page = (WikiPage)object;
-
-					StagedModelDataHandlerUtil.exportReferenceStagedModel(
-						portletDataContext, portletId, page);
-				}
-
-			});
-
-		return actionableDynamicQuery;
-	}
-
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WikiDisplayPortletDataHandler.class);
 
 }

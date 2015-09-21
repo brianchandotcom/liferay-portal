@@ -17,13 +17,12 @@ package com.liferay.bookmarks.lar;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.model.impl.BookmarksEntryImpl;
 import com.liferay.bookmarks.model.impl.BookmarksFolderImpl;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
@@ -92,12 +91,10 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		BookmarksFolderLocalServiceUtil.deleteFolders(
-			portletDataContext.getScopeGroupId());
-
-		BookmarksEntryLocalServiceUtil.deleteEntries(
-			portletDataContext.getScopeGroupId(),
-			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		_bookmarksEntryStagedModelRepository.deleteStagedModels(
+			portletDataContext);
+		_bookmarksFolderStagedModelRepository.deleteStagedModels(
+			portletDataContext);
 
 		return portletPreferences;
 	}
@@ -120,15 +117,15 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		ActionableDynamicQuery folderActionableDynamicQuery =
-			BookmarksFolderLocalServiceUtil.getExportActionableDynamicQuery(
-				portletDataContext);
+		ExportActionableDynamicQuery folderActionableDynamicQuery =
+			_bookmarksFolderStagedModelRepository.
+				getExportActionableDynamicQuery(portletDataContext);
 
 		folderActionableDynamicQuery.performActions();
 
 		ActionableDynamicQuery entryActionableDynamicQuery =
-			BookmarksEntryLocalServiceUtil.getExportActionableDynamicQuery(
-				portletDataContext);
+			_bookmarksEntryStagedModelRepository.
+				getExportActionableDynamicQuery(portletDataContext);
 
 		entryActionableDynamicQuery.performActions();
 
@@ -178,21 +175,52 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery entryExportActionableDynamicQuery =
-			BookmarksEntryLocalServiceUtil.getExportActionableDynamicQuery(
-				portletDataContext);
+			_bookmarksEntryStagedModelRepository.
+				getExportActionableDynamicQuery(portletDataContext);
 
 		entryExportActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery folderExportActionableDynamicQuery =
-			BookmarksFolderLocalServiceUtil.getExportActionableDynamicQuery(
-				portletDataContext);
+			_bookmarksFolderStagedModelRepository.
+				getExportActionableDynamicQuery(portletDataContext);
 
 		folderExportActionableDynamicQuery.performCount();
+	}
+
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)",
+		unbind = "-"
+	)
+	protected void setBookmarksEntryStagedModelRepository(
+		StagedModelRepository<BookmarksEntry>
+			bookmarksEntryStagedModelRepository) {
+
+		_bookmarksEntryStagedModelRepository =
+			bookmarksEntryStagedModelRepository;
+	}
+
+	@Reference(
+		target =
+			"(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)",
+		unbind = "-"
+	)
+	protected void setBookmarksFolderStagedModelRepository(
+		StagedModelRepository<BookmarksFolder>
+			bookmarksFolderStagedModelRepository) {
+
+		_bookmarksFolderStagedModelRepository =
+			bookmarksFolderStagedModelRepository;
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
+
+	private StagedModelRepository<BookmarksEntry>
+		_bookmarksEntryStagedModelRepository;
+	private StagedModelRepository<BookmarksFolder>
+		_bookmarksFolderStagedModelRepository;
 
 }

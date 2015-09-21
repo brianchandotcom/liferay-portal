@@ -15,9 +15,11 @@
 package com.liferay.bookmarks.exportimport.staged.model.repository;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -28,6 +30,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -44,7 +47,7 @@ public class BookmarksEntryStagedModelRepository
 	public void deleteStagedModel(BookmarksEntry bookmarksEntry)
 		throws PortalException {
 
-		BookmarksEntryLocalServiceUtil.deleteEntry(bookmarksEntry);
+		_bookmarksEntryLocalService.deleteEntry(bookmarksEntry);
 	}
 
 	@Override
@@ -61,21 +64,38 @@ public class BookmarksEntryStagedModelRepository
 	}
 
 	@Override
+	public void deleteStagedModels(PortletDataContext portletDataContext)
+		throws PortalException {
+
+		_bookmarksEntryLocalService.deleteEntries(
+			portletDataContext.getScopeGroupId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
+
+	@Override
 	public BookmarksEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return BookmarksEntryLocalServiceUtil.
-			fetchBookmarksEntryByUuidAndGroupId(uuid, groupId);
+		return _bookmarksEntryLocalService.fetchBookmarksEntryByUuidAndGroupId(
+			uuid, groupId);
 	}
 
 	@Override
 	public List<BookmarksEntry> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return BookmarksEntryLocalServiceUtil.
+		return _bookmarksEntryLocalService.
 			getBookmarksEntriesByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				new StagedModelModifiedDateComparator<BookmarksEntry>());
+	}
+
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext) {
+
+		return _bookmarksEntryLocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override
@@ -111,5 +131,14 @@ public class BookmarksEntryStagedModelRepository
 			throw new PortletDataException(pe);
 		}
 	}
+
+	@Reference
+	protected void setBookmarksEntryLocalService(
+		BookmarksEntryLocalService bookmarksEntryLocalService) {
+
+		_bookmarksEntryLocalService = bookmarksEntryLocalService;
+	}
+
+	private BookmarksEntryLocalService _bookmarksEntryLocalService;
 
 }

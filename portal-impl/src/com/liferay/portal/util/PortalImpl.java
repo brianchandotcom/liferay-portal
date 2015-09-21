@@ -7639,44 +7639,6 @@ public class PortalImpl implements Portal {
 		return portalDomain.substring(0, pos);
 	}
 
-	protected Map<String, List<Portlet>> getCategoriesMap(
-		HttpServletRequest request, String attributeName, String[] categories) {
-
-		Map<String, List<Portlet>> categoriesMap =
-			(Map<String, List<Portlet>>)request.getAttribute(attributeName);
-
-		if (categoriesMap != null) {
-			return categoriesMap;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		categoriesMap = new LinkedHashMap<>();
-
-		for (String category : categories) {
-			Group group = themeDisplay.getSiteGroup();
-
-			if (group.isInheritContent() &&
-				category.equals(
-					PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT)) {
-
-				continue;
-			}
-
-			List<Portlet> portlets = getControlPanelPortlets(
-				category, themeDisplay);
-
-			if (!portlets.isEmpty()) {
-				categoriesMap.put(category, portlets);
-			}
-		}
-
-		request.setAttribute(attributeName, categoriesMap);
-
-		return categoriesMap;
-	}
-
 	protected String getContextPath(String contextPath) {
 		contextPath = GetterUtil.getString(contextPath);
 

@@ -25,24 +25,12 @@ public interface SchedulerEntry extends Serializable {
 
 	public String getEventListenerClass();
 
-	public TimeUnit getTimeUnit();
-
-	public Trigger getTrigger() throws SchedulerException;
-
-	public TriggerType getTriggerType();
-
-	public String getTriggerValue();
+	public Trigger getTrigger();
 
 	public void setDescription(String description);
 
 	public void setEventListenerClass(String eventListenerClass);
 
-	public void setTimeUnit(TimeUnit timeUnit);
-
-	public void setTriggerType(TriggerType triggerType);
-
-	public void setTriggerValue(int triggerValue);
-
-	public void setTriggerValue(String triggerValue);
+	public void setTrigger(Trigger trigger);
 
 }

@@ -16,10 +16,7 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
-import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerType;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,23 +41,8 @@ public abstract class BaseSchedulerEntryMessageListener
 	}
 
 	@Override
-	public TimeUnit getTimeUnit() {
-		return schedulerEntry.getTimeUnit();
-	}
-
-	@Override
-	public Trigger getTrigger() throws SchedulerException {
+	public Trigger getTrigger() {
 		return schedulerEntry.getTrigger();
-	}
-
-	@Override
-	public TriggerType getTriggerType() {
-		return schedulerEntry.getTriggerType();
-	}
-
-	@Override
-	public String getTriggerValue() {
-		return schedulerEntry.getTriggerValue();
 	}
 
 	@Override
@@ -74,23 +56,8 @@ public abstract class BaseSchedulerEntryMessageListener
 	}
 
 	@Override
-	public void setTimeUnit(TimeUnit timeUnit) {
-		schedulerEntry.setTimeUnit(timeUnit);
-	}
-
-	@Override
-	public void setTriggerType(TriggerType triggerType) {
-		schedulerEntry.setTriggerType(triggerType);
-	}
-
-	@Override
-	public void setTriggerValue(int triggerValue) {
-		schedulerEntry.setTriggerValue(triggerValue);
-	}
-
-	@Override
-	public void setTriggerValue(String triggerValue) {
-		schedulerEntry.setTriggerValue(triggerValue);
+	public void setTrigger(Trigger trigger) {
+		schedulerEntry.setTrigger(trigger);
 	}
 
 	protected SchedulerEntry schedulerEntry = new SchedulerEntryImpl();

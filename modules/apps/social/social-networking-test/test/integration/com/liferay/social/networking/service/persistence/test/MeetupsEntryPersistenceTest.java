@@ -120,8 +120,6 @@ public class MeetupsEntryPersistenceTest {
 
 		MeetupsEntry newMeetupsEntry = _persistence.create(pk);
 
-		newMeetupsEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		newMeetupsEntry.setUserId(RandomTestUtil.nextLong());
 
 		newMeetupsEntry.setUserName(RandomTestUtil.randomString());
@@ -146,14 +144,14 @@ public class MeetupsEntryPersistenceTest {
 
 		newMeetupsEntry.setThumbnailId(RandomTestUtil.nextLong());
 
+		newMeetupsEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		_meetupsEntries.add(_persistence.update(newMeetupsEntry));
 
 		MeetupsEntry existingMeetupsEntry = _persistence.findByPrimaryKey(newMeetupsEntry.getPrimaryKey());
 
 		Assert.assertEquals(existingMeetupsEntry.getMeetupsEntryId(),
 			newMeetupsEntry.getMeetupsEntryId());
-		Assert.assertEquals(existingMeetupsEntry.getCompanyId(),
-			newMeetupsEntry.getCompanyId());
 		Assert.assertEquals(existingMeetupsEntry.getUserId(),
 			newMeetupsEntry.getUserId());
 		Assert.assertEquals(existingMeetupsEntry.getUserName(),
@@ -182,6 +180,8 @@ public class MeetupsEntryPersistenceTest {
 			newMeetupsEntry.getPrice());
 		Assert.assertEquals(existingMeetupsEntry.getThumbnailId(),
 			newMeetupsEntry.getThumbnailId());
+		Assert.assertEquals(existingMeetupsEntry.getCompanyId(),
+			newMeetupsEntry.getCompanyId());
 	}
 
 	@Test
@@ -222,11 +222,11 @@ public class MeetupsEntryPersistenceTest {
 
 	protected OrderByComparator<MeetupsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MeetupsEntry",
-			"meetupsEntryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"title", true, "description", true, "startDate", true, "endDate",
-			true, "totalAttendees", true, "maxAttendees", true, "price", true,
-			"thumbnailId", true);
+			"meetupsEntryId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "title", true,
+			"description", true, "startDate", true, "endDate", true,
+			"totalAttendees", true, "maxAttendees", true, "price", true,
+			"thumbnailId", true, "companyId", true);
 	}
 
 	@Test
@@ -430,8 +430,6 @@ public class MeetupsEntryPersistenceTest {
 
 		MeetupsEntry meetupsEntry = _persistence.create(pk);
 
-		meetupsEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		meetupsEntry.setUserId(RandomTestUtil.nextLong());
 
 		meetupsEntry.setUserName(RandomTestUtil.randomString());
@@ -455,6 +453,8 @@ public class MeetupsEntryPersistenceTest {
 		meetupsEntry.setPrice(RandomTestUtil.nextDouble());
 
 		meetupsEntry.setThumbnailId(RandomTestUtil.nextLong());
+
+		meetupsEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		_meetupsEntries.add(_persistence.update(meetupsEntry));
 

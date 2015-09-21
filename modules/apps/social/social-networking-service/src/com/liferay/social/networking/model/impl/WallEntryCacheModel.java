@@ -72,8 +72,6 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 		sb.append(wallEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -84,6 +82,8 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 		sb.append(modifiedDate);
 		sb.append(", comments=");
 		sb.append(comments);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -95,7 +95,6 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 
 		wallEntryImpl.setWallEntryId(wallEntryId);
 		wallEntryImpl.setGroupId(groupId);
-		wallEntryImpl.setCompanyId(companyId);
 		wallEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -126,6 +125,8 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 			wallEntryImpl.setComments(comments);
 		}
 
+		wallEntryImpl.setCompanyId(companyId);
+
 		wallEntryImpl.resetOriginalValues();
 
 		return wallEntryImpl;
@@ -135,12 +136,12 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		wallEntryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		comments = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -148,7 +149,6 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 		throws IOException {
 		objectOutput.writeLong(wallEntryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -167,14 +167,16 @@ public class WallEntryCacheModel implements CacheModel<WallEntry>,
 		else {
 			objectOutput.writeUTF(comments);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long wallEntryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public String comments;
+	public long companyId;
 }

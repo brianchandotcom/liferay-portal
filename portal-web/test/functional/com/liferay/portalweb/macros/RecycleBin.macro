@@ -49,6 +49,7 @@
 		<execute function="SelectFrameTop" value1="relative=top" />
 
 		<var name="key_assetType" value="${assetType2}" />
+		
 		<execute function="AssertTextEquals" locator1="Message#RECYCLE_BIN_RESTORE_SUCCESS" value1="The ${assetType2} ${documentName} was restored to ${assetRestoreLocation}." />
 	</command>
 

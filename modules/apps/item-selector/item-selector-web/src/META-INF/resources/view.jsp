@@ -79,19 +79,9 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 			</aui:nav>
 
 			<aui:nav-bar-search>
-				<div class="form-search <%= initialItemSelectorView.isShowSearch() ? "" : "hide" %>" id="<portlet:namespace />formSearch">
-					<aui:form action="<%= currentURL %>" cssClass="basic-search input-group"  name="searchFm">
-						<div class="input-group-input">
-							<div class="basic-search-slider">
-								<button class="basic-search-close btn btn-default" type="button"><span class="icon-remove"></span></button>
-
-								<aui:input cssClass="form-control" label="" name="keywords" placeholder="search" type="text" />
-							</div>
-						</div>
-
-						<div class="input-group-btn">
-							<aui:button cssClass="btn btn-default" icon="icon-search" type="submit" value="" />
-						</div>
+				<div class="<%= initialItemSelectorView.isShowSearch() ? "" : "hide" %>" id="<portlet:namespace />formSearch">
+					<aui:form action="<%= currentURL %>" name="searchFm">
+						<liferay-ui:input-search markupView="lexicon" />
 					</aui:form>
 				</div>
 			</aui:nav-bar-search>

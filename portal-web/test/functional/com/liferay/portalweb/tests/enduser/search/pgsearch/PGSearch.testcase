@@ -626,11 +626,6 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultPG">
-			<var name="searchAssetTitle" value="DM Document Title" />
-			<var name="searchAssetType" value="Document" />
-		</execute>
-
 		<execute macro="Search#searchPG">
 			<var name="searchTerm" value="DM Document Title" />
 		</execute>

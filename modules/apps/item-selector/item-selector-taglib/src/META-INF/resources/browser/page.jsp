@@ -43,6 +43,23 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+
+		<%
+		PortletURL sortURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+		String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+		%>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"title", "size"} %>'
+			portletURL="<%= sortURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 
 <div class="container-fluid-1280 lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">

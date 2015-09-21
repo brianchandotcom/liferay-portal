@@ -621,12 +621,6 @@ public class PortalUtil {
 		return getPortal().getComputerName();
 	}
 
-	public static String getControlPanelCategory(
-		String portletId, ThemeDisplay themeDisplay) {
-
-		return getPortal().getControlPanelCategory(portletId, themeDisplay);
-	}
-
 	public static String getControlPanelFullURL(
 			long scopeGroupId, String ppid, Map<String, String[]> params)
 		throws PortalException {

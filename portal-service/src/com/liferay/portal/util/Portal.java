@@ -480,9 +480,6 @@ public interface Portal {
 
 	public String getComputerName();
 
-	public String getControlPanelCategory(
-		String portletId, ThemeDisplay themeDisplay);
-
 	public String getControlPanelFullURL(
 			long scopeGroupId, String ppid, Map<String, String[]> params)
 		throws PortalException;

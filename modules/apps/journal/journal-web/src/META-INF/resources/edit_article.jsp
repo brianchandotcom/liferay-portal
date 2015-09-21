@@ -77,7 +77,7 @@ else if (Validator.isNotNull(ddmTemplateKey)) {
 }
 
 if (ddmTemplate == null) {
-	List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(company.getCompanyId(), groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), PortalUtil.getClassNameId(JournalArticle.class), true);
+	List<DDMTemplate> ddmTemplates = DDMTemplateServiceUtil.getTemplates(company.getCompanyId(), groupId, PortalUtil.getClassNameId(DDMStructure.class), ddmStructure.getStructureId(), PortalUtil.getClassNameId(JournalArticle.class), true, WorkflowConstants.STATUS_APPROVED);
 
 	if (!ddmTemplates.isEmpty()) {
 		ddmTemplate = ddmTemplates.get(0);

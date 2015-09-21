@@ -34,6 +34,9 @@ public interface DDMTemplate extends DDMTemplateModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

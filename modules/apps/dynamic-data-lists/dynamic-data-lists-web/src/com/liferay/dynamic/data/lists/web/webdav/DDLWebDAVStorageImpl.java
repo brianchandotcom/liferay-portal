@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -146,7 +147,8 @@ public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			DDMTemplateLocalServiceUtil.getTemplatesByStructureClassNameId(
 				webDAVRequest.getGroupId(),
 				PortalUtil.getClassNameId(DDLRecordSet.class),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
 			Resource resource = DDMWebDavUtil.toResource(

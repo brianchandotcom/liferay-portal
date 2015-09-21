@@ -438,6 +438,12 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		return _ddmTemplate.getLastPublishDate();
 	}
 
+	@Override
+	public com.liferay.dynamic.data.mapping.model.DDMTemplateVersion getLatestTemplateVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmTemplate.getLatestTemplateVersion();
+	}
+
 	/**
 	* Returns the mode of this d d m template.
 	*

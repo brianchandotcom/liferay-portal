@@ -777,11 +777,12 @@ public class DDMTemplateLocalServiceUtil {
 	* @return the range of matching templates ordered by the comparator
 	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> getTemplatesByStructureClassNameId(
-		long groupId, long structureClassNameId, int start, int end,
+		long groupId, long structureClassNameId, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getService()
 				   .getTemplatesByStructureClassNameId(groupId,
-			structureClassNameId, start, end, orderByComparator);
+			structureClassNameId, status, start, end, orderByComparator);
 	}
 
 	/**
@@ -794,10 +795,10 @@ public class DDMTemplateLocalServiceUtil {
 	* @return the number of matching templates
 	*/
 	public static int getTemplatesByStructureClassNameIdCount(long groupId,
-		long structureClassNameId) {
+		long structureClassNameId, int status) {
 		return getService()
 				   .getTemplatesByStructureClassNameIdCount(groupId,
-			structureClassNameId);
+			structureClassNameId, status);
 	}
 
 	/**
@@ -882,11 +883,12 @@ public class DDMTemplateLocalServiceUtil {
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> search(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getService()
 				   .search(companyId, groupId, classNameId, classPK,
-			resourceClassNameId, keywords, type, mode, start, end,
+			resourceClassNameId, keywords, type, mode, status, start, end,
 			orderByComparator);
 	}
 
@@ -935,13 +937,13 @@ public class DDMTemplateLocalServiceUtil {
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
+		java.lang.String mode, java.lang.String language, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getService()
 				   .search(companyId, groupId, classNameId, classPK,
 			resourceClassNameId, name, description, type, mode, language,
-			andOperator, start, end, orderByComparator);
+			status, andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -982,11 +984,12 @@ public class DDMTemplateLocalServiceUtil {
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> search(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getService()
 				   .search(companyId, groupIds, classNameIds, classPKs,
-			resourceClassNameId, keywords, type, mode, start, end,
+			resourceClassNameId, keywords, type, mode, status, start, end,
 			orderByComparator);
 	}
 
@@ -1035,13 +1038,13 @@ public class DDMTemplateLocalServiceUtil {
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
+		java.lang.String mode, java.lang.String language, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator) {
 		return getService()
 				   .search(companyId, groupIds, classNameIds, classPKs,
 			resourceClassNameId, name, description, type, mode, language,
-			andOperator, start, end, orderByComparator);
+			status, andOperator, start, end, orderByComparator);
 	}
 
 	/**
@@ -1066,10 +1069,11 @@ public class DDMTemplateLocalServiceUtil {
 	*/
 	public static int searchCount(long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type, java.lang.String mode) {
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int status) {
 		return getService()
 				   .searchCount(companyId, groupId, classNameId, classPK,
-			resourceClassNameId, keywords, type, mode);
+			resourceClassNameId, keywords, type, mode, status);
 	}
 
 	/**
@@ -1101,11 +1105,11 @@ public class DDMTemplateLocalServiceUtil {
 		long classNameId, long classPK, long resourceClassNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator) {
+		java.lang.String language, int status, boolean andOperator) {
 		return getService()
 				   .searchCount(companyId, groupId, classNameId, classPK,
 			resourceClassNameId, name, description, type, mode, language,
-			andOperator);
+			status, andOperator);
 	}
 
 	/**
@@ -1130,10 +1134,11 @@ public class DDMTemplateLocalServiceUtil {
 	*/
 	public static int searchCount(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type, java.lang.String mode) {
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int status) {
 		return getService()
 				   .searchCount(companyId, groupIds, classNameIds, classPKs,
-			resourceClassNameId, keywords, type, mode);
+			resourceClassNameId, keywords, type, mode, status);
 	}
 
 	/**
@@ -1165,11 +1170,11 @@ public class DDMTemplateLocalServiceUtil {
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator) {
+		java.lang.String language, int status, boolean andOperator) {
 		return getService()
 				   .searchCount(companyId, groupIds, classNameIds, classPKs,
 			resourceClassNameId, name, description, type, mode, language,
-			andOperator);
+			status, andOperator);
 	}
 
 	/**

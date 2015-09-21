@@ -24,196 +24,210 @@ import aQute.bnd.annotation.ProviderType;
 public interface DDMTemplateFinder {
 	public int countByKeywords(long companyId, long groupId, long classNameId,
 		long classPK, long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode);
+		java.lang.String type, java.lang.String mode, int status);
 
 	public int countByKeywords(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type, java.lang.String mode);
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int status);
 
-	public int countByG_SC(long groupId, long structureClassNameId);
+	public int countByG_SC_S(long groupId, long structureClassNameId, int status);
 
-	public int countByC_G_C_C_R_T_M(long companyId, long[] groupIds,
+	public int countByC_G_C_C_R_T_M_S(long companyId, long[] groupIds,
 		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String type, java.lang.String mode);
+		java.lang.String type, java.lang.String mode, int status);
 
-	public int countByC_G_C_C_R_N_D_T_M_L(long companyId, long groupId,
+	public int countByC_G_C_C_R_N_D_T_M_L_S(long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator);
+		java.lang.String language, int status, boolean andOperator);
 
-	public int countByC_G_C_C_R_N_D_T_M_L(long companyId, long groupId,
+	public int countByC_G_C_C_R_N_D_T_M_L_S(long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
 		java.lang.String[] names, java.lang.String[] descriptions,
 		java.lang.String[] types, java.lang.String[] modes,
-		java.lang.String[] languages, boolean andOperator);
+		java.lang.String[] languages, int status, boolean andOperator);
 
-	public int countByC_G_C_C_R_N_D_T_M_L(long companyId, long[] groupIds,
+	public int countByC_G_C_C_R_N_D_T_M_L_S(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator);
+		java.lang.String language, int status, boolean andOperator);
 
-	public int countByC_G_C_C_R_N_D_T_M_L(long companyId, long[] groupIds,
+	public int countByC_G_C_C_R_N_D_T_M_L_S(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
 		java.lang.String[] names, java.lang.String[] descriptions,
 		java.lang.String[] types, java.lang.String[] modes,
-		java.lang.String[] languages, boolean andOperator);
+		java.lang.String[] languages, int status, boolean andOperator);
 
 	public int filterCountByKeywords(long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type, java.lang.String mode);
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int status);
 
 	public int filterCountByKeywords(long companyId, long[] groupIds,
 		long[] classNameIds, long[] classPKs, long resourceClassNameId,
-		java.lang.String keywords, java.lang.String type, java.lang.String mode);
+		java.lang.String keywords, java.lang.String type,
+		java.lang.String mode, int status);
 
-	public int filterCountByC_G_C_C_R_T_M(long companyId, long[] groupIds,
+	public int filterCountByC_G_C_C_R_T_M_S(long companyId, long[] groupIds,
 		long classNameId, long classPK, long resourceClassNameId,
-		java.lang.String type, java.lang.String mode);
+		java.lang.String type, java.lang.String mode, int status);
 
-	public int filterCountByC_G_C_C_R_N_D_T_M_L(long companyId, long groupId,
+	public int filterCountByC_G_C_C_R_N_D_T_M_L_S(long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String type, java.lang.String mode,
-		java.lang.String language, boolean andOperator);
+		java.lang.String language, int status, boolean andOperator);
 
-	public int filterCountByC_G_C_C_R_N_D_T_M_L(long companyId, long groupId,
+	public int filterCountByC_G_C_C_R_N_D_T_M_L_S(long companyId, long groupId,
 		long classNameId, long classPK, long resourceClassNameId,
 		java.lang.String[] names, java.lang.String[] descriptions,
 		java.lang.String[] types, java.lang.String[] modes,
-		java.lang.String[] languages, boolean andOperator);
+		java.lang.String[] languages, int status, boolean andOperator);
 
-	public int filterCountByC_G_C_C_R_N_D_T_M_L(long companyId,
+	public int filterCountByC_G_C_C_R_N_D_T_M_L_S(long companyId,
 		long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator);
-
-	public int filterCountByC_G_C_C_R_N_D_T_M_L(long companyId,
-		long[] groupIds, long[] classNameIds, long[] classPKs,
-		long resourceClassNameId, java.lang.String[] names,
-		java.lang.String[] descriptions, java.lang.String[] types,
-		java.lang.String[] modes, java.lang.String[] languages,
+		java.lang.String mode, java.lang.String language, int status,
 		boolean andOperator);
 
-	public int filterCountByG_SC(long groupId, long structureClassNameId);
+	public int filterCountByC_G_C_C_R_N_D_T_M_L_S(long companyId,
+		long[] groupIds, long[] classNameIds, long[] classPKs,
+		long resourceClassNameId, java.lang.String[] names,
+		java.lang.String[] descriptions, java.lang.String[] types,
+		java.lang.String[] modes, java.lang.String[] languages, int status,
+		boolean andOperator);
 
-	public int filterCountByG_SC(long[] groupIds, long structureClassNameId);
+	public int filterCountByG_SC_S(long groupId, long structureClassNameId,
+		int status);
+
+	public int filterCountByG_SC_S(long[] groupIds, long structureClassNameId,
+		int status);
 
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByKeywords(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByKeywords(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_T_M(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_T_M_S(
 		long companyId, long[] groupIds, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String type, java.lang.String mode,
-		int start, int end,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L_S(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
+		java.lang.String mode, java.lang.String language, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L_S(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String[] names,
 		java.lang.String[] descriptions, java.lang.String[] types,
-		java.lang.String[] modes, java.lang.String[] languages,
+		java.lang.String[] modes, java.lang.String[] languages, int status,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L_S(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
-
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L(
-		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
-		long resourceClassNameId, java.lang.String[] names,
-		java.lang.String[] descriptions, java.lang.String[] types,
-		java.lang.String[] modes, java.lang.String[] languages,
+		java.lang.String mode, java.lang.String language, int status,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByG_SC(
-		long groupId, long structureClassNameId, int start, int end,
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByC_G_C_C_R_N_D_T_M_L_S(
+		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
+		long resourceClassNameId, java.lang.String[] names,
+		java.lang.String[] descriptions, java.lang.String[] types,
+		java.lang.String[] modes, java.lang.String[] languages, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByG_SC(
-		long[] groupIds, long structureClassNameId, int start, int end,
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByG_SC_S(
+		long groupId, long structureClassNameId, int status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
+
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> filterFindByG_SC_S(
+		long[] groupIds, long structureClassNameId, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByKeywords(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
 	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByKeywords(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String keywords,
-		java.lang.String type, java.lang.String mode, int start, int end,
+		java.lang.String type, java.lang.String mode, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByG_SC(
-		long groupId, long structureClassNameId, int start, int end,
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByG_SC_S(
+		long groupId, long structureClassNameId, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByG_SC(
-		long[] groupIds, long structureClassNameId, int start, int end,
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByG_SC_S(
+		long[] groupIds, long structureClassNameId, int status, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_T_M(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_T_M_S(
 		long companyId, long[] groupIds, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String type, java.lang.String mode,
-		int start, int end,
+		int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L_S(
 		long companyId, long groupId, long classNameId, long classPK,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
-
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
-		long companyId, long groupId, long classNameId, long classPK,
-		long resourceClassNameId, java.lang.String[] names,
-		java.lang.String[] descriptions, java.lang.String[] types,
-		java.lang.String[] modes, java.lang.String[] languages,
+		java.lang.String mode, java.lang.String language, int status,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L_S(
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId, java.lang.String[] names,
+		java.lang.String[] descriptions, java.lang.String[] types,
+		java.lang.String[] modes, java.lang.String[] languages, int status,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
+
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L_S(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String name,
 		java.lang.String description, java.lang.String type,
-		java.lang.String mode, java.lang.String language, boolean andOperator,
-		int start, int end,
+		java.lang.String mode, java.lang.String language, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 
-	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L(
+	public java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> findByC_G_C_C_R_N_D_T_M_L_S(
 		long companyId, long[] groupIds, long[] classNameIds, long[] classPKs,
 		long resourceClassNameId, java.lang.String[] names,
 		java.lang.String[] descriptions, java.lang.String[] types,
-		java.lang.String[] modes, java.lang.String[] languages,
+		java.lang.String[] modes, java.lang.String[] languages, int status,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMTemplate> orderByComparator);
 }

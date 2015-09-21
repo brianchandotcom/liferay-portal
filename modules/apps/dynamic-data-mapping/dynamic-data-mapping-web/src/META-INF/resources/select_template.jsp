@@ -52,7 +52,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 	</c:if>
 
 	<liferay-ui:search-container
-		searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= new TemplateSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED) %>"
 	>
 		<c:if test="<%= showToolbar %>">
 

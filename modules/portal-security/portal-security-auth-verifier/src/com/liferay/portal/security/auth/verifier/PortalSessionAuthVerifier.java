@@ -60,7 +60,7 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 
 			User user = PortalUtil.getUser(request);
 
-			if (user == null) {
+			if ((user == null) || user.isDefaultUser()) {
 				return authVerifierResult;
 			}
 

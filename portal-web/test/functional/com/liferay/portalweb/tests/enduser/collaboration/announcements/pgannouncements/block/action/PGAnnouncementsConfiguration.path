@@ -52,7 +52,7 @@
 <!--SETUP-->
 <tr>
 	<td>SETUP_MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>
-	<td>//select[@id='_86_pageDelta']</td>
+	<td>//select[contains(@id,'pageDelta')]</td>
 	<td></td>
 </tr>
 </tbody>

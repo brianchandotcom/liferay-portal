@@ -17,18 +17,17 @@ package com.liferay.wiki.web.display.context.util;
 import com.liferay.portal.kernel.display.context.util.BaseStrutsRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.settings.WikiGroupServiceSettings;
-import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
-import com.liferay.wiki.web.util.WikiWebComponentProvider;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -49,34 +48,33 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		return _categoryId;
 	}
 
-	public WikiGroupServiceSettings getWikiGroupServiceSettings() {
+	public WikiGroupServiceOverriddenConfiguration
+		getWikiGroupServiceOverriddenConfiguration() {
+
 		try {
-			if (_wikiGroupServiceSettings == null) {
+			if (_wikiGroupServiceOverriddenConfiguration == null) {
 				String portletResource = getPortletResource();
 
-				WikiWebComponentProvider wikiWebComponentProvider =
-					WikiWebComponentProvider.getWikiWebComponentProvider();
-
-				SettingsFactory settingsFactory =
-					wikiWebComponentProvider.getSettingsFactory();
-
 				if (Validator.isNotNull(portletResource)) {
-					_wikiGroupServiceSettings = settingsFactory.getSettings(
-						WikiGroupServiceSettings.class,
-						new ParameterMapSettingsLocator(
-							getRequest().getParameterMap(),
-							new GroupServiceSettingsLocator(
-								getSiteGroupId(), WikiConstants.SERVICE_NAME)));
+					_wikiGroupServiceOverriddenConfiguration =
+						ConfigurationFactoryUtil.getConfiguration(
+							WikiGroupServiceOverriddenConfiguration.class,
+							new ParameterMapSettingsLocator(
+								getRequest().getParameterMap(),
+								new GroupServiceSettingsLocator(
+									getSiteGroupId(),
+									WikiConstants.SERVICE_NAME)));
 				}
 				else {
-					_wikiGroupServiceSettings = settingsFactory.getSettings(
-						WikiGroupServiceSettings.class,
-						new GroupServiceSettingsLocator(
-							getSiteGroupId(), WikiConstants.SERVICE_NAME));
+					_wikiGroupServiceOverriddenConfiguration =
+						ConfigurationFactoryUtil.getConfiguration(
+							WikiGroupServiceOverriddenConfiguration.class,
+							new GroupServiceSettingsLocator(
+								getSiteGroupId(), WikiConstants.SERVICE_NAME));
 				}
 			}
 
-			return _wikiGroupServiceSettings;
+			return _wikiGroupServiceOverriddenConfiguration;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
@@ -93,34 +91,32 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 		return _wikiPage;
 	}
 
-	public WikiPortletInstanceSettings getWikiPortletInstanceSettings() {
+	public WikiPortletInstanceOverriddenConfiguration
+		getWikiPortletInstanceOverridenConfiguration() {
+
 		try {
-			if (_wikiPortletInstanceSettings == null) {
+			if (_wikiPortletInstanceOverridenConfiguration == null) {
 				String portletResource = getPortletResource();
 
-				WikiWebComponentProvider wikiWebComponentProvider =
-					WikiWebComponentProvider.getWikiWebComponentProvider();
-
-				SettingsFactory settingsFactory =
-					wikiWebComponentProvider.getSettingsFactory();
-
 				if (Validator.isNotNull(portletResource)) {
-					_wikiPortletInstanceSettings = settingsFactory.getSettings(
-						WikiPortletInstanceSettings.class,
-						new ParameterMapSettingsLocator(
-							getRequest().getParameterMap(),
-							new PortletInstanceSettingsLocator(
-								getLayout(), getResourcePortletId())));
+					_wikiPortletInstanceOverridenConfiguration =
+						ConfigurationFactoryUtil.getConfiguration(
+							WikiPortletInstanceOverriddenConfiguration.class,
+							new ParameterMapSettingsLocator(
+								getRequest().getParameterMap(),
+								new PortletInstanceSettingsLocator(
+									getLayout(), getResourcePortletId())));
 				}
 				else {
-					_wikiPortletInstanceSettings = settingsFactory.getSettings(
-						WikiPortletInstanceSettings.class,
-						new PortletInstanceSettingsLocator(
-							getLayout(), getPortletId()));
+					_wikiPortletInstanceOverridenConfiguration =
+						ConfigurationFactoryUtil.getConfiguration(
+							WikiPortletInstanceOverriddenConfiguration.class,
+							new PortletInstanceSettingsLocator(
+								getLayout(), getPortletId()));
 				}
 			}
 
-			return _wikiPortletInstanceSettings;
+			return _wikiPortletInstanceOverridenConfiguration;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
@@ -128,8 +124,10 @@ public class WikiRequestHelper extends BaseStrutsRequestHelper {
 	}
 
 	private Long _categoryId;
-	private WikiGroupServiceSettings _wikiGroupServiceSettings;
+	private WikiGroupServiceOverriddenConfiguration
+		_wikiGroupServiceOverriddenConfiguration;
 	private WikiPage _wikiPage;
-	private WikiPortletInstanceSettings _wikiPortletInstanceSettings;
+	private WikiPortletInstanceOverriddenConfiguration
+		_wikiPortletInstanceOverridenConfiguration;
 
 }

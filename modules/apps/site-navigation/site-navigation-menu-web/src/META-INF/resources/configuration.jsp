@@ -26,25 +26,16 @@
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
+			<div class="display-template">
+				<liferay-ddm:template-selector
+					className="<%= NavItem.class.getName() %>"
+					displayStyle="<%= siteNavigationMenuDisplayContext.getDisplayStyle() %>"
+					displayStyleGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
+					refreshURL="<%= configurationRenderURL %>"
+				/>
+			</div>
+
 			<aui:fieldset column="<%= true %>">
-				<aui:select name="preferences--displayStyle--">
-					<aui:option label="custom" selected='<%= Validator.equals(navigationMenuDisplayContext.getDisplayStyle(), "[custom]") %>' value="[custom]" />
-
-					<optgroup label="<liferay-ui:message key="predefined" />">
-
-						<%
-						for (String displayStyleOption : navigationMenuWebConfiguration.displayStyleOptions()) {
-						%>
-
-							<aui:option label="<%= displayStyleOption %>" selected="<%= Validator.equals(navigationMenuDisplayContext.getDisplayStyle(), displayStyleOption) %>" />
-
-						<%
-						}
-						%>
-
-					</optgroup>
-				</aui:select>
-
 				<aui:select name="preferences--bulletStyle--">
 
 					<%
@@ -61,7 +52,7 @@
 							for (String bulletStyleOption : bulletStyleOptions) {
 							%>
 
-								<aui:option label="<%= bulletStyleOption %>" selected="<%= Validator.equals(navigationMenuDisplayContext.getBulletStyle(), bulletStyleOption) %>" />
+								<aui:option label="<%= bulletStyleOption %>" selected="<%= Validator.equals(siteNavigationMenuDisplayContext.getBulletStyle(), bulletStyleOption) %>" />
 
 							<%
 							}
@@ -73,15 +64,15 @@
 			</aui:fieldset>
 
 			<aui:fieldset column="<%= true %>">
-				<div class="<%= (navigationMenuDisplayContext.getDisplayStyle()).equals("[custom]") ? "" : "hide" %>" id="<portlet:namespace />customDisplayOptions">
-					<aui:select label="header" name="preferences--headerType--" value="<%= navigationMenuDisplayContext.getHeaderType() %>">
+				<div class="" id="<portlet:namespace />customDisplayOptions">
+					<aui:select label="header" name="preferences--headerType--" value="<%= siteNavigationMenuDisplayContext.getHeaderType() %>">
 						<aui:option label="none" />
 						<aui:option label="portlet-title" />
 						<aui:option label="root-layout" />
 						<aui:option label="breadcrumb" />
 					</aui:select>
 
-					<aui:select label="root-layout" name="preferences--rootLayoutType--" value="<%= navigationMenuDisplayContext.getRootLayoutType() %>">
+					<aui:select label="root-layout" name="preferences--rootLayoutType--" value="<%= siteNavigationMenuDisplayContext.getRootLayoutType() %>">
 						<aui:option label="parent-at-level" value="absolute" />
 						<aui:option label="relative-parent-up-by" value="relative" />
 					</aui:select>
@@ -92,7 +83,7 @@
 						for (int i = 0; i <= 4; i++) {
 						%>
 
-							<aui:option label="<%= i %>" selected="<%= navigationMenuDisplayContext.getRootLayoutLevel() == i %>" />
+							<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() == i %>" />
 
 						<%
 						}
@@ -100,14 +91,14 @@
 
 					</aui:select>
 
-					<aui:select name="preferences--includedLayouts--" value="<%= navigationMenuDisplayContext.getIncludedLayouts() %>">
+					<aui:select name="preferences--includedLayouts--" value="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>">
 						<aui:option label="auto" />
 						<aui:option label="all" />
 					</aui:select>
 
 					<aui:select name="preferences--nestedChildren--">
-						<aui:option label="yes" selected="<%= navigationMenuDisplayContext.isNestedChildren() %>" value="1" />
-						<aui:option label="no" selected="<%= !navigationMenuDisplayContext.isNestedChildren() %>" value="0" />
+						<aui:option label="yes" selected="<%= siteNavigationMenuDisplayContext.isNestedChildren() %>" value="1" />
+						<aui:option label="no" selected="<%= !siteNavigationMenuDisplayContext.isNestedChildren() %>" value="0" />
 					</aui:select>
 				</div>
 			</aui:fieldset>
@@ -128,7 +119,6 @@
 <aui:script sandbox="<%= true %>">
 	var form = $('#<portlet:namespace />fm');
 
-	var customDisplayOptions = form.fm('customDisplayOptions');
 	var selectBulletStyle = form.fm('bulletStyle');
 	var selectDisplayStyle = form.fm('displayStyle');
 	var selectHeaderType = form.fm('headerType');
@@ -149,19 +139,11 @@
 				preview: true
 			};
 
-			var hide = true;
-
-			if (selectDisplayStyle.val() == '[custom]') {
-				hide = false;
-
-				data.headerType = selectHeaderType.val();
-				data.includedLayouts = selectIncludedLayouts.val();
-				data.nestedChildren = selectNestedChildren.val();
-				data.rootLayoutLevel = selectRootLayoutLevel.val();
-				data.rootLayoutType = selectRootLayoutType.val();
-			}
-
-			customDisplayOptions.toggleClass('hide', hide);
+			data.headerType = selectHeaderType.val();
+			data.includedLayouts = selectIncludedLayouts.val();
+			data.nestedChildren = selectNestedChildren.val();
+			data.rootLayoutLevel = selectRootLayoutLevel.val();
+			data.rootLayoutType = selectRootLayoutType.val();
 
 			data = Liferay.Util.ns('_<%= HtmlUtil.escapeJS(portletResource) %>_', data);
 

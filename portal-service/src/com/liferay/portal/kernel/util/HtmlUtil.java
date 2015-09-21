@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import java.util.Map;
+
 /**
  * Provides utility methods for escaping, rendering, replacing, and stripping
  * HTML text. This class uses XSS recommendations from <a
@@ -28,6 +30,10 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
  * @author Samuel Kong
  */
 public class HtmlUtil {
+
+	public static String buildData(Map<String, Object> data) {
+		return getHtml().buildData(data);
+	}
 
 	/**
 	 * Escapes the text so that it is safe to use in an HTML context.

@@ -458,19 +458,19 @@ public class MBDiscussionPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingMBDiscussion.getUuid(),
 				ReflectionTestUtil.invoke(existingMBDiscussion,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingMBDiscussion.getGroupId(),
-			ReflectionTestUtil.invoke(existingMBDiscussion,
+		Assert.assertEquals(Long.valueOf(existingMBDiscussion.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBDiscussion,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMBDiscussion.getThreadId(),
-			ReflectionTestUtil.invoke(existingMBDiscussion,
+		Assert.assertEquals(Long.valueOf(existingMBDiscussion.getThreadId()),
+			ReflectionTestUtil.<Long>invoke(existingMBDiscussion,
 				"getOriginalThreadId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMBDiscussion.getClassNameId(),
-			ReflectionTestUtil.invoke(existingMBDiscussion,
+		Assert.assertEquals(Long.valueOf(existingMBDiscussion.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingMBDiscussion,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingMBDiscussion.getClassPK(),
-			ReflectionTestUtil.invoke(existingMBDiscussion,
+		Assert.assertEquals(Long.valueOf(existingMBDiscussion.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingMBDiscussion,
 				"getOriginalClassPK", new Class<?>[0]));
 	}
 

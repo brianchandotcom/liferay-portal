@@ -47,6 +47,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryTitleException;
+import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -142,6 +143,15 @@ public class BlogsEntryLocalServiceTest {
 			serviceContext);
 	}
 
+	@Test(expected = NoSuchEntryException.class)
+	public void testDeleteEntry() throws Exception {
+		BlogsEntry entry = addEntry(false);
+
+		BlogsEntryLocalServiceUtil.deleteEntry(entry);
+
+		BlogsEntryLocalServiceUtil.getEntry(entry.getEntryId());
+	}
+
 	@Test
 	public void testGetCompanyEntriesCountInTrash() throws Exception {
 		testGetCompanyEntriesCount(true);
@@ -167,9 +177,8 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = addEntry(false);
 
 		MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-			TestPropsValues.getUserId(), _group.getGroupId(),
-			BlogsEntry.class.getName(), entry.getEntryId(),
-			WorkflowConstants.STATUS_ANY);
+			_user.getUserId(), _group.getGroupId(), BlogsEntry.class.getName(),
+			entry.getEntryId(), WorkflowConstants.STATUS_ANY);
 	}
 
 	@Test
@@ -441,14 +450,14 @@ public class BlogsEntryLocalServiceTest {
 	public void testSubscribe() throws Exception {
 		int initialCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), _group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		int actualCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		Assert.assertEquals(initialCount + 1, actualCount);
 	}
@@ -457,17 +466,17 @@ public class BlogsEntryLocalServiceTest {
 	public void testUnsubscribe() throws Exception {
 		int initialCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			TestPropsValues.getUserId(), _group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		BlogsEntryLocalServiceUtil.unsubscribe(
-			TestPropsValues.getUserId(), _group.getGroupId());
+			_user.getUserId(), _group.getGroupId());
 
 		int actualCount =
 			SubscriptionLocalServiceUtil.getUserSubscriptionsCount(
-				TestPropsValues.getUserId());
+				_user.getUserId());
 
 		Assert.assertEquals(initialCount, actualCount);
 	}
@@ -481,7 +490,7 @@ public class BlogsEntryLocalServiceTest {
 	}
 
 	protected BlogsEntry addEntry(boolean statusInTrash) throws Exception {
-		return addEntry(TestPropsValues.getUserId(), statusInTrash);
+		return addEntry(_user.getUserId(), statusInTrash);
 	}
 
 	protected BlogsEntry addEntry(long userId, boolean statusInTrash)
@@ -511,24 +520,7 @@ public class BlogsEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), userId);
 
-		ClassLoader classLoader = getClass().getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portal/util/dependencies/test.jpg");
-
-		FileEntry fileEntry = null;
-
-		try {
-			fileEntry = TempFileEntryUtil.getTempFileEntry(
-				serviceContext.getScopeGroupId(), userId,
-				BlogsEntry.class.getName(), "image.jpg");
-		}
-		catch (Exception e) {
-			fileEntry = TempFileEntryUtil.addTempFileEntry(
-				serviceContext.getScopeGroupId(), userId,
-				BlogsEntry.class.getName(), "image.jpg", inputStream,
-				MimeTypesUtil.getContentType("image.jpg"));
-		}
+		FileEntry fileEntry = getTempFileEntry(userId, serviceContext);
 
 		ImageSelector coverImageSelector = null;
 		ImageSelector smallImageSelector = new ImageSelector(
@@ -564,6 +556,34 @@ public class BlogsEntryLocalServiceTest {
 		}
 	}
 
+	protected FileEntry getTempFileEntry(
+			long userId, ServiceContext serviceContext)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portal/util/dependencies/test.jpg");
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = TempFileEntryUtil.getTempFileEntry(
+				serviceContext.getScopeGroupId(), userId,
+				BlogsEntry.class.getName(), "image.jpg");
+		}
+		catch (Exception e) {
+			fileEntry = TempFileEntryUtil.addTempFileEntry(
+				serviceContext.getScopeGroupId(), userId,
+				BlogsEntry.class.getName(), "image.jpg", inputStream,
+				MimeTypesUtil.getContentType("image.jpg"));
+		}
+
+		return fileEntry;
+	}
+
 	protected BlogsEntry testAddEntry(boolean smallImage) throws Exception {
 		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 			_group.getGroupId(), _statusApprovedQueryDefinition);
@@ -571,7 +591,7 @@ public class BlogsEntryLocalServiceTest {
 		BlogsEntry entry = null;
 
 		if (smallImage) {
-			entry = addEntryWithSmallImage(TestPropsValues.getUserId());
+			entry = addEntryWithSmallImage(_user.getUserId());
 		}
 		else {
 			entry = addEntry(false);

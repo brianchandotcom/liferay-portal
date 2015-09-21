@@ -20,12 +20,17 @@ package com.liferay.gradle.util;
 public class ArrayUtil {
 
 	public static boolean contains(Object[] array, Object value) {
-		if (isEmpty(array) || (value == null)) {
+		if (isEmpty(array)) {
 			return false;
 		}
 
 		for (int i = 0; i < array.length; i++) {
-			if (value.equals(array[i])) {
+			if (value == null) {
+				if (array[i] == null) {
+					return true;
+				}
+			}
+			else if (value.equals(array[i])) {
 				return true;
 			}
 		}

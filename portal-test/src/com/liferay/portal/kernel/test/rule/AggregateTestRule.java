@@ -64,6 +64,7 @@ public class AggregateTestRule implements TestRule {
 		"com.liferay.portal.test.rule.PortalExecutorManagerTestRule",
 		"com.liferay.portal.test.rule.LiferayIntegrationTestRule",
 		"com.liferay.portal.test.rule.MainServletTestRule",
+		"com.liferay.portal.test.rule.HypersonicServerTestRule",
 		"com.liferay.portal.test.rule.PersistenceTestRule",
 		TransactionalTestRule.class.getName(),
 		SynchronousDestinationTestRule.class.getName(),

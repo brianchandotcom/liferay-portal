@@ -66,10 +66,10 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 				IGViewFileVersionDisplayContext igViewFileVersionDisplayContext = null;
 
 				if (fileShortcut == null) {
-					igViewFileVersionDisplayContext = IGDisplayContextProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
+					igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileEntry.getFileVersion());
 				}
 				else {
-					igViewFileVersionDisplayContext = IGDisplayContextProviderUtil.getIGFileVersionActionsDisplayContext(request, response, fileShortcut);
+					igViewFileVersionDisplayContext = igDisplayContextProvider.getIGViewFileVersionActionsDisplayContext(request, response, fileShortcut);
 				}
 				%>
 
@@ -116,12 +116,18 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 							}
 						}
 					}
+
+					String title = fileEntry.getTitle();
+
+					if (Validator.isNotNull(fileEntry.getDescription())) {
+						title += " - " + fileEntry.getDescription();
+					}
 					%>
 
 					<div class="image-icon">
-						<a class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escape(fileEntry.getTitle()) + " - " + HtmlUtil.escape(fileEntry.getDescription()) %>">
+						<a class="image-link preview" <%= (hasAudio || hasVideo) ? "data-options=\"height=" + playerHeight + "&thumbnailURL=" + HtmlUtil.escapeURL(DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&videoThumbnail=1")) + "&width=640" + dataOptions + "\"" : StringPool.BLANK %> href="<%= href %>" thumbnailId="<%= thumbnailId %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 							<span class="image-thumbnail">
-								<img alt="<%= HtmlUtil.escapeAttribute(fileEntry.getTitle()) + " - " + HtmlUtil.escapeAttribute(fileEntry.getDescription()) %>" src="<%= src %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
+								<img alt="<%= HtmlUtil.escapeAttribute(title) %>" src="<%= src %>" style="<%= DLUtil.getThumbnailStyle(true, 0) %>" />
 
 								<c:if test="<%= fileShortcut != null %>">
 									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
@@ -171,6 +177,14 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				</portlet:renderURL>
 
+				<%
+				String curFolderTitle = curFolder.getName();
+
+				if (Validator.isNotNull(curFolder.getDescription())) {
+					curFolderTitle += " - " + curFolder.getDescription();
+				}
+				%>
+
 				<c:choose>
 					<c:when test="<%= curFolder.isMountPoint() %>">
 
@@ -182,7 +196,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						%>
 
 							<div class="image-icon">
-								<a class="image-link" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
+								<a class="image-link" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(curFolderTitle) %>">
 									<span class="image-thumbnail">
 										<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="repository" />" src="<%= folderImageSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
 									</span>
@@ -212,7 +226,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 					</c:when>
 					<c:otherwise>
 						<div class="image-icon">
-							<a class="image-link" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escape(curFolder.getName()) + " - " + HtmlUtil.escape(curFolder.getDescription()) %>">
+							<a class="image-link" href="<%= viewFolderURL.toString() %>" title="<%= HtmlUtil.escapeAttribute(curFolderTitle) %>">
 
 								<%
 								String folderImageSrc = themeDisplay.getPathThemeImages() + "/file_system/large/folder_empty.png";

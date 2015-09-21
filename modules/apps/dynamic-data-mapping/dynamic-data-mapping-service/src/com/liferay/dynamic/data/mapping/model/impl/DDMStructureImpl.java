@@ -17,10 +17,14 @@ package com.liferay.dynamic.data.mapping.model.impl;
 import com.liferay.dynamic.data.mapping.exception.StructureFieldException;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
@@ -44,10 +48,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +62,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public DDMForm createFullHierarchyDDMForm() throws PortalException {
-		DDMForm fullHierarchyDDMForm = DDMFormJSONDeserializerUtil.deserialize(
-			getDefinition());
+		DDMForm fullHierarchyDDMForm = getDDMForm();
 
 		DDMStructure parentDDMStructure = getParentDDMStructure();
 
@@ -249,16 +248,16 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public DDMForm getFullHierarchyDDMForm() {
-		if (_fullHierarchyDDMForm == null) {
-			try {
-				_fullHierarchyDDMForm = createFullHierarchyDDMForm();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		try {
+			DDMForm fullHierarchyDDMForm = createFullHierarchyDDMForm();
+
+			return new DDMForm(fullHierarchyDDMForm);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
-		return new DDMForm(_fullHierarchyDDMForm);
+		return new DDMForm();
 	}
 
 	@Override
@@ -268,6 +267,14 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		DDMForm ddmForm = getFullHierarchyDDMForm();
 
 		return ddmForm.getDDMFormFieldsMap(includeNestedDDMFormFields);
+	}
+
+	@Override
+	public DDMStructureVersion getLatestStructureVersion()
+		throws PortalException {
+
+		return DDMStructureVersionLocalServiceUtil.getLatestStructureVersion(
+			getStructureId());
 	}
 
 	@Override
@@ -425,12 +432,6 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 		super.setDefinition(definition);
 
 		_ddmForm = null;
-		_fullHierarchyDDMForm = null;
-	}
-
-	@Override
-	public void setFullHierarchyDDMForm(DDMForm fullHierarchyDDMForm) {
-		_fullHierarchyDDMForm = fullHierarchyDDMForm;
 	}
 
 	@Override
@@ -485,8 +486,5 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@CacheField(methodName = "DDMForm")
 	private DDMForm _ddmForm;
-
-	@CacheField(methodName = "FullHierarchyDDMForm")
-	private DDMForm _fullHierarchyDDMForm;
 
 }

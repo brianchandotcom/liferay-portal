@@ -17,11 +17,11 @@ package com.liferay.service.access.policy;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicy;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyManager;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.service.access.policy.configuration.SAPConfiguration;
 import com.liferay.service.access.policy.constants.SAPConstants;
 import com.liferay.service.access.policy.model.SAPEntry;
@@ -90,14 +90,14 @@ public class ServiceAccessPolicyManagerImpl
 
 	protected SAPConfiguration getSAPConfiguration(long companyId) {
 		try {
-			return _settingsFactory.getSettings(
+			return _configurationFactory.getConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					companyId, SAPConstants.SERVICE_NAME));
 		}
-		catch (SettingsException se) {
+		catch (ConfigurationException ce) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get SAP configuration", se);
+				_log.warn("Unable to get SAP configuration", ce);
 			}
 
 			return null;
@@ -105,13 +105,15 @@ public class ServiceAccessPolicyManagerImpl
 	}
 
 	@Reference(unbind = "-")
-	protected void setSAPEntryService(SAPEntryService sapEntryService) {
-		_sapEntryService = sapEntryService;
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setSAPEntryService(SAPEntryService sapEntryService) {
+		_sapEntryService = sapEntryService;
 	}
 
 	protected List<ServiceAccessPolicy> toServiceAccessPolicies(
@@ -145,7 +147,7 @@ public class ServiceAccessPolicyManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceAccessPolicyManagerImpl.class);
 
+	private volatile ConfigurationFactory _configurationFactory;
 	private SAPEntryService _sapEntryService;
-	private volatile SettingsFactory _settingsFactory;
 
 }

@@ -42,6 +42,10 @@ public class InputSearchTag extends IncludeTag {
 		_id = id;
 	}
 
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
 	public void setName(String name) {
 		_name = name;
 	}
@@ -70,6 +74,7 @@ public class InputSearchTag extends IncludeTag {
 		_buttonLabel = null;
 		_cssClass = null;
 		_id = null;
+		_markupView = null;
 		_name = null;
 		_placeholder = null;
 		_showButton = true;
@@ -79,7 +84,11 @@ public class InputSearchTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		return _PAGE;
+		if (Validator.isNotNull(_markupView)) {
+			return "/html/taglib/ui/input_search/" + _markupView +"/page.jsp";
+		}
+
+		return "/html/taglib/ui/input_search/page.jsp";
 	}
 
 	@Override
@@ -131,12 +140,11 @@ public class InputSearchTag extends IncludeTag {
 			"liferay-ui:input-search:useNamespace", _useNamespace);
 	}
 
-	private static final String _PAGE = "/html/taglib/ui/input_search/page.jsp";
-
 	private boolean _autoFocus;
 	private String _buttonLabel;
 	private String _cssClass;
 	private String _id;
+	private String _markupView;
 	private String _name;
 	private String _placeholder;
 	private boolean _showButton = true;

@@ -9,6 +9,14 @@ AUI.add(
 		var FormBuilder = A.Component.create(
 			{
 				ATTRS: {
+					container: {
+						getter: function() {
+							var instance = this;
+
+							return instance.get('contentBox');
+						}
+					},
+
 					definition: {
 						validator: Lang.isObject
 					},
@@ -18,16 +26,15 @@ AUI.add(
 					},
 
 					fieldTypes: {
-						getter: function() {
-							return FieldTypes.getAll();
-						}
+						setter: '_setFieldTypes',
+						valueFn: '_valueFieldTypes'
 					},
 
 					layouts: {
 						valueFn: '_valueLayouts'
 					},
 
-					pages: {
+					pagesJSON: {
 						validator: Array.isArray,
 						value: []
 					},
@@ -37,6 +44,8 @@ AUI.add(
 						valueFn: '_valueVisitor'
 					}
 				},
+
+				AUGMENTS: [Liferay.DDM.Renderer.NestedFieldsSupport],
 
 				CSS_PREFIX: 'form-builder',
 
@@ -50,7 +59,9 @@ AUI.add(
 
 						var boundingBox = instance.get('boundingBox');
 
-						boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a');
+						instance._eventHandlers = [
+							boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a')
+						];
 					},
 
 					renderUI: function() {
@@ -179,7 +190,7 @@ AUI.add(
 
 						var deserializer = instance.get('deserializer');
 
-						var pages = instance._getPages();
+						var pages = instance.get('pages');
 
 						pages.set('descriptions', deserializer.get('descriptions'));
 						pages.set('titles', deserializer.get('titles'));
@@ -187,14 +198,32 @@ AUI.add(
 						pages._uiSetActivePageNumber(pages.get('activePageNumber'));
 					},
 
+					_setFieldTypes: function(fieldTypes) {
+						var instance = this;
+
+						return AArray.filter(
+							fieldTypes,
+							function(item) {
+								return !item.get('system');
+							}
+						);
+					},
+
 					_valueDeserializer: function() {
 						var instance = this;
 
 						return new Liferay.DDL.LayoutDeserializer(
 							{
+								builder: instance,
 								definition: instance.get('definition')
 							}
 						);
+					},
+
+					_valueFieldTypes: function() {
+						var instance = this;
+
+						return FieldTypes.getAll();
 					},
 
 					_valueLayouts: function() {
@@ -202,7 +231,7 @@ AUI.add(
 
 						var deserializer = instance.get('deserializer');
 
-						deserializer.set('pages', instance.get('pages'));
+						deserializer.set('pages', instance.get('pagesJSON'));
 
 						return deserializer.deserialize();
 					},

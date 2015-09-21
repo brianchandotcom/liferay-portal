@@ -39,12 +39,13 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion,
 		WikiAttachmentItemSelectorView
 			wikiAttachmentItemSelectorView,
-		String itemSelectedEventName, PortletURL portletURL) {
+		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
 		_wikiAttachmentItemSelectorCriterion =
 			wikiAttachmentItemSelectorCriterion;
 		_wikiAttachmentItemSelectorView = wikiAttachmentItemSelectorView;
 		_itemSelectedEventName = itemSelectedEventName;
+		_search = search;
 		_portletURL = portletURL;
 	}
 
@@ -97,8 +98,13 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 			_wikiAttachmentItemSelectorCriterion.getWikiPageResourceId());
 	}
 
+	public boolean isSearch() {
+		return _search;
+	}
+
 	private final String _itemSelectedEventName;
 	private final PortletURL _portletURL;
+	private final boolean _search;
 	private final WikiAttachmentItemSelectorCriterion
 		_wikiAttachmentItemSelectorCriterion;
 	private final WikiAttachmentItemSelectorView

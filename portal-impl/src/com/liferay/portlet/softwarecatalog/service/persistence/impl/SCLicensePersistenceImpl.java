@@ -2006,7 +2006,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 				scLicense.setNew(false);
 			}
 			else {
-				session.merge(scLicense);
+				scLicense = (SCLicense)session.merge(scLicense);
 			}
 		}
 		catch (Exception e) {

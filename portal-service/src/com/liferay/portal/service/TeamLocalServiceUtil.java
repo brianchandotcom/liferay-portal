@@ -279,6 +279,11 @@ public class TeamLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.portal.model.Team fetchTeam(long groupId,
+		java.lang.String name) {
+		return getService().fetchTeam(groupId, name);
+	}
+
 	public static com.liferay.portal.model.Team fetchTeam(long teamId) {
 		return getService().fetchTeam(teamId);
 	}

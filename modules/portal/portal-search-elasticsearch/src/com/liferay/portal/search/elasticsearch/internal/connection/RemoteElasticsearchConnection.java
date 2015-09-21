@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -33,7 +34,6 @@ import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.net.InetAddress;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -46,6 +46,7 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -78,13 +79,7 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		elasticsearchConfiguration = Configurable.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
-
-		String[] transportAddresses =
-			elasticsearchConfiguration.transportAddresses();
-
-		setTransportAddresses(new HashSet<>(Arrays.asList(transportAddresses)));
+		replaceElasticsearchConfiguration(properties);
 	}
 
 	@Override
@@ -161,11 +156,34 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 	}
 
+	@Modified
+	protected synchronized void modified(Map<String, Object> properties) {
+		replaceElasticsearchConfiguration(properties);
+
+		if (isConnected()) {
+			close();
+
+			connect();
+		}
+	}
+
 	@Override
 	protected void removeSettingsContributor(
 		SettingsContributor settingsContributor) {
 
 		super.removeSettingsContributor(settingsContributor);
+	}
+
+	protected void replaceElasticsearchConfiguration(
+		Map<String, Object> properties) {
+
+		elasticsearchConfiguration = Configurable.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+
+		String[] transportAddresses =
+			elasticsearchConfiguration.transportAddresses();
+
+		setTransportAddresses(SetUtil.fromArray(transportAddresses));
 	}
 
 	@Reference(unbind = "-")

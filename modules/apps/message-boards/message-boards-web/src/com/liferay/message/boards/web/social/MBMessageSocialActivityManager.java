@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	property = "model.className=com.liferay.portlet.messageboards.model.MBMessage",
+	property = "model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
 	service = SocialActivityManager.class
 )
 public class MBMessageSocialActivityManager

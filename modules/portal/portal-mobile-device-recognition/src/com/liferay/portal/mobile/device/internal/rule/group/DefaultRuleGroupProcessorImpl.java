@@ -14,20 +14,20 @@
 
 package com.liferay.portal.mobile.device.internal.rule.group;
 
+import com.liferay.mobile.device.rules.model.MDRRule;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+import com.liferay.mobile.device.rules.rule.RuleGroupProcessor;
+import com.liferay.mobile.device.rules.rule.RuleHandler;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
+import com.liferay.mobile.device.rules.util.comparator.RuleGroupInstancePriorityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessor;
-import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.mobiledevicerules.model.MDRRule;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalService;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalService;
-import com.liferay.portlet.mobiledevicerules.util.RuleGroupInstancePriorityComparator;
 
 import java.util.Collection;
 import java.util.Collections;

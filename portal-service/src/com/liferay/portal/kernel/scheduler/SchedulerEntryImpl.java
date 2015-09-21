@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.scheduler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Time;
 
 /**
  * @author Shuyang Zhou
@@ -50,26 +49,10 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 				_eventListenerClass, _eventListenerClass, _triggerValue);
 		}
 		else if (_triggerType.equals(TriggerType.SIMPLE)) {
-			long intervalTime = GetterUtil.getLong(_triggerValue);
-
-			if (_timeUnit.equals(TimeUnit.DAY)) {
-				intervalTime = intervalTime * Time.DAY;
-			}
-			else if (_timeUnit.equals(TimeUnit.HOUR)) {
-				intervalTime = intervalTime * Time.HOUR;
-			}
-			else if (_timeUnit.equals(TimeUnit.MINUTE)) {
-				intervalTime = intervalTime * Time.MINUTE;
-			}
-			else if (_timeUnit.equals(TimeUnit.WEEK)) {
-				intervalTime = intervalTime * Time.WEEK;
-			}
-			else {
-				intervalTime = intervalTime * Time.SECOND;
-			}
+			int interval = GetterUtil.getInteger(_triggerValue);
 
 			_trigger = new IntervalTrigger(
-				_eventListenerClass, _eventListenerClass, intervalTime);
+				_eventListenerClass, _eventListenerClass, interval, _timeUnit);
 		}
 		else {
 			throw new SchedulerException(
@@ -111,11 +94,6 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 
 	@Override
 	public void setTriggerValue(int triggerValue) {
-		_triggerValue = String.valueOf(triggerValue);
-	}
-
-	@Override
-	public void setTriggerValue(long triggerValue) {
 		_triggerValue = String.valueOf(triggerValue);
 	}
 

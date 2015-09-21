@@ -14,22 +14,22 @@
 
 package com.liferay.mobile.device.rules.util.test;
 
-import com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil;
-import com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil;
-import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
-import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
+import com.liferay.mobile.device.rules.action.ActionHandler;
+import com.liferay.mobile.device.rules.action.ActionHandlerManagerUtil;
+import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.mobile.device.rules.model.MDRRule;
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
+import com.liferay.mobile.device.rules.rule.RuleHandler;
+import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.mobiledevicerules.model.MDRAction;
-import com.liferay.portlet.mobiledevicerules.model.MDRRule;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
-import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 
 import java.util.Collection;
 import java.util.Locale;

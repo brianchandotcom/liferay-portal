@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -522,11 +523,15 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					getTempBlogsEntryAttachmentFileEntries(content);
 
 			if (!tempBlogsEntryAttachments.isEmpty()) {
+				Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+					themeDisplay.getUserId(), entry.getGroupId());
+
 				blogsEntryAttachmentFileEntryReferences =
 					blogsEntryAttachmentFileEntryHelper.
 						addBlogsEntryAttachmentFileEntries(
 							entry.getGroupId(), themeDisplay.getUserId(),
-							entry.getEntryId(), tempBlogsEntryAttachments);
+							entry.getEntryId(), folder.getFolderId(),
+							tempBlogsEntryAttachments);
 
 				content = blogsEntryAttachmentFileEntryHelper.updateContent(
 					content, blogsEntryAttachmentFileEntryReferences);
@@ -571,11 +576,14 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 					getTempBlogsEntryAttachmentFileEntries(content);
 
 			if (!tempBlogsEntryAttachmentFileEntries.isEmpty()) {
+				Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+					themeDisplay.getUserId(), entry.getGroupId());
+
 				blogsEntryAttachmentFileEntryReferences =
 					blogsEntryAttachmentHelper.
 						addBlogsEntryAttachmentFileEntries(
 							entry.getGroupId(), themeDisplay.getUserId(),
-							entry.getEntryId(),
+							entry.getEntryId(), folder.getFolderId(),
 							tempBlogsEntryAttachmentFileEntries);
 
 				content = blogsEntryAttachmentHelper.updateContent(

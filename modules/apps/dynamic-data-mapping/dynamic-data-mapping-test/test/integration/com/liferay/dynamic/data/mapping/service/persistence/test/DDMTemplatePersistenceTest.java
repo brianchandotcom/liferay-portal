@@ -421,9 +421,9 @@ public class DDMTemplatePersistenceTest {
 			true, "userName", true, "versionUserId", true, "versionUserName",
 			true, "createDate", true, "modifiedDate", true, "classNameId",
 			true, "classPK", true, "resourceClassNameId", true, "templateKey",
-			true, "version", true, "name", true, "type", true, "mode", true,
-			"language", true, "cacheable", true, "smallImage", true,
-			"smallImageId", true, "smallImageURL", true, "lastPublishDate", true);
+			true, "version", true, "type", true, "mode", true, "language",
+			true, "cacheable", true, "smallImage", true, "smallImageId", true,
+			"smallImageURL", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -631,19 +631,19 @@ public class DDMTemplatePersistenceTest {
 		Assert.assertTrue(Validator.equals(existingDDMTemplate.getUuid(),
 				ReflectionTestUtil.invoke(existingDDMTemplate,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingDDMTemplate.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDMTemplate,
+		Assert.assertEquals(Long.valueOf(existingDDMTemplate.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplate,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDDMTemplate.getSmallImageId(),
-			ReflectionTestUtil.invoke(existingDDMTemplate,
+		Assert.assertEquals(Long.valueOf(existingDDMTemplate.getSmallImageId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplate,
 				"getOriginalSmallImageId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDDMTemplate.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDMTemplate,
+		Assert.assertEquals(Long.valueOf(existingDDMTemplate.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplate,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingDDMTemplate.getClassNameId(),
-			ReflectionTestUtil.invoke(existingDDMTemplate,
+		Assert.assertEquals(Long.valueOf(existingDDMTemplate.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplate,
 				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingDDMTemplate.getTemplateKey(),

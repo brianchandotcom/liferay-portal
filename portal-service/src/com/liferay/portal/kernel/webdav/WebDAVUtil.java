@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.xml.Namespace;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -40,10 +41,12 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
-import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceRegistrationMap;
 import com.liferay.registry.collections.ServiceRegistrationMapImpl;
+import com.liferay.registry.collections.ServiceTrackerMap;
+import com.liferay.registry.collections.ServiceTrackerMapFactory;
+import com.liferay.registry.collections.ServiceTrackerMapFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,9 +54,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -289,6 +290,17 @@ public class WebDAVUtil {
 		return getInstance()._getStorage(token);
 	}
 
+	public static String getStorageToken(Portlet portlet) {
+		WebDAVStorage webDAVStorageInstance =
+			portlet.getWebDAVStorageInstance();
+
+		if (webDAVStorageInstance == null) {
+			return null;
+		}
+
+		return webDAVStorageInstance.getToken();
+	}
+
 	public static Collection<String> getStorageTokens() {
 		return getInstance()._getStorageTokens();
 	}
@@ -351,12 +363,54 @@ public class WebDAVUtil {
 	}
 
 	private WebDAVUtil() {
-		Registry registry = RegistryUtil.getRegistry();
+		ServiceTrackerMapFactory serviceTrackerMapFactory =
+			ServiceTrackerMapFactoryUtil.getServiceTrackerMapFactory();
 
-		_serviceTracker = registry.trackServices(
-			WebDAVStorage.class, new WebDAVStorageServiceTrackerCustomizer());
+		_storages = serviceTrackerMapFactory.singleValueMap(
+			WebDAVStorage.class, "webdav.storage.token",
+			new ServiceTrackerCustomizer<WebDAVStorage, WebDAVStorage>() {
 
-		_serviceTracker.open();
+				@Override
+				public WebDAVStorage addingService(
+					ServiceReference<WebDAVStorage> serviceReference) {
+
+					Registry registry = RegistryUtil.getRegistry();
+
+					WebDAVStorage webDAVStorage = registry.getService(
+						serviceReference);
+
+					setToken(serviceReference, webDAVStorage);
+
+					return webDAVStorage;
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<WebDAVStorage> serviceReference,
+					WebDAVStorage webDAVStorage) {
+
+					setToken(serviceReference, webDAVStorage);
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<WebDAVStorage> serviceReference,
+					WebDAVStorage webDAVStorage) {
+				}
+
+				protected void setToken(
+					ServiceReference<WebDAVStorage> serviceReference,
+					WebDAVStorage webDAVStorage) {
+
+					String token = (String)serviceReference.getProperty(
+						"webdav.storage.token");
+
+					webDAVStorage.setToken(token);
+				}
+
+			});
+
+		_storages.open();
 	}
 
 	private void _addStorage(WebDAVStorage storage) {
@@ -378,11 +432,11 @@ public class WebDAVUtil {
 	}
 
 	private WebDAVStorage _getStorage(String token) {
-		return _storageMap.get(token);
+		return _storages.getService(token);
 	}
 
 	private Collection<String> _getStorageTokens() {
-		return _storageMap.keySet();
+		return _storages.keySet();
 	}
 
 	private boolean _isOverwrite(HttpServletRequest request) {
@@ -404,48 +458,6 @@ public class WebDAVUtil {
 
 	private final ServiceRegistrationMap<WebDAVStorage> _serviceRegistrations =
 		new ServiceRegistrationMapImpl<>();
-	private final ServiceTracker<WebDAVStorage, WebDAVStorage> _serviceTracker;
-	private final Map<String, WebDAVStorage> _storageMap =
-		new ConcurrentSkipListMap<>();
-
-	private class WebDAVStorageServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<WebDAVStorage, WebDAVStorage> {
-
-		@Override
-		public WebDAVStorage addingService(
-			ServiceReference<WebDAVStorage> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			WebDAVStorage webDAVStorage = registry.getService(serviceReference);
-
-			if (webDAVStorage.getToken() == null) {
-				return null;
-			}
-
-			_storageMap.put(webDAVStorage.getToken(), webDAVStorage);
-
-			return webDAVStorage;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<WebDAVStorage> serviceReference,
-			WebDAVStorage webDAVStorage) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<WebDAVStorage> serviceReference,
-			WebDAVStorage webDAVStorage) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_storageMap.remove(webDAVStorage.getToken());
-		}
-
-	}
+	private final ServiceTrackerMap<String, WebDAVStorage> _storages;
 
 }

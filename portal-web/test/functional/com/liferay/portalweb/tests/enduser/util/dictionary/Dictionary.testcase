@@ -31,7 +31,7 @@
 		<var name="key_dictionaryTerm" value="${dictionaryTerm}" />
 
 		<execute function="SelectWindow" locator1="title=Dog | Define Dog at Dictionary.com" />
-		<execute function="AssertTextEquals" locator1="Dictionary#DICTIONARY_WORD" value1="${dictionaryTerm}" />
+		<execute function="AssertTextEquals" locator1="Dictionary#WORD" value1="${dictionaryTerm}" />
 
 		<execute function="Close" locator1="title=Dog | Define Dog at Dictionary.com" />
 		<execute function="SelectWindow" locator1="title=Dictionary Page - Liferay" />

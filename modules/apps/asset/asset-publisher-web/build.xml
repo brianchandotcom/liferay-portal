@@ -2,10 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../dynamic-data-mapping/dynamic-data-mapping-api,../journal/journal-api,../export-import/export-import-api,../export-import/export-import-service,../portlet-display-template/portlet-display-template" />
-	<property name="osgi.ide.dependencies" value="rome.jar" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+	<import file="../../../build-module.xml" />
 </project>

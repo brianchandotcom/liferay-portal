@@ -28,6 +28,63 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="AddPageWithCustomContentHeading" priority="4">
+		<execute macro="WikiNavigator#gotoAllPages" />
+
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+
+		<execute macro="WikiEntry#addPageTitle">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiEntry#selectPageFormat">
+			<var name="pageFormat" value="Creole" />
+		</execute>
+
+		<execute macro="CKEditor#selectHeading">
+			<var name="format" value="Heading 1" />
+		</execute>
+
+		<execute macro="WikiEntry#addPageContent">
+			<var name="wikiPageContent" value="Page Content Body Header" />
+		</execute>
+
+		<execute macro="CKEditor#typeEnterKey" />
+
+		<execute macro="CKEditor#selectHeading">
+			<var name="format" value="Normal" />
+		</execute>
+
+		<execute macro="WikiEntry#addPageContent">
+			<var name="wikiPageContent" value="Page Content Body" />
+		</execute>
+
+		<execute macro="WikiEntry#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPages" />
+
+		<execute macro="WikiTable#viewEntry">
+			<var name="draftStatus" value="Approved" />
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiTable#gotoEntry">
+			<var name="wikiPageTitle" value="Wiki Page Title" />
+		</execute>
+
+		<execute macro="WikiPage#viewPageContentBodyHeader">
+			<var name="wikiPageContent" value="Page Content Body Header" />
+		</execute>
+
+		<execute macro="WikiPage#viewPageContentBody">
+			<var name="wikiPageContent" value="Page Content Body" />
+		</execute>
+	</command>
+
 	<command name="ConfigurePortletDisplaySettings" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Wiki Test Page" />
@@ -138,6 +195,138 @@
 
 		<execute macro="WikiPage#viewFrontPageDefaultCP">
 			<var name="wikiPageTitle" value="FrontPage" />
+		</execute>
+	</command>
+
+	<command name="RateAndEditPageComment" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiTable#gotoNode">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+
+		<execute macro="WikiEntry#addPageTitle">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiEntry#addPageContent">
+			<var name="wikiPageContent" value="Wiki Page Content 1" />
+		</execute>
+
+		<execute macro="WikiEntry#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPages" />
+
+		<execute macro="WikiTable#viewEntry">
+			<var name="draftStatus" value="Approved" />
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiTable#gotoEntry">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiPage#viewPageContentBody">
+			<var name="wikiPageContent" value="Wiki Page Content 1" />
+		</execute>
+
+		<execute macro="WikiPage#addComment">
+			<var name="entryComment" value="Wiki Page Comment" />
+		</execute>
+
+		<execute macro="WikiPage#rateCommentAsGood" />
+
+		<execute macro="WikiPage#editComment">
+			<var name="entryComment" value="Wiki Page Comment" />
+			<var name="entryCommentEdit" value="Wiki Page Comment Edited" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPages" />
+
+		<execute macro="WikiTable#gotoEntry">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiPage#viewCommentPG">
+			<var name="entryComment" value="Wiki Page Comment Edited" />
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiPage#viewCommentRatingGood" />
+	</command>
+
+	<command name="RatePage" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiTable#gotoNode">
+			<var name="wikiNodeName" value="Main" />
+		</execute>
+
+		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
+
+		<execute macro="WikiEntry#addPageTitle">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiEntry#addPageContent">
+			<var name="wikiPageContent" value="Wiki Page Content 1" />
+		</execute>
+
+		<execute macro="WikiEntry#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPages" />
+
+		<execute macro="WikiTable#viewEntry">
+			<var name="draftStatus" value="Approved" />
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiTable#gotoEntry">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiPage#viewPageContentBody">
+			<var name="wikiPageContent" value="Wiki Page Content 1" />
+		</execute>
+
+		<execute macro="WikiPage#rate4StarsPG">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Test Page" />
+		</execute>
+
+		<execute macro="WikiNavigator#gotoAllPages" />
+
+		<execute macro="WikiTable#gotoEntry">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
+		</execute>
+
+		<execute macro="WikiPage#viewPageContentBody">
+			<var name="wikiPageContent" value="Wiki Page Content 1" />
+		</execute>
+
+		<execute macro="WikiPage#viewRate4StarsPG">
+			<var name="wikiPageTitle" value="Wiki Page 1" />
 		</execute>
 	</command>
 
@@ -293,7 +482,7 @@
 			<var name="wikiPageContentEdit"><![CDATA[<script>alert("xss")</script>]]></var>
 		</execute>
 
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD" value1="Add" />
+		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Icon#ADD" value1="Add" />
 		<execute function="AssertAlertNotPresent" />
 	</command>
 
@@ -306,7 +495,7 @@
 			<var name="portletName" value="Breadcrumb" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGWiki#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_RECENT_CHANGES" value1="Recent Changes" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />
@@ -318,7 +507,7 @@
 			<var name="pathLocator" value="PAGE" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGWiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_ALL_PAGES" value1="All Pages" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />
@@ -330,7 +519,7 @@
 			<var name="pathLocator" value="CURRENT_LOCATION" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGWiki#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
+		<execute function="AssertClick" locator1="Wiki#NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Wiki Test Page" />

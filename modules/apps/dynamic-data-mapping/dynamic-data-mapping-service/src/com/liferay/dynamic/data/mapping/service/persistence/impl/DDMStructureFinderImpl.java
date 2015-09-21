@@ -17,6 +17,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -45,15 +47,16 @@ import java.util.List;
 public class DDMStructureFinderImpl
 	extends BasePersistenceImpl<DDMStructure> implements DDMStructureFinder {
 
-	public static final String COUNT_BY_C_G_C_N_D_S_T =
-		DDMStructureFinder.class.getName() + ".countByC_G_C_N_D_S_T";
+	public static final String COUNT_BY_C_G_C_N_D_S_T_S =
+		DDMStructureFinder.class.getName() + ".countByC_G_C_N_D_S_T_S";
 
-	public static final String FIND_BY_C_G_C_N_D_S_T =
-		DDMStructureFinder.class.getName() + ".findByC_G_C_N_D_S_T";
+	public static final String FIND_BY_C_G_C_N_D_S_T_R =
+		DDMStructureFinder.class.getName() + ".findByC_G_C_N_D_S_T_S";
 
 	@Override
 	public int countByKeywords(
-		long companyId, long[] groupIds, long classNameId, String keywords) {
+		long companyId, long[] groupIds, long classNameId, String keywords,
+		int status) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -67,38 +70,52 @@ public class DDMStructureFinderImpl
 			andOperator = true;
 		}
 
-		return countByC_G_C_N_D_S_T(
+		return countByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
-			DDMStructureConstants.TYPE_DEFAULT, andOperator);
+			DDMStructureConstants.TYPE_DEFAULT, status, andOperator);
 	}
 
 	@Override
-	public int countByC_G_C_N_D_S_T(
+	public int countByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return countByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true);
+	}
+
+	@Override
+	public int countByC_G_C_N_D_S_T_S(
 		long companyId, long[] groupIds, long classNameId, String name,
-		String description, String storageType, int type, boolean andOperator) {
+		String description, String storageType, int type, int status,
+		boolean andOperator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
 
-		return countByC_G_C_N_D_S_T(
+		return countByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
-			type, andOperator);
+			type, status, andOperator);
 	}
 
 	@Override
-	public int countByC_G_C_N_D_S_T(
+	public int countByC_G_C_N_D_S_T_S(
 		long companyId, long[] groupIds, long classNameId, String[] names,
-		String[] descriptions, String storageType, int type,
+		String[] descriptions, String storageType, int type, int status,
 		boolean andOperator) {
 
-		return doCountByC_G_C_N_D_S_T(
+		return doCountByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
-			type, andOperator, false);
+			type, status, andOperator, false);
 	}
 
 	@Override
 	public int filterCountByKeywords(
-		long companyId, long[] groupIds, long classNameId, String keywords) {
+		long companyId, long[] groupIds, long classNameId, String keywords,
+		int status) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -112,39 +129,53 @@ public class DDMStructureFinderImpl
 			andOperator = true;
 		}
 
-		return filterCountByC_G_C_N_D_S_T(
+		return filterCountByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
-			DDMStructureConstants.TYPE_DEFAULT, andOperator);
+			DDMStructureConstants.TYPE_DEFAULT, status, andOperator);
 	}
 
 	@Override
-	public int filterCountByC_G_C_N_D_S_T(
+	public int filterCountByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return filterCountByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true);
+	}
+
+	@Override
+	public int filterCountByC_G_C_N_D_S_T_S(
 		long companyId, long[] groupIds, long classNameId, String name,
-		String description, String storageType, int type, boolean andOperator) {
+		String description, String storageType, int type, int status,
+		boolean andOperator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
 
-		return filterCountByC_G_C_N_D_S_T(
+		return filterCountByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
-			type, andOperator);
+			type, status, andOperator);
 	}
 
 	@Override
-	public int filterCountByC_G_C_N_D_S_T(
+	public int filterCountByC_G_C_N_D_S_T_S(
 		long companyId, long[] groupIds, long classNameId, String[] names,
-		String[] descriptions, String storageType, int type,
+		String[] descriptions, String storageType, int type, int status,
 		boolean andOperator) {
 
-		return doCountByC_G_C_N_D_S_T(
+		return doCountByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
-			type, andOperator, true);
+			type, status, andOperator, true);
 	}
 
 	@Override
 	public List<DDMStructure> filterFindByKeywords(
 		long companyId, long[] groupIds, long classNameId, String keywords,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -158,42 +189,58 @@ public class DDMStructureFinderImpl
 			andOperator = true;
 		}
 
-		return filterFindByC_G_C_N_D_S_T(
+		return filterFindByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
-			DDMStructureConstants.TYPE_DEFAULT, andOperator, start, end,
+			DDMStructureConstants.TYPE_DEFAULT, status, andOperator, start, end,
 			orderByComparator);
 	}
 
 	@Override
-	public List<DDMStructure> filterFindByC_G_C_N_D_S_T(
-		long companyId, long[] groupIds, long classNameId, String name,
-		String description, String storageType, int type, boolean andOperator,
+	public List<DDMStructure> filterFindByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return filterFindByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<DDMStructure> filterFindByC_G_C_N_D_S_T_S(
+		long companyId, long[] groupIds, long classNameId, String name,
+		String description, String storageType, int type, int status,
+		boolean andOperator, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
 
-		return filterFindByC_G_C_N_D_S_T(
+		return filterFindByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
-			type, andOperator, start, end, orderByComparator);
+			type, status, andOperator, start, end, orderByComparator);
 	}
 
 	@Override
-	public List<DDMStructure> filterFindByC_G_C_N_D_S_T(
+	public List<DDMStructure> filterFindByC_G_C_N_D_S_T_S(
 		long companyId, long[] groupIds, long classNameId, String[] names,
-		String[] descriptions, String storageType, int type,
+		String[] descriptions, String storageType, int type, int status,
 		boolean andOperator, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return doFindByC_G_C_N_D_S_T(
+		return doFindByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
-			type, andOperator, start, end, orderByComparator, true);
+			type, status, andOperator, start, end, orderByComparator, true);
 	}
 
 	@Override
 	public List<DDMStructure> findByKeywords(
 		long companyId, long[] groupIds, long classNameId, String keywords,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+		int status, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		String[] names = null;
 		String[] descriptions = null;
@@ -207,41 +254,56 @@ public class DDMStructureFinderImpl
 			andOperator = true;
 		}
 
-		return findByC_G_C_N_D_S_T(
+		return findByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
-			DDMStructureConstants.TYPE_DEFAULT, andOperator, start, end,
+			DDMStructureConstants.TYPE_DEFAULT, status, andOperator, start, end,
 			orderByComparator);
 	}
 
 	@Override
-	public List<DDMStructure> findByC_G_C_N_D_S_T(
-		long companyId, long[] groupIds, long classNameId, String name,
-		String description, String storageType, int type, boolean andOperator,
+	public List<DDMStructure> findByC_G_C_S(
+		long companyId, long[] groupIds, long classNameId, int status,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
+
+		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
+		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+
+		return findByC_G_C_N_D_S_T_S(
+			companyId, groupIds, classNameId, names, descriptions, null,
+			DDMStructureConstants.TYPE_DEFAULT, status, true, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public List<DDMStructure> findByC_G_C_N_D_S_T_S(
+		long companyId, long[] groupIds, long classNameId, String name,
+		String description, String storageType, int type, int status,
+		boolean andOperator, int start, int end,
+		OrderByComparator<DDMStructure> orderByComparator) {
 
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] descriptions = CustomSQLUtil.keywords(description, false);
 
-		return findByC_G_C_N_D_S_T(
+		return findByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
-			type, andOperator, start, end, orderByComparator);
+			type, status, andOperator, start, end, orderByComparator);
 	}
 
 	@Override
-	public List<DDMStructure> findByC_G_C_N_D_S_T(
+	public List<DDMStructure> findByC_G_C_N_D_S_T_S(
 		long companyId, long[] groupIds, long classNameId, String[] names,
-		String[] descriptions, String storageType, int type,
+		String[] descriptions, String storageType, int type, int status,
 		boolean andOperator, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
 
-		return doFindByC_G_C_N_D_S_T(
+		return doFindByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
-			type, andOperator, start, end, orderByComparator, false);
+			type, status, andOperator, start, end, orderByComparator, false);
 	}
 
-	protected int doCountByC_G_C_N_D_S_T(
+	protected int doCountByC_G_C_N_D_S_T_S(
 		long companyId, long[] groupIds, long classNameId, String[] names,
-		String[] descriptions, String storageType, int type,
+		String[] descriptions, String storageType, int type, int status,
 		boolean andOperator, boolean inlineSQLHelper) {
 
 		names = CustomSQLUtil.keywords(names);
@@ -252,20 +314,24 @@ public class DDMStructureFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(COUNT_BY_C_G_C_N_D_S_T);
+			String sql = CustomSQLUtil.get(COUNT_BY_C_G_C_N_D_S_T_S);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMStructure.class.getName(),
+					sql,
+					DDMStructurePermission.getStructureModelResourceName(
+						classNameId),
 					"DDMStructure.structureId", groupIds);
 			}
 
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
+			sql = StringUtil.replace(sql, "[$STATUS$]", getStatus(status));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(CAST_TEXT(name))", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "description", StringPool.LIKE, true, descriptions);
+
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -287,6 +353,10 @@ public class DDMStructureFinderImpl
 			qPos.add(storageType);
 			qPos.add(type);
 
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
 			Iterator<Long> itr = q.iterate();
 
 			if (itr.hasNext()) {
@@ -307,9 +377,9 @@ public class DDMStructureFinderImpl
 		}
 	}
 
-	protected List<DDMStructure> doFindByC_G_C_N_D_S_T(
+	protected List<DDMStructure> doFindByC_G_C_N_D_S_T_S(
 		long companyId, long[] groupIds, long classNameId, String[] names,
-		String[] descriptions, String storageType, int type,
+		String[] descriptions, String storageType, int type, int status,
 		boolean andOperator, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator,
 		boolean inlineSQLHelper) {
@@ -322,18 +392,21 @@ public class DDMStructureFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_G_C_N_D_S_T);
+			String sql = CustomSQLUtil.get(FIND_BY_C_G_C_N_D_S_T_R);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, DDMStructure.class.getName(),
+					sql,
+					DDMStructurePermission.getStructureModelResourceName(
+						classNameId),
 					"DDMStructure.structureId", groupIds);
 			}
 
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
+			sql = StringUtil.replace(sql, "[$STATUS$]", getStatus(status));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(name)", StringPool.LIKE, false, names);
+				sql, "lower(CAST_TEXT(name))", StringPool.LIKE, false, names);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "description", StringPool.LIKE, true, descriptions);
 			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
@@ -361,6 +434,10 @@ public class DDMStructureFinderImpl
 			qPos.add(storageType);
 			qPos.add(type);
 
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+
 			return (List<DDMStructure>)QueryUtil.list(
 				q, getDialect(), start, end);
 		}
@@ -382,7 +459,7 @@ public class DDMStructureFinderImpl
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
 		for (int i = 0; i < groupIds.length; i++) {
-			sb.append("groupId = ?");
+			sb.append("DDMStructure.groupId = ?");
 
 			if ((i + 1) < groupIds.length) {
 				sb.append(" OR ");
@@ -390,6 +467,22 @@ public class DDMStructureFinderImpl
 		}
 
 		sb.append(") AND");
+
+		return sb.toString();
+	}
+
+	protected String getStatus(int status) {
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("AND EXISTS (SELECT 1 FROM DDMStructureVersion WHERE ");
+		sb.append("(DDMStructureVersion.structureId = ");
+		sb.append("DDMStructure.structureId) AND ");
+		sb.append("(DDMStructureVersion.version = DDMStructure.version) AND ");
+		sb.append("(DDMStructureVersion.status = ?))");
 
 		return sb.toString();
 	}

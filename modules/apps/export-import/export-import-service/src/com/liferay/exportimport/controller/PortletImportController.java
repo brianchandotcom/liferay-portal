@@ -119,6 +119,7 @@ import java.util.Map;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -213,7 +214,7 @@ public class PortletImportController implements ImportController {
 			portletDataContext = getPortletDataContext(
 				exportImportConfiguration, file);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
@@ -227,7 +228,7 @@ public class PortletImportController implements ImportController {
 
 			ExportImportThreadLocal.setPortletImportInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_IMPORT_SUCCEEDED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
@@ -236,7 +237,7 @@ public class PortletImportController implements ImportController {
 		catch (Throwable t) {
 			ExportImportThreadLocal.setPortletImportInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_IMPORT_FAILED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
@@ -1224,6 +1225,13 @@ public class PortletImportController implements ImportController {
 		portletDataContext.setScopeType(StringPool.BLANK);
 	}
 
+	@Reference(unbind = "-")
+	protected void setExportImportLifecycleManager(
+		ExportImportLifecycleManager exportImportLifecycleManager) {
+
+		_exportImportLifecycleManager = exportImportLifecycleManager;
+	}
+
 	protected void updatePortletPreferences(
 			PortletDataContext portletDataContext, long ownerId, int ownerType,
 			long plid, String portletId, String xml, boolean importData)
@@ -1389,6 +1397,7 @@ public class PortletImportController implements ImportController {
 
 	private final DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();
+	private ExportImportLifecycleManager _exportImportLifecycleManager;
 	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();
 

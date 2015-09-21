@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.trash;
 
-import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,10 +22,13 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.capabilities.UnsupportedCapabilityException;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.trash.TrashRendererFactory;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -45,6 +47,7 @@ import com.liferay.portlet.trash.model.TrashEntry;
 import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * Implements trash handling for the file shortcut entity.
@@ -133,6 +136,11 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
+	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
+		return _trashRendererFactory.getTrashRenderer(classPK);
+	}
+
+	@Override
 	public boolean hasTrashPermission(
 			PermissionChecker permissionChecker, long groupId, long classPK,
 			String trashActionId)
@@ -154,9 +162,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 			return dlFileShortcut.isInTrash();
 		}
-		catch (InvalidRepositoryException ire) {
+		catch (UnsupportedCapabilityException uce) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ire, ire);
+				_log.debug(uce, uce);
 			}
 
 			return false;
@@ -170,9 +178,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 			return dlFileShortcut.isInTrashContainer();
 		}
-		catch (InvalidRepositoryException ire) {
+		catch (UnsupportedCapabilityException uce) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ire, ire);
+				_log.debug(uce, uce);
 			}
 
 			return false;
@@ -254,9 +262,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			RepositoryProviderUtil.getFileShortcutRepository(classPK);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
-			throw new InvalidRepositoryException(
-				"Repository " + repository.getRepositoryId() +
-					" does not support trash operations");
+			throw new UnsupportedCapabilityException(
+				TrashCapability.class,
+				"Repository " + repository.getRepositoryId());
 		}
 
 		FileShortcut fileShortcut = repository.getFileShortcut(classPK);
@@ -272,9 +280,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			RepositoryProviderUtil.getFileShortcutLocalRepository(classPK);
 
 		if (!localRepository.isCapabilityProvided(TrashCapability.class)) {
-			throw new InvalidRepositoryException(
-				"Repository " + localRepository.getRepositoryId() +
-					" does not support trash operations");
+			throw new UnsupportedCapabilityException(
+				TrashCapability.class,
+				"Repository " + localRepository.getRepositoryId());
 		}
 
 		return localRepository;
@@ -297,7 +305,19 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			permissionChecker, classPK, actionId);
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.portlet.documentlibrary.model.DLFileShortcut)",
+		unbind = "-"
+	)
+	protected void setTrashRendererFactory(
+		TrashRendererFactory trashRendererFactory) {
+
+		_trashRendererFactory = trashRendererFactory;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileShortcutTrashHandler.class);
+
+	private TrashRendererFactory _trashRendererFactory;
 
 }

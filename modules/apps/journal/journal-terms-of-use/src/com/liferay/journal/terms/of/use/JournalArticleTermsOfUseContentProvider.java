@@ -70,10 +70,9 @@ public class JournalArticleTermsOfUseContentProvider
 		_servletContext = servletContext;
 	}
 
-	private static final String _JSP_PATH_CONFIGURATION =
-		"/META-INF/resources/configuration.jsp";
+	private static final String _JSP_PATH_CONFIGURATION = "/configuration.jsp";
 
-	private static final String _JSP_PATH_VIEW = "/META-INF/resources/view.jsp";
+	private static final String _JSP_PATH_VIEW = "/view.jsp";
 
 	private ServletContext _servletContext;
 

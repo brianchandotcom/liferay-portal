@@ -279,7 +279,8 @@ public abstract class BaseNodeBuilder
 
 			DelayDuration delayDuration = new DelayDuration(
 				kaleoTimer.getDuration(),
-				DurationScale.parse(kaleoTimer.getScale()));
+				DurationScale.valueOf(
+					StringUtil.toUpperCase(kaleoTimer.getScale())));
 
 			timer.setDelayDuration(delayDuration);
 
@@ -288,7 +289,8 @@ public abstract class BaseNodeBuilder
 			if (Validator.isNotNull(recurrenceScale)) {
 				DelayDuration recurrenceDelayDuration = new DelayDuration(
 					kaleoTimer.getRecurrenceDuration(),
-					DurationScale.parse(recurrenceScale));
+					DurationScale.valueOf(
+						StringUtil.toUpperCase(recurrenceScale)));
 
 				timer.setRecurrence(recurrenceDelayDuration);
 			}

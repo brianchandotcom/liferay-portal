@@ -186,6 +186,23 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 				}
 			};
 
+			datePicker.after(
+				'selectionChange',
+				function(event) {
+					var input = A.one('#<%= nameId %>');
+
+					if (input) {
+						var form = input.get('form');
+
+						var formId = form.get('id');
+
+						var formInstance = Liferay.Form.get(formId);
+
+						formInstance.formValidator.validateField('<%= namespace + HtmlUtil.escapeAttribute(name) %>');
+					}
+				}
+			);
+
 			return datePicker;
 		}
 	);

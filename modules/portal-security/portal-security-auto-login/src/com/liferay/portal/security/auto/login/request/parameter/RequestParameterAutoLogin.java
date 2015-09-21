@@ -16,19 +16,19 @@ package com.liferay.portal.security.auto.login.request.parameter;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auto.login.request.parameter.configuration.RequestParameterAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.request.parameter.constants.RequestParameterAutoLoginConstants;
+import com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration;
 import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.auto.login.request.parameter.configuration.RequestParameterAutoLoginConfiguration",
+	configurationPid = "com.liferay.portal.security.auto.login.request.parameter.module.configuration.RequestParameterAutoLoginConfiguration",
 	immediate = true, service = AutoLogin.class
 )
 public class RequestParameterAutoLogin extends BaseAutoLogin {
@@ -139,9 +139,11 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		return requestParameterAutoLoginConfiguration.enabled();
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private RequestParameterAutoLoginConfiguration
@@ -150,7 +152,7 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		try {
 			RequestParameterAutoLoginConfiguration
 				requestParameterAutoLoginConfiguration =
-					_settingsFactory.getSettings(
+					_configurationFactory.getConfiguration(
 						RequestParameterAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
@@ -158,9 +160,9 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 
 			return requestParameterAutoLoginConfiguration;
 		}
-		catch (SettingsException se) {
+		catch (ConfigurationException ce) {
 			_log.error(
-				"Unable to get request parameter auto login configuration", se);
+				"Unable to get request parameter auto login configuration", ce);
 		}
 
 		return null;
@@ -173,6 +175,6 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RequestParameterAutoLogin.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

@@ -21,6 +21,7 @@ import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfig
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch.internal.cluster.UnicastSettingsContributor;
+import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
 
 import java.io.File;
 
@@ -28,6 +29,7 @@ import java.lang.reflect.Method;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 
@@ -41,6 +43,8 @@ import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.ClusterAdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
+import org.elasticsearch.common.settings.ImmutableSettings.Builder;
+import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.indices.IndexMissingException;
 
 import org.mockito.Mockito;
@@ -97,7 +101,9 @@ public class ElasticsearchFixture {
 		deleteTmpDir();
 	}
 
-	public ClusterHealthResponse getClusterHealthResponse() {
+	public ClusterHealthResponse getClusterHealthResponse(
+		HealthExpectations healthExpectations) {
+
 		Client client = _elasticsearchConnection.getClient();
 
 		AdminClient adminClient = client.admin();
@@ -109,6 +115,14 @@ public class ElasticsearchFixture {
 
 		ClusterHealthRequest clusterHealthRequest =
 			clusterHealthRequestBuilder.request();
+
+		clusterHealthRequest.timeout(new TimeValue(10, TimeUnit.MINUTES));
+		clusterHealthRequest.waitForActiveShards(
+			healthExpectations.activeShards);
+		clusterHealthRequest.waitForNodes(
+			String.valueOf(healthExpectations.numberOfNodes));
+		clusterHealthRequest.waitForRelocatingShards(0);
+		clusterHealthRequest.waitForStatus(healthExpectations.status);
 
 		ActionFuture<ClusterHealthResponse> health = clusterAdminClient.health(
 			clusterHealthRequest);
@@ -152,6 +166,22 @@ public class ElasticsearchFixture {
 
 	}
 
+	protected void addDiskThresholdSettingsContributor(
+		EmbeddedElasticsearchConnection embeddedElasticsearchConnection) {
+
+		embeddedElasticsearchConnection.addSettingsContributor(
+			new BaseSettingsContributor(0) {
+
+				@Override
+				public void populate(Builder builder) {
+					builder.put(
+						"cluster.routing.allocation.disk.threshold_enabled",
+						"false");
+				}
+
+			});
+	}
+
 	protected void addUnicastSettingsContributor(
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection) {
 
@@ -180,6 +210,7 @@ public class ElasticsearchFixture {
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection =
 			new EmbeddedElasticsearchConnection();
 
+		addDiskThresholdSettingsContributor(embeddedElasticsearchConnection);
 		addUnicastSettingsContributor(embeddedElasticsearchConnection);
 
 		Props props = Mockito.mock(Props.class);

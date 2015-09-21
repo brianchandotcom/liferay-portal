@@ -16,8 +16,66 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String remoteMVCPath = "/marketplace/view.jsp";
+
+String portletId = portletDisplay.getId();
+
+if (portletId.equals(MarketplaceStorePortletKeys.MARKETPLACE_PURCHASED)) {
+	remoteMVCPath = "/marketplace_server/view_purchased.jsp";
+}
+%>
+
 <liferay-portlet:renderURL var="viewURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="remoteMVCPath" value="/marketplace/view.jsp" />
+	<portlet:param name="remoteMVCPath" value="<%= remoteMVCPath %>" />
 </liferay-portlet:renderURL>
 
 <iframe frameborder="0" id="<portlet:namespace />frame" name="<portlet:namespace />frame" scrolling="no" src="<%= viewURL %>"></iframe>
+
+<c:if test="<%= GetterUtil.getBoolean(request.getAttribute(MarketplaceStoreWebKeys.OAUTH_AUTHORIZED)) %>">
+	<div class="sign-out">
+		<liferay-portlet:actionURL name="deauthorize" var="deauthorizeURL" />
+
+		<aui:button onClick="<%= deauthorizeURL %>" value="sign-out" />
+	</div>
+</c:if>
+
+<aui:script use="liferay-marketplace-messenger">
+	var frame = A.one('#<portlet:namespace />frame');
+
+	Liferay.MarketplaceMessenger.init(
+		{
+			targetFrame: frame
+		}
+	);
+
+	Liferay.MarketplaceMessenger.receiveMessage(
+		function(event) {
+			var response = event.responseData;
+
+			if (!response.cmd) {
+				return;
+			}
+
+			var data = response.data;
+
+			if ((response.cmd == 'resize') || (response.cmd == 'init')) {
+				if (data.height) {
+					frame.height(data.height + 50);
+				}
+
+				if (data.width) {
+					frame.width(data.width);
+				}
+			}
+
+			if ((response.cmd == 'scrollTo') || (response.cmd == 'init')) {
+				var scrollX = data.scrollX || 0;
+				var scrollY = data.scrollY || 0;
+
+				window.scrollTo(scrollX, scrollY);
+			}
+		},
+		A.Lang.emptyFnTrue
+	);
+</aui:script>

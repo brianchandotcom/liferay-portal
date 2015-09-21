@@ -56,6 +56,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.control-panel-entry-category=users",
 		"com.liferay.portlet.control-panel-entry-weight=4.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-users-admin",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.icon=/icons/password_policies_admin.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",

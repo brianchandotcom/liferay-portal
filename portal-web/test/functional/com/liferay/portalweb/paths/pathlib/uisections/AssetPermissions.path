@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>GUEST_REPLY_TO_MESSAGE_CHECKBOX</td>
-	<td>//tr[contains(.,'Guest')]/input[contains(@type,'checkbox') and contains(@name,'ACTION_REPLY_TO_MESSAGE')]</td>
+	<td>//tr[contains(.,'Guest')]//input[contains(@name,'ACTION_REPLY_TO_MESSAGE') and contains(@type,'checkbox')]</td>
 	<td></td>
 </tr>
 <tr>

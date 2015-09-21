@@ -132,6 +132,11 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Team fetchTeam(long groupId, String name) {
+		return teamPersistence.fetchByG_N(groupId, name);
+	}
+
+	@Override
 	public List<Team> getGroupTeams(long groupId) {
 		return teamPersistence.findByGroupId(groupId);
 	}

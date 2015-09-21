@@ -15,6 +15,8 @@
 package com.liferay.exportimport.web.portlet.action;
 
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,8 +28,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
@@ -159,7 +159,7 @@ public class EditPublishConfigurationMVCActionCommand
 			actionRequest, "backgroundTaskId");
 
 		BackgroundTask backgroundTask =
-			BackgroundTaskLocalServiceUtil.getBackgroundTask(backgroundTaskId);
+			BackgroundTaskManagerUtil.getBackgroundTask(backgroundTaskId);
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();

@@ -319,22 +319,21 @@ public class LocaleUtil {
 		String language, String country, Locale locale,
 		Set<String> duplicateLanguages) {
 
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(language);
+		String displayName = null;
 
 		if (duplicateLanguages.contains(locale.getLanguage())) {
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(country);
-			sb.append(StringPool.CLOSE_PARENTHESIS);
+			displayName = StringUtil.appendParentheticalSuffix(
+				language, country);
+		}
+		else {
+			displayName = language;
 		}
 
 		if (LanguageUtil.isBetaLocale(locale)) {
-			sb.append(_BETA_SUFFIX);
+			displayName = displayName.concat(_BETA_SUFFIX);
 		}
 
-		return sb.toString();
+		return displayName;
 	}
 
 	private Map<String, String> _getISOLanguages(Locale locale) {

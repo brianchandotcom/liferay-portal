@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Frontend Theme Admin Web
+Bundle-SymbolicName: com.liferay.frontend.theme.admin.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /frontend-theme-admin-web
+-donotcopy: (.*_diffs.*)

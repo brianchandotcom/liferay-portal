@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtilAdvice;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -599,9 +598,9 @@ public class SPIAgentSerializableTest {
 		};
 
 		ClassLoader oldClassLoader = ClassLoaderPool.getClassLoader(
-			StringPool.BLANK);
+			_SERVLET_CONTEXT_NAME);
 
-		ClassLoaderPool.register(StringPool.BLANK, incapableClassLoader);
+		ClassLoaderPool.register(_SERVLET_CONTEXT_NAME, incapableClassLoader);
 
 		byte[] receiptData = new byte[8];
 
@@ -620,7 +619,7 @@ public class SPIAgentSerializableTest {
 				ClassNotFoundException.class, throwable.getClass());
 		}
 		finally {
-			ClassLoaderPool.register(StringPool.BLANK, oldClassLoader);
+			ClassLoaderPool.register(_SERVLET_CONTEXT_NAME, oldClassLoader);
 		}
 
 		// Successfully receive

@@ -197,7 +197,7 @@ public class BundlePortletApp implements PortletApp, ServletContextListener {
 
 	@Override
 	public boolean isWARFile() {
-		return false;
+		return true;
 	}
 
 	@Override

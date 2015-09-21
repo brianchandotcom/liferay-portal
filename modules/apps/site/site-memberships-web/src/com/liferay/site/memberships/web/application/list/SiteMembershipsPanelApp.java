@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SiteMembershipsPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_USERS;
-	}
-
-	@Override
 	public String getPortletId() {
 		return SiteMembershipsPortletKeys.SITE_MEMBERSHIPS_ADMIN;
 	}
@@ -50,7 +45,7 @@ public class SiteMembershipsPanelApp extends BaseControlPanelEntryPanelApp {
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

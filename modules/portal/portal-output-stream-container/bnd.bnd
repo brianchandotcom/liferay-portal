@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Output Stream Container
+Bundle-SymbolicName: com.liferay.portal.output.stream.container
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.output.stream.container
+Include-Resource: classes

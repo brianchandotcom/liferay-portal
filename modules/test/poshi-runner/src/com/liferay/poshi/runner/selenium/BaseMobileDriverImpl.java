@@ -70,6 +70,14 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void assertCssValue(
+			String locator, String cssAttribute, String cssValue)
+		throws Exception {
+
+		WebDriverHelper.assertCssValue(this, locator, cssAttribute, cssValue);
+	}
+
+	@Override
 	public void assertEditable(String locator) throws Exception {
 		LiferaySeleniumHelper.assertEditable(this, locator);
 	}
@@ -115,10 +123,6 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void assertLiferayErrors() throws Exception {
-		if (!PropsValues.TEST_ASSERT_LIFERAY_ERRORS) {
-			return;
-		}
-
 		LiferaySeleniumHelper.assertLiferayErrors();
 	}
 
@@ -399,7 +403,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isNotSelectedLabel(String selectLocator, String pattern) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.isNotSelectedLabel(this, selectLocator, pattern);
 	}
 
 	@Override
@@ -419,12 +423,12 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isPartialText(String locator, String value) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.isPartialText(this, locator, value);
 	}
 
 	@Override
 	public boolean isSelectedLabel(String selectLocator, String pattern) {
-		throw new UnsupportedOperationException();
+		return WebDriverHelper.isSelectedLabel(this, selectLocator, pattern);
 	}
 
 	@Override
@@ -738,7 +742,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public void waitForConfirmation(String pattern) throws Exception {
-		throw new UnsupportedOperationException();
+		LiferaySeleniumHelper.waitForConfirmation(this, pattern);
 	}
 
 	@Override

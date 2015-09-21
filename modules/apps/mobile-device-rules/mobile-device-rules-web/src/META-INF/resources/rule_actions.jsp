@@ -23,7 +23,7 @@ MDRRule rule = (MDRRule)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, rule.getRuleGroupId(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= MDRRuleGroupPermission.contains(permissionChecker, rule.getRuleGroupId(), ActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

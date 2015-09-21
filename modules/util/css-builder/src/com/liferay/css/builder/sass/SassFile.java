@@ -15,10 +15,10 @@
 package com.liferay.css.builder.sass;
 
 import com.liferay.css.builder.CSSBuilder;
+import com.liferay.css.builder.CSSBuilderUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.tools.CSSBuilderUtil;
 import com.liferay.portal.util.AggregateUtil;
 
 import java.io.File;

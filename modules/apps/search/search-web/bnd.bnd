@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Search Web
 Bundle-SymbolicName: com.liferay.search.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.search.web.constants.*
 Import-Package:\
 	!com.liferay.util.xml,\
 	*

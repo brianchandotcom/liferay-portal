@@ -17,67 +17,147 @@
 <%@ include file="/admin/init.jsp" %>
 
 <%
+String displayStyle = ddlFormAdminDisplayContext.getDisplayStyle();
 PortletURL portletURL = ddlFormAdminDisplayContext.getPortletURL();
+
+RecordSetSearch recordSetSearch = new RecordSetSearch(renderRequest, portletURL);
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "modified-date");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+OrderByComparator<DDLRecordSet> orderByComparator = DDLFormPortletUtil.getDDLRecordSetOrderByComparator(orderByCol, orderByType);
+
+recordSetSearch.setOrderByCol(orderByCol);
+recordSetSearch.setOrderByComparator(orderByComparator);
+recordSetSearch.setOrderByType(orderByType);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="deleteStructureIds" type="hidden" />
+<liferay-util:include page="/admin/search_bar.jsp" servletContext="<%= application %>" />
 
-	<liferay-ui:search-container
-		emptyResultsMessage="no-forms-were-found"
-		id="searchContainer"
-		searchContainer="<%= new RecordSetSearch(renderRequest, portletURL) %>"
-	>
+<liferay-util:include page="/admin/toolbar.jsp" servletContext="<%= application %>" />
 
-		<%
-		request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
-		%>
+<div class="container-fluid-1280" id="<portlet:namespace />formContainer">
+	<aui:form action="<%= portletURL.toString() %>" method="post" name="searchContainerForm">
+		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
-		<liferay-util:include page="/admin/toolbar.jsp" servletContext="<%= application %>" />
-
-		<liferay-ui:search-container-results
-			results="<%= ddlFormAdminDisplayContext.getSearchContainerResults(searchContainer) %>"
-			total="<%= ddlFormAdminDisplayContext.getSearchContainerTotal(searchContainer) %>"
-		/>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
-			escapedModel="<%= true %>"
-			keyProperty="recordSetId"
-			modelVar="recordSet"
+		<liferay-ui:search-container
+			emptyResultsMessage="no-forms-were-found"
+			id="searchContainer"
+			searchContainer="<%= recordSetSearch %>"
 		>
-			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-			</portlet:renderURL>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="name"
-				value="<%= recordSet.getName(locale) %>"
+			<%
+			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
+			%>
+
+			<liferay-ui:search-container-results
+				results="<%= ddlFormAdminDisplayContext.getSearchContainerResults(searchContainer) %>"
+				total="<%= ddlFormAdminDisplayContext.getSearchContainerTotal(searchContainer) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="description"
-				value="<%= StringUtil.shorten(recordSet.getDescription(locale), 100) %>"
-			/>
+			<liferay-ui:search-container-row
+				className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
+				cssClass="entry-display-style"
+				escapedModel="<%= true %>"
+				keyProperty="recordSetId"
+				modelVar="recordSet"
+			>
+				<portlet:renderURL var="rowURL">
+					<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+					<portlet:param name="displayStyle" value="<%= displayStyle %>" />
+				</portlet:renderURL>
 
-			<liferay-ui:search-container-column-date
-				href="<%= rowURL %>"
-				name="modified-date"
-				value="<%= recordSet.getModifiedDate() %>"
-			/>
+				<c:choose>
+					<c:when test='<%= displayStyle.equals("descriptive") %>'>
+						<% request.setAttribute("rowURL", rowURL); %>
 
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
-				path="/admin/record_set_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+						<liferay-ui:search-container-column-image
+							src='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+							toggleRowChecker="<%= true %>"
+						/>
 
-		<liferay-ui:search-iterator />
-	</liferay-ui:search-container>
-</aui:form>
+						<liferay-ui:search-container-column-jsp
+							colspan="2"
+							path="/admin/view_record_set_descriptive.jsp"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							path="/admin/record_set_action.jsp"
+						/>
+
+					</c:when>
+					<c:when test='<%= displayStyle.equals("icon") %>'>
+
+						<%
+						row.setCssClass("col-md-3 col-sm-4 col-xs-12");
+						%>
+
+						<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+
+							<%
+								User userDisplay = UserLocalServiceUtil.fetchUserById(recordSet.getUserId());
+							%>
+
+							<liferay-frontend:card
+								actionJsp="/admin/record_set_action.jsp"
+								actionJspServletContext="<%= application %>"
+								cssClass="entry-display-style"
+								header='<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - recordSet.getModifiedDate().getTime(), true), HtmlUtil.escape(recordSet.getUserName())}, false) %>'
+								imageUrl='<%= themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+								resultRow="<%= row %>"
+								showCheckbox= "<%= false %>"
+								smallImageCSSClass="user-icon user-icon-lg"
+								smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+								title="<%= HtmlUtil.escape(recordSet.getName(locale)) %>"
+								url="<%= rowURL %>"
+							/>
+						</liferay-ui:search-container-column-text>
+
+					</c:when>
+					<c:otherwise>
+
+						<liferay-ui:search-container-column-text
+							href="<%= rowURL %>"
+							name="name"
+							value="<%= recordSet.getName(locale) %>"
+						/>
+
+						<liferay-ui:search-container-column-text
+							name="description"
+							value="<%= StringUtil.shorten(recordSet.getDescription(locale), 100) %>"
+						/>
+
+						<liferay-ui:search-container-column-date
+							name="modified-date"
+							value="<%= recordSet.getModifiedDate() %>"
+						/>
+
+						<liferay-ui:search-container-column-jsp
+							align="right"
+							cssClass="checkbox-cell entry-action"
+							path="/admin/record_set_action.jsp"
+						/>
+
+					</c:otherwise>
+				</c:choose>
+
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		</liferay-ui:search-container>
+	</aui:form>
+</div>
+
+<c:if test="<%= ddlFormAdminDisplayContext.isShowAddRecordSetButton() %>">
+	<portlet:renderURL var="addRecordSetURL">
+		<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "new-form") %>' url="<%= addRecordSetURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>

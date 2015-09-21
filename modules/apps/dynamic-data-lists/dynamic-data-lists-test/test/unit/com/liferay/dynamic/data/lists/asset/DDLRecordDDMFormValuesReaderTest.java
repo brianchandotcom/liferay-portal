@@ -14,44 +14,31 @@
 
 package com.liferay.dynamic.data.lists.asset;
 
-import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.web.asset.DDLRecordDDMFormValuesReader;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.asset.model.DDMFormValuesReader;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.UnlocalizedValue;
 
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Mock;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
  */
-@RunWith(PowerMockRunner.class)
-public class DDLRecordDDMFormValuesReaderTest extends PowerMockito {
-
-	@Before
-	public void setUp() throws Exception {
-		setUpDDLRecord();
-	}
+public class DDLRecordDDMFormValuesReaderTest {
 
 	@Test
 	public void testGetDDMFormFieldValues() throws Exception {
 		DDMFormValuesReader ddmFormValuesReader =
-			new DDLRecordDDMFormValuesReader(_ddlRecord);
+			new MockDDLRecordDDMFormValuesReader(createDDMFormValues());
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValuesReader.getDDMFormFieldValues("text");
@@ -139,17 +126,22 @@ public class DDLRecordDDMFormValuesReaderTest extends PowerMockito {
 		return ddmFormFieldValue.getName();
 	}
 
-	protected void setUpDDLRecord() throws Exception {
-		DDMFormValues ddmFormValues = createDDMFormValues();
+	private static class MockDDLRecordDDMFormValuesReader
+		extends DDLRecordDDMFormValuesReader {
 
-		when(
-			_ddlRecord.getDDMFormValues()
-		).thenReturn(
-			ddmFormValues
-		);
+		public MockDDLRecordDDMFormValuesReader(DDMFormValues ddmFormValues) {
+			super(null);
+
+			_ddmFormValues = ddmFormValues;
+		}
+
+		@Override
+		public DDMFormValues getDDMFormValues() throws PortalException {
+			return _ddmFormValues;
+		}
+
+		private final DDMFormValues _ddmFormValues;
+
 	}
-
-	@Mock
-	private DDLRecord _ddlRecord;
 
 }

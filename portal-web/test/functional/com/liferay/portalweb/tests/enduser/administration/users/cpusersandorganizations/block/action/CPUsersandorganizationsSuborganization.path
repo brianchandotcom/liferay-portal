@@ -11,7 +11,7 @@
 <!--SUBORGANIZATION_TABLE-->
 <tr>
 	<td>SUBORGANIZATION_TABLE_ALL_CHECKBOX</td>
-	<td>//input[@name='_125_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

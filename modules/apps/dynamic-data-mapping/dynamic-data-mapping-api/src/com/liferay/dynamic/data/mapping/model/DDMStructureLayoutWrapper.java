@@ -162,7 +162,7 @@ public class DDMStructureLayoutWrapper implements DDMStructureLayout,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout getDDMFormLayout() {
+	public com.liferay.dynamic.data.mapping.model.DDMFormLayout getDDMFormLayout() {
 		return _ddmStructureLayout.getDDMFormLayout();
 	}
 

@@ -58,8 +58,8 @@ public class DDMStructureLocalServiceUtil {
 		long userId, long groupId, long classNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -109,8 +109,8 @@ public class DDMStructureLocalServiceUtil {
 		java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -171,8 +171,8 @@ public class DDMStructureLocalServiceUtil {
 		long classNameId, java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		java.lang.String storageType, int type,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1045,11 +1045,11 @@ public class DDMStructureLocalServiceUtil {
 	*/
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> search(
 		long companyId, long[] groupIds, long classNameId,
-		java.lang.String keywords, int start, int end,
+		java.lang.String keywords, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator) {
 		return getService()
-				   .search(companyId, groupIds, classNameId, keywords, start,
-			end, orderByComparator);
+				   .search(companyId, groupIds, classNameId, keywords, status,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -1087,12 +1087,13 @@ public class DDMStructureLocalServiceUtil {
 	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMStructure> search(
 		long companyId, long[] groupIds, long classNameId,
 		java.lang.String name, java.lang.String description,
-		java.lang.String storageType, int type, boolean andOperator, int start,
-		int end,
+		java.lang.String storageType, int type, int status,
+		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMStructure> orderByComparator) {
 		return getService()
 				   .search(companyId, groupIds, classNameId, name, description,
-			storageType, type, andOperator, start, end, orderByComparator);
+			storageType, type, status, andOperator, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -1108,9 +1109,10 @@ public class DDMStructureLocalServiceUtil {
 	* @return the number of matching structures
 	*/
 	public static int searchCount(long companyId, long[] groupIds,
-		long classNameId, java.lang.String keywords) {
+		long classNameId, java.lang.String keywords, int status) {
 		return getService()
-				   .searchCount(companyId, groupIds, classNameId, keywords);
+				   .searchCount(companyId, groupIds, classNameId, keywords,
+			status);
 	}
 
 	/**
@@ -1132,10 +1134,10 @@ public class DDMStructureLocalServiceUtil {
 	*/
 	public static int searchCount(long companyId, long[] groupIds,
 		long classNameId, java.lang.String name, java.lang.String description,
-		java.lang.String storageType, int type, boolean andOperator) {
+		java.lang.String storageType, int type, int status, boolean andOperator) {
 		return getService()
 				   .searchCount(companyId, groupIds, classNameId, name,
-			description, storageType, type, andOperator);
+			description, storageType, type, status, andOperator);
 	}
 
 	/**
@@ -1233,8 +1235,8 @@ public class DDMStructureLocalServiceUtil {
 		java.lang.String structureKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1245,8 +1247,8 @@ public class DDMStructureLocalServiceUtil {
 
 	public static com.liferay.dynamic.data.mapping.model.DDMStructure updateStructure(
 		long userId, long structureId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1258,8 +1260,8 @@ public class DDMStructureLocalServiceUtil {
 		long userId, long structureId, long parentStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm,
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout,
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm,
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

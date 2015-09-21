@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:breadcrumb
-	ddmTemplateGroupId="<%= breadcrumbDisplayContext.getDisplayStyleGroupId() %>"
-	ddmTemplateKey="<%= breadcrumbDisplayContext.getDDMTemplateKey() %>"
-	showCurrentGroup="<%= breadcrumbDisplayContext.isShowCurrentGroup() %>"
-	showGuestGroup="<%= breadcrumbDisplayContext.isShowGuestGroup() %>"
-	showLayout="<%= breadcrumbDisplayContext.isShowLayout() %>"
-	showParentGroups="<%= breadcrumbDisplayContext.isShowParentGroups() %>"
-	showPortletBreadcrumb="<%= breadcrumbDisplayContext.isShowPortletBreadcrumb() %>"
+	ddmTemplateGroupId="<%= siteNavigationBreadcrumbDisplayContext.getDisplayStyleGroupId() %>"
+	ddmTemplateKey="<%= siteNavigationBreadcrumbDisplayContext.getDDMTemplateKey() %>"
+	showCurrentGroup="<%= siteNavigationBreadcrumbDisplayContext.isShowCurrentGroup() %>"
+	showGuestGroup="<%= siteNavigationBreadcrumbDisplayContext.isShowGuestGroup() %>"
+	showLayout="<%= siteNavigationBreadcrumbDisplayContext.isShowLayout() %>"
+	showParentGroups="<%= siteNavigationBreadcrumbDisplayContext.isShowParentGroups() %>"
+	showPortletBreadcrumb="<%= siteNavigationBreadcrumbDisplayContext.isShowPortletBreadcrumb() %>"
 />

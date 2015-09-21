@@ -919,7 +919,7 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 				workflowInstanceLink.setNew(false);
 			}
 			else {
-				session.merge(workflowInstanceLink);
+				workflowInstanceLink = (WorkflowInstanceLink)session.merge(workflowInstanceLink);
 			}
 		}
 		catch (Exception e) {

@@ -20,7 +20,12 @@
 Group group = (Group)request.getAttribute("site.group");
 Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute("site.layoutSetPrototype");
-boolean showPrototypes = GetterUtil.getBoolean(request.getAttribute("site.showPrototypes"));
+
+boolean showPrototypes = false;
+
+if(layoutSetPrototype != null) {
+	showPrototypes = true;
+}
 
 long parentGroupId = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys", (group != null) ? group.getParentGroupId() : GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
@@ -112,7 +117,17 @@ else if (group != null) {
 
 <liferay-ui:error exception="<%= DuplicateGroupException.class %>" message="please-enter-a-unique-name" />
 <liferay-ui:error exception="<%= GroupInheritContentException.class %>" message="this-site-cannot-inherit-content-from-its-parent-site" />
-<liferay-ui:error exception="<%= GroupKeyException.class %>" message="please-enter-a-valid-name" />
+
+<liferay-ui:error exception="<%= GroupKeyException.class %>">
+	<p>
+		<liferay-ui:message arguments="<%= new String[] {SiteConstants.NAME_LABEL, SiteConstants.getNameGeneralRestrictions(locale), SiteConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
+	</p>
+
+	<p>
+		<liferay-ui:message arguments="<%= new String[] {SiteConstants.NAME_LABEL, SiteConstants.NAME_INVALID_CHARACTERS} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
+	</p>
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= GroupParentException.MustNotBeOwnParent.class %>" message="the-site-cannot-be-its-own-parent-site" />
 <liferay-ui:error exception="<%= GroupParentException.MustNotHaveChildParent.class %>" message="the-site-cannot-have-a-child-as-its-parent-site" />
 <liferay-ui:error exception="<%= GroupParentException.MustNotHaveStagingParent.class %>" message="the-site-cannot-have-a-staging-site-as-its-parent-site" />
@@ -143,7 +158,7 @@ else if (group != null) {
 		<aui:input name="active" value="<%= true %>" />
 	</c:if>
 
-	<c:if test="<%= ((parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) && PropsValues.SITES_SHOW_INHERIT_CONTENT_SCOPE_FROM_PARENT_SITE) %>">
+	<c:if test="<%= (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) && PropsValues.SITES_SHOW_INHERIT_CONTENT_SCOPE_FROM_PARENT_SITE %>">
 
 		<%
 		boolean disabled = false;
@@ -418,6 +433,32 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 						</aui:select>
 					</aui:fieldset>
+
+					<aui:script sandbox="<%= true %>">
+						var applicationAdapter = $('#<portlet:namespace />customJspServletContextName');
+
+						if (applicationAdapter.length) {
+							var publicPages = $('#<portlet:namespace />publicLayoutSetPrototypeId');
+							var privatePages = $('#<portlet:namespace />privateLayoutSetPrototypeId');
+
+							var toggleCompatibleSiteTemplates = function(event) {
+								var siteTemplate = applicationAdapter.val();
+
+								var options = $();
+
+								options = options.add(publicPages.find('option[data-servletContextName]'));
+								options = options.add(privatePages.find('option[data-servletContextName]'));
+
+								options.prop('disabled', false);
+
+								options.filter(':not([data-servletContextName=' + siteTemplate + '])').prop('disabled', true);
+							};
+
+							applicationAdapter.on('change', toggleCompatibleSiteTemplates);
+
+							toggleCompatibleSiteTemplates();
+						}
+					</aui:script>
 				</c:if>
 			</c:when>
 			<c:when test="<%= layoutSetPrototype != null %>">
@@ -477,7 +518,6 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		>
 			<portlet:renderURL var="rowURL">
 				<portlet:param name="mvcPath" value="/edit_site.jsp" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
 			</portlet:renderURL>
 

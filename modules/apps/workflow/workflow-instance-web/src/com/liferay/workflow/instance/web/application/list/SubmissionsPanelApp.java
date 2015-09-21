@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class SubmissionsPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.CONTROL_PANEL_APPS;
-	}
-
-	@Override
 	public String getPortletId() {
 		return WorkflowInstancePortletKeys.WORKFLOW_INSTANCE;
 	}
@@ -50,7 +45,7 @@ public class SubmissionsPanelApp extends BaseControlPanelEntryPanelApp {
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

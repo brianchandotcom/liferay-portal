@@ -95,7 +95,8 @@ public class JournalArticleFinderTest {
 			_group.getGroupId(), JournalArticle.class.getName());
 
 		_basicWebContentDDMTemplate = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), _basicWebContentDDMStructure.getStructureId());
+			_group.getGroupId(), _basicWebContentDDMStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(), _folder.getFolderId(),
@@ -110,7 +111,8 @@ public class JournalArticleFinderTest {
 			_group.getGroupId(), "Folder 2");
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), _ddmStructure.getStructureId());
+			_group.getGroupId(), _ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		article = JournalTestUtil.addArticleWithXMLContent(
 			_group.getGroupId(), folder.getFolderId(),

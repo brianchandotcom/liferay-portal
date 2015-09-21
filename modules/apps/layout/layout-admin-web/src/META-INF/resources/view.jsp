@@ -166,7 +166,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 				%>
 
 				<liferay-ui:layouts-tree
-					groupId="<%= layoutsAdminDisplayContext.getGroupId() %>"
+					groupId="<%= selGroup.getGroupId() %>"
 					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
 					privateLayout="<%= layoutsAdminDisplayContext.isPrivateLayout() %>"
 					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"

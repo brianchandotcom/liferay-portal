@@ -14,14 +14,16 @@
 
 package com.liferay.microblogs.service.permission;
 
+import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Jonathan Lee
  */
-public class MicroblogsPermission {
+public class MicroblogsPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.microblogs";
 
@@ -37,8 +39,16 @@ public class MicroblogsPermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return permissionChecker.hasPermission(
-			groupId, RESOURCE_NAME, groupId, actionId);
+		return contains(
+			permissionChecker, RESOURCE_NAME, MicroblogsPortletKeys.MICROBLOGS,
+			groupId, actionId);
+	}
+
+	@Override
+	public Boolean checkResource(
+		PermissionChecker permissionChecker, long classPK, String actionId) {
+
+		return contains(permissionChecker, classPK, actionId);
 	}
 
 }

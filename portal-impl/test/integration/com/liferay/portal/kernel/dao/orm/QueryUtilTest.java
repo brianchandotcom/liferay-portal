@@ -325,8 +325,9 @@ public class QueryUtilTest {
 			Object[] firstRow = result.get(0);
 			Object[] lastRow = result.get(result.size() - 1);
 
-			Assert.assertEquals(firstType, firstRow[0]);
-			Assert.assertEquals(lastType, lastRow[0]);
+			Assert.assertEquals(
+				firstType, StringUtil.trim((String)firstRow[0]));
+			Assert.assertEquals(lastType, StringUtil.trim((String)lastRow[0]));
 		}
 		finally {
 			_sessionFactory.closeSession(session);

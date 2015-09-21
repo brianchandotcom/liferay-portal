@@ -136,7 +136,8 @@ public class TrackbackMVCActionCommand extends BaseMVCActionCommand {
 		catch (PrincipalException pe) {
 			throw new TrackbackValidationException(
 				"Blog entry must have guest view permissions to enable " +
-					"trackbacks");
+					"trackbacks",
+				pe);
 		}
 
 		return (BlogsEntry)actionRequest.getAttribute(WebKeys.BLOGS_ENTRY);

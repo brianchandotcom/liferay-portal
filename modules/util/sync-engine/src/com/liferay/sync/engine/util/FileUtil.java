@@ -27,6 +27,7 @@ import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
@@ -247,6 +248,17 @@ public class FileUtil {
 		return filePath.toString();
 	}
 
+	public static long getLastModifiedTime(Path filePath) throws IOException {
+		if (!Files.exists(filePath)) {
+			return 0;
+		}
+
+		FileTime fileTime = Files.getLastModifiedTime(
+			filePath, LinkOption.NOFOLLOW_LINKS);
+
+		return fileTime.toMillis();
+	}
+
 	public static String getNextFilePathName(String filePathName) {
 		Path filePath = Paths.get(filePathName);
 
@@ -384,18 +396,23 @@ public class FileUtil {
 		}
 
 		try {
-			FileTime fileTime = Files.getLastModifiedTime(filePath);
+			if (syncFile.getSize() > 0) {
+				long lastModifiedTime = getLastModifiedTime(filePath);
 
-			long modifiedTime = syncFile.getModifiedTime();
+				long modifiedTime = syncFile.getModifiedTime();
 
-			if (OSDetector.isUnix()) {
-				modifiedTime = modifiedTime / 1000 * 1000;
-			}
+				if (OSDetector.isUnix()) {
+					modifiedTime = modifiedTime / 1000 * 1000;
+				}
 
-			if ((fileTime.toMillis() <= modifiedTime) &&
-				FileKeyUtil.hasFileKey(filePath, syncFile.getSyncFileId())) {
+				if (((lastModifiedTime == modifiedTime) ||
+					 (lastModifiedTime ==
+						 syncFile.getPreviousModifiedTime())) &&
+					FileKeyUtil.hasFileKey(
+						filePath, syncFile.getSyncFileId())) {
 
-				return false;
+					return false;
+				}
 			}
 		}
 		catch (IOException ioe) {

@@ -89,18 +89,20 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getSiteDefault());
 
-		String[] availableLanguageIds = StringUtil.split(
-			rootElement.attributeValue("available-locales", defaultLanguageId));
-
 		String articleDefaultLanguageId = rootElement.attributeValue(
 			"default-locale", defaultLanguageId);
 
+		String[] availableLanguageIds = StringUtil.split(
+			rootElement.attributeValue(
+				"available-locales", articleDefaultLanguageId));
+
 		if (!ArrayUtil.contains(availableLanguageIds, languageId, true)) {
 			filterByLanguage(
-				rootElement, articleDefaultLanguageId, defaultLanguageId);
+				rootElement, articleDefaultLanguageId,
+				articleDefaultLanguageId);
 		}
 		else {
-			filterByLanguage(rootElement, languageId, defaultLanguageId);
+			filterByLanguage(rootElement, languageId, articleDefaultLanguageId);
 		}
 	}
 

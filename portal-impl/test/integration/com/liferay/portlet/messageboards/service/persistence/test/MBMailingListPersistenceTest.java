@@ -511,15 +511,15 @@ public class MBMailingListPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingMBMailingList.getUuid(),
 				ReflectionTestUtil.invoke(existingMBMailingList,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingMBMailingList.getGroupId(),
-			ReflectionTestUtil.invoke(existingMBMailingList,
+		Assert.assertEquals(Long.valueOf(existingMBMailingList.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBMailingList,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMBMailingList.getGroupId(),
-			ReflectionTestUtil.invoke(existingMBMailingList,
+		Assert.assertEquals(Long.valueOf(existingMBMailingList.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBMailingList,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingMBMailingList.getCategoryId(),
-			ReflectionTestUtil.invoke(existingMBMailingList,
+		Assert.assertEquals(Long.valueOf(existingMBMailingList.getCategoryId()),
+			ReflectionTestUtil.<Long>invoke(existingMBMailingList,
 				"getOriginalCategoryId", new Class<?>[0]));
 	}
 

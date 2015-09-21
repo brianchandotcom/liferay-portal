@@ -145,10 +145,10 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 
 		long groupId = group.getGroupId();
 
-		if (category.equals(PortletCategoryKeys.APPS) ||
-			category.equals(PortletCategoryKeys.CONFIGURATION) ||
-			category.equals(PortletCategoryKeys.SITES) ||
-			category.equals(PortletCategoryKeys.USERS)) {
+		if (category.equals(PortletCategoryKeys.CONTROL_PANEL_APPS) ||
+			category.equals(PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION) ||
+			category.equals(PortletCategoryKeys.CONTROL_PANEL_SITES) ||
+			category.equals(PortletCategoryKeys.CONTROL_PANEL_USERS)) {
 
 			groupId = 0;
 		}
@@ -173,7 +173,9 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 
 		String category = portlet.getControlPanelEntryCategory();
 
-		if ((category != null) && category.equals(PortletCategoryKeys.MY)) {
+		if ((category != null) &&
+			category.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
+
 			return true;
 		}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
@@ -106,6 +107,7 @@ public class SearchContainerRowTag<R>
 		if (!ServerDetector.isResin()) {
 			_bold = false;
 			_className = null;
+			_cssClass = StringPool.BLANK;
 			_escapedModel = false;
 			_indexVar = DEFAULT_INDEX_VAR;
 			_keyProperty = null;
@@ -114,6 +116,7 @@ public class SearchContainerRowTag<R>
 			_rowIdProperty = null;
 			_rowVar = DEFAULT_ROW_VAR;
 			_stringKey = false;
+			_state = StringPool.BLANK;
 		}
 
 		return EVAL_PAGE;
@@ -148,6 +151,10 @@ public class SearchContainerRowTag<R>
 
 	public String getClassName() {
 		return _className;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
 	}
 
 	public List<String> getHeaderNames() {
@@ -186,6 +193,10 @@ public class SearchContainerRowTag<R>
 		return _rowVar;
 	}
 
+	public String getState() {
+		return _state;
+	}
+
 	public boolean isBold() {
 		return _bold;
 	}
@@ -208,6 +219,10 @@ public class SearchContainerRowTag<R>
 
 	public void setClassName(String className) {
 		_className = className;
+	}
+
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
 	}
 
 	public void setEscapedModel(boolean escapedModel) {
@@ -248,6 +263,10 @@ public class SearchContainerRowTag<R>
 
 	public void setRowVar(String rowVar) {
 		_rowVar = rowVar;
+	}
+
+	public void setState(String state) {
+		_state = state;
 	}
 
 	public void setStringKey(boolean stringKey) {
@@ -304,7 +323,7 @@ public class SearchContainerRowTag<R>
 		}
 
 		_resultRow = new com.liferay.taglib.search.ResultRow(
-			rowId, model, primaryKey, _rowIndex, _bold);
+			rowId, model, primaryKey, _rowIndex, _bold, _cssClass, _state);
 
 		pageContext.setAttribute(_indexVar, _rowIndex);
 		pageContext.setAttribute(_modelVar, model);
@@ -316,6 +335,7 @@ public class SearchContainerRowTag<R>
 
 	private boolean _bold;
 	private String _className;
+	private String _cssClass = StringPool.BLANK;
 	private boolean _escapedModel;
 	private List<String> _headerNames;
 	private boolean _headerNamesAssigned;
@@ -330,6 +350,7 @@ public class SearchContainerRowTag<R>
 	private int _rowIndex;
 	private String _rowVar = DEFAULT_ROW_VAR;
 	private SearchContainer<R> _searchContainer;
+	private String _state = StringPool.BLANK;
 	private boolean _stringKey;
 
 }

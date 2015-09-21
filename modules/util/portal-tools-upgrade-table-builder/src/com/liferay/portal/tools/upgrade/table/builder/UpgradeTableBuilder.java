@@ -270,8 +270,10 @@ public class UpgradeTableBuilder {
 
 		sb.append("import java.sql.Types;\n\n");
 
-		sb.append("import java.util.HashMap;\n");
-		sb.append("import java.util.Map;\n\n");
+		if (content.contains("TABLE_COLUMNS_MAP")) {
+			sb.append("import java.util.HashMap;\n");
+			sb.append("import java.util.Map;\n\n");
+		}
 
 		sb.append("/**\n");
 		sb.append(" * @author\t  ");

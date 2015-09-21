@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.form.values.query.internal.model;
 
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -74,10 +74,10 @@ else {
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = null;
 
 if (fileShortcut == null) {
-	dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
+	dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileEntry.getFileVersion());
 }
 else {
-	dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
+	dlViewFileVersionDisplayContext = dlDisplayContextProvider.getDLViewFileVersionDisplayContext(request, response, fileShortcut);
 }
 
 DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
@@ -88,7 +88,7 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 		<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
 	</c:when>
 	<c:otherwise>
-		<span class="entry-action overlay">
+		<span class="<%= (row != null) ? StringPool.BLANK : "entry-action overlay" %>">
 			<liferay-ui:menu menu="<%= dlViewFileVersionDisplayContext.getMenu() %>" />
 		</span>
 	</c:otherwise>

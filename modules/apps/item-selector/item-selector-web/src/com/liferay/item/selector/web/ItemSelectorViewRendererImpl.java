@@ -17,16 +17,14 @@ package com.liferay.item.selector.web;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.taglib.servlet.PipingServletResponse;
+import com.liferay.taglib.util.PortalIncludeUtil;
 
 import java.io.IOException;
-import java.io.Writer;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
@@ -38,12 +36,13 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	public ItemSelectorViewRendererImpl(
 		ItemSelectorView<ItemSelectorCriterion> itemSelectorView,
 		ItemSelectorCriterion itemSelectorCriterion, PortletURL portletURL,
-		String itemSelectedEventName) {
+		String itemSelectedEventName, boolean search) {
 
 		_itemSelectorView = itemSelectorView;
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
+		_search = search;
 	}
 
 	@Override
@@ -57,31 +56,36 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	}
 
 	@Override
+	public PortletURL getPortletURL() {
+		return _portletURL;
+	}
+
+	@Override
 	public void renderHTML(PageContext pageContext)
 		throws IOException, ServletException {
 
-		HttpServletResponse response =
-			(HttpServletResponse)pageContext.getResponse();
+		PortalIncludeUtil.include(
+			pageContext,
+			new PortalIncludeUtil.HTMLRenderer() {
 
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+				@Override
+				public void renderHTML(
+						HttpServletRequest request,
+						HttpServletResponse response)
+					throws IOException, ServletException {
 
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			response, unsyncStringWriter);
+					_itemSelectorView.renderHTML(
+						request, response, _itemSelectorCriterion, _portletURL,
+						_itemSelectedEventName, _search);
+				}
 
-		_itemSelectorView.renderHTML(
-			pageContext.getRequest(), pipingServletResponse,
-			_itemSelectorCriterion, _portletURL, _itemSelectedEventName);
-
-		Writer writer = pageContext.getOut();
-
-		StringBundler sb = unsyncStringWriter.getStringBundler();
-
-		writer.write(sb.toString());
+			});
 	}
 
 	private final String _itemSelectedEventName;
 	private final ItemSelectorCriterion _itemSelectorCriterion;
 	private final ItemSelectorView<ItemSelectorCriterion> _itemSelectorView;
 	private final PortletURL _portletURL;
+	private final boolean _search;
 
 }

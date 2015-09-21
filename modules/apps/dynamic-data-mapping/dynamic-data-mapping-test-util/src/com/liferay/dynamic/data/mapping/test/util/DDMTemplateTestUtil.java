@@ -57,50 +57,60 @@ public class DDMTemplateTestUtil {
 		return dynamicElementElement;
 	}
 
-	public static DDMTemplate addTemplate(long structureId) throws Exception {
-		return addTemplate(
-			structureId, TemplateConstants.LANG_TYPE_VM, getSampleTemplateXSL(),
-			LocaleUtil.getSiteDefault());
-	}
-
 	public static DDMTemplate addTemplate(
-			long structureId, Locale defaultLocale)
+			long structureId, long resourceClassNameId)
 		throws Exception {
 
 		return addTemplate(
-			structureId, TemplateConstants.LANG_TYPE_VM, getSampleTemplateXSL(),
-			defaultLocale);
-	}
-
-	public static DDMTemplate addTemplate(long groupId, long structureId)
-		throws Exception {
-
-		return addTemplate(
-			groupId, structureId, TemplateConstants.LANG_TYPE_VM,
+			structureId, resourceClassNameId, TemplateConstants.LANG_TYPE_VM,
 			getSampleTemplateXSL(), LocaleUtil.getSiteDefault());
 	}
 
 	public static DDMTemplate addTemplate(
-			long groupId, long structureId, Locale defaultLocale)
+			long structureId, long resourceClassNameId, Locale defaultLocale)
 		throws Exception {
 
 		return addTemplate(
-			groupId, structureId, TemplateConstants.LANG_TYPE_VM,
+			structureId, resourceClassNameId, TemplateConstants.LANG_TYPE_VM,
 			getSampleTemplateXSL(), defaultLocale);
 	}
 
 	public static DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK)
+			long groupId, long structureId, long resourceClassNameId)
 		throws Exception {
 
 		return addTemplate(
-			groupId, classNameId, classPK, TemplateConstants.LANG_TYPE_VM,
-			getSampleTemplateXSL(), LocaleUtil.getSiteDefault());
+			groupId, structureId, resourceClassNameId,
+			TemplateConstants.LANG_TYPE_VM, getSampleTemplateXSL(),
+			LocaleUtil.getSiteDefault());
 	}
 
 	public static DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK, String language,
-			String script, Locale defaultLocale)
+			long groupId, long structureId, long resourceClassNameId,
+			Locale defaultLocale)
+		throws Exception {
+
+		return addTemplate(
+			groupId, structureId, resourceClassNameId,
+			TemplateConstants.LANG_TYPE_VM, getSampleTemplateXSL(),
+			defaultLocale);
+	}
+
+	public static DDMTemplate addTemplate(
+			long groupId, long classNameId, long classPK,
+			long resourceClassNameId)
+		throws Exception {
+
+		return addTemplate(
+			groupId, classNameId, classPK, resourceClassNameId,
+			TemplateConstants.LANG_TYPE_VM, getSampleTemplateXSL(),
+			LocaleUtil.getSiteDefault());
+	}
+
+	public static DDMTemplate addTemplate(
+			long groupId, long classNameId, long classPK,
+			long resourceClassNameId, String language, String script,
+			Locale defaultLocale)
 		throws Exception {
 
 		Map<Locale, String> nameMap = new HashMap<>();
@@ -113,38 +123,40 @@ public class DDMTemplateTestUtil {
 		serviceContext.setAddGuestPermissions(true);
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
-			TestPropsValues.getUserId(), groupId, classNameId, classPK, 0,
-			nameMap, null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
-			language, script, serviceContext);
+			TestPropsValues.getUserId(), groupId, classNameId, classPK,
+			resourceClassNameId, nameMap, null,
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null, language, script,
+			serviceContext);
 	}
 
 	public static DDMTemplate addTemplate(
-			long groupId, long structureId, String language, String script,
-			Locale defaultLocale)
+			long groupId, long structureId, long resourceClassNameId,
+			String language, String script, Locale defaultLocale)
 		throws Exception {
 
 		return addTemplate(
 			groupId, PortalUtil.getClassNameId(DDMStructure.class), structureId,
+			resourceClassNameId, language, script, defaultLocale);
+	}
+
+	public static DDMTemplate addTemplate(
+			long structureId, long resourceClassNameId, String language,
+			String script)
+		throws Exception {
+
+		return addTemplate(
+			TestPropsValues.getGroupId(), structureId, resourceClassNameId,
+			language, script, LocaleUtil.getSiteDefault());
+	}
+
+	public static DDMTemplate addTemplate(
+			long structureId, long resourceClassNameId, String language,
+			String script, Locale defaultLocale)
+		throws Exception {
+
+		return addTemplate(
+			TestPropsValues.getGroupId(), structureId, resourceClassNameId,
 			language, script, defaultLocale);
-	}
-
-	public static DDMTemplate addTemplate(
-			long structureId, String language, String script)
-		throws Exception {
-
-		return addTemplate(
-			TestPropsValues.getGroupId(), structureId, language, script,
-			LocaleUtil.getSiteDefault());
-	}
-
-	public static DDMTemplate addTemplate(
-			long structureId, String language, String script,
-			Locale defaultLocale)
-		throws Exception {
-
-		return addTemplate(
-			TestPropsValues.getGroupId(), structureId, language, script,
-			defaultLocale);
 	}
 
 	public static Document createDocument(

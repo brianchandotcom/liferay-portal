@@ -17,22 +17,21 @@ package com.liferay.dynamic.data.mapping.form.renderer.internal;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeRegistryUtil;
+import com.liferay.dynamic.data.mapping.registry.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.HashMap;
 import java.util.List;
@@ -62,12 +61,6 @@ public class DDMFormRendererHelper {
 		else {
 			return getRenderedDDMFormFields();
 		}
-	}
-
-	public void setExpressionEvaluator(
-		ExpressionEvaluator expressionEvaluator) {
-
-		_expressionEvaluator = expressionEvaluator;
 	}
 
 	protected DDMFormFieldRenderingContext
@@ -166,20 +159,17 @@ public class DDMFormRendererHelper {
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
 		throws DDMFormRenderingException {
 
-		DDMFormFieldType ddmFormFieldType =
-			DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(
+		DDMFormFieldRenderer ddmFormFieldRenderer =
+			_ddmFormFieldTypeServicesTracker.getDDMFormFieldRenderer(
 				ddmFormField.getType());
 
-		if (ddmFormFieldType == null) {
+		if (ddmFormFieldRenderer == null) {
 			throw new DDMFormRenderingException(
-				"No DDM form field type registered for " +
+				"No DDM form field renderer registered for " +
 					ddmFormField.getType());
 		}
 
 		try {
-			DDMFormFieldRenderer ddmFormFieldRenderer =
-				ddmFormFieldType.getDDMFormFieldRenderer();
-
 			String ddmFormFieldHTML = ddmFormFieldRenderer.render(
 				ddmFormField, ddmFormFieldRenderingContext);
 
@@ -355,6 +345,18 @@ public class DDMFormRendererHelper {
 		ddmFormFieldRenderingContext.setVisible(visible);
 	}
 
+	protected void setDDMFormFieldTypeServicesTracker(
+		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
+
+		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
+	}
+
+	protected void setExpressionEvaluator(
+		ExpressionEvaluator expressionEvaluator) {
+
+		_expressionEvaluator = expressionEvaluator;
+	}
+
 	protected String wrapDDMFormFieldHTML(String ddmFormFieldHTML) {
 		StringBundler sb = new StringBundler(4);
 
@@ -368,6 +370,7 @@ public class DDMFormRendererHelper {
 
 	private final DDMForm _ddmForm;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
+	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private final DDMFormRenderingContext _ddmFormRenderingContext;
 	private final DDMFormValues _ddmFormValues;
 	private ExpressionEvaluator _expressionEvaluator;

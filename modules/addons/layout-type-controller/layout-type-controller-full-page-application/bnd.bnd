@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Layout Type Controller Full Page Application
+Bundle-SymbolicName: com.liferay.layout.type.controller.full.page.application
+Bundle-Version: 1.0.0
+Include-Resource: classes
+Web-ContextPath: /layout-type-controller-full-page-application

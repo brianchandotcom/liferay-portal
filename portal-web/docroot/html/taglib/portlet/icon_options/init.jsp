@@ -16,13 +16,14 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon" %><%@
-page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconFactory" %><%@
-page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconTracker" %><%@
+<%@ page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon" %><%@
+page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory" %><%@
+page import="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker" %><%@
+page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
 page import="com.liferay.util.PropertyComparator" %>
 
 <%
 String direction = (String)request.getAttribute("liferay-ui:icon:direction");
+String markupView = (String)request.getAttribute("liferay-ui:icon:markupView");
 boolean showArrow = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:showArrow"));
-String view = (String)request.getAttribute("liferay-ui:icon:view");
 %>

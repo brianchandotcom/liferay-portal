@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AssetTagsPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT;
-	}
-
-	@Override
 	public String getPortletId() {
 		return AssetTagsAdminPortletKeys.ASSET_TAGS_ADMIN;
 	}
@@ -50,7 +45,7 @@ public class AssetTagsPanelApp extends BaseControlPanelEntryPanelApp {
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

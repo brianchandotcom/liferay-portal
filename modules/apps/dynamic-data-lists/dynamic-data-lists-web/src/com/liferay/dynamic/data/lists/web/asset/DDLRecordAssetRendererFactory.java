@@ -19,7 +19,7 @@ import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
-import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -49,7 +49,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = AssetRendererFactory.class
 )
-public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
+public class DDLRecordAssetRendererFactory
+	extends BaseAssetRendererFactory<DDLRecord> {
 
 	public static final String TYPE = "record";
 
@@ -61,23 +62,12 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<DDLRecord> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		DDLRecord record = null;
-		DDLRecordVersion recordVersion = null;
+		DDLRecord record = DDLRecordLocalServiceUtil.getRecord(classPK);
 
-		if (type == TYPE_LATEST) {
-			recordVersion = DDLRecordVersionLocalServiceUtil.getRecordVersion(
-				classPK);
-
-			record = recordVersion.getRecord();
-		}
-		else {
-			record = DDLRecordLocalServiceUtil.getRecord(classPK);
-
-			recordVersion = record.getRecordVersion();
-		}
+		DDLRecordVersion recordVersion = record.getRecordVersion();
 
 		DDLRecordAssetRenderer ddlRecordAssetRenderer =
 			new DDLRecordAssetRenderer(record, recordVersion);
@@ -143,10 +133,8 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		DDLRecord record = DDLRecordLocalServiceUtil.getRecord(classPK);
-
-		return DDLRecordSetPermission.contains(
-			permissionChecker, record.getRecordSet(), actionId);
+		return DDLRecordPermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Reference(

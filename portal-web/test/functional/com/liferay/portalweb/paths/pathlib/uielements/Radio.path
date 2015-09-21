@@ -29,6 +29,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CUSTOM_ABSTRACT</td>
+	<td>//label[contains(.,'Custom Abstract')]/input[contains(@id,'customAbstract')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIRST_400_ABSTRACT</td>
+	<td>//label[contains(.,'first 400 characters')]/input[contains(@id,'customAbstract')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>KEEP</td>
+	<td>//label[contains(.,'Keep')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOCAL_LIVE</td>
 	<td>//label[contains(.,'Local Live')]/input[@type='radio']</td>
 	<td></td>
@@ -36,6 +51,11 @@
 <tr>
 	<td>NONE</td>
 	<td>//label[contains(.,'None')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OVERWRITE</td>
+	<td>//label[contains(.,'Overwrite')]/input[@type='radio']</td>
 	<td></td>
 </tr>
 <tr>

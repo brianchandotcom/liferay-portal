@@ -432,8 +432,9 @@ public class AssetCategoryPropertyPersistenceTest {
 
 		AssetCategoryProperty existingAssetCategoryProperty = _persistence.findByPrimaryKey(newAssetCategoryProperty.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetCategoryProperty.getCategoryId(),
-			ReflectionTestUtil.invoke(existingAssetCategoryProperty,
+		Assert.assertEquals(Long.valueOf(
+				existingAssetCategoryProperty.getCategoryId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetCategoryProperty,
 				"getOriginalCategoryId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingAssetCategoryProperty.getKey(),

@@ -2,5 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<import file="../../../tools/sdk/build-common-plugins.xml" />
+	<import file="../../build-module.xml" />
 </project>

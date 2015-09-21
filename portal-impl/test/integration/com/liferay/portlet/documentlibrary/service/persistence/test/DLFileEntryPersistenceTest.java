@@ -653,35 +653,35 @@ public class DLFileEntryPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingDLFileEntry.getUuid(),
 				ReflectionTestUtil.invoke(existingDLFileEntry,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingDLFileEntry.getGroupId(),
-			ReflectionTestUtil.invoke(existingDLFileEntry,
+		Assert.assertEquals(Long.valueOf(existingDLFileEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntry,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDLFileEntry.getGroupId(),
-			ReflectionTestUtil.invoke(existingDLFileEntry,
+		Assert.assertEquals(Long.valueOf(existingDLFileEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntry,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingDLFileEntry.getFolderId(),
-			ReflectionTestUtil.invoke(existingDLFileEntry,
+		Assert.assertEquals(Long.valueOf(existingDLFileEntry.getFolderId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntry,
 				"getOriginalFolderId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingDLFileEntry.getName(),
 				ReflectionTestUtil.invoke(existingDLFileEntry,
 					"getOriginalName", new Class<?>[0])));
 
-		Assert.assertEquals(existingDLFileEntry.getGroupId(),
-			ReflectionTestUtil.invoke(existingDLFileEntry,
+		Assert.assertEquals(Long.valueOf(existingDLFileEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntry,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingDLFileEntry.getFolderId(),
-			ReflectionTestUtil.invoke(existingDLFileEntry,
+		Assert.assertEquals(Long.valueOf(existingDLFileEntry.getFolderId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntry,
 				"getOriginalFolderId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingDLFileEntry.getFileName(),
 				ReflectionTestUtil.invoke(existingDLFileEntry,
 					"getOriginalFileName", new Class<?>[0])));
 
-		Assert.assertEquals(existingDLFileEntry.getGroupId(),
-			ReflectionTestUtil.invoke(existingDLFileEntry,
+		Assert.assertEquals(Long.valueOf(existingDLFileEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntry,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingDLFileEntry.getFolderId(),
-			ReflectionTestUtil.invoke(existingDLFileEntry,
+		Assert.assertEquals(Long.valueOf(existingDLFileEntry.getFolderId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntry,
 				"getOriginalFolderId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingDLFileEntry.getTitle(),
 				ReflectionTestUtil.invoke(existingDLFileEntry,

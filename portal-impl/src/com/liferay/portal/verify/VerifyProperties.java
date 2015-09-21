@@ -372,11 +372,11 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.asset.publisher.web"
 		},
 		new String[] {
-			"asset.publisher.email.from.name", "email.from.name",
+			"asset.publisher.email.from.address", "email.from.address",
 			"com.liferay.asset.publisher.web"
 		},
 		new String[] {
-			"asset.publisher.email.from.address", "email.from.address",
+			"asset.publisher.email.from.name", "email.from.name",
 			"com.liferay.asset.publisher.web"
 		},
 		new String[] {
@@ -998,11 +998,11 @@ public class VerifyProperties extends VerifyProcess {
 			"journal.display.views", "display.views", "com.liferay.journal.web"
 		},
 		new String[] {
-			"journal.email.from.name", "email.from.name",
+			"journal.email.from.address", "email.from.address",
 			"com.liferay.journal.service"
 		},
 		new String[] {
-			"journal.email.from.address", "email.from.address",
+			"journal.email.from.name", "email.from.name",
 			"com.liferay.journal.service"
 		},
 		new String[] {
@@ -1364,11 +1364,7 @@ public class VerifyProperties extends VerifyProcess {
 		// Navigation
 
 		new String[] {
-			"navigation.display.style", "display.style",
-			"com.liferay.site.navigation.menu.web"
-		},
-		new String[] {
-			"navigation.display.style.default", "display.style.default",
+			"navigation.display.style.default", "ddm.template.key.default",
 			"com.liferay.site.navigation.menu.web"
 		},
 		new String[] {
@@ -1528,6 +1524,109 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"rss.display.templates.config", "display.templates.config",
 			"com.liferay.rss.web"
+		},
+
+		// Shopping
+
+		new String[] {
+			"shopping.cart.min.qty.multiple", "cart.min.qty.multiple",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.category.forward.to.cart", "category.forward.to.cart",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.category.show.special.items",
+			"category.show.special.items", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.credit.card.types", "credit.card.types",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.currency.id", "currency.id",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.from.address", "email.from.address",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.from.name", "email.from.name",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.confirmation.enabled",
+			"email.order.confirmation.enabled", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.confirmation.subject",
+			"email.order.confirmation.subject", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.confirmation.body",
+			"email.order.confirmation.body", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.shipping.enabled",
+			"email.order.shipping.enabled", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.shipping.subject",
+			"email.order.shipping.subject", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.email.order.shipping.body", "email.order.shipping.body",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.image.extensions", "image.extensions",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.image.large.max.size", "image.large.max.size",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.image.medium.max.size", "image.medium.max.size",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.image.small.max.size", "image.small.max.size",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.insurance", "insurance", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.insurance.formula", "insurance.formula",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.item.show.availability", "item.show.availability",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.min.order", "min.order", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.order.comments.enabled", "order.comments.enabled",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.paypal.email.address", "paypal.email.address",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.shipping", "shipping", "com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.shipping.formula", "shipping.formula",
+			"com.liferay.shopping.service"
+		},
+		new String[] {
+			"shopping.tax.rate", "tax.rate", "com.liferay.shopping.service"
 		},
 
 		// Scripting
@@ -1699,8 +1798,8 @@ public class VerifyProperties extends VerifyProcess {
 		"commons.pool.enabled", "company.settings.form.configuration",
 		"company.settings.form.identification",
 		"company.settings.form.miscellaneous", "company.settings.form.social",
-		"convert.processes", "discussion.thread.view",
-		"dl.file.entry.read.count.enabled",
+		"control.panel.home.portlet.id", "convert.processes",
+		"discussion.thread.view", "dl.file.entry.read.count.enabled",
 		"dynamic.data.lists.record.set.force.autogenerate.key",
 		"dynamic.data.lists.template.language.parser[ftl]",
 		"dynamic.data.lists.template.language.parser[vm]",

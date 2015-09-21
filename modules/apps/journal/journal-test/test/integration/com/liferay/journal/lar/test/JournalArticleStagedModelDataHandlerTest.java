@@ -43,6 +43,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
@@ -118,7 +119,8 @@ public class JournalArticleStagedModelDataHandlerTest
 			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			companyGroup.getGroupId(), ddmStructure.getStructureId());
+			companyGroup.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMTemplate.class, ddmTemplate);
@@ -144,7 +146,8 @@ public class JournalArticleStagedModelDataHandlerTest
 			group.getGroupId(), JournalArticle.class.getName());
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			group.getGroupId(), ddmStructure.getStructureId());
+			group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMTemplate.class, ddmTemplate);

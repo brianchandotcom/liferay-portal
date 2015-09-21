@@ -53,6 +53,27 @@
 					<description/>
 				</parameter>
 				<parameter>
+					<name>formatCurrentBranch</name>
+					<type>boolean</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>formatLatestAuthor</name>
+					<type>boolean</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
+					<name>formatLocalChanges</name>
+					<type>boolean</type>
+					<required>false</required>
+					<editable>true</editable>
+					<description/>
+				</parameter>
+				<parameter>
 					<name>printErrors</name>
 					<type>boolean</type>
 					<required>false</required>

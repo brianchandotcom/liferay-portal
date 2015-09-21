@@ -1,4 +1,5 @@
 @import "bourbon";
+@import "mixins";
 
 .journal-article-component-list {
 	margin: 10px 0 0 0;
@@ -195,6 +196,10 @@
 				right: 15px;
 				top: 50%;
 			}
+		}
+
+		.card-horizontal, .card-row, .card-row [class*="card-col"] {
+			overflow: visible;
 		}
 	}
 

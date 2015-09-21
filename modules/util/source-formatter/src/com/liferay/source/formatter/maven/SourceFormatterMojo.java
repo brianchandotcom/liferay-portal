@@ -68,6 +68,18 @@ public class SourceFormatterMojo extends AbstractMojo {
 		_sourceFormatterArgs.setFileNames(Arrays.asList(fileNames));
 	}
 
+	public void setFormatCurrentBranch(boolean formatCurrentBranch) {
+		_sourceFormatterArgs.setFormatCurrentBranch(formatCurrentBranch);
+	}
+
+	public void setFormatLatestAuthor(boolean formatLatestAuthor) {
+		_sourceFormatterArgs.setFormatLatestAuthor(formatLatestAuthor);
+	}
+
+	public void setFormatLocalChanges(boolean formatLocalChanges) {
+		_sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
+	}
+
 	public void setPrintErrors(boolean printErrors) {
 		_sourceFormatterArgs.setPrintErrors(printErrors);
 	}

@@ -14,30 +14,34 @@
 
 package com.liferay.dynamic.data.mapping.type.radio;
 
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Renato Rego
  */
-public class RadioDDMFormFieldValueAccessor
-	extends DDMFormFieldValueAccessor<String> {
-
-	public RadioDDMFormFieldValueAccessor(Locale locale) {
-		super(locale);
+@Component(
+	immediate = true, property = "ddm.form.field.type.name=radio",
+	service = {
+		DDMFormFieldValueAccessor.class, RadioDDMFormFieldValueAccessor.class
 	}
+)
+public class RadioDDMFormFieldValueAccessor
+	implements DDMFormFieldValueAccessor<String> {
 
 	@Override
-	public String get(DDMFormFieldValue ddmFormFieldValue) {
+	public String getValue(DDMFormFieldValue ddmFormFieldValue, Locale locale) {
 		try {
 			Value value = ddmFormFieldValue.getValue();
 
@@ -51,11 +55,6 @@ public class RadioDDMFormFieldValueAccessor
 
 			return StringPool.BLANK;
 		}
-	}
-
-	@Override
-	public Class<String> getAttributeClass() {
-		return String.class;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -27,7 +27,7 @@ MDRAction action = (MDRAction)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, action.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
+	<c:if test="<%= MDRRuleGroupInstancePermission.contains(permissionChecker, action.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editActionURL">
 			<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 			<portlet:param name="redirect" value="<%= redirect %>" />

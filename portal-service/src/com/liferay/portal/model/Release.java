@@ -32,4 +32,5 @@ public interface Release extends ReleaseModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.ReleaseImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getBundleSymbolicName();
 }

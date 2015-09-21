@@ -88,6 +88,13 @@ public class ResourceBlockLocalServiceTest {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
+				dbType = DB.TYPE_HYPERSONIC,
+				expectedLog =
+					"integrity constraint violation: unique constraint or " +
+						"index violation:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				dbType = DB.TYPE_MYSQL,
 				expectedLog =
 					"Deadlock found when trying to get lock; try restarting " +
@@ -112,6 +119,13 @@ public class ResourceBlockLocalServiceTest {
 				dbType = DB.TYPE_POSTGRESQL,
 				expectedLog =
 					"ERROR: duplicate key value violates unique constraint ",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_SYBASE,
+				expectedLog =
+					"Attempt to insert duplicate key row in object " +
+						"'ResourceBlock'",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -204,6 +218,13 @@ public class ResourceBlockLocalServiceTest {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
+				dbType = DB.TYPE_HYPERSONIC,
+				expectedLog =
+					"integrity constraint violation: unique constraint or " +
+						"index violation:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				dbType = DB.TYPE_MYSQL,
 				expectedLog =
 					"Deadlock found when trying to get lock; try restarting " +
@@ -228,6 +249,13 @@ public class ResourceBlockLocalServiceTest {
 				dbType = DB.TYPE_POSTGRESQL,
 				expectedLog =
 					"ERROR: duplicate key value violates unique constraint ",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_SYBASE,
+				expectedLog =
+					"Attempt to insert duplicate key row in object " +
+						"'ResourceBlock'",
 				expectedType = ExpectedType.PREFIX
 			)
 		},

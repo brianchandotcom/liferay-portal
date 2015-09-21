@@ -19,13 +19,11 @@
 <%
 String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
-Folder folder = (Folder)request.getAttribute("view.jsp-folder");
+String navigation = ParamUtil.getString(request, "navigation", "home");
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
-
-String keywords = ParamUtil.getString(request, "keywords");
 
 boolean search = mvcRenderCommandName.equals("/document_library/search");
 %>
@@ -86,7 +84,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 
 		<liferay-util:include page="/document_library/add_button.jsp" servletContext="<%= application %>" />
 
-		<c:if test="<%= !search %>">
+		<c:if test='<%= !search && !navigation.equals("recent") %>'>
 			<liferay-util:include page="/document_library/sort_button.jsp" servletContext="<%= application %>" />
 		</c:if>
 
@@ -167,7 +165,7 @@ boolean search = mvcRenderCommandName.equals("/document_library/search");
 	function <portlet:namespace />openDDMStructureView() {
 		Liferay.Util.openDDMPortlet(
 			{
-				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(DDMStructureManagerUtil.getDDMStructureModelClass().getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletProviderUtil.getPortletId(com.liferay.dynamic.data.mapping.model.DDMStructure.class.getName(), PortletProvider.Action.VIEW), themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				dialog: {
 					destroyOnHide: true
 				},

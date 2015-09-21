@@ -306,14 +306,23 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			return proxyPath.concat(virtualPath);
 		}
 
+		if (isWARFile()) {
+			return getContextPath();
+		}
+
 		String contextPath = null;
 
-		if (!isWARFile()) {
+		if (_themeId.equals("admin")) {
 			contextPath = PortalWebResourcesUtil.getContextPath(
-				PortalWebResourceConstants.RESOURCE_TYPE_THEMES);
+				PortalWebResourceConstants.RESOURCE_TYPE_THEME_ADMIN);
 		}
-		else {
-			return getContextPath();
+		else if (_themeId.equals("classic")) {
+			contextPath = PortalWebResourcesUtil.getContextPath(
+				PortalWebResourceConstants.RESOURCE_TYPE_THEME_CLASSIC);
+		}
+
+		if (Validator.isNull(contextPath)) {
+			return proxyPath;
 		}
 
 		return proxyPath.concat(contextPath);

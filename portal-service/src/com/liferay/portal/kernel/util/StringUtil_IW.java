@@ -585,6 +585,10 @@ public class StringUtil_IW {
 		return StringUtil.stripCDATA(s);
 	}
 
+	public java.lang.String stripParentheticalSuffix(java.lang.String s) {
+		return StringUtil.stripParentheticalSuffix(s);
+	}
+
 	public java.lang.String toCharCode(java.lang.String s) {
 		return StringUtil.toCharCode(s);
 	}

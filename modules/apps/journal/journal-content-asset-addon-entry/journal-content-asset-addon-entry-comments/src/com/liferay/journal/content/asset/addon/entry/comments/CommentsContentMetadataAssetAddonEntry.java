@@ -47,7 +47,7 @@ public class CommentsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getJspPath() {
-		return "/META-INF/resources/comments.jsp";
+		return "/comments.jsp";
 	}
 
 	@Override

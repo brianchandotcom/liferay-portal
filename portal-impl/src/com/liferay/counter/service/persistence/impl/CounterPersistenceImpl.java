@@ -276,7 +276,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 				counter.setNew(false);
 			}
 			else {
-				session.merge(counter);
+				counter = (Counter)session.merge(counter);
 			}
 		}
 		catch (Exception e) {

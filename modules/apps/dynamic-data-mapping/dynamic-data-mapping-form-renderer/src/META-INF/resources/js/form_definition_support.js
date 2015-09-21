@@ -6,12 +6,16 @@ AUI.add(
 
 		var Util = Renderer.Util;
 
-		var DefinitionSupport = function() {
+		var FormDefinitionSupport = function() {
 		};
 
-		DefinitionSupport.ATTRS = {
+		FormDefinitionSupport.ATTRS = {
 			definition: {
 				value: {}
+			},
+
+			fields: {
+				valueFn: '_valueFields'
 			},
 
 			values: {
@@ -19,26 +23,14 @@ AUI.add(
 			}
 		};
 
-		DefinitionSupport.prototype = {
+		FormDefinitionSupport.prototype = {
 			initializer: function() {
 				var instance = this;
 
-				var definition = instance.get('definition');
-
-				var fields = instance.get('fields');
-				var values = instance.get('values');
-
-				if (values.fieldValues) {
-					fields = instance._createFieldsFromValues(values);
-				}
-				else if (definition.fields) {
-					fields = instance._createFieldsFromDefinition(definition);
-				}
-
-				instance.set('fields', fields);
-
-				instance.after('definitionChange', instance._afterDefinitionChange);
-				instance.after('valuesChange', instance._afterValuesChange);
+				instance._eventHandlers.push(
+					instance.after('definitionChange', instance._afterDefinitionChange),
+					instance.after('valuesChange', instance._afterValuesChange)
+				);
 			},
 
 			_afterDefinitionChange: function(event) {
@@ -86,13 +78,25 @@ AUI.add(
 				var definition = instance.get('definition');
 				var portletNamespace = instance.get('portletNamespace');
 
-				return A.map(
-					values.fieldValues,
+				var fields = [];
+
+				var getField = function(name) {
+					return AArray.find(
+						fields,
+						function(item) {
+							return item.get('name') === name;
+						}
+					);
+				};
+
+				values.fieldValues.forEach(
 					function(item) {
-						var siblings = Util.searchFieldsByKey(values, item.name);
+						var name = item.name;
+
+						var siblings = Util.searchFieldsByKey(values, name);
 
 						var config = A.merge(
-							Util.getFieldByKey(definition, item.name),
+							Util.getFieldByKey(definition, name),
 							{
 								parent: instance,
 								portletNamespace: portletNamespace,
@@ -102,16 +106,47 @@ AUI.add(
 
 						var fieldClass = Util.getFieldClass(config.type);
 
-						return new fieldClass(A.merge(config, item));
+						var fieldInstance = new fieldClass(A.merge(config, item));
+
+						var createdField = getField(name);
+
+						if (createdField) {
+							var repetitions = createdField.get('repetitions');
+
+							repetitions.push(fieldInstance);
+
+							fieldInstance.set('repetitions', repetitions);
+						}
+						else {
+							fields.push(fieldInstance);
+						}
 					}
 				);
+
+				return fields;
+			},
+
+			_valueFields: function(val) {
+				var instance = this;
+
+				var definition = instance.get('definition');
+				var values = instance.get('values');
+
+				if (values.fieldValues) {
+					val = instance._createFieldsFromValues(values);
+				}
+				else if (definition.fields) {
+					val = instance._createFieldsFromDefinition(definition);
+				}
+
+				return val;
 			}
 		};
 
-		Liferay.namespace('DDM.Renderer').DefinitionSupport = DefinitionSupport;
+		Liferay.namespace('DDM.Renderer').FormDefinitionSupport = FormDefinitionSupport;
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-field-types', 'liferay-ddm-form-renderer-util']
+		requires: ['liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
 	}
 );

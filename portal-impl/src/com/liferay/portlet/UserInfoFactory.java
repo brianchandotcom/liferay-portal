@@ -99,11 +99,12 @@ public class UserInfoFactory {
 
 			// Portlet user attributes
 
-			for (String attrName : portletApp.getUserAttributes()) {
-				String attrValue = userAttributes.getValue(attrName);
+			for (String userAttributeName : portletApp.getUserAttributes()) {
+				String userAttributeValue = userAttributes.getValue(
+					userAttributeName);
 
-				if (attrValue != null) {
-					userInfo.put(attrName, attrValue);
+				if (userAttributeValue != null) {
+					userInfo.put(userAttributeName, userAttributeValue);
 				}
 			}
 		}
@@ -116,52 +117,69 @@ public class UserInfoFactory {
 
 		// Custom user attributes
 
-		Map<String, CustomUserAttributes> cuaInstances = new HashMap<>();
+		Map<String, CustomUserAttributes> customUserAttributesMap =
+			new HashMap<>();
+
+		Map<String, String> customUserAttributesClassNames =
+			portletApp.getCustomUserAttributes();
 
 		for (Map.Entry<String, String> entry :
-				portletApp.getCustomUserAttributes().entrySet()) {
+				customUserAttributesClassNames.entrySet()) {
 
-			String attrName = entry.getKey();
-			String attrCustomClass = entry.getValue();
+			String userAttributeName = entry.getKey();
+			String customUserAttributesClassName = entry.getValue();
 
-			CustomUserAttributes cua = cuaInstances.get(attrCustomClass);
+			CustomUserAttributes customUserAttributes =
+				customUserAttributesMap.get(customUserAttributesClassName);
 
-			if (cua == null) {
+			if (customUserAttributes == null) {
 				if (portletApp.isWARFile()) {
 					PortletContextBag portletContextBag =
 						PortletContextBagPool.get(
 							portletApp.getServletContextName());
 
-					Map<String, CustomUserAttributes> customUserAttributes =
-						portletContextBag.getCustomUserAttributes();
+					Map<String, CustomUserAttributes>
+						portletContextBagCustomUserAttributes =
+							portletContextBag.getCustomUserAttributes();
 
-					cua = customUserAttributes.get(attrCustomClass);
+					customUserAttributes =
+						portletContextBagCustomUserAttributes.get(
+							customUserAttributesClassName);
 
-					cua = (CustomUserAttributes)cua.clone();
+					customUserAttributes =
+						(CustomUserAttributes)customUserAttributes.clone();
 				}
 				else {
-					try {
-						cua = (CustomUserAttributes)InstanceFactory.newInstance(
-							attrCustomClass);
-					}
-					catch (Exception e) {
-						_log.error(e, e);
-					}
+					customUserAttributes = newInstance(
+						customUserAttributesClassName);
 				}
 
-				cuaInstances.put(attrCustomClass, cua);
+				customUserAttributesMap.put(
+					customUserAttributesClassName, customUserAttributes);
 			}
 
-			if (cua != null) {
-				String attrValue = cua.getValue(attrName, unmodifiableUserInfo);
+			if (customUserAttributes != null) {
+				String attrValue = customUserAttributes.getValue(
+					userAttributeName, unmodifiableUserInfo);
 
 				if (attrValue != null) {
-					userInfo.put(attrName, attrValue);
+					userInfo.put(userAttributeName, attrValue);
 				}
 			}
 		}
 
 		return userInfo;
+	}
+
+	private static CustomUserAttributes newInstance(String className) {
+		try {
+			return (CustomUserAttributes)InstanceFactory.newInstance(className);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

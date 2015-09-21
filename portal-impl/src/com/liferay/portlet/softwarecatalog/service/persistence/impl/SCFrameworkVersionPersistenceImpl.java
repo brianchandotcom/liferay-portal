@@ -2552,7 +2552,7 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 				scFrameworkVersion.setNew(false);
 			}
 			else {
-				session.merge(scFrameworkVersion);
+				scFrameworkVersion = (SCFrameworkVersion)session.merge(scFrameworkVersion);
 			}
 		}
 		catch (Exception e) {

@@ -152,6 +152,8 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#SCOPE_SELECTION" value1="${scopeSelection}" />
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="AssertTextEquals" locator1="MenuItem#SCOPE" value1="${scopeSelection}" />
 	</command>

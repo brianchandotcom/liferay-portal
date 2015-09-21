@@ -7,9 +7,6 @@
 	<bean id="com.liferay.portal.service.AddressLocalService" class="com.liferay.portal.service.impl.AddressLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.AddressService" class="com.liferay.portal.service.impl.AddressServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.AddressPersistence" class="com.liferay.portal.service.persistence.impl.AddressPersistenceImpl2" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.BackgroundTaskLocalService" class="com.liferay.portal.service.impl.BackgroundTaskLocalServiceImpl" />
-	<bean id="com.liferay.portal.service.BackgroundTaskService" class="com.liferay.portal.service.impl.BackgroundTaskServiceImpl" />
-	<bean id="com.liferay.portal.service.persistence.BackgroundTaskPersistence" class="com.liferay.portal.service.persistence.impl.BackgroundTaskPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.BrowserTrackerLocalService" class="com.liferay.portal.service.impl.BrowserTrackerLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.BrowserTrackerPersistence" class="com.liferay.portal.service.persistence.impl.BrowserTrackerPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ClassNameLocalService" class="com.liferay.portal.service.impl.ClassNameLocalServiceImpl" />
@@ -299,19 +296,6 @@
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBThreadFinder" class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.messageboards.service.MBThreadFlagLocalService" class="com.liferay.portlet.messageboards.service.impl.MBThreadFlagLocalServiceImpl" />
 	<bean id="com.liferay.portlet.messageboards.service.persistence.MBThreadFlagPersistence" class="com.liferay.portlet.messageboards.service.persistence.impl.MBThreadFlagPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRActionLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRActionLocalServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRActionService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRActionServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRActionPersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRActionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleLocalServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRulePersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRRulePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupLocalServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupPersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRRuleGroupPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupFinder" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRRuleGroupFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupInstanceLocalServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceService" class="com.liferay.portlet.mobiledevicerules.service.impl.MDRRuleGroupInstanceServiceImpl" />
-	<bean id="com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupInstancePersistence" class="com.liferay.portlet.mobiledevicerules.service.persistence.impl.MDRRuleGroupInstancePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.ratings.service.RatingsEntryLocalService" class="com.liferay.portlet.ratings.service.impl.RatingsEntryLocalServiceImpl" />
 	<bean id="com.liferay.portlet.ratings.service.RatingsEntryService" class="com.liferay.portlet.ratings.service.impl.RatingsEntryServiceImpl" />
 	<bean id="com.liferay.portlet.ratings.service.persistence.RatingsEntryPersistence" class="com.liferay.portlet.ratings.service.persistence.impl.RatingsEntryPersistenceImpl" parent="basePersistence" />
@@ -319,29 +303,6 @@
 	<bean id="com.liferay.portlet.ratings.service.RatingsStatsLocalService" class="com.liferay.portlet.ratings.service.impl.RatingsStatsLocalServiceImpl" />
 	<bean id="com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence" class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder" class="com.liferay.portlet.ratings.service.persistence.impl.RatingsStatsFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingCartLocalService" class="com.liferay.portlet.shopping.service.impl.ShoppingCartLocalServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingCartPersistence" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingCartPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingCategoryLocalService" class="com.liferay.portlet.shopping.service.impl.ShoppingCategoryLocalServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingCategoryService" class="com.liferay.portlet.shopping.service.impl.ShoppingCategoryServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingCategoryPersistence" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingCategoryPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingCouponLocalService" class="com.liferay.portlet.shopping.service.impl.ShoppingCouponLocalServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingCouponService" class="com.liferay.portlet.shopping.service.impl.ShoppingCouponServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingCouponPersistence" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingCouponPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingCouponFinder" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingCouponFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingItemLocalService" class="com.liferay.portlet.shopping.service.impl.ShoppingItemLocalServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingItemService" class="com.liferay.portlet.shopping.service.impl.ShoppingItemServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingItemPersistence" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingItemPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingItemFinder" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingItemFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingItemFieldLocalService" class="com.liferay.portlet.shopping.service.impl.ShoppingItemFieldLocalServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingItemFieldPersistence" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingItemFieldPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingItemPriceLocalService" class="com.liferay.portlet.shopping.service.impl.ShoppingItemPriceLocalServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingItemPricePersistence" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingItemPricePersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingOrderLocalService" class="com.liferay.portlet.shopping.service.impl.ShoppingOrderLocalServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingOrderService" class="com.liferay.portlet.shopping.service.impl.ShoppingOrderServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingOrderPersistence" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingOrderPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingOrderFinder" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingOrderFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.shopping.service.ShoppingOrderItemLocalService" class="com.liferay.portlet.shopping.service.impl.ShoppingOrderItemLocalServiceImpl" />
-	<bean id="com.liferay.portlet.shopping.service.persistence.ShoppingOrderItemPersistence" class="com.liferay.portlet.shopping.service.persistence.impl.ShoppingOrderItemPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.social.service.SocialActivityLocalService" class="com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.SocialActivityService" class="com.liferay.portlet.social.service.impl.SocialActivityServiceImpl" />
 	<bean id="com.liferay.portlet.social.service.persistence.SocialActivityPersistence" class="com.liferay.portlet.social.service.persistence.impl.SocialActivityPersistenceImpl" parent="basePersistence" />

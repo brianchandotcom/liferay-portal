@@ -14,14 +14,13 @@
 
 package com.liferay.dynamic.data.mapping.type.options;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 
 import java.util.List;
 import java.util.Map;
@@ -33,8 +32,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Renato Rego
  */
 @Component(
-	immediate = true, property = {"templatePath=/META-INF/resources/options.soy"},
-	service = {OptionsDDMFormFieldRenderer.class, DDMFormFieldRenderer.class}
+	immediate = true, property = "ddm.form.field.type.name=options",
+	service = DDMFormFieldRenderer.class
 )
 public class OptionsDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
@@ -55,9 +54,8 @@ public class OptionsDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		String templatePath = MapUtil.getString(properties, "templatePath");
-
-		_templateResource = getTemplateResource(templatePath);
+		_templateResource = getTemplateResource(
+			"/META-INF/resources/options.soy");
 	}
 
 	protected List<Object> getOptions(

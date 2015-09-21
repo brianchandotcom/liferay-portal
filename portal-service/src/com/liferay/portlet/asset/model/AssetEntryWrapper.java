@@ -259,12 +259,12 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 	}
 
 	@Override
-	public com.liferay.portlet.asset.model.AssetRenderer getAssetRenderer() {
+	public com.liferay.portlet.asset.model.AssetRenderer<?> getAssetRenderer() {
 		return _assetEntry.getAssetRenderer();
 	}
 
 	@Override
-	public com.liferay.portlet.asset.model.AssetRendererFactory getAssetRendererFactory() {
+	public com.liferay.portlet.asset.model.AssetRendererFactory<?> getAssetRendererFactory() {
 		return _assetEntry.getAssetRendererFactory();
 	}
 

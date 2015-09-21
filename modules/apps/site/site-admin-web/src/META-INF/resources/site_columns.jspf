@@ -71,7 +71,7 @@
 	%>
 
 			<liferay-portlet:renderURL var="viewSubsitesURL">
-				<portlet:param name="backURL" value="<%= StringPool.SLASH + currentURL %>" />
+				<portlet:param name="mvcPath" value="/view.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(curGroup.getGroupId()) %>" />
 				<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
 			</liferay-portlet:renderURL>

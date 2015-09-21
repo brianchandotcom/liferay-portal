@@ -14,13 +14,13 @@
 
 package com.liferay.mobile.device.rules.rule.group.action;
 
+import com.liferay.mobile.device.rules.action.ActionHandler;
+import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 
 import java.io.IOException;
 

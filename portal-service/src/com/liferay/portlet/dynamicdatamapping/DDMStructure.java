@@ -16,9 +16,6 @@ package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.StagedGroupedModel;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 
 import java.util.List;
 import java.util.Locale;
@@ -41,8 +38,6 @@ public interface DDMStructure extends StagedGroupedModel {
 		throws PortalException;
 
 	public List<DDMFormField> getDDMFormFields(boolean includeTransientFields);
-
-	public DDMFormLayout getDDMFormLayout() throws PortalException;
 
 	public String getDefinition();
 

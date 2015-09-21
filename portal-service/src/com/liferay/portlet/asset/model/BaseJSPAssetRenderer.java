@@ -31,8 +31,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Julio Camarero
  */
-public abstract class BaseJSPAssetRenderer
-	extends BaseAssetRenderer implements AssetRenderer {
+public abstract class BaseJSPAssetRenderer<T>
+	extends BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	public abstract String getJspPath(
 		HttpServletRequest request, String template);

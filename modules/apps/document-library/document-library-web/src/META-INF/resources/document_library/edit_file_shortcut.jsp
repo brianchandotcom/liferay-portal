@@ -34,8 +34,6 @@ Group toGroup = null;
 long repositoryId = BeanParamUtil.getLong(fileShortcut, request, "repositoryId");
 long folderId = BeanParamUtil.getLong(fileShortcut, request, "folderId");
 
-Folder toFolder = null;
-
 long toFileEntryId = BeanParamUtil.getLong(fileShortcut, request, "toFileEntryId");
 
 FileEntry toFileEntry = null;
@@ -46,9 +44,7 @@ if (toFileEntryId > 0) {
 
 		toFileEntry = toFileEntry.toEscapedModel();
 
-		toFolder = toFileEntry.getFolder();
-
-		toGroupId = toFolder.getRepositoryId();
+		toGroupId = toFileEntry.getRepositoryId();
 
 		toGroup = GroupLocalServiceUtil.getGroup(toGroupId);
 
@@ -94,7 +90,11 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 		</div>
 
 		<%
-		String toGroupName = BeanPropertiesUtil.getString(toGroup, "name");
+		String toGroupName = StringPool.BLANK;
+
+		if (toGroup != null) {
+			toGroupName = HtmlUtil.escape(toGroup.getDescriptiveName(locale));
+		}
 		%>
 
 		<div class="form-group">

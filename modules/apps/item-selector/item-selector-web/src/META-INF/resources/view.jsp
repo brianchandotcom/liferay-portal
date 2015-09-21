@@ -36,7 +36,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		<div class="alert alert-info">
 
 			<%
-			ResourceBundle resourceBundle = ResourceBundle.getBundle("content/Language", locale);
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content/Language", locale, getClass());
 			%>
 
 			<%= LanguageUtil.get(resourceBundle, "selection-is-not-available") %>
@@ -50,9 +50,13 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		if (Validator.isNull(selectedTab)) {
 			selectedTab = titles.get(0);
 		}
+
+		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(selectedTab);
+
+		ItemSelectorView<ItemSelectorCriterion> initialItemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
 		%>
 
-		<div class="form-search" id="<portlet:namespace />formSearch">
+		<div class="form-search <%= initialItemSelectorView.isShowSearch() ? "" : "hide" %>" id="<portlet:namespace />formSearch">
 			<aui:form action="<%= currentURL %>" cssClass="basic-search input-group"  name="searchFm">
 				<div class="input-group-input">
 					<div class="basic-search-slider">
@@ -77,11 +81,18 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 			<%
 			for (String title : titles) {
-				ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
+				ItemSelectorViewRenderer curItemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
 
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
+				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = curItemSelectorViewRenderer.getItemSelectorView();
+
+				if (selectedTab.equals(itemSelectorView.getTitle(locale))) {
+					data.put("portletURL", currentURL);
+				}
+				else {
+					data.put("portletURL", curItemSelectorViewRenderer.getPortletURL());
+				}
 
 				data.put("showSearch", itemSelectorView.isShowSearch());
 			%>
@@ -90,7 +101,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 					<div>
 
 						<%
-						itemSelectorViewRenderer.renderHTML(pageContext);
+						curItemSelectorViewRenderer.renderHTML(pageContext);
 						%>
 
 					</div>
@@ -121,6 +132,10 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 
 				if (formSearch) {
 					formSearch.toggle(showSearch === 'true');
+
+					var searchFm = A.one('#<portlet:namespace />searchFm');
+
+					searchFm.setAttribute('action', tabSection.getData('portletURL'));
 				}
 			}
 		}

@@ -19,7 +19,7 @@ package com.liferay.site.teams.web.constants;
  */
 public class SiteTeamsPortletKeys {
 
-	public static final String SITE_TEAMS_ADMIN =
+	public static final String SITE_TEAMS =
 		"com_liferay_site_teams_web_portlet_SiteTeamsPortlet";
 
 }

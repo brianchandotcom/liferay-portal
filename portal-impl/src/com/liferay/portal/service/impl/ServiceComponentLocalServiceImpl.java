@@ -18,8 +18,6 @@ import com.liferay.portal.OldServiceComponentException;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -43,7 +41,6 @@ import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 import java.lang.reflect.Field;
 
@@ -63,11 +60,8 @@ public class ServiceComponentLocalServiceImpl
 		ServiceComponentConfiguration serviceComponentConfiguration,
 		ClassLoader classLoader) {
 
-		try {
-			clearCacheRegistry(serviceComponentConfiguration);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		if (PropsValues.CACHE_CLEAR_ON_PLUGIN_UNDEPLOY) {
+			CacheRegistryUtil.clear();
 		}
 	}
 
@@ -277,37 +271,6 @@ public class ServiceComponentLocalServiceImpl
 					doUpgradeDBPrivilegedExceptionAction)
 			throws Exception;
 
-	}
-
-	protected void clearCacheRegistry(
-			ServiceComponentConfiguration serviceComponentConfiguration)
-		throws DocumentException {
-
-		InputStream inputStream =
-			serviceComponentConfiguration.getHibernateInputStream();
-
-		if (inputStream == null) {
-			return;
-		}
-
-		Document document = UnsecureSAXReaderUtil.read(inputStream);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> classElements = rootElement.elements("class");
-
-		for (Element classElement : classElements) {
-			String name = classElement.attributeValue("name");
-
-			CacheRegistryUtil.unregister(name);
-		}
-
-		CacheRegistryUtil.clear();
-
-		if (PropsValues.CACHE_CLEAR_ON_PLUGIN_UNDEPLOY) {
-			EntityCacheUtil.clearCache();
-			FinderCacheUtil.clearCache();
-		}
 	}
 
 	protected void doUpgradeDB(

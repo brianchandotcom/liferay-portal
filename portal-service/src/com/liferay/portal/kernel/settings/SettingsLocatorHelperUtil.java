@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.settings;
 
-import com.liferay.portal.model.Layout;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
@@ -60,11 +59,11 @@ public class SettingsLocatorHelperUtil {
 	}
 
 	public Settings getPortletInstancePortletPreferencesSettings(
-		Layout layout, String portletId, Settings parentSettings) {
+		long companyId, long plid, String portletId, Settings parentSettings) {
 
 		return getSettingsLocatorHelper().
 			getPortletInstancePortletPreferencesSettings(
-				layout, portletId, parentSettings);
+				companyId, plid, portletId, parentSettings);
 	}
 
 	private static final ServiceTrackerList<SettingsLocatorHelper>

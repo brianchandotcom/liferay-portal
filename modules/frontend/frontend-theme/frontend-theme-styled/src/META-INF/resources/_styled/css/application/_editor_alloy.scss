@@ -1,0 +1,17 @@
+.alloy-editor {
+	&.alloy-editor-placeholder {
+		color: #2B4259;
+
+		&:empty:not(:focus) {
+			background: transparent;
+			border-left-color: #DBDDE1;
+			color: #B0B4BB;
+		}
+
+		&.readonly {
+			color: #CCC;
+		}
+	}
+
+	outline: 0;
+}

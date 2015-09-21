@@ -36,7 +36,7 @@
 				COUNT(DISTINCT MicroblogsEntry.microblogsEntryId) AS COUNT_VALUE
 			FROM
 				MicroblogsEntry
-			LLEFT JOIN
+			LEFT JOIN
 				MicroblogsEntry AS TEMP_TABLE ON
 					(MicroblogsEntry.parentMicroblogsEntryId = TEMP_TABLE.microblogsEntryId)
 			LEFT JOIN

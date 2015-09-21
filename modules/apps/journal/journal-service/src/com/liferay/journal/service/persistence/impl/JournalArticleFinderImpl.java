@@ -1494,7 +1494,7 @@ public class JournalArticleFinderImpl
 
 		for (int i = 0; i < ddmStructureKeys.length; i++) {
 			sb.append(tableName);
-			sb.append(".ddmStructureKey = ? ");
+			sb.append(".DDMStructureKey = ? ");
 			sb.append(WHERE_OR);
 		}
 

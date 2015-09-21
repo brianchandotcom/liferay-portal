@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.site.navigation.language.web.constants.LanguagePortletKeys;
+import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ReadOnlyException;
@@ -33,7 +33,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	@Override
 	protected String[] getPortletIds() {
-		return new String[] {LanguagePortletKeys.LANGUAGE};
+		return new String[] {
+			SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE
+		};
 	}
 
 	@SuppressWarnings("deprecation")

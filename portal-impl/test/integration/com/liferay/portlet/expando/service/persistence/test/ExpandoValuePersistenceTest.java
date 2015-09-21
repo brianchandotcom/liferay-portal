@@ -460,21 +460,21 @@ public class ExpandoValuePersistenceTest {
 
 		ExpandoValue existingExpandoValue = _persistence.findByPrimaryKey(newExpandoValue.getPrimaryKey());
 
-		Assert.assertEquals(existingExpandoValue.getColumnId(),
-			ReflectionTestUtil.invoke(existingExpandoValue,
+		Assert.assertEquals(Long.valueOf(existingExpandoValue.getColumnId()),
+			ReflectionTestUtil.<Long>invoke(existingExpandoValue,
 				"getOriginalColumnId", new Class<?>[0]));
-		Assert.assertEquals(existingExpandoValue.getRowId(),
-			ReflectionTestUtil.invoke(existingExpandoValue, "getOriginalRowId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingExpandoValue.getRowId()),
+			ReflectionTestUtil.<Long>invoke(existingExpandoValue,
+				"getOriginalRowId", new Class<?>[0]));
 
-		Assert.assertEquals(existingExpandoValue.getTableId(),
-			ReflectionTestUtil.invoke(existingExpandoValue,
+		Assert.assertEquals(Long.valueOf(existingExpandoValue.getTableId()),
+			ReflectionTestUtil.<Long>invoke(existingExpandoValue,
 				"getOriginalTableId", new Class<?>[0]));
-		Assert.assertEquals(existingExpandoValue.getColumnId(),
-			ReflectionTestUtil.invoke(existingExpandoValue,
+		Assert.assertEquals(Long.valueOf(existingExpandoValue.getColumnId()),
+			ReflectionTestUtil.<Long>invoke(existingExpandoValue,
 				"getOriginalColumnId", new Class<?>[0]));
-		Assert.assertEquals(existingExpandoValue.getClassPK(),
-			ReflectionTestUtil.invoke(existingExpandoValue,
+		Assert.assertEquals(Long.valueOf(existingExpandoValue.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingExpandoValue,
 				"getOriginalClassPK", new Class<?>[0]));
 	}
 

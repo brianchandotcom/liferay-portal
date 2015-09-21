@@ -46,7 +46,8 @@ AUI.add(
 								displayStyleToolbar: displayStyleToolbar,
 								namespace: namespace,
 								portletContainerId: portletContainerId,
-								selector: 'entry-selector'
+								selector: 'entry-selector',
+								toggleSelector: 'click-selector'
 							},
 							config.select
 						);

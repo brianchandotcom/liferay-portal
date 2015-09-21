@@ -3585,7 +3585,7 @@ public class KaleoInstancePersistenceImpl extends BasePersistenceImpl<KaleoInsta
 				kaleoInstance.setNew(false);
 			}
 			else {
-				session.merge(kaleoInstance);
+				kaleoInstance = (KaleoInstance)session.merge(kaleoInstance);
 			}
 		}
 		catch (Exception e) {

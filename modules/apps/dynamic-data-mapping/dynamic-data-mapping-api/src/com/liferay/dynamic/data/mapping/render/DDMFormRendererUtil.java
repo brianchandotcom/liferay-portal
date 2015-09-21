@@ -14,9 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.render;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**
  * @author Marcellus Tavares

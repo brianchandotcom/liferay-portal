@@ -50,10 +50,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Pier Paolo Ramon
  */
 public class CalendarBookingAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<CalendarBooking> implements TrashRenderer {
 
 	public CalendarBookingAssetRenderer(CalendarBooking calendarBooking) {
 		_calendarBooking = calendarBooking;
+	}
+
+	@Override
+	public CalendarBooking getAssetObject() {
+		return _calendarBooking;
 	}
 
 	@Override
@@ -90,7 +95,8 @@ public class CalendarBookingAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<CalendarBooking> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}

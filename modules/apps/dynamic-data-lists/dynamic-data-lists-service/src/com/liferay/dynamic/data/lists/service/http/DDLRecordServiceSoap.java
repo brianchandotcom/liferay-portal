@@ -68,7 +68,7 @@ import java.rmi.RemoteException;
 public class DDLRecordServiceSoap {
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSoap addRecord(
 		long groupId, long recordSetId, int displayIndex,
-		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -179,7 +179,7 @@ public class DDLRecordServiceSoap {
 
 	public static com.liferay.dynamic.data.lists.model.DDLRecordSoap updateRecord(
 		long recordId, boolean majorVersion, int displayIndex,
-		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues,
+		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

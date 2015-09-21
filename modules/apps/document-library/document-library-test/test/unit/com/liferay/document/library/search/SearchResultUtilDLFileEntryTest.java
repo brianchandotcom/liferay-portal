@@ -126,7 +126,7 @@ public class SearchResultUtilDLFileEntryTest
 			new InvocationHandler() {
 
 				@Override
-				public AssetRendererFactory invoke(
+				public AssetRendererFactory<?> invoke(
 						Object proxy, Method method, Object[] args)
 					throws Throwable {
 

@@ -46,10 +46,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Sergio González
  */
 public class BookmarksEntryAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<BookmarksEntry> implements TrashRenderer {
 
 	public BookmarksEntryAssetRenderer(BookmarksEntry entry) {
 		_entry = entry;
+	}
+
+	@Override
+	public BookmarksEntry getAssetObject() {
+		return _entry;
 	}
 
 	@Override
@@ -89,7 +94,8 @@ public class BookmarksEntryAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<BookmarksEntry> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
@@ -151,7 +157,8 @@ public class BookmarksEntryAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<BookmarksEntry> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

@@ -295,7 +295,7 @@ public class AssetUtil {
 			(ThemeDisplay)liferayPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 
@@ -429,7 +429,7 @@ public class AssetUtil {
 		for (long classNameId : classNameIds) {
 			String className = PortalUtil.getClassName(classNameId);
 
-			AssetRendererFactory assetRendererFactory =
+			AssetRendererFactory<?> assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(className);
 
@@ -511,6 +511,10 @@ public class AssetUtil {
 
 	public static List<AssetEntry> getAssetEntries(Hits hits) {
 		List<AssetEntry> assetEntries = new ArrayList<>();
+
+		if (hits.getDocs() == null) {
+			return assetEntries;
+		}
 
 		for (Document document : hits.getDocs()) {
 			String className = GetterUtil.getString(

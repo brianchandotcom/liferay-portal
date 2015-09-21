@@ -55,14 +55,14 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.control-panel-entry-category=site_administration.users",
 		"com.liferay.portlet.control-panel-entry-weight=2.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-communities",
-		"com.liferay.portlet.icon=/icons/site_memberships_admin.png",
+		"com.liferay.portlet.icon=/icons/site_teams.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Site Teams Admin",
+		"javax.portlet.display-name=Site Teams",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
@@ -81,6 +81,18 @@ public class SiteTeamsPortlet extends MVCPortlet {
 		long teamId = ParamUtil.getLong(actionRequest, "teamId");
 
 		TeamServiceUtil.deleteTeam(teamId);
+	}
+
+	public void deleteTeams(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] teamIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "teamIds"), 0L);
+
+		for (long teamId : teamIds) {
+			TeamServiceUtil.deleteTeam(teamId);
+		}
 	}
 
 	public void editTeam(

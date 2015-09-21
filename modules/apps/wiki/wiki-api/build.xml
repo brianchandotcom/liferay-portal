@@ -2,9 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-    <property name="import.shared" value="../item-selector/item-selector-api,../item-selector/item-selector-criteria-api,../../portal/portal-settings" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+	<import file="../../../build-module.xml" />
 </project>

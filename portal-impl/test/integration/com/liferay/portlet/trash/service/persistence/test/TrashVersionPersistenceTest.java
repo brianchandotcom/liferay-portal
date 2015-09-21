@@ -395,11 +395,11 @@ public class TrashVersionPersistenceTest {
 
 		TrashVersion existingTrashVersion = _persistence.findByPrimaryKey(newTrashVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingTrashVersion.getClassNameId(),
-			ReflectionTestUtil.invoke(existingTrashVersion,
+		Assert.assertEquals(Long.valueOf(existingTrashVersion.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingTrashVersion,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingTrashVersion.getClassPK(),
-			ReflectionTestUtil.invoke(existingTrashVersion,
+		Assert.assertEquals(Long.valueOf(existingTrashVersion.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingTrashVersion,
 				"getOriginalClassPK", new Class<?>[0]));
 	}
 

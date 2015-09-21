@@ -16,15 +16,15 @@ package com.liferay.portal.security.sso.cas;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.cas.configuration.CASConfiguration;
 import com.liferay.portal.security.sso.cas.constants.CASConstants;
 import com.liferay.portal.security.sso.cas.constants.CASWebKeys;
+import com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashMap;
@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Balogh
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.cas.configuration.CASConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.cas.module.configuration.CASConfiguration",
 	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
@@ -76,10 +76,11 @@ public class CASFilter extends BaseFilter {
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
-			CASConfiguration casConfiguration = _settingsFactory.getSettings(
-				CASConfiguration.class,
-				new CompanyServiceSettingsLocator(
-					companyId, CASConstants.SERVICE_NAME));
+			CASConfiguration casConfiguration =
+				_configurationFactory.getConfiguration(
+					CASConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId, CASConstants.SERVICE_NAME));
 
 			if (casConfiguration.enabled()) {
 				return true;
@@ -106,10 +107,11 @@ public class CASFilter extends BaseFilter {
 			return ticketValidator;
 		}
 
-		CASConfiguration casConfiguration = _settingsFactory.getSettings(
-			CASConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId, CASConstants.SERVICE_NAME));
+		CASConfiguration casConfiguration =
+			_configurationFactory.getConfiguration(
+				CASConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, CASConstants.SERVICE_NAME));
 
 		String serverName = casConfiguration.serverName();
 		String serverUrl = casConfiguration.serverURL();
@@ -142,10 +144,11 @@ public class CASFilter extends BaseFilter {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		CASConfiguration casConfiguration = _settingsFactory.getSettings(
-			CASConfiguration.class,
-			new CompanyServiceSettingsLocator(
-				companyId, CASConstants.SERVICE_NAME));
+		CASConfiguration casConfiguration =
+			_configurationFactory.getConfiguration(
+				CASConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, CASConstants.SERVICE_NAME));
 
 		String pathInfo = request.getPathInfo();
 
@@ -220,9 +223,11 @@ public class CASFilter extends BaseFilter {
 		processFilter(CASFilter.class, request, response, filterChain);
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(CASFilter.class);
@@ -230,6 +235,6 @@ public class CASFilter extends BaseFilter {
 	private static final Map<Long, TicketValidator> _ticketValidators =
 		new ConcurrentHashMap<>();
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

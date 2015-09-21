@@ -703,9 +703,9 @@ public class MBMessagePersistenceTest {
 		Assert.assertTrue(Validator.equals(existingMBMessage.getUuid(),
 				ReflectionTestUtil.invoke(existingMBMessage, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(existingMBMessage.getGroupId(),
-			ReflectionTestUtil.invoke(existingMBMessage, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingMBMessage.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMBMessage,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected MBMessage addMBMessage() throws Exception {

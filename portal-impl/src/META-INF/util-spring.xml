@@ -22,10 +22,6 @@
 			<bean class="com.liferay.portal.audit.AuditMessageFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry" class="com.liferay.portal.backgroundtask.BackgroundTaskStatusRegistryImpl" />
-	<bean id="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil" class="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil">
-		<property name="backgroundTaskStatusRegistry" ref="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry" />
-	</bean>
 	<bean id="com.liferay.portal.kernel.bean.BeanPropertiesUtil" class="com.liferay.portal.kernel.bean.BeanPropertiesUtil">
 		<property name="beanProperties">
 			<bean class="com.liferay.portal.bean.BeanPropertiesImpl" />
@@ -194,12 +190,17 @@
 			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.patcher.PatcherUtil" class="com.liferay.portal.kernel.patcher.PatcherUtil">
+		<property name="patcher">
+			<bean class="com.liferay.portal.patcher.PatcherImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil" class="com.liferay.portal.kernel.poller.comet.CometHandlerPoolUtil">
 		<property name="cometHandlerPool">
 			<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPool" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconTracker" class="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconTracker" />
+	<bean id="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker" class="com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconTracker" />
 	<bean id="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" class="com.liferay.portal.kernel.portlet.toolbar.PortletToolbar" />
 	<bean id="com.liferay.portal.kernel.portlet.PortletContainerUtil" class="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />
@@ -332,11 +333,6 @@
 	<bean id="com.liferay.portal.kernel.util.MimeTypes" class="com.liferay.portal.util.MimeTypesImpl" />
 	<bean id="com.liferay.portal.kernel.util.MimeTypesUtil" class="com.liferay.portal.kernel.util.MimeTypesUtil">
 		<property name="mimeTypes" ref="com.liferay.portal.kernel.util.MimeTypes" />
-	</bean>
-	<bean id="com.liferay.portal.kernel.util.MultiValueMapFactoryUtil" class="com.liferay.portal.kernel.util.MultiValueMapFactoryUtil">
-		<property name="multiValueMapFactory">
-			<bean class="com.liferay.portal.util.MultiValueMapFactoryImpl" />
-		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil" class="com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil">
 		<property name="serviceBeanMethodInvocationFactory">
@@ -544,8 +540,6 @@
 	<bean class="com.liferay.portal.verify.model.RoleVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.SCFrameworkVersionVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.SCProductEntryVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.ShoppingCategoryVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.ShoppingItemVerifiableResourcedModel" />
 	<bean class="com.liferay.portal.verify.model.TeamVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.UserGroupVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.UserVerifiableModel" />
@@ -567,6 +561,11 @@
 	<bean id="com.liferay.portlet.RestrictPortletContainerWrapper" class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.SecurityPortletContainerWrapper" />
 	</bean>
+	<bean id="com.liferay.portlet.admin.action.EditServerMVCActionCommand" class="com.liferay.portlet.admin.action.EditServerMVCActionCommand" />
+	<bean id="com.liferay.portlet.admin.action.EditDocumentLibraryExtraSettingsMVCActionCommand" class="com.liferay.portlet.admin.action.EditDocumentLibraryExtraSettingsMVCActionCommand" />
+	<bean id="com.liferay.portlet.admin.action.EditDocumentLibraryExtraSettingsMVCRenderCommand" class="com.liferay.portlet.admin.action.EditDocumentLibraryExtraSettingsMVCRenderCommand" />
+	<bean id="com.liferay.portlet.admin.action.ViewChartMVCResourceCommand" class="com.liferay.portlet.admin.action.ViewChartMVCResourceCommand" />
+	<bean id="com.liferay.portlet.admin.action.ViewMVCRenderCommand" class="com.liferay.portlet.admin.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.admin.util.OmniadminImpl" class="com.liferay.portlet.admin.util.OmniadminImpl" />
 	<bean id="com.liferay.portlet.asset.util.AssetCategoryIndexer" class="com.liferay.portlet.asset.util.AssetCategoryIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetEntryIndexer" class="com.liferay.portlet.asset.util.AssetEntryIndexer" />
@@ -596,27 +595,23 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil" class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionUtil">
-		<property name="MDRPermission">
-			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRPermissionImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupPermissionUtil" class="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupPermissionUtil">
-		<property name="MDRRuleGroupPermission">
-			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupPermissionImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil" class="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionUtil">
-		<property name="MDRRuleGroupInstancePermission">
-			<bean class="com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupInstancePermissionImpl" />
-		</property>
-	</bean>
+	<bean id="com.liferay.portlet.login.action.CaptchaMVCResourceCommand" class="com.liferay.portlet.login.action.CaptchaMVCResourceCommand" />
+	<bean id="com.liferay.portlet.login.action.CreateAccountMVCActionCommand" class="com.liferay.portlet.login.action.CreateAccountMVCActionCommand" />
+	<bean id="com.liferay.portlet.login.action.CreateAccountMVCRenderCommand" class="com.liferay.portlet.login.action.CreateAccountMVCRenderCommand" />
+	<bean id="com.liferay.portlet.login.action.CreateAnonymousAccountMVCActionCommand" class="com.liferay.portlet.login.action.CreateAnonymousAccountMVCActionCommand" />
+	<bean id="com.liferay.portlet.login.action.CreateAnonymousAccountMVCRenderCommand" class="com.liferay.portlet.login.action.CreateAnonymousAccountMVCRenderCommand" />
+	<bean id="com.liferay.portlet.login.action.ForgotPasswordMVCActionCommand" class="com.liferay.portlet.login.action.ForgotPasswordMVCActionCommand" />
+	<bean id="com.liferay.portlet.login.action.ForgotPasswordMVCRenderCommand" class="com.liferay.portlet.login.action.ForgotPasswordMVCRenderCommand" />
+	<bean id="com.liferay.portlet.login.action.LoginMVCActionCommand" class="com.liferay.portlet.login.action.LoginMVCActionCommand" />
+	<bean id="com.liferay.portlet.login.action.LoginMVCRenderCommand" class="com.liferay.portlet.login.action.LoginMVCRenderCommand" />
+	<bean id="com.liferay.portlet.login.action.LoginRedirectMVCRenderCommand" class="com.liferay.portlet.login.action.LoginRedirectMVCRenderCommand" />
+	<bean id="com.liferay.portlet.monitoring.action.EditSessionMVCActionCommand" class="com.liferay.portlet.monitoring.action.EditSessionMVCActionCommand" />
+	<bean id="com.liferay.portlet.monitoring.action.EditSessionMVCRenderCommand" class="com.liferay.portlet.monitoring.action.EditSessionMVCRenderCommand" />
+	<bean id="com.liferay.portlet.monitoring.action.ViewMVCRenderCommand" class="com.liferay.portlet.monitoring.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdmin" class="com.liferay.portlet.rolesadmin.util.RolesAdminImpl" />
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" class="com.liferay.portlet.rolesadmin.util.RolesAdminUtil">
 		<property name="rolesAdmin" ref="com.liferay.portlet.rolesadmin.util.RolesAdmin" />
 	</bean>
-	<bean id="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPermission" class="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPermission" />
-	<bean id="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" class="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" />
 	<bean id="com.liferay.portlet.sites.util.Sites" class="com.liferay.portlet.sites.util.SitesImpl" />
 	<bean id="com.liferay.portlet.sites.util.SitesUtil" class="com.liferay.portlet.sites.util.SitesUtil">
 		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />

@@ -2,10 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="javac.source" value="1.6" />
-	<property name="javac.target" value="1.6" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+	<import file="../../build-module.xml" />
 </project>

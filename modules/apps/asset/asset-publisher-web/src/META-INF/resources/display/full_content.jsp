@@ -36,8 +36,8 @@ if (Validator.isNull(redirect) && results.isEmpty()) {
 int assetEntryIndex = ((Integer)request.getAttribute("view.jsp-assetEntryIndex")).intValue();
 
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
-AssetRendererFactory assetRendererFactory = (AssetRendererFactory)request.getAttribute("view.jsp-assetRendererFactory");
-AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute("view.jsp-assetRenderer");
+AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory<?>)request.getAttribute("view.jsp-assetRendererFactory");
+AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute("view.jsp-assetRenderer");
 
 String languageId = LanguageUtil.getLanguageId(request);
 
@@ -74,12 +74,12 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				</div>
 			</c:if>
 
-			<c:if test="<%= (assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible()) && !print %>">
+			<c:if test="<%= assetPublisherDisplayContext.isEnableConversions() && assetRenderer.isConvertible() && !print %>">
 				<div class="export-actions">
 					<%@ include file="/asset_export.jspf" %>
 				</div>
 			</c:if>
-			<c:if test="<%= (assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable()) && !print %>">
+			<c:if test="<%= assetPublisherDisplayContext.isShowAvailableLocales() && assetRenderer.isLocalizable() && !print %>">
 
 				<%
 				String[] availableLanguageIds = assetRenderer.getAvailableLanguageIds();

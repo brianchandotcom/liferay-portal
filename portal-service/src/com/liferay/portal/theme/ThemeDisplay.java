@@ -49,7 +49,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.admin.util.PortalMyAccountApplicationType;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
+import com.liferay.portlet.mobiledevicerules.MDRRuleGroupInstance;
 
 import java.io.Serializable;
 
@@ -537,8 +537,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * Returns the URL for the portal instance's JavaScript resources. This
-	 * method typically returns <code>/html/js</code>.
+	 * Returns the URL for the portal instance's JavaScript resources.
 	 *
 	 * @return the URL for the portal instance's JavaScript resources
 	 */

@@ -67,7 +67,7 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 			{ "tableId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "type_", Types.INTEGER },
-			{ "defaultData", Types.VARCHAR },
+			{ "defaultData", Types.CLOB },
 			{ "typeSettings", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -78,11 +78,11 @@ public class ExpandoColumnModelImpl extends BaseModelImpl<ExpandoColumn>
 		TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("defaultData", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("defaultData", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ExpandoColumn (columnId LONG not null primary key,companyId LONG,tableId LONG,name VARCHAR(75) null,type_ INTEGER,defaultData STRING null,typeSettings TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table ExpandoColumn (columnId LONG not null primary key,companyId LONG,tableId LONG,name VARCHAR(75) null,type_ INTEGER,defaultData TEXT null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table ExpandoColumn";
 	public static final String ORDER_BY_JPQL = " ORDER BY expandoColumn.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ExpandoColumn.name ASC";

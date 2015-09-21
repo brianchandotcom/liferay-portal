@@ -299,6 +299,12 @@ public class TeamLocalServiceWrapper implements TeamLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.model.Team fetchTeam(long groupId,
+		java.lang.String name) {
+		return _teamLocalService.fetchTeam(groupId, name);
+	}
+
+	@Override
 	public com.liferay.portal.model.Team fetchTeam(long teamId) {
 		return _teamLocalService.fetchTeam(teamId);
 	}

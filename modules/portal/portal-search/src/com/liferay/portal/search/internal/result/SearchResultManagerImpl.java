@@ -121,7 +121,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 
 	private final ServiceTrackerMap<String, SearchResultManager>
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-			SearchResultManager.class, "(model.className=*)",
+			SearchResultManager.class, "(model.class.name=*)",
 			new ServiceReferenceMapper<String, SearchResultManager>() {
 
 				@Override
@@ -130,7 +130,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 					Emitter<String> emitter) {
 
 					Object modelClassName = serviceReference.getProperty(
-						"model.className");
+						"model.class.name");
 
 					emitter.emit((String)modelClassName);
 				}

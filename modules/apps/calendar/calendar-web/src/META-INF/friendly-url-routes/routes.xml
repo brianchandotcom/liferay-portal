@@ -3,13 +3,13 @@
 
 <routes>
 	<route>
+		<pattern>/event/{calendarBookingId}</pattern>
+		<implicit-parameter name="mvcPath">/view_calendar_booking.jsp</implicit-parameter>
+	</route>
+	<route>
 		<pattern>/rss/{calendarId}</pattern>
 		<ignored-parameter name="p_p_cacheability" />
 		<implicit-parameter name="p_p_lifecycle">2</implicit-parameter>
 		<implicit-parameter name="p_p_resource_id">calendarBookingsRSS</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/event/{calendarBookingId}</pattern>
-		<implicit-parameter name="mvcPath">/view_calendar_booking.jsp</implicit-parameter>
 	</route>
 </routes>

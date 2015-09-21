@@ -27,8 +27,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
 import org.elasticsearch.search.aggregations.bucket.range.Range;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 
 /**
  * @author Michael C. Han
@@ -40,8 +40,8 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 		if (aggregation instanceof Range) {
 			initialize((Range)aggregation);
 		}
-		else {
-			initialize((Terms)aggregation);
+		else if (aggregation instanceof MultiBucketsAggregation) {
+			initialize((MultiBucketsAggregation)aggregation);
 		}
 	}
 
@@ -95,10 +95,12 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 		}
 	}
 
-	protected void initialize(Terms terms) {
-		_aggregation = terms;
+	private void initialize(MultiBucketsAggregation multiBucketsAggregation) {
+		_aggregation = multiBucketsAggregation;
 
-		for (Terms.Bucket bucket : terms.getBuckets()) {
+		for (MultiBucketsAggregation.Bucket bucket :
+				multiBucketsAggregation.getBuckets()) {
+
 			Text term = bucket.getKeyAsText();
 
 			_counts.put(term.string(), (int)bucket.getDocCount());

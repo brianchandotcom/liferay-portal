@@ -2,4 +2,5 @@ Bundle-Name: Liferay Frontend JS Polyfill Babel Web
 Bundle-SymbolicName: com.liferay.frontend.js.polyfill.babel.web
 Bundle-Version: 1.0.0
 Include-Resource: classes
+JS-Config: /META-INF/resources/config.js
 Web-ContextPath: /frontend-js-polyfill-babel-web

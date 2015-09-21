@@ -21,11 +21,11 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 List<String> rankingNamesList = new ArrayList<String>();
 
-if (userStatisticsPortletInstanceConfiguration.rankByParticipation()) {
+if (socialUserStatisticsPortletInstanceConfiguration.rankByParticipation()) {
 	rankingNamesList.add(SocialActivityCounterConstants.NAME_PARTICIPATION);
 }
 
-if (userStatisticsPortletInstanceConfiguration.rankByContribution()) {
+if (socialUserStatisticsPortletInstanceConfiguration.rankByContribution()) {
 	rankingNamesList.add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 }
 
@@ -43,11 +43,11 @@ if (!rankingNamesList.isEmpty()) {
 	selectedNamesList.add(SocialActivityCounterConstants.NAME_CONTRIBUTION);
 	selectedNamesList.add(SocialActivityCounterConstants.NAME_PARTICIPATION);
 
-	if (userStatisticsPortletInstanceConfiguration.displayAdditionalActivityCounters()) {
-		int displayActivityCounterNameCount = userStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;
+	if (socialUserStatisticsPortletInstanceConfiguration.displayAdditionalActivityCounters()) {
+		int displayActivityCounterNameCount = socialUserStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;
 
 		for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameCount; displayActivityCounterNameIndex++) {
-			selectedNamesList.add(userStatisticsPortletInstanceConfiguration.displayActivityCounterName()[displayActivityCounterNameIndex]);
+			selectedNamesList.add(socialUserStatisticsPortletInstanceConfiguration.displayActivityCounterName()[displayActivityCounterNameIndex]);
 		}
 	}
 
@@ -80,7 +80,7 @@ if (!rankingNamesList.isEmpty()) {
 	}
 	%>
 
-	<c:if test="<%= userStatisticsPortletInstanceConfiguration.showHeaderText() %>">
+	<c:if test="<%= socialUserStatisticsPortletInstanceConfiguration.showHeaderText() %>">
 		<div class="top-users">
 			<c:if test="<%= total > 0 %>">
 				<liferay-ui:message arguments="<%= total %>" key="top-users-out-of-x" translateArguments="<%= false %>" /> <%= LanguageUtil.format(request, "ranking-is-based-on-x", rankingNamesMessage, false) %><br />

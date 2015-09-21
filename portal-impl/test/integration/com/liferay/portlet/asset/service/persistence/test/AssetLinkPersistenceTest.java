@@ -432,15 +432,15 @@ public class AssetLinkPersistenceTest {
 
 		AssetLink existingAssetLink = _persistence.findByPrimaryKey(newAssetLink.getPrimaryKey());
 
-		Assert.assertEquals(existingAssetLink.getEntryId1(),
-			ReflectionTestUtil.invoke(existingAssetLink, "getOriginalEntryId1",
-				new Class<?>[0]));
-		Assert.assertEquals(existingAssetLink.getEntryId2(),
-			ReflectionTestUtil.invoke(existingAssetLink, "getOriginalEntryId2",
-				new Class<?>[0]));
-		Assert.assertEquals(existingAssetLink.getType(),
-			ReflectionTestUtil.invoke(existingAssetLink, "getOriginalType",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingAssetLink.getEntryId1()),
+			ReflectionTestUtil.<Long>invoke(existingAssetLink,
+				"getOriginalEntryId1", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingAssetLink.getEntryId2()),
+			ReflectionTestUtil.<Long>invoke(existingAssetLink,
+				"getOriginalEntryId2", new Class<?>[0]));
+		Assert.assertEquals(Integer.valueOf(existingAssetLink.getType()),
+			ReflectionTestUtil.<Integer>invoke(existingAssetLink,
+				"getOriginalType", new Class<?>[0]));
 	}
 
 	protected AssetLink addAssetLink() throws Exception {

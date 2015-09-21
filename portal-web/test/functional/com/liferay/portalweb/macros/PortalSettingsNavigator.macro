@@ -4,6 +4,6 @@
 	</command>
 
 	<command name="gotoMenuAuthentication">
-		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+		<execute function="AssertClick" locator1="NavListItem#AUTHENTICATION" value1="Authentication" />
 	</command>
 </definition>

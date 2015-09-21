@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v7_0_0.util.PortletPreferencesRow;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.shopping.constants.ShoppingConstants;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,7 +36,7 @@ import java.util.Enumeration;
  * @author Sergio González
  * @author Iván Zaera
  */
-public class UpgradePortletSettings extends UpgradeProcess {
+public abstract class UpgradePortletSettings extends UpgradeProcess {
 
 	public UpgradePortletSettings() {
 		_settingsFactory = SettingsFactoryUtil.getSettingsFactory();
@@ -129,16 +128,6 @@ public class UpgradePortletSettings extends UpgradeProcess {
 		finally {
 			DataAccess.deepCleanUp(rs);
 		}
-	}
-
-	@Override
-	protected void doUpgrade() throws Exception {
-
-		// Main portlets
-
-		upgradeMainPortlet(
-			PortletKeys.SHOPPING, ShoppingConstants.SERVICE_NAME,
-			PortletKeys.PREFS_OWNER_TYPE_GROUP, false);
 	}
 
 	protected long getGroupId(long plid) throws Exception {

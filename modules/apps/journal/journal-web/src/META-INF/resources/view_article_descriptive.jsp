@@ -17,9 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalArticle article = (JournalArticle)request.getAttribute("view_entries.jsp-article");
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-PortletURL tempRowURL = (PortletURL)request.getAttribute("view_entries.jsp-tempRowURL");
+JournalArticle article = (JournalArticle)row.getObject();
+
+String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 
 JournalArticle latestApprovedArticleVersion = null;
 
@@ -57,6 +59,7 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	groupId="<%= article.getGroupId() %>"
 	latestApprovedVersion="<%= (latestApprovedArticleVersion != null) ? String.valueOf(latestApprovedArticleVersion.getVersion()) : null %>"
 	latestApprovedVersionAuthor="<%= (latestApprovedArticleVersion != null) ? String.valueOf(latestApprovedArticleVersion.getUserName()) : null %>"
+	markupView="lexicon"
 	modifiedDate="<%= article.getModifiedDate() %>"
 	reviewDate="<%= article.getReviewDate() %>"
 	rowCheckerId="<%= HtmlUtil.escape(article.getArticleId()) %>"
@@ -67,6 +70,6 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	thumbnailSrc='<%= Validator.isNotNull(articleImageURL) ? articleImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 	thumbnailStyle="max-height: 128px; max-width: 128px;"
 	title="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
-	url="<%= tempRowURL.toString() %>"
+	url="<%= href %>"
 	version="<%= String.valueOf(article.getVersion()) %>"
 />

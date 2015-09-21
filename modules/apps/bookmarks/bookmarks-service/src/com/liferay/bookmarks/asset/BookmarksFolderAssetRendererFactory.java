@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = AssetRendererFactory.class
 )
 public class BookmarksFolderAssetRendererFactory
-	extends BaseAssetRendererFactory {
+	extends BaseAssetRendererFactory<BookmarksFolder> {
 
 	public static final String TYPE = "bookmark_folder";
 
@@ -60,7 +60,8 @@ public class BookmarksFolderAssetRendererFactory
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<BookmarksFolder> getAssetRenderer(
+			long classPK, int type)
 		throws PortalException {
 
 		BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(

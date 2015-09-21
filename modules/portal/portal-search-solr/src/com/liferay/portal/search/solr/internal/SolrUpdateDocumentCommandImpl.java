@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.solr.connection.SolrClientManager;
 import com.liferay.portal.search.solr.document.SolrDocumentFactory;
@@ -100,9 +99,7 @@ public class SolrUpdateDocumentCommandImpl
 
 			UpdateResponse updateResponse = solrClient.add(solrInputDocuments);
 
-			if (PortalRunMode.isTestMode() ||
-				searchContext.isCommitImmediately()) {
-
+			if (searchContext.isCommitImmediately()) {
 				solrClient.commit();
 			}
 

@@ -732,7 +732,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 				image.setNew(false);
 			}
 			else {
-				session.merge(image);
+				image = (Image)session.merge(image);
 			}
 		}
 		catch (Exception e) {

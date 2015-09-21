@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,22 +41,36 @@ public class SearchToggleTag extends IncludeTag {
 		_id = id;
 	}
 
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_autoFocus = false;
 		_buttonLabel = null;
 		_displayTerms = null;
 		_id = null;
+		_markupView = null;
 	}
 
 	@Override
 	protected String getEndPage() {
-		return _END_PAGE;
+		if (Validator.isNotNull(_markupView)) {
+			return "/html/taglib/ui/search_toggle/" + _markupView + "/end.jsp";
+		}
+
+		return "/html/taglib/ui/search_toggle/end.jsp";
 	}
 
 	@Override
 	protected String getStartPage() {
-		return _START_PAGE;
+		if (Validator.isNotNull(_markupView)) {
+			return
+				"/html/taglib/ui/search_toggle/" + _markupView + "/start.jsp";
+		}
+
+		return "/html/taglib/ui/search_toggle/start.jsp";
 	}
 
 	@Override
@@ -69,15 +84,10 @@ public class SearchToggleTag extends IncludeTag {
 		request.setAttribute("liferay-ui:search-toggle:id", _id);
 	}
 
-	private static final String _END_PAGE =
-		"/html/taglib/ui/search_toggle/end.jsp";
-
-	private static final String _START_PAGE =
-		"/html/taglib/ui/search_toggle/start.jsp";
-
 	private boolean _autoFocus;
 	private String _buttonLabel;
 	private DisplayTerms _displayTerms;
 	private String _id;
+	private String _markupView;
 
 }

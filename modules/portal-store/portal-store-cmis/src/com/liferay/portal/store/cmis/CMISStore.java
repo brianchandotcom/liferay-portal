@@ -210,7 +210,9 @@ public class CMISStore extends BaseStore {
 		Document document = getVersionedDocument(
 			companyId, repositoryId, fileName, versionLabel);
 
-		return document.getContentStream().getStream();
+		ContentStream contentStream = document.getContentStream();
+
+		return contentStream.getStream();
 	}
 
 	@Override
@@ -348,7 +350,9 @@ public class CMISStore extends BaseStore {
 			Document document = getDocument(
 				oldVersioningFolderEntry, versionLabel);
 
-			InputStream is = document.getContentStream().getStream();
+			ContentStream contentStream = document.getContentStream();
+
+			InputStream is = contentStream.getStream();
 
 			createDocument(newVersioningFolderEntry, versionLabel, is);
 		}
@@ -383,7 +387,9 @@ public class CMISStore extends BaseStore {
 			Document document = getDocument(
 				oldVersioningFolderEntry, versionLabel);
 
-			InputStream is = document.getContentStream().getStream();
+			ContentStream contentStream = document.getContentStream();
+
+			InputStream is = contentStream.getStream();
 
 			createDocument(newVersioningFolderEntry, versionLabel, is);
 		}

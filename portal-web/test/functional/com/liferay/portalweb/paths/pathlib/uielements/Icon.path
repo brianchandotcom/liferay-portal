@@ -20,7 +20,22 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')]</td>
+	<td>//a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')] | //span[contains(@class,'icon-angle-left')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_SEARCH</td>
+	<td>//button[contains(@type,'submit')]/span[@class='icon-search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_VERTICAL_ELLIPSIS</td>
+	<td>//div[contains(@class,'portlet-content-container')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_VERTICAL_ELLIPSIS_2</td>
+	<td>xpath=(//div[contains(@class,'portlet-content-container')]//span[contains(@class,'icon-ellipsis-vertical')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,13 +54,38 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE</td>
+	<td>//a/span[contains(@class,'icon-trash')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTIVE_VERTICAL_ELLIPSIS</td>
+	<td>//li[contains(@class,'selectable') and contains(@class,'active')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS</td>
 	<td>//div[contains(.,'Details')]/span/a/i[@class='icon-file-alt']</td>
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_STYLE_DESCRIPTIVE</td>
+	<td>//a[contains(@href,'descriptive')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_ICON</td>
+	<td>//a[contains(@href,'icon')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_LIST</td>
+	<td>//a[contains(@href,'list')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
-	<td>//a[contains(@id,'editLayoutPanel') and i[contains(@class,'icon-edit')]]</td>
+	<td>//a[contains(@id,'ControlMenuPortlet') and i[contains(@class,'icon-cog')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,18 +94,58 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPIRE</td>
+	<td>//a[contains(@href,'editEntry')]/span[contains(@class,'icon-time')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FLAG</td>
 	<td>//div[contains(@class,'asset-actions')]/div[@title='Flag']/span/a</td>
 	<td></td>
 </tr>
 <tr>
+	<td>FACEBOOK</td>
+	<td>//i[contains(@class,'icon-facebook')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GOOGLE_PLUS</td>
-	<td>//span[@class='social-bookmark']//span[contains(.,'Google+')]</td>
+	<td>//i[contains(@class,'icon-google-plus')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_VERTICAL_ELLIPSIS</td>
+	<td>//header//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO</td>
+	<td>//div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_ALL_ENTRIES</td>
+	<td>//div[contains(@class,'management-bar-no-collapse on')]//a[contains(@class,'infoPanelToggler')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_VERTICAL_ELLIPSIS</td>
+	<td>//tr[contains(@class,'info')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LOCALIZED_FLAG</td>
 	<td>//li[@role='menuitem' and @data-value='${key_localizationName}']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE</td>
+	<td>//a[contains(@href,'editEntry')]/span[contains(@class,'icon-move')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENCIL</td>
+	<td>//a[contains(@class,'btn icon-monospaced btn-default')]/i[contains(@class,'icon-pencil')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,8 +159,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REMOVE</td>
+	<td>//a/i[@class='icon-remove']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REORDER</td>
+	<td>//a/i[@class='icon-reorder']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TWITTER</td>
-	<td>//span[@class='social-bookmark']//span[contains(.,'Twitter')]</td>
+	<td>//i[contains(@class,'icon-twitter')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -56,6 +56,12 @@ public class PortalServiceImpl extends PortalServiceBaseImpl {
 		return ReleaseInfo.getBuildNumber();
 	}
 
+	@JSONWebService
+	@Override
+	public String getVersion() {
+		return ReleaseInfo.getVersion();
+	}
+
 	@Override
 	public void testAddClassName_Rollback(String classNameValue) {
 		addClassName(classNameValue);

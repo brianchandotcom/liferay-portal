@@ -55,14 +55,14 @@ public class ObjectServiceTrackerMapTest {
 
 	@Before
 	public void setUp() throws BundleException {
-		_bundle.start();
+		bundle.start();
 
-		_bundleContext = _bundle.getBundleContext();
+		_bundleContext = bundle.getBundleContext();
 	}
 
 	@After
 	public void tearDown() throws BundleException {
-		_bundle.stop();
+		bundle.stop();
 
 		if (_serviceTrackerMap != null) {
 			_serviceTrackerMap.close();
@@ -506,7 +506,7 @@ public class ObjectServiceTrackerMapTest {
 	}
 
 	@ArquillianResource
-	public Bundle _bundle;
+	public Bundle bundle;
 
 	protected ServiceTrackerMap<String, TrackedOne> createServiceTrackerMap() {
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(

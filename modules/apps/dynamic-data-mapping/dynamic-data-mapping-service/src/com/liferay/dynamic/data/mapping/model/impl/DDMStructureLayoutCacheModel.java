@@ -160,7 +160,7 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 		structureVersionId = objectInput.readLong();
 		definition = objectInput.readUTF();
 
-		_ddmFormLayout = (com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout)objectInput.readObject();
+		_ddmFormLayout = (com.liferay.dynamic.data.mapping.model.DDMFormLayout)objectInput.readObject();
 	}
 
 	@Override
@@ -209,5 +209,5 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 	public long modifiedDate;
 	public long structureVersionId;
 	public String definition;
-	public com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout _ddmFormLayout;
+	public com.liferay.dynamic.data.mapping.model.DDMFormLayout _ddmFormLayout;
 }

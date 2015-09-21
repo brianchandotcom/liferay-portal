@@ -3,6 +3,7 @@ dependencies {
 	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:journal:journal-content-web")
 	compile project(":apps:journal:journal-test")
+	compile project(":portal:portal-background-task-service")
 
 	testCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0-SNAPSHOT"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "1.0.0-SNAPSHOT"

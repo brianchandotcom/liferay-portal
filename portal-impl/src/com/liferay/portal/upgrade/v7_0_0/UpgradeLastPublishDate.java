@@ -113,6 +113,10 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 
 		updateLastPublishDates("19", "MBMessage");
 
+		runSQL("alter table MBThread add lastPublishDate DATE null");
+
+		updateLastPublishDates("19", "MBThread");
+
 		runSQL("alter table MBThreadFlag add lastPublishDate DATE null");
 
 		updateLastPublishDates("19", "MBThreadFlag");
@@ -146,11 +150,11 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 	protected void upgradeRolesAdmin() throws Exception {
 		runSQL("alter table PasswordPolicy add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.ROLES_ADMIN, "PasswordPolicy");
+		updateLastPublishDates("128", "PasswordPolicy");
 
 		runSQL("alter table Role_ add lastPublishDate DATE null");
 
-		updateLastPublishDates(PortletKeys.ROLES_ADMIN, "Role_");
+		updateLastPublishDates("128", "Role_");
 	}
 
 	protected void upgradeSiteAdmin() throws Exception {
@@ -167,6 +171,10 @@ public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
 		runSQL("alter table EmailAddress add lastPublishDate DATE null");
 
 		updateLastPublishDates(PortletKeys.USERS_ADMIN, "EmailAddress");
+
+		runSQL("alter table Organization_ add lastPublishDate DATE null");
+
+		updateLastPublishDates(PortletKeys.USERS_ADMIN, "Organization_");
 
 		runSQL("alter table Phone add lastPublishDate DATE null");
 

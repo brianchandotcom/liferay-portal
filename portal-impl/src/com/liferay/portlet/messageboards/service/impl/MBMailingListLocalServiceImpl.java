@@ -16,10 +16,10 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.scheduler.CronText;
-import com.liferay.portal.kernel.scheduler.CronTrigger;
+import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -206,13 +206,9 @@ public class MBMailingListLocalServiceImpl
 
 		Calendar startDate = CalendarFactoryUtil.getCalendar();
 
-		CronText cronText = new CronText(
-			startDate, CronText.MINUTELY_FREQUENCY,
-			mailingList.getInReadInterval());
-
-		Trigger trigger = new CronTrigger(
+		Trigger trigger = new IntervalTrigger(
 			groupName, groupName, startDate.getTime(), null,
-			cronText.toString());
+			mailingList.getInReadInterval(), TimeUnit.MINUTE);
 
 		MailingListRequest mailingListRequest = new MailingListRequest();
 

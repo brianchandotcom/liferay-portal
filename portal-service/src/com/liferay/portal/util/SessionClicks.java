@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
+import java.util.ConcurrentModificationException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -43,10 +45,10 @@ public class SessionClicks {
 		String defaultValue) {
 
 		try {
-			PortalPreferences preferences =
+			PortalPreferences portalPreferences =
 				PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-			return preferences.getValue(namespace, key, defaultValue);
+			return portalPreferences.getValue(namespace, key, defaultValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -81,39 +83,48 @@ public class SessionClicks {
 		HttpServletRequest request, String namespace, String key,
 		String value) {
 
-		try {
-			if ((key.length() > _SESSION_CLICKS_MAX_SIZE_TERMS) ||
-				(value.length() > _SESSION_CLICKS_MAX_SIZE_TERMS)) {
+		if ((key.length() > _SESSION_CLICKS_MAX_SIZE_TERMS) ||
+			(value.length() > _SESSION_CLICKS_MAX_SIZE_TERMS)) {
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Session clicks has attempted to exceed the maximum " +
-							"size allowed for keys or values with {key=" + key +
-								", value=" + value + "}");
-				}
-
-				return;
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Session clicks has attempted to exceed the maximum " +
+						"size allowed for keys or values with {key=" + key +
+							", value=" + value + "}");
 			}
 
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-			int size = preferences.size();
-
-			if (size <= _SESSION_CLICKS_MAX_ALLOWED_VALUES) {
-				preferences.setValue(namespace, key, value);
-			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Session clicks has attempted to exceed the maximum " +
-							"number of allowed values with {key=" + key +
-								", value=" + value + "}");
-				}
-			}
+			return;
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+
+		while (true) {
+			try {
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+				int size = portalPreferences.size();
+
+				if (size <= _SESSION_CLICKS_MAX_ALLOWED_VALUES) {
+					portalPreferences.setValue(namespace, key, value);
+				}
+				else {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Session clicks has attempted to exceed the " +
+								"maximum number of allowed values with {key=" +
+									key + ", value=" + value + "}");
+					}
+				}
+
+				break;
+			}
+			catch (ConcurrentModificationException cme) {
+				continue;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+
+				break;
+			}
 		}
 	}
 

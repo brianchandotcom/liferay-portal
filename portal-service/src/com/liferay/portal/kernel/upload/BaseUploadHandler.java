@@ -167,8 +167,10 @@ public abstract class BaseUploadHandler implements UploadHandler {
 				getServiceContext(uploadPortletRequest));
 
 			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-
+			imageJSONObject.put("groupId", fileEntry.getGroupId());
+			imageJSONObject.put("title", fileEntry.getTitle());
 			imageJSONObject.put("url", getURL(fileEntry, themeDisplay));
+			imageJSONObject.put("uuid", fileEntry.getUuid());
 
 			return imageJSONObject;
 		}
@@ -283,7 +285,7 @@ public abstract class BaseUploadHandler implements UploadHandler {
 			String fileName, String contentType, long size)
 		throws PortalException;
 
-	protected static final String _TEMP_FOLDER_NAME =
+	protected static final String TEMP_FOLDER_NAME =
 		BaseUploadHandler.class.getName();
 
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;

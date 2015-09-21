@@ -39,7 +39,7 @@ public class SelectCategoryMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/portlet/message_boards/select_category.jsp";
+		return "/message_boards/select_category.jsp";
 	}
 
 }

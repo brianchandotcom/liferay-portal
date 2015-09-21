@@ -1,11 +1,6 @@
 /* ---------- Scope selection ---------- */
 
 .current-scope {
-	background-color: $scoped-line-bg-color;
-	border: 1px solid #DEE;
-	margin: -1px;
-	padding: 0;
-
 	.line-number {
 		opacity: 0.8;
 	}
@@ -28,6 +23,10 @@
 		}
 	}
 
+	&.macro > .btn-container .line-number {
+		opacity: 0.2;
+	}
+
 	.macro {
 		> .btn-container .line-number {
 			opacity: 0.8;
@@ -47,29 +46,11 @@
 	}
 }
 
-.hover.current-scope {
-	background-color: $scoped-line-bg-color;
-}
-
-.current-scope, .fail {
-	&:after {
-		content: ' ';
-		height: 7px;
-		margin-top: -30px;
-		position: absolute;
-		width: 100%;
-	}
-}
-
 .transitioning .current-scope:after {
 	opacity: 0;
 }
 
 .hover {
-	background-color: rgba(74, 220, 231, 0.46);
-	border: 1px solid #FFF;
-	padding: 0;
-
 	> {
 		.btn-container .line-number, .line-container .line-number {
 			opacity: 1;
@@ -81,24 +62,8 @@
 	}
 }
 
-.pass.hover, .fail.hover {
-	> .btn-container {
-		margin: 1px 0;
-	}
-}
-
-.pending.hover > .btn-container {
-	margin: 0;
-}
-
 .marco.current-scope > {
 	.btn-container .line-number, .line-container .line-number {
 		opacity: 0.2;
-	}
-}
-
-.current-scope, .hover {
-	.fail .line-container {
-		background-color: #EE6C39;
 	}
 }

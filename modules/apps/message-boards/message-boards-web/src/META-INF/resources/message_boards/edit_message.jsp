@@ -349,9 +349,9 @@ else {
 									<aui:input id='<%= "existingPath" + (i + 1) %>' name='<%= "existingPath" + (i + 1) %>' type="hidden" value="<%= fileEntry.getFileEntryId() %>" />
 
 									<%
-									AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+									AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
-									AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
+									AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 									%>
 
 									<liferay-ui:icon
@@ -516,7 +516,7 @@ else {
 	}
 
 	function <portlet:namespace />previewMessage() {
-		<c:if test="<%= ((message != null) && !message.isDraft()) %>">
+		<c:if test="<%= (message != null) && !message.isDraft() %>">
 			if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-message-is-saved-as-a-draft-and-other-users-may-not-be-able-to-see-it" />')) {
 				return false;
 			}

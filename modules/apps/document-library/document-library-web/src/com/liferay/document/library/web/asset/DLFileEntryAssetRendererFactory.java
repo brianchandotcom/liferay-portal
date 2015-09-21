@@ -16,6 +16,7 @@ package com.liferay.document.library.web.asset;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -34,8 +35,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
@@ -48,6 +49,7 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -63,7 +65,8 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = AssetRendererFactory.class
 )
-public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
+public class DLFileEntryAssetRendererFactory
+	extends BaseAssetRendererFactory<FileEntry> {
 
 	public static final String TYPE = "document";
 
@@ -74,21 +77,22 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<FileEntry> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		FileEntry fileEntry = null;
+		FileEntry fileEntry = _dlAppLocalService.getFileEntry(classPK);
+
 		FileVersion fileVersion = null;
 
 		if (type == TYPE_LATEST) {
-			fileVersion = DLAppLocalServiceUtil.getFileVersion(classPK);
-
-			fileEntry = fileVersion.getFileEntry();
+			fileVersion = fileEntry.getLatestFileVersion();
+		}
+		else if (type == TYPE_LATEST_APPROVED) {
+			fileVersion = fileEntry.getFileVersion();
 		}
 		else {
-			fileEntry = DLAppLocalServiceUtil.getFileEntry(classPK);
-
-			fileVersion = fileEntry.getFileVersion();
+			throw new IllegalArgumentException(
+				"Unknown asset renderer type " + type);
 		}
 
 		DLFileEntryAssetRenderer dlFileEntryAssetRenderer =
@@ -115,6 +119,11 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
+	public String getSubtypeTitle(Locale locale) {
+		return LanguageUtil.get(locale, "type");
+	}
+
+	@Override
 	public String getType() {
 		return TYPE;
 	}
@@ -123,7 +132,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	public String getTypeName(Locale locale, long subtypeId) {
 		try {
 			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.getFileEntryType(subtypeId);
+				_dlFileEntryTypeLocalService.getFileEntryType(subtypeId);
 
 			return dlFileEntryType.getName(locale);
 		}
@@ -211,5 +220,20 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/clip.png";
 	}
+
+	@Reference(unbind = "-")
+	protected void setDLAppLocalService(DLAppLocalService dlAppLocalService) {
+		_dlAppLocalService = dlAppLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setDLFileEntryTypeLocalService(
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
+
+		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+	}
+
+	private DLAppLocalService _dlAppLocalService;
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 }

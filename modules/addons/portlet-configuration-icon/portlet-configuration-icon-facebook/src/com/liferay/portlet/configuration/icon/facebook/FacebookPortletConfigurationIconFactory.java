@@ -14,8 +14,9 @@
 
 package com.liferay.portlet.configuration.icon.facebook;
 
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIconFactory;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
+import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIconFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = PortletConfigurationIconFactory.class)
 public class FacebookPortletConfigurationIconFactory
-	implements PortletConfigurationIconFactory {
+	extends BasePortletConfigurationIconFactory {
 
 	@Override
 	public PortletConfigurationIcon create(HttpServletRequest request) {

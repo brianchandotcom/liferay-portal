@@ -227,7 +227,7 @@
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>LANGUAGE_SELECT</td>
-	<td>//select[@id='_2_languageId']</td>
+	<td>//select[contains(@id,'MyAccountPortlet') and contains(@id,'languageId')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -613,8 +613,8 @@ public class PortalUtil {
 		return getPortal().getCompanyIds();
 	}
 
-	public static String getComputerAddress() {
-		return getPortal().getComputerAddress();
+	public static Set<String> getComputerAddresses() {
+		return getPortal().getComputerAddresses();
 	}
 
 	public static String getComputerName() {

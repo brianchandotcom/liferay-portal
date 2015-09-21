@@ -22,7 +22,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="AddCategorywithLocalization" priority="4">
+	<command known-issues="LPS-58038" name="AddCategorywithLocalization" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -163,7 +163,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56956" name="AddCategorywithSiteRole" priority="4">
+	<command name="AddCategorywithSiteRole" priority="4">
 		<var name="pageName" value="Test Page Name" />
 		<var name="siteName" value="Test Site Name" />
 
@@ -457,7 +457,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56956" name="DeletePartialCategory" priority="4">
+	<command name="DeletePartialCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -789,15 +789,15 @@
 		<if>
 			<equals arg1="${exportPermissions}" arg2="true" />
 			<then>
-				<execute function="Check" locator1="CPSitepagesExport#PERMISSIONS_CHECKBOX" />
+				<execute function="Check" locator1="Checkbox#PERMISSIONS" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
+		<execute function="AssertClick" locator1="SitePagesExport#EXPORT_BUTTON" value1="Export" />
 
 		<var name="key_larFileName" value="${larFileName}" />
 
-		<execute function="AssertTextEquals" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
+		<execute function="AssertTextEquals" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_STATUS" value1="Successful" />
 
 		<var method="selenium#getText('//tr/td[5]/span/a')" name="valueName" />
 
@@ -807,7 +807,7 @@
 
 		<echo message="lar file name ${larFileName}" />
 
-		<execute function="Click" locator1="CPSitepagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
+		<execute function="Click" locator1="SitePagesExport#CURRENT_AND_PREVIOUS_DOWNLOAD" />
 		<execute function="DownloadTempFile" />
 		<execute function="SelectFrame" value1="relative=top" />
 

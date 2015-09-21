@@ -84,6 +84,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-field-types', 'queue']
+		requires: ['liferay-ddm-form-renderer-types', 'queue']
 	}
 );

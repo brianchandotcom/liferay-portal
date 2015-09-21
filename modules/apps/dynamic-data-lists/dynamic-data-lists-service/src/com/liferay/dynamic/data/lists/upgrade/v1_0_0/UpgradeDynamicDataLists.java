@@ -235,8 +235,7 @@ public class UpgradeDynamicDataLists extends UpgradeProcess {
 		_ddmContentClassNameId = PortalUtil.getClassNameId(DDMContent.class);
 
 		_expandoStorageAdapterClassNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.storage." +
-				"ExpandoStorageAdapter");
+			"com.liferay.portlet.dynamicdatamapping.ExpandoStorageAdapter");
 	}
 
 	protected String toXML(Map<String, String> expandoValuesMap) {

@@ -1,45 +1,45 @@
 create index IX_E3BAF436 on DDMContent (companyId);
 create index IX_50BF1038 on DDMContent (groupId);
-create index IX_3A9C0626 on DDMContent (uuid_, companyId);
-create unique index IX_EB9BDE28 on DDMContent (uuid_, groupId);
+create index IX_3A9C0626 on DDMContent (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_EB9BDE28 on DDMContent (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_702D1AD5 on DDMStorageLink (classPK);
 create index IX_81776090 on DDMStorageLink (structureId);
-create index IX_32A18526 on DDMStorageLink (uuid_);
+create index IX_32A18526 on DDMStorageLink (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_31817A62 on DDMStructure (classNameId);
 create index IX_4FBAC092 on DDMStructure (companyId, classNameId);
-create unique index IX_C8785130 on DDMStructure (groupId, classNameId, structureKey);
+create unique index IX_C8785130 on DDMStructure (groupId, classNameId, structureKey[$COLUMN_LENGTH:75$]);
 create index IX_43395316 on DDMStructure (groupId, parentStructureId);
 create index IX_657899A8 on DDMStructure (parentStructureId);
-create index IX_20FDE04C on DDMStructure (structureKey);
-create index IX_F9FB8D60 on DDMStructure (uuid_, companyId);
-create unique index IX_85C7EBE2 on DDMStructure (uuid_, groupId);
+create index IX_20FDE04C on DDMStructure (structureKey[$COLUMN_LENGTH:75$]);
+create index IX_F9FB8D60 on DDMStructure (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_85C7EBE2 on DDMStructure (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_B7158C0A on DDMStructureLayout (structureVersionId);
-create index IX_A90FF72A on DDMStructureLayout (uuid_, companyId);
-create unique index IX_C9A0402C on DDMStructureLayout (uuid_, groupId);
+create index IX_A90FF72A on DDMStructureLayout (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_C9A0402C on DDMStructureLayout (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_E43143A3 on DDMStructureLink (classNameId, classPK, structureId);
 create index IX_17692B58 on DDMStructureLink (structureId);
 
 create index IX_17B3C96C on DDMStructureVersion (structureId, status);
-create unique index IX_64C3C42 on DDMStructureVersion (structureId, version);
+create unique index IX_64C3C42 on DDMStructureVersion (structureId, version[$COLUMN_LENGTH:75$]);
 
-create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_);
+create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_[$COLUMN_LENGTH:75$]);
 create index IX_32F83D16 on DDMTemplate (classPK);
-create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_, mode_);
-create unique index IX_E6DFAB84 on DDMTemplate (groupId, classNameId, templateKey);
+create index IX_F0C3449 on DDMTemplate (groupId, classNameId, classPK, type_[$COLUMN_LENGTH:75$], mode_[$COLUMN_LENGTH:75$]);
+create unique index IX_E6DFAB84 on DDMTemplate (groupId, classNameId, templateKey[$COLUMN_LENGTH:75$]);
 create index IX_B1C33EA6 on DDMTemplate (groupId, classPK);
-create index IX_33BEF579 on DDMTemplate (language);
+create index IX_33BEF579 on DDMTemplate (language[$COLUMN_LENGTH:75$]);
 create index IX_127A35B0 on DDMTemplate (smallImageId);
-create index IX_CAE41A28 on DDMTemplate (templateKey);
-create index IX_C4F283C8 on DDMTemplate (type_);
-create index IX_D4C2C221 on DDMTemplate (uuid_, companyId);
-create unique index IX_1AA75CE3 on DDMTemplate (uuid_, groupId);
+create index IX_CAE41A28 on DDMTemplate (templateKey[$COLUMN_LENGTH:75$]);
+create index IX_C4F283C8 on DDMTemplate (type_[$COLUMN_LENGTH:75$]);
+create index IX_D4C2C221 on DDMTemplate (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_1AA75CE3 on DDMTemplate (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_6F3B3E9C on DDMTemplateLink (classNameId, classPK);
 create index IX_85278170 on DDMTemplateLink (templateId);
 
 create index IX_66382FC6 on DDMTemplateVersion (templateId, status);
-create unique index IX_8854A128 on DDMTemplateVersion (templateId, version);
+create unique index IX_8854A128 on DDMTemplateVersion (templateId, version[$COLUMN_LENGTH:75$]);

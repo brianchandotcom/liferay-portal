@@ -15,6 +15,8 @@
 package com.liferay.blogs.web.upload;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -59,8 +61,15 @@ public class ImageBlogsUploadHandler extends BaseBlogsUploadHandler {
 				groupId, folder.getFolderId(), fileName);
 		}
 		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+
 			return null;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImageBlogsUploadHandler.class);
 
 }

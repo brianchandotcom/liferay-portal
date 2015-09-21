@@ -36,7 +36,7 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[1]/input[@name='_191_rowIds']</td>
+	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[1]/input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -57,7 +57,7 @@
 <!--USER_GROUPS_TABLE-->
 <tr>
 	<td>USER_GROUPS_TABLE_CHECKBOX</td>
-	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[1]/input[@name='_191_rowIds']</td>
+	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[1]/input[contains(@name,'rowIds')]</td>
 	<td></td>
 </tr>
 <tr>

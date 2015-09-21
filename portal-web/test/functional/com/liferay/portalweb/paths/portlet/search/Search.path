@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[contains(@name,'SearchPortlet_keywords')]</td>
+	<td>//input[contains(@id,'searchkeywords')] | //input[contains(@name,'SearchPortlet_keywords')]</td>
 	<td></td>
 </tr>
 <tr>

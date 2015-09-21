@@ -1,23 +1,27 @@
 /* ---------- Buttons ---------- */
 
 .btn-command-log, .btn-error, .btn-jump-to-error, .btn-screenshot, .btn-sidebar {
-	font-family: 'FontAwesome';
+	font-family: 'FontAwesome' !important;
 }
 
 .xml-log, .sidebar-btn-container {
 	.btn {
-		background: transparent;
-		border-width: 0;
+		background-color: transparentize($off-white, 0.84);
+		border: 1px solid $button-border-color;
+		border-radius: 4px;
+		color: $neutral;
 		cursor: pointer;
 		font-size: 10px;
-		height: 28px;
+		height: 32px;
 		left: 0;
-		margin: auto;
+		line-height: 1em;
+		margin-right: 5px;
+		opacity: 0.6;
 		outline: none;
-		padding: 2px;
+		padding: 0;
 		text-align: center;
-		transition: all 0.2s ease;
-		width: 28px;
+		transition: opacity 0.2s ease;
+		width: 32px;
 
 		&:active:focus, &:focus, &:hover {
 			box-shadow: none;
@@ -25,44 +29,42 @@
 		}
 
 		.btn-content {
-			transition: all 0.2s ease;
+			transition: transform 0.2s ease;
 		}
 
 		&:hover {
-			background-color: $button-hover-bg-color;
-
-			&.btn-content {
-				transform: scale(1.3, 1.3);
-			}
+			opacity: 1;
 		}
 
 		&.toggle {
 			background-color: $button-toggle-bg-color;
+		}
+
+		&.btn-sidebar {
+			&:before {
+				transform: rotate(180deg);
+				transition: transform 0.5s ease-in-out;
+			}
+
+			&.toggle:before {
+				transform: rotate(0);
+			}
 		}
 	}
 }
 
 .xml-log {
 	.btn-error, .btn-screenshot {
+		background-color: transparentize($failed-color, 0.84);
 		border-color: $button-error-color;
 		bottom: 0;
-		color: $button-error-color;
+		color: $button-error-border-color;
 		display: inline-block;
+		font-family: $monospaced-font;
 		font-size: 17px;
-		margin-top: 1px;
-
-		&:focus, &:hover {
-			background-color: transparent;
-			color: $button-error-color;
-		}
 
 		&.toggle {
-			background: $button-error-color;
-			color: $body-bg-color;
-
-			&:hover {
-				background-color: $button-error-color;
-			}
+			background: $button-error-toggle-bg-color;
 		}
 	}
 }
@@ -76,27 +78,12 @@
 	width: 28px;
 
 	.btn {
-		color: $global-button-color;
 		font-size: 20px;
-		line-height: 25px;
+		line-height: 1em;
 		margin: 5px 15px;
-
-		&.toggle {
-			background-color: $global-button-toggle-bg-color;
-		}
-
-		&:hover {
-			background-color: $global-button-hover-bg-color;
-		}
 	}
 
 	.btn-command-log {
-		&.toggle {
-			background-color: $global-button-color;
-			border-color: $global-button-color;
-			color: $command-log-toggle-button-toggle-color;
-		}
-
 		&:before {
 			content: '\f126';
 		}
@@ -138,13 +125,17 @@
 
 .btn-var:before {
 	content: 'var';
-	font-family: $xml-log-font;
+	font-family: $monospaced-font;
 }
 
 .btn-error .btn-content:before {
-	content: '\f071';
+	content: '!';
 }
 
 .btn-screenshot .btn-content:before {
 	content: '\f108';
+}
+
+.btn-screenshot {
+	display: none !important;
 }

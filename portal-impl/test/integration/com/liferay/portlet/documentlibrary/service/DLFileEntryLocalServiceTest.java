@@ -30,23 +30,47 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
+import com.liferay.portlet.dynamicdatamapping.UnlocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.Value;
+import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
+import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.model.ExpandoColumnConstants;
+import com.liferay.portlet.expando.model.ExpandoTable;
+import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
+import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -74,6 +98,97 @@ public class DLFileEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testCopyFileEntry() throws Exception {
+		ExpandoTable expandoTable =
+			ExpandoTableLocalServiceUtil.addDefaultTable(
+				PortalUtil.getDefaultCompanyId(), DLFileEntry.class.getName());
+
+		ExpandoColumnLocalServiceUtil.addColumn(
+			expandoTable.getTableId(), "ExpandoAttributeName",
+			ExpandoColumnConstants.STRING, StringPool.BLANK);
+
+		try {
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId());
+
+			Folder folder = DLAppServiceUtil.addFolder(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				serviceContext);
+
+			long fileEntryTypeId = populateServiceContextFileEntryType(
+				serviceContext);
+
+			Map<String, Serializable> expandoBridgeAttributes = new HashMap<>();
+
+			expandoBridgeAttributes.put(
+				"ExpandoAttributeName", "ExpandoAttributeValue");
+
+			serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				folder.getFolderId(), RandomTestUtil.randomString(),
+				ContentTypes.TEXT_PLAIN,
+				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+				serviceContext);
+
+			serviceContext = ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+			Folder destinationFolder = DLAppServiceUtil.addFolder(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				serviceContext);
+
+			DLFileEntry copyFileEntry =
+				DLFileEntryLocalServiceUtil.copyFileEntry(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					_group.getGroupId(), fileEntry.getFileEntryId(),
+					destinationFolder.getFolderId(), serviceContext);
+
+			ExpandoBridge expandoBridge = copyFileEntry.getExpandoBridge();
+
+			String attributeValue = GetterUtil.getString(
+				expandoBridge.getAttribute("ExpandoAttributeName"));
+
+			Assert.assertEquals("ExpandoAttributeValue", attributeValue);
+			Assert.assertEquals(
+				fileEntryTypeId, copyFileEntry.getFileEntryTypeId());
+
+			DLFileVersion copyDLFileVersion = copyFileEntry.getFileVersion();
+
+			List<DDMStructure> copyDDMStructures =
+				copyDLFileVersion.getDDMStructures();
+
+			DDMStructure copyDDMStructure = copyDDMStructures.get(0);
+
+			DLFileEntryMetadata dlFileEntryMetadata =
+				DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(
+					copyDDMStructure.getStructureId(),
+					copyDLFileVersion.getFileVersionId());
+
+			DDMFormValues copyDDMFormValues =
+				StorageEngineManagerUtil.getDDMFormValues(
+					dlFileEntryMetadata.getDDMStorageId());
+
+			List<DDMFormFieldValue> ddmFormFieldValues =
+				copyDDMFormValues.getDDMFormFieldValues();
+
+			DDMFormFieldValue ddmFormFieldValue = ddmFormFieldValues.get(0);
+
+			Value value = ddmFormFieldValue.getValue();
+
+			Assert.assertEquals("Text1", ddmFormFieldValue.getName());
+			Assert.assertEquals("Text 1 Value", value.getString(LocaleUtil.US));
+		}
+		finally {
+			ExpandoTableLocalServiceUtil.deleteTable(expandoTable);
+		}
+	}
+
+	@Test
 	public void testDeleteFileEntries() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -88,7 +203,8 @@ public class DLFileEntryLocalServiceTest {
 			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
-				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+				ContentTypes.TEXT_PLAIN,
+				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 				serviceContext);
 
 			LocalRepository localRepository =
@@ -104,7 +220,8 @@ public class DLFileEntryLocalServiceTest {
 			DLAppLocalServiceUtil.addFileEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				folder.getFolderId(), RandomTestUtil.randomString(),
-				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+				ContentTypes.TEXT_PLAIN,
+				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 				serviceContext);
 		}
 
@@ -121,7 +238,8 @@ public class DLFileEntryLocalServiceTest {
 	public void testGetMisversionedFileEntries() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		byte[] bytes = RandomTestUtil.randomBytes();
+		byte[] bytes = RandomTestUtil.randomBytes(
+			TikaSafeRandomizerBumper.INSTANCE);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
@@ -172,7 +290,8 @@ public class DLFileEntryLocalServiceTest {
 	public void testGetNoAssetEntries() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		byte[] bytes = RandomTestUtil.randomBytes();
+		byte[] bytes = RandomTestUtil.randomBytes(
+			TikaSafeRandomizerBumper.INSTANCE);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
@@ -217,7 +336,8 @@ public class DLFileEntryLocalServiceTest {
 	public void testGetOrphanedFileEntries() throws Exception {
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		byte[] bytes = RandomTestUtil.randomBytes();
+		byte[] bytes = RandomTestUtil.randomBytes(
+			TikaSafeRandomizerBumper.INSTANCE);
 
 		InputStream is = new ByteArrayInputStream(bytes);
 
@@ -259,6 +379,75 @@ public class DLFileEntryLocalServiceTest {
 
 			SearchEngineUtil.setIndexReadOnly(indexReadOnly);
 		}
+	}
+
+	protected DDMForm createDDMForm() {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.addAvailableLocale(LocaleUtil.US);
+
+		DDMFormField ddmFormField = new DDMFormField("Text1", "text");
+
+		ddmFormField.setDataType("string");
+
+		LocalizedValue label = new LocalizedValue(LocaleUtil.US);
+
+		label.addString(LocaleUtil.US, "Text1");
+
+		ddmFormField.setLabel(label);
+		ddmFormField.setLocalizable(false);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		ddmForm.setDefaultLocale(LocaleUtil.US);
+
+		return ddmForm;
+	}
+
+	protected DDMFormValues createDDMFormValues() throws Exception {
+		DDMForm ddmForm = createDDMForm();
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.addAvailableLocale(LocaleUtil.US);
+
+		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
+
+		ddmFormFieldValue.setInstanceId("baga");
+		ddmFormFieldValue.setName("Text1");
+		ddmFormFieldValue.setValue(new UnlocalizedValue("Text 1 Value"));
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		ddmFormValues.setDefaultLocale(LocaleUtil.US);
+
+		return ddmFormValues;
+	}
+
+	protected long populateServiceContextFileEntryType(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group.getGroupId(), DLFileEntryMetadata.class.getName(), "0",
+			createDDMForm(), LocaleUtil.US, serviceContext);
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				new long[] {ddmStructure.getStructureId()}, serviceContext);
+
+		serviceContext.setAttribute(
+			"fileEntryTypeId", dlFileEntryType.getFileEntryTypeId());
+
+		DDMFormValues ddmFormValues = createDDMFormValues();
+
+		serviceContext.setAttribute(
+			DDMFormValues.class.getName() + ddmStructure.getStructureId(),
+			ddmFormValues);
+
+		return dlFileEntryType.getFileEntryTypeId();
 	}
 
 	@DeleteAfterTestRun

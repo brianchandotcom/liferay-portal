@@ -205,7 +205,7 @@ public abstract class BaseRequestHelper {
 		if (_resourcePortletName == null) {
 			String portletResource = getPortletResource();
 
-			if (Validator.isNull(portletResource)) {
+			if (Validator.isNotNull(portletResource)) {
 				_resourcePortletName = portletResource;
 			}
 			else {

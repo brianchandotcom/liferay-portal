@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GENDER</td>
+	<td>//div[label[contains(.,'Gender')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER</td>
 	<td>//div[label[contains(.,'Header')]]/select</td>
 	<td></td>
@@ -59,11 +64,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MAXIMUM_FAILURE</td>
-	<td>//div[label[contains(.,'Maximum Failure')]]/select</td>
-	<td></td>
-</tr>
-<tr>
 	<td>MINIMUM_AGE</td>
 	<td>//div[label[contains(.,'Minimum Age')]]/select</td>
 	<td></td>
@@ -71,6 +71,16 @@
 <tr>
 	<td>NESTED_CHILDREN</td>
 	<td>//div[label[contains(.,'Nested Children')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_NODE</td>
+	<td>//div[label[contains(.,'New Node')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PARENT</td>
+	<td>//div[label[contains(.,'New Parent')]]/select</td>
 	<td></td>
 </tr>
 <tr>

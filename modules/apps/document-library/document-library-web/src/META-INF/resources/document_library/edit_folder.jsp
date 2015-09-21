@@ -48,7 +48,7 @@ boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHan
 List<WorkflowDefinition> workflowDefinitions = null;
 
 if (workflowEnabled) {
-	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
+	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 }
 %>
 
@@ -79,7 +79,21 @@ if (workflowEnabled) {
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-folder-name" />
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
-	<liferay-ui:error exception="<%= FolderNameException.class %>" message="please-enter-a-valid-name" />
+
+	<liferay-ui:error exception="<%= FolderNameException.class %>">
+		<p>
+			<liferay-ui:message arguments="<%= new String[] {DLFolderConstants.NAME_LABEL, DLFolderConstants.NAME_GENERAL_RESTRICTIONS, DLFolderConstants.getNameReservedWords(PropsValues.DL_NAME_BLACKLIST)} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
+		</p>
+
+		<p>
+			<liferay-ui:message arguments="<%= new String[] {DLFolderConstants.getNameInvalidEndCharacters(PropsValues.DL_CHAR_LAST_BLACKLIST)} %>" key="the-folder-name-cannot-end-with-the-following-characters-x" />
+		</p>
+
+		<p>
+			<liferay-ui:message arguments="<%= new String[] {DLFolderConstants.NAME_LABEL, DLFolderConstants.getNameInvalidCharacters(PropsValues.DL_CHAR_BLACKLIST)} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
+		</p>
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="please-select-a-document-type" />
 
 	<aui:model-context bean="<%= folder %>" model="<%= DLFolder.class %>" />

@@ -427,15 +427,15 @@ public class ModulePersistenceTest {
 
 		Module existingModule = _persistence.findByPrimaryKey(newModule.getPrimaryKey());
 
-		Assert.assertEquals(existingModule.getAppId(),
-			ReflectionTestUtil.invoke(existingModule, "getOriginalAppId",
+		Assert.assertEquals(Long.valueOf(existingModule.getAppId()),
+			ReflectionTestUtil.<Long>invoke(existingModule, "getOriginalAppId",
 				new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingModule.getContextName(),
 				ReflectionTestUtil.invoke(existingModule,
 					"getOriginalContextName", new Class<?>[0])));
 
-		Assert.assertEquals(existingModule.getAppId(),
-			ReflectionTestUtil.invoke(existingModule, "getOriginalAppId",
+		Assert.assertEquals(Long.valueOf(existingModule.getAppId()),
+			ReflectionTestUtil.<Long>invoke(existingModule, "getOriginalAppId",
 				new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingModule.getBundleSymbolicName(),

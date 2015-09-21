@@ -33,12 +33,12 @@
 <!--SITES_TABLE-->
 <tr>
 	<td>SITES_TABLE_NAME</td>
-	<td>//div[@id='_134_groupsSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[1]</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITES_TABLE_TYPE</td>
-	<td>//div[@id='_134_groupsSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[2]</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>

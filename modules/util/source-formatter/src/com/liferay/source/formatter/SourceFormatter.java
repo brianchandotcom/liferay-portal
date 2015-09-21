@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.source.formatter.util.GitUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +56,37 @@ public class SourceFormatter {
 
 			sourceFormatterArgs.setBaseDirName(baseDirName);
 
+			boolean formatCurrentBranch = GetterUtil.getBoolean(
+				arguments.get("format.current.branch"),
+				SourceFormatterArgs.FORMAT_CURRENT_BRANCH);
+
+			sourceFormatterArgs.setFormatCurrentBranch(formatCurrentBranch);
+
+			boolean formatLatestAuthor = GetterUtil.getBoolean(
+				arguments.get("format.latest.author"),
+				SourceFormatterArgs.FORMAT_LATEST_AUTHOR);
+
+			sourceFormatterArgs.setFormatLatestAuthor(formatLatestAuthor);
+
+			boolean formatLocalChanges = GetterUtil.getBoolean(
+				arguments.get("format.local.changes"),
+				SourceFormatterArgs.FORMAT_LOCAL_CHANGES);
+
+			sourceFormatterArgs.setFormatLocalChanges(formatLocalChanges);
+
+			if (formatCurrentBranch) {
+				sourceFormatterArgs.setRecentChangesFileNames(
+					GitUtil.getCurrentBranchFileNames(baseDirName));
+			}
+			else if (formatLatestAuthor) {
+				sourceFormatterArgs.setRecentChangesFileNames(
+					GitUtil.getLatestAuthorFileNames(baseDirName));
+			}
+			else if (formatLocalChanges) {
+				sourceFormatterArgs.setRecentChangesFileNames(
+					GitUtil.getLocalChangesFileNames(baseDirName));
+			}
+
 			String copyrightFileName = GetterUtil.getString(
 				arguments.get("source.copyright.file"),
 				SourceFormatterArgs.COPYRIGHT_FILE_NAME);
@@ -90,6 +122,11 @@ public class SourceFormatter {
 				sourceFormatterArgs);
 
 			sourceFormatter.format();
+		}
+		catch (GitException ge) {
+			System.out.println(ge.getMessage());
+
+			System.exit(0);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);

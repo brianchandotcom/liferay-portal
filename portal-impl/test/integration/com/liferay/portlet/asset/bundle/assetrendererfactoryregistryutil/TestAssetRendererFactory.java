@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.bundle.assetrendererfactoryregistryutil;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -40,7 +41,8 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {"service.ranking:Integer=" + Integer.MAX_VALUE}
 )
-public class TestAssetRendererFactory implements AssetRendererFactory {
+public class TestAssetRendererFactory
+	implements AssetRendererFactory<TestAssetRendererModel> {
 
 	@Override
 	public AssetEntry getAssetEntry(long assetEntryId) {
@@ -53,17 +55,23 @@ public class TestAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK) {
+	public AssetRenderer<TestAssetRendererModel> getAssetRenderer(
+		long classPK) {
+
 		return null;
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type) {
+	public AssetRenderer<TestAssetRendererModel> getAssetRenderer(
+		long classPK, int type) {
+
 		return null;
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long groupId, String urlTitle) {
+	public AssetRenderer<TestAssetRendererModel> getAssetRenderer(
+		long groupId, String urlTitle) {
+
 		return null;
 	}
 
@@ -123,6 +131,11 @@ public class TestAssetRendererFactory implements AssetRendererFactory {
 	@Override
 	public String getPortletId() {
 		return null;
+	}
+
+	@Override
+	public String getSubtypeTitle(Locale locale) {
+		return StringPool.BLANK;
 	}
 
 	@Override

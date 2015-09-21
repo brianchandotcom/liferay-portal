@@ -33,6 +33,10 @@ import org.osgi.service.component.annotations.Component;
 )
 public class IncorrectWhitespace {
 
+	public boolean isGif() {
+		return true;
+	}
+
 	public void method1(String s1, String s2, String s3, String s4) {
 		String s5 = s1;
 
@@ -45,6 +49,10 @@ public class IncorrectWhitespace {
 		}
 
 		String s9 = s5;
+
+		if (isGif()) {
+			return;
+		}
 	}
 
 	/**

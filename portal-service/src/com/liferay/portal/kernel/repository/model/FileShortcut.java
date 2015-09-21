@@ -36,6 +36,8 @@ public interface FileShortcut
 
 	public long getFolderId();
 
+	public long getRepositoryId();
+
 	public long getToFileEntryId();
 
 	public String getToTitle();

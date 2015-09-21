@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  Copyright (c) 2008-2011, Piccolo2D project, http://piccolo2d.org
+  Copyright (c) 1998-2008, University of Maryland
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without modification, are permitted provided
+  that the following conditions are met:
+
+  Redistributions of source code must retain the above copyright notice, this list of conditions
+  and the following disclaimer.
+
+  Redistributions in binary form must reproduce the above copyright notice, this list of conditions
+  and the following disclaimer in the documentation and/or other materials provided with the
+  distribution.
+
+  None of the name of the University of Maryland, the name of the Piccolo2D project, or the names of its
+  contributors may be used to endorse or promote products derived from this software without specific
+  prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
+  WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+  PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+  ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+  TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.piccolo2d</groupId>
+  <artifactId>piccolo2d-parent</artifactId>
+  <version>1.3.1</version>
+  <packaging>pom</packaging>
+  <name>Piccolo2D Parent</name>
+  <description>A revolutionary way to create robust, full-featured graphical applications in Java and C#, with striking visual effects such as zooming, animation and multiple representations.</description>
+  <properties>
+    <jdk.version>1.4</jdk.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
+    <httpbase>http://www.piccolo2d.org/java</httpbase>
+    <httpsitebase>${httpbase}/site</httpsitebase>
+    <!--
+      ftpbase>ftp://jcurl.org</ftpbase>
+      <ftpsitebase>${ftpbase}/site</ftpsitebase
+    -->
+    <scpbase>
+      <!--
+        @TODO Will, is there ssh access to the website? Required for
+        artifact upload.
+      -->
+    </scpbase>
+    <scpsitebase>
+      <!--
+        @TODO Will, is there ssh access to the website? Required for maven
+        site upload.
+      -->
+    </scpsitebase>
+  </properties>
+  <url>${httpsitebase}/${project.artifactId}/${project.version}</url>
+  <issueManagement>
+    <system>Google Code</system>
+    <url>http://code.google.com/p/piccolo2d/issues/list</url>
+  </issueManagement>
+  <inceptionYear>1995</inceptionYear>
+  <ciManagement>
+    <system>hudson</system>
+    <url>http://allain.homelinux.org:2121/</url>
+  </ciManagement>
+  <mailingLists>
+    <mailingList>
+      <name>Piccolo2D Announce</name>
+      <subscribe>http://groups.google.com/group/piccolo2d-announce/subscribe</subscribe>
+      <post>piccolo2d-announce@googlegroups.com</post>
+      <archive>http://groups.google.com/group/piccolo2d-announce</archive>
+    </mailingList>
+    <mailingList>
+      <name>Piccolo2D Users</name>
+      <subscribe>http://groups.google.com/group/piccolo2d-users/subscribe</subscribe>
+      <post>piccolo2d-users@googlegroups.com</post>
+      <archive>http://groups.google.com/group/piccolo2d-users</archive>
+    </mailingList>
+    <mailingList>
+      <name>Piccolo2D Dev</name>
+      <subscribe>http://groups.google.com/group/piccolo2d-dev/subscribe</subscribe>
+      <post>piccolo2d-dev@googlegroups.com</post>
+      <archive>http://groups.google.com/group/piccolo2d-dev</archive>
+    </mailingList>
+  </mailingLists>
+  <licenses>
+    <license>
+      <name>BSD PUBLIC LICENSE</name>
+      <url>http://opensource.org/licenses/bsd-license.php</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+  <scm>
+    <connection>scm:svn:http://piccolo2d.googlecode.com/svn/piccolo2d.java/branches/release-1.3/parent</connection>
+    <developerConnection>scm:svn:https://piccolo2d.googlecode.com/svn/piccolo2d.java/branches/release-1.3/parent</developerConnection>
+    <url>http://code.google.com/p/piccolo2d/source/browse/piccolo2d.java/branches/release-1.3/parent</url>
+  </scm>
+  <organization>
+    <name>Piccolo2D</name>
+    <url>http://code.google.com/p/piccolo2d/</url>
+  </organization>
+  <developers>
+    <developer>
+      <id>allain.lalonde</id>
+      <name>Allain Lalonde</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <email>allain@machete.ca</email>
+      <url>http://www.machete.ca</url>
+      <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <id>bederson</id>
+      <name>Ben Bederson</name>
+      <roles>
+        <role>founder, original architect</role>
+      </roles>
+      <timezone>-5</timezone>
+      <organization>University of Maryland / Human-Computer Interaction Lab</organization>
+      <url>http://www.cs.umd.edu/~bederson</url>
+    </developer>
+    <developer>
+      <id>heuermh</id>
+      <name>Michael L Heuer</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>-6</timezone>
+    </developer>
+    <developer>
+      <id>jesse</id>
+      <name>jesse</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <id>mr0738@mro.name</id>
+      <name>Marcus Rohrmoser</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+1</timezone>
+      <url>http://blog.mro.name</url>
+    </developer>
+    <developer>
+      <id>reids</id>
+      <name>Sam Reid</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <url>http://spot.colorado.edu/~reids</url>
+      <timezone>-7</timezone>
+    </developer>
+    <developer>
+      <id>sjc@browsecode.org</id>
+      <name>Stephen Chin</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <email>sjc@browsecode.org</email>
+      <url>http://steveonjava.com/</url>
+      <timezone>-8</timezone>
+    </developer>
+    <developer>
+      <id>aclamage</id>
+      <name>Aaron Clamage</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <email>aclamage@gmail.com</email>
+      <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <id>lgood</id>
+      <name>Lance Good</name>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <email>lance@goodle.org</email>
+      <timezone>-5</timezone>
+    </developer>
+    <developer>
+      <name>Aaron Dixon</name>
+      <email>atdixon@gmail.com</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>-6</timezone>
+    </developer>
+    <developer>
+      <name>Chris Malley</name>
+      <email>cmalley@pixelzoom.com</email>
+      <url>http://www.pixelzoom.com</url>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>-7</timezone>
+    </developer>
+  </developers>
+  <contributors>
+    <contributor>
+      <name>Alexander Kurtakov</name>
+      <email>akurtakov@gmail.com</email>
+      <url>http://akurtakov.blogspot.com</url>
+      <organization>Red Hat Inc.</organization>
+      <organizationUrl>http://redhat.com</organizationUrl>
+      <roles>
+        <role>developer</role>
+      </roles>
+      <timezone>+2</timezone>
+    </contributor>
+    <contributor>
+      <email>berthold.daum@bdaum.de</email>
+      <roles>
+        <role>developer</role>
+      </roles>
+    </contributor>
+  </contributors>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.2.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>2.4.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>2.3.2</version>
+          <configuration>
+            <verbose>true</verbose>
+            <fork>true</fork>
+            <encoding>ascii</encoding>
+            <optimize>false</optimize>
+            <debug>true</debug>
+            <compilerVersion>${jdk.version}</compilerVersion>
+            <showDeprecation>false</showDeprecation>
+            <showWarnings>true</showWarnings>
+            <source>${jdk.version}</source>
+            <target>${jdk.version}</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.5</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>        
+          <version>2.7</version>
+          <configuration>
+            <source>${jdk.version}</source>
+            <verbose>false</verbose>
+            <show>package</show>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>2.3.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-scm-plugin</artifactId>
+          <version>1.1</version>
+          <configuration>
+            <connectionType>developerConnection</connectionType>
+          </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>2.1.1</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>2.1.2</version>
+        </plugin>
+        <plugin>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.8</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>2.3.4</version>
+          <extensions>true</extensions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <extensions>true</extensions>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>3.8.2</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>  
+  <distributionManagement>
+    <!--
+      use a ~/.m2/settings.xml like this: <settings> <profiles> <profile>
+      <id>piccolo2d</id> <activation>
+      <activeByDefault>true</activeByDefault> </activation> <properties>
+      <piccolo2d.file.site.base>file:///var/www/piccolo2d/</piccolo2d.file.site.base>
+      </properties> </profile> </profiles> </settings>
+    -->
+    <site>
+      <id>maven.site</id>
+      <url>${piccolo2d.file.site.base}</url>
+    </site>
+    <repository>
+      <id>sonatype-nexus-staging</id>
+      <name>Nexus Release Repository</name>
+      <url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>signArtifacts</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <!--  profile only activated for maven 3.0-beta-x or later versions -->
+    <profile>
+      <id>maven-3</id>
+      <activation>
+        <file>
+          <exists>${basedir}</exists>
+        </file>
+      </activation>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <artifactId>maven-site-plugin</artifactId>
+              <version>3.0-beta-3</version>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+  </profiles>
+</project>

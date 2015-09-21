@@ -14,13 +14,10 @@
 
 package com.liferay.gradle.plugins.js.module.config.generator;
 
+import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
-import com.liferay.gradle.util.Validator;
-
-import com.moowork.gradle.node.NodeExtension;
-import com.moowork.gradle.node.task.NodeTask;
-import com.moowork.gradle.node.task.SetupTask;
+import com.liferay.gradle.util.StringUtil;
 
 import groovy.lang.Closure;
 
@@ -37,11 +34,13 @@ import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.FileTreeElement;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.OutputFile;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.api.tasks.util.PatternFilterable;
@@ -51,13 +50,14 @@ import org.gradle.util.GUtil;
 /**
  * @author Andrea Di Giorgi
  */
-public class ConfigJSModulesTask extends NodeTask {
+public class ConfigJSModulesTask extends ExecuteNodeTask {
 
 	public ConfigJSModulesTask() {
 		dependsOn(
 			JSModuleConfigGeneratorPlugin.
 				DOWNLOAD_LFR_MODULE_CONFIG_GENERATOR_TASK_NAME);
-		dependsOn(SetupTask.NAME);
+		dependsOn(
+			BasePlugin.CLEAN_TASK_NAME + StringUtil.capitalize(getName()));
 
 		onlyIf(
 			new Spec<Task>() {
@@ -74,26 +74,6 @@ public class ConfigJSModulesTask extends NodeTask {
 					}
 
 					return false;
-				}
-
-			});
-
-		Project project = getProject();
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					NodeExtension nodeExtension = GradleUtil.getExtension(
-						project, NodeExtension.class);
-
-					File scriptFile = new File(
-						nodeExtension.getNodeModulesDir(),
-						"node_modules/lfr-module-config-generator/bin" +
-							"/index.js");
-
-					setScript(scriptFile);
 				}
 
 			});
@@ -124,12 +104,8 @@ public class ConfigJSModulesTask extends NodeTask {
 	}
 
 	@Override
-	public void exec() {
+	public void executeNode() {
 		Project project = getProject();
-
-		final File sourceTmpDir = new File(getTemporaryDir(), "files");
-
-		project.delete(sourceTmpDir);
 
 		project.copy(
 			new Action<CopySpec>() {
@@ -137,14 +113,25 @@ public class ConfigJSModulesTask extends NodeTask {
 				@Override
 				public void execute(CopySpec copySpec) {
 					copySpec.from(getSourceFiles());
-					copySpec.into(sourceTmpDir);
+					copySpec.into(getOutputDir());
 				}
 
 			});
 
-		setArgs(getCompleteArgs(sourceTmpDir));
+		setArgs(getCompleteArgs());
 
-		super.exec();
+		super.executeNode();
+
+		project.copy(
+			new Action<CopySpec>() {
+
+				@Override
+				public void execute(CopySpec copySpec) {
+					copySpec.from(getOutputDir());
+					copySpec.into(getSourceDir());
+				}
+
+			});
 	}
 
 	@Input
@@ -177,6 +164,11 @@ public class ConfigJSModulesTask extends NodeTask {
 	@Optional
 	public String getModuleFormat() {
 		return GradleUtil.toString(_moduleFormat);
+	}
+
+	@OutputDirectory
+	public File getOutputDir() {
+		return new File(getTemporaryDir(), "files");
 	}
 
 	@OutputFile
@@ -289,40 +281,58 @@ public class ConfigJSModulesTask extends NodeTask {
 		_sourceDir = sourceDir;
 	}
 
-	protected List<Object> getCompleteArgs(File sourceTmpDir) {
+	protected List<Object> getCompleteArgs() {
 		List<Object> completeArgs = new ArrayList<>();
+
+		File scriptFile = new File(
+			getNodeDir(),
+			"node_modules/lfr-module-config-generator/bin/index.js");
+
+		completeArgs.add(FileUtil.getAbsolutePath(scriptFile));
 
 		GUtil.addToCollection(completeArgs, getArgs());
 
 		String configVariable = getConfigVariable();
 
-		if (Validator.isNotNull(configVariable)) {
+		if (configVariable != null) {
 			completeArgs.add("--config");
 			completeArgs.add(configVariable);
 		}
 
 		String moduleExtension = getModuleExtension();
 
-		if (Validator.isNotNull(moduleExtension)) {
+		if (moduleExtension != null) {
 			completeArgs.add("--extension");
 			completeArgs.add(moduleExtension);
 		}
 
 		String moduleFormat = getModuleFormat();
 
-		if (Validator.isNotNull(moduleFormat)) {
+		if (moduleFormat != null) {
 			completeArgs.add("--format");
 			completeArgs.add(moduleFormat);
 		}
 
-		completeArgs.add("--ignorePath");
-		completeArgs.add(isIgnorePath());
+		boolean ignorePath = isIgnorePath();
 
-		completeArgs.add("--keepExtension");
-		completeArgs.add(isKeepFileExtension());
+		if (ignorePath) {
+			completeArgs.add("--ignorePath");
+			completeArgs.add(ignorePath);
+		}
 
-		completeArgs.add("--lowerCase");
-		completeArgs.add(isLowerCase());
+		boolean keepFileExtension = isKeepFileExtension();
+
+		if (keepFileExtension) {
+			completeArgs.add("--keepExtension");
+			completeArgs.add(keepFileExtension);
+		}
+
+		boolean lowerCase = isLowerCase();
+
+		if (lowerCase) {
+			completeArgs.add("--lowerCase");
+			completeArgs.add(lowerCase);
+		}
 
 		completeArgs.add("--moduleConfig");
 		completeArgs.add(FileUtil.getAbsolutePath(getModuleConfigFile()));
@@ -330,11 +340,12 @@ public class ConfigJSModulesTask extends NodeTask {
 		completeArgs.add("--output");
 		completeArgs.add(FileUtil.getAbsolutePath(getOutputFile()));
 
-		completeArgs.add("--moduleRoot");
-		completeArgs.add(FileUtil.getAbsolutePath(sourceTmpDir));
+		File outputDir = getOutputDir();
 
-		completeArgs.add(
-			FileUtil.getAbsolutePath(sourceTmpDir.getParentFile()));
+		completeArgs.add("--moduleRoot");
+		completeArgs.add(FileUtil.getAbsolutePath(outputDir));
+
+		completeArgs.add(FileUtil.getAbsolutePath(outputDir.getParentFile()));
 
 		return completeArgs;
 	}

@@ -2,6 +2,7 @@ AUI.add(
 	'liferay-portlet-journal',
 	function(A) {
 		var Lang = A.Lang;
+		var Util = Liferay.Util;
 
 		var SELECTOR_ACTION_NAME = '#javax-portlet-action';
 
@@ -74,12 +75,16 @@ AUI.add(
 
 						if (basicPreviewButton) {
 							eventHandles.push(basicPreviewButton.on(STR_CLICK, instance._previewArticle, instance));
+
+							Util.toggleDisabled(basicPreviewButton, false);
 						}
 
 						var permissionsButton = instance.one('#articlePermissionsButton');
 
 						if (permissionsButton) {
 							eventHandles.push(permissionsButton.on(STR_CLICK, instance._viewArticlePermissions, instance));
+
+							Util.toggleDisabled(permissionsButton, false);
 						}
 
 						var buttonRow = instance.one('.journal-article-button-row');
@@ -117,7 +122,6 @@ AUI.add(
 						if (!withoutNamespace) {
 							name = instance.ns(name);
 						}
-
 
 						return instance.one('[name=' + name + ']', currentForm);
 					},
@@ -296,10 +300,10 @@ AUI.add(
 
 						event.preventDefault();
 
-						var strings = instance.get(STR_STRINGS);
 						var article = instance.get(STR_ARTICLE);
+						var strings = instance.get(STR_STRINGS);
 
-						Liferay.Util.openWindow(
+						Util.openWindow(
 							{
 								dialog: {
 									cssClass: 'portlet-asset-categories-admin-dialog permissions-change',

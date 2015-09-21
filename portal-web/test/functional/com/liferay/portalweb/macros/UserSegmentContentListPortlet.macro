@@ -5,67 +5,67 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGUsersegmentcontentlist#USER_SEGMENT_CONTENT_LIST_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="UserSegmentContentList#USER_SEGMENT_CONTENT_LIST_CONFIGURATION_IFRAME" />
 
 		<if>
 			<isset var="assetTypeFilter" />
 			<then>
-				<execute function="Select" locator1="PGUsersegmentcontentlist#ASSET_TYPE_MENULIST" value1="${assetTypeFilter}" />
+				<execute function="Select" locator1="UserSegmentContentList#ASSET_TYPE_MENULIST" value1="${assetTypeFilter}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="selectMultipleAssetTypes" />
 			<then>
-				<execute function="Select" locator1="PGUsersegmentcontentlist#ASSET_TYPE_MENULIST" value1="Select More Than One..." />
+				<execute function="Select" locator1="UserSegmentContentList#ASSET_TYPE_MENULIST" value1="Select More Than One..." />
 
 				<while>
-					<condition function="IsElementPresent" locator1="PGUsersegmentcontentlist#SELECTED_ASSETS" />
+					<condition function="IsElementPresent" locator1="UserSegmentContentList#SELECTED_ASSETS" />
 					<then>
-						<execute function="Click" locator1="PGUsersegmentcontentlist#SELECTED_ASSETS" />
-						<execute function="Click" locator1="PGUsersegmentcontentlist#MOVE_SELECTED_TO_AVAILABLE_BUTTON" />
+						<execute function="Click" locator1="UserSegmentContentList#SELECTED_ASSETS" />
+						<execute function="Click" locator1="UserSegmentContentList#MOVE_SELECTED_TO_AVAILABLE_BUTTON" />
 					</then>
 				</while>
 
 				<for list="${selectMultipleAssetTypes}" param="assetType">
 					<var name="key_assetType" value="${assetType}" />
 
-					<execute function="Click" locator1="PGUsersegmentcontentlist#AVAILABLE_ASSET_TYPE" value1="${assetType}" />
-					<execute function="Click" locator1="PGUsersegmentcontentlist#MOVE_AVAILABLE_TO_SELECTED_BUTTON" />
-					<execute function="AssertTextEquals" locator1="PGUsersegmentcontentlist#SELECTED_ASSETS" value1="${assetType}" />
+					<execute function="Click" locator1="UserSegmentContentList#AVAILABLE_ASSET_TYPE" value1="${assetType}" />
+					<execute function="Click" locator1="UserSegmentContentList#MOVE_AVAILABLE_TO_SELECTED_BUTTON" />
+					<execute function="AssertTextEquals" locator1="UserSegmentContentList#SELECTED_ASSETS" value1="${assetType}" />
 				</for>
 
-				<execute function="AssertClick" locator1="PGUsersegmentcontentlist#SAVE_BUTTON" value1="Save" />
-				<execute function="AssertClick" locator1="PGUsersegmentcontentlist#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute function="Select" locator1="PGUsersegmentcontentlist#ASSET_TYPE_MENULIST" value1="Select More Than One..." />
+				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+				<execute function="AssertClick" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+				<execute function="Select" locator1="UserSegmentContentList#ASSET_TYPE_MENULIST" value1="Select More Than One..." />
 
 				<for list="${selectMultipleAssetTypes}" param="assetType">
 					<var name="key_assetType" value="${assetType}" />
 
-					<execute function="AssertTextEquals" locator1="PGUsersegmentcontentlist#SELECTED_ASSETS" value1="${assetType}" />
+					<execute function="AssertTextEquals" locator1="UserSegmentContentList#SELECTED_ASSETS" value1="${assetType}" />
 				</for>
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGUsersegmentcontentlist#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertClick" locator1="PGUsersegmentcontentlist#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertClick" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="viewContent">
 		<for list="${viewEntryTitleList}" param="entryTitle">
 			<var name="key_entryTitle" value="${entryTitle}" />
 
-			<execute function="AssertTextEquals" locator1="PGUsersegmentcontentlist#VIEW_ENTRY_TITLE" value1="${entryTitle}" />
+			<execute function="AssertTextEquals" locator1="UserSegmentContentList#VIEW_ENTRY_TITLE" value1="${entryTitle}" />
 		</for>
 
 		<for list="${viewEntryContentList}" param="entryContent">
 			<var name="key_entryContent" value="${entryContent}" />
 
-			<execute function="AssertTextEquals" locator1="PGUsersegmentcontentlist#VIEW_ENTRY_CONTENT" value1="${entryContent}" />
+			<execute function="AssertTextEquals" locator1="UserSegmentContentList#VIEW_ENTRY_CONTENT" value1="${entryContent}" />
 		</for>
 	</command>
 
 	<command name="viewContentNotPresent">
-		<execute function="AssertElementNotPresent" locator1="PGUsersegmentcontentlist#VIEW_ENTRY_TITLE_BASIC" />
+		<execute function="AssertElementNotPresent" locator1="UserSegmentContentList#VIEW_ENTRY_TITLE_BASIC" />
 	</command>
 </definition>

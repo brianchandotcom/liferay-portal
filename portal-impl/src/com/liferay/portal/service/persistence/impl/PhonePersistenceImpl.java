@@ -3989,7 +3989,7 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 				phone.setNew(false);
 			}
 			else {
-				session.merge(phone);
+				phone = (Phone)session.merge(phone);
 			}
 		}
 		catch (Exception e) {

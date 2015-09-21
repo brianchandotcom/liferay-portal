@@ -165,6 +165,7 @@
 		<execute macro="Page#addPG">
 			<var name="pageAccess" value="Private" />
 			<var name="pageName" value="Blogs Page" />
+			<var name="privatePage" value="Private Pages" />
 			<var name="siteName" value="Site Name" />
 			<var name="siteURL" value="true" />
 		</execute>
@@ -346,7 +347,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56754" name="DeleteSitePages" priority="5">
+	<command name="DeleteSitePages" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -553,7 +554,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page has been changed since the last update from the site template." />
+		<execute macro="SiteTemplates#viewNoInfoMessage" />
 
 		<execute macro="User#firstLoginPG">
 			<var name="password" value="test" />

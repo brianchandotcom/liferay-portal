@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.portal.background.task.model.BackgroundTask">
+		<field name="mvccVersion" type="long" />
+		<field name="backgroundTaskId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="servletContextNames" type="String">
+			<hint name="max-length">255</hint>
+		</field>
+		<field name="taskExecutorClassName" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="taskContextMap" type="Map" />
+		<field name="completed" type="boolean" />
+		<field name="completionDate" type="Date" />
+		<field name="status" type="int" />
+		<field name="statusMessage" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
+</model-hints>

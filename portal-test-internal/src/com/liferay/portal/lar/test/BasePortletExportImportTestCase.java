@@ -546,9 +546,12 @@ public abstract class BasePortletExportImportTestCase
 		}
 
 		String className = templateHandler.getClassName();
+		long resourceClassNameId = PortalUtil.getClassNameId(
+			"com.liferay.portlet.display.template.PortletDisplayTemplate");
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			displayStyleGroupId, PortalUtil.getClassNameId(className), 0);
+			displayStyleGroupId, PortalUtil.getClassNameId(className), 0,
+			resourceClassNameId);
 
 		Map<String, String[]> preferenceMap = new HashMap<>();
 

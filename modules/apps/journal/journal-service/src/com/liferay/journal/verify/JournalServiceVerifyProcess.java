@@ -500,7 +500,7 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 			try {
 				_journalArticleLocalService.updateAsset(
 					journalArticle.getUserId(), journalArticle, null, null,
-					null);
+					null, null);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

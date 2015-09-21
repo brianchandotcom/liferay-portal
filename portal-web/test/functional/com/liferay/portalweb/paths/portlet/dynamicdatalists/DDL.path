@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_RECORD_1</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContain2er')]//tr/td[1])</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a)</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1</td>
-	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2])</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/a)</td>
 	<td></td>
 </tr>
 <tr>

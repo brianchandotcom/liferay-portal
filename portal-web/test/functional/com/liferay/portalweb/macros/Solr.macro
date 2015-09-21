@@ -19,8 +19,11 @@
 		<var name="key_coreName" value="${coreName}" />
 
 		<execute function="AssertTextEquals" locator1="SolrAdminDashboard#CORE_ADMIN_CORE_NAVIGATION" value1="liferay" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_INSTANCE_DIR" value1="\solr-${solrVersion}\server\solr\liferay\" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_DATA_DIR" value1="\solr-${solrVersion}\server\solr\liferay\data\" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_INSTANCE_DIR" value1="solr-${solrVersion}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_INSTANCE_DIR" value1="liferay" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_DATA_DIR" value1="solr-${solrVersion}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_DATA_DIR" value1="liferay" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SolrAdminDashboard#CORE_ADMIN_CONTENT_DATA_DIR" value1="data" />
 	</command>
 
 	<command name="viewSolrLogsInConsole">

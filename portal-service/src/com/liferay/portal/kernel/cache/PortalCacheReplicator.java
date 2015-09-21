@@ -14,10 +14,14 @@
 
 package com.liferay.portal.kernel.cache;
 
+import java.io.Serializable;
+
 /**
  * @author Tina Tian
  */
-public interface PortalCacheReplicator {
+public interface PortalCacheReplicator
+	<K extends Serializable, V extends Serializable>
+		extends PortalCacheListener<K, V> {
 
 	public static final boolean DEFAULT_REPLICATE_PUTS = true;
 
@@ -39,5 +43,7 @@ public interface PortalCacheReplicator {
 
 	public static final String REPLICATE_UPDATES_VIA_COPY =
 		"replicateUpdatesViaCopy";
+
+	public static final String REPLICATOR = "replicator";
 
 }

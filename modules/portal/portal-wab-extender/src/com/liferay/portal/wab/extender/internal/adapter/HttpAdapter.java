@@ -33,6 +33,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.http.runtime.HttpServiceRuntimeConstants;
 
 /**
  * @author Raymond Augé
@@ -79,6 +80,13 @@ public class HttpAdapter {
 
 			@Override
 			public String getInitParameter(String name) {
+				if (name.equals(
+						HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT)) {
+
+					return _servletContext.getContextPath() +
+						_servletContext.getInitParameter(name);
+				}
+
 				return _servletContext.getInitParameter(name);
 			}
 

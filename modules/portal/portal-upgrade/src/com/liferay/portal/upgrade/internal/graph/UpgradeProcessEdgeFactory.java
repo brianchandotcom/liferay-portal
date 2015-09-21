@@ -36,11 +36,13 @@ public class UpgradeProcessEdgeFactory
 		String sourceVertex, String targetVertex) {
 
 		for (UpgradeInfo upgradeInfo : _upgradeInfos) {
-			String fromVersionString = upgradeInfo.getFromVersionString();
-			String toVersionString = upgradeInfo.getToVersionString();
+			String fromSchemaVersionString =
+				upgradeInfo.getFromSchemaVersionString();
+			String toSchemaVersionString =
+				upgradeInfo.getToSchemaVersionString();
 
-			if (fromVersionString.equals(sourceVertex) &&
-				toVersionString.equals(targetVertex)) {
+			if (fromSchemaVersionString.equals(sourceVertex) &&
+				toSchemaVersionString.equals(targetVertex)) {
 
 				return new UpgradeProcessEdge(upgradeInfo);
 			}

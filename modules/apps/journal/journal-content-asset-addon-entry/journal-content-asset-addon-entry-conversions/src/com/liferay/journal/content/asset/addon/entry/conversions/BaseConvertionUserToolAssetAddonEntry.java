@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
@@ -42,13 +43,13 @@ public abstract class BaseConvertionUserToolAssetAddonEntry
 
 	@Override
 	public String getJspPath() {
-		return "/META-INF/resources/conversions.jsp";
+		return "/conversions.jsp";
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content.Language", locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
 
 		return LanguageUtil.format(
 			resourceBundle, "download-as-x",

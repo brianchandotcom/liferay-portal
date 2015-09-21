@@ -46,7 +46,8 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = AssetRendererFactory.class
 )
-public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
+public class DLFolderAssetRendererFactory
+	extends BaseAssetRendererFactory<Folder> {
 
 	public static final String TYPE = "document_folder";
 
@@ -56,7 +57,7 @@ public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<Folder> getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
 		Folder folder = DLAppLocalServiceUtil.getFolder(classPK);

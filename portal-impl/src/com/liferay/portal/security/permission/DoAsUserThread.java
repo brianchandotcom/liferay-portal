@@ -26,7 +26,13 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 public abstract class DoAsUserThread extends Thread {
 
 	public DoAsUserThread(long userId) {
+		this(userId, 1);
+	}
+
+	public DoAsUserThread(long userId, int retries) {
 		_userId = userId;
+
+		_retries = retries;
 	}
 
 	public boolean isSuccess() {
@@ -35,26 +41,30 @@ public abstract class DoAsUserThread extends Thread {
 
 	@Override
 	public void run() {
-		try {
-			PrincipalThreadLocal.setName(_userId);
+		for (int i = 0; i < _retries; i++) {
+			try {
+				PrincipalThreadLocal.setName(_userId);
 
-			User user = UserLocalServiceUtil.getUserById(_userId);
+				User user = UserLocalServiceUtil.getUserById(_userId);
 
-			PermissionChecker permissionChecker =
-				PermissionCheckerFactoryUtil.create(user);
+				PermissionChecker permissionChecker =
+					PermissionCheckerFactoryUtil.create(user);
 
-			PermissionThreadLocal.setPermissionChecker(permissionChecker);
+				PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-			doRun();
+				doRun();
 
-			_success = true;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-		finally {
-			PrincipalThreadLocal.setName(null);
-			PermissionThreadLocal.setPermissionChecker(null);
+				_success = true;
+
+				return;
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+			finally {
+				PrincipalThreadLocal.setName(null);
+				PermissionThreadLocal.setPermissionChecker(null);
+			}
 		}
 	}
 
@@ -62,6 +72,7 @@ public abstract class DoAsUserThread extends Thread {
 
 	private static final Log _log = LogFactoryUtil.getLog(DoAsUserThread.class);
 
+	private final int _retries;
 	private boolean _success;
 	private final long _userId;
 

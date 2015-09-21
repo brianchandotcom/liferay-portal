@@ -16,6 +16,7 @@ package com.liferay.journal.events;
 
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
@@ -72,6 +73,9 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 	protected void doRun(long companyId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+
 		Group group = _groupLocalService.getCompanyGroup(companyId);
 
 		serviceContext.setScopeGroupId(group.getGroupId());
@@ -108,6 +112,11 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 	@Reference
 	protected void setGroupLocalService(GroupLocalService groupLocalService) {
 		_groupLocalService = groupLocalService;
+	}
+
+	@Reference
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

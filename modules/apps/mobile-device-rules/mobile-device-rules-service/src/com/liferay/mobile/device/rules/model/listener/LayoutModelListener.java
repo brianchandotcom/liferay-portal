@@ -14,16 +14,17 @@
 
 package com.liferay.mobile.device.rules.model.listener;
 
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -35,13 +36,13 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
 		try {
 			List<MDRRuleGroupInstance> mdrRuleGroupInstances =
-				MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstances(
+				_mdrRuleGroupInstanceLocalService.getRuleGroupInstances(
 					Layout.class.getName(), layout.getPlid());
 
 			for (MDRRuleGroupInstance mdrRuleGroupInstance :
 					mdrRuleGroupInstances) {
 
-				MDRRuleGroupInstanceLocalServiceUtil.deleteMDRRuleGroupInstance(
+				_mdrRuleGroupInstanceLocalService.deleteMDRRuleGroupInstance(
 					mdrRuleGroupInstance);
 			}
 		}
@@ -49,5 +50,14 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference
+	protected void setMDRRuleGroupInstanceLocalService(
+		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
+
+		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
+	}
+
+	private MDRRuleGroupInstanceLocalService _mdrRuleGroupInstanceLocalService;
 
 }

@@ -463,12 +463,12 @@ public class DLFileEntryTypePersistenceTest {
 		Assert.assertTrue(Validator.equals(existingDLFileEntryType.getUuid(),
 				ReflectionTestUtil.invoke(existingDLFileEntryType,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingDLFileEntryType.getGroupId(),
-			ReflectionTestUtil.invoke(existingDLFileEntryType,
+		Assert.assertEquals(Long.valueOf(existingDLFileEntryType.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntryType,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDLFileEntryType.getGroupId(),
-			ReflectionTestUtil.invoke(existingDLFileEntryType,
+		Assert.assertEquals(Long.valueOf(existingDLFileEntryType.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileEntryType,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingDLFileEntryType.getFileEntryTypeKey(),

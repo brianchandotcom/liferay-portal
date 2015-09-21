@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -1238,7 +1239,7 @@ public class LocalizationImpl implements Localization {
 		String bundleName, Locale locale, ClassLoader classLoader, String key,
 		String defaultValue) {
 
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			bundleName, locale, classLoader);
 
 		String value = null;

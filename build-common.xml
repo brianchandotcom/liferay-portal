@@ -12,6 +12,10 @@
 		<path location="${project.dir.native}" />
 	</pathconvert>
 
+	<pathconvert dirsep="/" property="project.dir.unix">
+		<path location="${project.dir.native}" />
+	</pathconvert>
+
 	<property name="sdk.dir" value="${project.dir}/tools/sdk" />
 
 	<property name="test.properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
@@ -52,6 +56,10 @@
 		<fileset dir="${project.dir}/lib/development" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/global" includes="*.jar" />
 		<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+	</path>
+
+	<path id="portal.tools.classpath">
+		<fileset dir="${project.dir}/tools/sdk/tmp/portal-tools" includes="*.jar" />
 	</path>
 
 	<path id="project.classpath">
@@ -116,6 +124,16 @@
 	<propertycopy from="app.server.${app.server.type}.log.dir" name="app.server.log.dir" />
 	<propertycopy from="app.server.${app.server.type}.temp.dir" name="app.server.temp.dir" />
 	<propertycopy from="app.server.${app.server.type}.work.dir" name="app.server.work.dir" />
+
+	<if>
+		<or>
+			<equals arg1="${app.server.type}" arg2="glassfish" />
+			<equals arg1="${app.server.type}" arg2="websphere" />
+		</or>
+		<then>
+			<propertycopy from="app.server.${app.server.type}.portal.war.name" name="app.server.portal.war.name" />
+		</then>
+	</if>
 
 	<propertyselector
 		casesensitive="false"
@@ -424,7 +442,7 @@ Error-Prone was automatically installed. Please rerun your task.
 .
 
 Please set the environment variable ANT_OPTS to the recommended value of
-"-Xmx1024m -XX:MaxPermSize=512m".
+"-Xmx2048m -XX:MaxPermSize=512m".
 			</fail>
 		</then>
 	</if>
@@ -673,7 +691,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<equals arg1="${app.server.type}" arg2="glassfish" />
 				</and>
 				<then>
-					<war destfile="${app.server.glassfish.portal.war.dir}" update="true">
+					<war destfile="${app.server.glassfish.portal.war.name}" update="true">
 						<classes dir="${project.dir}/portal-impl/src" includes="portal-*.properties,system-*.properties" />
 					</war>
 				</then>
@@ -842,6 +860,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	<macrodef name="gradle-execute">
 		<attribute default="${basedir}" name="dir" />
 		<attribute default="true" name="failonerror" />
+		<attribute default="true" name="forcedcacheenabled" />
 		<attribute name="task" />
 		<element implicit="true" name="args" optional="true" />
 
@@ -860,13 +879,46 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<exec dir="@{dir}" executable="${project.dir}/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 				<args />
+				<arg value="--no-daemon" />
 				<arg value="--project-cache-dir=${project.dir}/.gradle" />
 				<arg value="--stacktrace" />
-				<arg value="-DappServerParentDir=${app.server.parent.dir}" />
-				<arg value="-DliferayHome=${liferay.home}" />
+				<arg value="-Dapp.server.parent.dir=${app.server.parent.dir}" />
+				<arg value="-Dforced.cache.enabled=@{forcedcacheenabled}" />
+				<arg value="-Dliferay.home=${liferay.home}" />
 				<arg value="@{task}" />
 				<env key="GRADLE_OPTS" value="${env.ANT_OPTS}" />
 			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="install-portal-snapshot">
+		<attribute name="artifact.dir" default="${basedir}" />
+		<attribute name="artifact.name" />
+
+		<sequential>
+			<artifact:pom
+				artifactId="@{artifact.name}"
+				groupId="com.liferay.portal"
+				id="prepare-@{artifact.name}"
+				name="@{artifact.name}"
+				version="${lp.version}-SNAPSHOT"
+			/>
+
+			<artifact:writepom pomRefId="prepare-@{artifact.name}" file="@{artifact.dir}/pom.xml" />
+
+			<artifact:pom file="@{artifact.dir}/pom.xml" id="@{artifact.name}" />
+
+			<if>
+				<equals arg1="@{artifact.name}" arg2="portal-web" />
+				<then>
+					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.dir}/@{artifact.name}.war" />
+				</then>
+				<else>
+					<artifact:install pomRefId="@{artifact.name}" file="@{artifact.dir}/@{artifact.name}.jar" />
+				</else>
+			</if>
+
+			<delete file="@{artifact.dir}/pom.xml" />
 		</sequential>
 	</macrodef>
 
@@ -1106,6 +1158,12 @@ Please set the environment variable ANT_OPTS to the recommended value of
 					<update-sdk-properties />
 				</then>
 			</if>
+
+			<update-gradle-properties />
+
+			<gradle-execute task="setupPortalTools">
+				<arg value="--build-file=${project.dir}/modules/util.gradle" />
+			</gradle-execute>
 		</sequential>
 	</macrodef>
 
@@ -1297,13 +1355,150 @@ rerun your task.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="update-gradle-properties">
+		<sequential>
+			<propertyselector
+				casesensitive="false"
+				delimiter=","
+				distinct="true"
+				match="app\.(server\.(glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*)\.dir"
+				override="true"
+				property="app.server.dir.property.list"
+				select="\1"
+			/>
+
+			<sortlist
+				delimiter=","
+				override="true"
+				property="app.server.dir.property.list"
+				value="${app.server.dir.property.list}"
+			/>
+
+			<delete file="${basedir}/.gradle/gradle.properties" />
+
+			<for list="${app.server.dir.property.list}" param="app.server.dir.property">
+				<sequential>
+					<propertycopy
+						from="app.@{app.server.dir.property}.dir"
+						name="temp.app.server.dir"
+					/>
+
+					<echo
+						append="true"
+						file="${basedir}/.gradle/gradle.properties"
+					>
+						app.@{app.server.dir.property}.dir=${temp.app.server.dir}
+					</echo>
+
+					<var name="temp.app.server.dir" unset="true" />
+				</sequential>
+			</for>
+
+			<propertyselector
+				casesensitive="false"
+				delimiter="," match="ivy.pom.(.+)"
+				property="ivy.pom.property.list"
+				select="\1"
+			/>
+
+			<sortlist
+				delimiter=","
+				override="true"
+				property="ivy.pom.property.list"
+				value="${ivy.pom.property.list}"
+			/>
+
+			<if>
+				<not>
+					<equals arg1="${ivy.pom.property.list}" arg2="$${ivy.pom.property.list}" />
+				</not>
+				<then>
+					<for list="${ivy.pom.property.list}" param="ivy.pom.property">
+						<sequential>
+							<propertycopy
+								from="ivy.pom.@{ivy.pom.property}"
+								name="temp.ivy.pom"
+							/>
+
+							<echo
+								append="true"
+								file="${basedir}/.gradle/gradle.properties"
+							>
+								pom.@{ivy.pom.property}=${temp.ivy.pom}
+							</echo>
+
+							<var name="temp.ivy.pom" unset="true" />
+						</sequential>
+					</for>
+				</then>
+			</if>
+
+			<propertyselector
+				casesensitive="false"
+				delimiter="," match="sonatype.(.+)"
+				property="sonatype.property.list"
+				select="\1"
+			/>
+
+			<sortlist
+				delimiter=","
+				override="true"
+				property="sonatype.property.list"
+				value="${sonatype.property.list}"
+			/>
+
+			<if>
+				<not>
+					<equals arg1="${sonatype.property.list}" arg2="$${sonatype.property.list}" />
+				</not>
+				<then>
+					<for list="${sonatype.property.list}" param="sonatype.property">
+						<sequential>
+							<propertycopy
+								from="sonatype.@{sonatype.property}"
+								name="temp.sonatype"
+							/>
+
+							<echo
+								append="true"
+								file="${basedir}/.gradle/gradle.properties"
+							>
+								sonatype.@{sonatype.property}=${temp.sonatype}
+							</echo>
+
+							<var name="temp.sonatype" unset="true" />
+						</sequential>
+					</for>
+				</then>
+			</if>
+
+			<echo
+				append="true"
+				file="${basedir}/.gradle/gradle.properties"
+			>
+				app.server.type=${app.server.type}
+				auto.deploy.dir=${liferay.home}/osgi/apps
+				junit.java.integration.gc=${junit.java.integration.gc}
+				junit.java.unit.gc=${junit.java.unit.gc}
+				liferay.home=${liferay.home}
+				microsoft.translator.client.id=${microsoft.translator.client.id}
+				microsoft.translator.client.secret=${microsoft.translator.client.secret}
+				nodejs.npm.email=${nodejs.npm.email}
+				nodejs.npm.password=${nodejs.npm.password}
+				nodejs.npm.user=${nodejs.npm.user}
+				sass.compiler.class.name=${sass.compiler.class.name}
+				upgrade.table.dir=${upgrade.table.dir}
+			</echo>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="update-sdk-properties">
 		<sequential>
 			<propertyselector
 				casesensitive="false"
 				delimiter=","
 				distinct="true"
-				match="app\.(server\.(glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere).+)\.dir"
+				match="app\.(server\.(glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere|wildfly).*)\.dir"
 				override="true"
 				property="app.server.dir.property.list"
 				select="\1"
@@ -1482,14 +1677,9 @@ rerun your task.
 	<target name="format-javadoc">
 		<echo>Run "ant compile compile-test" before using format-javadoc to generate @Override tags.</echo>
 
-		<path id="javadoc.formatter.classpath">
-			<fileset dir="${sdk.dir}/dependencies/com.liferay.javadoc.formatter/lib" includes="*.jar" />
-			<path refid="project.classpath" />
-		</path>
-
 		<java
 			classname="com.liferay.javadoc.formatter.JavadocFormatter"
-			classpathref="javadoc.formatter.classpath"
+			classpathref="portal.tools.classpath"
 			fork="true"
 			newenvironment="true"
 		>
@@ -1500,6 +1690,10 @@ rerun your task.
 			<arg value="javadoc.output.file.prefix=${output.file.prefix}" />
 			<arg value="javadoc.update=${update}" />
 		</java>
+	</target>
+
+	<target name="install-portal-snapshot">
+		<install-portal-snapshot artifact.name="${ant.project.name}" />
 	</target>
 
 	<target name="print-properties">
@@ -1589,21 +1783,7 @@ rerun your task.
 			</sequential>
 		</for>
 
-		<ivy:resolve log="${ivy.log.level}">
-			<dependency conf="default" name="sonar-ant-task" org="org.codehaus.sonar-plugins" rev="2.1" />
-		</ivy:resolve>
-
-		<ivy:cachepath
-			conf="default"
-			inline="true"
-			module="sonar-ant-task"
-			log="quiet"
-			organisation="org.codehaus.sonar-plugins"
-			pathid="sonar.ant.task.classpath"
-			revision="2.1"
-		/>
-
-		<taskdef classpathref="sonar.ant.task.classpath" resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant" />
+		<taskdef classpathref="portal.tools.classpath" resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant" />
 
 		<sonar:sonar />
 
@@ -1852,6 +2032,10 @@ rerun your task.
 		<report-test-coverage
 			test.type="unit"
 		/>
+	</target>
+
+	<target name="update-gradle-properties">
+		<update-gradle-properties />
 	</target>
 
 	<target name="update-sdk-properties">

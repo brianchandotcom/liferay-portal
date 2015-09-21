@@ -2,7 +2,6 @@ Bundle-Name: Liferay Application List Taglib
 Bundle-SymbolicName: com.liferay.application.list.taglib
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.application.list.taglib.constants,\
 	com.liferay.application.list.taglib.display.context.logic,\
 	com.liferay.application.list.taglib.servlet.taglib
 Include-Resource:\

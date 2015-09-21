@@ -35,12 +35,6 @@
 
 	String title = ParamUtil.getString(request, "title");
 
-	boolean hasDraftPage = false;
-
-	if (nodeId > 0) {
-		hasDraftPage = WikiPageLocalServiceUtil.hasDraftPage(nodeId, title);
-	}
-
 	PortletURL searchURL = renderResponse.createRenderURL();
 
 	searchURL.setParameter("struts_action", "/wiki/search");
@@ -56,62 +50,24 @@
 	editPageURL.setParameter("title", title);
 	%>
 
-	<c:choose>
-		<c:when test="<%= hasDraftPage %>">
+	<div class="alert alert-info">
+		<liferay-ui:message key="this-page-is-empty.-use-the-buttons-below-to-create-it-or-to-search-for-the-words-in-the-title" />
+	</div>
 
-			<%
-			WikiPage draftPage = WikiPageLocalServiceUtil.getDraftPage(nodeId, title);
+	<div class="btn-toolbar">
 
-			boolean editableDraft = false;
+		<%
+		String taglibSearch = "location.href = '" + searchURL.toString() + "';";
+		%>
 
-			if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId) || (draftPage.getUserId() == user.getUserId())) {
-				editableDraft = true;
-			}
-			%>
+		<aui:button onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
 
-			<c:choose>
-				<c:when test="<%= editableDraft %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="this-page-has-an-associated-draft-that-is-not-yet-published" />
-					</div>
+		<%
+		String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
+		%>
 
-					<div class="btn-toolbar">
-
-						<%
-						String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
-						%>
-
-						<aui:button onClick="<%= taglibEditPage %>" value="edit-draft" />
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="alert alert-info">
-						<liferay-ui:message key="this-page-has-already-been-started-by-another-author" />
-					</div>
-				</c:otherwise>
-			</c:choose>
-		</c:when>
-		<c:otherwise>
-			<div class="alert alert-info">
-				<liferay-ui:message key="this-page-is-empty.-use-the-buttons-below-to-create-it-or-to-search-for-the-words-in-the-title" />
-			</div>
-
-			<div class="btn-toolbar">
-
-				<%
-				String taglibSearch = "location.href = '" + searchURL.toString() + "';";
-				%>
-
-				<aui:button onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
-
-				<%
-				String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
-				%>
-
-				<aui:button onClick="<%= taglibEditPage %>" value='<%= LanguageUtil.format(request, "create-page-x", HtmlUtil.escapeAttribute(title), false) %>' />
-			</div>
-		</c:otherwise>
-	</c:choose>
+		<aui:button onClick="<%= taglibEditPage %>" value='<%= LanguageUtil.format(request, "create-page-x", HtmlUtil.escapeAttribute(title), false) %>' />
+	</div>
 </c:if>
 
 <liferay-ui:error exception="<%= PageTitleException.class %>" message="please-enter-a-valid-page-title" />

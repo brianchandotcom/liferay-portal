@@ -276,7 +276,7 @@
 			{
 				"template_ja": {
 					"mapping": {
-						"analyzer": "cjk",
+						"analyzer": "kuromoji",
 						"index": "analyzed",
 						"store": "true",
 						"term_vector": "with_positions_offsets",
@@ -429,7 +429,7 @@
 			{
 				"template_zh": {
 					"mapping": {
-						"analyzer": "chinese",
+						"analyzer": "smartcn",
 						"index": "analyzed",
 						"store": "true",
 						"term_vector": "with_positions_offsets",
@@ -506,7 +506,8 @@
 				"type": "string"
 			},
 			"assetTagNames": {
-				"index": "analyzed",
+				"analyzer" : "keyword_lowercase",
+				"search_analyzer" : "asset_tag_name",
 				"store": "yes",
 				"term_vector": "with_positions_offsets",
 				"type": "string"

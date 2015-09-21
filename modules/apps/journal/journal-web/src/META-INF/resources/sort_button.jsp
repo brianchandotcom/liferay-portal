@@ -23,33 +23,32 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 
 String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
+String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
-String reverseOrderByType = "asc";
+if (Validator.isNull(orderByCol)) {
+	orderByCol = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-col", "modified-date");
+	orderByType = portalPreferences.getValue(JournalPortletKeys.JOURNAL, "order-by-type", "asc");
+}
+else {
+	boolean saveOrderBy = ParamUtil.getBoolean(request, "saveOrderBy");
 
-if (orderByType.equals("asc")) {
-	reverseOrderByType = "desc";
+	if (saveOrderBy) {
+		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-col", orderByCol);
+		portalPreferences.setValue(JournalPortletKeys.JOURNAL, "order-by-type", orderByType);
+	}
 }
 %>
 
-<aui:nav-item dropdown="<%= true %>" id="sortButtonContainer" label="sort-by">
-	<portlet:renderURL var="sortDisplayDatetURL">
-		<portlet:param name="navigation" value="<%= navigation %>" />
-		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
-		<portlet:param name="orderByCol" value="display-date" />
-		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
-	</portlet:renderURL>
+<liferay-portlet:renderURL varImpl="portletURL">
+	<portlet:param name="navigation" value="<%= navigation %>" />
+	<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+	<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
+</liferay-portlet:renderURL>
 
-	<aui:nav-item href="<%= sortDisplayDatetURL %>" iconCssClass="icon-calendar" label="display-date" />
-
-	<portlet:renderURL var="sortModifiedDatetURL">
-		<portlet:param name="navigation" value="<%= navigation %>" />
-		<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
-		<portlet:param name="orderByCol" value="modified-date" />
-		<portlet:param name="orderByType" value="<%= reverseOrderByType %>" />
-	</portlet:renderURL>
-
-	<aui:nav-item href="<%= sortModifiedDatetURL %>" iconCssClass="icon-calendar" label="modified-date" />
-</aui:nav-item>
+<liferay-frontend:management-bar-sort
+	orderByCol="<%= orderByCol %>"
+	orderByType="<%= orderByType %>"
+	orderColumns='<%= new String[]{"display-date", "modified-date"} %>'
+	portletURL="<%= portletURL %>"
+/>

@@ -49,6 +49,7 @@ import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
@@ -243,7 +244,8 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			groupId, JournalArticle.class.getName());
 
 		ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			groupId, ddmStructure.getStructureId());
+			groupId, ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		String content = DDMStructureTestUtil.getSampleStructuredContent();
 

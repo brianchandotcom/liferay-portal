@@ -14,8 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
+import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Bruno Basto
@@ -121,11 +124,18 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 	}
 
 	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
+	}
+
+	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
 		_className = null;
-		_defaultDisplayStyle = null;
+		_defaultDisplayStyle = com.liferay.portal.kernel.util.StringPool.BLANK;
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_displayStyles = null;
@@ -155,10 +165,11 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:template-selector:";
 
-	private static final String _PAGE = "/template_selector/page.jsp";
+	private static final String _PAGE =
+		"/template_selector/page.jsp";
 
 	private java.lang.String _className = null;
-	private java.lang.String _defaultDisplayStyle = null;
+	private java.lang.String _defaultDisplayStyle = com.liferay.portal.kernel.util.StringPool.BLANK;
 	private java.lang.String _displayStyle = null;
 	private long _displayStyleGroupId = 0;
 	private java.util.List<java.lang.String> _displayStyles = null;

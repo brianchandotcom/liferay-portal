@@ -273,6 +273,10 @@ public class ServiceContextFactory {
 			serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 		}
 
+		Double assetPriority = ParamUtil.getDouble(request, "assetPriority");
+
+		serviceContext.setAssetPriority(assetPriority);
+
 		String assetTagNamesString = request.getParameter("assetTagNames");
 
 		if (assetTagNamesString != null) {
@@ -481,6 +485,10 @@ public class ServiceContextFactory {
 
 			serviceContext.setAssetLinkEntryIds(assetLinkEntryIds);
 		}
+
+		Double assetPriority = ParamUtil.getDouble(request, "assetPriority");
+
+		serviceContext.setAssetPriority(assetPriority);
 
 		String assetTagNamesString = request.getParameter("assetTagNames");
 

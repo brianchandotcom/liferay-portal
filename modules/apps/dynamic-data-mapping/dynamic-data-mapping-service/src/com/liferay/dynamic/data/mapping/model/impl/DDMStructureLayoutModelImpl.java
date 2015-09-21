@@ -413,12 +413,12 @@ public class DDMStructureLayoutModelImpl extends BaseModelImpl<DDMStructureLayou
 		_definition = definition;
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout getDDMFormLayout() {
+	public com.liferay.dynamic.data.mapping.model.DDMFormLayout getDDMFormLayout() {
 		return null;
 	}
 
 	public void setDDMFormLayout(
-		com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout ddmFormLayout) {
+		com.liferay.dynamic.data.mapping.model.DDMFormLayout ddmFormLayout) {
 	}
 
 	public long getColumnBitmask() {

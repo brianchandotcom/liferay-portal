@@ -15,6 +15,7 @@
 package com.liferay.layout.admin.web.lar;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,7 +64,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -245,6 +245,27 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return portletIds;
+	}
+
+	protected void deleteMissingLayoutFriendlyURLs(
+		PortletDataContext portletDataContext, Layout layout) {
+
+		Map<Long, Long> layoutFriendlyURLIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				LayoutFriendlyURL.class);
+
+		List<LayoutFriendlyURL> layoutFriendlyURLs =
+			LayoutFriendlyURLLocalServiceUtil.getLayoutFriendlyURLs(
+				layout.getPlid());
+
+		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
+			if (!layoutFriendlyURLIds.containsValue(
+					layoutFriendlyURL.getLayoutFriendlyURLId())) {
+
+				LayoutFriendlyURLLocalServiceUtil.deleteLayoutFriendlyURL(
+					layoutFriendlyURL);
+			}
+		}
 	}
 
 	@Override
@@ -639,7 +660,7 @@ public class LayoutStagedModelDataHandler
 
 		importAssets(portletDataContext, layout, importedLayout);
 
-		importLayoutFriendlyURLs(portletDataContext, layout);
+		importLayoutFriendlyURLs(portletDataContext, layout, importedLayout);
 
 		portletDataContext.importClassedModel(layout, importedLayout);
 	}
@@ -922,7 +943,8 @@ public class LayoutStagedModelDataHandler
 	}
 
 	protected void importLayoutFriendlyURLs(
-			PortletDataContext portletDataContext, Layout layout)
+			PortletDataContext portletDataContext, Layout layout,
+			Layout importedLayout)
 		throws Exception {
 
 		List<Element> layoutFriendlyURLElements =
@@ -940,6 +962,8 @@ public class LayoutStagedModelDataHandler
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, layoutFriendlyURL);
 		}
+
+		deleteMissingLayoutFriendlyURLs(portletDataContext, importedLayout);
 	}
 
 	protected void importLayoutIconImage(
@@ -1006,6 +1030,13 @@ public class LayoutStagedModelDataHandler
 				portletDataContext, linkedToLayout);
 
 			Layout importedLinkedLayout = layouts.get(linkToLayoutId);
+
+			if (importedLinkedLayout == null) {
+				throw new NoSuchLayoutException(
+					"Layout with layout id " + linkToLayoutId +
+						" that is linked from layout with layout id " +
+							layout.getLayoutId() + " does not exist");
+			}
 
 			typeSettingsProperties.setProperty(
 				"privateLayout",

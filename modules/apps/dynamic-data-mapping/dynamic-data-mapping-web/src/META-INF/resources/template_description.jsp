@@ -24,15 +24,19 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 String rowHREF = (String)row.getParameter("rowHREF");
 %>
 
-<a href="<%= rowHREF %>">
+<c:if test="<%= Validator.isNotNull(rowHREF) %>">
+	<a href="<%= rowHREF %>">
+</c:if>
 
 <c:choose>
 	<c:when test="<%= template.isSmallImage() %>">
-		<img alt="" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
+		<img alt="<%= HtmlUtil.escape(template.getName(locale)) %>" class="lfr-ddm-small-image-view" src="<%= HtmlUtil.escapeAttribute(template.getTemplateImageURL(themeDisplay)) %>" />
 	</c:when>
 	<c:otherwise>
 		<%= HtmlUtil.escape(template.getDescription(locale)) %>
 	</c:otherwise>
 </c:choose>
 
-</a>
+<c:if test="<%= Validator.isNotNull(rowHREF) %>">
+	</a>
+</c:if>

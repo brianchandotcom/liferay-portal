@@ -17,29 +17,33 @@
 <%@ include file="/init.jsp" %>
 
 <%
-groupStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(GroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
+String portletResource = ParamUtil.getString(request, "portletResource");
+
+String portletResourceNamespace = PortalUtil.getPortletNamespace(portletResource);
+
+int index = ParamUtil.getInteger(request, "index");
+
+socialGroupStatisticsPortletInstanceConfiguration = ConfigurationFactoryUtil.getConfiguration(SocialGroupStatisticsPortletInstanceConfiguration.class, new ParameterMapSettingsLocator(request.getParameterMap(), new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource())));
 
 String displayActivityCounterName = "";
 String chartType = "";
 int chartWidth = 35;
 String dataRange = "";
 
-int index = ParamUtil.getInteger(request, "index");
-
-String[] displayActivityCounterNames = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+String[] displayActivityCounterNames = socialGroupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
 
 if (index < displayActivityCounterNames.length) {
 	displayActivityCounterName = displayActivityCounterNames[index];
 
-	String[] chartTypes = groupStatisticsPortletInstanceConfiguration.chartType();
+	String[] chartTypes = socialGroupStatisticsPortletInstanceConfiguration.chartType();
 
 	chartType = chartTypes[index];
 
-	String[] chartWidths = groupStatisticsPortletInstanceConfiguration.chartWidth();
+	String[] chartWidths = socialGroupStatisticsPortletInstanceConfiguration.chartWidth();
 
 	chartWidth = GetterUtil.getInteger(chartWidths[index], chartWidth);
 
-	String[] dataRanges = groupStatisticsPortletInstanceConfiguration.dataRange();
+	String[] dataRanges = socialGroupStatisticsPortletInstanceConfiguration.dataRange();
 
 	dataRange = dataRanges[index];
 }
@@ -60,7 +64,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-first-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayActivityCounterName" + index + "--" %>' title="display-activity-counter-name">
+	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "preferences--displayActivityCounterName" + index + "--" %>' title="display-activity-counter-name" useNamespace="<%= false %>">
 
 		<%
 		for (String activityCounterName : activityCounterNames) {
@@ -81,7 +85,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-second-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartType" + index + "--" %>' title="chart-type" value="<%= chartType %>">
+	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "preferences--chartType" + index + "--" %>' title="chart-type" useNamespace="<%= false %>" value="<%= chartType %>">
 		<aui:option label="group-statistics-chart-type-area-diagram" value="area" />
 		<aui:option label="group-statistics-chart-type-column-diagram" value="column" />
 		<aui:option label="group-statistics-chart-type-activity-distribution" value="pie" />
@@ -92,7 +96,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="group-statistics-add-counter-third-text" />
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--dataRange" + index + "--" %>' title="date-range" value="<%= dataRange %>">
+	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "preferences--dataRange" + index + "--" %>' title="date-range" useNamespace="<%= false %>" value="<%= dataRange %>">
 		<aui:option label="group-statistics-data-range-this-year" value="year" />
 		<aui:option label="group-statistics-data-range-last-12-months" value="12months" />
 	</aui:select>
@@ -103,7 +107,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 		<liferay-ui:message key="chart-width" />:
 	</span>
 
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--chartWidth" + index + "--" %>' title="chart-width">
+	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "preferences--chartWidth" + index + "--" %>' title="chart-width" useNamespace="<%= false %>">
 
 		<%
 		for (int i = 5; i < 100; i = i + 5) {

@@ -14,12 +14,12 @@
 
 package com.liferay.mobile.device.rules.web.search;
 
+import com.liferay.mobile.device.rules.model.MDRRuleGroup;
+import com.liferay.mobile.device.rules.service.permission.MDRRuleGroupPermission;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
-import com.liferay.portlet.mobiledevicerules.service.permission.MDRRuleGroupPermissionUtil;
 
 import javax.portlet.PortletResponse;
 
@@ -39,7 +39,7 @@ public class RuleGroupChecker extends RowChecker {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (!MDRRuleGroupPermissionUtil.contains(
+		if (!MDRRuleGroupPermission.contains(
 				permissionChecker, ruleGroup, ActionKeys.DELETE)) {
 
 			return true;

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.model.BackgroundTask;
-
 /**
  * @author Michael C. Han
  */

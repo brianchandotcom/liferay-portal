@@ -54,6 +54,8 @@ public class SyncFile extends StateAwareModel {
 
 	public static final String TYPE_FOLDER = "folder";
 
+	public static final String TYPE_PRIVATE_WORKING_COPY = "privateWorkingCopy";
+
 	public static final String TYPE_SYSTEM = "system";
 
 	public static final int UI_EVENT_ADDED_LOCAL = 1;
@@ -194,6 +196,10 @@ public class SyncFile extends StateAwareModel {
 		return parentFolderId;
 	}
 
+	public long getPreviousModifiedTime() {
+		return previousModifiedTime;
+	}
+
 	public long getRepositoryId() {
 		return repositoryId;
 	}
@@ -248,7 +254,15 @@ public class SyncFile extends StateAwareModel {
 	}
 
 	public boolean isFolder() {
-		return !isFile();
+		if (!isFile() && !isPrivateWorkingCopy()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isPrivateWorkingCopy() {
+		return type.equals(TYPE_PRIVATE_WORKING_COPY);
 	}
 
 	public boolean isSystem() {
@@ -321,6 +335,10 @@ public class SyncFile extends StateAwareModel {
 
 	public void setParentFolderId(long parentFolderId) {
 		this.parentFolderId = parentFolderId;
+	}
+
+	public void setPreviousModifiedTime(long previousModifiedTime) {
+		this.previousModifiedTime = previousModifiedTime;
 	}
 
 	public void setRepositoryId(long repositoryId) {
@@ -417,6 +435,9 @@ public class SyncFile extends StateAwareModel {
 
 	@DatabaseField(useGetSet = true)
 	protected long parentFolderId;
+
+	@DatabaseField(useGetSet = true)
+	protected long previousModifiedTime;
 
 	@DatabaseField(useGetSet = true)
 	protected long repositoryId;

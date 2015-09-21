@@ -15,7 +15,9 @@
 package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,6 +37,7 @@ import org.junit.Test;
 
 /**
  * @author Mate Thurzo
+ * @author Shuyang Zhou
  */
 public class DynamicQueryTest {
 
@@ -45,56 +48,51 @@ public class DynamicQueryTest {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
-	public void setUp() throws Exception {
-		_existingClassNames = ClassNameLocalServiceUtil.getClassNames(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	public void setUp() {
+		_allClassNames = new ArrayList<>(
+			ClassNameLocalServiceUtil.getClassNames(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+
+		_oldClassNameCount = _allClassNames.size();
 
 		for (int i = 0; i < _BATCH_SIZE; i++) {
 			ClassName className = ClassNameLocalServiceUtil.addClassName(
-				RandomTestUtil.randomString());
+				RandomTestUtil.randomString(
+					UniqueStringRandomizerBumper.INSTANCE));
 
 			_newClassNames.add(className);
+
+			_allClassNames.add(className);
 		}
 	}
 
 	@Test
-	public void testLowerBound() throws Exception {
+	public void testLowerBound() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
-		dynamicQuery.setLimit(_existingClassNames.size(), QueryUtil.ALL_POS);
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
+		dynamicQuery.setLimit(_oldClassNameCount, QueryUtil.ALL_POS);
 
-		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
-
-		Assert.assertNotNull(dynamicQueryClassNames);
-
-		Assert.assertEquals(_BATCH_SIZE, dynamicQueryClassNames.size());
+		Assert.assertEquals(
+			_newClassNames,
+			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	@Test
-	public void testLowerUpperBound() throws Exception {
+	public void testLowerUpperBound() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 		dynamicQuery.setLimit(
-			_existingClassNames.size(),
-			_existingClassNames.size() + _BATCH_SIZE);
+			_oldClassNameCount, _oldClassNameCount + _BATCH_SIZE);
 
-		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
-
-		Assert.assertNotNull(dynamicQueryClassNames);
-		Assert.assertEquals(_BATCH_SIZE, dynamicQueryClassNames.size());
-
-		for (ClassName className : dynamicQueryClassNames) {
-			if (_existingClassNames.contains(className)) {
-				Assert.fail(
-					"Returned class name should not contain " + className);
-			}
-		}
+		Assert.assertEquals(
+			_newClassNames,
+			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	@Test
-	public void testNegativeBoundaries() throws Exception {
+	public void testNegativeBoundaries() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(-1985, -625);
@@ -102,27 +100,23 @@ public class DynamicQueryTest {
 		List<ClassName> dynamicQueryClassNames =
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		Assert.assertNotNull(dynamicQueryClassNames);
-		Assert.assertEquals(0, dynamicQueryClassNames.size());
+		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
 	}
 
 	@Test
-	public void testNegativeLowerBound() throws Exception {
+	public void testNegativeLowerBound() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 		dynamicQuery.setLimit(-50, QueryUtil.ALL_POS);
 
-		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
-
-		Assert.assertNotNull(dynamicQueryClassNames);
 		Assert.assertEquals(
-			_existingClassNames.size() + _BATCH_SIZE,
-			dynamicQueryClassNames.size());
+			_allClassNames,
+			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	@Test
-	public void testNegativeUpperBound() throws Exception {
+	public void testNegativeUpperBound() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(QueryUtil.ALL_POS, -50);
@@ -130,25 +124,22 @@ public class DynamicQueryTest {
 		List<ClassName> dynamicQueryClassNames =
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		Assert.assertNotNull(dynamicQueryClassNames);
-		Assert.assertEquals(0, dynamicQueryClassNames.size());
+		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
 	}
 
 	@Test
-	public void testNoLimit() throws Exception {
+	public void testNoLimit() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
-		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 
-		Assert.assertNotNull(dynamicQueryClassNames);
 		Assert.assertEquals(
-			_existingClassNames.size() + _BATCH_SIZE,
-			dynamicQueryClassNames.size());
+			_allClassNames,
+			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	@Test
-	public void testNoResults() throws Exception {
+	public void testNoResults() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(10, 10);
@@ -156,25 +147,26 @@ public class DynamicQueryTest {
 		List<ClassName> dynamicQueryClassNames =
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		Assert.assertNotNull(dynamicQueryClassNames);
-		Assert.assertEquals(0, dynamicQueryClassNames.size());
+		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
 	}
 
 	@Test
-	public void testSingleResult() throws Exception {
+	public void testSingleResult() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 		dynamicQuery.setLimit(10, 11);
 
 		List<ClassName> dynamicQueryClassNames =
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		Assert.assertNotNull(dynamicQueryClassNames);
 		Assert.assertEquals(1, dynamicQueryClassNames.size());
+		Assert.assertEquals(
+			_allClassNames.get(10), dynamicQueryClassNames.get(0));
 	}
 
 	@Test
-	public void testStartHigherThanEnd() throws Exception {
+	public void testStartHigherThanEnd() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
 		dynamicQuery.setLimit(1984, 309);
@@ -182,28 +174,28 @@ public class DynamicQueryTest {
 		List<ClassName> dynamicQueryClassNames =
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		Assert.assertNotNull(dynamicQueryClassNames);
-		Assert.assertEquals(0, dynamicQueryClassNames.size());
+		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
 	}
 
 	@Test
-	public void testUpperBound() throws Exception {
+	public void testUpperBound() {
 		DynamicQuery dynamicQuery = ClassNameLocalServiceUtil.dynamicQuery();
 
+		dynamicQuery.addOrder(OrderFactoryUtil.asc("classNameId"));
 		dynamicQuery.setLimit(QueryUtil.ALL_POS, _BATCH_SIZE);
 
-		List<ClassName> dynamicQueryClassNames =
-			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
-
-		Assert.assertNotNull(dynamicQueryClassNames);
-		Assert.assertEquals(_BATCH_SIZE, dynamicQueryClassNames.size());
+		Assert.assertEquals(
+			_allClassNames.subList(0, _BATCH_SIZE),
+			ClassNameLocalServiceUtil.<ClassName>dynamicQuery(dynamicQuery));
 	}
 
 	private static final int _BATCH_SIZE = 50;
 
-	private List<ClassName> _existingClassNames;
+	private List<ClassName> _allClassNames;
 
 	@DeleteAfterTestRun
 	private final List<ClassName> _newClassNames = new ArrayList<>();
+
+	private int _oldClassNameCount;
 
 }

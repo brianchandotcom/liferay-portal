@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class AssetCategoryUtil {
 
-	public static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
+	public static final String CATEGORY_SEPARATOR = "_CATEGORY_";
 
 	public static long[] filterCategoryIds(
 		long vocabularyId, long[] categoryIds) {
@@ -93,7 +93,7 @@ public class AssetCategoryUtil {
 
 					categoryNamesSb.append(
 						category.getTitle(themeDisplay.getLocale()));
-					categoryNamesSb.append(_CATEGORY_SEPARATOR);
+					categoryNamesSb.append(CATEGORY_SEPARATOR);
 				}
 
 				if (categoryIdsSb.index() > 0) {

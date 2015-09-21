@@ -110,7 +110,7 @@ public class PortletProviderUtil {
 	}
 
 	protected static boolean isAssetObject(String className) {
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				className);
 

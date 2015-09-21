@@ -62,13 +62,15 @@ public class RelatedAssetsRenderParametersPortletFilter
 			FilterChain filterChain)
 		throws IOException, PortletException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			renderRequest);
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(renderRequest);
 
-		if (request.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) == null) {
-			clearDynamicServletRequestParameters(request);
+		if (httpServletRequest.getAttribute(WebKeys.LAYOUT_ASSET_ENTRY) ==
+				null) {
 
-			clearRenderRequestParameters(renderRequest, request);
+			clearDynamicServletRequestParameters(httpServletRequest);
+
+			clearRenderRequestParameters(renderRequest, httpServletRequest);
 		}
 
 		filterChain.doFilter(renderRequest, renderResponse);
@@ -79,21 +81,22 @@ public class RelatedAssetsRenderParametersPortletFilter
 	}
 
 	protected void clearDynamicServletRequestParameters(
-		HttpServletRequest request) {
+		HttpServletRequest httpServletRequest) {
 
 		DynamicServletRequest dynamicServletRequest = null;
 
-		while (request instanceof HttpServletRequestWrapper) {
-			if (request instanceof DynamicServletRequest) {
-				dynamicServletRequest = (DynamicServletRequest)request;
+		while (httpServletRequest instanceof HttpServletRequestWrapper) {
+			if (httpServletRequest instanceof DynamicServletRequest) {
+				dynamicServletRequest =
+					(DynamicServletRequest)httpServletRequest;
 
 				break;
 			}
 
 			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)request;
+				(HttpServletRequestWrapper)httpServletRequest;
 
-			request =
+			httpServletRequest =
 				(HttpServletRequest)httpServletRequestWrapper.getRequest();
 		}
 
@@ -106,14 +109,15 @@ public class RelatedAssetsRenderParametersPortletFilter
 	}
 
 	protected void clearRenderRequestParameters(
-		RenderRequest renderRequest, HttpServletRequest request) {
+		RenderRequest renderRequest, HttpServletRequest httpServletRequest) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		String portletId = PortalUtil.getPortletId(renderRequest);
 
-		RenderParametersPool.clear(request, themeDisplay.getPlid(), portletId);
+		RenderParametersPool.clear(
+			httpServletRequest, themeDisplay.getPlid(), portletId);
 	}
 
 }

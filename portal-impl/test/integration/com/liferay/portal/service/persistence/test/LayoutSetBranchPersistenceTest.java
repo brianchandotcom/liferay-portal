@@ -485,11 +485,12 @@ public class LayoutSetBranchPersistenceTest {
 
 		LayoutSetBranch existingLayoutSetBranch = _persistence.findByPrimaryKey(newLayoutSetBranch.getPrimaryKey());
 
-		Assert.assertEquals(existingLayoutSetBranch.getGroupId(),
-			ReflectionTestUtil.invoke(existingLayoutSetBranch,
+		Assert.assertEquals(Long.valueOf(existingLayoutSetBranch.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingLayoutSetBranch,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingLayoutSetBranch.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingLayoutSetBranch,
+		Assert.assertEquals(Boolean.valueOf(
+				existingLayoutSetBranch.getPrivateLayout()),
+			ReflectionTestUtil.<Boolean>invoke(existingLayoutSetBranch,
 				"getOriginalPrivateLayout", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingLayoutSetBranch.getName(),
 				ReflectionTestUtil.invoke(existingLayoutSetBranch,

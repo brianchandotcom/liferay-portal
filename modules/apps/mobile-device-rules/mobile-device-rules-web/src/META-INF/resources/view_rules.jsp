@@ -75,7 +75,7 @@ portletURL.setParameter("redirect", redirect);
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portlet.mobiledevicerules.model.MDRRule"
+		className="com.liferay.mobile.device.rules.model.MDRRule"
 		escapedModel="<%= true %>"
 		keyProperty="ruleId"
 		modelVar="rule"

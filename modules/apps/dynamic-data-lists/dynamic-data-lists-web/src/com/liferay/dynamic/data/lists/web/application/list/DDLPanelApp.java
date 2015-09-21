@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class DDLPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT;
-	}
-
-	@Override
 	public String getPortletId() {
 		return DDLPortletKeys.DYNAMIC_DATA_LISTS;
 	}
@@ -50,7 +45,7 @@ public class DDLPanelApp extends BaseControlPanelEntryPanelApp {
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

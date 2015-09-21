@@ -16,6 +16,8 @@ package com.liferay.marketplace.store.web.messaging;
 
 import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 
@@ -26,7 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Ryan Park
  */
 @Component(
-	immediate = true, property = {"destination.name=liferay/hot_deploy"},
+	immediate = true,
+	property = {"destination.name=" + DestinationNames.HOT_DEPLOY},
 	service = MessageListener.class
 )
 public class HotDeployMessageListener extends BaseMessageListener {
@@ -39,6 +42,13 @@ public class HotDeployMessageListener extends BaseMessageListener {
 	@Reference(unbind = "-")
 	protected void setAppLocalService(AppLocalService appLocalService) {
 		_appLocalService = appLocalService;
+	}
+
+	@Reference(
+		target = "(destination.name=" + DestinationNames.HOT_DEPLOY + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
 	}
 
 	private AppLocalService _appLocalService;

@@ -103,7 +103,15 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewCP">
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content - Liferay" />
 			<var name="entryTitle" value="Blogs Entry Title - Liferay" />
 		</execute>
@@ -164,7 +172,15 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewCP">
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="Blogs Entry Content - Site Name" />
 			<var name="entryTitle" value="Blogs Entry Title - Site Name" />
 		</execute>
@@ -363,12 +379,12 @@
 
 		<var name="key_workflowAssetTitle" value="${wikiPageTitle}" />
 
-		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_DEFINITION" value1="Single Approver" />
-		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_ASSET_TITLE" value1="${wikiPageTitle}" />
-		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
-		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_STATUS" value1="Review" />
-		<execute function="AssertElementPresent" locator1="CPMysubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
-		<execute function="AssertElementPresent" locator1="CPMysubmissions#PENDING_TABLE_END_DATE" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_DEFINITION" value1="Single Approver" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TITLE" value1="${wikiPageTitle}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertTextEquals" locator1="WorkflowSubmissions#PENDING_TABLE_STATUS" value1="Review" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="WorkflowSubmissions#PENDING_TABLE_END_DATE" />
 
 		<execute macro="User#logoutPG" />
 
@@ -511,7 +527,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="4">
+	<command known-issues="LPS-57228" name="ViewBlogsEntryWorkflowViaNotifications" priority="4">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -583,7 +599,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="ViewTaskCount" priority="3">
+	<command name="ViewTaskCount" priority="3">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="webContentContent" value="WC WebContent Content" />
@@ -609,6 +625,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -674,7 +692,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="XSSScriptWebContent" priority="4">
+	<command name="XSSScriptWebContent" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -686,6 +704,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent"><![CDATA[&lt;script&gt;alert("web content article")&lt;/script&gt;]]></var>

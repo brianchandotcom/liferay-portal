@@ -42,12 +42,12 @@
 <!--TEMPLATES-->
 <tr>
 	<td>TEMPLATES_DISPLAY_TEMPLATE_SELECT</td>
-	<td>//select[contains(@id,'displayTemplateId')]</td>
+	<td>//select[contains(@id,'displayDDMTemplateId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TEMPLATES_FORM_TEMPLATE_SELECT</td>
-	<td>//select[contains(@id,'formTemplateId')]</td>
+	<td>//select[contains(@id,'formDDMTemplateId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,12 +68,12 @@
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME_1</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[2]/a)</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[3]/a)</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -95,6 +95,17 @@
 <tr>
 	<td>LIST_MENULIST_DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//div[contains(@class,'form-search')]//input[contains(@id,'keywords')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//span[contains(@class,'btn')]//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 </tbody>

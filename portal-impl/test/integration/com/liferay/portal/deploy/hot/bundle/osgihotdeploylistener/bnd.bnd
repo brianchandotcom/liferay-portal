@@ -1,0 +1,4 @@
+Bundle-Description: Test Bundle for OSGiHotDeployListenerTest
+Bundle-Version: 1.0.0
+Private-Package: $(bundle.package).*
+-dsannotations: *

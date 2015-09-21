@@ -1,11 +1,9 @@
-#set ($ddlRecordLocalService = $serviceLocator.findService("com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService"))
-
-#set ($records = $ddlRecordLocalService.getRecords($reserved_record_set_id))
+#set ($records = $ddlDisplayTemplateHelper.getRecords($reserved_record_set_id))
 
 #if (!$records.isEmpty())
 	#foreach ($cur_record in $records)
 
-		<div class="ddl-record">$cur_record.getFieldValue("Name", $locale)</div>
+		<div class="ddl-record">$ddlDisplayTemplateHelper.renderRecordFieldValue($cur_record.getDDMFormFieldValues("Name").get(0), $locale)</div>
 
 	#end
 #end

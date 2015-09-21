@@ -84,7 +84,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
 					</c:if>
 
-					<c:if test="<%= ((latestFileVersionStatus != WorkflowConstants.STATUS_ANY) && (latestFileVersionStatus != WorkflowConstants.STATUS_APPROVED)) %>">
+					<c:if test="<%= (latestFileVersionStatus != WorkflowConstants.STATUS_ANY) && (latestFileVersionStatus != WorkflowConstants.STATUS_APPROVED) %>">
 						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersionStatus %>" />
 					</c:if>
 				</span>

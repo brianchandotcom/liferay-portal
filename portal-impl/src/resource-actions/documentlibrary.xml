@@ -186,4 +186,33 @@
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
+	<model-resource>
+		<composite-model-name>
+			<model-name>com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata</model-name>
+			<model-name>com.liferay.dynamic.data.mapping.model.DDMStructure</model-name>
+		</composite-model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_document_library_web_portlet_DLAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLDisplayPortlet</portlet-name>
+			<portlet-name>com_liferay_document_library_web_portlet_DLPortlet</portlet-name>
+		</portlet-ref>
+		<weight>6</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
 </resource-action-mapping>

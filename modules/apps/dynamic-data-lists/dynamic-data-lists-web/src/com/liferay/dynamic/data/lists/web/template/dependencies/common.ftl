@@ -1,3 +1,7 @@
 <#include "init.ftl">
 
-${getVariableReferenceCode(fieldValue)}
+<#if language == "ftl">
+	${r"${"}ddlDisplayTemplateHelper.renderRecordFieldValue(${fieldValueVariable}, ${localeVariable})${r"}"}
+<#else>
+	$ddlDisplayTemplateHelper.renderRecordFieldValue(${fieldValueVariable}, ${localeVariable})
+</#if>

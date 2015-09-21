@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Asset Tags Navigation Web
 Bundle-SymbolicName: com.liferay.asset.tags.navigation.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.asset.tags.navigation.web.constants.*
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources

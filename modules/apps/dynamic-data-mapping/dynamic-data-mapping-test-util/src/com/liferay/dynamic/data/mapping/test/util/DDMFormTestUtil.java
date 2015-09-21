@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.test.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -28,6 +28,28 @@ import java.util.Set;
  * @author Marcellus Tavares
  */
 public class DDMFormTestUtil {
+
+	public static void addDDMFormFields(
+		DDMForm ddmForm, DDMFormField... ddmFormFieldsArray) {
+
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		for (DDMFormField ddmFormField : ddmFormFieldsArray) {
+			ddmFormFields.add(ddmFormField);
+		}
+	}
+
+	public static void addNestedTextDDMFormFields(
+		DDMFormField ddmFormField, String... fieldNames) {
+
+		List<DDMFormField> nestedDDMFormFields =
+			ddmFormField.getNestedDDMFormFields();
+
+		for (String fieldName : fieldNames) {
+			nestedDDMFormFields.add(
+				createLocalizableTextDDMFormField(fieldName));
+		}
+	}
 
 	public static void addTextDDMFormFields(
 		DDMForm ddmForm, String... fieldNames) {
@@ -91,12 +113,34 @@ public class DDMFormTestUtil {
 		return createTextDDMFormField(name, true, false, false);
 	}
 
+	public static DDMFormField createSeparatorDDMFormField(
+		String name, boolean repeatable) {
+
+		DDMFormField ddmFormField = new DDMFormField(name, "separator");
+
+		ddmFormField.setRepeatable(repeatable);
+
+		LocalizedValue localizedValue = ddmFormField.getLabel();
+
+		localizedValue.addString(LocaleUtil.US, name);
+
+		return ddmFormField;
+	}
+
 	public static DDMFormField createTextDDMFormField(
 		String name, boolean localizable, boolean repeatable,
 		boolean required) {
 
 		return createDDMFormField(
 			name, name, "text", "string", localizable, repeatable, required);
+	}
+
+	public static DDMFormField createTextDDMFormField(
+		String name, String label, boolean localizable, boolean repeatable,
+		boolean required) {
+
+		return createDDMFormField(
+			name, label, "text", "string", localizable, repeatable, required);
 	}
 
 }

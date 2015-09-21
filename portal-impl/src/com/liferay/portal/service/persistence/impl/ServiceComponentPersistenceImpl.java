@@ -958,7 +958,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(serviceComponent);
+		clearUniqueFindersCache((ServiceComponentModelImpl)serviceComponent);
 	}
 
 	@Override
@@ -970,47 +970,44 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			EntityCacheUtil.removeResult(ServiceComponentModelImpl.ENTITY_CACHE_ENABLED,
 				ServiceComponentImpl.class, serviceComponent.getPrimaryKey());
 
-			clearUniqueFindersCache(serviceComponent);
+			clearUniqueFindersCache((ServiceComponentModelImpl)serviceComponent);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(ServiceComponent serviceComponent,
-		boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		ServiceComponentModelImpl serviceComponentModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					serviceComponent.getBuildNamespace(),
-					serviceComponent.getBuildNumber()
+					serviceComponentModelImpl.getBuildNamespace(),
+					serviceComponentModelImpl.getBuildNumber()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BNS_BNU, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU, args,
-				serviceComponent);
+				serviceComponentModelImpl);
 		}
 		else {
-			ServiceComponentModelImpl serviceComponentModelImpl = (ServiceComponentModelImpl)serviceComponent;
-
 			if ((serviceComponentModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_BNS_BNU.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						serviceComponent.getBuildNamespace(),
-						serviceComponent.getBuildNumber()
+						serviceComponentModelImpl.getBuildNamespace(),
+						serviceComponentModelImpl.getBuildNumber()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_BNS_BNU, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_BNS_BNU, args,
-					serviceComponent);
+					serviceComponentModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(ServiceComponent serviceComponent) {
-		ServiceComponentModelImpl serviceComponentModelImpl = (ServiceComponentModelImpl)serviceComponent;
-
+	protected void clearUniqueFindersCache(
+		ServiceComponentModelImpl serviceComponentModelImpl) {
 		Object[] args = new Object[] {
-				serviceComponent.getBuildNamespace(),
-				serviceComponent.getBuildNumber()
+				serviceComponentModelImpl.getBuildNamespace(),
+				serviceComponentModelImpl.getBuildNumber()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_BNS_BNU, args);
@@ -1148,7 +1145,7 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 				serviceComponent.setNew(false);
 			}
 			else {
-				session.merge(serviceComponent);
+				serviceComponent = (ServiceComponent)session.merge(serviceComponent);
 			}
 		}
 		catch (Exception e) {
@@ -1191,8 +1188,8 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 			ServiceComponentImpl.class, serviceComponent.getPrimaryKey(),
 			serviceComponent, false);
 
-		clearUniqueFindersCache(serviceComponent);
-		cacheUniqueFindersCache(serviceComponent, isNew);
+		clearUniqueFindersCache(serviceComponentModelImpl);
+		cacheUniqueFindersCache(serviceComponentModelImpl, isNew);
 
 		serviceComponent.resetOriginalValues();
 

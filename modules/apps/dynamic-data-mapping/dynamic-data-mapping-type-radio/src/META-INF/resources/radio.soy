@@ -12,12 +12,12 @@
  * @param visible
  */
 {template .radio}
-	<div class="form-group field-wrapper{$visible ? '' : ' hide'}" data-fieldname="{$name}">
+	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<span class="control-label">
 			{$label}
 
 			{if $required}
-				<b>&nbsp;*</b>
+				<b>*</b>
 			{/if}
 		</span>
 

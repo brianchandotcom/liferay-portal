@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 /**
  * @author Sergio González
@@ -34,12 +36,15 @@ public class DefaultLayoutSetPrototypesUtil {
 
 	public static LayoutSet addLayoutSetPrototype(
 			long companyId, long defaultUserId, String nameKey,
-			String descriptionKey, List<LayoutSetPrototype> layoutSetPrototypes)
+			String descriptionKey, List<LayoutSetPrototype> layoutSetPrototypes,
+			ClassLoader classLoader)
 		throws Exception {
 
-		String name = LanguageUtil.get(LocaleUtil.getDefault(), nameKey);
-		String description = LanguageUtil.get(
-			LocaleUtil.getDefault(), descriptionKey);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", LocaleUtil.getDefault(), classLoader);
+
+		String name = LanguageUtil.get(resourceBundle, nameKey);
+		String description = LanguageUtil.get(resourceBundle, descriptionKey);
 
 		for (LayoutSetPrototype layoutSetPrototype : layoutSetPrototypes) {
 			String curName = layoutSetPrototype.getName(
@@ -56,9 +61,12 @@ public class DefaultLayoutSetPrototypesUtil {
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			nameMap.put(locale, LanguageUtil.get(locale, nameKey));
+			resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", locale, classLoader);
+
+			nameMap.put(locale, LanguageUtil.get(resourceBundle, nameKey));
 			descriptionMap.put(
-				locale, LanguageUtil.get(locale, descriptionKey));
+				locale, LanguageUtil.get(resourceBundle, descriptionKey));
 		}
 
 		LayoutSetPrototype layoutSetPrototype =

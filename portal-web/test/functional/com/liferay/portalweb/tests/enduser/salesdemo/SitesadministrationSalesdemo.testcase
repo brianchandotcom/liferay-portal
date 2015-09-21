@@ -51,8 +51,8 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Site Settings" />
+		<execute macro="Page#gotoPublishingTools">
+			<var name="portletName" value="Staging Configuration" />
 			<var name="siteScopeName" value="Staging Site Name" />
 			<var name="siteScopeSelected" value="true" />
 		</execute>
@@ -82,6 +82,7 @@
 		</execute>
 
 		<execute macro="SitePage#viewDefaultSiteTemplatePagesPG">
+			<var name="pageName" value="Home" />
 			<var name="siteName" value="Healthcare Site Name" />
 			<var name="siteTemplate" value="Zoe Healthcare Theme" />
 		</execute>
@@ -103,7 +104,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="Click#textClickAtClickDockbar" locator1="Dockbar#MY_SITES" value1="My Sites" />
+		<execute function="Click#textClickAtClickDockbar" locator1="ControlMenu#MY_SITES" value1="My Sites" />
 
 		<for list="${allSiteNameLists}" param="allSiteNameListsCount" >
 			<execute macro="Dockbar#viewSitesViaMySitesDropDown">
@@ -119,7 +120,7 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPSitepages#SITE_PAGES_LINK" value1="Site Pages" />
+		<execute function="AssertClick" locator1="SitePages#SITE_PAGES_LINK" value1="Site Pages" />
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="Web Content Display" />

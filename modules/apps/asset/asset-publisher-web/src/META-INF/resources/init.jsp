@@ -31,6 +31,7 @@ page import="com.liferay.asset.publisher.web.context.AssetEntryResult" %><%@
 page import="com.liferay.asset.publisher.web.context.AssetPublisherDisplayContext" %><%@
 page import="com.liferay.asset.publisher.web.util.AssetPublisherHelper" %><%@
 page import="com.liferay.asset.publisher.web.util.AssetPublisherUtil" %><%@
+page import="com.liferay.dynamic.data.mapping.model.DDMFormFieldType" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMIndexerUtil" %><%@
 page import="com.liferay.portal.NoSuchGroupException" %><%@
@@ -101,7 +102,6 @@ page import="com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil" 
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.asset.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType" %><%@
 page import="com.liferay.util.ContentUtil" %>
 
 <%@ page import="java.io.Serializable" %>

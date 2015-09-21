@@ -1,15 +1,41 @@
-.lfr-ddm-form-field-container {
-	position: relative;
+@import "bourbon";
 
-	.lfr-ddm-form-field-repeatable-add-button {
-		position: absolute;
-		right: 0;
-		top: 0;
+.lfr-ddm-form-container {
+	.lfr-ddm-form-field-container {
+		position: relative;
+
+		@include keyframes(spin) {
+			100% {
+				transform: rotate(359deg);
+			}
+		}
+
+		.icon-spinner {
+			@include animation(spin 1000ms infinite linear);
+		}
+
+		.lfr-ddm-form-field-repeatable-add-button {
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+
+		.lfr-ddm-form-field-repeatable-delete-button {
+			position: absolute;
+			right: 15px;
+			top: 0;
+		}
 	}
 
-	.lfr-ddm-form-field-repeatable-delete-button {
-		position: absolute;
-		right: 15px;
-		top: 0;
+	.lfr-ddm-form-page {
+		display: none;
+
+		&.active {
+			display: block;
+		}
+	}
+
+	.row {
+		min-height: auto;
 	}
 }

@@ -59,7 +59,7 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 		/>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.mobiledevicerules.model.MDRAction"
+			className="com.liferay.mobile.device.rules.model.MDRAction"
 			escapedModel="<%= true %>"
 			keyProperty="actionId"
 			modelVar="action"
@@ -73,7 +73,7 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 			<%@ include file="/action_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
+		<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 			<liferay-portlet:renderURL var="addURL">
 				<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_action" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />

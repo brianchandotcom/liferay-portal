@@ -19,12 +19,12 @@ import static org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus.
 
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch.internal.connection.HealthExpectations;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
 
 import org.junit.Assert;
 
@@ -39,7 +39,7 @@ public class ClusterAssert {
 
 		ClusterAssert.assertHealth(
 			elasticsearchFixture,
-			new ClusterAssert.HealthExpectations() {
+			new HealthExpectations() {
 				{
 					activePrimaryShards = 1;
 					activeShards = 1;
@@ -57,7 +57,7 @@ public class ClusterAssert {
 
 		ClusterAssert.assertHealth(
 			elasticsearchFixture,
-			new ClusterAssert.HealthExpectations() {
+			new HealthExpectations() {
 				{
 					activePrimaryShards = 1;
 					activeShards = 1;
@@ -75,7 +75,7 @@ public class ClusterAssert {
 
 		ClusterAssert.assertHealth(
 			elasticsearchFixture,
-			new ClusterAssert.HealthExpectations() {
+			new HealthExpectations() {
 				{
 					activePrimaryShards = 1;
 					activeShards = 1;
@@ -93,7 +93,7 @@ public class ClusterAssert {
 
 		ClusterAssert.assertHealth(
 			elasticsearchFixture,
-			new ClusterAssert.HealthExpectations() {
+			new HealthExpectations() {
 				{
 					activePrimaryShards = 1;
 					activeShards = 2;
@@ -111,7 +111,7 @@ public class ClusterAssert {
 
 		ClusterAssert.assertHealth(
 			elasticsearchFixture,
-			new ClusterAssert.HealthExpectations() {
+			new HealthExpectations() {
 				{
 					activePrimaryShards = 1;
 					activeShards = 2;
@@ -129,7 +129,7 @@ public class ClusterAssert {
 
 		ClusterAssert.assertHealth(
 			elasticsearchFixture,
-			new ClusterAssert.HealthExpectations() {
+			new HealthExpectations() {
 				{
 					activePrimaryShards = 1;
 					activeShards = 3;
@@ -147,13 +147,14 @@ public class ClusterAssert {
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			10, TimeUnit.MINUTES,
 			new Callable<Void>() {
 
 				@Override
 				public Void call() throws Exception {
 					ClusterHealthResponse clusterHealthResponse =
-						elasticsearchFixture.getClusterHealthResponse();
+						elasticsearchFixture.getClusterHealthResponse(
+							healthExpectations);
 
 					_assertHealth(clusterHealthResponse, healthExpectations);
 
@@ -163,39 +164,16 @@ public class ClusterAssert {
 			});
 	}
 
-	public static class HealthExpectations {
-
-		public int activePrimaryShards;
-		public int activeShards;
-		public int numberOfDataNodes;
-		public int numberOfNodes;
-		public ClusterHealthStatus status;
-		public int unassignedShards;
-
-	}
-
 	private static void _assertHealth(
 		ClusterHealthResponse clusterHealthResponse,
-		HealthExpectations healthExpectations) {
+		HealthExpectations expectedHealthExpectations) {
+
+		HealthExpectations actualHealthExpectations = new HealthExpectations(
+			clusterHealthResponse);
 
 		Assert.assertEquals(
-			"activePrimaryShards", healthExpectations.activePrimaryShards,
-			clusterHealthResponse.getActivePrimaryShards());
-		Assert.assertEquals(
-			"activeShards", healthExpectations.activeShards,
-			clusterHealthResponse.getActiveShards());
-		Assert.assertEquals(
-			"numberOfDataNodes", healthExpectations.numberOfDataNodes,
-			clusterHealthResponse.getNumberOfDataNodes());
-		Assert.assertEquals(
-			"numberOfNodes", healthExpectations.numberOfNodes,
-			clusterHealthResponse.getNumberOfNodes());
-		Assert.assertEquals(
-			"status", healthExpectations.status,
-			clusterHealthResponse.getStatus());
-		Assert.assertEquals(
-			"unassignedShards", healthExpectations.unassignedShards,
-			clusterHealthResponse.getUnassignedShards());
+			expectedHealthExpectations.toString(),
+			actualHealthExpectations.toString());
 	}
 
 }

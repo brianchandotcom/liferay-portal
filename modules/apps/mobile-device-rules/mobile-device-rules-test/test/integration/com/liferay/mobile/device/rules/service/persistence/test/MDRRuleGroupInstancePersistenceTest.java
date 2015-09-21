@@ -15,6 +15,13 @@
 package com.liferay.mobile.device.rules.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
+import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupInstanceException;
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupInstancePersistence;
+import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupInstanceUtil;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -35,17 +42,12 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupInstancePersistence;
-import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupInstanceUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
 import org.junit.runner.RunWith;
 
 import java.io.Serializable;
@@ -142,6 +144,8 @@ public class MDRRuleGroupInstancePersistenceTest {
 
 		newMDRRuleGroupInstance.setPriority(RandomTestUtil.nextInt());
 
+		newMDRRuleGroupInstance.setLastPublishDate(RandomTestUtil.nextDate());
+
 		_mdrRuleGroupInstances.add(_persistence.update(newMDRRuleGroupInstance));
 
 		MDRRuleGroupInstance existingMDRRuleGroupInstance = _persistence.findByPrimaryKey(newMDRRuleGroupInstance.getPrimaryKey());
@@ -172,6 +176,9 @@ public class MDRRuleGroupInstancePersistenceTest {
 			newMDRRuleGroupInstance.getRuleGroupId());
 		Assert.assertEquals(existingMDRRuleGroupInstance.getPriority(),
 			newMDRRuleGroupInstance.getPriority());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingMDRRuleGroupInstance.getLastPublishDate()),
+			Time.getShortTimestamp(newMDRRuleGroupInstance.getLastPublishDate()));
 	}
 
 	@Test
@@ -273,7 +280,7 @@ public class MDRRuleGroupInstancePersistenceTest {
 			"uuid", true, "ruleGroupInstanceId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "classNameId", true, "classPK", true,
-			"ruleGroupId", true, "priority", true);
+			"ruleGroupId", true, "priority", true, "lastPublishDate", true);
 	}
 
 	@Test
@@ -486,18 +493,22 @@ public class MDRRuleGroupInstancePersistenceTest {
 				existingMDRRuleGroupInstance.getUuid(),
 				ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingMDRRuleGroupInstance.getGroupId(),
-			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+		Assert.assertEquals(Long.valueOf(
+				existingMDRRuleGroupInstance.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRuleGroupInstance,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingMDRRuleGroupInstance.getClassNameId(),
-			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+		Assert.assertEquals(Long.valueOf(
+				existingMDRRuleGroupInstance.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRuleGroupInstance,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingMDRRuleGroupInstance.getClassPK(),
-			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+		Assert.assertEquals(Long.valueOf(
+				existingMDRRuleGroupInstance.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRuleGroupInstance,
 				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(existingMDRRuleGroupInstance.getRuleGroupId(),
-			ReflectionTestUtil.invoke(existingMDRRuleGroupInstance,
+		Assert.assertEquals(Long.valueOf(
+				existingMDRRuleGroupInstance.getRuleGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingMDRRuleGroupInstance,
 				"getOriginalRuleGroupId", new Class<?>[0]));
 	}
 
@@ -528,6 +539,8 @@ public class MDRRuleGroupInstancePersistenceTest {
 		mdrRuleGroupInstance.setRuleGroupId(RandomTestUtil.nextLong());
 
 		mdrRuleGroupInstance.setPriority(RandomTestUtil.nextInt());
+
+		mdrRuleGroupInstance.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_mdrRuleGroupInstances.add(_persistence.update(mdrRuleGroupInstance));
 

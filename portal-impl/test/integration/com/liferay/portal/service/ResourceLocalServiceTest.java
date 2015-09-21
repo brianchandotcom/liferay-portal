@@ -104,11 +104,6 @@ public class ResourceLocalServiceTest {
 		}
 
 		@Override
-		public boolean isSuccess() {
-			return true;
-		}
-
-		@Override
 		protected void doRun() throws Exception {
 			try {
 				ResourceLocalServiceUtil.getResource(

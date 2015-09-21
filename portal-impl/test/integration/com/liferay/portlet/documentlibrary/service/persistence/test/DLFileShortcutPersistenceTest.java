@@ -510,8 +510,8 @@ public class DLFileShortcutPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingDLFileShortcut.getUuid(),
 				ReflectionTestUtil.invoke(existingDLFileShortcut,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingDLFileShortcut.getGroupId(),
-			ReflectionTestUtil.invoke(existingDLFileShortcut,
+		Assert.assertEquals(Long.valueOf(existingDLFileShortcut.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileShortcut,
 				"getOriginalGroupId", new Class<?>[0]));
 	}
 

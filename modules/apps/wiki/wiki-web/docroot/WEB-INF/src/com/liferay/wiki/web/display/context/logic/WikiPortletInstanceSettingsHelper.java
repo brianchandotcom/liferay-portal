@@ -20,8 +20,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceOverriddenConfiguration;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
-import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 
 import java.util.List;
 
@@ -35,8 +35,8 @@ public class WikiPortletInstanceSettingsHelper {
 
 		_wikiRequestHelper = wikiRequestHelper;
 
-		_wikiPortletInstanceSettings =
-			_wikiRequestHelper.getWikiPortletInstanceSettings();
+		_wikiPortletInstanceOverridenConfiguration =
+			_wikiRequestHelper.getWikiPortletInstanceOverridenConfiguration();
 	}
 
 	public List<String> getAllNodeNames() throws PortalException {
@@ -58,7 +58,8 @@ public class WikiPortletInstanceSettingsHelper {
 	public List<WikiNode> getAllPermittedNodes() throws PortalException {
 		if (_allPermittedNodes == null) {
 			_allPermittedNodes = WikiUtil.getNodes(
-				getAllNodes(), _wikiPortletInstanceSettings.hiddenNodes(),
+				getAllNodes(),
+				_wikiPortletInstanceOverridenConfiguration.hiddenNodes(),
 				_wikiRequestHelper.getPermissionChecker());
 		}
 
@@ -70,7 +71,8 @@ public class WikiPortletInstanceSettingsHelper {
 			return _displayStyle;
 		}
 
-		_displayStyle = _wikiPortletInstanceSettings.displayStyle();
+		_displayStyle =
+			_wikiPortletInstanceOverridenConfiguration.displayStyle();
 
 		return _displayStyle;
 	}
@@ -81,7 +83,7 @@ public class WikiPortletInstanceSettingsHelper {
 		}
 
 		_displayStyleGroupId =
-			_wikiPortletInstanceSettings.displayStyleGroupId();
+			_wikiPortletInstanceOverridenConfiguration.displayStyleGroupId();
 
 		if (_displayStyleGroupId <= 0) {
 			ThemeDisplay themeDisplay = _wikiRequestHelper.getThemeDisplay();
@@ -97,7 +99,7 @@ public class WikiPortletInstanceSettingsHelper {
 			return _hiddenNodes;
 		}
 
-		_hiddenNodes = _wikiPortletInstanceSettings.hiddenNodes();
+		_hiddenNodes = _wikiPortletInstanceOverridenConfiguration.hiddenNodes();
 
 		return _hiddenNodes;
 	}
@@ -116,7 +118,7 @@ public class WikiPortletInstanceSettingsHelper {
 		}
 
 		_enableCommentRatings =
-			_wikiPortletInstanceSettings.enableCommentRatings();
+			_wikiPortletInstanceOverridenConfiguration.enableCommentRatings();
 
 		return _enableCommentRatings;
 	}
@@ -126,7 +128,8 @@ public class WikiPortletInstanceSettingsHelper {
 			return _enableComments;
 		}
 
-		_enableComments = _wikiPortletInstanceSettings.enableComments();
+		_enableComments =
+			_wikiPortletInstanceOverridenConfiguration.enableComments();
 
 		return _enableComments;
 	}
@@ -136,7 +139,8 @@ public class WikiPortletInstanceSettingsHelper {
 			return _enablePageRatings;
 		}
 
-		_enablePageRatings = _wikiPortletInstanceSettings.enablePageRatings();
+		_enablePageRatings =
+			_wikiPortletInstanceOverridenConfiguration.enablePageRatings();
 
 		return _enablePageRatings;
 	}
@@ -147,7 +151,7 @@ public class WikiPortletInstanceSettingsHelper {
 		}
 
 		_enableRelatedAssets =
-			_wikiPortletInstanceSettings.enableRelatedAssets();
+			_wikiPortletInstanceOverridenConfiguration.enableRelatedAssets();
 
 		return _enableRelatedAssets;
 	}
@@ -158,7 +162,8 @@ public class WikiPortletInstanceSettingsHelper {
 
 		_allNodeNames = WikiUtil.getNodeNames(_allNodes);
 
-		_visibleNodeNames = _wikiPortletInstanceSettings.visibleNodes();
+		_visibleNodeNames =
+			_wikiPortletInstanceOverridenConfiguration.visibleNodes();
 
 		if (ArrayUtil.isNotEmpty(_visibleNodeNames)) {
 			_allNodes = WikiUtil.orderNodes(_allNodes, _visibleNodeNames);
@@ -180,7 +185,8 @@ public class WikiPortletInstanceSettingsHelper {
 	private Boolean _enableRelatedAssets;
 	private String[] _hiddenNodes;
 	private String[] _visibleNodeNames;
-	private final WikiPortletInstanceSettings _wikiPortletInstanceSettings;
+	private final WikiPortletInstanceOverriddenConfiguration
+		_wikiPortletInstanceOverridenConfiguration;
 	private final WikiRequestHelper _wikiRequestHelper;
 
 }

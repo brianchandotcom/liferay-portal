@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project name="build-common-ivy" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:ivy="antlib:org.apache.ivy.ant">
+<project name="build-common-ivy" xmlns:antelope="antlib:ise.antelope.tasks">
 	<macrodef name="mirrors-get">
 		<attribute name="dest" />
 		<attribute default="false" name="ignoreerrors" />
@@ -99,29 +99,4 @@
 			<var name="mirrors.src" unset="true" />
 		</sequential>
 	</macrodef>
-
-	<if>
-		<not>
-			<available file="${ivy.home}/ivy-${ivy.version}.jar" />
-		</not>
-		<then>
-			<mkdir dir="${ivy.home}" />
-
-			<mirrors-get
-				dest="${ivy.home}/ivy-${ivy.version}.jar"
-				src="${ivy.jar.url}"
-			/>
-		</then>
-	</if>
-
-	<path id="ivy.lib.path">
-		<fileset
-			dir="${ivy.home}"
-			includes="ivy-${ivy.version}.jar"
-		/>
-	</path>
-
-	<taskdef classpathref="ivy.lib.path" resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" />
-
-	<ivy:settings file="${project.dir}/ivy-settings.xml" />
 </project>

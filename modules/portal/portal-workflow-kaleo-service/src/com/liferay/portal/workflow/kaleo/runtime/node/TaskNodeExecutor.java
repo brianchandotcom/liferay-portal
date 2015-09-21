@@ -82,7 +82,8 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 		for (KaleoTimer kaleoTimer : kaleoTimers) {
 			DelayDuration delayDuration = new DelayDuration(
 				kaleoTimer.getDuration(),
-				DurationScale.parse(kaleoTimer.getScale()));
+				DurationScale.valueOf(
+					StringUtil.toUpperCase(kaleoTimer.getScale())));
 
 			Date dueDate = _dueDateCalculator.getDueDate(
 				new Date(), delayDuration);

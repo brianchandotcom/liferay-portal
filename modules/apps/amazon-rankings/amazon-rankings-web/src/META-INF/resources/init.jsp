@@ -50,7 +50,7 @@ page import="javax.portlet.WindowState" %>
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();
 
-AmazonRankingsConfiguration amazonRankingsConfiguration = (AmazonRankingsConfiguration)renderRequest.getAttribute(AmazonRankingsConfiguration.class.getName());
+AmazonRankingsConfiguration amazonRankingsConfiguration = (AmazonRankingsConfiguration)request.getAttribute(AmazonRankingsConfiguration.class.getName());
 
 String[] isbns = portletPreferences.getValues("isbns", amazonRankingsConfiguration.isbns());
 

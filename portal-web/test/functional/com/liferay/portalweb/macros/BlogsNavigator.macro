@@ -1,4 +1,16 @@
 <definition>
+	<command name="gotoAddEntry">
+		<if>
+			<condition function="IsElementPresent" locator1="Blogs#ADD_BLOGS_ENTRY" />
+			<then>
+				<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+			</then>
+			<else>
+				<execute function="Click" locator1="Button#PLUS" />
+			</else>
+		</if>
+	</command>
+
 	<command name="gotoCommentPG">
 		<execute macro="BlogsNavigator#gotoEntryPG">
 			<var name="entryContent" value="${entryContent}" />
@@ -76,7 +88,7 @@
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
-		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
+		<execute function="Click#clickAtAndWait" locator1="Icon#PENCIL" />
 	</command>
 
 	<command name="gotoEntryCP">
@@ -94,7 +106,7 @@
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 
-		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
 	</command>
 
 	<command name="gotoEntryTitleSpecialCharacter">
@@ -105,6 +117,22 @@
 		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT_GENERIC" value1="${entryContent}" />
 
 		<execute function="AssertClick" locator1="BlogsEntry#TITLE_GENERIC" value1="${entryTitle}" />
+	</command>
+
+	<command name="gotoEntryWithAbstractPG">
+		<var name="key_entryAbstractDescription" value="${entryAbstractDescription}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="${entryAbstractDescription}" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
+	</command>
+
+	<command name="gotoItemSelector">
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_BUTTON" />
+
+		<execute function="Click" locator1="AlloyEditor#CONTENT_ADD_MENUBAR_IMAGE" />
 	</command>
 
 	<command name="gotoPG">

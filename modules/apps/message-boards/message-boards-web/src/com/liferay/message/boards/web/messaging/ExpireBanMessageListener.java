@@ -16,7 +16,7 @@ package com.liferay.message.boards.web.messaging;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.message.boards.configuration.MessageBoardsConfiguration;
+import com.liferay.message.boards.configuration.MBConfiguration;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
@@ -52,11 +52,10 @@ public class ExpireBanMessageListener
 		schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
 		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
 
-		_messageBoardsConfiguration = Configurable.createConfigurable(
-			MessageBoardsConfiguration.class, properties);
+		_mbConfiguration = Configurable.createConfigurable(
+			MBConfiguration.class, properties);
 
-		schedulerEntry.setTriggerValue(
-			_messageBoardsConfiguration.expireBanJobInterval());
+		schedulerEntry.setTriggerValue(_mbConfiguration.expireBanJobInterval());
 	}
 
 	@Override
@@ -76,6 +75,6 @@ public class ExpireBanMessageListener
 	protected void setPortlet(Portlet portlet) {
 	}
 
-	private volatile MessageBoardsConfiguration _messageBoardsConfiguration;
+	private volatile MBConfiguration _mbConfiguration;
 
 }

@@ -17,8 +17,8 @@
 			<var name="portletName" value="Knowledge Base (Admin)" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPKnowledgebaseadmin#ADD_ARTICLE_BUTTON" value1="Add Article" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_ARTICLE" value1="Add Article" />
 
-		<execute function="AssertTextEquals" locator1="CPKnowledgebaseadminAddarticle#SECTIONS_SELECT" value1="Application Server Authentication Content Management Database Development Plugins Portlets Security Server Configuration User Interface" />
+		<execute function="AssertTextEquals" locator1="KnowledgeBaseArticle#SECTIONS_SELECT" value1="Application Server Authentication Content Management Database Development Plugins Portlets Security Server Configuration User Interface" />
 	</command>
 </definition>

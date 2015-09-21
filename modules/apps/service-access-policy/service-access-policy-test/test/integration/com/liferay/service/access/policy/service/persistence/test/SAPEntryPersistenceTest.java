@@ -435,9 +435,9 @@ public class SAPEntryPersistenceTest {
 
 		SAPEntry existingSAPEntry = _persistence.findByPrimaryKey(newSAPEntry.getPrimaryKey());
 
-		Assert.assertEquals(existingSAPEntry.getCompanyId(),
-			ReflectionTestUtil.invoke(existingSAPEntry, "getOriginalCompanyId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingSAPEntry.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingSAPEntry,
+				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingSAPEntry.getName(),
 				ReflectionTestUtil.invoke(existingSAPEntry, "getOriginalName",
 					new Class<?>[0])));

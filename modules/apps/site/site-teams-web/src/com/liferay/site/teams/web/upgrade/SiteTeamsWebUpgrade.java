@@ -52,7 +52,7 @@ public class SiteTeamsWebUpgrade {
 			@Override
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
-					new String[] {"191", SiteTeamsPortletKeys.SITE_TEAMS_ADMIN}
+					new String[] {"191", SiteTeamsPortletKeys.SITE_TEAMS}
 				};
 			}
 

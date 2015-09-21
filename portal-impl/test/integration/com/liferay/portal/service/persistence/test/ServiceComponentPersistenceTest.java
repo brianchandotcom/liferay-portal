@@ -397,8 +397,9 @@ public class ServiceComponentPersistenceTest {
 				existingServiceComponent.getBuildNamespace(),
 				ReflectionTestUtil.invoke(existingServiceComponent,
 					"getOriginalBuildNamespace", new Class<?>[0])));
-		Assert.assertEquals(existingServiceComponent.getBuildNumber(),
-			ReflectionTestUtil.invoke(existingServiceComponent,
+		Assert.assertEquals(Long.valueOf(
+				existingServiceComponent.getBuildNumber()),
+			ReflectionTestUtil.<Long>invoke(existingServiceComponent,
 				"getOriginalBuildNumber", new Class<?>[0]));
 	}
 

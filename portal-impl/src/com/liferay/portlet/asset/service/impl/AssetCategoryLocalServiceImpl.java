@@ -279,7 +279,7 @@ public class AssetCategoryLocalServiceImpl
 				category.getCategoryId());
 
 		for (AssetCategory curCategory : categories) {
-			deleteCategory(curCategory, true);
+			assetCategoryLocalService.deleteCategory(curCategory, true);
 		}
 
 		if (!categories.isEmpty() && !skipRebuildTree) {

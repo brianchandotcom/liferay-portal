@@ -483,12 +483,12 @@ public class AssetVocabularyPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingAssetVocabulary.getUuid(),
 				ReflectionTestUtil.invoke(existingAssetVocabulary,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingAssetVocabulary.getGroupId(),
-			ReflectionTestUtil.invoke(existingAssetVocabulary,
+		Assert.assertEquals(Long.valueOf(existingAssetVocabulary.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetVocabulary,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingAssetVocabulary.getGroupId(),
-			ReflectionTestUtil.invoke(existingAssetVocabulary,
+		Assert.assertEquals(Long.valueOf(existingAssetVocabulary.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetVocabulary,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingAssetVocabulary.getName(),
 				ReflectionTestUtil.invoke(existingAssetVocabulary,

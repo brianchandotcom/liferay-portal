@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS</td>
+	<td>//a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Edit')]</td>
 	<td></td>
@@ -36,6 +41,11 @@
 <tr>
 	<td>MANAGE_DISPLAY_TEMPLATES_FOR_LIFERAY</td>
 	<td>//a[contains(.,'Manage Display Templates for Liferay')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE</td>
+	<td>//span[contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>

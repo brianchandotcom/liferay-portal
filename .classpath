@@ -35,8 +35,6 @@
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.build.logger.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.heap.dump.jar"/>
 	<classpathentry kind="lib" path="lib/development/deployment.jar"/>
-	<classpathentry kind="lib" path="lib/development/derby.jar"/>
-	<classpathentry kind="lib" path="lib/development/derbytools.jar"/>
 	<classpathentry kind="lib" path="lib/development/dtddoc.jar"/>
 	<classpathentry kind="lib" path="lib/development/dtdparser.jar"/>
 	<classpathentry kind="lib" path="lib/development/dumbster.jar"/>
@@ -139,11 +137,6 @@
 	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-commons-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/chemistry-opencmis-commons-impl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/closure-compiler.jar"/>
-	<classpathentry kind="lib" path="lib/portal/com.liferay.rtl.css.jar"/>
-	<classpathentry kind="lib" path="lib/portal/com.liferay.ruby.gems.jar"/>
-	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.api.jar"/>
-	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.jni.jar"/>
-	<classpathentry kind="lib" path="lib/portal/com.liferay.sass.compiler.ruby.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-beanutils.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-chain.jar"/>
 	<classpathentry kind="lib" path="lib/portal/commons-codec.jar"/>
@@ -178,6 +171,7 @@
 	<classpathentry kind="lib" path="lib/portal/hessian.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hibernate-commons-annotations.jar"/>
 	<classpathentry kind="lib" path="lib/portal/hibernate-core.jar"/>
+	<classpathentry kind="lib" path="lib/portal/hikaricp.jar"/>
 	<classpathentry kind="lib" path="lib/portal/htmlparser.jar"/>
 	<classpathentry kind="lib" path="lib/portal/httpclient.jar"/>
 	<classpathentry kind="lib" path="lib/portal/httpcore.jar"/>
@@ -209,6 +203,7 @@
 	<classpathentry kind="lib" path="lib/portal/jhighlight.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jhlabs-filters.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jmatio.jar"/>
+	<classpathentry kind="lib" path="lib/portal/jna.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodconverter.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jodd.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jrcs-diff.jar"/>

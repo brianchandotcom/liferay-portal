@@ -21,6 +21,7 @@ import com.liferay.portal.NoSuchLayoutBranchException;
 import com.liferay.portal.NoSuchLayoutRevisionException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.RemoteOptionsException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -73,7 +74,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -297,7 +297,7 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> settingsMap =
 			exportImportConfiguration.getSettingsMap();
 
-		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 		String remoteAddress = MapUtil.getString(settingsMap, "remoteAddress");
 		int remotePort = MapUtil.getInteger(settingsMap, "remotePort");
 		String remotePathContext = MapUtil.getString(
@@ -306,7 +306,7 @@ public class StagingImpl implements Staging {
 			settingsMap, "secureConnection");
 
 		validateRemoteGroup(
-			exportImportConfiguration.getGroupId(), remoteGroupId,
+			exportImportConfiguration.getGroupId(), targetGroupId,
 			remoteAddress, remotePort, remotePathContext, secureConnection);
 
 		boolean remotePrivateLayout = MapUtil.getBoolean(
@@ -1307,7 +1307,7 @@ public class StagingImpl implements Staging {
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
 
-		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+		BackgroundTaskManagerUtil.addBackgroundTask(
 			userId, exportImportConfiguration.getGroupId(), StringPool.BLANK,
 			null, LayoutStagingBackgroundTaskExecutor.class, taskContextMap,
 			new ServiceContext());
@@ -1431,7 +1431,7 @@ public class StagingImpl implements Staging {
 			"exportImportConfigurationId",
 			exportImportConfiguration.getExportImportConfigurationId());
 
-		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+		BackgroundTaskManagerUtil.addBackgroundTask(
 			userId, exportImportConfiguration.getGroupId(),
 			exportImportConfiguration.getName(), null,
 			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
@@ -2035,7 +2035,7 @@ public class StagingImpl implements Staging {
 
 		taskContextMap.put("httpPrincipal", httpPrincipal);
 
-		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+		BackgroundTaskManagerUtil.addBackgroundTask(
 			user.getUserId(), exportImportConfiguration.getGroupId(),
 			StringPool.BLANK, null,
 			LayoutRemoteStagingBackgroundTaskExecutor.class, taskContextMap,
@@ -2240,14 +2240,8 @@ public class StagingImpl implements Staging {
 			privateLayout = false;
 		}
 
-		String scope = ParamUtil.getString(portletRequest, "scope");
-
-		long[] layoutIds = null;
-
-		if (scope.equals("selected-pages")) {
-			layoutIds = ExportImportHelperUtil.getLayoutIds(
-				portletRequest, targetGroupId);
-		}
+		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(
+			portletRequest, targetGroupId);
 
 		if (schedule) {
 			String groupName = getSchedulerGroupName(
@@ -2279,20 +2273,13 @@ public class StagingImpl implements Staging {
 
 			LayoutServiceUtil.schedulePublishToLive(
 				sourceGroupId, targetGroupId, privateLayout, layoutIds,
-				parameterMap, scope, null, null, groupName, cronText,
-				startCalendar.getTime(), schedulerEndDate, description);
+				parameterMap, groupName, cronText, startCalendar.getTime(),
+				schedulerEndDate, description);
 		}
 		else {
-			if (scope.equals("all-pages")) {
-				publishLayouts(
-					themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-					privateLayout, parameterMap);
-			}
-			else {
-				publishLayouts(
-					themeDisplay.getUserId(), sourceGroupId, targetGroupId,
-					privateLayout, layoutIds, parameterMap);
-			}
+			publishLayouts(
+				themeDisplay.getUserId(), sourceGroupId, targetGroupId,
+				privateLayout, layoutIds, parameterMap);
 		}
 	}
 
@@ -2310,17 +2297,8 @@ public class StagingImpl implements Staging {
 			privateLayout = false;
 		}
 
-		String scope = ParamUtil.getString(portletRequest, "scope");
-
-		if (Validator.isNull(scope)) {
-			scope = "all-pages";
-		}
-
-		Map<Long, Boolean> layoutIdMap = null;
-
-		if (scope.equals("selected-pages")) {
-			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
-		}
+		Map<Long, Boolean> layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(
+			portletRequest);
 
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactory.buildParameterMap(

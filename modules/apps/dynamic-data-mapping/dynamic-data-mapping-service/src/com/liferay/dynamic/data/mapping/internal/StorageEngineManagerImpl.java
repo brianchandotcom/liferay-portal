@@ -16,11 +16,12 @@ package com.liferay.dynamic.data.mapping.internal;
 
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManager;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +40,8 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 
 		try {
 			return _storageEngine.create(
-				companyId, ddmStructureId, ddmFormValues, serviceContext);
+				companyId, ddmStructureId,
+				_ddmBeanTranslator.translate(ddmFormValues), serviceContext);
 		}
 		catch (PortalException pe) {
 			throw translate(pe);
@@ -52,15 +54,9 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	@Override
-	public void deleteByDDMStructure(long ddmStructureId)
-		throws PortalException {
-
-		_storageEngine.deleteByDDMStructure(ddmStructureId);
-	}
-
-	@Override
 	public DDMFormValues getDDMFormValues(long classPK) throws PortalException {
-		return _storageEngine.getDDMFormValues(classPK);
+		return _ddmBeanTranslator.translate(
+			_storageEngine.getDDMFormValues(classPK));
 	}
 
 	@Override
@@ -69,8 +65,9 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _ddm.getDDMFormValues(
-			ddmStructureId, fieldNamespace, serviceContext);
+		return _ddmBeanTranslator.translate(
+			_ddm.getDDMFormValues(
+				ddmStructureId, fieldNamespace, serviceContext));
 	}
 
 	@Override
@@ -80,7 +77,9 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 		throws PortalException {
 
 		try {
-			_storageEngine.update(classPK, ddmFormValues, serviceContext);
+			_storageEngine.update(
+				classPK, _ddmBeanTranslator.translate(ddmFormValues),
+				serviceContext);
 		}
 		catch (PortalException pe) {
 			throw translate(pe);
@@ -90,6 +89,11 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	@Reference
 	protected void setDDM(DDM ddm) {
 		_ddm = ddm;
+	}
+
+	@Reference
+	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
+		_ddmBeanTranslator = ddmBeanTranslator;
 	}
 
 	@Reference
@@ -110,6 +114,7 @@ public class StorageEngineManagerImpl implements StorageEngineManager {
 	}
 
 	private DDM _ddm;
+	private DDMBeanTranslator _ddmBeanTranslator;
 	private StorageEngine _storageEngine;
 
 }

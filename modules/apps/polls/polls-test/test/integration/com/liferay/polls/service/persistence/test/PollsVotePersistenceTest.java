@@ -461,16 +461,16 @@ public class PollsVotePersistenceTest {
 		Assert.assertTrue(Validator.equals(existingPollsVote.getUuid(),
 				ReflectionTestUtil.invoke(existingPollsVote, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(existingPollsVote.getGroupId(),
-			ReflectionTestUtil.invoke(existingPollsVote, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingPollsVote.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingPollsVote,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingPollsVote.getQuestionId(),
-			ReflectionTestUtil.invoke(existingPollsVote,
+		Assert.assertEquals(Long.valueOf(existingPollsVote.getQuestionId()),
+			ReflectionTestUtil.<Long>invoke(existingPollsVote,
 				"getOriginalQuestionId", new Class<?>[0]));
-		Assert.assertEquals(existingPollsVote.getUserId(),
-			ReflectionTestUtil.invoke(existingPollsVote, "getOriginalUserId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingPollsVote.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingPollsVote,
+				"getOriginalUserId", new Class<?>[0]));
 	}
 
 	protected PollsVote addPollsVote() throws Exception {

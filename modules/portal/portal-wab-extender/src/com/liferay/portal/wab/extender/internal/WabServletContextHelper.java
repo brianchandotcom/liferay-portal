@@ -18,7 +18,9 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,7 +46,7 @@ public class WabServletContextHelper extends ServletContextHelper {
 
 		Class<?> clazz = getClass();
 
-		_string = clazz.getSimpleName() + '[' + bundle.getBundleId() + ']';
+		_string = clazz.getSimpleName() + '[' + bundle + ']';
 	}
 
 	@Override
@@ -75,33 +77,42 @@ public class WabServletContextHelper extends ServletContextHelper {
 	public boolean handleSecurity(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		String pathInfo = null;
+		String path = null;
 
-		if (request.getAttribute(
-				RequestDispatcher.INCLUDE_REQUEST_URI) != null) {
+		if (request.getDispatcherType() == DispatcherType.INCLUDE) {
+			path = (String)request.getAttribute(
+				RequestDispatcher.INCLUDE_SERVLET_PATH);
 
-			pathInfo = (String)request.getAttribute(
+			String pathInfo = (String)request.getAttribute(
 				RequestDispatcher.INCLUDE_PATH_INFO);
+
+			if (pathInfo != null) {
+				path = path + pathInfo;
+			}
 		}
 		else {
-			pathInfo = request.getPathInfo();
+			path = request.getPathInfo();
 		}
 
-		if (pathInfo == null) {
+		if (path == null) {
 			return true;
 		}
 
-		if (pathInfo.startsWith("/")) {
-			pathInfo = pathInfo.substring(1);
+		if (path.indexOf('/') != 0) {
+			path = '/' + path;
 		}
 
-		if (pathInfo.startsWith("META-INF/") ||
-			pathInfo.startsWith("OSGI-INF/") ||
-			pathInfo.startsWith("OSGI-OPT/") ||
-			pathInfo.startsWith("WEB-INF/")) {
+		if (path.startsWith("/META-INF/") || path.startsWith("/OSGI-INF/") ||
+			path.startsWith("/OSGI-OPT/") || path.startsWith("/WEB-INF/")) {
 
 			try {
-				response.sendError(HttpServletResponse.SC_FORBIDDEN, pathInfo);
+				ServletContext servletContext = request.getServletContext();
+
+				servletContext.log(
+					"[WAB ERROR] Attempt to load illegal path " + path +
+						" in " + toString());
+
+				response.sendError(HttpServletResponse.SC_FORBIDDEN, path);
 			}
 			catch (IOException ioe) {
 				response.setStatus(HttpServletResponse.SC_FORBIDDEN);

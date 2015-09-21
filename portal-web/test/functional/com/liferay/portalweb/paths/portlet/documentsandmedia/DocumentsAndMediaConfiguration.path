@@ -21,12 +21,12 @@
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_DROPDOWN_COLLAPSED</td>
-	<td>//div[@id='documentLibraryItemsListingPanel']/div[contains(@class,'toggler-header-collapsed')]</td>
+	<td>//div[contains(@id,'documentLibraryItemsListingPanel')]/div[contains(@class,'toggler-header-collapsed')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_ROOT_FOLDER_FIELD</td>
-	<td>//input[@id='_86_rootFolderName']</td>
+	<td>//input[contains(@id,'rootFolderName')]</td>
 	<td></td>
 </tr>
 <tr>

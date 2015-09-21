@@ -175,7 +175,7 @@ portletURL.setParameter("tabs3", tabs3);
 				}
 				%>
 
-				<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" />
+				<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= OrganizationConstants.ANY_PARENT_ORGANIZATION_ID %>" />
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.model.Organization"

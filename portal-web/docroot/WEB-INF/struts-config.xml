@@ -127,45 +127,9 @@
 			<forward name="portal.verify_email_address" path="portal.verify_email_address" />
 		</action>
 
-		<!-- Admin -->
-
-		<action path="/admin/edit_server" type="com.liferay.portlet.admin.action.EditServerAction">
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
-		<action path="/admin/view" forward="portlet.admin.view" />
-
-		<!-- Admin Plugins -->
-
-		<action path="/admin_plugins/edit_server" type="com.liferay.portlet.admin.action.EditServerAction">
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
-		<action path="/admin_plugins/view" forward="portlet.admin.view" />
-
-		<!-- Admin Server -->
-
-		<action path="/admin_server/edit_document_library_extra_settings" type="com.liferay.portal.convert.action.EditDocumentLibraryExtraSettingsAction">
-			<forward name="portlet.admin.edit_document_library_extra_settings" path="portlet.admin.edit_document_library_extra_settings" />
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
-		<action path="/admin_server/edit_server" type="com.liferay.portlet.admin.action.EditServerAction">
-			<forward name="portlet.admin.edit_permissions" path="portlet.admin.edit_permissions" />
-			<forward name="portlet.admin.error" path="portlet.admin.error" />
-		</action>
-
-		<action path="/admin_server/view" forward="portlet.admin.view" />
-
-		<action path="/admin_server/view_chart" type="com.liferay.portlet.admin.action.ViewChartAction" />
-
 		<!-- Asset -->
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />
-
-		<!-- Control Panel Home -->
-
-		<action path="/control_panel_home/view" forward="portlet.control_panel_home.view" />
 
 		<!-- Directory -->
 
@@ -207,47 +171,9 @@
 			<forward name="portlet.invitation.view" path="portlet.invitation.view" />
 		</action>
 
-		<!-- Login -->
-
-		<action path="/login/captcha" type="com.liferay.portal.captcha.CaptchaPortletAction" />
-
-		<action path="/login/create_account" type="com.liferay.portlet.login.action.CreateAccountAction">
-			<forward name="portlet.login.create_account" path="portlet.login.create_account" />
-			<forward name="portlet.login.login" path="portlet.login.login" />
-			<forward name="portlet.login.update_account" path="portlet.login.update_account" />
-		</action>
-
-		<action path="/login/create_anonymous_account" type="com.liferay.portlet.login.action.CreateAnonymousAccountAction">
-			<forward name="portlet.login.create_anonymous_account" path="portlet.login.create_anonymous_account" />
-			<forward name="portlet.login.login" path="portlet.login.login" />
-		</action>
-
-		<action path="/login/forgot_password" type="com.liferay.portlet.login.action.ForgotPasswordAction">
-			<forward name="portlet.login.forgot_password" path="portlet.login.forgot_password" />
-			<forward name="portlet.login.login" path="portlet.login.login" />
-		</action>
-
-		<action path="/login/login" type="com.liferay.portlet.login.action.LoginAction">
-			<forward name="portlet.login.login" path="portlet.login.login" />
-			<forward name="portlet.login.login_redirect" path="portlet.login.login_redirect" />
-		</action>
-
-		<action path="/login/login_redirect" forward="portlet.login.login_redirect" />
-
-		<action path="/login/update_account" forward="portlet.login.update_account" />
-
 		<!-- Maps -->
 
 		<action path="/maps/view" forward="portlet.maps.view" name="mapsMapsForm" scope="request" />
-
-		<!-- Monitoring -->
-
-		<action path="/monitoring/edit_session" type="com.liferay.portlet.monitoring.action.EditSessionAction">
-			<forward name="portlet.monitoring.edit_session" path="portlet.monitoring.edit_session" />
-			<forward name="portlet.monitoring.error" path="portlet.monitoring.error" />
-		</action>
-
-		<action path="/monitoring/view" forward="portlet.monitoring.view" />
 
 		<!-- News -->
 
@@ -261,31 +187,6 @@
 
 		<action path="/our_activities/view" forward="portlet.our_activities.view" />
 
-
-		<!-- Portal Settings -->
-
-		<action path="/portal_settings/edit_company" type="com.liferay.portlet.portalsettings.action.EditCompanyAction">
-			<forward name="portlet.portal_settings.edit_company" path="portlet.portal_settings.edit_company" />
-			<forward name="portlet.portal_settings.error" path="portlet.portal_settings.error" />
-		</action>
-
-		<action path="/portal_settings/edit_ldap_server" type="com.liferay.portlet.portalsettings.action.EditLDAPServerAction">
-			<forward name="portlet.portal_settings.edit_ldap_server" path="portlet.portal_settings.edit_ldap_server" />
-			<forward name="portlet.portal_settings.error" path="portlet.portal_settings.error" />
-		</action>
-
-		<action path="/portal_settings/test_cas_configuration" forward="portlet.portal_settings.test_cas_configuration" />
-
-		<action path="/portal_settings/test_ldap_connection" forward="portlet.portal_settings.test_ldap_connection" />
-
-		<action path="/portal_settings/test_ldap_groups" forward="portlet.portal_settings.test_ldap_groups" />
-
-		<action path="/portal_settings/test_ldap_users" forward="portlet.portal_settings.test_ldap_users" />
-
-		<action path="/portal_settings/test_opensso_configuration" forward="portlet.portal_settings.test_opensso_configuration" />
-
-		<action path="/portal_settings/view" forward="portlet.portal_settings.edit_company" />
-
 		<!-- Portlet Sharing -->
 
 		<action path="/portlet_sharing/view" type="com.liferay.portlet.portletsharing.action.ViewAction">
@@ -295,66 +196,6 @@
 		<!-- Recent Documents -->
 
 		<action path="/recent_documents/view" forward="portlet.recent_documents.view" />
-
-		<!-- Shopping -->
-
-		<action path="/shopping/cart" type="com.liferay.portlet.shopping.action.CartAction">
-			<forward name="portlet.shopping.cart" path="portlet.shopping.cart" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-		</action>
-
-		<action path="/shopping/checkout" type="com.liferay.portlet.shopping.action.CheckoutAction">
-			<forward name="portlet.shopping.checkout_first" path="portlet.shopping.checkout_first" />
-			<forward name="portlet.shopping.checkout_second" path="portlet.shopping.checkout_second" />
-			<forward name="portlet.shopping.checkout_third" path="portlet.shopping.checkout_third" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-		</action>
-
-		<action path="/shopping/edit_category" type="com.liferay.portlet.shopping.action.EditCategoryAction">
-			<forward name="portlet.shopping.edit_category" path="portlet.shopping.edit_category" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-		</action>
-
-		<action path="/shopping/edit_coupon" type="com.liferay.portlet.shopping.action.EditCouponAction">
-			<forward name="portlet.shopping.edit_coupon" path="portlet.shopping.edit_coupon" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-		</action>
-
-		<action path="/shopping/edit_item" type="com.liferay.portlet.shopping.action.EditItemAction">
-			<forward name="portlet.shopping.edit_item" path="portlet.shopping.edit_item" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-		</action>
-
-		<action path="/shopping/edit_item_quantities" forward="portlet.shopping.edit_item_quantities" />
-
-		<action path="/shopping/edit_order" type="com.liferay.portlet.shopping.action.EditOrderAction">
-			<forward name="portlet.shopping.edit_order" path="portlet.shopping.edit_order" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-		</action>
-
-		<action path="/shopping/notify" type="com.liferay.portlet.shopping.action.PayPalNotificationAction" />
-
-		<action path="/shopping/search" forward="portlet.shopping.search" />
-
-		<action path="/shopping/select_category" type="com.liferay.portlet.shopping.action.EditCategoryAction">
-			<forward name="portlet.shopping.edit_category" path="portlet.shopping.select_category" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-		</action>
-
-		<action path="/shopping/view" type="com.liferay.portlet.shopping.action.ViewAction">
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-			<forward name="portlet.shopping.view" path="portlet.shopping.view" />
-		</action>
-
-		<action path="/shopping/view_coupon" type="com.liferay.portlet.shopping.action.ViewCouponAction">
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-			<forward name="portlet.shopping.view_coupon" path="portlet.shopping.view_coupon" />
-		</action>
-
-		<action path="/shopping/view_item" type="com.liferay.portlet.shopping.action.EditItemAction">
-			<forward name="portlet.shopping.edit_item" path="portlet.shopping.view_item" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-		</action>
 
 		<!-- Sites Directory -->
 

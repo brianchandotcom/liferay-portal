@@ -41,6 +41,7 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
@@ -1471,7 +1472,9 @@ public class DLFileEntryFinderTest {
 		fileEntry = DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), "FE3.txt", ContentTypes.TEXT_PLAIN,
 			"FE3.txt".concat(titleSuffix), StringPool.BLANK, StringPool.BLANK,
-			false, RandomTestUtil.randomBytes(), serviceContext);
+			false,
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			serviceContext);
 
 		dlFileEntry = ((LiferayFileEntry)fileEntry).getDLFileEntry();
 

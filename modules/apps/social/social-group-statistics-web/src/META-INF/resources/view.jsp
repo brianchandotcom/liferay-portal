@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String[] displayActivityCounterNames = groupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+String[] displayActivityCounterNames = socialGroupStatisticsPortletInstanceConfiguration.displayActivityCounterName();
 
 for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNames.length; displayActivityCounterNameIndex++) {
 	String displayActivityCounterName = displayActivityCounterNames[displayActivityCounterNameIndex];
@@ -26,15 +26,15 @@ for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < 
 		continue;
 	}
 
-	String[] chartTypes = groupStatisticsPortletInstanceConfiguration.chartType();
+	String[] chartTypes = socialGroupStatisticsPortletInstanceConfiguration.chartType();
 
 	String chartType = GetterUtil.getString(chartTypes[displayActivityCounterNameIndex], "area");
 
-	String[] chartWidths = groupStatisticsPortletInstanceConfiguration.chartWidth();
+	String[] chartWidths = socialGroupStatisticsPortletInstanceConfiguration.chartWidth();
 
 	int chartWidth = GetterUtil.getInteger(chartWidths[displayActivityCounterNameIndex], 35);
 
-	String[] dataRanges = groupStatisticsPortletInstanceConfiguration.dataRange();
+	String[] dataRanges = socialGroupStatisticsPortletInstanceConfiguration.dataRange();
 
 	String dataRange = GetterUtil.getString(dataRanges[displayActivityCounterNameIndex], "year");
 

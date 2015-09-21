@@ -92,7 +92,7 @@ public class JournalContentDisplayContext {
 		JournalArticleDisplay articleDisplay = getArticleDisplay();
 
 		if ((article == null) || !hasViewPermission() ||
-			(articleDisplay == null) || isExpired()) {
+			(articleDisplay == null) || isExpired() || article.isScheduled()) {
 
 			portletRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
@@ -218,16 +218,18 @@ public class JournalContentDisplayContext {
 		return assetEntry.getEntryId();
 	}
 
-	public AssetRenderer getAssetRenderer() throws PortalException {
+	public AssetRenderer<JournalArticle> getAssetRenderer()
+		throws PortalException {
+
 		JournalArticle article = getArticle();
 
 		if (article == null) {
 			return null;
 		}
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				JournalArticle.class.getName());
+		AssetRendererFactory<JournalArticle> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(
+				JournalArticle.class);
 
 		if (assetRendererFactory == null) {
 			return null;

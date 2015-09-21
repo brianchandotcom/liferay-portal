@@ -357,45 +357,13 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
-	/**
-	* Returns all the templates matching the group and class name ID.
-	*
-	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the class name for template's
-	related model
-	* @return the matching templates
-	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] getTemplates(
-		long groupId, long classNameId) throws RemoteException {
+		long companyId, long groupId, long classNameId, long resourceClassNameId)
+		throws RemoteException {
 		try {
 			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.getTemplates(groupId, classNameId);
-
-			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	/**
-	* Returns all the templates matching the group, class name ID, and class
-	* PK.
-	*
-	* @param groupId the primary key of the group
-	* @param classNameId the primary key of the class name for template's
-	related model
-	* @param classPK the primary key of the template's related entity
-	* @return the matching templates
-	*/
-	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] getTemplates(
-		long groupId, long classNameId, long classPK) throws RemoteException {
-		try {
-			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.getTemplates(groupId, classNameId,
-					classPK);
+				DDMTemplateServiceUtil.getTemplates(companyId, groupId,
+					classNameId, resourceClassNameId);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -407,12 +375,31 @@ public class DDMTemplateServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] getTemplates(
-		long groupId, long classNameId, long classPK,
-		boolean includeAncestorTemplates) throws RemoteException {
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId) throws RemoteException {
 		try {
 			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.getTemplates(groupId, classNameId,
-					classPK, includeAncestorTemplates);
+				DDMTemplateServiceUtil.getTemplates(companyId, groupId,
+					classNameId, classPK, resourceClassNameId);
+
+			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] getTemplates(
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId, boolean includeAncestorTemplates)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> returnValue =
+				DDMTemplateServiceUtil.getTemplates(companyId, groupId,
+					classNameId, classPK, resourceClassNameId,
+					includeAncestorTemplates);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -436,12 +423,13 @@ public class DDMTemplateServiceSoap {
 	* @return the matching templates
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] getTemplates(
-		long groupId, long classNameId, long classPK, java.lang.String type)
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId, java.lang.String type)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.getTemplates(groupId, classNameId,
-					classPK, type);
+				DDMTemplateServiceUtil.getTemplates(companyId, groupId,
+					classNameId, classPK, resourceClassNameId, type);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -453,12 +441,13 @@ public class DDMTemplateServiceSoap {
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] getTemplates(
-		long groupId, long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode) throws RemoteException {
+		long companyId, long groupId, long classNameId, long classPK,
+		long resourceClassNameId, java.lang.String type, java.lang.String mode)
+		throws RemoteException {
 		try {
 			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.getTemplates(groupId, classNameId,
-					classPK, type, mode);
+				DDMTemplateServiceUtil.getTemplates(companyId, groupId,
+					classNameId, classPK, resourceClassNameId, type, mode);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}
@@ -477,10 +466,12 @@ public class DDMTemplateServiceSoap {
 	* @return the matching templates
 	*/
 	public static com.liferay.dynamic.data.mapping.model.DDMTemplateSoap[] getTemplatesByClassPK(
-		long groupId, long classPK) throws RemoteException {
+		long companyId, long groupId, long classPK, long resourceClassNameIs)
+		throws RemoteException {
 		try {
 			java.util.List<com.liferay.dynamic.data.mapping.model.DDMTemplate> returnValue =
-				DDMTemplateServiceUtil.getTemplatesByClassPK(groupId, classPK);
+				DDMTemplateServiceUtil.getTemplatesByClassPK(companyId,
+					groupId, classPK, resourceClassNameIs);
 
 			return com.liferay.dynamic.data.mapping.model.DDMTemplateSoap.toSoapModels(returnValue);
 		}

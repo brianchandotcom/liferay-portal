@@ -77,16 +77,16 @@
 
 		<var name="key_dmDocumentTitle" value="Test XML Title" />
 
-		<execute function="AssertClick" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="Test XML Title" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Test XML Title" />
 		<execute function="ClickNoError" locator1="CPDocumentsandmediaDocument#DOCUMENT_INFO_URL_LINK" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -97,16 +97,16 @@
 
 		<var name="key_dmDocumentTitle" value="Test XSL Title" />
 
-		<execute function="AssertClick" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="Test XSL Title" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Test XSL Title" />
 		<execute function="ClickNoError" locator1="CPDocumentsandmediaDocument#DOCUMENT_INFO_URL_LINK" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 
@@ -120,10 +120,10 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="XSLContentConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="XSLContentConfiguration#SETUP_XML_URL_FIELD" value1="@portal_url@/${xmlURL}" />
-		<execute function="Type" locator1="XSLContentConfiguration#SETUP_XSL_URL_FIELD" value1="@portal_url@/${xslURL}" />
+		<execute function="Type" locator1="TextInput#SETUP_XML_URL" value1="@portal_url@/${xmlURL}" />
+		<execute function="Type" locator1="TextInput#SETUP_XSL_URL" value1="@portal_url@/${xslURL}" />
 
 		<execute function="Click" locator1="Button#SAVE" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
@@ -183,16 +183,16 @@
 
 		<var name="key_dmDocumentTitle" value="Test Corrupt XML Title" />
 
-		<execute function="AssertClick" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="Test Corrupt XML Title" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Test Corrupt XML Title" />
 		<execute function="ClickNoError" locator1="CPDocumentsandmediaDocument#DOCUMENT_INFO_URL_LINK" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -203,16 +203,16 @@
 
 		<var name="key_dmDocumentTitle" value="Test XSL Title" />
 
-		<execute function="AssertClick" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="Test XSL Title" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Test XSL Title" />
 		<execute function="ClickNoError" locator1="CPDocumentsandmediaDocument#DOCUMENT_INFO_URL_LINK" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 
@@ -226,10 +226,10 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="XSLContentConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="XSLContentConfiguration#SETUP_XML_URL_FIELD" value1="@portal_url@/${xmlURL}" />
-		<execute function="Type" locator1="XSLContentConfiguration#SETUP_XSL_URL_FIELD" value1="@portal_url@/${xslURL}" />
+		<execute function="Type" locator1="TextInput#SETUP_XML_URL" value1="@portal_url@/${xmlURL}" />
+		<execute function="Type" locator1="TextInput#SETUP_XSL_URL" value1="@portal_url@/${xslURL}" />
 
 		<execute function="Click" locator1="Button#SAVE" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
@@ -277,16 +277,16 @@
 
 		<var name="key_dmDocumentTitle" value="Test XML Title" />
 
-		<execute function="AssertClick" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="Test XML Title" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Test XML Title" />
 		<execute function="ClickNoError" locator1="CPDocumentsandmediaDocument#DOCUMENT_INFO_URL_LINK" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -297,16 +297,16 @@
 
 		<var name="key_dmDocumentTitle" value="Test Corrupt XSL Title" />
 
-		<execute function="AssertClick" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="Test Corrupt XSL Title" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Test Corrupt XSL Title" />
 		<execute function="ClickNoError" locator1="CPDocumentsandmediaDocument#DOCUMENT_INFO_URL_LINK" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 
@@ -320,10 +320,10 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="XSLContentConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="XSLContentConfiguration#SETUP_XML_URL_FIELD" value1="@portal_url@/${xmlURL}" />
-		<execute function="Type" locator1="XSLContentConfiguration#SETUP_XSL_URL_FIELD" value1="@portal_url@/${xslURL}" />
+		<execute function="Type" locator1="TextInput#SETUP_XML_URL" value1="@portal_url@/${xmlURL}" />
+		<execute function="Type" locator1="TextInput#SETUP_XSL_URL" value1="@portal_url@/${xslURL}" />
 
 		<execute function="Click" locator1="Button#SAVE" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
@@ -369,16 +369,16 @@
 
 		<var name="key_dmDocumentTitle" value="Test XML Title" />
 
-		<execute function="AssertClick" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="Test XML Title" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Test XML Title" />
 		<execute function="ClickNoError" locator1="CPDocumentsandmediaDocument#DOCUMENT_INFO_URL_LINK" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xmlURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xml url ${xmlURL}" />
 
@@ -389,16 +389,16 @@
 
 		<var name="key_dmDocumentTitle" value="Test XSL Title" />
 
-		<execute function="AssertClick" locator1="CPDocumentsandmedia#DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="Test XSL Title" />
+		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="Test XSL Title" />
 		<execute function="ClickNoError" locator1="CPDocumentsandmediaDocument#DOCUMENT_INFO_URL_LINK" />
 
 		<execute function="Pause" locator1="5000" />
 
-		<var method="selenium#getValue('//div/input[@id=\'_199_url\']')" name="valueName" />
+		<var method="selenium#getValue('//input[contains(@id,\'url\')]')" name="valueName" />
 
 		<echo message="value name ${valueName}" />
 
-		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\\d+\\/)(documents\\/.*)" />
+		<var group="2" input="${valueName}" name="xslURL" pattern="(localhost:\d+\/)(documents\/.*)" />
 
 		<echo message="xsl url ${xslURL}" />
 
@@ -412,10 +412,10 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="XSLContentConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="XSLContentConfiguration#SETUP_XML_URL_FIELD" value1="@portal_url@/${xmlURL}" />
-		<execute function="Type" locator1="XSLContentConfiguration#SETUP_XSL_URL_FIELD" value1="@portal_url@/${xslURL}" />
+		<execute function="Type" locator1="TextInput#SETUP_XML_URL" value1="@portal_url@/${xmlURL}" />
+		<execute function="Type" locator1="TextInput#SETUP_XSL_URL" value1="@portal_url@/${xslURL}" />
 
 		<execute function="Click" locator1="Button#SAVE" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />

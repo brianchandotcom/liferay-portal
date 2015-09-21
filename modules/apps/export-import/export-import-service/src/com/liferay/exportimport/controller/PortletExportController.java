@@ -106,6 +106,7 @@ import java.util.concurrent.Callable;
 import org.apache.commons.lang.time.StopWatch;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -137,7 +138,7 @@ public class PortletExportController implements ExportController {
 			portletDataContext = getPortletDataContext(
 				exportImportConfiguration);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
@@ -146,7 +147,7 @@ public class PortletExportController implements ExportController {
 
 			ExportImportThreadLocal.setPortletExportInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_EXPORT_SUCCEEDED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
@@ -156,7 +157,7 @@ public class PortletExportController implements ExportController {
 		catch (Throwable t) {
 			ExportImportThreadLocal.setPortletExportInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_PORTLET_EXPORT_FAILED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
@@ -1230,11 +1231,19 @@ public class PortletExportController implements ExportController {
 		return PROCESS_FLAG_PORTLET_EXPORT_IN_PROCESS;
 	}
 
+	@Reference(unbind = "-")
+	protected void setExportImportLifecycleManager(
+		ExportImportLifecycleManager exportImportLifecycleManager) {
+
+		_exportImportLifecycleManager = exportImportLifecycleManager;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletExportController.class);
 
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
+	private ExportImportLifecycleManager _exportImportLifecycleManager;
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
 

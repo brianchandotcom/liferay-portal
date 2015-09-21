@@ -15,71 +15,27 @@
 package com.liferay.dynamic.data.mapping.type.options;
 
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldType;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueParameterSerializer;
-import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueRendererAccessor;
-
-import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Renato Rego
  */
-@Component(immediate = true, service = DDMFormFieldType.class)
+@Component(
+	immediate = true,
+	property = {
+		"ddm.form.field.type.js.class.name=Liferay.DDM.Field.Options",
+		"ddm.form.field.type.js.module=liferay-ddm-form-field-options",
+		"ddm.form.field.type.name=options", "ddm.form.field.type.system=true"
+	},
+	service = DDMFormFieldType.class
+)
 public class OptionsDDMFormFieldType extends BaseDDMFormFieldType {
-
-	@Override
-	public DDMFormFieldRenderer getDDMFormFieldRenderer() {
-		return _ddmFormFieldRenderer;
-	}
-
-	@Override
-	public String getDDMFormFieldTypeJavaScriptClass() {
-		return "Liferay.DDM.Field.Options";
-	}
-
-	@Override
-	public String getDDMFormFieldTypeJavaScriptModule() {
-		return "liferay-ddm-form-field-options";
-	}
-
-	@Override
-	public DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
-		Locale locale) {
-
-		return null;
-	}
-
-	@Override
-	public DDMFormFieldValueParameterSerializer
-		getDDMFormFieldValueParameterSerializer() {
-
-		return null;
-	}
-
-	@Override
-	public DDMFormFieldValueRendererAccessor
-		getDDMFormFieldValueRendererAccessor(Locale locale) {
-
-		return null;
-	}
 
 	@Override
 	public String getName() {
 		return "options";
 	}
-
-	@Reference(service = OptionsDDMFormFieldRenderer.class, unbind = "-")
-	protected void setDDMFormFieldRenderer(
-		DDMFormFieldRenderer ddmFormFieldRenderer) {
-
-		_ddmFormFieldRenderer = ddmFormFieldRenderer;
-	}
-
-	private DDMFormFieldRenderer _ddmFormFieldRenderer;
 
 }

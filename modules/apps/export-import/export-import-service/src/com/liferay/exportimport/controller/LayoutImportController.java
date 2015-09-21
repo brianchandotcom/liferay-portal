@@ -208,7 +208,7 @@ public class LayoutImportController implements ImportController {
 			portletDataContext = getPortletDataContext(
 				exportImportConfiguration, file);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_IMPORT_STARTED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
@@ -222,7 +222,7 @@ public class LayoutImportController implements ImportController {
 
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_IMPORT_SUCCEEDED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
@@ -231,7 +231,7 @@ public class LayoutImportController implements ImportController {
 		catch (Throwable t) {
 			ExportImportThreadLocal.setLayoutImportInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_IMPORT_FAILED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
@@ -767,7 +767,7 @@ public class LayoutImportController implements ImportController {
 			}
 
 			try {
-				ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_IMPORT_STARTED, getProcessFlag(),
 					PortletDataContextFactoryUtil.clonePortletDataContext(
 						portletDataContext));
@@ -795,13 +795,13 @@ public class LayoutImportController implements ImportController {
 						portletDataContext, portletDataElement);
 				}
 
-				ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_IMPORT_SUCCEEDED, getProcessFlag(),
 					PortletDataContextFactoryUtil.clonePortletDataContext(
 						portletDataContext));
 			}
 			catch (Throwable t) {
-				ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_IMPORT_FAILED, getProcessFlag(),
 					PortletDataContextFactoryUtil.clonePortletDataContext(
 						portletDataContext),
@@ -1036,6 +1036,13 @@ public class LayoutImportController implements ImportController {
 			portletDataContext.addDeletionSystemEventStagedModelTypes(
 				portletDataHandler.getDeletionSystemEventStagedModelTypes());
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setExportImportLifecycleManager(
+		ExportImportLifecycleManager exportImportLifecycleManager) {
+
+		_exportImportLifecycleManager = exportImportLifecycleManager;
 	}
 
 	@Reference(unbind = "-")
@@ -1409,6 +1416,7 @@ public class LayoutImportController implements ImportController {
 
 	private final DeletionSystemEventImporter _deletionSystemEventImporter =
 		DeletionSystemEventImporter.getInstance();
+	private ExportImportLifecycleManager _exportImportLifecycleManager;
 	private final PermissionImporter _permissionImporter =
 		PermissionImporter.getInstance();
 	private PortletImportController _portletImportController;

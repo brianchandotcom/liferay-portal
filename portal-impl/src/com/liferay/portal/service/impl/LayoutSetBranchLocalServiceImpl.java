@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Image;
@@ -505,15 +506,11 @@ public class LayoutSetBranchLocalServiceImpl
 			return mergeBranchName;
 		}
 
-		StringBundler sb = new StringBundler(5);
+		String defaultLayoutBranchName = StringUtil.appendParentheticalSuffix(
+			LanguageUtil.get(locale, mergeBranchName),
+			LanguageUtil.get(locale, mergeLayoutSetBranchName));
 
-		sb.append(LanguageUtil.get(locale, mergeBranchName));
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.OPEN_PARENTHESIS);
-		sb.append(LanguageUtil.get(locale, mergeLayoutSetBranchName));
-		sb.append(StringPool.CLOSE_PARENTHESIS);
-
-		String layoutBranchName = sb.toString();
+		String layoutBranchName = defaultLayoutBranchName;
 
 		for (int i = 1;; i++) {
 			layoutBranch = layoutBranchPersistence.fetchByL_P_N(
@@ -523,7 +520,7 @@ public class LayoutSetBranchLocalServiceImpl
 				break;
 			}
 
-			layoutBranchName = sb.toString() + StringPool.SPACE + i;
+			layoutBranchName = defaultLayoutBranchName + StringPool.SPACE + i;
 		}
 
 		return layoutBranchName;

@@ -17,6 +17,7 @@ package com.liferay.item.selector.web;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,10 +60,15 @@ public class MediaItemSelectorView
 	}
 
 	@Override
+	public boolean isVisible(ThemeDisplay themeDisplay) {
+		return true;
+	}
+
+	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			MediaItemSelectorCriterion mediaItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedEventName)
+			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException {
 
 		PrintWriter printWriter = response.getWriter();

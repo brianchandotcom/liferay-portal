@@ -385,14 +385,15 @@ public class AnnouncementsFlagPersistenceTest {
 
 		AnnouncementsFlag existingAnnouncementsFlag = _persistence.findByPrimaryKey(newAnnouncementsFlag.getPrimaryKey());
 
-		Assert.assertEquals(existingAnnouncementsFlag.getUserId(),
-			ReflectionTestUtil.invoke(existingAnnouncementsFlag,
+		Assert.assertEquals(Long.valueOf(existingAnnouncementsFlag.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingAnnouncementsFlag,
 				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(existingAnnouncementsFlag.getEntryId(),
-			ReflectionTestUtil.invoke(existingAnnouncementsFlag,
+		Assert.assertEquals(Long.valueOf(existingAnnouncementsFlag.getEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingAnnouncementsFlag,
 				"getOriginalEntryId", new Class<?>[0]));
-		Assert.assertEquals(existingAnnouncementsFlag.getValue(),
-			ReflectionTestUtil.invoke(existingAnnouncementsFlag,
+		Assert.assertEquals(Integer.valueOf(
+				existingAnnouncementsFlag.getValue()),
+			ReflectionTestUtil.<Integer>invoke(existingAnnouncementsFlag,
 				"getOriginalValue", new Class<?>[0]));
 	}
 

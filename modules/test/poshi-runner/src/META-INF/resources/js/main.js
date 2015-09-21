@@ -9,7 +9,7 @@ function addChildLoggerElement(childLoggerAttributes, extraAttributes) {
 		childNode.innerHTML = childLoggerAttributes.innerHTML;
 
 		for (var attribute in extraAttributes) {
-			childNode.setAttribute(attribute, extraAttributes.attribute);
+			childNode.setAttribute(attribute, extraAttributes[attribute]);
 		}
 		if (parentNode) {
 			parentNode.appendChild(childNode);

@@ -16,16 +16,16 @@ package com.liferay.portal.security.sso.opensso.servlet.filters;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
+import com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Hugo Huijser
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration",
 	immediate = true,
 	property = {
 		"dispatcher=FORWARD", "dispatcher=REQUEST", "servlet-context-name=",
@@ -89,7 +89,7 @@ public class OpenSSOFilter extends BaseFilter {
 	protected OpenSSOConfiguration getOpenSSOConfiguration(long companyId)
 		throws Exception {
 
-		return _settingsFactory.getSettings(
+		return _configurationFactory.getConfiguration(
 			OpenSSOConfiguration.class,
 			new CompanyServiceSettingsLocator(
 				companyId, OpenSSOConstants.SERVICE_NAME));
@@ -192,21 +192,23 @@ public class OpenSSOFilter extends BaseFilter {
 		response.sendRedirect(redirect);
 	}
 
-	@Reference
-	protected void setOpenSSO(OpenSSO openSSO) {
-		_openSSO = openSSO;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	protected void setOpenSSO(OpenSSO openSSO) {
+		_openSSO = openSSO;
 	}
 
 	private static final String _SUBJECT_ID_KEY = "open.sso.subject.id";
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOFilter.class);
 
+	private volatile ConfigurationFactory _configurationFactory;
 	private OpenSSO _openSSO;
-	private volatile SettingsFactory _settingsFactory;
 
 }

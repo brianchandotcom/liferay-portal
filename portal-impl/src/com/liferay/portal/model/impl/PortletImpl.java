@@ -66,7 +66,6 @@ import com.liferay.portlet.DefaultControlPanelEntryFactory;
 import com.liferay.portlet.PortletQNameUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
-import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -411,6 +410,7 @@ public class PortletImpl extends PortletBaseImpl {
 			getPortletApp());
 
 		portlet.setId(getId());
+		portlet.setFullPageDisplayable(isFullPageDisplayable());
 		portlet.setUndeployedPortlet(isUndeployedPortlet());
 
 		return portlet;
@@ -557,7 +557,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @return the asset type instances of the portlet
 	 */
 	@Override
-	public List<AssetRendererFactory> getAssetRendererFactoryInstances() {
+	public List<AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
 		if (_assetRendererFactoryClasses.isEmpty()) {
 			return null;
 		}
@@ -2417,6 +2417,11 @@ public class PortletImpl extends PortletBaseImpl {
 		return _ajaxable;
 	}
 
+	@Override
+	public boolean isFullPageDisplayable() {
+		return _fullPageDisplayable;
+	}
+
 	/**
 	 * Returns <code>true</code> to include the portlet and make it available to
 	 * be made active.
@@ -3056,6 +3061,11 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public void setFriendlyURLRoutes(String friendlyURLRoutes) {
 		_friendlyURLRoutes = friendlyURLRoutes;
+	}
+
+	@Override
+	public void setFullPageDisplayable(boolean fullPageDisplayable) {
+		_fullPageDisplayable = fullPageDisplayable;
 	}
 
 	/**
@@ -4139,6 +4149,12 @@ public class PortletImpl extends PortletBaseImpl {
 	private String _friendlyURLRoutes;
 
 	/**
+	 * <code>True</code> if the portlet can be displayed as a full page of the
+	 * view.
+	 */
+	private boolean _fullPageDisplayable;
+
+	/**
 	 * A list of CSS files that will be referenced from the page's header
 	 * relative to the portal's context path.
 	 */
@@ -4255,8 +4271,7 @@ public class PortletImpl extends PortletBaseImpl {
 	/**
 	 * The name of the portlet data handler class of the portlet.
 	 */
-	private String _portletDataHandlerClass =
-		DefaultConfigurationPortletDataHandler.class.getName();
+	private String _portletDataHandlerClass;
 
 	/**
 	 * The filters of the portlet.

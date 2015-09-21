@@ -1,0 +1,192 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.memetix</groupId>
+  <artifactId>microsoft-translator-java-api</artifactId>
+  <version>0.6.2</version>
+  <packaging>jar</packaging>
+
+  <name>microsoft-translator-java-api</name>
+  <description>A Java wrapper for the Microsoft Translator API</description>
+  <url>http://github.com/boatmeme/microsoft-translator-java-api</url>
+  
+  <parent>
+    <groupId>org.sonatype.oss</groupId>
+    <artifactId>oss-parent</artifactId>
+    <version>7</version>
+  </parent>
+  
+   <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.inceptionYear>2011</project.inceptionYear>
+  </properties>
+
+    <licenses>
+      <license>
+        <name>Apache 2</name>
+        <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        <distribution>repo</distribution>
+        <comments>A business-friendly OSS license</comments>
+      </license>
+    </licenses>
+
+  <developers>
+        <developer>
+            <id>boatmeme</id>
+            <name>Jonathan Griggs</name>
+            <email>jonathan.griggs@gmail.com</email>
+            <url>http://memetix.com</url>
+            <roles>
+                <role>lead</role>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+            <timezone>-7</timezone>
+        </developer>
+  </developers>
+  
+  <scm>
+    <connection>scm:git:git@github.com:boatmeme/${project.artifactId}.git</connection>
+    <url>scm:git:git@github.com:boatmeme/${project.artifactId}.git</url>
+    <developerConnection>scm:git:git@github.com:boatmeme/${project.artifactId}.git</developerConnection>
+  </scm>
+  
+  <issueManagement>
+    <system>GitHub</system>
+    <url>https://github.com/boatmeme/microsoft-translator-java-api/issues</url>
+  </issueManagement>
+  
+    <mailingLists>
+        <mailingList>
+            <name>microsoft-translator-java-api</name>
+            <subscribe>microsoft-translator-java-api-subscribe@googlegroups.com</subscribe>
+            <unsubscribe>microsoft-translator-java-api-unsubscribe@googlegroups.com</unsubscribe>
+            <post>microsoft-translator-java-api@googlegroups.com</post>
+            <archive>http://groups.google.com/group/microsoft-translator-java-api</archive>
+        </mailingList>
+    </mailingLists>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>com.googlecode.json-simple</groupId>
+        <artifactId>json-simple</artifactId>
+        <version>1.1</version>
+        <type>jar</type>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+        <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-compiler-plugin</artifactId>
+	    <version>2.3.2</version>
+	    <configuration>
+		    <source>1.5</source>
+		    <target>1.5</target>
+		    <encoding>UTF-8</encoding>
+	    </configuration>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-release-plugin</artifactId>
+            <version>2.1</version>
+            <configuration>
+                  <preparationGoals>clean install</preparationGoals>
+                  <arguments>-Dtest.api.key=${test.api.key}</arguments> 
+                  <goals>deploy -P release</goals>
+            </configuration>
+        </plugin>
+        <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+                <archive>
+                    <manifest>
+                        <mainClass>fully.qualified.MainClass</mainClass>
+                    </manifest>
+                </archive>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+            </configuration>
+        </plugin>
+       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+          <systemPropertyVariables>
+            <test.api.key>${test.api.key}</test.api.key>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>release-sign-artifacts</id>
+      <activation>
+        <property>
+          <name>performRelease</name>
+          <value>true</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-source-plugin</artifactId>
+              <executions>
+                <execution>
+                  <id>attach-sources</id>
+                  <goals>
+                    <goal>jar</goal>
+                  </goals>
+                </execution>
+              </executions>
+            </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>attach-javadocs</id>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  <!--
+  <profiles>
+     <profile>
+          <id>release</id>
+          <properties>
+            <skipTests>true</skipTests>
+          </properties>
+      </profile>
+  </profiles>
+  -->
+</project>

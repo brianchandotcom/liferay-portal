@@ -562,18 +562,20 @@ public class AssetCategoryPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingAssetCategory.getUuid(),
 				ReflectionTestUtil.invoke(existingAssetCategory,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingAssetCategory.getGroupId(),
-			ReflectionTestUtil.invoke(existingAssetCategory,
+		Assert.assertEquals(Long.valueOf(existingAssetCategory.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetCategory,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingAssetCategory.getParentCategoryId(),
-			ReflectionTestUtil.invoke(existingAssetCategory,
+		Assert.assertEquals(Long.valueOf(
+				existingAssetCategory.getParentCategoryId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetCategory,
 				"getOriginalParentCategoryId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingAssetCategory.getName(),
 				ReflectionTestUtil.invoke(existingAssetCategory,
 					"getOriginalName", new Class<?>[0])));
-		Assert.assertEquals(existingAssetCategory.getVocabularyId(),
-			ReflectionTestUtil.invoke(existingAssetCategory,
+		Assert.assertEquals(Long.valueOf(
+				existingAssetCategory.getVocabularyId()),
+			ReflectionTestUtil.<Long>invoke(existingAssetCategory,
 				"getOriginalVocabularyId", new Class<?>[0]));
 	}
 

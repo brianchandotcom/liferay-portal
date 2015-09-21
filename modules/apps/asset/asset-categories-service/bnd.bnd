@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Asset Categories Service
+Bundle-SymbolicName: com.liferay.asset.categories.service
+Bundle-Version: 1.0.0
+Include-Resource: classes

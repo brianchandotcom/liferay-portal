@@ -60,7 +60,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 		}
 
 		long classNameId = PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure");
+			"com.liferay.portlet.dynamicdatamapping.DDMStructure");
 
 		try {
 			runSQL("update DDMTemplate set classNameId = " + classNameId);

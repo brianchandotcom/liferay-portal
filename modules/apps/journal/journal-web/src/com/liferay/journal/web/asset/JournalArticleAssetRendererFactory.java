@@ -26,6 +26,7 @@ import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -66,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = AssetRendererFactory.class
 )
 public class JournalArticleAssetRendererFactory
-	extends BaseAssetRendererFactory {
+	extends BaseAssetRendererFactory<JournalArticle> {
 
 	public static final String TYPE = "content";
 
@@ -78,7 +79,8 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long classPK, int type)
+	public AssetRenderer<JournalArticle> getAssetRenderer(
+			long classPK, int type)
 		throws PortalException {
 
 		JournalArticle article =
@@ -118,7 +120,8 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(long groupId, String urlTitle)
+	public AssetRenderer<JournalArticle> getAssetRenderer(
+			long groupId, String urlTitle)
 		throws PortalException {
 
 		JournalArticle article =
@@ -141,6 +144,11 @@ public class JournalArticleAssetRendererFactory
 	@Override
 	public String getIconCssClass() {
 		return "icon-file-2";
+	}
+
+	@Override
+	public String getSubtypeTitle(Locale locale) {
+		return LanguageUtil.get(locale, "structures");
 	}
 
 	@Override

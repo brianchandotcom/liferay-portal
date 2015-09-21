@@ -251,7 +251,7 @@ public class DDMTemplateVersionPersistenceTest {
 			"templateVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"classNameId", true, "classPK", true, "templateId", true,
-			"version", true, "name", true, "language", true, "status", true,
+			"version", true, "language", true, "status", true,
 			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
@@ -459,8 +459,9 @@ public class DDMTemplateVersionPersistenceTest {
 
 		DDMTemplateVersion existingDDMTemplateVersion = _persistence.findByPrimaryKey(newDDMTemplateVersion.getPrimaryKey());
 
-		Assert.assertEquals(existingDDMTemplateVersion.getTemplateId(),
-			ReflectionTestUtil.invoke(existingDDMTemplateVersion,
+		Assert.assertEquals(Long.valueOf(
+				existingDDMTemplateVersion.getTemplateId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMTemplateVersion,
 				"getOriginalTemplateId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingDDMTemplateVersion.getVersion(),

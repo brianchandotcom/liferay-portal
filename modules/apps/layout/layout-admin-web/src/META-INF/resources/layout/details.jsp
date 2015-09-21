@@ -159,9 +159,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 
 				LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
 
-				Class<?> clazz = layoutTypeController.getClass();
-
-				ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", locale, clazz.getClassLoader());
+				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
 			%>
 
 				<aui:option disabled="<%= selLayout.isFirstParent() && !layoutTypeController.isFirstPageable() %>" label='<%= LanguageUtil.get(request, resourceBundle, "layout.types." + type) %>' selected="<%= selLayout.getType().equals(type) %>" value="<%= type %>" />

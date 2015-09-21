@@ -38,7 +38,7 @@
 	<command name="addAbstractImage">
 		<execute function="Click" locator1="Button#SELECT" />
 
-		<execute function="AssertClick" locator1="PGDocumentsandmedia#ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+		<execute function="AssertClick" locator1="MenuItem#BASIC_DOCUMENT" value1="Basic Document" />
 
 		<execute function="UploadCommonFile" locator1="TextInput#FILE" value1="${dmDocumentFile}" />
 
@@ -149,8 +149,12 @@
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 	</command>
 
+	<command name="addCoverImage">
+		<execute function="AssertClick" locator1="BlogsEntry#ENTRY_COVER_IMAGE_SELECT_FILE" value1="Select File" />
+	</command>
+
 	<command name="addCP">
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 
@@ -193,19 +197,13 @@
 	</command>
 
 	<command name="addCustomAbstract">
-		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB_CUSTOM_ABSTRACT_RADIO" />
+		<execute function="Click" locator1="Radio#CUSTOM_ABSTRACT" />
 
-		<execute function="Type#typeAlloyEditor" locator1="BlogsEditEntry#SETTINGS_TAB_CUSTOM_ABSTRACT_FIELD" value1="${entryAbstractDescription}" />
-	</command>
-
-	<command name="addDefaultAbstract">
-		<execute function="Click" locator1="BlogsEditEntry#SETTINGS_TAB_USE_THE_FIRST_400_CHARACTERS_ABSTRACT_RADIO" />
-
-		<execute function="AssertTextEquals" locator1="BlogsEditEntry#SETTINGS_TAB_CUSTOM_ABSTRACT_FIELD" value1="${entryContent}" />
+		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#DESCRIPTION_FIELD" value1="${entryAbstractDescription}" />
 	</command>
 
 	<command name="addDraftAutoCP">
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
@@ -233,7 +231,7 @@
 	</command>
 
 	<command name="addDraftCP">
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
@@ -428,24 +426,24 @@
 			<then>
 				<var name="key_siteScope" value="${siteScope}" />
 
-				<execute function="AssertClick" locator1="PGAssetpublisher#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteScope}" />
+				<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteScope}" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="PGAssetpublisher#ADD_NEW_DROPDOWN" value1="Add New" />
+				<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
 			</else>
 		</if>
 
 		<if>
-			<condition function="IsVisible" locator1="PGAssetpublisher#ADD_NEW_MENULIST_BLOGS_ENTRY" />
+			<condition function="IsVisible" locator1="MenuItem#BLOGS_ENTRY" />
 			<then>
-				<execute function="AssertClick" locator1="PGAssetpublisher#ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
+				<execute function="AssertClick" locator1="MenuItem#BLOGS_ENTRY" value1="Blogs Entry" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="PGAssetpublisher#ADD_BLOGS_ENTRY_BUTTON" value1="Add Blogs Entry" />
+				<execute function="AssertClick" locator1="AP#ADD_BLOGS_ENTRY_BUTTON" value1="Add Blogs Entry" />
 			</else>
 		</if>
 
-		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewblogsentry#BLOGS_ENTRY_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 
 		<execute function="Type#typeAlloyEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
 
@@ -466,8 +464,8 @@
 
 		<var name="key_assetTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
+		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 	</command>
 
 	<command name="addRelatedAsset">
@@ -500,8 +498,8 @@
 
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="SelectFrame" locator1="PGRelatedassetsSelect#IFRAME" />
-		<execute function="AssertClick" locator1="PGRelatedassetsSelect#ASSET_TABLE_CHOOSE" value1="Choose" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="AssertClick" locator1="AssetRelatedAssets#ASSET_TABLE_CHOOSE" value1="Choose" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
@@ -680,7 +678,7 @@
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute function="AssertClick" locator1="CPBlogs#ADD_ENTRY" value1="Add" />
+		<execute macro="BlogsNavigator#gotoAddEntry" />
 
 		<execute function="Type" locator1="CPBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 
@@ -695,7 +693,7 @@
 
 		<execute function="Type" locator1="CPBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
 		<execute function="Pause" locator1="1000" />
-		<execute function="AssertClick" locator1="CPBlogsAdd#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -715,7 +713,7 @@
 
 		<execute function="Type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
 		<execute function="Type" locator1="PGBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
-		<execute function="AssertClick" locator1="PGBlogsAdd#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -730,20 +728,20 @@
 	</command>
 
 	<command name="addWithWorkflowPGViaAP">
-		<execute function="AssertClick" locator1="PGAssetpublisher#ADD_NEW_DROPDOWN" value1="Add New" />
-		<execute function="AssertClick" locator1="PGAssetpublisher#ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
+		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
+		<execute function="AssertClick" locator1="MenuItem#BLOGS_ENTRY" value1="Blogs Entry" />
 
-		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewblogsentry#BLOGS_ENTRY_IFRAME" />
-		<execute function="Type" locator1="PGAssetpublisherAddnewblogsentry#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type" locator1="PGAssetpublisherAddnewblogsentry#CONTENT_FIELD" value1="${entryContent}" />
-		<execute function="AssertClick" locator1="PGAssetpublisherAddnewblogsentry#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
+		<execute function="Type" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="Type" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
 		<execute function="Pause" locator1="5000" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 
 		<var name="key_assetTitle" value="${entryTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertElementNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 	</command>
 
 	<command name="autoSaveDraft">
@@ -1100,14 +1098,16 @@
 	</command>
 
 	<command name="moveToRecycleBinPG">
+		<var name="key_entryContent" value="${entryContent}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="${entryContent}" />
-		<execute function="AssertClick" locator1="PGBlogs#ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGBlogs#SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_TITLE" />
-		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_CONTENT" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+		<execute function="Click" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
+		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#CONTENT" />
 	</command>
 
 	<command name="previewPG">
@@ -1178,18 +1178,8 @@
 	<command name="publishWithInvalidTitleLength">
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
-
-		<var name="key_entryTitle" value="${entryValidTitleLength}" />
-
-		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryValidTitleLength}" />
-		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
-		<execute function="AssertTextNotEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
-
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
-		<execute function="AssertElementNotPresent" locator1="BlogsEntry#CONTENT" />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_REQUEST_FAILED_TO_COMPLETE" value1="Your request failed to complete." />
+		<execute function="AssertTextEquals" locator1="Message#ERROR_ENTER_A_VALID_TITLE" value1="Please enter a valid title." />
 	</command>
 
 	<command name="publishWithWorkflow">
@@ -1245,7 +1235,7 @@
 
 		<execute function="Uncheck" locator1="Permissions#CONTENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 
-		<execute function="AssertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -1380,7 +1370,7 @@
 			<then>
 				<execute function="Click" locator1="Blogs#ENTRY_TABLE_ALL_CHECKBOX" />
 
-				<execute function="AssertClick" locator1="Button#MOVE_TO_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute function="AssertClick" locator1="Button#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
 			</then>
@@ -1393,23 +1383,32 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="viewAbstractDisplay">
+		<var name="key_entryAbstractDescription" value="${entryAbstractDescription}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="${entryAbstractDescription}" />
+		<execute function="AssertTextNotEquals" locator1="BlogsEntry#CONTENT_GENERIC" value1="${entryContent}" />
+	</command>
+
 	<command name="viewAbstractEntryViaAPPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryAbstractDescription}" />
+		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${entryAbstractDescription}" />
 
 		<if>
 			<isset var="smallImage" />
 			<then>
-				<execute function="AssertElementPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION_SMALL_IMAGE" />
+				<execute function="AssertElementPresent" locator1="AP#ASSET_ABSTRACT_DESCRIPTION_SMALL_IMAGE" />
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAssetpublisherAsset#ASSET_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewAsRelatedAssetPG">
@@ -1653,12 +1652,21 @@
 		<execute function="AssertTextEquals" locator1="BlogsEntry#ENTRY_AUTHOR" value1="${entryAuthorFullName}" />
 	</command>
 
+	<command name="viewEntryTable">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertElementPresent" locator1="Blogs#ENTRY_TABLE_CHECKBOX" />
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute function="AssertElementPresent" locator1="Blogs#ENTRY_TABLE_CREATE_DATE" />
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_STATUS" value1="Approved" />
+	</command>
+
 	<command name="viewEntryViaAPPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="AssertClick" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="PGAssetpublisherAsset#ASSET_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${entryContent}" />
+		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewEntryViaBlogsAggregatorPG">
@@ -1749,8 +1757,8 @@
 	<command name="viewNoEntryViaAPPG">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="AssertTextNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
+		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextNotPresent" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 	</command>
 
 	<command name="viewNoEntryViaBlogsAggregatorPG">
@@ -1801,13 +1809,13 @@
 	<command name="viewPGViaAP">
 		<var name="key_assetTitle" value="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
+		<execute function="AssertTextEquals" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="AP#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
 
-		<execute function="AssertClick" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertClick" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGAssetpublisherAsset#ASSET_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisherAsset#ASSET_CONTENT" value1="${entryContent}" />
+		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewRate4StarsCP">
@@ -2159,6 +2167,6 @@
 	<command name="viewWithWorkflowPGViaAP">
 		<var name="key_assetTitle" value="${entryTitle}" />
 
-		<execute function="AssertElementNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertElementNotPresent" locator1="AP#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
 	</command>
 </definition>

@@ -52,9 +52,9 @@ public interface AssetEntry extends AssetEntryModel, PersistedModel {
 			}
 		};
 
-	public com.liferay.portlet.asset.model.AssetRenderer getAssetRenderer();
+	public com.liferay.portlet.asset.model.AssetRenderer<?> getAssetRenderer();
 
-	public com.liferay.portlet.asset.model.AssetRendererFactory getAssetRendererFactory();
+	public com.liferay.portlet.asset.model.AssetRendererFactory<?> getAssetRendererFactory();
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories();
 

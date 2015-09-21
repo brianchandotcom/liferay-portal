@@ -177,7 +177,7 @@ public class AssetEntryServiceSoap {
 		java.lang.String title, java.lang.String description,
 		java.lang.String summary, java.lang.String url,
 		java.lang.String layoutUuid, int height, int width,
-		java.lang.Integer priority) throws RemoteException {
+		java.lang.Double priority) throws RemoteException {
 		try {
 			com.liferay.portlet.asset.model.AssetEntry returnValue = AssetEntryServiceUtil.updateEntry(groupId,
 					createDate, modifiedDate, className, classPK, classUuid,
@@ -198,7 +198,7 @@ public class AssetEntryServiceSoap {
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
 	Date, String, long, String, long, long[], String[], boolean,
 	Date, Date, Date, String, String, String, String, String,
-	String, int, int, Integer)}
+	String, int, int, Double)}
 	*/
 	@Deprecated
 	public static com.liferay.portlet.asset.model.AssetEntrySoap updateEntry(

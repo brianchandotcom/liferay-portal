@@ -48,6 +48,12 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 		return _releaseLocalService.addRelease(servletContextName, buildNumber);
 	}
 
+	@Override
+	public com.liferay.portal.model.Release addRelease(
+		java.lang.String servletContextName, java.lang.String schemaVersion) {
+		return _releaseLocalService.addRelease(servletContextName, schemaVersion);
+	}
+
 	/**
 	* Creates a new release with the primary key. Does not add the release to the database.
 	*
@@ -290,6 +296,13 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _releaseLocalService.updateRelease(releaseId, buildNumber,
 			buildDate, verified);
+	}
+
+	@Override
+	public void updateRelease(java.lang.String servletContextName,
+		java.lang.String schemaVersion, java.lang.String previousSchemaVersion) {
+		_releaseLocalService.updateRelease(servletContextName, schemaVersion,
+			previousSchemaVersion);
 	}
 
 	@Override

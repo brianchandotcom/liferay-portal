@@ -51,13 +51,10 @@ public class AppServiceImpl extends AppServiceBaseImpl {
 	}
 
 	@Override
-	public App updateApp(long remoteAppId, String version, File file)
-		throws PortalException {
-
+	public App updateApp(File file) throws PortalException {
 		MarketplacePermission.check(getPermissionChecker());
 
-		return appLocalService.updateApp(
-			getUserId(), remoteAppId, version, file);
+		return appLocalService.updateApp(getUserId(), file);
 	}
 
 }

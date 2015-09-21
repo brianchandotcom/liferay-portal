@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -79,6 +81,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import org.quartz.Calendar;
+import org.quartz.CalendarIntervalScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -88,7 +91,6 @@ import org.quartz.ListenerManager;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerContext;
 import org.quartz.SchedulerMetaData;
-import org.quartz.SimpleScheduleBuilder;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
@@ -188,7 +190,8 @@ public class QuartzSchedulerEngineTest {
 			0, _synchronousDestination.getMessageListenerCount());
 
 		Trigger trigger = new IntervalTrigger(
-			testJobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL);
+			testJobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL,
+			TimeUnit.SECOND);
 
 		Message message = new Message();
 
@@ -259,7 +262,7 @@ public class QuartzSchedulerEngineTest {
 	@Test
 	public void testGetQuartzTrigger3() throws SchedulerException {
 		IntervalTrigger intervalTrigger = new IntervalTrigger(
-			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
+			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, -1, TimeUnit.SECOND);
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -279,7 +282,7 @@ public class QuartzSchedulerEngineTest {
 
 			Assert.assertEquals(
 				"Not scheduling " + _TEST_JOB_NAME_0 + " because interval " +
-					"is less than or equal to 0",
+					"is less than 0",
 				logRecord.getMessage());
 		}
 	}
@@ -295,7 +298,8 @@ public class QuartzSchedulerEngineTest {
 		}
 
 		Trigger intervalTrigger = new IntervalTrigger(
-			jobName, _PERSISTED_TEST_GROUP_NAME, _DEFAULT_INTERVAL);
+			jobName, _PERSISTED_TEST_GROUP_NAME, _DEFAULT_INTERVAL,
+			TimeUnit.SECOND);
 
 		org.quartz.Trigger trigger = _quartzSchedulerEngine.getQuartzTrigger(
 			intervalTrigger, StorageType.PERSISTED);
@@ -303,7 +307,8 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertFalse(jobName.equals(trigger.getJobKey().getName()));
 
 		intervalTrigger = new IntervalTrigger(
-			jobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL);
+			jobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL,
+			TimeUnit.SECOND);
 
 		trigger = _quartzSchedulerEngine.getQuartzTrigger(
 			intervalTrigger, StorageType.MEMORY);
@@ -412,7 +417,7 @@ public class QuartzSchedulerEngineTest {
 
 		Trigger trigger = new IntervalTrigger(
 			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME,
-			_DEFAULT_INTERVAL);
+			_DEFAULT_INTERVAL, TimeUnit.SECOND);
 
 		Message message = new Message();
 
@@ -445,7 +450,7 @@ public class QuartzSchedulerEngineTest {
 
 		Trigger trigger = new IntervalTrigger(
 			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME,
-			_DEFAULT_INTERVAL);
+			_DEFAULT_INTERVAL, TimeUnit.SECOND);
 
 		_quartzSchedulerEngine.schedule(
 			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
@@ -468,7 +473,7 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
 
 		IntervalTrigger intervalTrigger = new IntervalTrigger(
-			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, 0);
+			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, -1, TimeUnit.SECOND);
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -486,7 +491,7 @@ public class QuartzSchedulerEngineTest {
 
 			Assert.assertEquals(
 				"Not scheduling " + _TEST_JOB_NAME_0 + " because interval " +
-					"is less than or equal to 0",
+					"is less than 0",
 				logRecord.getMessage());
 		}
 
@@ -608,7 +613,8 @@ public class QuartzSchedulerEngineTest {
 		String testJobName = _TEST_JOB_NAME_PREFIX + "memory";
 
 		Trigger trigger = new IntervalTrigger(
-			testJobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL);
+			testJobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL,
+			TimeUnit.SECOND);
 
 		Message message = new Message();
 
@@ -645,23 +651,29 @@ public class QuartzSchedulerEngineTest {
 			_quartzSchedulerEngine.getScheduledJob(
 				_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
-		Object triggerContent =
-			schedulerResponse.getTrigger().getTriggerContent();
+		Trigger trigger = schedulerResponse.getTrigger();
 
-		Assert.assertEquals(_DEFAULT_INTERVAL, triggerContent);
+		ObjectValuePair<Integer, TimeUnit> objectValuePair =
+			(ObjectValuePair<Integer, TimeUnit>)trigger.getTriggerContent();
 
-		Trigger trigger = new IntervalTrigger(
+		Assert.assertEquals(_DEFAULT_INTERVAL, (int)objectValuePair.getKey());
+
+		Trigger newTrigger = new IntervalTrigger(
 			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, new Date(),
-			_DEFAULT_INTERVAL * 2);
+			_DEFAULT_INTERVAL * 2, TimeUnit.SECOND);
 
-		_quartzSchedulerEngine.update(trigger, StorageType.MEMORY);
+		_quartzSchedulerEngine.update(newTrigger, StorageType.MEMORY);
 
 		schedulerResponse = _quartzSchedulerEngine.getScheduledJob(
 			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
-		triggerContent = schedulerResponse.getTrigger().getTriggerContent();
+		trigger = schedulerResponse.getTrigger();
 
-		Assert.assertEquals(_DEFAULT_INTERVAL * 2, triggerContent);
+		objectValuePair =
+			(ObjectValuePair<Integer, TimeUnit>)trigger.getTriggerContent();
+
+		Assert.assertEquals(
+			_DEFAULT_INTERVAL * 2, (int)objectValuePair.getKey());
 	}
 
 	@Test
@@ -670,24 +682,26 @@ public class QuartzSchedulerEngineTest {
 			_quartzSchedulerEngine.getScheduledJob(
 				_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
-		Object triggerContent =
-			schedulerResponse.getTrigger().getTriggerContent();
+		Trigger trigger = schedulerResponse.getTrigger();
 
-		Assert.assertEquals(_DEFAULT_INTERVAL, triggerContent);
+		ObjectValuePair<Integer, TimeUnit> objectValuePair =
+			(ObjectValuePair<Integer, TimeUnit>)trigger.getTriggerContent();
+
+		Assert.assertEquals(_DEFAULT_INTERVAL, (int)objectValuePair.getKey());
 
 		String newTriggerContent = "0 0 12 * * ?";
 
-		Trigger trigger = new CronTrigger(
+		Trigger newTrigger = new CronTrigger(
 			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, newTriggerContent);
 
-		_quartzSchedulerEngine.update(trigger, StorageType.MEMORY);
+		_quartzSchedulerEngine.update(newTrigger, StorageType.MEMORY);
 
 		schedulerResponse = _quartzSchedulerEngine.getScheduledJob(
 			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
-		triggerContent = schedulerResponse.getTrigger().getTriggerContent();
+		trigger = schedulerResponse.getTrigger();
 
-		Assert.assertEquals(newTriggerContent, triggerContent);
+		Assert.assertEquals(newTriggerContent, trigger.getTriggerContent());
 	}
 
 	@Test
@@ -707,7 +721,8 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertNull(schedulerResponse.getTrigger());
 
 		Trigger trigger = new IntervalTrigger(
-			jobName, _MEMORY_TEST_GROUP_NAME, new Date(), _DEFAULT_INTERVAL);
+			jobName, _MEMORY_TEST_GROUP_NAME, new Date(), _DEFAULT_INTERVAL,
+			TimeUnit.SECOND);
 
 		_quartzSchedulerEngine.update(trigger, StorageType.MEMORY);
 
@@ -958,7 +973,7 @@ public class QuartzSchedulerEngineTest {
 		return props;
 	}
 
-	private static final long _DEFAULT_INTERVAL = 10000;
+	private static final int _DEFAULT_INTERVAL = 10;
 
 	private static final int _DEFAULT_JOB_NUMBER = 3;
 
@@ -989,8 +1004,8 @@ public class QuartzSchedulerEngineTest {
 				triggerBuilder.withIdentity(
 					_TEST_JOB_NAME_PREFIX + i, defaultGroupName);
 				triggerBuilder.withSchedule(
-					SimpleScheduleBuilder.simpleSchedule(
-						).withIntervalInMilliseconds(_DEFAULT_INTERVAL));
+					CalendarIntervalScheduleBuilder.calendarIntervalSchedule().
+						withIntervalInSeconds(_DEFAULT_INTERVAL));
 
 				org.quartz.Trigger trigger = triggerBuilder.build();
 

@@ -79,12 +79,12 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 				_log.warn("The template " + name + " should be created");
 			}
 
-			ServletContext themesServletContext =
+			ServletContext themeClassicServletContext =
 				PortalWebResourcesUtil.getServletContext(
-					PortalWebResourceConstants.RESOURCE_TYPE_THEMES);
+					PortalWebResourceConstants.RESOURCE_TYPE_THEME_CLASSIC);
 
-			url = themesServletContext.getResource(
-				"/html/themes/_unstyled/templates/init_custom.ftl");
+			url = themeClassicServletContext.getResource(
+				"/classic/templates/init_custom.ftl");
 		}
 
 		return url;

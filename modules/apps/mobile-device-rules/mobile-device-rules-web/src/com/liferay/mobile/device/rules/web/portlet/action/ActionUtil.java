@@ -14,13 +14,13 @@
 
 package com.liferay.mobile.device.rules.web.portlet.action;
 
+import com.liferay.mobile.device.rules.action.ActionHandler;
+import com.liferay.mobile.device.rules.action.ActionHandlerManagerUtil;
 import com.liferay.mobile.device.rules.rule.group.action.LayoutTemplateModificationActionHandler;
 import com.liferay.mobile.device.rules.rule.group.action.SimpleRedirectActionHandler;
 import com.liferay.mobile.device.rules.rule.group.action.SiteRedirectActionHandler;
 import com.liferay.mobile.device.rules.rule.group.action.ThemeModificationActionHandler;
 import com.liferay.mobile.device.rules.rule.group.rule.SimpleRuleHandler;
-import com.liferay.portal.kernel.mobile.device.rulegroup.ActionHandlerManagerUtil;
-import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;

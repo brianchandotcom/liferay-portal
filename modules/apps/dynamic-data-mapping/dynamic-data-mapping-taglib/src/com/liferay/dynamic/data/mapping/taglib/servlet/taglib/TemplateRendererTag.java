@@ -14,17 +14,14 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
 import com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base.BaseTemplateRendererTag;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.taglib.FileAvailabilityUtil;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -85,13 +82,6 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 	protected void setAttributes(HttpServletRequest request) {
 		super.setAttributes(request);
 
-		Map<String, Object> contextObjects = getContextObjects();
-
-		if (contextObjects == null) {
-			setNamespacedAttribute(
-				request, "contextObjects", new HashMap<String, Object>());
-		}
-
 		long displaStyleGroupId = getDisplayStyleGroupId();
 
 		if (displaStyleGroupId == 0) {
@@ -105,7 +95,7 @@ public class TemplateRendererTag extends BaseTemplateRendererTag {
 		}
 
 		_portletDisplayDDMTemplate =
-			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
 				displaStyleGroupId, PortalUtil.getClassNameId(getClassName()),
 				getDisplayStyle(), true);
 

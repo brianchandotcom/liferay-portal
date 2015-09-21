@@ -1923,7 +1923,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55802" name="SearchSOBlogsEntryComment" priority="4">
+	<command name="SearchSOBlogsEntryComment" priority="4">
 		<var name="entryComment" value="Blogs Entry Comment" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

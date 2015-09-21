@@ -68,78 +68,19 @@ public class SafariWebDriverImpl extends BaseWebDriverImpl {
 
 	@Override
 	public void mouseDown(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
-
-		StringBuilder sb = new StringBuilder(4);
-
-		sb.append("var element = arguments[0];");
-		sb.append("var event = document.createEvent('MouseEvents');");
-		sb.append("event.initEvent('mousedown', true, false);");
-		sb.append("element.dispatchEvent(event);");
-
-		javascriptExecutor.executeScript(sb.toString(), webElement);
+		WebDriverHelper.executeJavaScriptMouseEvent(this, locator, "mousedown");
 	}
 
 	@Override
 	public void mouseOver(String locator) {
-		WebElement webElement = getWebElement(locator);
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
-
-		StringBuilder sb = new StringBuilder(4);
-
-		sb.append("var element = arguments[0];");
-		sb.append("var event = document.createEvent('MouseEvents');");
-		sb.append("event.initEvent('mouseover', true, false);");
-		sb.append("element.dispatchEvent(event);");
-
-		javascriptExecutor.executeScript(sb.toString(), webElement);
+		WebDriverHelper.executeJavaScriptMouseEvent(this, locator, "mouseover");
 	}
 
 	@Override
 	public void mouseUp(String locator) {
-		WebElement webElement = getWebElement(locator);
+		WebDriverHelper.executeJavaScriptMouseEvent(this, locator, "mouseup");
 
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
-
-		if (!webElement.isDisplayed()) {
-			scrollWebElementIntoView(webElement);
-		}
-
-		StringBuilder sb = new StringBuilder(5);
-
-		sb.append("var element = arguments[0];");
-		sb.append("var event = document.createEvent('MouseEvents');");
-		sb.append("event.initEvent('mouseup', true, false);");
-		sb.append("event.initEvent('click', true, false);");
-		sb.append("element.dispatchEvent(event)");
-
-		javascriptExecutor.executeScript(sb.toString(), webElement);
+		WebDriverHelper.executeJavaScriptMouseEvent(this, locator, "click");
 	}
 
 }

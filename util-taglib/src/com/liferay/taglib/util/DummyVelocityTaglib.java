@@ -393,7 +393,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public void portletIconOptions(String direction, String view) {
+	public void portletIconOptions(String direction, String markupView) {
 	}
 
 	@Override
@@ -482,12 +482,26 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction, String instanceId)
+		throws Exception {
+	}
+
+	@Override
 	public void runtime(String portletName, String queryString) {
 	}
 
 	@Override
 	public void runtime(
 		String portletName, String queryString, String defaultPreferences) {
+	}
+
+	@Override
+	public void runtime(
+			String portletName, String instanceId, String queryString,
+			String defaultPreferences)
+		throws Exception {
 	}
 
 	@Override

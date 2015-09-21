@@ -87,8 +87,6 @@ public class RSSTag extends IncludeTag {
 
 	private String getURL() {
 		if (_resourceURL != null) {
-			_resourceURL.setCacheability(ResourceURL.FULL);
-
 			if ((_delta > 0) && (_delta != SearchContainer.DEFAULT_DELTA)) {
 				_resourceURL.setParameter("max", String.valueOf(_delta));
 			}

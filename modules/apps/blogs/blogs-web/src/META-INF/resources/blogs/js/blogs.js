@@ -106,7 +106,7 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						instance._captionNode = AUI.$('.entry-cover-image-caption');
+						instance._captionNode = instance.one('.cover-image-caption');
 
 						var eventHandles = [
 							Liferay.on('coverImageDeleted', instance._removeCaption, instance),
@@ -136,6 +136,17 @@ AUI.add(
 								customAbstractOptions.delegate(STR_CHANGE, instance._configureAbstract, 'input[type="radio"]', instance)
 							);
 						}
+
+						instance._editIcon = instance.one('#editIcon');
+						instance._settingsIcon = instance.one('#settingsIcon');
+
+						eventHandles.push(
+							instance._editIcon.on(STR_CLICK, instance._switchView, instance),
+							instance._settingsIcon.on(STR_CLICK, instance._switchView, instance)
+						);
+
+						instance._editSection = instance.one('#editSection');
+						instance._settingsSection = instance.one('#settingsSection');
 
 						instance._eventHandles = eventHandles;
 					},
@@ -225,7 +236,9 @@ AUI.add(
 
 						var captionNode = instance._captionNode;
 
-						captionNode.addClass(CSS_INVISIBLE);
+						if (captionNode) {
+							captionNode.addClass(CSS_INVISIBLE);
+						}
 
 						window[instance.ns('coverImageCaptionEditor')].setHTML(STR_BLANK);
 					},
@@ -234,7 +247,6 @@ AUI.add(
 						var instance = this;
 
 						var constants = instance.get('constants');
-						var entry = instance.get('entry');
 
 						var content = window[instance.ns('contentEditor')].getHTML();
 						var coverImageCaption = window[instance.ns('coverImageCaptionEditor')].getHTML();
@@ -396,7 +408,21 @@ AUI.add(
 					_showCaption: function() {
 						var instance = this;
 
-						instance._captionNode.removeClass(CSS_INVISIBLE);
+						var captionNode = instance._captionNode;
+
+						if (captionNode) {
+							captionNode.removeClass(CSS_INVISIBLE);
+						}
+					},
+
+					_switchView: function() {
+						var instance = this;
+
+						instance._editSection.toggle();
+						instance._settingsSection.toggle();
+
+						instance._editIcon.toggle();
+						instance._settingsIcon.toggle();
 					},
 
 					_updateImages: function(persistentImages) {

@@ -30,13 +30,83 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EDIT_ON_GITHUB_LINK</td>
+	<td>EDIT_ON_GITHUB</td>
 	<td>//span[contains(.,'Edit on GitHub')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RELATED_ASSETS_LINKS</td>
+	<td>RELATED_ASSETS</td>
 	<td>//ul[@class='asset-links-list']/li/span/a[contains(.,'${key_kbArticleRelatedAssetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>READ_MORE</td>
+	<td>//div[@class='kb-article-child']//a[contains(.,'Read More')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTES</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'rating-content')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTE_UP</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-up')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOTE_DOWN</td>
+	<td>//div[@class='kb-article-container']//div[contains(@class,'ratings')]//a[contains(@class,'thumbs-down')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIBE</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNSUBSCRIBE</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HISTORY</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PRINT</td>
+	<td>//div[@class='kb-article-container']//div//a/span[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARTICLE_ACTIONS_BUTTON</td>
+	<td>//div[@class='kb-article-container']//span[contains(.,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIOUS</td>
+	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-previous']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT</td>
+	<td>//div[@class='kb-article-container']//div/span[@class='kb-article-next']/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DO_YOU_HAVE_ANY_SUGGESTIONS</td>
+	<td>//div[@class='kb-article-container']//div/a[contains(.,'Do you have any suggestions?')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THERE_ARE_SUGGESTIONS</td>
+	<td>//div[@class='kb-article-container']//div[@class='kb-article-suggestion-actions']/a[2]</td>
 	<td></td>
 </tr>
 <tr>

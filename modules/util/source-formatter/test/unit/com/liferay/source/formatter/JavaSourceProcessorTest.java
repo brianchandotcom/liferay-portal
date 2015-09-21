@@ -118,13 +118,15 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testIncorrectTabs() throws Exception {
-		/*
+	public void testIncorrectVariableNames() throws Exception {
 		test(
-			"IncorrectTabs.testjava",
-			new String[] {"tab:", "tab:", "tab:", "tab:"},
-			new Integer[] {23, 27, 33, 40});
-		*/
+			"IncorrectVariableNames1.testjava",
+			new String[] {
+				"Only private var should start with underscore:",
+				"Only private var should start with underscore:"
+			},
+			new Integer[] {19, 25});
+		test("IncorrectVariableNames2.testjava");
 	}
 
 	@Test

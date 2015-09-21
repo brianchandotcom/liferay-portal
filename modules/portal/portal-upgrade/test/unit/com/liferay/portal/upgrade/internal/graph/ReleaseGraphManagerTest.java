@@ -14,7 +14,8 @@
 
 package com.liferay.portal.upgrade.internal.graph;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.dao.db.DBProcessContext;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.upgrade.internal.UpgradeInfo;
 
 import java.util.Arrays;
@@ -31,76 +32,89 @@ public class ReleaseGraphManagerTest {
 
 	@Test
 	public void testGetAutoUpgradePath() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.2.0", "1.0.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("1.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.2.0", "1.0.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("1.0.0", "2.0.0");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi1, upi2, upi3, upi4));
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4));
 
 		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.0.0");
 
-		Assert.assertEquals(Arrays.asList(upi1, upi2, upi3, upi4), upgradePath);
+		Assert.assertEquals(
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4),
+			upgradePath);
 	}
 
 	@Test
 	public void testGetAutoUpgradePathWhenInEndNode() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.2.0", "1.0.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("1.0.0", "2.0.0");
-		UpgradeInfo upi5 = createUpgradeProcessInfo("0.1.0", "0.1.0.1");
-		UpgradeInfo upi6 = createUpgradeProcessInfo("0.1.0.1", "0.1.0");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.2.0", "1.0.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("1.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo5 = createUpgradeInfo("0.1.0", "0.1.0.1");
+		UpgradeInfo upgradeInfo6 = createUpgradeInfo("0.1.0.1", "0.1.0");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi1, upi2, upi3, upi4, upi5, upi6));
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4,
+				upgradeInfo5, upgradeInfo6));
 
 		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.1.0.1");
 
-		Assert.assertEquals(Arrays.asList(upi6, upi2, upi3, upi4), upgradePath);
+		Assert.assertEquals(
+			Arrays.asList(
+				upgradeInfo6, upgradeInfo2, upgradeInfo3, upgradeInfo4),
+			upgradePath);
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testGetAutoUpgradePathWhenInEndNodeAndMultipleSinkNodes() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.2.0", "1.0.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("1.0.0", "2.0.0");
-		UpgradeInfo upi5 = createUpgradeProcessInfo("0.1.0", "0.1.0.1");
-		UpgradeInfo upi6 = createUpgradeProcessInfo("0.1.0.1", "0.1.0");
-		UpgradeInfo upi7 = createUpgradeProcessInfo("0.1.0.1", "0.1.0.2");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.2.0", "1.0.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("1.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo5 = createUpgradeInfo("0.1.0", "0.1.0.1");
+		UpgradeInfo upgradeInfo6 = createUpgradeInfo("0.1.0.1", "0.1.0");
+		UpgradeInfo upgradeInfo7 = createUpgradeInfo("0.1.0.1", "0.1.0.2");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi1, upi2, upi3, upi4, upi5, upi6, upi7));
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4,
+				upgradeInfo5, upgradeInfo6, upgradeInfo7));
 
 		releaseGraphManager.getUpgradeInfos("0.1.0.1");
 	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testGetAutoUpgradePathWhithoutEndNodes() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.0.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("0.2.0", "0.1.0");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.0.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("0.2.0", "0.1.0");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi1, upi2, upi3, upi4));
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4));
 
 		releaseGraphManager.getUpgradeInfos("0.0.0");
 	}
 
 	@Test
 	public void testGetSinkNodes() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.2.0", "1.0.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("1.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.2.0", "1.0.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("1.0.0", "2.0.0");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi1, upi2, upi3, upi4));
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4));
 
 		List<String> sinkNodes = releaseGraphManager.getEndVertices();
 
@@ -109,14 +123,16 @@ public class ReleaseGraphManagerTest {
 
 	@Test
 	public void testgetSinkNodesWithMultipleEndNodes() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.2.0", "1.0.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("1.0.0", "2.0.0");
-		UpgradeInfo upi5 = createUpgradeProcessInfo("1.0.0", "2.2.0");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.2.0", "1.0.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("1.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo5 = createUpgradeInfo("1.0.0", "2.2.0");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi1, upi2, upi3, upi4, upi5));
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4,
+				upgradeInfo5));
 
 		List<String> sinkNodes = releaseGraphManager.getEndVertices();
 
@@ -126,107 +142,122 @@ public class ReleaseGraphManagerTest {
 
 	@Test
 	public void testGetUpgradePath() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.2.0", "1.0.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("1.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.2.0", "1.0.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("1.0.0", "2.0.0");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi1, upi2, upi3, upi4));
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4));
 
 		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.0.0", "2.0.0");
 
-		Assert.assertEquals(Arrays.asList(upi1, upi2, upi3, upi4), upgradePath);
+		Assert.assertEquals(
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4),
+			upgradePath);
 	}
 
 	@Test
 	public void testGetUpgradePathNotInOrder() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.2.0", "1.0.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("1.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.2.0", "1.0.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("1.0.0", "2.0.0");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi4, upi2, upi1, upi3));
+			Arrays.asList(
+				upgradeInfo4, upgradeInfo2, upgradeInfo1, upgradeInfo3));
 
 		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.0.0", "2.0.0");
 
-		Assert.assertEquals(Arrays.asList(upi1, upi2, upi3, upi4), upgradePath);
+		Assert.assertEquals(
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4),
+			upgradePath);
 	}
 
 	@Test
 	public void testGetUpgradePathWithCyclesReturnsShortestPath() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.2.0", "1.0.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("1.0.0", "2.0.0");
-		UpgradeInfo upi5 = createUpgradeProcessInfo("0.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.2.0", "1.0.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("1.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo5 = createUpgradeInfo("0.0.0", "2.0.0");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi1, upi2, upi3, upi4, upi5));
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4,
+				upgradeInfo5));
 
 		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.0.0", "2.0.0");
 
-		Assert.assertEquals(Arrays.asList(upi5), upgradePath);
+		Assert.assertEquals(Arrays.asList(upgradeInfo5), upgradePath);
 	}
 
 	@Test
 	public void testGetUpgradePathWithCyclesReturnsShortestPathWhenNotZero() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.2.0", "1.0.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("1.0.0", "2.0.0");
-		UpgradeInfo upi5 = createUpgradeProcessInfo("0.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.2.0", "1.0.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("1.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo5 = createUpgradeInfo("0.0.0", "2.0.0");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi1, upi2, upi3, upi4, upi5));
+			Arrays.asList(
+				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4,
+				upgradeInfo5));
 
 		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
 			"0.1.0", "2.0.0");
 
-		Assert.assertEquals(Arrays.asList(upi2, upi3, upi4), upgradePath);
+		Assert.assertEquals(
+			Arrays.asList(upgradeInfo2, upgradeInfo3, upgradeInfo4),
+			upgradePath);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetUpgradePathWithIllegalArguments() {
-		UpgradeInfo upi1 = createUpgradeProcessInfo("0.0.0", "0.1.0");
-		UpgradeInfo upi2 = createUpgradeProcessInfo("0.1.0", "0.2.0");
-		UpgradeInfo upi3 = createUpgradeProcessInfo("0.2.0", "1.0.0");
-		UpgradeInfo upi4 = createUpgradeProcessInfo("1.0.0", "2.0.0");
+		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
+		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
+		UpgradeInfo upgradeInfo3 = createUpgradeInfo("0.2.0", "1.0.0");
+		UpgradeInfo upgradeInfo4 = createUpgradeInfo("1.0.0", "2.0.0");
 
 		ReleaseGraphManager releaseGraphManager = new ReleaseGraphManager(
-			Arrays.asList(upi4, upi2, upi1, upi3));
+			Arrays.asList(
+				upgradeInfo4, upgradeInfo2, upgradeInfo1, upgradeInfo3));
 
 		releaseGraphManager.getUpgradeInfos("0.0.0", "2.0.1");
 	}
 
-	protected UpgradeInfo createUpgradeProcessInfo(String from, String to) {
+	protected UpgradeInfo createUpgradeInfo(String from, String to) {
 		return new UpgradeInfo(
-			from, to, new TestUpgradeProcess(from + " -> " + to));
+			from, to, new TestUpgradeStep(from + " -> " + to));
 	}
 
-	private static class TestUpgradeProcess extends UpgradeProcess {
+	private static class TestUpgradeStep implements UpgradeStep {
 
-		public TestUpgradeProcess(String name) {
+		public TestUpgradeStep(String name) {
 			_name = name;
 		}
 
 		@Override
-		public boolean equals(Object o) {
-			if (this == o) {
+		public boolean equals(Object object) {
+			if (this == object) {
 				return true;
 			}
 
-			if ((o == null) || (getClass() != o.getClass())) {
+			if (!(object instanceof TestUpgradeStep)) {
 				return false;
 			}
 
-			TestUpgradeProcess testUpgradeProcess = (TestUpgradeProcess)o;
+			TestUpgradeStep testUpgradeStep = (TestUpgradeStep)object;
 
-			if (!_name.equals(testUpgradeProcess._name)) {
+			if (!_name.equals(testUpgradeStep._name)) {
 				return false;
 			}
 
@@ -239,7 +270,7 @@ public class ReleaseGraphManagerTest {
 		}
 
 		@Override
-		public void upgrade() {
+		public void upgrade(DBProcessContext dbProcessContext) {
 		}
 
 		private final String _name;

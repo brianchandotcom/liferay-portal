@@ -27,15 +27,20 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 
-	public void setorganizationParams(
+	public void setOrganizationParams(
 		LinkedHashMap<String, Object> organizationParams) {
 
 		_organizationParams = organizationParams;
 	}
 
+	public void setParentOrganizationId(long parentOrganizationId) {
+		_parentOrganizationId = parentOrganizationId;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_organizationParams = null;
+		_parentOrganizationId = 0;
 		_searchTerms = null;
 	}
 
@@ -65,12 +70,17 @@ public class OrganizationSearchContainerResultsTag<R> extends IncludeTag {
 			"liferay-ui:organization-search-container-results:" +
 				"organizationParams",
 			_organizationParams);
+		request.setAttribute(
+			"liferay-ui:organization-search-container-results:" +
+				"parentOrganizationId",
+			_parentOrganizationId);
 	}
 
 	private static final String _PAGE =
 		"/html/taglib/ui/organization_search_container_results/page.jsp";
 
 	private LinkedHashMap<String, Object> _organizationParams;
+	private long _parentOrganizationId;
 	private DisplayTerms _searchTerms;
 
 }

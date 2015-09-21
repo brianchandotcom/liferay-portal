@@ -172,9 +172,7 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 
 						LayoutTypeController layoutTypeController = LayoutTypeControllerTracker.getLayoutTypeController(type);
 
-						Class<?> clazz = layoutTypeController.getClass();
-
-						ResourceBundle resourceBundle = ResourceBundle.getBundle("content.Language", locale, clazz.getClassLoader());
+						ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, layoutTypeController.getClass());
 					%>
 
 						<aui:nav-item cssClass="lfr-page-template" data-search='<%= LanguageUtil.get(request, resourceBundle, "layout.types." + type) %>'>

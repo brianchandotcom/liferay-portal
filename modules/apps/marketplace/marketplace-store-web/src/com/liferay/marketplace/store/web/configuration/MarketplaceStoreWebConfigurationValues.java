@@ -23,6 +23,9 @@ public class MarketplaceStoreWebConfigurationValues {
 	public static final String MARKETPLACE_KEY =
 		MarketplaceStoreWebConfigurationUtil.get("marketplace.key");
 
+	public static final String MARKETPLACE_PORTLET_ID =
+		MarketplaceStoreWebConfigurationUtil.get("marketplace.portlet.id");
+
 	public static final String MARKETPLACE_SECRET =
 		MarketplaceStoreWebConfigurationUtil.get("marketplace.secret");
 

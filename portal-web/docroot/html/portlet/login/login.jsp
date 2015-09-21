@@ -25,7 +25,7 @@
 		if (themeDisplay.isShowMyAccountIcon() && (themeDisplay.getURLMyAccount() != null)) {
 			String myAccountURL = String.valueOf(themeDisplay.getURLMyAccount());
 
-			myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
+			myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.USER_MY_ACCOUNT);
 
 			signedInAs = "<a class=\"signed-in\" href=\"" + HtmlUtil.escape(myAccountURL) + "\">" + signedInAs + "</a>";
 		}
@@ -47,11 +47,9 @@
 		}
 		%>
 
-		<portlet:actionURL secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="loginURL">
-			<portlet:param name="struts_action" value="/login/login" />
-		</portlet:actionURL>
+		<portlet:actionURL name="/login/login" secure="<%= PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS || request.isSecure() %>" var="loginURL" />
 
-		<aui:form action="<%= loginURL %>" autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>' cssClass="sign-in-form" method="post" name="fm">
+		<aui:form action="<%= loginURL %>" autocomplete='<%= PropsValues.COMPANY_SECURITY_LOGIN_FORM_AUTOCOMPLETE ? "on" : "off" %>' cssClass="sign-in-form" method="post" name="fm" onSubmit="event.preventDefault();">
 			<aui:input name="saveLastPath" type="hidden" value="<%= false %>" />
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="doActionAfterLogin" type="hidden" value="<%= portletName.equals(PortletKeys.FAST_LOGIN) ? true : false %>" />
@@ -153,8 +151,25 @@
 
 		<liferay-util:include page="/html/portlet/login/navigation.jsp" />
 
-		<aui:script>
-			AUI.$('#<portlet:namespace />password').on(
+		<aui:script sandbox="<%= true %>">
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.on(
+				'submit',
+				function(event) {
+					var redirect = form.fm('redirect');
+
+					if (redirect) {
+						var redirectVal = redirect.val();
+
+						redirect.val(redirectVal + window.location.hash);
+					}
+
+					submitForm(form);
+				}
+			);
+
+			form.fm('password').on(
 				'keypress',
 				function(event) {
 					Liferay.Util.showCapsLock(event, '<portlet:namespace />passwordCapsLockSpan');

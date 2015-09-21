@@ -30,6 +30,8 @@ import java.util.Map;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.logging.Logger;
+import org.gradle.api.logging.Logging;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
@@ -67,7 +69,12 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 			String output = byteArrayOutputStream.toString();
 
 			if (output.contains("JasperException")) {
+				_logger.error(output);
+
 				throw new GradleException("Unable to compile JSPs");
+			}
+			else if (_logger.isInfoEnabled()) {
+				_logger.info(output);
 			}
 		}
 		finally {
@@ -177,6 +184,9 @@ public class CompileJSPTask extends JavaExec implements CompileJSPSpec {
 
 		return completeSystemProperties;
 	}
+
+	private static final Logger _logger = Logging.getLogger(
+		CompileJSPTask.class);
 
 	private Object _destinationDir;
 	private boolean _moduleWeb;

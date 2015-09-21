@@ -70,7 +70,7 @@ public class TextSearchEntry extends SearchEntry {
 			HttpServletResponse response)
 		throws Exception {
 
-		if (_href == null) {
+		if (Validator.isNull(_href)) {
 			writer.write(getName(request));
 		}
 		else {

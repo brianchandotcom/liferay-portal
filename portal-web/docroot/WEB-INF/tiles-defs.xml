@@ -104,22 +104,6 @@
 		<put name="content" value="/portal/verify_email_address.jsp" />
 	</definition>
 
-	<!-- Admin -->
-
-	<definition name="portlet.admin" extends="portlet" />
-
-	<definition name="portlet.admin.edit_document_library_extra_settings" extends="portlet.admin">
-		<put name="portlet_content" value="/portlet/admin/edit_document_library_extra_settings.jsp" />
-	</definition>
-
-	<definition name="portlet.admin.error" extends="portlet.admin">
-		<put name="portlet_content" value="/portlet/admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.admin.view" extends="portlet.admin">
-		<put name="portlet_content" value="/portlet/admin/view.jsp" />
-	</definition>
-
 	<!-- Background Task-->
 
 	<definition name="portlet.background_task" extends="portlet" />
@@ -146,16 +130,6 @@
 
 	<definition name="portlet.calendar.view_event" extends="portlet.calendar">
 		<put name="portlet_content" value="/portlet/calendar/view_event.jsp" />
-	</definition>
-
-	<!-- Control Panel Home -->
-
-	<definition name="portlet.control_panel_home" extends="portlet">
-		<put name="portlet_decorate" value="false" />
-	</definition>
-
-	<definition name="portlet.control_panel_home.view" extends="portlet.control_panel_home">
-		<put name="portlet_content" value="/portlet/control_panel_home/view.jsp" />
 	</definition>
 
 	<!-- Directory -->
@@ -212,60 +186,12 @@
 		<put name="portlet_content" value="/portlet/invitation/view.jsp" />
 	</definition>
 
-	<!-- Login -->
-
-	<definition name="portlet.login" extends="portlet" />
-
-	<definition name="portlet.login.create_account" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/create_account.jsp" />
-	</definition>
-
-	<definition name="portlet.login.create_anonymous_account" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/create_anonymous_account.jsp" />
-	</definition>
-
-	<definition name="portlet.login.forgot_password" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/forgot_password.jsp" />
-	</definition>
-
-	<definition name="portlet.login.login" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/login.jsp" />
-	</definition>
-
-	<definition name="portlet.login.login_redirect" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/login_redirect.jsp" />
-	</definition>
-
-	<definition name="portlet.login.open_id" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/open_id.jsp" />
-	</definition>
-
-	<definition name="portlet.login.update_account" extends="portlet.login">
-		<put name="portlet_content" value="/portlet/login/update_account.jsp" />
-	</definition>
-
 	<!-- Maps -->
 
 	<definition name="portlet.maps" extends="portlet" />
 
 	<definition name="portlet.maps.view" extends="portlet.maps">
 		<put name="portlet_content" value="/portlet/maps/view.jsp" />
-	</definition>
-
-	<!-- Monitoring -->
-
-	<definition name="portlet.monitoring" extends="portlet" />
-
-	<definition name="portlet.monitoring.edit_session" extends="portlet.monitoring">
-		<put name="portlet_content" value="/portlet/monitoring/edit_session.jsp" />
-	</definition>
-
-	<definition name="portlet.monitoring.error" extends="portlet.monitoring">
-		<put name="portlet_content" value="/portlet/monitoring/error.jsp" />
-	</definition>
-
-	<definition name="portlet.monitoring.view" extends="portlet.monitoring">
-		<put name="portlet_content" value="/portlet/monitoring/view.jsp" />
 	</definition>
 
 	<!-- News -->
@@ -288,43 +214,6 @@
 		<put name="portlet_content" value="/portlet/our_activities/view.jsp" />
 	</definition>
 
-
-	<!-- Portal Settings -->
-
-	<definition name="portlet.portal_settings" extends="portlet" />
-
-	<definition name="portlet.portal_settings.edit_company" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/edit_company.jsp" />
-	</definition>
-
-	<definition name="portlet.portal_settings.edit_ldap_server" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/edit_ldap_server.jsp" />
-	</definition>
-
-	<definition name="portlet.portal_settings.error" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/error.jsp" />
-	</definition>
-
-	<definition name="portlet.portal_settings.test_cas_configuration" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/test_cas_configuration.jsp" />
-	</definition>
-
-	<definition name="portlet.portal_settings.test_ldap_connection" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/test_ldap_connection.jsp" />
-	</definition>
-
-	<definition name="portlet.portal_settings.test_ldap_groups" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/test_ldap_groups.jsp" />
-	</definition>
-
-	<definition name="portlet.portal_settings.test_ldap_users" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/test_ldap_users.jsp" />
-	</definition>
-
-	<definition name="portlet.portal_settings.test_opensso_configuration" extends="portlet.portal_settings">
-		<put name="portlet_content" value="/portlet/portal_settings/test_opensso_configuration.jsp" />
-	</definition>
-
 	<!-- Portlet Sharing -->
 
 	<definition name="portlet.portlet_sharing" extends="portlet">
@@ -341,70 +230,6 @@
 
 	<definition name="portlet.recent_documents.view" extends="portlet.recent_documents">
 		<put name="portlet_content" value="/portlet/recent_documents/view.jsp" />
-	</definition>
-
-	<!-- Shopping -->
-
-	<definition name="portlet.shopping" extends="portlet" />
-
-	<definition name="portlet.shopping.cart" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/cart.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.checkout_first" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/checkout_first.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.checkout_second" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/checkout_second.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.checkout_third" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/checkout_third.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.edit_category" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/edit_category.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.edit_coupon" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/edit_coupon.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.edit_item" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/edit_item.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.edit_item_quantities" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/edit_item_quantities.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.edit_order" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/edit_order.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.error" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/error.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.search" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/search.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.select_category" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/select_category.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.view" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/view.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.view_coupon" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/view_coupon.jsp" />
-	</definition>
-
-	<definition name="portlet.shopping.view_item" extends="portlet.shopping">
-		<put name="portlet_content" value="/portlet/shopping/view_item.jsp" />
 	</definition>
 
 	<!-- Sites Directory -->

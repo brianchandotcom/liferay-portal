@@ -727,18 +727,28 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		if ((classNames == null) ||
 			ArrayUtil.contains(classNames, Organization.class.getName())) {
 
+			int filteredUserSiteGroupsCount = 0;
+
 			List<Organization> userOrgs =
 				organizationLocalService.getOrganizations(
-					userId, start, end, null);
+					userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			for (Organization organization : userOrgs) {
+				if (filteredUserSiteGroupsCount == max) {
+					break;
+				}
+
 				if (!organization.hasPrivateLayouts() &&
 					!organization.hasPublicLayouts()) {
 
 					userSiteGroups.remove(organization.getGroup());
+
+					filteredUserSiteGroupsCount--;
 				}
 				else {
-					userSiteGroups.add(0, organization.getGroup());
+					userSiteGroups.add(organization.getGroup());
+
+					filteredUserSiteGroupsCount++;
 				}
 
 				if (!PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
@@ -751,7 +761,9 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 							continue;
 						}
 
-						userSiteGroups.add(0, ancestorOrganization.getGroup());
+						userSiteGroups.add(ancestorOrganization.getGroup());
+
+						filteredUserSiteGroupsCount++;
 					}
 				}
 			}

@@ -20,7 +20,6 @@ import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationValue
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
-import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -36,11 +35,6 @@ import org.osgi.service.component.annotations.Component;
 	service = DDMDisplay.class
 )
 public class DDLDDMDisplay extends BaseDDMDisplay {
-
-	@Override
-	public DDMPermissionHandler getDDMPermissionHandler() {
-		return _ddmPermissionHandler;
-	}
 
 	@Override
 	public String getPortletId() {
@@ -68,8 +62,5 @@ public class DDLDDMDisplay extends BaseDDMDisplay {
 
 		return PortalUtil.getClassNameId(DDLRecordSet.class);
 	}
-
-	private final DDMPermissionHandler _ddmPermissionHandler =
-		new DDLDDMPermissionHandler();
 
 }

@@ -82,7 +82,9 @@ public class JaxWsApiEnabler {
 
 	@Deactivate
 	protected void deactivate() {
-		_serviceRegistration.unregister();
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 
 		_serviceTracker.close();
 	}

@@ -909,12 +909,18 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.Map</type>
+			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[A URL to navigate to when the link is clicked.]]></description>
 			<name>href</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>iconCssClass</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
 		</attribute>
@@ -1330,7 +1336,7 @@
 			<name>options</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.Map</type>
+			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
 		</attribute>
 		<attribute>
 			<name>scriptPosition</name>
@@ -1605,7 +1611,7 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.Map</type>
+			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[An ID for the component instance.]]></description>
@@ -1629,6 +1635,12 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[The target window in which the URL is opened. The default value is <code>self</code>. Possible values are <code>blank</code>, <code>self</code>, <code>parent</code>, <code>top</code>, and a unique frame's name.]]></description>
 			<name>target</name>
 			<required>false</required>
@@ -1638,12 +1650,6 @@
 		<attribute>
 			<description><![CDATA[A URL navigated to when the icon is clicked.]]></description>
 			<name>url</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>view</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -1853,7 +1859,7 @@
 			<name>model</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Class</type>
+			<type><![CDATA[java.lang.Class<?>]]></type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[The minimum value for the input if its <code>type</code> is <code>number</code> or <code>range</code>. Note that the min value is inclusive if the input's <code>type</code> is <code>range</code>.]]></description>
@@ -2013,7 +2019,7 @@
 			<name>model</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Class</type>
+			<type><![CDATA[java.lang.Class<?>]]></type>
 		</attribute>
 	</tag>
 	<tag>
@@ -2066,7 +2072,7 @@
 			<name>searchContainer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portal.kernel.dao.search.SearchContainer</type>
+			<type><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[Whether to use the default portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
@@ -2092,6 +2098,12 @@
 		<attribute>
 			<description><![CDATA[An ID for the component instance.]]></description>
 			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>markupView</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>
@@ -2128,7 +2140,7 @@
 			<name>searchContainer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portal.kernel.dao.search.SearchContainer</type>
+			<type><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
@@ -2305,7 +2317,7 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.Map</type>
+			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[Whether the component is disabled. The default value is <code>false</code>.]]></description>
@@ -2476,7 +2488,7 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.Map</type>
+			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[Whether the component is disabled. The default value is <code>false</code>.]]></description>
@@ -2818,11 +2830,17 @@
 			<type>java.lang.String</type>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<description><![CDATA[A class for the bean object.]]></description>
 			<name>model</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.Class</type>
+			<type><![CDATA[java.lang.Class<?>]]></type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[Whether to show the workflow status icon. The default value is <code>true</code>.]]></description>
@@ -2855,12 +2873,6 @@
 		<attribute>
 			<description><![CDATA[A version for the workflow status that is displayed in a label next to the workflow status.]]></description>
 			<name>version</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-			<type>java.lang.String</type>
-		</attribute>
-		<attribute>
-			<name>view</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.String</type>

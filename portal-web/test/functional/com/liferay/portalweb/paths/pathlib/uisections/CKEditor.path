@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>BODY_FIELD</td>
-	<td>//div[contains(@id,'cke__')]</td>
+	<td>//div[contains(@id,'cke')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>BODY_FIELD_IFRAME</td>
-	<td>//div[contains(@id,'cke__')]//iframe</td>
+	<td>//div[contains(@id,'cke')]//iframe</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IFRAME</td>
-	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td>//iframe[contains(@class,'cke_panel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_FORMAT_BUTTON</td>
-	<td>//a[contains(@class,'cke_combo_button') and contains(.,'Format')]/span</td>
+	<td>//a[contains(@class,'cke_combo_button') and contains(@title,'Format')]/span</td>
 	<td></td>
 </tr>
 <tr>

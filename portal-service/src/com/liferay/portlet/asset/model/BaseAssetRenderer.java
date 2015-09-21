@@ -33,9 +33,9 @@ import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.dynamicdatamapping.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.DDMFormFieldValue;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.Collections;
@@ -56,7 +56,7 @@ import javax.portlet.WindowState;
  * @author Jorge Ferrer
  * @author Sergio González
  */
-public abstract class BaseAssetRenderer implements AssetRenderer {
+public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
@@ -67,14 +67,15 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 		return StringPool.BLANK;
 	}
 
-	public AssetRendererFactory getAssetRendererFactory() {
+	public AssetRendererFactory<T> getAssetRendererFactory() {
 		if (_assetRendererFactory != null) {
 			return _assetRendererFactory;
 		}
 
 		_assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				getClassName());
+			(AssetRendererFactory<T>)
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(getClassName());
 
 		return _assetRendererFactory;
 	}
@@ -427,7 +428,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	private static final DDMFormValuesReader _nullDDMFormValuesReader =
 		new NullDDMFormValuesReader();
 
-	private AssetRendererFactory _assetRendererFactory;
+	private AssetRendererFactory<T> _assetRendererFactory;
 	private int _assetRendererType = AssetRendererFactory.TYPE_LATEST_APPROVED;
 
 	private static final class NullDDMFormValuesReader

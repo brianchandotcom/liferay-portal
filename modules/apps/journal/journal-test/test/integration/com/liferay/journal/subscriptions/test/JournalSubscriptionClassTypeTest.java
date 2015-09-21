@@ -88,7 +88,8 @@ public class JournalSubscriptionClassTypeTest
 			group.getGroupId(), JournalArticle.class.getName());
 
 		DDMTemplateTestUtil.addTemplate(
-			group.getGroupId(), ddmStructure.getStructureId());
+			group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(JournalArticle.class));
 
 		return ddmStructure.getStructureId();
 	}

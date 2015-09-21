@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portlet.RequestBackedPortletURLFactoryUtil;
 
@@ -70,6 +73,9 @@ public class ItemSelectorImpl implements ItemSelector {
 	public ItemSelectorRendering getItemSelectorRendering(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(portletRequest);
 
@@ -107,18 +113,24 @@ public class ItemSelectorImpl implements ItemSelector {
 			for (ItemSelectorView<ItemSelectorCriterion> itemSelectorView :
 					itemSelectorViews) {
 
+				if (!itemSelectorView.isVisible(themeDisplay)) {
+					continue;
+				}
+
 				PortletURL portletURL = getItemSelectorURL(
 					requestBackedPortletURLFactory, itemSelectedEventName,
 					itemSelectorCriteriaArray);
 
-				portletURL.setParameter(
-					PARAMETER_SELECTED_TAB,
-					itemSelectorView.getTitle(portletRequest.getLocale()));
+				String title = itemSelectorView.getTitle(
+					portletRequest.getLocale());
+
+				portletURL.setParameter(PARAMETER_SELECTED_TAB, title);
 
 				itemSelectorViewRenderers.add(
 					new ItemSelectorViewRendererImpl(
 						itemSelectorView, itemSelectorCriterion, portletURL,
-						itemSelectedEventName));
+						itemSelectedEventName,
+						isSearch(portletRequest, title)));
 			}
 		}
 
@@ -259,6 +271,17 @@ public class ItemSelectorImpl implements ItemSelector {
 		}
 
 		return values[0];
+	}
+
+	protected boolean isSearch(PortletRequest portletRequest, String title) {
+		String keywords = portletRequest.getParameter("keywords");
+		String selectedTab = portletRequest.getParameter("selectedTab");
+
+		if (Validator.isNotNull(keywords) && title.equals(selectedTab)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void populateCriteria(

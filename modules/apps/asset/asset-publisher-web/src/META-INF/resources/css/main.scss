@@ -18,7 +18,19 @@
 
 	.asset-content {
 		clear: right;
-		padding: 10px;
+
+		.lfr-preview-file-content {
+			border-bottom-width: 0;
+			height: auto;
+
+			.lfr-preview-file-image-current-column {
+				padding: 0;
+			}
+
+			.lfr-preview-file-image-container {
+				height: auto;
+			}
+		}
 	}
 
 	.asset-flag {
@@ -26,10 +38,6 @@
 	}
 
 	.asset-full-content {
-		.asset-content {
-			margin-right: 25px;
-		}
-
 		&.show-asset-title .asset-content {
 			margin-right: 10px;
 			overflow-x: auto;
@@ -296,4 +304,11 @@
 
 .social-boomarks-options {
 	margin-left: 2em;
+}
+
+/* Skin */
+
+.portlet-asset-publisher .asset-content .lfr-preview-file-content .lfr-preview-file-image-current-column {
+	background: none;
+	box-shadow: none;
 }

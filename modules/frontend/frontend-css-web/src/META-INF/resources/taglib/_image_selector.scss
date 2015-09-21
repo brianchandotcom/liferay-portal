@@ -1,0 +1,162 @@
+@import "bourbon";
+
+.taglib-image-selector {
+	height: 100%;
+	min-height: 100px;
+	padding: 0;
+	position: relative;
+	text-align: center;
+
+	&.drop-enabled .drop-here-info {
+		.drop-here-indicator {
+			height: 90px;
+		}
+
+		.drop-text {
+			display: inline-block;
+			margin-left: 20px;
+			margin-top: 0;
+		}
+	}
+
+	.glyphicon-ok {
+		left: 50%;
+		padding: 20px;
+		position: absolute;
+		top: 50%;
+
+		@include transform(translate(-50%, -50%));
+	}
+
+	.progress-wrapper {
+		display: none;
+		left: 50%;
+		max-width: 450px;
+		position: absolute;
+		top: 50%;
+
+		@include transform(translate(-50%, -50%));
+
+		width: 50%;
+
+		button {
+			margin-top: 20px;
+		}
+
+		p {
+			font-size: 18px;
+			margin: 0;
+			text-align: left;
+
+			&.size {
+				font-size: 14px;
+			}
+		}
+
+		.progressbar {
+			height: 6px;
+			margin: 5px auto;
+			width: 100%;
+		}
+	}
+
+	&.drop-active {
+		.change-image-controls {
+			display: none;
+		}
+
+		.progress-wrapper {
+			display: none;
+		}
+	}
+
+	&.draggable-image {
+		&.vertical .current-image {
+			max-height: inherit;
+			min-width: 100%;
+		}
+
+		&.horizontal .current-image {
+			max-width: inherit;
+		}
+
+		&.both .current-image {
+			max-height: 100%;
+			max-width: 100%;
+		}
+
+		&.drop-enabled .image-wrapper {
+			height : 100px;
+		}
+
+		.image-wrapper {
+			height : 400px;
+			overflow: hidden;
+			position: relative;
+			width: 100%;
+		}
+	}
+
+	&.progress-active {
+		.change-image-controls {
+			display: none;
+		}
+
+		.progress-wrapper {
+			display: block;
+		}
+	}
+
+	.browse-image-controls, .current-image {
+		margin: auto;
+		max-height: 100%;
+		max-width: 100%;
+	}
+
+	.browse-image-controls {
+		left: 0;
+		padding: 10px;
+		position: absolute;
+		right: 0;
+		top: 50%;
+
+		@include transform(translate(0, -50%));
+
+		width: 100%;
+		z-index: 1;
+
+		.drag-drop-label, .browse-image {
+			font-size: 16px;
+		}
+
+		.drag-drop-label {
+			line-height: 35px;
+		}
+
+		.file-validation-info {
+			margin-top: 15px;
+		}
+	}
+
+	.change-image-controls {
+		bottom: 10px;
+		padding: 10px;
+		position: absolute;
+		right: 10px;
+	}
+
+	.current-image {
+		margin-bottom: 5px;
+	}
+
+	.error-wrapper {
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 2;
+	}
+
+	.yui3-uploader-content {
+		display: none;
+	}
+}

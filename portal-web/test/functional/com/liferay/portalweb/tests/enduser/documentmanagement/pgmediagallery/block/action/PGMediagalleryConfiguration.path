@@ -36,22 +36,22 @@
 <!--DISPLAY_SETTINGS-->
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_ACTIONS_CHECKBOX</td>
-	<td>//input[@id='_86_showActions']</td>
+	<td>//input[contains(@id,'showActions')]</td>
 	<td>Show Actions</td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_FOLDER_MENU_CHECKBOX</td>
-	<td>//input[@id='_86_showFolderMenu']</td>
+	<td>//input[contains(@id,'showFolderMenu')]</td>
 	<td>Show Folder Menu</td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_NAVIGATION_LINKS_CHECKBOX</td>
-	<td>//input[@id='_86_showTabs']</td>
+	<td>//input[contains(@id,'showTabs')]</td>
 	<td>Show Navigation Links</td>
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX</td>
-	<td>//input[@id='_86_showFoldersSearch']</td>
+	<td>//input[contains(@id,'showFoldersSearch')]</td>
 	<td>Show Search</td>
 </tr>
 <tr>
@@ -62,12 +62,12 @@
 <!--DISPLAY_TEMPLATE-->
 <tr>
 	<td>DISPLAY_TEMPLATE_SELECT</td>
-	<td>//select[@id='_86_displayStyle']</td>
+	<td>//select[contains(@id,'displayStyle')]</td>
 	<td>Select Display Template</td>
 </tr>
 <tr>
 	<td>DISPLAY_TEMPLATE_MANAGE</td>
-	<td>//span/a[@id='_86_selectDDMTemplate']/span</td>
+	<td>//span/a[contains(@id,'selectDDMTemplate')]/span</td>
 	<td>Manage Display Templates for Liferay</td>
 </tr>
 <tr>
@@ -78,12 +78,12 @@
 <!--FOLDERS_LISTING-->
 <tr>
 	<td>FOLDERS_LISTING_ROOT_FOLDER_SELECT_BUTTON</td>
-	<td>//button[@id='_86_openFolderSelectorButton']</td>
+	<td>//button[contains(@id,'openFolderSelectorButton')]</td>
 	<td>Select Root Folder</td>
 </tr>
 <tr>
 	<td>FOLDERS_LISTING_ROOT_FOLDER_REMOVE_BUTTON</td>
-	<td>//button[@id='_86_removeFolderButton']</td>
+	<td>//button[contains(@id,'removeFolderButton')]</td>
 	<td>Remove Root Folder</td>
 </tr>
 <tr>
@@ -94,12 +94,12 @@
 <!--RATINGS-->
 <tr>
 	<td>RATINGS_ENABLE_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableRatings']</td>
+	<td>//input[contains(@id,'enableRatings')]</td>
 	<td>Enable Ratings</td>
 </tr>
 <tr>
 	<td>RATINGS_ENABLE_COMMENT_RATINGS_CHECKBOX</td>
-	<td>//input[@id='_86_enableCommentRatings']</td>
+	<td>//input[contains(@id,'enableCommentRatings')]</td>
 	<td>Enable Comment Ratings</td>
 </tr>
 </tbody>

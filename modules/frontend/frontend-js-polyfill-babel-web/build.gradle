@@ -1,33 +1,40 @@
-plugins {
-	id "com.moowork.node" version "0.10"
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
+
+apply plugin: "com.liferay.cache"
+
+task buildBabelCore(type: Copy)
+task downloadBabelCore(type: DownloadNodeModuleTask)
+
+String babelCoreVersion = "5.6.14"
+
+buildBabelCore {
+	dependsOn downloadBabelCore
+	from new File(node.nodeDir, "node_modules/babel-core/browser-polyfill.min.js")
+	into "classes/META-INF/resources"
+}
+
+cache {
+	task(buildBabelCore) {
+		baseDir = buildBabelCore.destinationDir
+		cacheDir = ".task-cache"
+		include "browser-polyfill.min.js"
+		testFile "build.gradle"
+	}
+}
+
+classes {
+	dependsOn buildBabelCore
 }
 
 dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }
 
-ext {
-	babelCoreVersion = "5.6.14"
+downloadBabelCore {
+	moduleName = "babel-core"
+	moduleVersion = babelCoreVersion
 }
 
 liferay {
 	deployDir = file("${liferayHome}/osgi/modules")
-}
-
-task buildBabelCore(type: Copy)
-task downloadBabelCore(type: NpmTask)
-
-buildBabelCore {
-	dependsOn downloadBabelCore
-	from new File(node.nodeModulesDir, "node_modules/babel-core/browser-polyfill.min.js")
-	into "classes/META-INF/resources"
-}
-
-downloadBabelCore {
-	args = ["install", "babel-core@${babelCoreVersion}"]
-	workingDir = node.nodeModulesDir
-}
-
-classes {
-	dependsOn buildBabelCore
 }

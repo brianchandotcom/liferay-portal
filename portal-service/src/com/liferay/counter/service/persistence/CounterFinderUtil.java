@@ -29,6 +29,10 @@ public class CounterFinderUtil {
 		getFinder().afterPropertiesSet();
 	}
 
+	public static void destroy() {
+		getFinder().destroy();
+	}
+
 	public static java.util.List<java.lang.String> getNames() {
 		return getFinder().getNames();
 	}

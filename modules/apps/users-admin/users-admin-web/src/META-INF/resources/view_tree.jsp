@@ -112,7 +112,7 @@ if (organization != null) {
 		int organizationsCount = OrganizationLocalServiceUtil.searchCount(company.getCompanyId(), _getParentOrganizationId(request, organization, filterManageableOrganizations), null, null, null, null, organizationParams);
 		%>
 
-		<c:if test="<%= (organization != null) %>">
+		<c:if test="<%= organization != null %>">
 
 			<%
 			long parentOrganizationId = OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID;
@@ -215,7 +215,7 @@ if (organization != null) {
 					boolean showOrganizations = false;
 					boolean showUsers = true;
 
-					if ((organization == null) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.IMPERSONATE)) {
+					if ((organization == null) && Validator.isNull(keywords) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER) && !PortalPermissionUtil.contains(permissionChecker, ActionKeys.IMPERSONATE)) {
 						showOrganizations = true;
 						showUsers = false;
 					}
@@ -338,7 +338,7 @@ if (organization != null) {
 										}
 										%>
 
-										<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" />
+										<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= parentOrganizationId %>" />
 									</c:otherwise>
 								</c:choose>
 

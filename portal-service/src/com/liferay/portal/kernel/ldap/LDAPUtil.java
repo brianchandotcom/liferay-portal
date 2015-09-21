@@ -273,7 +273,7 @@ public class LDAPUtil {
 				 (date.indexOf(CharPool.PLUS) != -1)) {
 
 			if (date.indexOf(CharPool.PERIOD) != -1) {
-				format = "yyyyMMddHHmmss.SZ";
+				format = "yyyyMMddHHmmss.SSSZ";
 			}
 			else {
 				format = "yyyyMMddHHmmssZ";

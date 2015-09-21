@@ -15,6 +15,8 @@
 package com.liferay.service.access.policy;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.access.control.AccessControlPolicy;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
@@ -22,8 +24,6 @@ import com.liferay.portal.kernel.security.access.control.BaseAccessControlPolicy
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicyThreadLocal;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,6 +39,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -56,21 +57,35 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			AccessControlled accessControlled)
 		throws SecurityException {
 
+		AccessControlContext accessControlContext =
+			AccessControlUtil.getAccessControlContext();
+
+		if (accessControlContext != null) {
+			Map<String, Object> settings = accessControlContext.getSettings();
+
+			int serviceDepth = (Integer)settings.get(
+				AccessControlContext.Settings.SERVICE_DEPTH.toString());
+
+			if (serviceDepth > 1) {
+				return;
+			}
+		}
+
 		List<String> serviceAccessPolicyNames =
 			ServiceAccessPolicyThreadLocal.getActiveServiceAccessPolicyNames();
 
 		SAPConfiguration sapConfiguration = null;
 
 		try {
-			sapConfiguration = _settingsFactory.getSettings(
+			sapConfiguration = _configurationFactory.getConfiguration(
 				SAPConfiguration.class,
 				new CompanyServiceSettingsLocator(
 					CompanyThreadLocal.getCompanyId(),
 					SAPConstants.SERVICE_NAME));
 		}
-		catch (SettingsException se) {
+		catch (ConfigurationException ce) {
 			throw new SecurityException(
-				"Unable to get service access policy configuration", se);
+				"Unable to get service access policy configuration", ce);
 		}
 
 		if (sapConfiguration.requireDefaultSAPEntry() ||
@@ -84,9 +99,6 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 			}
 
 			boolean passwordBasedAuthentication = false;
-
-			AccessControlContext accessControlContext =
-				AccessControlUtil.getAccessControlContext();
 
 			if (accessControlContext != null) {
 				AuthVerifierResult authVerifierResult =
@@ -251,18 +263,20 @@ public class SAPAccessControlPolicy extends BaseAccessControlPolicy {
 	}
 
 	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSAPEntryLocalService(
 		SAPEntryLocalService sapEntryLocalService) {
 
 		_sapEntryLocalService = sapEntryLocalService;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
+	private volatile ConfigurationFactory _configurationFactory;
 	private SAPEntryLocalService _sapEntryLocalService;
-	private volatile SettingsFactory _settingsFactory;
 
 }

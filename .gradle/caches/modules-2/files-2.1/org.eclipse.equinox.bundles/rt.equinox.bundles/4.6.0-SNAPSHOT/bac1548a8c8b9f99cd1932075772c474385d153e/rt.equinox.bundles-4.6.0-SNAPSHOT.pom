@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2012 Eclipse Foundation.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Distribution License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/org/documents/edl-v10.php
+ 
+  Contributors:
+     Igor Fedorenko - initial implementation
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.eclipse</groupId>
+    <artifactId>eclipse-platform-parent</artifactId>
+    <version>4.6.0-SNAPSHOT</version>
+    <relativePath>../eclipse-platform-parent</relativePath>
+  </parent>
+
+  <groupId>org.eclipse.equinox.bundles</groupId>
+  <artifactId>rt.equinox.bundles</artifactId>
+  <version>4.6.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/equinox/rt.equinox.bundles.git</tycho.scmUrl>
+  </properties>
+
+  <!-- 
+    To build individual bundles, we specify a repository where to find parent pom, 
+    in case it is not in local maven cache already
+    and that parent pom also has fuller individual-bundle profile 
+    defined that is combined with this one. --> 
+  <profiles>
+    <profile>
+      <id>build-individual-bundles</id>
+      <repositories>
+        <repository>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <id>eclipse-hosted</id>
+          <url>https://repo.eclipse.org/content/repositories/eclipse/</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
+  <modules>
+    <module>bundles/org.eclipse.equinox.security.ui</module>
+    <module>features/org.eclipse.equinox.compendium.sdk</module>
+    <module>features/org.eclipse.equinox.core.feature</module>
+    <module>features/org.eclipse.equinox.sdk</module>
+    <module>features/org.eclipse.equinox.server.core</module>
+    <module>features/org.eclipse.equinox.server.jetty</module>
+    <module>features/org.eclipse.equinox.server.p2</module>
+    <module>features/org.eclipse.equinox.core.sdk</module>
+
+<!-- https://bugs.eclipse.org/bugs/show_bug.cgi?id=348045
+    <module>features/org.eclipse.equinox.server.servletbridge</module>
+-->
+
+    <module>features/org.eclipse.equinox.server.simple</module>
+    <module>features/org.eclipse.equinox.serverside.sdk</module>
+    <module>features/org.eclipse.equinox.weaving.sdk</module>
+    <module>bundles/org.eclipse.equinox.bidi.tests</module>
+    <module>bundles/org.eclipse.equinox.cm.test</module>
+    <module>bundles/org.eclipse.equinox.compendium.tests</module>
+
+<!-- no longer built in M6
+    <module>bundles/org.eclipse.equinox.console.ssh.tests</module>
+    <module>bundles/org.eclipse.equinox.console.tests</module>
+-->
+
+    <module>bundles/org.eclipse.equinox.ds.tests</module>
+    <module>bundles/org.eclipse.equinox.region.tests</module>
+    <module>bundles/org.eclipse.equinox.security.tests</module>
+    <module>bundles/org.eclipse.equinox.app</module>
+    <module>bundles/org.eclipse.equinox.preferences</module>
+    <module>bundles/org.eclipse.equinox.common</module>
+    <module>bundles/org.eclipse.equinox.registry</module>
+    <module>bundles/org.eclipse.equinox.concurrent</module>
+    <module>bundles/org.eclipse.equinox.security</module>
+    <module>bundles/org.eclipse.equinox.security.macosx</module>
+    <module>bundles/org.eclipse.equinox.security.win32.x86</module>
+    <module>bundles/org.eclipse.equinox.security.win32.x86_64</module>
+    <module>bundles/org.eclipse.equinox.bidi</module>
+    <module>bundles/org.eclipse.equinox.cm</module>
+    <module>bundles/org.eclipse.equinox.console</module>
+    <module>bundles/org.eclipse.equinox.console.jaas.fragment</module>
+    <module>bundles/org.eclipse.equinox.console.ssh</module>
+    <module>bundles/org.eclipse.equinox.coordinator</module>
+    <module>bundles/org.eclipse.equinox.device</module>
+    <module>bundles/org.eclipse.equinox.ds</module>
+    <module>bundles/org.eclipse.equinox.event</module>
+
+    <!-- Module is deprecated
+         https://bugs.eclipse.org/bugs/show_bug.cgi?id=389050
+    <module>bundles/org.eclipse.equinox.http</module>
+    -->
+    
+    <module>bundles/org.eclipse.equinox.http.jetty9</module>
+    <module>bundles/org.eclipse.equinox.http.registry</module>
+    <module>bundles/org.eclipse.equinox.http.servlet</module>
+    <module>bundles/org.eclipse.equinox.http.servletbridge</module>
+    <module>bundles/org.eclipse.equinox.io</module>
+    <module>bundles/org.eclipse.equinox.ip</module>
+    <module>bundles/org.eclipse.equinox.jsp.jasper</module>
+    <module>bundles/org.eclipse.equinox.jsp.jasper.registry</module>
+    <module>bundles/org.eclipse.equinox.log</module>
+<!-- https://bugs.eclipse.org/bugs/show_bug.cgi?id=418663
+    <module>bundles/org.eclipse.equinox.log.test</module>
+-->
+    <module>bundles/org.eclipse.equinox.metatype</module>
+    <module>bundles/org.eclipse.equinox.region</module>
+    <module>bundles/org.eclipse.equinox.servletbridge</module>
+
+<!-- https://bugs.eclipse.org/bugs/show_bug.cgi?id=348045
+    <module>bundles/org.eclipse.equinox.servletbridge.extensionbundle</module>
+-->
+
+    <module>bundles/org.eclipse.equinox.servletbridge.template</module>
+    <module>bundles/org.eclipse.equinox.slf4j.stub</module>
+    <module>bundles/org.eclipse.equinox.transforms.hook</module>
+    <module>bundles/org.eclipse.equinox.transforms.xslt</module>
+    <module>bundles/org.eclipse.equinox.useradmin</module>
+    <module>bundles/org.eclipse.equinox.util</module>
+    <module>bundles/org.eclipse.equinox.weaving.aspectj</module>
+    <module>bundles/org.eclipse.equinox.weaving.caching</module>
+    <module>bundles/org.eclipse.equinox.weaving.caching.j9</module>
+    <module>bundles/org.eclipse.equinox.weaving.hook</module>
+    <module>bundles/org.eclipse.equinox.wireadmin</module>
+  </modules>
+
+</project>

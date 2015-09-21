@@ -4013,7 +4013,7 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 				website.setNew(false);
 			}
 			else {
-				session.merge(website);
+				website = (Website)session.merge(website);
 			}
 		}
 		catch (Exception e) {

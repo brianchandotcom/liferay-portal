@@ -95,6 +95,7 @@ public class ServiceContext implements Cloneable, Serializable {
 		serviceContext.setAssetCategoryIds(getAssetCategoryIds());
 		serviceContext.setAssetEntryVisible(isAssetEntryVisible());
 		serviceContext.setAssetLinkEntryIds(getAssetLinkEntryIds());
+		serviceContext.setAssetPriority(getAssetPriority());
 		serviceContext.setAssetTagNames(getAssetTagNames());
 		serviceContext.setAttributes(getAttributes());
 		serviceContext.setCommand(getCommand());
@@ -229,6 +230,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public long[] getAssetLinkEntryIds() {
 		return _assetLinkEntryIds;
+	}
+
+	public double getAssetPriority() {
+		return _assetPriority;
 	}
 
 	/**
@@ -815,6 +820,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public boolean isCommandUpdate() {
 		if (Validator.equals(_command, Constants.UPDATE) ||
+			Validator.equals(_command, Constants.UPDATE_AND_CHECKIN) ||
 			Validator.equals(_command, Constants.UPDATE_WEBDAV)) {
 
 			return true;
@@ -902,6 +908,10 @@ public class ServiceContext implements Cloneable, Serializable {
 
 		if (serviceContext.getAssetLinkEntryIds() != null) {
 			setAssetLinkEntryIds(serviceContext.getAssetLinkEntryIds());
+		}
+
+		if (serviceContext.getAssetPriority() > 0) {
+			setAssetPriority(serviceContext.getAssetPriority());
 		}
 
 		if (serviceContext.getAssetTagNames() != null) {
@@ -1112,6 +1122,10 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public void setAssetLinkEntryIds(long[] assetLinkEntryIds) {
 		_assetLinkEntryIds = assetLinkEntryIds;
+	}
+
+	public void setAssetPriority(double assetPriority) {
+		_assetPriority = assetPriority;
 	}
 
 	/**
@@ -1557,6 +1571,7 @@ public class ServiceContext implements Cloneable, Serializable {
 	private long[] _assetCategoryIds;
 	private boolean _assetEntryVisible = true;
 	private long[] _assetLinkEntryIds;
+	private double _assetPriority;
 	private String[] _assetTagNames;
 	private Map<String, Serializable> _attributes;
 	private String _command;

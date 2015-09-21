@@ -1654,7 +1654,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	private static final String _FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_1 =
-		"lock.expirationDate < NULL";
+		"lock.expirationDate IS NULL";
 	private static final String _FINDER_COLUMN_LTEXPIRATIONDATE_EXPIRATIONDATE_2 =
 		"lock.expirationDate < ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_K = new FinderPath(LockModelImpl.ENTITY_CACHE_ENABLED,
@@ -2014,7 +2014,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(lock);
+		clearUniqueFindersCache((LockModelImpl)lock);
 	}
 
 	@Override
@@ -2026,36 +2026,41 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			EntityCacheUtil.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 				LockImpl.class, lock.getPrimaryKey());
 
-			clearUniqueFindersCache(lock);
+			clearUniqueFindersCache((LockModelImpl)lock);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(Lock lock, boolean isNew) {
+	protected void cacheUniqueFindersCache(LockModelImpl lockModelImpl,
+		boolean isNew) {
 		if (isNew) {
-			Object[] args = new Object[] { lock.getClassName(), lock.getKey() };
+			Object[] args = new Object[] {
+					lockModelImpl.getClassName(), lockModelImpl.getKey()
+				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_K, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K, args, lock);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K, args,
+				lockModelImpl);
 		}
 		else {
-			LockModelImpl lockModelImpl = (LockModelImpl)lock;
-
 			if ((lockModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_K.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { lock.getClassName(), lock.getKey() };
+				Object[] args = new Object[] {
+						lockModelImpl.getClassName(), lockModelImpl.getKey()
+					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_K, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K, args, lock);
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K, args,
+					lockModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(Lock lock) {
-		LockModelImpl lockModelImpl = (LockModelImpl)lock;
-
-		Object[] args = new Object[] { lock.getClassName(), lock.getKey() };
+	protected void clearUniqueFindersCache(LockModelImpl lockModelImpl) {
+		Object[] args = new Object[] {
+				lockModelImpl.getClassName(), lockModelImpl.getKey()
+			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
@@ -2198,7 +2203,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				lock.setNew(false);
 			}
 			else {
-				session.merge(lock);
+				lock = (Lock)session.merge(lock);
 			}
 		}
 		catch (Exception e) {
@@ -2254,8 +2259,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		EntityCacheUtil.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockImpl.class, lock.getPrimaryKey(), lock, false);
 
-		clearUniqueFindersCache(lock);
-		cacheUniqueFindersCache(lock, isNew);
+		clearUniqueFindersCache(lockModelImpl);
+		cacheUniqueFindersCache(lockModelImpl, isNew);
 
 		lock.resetOriginalValues();
 

@@ -2,45 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="javac.source" value="1.6" />
-	<property name="javac.target" value="1.6" />
-	<property name="original.lib.name" value="hibernate-core" />
-	<property name="original.lib.url" value="http://search.maven.org/remotecontent?filepath=org/hibernate" />
-	<property name="original.lib.version" value="3.6.10.Final" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-
-	<target name="compile">
-		<process-ivy
-			module.dir="${basedir}"
-		/>
-
-		<unzip
-			dest="classes"
-			src="lib/${original.lib.name}.jar"
-		/>
-
-		<antcall target="patch">
-			<param name="patch.destination" value="org/hibernate/cache/UpdateTimestampsCache.java,org/hibernate/intercept/FieldInterceptionHelper.java" />
-			<param name="patch.original.lib.name" value="${original.lib.name}" />
-			<param name="patch.original.lib.source.dir" value="." />
-			<param name="patch.original.lib.url" value="${original.lib.url}" />
-			<param name="patch.original.lib.version" value="${original.lib.version}" />
-			<param name="patch.source" value="patches" />
-		</antcall>
-
-		<compile
-			module.dir="${basedir}"
-		/>
-	</target>
-
-	<target name="deploy">
-		<deploy
-			module.dir="${basedir}"
-		/>
-
-		<copy file="${plugin.file}" tofile="../../../lib/portal/hibernate-core.jar" />
-	</target>
+	<import file="../../build-module.xml" />
 </project>

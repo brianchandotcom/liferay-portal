@@ -16,12 +16,12 @@ package com.liferay.portal.security.sso.openid.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.openid.OpenId;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration;
 import com.liferay.portal.security.sso.openid.constants.OpenIdConstants;
+import com.liferay.portal.security.sso.openid.module.configuration.OpenIdConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.openid.configuration.OpenIdConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.openid.module.configuration.OpenIdConfiguration",
 	immediate = true, service = OpenId.class
 )
 public class OpenIdImpl implements OpenId {
@@ -39,27 +39,29 @@ public class OpenIdImpl implements OpenId {
 	public boolean isEnabled(long companyId) {
 		try {
 			OpenIdConfiguration openIdConfiguration =
-				_settingsFactory.getSettings(
+				_configurationFactory.getConfiguration(
 					OpenIdConfiguration.class,
 					new CompanyServiceSettingsLocator(
 						companyId, OpenIdConstants.SERVICE_NAME));
 
 			return openIdConfiguration.enabled();
 		}
-		catch (SettingsException se) {
-			_log.error("Unable to get OpenId configuration", se);
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get OpenId configuration", ce);
 		}
 
 		return false;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenIdImpl.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

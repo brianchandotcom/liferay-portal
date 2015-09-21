@@ -1,5 +1,5 @@
 dependencies {
-	compile group: "net.java.dev.jets3t", name: "jets3t", version: "0.9.3"
+	compile group: "com.amazonaws", name: "aws-java-sdk-s3", version: "1.10.11"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 }

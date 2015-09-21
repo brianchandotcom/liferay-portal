@@ -26,7 +26,7 @@ long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMPermission.contains(permissionChecker, groupId, ddmPermissionHandler.getResourceName(scopeClassNameId), ddmPermissionHandler.getAddStructureActionId()) %>">
+		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
 			<liferay-portlet:renderURL var="viewStructuresURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />

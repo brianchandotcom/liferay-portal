@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ANONYMOUS</td>
+	<td>//input[contains(@id,'anonymous')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BLOGS_ENTRY</td>
 	<td>//input[contains(@id,'BlogsEntry')]</td>
 	<td></td>
@@ -51,6 +56,11 @@
 <tr>
 	<td>CHECK_ALL_NAME</td>
 	<td>//input[contains(@name,'allRowIds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_IMMEDIATELY</td>
+	<td>//input[contains(@name,'displayImmediately')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -109,6 +119,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_LOCKOUT</td>
+	<td>//label[contains(.,'Enable Lockout')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_PAGE_RATINGS</td>
 	<td>//label[contains(.,'Enable Page Ratings')]//input[@type='checkbox']</td>
 	<td></td>
@@ -154,6 +169,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLED_ON_PRIVATE_PAGES</td>
+	<td>//input[contains(@id,'branchingPrivate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLED_ON_PUBLIC_PAGES</td>
+	<td>//input[contains(@id,'branchingPublic')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FACEBOOK</td>
 	<td>//input[contains(@id,'facebook')]</td>
 	<td></td>
@@ -179,13 +204,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LOCKOUT_ENABLED</td>
-	<td>//label[contains(.,'Lockout Enabled')]/input[@type='checkbox']</td>
+	<td>MAILING</td>
+	<td>//label[contains(.,'Mailing')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MAILING</td>
-	<td>//label[contains(.,'Mailing')]/input[@type='checkbox']</td>
+	<td>MARK_AS_A_QUESTION</td>
+	<td>//label[contains(.,'Mark as a Question')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -240,7 +265,7 @@
 </tr>
 <tr>
 	<td>SHOW_ACTIONS_CHECKBOX</td>
-	<td>//input[@id='_86_showActions']</td>
+	<td>//input[contains(@id,'showActions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -255,17 +280,17 @@
 </tr>
 <tr>
 	<td>SHOW_FOLDER_MENU_CHECKBOX</td>
-	<td>//input[@id='_86_showFolderMenu']</td>
+	<td>//input[contains(@id,'showFolderMenu')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHOW_NAVIGATION_LINKS_CHECKBOX</td>
-	<td>//input[@id='_86_showTabs']</td>
+	<td>//input[contains(@id,'showTabs')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SHOW_SEARCH_CHECKBOX</td>
-	<td>//input[@id='_86_showFoldersSearch']</td>
+	<td>//input[contains(@id,'showFoldersSearch')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -276,6 +301,11 @@
 <tr>
 	<td>SITE_OWNER</td>
 	<td>xpath=(//input[contains(@name,'rowIds')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STAGED_CONTENT</td>
+	<td>//div[contains(@id,'stagedPortlets')]//label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>

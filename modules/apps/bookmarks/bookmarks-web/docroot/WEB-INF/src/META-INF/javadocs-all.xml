@@ -869,12 +869,6 @@
 			</return>
 		</method>
 		<method>
-			<name>getSettingsFactory</name>
-			<return>
-				<comment><![CDATA[]]></comment>
-			</return>
-		</method>
-		<method>
 			<name>activate</name>
 		</method>
 		<method>
@@ -885,14 +879,6 @@
 			<param>
 				<name>bookmarksGroupServiceConfiguration</name>
 				<type>com.liferay.bookmarks.configuration.BookmarksGroupServiceConfiguration</type>
-				<comment><![CDATA[]]></comment>
-			</param>
-		</method>
-		<method>
-			<name>setSettingsFactory</name>
-			<param>
-				<name>settingsFactory</name>
-				<type>com.liferay.portal.kernel.settings.SettingsFactory</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
@@ -909,9 +895,6 @@
 		</field>
 		<field>
 			<name>_bookmarksGroupServiceConfiguration</name>
-		</field>
-		<field>
-			<name>_settingsFactory</name>
 		</field>
 	</javadoc>
 </javadocs>

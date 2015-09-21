@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
@@ -26,7 +27,7 @@ import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil
  * @author Bruno Basto
  * @author Levente Hudák
  */
-public class DDLPermission {
+public class DDLPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.dynamic.data.lists";
 
@@ -46,7 +47,8 @@ public class DDLPermission {
 		String portletId = PortletProviderUtil.getPortletId(
 			DDLRecord.class.getName(), PortletProvider.Action.EDIT);
 
-		return contains(permissionChecker, groupId, portletId, actionId);
+		return contains(
+			permissionChecker, RESOURCE_NAME, portletId, groupId, actionId);
 	}
 
 	public static boolean contains(
@@ -63,6 +65,13 @@ public class DDLPermission {
 
 		return permissionChecker.hasPermission(
 			groupId, RESOURCE_NAME, groupId, actionId);
+	}
+
+	@Override
+	public Boolean checkResource(
+		PermissionChecker permissionChecker, long classPK, String actionId) {
+
+		return contains(permissionChecker, classPK, actionId);
 	}
 
 }

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Asset Tags Service
+Bundle-SymbolicName: com.liferay.asset.tags.service
+Bundle-Version: 1.0.0
+Include-Resource: classes

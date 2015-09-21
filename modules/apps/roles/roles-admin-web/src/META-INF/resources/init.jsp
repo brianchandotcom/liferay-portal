@@ -39,7 +39,6 @@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
-page import="com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
@@ -73,6 +72,7 @@ page import="com.liferay.portal.security.membershippolicy.SiteMembershipPolicyUt
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.security.permission.PermissionConverterUtil" %><%@
 page import="com.liferay.portal.security.permission.ResourceActionsUtil" %><%@
+page import="com.liferay.portal.security.permission.RolePermissions" %><%@
 page import="com.liferay.portal.security.permission.comparator.ActionComparator" %><%@
 page import="com.liferay.portal.security.permission.comparator.ModelResourceWeightComparator" %><%@
 page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
@@ -97,6 +97,7 @@ page import="com.liferay.portal.util.WebAppPool" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portal.util.comparator.PortletTitleComparator" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
+page import="com.liferay.portlet.display.template.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.portlet.rolesadmin.search.ResourceActionRowChecker" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %><%@
@@ -155,7 +156,7 @@ private String _getActionLabel(HttpServletRequest request, ThemeDisplay themeDis
 		else if (controlPanelCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
 			actionLabel = LanguageUtil.get(request, "access-in-site-administration");
 		}
-		else if (controlPanelCategory.equals(PortletCategoryKeys.MY)) {
+		else if (controlPanelCategory.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
 			actionLabel = LanguageUtil.get(request, "access-in-my-account");
 		}
 	}

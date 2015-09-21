@@ -135,8 +135,13 @@
 			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
 		<execute macro="SiteTemplatesNavigator#gotoSiteTemplatesPage">
 			<var name="pageName" value="Page1 Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -517,7 +522,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Portlet#viewSpecificPG">
+		<execute macro="Portlet#viewPillTitle">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -933,7 +938,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51156" name="ViewNoAddPageTabViaPageTemplatesCP" priority="4">
+	<command name="ViewNoAddPageTabViaPageTemplatesCP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>

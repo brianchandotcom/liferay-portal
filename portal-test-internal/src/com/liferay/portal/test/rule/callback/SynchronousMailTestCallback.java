@@ -48,7 +48,9 @@ public class SynchronousMailTestCallback
 	}
 
 	@Override
-	public SyncHandler doBeforeClass(Description description) throws Exception {
+	public SyncHandler doBeforeClass(Description description) throws Throwable {
+		super.doBeforeClass(description);
+
 		MailServiceTestUtil.start();
 
 		SyncHandler syncHandler = new SyncHandler();

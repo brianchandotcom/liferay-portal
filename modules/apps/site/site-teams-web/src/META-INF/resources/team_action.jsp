@@ -22,7 +22,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 Team team = (Team)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/edit_team.jsp" />
@@ -65,19 +65,6 @@ Team team = (Team)row.getObject();
 			method="get"
 			url="<%= permissionsURL %>"
 			useDialog="<%= true %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.ASSIGN_MEMBERS) %>">
-		<portlet:renderURL var="assignMembersURL">
-			<portlet:param name="mvcPath" value="/edit_team_assignments.jsp" />
-			<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			iconCssClass="icon-plus"
-			message="assign-members"
-			url="<%= assignMembersURL %>"
 		/>
 	</c:if>
 

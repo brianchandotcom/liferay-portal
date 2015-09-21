@@ -75,7 +75,7 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
-	META-INF/resources/html/js=tmp/META-INF/resources/html/js
+	META-INF/resources=tmp/META-INF/resources
 Web-ContextPath: /frontend-js-web
 
 -donotcopy: (\.touch|.*_diffs.*)

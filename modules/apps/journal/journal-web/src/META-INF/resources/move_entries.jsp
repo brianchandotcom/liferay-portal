@@ -63,6 +63,11 @@ for (JournalArticle curArticle : articles) {
 		invalidMoveArticles.add(curArticle);
 	}
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(LanguageUtil.get(request, "move-web-content"));
 %>
 
 <portlet:actionURL name="moveEntries" var="moveArticleURL">
@@ -72,11 +77,6 @@ for (JournalArticle curArticle : articles) {
 <aui:form action="<%= moveArticleURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveArticle();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="newFolderId" type="hidden" value="<%= newFolderId %>" />
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="move-web-content"
-	/>
 
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 	<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="the-folder-you-selected-does-not-allow-this-type-of-structure.-please-select-a-different-folder" />
@@ -92,9 +92,9 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalFolder folder : validMoveFolders) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+					AssetRendererFactory<JournalFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalFolder.class);
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+					AssetRenderer<JournalFolder> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
 					<li class="move-folder">
@@ -123,9 +123,9 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalFolder folder : invalidMoveFolders) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalFolder.class.getName());
+					AssetRendererFactory<JournalFolder> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalFolder.class);
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
+					AssetRenderer<JournalFolder> assetRenderer = assetRendererFactory.getAssetRenderer(folder.getFolderId());
 				%>
 
 					<li class="icon-warning-sign move-error move-folder">
@@ -160,9 +160,9 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalArticle validMoveArticle : validMoveArticles) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+					AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(validMoveArticle));
+					AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(validMoveArticle));
 				%>
 
 					<li class="move-article">
@@ -191,9 +191,9 @@ for (JournalArticle curArticle : articles) {
 
 				<%
 				for (JournalArticle invalidMoveArticle : invalidMoveArticles) {
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+					AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
 
-					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(invalidMoveArticle));
+					AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(JournalArticleAssetRenderer.getClassPK(invalidMoveArticle));
 				%>
 
 					<li class="icon-warning-sign move-article move-error">

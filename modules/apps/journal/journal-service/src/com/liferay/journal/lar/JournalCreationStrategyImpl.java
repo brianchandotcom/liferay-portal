@@ -39,7 +39,7 @@ public class JournalCreationStrategyImpl implements JournalCreationStrategy {
 			PortletDataContext context, Object journalObj)
 		throws Exception {
 
-		return true;
+		return false;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class JournalCreationStrategyImpl implements JournalCreationStrategy {
 			PortletDataContext context, Object journalObj)
 		throws Exception {
 
-		return true;
+		return false;
 	}
 
 	@Override

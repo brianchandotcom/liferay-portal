@@ -285,6 +285,10 @@ public class PortletURLUtil {
 
 				String[] values = entry.getValue();
 
+				if (values == null) {
+					continue;
+				}
+
 				for (int i = 0; i < values.length; i++) {
 					sb.append(StringPool.AMPERSAND);
 					sb.append(name);

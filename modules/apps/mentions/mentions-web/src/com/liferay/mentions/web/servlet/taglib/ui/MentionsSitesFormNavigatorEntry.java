@@ -100,7 +100,7 @@ public class MentionsSitesFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/META-INF/resources/sites_admin/mentions.jsp";
+		return "/sites_admin/mentions.jsp";
 	}
 
 }

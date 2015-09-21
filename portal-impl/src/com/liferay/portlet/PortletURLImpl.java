@@ -95,10 +95,30 @@ public class PortletURLImpl
 	implements LiferayPortletURL, PortletURL, ResourceURL, Serializable {
 
 	public PortletURLImpl(
+		HttpServletRequest request, String portletId, Layout layout,
+		String lifecycle) {
+
+		this(request, portletId, null, layout.getPlid(), lifecycle);
+
+		_layout = layout;
+	}
+
+	public PortletURLImpl(
 		HttpServletRequest request, String portletId, long plid,
 		String lifecycle) {
 
 		this(request, portletId, null, plid, lifecycle);
+	}
+
+	public PortletURLImpl(
+		PortletRequest portletRequest, String portletId, Layout layout,
+		String lifecycle) {
+
+		this(
+			PortalUtil.getHttpServletRequest(portletRequest), portletId,
+			portletRequest, layout.getPlid(), lifecycle);
+
+		_layout = layout;
 	}
 
 	public PortletURLImpl(

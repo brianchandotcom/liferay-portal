@@ -44,9 +44,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
-import com.liferay.portlet.exportimport.lar.PortletDataContext;
-import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.VelocityTaglib;
 
@@ -80,24 +77,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 @DoPrivileged
 public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
-
-	@Override
-	public void exportDDMTemplateStagedModel(
-			PortletDataContext portletDataContext, String portletId,
-			long ddmTemplateId)
-		throws PortletDataException {
-
-		try {
-			DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
-				ddmTemplateId);
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, ddmTemplate);
-		}
-		catch (PortalException pe) {
-			throw new PortletDataException(pe);
-		}
-	}
 
 	@Override
 	public DDMTemplate fetchDDMTemplate(long groupId, String displayStyle) {

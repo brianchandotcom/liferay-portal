@@ -6939,7 +6939,7 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 				userNotificationEvent.setNew(false);
 			}
 			else {
-				session.merge(userNotificationEvent);
+				userNotificationEvent = (UserNotificationEvent)session.merge(userNotificationEvent);
 			}
 		}
 		catch (Exception e) {

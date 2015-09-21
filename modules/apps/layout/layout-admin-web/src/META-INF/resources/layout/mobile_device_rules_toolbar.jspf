@@ -14,7 +14,7 @@
  */
 --%>
 
-<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
+<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
 	<div class="btn-toolbar">
 		<aui:button name="saveInstance" value="select-device-family" />
 

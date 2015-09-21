@@ -2,30 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-
-	<target name="deploy">
-		<deploy module.dir="${basedir}" />
-
-		<copy file="${plugin.file}" tofile="../../../lib/portal/liferay-icu4j.jar" />
-	</target>
-
-	<target name="jar">
-		<process-ivy
-			module.dir="${basedir}"
-		/>
-
-		<taskdef
-			classname="com.tonicsystems.jarjar.JarJarTask"
-			classpath="lib/jarjar.jar"
-			name="jarjar"
-		/>
-
-		<jarjar jarfile="${plugin.file}">
-			<rule pattern="com.**" result="com.liferay.@1" />
-			<zipfileset src="lib/icu4j.jar" />
-		</jarjar>
-	</target>
+	<import file="../../build-module.xml" />
 </project>

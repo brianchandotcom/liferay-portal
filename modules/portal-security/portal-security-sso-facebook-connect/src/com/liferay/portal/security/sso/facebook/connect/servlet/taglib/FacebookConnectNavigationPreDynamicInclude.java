@@ -114,7 +114,7 @@ public class FacebookConnectNavigationPreDynamicInclude
 	}
 
 	private static final String _JSP_PATH =
-		"/META-INF/resources/html/portlet/login/navigation/facebook.jsp";
+		"/html/portlet/login/navigation/facebook.jsp";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FacebookConnectNavigationPreDynamicInclude.class);

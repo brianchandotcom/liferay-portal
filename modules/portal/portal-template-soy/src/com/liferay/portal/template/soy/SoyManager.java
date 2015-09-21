@@ -14,8 +14,6 @@
 
 package com.liferay.portal.template.soy;
 
-import com.google.template.soy.SoyFileSet;
-
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManager;
@@ -76,7 +74,7 @@ public class SoyManager extends BaseTemplateManager {
 
 		Template template = new SoyTemplate(
 			templateResource, errorTemplateResource, helperUtilities,
-			new SoyFileSet.Builder(), templateContextHelper, privileged);
+			templateContextHelper, privileged);
 
 		if (restricted) {
 			template = new RestrictedTemplate(

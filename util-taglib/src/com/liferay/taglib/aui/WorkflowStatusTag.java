@@ -29,10 +29,11 @@ public class WorkflowStatusTag extends BaseWorkflowStatusTag {
 
 	@Override
 	protected String getPage() {
-		String view = getView();
+		String markupView = getMarkupView();
 
-		if (Validator.isNotNull(view)) {
-			return "/html/taglib/aui/workflow_status/" + view + "/page.jsp";
+		if (Validator.isNotNull(markupView)) {
+			return
+				"/html/taglib/aui/workflow_status/" + markupView + "/page.jsp";
 		}
 
 		return "/html/taglib/aui/workflow_status/page.jsp";

@@ -348,6 +348,10 @@
 			<var name="workflowRestriction" value="Default Workflow" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
 		<execute macro="DMDocument#addCP">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.doc" />
@@ -887,6 +891,10 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowRestriction" value="Default Workflow" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMDocument#addCP">

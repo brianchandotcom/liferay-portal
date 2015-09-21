@@ -35,6 +35,7 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -240,7 +241,7 @@ public class ConvertDocumentLibraryFromFileSystemStoreToDBStoreTest {
 		FileEntry rootFileEntry = addFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes());
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE));
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -288,7 +289,8 @@ public class ConvertDocumentLibraryFromFileSystemStoreToDBStoreTest {
 	protected void testMigrateDL(long folderId) throws Exception {
 		FileEntry fileEntry = addFileEntry(
 			folderId, RandomTestUtil.randomString() + ".txt",
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes());
+			ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE));
 
 		_convertProcess.convert();
 

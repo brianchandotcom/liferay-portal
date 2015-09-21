@@ -202,25 +202,6 @@ create table AssetVocabulary (
 	lastPublishDate DATE null
 );
 
-create table BackgroundTask (
-	mvccVersion LONG default 0,
-	backgroundTaskId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	name VARCHAR(255) null,
-	servletContextNames VARCHAR(255) null,
-	taskExecutorClassName VARCHAR(200) null,
-	taskContextMap TEXT null,
-	completed BOOLEAN,
-	completionDate DATE null,
-	status INTEGER,
-	statusMessage TEXT null
-);
-
 create table BlogsEntry (
 	uuid_ VARCHAR(75) null,
 	entryId LONG not null primary key,
@@ -583,7 +564,7 @@ create table ExpandoColumn (
 	tableId LONG,
 	name VARCHAR(75) null,
 	type_ INTEGER,
-	defaultData STRING null,
+	defaultData TEXT null,
 	typeSettings TEXT null
 );
 
@@ -1023,72 +1004,6 @@ create table MBThreadFlag (
 	lastPublishDate DATE null
 );
 
-create table MDRAction (
-	uuid_ VARCHAR(75) null,
-	actionId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	classNameId LONG,
-	classPK LONG,
-	ruleGroupInstanceId LONG,
-	name STRING null,
-	description STRING null,
-	type_ VARCHAR(255) null,
-	typeSettings TEXT null,
-	lastPublishDate DATE null
-);
-
-create table MDRRule (
-	uuid_ VARCHAR(75) null,
-	ruleId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	ruleGroupId LONG,
-	name STRING null,
-	description STRING null,
-	type_ VARCHAR(255) null,
-	typeSettings TEXT null,
-	lastPublishDate DATE null
-);
-
-create table MDRRuleGroup (
-	uuid_ VARCHAR(75) null,
-	ruleGroupId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	name STRING null,
-	description STRING null,
-	lastPublishDate DATE null
-);
-
-create table MDRRuleGroupInstance (
-	uuid_ VARCHAR(75) null,
-	ruleGroupInstanceId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	classNameId LONG,
-	classPK LONG,
-	ruleGroupId LONG,
-	priority INTEGER,
-	lastPublishDate DATE null
-);
-
 create table MembershipRequest (
 	mvccVersion LONG default 0,
 	membershipRequestId LONG not null primary key,
@@ -1316,6 +1231,7 @@ create table Release_ (
 	createDate DATE null,
 	modifiedDate DATE null,
 	servletContextName VARCHAR(75) null,
+	schemaVersion VARCHAR(75) null,
 	buildNumber INTEGER,
 	buildDate DATE null,
 	verified BOOLEAN,
@@ -1391,9 +1307,11 @@ create table ResourcePermission (
 	name VARCHAR(255) null,
 	scope INTEGER,
 	primKey VARCHAR(255) null,
+	primKeyId LONG,
 	roleId LONG,
 	ownerId LONG,
-	actionIds LONG
+	actionIds LONG,
+	viewActionId BOOLEAN
 );
 
 create table ResourceTypePermission (
@@ -1511,179 +1429,6 @@ create table ServiceComponent (
 	buildNumber LONG,
 	buildDate LONG,
 	data_ TEXT null
-);
-
-create table ShoppingCart (
-	cartId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	itemIds TEXT null,
-	couponCodes VARCHAR(75) null,
-	altShipping INTEGER,
-	insure BOOLEAN
-);
-
-create table ShoppingCategory (
-	categoryId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	parentCategoryId LONG,
-	name VARCHAR(75) null,
-	description STRING null
-);
-
-create table ShoppingCoupon (
-	couponId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	code_ VARCHAR(75) null,
-	name VARCHAR(75) null,
-	description STRING null,
-	startDate DATE null,
-	endDate DATE null,
-	active_ BOOLEAN,
-	limitCategories STRING null,
-	limitSkus STRING null,
-	minOrder DOUBLE,
-	discount DOUBLE,
-	discountType VARCHAR(75) null
-);
-
-create table ShoppingItem (
-	itemId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	categoryId LONG,
-	sku VARCHAR(75) null,
-	name VARCHAR(200) null,
-	description STRING null,
-	properties STRING null,
-	fields_ BOOLEAN,
-	fieldsQuantities STRING null,
-	minQuantity INTEGER,
-	maxQuantity INTEGER,
-	price DOUBLE,
-	discount DOUBLE,
-	taxable BOOLEAN,
-	shipping DOUBLE,
-	useShippingFormula BOOLEAN,
-	requiresShipping BOOLEAN,
-	stockQuantity INTEGER,
-	featured_ BOOLEAN,
-	sale_ BOOLEAN,
-	smallImage BOOLEAN,
-	smallImageId LONG,
-	smallImageURL STRING null,
-	mediumImage BOOLEAN,
-	mediumImageId LONG,
-	mediumImageURL STRING null,
-	largeImage BOOLEAN,
-	largeImageId LONG,
-	largeImageURL STRING null
-);
-
-create table ShoppingItemField (
-	itemFieldId LONG not null primary key,
-	itemId LONG,
-	name VARCHAR(75) null,
-	values_ STRING null,
-	description STRING null
-);
-
-create table ShoppingItemPrice (
-	itemPriceId LONG not null primary key,
-	itemId LONG,
-	minQuantity INTEGER,
-	maxQuantity INTEGER,
-	price DOUBLE,
-	discount DOUBLE,
-	taxable BOOLEAN,
-	shipping DOUBLE,
-	useShippingFormula BOOLEAN,
-	status INTEGER
-);
-
-create table ShoppingOrder (
-	orderId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	number_ VARCHAR(75) null,
-	tax DOUBLE,
-	shipping DOUBLE,
-	altShipping VARCHAR(75) null,
-	requiresShipping BOOLEAN,
-	insure BOOLEAN,
-	insurance DOUBLE,
-	couponCodes VARCHAR(75) null,
-	couponDiscount DOUBLE,
-	billingFirstName VARCHAR(75) null,
-	billingLastName VARCHAR(75) null,
-	billingEmailAddress VARCHAR(75) null,
-	billingCompany VARCHAR(75) null,
-	billingStreet VARCHAR(75) null,
-	billingCity VARCHAR(75) null,
-	billingState VARCHAR(75) null,
-	billingZip VARCHAR(75) null,
-	billingCountry VARCHAR(75) null,
-	billingPhone VARCHAR(75) null,
-	shipToBilling BOOLEAN,
-	shippingFirstName VARCHAR(75) null,
-	shippingLastName VARCHAR(75) null,
-	shippingEmailAddress VARCHAR(75) null,
-	shippingCompany VARCHAR(75) null,
-	shippingStreet VARCHAR(75) null,
-	shippingCity VARCHAR(75) null,
-	shippingState VARCHAR(75) null,
-	shippingZip VARCHAR(75) null,
-	shippingCountry VARCHAR(75) null,
-	shippingPhone VARCHAR(75) null,
-	ccName VARCHAR(75) null,
-	ccType VARCHAR(75) null,
-	ccNumber VARCHAR(75) null,
-	ccExpMonth INTEGER,
-	ccExpYear INTEGER,
-	ccVerNumber VARCHAR(75) null,
-	comments TEXT null,
-	ppTxnId VARCHAR(75) null,
-	ppPaymentStatus VARCHAR(75) null,
-	ppPaymentGross DOUBLE,
-	ppReceiverEmail VARCHAR(75) null,
-	ppPayerEmail VARCHAR(75) null,
-	sendOrderEmail BOOLEAN,
-	sendShippingEmail BOOLEAN
-);
-
-create table ShoppingOrderItem (
-	orderItemId LONG not null primary key,
-	orderId LONG,
-	itemId TEXT null,
-	sku VARCHAR(75) null,
-	name VARCHAR(200) null,
-	description STRING null,
-	properties STRING null,
-	price DOUBLE,
-	quantity INTEGER,
-	shippedDate DATE null
 );
 
 create table SocialActivity (

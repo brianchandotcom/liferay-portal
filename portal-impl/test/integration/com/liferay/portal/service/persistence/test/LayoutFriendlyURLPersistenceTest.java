@@ -508,23 +508,24 @@ public class LayoutFriendlyURLPersistenceTest {
 				existingLayoutFriendlyURL.getUuid(),
 				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingLayoutFriendlyURL.getGroupId(),
-			ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+		Assert.assertEquals(Long.valueOf(existingLayoutFriendlyURL.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingLayoutFriendlyURL,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingLayoutFriendlyURL.getPlid(),
-			ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+		Assert.assertEquals(Long.valueOf(existingLayoutFriendlyURL.getPlid()),
+			ReflectionTestUtil.<Long>invoke(existingLayoutFriendlyURL,
 				"getOriginalPlid", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingLayoutFriendlyURL.getLanguageId(),
 				ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
 					"getOriginalLanguageId", new Class<?>[0])));
 
-		Assert.assertEquals(existingLayoutFriendlyURL.getGroupId(),
-			ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+		Assert.assertEquals(Long.valueOf(existingLayoutFriendlyURL.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingLayoutFriendlyURL,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingLayoutFriendlyURL.getPrivateLayout(),
-			ReflectionTestUtil.invoke(existingLayoutFriendlyURL,
+		Assert.assertEquals(Boolean.valueOf(
+				existingLayoutFriendlyURL.getPrivateLayout()),
+			ReflectionTestUtil.<Boolean>invoke(existingLayoutFriendlyURL,
 				"getOriginalPrivateLayout", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingLayoutFriendlyURL.getFriendlyURL(),

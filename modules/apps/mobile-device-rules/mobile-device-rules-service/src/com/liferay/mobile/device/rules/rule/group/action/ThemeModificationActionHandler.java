@@ -14,8 +14,9 @@
 
 package com.liferay.mobile.device.rules.rule.group.action;
 
+import com.liferay.mobile.device.rules.action.ActionHandler;
+import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.mobile.device.rulegroup.action.ActionHandler;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -25,7 +26,6 @@ import com.liferay.portal.service.ThemeLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 
 import java.util.Arrays;
 import java.util.Collection;

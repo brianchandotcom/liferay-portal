@@ -874,23 +874,24 @@ public class JournalArticlePersistenceTest {
 		Assert.assertTrue(Validator.equals(existingJournalArticle.getUuid(),
 				ReflectionTestUtil.invoke(existingJournalArticle,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingJournalArticle.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalArticle,
+		Assert.assertEquals(Long.valueOf(existingJournalArticle.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalArticle,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingJournalArticle.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalArticle,
+		Assert.assertEquals(Long.valueOf(existingJournalArticle.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalArticle,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingJournalArticle.getClassNameId(),
-			ReflectionTestUtil.invoke(existingJournalArticle,
+		Assert.assertEquals(Long.valueOf(
+				existingJournalArticle.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalArticle,
 				"getOriginalClassNameId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingJournalArticle.getDDMStructureKey(),
 				ReflectionTestUtil.invoke(existingJournalArticle,
 					"getOriginalDDMStructureKey", new Class<?>[0])));
 
-		Assert.assertEquals(existingJournalArticle.getGroupId(),
-			ReflectionTestUtil.invoke(existingJournalArticle,
+		Assert.assertEquals(Long.valueOf(existingJournalArticle.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingJournalArticle,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingJournalArticle.getArticleId(),

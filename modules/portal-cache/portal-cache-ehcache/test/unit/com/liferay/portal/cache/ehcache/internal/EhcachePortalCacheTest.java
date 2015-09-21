@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.util.List;
 
-import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -70,14 +69,14 @@ public class EhcachePortalCacheTest {
 	public void setUp() {
 		_cacheManager.addCache(_PORTAL_CACHE_NAME);
 
-		Cache cache = _cacheManager.getCache(_PORTAL_CACHE_NAME);
+		_ehcache = _cacheManager.getCache(_PORTAL_CACHE_NAME);
 
 		PortalCacheManager<String, String> portalCacheManager =
 			TestPortalCacheManager.createTestPortalCacheManager(
 				_PORTAL_CACHE_NAME);
 
 		_ehcachePortalCache = new EhcachePortalCache<>(
-			portalCacheManager, cache);
+			portalCacheManager, _ehcache);
 
 		_ehcachePortalCache.put(_KEY_1, _VALUE_1);
 
@@ -228,6 +227,11 @@ public class EhcachePortalCacheTest {
 		remotePortalCacheListener.assertActionsCount(0);
 		_defaultPortalCacheListener.assertActionsCount(0);
 		_defaultPortalCacheReplicator.assertActionsCount(0);
+	}
+
+	@Test
+	public void testGetEhcache() {
+		Assert.assertSame(_ehcache, _ehcachePortalCache.getEhcache());
 	}
 
 	@Test
@@ -627,6 +631,7 @@ public class EhcachePortalCacheTest {
 	private TestPortalCacheListener<String, String> _defaultPortalCacheListener;
 	private TestPortalCacheReplicator<String, String>
 		_defaultPortalCacheReplicator;
+	private Ehcache _ehcache;
 	private EhcachePortalCache<String, String> _ehcachePortalCache;
 
 }

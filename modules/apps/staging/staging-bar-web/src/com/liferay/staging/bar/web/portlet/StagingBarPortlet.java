@@ -42,6 +42,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.staging.StagingUtil;
 import com.liferay.staging.bar.web.portlet.constants.StagingBarPortletKeys;
+import com.liferay.staging.bar.web.upgrade.StagingBarWebUpgrade;
 
 import java.io.IOException;
 
@@ -491,6 +492,11 @@ public class StagingBarPortlet extends MVCPortlet {
 		LayoutSetLocalService layoutSetLocalService) {
 
 		_layoutSetLocalService = layoutSetLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setStagingBarWebUpgrade(
+		StagingBarWebUpgrade stagingBarWebUpgrade) {
 	}
 
 	protected void unsetLayoutBranchService(

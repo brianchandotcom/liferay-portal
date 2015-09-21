@@ -348,6 +348,7 @@ public class CustomJspBagRegistryUtil {
 			CustomJspBag customJspBag) {
 
 			removedService(serviceReference, customJspBag);
+
 			addingService(serviceReference);
 		}
 

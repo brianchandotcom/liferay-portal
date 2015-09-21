@@ -382,8 +382,9 @@ public class ServicePreAction extends Action {
 			}
 
 			if ((Validator.isNull(controlPanelCategory) ||
-				 controlPanelCategory.equals(PortletCategoryKeys.MY) ||
-				 controlPanelCategory.equals(PortletCategoryKeys.PORTLET)) &&
+				 controlPanelCategory.equals(PortletCategoryKeys.PORTLET) ||
+				 controlPanelCategory.equals(
+					 PortletCategoryKeys.USER_MY_ACCOUNT)) &&
 				Validator.isNotNull(ppid) &&
 				(LiferayWindowState.isPopUp(request) ||
 				 LiferayWindowState.isExclusive(request))) {
@@ -403,7 +404,7 @@ public class ServicePreAction extends Action {
 						PortletCategoryKeys.SITE_ADMINISTRATION)) {
 
 					portletControlPanelEntryCategory =
-						PortletCategoryKeys.SITES;
+						PortletCategoryKeys.CONTROL_PANEL_SITES;
 				}
 
 				if (!controlPanelCategory.startsWith(
@@ -828,8 +829,7 @@ public class ServicePreAction extends Action {
 
 			// Temporary workaround for LPS-56017
 
-			themeDisplay.setPathEditors(
-				portalWebResources.getContextPath() + "/html");
+			themeDisplay.setPathEditors(portalWebResources.getContextPath());
 		}
 
 		themeDisplay.setPathFlash(contextPath.concat("/flash"));
@@ -838,12 +838,9 @@ public class ServicePreAction extends Action {
 		themeDisplay.setPathFriendlyURLPrivateUser(friendlyURLPrivateUserPath);
 		themeDisplay.setPathFriendlyURLPublic(friendlyURLPublicPath);
 		themeDisplay.setPathImage(imagePath);
-
-		String javaScriptPath = PortalWebResourcesUtil.getContextPath(
-			PortalWebResourceConstants.RESOURCE_TYPE_JS);
-
-		themeDisplay.setPathJavaScript(javaScriptPath.concat("/html/js"));
-
+		themeDisplay.setPathJavaScript(
+			PortalWebResourcesUtil.getContextPath(
+				PortalWebResourceConstants.RESOURCE_TYPE_JS));
 		themeDisplay.setPathMain(mainPath);
 		themeDisplay.setPathSound(contextPath.concat("/html/sound"));
 		themeDisplay.setPermissionChecker(permissionChecker);
@@ -1775,7 +1772,8 @@ public class ServicePreAction extends Action {
 
 			if (controlPanelCategory.startsWith(
 					PortletCategoryKeys.CURRENT_SITE) ||
-				controlPanelCategory.startsWith(PortletCategoryKeys.SITES)) {
+				controlPanelCategory.startsWith(
+					PortletCategoryKeys.CONTROL_PANEL_SITES)) {
 
 				if (doAsGroupId <= 0) {
 					doAsGroupId = layout.getGroupId();
@@ -1794,8 +1792,9 @@ public class ServicePreAction extends Action {
 					return true;
 				}
 			}
-			else if (controlPanelCategory.equals(PortletCategoryKeys.MY) ||
-					 controlPanelCategory.equals(PortletCategoryKeys.PORTLET)) {
+			else if (controlPanelCategory.equals(PortletCategoryKeys.PORTLET) ||
+					 controlPanelCategory.equals(
+						 PortletCategoryKeys.USER_MY_ACCOUNT)) {
 
 				return true;
 			}
@@ -2050,8 +2049,7 @@ public class ServicePreAction extends Action {
 
 							PortletURL redirectURL =
 								PortalUtil.getControlPanelPortletURL(
-									request, themeDisplay.getScopeGroup(),
-									firstPortlet.getPortletId(), 0,
+									request, firstPortlet.getPortletId(), 0,
 									PortletRequest.RENDER_PHASE);
 
 							response.sendRedirect(redirectURL.toString());

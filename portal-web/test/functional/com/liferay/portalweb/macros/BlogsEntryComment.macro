@@ -1,8 +1,6 @@
 <definition>
 	<command name="add">
-		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
-
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
+		<execute function="Type#typeAlloyEditor" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
 
 		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
 
@@ -18,7 +16,7 @@
 
 		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
 
-		<execute function="AssertElementPresent" locator1="Dockbar#USER_SIGN_IN" />
+		<execute function="AssertElementPresent" locator1="ControlMenu#USER_SIGN_IN" />
 
 		<execute function="AssertClick" locator1="Button#REPLY_AS" value1="Reply as..." />
 
@@ -122,6 +120,8 @@
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
+
+		<execute function="Pause" locator1="1000" />
 
 		<execute function="AssertTextEquals" locator1="Comments#ENTRY_COUNT_PANEL" value1="${commentCount} Comments" />
 		<execute function="AssertTextEquals" locator1="Comments#USER_NAME" value1="${userFullName}" />

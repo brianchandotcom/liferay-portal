@@ -1810,7 +1810,7 @@ public class KaleoNotificationRecipientPersistenceImpl
 				kaleoNotificationRecipient.setNew(false);
 			}
 			else {
-				session.merge(kaleoNotificationRecipient);
+				kaleoNotificationRecipient = (KaleoNotificationRecipient)session.merge(kaleoNotificationRecipient);
 			}
 		}
 		catch (Exception e) {

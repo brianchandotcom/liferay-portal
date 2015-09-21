@@ -49,6 +49,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DATA_DEFINITION</td>
+	<td>//div[label[contains(.,'Data Definition')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION</td>
+	<td>//input[contains(@id,'description')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE</td>
 	<td>//input[contains(@id,'displayDate')]</td>
 	<td></td>
@@ -81,6 +91,16 @@
 <tr>
 	<td>EMAIL_ADDRESS</td>
 	<td>//div[label[contains(.,'Email Address')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_ADDRESS_PNG</td>
+	<td>portal/fields/email_address_field.png</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTENSION</td>
+	<td>//div[label[contains(.,'Extension')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,18 +194,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KEYWORDS</td>
+	<td>//input[contains(@title,'keywords')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOAN_AMOUNT</td>
 	<td>//div[label[contains(.,'Loan Amount')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MAIL_DOMAIN_FIELD</td>
+	<td>MAIL_DOMAIN</td>
 	<td>//input[contains(@id,'mx') and contains(@class,'input-text')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>MAX_USERS_FIELD</td>
+	<td>MAX_USERS</td>
 	<td>//input[contains(@id,'maxUsers') and contains(@class,'input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAXIMUM_FAILURE</td>
+	<td>//div[label[contains(.,'Maximum Failure')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -249,6 +279,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_NAME</td>
+	<td>//input[contains(@id,'newName')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NEW_TITLE</td>
 	<td>//input[contains(@id,'newTitle')]</td>
 	<td></td>
@@ -266,6 +301,11 @@
 <tr>
 	<td>PASSWORD</td>
 	<td>//div[label[contains(.,'Password')]]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_PNG</td>
+	<td>portal/fields/password_field.png</td>
 	<td></td>
 </tr>
 <tr>
@@ -300,7 +340,7 @@
 </tr>
 <tr>
 	<td>REQUIRED_ALERT</td>
-	<td>//div[@class=&quot;required&quot; and contains(.,'This field is required')]</td>
+	<td>//div[contains(@class,'has-error')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -311,6 +351,11 @@
 <tr>
 	<td>SEARCH</td>
 	<td>//input[@title='Search']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_2</td>
+	<td>xpath=(//input[@title='Search'])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -345,7 +390,7 @@
 </tr>
 <tr>
 	<td>SUBJECT</td>
-	<td>//input[contains(@id,'subject')]</td>
+	<td>//input[contains(@id,'subject')] | //input[contains(@id,'Subject')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -369,6 +414,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOTAL_PAID</td>
+	<td>//div[label[contains(.,'Total Paid')]]//input[@type='input']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TRASH_ENTRIES_MAX_AGE</td>
+	<td>//input[contains(@id,'trashEntriesMaxAge')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TWITTER</td>
 	<td>//div[label[contains(.,'Twitter')]]//input[@type='text']</td>
 	<td></td>
@@ -384,7 +439,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>URL_FIELD_REQUIRED</td>
+	<td>URL_REQUIRED</td>
 	<td>//div[contains(@class,'error')]</td>
 	<td></td>
 </tr>
@@ -410,6 +465,11 @@
 </tr>
 <tr>
 	<td>YIM</td>
+	<td>//div[label[contains(.,'YIM')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YM</td>
 	<td>//div[label[contains(.,'YIM')]]//input[@type='text']</td>
 	<td></td>
 </tr>

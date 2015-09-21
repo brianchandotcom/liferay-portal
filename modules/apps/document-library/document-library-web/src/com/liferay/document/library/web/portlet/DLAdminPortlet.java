@@ -15,11 +15,13 @@
 package com.liferay.document.library.web.portlet;
 
 import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.web.upgrade.DLWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -27,11 +29,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
-		"com.liferay.portlet.control-panel-entry-weight=3.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-document-library",
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.footer-portlet-javascript=/document_library/js/modules.js",
 		"com.liferay.portlet.header-portlet-css=/document_library/css/main.css",
 		"com.liferay.portlet.icon=/document_library/icons/document_library.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
@@ -45,6 +44,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.webdav-storage-token=document_library",
 		"javax.portlet.display-name=Documents and Media Admin",
 		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.single-page-application-cacheable=false",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/document_library_admin/view.jsp",
 		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN,
@@ -55,4 +55,9 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class DLAdminPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setDLWebUpgrade(DLWebUpgrade dlWebUpgrade) {
+	}
+
 }

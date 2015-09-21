@@ -48,12 +48,17 @@ import javax.servlet.http.HttpServletRequest;
  * @author Alexander Chow
  */
 public class JournalFolderAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<JournalFolder> implements TrashRenderer {
 
 	public static final String TYPE = "folder";
 
 	public JournalFolderAssetRenderer(JournalFolder folder) {
 		_folder = folder;
+	}
+
+	@Override
+	public JournalFolder getAssetObject() {
+		return _folder;
 	}
 
 	@Override
@@ -119,7 +124,8 @@ public class JournalFolderAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<JournalFolder> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
@@ -197,7 +203,8 @@ public class JournalFolderAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<JournalFolder> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

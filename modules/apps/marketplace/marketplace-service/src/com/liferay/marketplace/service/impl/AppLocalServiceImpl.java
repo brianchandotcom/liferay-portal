@@ -252,6 +252,21 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<App> getInstalledApps(String category) {
+		List<App> apps = appPersistence.findByCategory(category);
+
+		List<App> installedApps = new ArrayList<>(apps.size());
+
+		for (App app : apps) {
+			if (app.isInstalled()) {
+				installedApps.add(app);
+			}
+		}
+
+		return installedApps;
+	}
+
+	@Override
 	public void installApp(long remoteAppId) throws PortalException {
 		App app = appPersistence.findByRemoteAppId(remoteAppId);
 
@@ -453,10 +468,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 	}
 
 	@Override
-	public App updateApp(
-			long userId, long remoteAppId, String version, File file)
-		throws PortalException {
-
+	public App updateApp(long userId, File file) throws PortalException {
 		Properties properties = getMarketplaceProperties(file);
 
 		if (properties == null) {
@@ -464,10 +476,13 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 				"Unable to read liferay-marketplace.properties");
 		}
 
+		long remoteAppId = GetterUtil.getLong(
+			properties.getProperty("remote-app-id"));
 		String title = properties.getProperty("title");
 		String description = properties.getProperty("description");
 		String category = properties.getProperty("category");
 		String iconURL = properties.getProperty("icon-url");
+		String version = properties.getProperty("version");
 
 		return updateApp(
 			userId, remoteAppId, title, description, category, iconURL, version,

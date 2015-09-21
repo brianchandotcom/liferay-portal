@@ -68,6 +68,7 @@ portletURL.setParameter("types", types);
 portletURL.setParameter("filter", filter);
 portletURL.setParameter("includeCompany", String.valueOf(includeCompany));
 portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
+portletURL.setParameter("manualMembership", String.valueOf(manualMembership));
 portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("target", target);
 %>
@@ -246,7 +247,7 @@ portletURL.setParameter("target", target);
 			/>
 
 			<liferay-ui:search-container-column-text>
-				<c:if test="<%= ((Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()))) %>">
+				<c:if test="<%= Validator.isNull(p_u_i_d) || SiteMembershipPolicyUtil.isMembershipAllowed((selUser != null) ? selUser.getUserId() : 0, group.getGroupId()) %>">
 
 					<%
 					Map<String, Object> data = new HashMap<String, Object>();
@@ -255,6 +256,7 @@ portletURL.setParameter("target", target);
 					data.put("groupid", group.getGroupId());
 					data.put("grouptype", LanguageUtil.get(request, group.getTypeLabel()));
 					data.put("target", target);
+					data.put("url", group.getDisplayURL(themeDisplay));
 
 					boolean disabled = false;
 

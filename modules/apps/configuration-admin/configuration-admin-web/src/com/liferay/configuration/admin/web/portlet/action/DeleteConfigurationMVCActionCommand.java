@@ -62,7 +62,7 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 
 		try {
 			ConfigurationHelper configurationHelper = new ConfigurationHelper(
-				_bundleContext, _configurationAdmin, _metaTypeService, pid);
+				bundleContext, configurationAdmin, metaTypeService, pid);
 
 			Configuration configuration = configurationHelper.getConfiguration(
 				pid);
@@ -78,24 +78,24 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		this.bundleContext = bundleContext;
 	}
 
 	@Reference(unbind = "-")
 	protected void setConfigAdminService(
 		ConfigurationAdmin configurationAdmin) {
 
-		_configurationAdmin = configurationAdmin;
+		this.configurationAdmin = configurationAdmin;
 	}
 
 	@Reference(unbind = "-")
 	protected void setMetaTypeService(MetaTypeService metaTypeService) {
-		_metaTypeService = metaTypeService;
+		this.metaTypeService = metaTypeService;
 	}
 
-	protected BundleContext _bundleContext;
-	protected ConfigurationAdmin _configurationAdmin;
-	protected MetaTypeService _metaTypeService;
+	protected BundleContext bundleContext;
+	protected ConfigurationAdmin configurationAdmin;
+	protected MetaTypeService metaTypeService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteConfigurationMVCActionCommand.class);

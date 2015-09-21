@@ -428,8 +428,9 @@ public class KaleoConditionPersistenceTest {
 
 		KaleoCondition existingKaleoCondition = _persistence.findByPrimaryKey(newKaleoCondition.getPrimaryKey());
 
-		Assert.assertEquals(existingKaleoCondition.getKaleoNodeId(),
-			ReflectionTestUtil.invoke(existingKaleoCondition,
+		Assert.assertEquals(Long.valueOf(
+				existingKaleoCondition.getKaleoNodeId()),
+			ReflectionTestUtil.<Long>invoke(existingKaleoCondition,
 				"getOriginalKaleoNodeId", new Class<?>[0]));
 	}
 

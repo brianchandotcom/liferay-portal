@@ -1,0 +1,48 @@
+.app-view-taglib {
+	.display-style .icon {
+		background-image: url(../images/application/layouts.png);
+		background-repeat: no-repeat;
+	}
+
+	.icon-display-descriptive {
+		background-position: -32px 0;
+	}
+
+	.icon-display-icon {
+		background-position: -16px 0;
+	}
+
+	.icon-display-list {
+		background-position: 0 0;
+	}
+
+	.state-active {
+		.icon-display-descriptive {
+			background-position: -32px 100%;
+		}
+
+		.icon-display-icon {
+			background-position: -16px 100%;
+		}
+	}
+}
+
+.navbar {
+	.nav-display-style-buttons {
+		.display-style-buttons {
+			> .dropdown {
+				@include media-query(null, $screen-xs-max) {
+					> .dropdown-menu {
+						background-color: transparent;
+						box-shadow: none;
+					}
+				}
+			}
+		}
+
+		.display-style-buttons-container .dropdown-toggle .caret {
+			border-bottom-color: #333;
+			border-top-color: #333;
+		}
+	}
+}

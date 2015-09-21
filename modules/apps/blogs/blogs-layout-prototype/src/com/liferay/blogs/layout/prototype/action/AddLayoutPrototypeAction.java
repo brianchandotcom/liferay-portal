@@ -14,12 +14,11 @@
 
 package com.liferay.blogs.layout.prototype.action;
 
+import com.liferay.asset.tags.navigation.web.constants.AssetTagsNavigationPortletKeys;
 import com.liferay.blogs.recent.bloggers.web.constants.RecentBloggersPortletKeys;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
@@ -30,7 +29,6 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -65,15 +63,10 @@ public class AddLayoutPrototypeAction {
 			List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content.Language", LocaleUtil.getDefault());
-
 		Layout layout = DefaultLayoutPrototypesUtil.addLayoutPrototype(
-			companyId, defaultUserId,
-			LanguageUtil.get(resourceBundle, "layout-prototype-blog-title"),
-			LanguageUtil.get(
-				resourceBundle, "layout-prototype-blog-description"),
-			"2_columns_iii", layoutPrototypes);
+			companyId, defaultUserId, "layout-prototype-blog-title",
+			"layout-prototype-blog-description", "2_columns_iii",
+			layoutPrototypes, AddLayoutPrototypeAction.class.getClassLoader());
 
 		if (layout == null) {
 			return;
@@ -83,7 +76,17 @@ public class AddLayoutPrototypeAction {
 			layout, BlogsPortletKeys.BLOGS, "column-1");
 
 		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD,
+			"column-2");
+
+		DefaultLayoutPrototypesUtil.addPortletId(
 			layout, RecentBloggersPortletKeys.RECENT_BLOGGERS, "column-2");
+	}
+
+	@Reference(
+		target = "(javax.portlet.name=" + AssetTagsNavigationPortletKeys.ASSET_TAGS_CLOUD + ")"
+	)
+	protected void setAssetTagsCloudPortlet(Portlet portlet) {
 	}
 
 	@Reference(target = "(javax.portlet.name=" + BlogsPortletKeys.BLOGS + ")")

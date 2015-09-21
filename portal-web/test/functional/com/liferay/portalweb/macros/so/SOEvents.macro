@@ -10,8 +10,8 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 			</then>
 		</if>
 
@@ -37,8 +37,8 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 			</then>
 		</if>
 
@@ -89,37 +89,37 @@
 		<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_CREATOR" value1="${userName}" />
 		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
 
-		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#EVENT_TITLE" value1="${eventTitle}" />
 
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="12:00 AM" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#START_DATE_FIELD" value1="12:00 AM" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#START_DATE_FIELD" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="endDateTime" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="11:59 PM" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#END_DATE_FIELD" value1="11:59 PM" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#END_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -128,15 +128,15 @@
 				<equals arg1="${invitedToEvent}" arg2="true"  />
 			</not>
 			<then>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#RESOURCES_FIELD" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
 			<then>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#MAYBE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#DECLINE_BUTTON" />
 			</then>
 		</if>
 
@@ -147,8 +147,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<elseif>
@@ -157,8 +157,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_BODY" value1="${eventComment}" />
 				</then>
 			</elseif>
 		</if>
@@ -216,37 +216,37 @@
 
 		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_TODAYS_EVENTS_EVENT_TITLE" />
 
-		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#EVENT_TITLE" value1="${eventTitle}" />
 
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="12:00 AM" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#START_DATE_FIELD" value1="12:00 AM" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#START_DATE_FIELD" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="endDateTime" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
 			<elseif>
 				<equals arg1="${allDayEvent}" arg2="true" />
 				<then>
-					<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="11:59 PM" />
+					<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#END_DATE_FIELD" value1="11:59 PM" />
 				</then>
 			</elseif>
 			<else>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#END_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -255,15 +255,15 @@
 				<equals arg1="${invitedToEvent}" arg2="true"  />
 			</not>
 			<then>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#RESOURCES_FIELD" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
 			<then>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#MAYBE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#DECLINE_BUTTON" />
 			</then>
 		</if>
 
@@ -274,8 +274,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<elseif>
@@ -284,8 +284,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_BODY" value1="${eventComment}" />
 				</then>
 			</elseif>
 		</if>
@@ -327,25 +327,25 @@
 		<execute function="AssertTextEquals" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_CREATOR" value1="${userName}" />
 		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
 
-		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#EVENT_TITLE" value1="${eventTitle}" />
 
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#START_DATE_FIELD" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="endDateTime" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#END_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -354,15 +354,15 @@
 				<equals arg1="${invitedToEvent}" arg2="true"  />
 			</not>
 			<then>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#RESOURCES_FIELD" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
 			<then>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#MAYBE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#DECLINE_BUTTON" />
 			</then>
 		</if>
 
@@ -373,8 +373,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<elseif>
@@ -383,8 +383,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_BODY" value1="${eventComment}" />
 				</then>
 			</elseif>
 		</if>
@@ -408,25 +408,25 @@
 		<execute function="AssertElementPresent" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TIME" />
 		<execute function="Click" locator1="SOEvents#EVENTS_DISPLAY_UPCOMING_EVENTS_EVENT_TITLE" />
 
-		<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#EVENT_TITLE" value1="${eventTitle}" />
+		<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#EVENT_TITLE" value1="${eventTitle}" />
 
 		<if>
 			<isset var="startDateTime" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" value1="${startDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#START_DATE_FIELD" value1="${startDateTime}" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#START_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#START_DATE_FIELD" />
 			</else>
 		</if>
 
 		<if>
 			<isset var="endDateTime" />
 			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" value1="${endDateTime}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CalendarViewEventDetails#END_DATE_FIELD" value1="${endDateTime}" />
 			</then>
 			<else>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#END_DATE_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#END_DATE_FIELD" />
 			</else>
 		</if>
 
@@ -435,15 +435,15 @@
 				<equals arg1="${invitedToEvent}" arg2="true"  />
 			</not>
 			<then>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#RESOURCES_FIELD" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#RESOURCES_FIELD" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${schedulerEventDialogBox}" arg2="true" />
 			<then>
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#MAYBE_BUTTON" />
-				<execute function="AssertElementPresent" locator1="PGCalendarVieweventdetails#DECLINE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#MAYBE_BUTTON" />
+				<execute function="AssertElementPresent" locator1="CalendarViewEventDetails#DECLINE_BUTTON" />
 			</then>
 		</if>
 
@@ -454,8 +454,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_BODY" value1="${eventComment}" />
 				</for>
 			</then>
 			<elseif>
@@ -464,8 +464,8 @@
 					<var name="key_eventComment" value="${eventComment}" />
 					<var name="key_user" value="${user}" />
 
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_USER_NAME" value1="${user}" />
-					<execute function="AssertTextEquals" locator1="PGCalendarVieweventdetails#COMMENTS_BODY" value1="${eventComment}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_USER_NAME" value1="${user}" />
+					<execute function="AssertTextEquals" locator1="CalendarViewEventDetails#COMMENTS_BODY" value1="${eventComment}" />
 				</then>
 			</elseif>
 		</if>

@@ -87,6 +87,10 @@ public abstract class BaseControlPanelEntryPanelApp implements PanelApp {
 	protected ControlPanelEntry getControlPanelEntry() {
 		Portlet portlet = getPortlet();
 
+		if (portlet == null) {
+			return null;
+		}
+
 		return portlet.getControlPanelEntryInstance();
 	}
 
@@ -95,9 +99,9 @@ public abstract class BaseControlPanelEntryPanelApp implements PanelApp {
 	}
 
 	protected Portlet getPortlet() {
-		return _portletLocalService.getPortletById(getPortletId());
+		return portletLocalService.getPortletById(getPortletId());
 	}
 
-	protected PortletLocalService _portletLocalService;
+	protected PortletLocalService portletLocalService;
 
 }

@@ -231,6 +231,7 @@
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFolder" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoTable" />
+		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 
 		<!-- Transactions -->
@@ -662,6 +663,7 @@
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileShortcut" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLFileVersion" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
+		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
 	<entity name="DLSyncEvent" local-service="true" remote-service="false">

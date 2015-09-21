@@ -26,8 +26,7 @@ boolean anonymousAccount = ParamUtil.getBoolean(request, "anonymousUser");
 	<div class="hide lfr-message-response" id="<portlet:namespace />login-status-messages"></div>
 
 	<div class="anonymous-account">
-		<portlet:actionURL var="updateIncompleteUserURL">
-			<portlet:param name="struts_action" value="/login/create_anonymous_account" />
+		<portlet:actionURL name="/login/create_anonymous_account" var="updateIncompleteUserURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 			<portlet:param name="emailAddress" value="<%= emailAddress %>" />
 		</portlet:actionURL>

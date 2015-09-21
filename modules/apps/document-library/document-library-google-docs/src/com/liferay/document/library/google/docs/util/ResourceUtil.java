@@ -15,6 +15,7 @@
 package com.liferay.document.library.google.docs.util;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -68,8 +69,8 @@ public class ResourceUtil {
 	}
 
 	public static ResourceBundle getResourceBundle(Locale locale) {
-		return ResourceBundle.getBundle(
-			"content.Language", locale, ResourceUtil.class.getClassLoader());
+		return ResourceBundleUtil.getBundle(
+			"content.Language", locale, ResourceUtil.class);
 	}
 
 }

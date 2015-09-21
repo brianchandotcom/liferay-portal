@@ -17,7 +17,7 @@ package com.liferay.asset.categories.navigation.web.display.context;
 import com.liferay.asset.categories.navigation.web.configuration.AssetCategoriesNavigationPortletInstanceConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,7 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 public class AssetCategoriesNavigationDisplayContext {
 
 	public AssetCategoriesNavigationDisplayContext(HttpServletRequest request)
-		throws SettingsException {
+		throws ConfigurationException {
 
 		_request = request;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.ant.bnd.spring;
 
+import aQute.bnd.header.Attrs;
 import aQute.bnd.header.Parameters;
 import aQute.bnd.osgi.Analyzer;
 import aQute.bnd.osgi.Annotation;
@@ -33,7 +34,9 @@ import java.io.PrintWriter;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Miguel Pastor
@@ -54,6 +57,8 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 
 		Collection<Clazz> classes = analyzer.getClasses();
 
+		Set<String> serviceReferences = new TreeSet<String>();
+
 		for (String key : parameters.keySet()) {
 			ServiceReferenceCollector serviceReferenceCollector =
 				new ServiceReferenceCollector(key);
@@ -62,14 +67,44 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 				clazz.parseClassFileWithCollector(serviceReferenceCollector);
 			}
 
-			jar.putResource(
-				"OSGI-INF/context/context.dependencies",
-				new ContextDependencyWriter(
-					analyzer,
-					serviceReferenceCollector.getServiceReferences()));
+			serviceReferences.addAll(
+				serviceReferenceCollector.getServiceReferences());
 		}
 
+		String releaseInfo = getReleaseInfo(analyzer);
+
+		if (!releaseInfo.equals("")) {
+			serviceReferences.add(releaseInfo);
+		}
+
+		jar.putResource(
+			"OSGI-INF/context/context.dependencies",
+			new ContextDependencyWriter(analyzer, serviceReferences));
+
 		return false;
+	}
+
+	protected String getReleaseInfo(Analyzer analyzer) {
+		String property = analyzer.getProperty("Require-SchemaVersion");
+
+		if (property == null) {
+			return "";
+		}
+
+		StringBuffer sb = new StringBuffer(6);
+
+		sb.append("com.liferay.portal.model.Release ");
+		sb.append("(&(release.bundle.symbolic.name=");
+
+		Map.Entry<String, Attrs> entry = analyzer.getBundleSymbolicName();
+
+		sb.append(entry.getKey());
+
+		sb.append(")(release.schema.version=");
+		sb.append(property);
+		sb.append("))");
+
+		return sb.toString();
 	}
 
 	private static class ContextDependencyWriter extends WriteResource {
@@ -137,7 +172,15 @@ public class SpringDependencyAnalyzerPlugin implements AnalyzerPlugin {
 
 			typeRef = descriptor.getType();
 
-			_serviceReferences.add(typeRef.getFQN());
+			fqn = typeRef.getFQN();
+
+			Object filterString = annotation.get("filterString");
+
+			if (filterString != null) {
+				fqn += " " + filterString;
+			}
+
+			_serviceReferences.add(fqn);
 		}
 
 		@Override

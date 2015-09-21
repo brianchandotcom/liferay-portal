@@ -53,7 +53,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 		</portlet:renderURL>
 
 		<%
-		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+		AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 		%>
 
 		<aui:nav-item href="<%= addFolderURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label='<%= (folder != null) ? "subfolder" : "folder" %>' />
@@ -70,7 +70,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 		<aui:nav-item href="<%= editFileShortcutURL %>" iconCssClass="icon-external-link" label="shortcut" />
 	</c:if>
 
-	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY)) %>">
+	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY) %>">
 		<portlet:renderURL var="addRepositoryURL">
 			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -120,7 +120,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 				</portlet:renderURL>
 
 				<%
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+				AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 				%>
 
 				<aui:nav-item href="<%= addFileEntryTypeURL %>" iconCssClass="<%= assetRendererFactory.getIconCssClass() %>" label="<%= HtmlUtil.escape(fileEntryType.getUnambiguousName(fileEntryTypes, themeDisplay.getScopeGroupId(), locale)) %>" localizeLabel="<%= false %>" />

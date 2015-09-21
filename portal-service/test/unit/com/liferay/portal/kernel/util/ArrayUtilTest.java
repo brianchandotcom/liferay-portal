@@ -179,13 +179,15 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testContainsStringArray() throws Exception {
-		String[] array = {"a", "b"};
+		String[] array = {"a", "b", null};
 
 		Assert.assertFalse(ArrayUtil.contains(array, "c", true));
 		Assert.assertFalse(ArrayUtil.contains(array, "C", false));
 		Assert.assertTrue(ArrayUtil.contains(array, "a", true));
 		Assert.assertTrue(ArrayUtil.contains(array, "a", false));
 		Assert.assertTrue(ArrayUtil.contains(array, "A", true));
+		Assert.assertTrue(ArrayUtil.contains(array, null, true));
+		Assert.assertTrue(ArrayUtil.contains(array, null, false));
 	}
 
 	@Test
@@ -194,10 +196,11 @@ public class ArrayUtilTest {
 		User julio = new User("julio", 20);
 		User sergio = new User("sergio", 20);
 
-		User[] array = {julio, sergio};
+		User[] array = {julio, sergio, null};
 
 		Assert.assertFalse(ArrayUtil.contains(array, brian));
 		Assert.assertTrue(ArrayUtil.contains(array, julio));
+		Assert.assertTrue(ArrayUtil.contains(array, null));
 	}
 
 	@Test

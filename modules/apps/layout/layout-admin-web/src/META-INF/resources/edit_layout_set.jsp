@@ -36,12 +36,12 @@ if (selGroup.isLayoutSetPrototype()) {
 
 if (privateLayout) {
 	if (group != null) {
-		pagesCount = group.getPrivateLayoutsPageCount();
+		pagesCount = selGroup.getPrivateLayoutsPageCount();
 	}
 }
 else {
 	if (group != null) {
-		pagesCount = group.getPublicLayoutsPageCount();
+		pagesCount = selGroup.getPublicLayoutsPageCount();
 	}
 }
 %>
@@ -49,13 +49,13 @@ else {
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 		<c:if test="<%= pagesCount > 0 %>">
-			<aui:nav-item href="<%= group.getDisplayURL(themeDisplay, privateLayout) %>" iconCssClass="icon-file" label="view-pages" target="_blank" />
+			<aui:nav-item href="<%= selGroup.getDisplayURL(themeDisplay, privateLayout) %>" iconCssClass="icon-file" label="view-pages" target="_blank" />
 		</c:if>
-		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ADD_LAYOUT) %>">
+		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.ADD_LAYOUT) %>">
 			<portlet:renderURL var="addPagesURL">
 				<portlet:param name="mvcPath" value="/add_layout.jsp" />
 				<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(selGroup.getGroupId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 			</portlet:renderURL>
 
@@ -70,7 +70,7 @@ else {
 
 <aui:form action="<%= editLayoutSetURL %>" cssClass="edit-layoutset-form" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+	<aui:input name="groupId" type="hidden" value="<%= selGroup.getGroupId() %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />
 	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
@@ -81,6 +81,6 @@ else {
 	<liferay-ui:form-navigator
 		formModelBean="<%= selLayoutSet %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET %>"
-		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
+		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
 	/>
 </aui:form>

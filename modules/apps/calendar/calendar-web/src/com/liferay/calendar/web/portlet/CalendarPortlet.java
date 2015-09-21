@@ -52,6 +52,7 @@ import com.liferay.calendar.util.CalendarSearcher;
 import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RSSUtil;
+import com.liferay.calendar.web.upgrade.CalendarWebUpgrade;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -68,7 +69,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -125,6 +125,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
@@ -334,6 +335,9 @@ public class CalendarPortlet extends MVCPortlet {
 			actionRequest, "calendarBookingId");
 
 		long calendarId = ParamUtil.getLong(actionRequest, "calendarId");
+
+		Calendar calendar = CalendarServiceUtil.getCalendar(calendarId);
+
 		long[] childCalendarIds = ParamUtil.getLongValues(
 			actionRequest, "childCalendarIds");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
@@ -346,10 +350,10 @@ public class CalendarPortlet extends MVCPortlet {
 		java.util.Calendar endTimeJCalendar = getJCalendar(
 			actionRequest, "endTime");
 		boolean allDay = ParamUtil.getBoolean(actionRequest, "allDay");
-		String recurrence = getRecurrence(actionRequest);
+		String recurrence = getRecurrence(
+			actionRequest, calendar.getTimeZone());
 		long[] reminders = getReminders(actionRequest);
 		String[] remindersType = getRemindersType(actionRequest);
-		int status = ParamUtil.getInteger(actionRequest, "status");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CalendarBooking.class.getName(), actionRequest);
@@ -388,7 +392,7 @@ public class CalendarPortlet extends MVCPortlet {
 						startTimeJCalendar.getTimeInMillis(),
 						endTimeJCalendar.getTimeInMillis(), allDay, recurrence,
 						allFollowing, reminders[0], remindersType[0],
-						reminders[1], remindersType[1], status, serviceContext);
+						reminders[1], remindersType[1], serviceContext);
 			}
 			else {
 				calendarBooking =
@@ -414,7 +418,7 @@ public class CalendarPortlet extends MVCPortlet {
 						calendarBooking.getStartTime(),
 						calendarBooking.getEndTime(), allDay, recurrence,
 						reminders[0], remindersType[0], reminders[1],
-						remindersType[1], status, serviceContext);
+						remindersType[1], serviceContext);
 			}
 		}
 
@@ -688,7 +692,9 @@ public class CalendarPortlet extends MVCPortlet {
 		return notificationTypeSettingsProperties.toString();
 	}
 
-	protected String getRecurrence(ActionRequest actionRequest) {
+	protected String getRecurrence(
+		ActionRequest actionRequest, TimeZone calendarTimeZone) {
+
 		boolean repeat = ParamUtil.getBoolean(actionRequest, "repeat");
 
 		if (!repeat) {
@@ -716,24 +722,21 @@ public class CalendarPortlet extends MVCPortlet {
 
 		recurrence.setInterval(interval);
 
-		java.util.Calendar untilJCalendar = null;
-
 		if (ends.equals("on")) {
-			int untilDateDay = ParamUtil.getInteger(
-				actionRequest, "untilDateDay");
-			int untilDateMonth = ParamUtil.getInteger(
-				actionRequest, "untilDateMonth");
-			int untilDateYear = ParamUtil.getInteger(
-				actionRequest, "untilDateYear");
+			java.util.Calendar untilJCalendar = getJCalendar(
+				actionRequest, "untilDate");
 
-			untilJCalendar = CalendarFactoryUtil.getCalendar();
+			java.util.Calendar startTimeJCalendar = getJCalendar(
+				actionRequest, "startTime");
 
-			untilJCalendar.set(java.util.Calendar.DATE, untilDateDay);
-			untilJCalendar.set(java.util.Calendar.MONTH, untilDateMonth);
-			untilJCalendar.set(java.util.Calendar.YEAR, untilDateYear);
+			untilJCalendar = JCalendarUtil.mergeJCalendar(
+				untilJCalendar, startTimeJCalendar, getTimeZone(actionRequest));
+
+			untilJCalendar = JCalendarUtil.getJCalendar(
+				untilJCalendar, calendarTimeZone);
+
+			recurrence.setUntilJCalendar(untilJCalendar);
 		}
-
-		recurrence.setUntilJCalendar(untilJCalendar);
 
 		List<PositionalWeekday> positionalWeekdays = new ArrayList<>();
 
@@ -862,7 +865,7 @@ public class CalendarPortlet extends MVCPortlet {
 		searchContext.setStart(0);
 		searchContext.setUserId(userId);
 
-		Indexer indexer = CalendarSearcher.getInstance();
+		Indexer<?> indexer = CalendarSearcher.getInstance();
 
 		return indexer.search(searchContext);
 	}
@@ -1163,6 +1166,11 @@ public class CalendarPortlet extends MVCPortlet {
 			themeDisplay, calendars);
 
 		writeJSON(resourceRequest, resourceResponse, jsonObject);
+	}
+
+	@Reference(unbind = "-")
+	protected void setCalendarWebUpgrade(
+		CalendarWebUpgrade calendarWebUpgrade) {
 	}
 
 }

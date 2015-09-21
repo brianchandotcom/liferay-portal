@@ -108,6 +108,10 @@ public class IconTag extends IncludeTag {
 		_localizeMessage = localizeMessage;
 	}
 
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
 	public void setMessage(String message) {
 		_message = message;
 	}
@@ -144,10 +148,6 @@ public class IconTag extends IncludeTag {
 		_useDialog = useDialog;
 	}
 
-	public void setView(String view) {
-		_view = view;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_alt = null;
@@ -162,6 +162,7 @@ public class IconTag extends IncludeTag {
 		_lang = null;
 		_linkCssClass = null;
 		_localizeMessage = true;
+		_markupView = null;
 		_message = null;
 		_method = null;
 		_onClick = null;
@@ -171,7 +172,6 @@ public class IconTag extends IncludeTag {
 		_toolTip = false;
 		_url = null;
 		_useDialog = false;
-		_view = null;
 	}
 
 	protected Map<String, Object> getData() {
@@ -582,6 +582,7 @@ public class IconTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:icon:localizeMessage",
 			String.valueOf(_localizeMessage));
+		request.setAttribute("liferay-ui:icon:markupView", _markupView);
 		request.setAttribute("liferay-ui:icon:message", getProcessedMessage());
 		request.setAttribute("liferay-ui:icon:method", getMethod());
 		request.setAttribute("liferay-ui:icon:onClick", getOnClick());
@@ -593,7 +594,6 @@ public class IconTag extends IncludeTag {
 		request.setAttribute("liferay-ui:icon:url", getProcessedUrl());
 		request.setAttribute(
 			"liferay-ui:icon:useDialog", String.valueOf(_useDialog));
-		request.setAttribute("liferay-ui:icon:view", _view);
 	}
 
 	private static final String _AUI_PATH = "../aui/";
@@ -612,6 +612,7 @@ public class IconTag extends IncludeTag {
 	private String _lang;
 	private String _linkCssClass;
 	private boolean _localizeMessage = true;
+	private String _markupView;
 	private String _message;
 	private String _method;
 	private String _onClick;
@@ -621,6 +622,5 @@ public class IconTag extends IncludeTag {
 	private boolean _toolTip;
 	private String _url;
 	private boolean _useDialog = false;
-	private String _view;
 
 }

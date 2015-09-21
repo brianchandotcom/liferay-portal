@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -25,6 +26,7 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.TeamPermissionUtil;
 import com.liferay.portal.service.permission.UserPermissionUtil;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -134,6 +136,25 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 		}
 
 		return userPersistence.containsTeam(userId, teamId);
+	}
+
+	@Override
+	public List<Team> search(
+		long groupId, String name, String description,
+		LinkedHashMap<String, Object> params, int start, int end,
+		OrderByComparator<Team> obc) {
+
+		return teamFinder.filterFindByG_N_D(
+			groupId, name, description, params, start, end, obc);
+	}
+
+	@Override
+	public int searchCount(
+		long groupId, String name, String description,
+		LinkedHashMap<String, Object> params) {
+
+		return teamFinder.filterCountByG_N_D(
+			groupId, name, description, params);
 	}
 
 	@Override

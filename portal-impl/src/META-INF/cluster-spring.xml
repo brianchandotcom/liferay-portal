@@ -26,5 +26,4 @@
 		</property>
 		<property name="parentChainableMethodAdvice" ref="serviceAdvice" />
 	</bean>
-	<bean id="com.liferay.portal.backgroundtask.BackgroundTaskClusterMasterTokenTransitionListener" class="com.liferay.portal.backgroundtask.BackgroundTaskClusterMasterTokenTransitionListener" />
 </beans>

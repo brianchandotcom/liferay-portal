@@ -34,7 +34,7 @@ if (userCalendarResource != null) {
 
 List<Calendar> otherCalendars = new ArrayList<Calendar>();
 
-long[] calendarIds = StringUtil.split(SessionClicks.get(request, "calendar-portlet-other-calendars", StringPool.BLANK), 0L);
+long[] calendarIds = StringUtil.split(SessionClicks.get(request, "com.liferay.calendar.web_otherCalendars", StringPool.BLANK), 0L);
 
 for (long calendarId : calendarIds) {
 	Calendar calendar = CalendarServiceUtil.fetchCalendar(calendarId);
@@ -68,7 +68,7 @@ JSONArray groupCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDispl
 JSONArray userCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDisplay, userCalendars);
 JSONArray otherCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDisplay, otherCalendars);
 
-boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, "calendar-portlet-column-options-visible", "true"));
+boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.calendar.web_columnOptionsVisible", "true"));
 %>
 
 <aui:container cssClass="calendar-portlet-column-parent">
@@ -249,7 +249,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 						var calendarIds = A.Array.invoke(event.newVal, 'get', 'calendarId');
 
-						Liferay.Store('calendar-portlet-other-calendars', calendarIds.join());
+						Liferay.Store('com.liferay.calendar.web_otherCalendars', calendarIds.join());
 					},
 					'scheduler-calendar:visibleChange': function(event) {
 						syncCalendarsMap();
@@ -308,7 +308,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 
 						var calendar = event.currentTarget;
 
-						Liferay.Store('calendar-portlet-calendar-' + calendar.get('calendarId') + '-visible', event.newVal);
+						Liferay.Store('com.liferay.calendar.web_calendar' + calendar.get('calendarId') + 'Visible', event.newVal);
 					}
 				}
 			);
@@ -349,7 +349,7 @@ boolean columnOptionsVisible = GetterUtil.getBoolean(SessionClicks.get(request, 
 			var columnOptions = A.one('#<portlet:namespace />columnOptions');
 			var columnTogglerIcon = A.one('#<portlet:namespace />columnTogglerIcon');
 
-			Liferay.Store('calendar-portlet-column-options-visible', columnOptions.hasClass('hide'));
+			Liferay.Store('com.liferay.calendar.web_columnOptionsVisible', columnOptions.hasClass('hide'));
 
 			columnGrid.toggleClass('col-md-9').toggleClass('col-md-12');
 
@@ -480,8 +480,8 @@ protected void updateCalendarsJSONArray(HttpServletRequest request, JSONArray ca
 
 		long calendarId = jsonObject.getLong("calendarId");
 
-		jsonObject.put("color", GetterUtil.getString(SessionClicks.get(request, "calendar-portlet-calendar-" + calendarId + "-color", jsonObject.getString("color"))));
-		jsonObject.put("visible", GetterUtil.getBoolean(SessionClicks.get(request, "calendar-portlet-calendar-" + calendarId + "-visible", "true")));
+		jsonObject.put("color", GetterUtil.getString(SessionClicks.get(request, "com.liferay.calendar.web_calendar" + calendarId + "Color", jsonObject.getString("color"))));
+		jsonObject.put("visible", GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.calendar.web_calendar" + calendarId + "Visible", "true")));
 	}
 }
 %>

@@ -24,14 +24,14 @@ import java.util.Map;
 public class NodeBuilderRegistry {
 
 	public static NodeBuilder getNodeBuilder(String nodeTypeString) {
-		return _nodeBuilders.getNodeTypeDependentObjects(nodeTypeString);
+		return nodeBuilders.getNodeTypeDependentObjects(nodeTypeString);
 	}
 
 	public void setNodeBuilders(Map<String, NodeBuilder> nodeBuilders) {
-		_nodeBuilders.setNodeTypeDependentObjects(nodeBuilders);
+		this.nodeBuilders.setNodeTypeDependentObjects(nodeBuilders);
 	}
 
 	protected static NodeTypeDependentObjectRegistry<NodeBuilder>
-		_nodeBuilders = new NodeTypeDependentObjectRegistry<>();
+		nodeBuilders = new NodeTypeDependentObjectRegistry<>();
 
 }

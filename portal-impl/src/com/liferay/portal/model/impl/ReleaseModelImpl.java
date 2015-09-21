@@ -65,6 +65,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "servletContextName", Types.VARCHAR },
+			{ "schemaVersion", Types.VARCHAR },
 			{ "buildNumber", Types.INTEGER },
 			{ "buildDate", Types.TIMESTAMP },
 			{ "verified", Types.BOOLEAN },
@@ -79,6 +80,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("servletContextName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("schemaVersion", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("buildNumber", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("buildDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("verified", Types.BOOLEAN);
@@ -86,7 +88,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		TABLE_COLUMNS_MAP.put("testString", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Release_ (mvccVersion LONG default 0,releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
+	public static final String TABLE_SQL_CREATE = "create table Release_ (mvccVersion LONG default 0,releaseId LONG not null primary key,createDate DATE null,modifiedDate DATE null,servletContextName VARCHAR(75) null,schemaVersion VARCHAR(75) null,buildNumber INTEGER,buildDate DATE null,verified BOOLEAN,state_ INTEGER,testString VARCHAR(1024) null)";
 	public static final String TABLE_SQL_DROP = "drop table Release_";
 	public static final String ORDER_BY_JPQL = " ORDER BY release.releaseId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Release_.releaseId ASC";
@@ -149,6 +151,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("servletContextName", getServletContextName());
+		attributes.put("schemaVersion", getSchemaVersion());
 		attributes.put("buildNumber", getBuildNumber());
 		attributes.put("buildDate", getBuildDate());
 		attributes.put("verified", getVerified());
@@ -191,6 +194,12 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 		if (servletContextName != null) {
 			setServletContextName(servletContextName);
+		}
+
+		String schemaVersion = (String)attributes.get("schemaVersion");
+
+		if (schemaVersion != null) {
+			setSchemaVersion(schemaVersion);
 		}
 
 		Integer buildNumber = (Integer)attributes.get("buildNumber");
@@ -296,6 +305,21 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	}
 
 	@Override
+	public String getSchemaVersion() {
+		if (_schemaVersion == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _schemaVersion;
+		}
+	}
+
+	@Override
+	public void setSchemaVersion(String schemaVersion) {
+		_schemaVersion = schemaVersion;
+	}
+
+	@Override
 	public int getBuildNumber() {
 		return _buildNumber;
 	}
@@ -391,6 +415,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		releaseImpl.setCreateDate(getCreateDate());
 		releaseImpl.setModifiedDate(getModifiedDate());
 		releaseImpl.setServletContextName(getServletContextName());
+		releaseImpl.setSchemaVersion(getSchemaVersion());
 		releaseImpl.setBuildNumber(getBuildNumber());
 		releaseImpl.setBuildDate(getBuildDate());
 		releaseImpl.setVerified(getVerified());
@@ -499,6 +524,14 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 			releaseCacheModel.servletContextName = null;
 		}
 
+		releaseCacheModel.schemaVersion = getSchemaVersion();
+
+		String schemaVersion = releaseCacheModel.schemaVersion;
+
+		if ((schemaVersion != null) && (schemaVersion.length() == 0)) {
+			releaseCacheModel.schemaVersion = null;
+		}
+
 		releaseCacheModel.buildNumber = getBuildNumber();
 
 		Date buildDate = getBuildDate();
@@ -527,7 +560,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -539,6 +572,8 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		sb.append(getModifiedDate());
 		sb.append(", servletContextName=");
 		sb.append(getServletContextName());
+		sb.append(", schemaVersion=");
+		sb.append(getSchemaVersion());
 		sb.append(", buildNumber=");
 		sb.append(getBuildNumber());
 		sb.append(", buildDate=");
@@ -556,7 +591,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Release");
@@ -581,6 +616,10 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		sb.append(
 			"<column><column-name>servletContextName</column-name><column-value><![CDATA[");
 		sb.append(getServletContextName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>schemaVersion</column-name><column-value><![CDATA[");
+		sb.append(getSchemaVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>buildNumber</column-name><column-value><![CDATA[");
@@ -619,6 +658,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	private boolean _setModifiedDate;
 	private String _servletContextName;
 	private String _originalServletContextName;
+	private String _schemaVersion;
 	private int _buildNumber;
 	private Date _buildDate;
 	private boolean _verified;

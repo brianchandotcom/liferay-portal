@@ -416,14 +416,14 @@ public class DLFileRankPersistenceTest {
 
 		DLFileRank existingDLFileRank = _persistence.findByPrimaryKey(newDLFileRank.getPrimaryKey());
 
-		Assert.assertEquals(existingDLFileRank.getCompanyId(),
-			ReflectionTestUtil.invoke(existingDLFileRank,
+		Assert.assertEquals(Long.valueOf(existingDLFileRank.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileRank,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(existingDLFileRank.getUserId(),
-			ReflectionTestUtil.invoke(existingDLFileRank, "getOriginalUserId",
-				new Class<?>[0]));
-		Assert.assertEquals(existingDLFileRank.getFileEntryId(),
-			ReflectionTestUtil.invoke(existingDLFileRank,
+		Assert.assertEquals(Long.valueOf(existingDLFileRank.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileRank,
+				"getOriginalUserId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingDLFileRank.getFileEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileRank,
 				"getOriginalFileEntryId", new Class<?>[0]));
 	}
 

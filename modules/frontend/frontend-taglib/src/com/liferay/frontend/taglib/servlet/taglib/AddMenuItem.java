@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.servlet.taglib;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Ambrín Chaudhary
@@ -24,13 +25,26 @@ public class AddMenuItem extends MenuItem {
 	public AddMenuItem(String label, String url) {
 		setLabel(label);
 
+		_id = StringPool.BLANK;
 		_url = url;
+	}
+
+	public AddMenuItem(String id, String label, String url) {
+		setLabel(label);
+
+		_id = id;
+		_url = url;
+	}
+
+	public String getId() {
+		return _id;
 	}
 
 	public String getUrl() {
 		return _url;
 	}
 
+	private final String _id;
 	private final String _url;
 
 }

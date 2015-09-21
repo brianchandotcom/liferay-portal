@@ -16,12 +16,14 @@ package com.liferay.portal.repository.portletrepository;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
 import com.liferay.portal.repository.capabilities.LiferayRelatedModelCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.MinimalWorkflowCapability;
@@ -80,6 +82,9 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 		capabilityRegistry.addExportedCapability(
 			WorkflowCapability.class,
 			new MinimalWorkflowCapability(dlFileEntryServiceAdapter));
+
+		capabilityRegistry.addSupportedCapability(
+			ProcessorCapability.class, new LiferayProcessorCapability());
 	}
 
 	@Override

@@ -233,7 +233,7 @@
 	</category>
 
 	<category name="com.liferay.portal.events.StartupAction">
-		<priority value="ERROR" />
+		<priority value="INFO" />
 	</category>
 
 	<category name="com.liferay.portal.events.StartupHelper">
@@ -410,6 +410,10 @@
 
 	<category name="com.liferay.portal.plugin.PluginPackageUtil">
 		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.portal.patcher.PatcherImpl">
+		<priority value="WARN" />
 	</category>
 
 	<category name="com.liferay.portal.pop">
@@ -998,10 +1002,6 @@
 
 	<category name="com.liferay.portlet.portletconfiguration.action">
 		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portlet.shopping.action.PayPalNotificationAction">
-		<priority value="DEBUG" />
 	</category>
 
 	<category name="com.liferay.portlet.usersadmin.action.EditUserPortraitAction">

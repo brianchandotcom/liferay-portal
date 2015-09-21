@@ -26,8 +26,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -49,7 +47,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Marcellus Tavares
  * @author Sergio González
  */
-public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer {
+public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 
 	public DDLRecordAssetRenderer(
 		DDLRecord record, DDLRecordVersion recordVersion) {
@@ -73,6 +71,11 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer {
 
 		_ddmStructure = ddmStructure;
 		_recordSet = recordSet;
+	}
+
+	@Override
+	public DDLRecord getAssetObject() {
+		return _record;
 	}
 
 	@Override
@@ -155,14 +158,7 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer {
 			String noSuchEntryRedirect)
 		throws Exception {
 
-		PortletURL portletURL = PortletProviderUtil.getPortletURL(
-			liferayPortletRequest, DDLRecord.class.getName(),
-			PortletProvider.Action.VIEW);
-
-		portletURL.setParameter(
-			"recordId", String.valueOf(_record.getRecordId()));
-
-		return portletURL.toString();
+		return noSuchEntryRedirect;
 	}
 
 	@Override

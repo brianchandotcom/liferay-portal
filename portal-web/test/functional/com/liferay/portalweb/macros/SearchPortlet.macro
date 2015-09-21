@@ -7,9 +7,9 @@
 
 		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
 
-		<execute function="Click" locator1="PGSearchConfiguration#DISPLAY_SETTING_ADVANCED_RADIO" />
-		<execute function="Type" locator1="PGSearchConfiguration#DISPLAY_SETTING_ADVANCED_SEARCH_CONFIGURATION" value1="${advancedSearchConfiguration}" />
-		<execute function="AssertClick" locator1="PGSearchConfiguration#SAVE_BUTTON" value1="Save" />
+		<execute function="Click" locator1="Radio#ADVANCED" />
+		<execute function="Type" locator1="SearchConfiguration#ADVANCED_SEARCH_CONFIGURATION" value1="${advancedSearchConfiguration}" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

@@ -4,6 +4,8 @@ AUI.add(
 		var AArray = A.Array;
 		var Renderer = Liferay.DDM.Renderer;
 
+		var TPL_CONTAINER = '<div class="lfr-ddm-form-container"></div>';
+
 		var Form = A.Component.create(
 			{
 				ATTRS: {
@@ -17,53 +19,118 @@ AUI.add(
 					}
 				},
 
-				AUGMENTS: [Renderer.DefinitionSupport, Renderer.NestedFieldsSupport],
+				AUGMENTS: [
+					Renderer.FormDefinitionSupport,
+					Renderer.FormFeedbackSupport,
+					Renderer.FormPaginationSupport,
+					Renderer.FormTabsSupport,
+					Renderer.FormTemplateSupport,
+					Renderer.FormValidationSupport,
+					Renderer.NestedFieldsSupport
+				],
 
 				EXTENDS: A.Base,
 
 				NAME: 'liferay-ddm-form-renderer',
 
 				prototype: {
+					_eventHandlers: [],
+
 					initializer: function() {
+						var instance = this;
+
+						var formNode = instance.getFormNode();
+
+						if (formNode) {
+							instance._eventHandlers.push(
+								formNode.on('submit', A.bind('_onDOMSubmitForm', instance)),
+								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
+							);
+						}
+
+						instance.after('render', instance._afterFormRender);
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						instance.get('container').remove();
+
+						(new A.EventHandle(instance._eventHandlers)).detach();
+					},
+
+					getFormNode: function() {
 						var instance = this;
 
 						var container = instance.get('container');
 
-						instance.tabView = new A.TabView(
-							{
-								boundingBox: container,
-								srcNode: container.one('.lfr-ddm-form-pages'),
-								type: 'pills'
+						return container.ancestor('form', true);
+					},
+
+					submit: function() {
+						var instance = this;
+
+						instance.validate(
+							function(hasErrors) {
+								if (!hasErrors) {
+									var formNode = instance.getFormNode();
+
+									formNode.submit();
+								}
 							}
 						);
-					},
-
-					getTabView: function() {
-						var instance = this;
-
-						return instance.tabView;
-					},
-
-					render: function() {
-						var instance = this;
-
-						instance.tabView.render();
-
-						return instance;
 					},
 
 					toJSON: function() {
 						var instance = this;
 
+						var definition = instance.get('definition');
+
 						return {
-							fields: AArray.invoke(instance.get('fields'), 'toJSON')
+							availableLanguageIds: definition.availableLanguageIds,
+							defaultLanguageId: definition.defaultLanguageId,
+							fieldValues: AArray.invoke(instance.get('fields'), 'toJSON')
 						};
+					},
+
+					_afterFormRender: function() {
+						var instance = this;
+
+						instance.eachField(
+							function(field) {
+								field.render();
+							}
+						);
+					},
+
+					_onDOMSubmitForm: function(event) {
+						var instance = this;
+
+						event.preventDefault();
+
+						var currentPage = instance.getCurrentPage();
+						var pagesTotal = instance.getPagesTotal();
+
+						if (pagesTotal > 1 && currentPage < pagesTotal) {
+							instance.nextPage();
+						}
+						else {
+							instance.submit();
+						}
+					},
+
+					_onLiferaySubmitForm: function(event) {
+						var instance = this;
+
+						if (event.form === instance.getFormNode()) {
+							event.preventDefault();
+						}
 					},
 
 					_valueContainer: function() {
 						var instance = this;
 
-						return A.Node.create('<div class="lfr-ddm-form-container"></div>');
+						return A.Node.create(TPL_CONTAINER);
 					}
 				}
 			}
@@ -73,6 +140,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-component', 'aui-tabview', 'liferay-ddm-form-renderer-definition', 'liferay-ddm-form-renderer-nested-fields']
+		requires: ['aui-component', 'liferay-ddm-form-renderer-definition', 'liferay-ddm-form-renderer-feedback', 'liferay-ddm-form-renderer-nested-fields', 'liferay-ddm-form-renderer-pagination', 'liferay-ddm-form-renderer-tabs', 'liferay-ddm-form-renderer-template', 'liferay-ddm-form-renderer-validation', 'liferay-ddm-form-soy']
 	}
 );

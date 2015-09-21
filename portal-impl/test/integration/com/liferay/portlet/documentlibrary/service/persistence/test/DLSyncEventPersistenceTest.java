@@ -382,9 +382,9 @@ public class DLSyncEventPersistenceTest {
 
 		DLSyncEvent existingDLSyncEvent = _persistence.findByPrimaryKey(newDLSyncEvent.getPrimaryKey());
 
-		Assert.assertEquals(existingDLSyncEvent.getTypePK(),
-			ReflectionTestUtil.invoke(existingDLSyncEvent, "getOriginalTypePK",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingDLSyncEvent.getTypePK()),
+			ReflectionTestUtil.<Long>invoke(existingDLSyncEvent,
+				"getOriginalTypePK", new Class<?>[0]));
 	}
 
 	protected DLSyncEvent addDLSyncEvent() throws Exception {

@@ -479,12 +479,12 @@ public class DDLRecordSetPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingDDLRecordSet.getUuid(),
 				ReflectionTestUtil.invoke(existingDDLRecordSet,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingDDLRecordSet.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDLRecordSet,
+		Assert.assertEquals(Long.valueOf(existingDDLRecordSet.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDLRecordSet,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDDLRecordSet.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDLRecordSet,
+		Assert.assertEquals(Long.valueOf(existingDDLRecordSet.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDLRecordSet,
 				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingDDLRecordSet.getRecordSetKey(),

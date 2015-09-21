@@ -257,14 +257,14 @@
 		<if>
 			<contains string="${siteType}" substring="Private" />
 			<then>
-				<execute function="AssertChecked" locator1="CPSitesettings#PRIVATE_PAGE_PROPAGATION_CHECKBOX" />
+				<execute function="AssertChecked" locator1="Checkbox#ENABLE_PROPAGATION" />
 			</then>
 			<else>
-				<execute function="AssertChecked" locator1="CPSitesettings#PUBLIC_PAGE_PROPAGATION_CHECKBOX" />
+				<execute function="AssertChecked" locator1="Checkbox#ENABLE_PROPAGATION" />
 			</else>
 		</if>
 
-		<execute function="AssertSelectedLabel" locator1="CPSitesettings#APPLICATION_ADAPTER_SELECT" value1="Social Office EE Hook" />
+		<execute function="AssertSelectedLabel" locator1="SitesEditSite#APPLICATION_ADAPTER_SELECT" value1="Social Office EE Hook" />
 	</command>
 
 	<command name="viewSOSiteDeleted">
@@ -389,8 +389,8 @@
 				<if>
 					<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 					<then>
-						<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-						<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+						<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+						<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 					</then>
 				</if>
 
@@ -405,7 +405,7 @@
 			<else>
 				<execute function="AssertElementNotPresent" locator1="SOUserBar#TOGGLE_DOCKBAR" />
 
-				<execute function="AssertElementNotPresent" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="AssertElementNotPresent" locator1="Icon#EDIT_CONTROLS" />
 
 				<execute function="AssertElementNotPresent" locator1="SOAnnouncements#ANNOUNCEMENTS_OPTIONS" />
 				<execute function="AssertElementNotPresent" locator1="SOActivities#ACTIVITIES_OPTIONS" />

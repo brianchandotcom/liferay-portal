@@ -1,10 +1,10 @@
 <definition>
 	<command name="convertPG">
-		<execute function="Type" locator1="PGUnitconverter#FROM_FIELD" value1="${initialValue}" />
-		<execute function="Select" locator1="PGUnitconverter#UNIT_FROM_SELECT" value1="${initialUnit}" />
-		<execute function="Select" locator1="PGUnitconverter#UNIT_TYPE_SELECT" value1="${unitType}" />
-		<execute function="Select" locator1="PGUnitconverter#UNIT_TO_SELECT" value1="${targetUnit}" />
-		<execute function="AssertClick" locator1="PGUnitconverter#CONVERT_BUTTON" value1="Convert" />
-		<execute function="AssertTextEquals" locator1="PGUnitconverter#TO_FIELD" value1="${targetValue}" />
+		<execute function="Type" locator1="UnitConverter#FROM_FIELD" value1="${initialValue}" />
+		<execute function="Select" locator1="UnitConverter#UNIT_FROM_SELECT" value1="${initialUnit}" />
+		<execute function="Select" locator1="UnitConverter#UNIT_TYPE_SELECT" value1="${unitType}" />
+		<execute function="Select" locator1="UnitConverter#UNIT_TO_SELECT" value1="${targetUnit}" />
+		<execute function="AssertClick" locator1="Button#CONVERT" value1="Convert" />
+		<execute function="AssertTextEquals" locator1="UnitConverter#TO_FIELD" value1="${targetValue}" />
 	</command>
 </definition>

@@ -1631,7 +1631,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 				meetupsRegistration.setNew(false);
 			}
 			else {
-				session.merge(meetupsRegistration);
+				meetupsRegistration = (MeetupsRegistration)session.merge(meetupsRegistration);
 			}
 		}
 		catch (Exception e) {
@@ -1695,8 +1695,9 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 			MeetupsRegistrationImpl.class, meetupsRegistration.getPrimaryKey(),
 			meetupsRegistration, false);
 
-		clearUniqueFindersCache(meetupsRegistration);
-		cacheUniqueFindersCache(meetupsRegistration, isNew);
+		clearUniqueFindersCache((MeetupsRegistration)meetupsRegistrationModelImpl);
+		cacheUniqueFindersCache((MeetupsRegistration)meetupsRegistrationModelImpl,
+			isNew);
 
 		meetupsRegistration.resetOriginalValues();
 

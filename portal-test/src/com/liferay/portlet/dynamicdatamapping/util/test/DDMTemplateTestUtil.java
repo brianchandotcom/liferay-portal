@@ -33,17 +33,20 @@ import java.util.Map;
 public class DDMTemplateTestUtil {
 
 	public static DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK)
+			long groupId, long classNameId, long classPK,
+			long resourceClassNameId)
 		throws Exception {
 
 		return addTemplate(
-			groupId, classNameId, classPK, TemplateConstants.LANG_TYPE_VM,
-			getSampleTemplateXSL(), LocaleUtil.getSiteDefault());
+			groupId, classNameId, classPK, resourceClassNameId,
+			TemplateConstants.LANG_TYPE_VM, getSampleTemplateXSL(),
+			LocaleUtil.getSiteDefault());
 	}
 
 	public static DDMTemplate addTemplate(
-			long groupId, long classNameId, long classPK, String language,
-			String script, Locale defaultLocale)
+			long groupId, long classNameId, long classPK,
+			long resourceClassNameId, String language, String script,
+			Locale defaultLocale)
 		throws Exception {
 
 		Map<Locale, String> nameMap = new HashMap<>();
@@ -56,9 +59,10 @@ public class DDMTemplateTestUtil {
 		serviceContext.setAddGuestPermissions(true);
 
 		return DDMTemplateManagerUtil.addTemplate(
-			TestPropsValues.getUserId(), groupId, classNameId, classPK, 0l,
-			null, nameMap, null, DDMTemplateManager.TEMPLATE_TYPE_DISPLAY, null,
-			language, script, false, false, null, null, serviceContext);
+			TestPropsValues.getUserId(), groupId, classNameId, classPK,
+			resourceClassNameId, null, nameMap, null,
+			DDMTemplateManager.TEMPLATE_TYPE_DISPLAY, null, language, script,
+			false, false, null, null, serviceContext);
 	}
 
 	public static String getSampleTemplateXSL() {

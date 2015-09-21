@@ -2,11 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="bookmarks-api,bookmarks-service,../application-list/application-list-api" />
-	<property name="osgi.auto.update.xml" value="true" />
-	<property name="osgi.ide.dependencies" value="struts-core.jar" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+	<import file="../../../build-module.xml" />
 </project>

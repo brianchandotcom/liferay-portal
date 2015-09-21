@@ -145,11 +145,8 @@ public class ComboServlet extends HttpServlet {
 		}
 
 		if (modulePathsSet.isEmpty()) {
-			response.sendError(
-				HttpServletResponse.SC_BAD_REQUEST,
-				"Modules paths set is empty");
-
-			return;
+			throw new IllegalArgumentException(
+				"Query string translates to an empty module paths set");
 		}
 
 		String[] modulePaths = modulePathsSet.toArray(

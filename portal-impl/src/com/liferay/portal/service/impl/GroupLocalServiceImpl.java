@@ -24,7 +24,9 @@ import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutSetException;
 import com.liferay.portal.PendingBackgroundTaskException;
 import com.liferay.portal.RequiredGroupException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,7 +62,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Account;
-import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -89,6 +90,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.security.permission.RolePermissions;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.GroupLocalServiceBaseImpl;
 import com.liferay.portal.theme.ThemeLoader;
@@ -784,7 +786,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 
 			List<BackgroundTask> backgroundTasks =
-				backgroundTaskLocalService.getBackgroundTasks(
+				BackgroundTaskManagerUtil.getBackgroundTasks(
 					group.getGroupId(),
 					BackgroundTaskConstants.STATUS_IN_PROGRESS);
 
@@ -795,7 +797,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			// Background tasks
 
-			backgroundTaskLocalService.deleteGroupBackgroundTasks(
+			BackgroundTaskManagerUtil.deleteGroupBackgroundTasks(
 				group.getGroupId());
 
 			// Layout set branches
@@ -905,13 +907,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			// Expando
 
 			expandoRowLocalService.deleteRows(group.getGroupId());
-
-			// Shopping
-
-			shoppingCartLocalService.deleteGroupCarts(group.getGroupId());
-			shoppingCategoryLocalService.deleteCategories(group.getGroupId());
-			shoppingCouponLocalService.deleteCoupons(group.getGroupId());
-			shoppingOrderLocalService.deleteOrders(group.getGroupId());
 
 			// Social
 
@@ -3858,32 +3853,31 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		// Join by role permissions
 
-		List<?> rolePermissions = (List<?>)params.remove("rolePermissions");
+		RolePermissions rolePermissions = (RolePermissions)params.remove(
+			"rolePermissions");
 
 		if (rolePermissions != null) {
-			String resourceName = (String)rolePermissions.get(0);
-			Integer resourceScope = (Integer)rolePermissions.get(1);
-			String resourceActionId = (String)rolePermissions.get(2);
-			Long resourceRoleId = (Long)rolePermissions.get(3);
-
 			ResourceAction resourceAction =
 				resourceActionLocalService.fetchResourceAction(
-					resourceName, resourceActionId);
+					rolePermissions.getName(), rolePermissions.getActionId());
 
 			if (resourceAction != null) {
 				Set<Group> rolePermissionsGroups = new HashSet<>();
 
-				if (resourceBlockLocalService.isSupported(resourceName)) {
+				if (resourceBlockLocalService.isSupported(
+						rolePermissions.getName())) {
+
 					List<ResourceTypePermission> resourceTypePermissions =
 						resourceTypePermissionPersistence.findByRoleId(
-							resourceRoleId);
+							rolePermissions.getRoleId());
 
 					for (ResourceTypePermission resourceTypePermission :
 							resourceTypePermissions) {
 
 						if ((resourceTypePermission.getCompanyId() ==
 								companyId) &&
-							resourceName.equals(
+							Validator.equals(
+								rolePermissions.getName(),
 								resourceTypePermission.getName()) &&
 							resourceTypePermission.hasAction(resourceAction)) {
 
@@ -3899,13 +3893,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				else {
 					List<ResourcePermission> resourcePermissions =
 						resourcePermissionPersistence.findByC_N_S(
-							companyId, resourceName, resourceScope);
+							companyId, rolePermissions.getName(),
+							rolePermissions.getScope());
 
 					for (ResourcePermission resourcePermission :
 							resourcePermissions) {
 
 						if ((resourcePermission.getRoleId() ==
-								resourceRoleId) &&
+								rolePermissions.getRoleId()) &&
 							resourcePermission.hasAction(
 								resourceAction)) {
 

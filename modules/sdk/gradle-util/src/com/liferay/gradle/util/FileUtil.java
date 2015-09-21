@@ -27,16 +27,22 @@ import java.io.PrintWriter;
 
 import java.nio.channels.FileChannel;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.gradle.api.AntBuilder;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 
 /**
@@ -80,7 +86,7 @@ public class FileUtil {
 		return get(project, url, destinationFile, false, true, false);
 	}
 
-	public static File get(
+	public static synchronized File get(
 			Project project, String url, File destinationFile,
 			boolean ignoreErrors, boolean tryLocalNetwork, boolean verbose)
 		throws IOException {
@@ -172,18 +178,21 @@ public class FileUtil {
 			return false;
 		}
 
-		AntBuilder antBuilder = project.getAnt();
+		boolean upToDate = false;
 
-		_invokeAntMethodUpToDate(
-			antBuilder, "uptodate", sourceFile, targetFile);
+		try {
+			long sourceLastModified = _getLastModified(sourceFile);
+			long targetLastModified = _getLastModified(targetFile);
 
-		Map<String, Object> antProperties = antBuilder.getProperties();
-
-		if (antProperties.containsKey("uptodate")) {
-			return true;
+			if (targetLastModified >= sourceLastModified) {
+				upToDate = true;
+			}
+		}
+		catch (IOException ioe) {
+			throw new GradleException(ioe.getMessage(), ioe);
 		}
 
-		return false;
+		return upToDate;
 	}
 
 	public static void jar(
@@ -319,6 +328,38 @@ public class FileUtil {
 		project.ant(closure);
 	}
 
+	private static long _getLastModified(File file) throws IOException {
+		if (file.isFile()) {
+			return file.lastModified();
+		}
+
+		final AtomicLong lastModified = new AtomicLong();
+
+		Files.walkFileTree(
+			file.toPath(),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					FileTime fileTime = basicFileAttributes.lastModifiedTime();
+
+					long fileTimeMillis = fileTime.toMillis();
+
+					if (fileTimeMillis > lastModified.longValue()) {
+						lastModified.set(fileTimeMillis);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return lastModified.get();
+	}
+
 	private static File _getMirrorsCacheDir() {
 		String userHome = System.getProperty("user.home");
 
@@ -358,19 +399,6 @@ public class FileUtil {
 		};
 
 		antBuilder.invokeMethod("jar", new Object[] {args, closure});
-	}
-
-	private static void _invokeAntMethodUpToDate(
-		AntBuilder antBuilder, String property, File sourceFile,
-		File targetFile) {
-
-		Map<String, Object> args = new HashMap<>();
-
-		args.put("property", property);
-		args.put("srcfile", sourceFile);
-		args.put("targetfile", targetFile);
-
-		antBuilder.invokeMethod("uptodate", args);
 	}
 
 }

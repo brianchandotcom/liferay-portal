@@ -39,7 +39,7 @@ public class RatingsContentMetadataAssetAddonEntry
 
 	@Override
 	public String getJspPath() {
-		return "/META-INF/resources/ratings.jsp";
+		return "/ratings.jsp";
 	}
 
 	@Override

@@ -51,6 +51,10 @@ public class EhcachePortalCache<K extends Serializable, V>
 			NotificationScope.ALL);
 	}
 
+	public Ehcache getEhcache() {
+		return ehcache;
+	}
+
 	@Override
 	public List<K> getKeys() {
 		return ehcache.getKeys();

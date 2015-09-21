@@ -40,8 +40,13 @@ import java.util.TimeZone;
 import javax.portlet.PortletRequest;
 
 /**
+ * Provides a way to build a settings map for an {@link
+ * com.liferay.portlet.exportimport.model.ExportImportConfiguration}, which can
+ * be used to start and control an export, import, or staging process.
+ *
  * @author Daniel Kocsis
  * @author Akos Thurzo
+ * @since  7.0
  */
 public class ExportImportConfigurationSettingsMapFactory {
 
@@ -70,7 +75,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 		return buildSettingsMap(
 			userId, sourceGroupId, sourcePlid, 0, 0, portletId, null, null,
-			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
+			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null,
 			null, locale, timeZone, fileName);
 	}
 
@@ -91,8 +96,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 		return buildSettingsMap(
 			userId, 0, 0, targetGroupId, 0, StringPool.BLANK, privateLayout,
 			null, layoutIds, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, locale, timeZone,
-			StringPool.BLANK);
+			StringPool.BLANK, null, null, locale, timeZone, StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildImportLayoutSettingsMap(
@@ -110,7 +114,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 		return buildSettingsMap(
 			userId, 0, 0, targetGroupId, targetPlid, portletId, null, null,
-			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null, 0,
+			null, parameterMap, StringPool.BLANK, 0, StringPool.BLANK, null,
 			null, locale, timeZone, StringPool.BLANK);
 	}
 
@@ -131,8 +135,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 		return buildSettingsMap(
 			userId, sourceGroupId, 0, targetGroupId, 0, StringPool.BLANK,
 			privateLayout, null, layoutIds, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, locale, timeZone,
-			StringPool.BLANK);
+			StringPool.BLANK, null, null, locale, timeZone, StringPool.BLANK);
 	}
 
 	public static Map<String, Serializable> buildPublishLayoutLocalSettingsMap(
@@ -153,9 +156,9 @@ public class ExportImportConfigurationSettingsMapFactory {
 		boolean remotePrivateLayout, Locale locale, TimeZone timeZone) {
 
 		return buildSettingsMap(
-			userId, sourceGroupId, 0, 0, 0, StringPool.BLANK, privateLayout,
-			layoutIdMap, null, parameterMap, remoteAddress, remotePort,
-			remotePathContext, secureConnection, remoteGroupId,
+			userId, sourceGroupId, 0, remoteGroupId, 0, StringPool.BLANK,
+			privateLayout, layoutIdMap, null, parameterMap, remoteAddress,
+			remotePort, remotePathContext, secureConnection,
 			remotePrivateLayout, locale, timeZone, StringPool.BLANK);
 	}
 
@@ -181,7 +184,7 @@ public class ExportImportConfigurationSettingsMapFactory {
 		return buildSettingsMap(
 			userId, sourceGroupId, sourcePlid, targetGroupId, targetPlid,
 			portletId, null, null, null, parameterMap, StringPool.BLANK, 0,
-			StringPool.BLANK, null, 0, null, locale, timeZone, null);
+			StringPool.BLANK, null, null, locale, timeZone, null);
 	}
 
 	public static Map<String, Serializable> buildPublishPortletSettingsMap(
@@ -194,6 +197,20 @@ public class ExportImportConfigurationSettingsMapFactory {
 			user.getTimeZone());
 	}
 
+	/**
+	 * Returns an export layout settings map if the type is {@link
+	 * ExportImportConfigurationConstants#TYPE_EXPORT_LAYOUT}; otherwise,
+	 * returns either a local or remote publish layout settings map, depending
+	 * on the staging type.
+	 *
+	 * @param  portletRequest the portlet request
+	 * @param  groupId the primary key of the group
+	 * @param  type the export/import option type
+	 * @return an export layout settings map if the type is an export layout;
+	 *         otherwise, returns either a local or remote publish layout
+	 *         settings map, depending on the staging type
+	 * @throws PortalException if a portal exception occurred
+	 */
 	public static Map<String, Serializable> buildSettingsMap(
 			PortletRequest portletRequest, long groupId, int type)
 		throws PortalException {
@@ -279,8 +296,8 @@ public class ExportImportConfigurationSettingsMapFactory {
 		Map<Long, Boolean> layoutIdMap, long[] layoutIds,
 		Map<String, String[]> parameterMap, String remoteAddress,
 		int remotePort, String remotePathContext, Boolean secureConnection,
-		long remoteGroupId, Boolean remotePrivateLayout, Locale locale,
-		TimeZone timeZone, String fileName) {
+		Boolean remotePrivateLayout, Locale locale, TimeZone timeZone,
+		String fileName) {
 
 		Map<String, Serializable> settingsMap = new HashMap<>();
 
@@ -320,10 +337,6 @@ public class ExportImportConfigurationSettingsMapFactory {
 
 		if (Validator.isNotNull(remoteAddress)) {
 			settingsMap.put("remoteAddress", remoteAddress);
-		}
-
-		if (remoteGroupId > 0) {
-			settingsMap.put("remoteGroupId", remoteGroupId);
 		}
 
 		if (Validator.isNotNull(remotePathContext)) {

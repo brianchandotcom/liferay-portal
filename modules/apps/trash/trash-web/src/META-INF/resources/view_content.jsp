@@ -16,84 +16,82 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+
+long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
+
+long classNameId = ParamUtil.getLong(request, "classNameId");
+
+String className = StringPool.BLANK;
+
+if (classNameId != 0) {
+	className = PortalUtil.getClassName(classNameId);
+}
+
+long classPK = ParamUtil.getLong(request, "classPK");
+
+TrashEntry entry = null;
+
+if (trashEntryId > 0) {
+	entry = TrashEntryLocalServiceUtil.getEntry(trashEntryId);
+}
+else if (Validator.isNotNull(className) && (classPK > 0)) {
+	entry = TrashEntryLocalServiceUtil.fetchEntry(className, classPK);
+}
+
+if (entry != null) {
+	className = entry.getClassName();
+	classPK = entry.getClassPK();
+}
+
+TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
+
+TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle-bin"), portletURL.toString());
+
+PortletURL containerModelURL = renderResponse.createRenderURL();
+
+String trashHandlerContainerModelClassName = trashHandler.getContainerModelClassName(classPK);
+
+containerModelURL.setParameter("mvcPath", "/view_content.jsp");
+containerModelURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(trashHandlerContainerModelClassName)));
+
+TrashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, className, classPK, containerModelURL);
+
+if (Validator.isNull(redirect)) {
+	ContainerModel parentContainerModel = trashHandler.getParentContainerModel(classPK);
+
+	PortletURL redirectURL = renderResponse.createRenderURL();
+
+	if ((parentContainerModel != null) && (classNameId > 0)) {
+		String parentContainerModelClassName = parentContainerModel.getModelClassName();
+
+		redirectURL.setParameter("mvcPath", "/view_content.jsp");
+		redirectURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(parentContainerModelClassName)));
+		redirectURL.setParameter("classPK", String.valueOf(parentContainerModel.getContainerModelId()));
+	}
+
+	redirect = redirectURL.toString();
+}
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(trashRenderer.getTitle(locale));
+%>
+
 <liferay-util:include page="/restore_path.jsp" servletContext="<%= application %>" />
 
-<div class="asset-content">
-
-	<%
-	String redirect = ParamUtil.getString(request, "redirect");
-
-	long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
-
-	long classNameId = ParamUtil.getLong(request, "classNameId");
-
-	String className = StringPool.BLANK;
-
-	if (classNameId != 0) {
-		className = PortalUtil.getClassName(classNameId);
-	}
-
-	long classPK = ParamUtil.getLong(request, "classPK");
-
-	TrashEntry entry = null;
-
-	if (trashEntryId > 0) {
-		entry = TrashEntryLocalServiceUtil.getEntry(trashEntryId);
-	}
-	else if (Validator.isNotNull(className) && (classPK > 0)) {
-		entry = TrashEntryLocalServiceUtil.fetchEntry(className, classPK);
-	}
-
-	if (entry != null) {
-		className = entry.getClassName();
-		classPK = entry.getClassPK();
-	}
-
-	TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(className);
-
-	TrashRenderer trashRenderer = trashHandler.getTrashRenderer(classPK);
-
-	PortletURL portletURL = renderResponse.createRenderURL();
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "recycle-bin"), portletURL.toString());
-
-	PortletURL containerModelURL = renderResponse.createRenderURL();
-
-	String trashHandlerContainerModelClassName = trashHandler.getContainerModelClassName(classPK);
-
-	containerModelURL.setParameter("mvcPath", "/view_content.jsp");
-	containerModelURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(trashHandlerContainerModelClassName)));
-
-	TrashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, className, classPK, containerModelURL);
-
-	if (Validator.isNull(redirect)) {
-		ContainerModel parentContainerModel = trashHandler.getParentContainerModel(classPK);
-
-		PortletURL redirectURL = renderResponse.createRenderURL();
-
-		if ((parentContainerModel != null) && (classNameId > 0)) {
-			String parentContainerModelClassName = parentContainerModel.getModelClassName();
-
-			redirectURL.setParameter("mvcPath", "/view_content.jsp");
-			redirectURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(parentContainerModelClassName)));
-			redirectURL.setParameter("classPK", String.valueOf(parentContainerModel.getContainerModelId()));
-		}
-
-		redirect = redirectURL.toString();
-	}
-	%>
-
+<div class="asset-content container-fluid-1280">
 	<liferay-ui:breadcrumb
 		showCurrentGroup="<%= false %>"
 		showGuestGroup="<%= false %>"
 		showLayout="<%= false %>"
 		showParentGroups="<%= false %>"
-	/>
-
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= false %>"
-		title="<%= trashRenderer.getTitle(locale) %>"
 	/>
 
 	<c:choose>
@@ -296,7 +294,7 @@
 								/>
 							</liferay-ui:search-container-row>
 
-							<liferay-ui:search-iterator />
+							<liferay-ui:search-iterator markupView="lexicon" />
 						</liferay-ui:search-container>
 					</liferay-ui:panel>
 				</c:if>
@@ -345,7 +343,7 @@
 								/>
 							</liferay-ui:search-container-row>
 
-							<liferay-ui:search-iterator />
+							<liferay-ui:search-iterator markupView="lexicon" />
 						</liferay-ui:search-container>
 					</liferay-ui:panel>
 				</c:if>

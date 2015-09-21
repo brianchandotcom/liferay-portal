@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Release;
@@ -70,6 +71,40 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		release.setModifiedDate(now);
 		release.setServletContextName(servletContextName);
 		release.setBuildNumber(buildNumber);
+
+		if (servletContextName.equals(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
+
+			release.setTestString(ReleaseConstants.TEST_STRING);
+		}
+
+		releasePersistence.update(release);
+
+		return release;
+	}
+
+	@Override
+	public Release addRelease(String servletContextName, String schemaVersion) {
+		Release release = null;
+
+		if (servletContextName.equals(
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
+
+			release = releasePersistence.create(ReleaseConstants.DEFAULT_ID);
+		}
+
+		else {
+			long releaseId = counterLocalService.increment();
+
+			release = releasePersistence.create(releaseId);
+		}
+
+		Date now = new Date();
+
+		release.setCreateDate(now);
+		release.setModifiedDate(now);
+		release.setServletContextName(servletContextName);
+		release.setSchemaVersion(schemaVersion);
 
 		if (servletContextName.equals(
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
@@ -132,6 +167,22 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 	@Override
 	public int getBuildNumberOrCreate() throws PortalException {
 
+		// Gracefully add version column
+
+		DB db = DBFactoryUtil.getDB();
+
+		try {
+			db.runSQL(
+				"alter table Release_ add schemaVersion VARCHAR(75) null");
+
+			populateVersion();
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e.getMessage());
+			}
+		}
+
 		// Get release build number
 
 		Connection con = null;
@@ -154,7 +205,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 					_log.debug("Build number " + buildNumber);
 				}
 
-				DB db = DBFactoryUtil.getDB();
+				// Gracefully add state_ column
 
 				try {
 					db.runSQL("alter table Release_ add state_ INTEGER");
@@ -278,6 +329,48 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		updateRelease(
 			servletContextName, upgradeProcesses, buildNumber,
 			previousBuildNumber, indexOnUpgrade);
+	}
+
+	@Override
+	public void updateRelease(
+		String servletContextName, String schemaVersion,
+		String previousSchemaVersion) {
+
+		Release release = releaseLocalService.fetchRelease(servletContextName);
+
+		if (release == null) {
+			if (previousSchemaVersion.equals("0.0.0")) {
+				release = releaseLocalService.addRelease(
+					servletContextName, previousSchemaVersion);
+			}
+			else {
+				throw new IllegalStateException(
+					"Unable to update release because it does not exist");
+			}
+		}
+
+		if (!previousSchemaVersion.equals(release.getSchemaVersion())) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("Unable to update release because the previous schema ");
+			sb.append("version ");
+			sb.append(previousSchemaVersion);
+			sb.append(" does not match the expected schema version ");
+			sb.append(release.getSchemaVersion());
+
+			throw new IllegalStateException(sb.toString());
+		}
+
+		release.setSchemaVersion(schemaVersion);
+
+		releasePersistence.update(release);
+	}
+
+	protected void populateVersion() {
+
+		// This method is called if and only if the version column did not
+		// previously exist and was safely added to the database
+
 	}
 
 	protected void testSupportsStringCaseSensitiveQuery() {

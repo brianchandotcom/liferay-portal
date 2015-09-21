@@ -9,7 +9,7 @@ AUI.add(
 
 				return A.Component.create(
 					{
-						AUGMENTS: [Liferay.DDL.FormBuilderFieldSupport],
+						AUGMENTS: [Liferay.DDL.FormBuilderSettingsSupport],
 
 						EXTENDS: fieldClass,
 
@@ -23,6 +23,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder-field-support', 'liferay-ddm-form-renderer-util']
+		requires: ['liferay-ddl-form-builder-settings-support', 'liferay-ddm-form-renderer-util']
 	}
 );

@@ -993,10 +993,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param parameterMap the mapping of parameters indicating which
 	information will be used. See {@link
 	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
-	* @param scope the scope of the pages. It can be
-	<code>all-pages</code> or <code>selected-pages</code>.
-	* @param startDate the start date
-	* @param endDate the end date
 	* @param groupName the group name (optionally {@link
 	DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
 	DestinationNames}.
@@ -1040,10 +1036,6 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @param parameterMap the mapping of parameters indicating which
 	information will be used. See {@link
 	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
-	* @param scope the scope of the pages. It can be <code>all-pages</code> or
-	<code>selected-pages</code>.
-	* @param startDate the start date
-	* @param endDate the end date
 	* @param groupName the group name (optionally {@link
 	DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
 	DestinationNames}.
@@ -1055,6 +1047,50 @@ public class LayoutServiceWrapper implements LayoutService,
 	* @throws PortalException if the group did not have permission to manage
 	and publish
 	*/
+	@Override
+	public void schedulePublishToLive(long sourceGroupId, long targetGroupId,
+		boolean privateLayout, long[] layoutIds,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.lang.String groupName, java.lang.String cronText,
+		java.util.Date schedulerStartDate, java.util.Date schedulerEndDate,
+		java.lang.String description)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_layoutService.schedulePublishToLive(sourceGroupId, targetGroupId,
+			privateLayout, layoutIds, parameterMap, groupName, cronText,
+			schedulerStartDate, schedulerEndDate, description);
+	}
+
+	/**
+	* Schedules a range of layouts to be published.
+	*
+	* @param sourceGroupId the primary key of the source group
+	* @param targetGroupId the primary key of the target group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutIds the layouts considered for publishing, specified by
+	the layout IDs
+	* @param parameterMap the mapping of parameters indicating which
+	information will be used. See {@link
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
+	* @param scope the scope of the pages. It can be
+	<code>all-pages</code> or <code>selected-pages</code>.
+	* @param startDate the start date
+	* @param endDate the end date
+	* @param groupName the group name (optionally {@link
+	DestinationNames#LAYOUTS_LOCAL_PUBLISHER}). See {@link
+	DestinationNames}.
+	* @param cronText the cron text. See {@link
+	com.liferay.portal.kernel.cal.RecurrenceSerializer
+	#toCronText}
+	* @param schedulerStartDate the scheduler start date
+	* @param schedulerEndDate the scheduler end date
+	* @param description the scheduler description
+	* @throws PortalException if the group did not have permission to
+	manage and publish
+	* @deprecated As of 7.0.0, replaced by {@link #schedulePublishToLive(long,
+	long, boolean, long[], Map, String, String, Date, Date,
+	String)}
+	*/
+	@Deprecated
 	@Override
 	public void schedulePublishToLive(long sourceGroupId, long targetGroupId,
 		boolean privateLayout, long[] layoutIds,

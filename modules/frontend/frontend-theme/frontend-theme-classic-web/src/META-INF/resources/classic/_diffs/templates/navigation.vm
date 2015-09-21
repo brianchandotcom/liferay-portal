@@ -1,0 +1,18 @@
+<div aria-expanded="false" class="collapse navbar-collapse" id="navigationCollapse">
+	<nav class="$nav_css_class site-navigation" id="navigation" role="navigation">
+		<div class="navbar-form navbar-right" role="search">
+			#search()
+		</div>
+
+		<div class="navbar-right">
+			#navigation_menu()
+		</div>
+	</nav>
+
+	<nav class="user-personal-bar">
+		<ul class="nav navbar-nav navbar-right">
+			#user_personal_bar()
+		</ul>
+	<nav>
+
+</div>

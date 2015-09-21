@@ -14,16 +14,19 @@
 
 package com.liferay.dynamic.data.mapping.render.impl;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRendererRegistryUtil;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.render.DDMFormRenderer;
+import com.liferay.dynamic.data.mapping.util.impl.DDMFieldsCounter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -50,7 +53,27 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 					ddmFormField, ddmFormFieldRenderingContext));
 		}
 
+		clearDDMFieldsCounter(ddmFormFieldRenderingContext);
+
 		return sb.toString();
+	}
+
+	protected void clearDDMFieldsCounter(
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		HttpServletRequest request =
+			ddmFormFieldRenderingContext.getHttpServletRequest();
+
+		String fieldsCounterKey =
+			ddmFormFieldRenderingContext.getPortletNamespace() +
+				ddmFormFieldRenderingContext.getNamespace() + "fieldsCount";
+
+		DDMFieldsCounter ddmFieldsCounter =
+			(DDMFieldsCounter)request.getAttribute(fieldsCounterKey);
+
+		if (ddmFieldsCounter != null) {
+			ddmFieldsCounter.clear();
+		}
 	}
 
 }

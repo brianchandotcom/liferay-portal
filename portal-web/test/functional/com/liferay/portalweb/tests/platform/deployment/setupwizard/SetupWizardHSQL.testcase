@@ -179,7 +179,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command known-issues="LPS-55222" name="HSQLtoOracle" priority="4">
+	<command name="HSQLtoOracle" priority="4">
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=oracle -Ddelete.liferay.home=false" />
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
@@ -209,7 +209,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command known-issues="LPS-55222" name="HSQLtoOracleSampleDataDisabled" priority="4">
+	<command name="HSQLtoOracleSampleDataDisabled" priority="4">
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=oracle -Ddelete.liferay.home=false" />
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />

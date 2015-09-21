@@ -17,13 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-userStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(UserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource()));
+String portletResource = ParamUtil.getString(request, "portletResource");
 
-String displayActivityCounterName = "";
+String portletResourceNamespace = PortalUtil.getPortletNamespace(portletResource);
 
 int index = ParamUtil.getInteger(request, "index");
 
-String displayActivityCounterNames[] = userStatisticsPortletInstanceConfiguration.displayActivityCounterName();
+socialUserStatisticsPortletInstanceConfiguration = ConfigurationFactoryUtil.getConfiguration(SocialUserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource()));
+
+String displayActivityCounterName = "";
+
+String displayActivityCounterNames[] = socialUserStatisticsPortletInstanceConfiguration.displayActivityCounterName();
 
 if (index < displayActivityCounterNames.length) {
 	displayActivityCounterName = displayActivityCounterNames[index];
@@ -39,7 +43,7 @@ Collections.sort(activityCounterNames, new SocialActivityCounterNameComparator(l
 %>
 
 <div class="field-row query-row">
-	<aui:select inlineField="<%= true %>" label="" name='<%= "preferences--displayActivityCounterName" + index + "--" %>' title="display-activity-counter-name">
+	<aui:select inlineField="<%= true %>" label="" name='<%= portletResourceNamespace + "preferences--displayActivityCounterName" + index + "--" %>' title="display-activity-counter-name" useNamespace="<%= false %>">
 
 		<%
 		for (String activityCounterName : activityCounterNames) {

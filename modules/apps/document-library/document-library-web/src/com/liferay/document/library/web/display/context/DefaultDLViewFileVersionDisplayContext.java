@@ -30,14 +30,15 @@ import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.display.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.IOException;
 
@@ -99,17 +100,29 @@ public class DefaultDLViewFileVersionDisplayContext
 	public Menu getMenu() throws PortalException {
 		Menu menu = new Menu();
 
-		String direction = "left";
+		String direction = "left-side";
 
-		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
+		if (_dlVisualizationHelper.isShowMinimalActionsButton() &&
+			Validator.equals(
+				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
+
 			direction = "down";
 		}
 
 		menu.setDirection(direction);
 
+		if (!Validator.equals(
+				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
+
+			menu.setShowExpanded(true);
+		}
+
 		boolean extended = true;
 
-		if (_dlVisualizationHelper.isShowMinimalActionsButton()) {
+		if (_dlVisualizationHelper.isShowMinimalActionsButton() ||
+			!Validator.equals(
+				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
+
 			extended = false;
 		}
 
@@ -133,9 +146,26 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		menu.setMessage(message);
 
+		if (!Validator.equals(
+				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
+
+			menu.setScroll(true);
+		}
+
 		menu.setShowWhenSingleIcon(
 			_dlVisualizationHelper.isShowWhenSingleIconActionButton());
-		menu.setTriggerCssClass("btn btn-default");
+
+		if (Validator.equals(
+				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
+
+			menu.setTriggerCssClass("btn btn-default");
+		}
+
+		if (!Validator.equals(
+				_dlVisualizationHelper.getDisplayStyle(), "icon")) {
+
+			menu.setMarkupView("lexicon");
+		}
 
 		return menu;
 	}

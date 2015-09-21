@@ -372,8 +372,8 @@ public class BrowserTrackerPersistenceTest {
 
 		BrowserTracker existingBrowserTracker = _persistence.findByPrimaryKey(newBrowserTracker.getPrimaryKey());
 
-		Assert.assertEquals(existingBrowserTracker.getUserId(),
-			ReflectionTestUtil.invoke(existingBrowserTracker,
+		Assert.assertEquals(Long.valueOf(existingBrowserTracker.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingBrowserTracker,
 				"getOriginalUserId", new Class<?>[0]));
 	}
 

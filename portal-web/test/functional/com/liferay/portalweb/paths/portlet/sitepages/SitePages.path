@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>SITE_NAME</td>
-	<td>//a[contains(@title,'${key_siteName}')]</td>
+	<td>//div[contains(@id,'site_administration')]//a[contains(.,'${key_siteName}')]</td>
 	<td></td>
 </tr>
 <tr>

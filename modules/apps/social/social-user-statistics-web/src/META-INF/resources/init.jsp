@@ -28,10 +28,9 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator" %><%@
-page import="com.liferay.portal.kernel.settings.SettingsFactory" %><%@
-page import="com.liferay.portal.kernel.settings.SettingsFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
@@ -39,13 +38,15 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Tuple" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityCounter" %><%@
 page import="com.liferay.portlet.social.model.SocialActivityCounterConstants" %><%@
 page import="com.liferay.portlet.social.model.impl.SocialActivityCounterImpl" %><%@
 page import="com.liferay.portlet.social.service.SocialActivityCounterLocalServiceUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialConfigurationUtil" %><%@
 page import="com.liferay.portlet.social.util.comparator.SocialActivityCounterNameComparator" %><%@
-page import="com.liferay.social.user.statistics.web.configuration.UserStatisticsPortletInstanceConfiguration" %><%@
+page import="com.liferay.social.user.statistics.web.configuration.SocialUserStatisticsPortletInstanceConfiguration" %><%@
+page import="com.liferay.social.user.statistics.web.constants.SocialUserStatisticsPortletKeys" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="java.util.ArrayList" %><%@
@@ -60,9 +61,7 @@ page import="java.util.Map" %>
 <liferay-theme:defineObjects />
 
 <%
-SettingsFactory settingsFactory = SettingsFactoryUtil.getSettingsFactory();
-
-UserStatisticsPortletInstanceConfiguration userStatisticsPortletInstanceConfiguration = settingsFactory.getSettings(UserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
+SocialUserStatisticsPortletInstanceConfiguration socialUserStatisticsPortletInstanceConfiguration = ConfigurationFactoryUtil.getConfiguration(SocialUserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getId()));
 %>
 
 <%@ include file="/init-ext.jsp" %>

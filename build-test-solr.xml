@@ -48,7 +48,7 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 	</target>
 
 	<target name="delete-elasticseach-osgi-bundle">
-		<delete file="${liferay.home}/osgi/com.liferay.portal.search.elasticsearch.jar" failonerror="false" />
+		<delete file="${liferay.home}/osgi/portal/com.liferay.portal.search.elasticsearch.jar" failonerror="false" />
 	</target>
 
 	<target name="start-solr">
@@ -58,7 +58,9 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 
 		<antcall target="delete-elasticseach-osgi-bundle" />
 
-		<ant dir="modules/portal/portal-search-solr" target="all" />
+		<gradle-execute dir="modules/portal/portal-search-solr" task="deploy">
+			<arg value="clean" />
+		</gradle-execute>
 
 		<antcall target="configure-solr-osgi-bundle-properties" />
 
@@ -67,6 +69,8 @@ writeURL=http://localhost:8983/solr/liferay</echo>
 		<if>
 			<os family="unix" />
 			<then>
+				<chmod file="${solr.dir}/bin/solr" perm="a+x" />
+
 				<exec executable="/bin/bash" os="${os.unix}">
 					<arg value="-c" />
 					<arg value="${solr.dir}/bin/solr -V" />

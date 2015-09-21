@@ -15,10 +15,12 @@
 package com.liferay.calendar.lar;
 
 import com.liferay.calendar.constants.CalendarPortletKeys;
+import com.liferay.calendar.exception.DuplicateCalendarResourceException;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
 import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,7 +33,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -192,7 +193,9 @@ public class CalendarResourceStagedModelDataHandler
 						userId, portletDataContext.getScopeGroupId(),
 						calendarResource.getClassNameId(), classPK,
 						calendarResource.getClassUuid(),
-						calendarResource.getCode(), calendarResourceNameMap,
+						getUniqueCalendarResourceCode(
+							portletDataContext, calendarResource),
+						calendarResourceNameMap,
 						calendarResource.getDescriptionMap(),
 						calendarResource.isActive(), serviceContext);
 			}
@@ -206,14 +209,27 @@ public class CalendarResourceStagedModelDataHandler
 			}
 		}
 		else {
-			importedCalendarResource =
-				CalendarResourceLocalServiceUtil.addCalendarResource(
-					userId, portletDataContext.getScopeGroupId(),
-					calendarResource.getClassNameId(), classPK,
-					calendarResource.getClassUuid(), calendarResource.getCode(),
-					calendarResourceNameMap,
-					calendarResource.getDescriptionMap(),
-					calendarResource.isActive(), serviceContext);
+			try {
+				importedCalendarResource =
+					CalendarResourceLocalServiceUtil.addCalendarResource(
+						userId, portletDataContext.getScopeGroupId(),
+						calendarResource.getClassNameId(), classPK,
+						calendarResource.getClassUuid(),
+						getUniqueCalendarResourceCode(
+							portletDataContext, calendarResource),
+						calendarResourceNameMap,
+						calendarResource.getDescriptionMap(),
+						calendarResource.isActive(), serviceContext);
+			}
+			catch (DuplicateCalendarResourceException dcre) {
+
+				// The calendar resource for the site's default calendar is
+				// always generated beforehand, so we only want to add it once
+
+				importedCalendarResource =
+					CalendarResourceLocalServiceUtil.fetchCalendarResource(
+						calendarResource.getClassNameId(), classPK);
+			}
 		}
 
 		updateCalendars(
@@ -269,6 +285,28 @@ public class CalendarResourceStagedModelDataHandler
 		}
 
 		return classPK;
+	}
+
+	protected String getUniqueCalendarResourceCode(
+			PortletDataContext portletDataContext,
+			CalendarResource calendarResource)
+		throws Exception {
+
+		String code = calendarResource.getCode();
+
+		for (int i = 1;; i++) {
+			CalendarResource existingCalendarResource =
+				CalendarResourceLocalServiceUtil.fetchCalendarResource(
+					portletDataContext.getScopeGroupId(), code);
+
+			if (existingCalendarResource == null) {
+				break;
+			}
+
+			code = code.concat(String.valueOf(i));
+		}
+
+		return code;
 	}
 
 	protected void updateCalendars(

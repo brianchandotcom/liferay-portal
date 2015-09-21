@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BaseRelatedEntryIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentHelper;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -71,11 +70,11 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManager;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
@@ -98,8 +97,7 @@ import javax.portlet.PortletResponse;
  */
 @OSGiBeanProperties
 public class DLFileEntryIndexer
-	extends BaseIndexer<DLFileEntry>
-	implements DDMStructureIndexer, RelatedEntryIndexer {
+	extends BaseIndexer<DLFileEntry> implements RelatedEntryIndexer {
 
 	public static final String CLASS_NAME = DLFileEntry.class.getName();
 
@@ -301,31 +299,6 @@ public class DLFileEntryIndexer
 			if (Validator.isNotNull(expandoAttributes)) {
 				addSearchExpando(searchQuery, searchContext, expandoAttributes);
 			}
-		}
-	}
-
-	@Override
-	public void reindexDDMStructures(List<Long> ddmStructureIds)
-		throws SearchException {
-
-		if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
-			return;
-		}
-
-		try {
-			Indexer<DLFileEntry> indexer =
-				IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
-
-			List<DLFileEntry> dlFileEntries =
-				DLFileEntryLocalServiceUtil.getDDMStructureFileEntries(
-					ArrayUtil.toLongArray(ddmStructureIds));
-
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				indexer.reindex(dlFileEntry);
-			}
-		}
-		catch (Exception e) {
-			throw new SearchException(e);
 		}
 	}
 

@@ -158,8 +158,19 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 	}
 
 	protected void readResourceActions(ClassLoader classLoader) {
-		Configuration configuration = ConfigurationFactoryUtil.getConfiguration(
-			classLoader, "portlet");
+		Configuration configuration = null;
+
+		try {
+			configuration = ConfigurationFactoryUtil.getConfiguration(
+				classLoader, "portlet");
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to read portlet.properties");
+			}
+
+			return;
+		}
 
 		String[] resourceActionsConfigs = StringUtil.split(
 			configuration.get(PropsKeys.RESOURCE_ACTIONS_CONFIGS));

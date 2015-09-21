@@ -14,8 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.taglib.servlet.taglib.base;
 
+import com.liferay.dynamic.data.mapping.taglib.servlet.ServletContextUtil;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Bruno Basto
@@ -42,7 +45,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		return _classPK;
 	}
 
-	public com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues getDdmFormValues() {
+	public com.liferay.dynamic.data.mapping.storage.DDMFormValues getDdmFormValues() {
 		return _ddmFormValues;
 	}
 
@@ -84,7 +87,7 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("classPK", classPK);
 	}
 
-	public void setDdmFormValues(com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues) {
+	public void setDdmFormValues(com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues) {
 		_ddmFormValues = ddmFormValues;
 
 		setScopedAttribute("ddmFormValues", ddmFormValues);
@@ -118,6 +121,13 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 		_showEmptyFieldLabel = showEmptyFieldLabel;
 
 		setScopedAttribute("showEmptyFieldLabel", showEmptyFieldLabel);
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		setServletContext(ServletContextUtil.getServletContext());
 	}
 
 	@Override
@@ -160,14 +170,16 @@ public abstract class BaseHTMLTag extends com.liferay.taglib.util.IncludeTag {
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "liferay-ddm:html:";
 
-	private static final String _END_PAGE = "/html/end.jsp";
+	private static final String _END_PAGE =
+		"/html/end.jsp";
 
-	private static final String _START_PAGE = "/html/start.jsp";
+	private static final String _START_PAGE =
+		"/html/start.jsp";
 
 	private boolean _checkRequired = true;
 	private long _classNameId = 0;
 	private long _classPK = 0;
-	private com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues _ddmFormValues = null;
+	private com.liferay.dynamic.data.mapping.storage.DDMFormValues _ddmFormValues = null;
 	private java.lang.String _fieldsNamespace = null;
 	private boolean _readOnly = false;
 	private boolean _repeatable = true;

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.countByC_G_C_N_D_S_T_S">
 		<![CDATA[
 			SELECT
 				COUNT(DDMStructure.structureId) AS COUNT_VALUE
@@ -12,14 +12,15 @@
 				[$GROUP_ID$]
 				(classNameId = ?) AND
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(CAST_TEXT(name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(storageType = ? OR ? IS NULL) AND
 				(type_ = ?)
+				[$STATUS$]
 		]]>
 	</sql>
-	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T">
+	<sql id="com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder.findByC_G_C_N_D_S_T_S">
 		<![CDATA[
 			SELECT
 				{DDMStructure.*}
@@ -30,11 +31,12 @@
 				[$GROUP_ID$]
 				(classNameId = ?) AND
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(CAST_TEXT(name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
 				(storageType = ? OR ? IS NULL) AND
 				(type_ = ?)
+				[$STATUS$]
 			ORDER BY
 				DDMStructure.structureId DESC
 		]]>
@@ -74,7 +76,7 @@
 				[$CLASS_PK$]
 				(resourceClassNameId = ?) AND
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(CAST_TEXT(name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
@@ -119,7 +121,7 @@
 				[$CLASS_PK$]
 				(resourceClassNameId = ?) AND
 				(
-					(lower(name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(lower(CAST_TEXT(name)) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(description LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(type_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(mode_ LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]

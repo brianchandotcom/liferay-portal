@@ -85,10 +85,10 @@ long assetClassPK = 0;
 DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext = null;
 
 if (fileEntry == null) {
-	dlEditFileEntryDisplayContext = DLDisplayContextProviderUtil.getDLEditFileEntryDisplayContext(request, response, fileEntryType);
+	dlEditFileEntryDisplayContext = dlDisplayContextProvider.getDLEditFileEntryDisplayContext(request, response, fileEntryType);
 }
 else {
-	dlEditFileEntryDisplayContext = DLDisplayContextProviderUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
+	dlEditFileEntryDisplayContext = dlDisplayContextProvider.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
 %>
 
@@ -157,12 +157,12 @@ else {
 							List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 							for (DDMStructure ddmStructure : ddmStructures) {
-								DDMFormValues ddmFormValues = null;
+								com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues = null;
 
 								try {
 									DLFileEntryMetadata fileEntryMetadata = DLFileEntryMetadataLocalServiceUtil.getFileEntryMetadata(ddmStructure.getStructureId(), fileVersionId);
 
-									ddmFormValues = StorageEngineManagerUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
+									ddmFormValues = StorageEngineUtil.getDDMFormValues(fileEntryMetadata.getDDMStorageId());
 								}
 								catch (Exception e) {
 								}
@@ -170,7 +170,7 @@ else {
 
 									<div class="document-type-fields">
 										<liferay-ddm:html
-											classNameId="<%= PortalUtil.getClassNameId(DDMStructure.class) %>"
+											classNameId="<%= PortalUtil.getClassNameId(com.liferay.dynamic.data.mapping.model.DDMStructure.class) %>"
 											classPK="<%= ddmStructure.getPrimaryKey() %>"
 											ddmFormValues="<%= ddmFormValues %>"
 											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"

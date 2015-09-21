@@ -19,6 +19,7 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -28,14 +29,13 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
-import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
+import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
 import com.liferay.portlet.exportimport.service.StagingLocalServiceUtil;
@@ -79,7 +79,7 @@ public class LayoutStagingBackgroundTaskExecutor
 		try {
 			ExportImportThreadLocal.setLayoutStagingInProcess(true);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED,
 				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
 				exportImportConfiguration);
@@ -104,7 +104,7 @@ public class LayoutStagingBackgroundTaskExecutor
 
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_LAYOUT_LOCAL_SUCCEEDED,
 				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
 				exportImportConfiguration);
@@ -112,7 +112,7 @@ public class LayoutStagingBackgroundTaskExecutor
 		catch (Throwable t) {
 			ExportImportThreadLocal.setLayoutStagingInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED,
 				PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS,
 				exportImportConfiguration, t);

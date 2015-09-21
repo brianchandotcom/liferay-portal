@@ -8,6 +8,7 @@ dependencies {
 	antlr group: "org.antlr", name: "antlr4", version: "4.3"
 
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
+	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
 }
 
 generateGrammarSource {

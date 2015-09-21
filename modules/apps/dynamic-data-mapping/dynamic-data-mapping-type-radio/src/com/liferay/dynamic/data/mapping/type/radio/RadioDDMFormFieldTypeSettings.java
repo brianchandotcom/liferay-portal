@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.type.radio;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 
 /**
  * @author Marcellus Tavares

@@ -19,20 +19,29 @@ import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.RequestBackedPortletURLFactory;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistration;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,6 +56,38 @@ public class EditorConfigContributorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		Collection<ServiceReference<EditorConfigContributor>>
+			serviceReferences = registry.getServiceReferences(
+				EditorConfigContributor.class, null);
+
+		for (ServiceReference<EditorConfigContributor> serviceReference :
+				serviceReferences) {
+
+			Long bundleId = (Long)serviceReference.getProperty(
+				"service.bundleid");
+
+			_bundleIds.add(bundleId);
+
+			ModuleFrameworkUtilAdapter.stopBundle(bundleId);
+		}
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		for (long bundleId : _bundleIds) {
+			try {
+				ModuleFrameworkUtilAdapter.startBundle(bundleId);
+			}
+			catch (Exception e) {
+				_log.error("Unable to start bundle " + bundleId, e);
+			}
+		}
+	}
 
 	@After
 	public void tearDown() {
@@ -520,6 +561,11 @@ public class EditorConfigContributorTest {
 	private static final String _EDITOR_NAME_2 = "testEditorName2";
 
 	private static final String _PORTLET_NAME = "testPortletName";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditorConfigContributorTest.class);
+
+	private static final List<Long> _bundleIds = new ArrayList<>();
 
 	private ServiceRegistration<EditorConfigContributor>
 		_editorConfigContributorServiceRegistration1;

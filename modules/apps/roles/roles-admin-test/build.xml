@@ -2,7 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="roles-admin-service" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
+	<import file="../../../build-module.xml" />
 </project>

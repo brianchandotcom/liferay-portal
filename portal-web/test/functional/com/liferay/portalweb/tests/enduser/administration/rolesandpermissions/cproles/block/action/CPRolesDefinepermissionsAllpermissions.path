@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//input[@id='_128_permissionNavigationSearch']</td>
+	<td>//input[contains(@id,'permissionNavigationSearch')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -210,7 +210,7 @@
 <!--SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>//input[@name='_128_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -226,7 +226,7 @@
 <!--SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -267,7 +267,7 @@
 <!--SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[3]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -288,7 +288,7 @@
 <!--SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VARIATION-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_PAGE_VARIATION_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[4]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[4]</td>
 	<td></td>
 </tr>
 <tr>
@@ -299,7 +299,7 @@
 <!--SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_PAGE_VARIATION-->
 <tr>
 	<td>SITE_ADMIN_PAGES_SITE_PAGES_RESOURCE_PERMISSIONS_SITE_PAGES_VARIATION_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[5]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[5]</td>
 	<td></td>
 </tr>
 <tr>
@@ -315,7 +315,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -331,7 +331,7 @@
 <!--SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -367,7 +367,7 @@
 <!--SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FOLDER-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FOLDER_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[3]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -378,7 +378,7 @@
 <!--SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_ARTICLE_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[4]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[4]</td>
 	<td></td>
 </tr>
 <tr>
@@ -389,7 +389,7 @@
 <!--SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FEED-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_FEED_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[5]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[5]</td>
 	<td></td>
 </tr>
 <tr>
@@ -400,7 +400,7 @@
 <!--SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_STRUCTURE-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_STRUCTURE_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[6]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[6]</td>
 	<td></td>
 </tr>
 <tr>
@@ -411,7 +411,7 @@
 <!--SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_TEMPLATE-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_RESOURCE_PERMISSIONS_WEB_CONTENT_TEMPLATE_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[7]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[7]</td>
 	<td></td>
 </tr>
 <tr>
@@ -422,7 +422,7 @@
 <!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -449,7 +449,7 @@
 <!--SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -465,7 +465,7 @@
 <!--SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -475,12 +475,12 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_SITE_SCOPE</td>
-	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span[contains(.,'${key_siteNameScope}')]/span</td>
+	<td>//span[contains(@id,'groupHTMLcom.liferay.portlet.blogsADD_ENTRY')]/span[contains(.,'${key_siteNameScope}')]/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRIES_ADD_ENTRY_SITE_SCOPE_REMOVE</td>
-	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span[contains(.,'${key_siteNameScope}')]/a</td>
+	<td>//span[contains(@id,'groupHTMLcom.liferay.portlet.blogsADD_ENTRY')]/span[contains(.,'${key_siteNameScope}')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -501,7 +501,7 @@
 <!--SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_RESOURCE_PERMISSIONS_BLOGS_ENTRY_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[3]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -547,7 +547,7 @@
 <!--SITE_ADMIN_CONTENT_BOOKMARKS_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_BOOKMARKS_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -563,12 +563,12 @@
 <!--SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_CONTENT_KALEO_FORMS_ADMIN_GENERAL_RESOURCE_PERMISSIONS_KALEO_FORMS_ALL_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -579,7 +579,7 @@
 <!--SITE_ADMIN_CONTENT_MESSAGE_BOARDS_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -643,7 +643,7 @@
 <!--SITE_ADMIN_CONTENT_WIKI_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_CONTENT_WIKI_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -744,7 +744,7 @@
 <!--SITE_ADMIN_USERS_SITE_MEMBERSHIPS_GENERAL_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_USERS_SITE_MEMBERSHIPS_GENERAL_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -755,7 +755,7 @@
 <!--SITE_ADMIN_USERS_SITE_MEMBERSHIPS_RESOURCE_PERMISSIONS_TEAM-->
 <tr>
 	<td>SITE_ADMIN_USERS_SITE_MEMBERSHIPS_RESOURCE_PERMISSIONS_TEAM_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[3]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -766,7 +766,7 @@
 <!--SITE_ADMIN_APPLICATIONS_KALEO_FORMS-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_APPLICATION_PERMISSIONS_ALL_CHECKBOX</td>
-	<td>//input[@name='_128_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -776,7 +776,7 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_KALEO_FORMS_RESOURCE_PERMISSIONS_KALEO_FORMS_PROCESS_ALL_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -838,12 +838,12 @@
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_CHANGE_LINK</td>
-	<td>//a[@id='_128_comliferaybookmarksmodelBookmarksEntryVIEW']/span[contains(.,'Change')]</td>
+	<td>//a[contains(@id,'comliferaybookmarksmodelBookmarksEntryVIEW')]/span[contains(.,'Change')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_BOOKMARKS_RESOURCE_PERMISSIONS_BOOKMARKS_ENTRY_VIEW_SITE_SCOPE</td>
-	<td>//span[@id='_128_groupHTMLcom.liferay.bookmarks.model.BookmarksEntryVIEW']/span[contains(.,'${key_siteNameScope}')]/span</td>
+	<td>//span[contains(@id,'groupHTMLcom.liferay.bookmarks.model.BookmarksEntryVIEW')]/span[contains(.,'${key_siteNameScope}')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -875,7 +875,7 @@
 <!--SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENTS_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -896,7 +896,7 @@
 <!--SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_DOCUMENTS_AND_MEDIA_RESOURCE_PERMISSIONS_DOCUMENT_ACTION_CHECKBOX</td>
-	<td>xpath=(//input[@name='_128_allRowIds'])[4]</td>
+	<td>xpath=(//input[contains(@name,'allRowIds')])[4]</td>
 	<td></td>
 </tr>
 <tr>
@@ -912,7 +912,7 @@
 <!--SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_SOCIAL_OFFICE_ANNOUNCEMENTS_APPLICATIONS_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>//input[@name='_128_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -933,7 +933,7 @@
 <!--SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY_APPLICATIONS_PERMISSIONS-->
 <tr>
 	<td>SITE_ADMIN_APPLICATIONS_WEB_CONTENT_DISPLAY_APPLICATIONS_PERMISSIONS_ACTION_CHECKBOX</td>
-	<td>//input[@name='_128_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -38,7 +38,5 @@
 
 	<target name="run-websphere">
 		<antcall target="run-simple-server" />
-
-		<antcall target="evaluate-logs" />
 	</target>
 </project>

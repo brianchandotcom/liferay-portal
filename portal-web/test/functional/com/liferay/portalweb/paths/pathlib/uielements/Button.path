@@ -15,12 +15,17 @@
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//a[contains(.,'Add')]|//button[contains(.,'Add')]</td>
+	<td>//a[contains(.,'Add')] | //button[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_ATTACHMENTS</td>
 	<td>//button[contains(.,'Add Attachments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_COMMUNITY_SITE</td>
+	<td>//button[contains(.,'Add Community Site')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,7 +35,7 @@
 </tr>
 <tr>
 	<td>ADD_CUSTOM_FIELD</td>
-	<td>//button[contains(.,'Add Custom Field')]</td>
+	<td>//a[contains(.,'Add Custom Field')]|//button[contains(.,'Add Custom Field')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -64,6 +69,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_ROW</td>
+	<td>//button[contains(@class,'add-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ROW_N</td>
+	<td>xpath=(//button[contains(@class,'add-row')])[${key_rowIndexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_ROW_LAST</td>
+	<td>xpath=(//button[contains(@class,'add-row')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_SUBFOLDER</td>
 	<td>//a[contains(.,'Add Subfolder')]</td>
 	<td></td>
@@ -75,7 +95,7 @@
 </tr>
 <tr>
 	<td>ADD_TEAM</td>
-	<td>//a[contains(.,'Add Team')]</td>
+	<td>//a[contains(@id,'teams') and contains(@class,'btn-action')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,7 +104,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BACK_BUTTON</td>
+	<td>BASIC_PREVIEW</td>
+	<td>//a[contains(.,'Basic Preview')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BACK</td>
 	<td>//a[@title='Back']</td>
 	<td></td>
 </tr>
@@ -100,7 +125,7 @@
 </tr>
 <tr>
 	<td>CANCEL</td>
-	<td>//a[contains(@id,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')]</td>
+	<td>//a[contains(@class,'cancel') and contains(@class,'btn')] | //button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -111,6 +136,16 @@
 <tr>
 	<td>CHANGE</td>
 	<td>//button[contains(.,'Change')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_NODE</td>
+	<td>//button[contains(.,'Change Node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_PARENT</td>
+	<td>//button[contains(.,'Change Parent')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -154,8 +189,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COG</td>
+	<td>//button[contains(@id,'settingsIcon')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMPARE_VERSIONS</td>
 	<td>//button[contains(@id,'compare')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRM</td>
+	<td>//button[contains(.,'Confirms')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -184,6 +229,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DELETE_ROW</td>
+	<td>//button[contains(@class,'delete-row')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_ROW_N</td>
+	<td>xpath=(//button[contains(@class,'delete-row')])[${key_rowIndexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_ROW_LAST</td>
+	<td>xpath=(//button[contains(@class,'delete-row')])[last()]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DOCUMENTS_AND_MEDIA</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/div/button[contains(.,'Select')]</td>
 	<td></td>
@@ -201,6 +261,21 @@
 <tr>
 	<td>EDIT</td>
 	<td>//a[contains(@id,'edit') and contains(@class,'btn')] | //button[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTER</td>
+	<td>//button[contains(.,'Enter')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPIRE</td>
+	<td>//button[contains(.,'Expire')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXPORT</td>
+	<td>//button[contains(.,'Export')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -226,6 +301,16 @@
 <tr>
 	<td>I_DISAGREE_BUTTON</td>
 	<td>//button[contains(.,'I Disagree')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IGNORE</td>
+	<td>//button[contains(.,'Ignore')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>IMPORT</td>
+	<td>//button[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -264,13 +349,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MOVE_TO_RECYCLE_BIN</td>
+	<td>MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//button[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NEW_TEMPLATE</td>
 	<td>//a[@role='menuitem' and contains(.,'New')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEXT</td>
+	<td>//button[contains(.,'Next')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -299,6 +389,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PLUS</td>
+	<td>//a[contains(@class,'btn') and span[contains(@class,'icon-plus')]] | //button[span[contains(@class,'icon-plus')]]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>POST</td>
 	<td>//button[contains(.,'Post')]</td>
 	<td></td>
@@ -319,6 +414,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_TO_LIVE</td>
+	<td>//button[contains(.,'Publish to Live')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOVE</td>
 	<td>//button[contains(.,'Remove')]</td>
 	<td></td>
@@ -331,6 +431,11 @@
 <tr>
 	<td>RENAME</td>
 	<td>//button[contains(.,'Rename')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REORDER</td>
+	<td>//button[span[@class='icon-bar'][3]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -355,12 +460,12 @@
 </tr>
 <tr>
 	<td>SAVE</td>
-	<td>//button[contains(.,'Save')]</td>
+	<td>//button[contains(.,'Save')] | //div[@class='button-holder ']/button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_AND_CHECKIN_BUTTON</td>
-	<td>//button[contains(.,'Save and Checkin')]</td>
+	<td>SAVE_AND_CHECKIN</td>
+	<td>//button[contains(.,'Save and Check In')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -374,8 +479,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_INACTIVE</td>
+	<td>//button[contains(.,'Save Inactive')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_LOCALIZED</td>
+	<td>//button[contains(.,'${key_saveButton}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEARCH</td>
 	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_2</td>
+	<td>xpath=(//button[contains(.,'Search')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -391,6 +511,11 @@
 <tr>
 	<td>SELECT_FILE</td>
 	<td>//button[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_FILES</td>
+	<td>//button[contains(.,'Select Files')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -459,8 +584,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VERIFY</td>
+	<td>//button[contains(.,'Verify')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_HISTORY</td>
-	<td>//button[contains(.,'View History')]</td>
+	<td>//a[contains(.,'View History')]</td>
 	<td></td>
 </tr>
 <tr>

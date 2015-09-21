@@ -17,7 +17,7 @@
 			<openSearcher>false</openSearcher>
 		</autoCommit>
 		<autoSoftCommit>
-			<maxTime>${solr.autoSoftCommit.maxTime:-1}</maxTime>
+			<maxTime>${solr.autoSoftCommit.maxTime:1000}</maxTime>
 		</autoSoftCommit>
 		<updateLog>
 			<int name="numVersionBuckets">${solr.ulog.numVersionBuckets:65536}</int>

@@ -16,17 +16,6 @@ apply plugin: "java"
 
 apply plugin: "com.liferay.js.transpiler"
 
-File nodejsDir = buildDir
-
-nodejsDir.mkdirs()
-
-node {
-	download = true
-	nodeModulesDir = nodejsDir
-	npmVersion = "1.4.9"
-	version = "0.12.6"
-}
-
 transpileJS {
 	include "**/*.es.js"
 	sourceDir = "src/main/resources"

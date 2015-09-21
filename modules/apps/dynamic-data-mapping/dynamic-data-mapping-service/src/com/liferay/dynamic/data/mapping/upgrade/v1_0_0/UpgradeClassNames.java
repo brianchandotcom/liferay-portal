@@ -59,7 +59,7 @@ public class UpgradeClassNames extends UpgradeProcess {
 
 		ClassNameDependencyUpgrader classNameDependencyUpgrader =
 			new ClassNameDependencyUpgrader(
-				"com.liferay.portlet.dynamicdatamapping.model.DDMContent",
+				"com.liferay.portlet.dynamicdatamapping.DDMContent",
 				DDMContent.class.getName(), classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();
@@ -70,7 +70,7 @@ public class UpgradeClassNames extends UpgradeProcess {
 
 		ClassNameDependencyUpgrader classNameDependencyUpgrader =
 			new ClassNameDependencyUpgrader(
-				"com.liferay.portlet.dynamicdatamapping.model.DDMStructure",
+				"com.liferay.portlet.dynamicdatamapping.DDMStructure",
 				DDMStructure.class.getName(), classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();
@@ -81,7 +81,7 @@ public class UpgradeClassNames extends UpgradeProcess {
 
 		ClassNameDependencyUpgrader classNameDependencyUpgrader =
 			new ClassNameDependencyUpgrader(
-				"com.liferay.portlet.dynamicdatamapping.model.DDMTemplate",
+				"com.liferay.portlet.dynamicdatamapping.DDMTemplate",
 				DDMTemplate.class.getName(), classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();

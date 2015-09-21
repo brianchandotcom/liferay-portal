@@ -17,12 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:navigation
-	bulletStyle="<%= navigationMenuDisplayContext.getBulletStyle() %>"
-	displayStyleDefinition='<%= NavigationMenuWebConfigurationUtil.getArray("display.style", new Filter(navigationMenuDisplayContext.getDisplayStyle())) %>'
-	headerType="<%= navigationMenuDisplayContext.getHeaderType() %>"
-	includedLayouts="<%= navigationMenuDisplayContext.getIncludedLayouts() %>"
-	nestedChildren="<%= navigationMenuDisplayContext.isNestedChildren() %>"
-	preview="<%= navigationMenuDisplayContext.isPreview() %>"
-	rootLayoutLevel="<%= navigationMenuDisplayContext.getRootLayoutLevel() %>"
-	rootLayoutType="<%= navigationMenuDisplayContext.getRootLayoutType() %>"
+	bulletStyle="<%= siteNavigationMenuDisplayContext.getBulletStyle() %>"
+	ddmTemplateGroupId="<%= siteNavigationMenuDisplayContext.getDisplayStyleGroupId() %>"
+	ddmTemplateKey="<%= siteNavigationMenuDisplayContext.getDDMTemplateKey() %>"
+	headerType="<%= siteNavigationMenuDisplayContext.getHeaderType() %>"
+	includedLayouts="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>"
+	nestedChildren="<%= siteNavigationMenuDisplayContext.isNestedChildren() %>"
+	preview="<%= siteNavigationMenuDisplayContext.isPreview() %>"
+	rootLayoutLevel="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() %>"
+	rootLayoutType="<%= siteNavigationMenuDisplayContext.getRootLayoutType() %>"
 />

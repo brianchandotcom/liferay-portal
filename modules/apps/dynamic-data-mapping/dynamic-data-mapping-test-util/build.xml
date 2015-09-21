@@ -2,20 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="dynamic-data-mapping-api,dynamic-data-mapping-service" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/test" />
-
-	<target name="compile">
-		<path id="plugin.classpath">
-			<path refid="plugin-lib.classpath" />
-			<fileset dir="${module.framework.base.dir}/test" erroronmissingdir="true" includes="portal-test*.jar" />
-		</path>
-
-		<compile
-			module.dir="${basedir}"
-		/>
-	</target>
+	<import file="../../../build-module.xml" />
 </project>

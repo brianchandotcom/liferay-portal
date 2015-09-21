@@ -21,25 +21,21 @@
 		<liferay-ui:message key="drag-portlets-below-to-nest-them" />
 	</div>
 
-	<aui:script use="aui-base">
-		var portletWrapper = A.one('#portlet-wrapper-<%= portletDisplay.getId() %>');
+	<aui:script sandbox="<%= true %>">
+		var portletWrapper = $('#p_p_id_<%= portletDisplay.getId() %>_');
 
-		if (portletWrapper) {
-			var message = portletWrapper.one('#<portlet:namespace />nested-portlets-msg');
+		var nestedPortlet = portletWrapper.find('.portlet-boundary, .portlet-borderless-container');
 
-			var nestedPortlet = portletWrapper.one('.portlet, .portlet-borderless-container');
-
-			if (!nestedPortlet) {
-				message.show();
-			}
+		if (!nestedPortlet.length) {
+			portletWrapper.find('#<portlet:namespace />nested-portlets-msg').first().removeClass('hide');
 		}
 	</aui:script>
 </c:if>
 
 <%
 try {
-	String templateId = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_ID);
-	String templateContent = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_CONTENT);
+	String templateId = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_ID + portletDisplay.getId());
+	String templateContent = (String)request.getAttribute(NestedPortletsConfiguration.TEMPLATE_CONTENT + portletDisplay.getId());
 
 	if (Validator.isNotNull(templateId) && Validator.isNotNull(templateContent)) {
 		RuntimePageUtil.processTemplate(request, response, new StringTemplateResource(templateId, templateContent));

@@ -2,54 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="wiki-api,wiki-engine-input-editor-common" />
-
-	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-
-	<target name="build-creole-parser">
-		<delete>
-			<fileset
-				dir="src/com/liferay/wiki/engine/creole/parser/parser"
-				includes="*.*"
-			/>
-		</delete>
-
-		<path id="antlr.classpath">
-			<fileset dir="../../../../lib/portal" includes="antlr2.jar,antlr3.jar,antlr3-runtime.jar,stringtemplate.jar" />
-		</path>
-
-		<java
-			classname="org.antlr.Tool"
-			classpathref="antlr.classpath"
-			dir="src/com/liferay/wiki/engine/creole/parser/grammar"
-			fork="true"
-			maxmemory="1512m"
-			newenvironment="true"
-		>
-			<arg value="-o" />
-			<arg value="../parser" />
-			<arg value="Creole10.g" />
-		</java>
-
-		<replace file="src/com/liferay/wiki/engine/creole/parser/parser/Creole10Lexer.java">
-			<replacetoken>public class Creole10Lexer</replacetoken>
-			<replacevalue><![CDATA[@SuppressWarnings("all")
-public class Creole10Lexer]]></replacevalue>
-		</replace>
-
-		<replace file="src/com/liferay/wiki/engine/creole/parser/parser/Creole10Parser.java">
-			<replacetoken>public class Creole10Parser</replacetoken>
-			<replacevalue><![CDATA[@SuppressWarnings("all")
-public class Creole10Parser]]></replacevalue>
-		</replace>
-
-		<fixcrlf
-			includes="*.java"
-			javafiles="yes"
-			srcdir="src/com/liferay/wiki/engine/creole/parser/parser"
-			tab="add"
-		/>
-	</target>
+	<import file="../../../build-module.xml" />
 </project>

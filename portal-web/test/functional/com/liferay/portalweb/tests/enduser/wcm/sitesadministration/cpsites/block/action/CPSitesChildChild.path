@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>BACK_BUTTON</td>
-	<td>//a[@id='_134_TabsBack']</td>
+	<td>//a[contains(@id,'TabsBack')]</td>
 	<td></td>
 </tr>
 <tr>

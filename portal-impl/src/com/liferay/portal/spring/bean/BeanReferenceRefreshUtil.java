@@ -34,7 +34,7 @@ import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 public class BeanReferenceRefreshUtil {
 
 	public static void refresh(BeanFactory beanFactory) throws Exception {
-		BeanRegistrations beanRegistrations = _registeredRefreshPoints.get(
+		BeanRegistrations beanRegistrations = _registeredRefreshPoints.remove(
 			beanFactory);
 
 		if (beanRegistrations == null) {
@@ -42,8 +42,6 @@ public class BeanReferenceRefreshUtil {
 		}
 
 		beanRegistrations.refresh();
-
-		_registeredRefreshPoints.remove(beanFactory);
 	}
 
 	public static void registerRefreshPoint(

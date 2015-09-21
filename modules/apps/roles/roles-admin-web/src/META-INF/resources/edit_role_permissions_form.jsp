@@ -136,7 +136,7 @@ if (Validator.isNotNull(portletResource)) {
 
 			List resultRows = searchContainer.getResultRows();
 
-			List<TemplateHandler> templateHandlers = PortletDisplayTemplateManagerUtil.getPortletDisplayTemplateHandlers();
+			List<TemplateHandler> templateHandlers = PortletDisplayTemplateUtil.getPortletDisplayTemplateHandlers();
 
 			ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
 
@@ -155,6 +155,33 @@ if (Validator.isNotNull(portletResource)) {
 
 				if (portlet.isSystem()) {
 					continue;
+				}
+
+				if (role.getType() == RoleConstants.TYPE_REGULAR) {
+					LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
+
+					RolePermissions rolePermissions = new RolePermissions(resource, ResourceConstants.SCOPE_GROUP, actionId, role.getRoleId());
+
+					groupParams.put("rolePermissions", rolePermissions);
+
+					groups = GroupLocalServiceUtil.search(company.getCompanyId(), new long[] {PortalUtil.getClassNameId(Company.class), PortalUtil.getClassNameId(Group.class), PortalUtil.getClassNameId(Organization.class), PortalUtil.getClassNameId(UserPersonalSite.class)}, null, null, groupParams, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+					groupIdsArray = new long[groups.size()];
+
+					for (int i = 0; i < groups.size(); i++) {
+						Group group = (Group)groups.get(i);
+
+						groupIdsArray[i] = group.getGroupId();
+
+						groupNames.add(HtmlUtil.escape(group.getDescriptiveName(locale)));
+					}
+
+					if (!groups.isEmpty()) {
+						scope = ResourceConstants.SCOPE_GROUP;
+					}
+				}
+				else {
+					scope = ResourceConstants.SCOPE_GROUP_TEMPLATE;
 				}
 
 				ResultRow row = new ResultRow(new Object[] {role, actionId, resource, target, scope, supportsFilterByGroup, groups, groupIdsArray, groupNames}, target, relatedPortletResources.size());

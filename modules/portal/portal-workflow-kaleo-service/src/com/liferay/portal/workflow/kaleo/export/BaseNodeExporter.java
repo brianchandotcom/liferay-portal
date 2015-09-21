@@ -326,7 +326,7 @@ public abstract class BaseNodeExporter implements NodeExporter {
 				populateScriptingElement(
 					scriptedRecipientElement, scriptRecipient.getScript(),
 					scriptLanguage.getValue(),
-					scriptRecipient.getScriptContexts());
+					scriptRecipient.getScriptRequiredContexts());
 			}
 			else if (recipientType.equals(RecipientType.USER)) {
 				Element userElement = recipientsElement.addElement("user");

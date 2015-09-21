@@ -25,12 +25,12 @@ String panelSelectedPortlets = StringPool.BLANK;
 if (selLayout != null) {
 	UnicodeProperties typeSettingsProperties = selLayout.getTypeSettingsProperties();
 
-	description = typeSettingsProperties.getProperty("description", StringPool.BLANK);
+	description = typeSettingsProperties.getProperty("panelLayoutDescription", StringPool.BLANK);
 	panelSelectedPortlets = typeSettingsProperties.getProperty("panelSelectedPortlets", StringPool.BLANK);
 }
 %>
 
-<aui:input cssClass="layout-description" id="descriptionPanel" label="description" name="TypeSettingsProperties--description--" type="textarea" value="<%= description %>" wrap="soft" />
+<aui:input cssClass="layout-description" id="descriptionPanel" label="description" name="TypeSettingsProperties--panelLayoutDescription--" type="textarea" value="<%= description %>" wrap="soft" />
 
 <div class="alert alert-info">
 	<liferay-ui:message key="select-the-applications-that-are-available-in-the-panel" />

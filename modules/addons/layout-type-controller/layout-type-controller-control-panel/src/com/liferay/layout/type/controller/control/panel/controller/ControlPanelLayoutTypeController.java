@@ -16,11 +16,11 @@ package com.liferay.layout.type.controller.control.panel.controller;
 
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategoryRegistry;
-import com.liferay.application.list.taglib.constants.ApplicationListWebKeys;
+import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
-import com.liferay.portal.model.impl.BasePanelLayoutTypeControllerImpl;
+import com.liferay.portal.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = LayoutTypeController.class
 )
 public class ControlPanelLayoutTypeController
-	extends BasePanelLayoutTypeControllerImpl {
+	extends BaseLayoutTypeControllerImpl {
 
 	@Override
 	public String getURL() {

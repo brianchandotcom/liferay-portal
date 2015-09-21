@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.exportimport.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -21,8 +23,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
 
@@ -68,7 +68,7 @@ public class LayoutExportBackgroundTaskExecutor
 		File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
 
-		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
+		BackgroundTaskManagerUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), sb.toString(),
 			larFile);
 

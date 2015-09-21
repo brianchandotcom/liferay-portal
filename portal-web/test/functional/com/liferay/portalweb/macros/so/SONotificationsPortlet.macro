@@ -6,27 +6,27 @@
 		<var name="key_contentType" value="Microblogs" />
 		<var name="key_notificationType" value="Website" />
 
-		<execute function="Check" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX" />
+		<execute function="Check" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX" />
 
 		<var name="key_actionType" value="sends" />
 		<var name="key_contentType" value="Private Messaging" />
 		<var name="key_notificationType" value="Website" />
 
-		<execute function="Check" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX" />
+		<execute function="Check" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX" />
 
 		<var name="key_notificationType" value="Email" />
 
-		<execute function="Check" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX" />
+		<execute function="Check" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX" />
 
 		<var name="key_contentType" value="Social Office Announcements" />
 		<var name="key_notificationType" value="Website" />
 
-		<execute function="Check" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX" />
+		<execute function="Check" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX" />
 
 		<var name="key_actionType" value="assigns" />
 		<var name="key_contentType" value="Tasks" />
 		<var name="key_notificationType" value="Website" />
 
-		<execute function="Check" locator1="PGNotificationsdelivery#NOTIFICATION_DELIVERY_CHECKBOX" />
+		<execute function="Check" locator1="Notifications#NOTIFICATION_DELIVERY_CHECKBOX" />
 	</command>
 </definition>

@@ -17,11 +17,11 @@ package com.liferay.portal.security.sso.opensso.auto.login;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -34,8 +34,8 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
-import com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration;
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
+import com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -57,7 +57,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Prashant Dighe
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.sso.opensso.configuration.OpenSSOConfiguration",
+	configurationPid = "com.liferay.portal.security.sso.opensso.module.configuration.OpenSSOConfiguration",
 	immediate = true, service = AutoLogin.class
 )
 public class OpenSSOAutoLogin extends BaseAutoLogin {
@@ -228,10 +228,17 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 	protected OpenSSOConfiguration getOpenSSOConfiguration(long companyId)
 		throws Exception {
 
-		return _settingsFactory.getSettings(
+		return _configurationFactory.getConfiguration(
 			OpenSSOConfiguration.class,
 			new CompanyServiceSettingsLocator(
 				companyId, OpenSSOConstants.SERVICE_NAME));
+	}
+
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	@Reference
@@ -246,16 +253,11 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 		_screenNameGenerator = screenNameGenerator;
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenSSOAutoLogin.class);
 
+	private volatile ConfigurationFactory _configurationFactory;
 	private OpenSSO _openSSO;
 	private ScreenNameGenerator _screenNameGenerator;
-	private volatile SettingsFactory _settingsFactory;
 
 }

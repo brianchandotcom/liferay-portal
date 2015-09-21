@@ -50,6 +50,8 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		MBBan ban = mbBanPersistence.fetchByG_B(groupId, banUserId);
 
 		if (ban == null) {
+			Date now = new Date();
+
 			ban = mbBanPersistence.create(banId);
 
 			ban.setUuid(serviceContext.getUuid());
@@ -57,6 +59,8 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 			ban.setCompanyId(user.getCompanyId());
 			ban.setUserId(user.getUserId());
 			ban.setUserName(user.getFullName());
+			ban.setCreateDate(serviceContext.getCreateDate(now));
+			ban.setModifiedDate(serviceContext.getModifiedDate(now));
 			ban.setBanUserId(banUserId);
 		}
 

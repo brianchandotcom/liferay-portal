@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.mapping.io.DDMFormJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
@@ -25,12 +26,11 @@ import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Set;
 
@@ -50,9 +50,7 @@ public class DDLRecordSetImplTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			SynchronousDestinationTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
@@ -64,7 +62,7 @@ public class DDLRecordSetImplTest {
 	@Test
 	public void testGetDDMStructure() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
-			"Text 1", "Text 2", "Text 3");
+			"Text1", "Text2", "Text3");
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), DDLRecordSet.class.getName(), ddmForm);
@@ -72,10 +70,11 @@ public class DDLRecordSetImplTest {
 		DDLRecordSet recordSet = _ddlRecordSetTestHelper.addRecordSet(
 			ddmStructure);
 
-		ddmForm = DDMFormTestUtil.createDDMForm("Text 2", "Text 3");
+		ddmForm = DDMFormTestUtil.createDDMForm("Text2", "Text3");
 
 		DDMTemplate template = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), ddmStructure.getStructureId(), "json",
+			_group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(DDLRecordSet.class), "json",
 			DDMFormJSONSerializerUtil.serialize(ddmForm), LocaleUtil.US);
 
 		Set<String> fieldNames = ddmStructure.getFieldNames();

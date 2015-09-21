@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>WebContentSearchResults</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WebContentSearchResults</td></tr>
+</thead>
+<tbody>
+<!--RESULTS_TABLE-->
+<tr>
+	<td>RESULTS_TABLE_NUMBER</td>
+	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_TABLE_LANGUAGE</td>
+	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[2]/span/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESULTS_TABLE_CONTENT</td>
+	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[4]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

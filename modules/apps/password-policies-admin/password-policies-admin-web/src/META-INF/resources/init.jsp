@@ -39,6 +39,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.model.Organization" %><%@
+page import="com.liferay.portal.model.OrganizationConstants" %><%@
 page import="com.liferay.portal.model.PasswordPolicy" %><%@
 page import="com.liferay.portal.model.PasswordPolicyRel" %><%@
 page import="com.liferay.portal.model.User" %><%@

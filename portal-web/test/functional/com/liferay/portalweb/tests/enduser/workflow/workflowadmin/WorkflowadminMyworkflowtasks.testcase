@@ -237,7 +237,15 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewCP">
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -282,7 +290,15 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewCP">
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -579,7 +595,9 @@
 			<var name="userLoginFullName" value="${userFirstName1} ${userLastName1}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
 
 		<execute macro="Blogs#addWithWorkflow">
 			<var name="entryContent" value="${entryContent}" />
@@ -629,7 +647,9 @@
 			<var name="workflowTask" value="Update" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
 
 		<execute macro="BlogsEntry#viewWithWorkflowCP">
 			<var name="entryContent" value="${entryContent}" />
@@ -666,10 +686,24 @@
 			<var name="userLoginFullName" value="${userFirstName1} ${userLastName1}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
 
-		<execute macro="BlogsEntry#viewCP">
-			<var name="entryAuthor" value="${userFirstName1} ${userLastName1}" />
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryAuthorCP">
+			<var name="entryAuthorFullName" value="${userFirstName1} ${userLastName1}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -683,8 +717,20 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewCP">
-			<var name="entryAuthor" value="${userFirstName1} ${userLastName1}" />
+		<execute macro="BlogsEntry#viewEntryTable">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryAuthorCP">
+			<var name="entryAuthorFullName" value="${userFirstName1} ${userLastName1}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>

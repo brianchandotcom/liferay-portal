@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
-import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -50,15 +49,10 @@ import org.osgi.service.component.annotations.Reference;
 public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 
 	@Override
-	public DDMPermissionHandler getDDMPermissionHandler() {
-		return _ddmPermissionHandler;
-	}
-
-	@Override
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
-			long classPK, String portletResource)
+			long classPK, long resourceClassNameId, String portletResource)
 		throws Exception {
 
 		String redirect = ParamUtil.getString(
@@ -67,7 +61,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 		if (Validator.isNull(redirect)) {
 			return getViewTemplatesURL(
 				liferayPortletRequest, liferayPortletResponse, classNameId,
-				classPK);
+				classPK, resourceClassNameId);
 		}
 
 		return redirect;
@@ -97,7 +91,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 		}
 
 		return new long[] {
-			_portletDisplayTemplate.getDDMTemplateGroupId(
+			portletDisplayTemplate.getDDMTemplateGroupId(
 				themeDisplay.getScopeGroupId())
 			};
 	}
@@ -109,6 +103,12 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getTemplateType(DDMTemplate template, Locale locale) {
+		String type = template.getType();
+
+		if (!type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
+			return type;
+		}
+
 		TemplateHandler templateHandler =
 			TemplateHandlerRegistryUtil.getTemplateHandler(
 				template.getClassNameId());
@@ -161,15 +161,12 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	protected void setPortletDisplayTemplate(
 		PortletDisplayTemplate portletDisplayTemplate) {
 
-		_portletDisplayTemplate = portletDisplayTemplate;
+		this.portletDisplayTemplate = portletDisplayTemplate;
 	}
 
-	protected PortletDisplayTemplate _portletDisplayTemplate;
+	protected PortletDisplayTemplate portletDisplayTemplate;
 
 	private static final Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"language", "mode", "structure"});
-
-	private final DDMPermissionHandler _ddmPermissionHandler =
-		new PortletDisplayTemplateDDMPermissionHandler();
 
 }

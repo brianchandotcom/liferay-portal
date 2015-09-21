@@ -447,9 +447,9 @@ public class DDMContentPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingDDMContent.getUuid(),
 				ReflectionTestUtil.invoke(existingDDMContent,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingDDMContent.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDMContent, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingDDMContent.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMContent,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected DDMContent addDDMContent() throws Exception {

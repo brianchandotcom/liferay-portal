@@ -467,6 +467,7 @@ AUI.add(
 
 		LocalizableFieldSupport.ATTRS = {
 			localizationMap: {
+				setter: A.clone,
 				value: {}
 			},
 
@@ -611,21 +612,15 @@ AUI.add(
 				instance._updateLocalizationMapOptions(locale);
 			}
 			else {
-				var localizationMap = {};
+				var localizationMap = instance.get('localizationMap');
 
-				localizationMap[locale] = instance.getAttrs([attributeName]);
+				var localeMap = localizationMap[locale] || {};
 
-				instance.set(
-					'localizationMap',
-					A.mix(
-						instance.get('localizationMap'),
-						localizationMap,
-						true,
-						null,
-						0,
-						true
-					)
-				);
+				localeMap[attributeName] = instance.get(attributeName);
+
+				localizationMap[locale] = localeMap;
+
+				instance.set('localizationMap', localizationMap);
 			}
 		};
 

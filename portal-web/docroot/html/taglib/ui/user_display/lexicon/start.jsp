@@ -16,23 +16,35 @@
 
 <%@ include file="/html/taglib/ui/user_display/init.jsp" %>
 
-<div class="profile-header">
-	<div class="nameplate">
-		<div class="nameplate-field">
-			<div class="user-icon user-icon-lg user-icon-success">
-				<img alt="" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(taglibSrc) %>">
-			</div>
-		</div>
-		<div class="nameplate-content">
-			<div class="heading4">
-				<c:choose>
-					<c:when test="<%= showLink %>">
-						<aui:a href="<%= url %>">
-							<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
-						</aui:a>
-					</c:when>
-					<c:otherwise>
-						<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
-					</c:otherwise>
-				</c:choose>
-			</div>
+<liferay-util:buffer var="html">
+	<div class="<%= userIconCssClass %> user-icon user-icon-lg">
+		<img alt="thumbnail" class="img-responsive <%= imageCssClass %>" src="<%= HtmlUtil.escape(taglibSrc) %>">
+	</div>
+</liferay-util:buffer>
+
+<c:choose>
+	<c:when test="<%= showUserDetails || showUserName %>">
+		<div class="profile-header">
+			<div class="nameplate">
+				<div class="nameplate-field">
+					<%= html %>
+				</div>
+
+				<c:if test="<%= showUserName %>">
+					<div class="nameplate-content">
+						<div class="heading4">
+							<aui:a href="<%= showLink ? url : null %>">
+								<%= (userDisplay != null) ? HtmlUtil.escape(userDisplay.getFullName()) : HtmlUtil.escape(userName) %>
+							</aui:a>
+						</div>
+					</div>
+				</c:if>
+
+				<c:if test="<%= showUserDetails %>">
+					<div class="nameplate-content">
+				</c:if>
+	</c:when>
+	<c:otherwise>
+		<%= html %>
+	</c:otherwise>
+</c:choose>

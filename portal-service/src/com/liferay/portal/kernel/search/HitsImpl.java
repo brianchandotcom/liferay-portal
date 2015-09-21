@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +31,16 @@ import java.util.Map;
 public class HitsImpl implements Hits {
 
 	public HitsImpl() {
+	}
+
+	@Override
+	public void addGroupedHits(String groupValue, Hits hits) {
+		_groupedHits.put(groupValue, hits);
+	}
+
+	@Override
+	public void addStatsResults(StatsResults statsResults) {
+		_statsResults.put(statsResults.getField(), statsResults);
 	}
 
 	@Override
@@ -60,6 +72,11 @@ public class HitsImpl implements Hits {
 	@Override
 	public Document[] getDocs() {
 		return _docs;
+	}
+
+	@Override
+	public Map<String, Hits> getGroupedHits() {
+		return Collections.unmodifiableMap(_groupedHits);
 	}
 
 	@Override
@@ -114,6 +131,16 @@ public class HitsImpl implements Hits {
 	@Override
 	public long getStart() {
 		return _start;
+	}
+
+	@Override
+	public Map<String, StatsResults> getStatsResults() {
+		return Collections.unmodifiableMap(_statsResults);
+	}
+
+	@Override
+	public boolean hasGroupedHits() {
+		return !_groupedHits.isEmpty();
 	}
 
 	@Override
@@ -196,6 +223,7 @@ public class HitsImpl implements Hits {
 
 	private String _collatedSpellCheckResult;
 	private Document[] _docs;
+	private final Map<String, Hits> _groupedHits = new HashMap<>();
 	private int _length;
 	private Query _query;
 	private String[] _querySuggestions;
@@ -205,5 +233,6 @@ public class HitsImpl implements Hits {
 	private String[] _snippets = {};
 	private Map<String, List<String>> _spellCheckResults;
 	private long _start;
+	private final Map<String, StatsResults> _statsResults = new HashMap<>();
 
 }

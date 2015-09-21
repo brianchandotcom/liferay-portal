@@ -43,8 +43,6 @@ public interface SchedulerEntry extends Serializable {
 
 	public void setTriggerValue(int triggerValue);
 
-	public void setTriggerValue(long triggerValue);
-
 	public void setTriggerValue(String triggerValue);
 
 }

@@ -3,25 +3,25 @@
 		<if>
 			<equals arg1="${enableSpamModerationFor}" arg2="Message Boards" />
 			<then>
-				<execute function="Check" locator1="CPAkismet#ENABLED_FOR_MESSAGE_BOARDS_CHECKBOX" />
+				<execute function="Check" locator1="Akismet#ENABLED_FOR_MESSAGE_BOARDS_CHECKBOX" />
 			</then>
 			<elseif>
 				<equals arg1="${enableSpamModerationFor}" arg2="Discussions" />
 				<then>
-					<execute function="Check" locator1="CPAkismet#ENABLED_FOR_DISCUSSIONS_CHECKBOX" />
+					<execute function="Check" locator1="Akismet#ENABLED_FOR_DISCUSSIONS_CHECKBOX" />
 				</then>
 			</elseif>
 			<elseif>
 				<equals arg1="${enableSpamModerationFor}" arg2="Wiki" />
 				<then>
-					<execute function="Check" locator1="CPAkismet#ENABLED_FOR_WIKI_CHECKBOX" />
+					<execute function="Check" locator1="Akismet#ENABLED_FOR_WIKI_CHECKBOX" />
 				</then>
 			</elseif>
 		</if>
 
-		<execute function="Type" locator1="CPAkismet#API_KEY_FIELD" value1="a0a822b80b2b" />
-		<execute function="AssertClick" locator1="CPAkismet#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="CPAkismet#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="Type" locator1="Akismet#API_KEY_FIELD" value1="a0a822b80b2b" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownConfiguration">
@@ -29,12 +29,12 @@
 			<var name="portletName" value="Akismet" />
 		</execute>
 
-		<execute function="Uncheck" locator1="CPAkismet#ENABLED_FOR_MESSAGE_BOARDS_CHECKBOX" />
-		<execute function="Uncheck" locator1="CPAkismet#ENABLED_FOR_DISCUSSIONS_CHECKBOX" />
-		<execute function="Uncheck" locator1="CPAkismet#ENABLED_FOR_WIKI_CHECKBOX" />
-		<execute function="Type" locator1="CPAkismet#API_KEY_FIELD" value1="" />
-		<execute function="Type" locator1="CPAkismet#REPORTABLE_TIME_FIELD" value1="30" />
-		<execute function="Type" locator1="CPAkismet#CHECK_THRESHOLD_FIELD" value1="50" />
-		<execute function="AssertClick" locator1="CPAkismet#SAVE_BUTTON" value1="Save" />
+		<execute function="Uncheck" locator1="Akismet#ENABLED_FOR_MESSAGE_BOARDS_CHECKBOX" />
+		<execute function="Uncheck" locator1="Akismet#ENABLED_FOR_DISCUSSIONS_CHECKBOX" />
+		<execute function="Uncheck" locator1="Akismet#ENABLED_FOR_WIKI_CHECKBOX" />
+		<execute function="Type" locator1="Akismet#API_KEY_FIELD" value1="" />
+		<execute function="Type" locator1="Akismet#REPORTABLE_TIME_FIELD" value1="30" />
+		<execute function="Type" locator1="Akismet#CHECK_THRESHOLD_FIELD" value1="50" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 </definition>

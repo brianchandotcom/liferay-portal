@@ -143,6 +143,11 @@ public class FileShortcutProxyBean extends RepositoryModelProxyBean
 	}
 
 	@Override
+	public long getRepositoryId() {
+		return _fileShortcut.getRepositoryId();
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return _fileShortcut.getStagedModelType();
 	}

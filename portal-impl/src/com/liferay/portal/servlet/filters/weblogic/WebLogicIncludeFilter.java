@@ -16,12 +16,9 @@ package com.liferay.portal.servlet.filters.weblogic;
 
 import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
 import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
-import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -36,24 +33,16 @@ public class WebLogicIncludeFilter
 	public HttpServletResponse getWrappedHttpServletResponse(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		if (!ServerDetector.isWebLogic()) {
-			ServletContext servletContext = request.getServletContext();
-
-			InvokerFilterHelper invokerFilterHelper =
-				(InvokerFilterHelper)servletContext.getAttribute(
-					InvokerFilterHelper.class.getName());
-
-			FilterConfig filterConfig = getFilterConfig();
-
-			invokerFilterHelper.unregisterFilterMappings(
-				filterConfig.getFilterName());
-		}
-
 		if (isWrap(response)) {
 			return new WebLogicIncludeServletResponse(response);
 		}
 
 		return response;
+	}
+
+	@Override
+	public boolean isFilterEnabled() {
+		return ServerDetector.isWebLogic();
 	}
 
 	protected boolean isWrap(HttpServletResponse response) {

@@ -15,12 +15,10 @@
 package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,6 +30,8 @@ public interface DDMTemplateManager {
 	public static final String TEMPLATE_MODE_CREATE = "create";
 
 	public static final String TEMPLATE_TYPE_DISPLAY = "display";
+
+	public static final String TEMPLATE_TYPE_MACRO = "macro";
 
 	public static final String TEMPLATE_VERSION_DEFAULT = "1.0";
 
@@ -47,16 +47,6 @@ public interface DDMTemplateManager {
 	public DDMTemplate fetchTemplate(
 		long groupId, long classNameId, String templateKey);
 
-	public Class<?> getDDMTemplateModelClass();
-
 	public DDMTemplate getTemplate(long templateId) throws PortalException;
-
-	public List<DDMTemplate> getTemplates(
-		long[] groupIds, long classNameId, long classPK);
-
-	public boolean hasPermission(
-			PermissionChecker permissionChecker, long groupId, long templateId,
-			String portletId, String actionId)
-		throws PortalException;
 
 }

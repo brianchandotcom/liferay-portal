@@ -20,15 +20,15 @@ package com.liferay.portal.search.elasticsearch.settings;
 public abstract class BaseSettingsContributor implements SettingsContributor {
 
 	public BaseSettingsContributor(int priority) {
-		_priority = priority;
+		this.priority = priority;
 	}
 
 	@Override
 	public int compareTo(SettingsContributor settingsContributor) {
-		if (_priority > settingsContributor.getPriority()) {
+		if (priority > settingsContributor.getPriority()) {
 			return 1;
 		}
-		else if (_priority == settingsContributor.getPriority()) {
+		else if (priority == settingsContributor.getPriority()) {
 			return 0;
 		}
 
@@ -37,9 +37,9 @@ public abstract class BaseSettingsContributor implements SettingsContributor {
 
 	@Override
 	public int getPriority() {
-		return _priority;
+		return priority;
 	}
 
-	protected int _priority;
+	protected int priority;
 
 }

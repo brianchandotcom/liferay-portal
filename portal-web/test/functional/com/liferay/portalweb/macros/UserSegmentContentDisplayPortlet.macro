@@ -1,6 +1,6 @@
 <definition>
 	<command name="configureDisplayContent">
-		<execute function="SelectFrame" locator1="PGUsersegmentcontentdisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
 		<var method="selenium#getNumberDecrement('${rowNumber}')" name="rowIndexNumber" />
 
@@ -11,7 +11,7 @@
 			<then>
 				<var name="key_indexNumber" value="${rowIndexNumber}" />
 
-				<execute function="Click" locator1="PGUsersegmentcontentdisplay#CONTENT_PLUS_LINK" />
+				<execute function="Click" locator1="UserSegmentContentDisplay#CONTENT_PLUS_LINK" />
 			</then>
 		</if>
 
@@ -20,37 +20,37 @@
 		<if>
 			<equals arg1="${belongs}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_BELONGS_RADIO" />
+				<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_BELONGS_RADIO" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${doesNotBelong}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_DOES_NOT_BELONG_RADIO" />
+				<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_DOES_NOT_BELONG_RADIO" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${toAll}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_ALL_RADIO" />
+				<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_ALL_RADIO" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${toAny}" arg2="true" />
 			<then>
-				<execute function="Click" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_ANY_RADIO" />
+				<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_ANY_RADIO" />
 			</then>
 		</if>
 
-		<execute function="Click" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_USER_SEGMENT_SELECT_BUTTON" />
+		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_BUTTON" />
 
 		<for list="${userSegmentName}" param="userSegmentName">
 			<var name="key_userSegmentName" value="${userSegmentName}" />
 
-			<execute function="Click" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX" />
+			<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX" />
 		</for>
 
 		<if>
@@ -58,66 +58,66 @@
 			<then>
 				<var name="key_siteScope" value="${siteScope}" />
 
-				<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE" value1="User Segment (${siteScope})" />
+				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE" value1="User Segment (${siteScope})" />
 			</then>
 		</if>
 
-		<execute function="Click" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON" />
-		<execute function="Click" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_DISPLAY_CONTENT_DROPDOWN" />
+		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CLOSE_BUTTON" />
+		<execute function="Click" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_DROPDOWN" />
 
 		<var name="key_contentType" value="${contentType}" />
 
-		<execute function="AssertClick" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_DISPLAY_CONTENT_DROPDOWN_MENULIST" value1="${contentType}" />
+		<execute function="AssertClick" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_DROPDOWN_MENULIST" value1="${contentType}" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGUsersegmentcontentdisplay#SELECT_CONTENT_IFRAME" />
+		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#SELECT_CONTENT_IFRAME" />
 
 		<var name="key_contentTitle" value="${contentTitle}" />
 
-		<execute function="AssertClickNoError" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
+		<execute function="AssertClickNoError" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGUsersegmentcontentdisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="configureOtherwiseContenDisplayRule">
-		<execute function="SelectFrame" locator1="PGUsersegmentcontentdisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
 		<if>
 			<isset var="otherwiseContentType" />
 			<then>
-				<execute function="ClickNoError" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL" />
-				<execute function="Click" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
+				<execute function="ClickNoError" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL" />
+				<execute function="Click" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
 
-				<execute function="ClickNoError" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_SELECT_CONTENT_BUTTON" />
+				<execute function="ClickNoError" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_SELECT_CONTENT_BUTTON" />
 
 				<var name="key_contentType" value="${otherwiseContentType}" />
 
-				<execute function="Click" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_CONTENT_DROPDOWN_MENULIST" />
+				<execute function="Click" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_CONTENT_DROPDOWN_MENULIST" />
 
 				<execute function="SelectFrame" value1="relative=top" />
-				<execute function="SelectFrame" locator1="PGUsersegmentcontentdisplay#SELECT_CONTENT_IFRAME" />
+				<execute function="SelectFrame" locator1="UserSegmentContentDisplay#SELECT_CONTENT_IFRAME" />
 
 				<var name="key_contentTitle" value="${otherwiseContentTitle}" />
 
-				<execute function="AssertClickNoError" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
+				<execute function="AssertClickNoError" locator1="UserSegmentContentDisplay#RULE_PANEL_DISPLAY_CONTENT_SELECT_CONTENT_CHOOSE_BUTTON" value1="Choose" />
 
 				<execute function="SelectFrame" value1="relative=top" />
 			</then>
 			<else>
-				<execute function="ClickNoError" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL" />
-				<execute function="Click" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO" />
+				<execute function="ClickNoError" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL" />
+				<execute function="Click" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_DONT_DISPLAY_ANYTHING_RADIO" />
 				<execute function="SelectFrame" value1="relative=top" />
 			</else>
 		</if>
 	</command>
 
 	<command name="savePG">
-		<execute function="SelectFrame" locator1="PGUsersegmentcontentdisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
-		<execute function="ClickNoError" locator1="PGUsersegmentcontentdisplay#SAVE_BUTTON" />
-		<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute function="ClickNoError" locator1="Button#SAVE" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -128,63 +128,63 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGUsersegmentcontentdisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="UserSegmentContentDisplay#USER_SEGMENT_CONTENT_DISPLAY_CONFIGURATION_IFRAME" />
 
 		<var name="key_rowNumber" value="${rowNumber}" />
 
 		<if>
 			<equals arg1="${belongs}" arg2="true" />
 			<then>
-				<execute function="AssertChecked" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_BELONGS_RADIO" />
+				<execute function="AssertChecked" locator1="UserSegmentContentDisplay#RULE_PANEL_BELONGS_RADIO" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${doesNotBelong}" arg2="true" />
 			<then>
-				<execute function="AssertChecked" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_DOES_NOT_BELONG_RADIO" />
+				<execute function="AssertChecked" locator1="UserSegmentContentDisplay#RULE_PANEL_DOES_NOT_BELONG_RADIO" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${toAll}" arg2="true" />
 			<then>
-				<execute function="AssertChecked" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_ALL_RADIO" />
+				<execute function="AssertChecked" locator1="UserSegmentContentDisplay#RULE_PANEL_ALL_RADIO" />
 			</then>
 		</if>
 
 		<if>
 			<equals arg1="${toAny}" arg2="true" />
 			<then>
-				<execute function="AssertChecked" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_ANY_RADIO" />
+				<execute function="AssertChecked" locator1="UserSegmentContentDisplay#RULE_PANEL_ANY_RADIO" />
 			</then>
 		</if>
 
 		<var name="key_userSegmentName" value="${userSegmentName}" />
 
-		<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_SELECTED_USER_SEGMENT" value1="${userSegmentName}" />
+		<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#RULE_PANEL_SELECTED_USER_SEGMENT" value1="${userSegmentName}" />
 
 		<var name="key_contentTitle" value="${contentTitle}" />
 
-		<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_SELECTED_DISPLAY_CONTENT_TITLE" value1="${contentTitle}" />
+		<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#RULE_PANEL_SELECTED_DISPLAY_CONTENT_TITLE" value1="${contentTitle}" />
 
 		<var name="key_contentType" value="${contentType}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="PGUsersegmentcontentdisplay#RULE_PANEL_SELECTED_DISPLAY_CONTENT_TYPE" value1="Type: ${contentType}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="UserSegmentContentDisplay#RULE_PANEL_SELECTED_DISPLAY_CONTENT_TYPE" value1="Type: ${contentType}" />
 
 		<if>
 			<isset var="otherwiseContentType" />
 			<then>
-				<execute function="Click" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL" />
-				<execute function="AssertChecked" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
+				<execute function="Click" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL" />
+				<execute function="AssertChecked" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_DISPLAY_THIS_CONTENT_RADIO" />
 
 				<var name="key_contentType" value="${otherwiseContentType}" />
 
-				<execute function="AssertTextEquals#assertPartialText" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE" value1="Type: ${otherwiseContentType}" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_SELECTED_CONTENT_TYPE" value1="Type: ${otherwiseContentType}" />
 
 				<var name="key_contentTitle" value="${otherwiseContentTitle}" />
 
-				<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#OTHERWISE_PANEL_SELECTED_CONTENT_TITLE" value1="${otherwiseContentTitle}" />
+				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#OTHERWISE_PANEL_SELECTED_CONTENT_TITLE" value1="${otherwiseContentTitle}" />
 			</then>
 		</if>
 	</command>
@@ -194,22 +194,22 @@
 			<isset var="viewUserSegmentSelected" />
 			<then>
 				<var name="key_viewUserSegmentSelected" value="${viewUserSegmentSelected}" />
-				<execute function="AssertElementPresent" locator1="PGUsersegmentcontentdisplay#PREVIEW_USER_SEGMENT_SELECTED" value1="${viewUserSegmentSelected}" />
+				<execute function="AssertElementPresent" locator1="UserSegmentContentDisplay#PREVIEW_USER_SEGMENT_SELECTED" value1="${viewUserSegmentSelected}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="entryContentText" />
 			<then>
-				<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#ENTRY_CONTENT" value1="${entryContentText}" />
+				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#ENTRY_CONTENT" value1="${entryContentText}" />
 			</then>
 		</if>
 
 		<if>
 			<isset var="preview1Text" />
 			<then>
-				<execute function="MouseOver" locator1="PGUsersegmentcontentdisplay#PREVIEW_1" />
-				<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#PREVIEW_1" value1="${preview1Text}" />
+				<execute function="MouseOver" locator1="UserSegmentContentDisplay#PREVIEW_1" />
+				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#PREVIEW_1" value1="${preview1Text}" />
 			</then>
 		</if>
 
@@ -218,8 +218,8 @@
 		<if>
 			<isset var="preview2Text" />
 			<then>
-				<execute function="MouseOver" locator1="PGUsersegmentcontentdisplay#PREVIEW_2" />
-				<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#PREVIEW_2" value1="${preview2Text}" />
+				<execute function="MouseOver" locator1="UserSegmentContentDisplay#PREVIEW_2" />
+				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#PREVIEW_2" value1="${preview2Text}" />
 			</then>
 		</if>
 
@@ -227,12 +227,12 @@
 			<isset var="viewDontDisplay" />
 			<then>
 				<execute function="MouseOverNoError" locator1="PGUsersegmentcontentdisplay#${viewDontDisplay}" />
-				<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#INFO_MESSAGE" value1="There are no matching rules" />
+				<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#INFO_MESSAGE" value1="There are no matching rules" />
 			</then>
 		</if>
 	</command>
 
 	<command name="viewNoContentPG">
-		<execute function="AssertTextEquals" locator1="PGUsersegmentcontentdisplay#INFO_MESSAGE" value1="There are no matching rules" />
+		<execute function="AssertTextEquals" locator1="UserSegmentContentDisplay#INFO_MESSAGE" value1="There are no matching rules" />
 	</command>
 </definition>

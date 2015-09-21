@@ -16,19 +16,19 @@ package com.liferay.portal.security.auto.login.request.header;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auto.login.request.header.configuration.RequestHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.request.header.constants.RequestHeaderAutoLoginConstants;
+import com.liferay.portal.security.auto.login.request.header.module.configuration.RequestHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Wesley Gong
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.auto.login.request.header.configuration.RequestHeaderAutoLoginConfiguration",
+	configurationPid = "com.liferay.portal.security.auto.login.request.header.module.configuration.RequestHeaderAutoLoginConfiguration",
 	immediate = true, service = AutoLogin.class
 )
 public class RequestHeaderAutoLogin extends BaseAutoLogin {
@@ -156,9 +156,11 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		return requestHeaderAutoLoginConfiguration.importFromLDAP();
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private RequestHeaderAutoLoginConfiguration
@@ -167,7 +169,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		try {
 			RequestHeaderAutoLoginConfiguration
 				requestHeaderAutoLoginConfiguration =
-					_settingsFactory.getSettings(
+					_configurationFactory.getConfiguration(
 						RequestHeaderAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
@@ -175,9 +177,9 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 			return requestHeaderAutoLoginConfiguration;
 		}
-		catch (SettingsException se) {
+		catch (ConfigurationException ce) {
 			_log.error(
-				"Unable to get request header auto login configuration", se);
+				"Unable to get request header auto login configuration", ce);
 		}
 
 		return null;
@@ -186,6 +188,6 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RequestHeaderAutoLogin.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

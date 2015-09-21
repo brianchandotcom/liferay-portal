@@ -463,14 +463,14 @@ public class SocialRelationPersistenceTest {
 
 		SocialRelation existingSocialRelation = _persistence.findByPrimaryKey(newSocialRelation.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialRelation.getUserId1(),
-			ReflectionTestUtil.invoke(existingSocialRelation,
+		Assert.assertEquals(Long.valueOf(existingSocialRelation.getUserId1()),
+			ReflectionTestUtil.<Long>invoke(existingSocialRelation,
 				"getOriginalUserId1", new Class<?>[0]));
-		Assert.assertEquals(existingSocialRelation.getUserId2(),
-			ReflectionTestUtil.invoke(existingSocialRelation,
+		Assert.assertEquals(Long.valueOf(existingSocialRelation.getUserId2()),
+			ReflectionTestUtil.<Long>invoke(existingSocialRelation,
 				"getOriginalUserId2", new Class<?>[0]));
-		Assert.assertEquals(existingSocialRelation.getType(),
-			ReflectionTestUtil.invoke(existingSocialRelation,
+		Assert.assertEquals(Integer.valueOf(existingSocialRelation.getType()),
+			ReflectionTestUtil.<Integer>invoke(existingSocialRelation,
 				"getOriginalType", new Class<?>[0]));
 	}
 

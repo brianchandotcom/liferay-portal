@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletResponse;
 
@@ -84,6 +85,10 @@ public class RowChecker {
 
 	public String getCssClass() {
 		return _cssClass;
+	}
+
+	public Map<String, Object> getData(Object obj) {
+		return _data;
 	}
 
 	public String getFormName() {
@@ -148,6 +153,10 @@ public class RowChecker {
 		_cssClass = cssClass;
 	}
 
+	public void setData(Map<String, Object> data) {
+		_data = data;
+	}
+
 	public void setFormName(String formName) {
 		_formName = getNamespacedValue(formName);
 	}
@@ -167,19 +176,18 @@ public class RowChecker {
 			return StringPool.BLANK;
 		}
 
-		StringBuilder sb = new StringBuilder(11);
+		StringBuilder sb = new StringBuilder(10);
 
 		sb.append("<input name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");
 		sb.append(LanguageUtil.get(getLocale(request), "select-all"));
 		sb.append("\" type=\"checkbox\" ");
-		sb.append("onClick=\"Liferay.Util.checkAll(");
-		sb.append("AUI().one(this).ancestor('");
-		sb.append(".table'), ");
+		sb.append(HtmlUtil.buildData(_data));
+		sb.append("onClick=\"Liferay.Util.checkAll(AUI().one(this).ancestor(");
+		sb.append("'.table'), ");
 		sb.append(checkBoxRowIds);
-		sb.append(", this, 'tr:not(.lfr-template)'");
-		sb.append(");\">");
+		sb.append(", this, 'tr:not(.lfr-template)');\">");
 
 		return sb.toString();
 	}
@@ -221,7 +229,7 @@ public class RowChecker {
 		String name, String value, String checkBoxRowIds,
 		String checkBoxAllRowIds, String checkBoxPostOnClick) {
 
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("<input ");
 
@@ -233,7 +241,9 @@ public class RowChecker {
 			sb.append("disabled ");
 		}
 
-		sb.append("name=\"");
+		sb.append("class=\"");
+		sb.append(_cssClass);
+		sb.append("\" name=\"");
 		sb.append(name);
 		sb.append("\" title=\"");
 		sb.append(LanguageUtil.get(request.getLocale(), "select"));
@@ -242,15 +252,13 @@ public class RowChecker {
 		sb.append("\" ");
 
 		if (Validator.isNotNull(_allRowIds)) {
-			sb.append("onClick=\"Liferay.Util.checkAllBox(");
-			sb.append("AUI().one(this).ancestor('");
-			sb.append(".table'), ");
+			sb.append("onClick=\"Liferay.Util.rowCheckerCheckAllBox(AUI().");
+			sb.append("one(this).ancestor('.table'), AUI().one(this).");
+			sb.append("ancestor('tr:not(.lfr-template)'), ");
 			sb.append(checkBoxRowIds);
 			sb.append(", ");
 			sb.append(checkBoxAllRowIds);
-			sb.append(");");
-			sb.append("AUI().one(this).ancestor('tr:not(.lfr-template)').");
-			sb.append("toggleClass('info');");
+			sb.append(", 'info');");
 
 			if (Validator.isNotNull(checkBoxPostOnClick)) {
 				sb.append(checkBoxPostOnClick);
@@ -268,6 +276,7 @@ public class RowChecker {
 	private String _allRowIds;
 	private int _colspan = COLSPAN;
 	private String _cssClass = CSS_CLASS;
+	private Map<String, Object> _data;
 	private String _formName;
 	private final PortletResponse _portletResponse;
 	private String _rowIds;

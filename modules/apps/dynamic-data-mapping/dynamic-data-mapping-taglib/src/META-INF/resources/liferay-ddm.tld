@@ -30,7 +30,7 @@
 			<name>ddmFormValues</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues</type>
+			<type>com.liferay.dynamic.data.mapping.storage.DDMFormValues</type>
 		</attribute>
 		<attribute>
 			<name>fieldsNamespace</name>
@@ -132,7 +132,7 @@
 			<name>contextObjects</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.Map</type>
+			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
 		</attribute>
 		<attribute>
 			<name>displayStyle</name>
@@ -150,7 +150,7 @@
 			<name>entries</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.List</type>
+			<type><![CDATA[java.util.List<?>]]></type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
@@ -186,7 +186,7 @@
 			<name>displayStyles</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>java.util.List</type>
+			<type><![CDATA[java.util.List<java.lang.String>]]></type>
 		</attribute>
 		<attribute>
 			<name>icon</name>

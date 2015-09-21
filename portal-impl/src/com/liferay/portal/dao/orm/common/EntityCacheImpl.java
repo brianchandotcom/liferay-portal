@@ -118,6 +118,10 @@ public class EntityCacheImpl
 		}
 	}
 
+	public void destroy() {
+		CacheRegistryUtil.unregister(getRegistryName());
+	}
+
 	@Override
 	public void dispose() {
 		_portalCaches.clear();

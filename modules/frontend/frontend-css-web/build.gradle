@@ -4,7 +4,7 @@ dependencies {
 }
 
 liferay {
-	deployDir = file("${liferayHome}/osgi/portal")
+	deployDir = file("${liferayHome}/osgi/modules")
 }
 
 task buildAlloyTheme(type: Copy)
@@ -16,8 +16,8 @@ buildAlloyTheme {
 		autoClean = false
 	}
 
-	from "../frontend-js-web/tmp/META-INF/resources/html/js/aui/aui_deprecated.css"
-	into "src/META-INF/resources/html/css/portal"
+	from "../frontend-js-web/tmp/META-INF/resources/aui/aui_deprecated.css"
+	into "src/META-INF/resources/portal"
 }
 
 classes {

@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys;
+import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationUtil;
 import com.liferay.dynamic.data.mapping.exception.InvalidTemplateVersionException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchTemplateException;
 import com.liferay.dynamic.data.mapping.exception.RequiredTemplateException;
@@ -27,6 +28,7 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMTemplateLocalServiceBaseImpl;
+import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.util.DDMXMLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -50,7 +52,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.service.persistence.ImageUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.util.xml.XMLUtil;
 
 import java.io.File;
@@ -273,11 +274,14 @@ public class DDMTemplateLocalServiceImpl
 			boolean addGuestPermissions)
 		throws PortalException {
 
+		String resourceName =
+			DDMTemplatePermission.getTemplateModelResourceName(
+				template.getResourceClassNameId());
+
 		resourceLocalService.addResources(
 			template.getCompanyId(), template.getGroupId(),
-			template.getUserId(), DDMTemplate.class.getName(),
-			template.getTemplateId(), false, addGroupPermissions,
-			addGuestPermissions);
+			template.getUserId(), resourceName, template.getTemplateId(), false,
+			addGroupPermissions, addGuestPermissions);
 	}
 
 	/**
@@ -292,10 +296,14 @@ public class DDMTemplateLocalServiceImpl
 			DDMTemplate template, ModelPermissions modelPermissions)
 		throws PortalException {
 
+		String resourceName =
+			DDMTemplatePermission.getTemplateModelResourceName(
+				template.getResourceClassNameId());
+
 		resourceLocalService.addModelResources(
 			template.getCompanyId(), template.getGroupId(),
-			template.getUserId(), DDMTemplate.class.getName(),
-			template.getTemplateId(), modelPermissions);
+			template.getUserId(), resourceName, template.getTemplateId(),
+			modelPermissions);
 	}
 
 	/**
@@ -1530,9 +1538,8 @@ public class DDMTemplateLocalServiceImpl
 
 		validate(nameMap, script);
 
-		String[] imageExtensions = PrefsPropsUtil.getStringArray(
-			DDMServiceConfigurationKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS,
-			StringPool.COMMA);
+		String[] imageExtensions = DDMServiceConfigurationUtil.getArray(
+			DDMServiceConfigurationKeys.DYNAMIC_DATA_MAPPING_IMAGE_EXTENSIONS);
 
 		if (!smallImage || Validator.isNotNull(smallImageURL) ||
 			(smallImageFile == null) || (smallImageBytes == null)) {
@@ -1559,9 +1566,10 @@ public class DDMTemplateLocalServiceImpl
 			throw new TemplateSmallImageNameException(smallImageName);
 		}
 
-		long smallImageMaxSize = PrefsPropsUtil.getLong(
-			DDMServiceConfigurationKeys.
-				DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE);
+		long smallImageMaxSize = GetterUtil.getLong(
+			DDMServiceConfigurationUtil.get(
+				DDMServiceConfigurationKeys.
+					DYNAMIC_DATA_MAPPING_IMAGE_SMALL_MAX_SIZE));
 
 		if ((smallImageMaxSize > 0) &&
 			(smallImageBytes.length > smallImageMaxSize)) {

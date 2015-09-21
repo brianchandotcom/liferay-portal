@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.BackgroundTask;
 
 /**
  * @author Daniel Kocsis

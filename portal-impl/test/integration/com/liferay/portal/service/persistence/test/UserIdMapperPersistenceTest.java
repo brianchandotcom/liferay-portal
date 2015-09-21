@@ -400,8 +400,8 @@ public class UserIdMapperPersistenceTest {
 
 		UserIdMapper existingUserIdMapper = _persistence.findByPrimaryKey(newUserIdMapper.getPrimaryKey());
 
-		Assert.assertEquals(existingUserIdMapper.getUserId(),
-			ReflectionTestUtil.invoke(existingUserIdMapper,
+		Assert.assertEquals(Long.valueOf(existingUserIdMapper.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingUserIdMapper,
 				"getOriginalUserId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingUserIdMapper.getType(),
 				ReflectionTestUtil.invoke(existingUserIdMapper,

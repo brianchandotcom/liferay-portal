@@ -44,14 +44,14 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 	orderByCol="<%= orderByCol %>"
 	orderByComparator="<%= orderByComparator %>"
 	orderByType="<%= orderByType %>"
-	total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, selPortlet.getPortletId(), PortletExportBackgroundTaskExecutor.class.getName()) %>"
+	total="<%= BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, selPortlet.getPortletId(), PortletExportBackgroundTaskExecutor.class.getName()) %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, selPortlet.getPortletId(), PortletExportBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+		results="<%= BackgroundTaskManagerUtil.getBackgroundTasks(groupId, selPortlet.getPortletId(), PortletExportBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.BackgroundTask"
+		className="com.liferay.portal.kernel.backgroundtask.BackgroundTask"
 		keyProperty="backgroundTaskId"
 		modelVar="backgroundTask"
 	>
@@ -143,7 +143,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 </liferay-ui:search-container>
 
 <%
-int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, selPortlet.getPortletId(), PortletExportBackgroundTaskExecutor.class.getName(), false);
+int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, selPortlet.getPortletId(), PortletExportBackgroundTaskExecutor.class.getName(), false);
 %>
 
 <div class="hide incomplete-process-message">

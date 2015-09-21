@@ -572,12 +572,12 @@ public class DLFileVersionPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingDLFileVersion.getUuid(),
 				ReflectionTestUtil.invoke(existingDLFileVersion,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingDLFileVersion.getGroupId(),
-			ReflectionTestUtil.invoke(existingDLFileVersion,
+		Assert.assertEquals(Long.valueOf(existingDLFileVersion.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileVersion,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDLFileVersion.getFileEntryId(),
-			ReflectionTestUtil.invoke(existingDLFileVersion,
+		Assert.assertEquals(Long.valueOf(existingDLFileVersion.getFileEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingDLFileVersion,
 				"getOriginalFileEntryId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingDLFileVersion.getVersion(),
 				ReflectionTestUtil.invoke(existingDLFileVersion,

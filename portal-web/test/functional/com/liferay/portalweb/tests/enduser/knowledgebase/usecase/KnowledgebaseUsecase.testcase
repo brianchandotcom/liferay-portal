@@ -1034,7 +1034,7 @@
 			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="CPDocumentsandmedia#INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no documents or media files in this folder." />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Knowledge Base" />

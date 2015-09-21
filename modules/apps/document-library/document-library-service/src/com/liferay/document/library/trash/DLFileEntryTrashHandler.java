@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.trash;
 
-import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.capabilities.UnsupportedCapabilityException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -214,9 +214,9 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 			return dlFileEntry.isInTrash();
 		}
-		catch (InvalidRepositoryException ire) {
+		catch (UnsupportedCapabilityException uce) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ire, ire);
+				_log.debug(uce, uce);
 			}
 
 			return false;
@@ -230,9 +230,9 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 			return dlFileEntry.isInTrashContainer();
 		}
-		catch (InvalidRepositoryException ire) {
+		catch (UnsupportedCapabilityException uce) {
 			if (_log.isDebugEnabled()) {
-				_log.debug(ire, ire);
+				_log.debug(uce, uce);
 			}
 
 			return false;
@@ -407,9 +407,9 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			classPK);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
-			throw new InvalidRepositoryException(
-				"Repository " + repository.getRepositoryId() +
-					" does not support trash operations");
+			throw new UnsupportedCapabilityException(
+				TrashCapability.class,
+				"Repository " + repository.getRepositoryId());
 		}
 
 		FileEntry fileEntry = repository.getFileEntry(classPK);
@@ -425,9 +425,9 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			RepositoryProviderUtil.getFileEntryLocalRepository(classPK);
 
 		if (!localRepository.isCapabilityProvided(TrashCapability.class)) {
-			throw new InvalidRepositoryException(
-				"Repository " + localRepository.getRepositoryId() +
-					" does not support trash operations");
+			throw new UnsupportedCapabilityException(
+				TrashCapability.class,
+				"Repository " + localRepository.getRepositoryId());
 		}
 
 		return localRepository;

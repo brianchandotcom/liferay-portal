@@ -16,6 +16,7 @@ package com.liferay.bookmarks.service.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.bookmarks.configuration.BookmarksGroupServiceOverriddenConfiguration;
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.exception.EntryURLException;
@@ -24,7 +25,6 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.base.BookmarksEntryLocalServiceBaseImpl;
 import com.liferay.bookmarks.service.permission.BookmarksResourcePermissionChecker;
-import com.liferay.bookmarks.settings.BookmarksGroupServiceSettings;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -50,7 +51,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -194,6 +194,11 @@ public class BookmarksEntryLocalServiceImpl
 		// Expando
 
 		expandoRowLocalService.deleteRows(entry.getEntryId());
+
+		// Ratings
+
+		ratingsStatsLocalService.deleteStats(
+			BookmarksEntry.class.getName(), entry.getEntryId());
 
 		// Subscriptions
 
@@ -723,16 +728,19 @@ public class BookmarksEntryLocalServiceImpl
 			return;
 		}
 
-		BookmarksGroupServiceSettings bookmarksGroupServiceSettings =
-			settingsFactory.getSettings(
-				BookmarksGroupServiceSettings.class,
-				new GroupServiceSettingsLocator(
-					entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
+		BookmarksGroupServiceOverriddenConfiguration
+			bookmarksGroupServiceOverriddenConfiguration =
+				configurationFactory.getConfiguration(
+					BookmarksGroupServiceOverriddenConfiguration.class,
+					new GroupServiceSettingsLocator(
+						entry.getGroupId(), BookmarksConstants.SERVICE_NAME));
 
 		if ((serviceContext.isCommandAdd() &&
-			 !bookmarksGroupServiceSettings.emailEntryAddedEnabled()) ||
+			 !bookmarksGroupServiceOverriddenConfiguration.
+				 emailEntryAddedEnabled()) ||
 			(serviceContext.isCommandUpdate() &&
-			 !bookmarksGroupServiceSettings.emailEntryUpdatedEnabled())) {
+			 !bookmarksGroupServiceOverriddenConfiguration.
+				 emailEntryUpdatedEnabled())) {
 
 			return;
 		}
@@ -754,23 +762,29 @@ public class BookmarksEntryLocalServiceImpl
 			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "bookmarks" +
 				StringPool.SLASH + entry.getEntryId();
 
-		String fromName = bookmarksGroupServiceSettings.emailFromName();
-		String fromAddress = bookmarksGroupServiceSettings.emailFromAddress();
+		String fromName =
+			bookmarksGroupServiceOverriddenConfiguration.emailFromName();
+		String fromAddress =
+			bookmarksGroupServiceOverriddenConfiguration.emailFromAddress();
 
 		LocalizedValuesMap subjectLocalizedValuesMap = null;
 		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
 			subjectLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryUpdatedSubject();
+				bookmarksGroupServiceOverriddenConfiguration.
+					emailEntryUpdatedSubject();
 			bodyLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryUpdatedBody();
+				bookmarksGroupServiceOverriddenConfiguration.
+					emailEntryUpdatedBody();
 		}
 		else {
 			subjectLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryAddedSubject();
+				bookmarksGroupServiceOverriddenConfiguration.
+					emailEntryAddedSubject();
 			bodyLocalizedValuesMap =
-				bookmarksGroupServiceSettings.emailEntryAddedBody();
+				bookmarksGroupServiceOverriddenConfiguration.
+					emailEntryAddedBody();
 		}
 
 		SubscriptionSender subscriptionSender =
@@ -845,8 +859,8 @@ public class BookmarksEntryLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = SettingsFactory.class)
-	protected SettingsFactory settingsFactory;
+	@ServiceReference(type = ConfigurationFactory.class)
+	protected ConfigurationFactory configurationFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksEntryLocalServiceImpl.class);

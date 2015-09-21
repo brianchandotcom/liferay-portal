@@ -15,10 +15,10 @@
 package com.liferay.exportimport.messaging;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageStatus;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
@@ -29,7 +29,10 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import org.osgi.service.component.ComponentContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -39,11 +42,26 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"destination.name=liferay/layouts_local_publisher"},
-	service = MessageListener.class
+	property = {
+		"destination.name=" + DestinationNames.LAYOUTS_LOCAL_PUBLISHER,
+		"message.status.destination.name=" + DestinationNames.MESSAGE_BUS_MESSAGE_STATUS
+	},
+	service = LayoutsLocalPublisherMessageListener.class
 )
 public class LayoutsLocalPublisherMessageListener
 	extends BasePublisherMessageListener {
+
+	@Activate
+	protected void activate(ComponentContext componentContext) {
+		initialize(componentContext);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		if (serviceRegistration != null) {
+			serviceRegistration.unregister();
+		}
+	}
 
 	@Override
 	protected void doReceive(Message message, MessageStatus messageStatus)
@@ -83,9 +101,11 @@ public class LayoutsLocalPublisherMessageListener
 		}
 	}
 
-	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
-	protected void setModuleServiceLifecycle(
-		ModuleServiceLifecycle moduleServiceLifecycle) {
+	@Reference(
+		target = "(destination.name=" + DestinationNames.LAYOUTS_LOCAL_PUBLISHER + ")",
+		unbind = "-"
+	)
+	protected void setDestination(Destination destination) {
 	}
 
 }

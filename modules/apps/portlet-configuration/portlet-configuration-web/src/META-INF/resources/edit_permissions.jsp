@@ -103,12 +103,10 @@ if (Validator.isNotNull(roleTypesParam)) {
 	roleTypes = StringUtil.split(roleTypesParam, 0);
 }
 
-String portletId = PortletProviderUtil.getPortletId(Role.class.getName(), PortletProvider.Action.MANAGE);
+LiferayPortletURL definePermissionsURL = (LiferayPortletURL)PortletProviderUtil.getPortletURL(request, Role.class.getName(), PortletProvider.Action.MANAGE);
 
-LiferayPortletURL definePermissionsURL = (LiferayPortletURL)PortalUtil.getControlPanelPortletURL(request, portletId, 0, PortletRequest.RENDER_PHASE);
-
-definePermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
+definePermissionsURL.setParameter("backURL", currentURL);
 definePermissionsURL.setPortletMode(PortletMode.VIEW);
 definePermissionsURL.setRefererPlid(plid);
 definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);

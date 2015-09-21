@@ -14,6 +14,7 @@
 
 package com.liferay.polls.lar;
 
+import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.PollsVote;
@@ -25,9 +26,11 @@ import com.liferay.polls.service.PollsQuestionLocalServiceUtil;
 import com.liferay.polls.service.PollsVoteLocalServiceUtil;
 import com.liferay.polls.service.permission.PollsResourcePermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
@@ -38,16 +41,26 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Bruno Farache
  * @author Marcellus Tavares
  * @author Mate Thurzo
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PollsPortletKeys.POLLS},
+	service = PortletDataHandler.class
+)
 public class PollsPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "polls";
 
-	public PollsPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLocalized(true);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(PollsQuestion.class));
@@ -200,6 +213,11 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext);
 
 		voteActionableDynamicQuery.performCount();
+	}
+
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle(
+		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
 
 }

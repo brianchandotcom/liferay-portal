@@ -453,14 +453,16 @@ public class PortletPreferencesPersistenceTest {
 
 		PortletPreferences existingPortletPreferences = _persistence.findByPrimaryKey(newPortletPreferences.getPrimaryKey());
 
-		Assert.assertEquals(existingPortletPreferences.getOwnerId(),
-			ReflectionTestUtil.invoke(existingPortletPreferences,
+		Assert.assertEquals(Long.valueOf(
+				existingPortletPreferences.getOwnerId()),
+			ReflectionTestUtil.<Long>invoke(existingPortletPreferences,
 				"getOriginalOwnerId", new Class<?>[0]));
-		Assert.assertEquals(existingPortletPreferences.getOwnerType(),
-			ReflectionTestUtil.invoke(existingPortletPreferences,
+		Assert.assertEquals(Integer.valueOf(
+				existingPortletPreferences.getOwnerType()),
+			ReflectionTestUtil.<Integer>invoke(existingPortletPreferences,
 				"getOriginalOwnerType", new Class<?>[0]));
-		Assert.assertEquals(existingPortletPreferences.getPlid(),
-			ReflectionTestUtil.invoke(existingPortletPreferences,
+		Assert.assertEquals(Long.valueOf(existingPortletPreferences.getPlid()),
+			ReflectionTestUtil.<Long>invoke(existingPortletPreferences,
 				"getOriginalPlid", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingPortletPreferences.getPortletId(),

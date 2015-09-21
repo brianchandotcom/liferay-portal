@@ -18,12 +18,8 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				if (!instance._eventHandlers) {
-					instance._eventHandlers = [];
-				}
-
 				instance._eventHandlers.push(
-					instance.after('containerChange', instance._afterContainerChange)
+					instance.after('fieldsChange', instance._afterFieldsChange)
 				);
 			},
 
@@ -42,18 +38,26 @@ AUI.add(
 			eachField: function(fn) {
 				var instance = this;
 
-				var queue = new A.Queue(instance);
+				var queue = new A.Queue();
 
-				var addToQueue = function(item) {
-					queue.add(item);
+				var addToQueue = A.fn(1, 'add', queue);
+
+				var addSiblingsToQueue = function(item) {
+					item.getRepeatedSiblings().forEach(addToQueue);
 				};
+
+				instance.get('fields').forEach(addSiblingsToQueue);
 
 				while (queue.size() > 0) {
 					var field = queue.next();
 
-					fn.call(instance, field);
+					var stop = fn.call(instance, field, queue);
 
-					field.get('fields').forEach(addToQueue);
+					if (stop === true) {
+						break;
+					}
+
+					field.get('fields').forEach(addSiblingsToQueue);
 				}
 			},
 
@@ -76,7 +80,7 @@ AUI.add(
 
 				return nodes.filter(
 					function(item) {
-						var qualifiedName = item.one('.field-wrapper').getData('fieldname');
+						var qualifiedName = item.one('.form-group').getData('fieldname');
 
 						return fn.call(instance, qualifiedName, item);
 					}
@@ -93,6 +97,8 @@ AUI.add(
 						if (item.get('name') === name) {
 							field = item;
 						}
+
+						return field !== undefined;
 					}
 				);
 
@@ -140,18 +146,27 @@ AUI.add(
 
 				if (index > -1) {
 					fields.splice(index, 1);
-				}
 
-				instance.set('fields', fields);
+					instance.set('fields', fields);
+				}
 			},
 
-			_afterContainerChange: function(event) {
+			_afterFieldsChange: function(event) {
 				var instance = this;
 
-				A.each(
-					instance.get('fields'),
-					function(item) {
-						event.newVal.append(item.get('container'));
+				instance.eachField(
+					function(field) {
+						field.render();
+					}
+				);
+			},
+
+			_setFields: function(fields) {
+				var instance = this;
+
+				fields.forEach(
+					function(field) {
+						field.set('parent', instance);
 					}
 				);
 			}
@@ -161,6 +176,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-field-types', 'liferay-ddm-form-renderer-util']
+		requires: ['liferay-ddm-form-renderer-types', 'liferay-ddm-form-renderer-util']
 	}
 );

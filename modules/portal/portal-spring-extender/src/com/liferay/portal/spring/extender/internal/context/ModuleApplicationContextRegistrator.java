@@ -56,24 +56,35 @@ public class ModuleApplicationContextRegistrator {
 	}
 
 	protected void start() throws Exception {
-		ConfigurableApplicationContext configurableApplicationContext =
-			_createApplicationContext(_extenderBundle, _extendeeBundle);
+		try {
+			ConfigurableApplicationContext configurableApplicationContext =
+				_createApplicationContext(_extenderBundle, _extendeeBundle);
 
-		_registerBeanLocator(_extendeeBundle, configurableApplicationContext);
+			_registerBeanLocator(
+				_extendeeBundle, configurableApplicationContext);
 
-		_refreshBeanFactory(configurableApplicationContext);
+			_refreshBeanFactory(configurableApplicationContext);
 
-		_serviceConfigurator.initServices(
-			new ModuleResourceLoader(_extendeeBundle), _extendeeClassLoader);
+			_serviceConfigurator.initServices(
+				new ModuleResourceLoader(_extendeeBundle),
+				_extendeeClassLoader);
 
-		_configurableApplicationContext = configurableApplicationContext;
+			_configurableApplicationContext = configurableApplicationContext;
 
-		_applicationContextServicePublisher =
-			new ApplicationContextServicePublisher(
-				_configurableApplicationContext,
-			_extendeeBundle.getBundleContext());
+			_applicationContextServicePublisher =
+				new ApplicationContextServicePublisher(
+					_configurableApplicationContext,
+				_extendeeBundle.getBundleContext());
 
-		_applicationContextServicePublisher.register();
+			_applicationContextServicePublisher.register();
+		}
+		catch (Exception e) {
+			_logger.log(
+				Logger.LOG_ERROR,
+				"Unable to start " + _extendeeBundle.getSymbolicName(), e);
+
+			throw e;
+		}
 	}
 
 	protected void stop() throws Exception {
@@ -146,9 +157,9 @@ public class ModuleApplicationContextRegistrator {
 		catch (Exception e) {
 			_logger.log(
 				Logger.LOG_ERROR,
-				"Unexpected error while refreshing " +
-					applicationContext.getDisplayName() + " may cause memory " +
-						"leaks on multiple redeployments");
+				"Unable to refresh " + applicationContext.getDisplayName() +
+					". This may result in memory leaks on multiple " +
+						"redeployments.");
 		}
 	}
 

@@ -17,7 +17,7 @@ package com.liferay.polls.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.polls.web.constants.PollsPortletKeys;
+import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.portal.service.PortletLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class PollsPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT;
-	}
-
-	@Override
 	public String getPortletId() {
 		return PollsPortletKeys.POLLS;
 	}
@@ -50,7 +45,7 @@ public class PollsPanelApp extends BaseControlPanelEntryPanelApp {
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

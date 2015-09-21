@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMPLETED</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Completed')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONSUMERS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Consumers')]</td>
 	<td></td>
@@ -79,7 +84,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMAIL_VERIFICATiON_NOTIFICATION</td>
+	<td>EMAIL_VERIFICATION_NOTIFICATION</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Email Verification Notification')]</td>
 	<td></td>
 </tr>
@@ -151,6 +156,11 @@
 <tr>
 	<td>PASSWORD_RESET_NOTIFICATION</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Password Reset Notification')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PENDING</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Pending')]</td>
 	<td></td>
 </tr>
 <tr>

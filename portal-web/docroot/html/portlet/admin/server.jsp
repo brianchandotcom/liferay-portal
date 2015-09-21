@@ -27,7 +27,7 @@ long seconds = (uptimeDiff / Time.SECOND) % 60;
 
 PortletURL serverURL = renderResponse.createRenderURL();
 
-serverURL.setParameter("struts_action", "/admin/view");
+serverURL.setParameter("mvcRenderCommandName", "/admin/view");
 serverURL.setParameter("tabs1", tabs1);
 serverURL.setParameter("tabs2", tabs2);
 serverURL.setParameter("tabs3", tabs3);

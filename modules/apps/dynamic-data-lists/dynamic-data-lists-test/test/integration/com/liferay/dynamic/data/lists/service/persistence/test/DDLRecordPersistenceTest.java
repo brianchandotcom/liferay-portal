@@ -473,9 +473,9 @@ public class DDLRecordPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingDDLRecord.getUuid(),
 				ReflectionTestUtil.invoke(existingDDLRecord, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(existingDDLRecord.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDLRecord, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingDDLRecord.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDLRecord,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected DDLRecord addDDLRecord() throws Exception {

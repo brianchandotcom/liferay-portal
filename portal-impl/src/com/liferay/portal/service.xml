@@ -103,90 +103,6 @@
 		<reference package-path="com.liferay.portal" entity="ListType" />
 		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
-	<entity name="BackgroundTask" local-service="true" remote-service="true">
-
-		<!-- PK fields -->
-
-		<column name="backgroundTaskId" type="long" primary="true" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="name" type="String" />
-		<column name="servletContextNames" type="String" />
-		<column name="taskExecutorClassName" type="String" />
-		<column name="taskContextMap" type="Map" />
-		<column name="completed" type="boolean" />
-		<column name="completionDate" type="Date" />
-		<column name="status" type="int" />
-		<column name="statusMessage" type="String" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="createDate" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
-		<finder name="Status" return-type="Collection">
-			<finder-column name="status" />
-		</finder>
-		<finder name="G_T" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="taskExecutorClassName" arrayable-operator="OR" />
-		</finder>
-		<finder name="G_S" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="status" />
-		</finder>
-		<finder name="T_S" return-type="Collection">
-			<finder-column name="taskExecutorClassName" arrayable-operator="OR" />
-			<finder-column name="status" />
-		</finder>
-		<finder name="G_N_T" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="name" />
-			<finder-column name="taskExecutorClassName" />
-		</finder>
-		<finder name="G_T_C" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="taskExecutorClassName" arrayable-operator="OR" />
-			<finder-column name="completed" />
-		</finder>
-		<finder name="G_T_S" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="taskExecutorClassName" arrayable-operator="OR" />
-			<finder-column name="status" />
-		</finder>
-		<finder name="G_N_T_C" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="name" />
-			<finder-column name="taskExecutorClassName" />
-			<finder-column name="completed" />
-		</finder>
-
-		<!-- References -->
-
-		<reference package-path="com.liferay.portal" entity="User" />
-	</entity>
 	<entity name="BrowserTracker" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
@@ -566,7 +482,6 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Account" />
-		<reference package-path="com.liferay.portal" entity="BackgroundTask" />
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Company" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
@@ -600,10 +515,6 @@
 		<reference package-path="com.liferay.portlet.exportimport" entity="ExportImport" />
 		<reference package-path="com.liferay.portlet.exportimport" entity="ExportImportConfiguration" />
 		<reference package-path="com.liferay.portlet.exportimport" entity="Staging" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCart" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCategory" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCoupon" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingOrder" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivitySetting" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialRequest" />
@@ -744,7 +655,6 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="BackgroundTask" />
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Image" />
@@ -1878,6 +1788,7 @@
 		<!-- Other fields -->
 
 		<column name="servletContextName" type="String" />
+		<column name="schemaVersion" type="String" />
 		<column name="buildNumber" type="int" />
 		<column name="buildDate" type="Date" />
 		<column name="verified" type="boolean" />
@@ -2112,9 +2023,11 @@
 		<column name="name" type="String" />
 		<column name="scope" type="int" />
 		<column name="primKey" type="String" />
+		<column name="primKeyId" type="long" />
 		<column name="roleId" type="long" />
 		<column name="ownerId" type="long" />
 		<column name="actionIds" type="long" />
+		<column name="viewActionId" type="boolean" />
 
 		<!-- Finder methods -->
 
@@ -2145,6 +2058,14 @@
 			<finder-column name="scope" />
 			<finder-column name="primKey" />
 			<finder-column name="roleId" arrayable-operator="OR" />
+		</finder>
+		<finder name="C_N_S_P_R_V" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="name" />
+			<finder-column name="scope" />
+			<finder-column name="primKeyId" />
+			<finder-column name="roleId" arrayable-operator="OR" />
+			<finder-column name="viewActionId" />
 		</finder>
 
 		<!-- References -->
@@ -2674,7 +2595,7 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBStatsUser" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBThreadFlag" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCart" />
+		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialRelation" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialRequest" />

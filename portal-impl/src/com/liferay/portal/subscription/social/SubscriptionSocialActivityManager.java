@@ -25,7 +25,7 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
  * @author Adolfo Pérez
  */
 @OSGiBeanProperties(
-	property = "model.className=com.liferay.portal.model.Subscription",
+	property = "model.class.name=com.liferay.portal.model.Subscription",
 	service = SocialActivityManager.class
 )
 public class SubscriptionSocialActivityManager

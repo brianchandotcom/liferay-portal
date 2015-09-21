@@ -25,7 +25,7 @@ import jodd.util.CsvUtil;
 public class NumberArrayConverter implements TypeConverter<Number[]> {
 
 	public NumberArrayConverter(ConvertBean convertBean) {
-		_convertBean = convertBean;
+		this.convertBean = convertBean;
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class NumberArrayConverter implements TypeConverter<Number[]> {
 				return convertArray(values);
 			}
 
-			return new Number[] {_convertBean.toBigDecimal(value)};
+			return new Number[] {convertBean.toBigDecimal(value)};
 		}
 
 		Class<?> componentType = type.getComponentType();
@@ -128,12 +128,12 @@ public class NumberArrayConverter implements TypeConverter<Number[]> {
 		Number[] results = new Number[values.length];
 
 		for (int i = 0; i < values.length; i++) {
-			results[i] = _convertBean.toBigDecimal(values[i]);
+			results[i] = convertBean.toBigDecimal(values[i]);
 		}
 
 		return results;
 	}
 
-	protected ConvertBean _convertBean;
+	protected ConvertBean convertBean;
 
 }

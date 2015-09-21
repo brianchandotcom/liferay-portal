@@ -607,7 +607,15 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	}
 
 	protected User getUser(long companyId, LDAPUser ldapUser) throws Exception {
-		User user = null;
+		if (Validator.equals(
+				PropsValues.LDAP_IMPORT_USER_SYNC_STRATEGY,
+				_USER_SYNC_STRATEGY_UUID)) {
+
+			ServiceContext serviceContext = ldapUser.getServiceContext();
+
+			return UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
+				serviceContext.getUuid(), companyId);
+		}
 
 		String authType = PrefsPropsUtil.getString(
 			companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
@@ -616,15 +624,12 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		if (authType.equals(CompanyConstants.AUTH_TYPE_SN) &&
 			!ldapUser.isAutoScreenName()) {
 
-			user = UserLocalServiceUtil.fetchUserByScreenName(
+			return UserLocalServiceUtil.fetchUserByScreenName(
 				companyId, ldapUser.getScreenName());
 		}
-		else {
-			user = UserLocalServiceUtil.fetchUserByEmailAddress(
-				companyId, ldapUser.getEmailAddress());
-		}
 
-		return user;
+		return UserLocalServiceUtil.fetchUserByEmailAddress(
+			companyId, ldapUser.getEmailAddress());
 	}
 
 	protected Attribute getUsers(
@@ -1123,7 +1128,9 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 			userGroupId);
 
 		for (User user : userGroupUsers) {
-			if (!newUserIds.contains(user.getUserId())) {
+			if ((ldapServerId == user.getLdapServerId()) &&
+				!newUserIds.contains(user.getUserId())) {
+
 				UserLocalServiceUtil.deleteUserGroupUser(
 					userGroupId, user.getUserId());
 			}
@@ -1383,6 +1390,8 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		"languageId", "lastName", "middleName", "openId", "portraitId",
 		"timeZoneId"
 	};
+
+	private static final String _USER_SYNC_STRATEGY_UUID = "uuid";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LDAPUserImporterImpl.class);

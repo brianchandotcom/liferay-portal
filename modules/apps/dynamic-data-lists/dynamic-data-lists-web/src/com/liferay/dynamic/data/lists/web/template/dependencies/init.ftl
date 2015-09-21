@@ -2,18 +2,20 @@
 
 <#assign localeVariable = "locale">
 
+<#assign themeDisplayVariable = "themeDisplay">
+
 <#if language == "vm">
 	<#assign localeVariable = "$" + localeVariable>
+
+	<#assign themeDisplayVariable = "$" + themeDisplayVariable>
 </#if>
 
-<#-- Field -->
+<#-- Field Value -->
 
-<#assign fieldType = "cur_record.getFieldType(\"" + name + "\")">
+<#assign fieldValueVariable = "cur_record.getDDMFormFieldValues(\"" + name + "\")?first">
 
-<#assign fieldValue = "cur_record.getFieldValue(\"" + name + "\", " + localeVariable + ")">
-
-<#if repeatable>
-	<#assign fieldValue = "curValue_" + name>
+<#if language == "vm">
+	<#assign fieldValueVariable = "$cur_record.getDDMFormFieldValues(\"" + name + "\").get(0)">
 </#if>
 
 <#-- Util -->

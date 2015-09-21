@@ -49,9 +49,9 @@
 
 		<var name="key_consumerPortletName" value="${consumerPortletName}" />
 
-		<execute function="AssertTextEquals" locator1="CPWSRPManageportlets#PORTLET_TABLE_NAME" value1="${consumerPortletName}" />
-		<execute function="AssertTextEquals" locator1="CPWSRPManageportlets#PORTLET_TABLE_REMOTE_PORTLET" value1="${consumerPortletType}" />
-		<execute function="AssertElementPresent" locator1="CPWSRPManageportlets#PORTLET_TABLE_DELETE" value1="Delete" />
+		<execute function="AssertTextEquals" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_NAME" value1="${consumerPortletName}" />
+		<execute function="AssertTextEquals" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_REMOTE_PORTLET" value1="${consumerPortletType}" />
+		<execute function="AssertElementPresent" locator1="WSRPAdminManagePortlets#PORTLET_TABLE_DELETE" value1="Delete" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />

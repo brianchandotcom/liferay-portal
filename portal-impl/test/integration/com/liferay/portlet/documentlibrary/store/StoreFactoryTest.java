@@ -15,9 +15,14 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.portlet.documentlibrary.store.bundle.storefactory.DelegatorStore;
+import com.liferay.portlet.documentlibrary.store.bundle.storefactory.FirstStoreWrapper;
+
+import java.lang.reflect.Method;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -26,6 +31,7 @@ import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
+ * @author Adolfo Pérez
  */
 public class StoreFactoryTest {
 
@@ -37,7 +43,16 @@ public class StoreFactoryTest {
 			new SyntheticBundleRule("bundle.storefactory"));
 
 	@Test
-	public void testGetInstance() throws Exception {
+	public void testGetDelegatorStoresCount() throws Exception {
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore("test");
+
+		Assert.assertEquals(2, getDelegatorStoresCount(store));
+	}
+
+	@Test
+	public void testGetStore() throws Exception {
 		StoreFactory storeFactory = StoreFactory.getInstance();
 
 		Store store = storeFactory.getStore("test");
@@ -48,6 +63,55 @@ public class StoreFactoryTest {
 
 		Assert.assertEquals(1, fileNames.length);
 		Assert.assertEquals("TestStore", fileNames[0]);
+	}
+
+	@Test
+	public void testGetStoreReturnsDelegatorStore() throws Exception {
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore("test");
+
+		Assert.assertTrue(
+			isAssignableFrom(store, DelegatorStore.class.getName()));
+	}
+
+	@Test
+	public void testGetStoreReturnsFirstDelegatorStore() throws Exception {
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store store = storeFactory.getStore("test");
+
+		Assert.assertTrue(
+			isAssignableFrom(
+				store, FirstStoreWrapper.FirstDelegatorStore.class.getName()));
+	}
+
+	protected int getDelegatorStoresCount(Store store) throws Exception {
+		try {
+			Class<? extends Store> storeClass = store.getClass();
+
+			Method method = storeClass.getMethod("getDelegatorStoresCount");
+
+			return (Integer)method.invoke(store);
+		}
+		catch (NoSuchMethodException nsme) {
+			throw new IllegalArgumentException(
+				ClassUtil.getClassName(store) +
+					" does not implement DelegatorStore",
+				nsme);
+		}
+	}
+
+	private boolean isAssignableFrom(Store store, String className)
+		throws ClassNotFoundException {
+
+		Class<? extends Store> storeClass = store.getClass();
+
+		ClassLoader classLoader = storeClass.getClassLoader();
+
+		Class<?> clazz = classLoader.loadClass(className);
+
+		return clazz.isAssignableFrom(storeClass);
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.soap.extender.test.activator.configuration;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.concurrent.CountDownLatch;
@@ -104,7 +106,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 							HttpWhiteboardConstants.
 								HTTP_WHITEBOARD_CONTEXT_NAME);
 
-						if ("soap-test".equals(contextName)) {
+						if (Validator.equals(contextName, "soap-test")) {
 							countDownLatch.countDown();
 
 							close();

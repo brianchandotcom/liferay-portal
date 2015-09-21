@@ -545,11 +545,10 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		permissionJoin += CustomSQLUtil.get(JOIN_RESOURCE_PERMISSION);
 
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(8);
 
-		sb.append("((InlineSQLResourcePermission.primKey = CAST_TEXT(");
+		sb.append("((ResourcePermission.primKeyId = ");
 		sb.append(classPKField);
-		sb.append(StringPool.CLOSE_PARENTHESIS);
 
 		if (Validator.isNotNull(groupIdField) && (groupIds.length > 0)) {
 			sb.append(") AND (");

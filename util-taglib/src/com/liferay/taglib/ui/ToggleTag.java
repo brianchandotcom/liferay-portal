@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -116,7 +117,8 @@ public class ToggleTag extends IncludeTag {
 			"liferay-ui:toggle:defaultMessage", defaultMessage);
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(page);
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				servletContext, page);
 
 		requestDispatcher.include(request, response);
 	}

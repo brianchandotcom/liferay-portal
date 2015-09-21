@@ -203,7 +203,7 @@
 <!--PAGE-->
 <tr>
 	<td>PAGE</td>
-	<td>//nav[contains(@class,'site-navigation')]/ul/li/a[contains(.,'${key_pageName}')]</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td>Page</td>
 </tr>
 <tr>
@@ -213,12 +213,12 @@
 </tr>
 <tr>
 	<td>PAGE_1</td>
-	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[1]/a</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li[1]/a</td>
 	<td>1st Page</td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_1</td>
-	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[1]/a</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li/a[contains(.,'${key_pageName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -248,12 +248,12 @@
 </tr>
 <tr>
 	<td>PAGE_2</td>
-	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[2]/a</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li[2]/a</td>
 	<td>2nd Page</td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_2</td>
-	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[2]/a</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li[2]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -268,7 +268,7 @@
 </tr>
 <tr>
 	<td>PAGE_3</td>
-	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[3]/a</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li[3]/a</td>
 	<td>3rd Page</td>
 </tr>
 <tr>
@@ -278,27 +278,27 @@
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_3</td>
-	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[3]/a</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_4</td>
-	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[4]/a</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_5</td>
-	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[5]/a</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li[5]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_6</td>
-	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[6]/a</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li[6]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_TEMPLATE_7</td>
-	<td>//ul[@aria-label='Site Pages' and @role='menubar']/li[7]/a</td>
+	<td>//div[contains(@class,'navbar-classic')]/ul/li[7]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -397,22 +397,22 @@
 <!--PAGE_CUSTOMIZATION-->
 <tr>
 	<td>PAGE_CUSTOMIZATION_MESSAGE_INFO</td>
-	<td>//div[@class='page-customization-bar']//span[contains(@class,'page-customization-bar-message')]</td>
+	<td>//div[@class='customizable-layout']/span[contains(.,'You can customize this page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_VIEW_DEFAULT_PAGE</td>
-	<td>//div[contains(@class,'page-customization-bar-form')]/span[contains(.,'View Default Page')]/a/span</td>
+	<td>//div[@class='customizable-layout']//span[contains(.,'View Default Page')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_RESET_MY_CUSTOMIZATIONS</td>
-	<td>//div[contains(@class,'page-customization-bar-form')]/span[contains(.,'Reset My Customizations')]/a/span</td>
+	<td>//div[@class='customizable-layout']//span[contains(.,'Reset My Customizations')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CUSTOMIZATION_VIEW_MY_CUSTOMIZED_PAGE</td>
-	<td>//div[contains(@class,'page-customization-bar-form')]/span[contains(.,'View My Customized')]/a/span</td>
+	<td>//div[@class='customizable-layout']//span[contains(.,'View My Customized')]/a/span</td>
 	<td></td>
 </tr>
 <tr>

@@ -17,7 +17,7 @@ package com.liferay.wiki.editor.configuration;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
@@ -91,7 +91,8 @@ public class WikiAttachmentEditorConfigContributor
 			new ArrayList<>();
 
 		desiredItemSelectorReturnTypes.add(new UploadableFileReturnType());
-		desiredItemSelectorReturnTypes.add(new URLItemSelectorReturnType());
+		desiredItemSelectorReturnTypes.add(
+			new FileEntryItemSelectorReturnType());
 
 		attachmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);

@@ -145,32 +145,32 @@
 <!--ASSIGNED_TO_MY_ROLES_TABLE-->
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_TASK</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowTask}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowTask}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TYPE</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowTask}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowAssetTitle}')]/td[4]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowTask}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowAssetTitle}')]/td[5]/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowTask}')]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS</td>
-	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowAssetTitle}')]/td[6]/div/a</td>
+	<td>//div[@id='workflowMyRolesTasksPanelContent']//tr[contains(.,'${key_workflowTask}')]/td[6]/div/a</td>
 	<td></td>
 </tr>
 <tr>

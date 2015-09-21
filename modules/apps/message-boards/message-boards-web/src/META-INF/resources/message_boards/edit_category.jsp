@@ -19,11 +19,11 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_CATEGORY);
+MBCategory category = mbRequestHelper.getCategory();
 
 long categoryId = MBUtil.getCategoryId(request, category);
 
-long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId", MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+long parentCategoryId = mbRequestHelper.getParentCategoryId();
 
 String defaultDisplayStyle = MBCategoryConstants.DEFAULT_DISPLAY_STYLE;
 
@@ -70,7 +70,7 @@ else {
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= (category == null) %>"
-	title='<%= (category == null) ? "add-category[message-board]" : LanguageUtil.format(request, "edit-x", category.getName(), false) %>'
+	title="<%= mbHomeDisplayContext.getTitle() %>"
 />
 
 <portlet:actionURL name="/message_boards/edit_category" var="editCategoryURL" />

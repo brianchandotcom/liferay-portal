@@ -38,14 +38,27 @@ public class PropertyServiceReferenceComparator<T>
 				return 0;
 			}
 			else {
-				return -1;
+				return 1;
 			}
 		}
 		else if (serviceReference2 == null) {
-			return 1;
+			return -1;
 		}
 
 		Object propertyValue1 = serviceReference1.getProperty(_propertyKey);
+		Object propertyValue2 = serviceReference2.getProperty(_propertyKey);
+
+		if (propertyValue1 == null) {
+			if (propertyValue2 == null) {
+				return 0;
+			}
+			else {
+				return 1;
+			}
+		}
+		else if (propertyValue2 == null) {
+			return -1;
+		}
 
 		if (!(propertyValue1 instanceof Comparable)) {
 			return -(serviceReference1.compareTo(serviceReference2));
@@ -53,16 +66,6 @@ public class PropertyServiceReferenceComparator<T>
 
 		Comparable<Object> propertyValueComparable1 =
 			(Comparable<Object>)propertyValue1;
-
-		Object propertyValue2 = serviceReference2.getProperty(_propertyKey);
-
-		if (propertyValue1 == null) {
-			if (propertyValue2 != null) {
-				return -1;
-			}
-
-			return -(serviceReference1.compareTo(serviceReference2));
-		}
 
 		return -(propertyValueComparable1.compareTo(propertyValue2));
 	}

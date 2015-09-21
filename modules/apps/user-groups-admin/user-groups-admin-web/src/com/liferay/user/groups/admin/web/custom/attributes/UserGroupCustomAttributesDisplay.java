@@ -17,10 +17,19 @@ package com.liferay.user.groups.admin.web.custom.attributes;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Hugo Huijser
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN},
+	service = CustomAttributesDisplay.class
+)
 public class UserGroupCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 

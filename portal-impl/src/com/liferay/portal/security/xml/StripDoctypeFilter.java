@@ -67,13 +67,13 @@ public class StripDoctypeFilter {
 					int doctypeContent = readFromSource();
 
 					if (doctypeContent == '[') {
-						entityDeclaration = true;
+						_entityDeclaration = true;
 					}
 					else if (doctypeContent == ']') {
-						entityDeclaration = false;
+						_entityDeclaration = false;
 					}
 					else if (doctypeContent == '>') {
-						if (!entityDeclaration) {
+						if (!_entityDeclaration) {
 							_documentStarted = true;
 
 							return readFromSource();
@@ -165,8 +165,8 @@ public class StripDoctypeFilter {
 	private int[] _buffer;
 	private int _bufferLength;
 	private boolean _documentStarted;
+	private boolean _entityDeclaration;
 	private final InputStream _inputStream;
 	private final Reader _reader;
-	private boolean entityDeclaration;
 
 }

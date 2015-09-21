@@ -14,18 +14,19 @@
 
 package com.liferay.portlet.display.template.exportimport.portlet.preferences.processor;
 
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
-import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplate;
+import com.liferay.portlet.display.template.PortletDisplayTemplateUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import javax.portlet.PortletPreferences;
 
@@ -63,7 +64,7 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 
 		if (Validator.isNull(displayStyle) ||
 			!displayStyle.startsWith(
-				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX)) {
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
 			return;
 		}
@@ -78,13 +79,13 @@ public class PortletDisplayTemplateExportCapability implements Capability {
 		}
 
 		DDMTemplate ddmTemplate =
-			PortletDisplayTemplateManagerUtil.getDDMTemplate(
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
 				portletDataContext.getGroupId(),
 				getClassNameId(portletDataContext, portletId), displayStyle,
 				false);
 
 		if (ddmTemplate != null) {
-			PortletDisplayTemplateManagerUtil.exportDDMTemplateStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, portletId, ddmTemplate);
 		}
 

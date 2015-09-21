@@ -22,7 +22,7 @@ JournalArticleDisplay articleDisplay = journalContentDisplayContext.getArticleDi
 
 journalContentDisplayContext.incrementViewCounter();
 
-AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(JournalArticle.class.getName());
+AssetRendererFactory<JournalArticle> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClass(JournalArticle.class);
 %>
 
 <c:choose>
@@ -47,9 +47,40 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 					<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-web-content-entry" />
 				</div>
 			</c:when>
-			<c:otherwise>
+			<c:when test="<%= Validator.isNotNull(journalContentDisplayContext.getArticleId()) %>">
 				<c:choose>
-					<c:when test="<%= (articleDisplay != null) && !journalContentDisplayContext.isExpired() %>">
+					<c:when test="<%= journalContentDisplayContext.isExpired() %>">
+						<div class="alert alert-warning">
+							<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
+						</div>
+					</c:when>
+					<c:when test="<%= article.isScheduled() %>">
+						<div class="alert alert-warning">
+							<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(article.getTitle(locale)), dateFormatDateTime.format(article.getDisplayDate())} %>" key="x-is-scheduled-and-will-be-displayed-on-x" />
+						</div>
+					</c:when>
+					<c:when test="<%= !article.isApproved() %>">
+
+						<%
+							AssetRenderer<JournalArticle> assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
+						%>
+
+						<c:choose>
+							<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
+								<div class="alert alert-warning">
+									<a href="<%= assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, WindowState.MAXIMIZED, currentURLObj) %>">
+										<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
+									</a>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="alert alert-warning">
+									<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:when test="<%= (articleDisplay != null) %>">
 						<div class="user-tool-asset-addon-entries">
 							<liferay-ui:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>" />
 						</div>
@@ -78,38 +109,8 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 							<br />
 						</c:if>
 					</c:when>
-					<c:when test="<%= Validator.isNotNull(journalContentDisplayContext.getArticleId()) %>">
-						<c:choose>
-							<c:when test="<%= journalContentDisplayContext.isExpired() %>">
-								<div class="alert alert-warning">
-									<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-expired" />
-								</div>
-							</c:when>
-							<c:when test="<%= !article.isApproved() %>">
-
-								<%
-								AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(article.getResourcePrimKey());
-								%>
-
-								<c:choose>
-									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) %>">
-										<div class="alert alert-warning">
-											<a href="<%= assetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, WindowState.MAXIMIZED, currentURLObj) %>">
-												<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
-											</a>
-										</div>
-									</c:when>
-									<c:otherwise>
-										<div class="alert alert-warning">
-											<liferay-ui:message arguments="<%= HtmlUtil.escape(article.getTitle(locale)) %>" key="x-is-not-approved" />
-										</div>
-									</c:otherwise>
-								</c:choose>
-							</c:when>
-						</c:choose>
-					</c:when>
 				</c:choose>
-			</c:otherwise>
+			</c:when>
 		</c:choose>
 	</c:otherwise>
 </c:choose>
@@ -127,7 +128,7 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 				<%
 				JournalArticle latestArticle = journalContentDisplayContext.getLatestArticle();
 
-				AssetRenderer latestArticleAssetRenderer = assetRendererFactory.getAssetRenderer(latestArticle.getResourcePrimKey());
+				AssetRenderer<JournalArticle> latestArticleAssetRenderer = assetRendererFactory.getAssetRenderer(latestArticle.getResourcePrimKey());
 
 				PortletURL latestArticleEditURL = latestArticleAssetRenderer.getURLEdit(liferayPortletRequest, liferayPortletResponse, LiferayWindowState.POP_UP, redirectURL);
 
@@ -208,7 +209,7 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 
 					addArticleURL.setWindowState(LiferayWindowState.POP_UP);
 
-					List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), PortalUtil.getClassNameId(JournalArticle.class));
+					List<DDMStructure> ddmStructures = DDMStructureServiceUtil.getStructures(company.getCompanyId(), PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), PortalUtil.getClassNameId(JournalArticle.class), WorkflowConstants.STATUS_APPROVED);
 
 					for (DDMStructure ddmStructure : ddmStructures) {
 						addArticleURL.setParameter("ddmStructureId", String.valueOf(ddmStructure.getStructureId()));

@@ -314,6 +314,16 @@ if (layout.isLayoutPrototypeLinkActive()) {
 	showPortletCssIcon = false;
 }
 
+// Portlets in a full page cannot be moved
+
+LayoutTypeController layoutTypeController = layoutTypePortlet.getLayoutTypeController();
+
+if (layoutTypeController.isFullPageDisplayable()) {
+	showCloseIcon = false;
+	showMaxIcon = false;
+	showMinIcon = false;
+}
+
 long previousScopeGroupId = themeDisplay.getScopeGroupId();
 
 if (Validator.isNotNull(portletResource)) {
@@ -1004,19 +1014,20 @@ else {
 }
 %>
 
+<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
+	Liferay.Portlet.onLoad(
+		{
+			canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
+			columnPos: <%= columnPos %>,
+			isStatic: '<%= staticVar %>',
+			namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
+			portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
+			refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
+		}
+	);
+</aui:script>
+
 <c:if test="<%= renderPortletBoundary %>">
-		<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
-			Liferay.Portlet.onLoad(
-				{
-					canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
-					columnPos: <%= columnPos %>,
-					isStatic: '<%= staticVar %>',
-					namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
-					portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',
-					refreshURL: '<%= HtmlUtil.escapeJS(PortletURLUtil.getRefreshURL(request, themeDisplay)) %>'
-				}
-			);
-		</aui:script>
 		</div>
 	</div>
 </c:if>

@@ -38,7 +38,7 @@ public class SiteTeamsBrowsePortletProvider
 
 	@Override
 	public String getPortletId() {
-		return SiteTeamsPortletKeys.SITE_TEAMS_ADMIN;
+		return SiteTeamsPortletKeys.SITE_TEAMS;
 	}
 
 	@Override

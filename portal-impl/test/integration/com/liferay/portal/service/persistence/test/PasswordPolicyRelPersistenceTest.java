@@ -384,11 +384,12 @@ public class PasswordPolicyRelPersistenceTest {
 
 		PasswordPolicyRel existingPasswordPolicyRel = _persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
 
-		Assert.assertEquals(existingPasswordPolicyRel.getClassNameId(),
-			ReflectionTestUtil.invoke(existingPasswordPolicyRel,
+		Assert.assertEquals(Long.valueOf(
+				existingPasswordPolicyRel.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingPasswordPolicyRel,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingPasswordPolicyRel.getClassPK(),
-			ReflectionTestUtil.invoke(existingPasswordPolicyRel,
+		Assert.assertEquals(Long.valueOf(existingPasswordPolicyRel.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingPasswordPolicyRel,
 				"getOriginalClassPK", new Class<?>[0]));
 	}
 

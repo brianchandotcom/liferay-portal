@@ -15,7 +15,7 @@
 --%>
 
 <%
-String collapsed = HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(request, _LIFERAY_JS_CONSOLE_COLLAPSED_SESSION_CLICKS_KEY, null), "false"));
+String collapsed = HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(request, "liferay_js_console_collapsed", null), "false"));
 %>
 
 <div id="liferayJSConsole"></div>
@@ -43,7 +43,7 @@ String collapsed = HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(requ
 
 							instance.set('height', height);
 
-							Liferay.Store('<%= _LIFERAY_JS_CONSOLE_COLLAPSED_SESSION_CLICKS_KEY %>', String(event.newVal));
+							Liferay.Store('liferay_js_console_collapsed', String(event.newVal));
 						}
 					},
 					collapsed: <%= collapsed %>,
@@ -67,7 +67,3 @@ String collapsed = HtmlUtil.escapeJS(GetterUtil.getString(SessionClicks.get(requ
 		}
 	);
 </aui:script>
-
-<%!
-private static final String _LIFERAY_JS_CONSOLE_COLLAPSED_SESSION_CLICKS_KEY = "liferay_js_console_collapsed";
-%>

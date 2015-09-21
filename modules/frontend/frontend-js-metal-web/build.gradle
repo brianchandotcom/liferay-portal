@@ -1,0 +1,67 @@
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
+import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask
+import com.liferay.gradle.plugins.node.tasks.ExecuteNpmTask
+
+apply plugin: "com.liferay.cache"
+
+task downloadBower(type: DownloadNodeModuleTask)
+task downloadGulp(type: DownloadNodeModuleTask)
+task npmInstall(type: ExecuteNpmTask)
+task runGulp(type: ExecuteNodeTask)
+task bowerInstall(type: ExecuteNodeTask)
+
+String bowerVersion = "1.5.2"
+String gulpVersion = "3.9.0"
+
+bowerInstall {
+	args = [new File(node.nodeDir, "node_modules/bower/bin/bower"), "install", "--allow-root"]
+	dependsOn npmInstall
+}
+
+cache {
+	task(classes) {
+		baseDir = "classes/META-INF"
+		cacheDir = ".task-cache"
+		skipTaskDependency configJSModules
+
+		testFile "bower.json"
+		testFile "build.gradle"
+		testFile "gulpfile.js"
+		testFile "package.json"
+	}
+}
+
+configJSModules {
+	dependsOn runGulp
+	include "**/*.js"
+}
+
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+downloadBower {
+	moduleName = "bower"
+	moduleVersion = bowerVersion
+}
+
+downloadGulp {
+	moduleName = "gulp"
+	moduleVersion = gulpVersion
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}
+
+npmInstall {
+	args "install"
+
+	dependsOn downloadBower
+	dependsOn downloadGulp
+}
+
+runGulp {
+	args = [new File(node.nodeDir, "node_modules/gulp/bin/gulp.js")]
+	dependsOn bowerInstall
+}

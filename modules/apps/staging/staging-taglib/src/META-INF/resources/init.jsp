@@ -22,6 +22,7 @@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/staging" prefix="liferay-staging" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -44,6 +45,7 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.model.LayoutSetBranch" %><%@
 page import="com.liferay.portal.model.Portlet" %><%@
+page import="com.liferay.portal.model.StagedModel" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.LayoutSetBranchLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
@@ -60,6 +62,7 @@ page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean" %><
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerChoice" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerControl" %><%@
 page import="com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys" %><%@
+page import="com.liferay.portlet.exportimport.lar.StagedModelType" %><%@
 page import="com.liferay.portlet.exportimport.model.ExportImportConfiguration" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %>
 

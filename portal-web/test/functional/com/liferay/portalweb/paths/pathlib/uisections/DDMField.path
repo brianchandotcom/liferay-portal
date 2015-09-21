@@ -44,7 +44,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LINK_TO_PAGE_SELECT</td>
+	<td>LINK_TO_PAGE</td>
 	<td>//div[contains(.,'Link to Page')]/select</td>
 	<td></td>
 </tr>
@@ -66,6 +66,11 @@
 <tr>
 	<td>TEXT</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEXT_BOX</td>
+	<td>//div[@data-fieldname='${key_fieldName}']/textarea</td>
 	<td></td>
 </tr>
 </tbody>

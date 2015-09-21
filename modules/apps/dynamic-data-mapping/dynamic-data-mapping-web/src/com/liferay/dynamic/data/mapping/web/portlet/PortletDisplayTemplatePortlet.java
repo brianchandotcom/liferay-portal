@@ -31,8 +31,6 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.autopropagated-parameters=showAncestorScopes",
 		"com.liferay.portlet.autopropagated-parameters=showManageTemplates",
 		"com.liferay.portlet.autopropagated-parameters=showToolbar",
-		"com.liferay.portlet.control-panel-entry-category=site_administration.configuration",
-		"com.liferay.portlet.control-panel-entry-weight=2.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-mapping",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",

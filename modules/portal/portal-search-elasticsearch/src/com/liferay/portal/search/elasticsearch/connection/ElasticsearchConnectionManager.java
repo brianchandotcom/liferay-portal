@@ -74,14 +74,11 @@ public class ElasticsearchConnectionManager {
 		return adminClient.cluster();
 	}
 
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount) {
-
+	public ClusterHealthResponse getClusterHealthResponse(long timeout) {
 		ElasticsearchConnection elasticsearchConnection =
 			getElasticsearchConnection();
 
-		return elasticsearchConnection.getClusterHealthResponse(
-			timeout, nodesCount);
+		return elasticsearchConnection.getClusterHealthResponse(timeout);
 	}
 
 	public ElasticsearchConnection getElasticsearchConnection() {

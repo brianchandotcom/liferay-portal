@@ -17,103 +17,205 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
+String displayStyle = ParamUtil.getString(request, "displayStyle", "descriptive");
 
 Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
+portletURL.setParameter("displayStyle", displayStyle);
+
 pageContext.setAttribute("portletURL", portletURL);
+
+SearchContainer teamSearchContainer = new TeamSearch(renderRequest, portletURL);
+
+TeamDisplayTerms searchTerms = (TeamDisplayTerms)teamSearchContainer.getSearchTerms();
 %>
 
-<c:if test="<%= !layout.isTypeControlPanel() %>">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		escapeXml="<%= false %>"
-		localizeTitle="<%= false %>"
-		title='<%= HtmlUtil.escape(group.getDescriptiveName(locale)) + StringPool.COLON + StringPool.SPACE + LanguageUtil.get(request, "manage-memberships") %>'
-	/>
-</c:if>
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item cssClass="active" label="teams" />
+	</aui:nav>
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="form-search" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="portletURL" />
+	<aui:nav-bar-search>
+		<aui:form action="<%= portletURL.toString() %>" method="get" name="searchFm">
+			<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-	<liferay-ui:search-container
-		searchContainer="<%= new TeamSearch(renderRequest, portletURL) %>"
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" name="<%= searchTerms.NAME %>" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<div class="management-bar-container">
+	<liferay-frontend:management-bar
+		includeCheckBox="<%= true %>"
 	>
 
 		<%
-		TeamDisplayTerms searchTerms = (TeamDisplayTerms)searchContainer.getSearchTerms();
+		PortletURL displayStyleURL = renderResponse.createRenderURL();
+		%>
 
-		portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
+		<liferay-frontend:management-bar-buttons>
+			<liferay-frontend:management-bar-display-buttons
+				displayStyleURL="<%= displayStyleURL %>"
+				displayViews='<%= new String[]{"descriptive", "list"} %>'
+				selectedDisplayStyle="<%= displayStyle %>"
+			/>
+		</liferay-frontend:management-bar-buttons>
 
-		total = TeamLocalServiceUtil.searchCount(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
+		<%
+		PortletURL iteratorURL = renderResponse.createRenderURL();
+
+		iteratorURL.setParameter("displayStyle", displayStyle);
+		%>
+
+		<liferay-frontend:management-bar-filters>
+			<liferay-frontend:management-bar-sort
+				orderByCol="<%= teamSearchContainer.getOrderByCol() %>"
+				orderByType="<%= teamSearchContainer.getOrderByType() %>"
+				orderColumns='<%= new String[]{"name"} %>'
+				portletURL="<%= iteratorURL %>"
+			/>
+		</liferay-frontend:management-bar-filters>
+	</liferay-frontend:management-bar>
+
+	<liferay-frontend:management-bar
+		cssClass="management-bar-no-collapse"
+		id="teamsActionsButton"
+	>
+		<liferay-frontend:management-bar-buttons>
+			<aui:a cssClass="btn" href="javascript:;" iconCssClass="icon-trash" id="deleteSelectedTeams" />
+		</liferay-frontend:management-bar-buttons>
+	</liferay-frontend:management-bar>
+</div>
+
+<aui:form cssClass="container-fluid-1280" name="fm">
+	<aui:input name="teamIds" type="hidden" />
+
+	<liferay-ui:search-container
+		id="teams"
+		rowChecker="<%= new RowChecker(renderResponse) %>"
+		searchContainer="<%= teamSearchContainer %>"
+	>
+
+		<%
+		total = TeamServiceUtil.searchCount(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
 
 		searchContainer.setTotal(total);
 		%>
 
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_TEAMS) %>">
-					<portlet:renderURL var="addTeamURL">
-						<portlet:param name="mvcPath" value="/edit_team.jsp" />
-					</portlet:renderURL>
-
-					<aui:nav-item href="<%= addTeamURL %>" iconCssClass="icon-plus" label="add-team" />
-				</c:if>
-			</aui:nav>
-
-			<aui:nav-bar-search>
-				<div class="form-search">
-					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= searchTerms.NAME %>" />
-				</div>
-			</aui:nav-bar-search>
-		</aui:nav-bar>
-
 		<liferay-ui:search-container-results
-			results="<%= TeamLocalServiceUtil.search(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+			results="<%= TeamServiceUtil.search(scopeGroupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.Team"
 			escapedModel="<%= true %>"
+			keyProperty="teamId"
 			modelVar="team"
 		>
 
 			<%
 			PortletURL rowURL = null;
 
-			if (TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.UPDATE)) {
+			if (TeamPermissionUtil.contains(permissionChecker, team, ActionKeys.ASSIGN_MEMBERS)) {
 				rowURL = renderResponse.createRenderURL();
 
-				rowURL.setParameter("mvcPath", "/edit_team.jsp");
+				rowURL.setParameter("mvcPath", "/edit_team_assignments.jsp");
 				rowURL.setParameter("teamId", String.valueOf(team.getTeamId()));
 			}
 			%>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="name"
-				property="name"
-			/>
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-text>
+						<h3 class="icon-group"></h3>
+					</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
-				href="<%= rowURL %>"
-				name="description"
-				property="description"
-			/>
+					<liferay-ui:search-container-column-text
+						colspan="<%= 2 %>"
+					>
+						<h5>
+							<aui:a href="<%= (rowURL != null) ? rowURL.toString() : null %>"><%= team.getName() %></aui:a>
+						</h5>
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action"
-				path="/team_action.jsp"
-			/>
+						<h6 class="text-default">
+							<span><%= team.getDescription() %></span>
+						</h6>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-jsp
+						path="/team_action.jsp"
+					/>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("list") %>'>
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="name"
+						property="name"
+					/>
+
+					<liferay-ui:search-container-column-text
+						href="<%= rowURL %>"
+						name="description"
+						property="description"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						cssClass="checkbox-cell entry-action"
+						path="/team_action.jsp"
+					/>
+				</c:when>
+			</c:choose>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= searchContainer %>" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_TEAMS) %>">
+
+	<%
+	PortletURL addTeamURL = renderResponse.createRenderURL();
+
+	addTeamURL.setParameter("mvcPath", "/edit_team.jsp");
+	%>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-team") %>' url="<%= addTeamURL.toString() %>" />
+	</liferay-frontend:add-menu>
+</c:if>
+
+<aui:script sandbox="<%= true %>">
+	var Util = Liferay.Util;
+
+	var form = $(document.<portlet:namespace />fm);
+
+	$('#<portlet:namespace />teamsSearchContainer').on(
+		'click',
+		'input[type=checkbox]',
+		function() {
+			var hide = (Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
+
+			$('#<portlet:namespace />teamsActionsButton').toggleClass('on', !hide);
+		}
+	);
+
+	$('#<portlet:namespace />deleteSelectedTeams').on(
+		'click',
+		function() {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+				<portlet:actionURL name="deleteTeams" var="deleteTeamsURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:actionURL>
+
+				form.fm('teamIds').val(Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+				submitForm(form, '<%= deleteTeamsURL %>');
+			}
+		}
+	);
+</aui:script>
 
 <%
 if (group.isOrganization()) {

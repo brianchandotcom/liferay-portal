@@ -93,6 +93,17 @@ public class SearchContainer<R> {
 		PortletURL iteratorURL, List<String> headerNames,
 		String emptyResultsMessage) {
 
+		this (
+			portletRequest, displayTerms, searchTerms, curParam, cur, delta,
+			iteratorURL, headerNames, emptyResultsMessage, StringPool.BLANK);
+	}
+
+	public SearchContainer(
+		PortletRequest portletRequest, DisplayTerms displayTerms,
+		DisplayTerms searchTerms, String curParam, int cur, int delta,
+		PortletURL iteratorURL, List<String> headerNames,
+		String emptyResultsMessage, String cssClass) {
+
 		_portletRequest = portletRequest;
 		_displayTerms = displayTerms;
 		_searchTerms = searchTerms;
@@ -131,19 +142,10 @@ public class SearchContainer<R> {
 
 		_iteratorURL.setParameter(_curParam, String.valueOf(_cur));
 		_iteratorURL.setParameter(_deltaParam, String.valueOf(_delta));
-		_iteratorURL.setParameter(
-			DisplayTerms.KEYWORDS,
-			ParamUtil.getString(portletRequest, DisplayTerms.KEYWORDS));
-		_iteratorURL.setParameter(
-			DisplayTerms.ADVANCED_SEARCH,
-			String.valueOf(
-				ParamUtil.getBoolean(
-					portletRequest, DisplayTerms.ADVANCED_SEARCH)));
-		_iteratorURL.setParameter(
-			DisplayTerms.AND_OPERATOR,
-			String.valueOf(
-				ParamUtil.getBoolean(
-					portletRequest, DisplayTerms.AND_OPERATOR, true)));
+
+		_setParameter(DisplayTerms.KEYWORDS);
+		_setParameter(DisplayTerms.ADVANCED_SEARCH);
+		_setParameter(DisplayTerms.AND_OPERATOR);
 
 		if (headerNames != null) {
 			_headerNames = new ArrayList<>(headerNames.size());
@@ -161,6 +163,10 @@ public class SearchContainer<R> {
 
 		if (searchContainerReference != null) {
 			searchContainerReference.register(this);
+		}
+
+		if (Validator.isNotNull(cssClass)) {
+			_cssClass = cssClass;
 		}
 	}
 
@@ -186,6 +192,10 @@ public class SearchContainer<R> {
 
 	public String getClassName() {
 		return _className;
+	}
+
+	public String getCssClass() {
+		return _cssClass;
 	}
 
 	public int getCur() {
@@ -380,6 +390,10 @@ public class SearchContainer<R> {
 		_className = className;
 	}
 
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
+	}
+
 	public void setDelta(int delta) {
 		if (delta <= 0) {
 			_delta = DEFAULT_DELTA;
@@ -527,7 +541,16 @@ public class SearchContainer<R> {
 		}
 	}
 
+	private void _setParameter(String name) {
+		String value = _portletRequest.getParameter(name);
+
+		if (value != null) {
+			_iteratorURL.setParameter(name, value);
+		}
+	}
+
 	private String _className;
+	private String _cssClass = StringPool.BLANK;
 	private int _cur;
 	private final String _curParam;
 	private int _delta = DEFAULT_DELTA;

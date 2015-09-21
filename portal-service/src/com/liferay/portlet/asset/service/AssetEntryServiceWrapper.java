@@ -155,7 +155,7 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 		java.lang.String title, java.lang.String description,
 		java.lang.String summary, java.lang.String url,
 		java.lang.String layoutUuid, int height, int width,
-		java.lang.Integer priority)
+		java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryService.updateEntry(groupId, createDate,
 			modifiedDate, className, classPK, classUuid, classTypeId,
@@ -168,7 +168,7 @@ public class AssetEntryServiceWrapper implements AssetEntryService,
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, Date,
 	Date, String, long, String, long, long[], String[], boolean,
 	Date, Date, Date, String, String, String, String, String,
-	String, int, int, Integer)}
+	String, int, int, Double)}
 	*/
 	@Deprecated
 	@Override

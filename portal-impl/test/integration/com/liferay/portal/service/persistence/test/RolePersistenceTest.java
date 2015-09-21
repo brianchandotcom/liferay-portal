@@ -495,21 +495,21 @@ public class RolePersistenceTest {
 
 		Role existingRole = _persistence.findByPrimaryKey(newRole.getPrimaryKey());
 
-		Assert.assertEquals(existingRole.getCompanyId(),
-			ReflectionTestUtil.invoke(existingRole, "getOriginalCompanyId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingRole.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingRole,
+				"getOriginalCompanyId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingRole.getName(),
 				ReflectionTestUtil.invoke(existingRole, "getOriginalName",
 					new Class<?>[0])));
 
-		Assert.assertEquals(existingRole.getCompanyId(),
-			ReflectionTestUtil.invoke(existingRole, "getOriginalCompanyId",
-				new Class<?>[0]));
-		Assert.assertEquals(existingRole.getClassNameId(),
-			ReflectionTestUtil.invoke(existingRole, "getOriginalClassNameId",
-				new Class<?>[0]));
-		Assert.assertEquals(existingRole.getClassPK(),
-			ReflectionTestUtil.invoke(existingRole, "getOriginalClassPK",
+		Assert.assertEquals(Long.valueOf(existingRole.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingRole,
+				"getOriginalCompanyId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingRole.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingRole,
+				"getOriginalClassNameId", new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingRole.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingRole, "getOriginalClassPK",
 				new Class<?>[0]));
 	}
 

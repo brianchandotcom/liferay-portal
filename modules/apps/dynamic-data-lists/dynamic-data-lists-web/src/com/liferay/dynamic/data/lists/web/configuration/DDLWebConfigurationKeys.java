@@ -22,6 +22,9 @@ public class DDLWebConfigurationKeys {
 	public static final String DYNAMIC_DATA_LISTS_ERROR_TEMPLATE =
 		"dynamic.data.lists.error.template";
 
+	public static final String DYNAMIC_DATA_LISTS_HELP_TEMPLATE =
+		"dynamic.data.lists.help.template";
+
 	public static final String DYNAMIC_DATA_LISTS_STORAGE_TYPE =
 		"dynamic.data.lists.storage.type";
 

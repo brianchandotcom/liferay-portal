@@ -36,6 +36,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.LinkedHashMap;
@@ -91,7 +92,8 @@ public class JournalFeedStagedModelDataHandlerTest
 
 		for (int i = 0; i < 2; i++) {
 			DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-				group.getGroupId(), ddmStructure.getStructureId());
+				group.getGroupId(), ddmStructure.getStructureId(),
+				PortalUtil.getClassNameId(JournalArticle.class));
 
 			addDependentStagedModel(
 				dependentStagedModelsMap, DDMTemplate.class, ddmTemplate);

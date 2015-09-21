@@ -36,6 +36,8 @@ numberFormat.setMinimumIntegerDigits(2);
 	</c:if>
 
 	<%
+	long currentTime = System.currentTimeMillis();
+
 	Set<TimeZone> timeZones = new TreeSet<TimeZone>(new TimeZoneComparator());
 
 	for (String timeZoneId : PropsUtil.getArray(PropsKeys.TIME_ZONES)) {
@@ -49,11 +51,7 @@ numberFormat.setMinimumIntegerDigits(2);
 
 		boolean inDaylightTime = curTimeZone.inDaylightTime(new Date());
 
-		int totalOffset = curTimeZone.getRawOffset();
-
-		if (inDaylightTime) {
-			totalOffset = totalOffset + curTimeZone.getDSTSavings();
-		}
+		int totalOffset = curTimeZone.getOffset(currentTime);
 
 		if (totalOffset != 0) {
 			String offsetHour = numberFormat.format(totalOffset / Time.HOUR);

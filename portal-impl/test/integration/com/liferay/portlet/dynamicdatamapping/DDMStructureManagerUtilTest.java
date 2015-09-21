@@ -30,18 +30,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutRow;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -266,7 +255,7 @@ public class DDMStructureManagerUtilTest {
 		DDMStructure actualStructure = DDMStructureManagerUtil.updateStructure(
 			TestPropsValues.getUserId(), expectedStructure.getStructureId(), 0,
 			nameMap, descriptionMap, expectedStructure.getDDMForm(),
-			expectedStructure.getDDMFormLayout(), _serviceContext);
+			_serviceContext);
 
 		Assert.assertEquals(nameMap, actualStructure.getNameMap());
 		Assert.assertEquals(
@@ -316,8 +305,7 @@ public class DDMStructureManagerUtilTest {
 		return DDMStructureManagerUtil.addStructure(
 			TestPropsValues.getUserId(), _group.getGroupId(), null,
 			_classNameId, StringUtil.randomString(), nameMap, descriptionMap,
-			createDDMForm(), createDDMFormLayout(),
-			StorageEngineManager.STORAGE_TYPE_DEFAULT,
+			createDDMForm(), StorageEngineManager.STORAGE_TYPE_DEFAULT,
 			DDMStructureManager.STRUCTURE_TYPE_DEFAULT, _serviceContext);
 	}
 
@@ -350,67 +338,11 @@ public class DDMStructureManagerUtilTest {
 		ddmForm.setDefaultLocale(LocaleUtil.US);
 		ddmForm.addAvailableLocale(LocaleUtil.US);
 
-		DDMFormField ddmFormField = new DDMFormField();
-
-		ddmFormField.setType("text");
-		ddmFormField.setName("fieldName");
+		DDMFormField ddmFormField = new DDMFormField("fieldName", "text");
 
 		ddmForm.addDDMFormField(ddmFormField);
 
 		return ddmForm;
-	}
-
-	protected DDMFormLayout createDDMFormLayout() {
-		DDMFormLayout ddmFormLayout = new DDMFormLayout();
-
-		ddmFormLayout.setDefaultLocale(LocaleUtil.US);
-
-		ddmFormLayout.addDDMFormLayoutPage(createDDMFormLayoutPage());
-
-		return ddmFormLayout;
-	}
-
-	protected DDMFormLayoutColumn createDDMFormLayoutColumn() {
-		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn();
-
-		List<String> ddmFormFieldNames = new ArrayList<>();
-
-		ddmFormFieldNames.add("fieldName");
-
-		ddmFormLayoutColumn.setDDMFormFieldNames(ddmFormFieldNames);
-		ddmFormLayoutColumn.setSize(DDMFormLayoutColumn.FULL);
-
-		return ddmFormLayoutColumn;
-	}
-
-	protected DDMFormLayoutPage createDDMFormLayoutPage() {
-		LocalizedValue title = new LocalizedValue();
-
-		title.setDefaultLocale(LocaleUtil.US);
-
-		title.addString(LocaleUtil.US, "Title");
-
-		LocalizedValue description = new LocalizedValue();
-
-		description.setDefaultLocale(LocaleUtil.US);
-
-		description.addString(LocaleUtil.US, "Description");
-
-		DDMFormLayoutPage ddmFormLayoutPage = new DDMFormLayoutPage();
-
-		ddmFormLayoutPage.setTitle(title);
-		ddmFormLayoutPage.setDescription(description);
-		ddmFormLayoutPage.addDDMFormLayoutRow(createDDMFormLayoutRow());
-
-		return ddmFormLayoutPage;
-	}
-
-	protected DDMFormLayoutRow createDDMFormLayoutRow() {
-		DDMFormLayoutRow ddmFormLayoutRow = new DDMFormLayoutRow();
-
-		ddmFormLayoutRow.addDDMFormLayoutColumn(createDDMFormLayoutColumn());
-
-		return ddmFormLayoutRow;
 	}
 
 	protected DDMFormValues createDDMFormValues() {

@@ -53,12 +53,12 @@
 <!--SUBORGANIZATION_TABLE-->
 <tr>
 	<td>SUBORGANIZATION_TABLE_ALL_CHECKBOX</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//input[@name='_125_allRowIds'])</td>
+	<td>xpath=(//div[contains(@id,'organizationsSearchContainer')]//input[contains(@name,'allRowIds')])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[1]//input[@name='_125_rowIds'])[1]</td>
+	<td>xpath=(//div[contains(@id,'organizationsSearchContainer')]//tr/td[1]//input[contains(@name,'rowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -68,7 +68,7 @@
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_NAME_1</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[2]/a/strong)[1]</td>
+	<td>xpath=(//div[contains(@id,'organizationsSearchContainer')]//tr/td[2]/a/strong)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_TYPE_1</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[3]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'organizationsSearchContainer')]//tr/td[3]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -88,7 +88,7 @@
 </tr>
 <tr>
 	<td>SUBORGANIZATION_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_125_organizationsSearchContainer']//tr/td[4]/div/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'organizationsSearchContainer')]//tr/td[4]/div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -115,32 +115,32 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_ALL_CHECKBOX</td>
-	<td>xpath=(//div[@id='_125_usersSearchContainer']//input[@name='_125_allRowIds'])</td>
+	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//input[contains(@name,'allRowIds')])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[1]/input[@name='_125_rowIds'])[1]</td>
+	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[1]/input[contains(@name,'rowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_FIRST_NAME_1</td>
-	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[2]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_LAST_NAME_1</td>
-	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[3]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[3]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_SCREEN_NAME_1</td>
-	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[4]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[4]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_125_usersSearchContainer']//tr/td[8]/div/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'usersSearchContainer')]//tr/td[8]/div/a)[1]</td>
 	<td></td>
 </tr>
 </tbody>

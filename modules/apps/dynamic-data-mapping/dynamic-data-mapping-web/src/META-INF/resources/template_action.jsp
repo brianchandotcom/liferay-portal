@@ -42,7 +42,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 
 	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
-			modelResource="<%= DDMTemplate.class.getName() %>"
+			modelResource="<%= DDMTemplatePermission.getTemplateModelResourceName(template.getResourceClassNameId()) %>"
 			modelResourceDescription="<%= template.getName(locale) %>"
 			resourcePrimKey="<%= String.valueOf(template.getTemplateId()) %>"
 			var="permissionsURL"
@@ -55,7 +55,7 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMPermission.contains(permissionChecker, scopeGroupId, ddmPermissionHandler.getResourceName(template.getClassNameId()), ddmPermissionHandler.getAddTemplateActionId()) %>">
+	<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, scopeGroupId, template.getClassNameId(), template.getResourceClassNameId()) %>">
 		<portlet:renderURL var="copyURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="mvcPath" value="/copy_template.jsp" />
 			<portlet:param name="closeRedirect" value="<%= HttpUtil.encodeURL(currentURL) %>" />

@@ -1,7 +1,7 @@
 /* ---------- Sidebar ---------- */
 
 .command-logger .sidebar {
-	width: 40%;
+	width: 30%;
 }
 
 .minimized-sidebar .sidebar {
@@ -10,17 +10,18 @@
 
 .sidebar {
 	background-color: $sidebar-bg-color;
-	box-shadow: -7px 0 0 0 $sidebar-box-shadow-color;
+	border-left: 1px solid $sidebar-border-color;
 	color: $sidebar-default-text-color;
 	display: inline-block;
-	font-family: $sidebar-font;
+	font-family: $general-font;
 	height: 100%;
 	position: fixed;
 	right: 0;
+	top: 0;
 	transform: translateX(0%);
-	transition: all 0.6s ease-out;
+	transition: transform 0.4s ease-out, width 0.4s ease-out;
 	width: 20%;
-	z-index: 2;
+	z-index: 200;
 
 	.title {
 		display: block;
@@ -51,7 +52,7 @@
 		width: auto;
 
 		&:hover {
-			box-shadow: -5px 7px 0 0 $sidebar-box-shadow-color;
+			box-shadow: $scope-name-hover-box-shadow;
 			max-width: 300%;
 			padding-right: 20px;
 		}

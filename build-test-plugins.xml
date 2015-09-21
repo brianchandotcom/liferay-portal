@@ -92,7 +92,43 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 							override="true"
 						/>
 
-						<echo file="${lp.plugins.dir}/${plugin.types}/@{plugin}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
+						<if>
+							<matches pattern="http" string="${test.build.plugins.war.zip.url}" />
+							<then>
+								<pathconvert pathsep="," property="plugin.war" setonempty="false">
+									<path>
+										<fileset
+											dir="plugins"
+											includes="@{plugin}*.war"
+										/>
+									</path>
+								</pathconvert>
+
+								<tstamp>
+									<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+								</tstamp>
+
+								<mkdir dir="${tstamp.value}" />
+
+								<unzip
+									dest="${tstamp.value}"
+									src="${plugin.war}"
+								/>
+
+								<echo append="true" file="${tstamp.value}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
+
+								<zip
+									basedir="${tstamp.value}"
+									destfile="${plugin.war}"
+									update="yes"
+								/>
+
+								<delete dir="${tstamp.value}" />
+							</then>
+							<else>
+								<echo file="${lp.plugins.dir}/${plugin.types}/@{plugin}/docroot/WEB-INF/src/portlet-ext.properties">${portlet.properties}</echo>
+							</else>
+						</if>
 					</then>
 					<else>
 						<delete file="${lp.plugins.dir}/${plugin.types}/@{plugin}/docroot/WEB-INF/src/portlet-ext.properties" />

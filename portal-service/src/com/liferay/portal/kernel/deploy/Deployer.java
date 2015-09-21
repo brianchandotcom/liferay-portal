@@ -99,6 +99,8 @@ public interface Deployer {
 
 	public void setWars(List<String> wars);
 
+	public void setWildflyPrefix(String wildflyPrefix);
+
 	public void updateWebXml(
 			File webXml, File srcFile, String displayName,
 			PluginPackage pluginPackage)

@@ -175,7 +175,7 @@
 		</execute>
 	</command>
 
-	<command name="RecycleWebContentViaActionsMenu" priority="3">
+	<command name="RecycleWebContentViaDeleteIcon" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Liferay" />
@@ -199,7 +199,7 @@
 			<var name="siteScopeName" value="Liferay" />
 		</execute>
 
-		<execute macro="WebContent#moveToRecycleBinViaActionsMenuCP" />
+		<execute macro="WebContent#moveToRecycleBinViaDeleteIconCP" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -222,7 +222,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="RestoreWebcontent" priority="5">
+	<command name="RestoreWebcontent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -305,7 +305,7 @@
 			<var name="siteScopeName" value="Liferay" />
 		</execute>
 
-		<execute macro="WebContent#moveToRecycleBinViaActionsMenuCP" />
+		<execute macro="WebContent#moveToRecycleBinViaDeleteIconCP" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />
@@ -341,7 +341,7 @@
 			<var name="siteScopeName" value="Liferay" />
 		</execute>
 
-		<execute macro="WebContent#moveToRecycleBinViaActionsMenuCP" />
+		<execute macro="WebContent#moveToRecycleBinViaDeleteIconCP" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />

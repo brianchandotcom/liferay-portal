@@ -31,7 +31,12 @@ public class StagedModelType {
 	public static final String REFERRER_CLASS_NAME_ALL =
 		"referrer-class-name-all";
 
+	public static final String REFERRER_CLASS_NAME_ANY =
+		"referrer-class-name-any";
+
 	public static final int REFERRER_CLASS_NAME_ID_ALL = -1;
+
+	public static final int REFERRER_CLASS_NAME_ID_ANY = -2;
 
 	public StagedModelType(Class<?> clazz) {
 		setClassName(clazz.getName());
@@ -121,7 +126,15 @@ public class StagedModelType {
 	}
 
 	protected String getSimpleName(String className) {
+		if (Validator.isNull(className)) {
+			return StringPool.BLANK;
+		}
+
 		int pos = className.lastIndexOf(StringPool.PERIOD) + 1;
+
+		if (pos <= 0) {
+			return className;
+		}
 
 		return className.substring(pos);
 	}
@@ -164,20 +177,29 @@ public class StagedModelType {
 		else if (referrerClassName.equals(REFERRER_CLASS_NAME_ALL)) {
 			_referrerClassNameId = REFERRER_CLASS_NAME_ID_ALL;
 		}
+		else if (referrerClassName.equals(REFERRER_CLASS_NAME_ANY)) {
+			_referrerClassNameId = REFERRER_CLASS_NAME_ID_ANY;
+		}
 		else {
 			_referrerClassNameId = PortalUtil.getClassNameId(referrerClassName);
 		}
 	}
 
 	protected void setReferrerClassNameId(long referrerClassNameId) {
-		if (referrerClassNameId > 0) {
-			_referrerClassName = PortalUtil.getClassName(referrerClassNameId);
-		}
-		else {
+		_referrerClassNameId = referrerClassNameId;
+
+		if (referrerClassNameId == 0) {
 			_referrerClassName = null;
 		}
-
-		_referrerClassNameId = referrerClassNameId;
+		else if (referrerClassNameId == REFERRER_CLASS_NAME_ID_ALL) {
+			_referrerClassName = REFERRER_CLASS_NAME_ALL;
+		}
+		else if (referrerClassNameId == REFERRER_CLASS_NAME_ID_ANY) {
+			_referrerClassName = REFERRER_CLASS_NAME_ANY;
+		}
+		else if (referrerClassNameId > 0) {
+			_referrerClassName = PortalUtil.getClassName(referrerClassNameId);
+		}
 	}
 
 	private String _className;

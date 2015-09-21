@@ -23,6 +23,7 @@ import com.liferay.portal.model.Layout;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -52,6 +53,10 @@ public class SearchContext implements Serializable {
 		}
 
 		_fullQueryEntryClassNames.add(entryClassName);
+	}
+
+	public void addStats(Stats stats) {
+		_stats.put(stats.getField(), stats);
 	}
 
 	public void clearFullQueryEntryClassNames() {
@@ -131,6 +136,10 @@ public class SearchContext implements Serializable {
 			new String[_fullQueryEntryClassNames.size()]);
 	}
 
+	public GroupBy getGroupBy() {
+		return _groupBy;
+	}
+
 	public long[] getGroupIds() {
 		return _groupIds;
 	}
@@ -189,6 +198,14 @@ public class SearchContext implements Serializable {
 
 	public int getStart() {
 		return _start;
+	}
+
+	public Map<String, Stats> getStats() {
+		return Collections.unmodifiableMap(_stats);
+	}
+
+	public Stats getStats(String fieldName) {
+		return _stats.get(fieldName);
 	}
 
 	public TimeZone getTimeZone() {
@@ -312,6 +329,10 @@ public class SearchContext implements Serializable {
 		_folderIds = folderIds;
 	}
 
+	public void setGroupBy(GroupBy groupBy) {
+		_groupBy = groupBy;
+	}
+
 	public void setGroupIds(long[] groupIds) {
 		_groupIds = groupIds;
 	}
@@ -414,6 +435,7 @@ public class SearchContext implements Serializable {
 	private final Map<String, Facet> _facets = new ConcurrentHashMap<>();
 	private long[] _folderIds;
 	private Set<String> _fullQueryEntryClassNames;
+	private GroupBy _groupBy;
 	private long[] _groupIds;
 	private boolean _includeAttachments;
 	private boolean _includeDiscussions;
@@ -434,6 +456,7 @@ public class SearchContext implements Serializable {
 	private String _searchEngineId;
 	private Sort[] _sorts;
 	private int _start = QueryUtil.ALL_POS;
+	private final Map<String, Stats> _stats = new ConcurrentHashMap<>();
 	private TimeZone _timeZone;
 	private long _userId;
 

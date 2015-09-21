@@ -17,19 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 AssetEntry assetEntry = workflowTaskDisplayContext.getAssetEntry();
 AssetRenderer assetRenderer = workflowTaskDisplayContext.getAssetRenderer();
 AssetRendererFactory assetRendererFactory = workflowTaskDisplayContext.getAssetRendererFactory();
 
 request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(assetRenderer.getTitle(locale));
 %>
 
-<c:if test="<%= (assetEntry != null) %>">
-	<liferay-ui:header
-		localizeTitle="<%= false %>"
-		title="<%= assetRenderer.getTitle(locale) %>"
-	/>
-
+<c:if test="<%= assetEntry != null %>">
 	<liferay-ui:asset-display
 		assetEntry="<%= assetEntry %>"
 		assetRenderer="<%= assetRenderer %>"

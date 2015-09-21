@@ -14,32 +14,33 @@
 
 package com.liferay.dynamic.data.mapping.type.checkbox;
 
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Renato Rego
  */
-public class CheckboxDDMFormFieldValueAccessor
-	extends DDMFormFieldValueAccessor<Boolean> {
-
-	public CheckboxDDMFormFieldValueAccessor(Locale locale) {
-		super(locale);
+@Component(
+	immediate = true, property = "ddm.form.field.type.name=checkbox",
+	service = {
+		CheckboxDDMFormFieldValueAccessor.class, DDMFormFieldValueAccessor.class
 	}
+)
+public class CheckboxDDMFormFieldValueAccessor
+	implements DDMFormFieldValueAccessor<Boolean> {
 
 	@Override
-	public Boolean get(DDMFormFieldValue ddmFormFieldValue) {
+	public Boolean getValue(
+		DDMFormFieldValue ddmFormFieldValue, Locale locale) {
+
 		Value value = ddmFormFieldValue.getValue();
 
 		return Boolean.valueOf(value.getString(locale));
-	}
-
-	@Override
-	public Class<Boolean> getAttributeClass() {
-		return Boolean.class;
 	}
 
 }

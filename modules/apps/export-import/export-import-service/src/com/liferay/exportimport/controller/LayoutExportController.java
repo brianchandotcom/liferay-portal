@@ -146,7 +146,7 @@ public class LayoutExportController implements ExportController {
 			portletDataContext = getPortletDataContext(
 				exportImportConfiguration);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_EXPORT_STARTED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
@@ -155,7 +155,7 @@ public class LayoutExportController implements ExportController {
 
 			ExportImportThreadLocal.setLayoutExportInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_EXPORT_SUCCEEDED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext));
@@ -165,7 +165,7 @@ public class LayoutExportController implements ExportController {
 		catch (Throwable t) {
 			ExportImportThreadLocal.setLayoutExportInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 				EVENT_LAYOUT_EXPORT_FAILED, getProcessFlag(),
 				PortletDataContextFactoryUtil.clonePortletDataContext(
 					portletDataContext),
@@ -420,6 +420,26 @@ public class LayoutExportController implements ExportController {
 			}
 		}
 
+		// Collect layout portlets
+
+		for (Layout layout : layouts) {
+			getLayoutPortlets(
+				portletDataContext, layoutIds, portletIds, layout);
+		}
+
+		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			ManifestSummary manifestSummary =
+				portletDataContext.getManifestSummary();
+
+			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+				"layout", ArrayUtil.toStringArray(portletIds.keySet()),
+				manifestSummary);
+
+			manifestSummary.resetCounters();
+		}
+
+		// Export actual data
+
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Layout.class));
 
@@ -443,18 +463,7 @@ public class LayoutExportController implements ExportController {
 		}
 
 		for (Layout layout : layouts) {
-			exportLayout(portletDataContext, layoutIds, portletIds, layout);
-		}
-
-		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			ManifestSummary manifestSummary =
-				portletDataContext.getManifestSummary();
-
-			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
-				"layout", ArrayUtil.toStringArray(portletIds.keySet()),
-				manifestSummary);
-
-			manifestSummary.resetCounters();
+			exportLayout(portletDataContext, layoutIds, layout);
 		}
 
 		Element portletsElement = rootElement.addElement("portlets");
@@ -509,7 +518,7 @@ public class LayoutExportController implements ExportController {
 					companyId, portletId, parameterMap, type);
 
 			try {
-				ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_EXPORT_STARTED, getProcessFlag(),
 					PortletDataContextFactoryUtil.clonePortletDataContext(
 						portletDataContext));
@@ -530,13 +539,13 @@ public class LayoutExportController implements ExportController {
 					exportPortletControlsMap.get(
 						PortletDataHandlerKeys.PORTLET_SETUP));
 
-				ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_EXPORT_SUCCEEDED, getProcessFlag(),
 					PortletDataContextFactoryUtil.clonePortletDataContext(
 						portletDataContext));
 			}
 			catch (Throwable t) {
-				ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+				_exportImportLifecycleManager.fireExportImportLifecycleEvent(
 					EVENT_PORTLET_EXPORT_FAILED, getProcessFlag(),
 					PortletDataContextFactoryUtil.clonePortletDataContext(
 						portletDataContext),
@@ -591,7 +600,7 @@ public class LayoutExportController implements ExportController {
 
 	protected void exportLayout(
 			PortletDataContext portletDataContext, long[] layoutIds,
-			Map<String, Object[]> portletIds, Layout layout)
+			Layout layout)
 		throws Exception {
 
 		if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
@@ -603,35 +612,25 @@ public class LayoutExportController implements ExportController {
 			return;
 		}
 
-		boolean exportLAR = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(), "exportLAR");
-
-		if (!exportLAR && LayoutStagingUtil.isBranchingLayout(layout)) {
-			long layoutSetBranchId = MapUtil.getLong(
-				portletDataContext.getParameterMap(), "layoutSetBranchId");
-
-			if (layoutSetBranchId <= 0) {
-				return;
-			}
-
-			LayoutRevision layoutRevision =
-				LayoutRevisionLocalServiceUtil.fetchLayoutRevision(
-					layoutSetBranchId, true, layout.getPlid());
-
-			if (layoutRevision == null) {
-				return;
-			}
-
-			LayoutStagingHandler layoutStagingHandler =
-				LayoutStagingUtil.getLayoutStagingHandler(layout);
-
-			layoutStagingHandler.setLayoutRevision(layoutRevision);
+		if (!prepareLayoutStagingHandler(portletDataContext, layout)) {
+			return;
 		}
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, layout);
+	}
 
-		if (!layout.isSupportsEmbeddedPortlets()) {
+	protected void getLayoutPortlets(
+			PortletDataContext portletDataContext, long[] layoutIds,
+			Map<String, Object[]> portletIds, Layout layout)
+		throws Exception {
+
+		if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
+			return;
+		}
+
+		if (!prepareLayoutStagingHandler(portletDataContext, layout) ||
+			!layout.isSupportsEmbeddedPortlets()) {
 
 			// Only portlet type layouts support page scoping
 
@@ -739,6 +738,46 @@ public class LayoutExportController implements ExportController {
 		return PROCESS_FLAG_LAYOUT_EXPORT_IN_PROCESS;
 	}
 
+	protected boolean prepareLayoutStagingHandler(
+		PortletDataContext portletDataContext, Layout layout) {
+
+		boolean exportLAR = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(), "exportLAR");
+
+		if (exportLAR || !LayoutStagingUtil.isBranchingLayout(layout)) {
+			return true;
+		}
+
+		long layoutSetBranchId = MapUtil.getLong(
+			portletDataContext.getParameterMap(), "layoutSetBranchId");
+
+		if (layoutSetBranchId <= 0) {
+			return false;
+		}
+
+		LayoutRevision layoutRevision =
+			LayoutRevisionLocalServiceUtil.fetchLayoutRevision(
+				layoutSetBranchId, true, layout.getPlid());
+
+		if (layoutRevision == null) {
+			return false;
+		}
+
+		LayoutStagingHandler layoutStagingHandler =
+			LayoutStagingUtil.getLayoutStagingHandler(layout);
+
+		layoutStagingHandler.setLayoutRevision(layoutRevision);
+
+		return true;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExportImportLifecycleManager(
+		ExportImportLifecycleManager exportImportLifecycleManager) {
+
+		_exportImportLifecycleManager = exportImportLifecycleManager;
+	}
+
 	@Reference(unbind = "-")
 	protected void setPortletExportController(
 		PortletExportController portletExportController) {
@@ -751,6 +790,7 @@ public class LayoutExportController implements ExportController {
 
 	private final DeletionSystemEventExporter _deletionSystemEventExporter =
 		DeletionSystemEventExporter.getInstance();
+	private ExportImportLifecycleManager _exportImportLifecycleManager;
 	private final PermissionExporter _permissionExporter =
 		PermissionExporter.getInstance();
 	private PortletExportController _portletExportController;

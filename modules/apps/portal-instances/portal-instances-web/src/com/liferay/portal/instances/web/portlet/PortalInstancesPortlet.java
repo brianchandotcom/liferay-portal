@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.struts-path=portal_instances",
-		"com.liferay.portlet.use-default-template=false",
+		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Portal Instances",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",

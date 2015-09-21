@@ -22,6 +22,7 @@
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowTask"
+		cssClass="entry-display-style"
 		modelVar="workflowTask"
 		stringKey="<%= true %>"
 	>
@@ -32,6 +33,7 @@
 
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
+			<portlet:param name="tabs1" value="<%= tabs1 %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
 		</portlet:renderURL>
@@ -57,13 +59,13 @@
 			value="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
+		<liferay-ui:search-container-column-date
 			href="<%= rowURL %>"
 			name="last-activity-date"
 			value="<%= workflowTaskDisplayContext.getLastActivityDate(workflowTask) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
+		<liferay-ui:search-container-column-date
 			href="<%= rowURL %>"
 			name="due-date"
 			orderable="<%= true %>"
@@ -72,12 +74,10 @@
 
 		<c:if test="<%= !workflowTaskDisplayContext.isCompletedTabSelected() %>">
 			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
 				path="/workflow_task_action.jsp"
 			/>
 		</c:if>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator displayStyle="list" markupView="lexicon" />
 </liferay-ui:search-container>

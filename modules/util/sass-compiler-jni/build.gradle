@@ -96,10 +96,9 @@ downloadSassSpec {
 		autoClean = false
 	}
 
-	from zipTree(
-		{
-			FileUtil.get(project, sassSpecUrl)
-		})
+	from {
+		zipTree FileUtil.get(project, sassSpecUrl)
+	}
 
 	include "**/spec/basic/**"
 	into sassSpecDir

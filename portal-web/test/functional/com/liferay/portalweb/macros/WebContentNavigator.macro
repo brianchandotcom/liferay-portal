@@ -1,50 +1,66 @@
 <definition>
 	<command name="gotoAddCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute function="AssertVisible" locator1="Button#PLUS" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="Click" locator1="Button#PLUS" />
+		<execute function="AssertClick" locator1="MenuItem#BASIC_WEB_CONTENT" value1="Basic Web Content" />
+
+		<execute function="Pause" locator1="3000" />
 	</command>
 
 	<command name="gotoAddWithStructureCP">
 		<var name="key_structureName" value="${structureName}" />
 
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add"  />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_STRUCTURE_NAME" value1="${structureName}" />
+		<execute function="Click" locator1="Button#PLUS" />
+		<execute function="AssertClick" locator1="MenuItem#STRUCTURE_NAME" value1="${structureName}" />
 	</command>
 
 	<command name="gotoEditCP">
-		<var name="key_webContentTitle" value="${webContentTitle}" />
+		<if>
+			<isset var="webContentTitleEscapeCharacter" />
+			<then>
+				<var name="key_webContentTitle" value="${webContentTitleEscapeCharacter}" />
+			</then>
+			<else>
+				<var name="key_webContentTitle" value="${webContentTitle}" />
+			</else>
+		</if>
 
-		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute macro="WebContent#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
 
-		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute function="Click" locator1="WC#ENTRY_DESCRIPTIVE_MENULIST_ICON" />
 
-		<execute function="Click" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
-
-		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_MENULIST_EDIT" value1="Edit" />
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 	</command>
 
 	<command name="gotoEditPGViaWCD">
-		<execute function="Click" locator1="PGWebcontentdisplay#EDIT_WEB_CONTENT" />
+		<execute function="Click" locator1="WCD#EDIT_WEB_CONTENT" />
 
 		<execute function="SelectFrame" locator1="PGWebcontentdisplayEditwebcontent#WEB_CONTENT_IFRAME" />
 	</command>
 
 	<command name="gotoManageStructures">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_MANAGE" value1="Manage" />
-		<execute function="AssertClick" locator1="CPWebcontent#MANAGE_MENULIST_STRUCTURES" value1="Structures" />
+		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
+		<execute function="AssertClick" locator1="MenuItem#STRUCTURES" value1="Structures" />
 
-		<execute function="SelectFrame" locator1="CPWebcontentStructures#STRUCTURES_IFRAME" />
+		<execute function="SelectFrame" locator1="DDMSelectStructure#DDM_STRUCTURES_IFRAME" />
 	</command>
 
 	<command name="gotoViewStatus">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
-		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
-		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
-		<execute function="AssertElementPresent#pauseAssertVisible" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_THUMBNAIL" />
-		<execute function="AssertTextEquals" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="${webContentStatus}" />
-		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
+		<execute macro="WebContent#changeDisplayStyle">
+			<var name="displayStyle" value="Descriptive" />
+		</execute>
+
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="WC#ENTRY_DESCRIPTIVE_THUMBNAIL" />
+		<execute function="AssertTextEquals" locator1="WC#ENTRY_DESCRIPTIVE_WORKFLOW_STATUS" value1="${webContentStatus}" />
+		<execute function="AssertClick" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 	</command>
 </definition>

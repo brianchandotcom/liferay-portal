@@ -52,7 +52,12 @@
 </tr>
 <tr>
 	<td>SETUP_FORM_FIELDS_NAME_FIELD</td>
-	<td>//div[@class='field-title' and contains(.,'${key_wfFieldName}')]/..//input[contains(@id,'fieldLabel') and @type='text']</td>
+	<td>//input[contains(@id,'fieldLabel') and @type='text' and contains(@value,'${key_wfFieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_NAME_FIELD_NEW</td>
+	<td>//div[@class='field-title' and contains(.,'New Item')]/..//input[contains(@id,'fieldLabel') and @type='text']</td>
 	<td></td>
 </tr>
 <tr>

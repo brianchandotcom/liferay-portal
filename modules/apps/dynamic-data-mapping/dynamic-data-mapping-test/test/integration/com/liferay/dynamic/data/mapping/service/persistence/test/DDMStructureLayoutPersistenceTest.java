@@ -439,12 +439,14 @@ public class DDMStructureLayoutPersistenceTest {
 				existingDDMStructureLayout.getUuid(),
 				ReflectionTestUtil.invoke(existingDDMStructureLayout,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingDDMStructureLayout.getGroupId(),
-			ReflectionTestUtil.invoke(existingDDMStructureLayout,
+		Assert.assertEquals(Long.valueOf(
+				existingDDMStructureLayout.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructureLayout,
 				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingDDMStructureLayout.getStructureVersionId(),
-			ReflectionTestUtil.invoke(existingDDMStructureLayout,
+		Assert.assertEquals(Long.valueOf(
+				existingDDMStructureLayout.getStructureVersionId()),
+			ReflectionTestUtil.<Long>invoke(existingDDMStructureLayout,
 				"getOriginalStructureVersionId", new Class<?>[0]));
 	}
 

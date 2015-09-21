@@ -14,7 +14,7 @@
 
 package com.liferay.portal.upgrade.internal.graph;
 
-import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.upgrade.internal.UpgradeInfo;
 
@@ -37,12 +37,12 @@ public class ReleaseGraphManager {
 			new UpgradeProcessEdgeFactory(upgradeInfos));
 
 		for (UpgradeInfo upgradeInfo : upgradeInfos) {
-			_directedGraph.addVertex(upgradeInfo.getFromVersionString());
-			_directedGraph.addVertex(upgradeInfo.getToVersionString());
+			_directedGraph.addVertex(upgradeInfo.getFromSchemaVersionString());
+			_directedGraph.addVertex(upgradeInfo.getToSchemaVersionString());
 
 			_directedGraph.addEdge(
-				upgradeInfo.getFromVersionString(),
-				upgradeInfo.getToVersionString(),
+				upgradeInfo.getFromSchemaVersionString(),
+				upgradeInfo.getToSchemaVersionString(),
 				new UpgradeProcessEdge(upgradeInfo));
 		}
 	}
@@ -92,21 +92,13 @@ public class ReleaseGraphManager {
 
 		return ListUtil.toList(
 			upgradeProcessEdges,
-			new Accessor<UpgradeProcessEdge, UpgradeInfo>() {
+			new Function<UpgradeProcessEdge, UpgradeInfo>() {
 
 				@Override
-				public UpgradeInfo get(UpgradeProcessEdge upgradeProcessEdge) {
+				public UpgradeInfo apply(
+					UpgradeProcessEdge upgradeProcessEdge) {
+
 					return upgradeProcessEdge.getUpgradeInfo();
-				}
-
-				@Override
-				public Class<UpgradeInfo> getAttributeClass() {
-					return UpgradeInfo.class;
-				}
-
-				@Override
-				public Class<UpgradeProcessEdge> getTypeClass() {
-					return UpgradeProcessEdge.class;
 				}
 
 			});

@@ -17,10 +17,19 @@ package com.liferay.roles.admin.web.custom.attributes;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.roles.admin.web.constants.RolesAdminPortletKeys;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Aniceto Perez
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + RolesAdminPortletKeys.ROLES_ADMIN},
+	service = CustomAttributesDisplay.class
+)
 public class RoleCustomAttributesDisplay extends BaseCustomAttributesDisplay {
 
 	@Override

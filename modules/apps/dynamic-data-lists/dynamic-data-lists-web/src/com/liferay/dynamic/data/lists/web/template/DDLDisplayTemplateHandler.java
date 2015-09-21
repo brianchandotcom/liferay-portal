@@ -22,20 +22,25 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
+import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationKeys;
+import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationUtil;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateService;
-import com.liferay.dynamic.data.mapping.storage.Field;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.template.BaseDDMTemplateHandler;
 import com.liferay.dynamic.data.mapping.template.DDMTemplateVariableCodeHandler;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -62,6 +67,16 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	}
 
 	@Override
+	public Map<String, Object> getCustomContextObjects() {
+		Map<String, Object> contextObjects = new HashMap<>(1);
+
+		contextObjects.put(
+			"ddlDisplayTemplateHelper", new DDLDisplayTemplateHelper());
+
+		return contextObjects;
+	}
+
+	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
 			DDLPortletKeys.DYNAMIC_DATA_LISTS, locale);
@@ -76,6 +91,17 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	}
 
 	@Override
+	public String getTemplatesHelpPath(String language) {
+		return DDLWebConfigurationUtil.get(
+			getTemplatesHelpPropertyKey(), new Filter(language));
+	}
+
+	@Override
+	public String getTemplatesHelpPropertyKey() {
+		return DDLWebConfigurationKeys.DYNAMIC_DATA_LISTS_HELP_TEMPLATE;
+	}
+
+	@Override
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
 			long classPK, String language, Locale locale)
 		throws Exception {
@@ -83,6 +109,9 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			new LinkedHashMap<>();
 
+		addTemplateVariableGroup(
+			templateVariableGroups,
+			getDDLUtilVariablesTemplateVariableGroups());
 		addTemplateVariableGroup(
 			templateVariableGroups, getDDLVariablesTemplateVariableGroups());
 		addTemplateVariableGroup(
@@ -121,6 +150,19 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 		return templateVariableGroups;
 	}
 
+	protected TemplateVariableGroup
+		getDDLUtilVariablesTemplateVariableGroups() {
+
+		TemplateVariableGroup ddlUtilTemplateVariableGroup =
+			new TemplateVariableGroup("data-list-util");
+
+		ddlUtilTemplateVariableGroup.addVariable(
+			"data-list-display-template-helper", DDLDisplayTemplateHelper.class,
+			"ddlDisplayTemplateHelper", null);
+
+		return ddlUtilTemplateVariableGroup;
+	}
+
 	protected TemplateVariableGroup getDDLVariablesTemplateVariableGroups() {
 		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(
 			"data-list-variables");
@@ -146,7 +188,7 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	protected Class<?> getFieldVariableClass() {
-		return Field.class;
+		return DDMFormFieldValue.class;
 	}
 
 	@Override
@@ -157,7 +199,8 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
 			DDLDisplayTemplateHandler.class.getClassLoader(),
-			"com/liferay/dynamic/data/lists/web/template/dependencies/"
-		);
+			"com/liferay/dynamic/data/lists/web/template/dependencies/",
+			SetUtil.fromArray(
+				new String[] {"document-library", "html", "link-to-page"}));
 
 }

@@ -440,11 +440,13 @@ public class SocialActivityAchievementPersistenceTest {
 
 		SocialActivityAchievement existingSocialActivityAchievement = _persistence.findByPrimaryKey(newSocialActivityAchievement.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivityAchievement.getGroupId(),
-			ReflectionTestUtil.invoke(existingSocialActivityAchievement,
+		Assert.assertEquals(Long.valueOf(
+				existingSocialActivityAchievement.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivityAchievement,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingSocialActivityAchievement.getUserId(),
-			ReflectionTestUtil.invoke(existingSocialActivityAchievement,
+		Assert.assertEquals(Long.valueOf(
+				existingSocialActivityAchievement.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivityAchievement,
 				"getOriginalUserId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(
 				existingSocialActivityAchievement.getName(),

@@ -313,18 +313,11 @@ public class PortletAction extends Action {
 		String portletId = (String)portletRequest.getAttribute(
 			WebKeys.PORTLET_ID);
 
-		try {
-			LayoutTypePortlet layoutTypePortlet =
-				themeDisplay.getLayoutTypePortlet();
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
 
-			if (layoutTypePortlet.hasPortletId(portletId)) {
-				return true;
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
+		if (layoutTypePortlet.hasPortletId(portletId)) {
+			return true;
 		}
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(

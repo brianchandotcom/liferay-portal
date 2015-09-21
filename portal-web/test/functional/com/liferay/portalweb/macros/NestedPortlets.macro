@@ -14,9 +14,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="NestedportletsConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="AssertChecked" locator1="NestedportletsConfiguration#LAYOUT_2_COLUMNS" />
+		<execute function="AssertChecked" locator1="Portlet#LAYOUT_2_COLUMNS" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>

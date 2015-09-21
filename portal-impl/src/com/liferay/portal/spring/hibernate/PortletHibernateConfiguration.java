@@ -26,7 +26,7 @@ public class PortletHibernateConfiguration
 	extends PortalHibernateConfiguration {
 
 	public PortletHibernateConfiguration() {
-		_classLoader = null;
+		this(null, null);
 	}
 
 	public PortletHibernateConfiguration(
@@ -35,6 +35,7 @@ public class PortletHibernateConfiguration
 		_classLoader = classLoader;
 
 		setDataSource(dataSource);
+		setMvccEnabled(false);
 	}
 
 	@Override

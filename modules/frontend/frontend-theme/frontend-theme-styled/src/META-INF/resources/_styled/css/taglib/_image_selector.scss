@@ -1,0 +1,59 @@
+.taglib-image-selector {
+	.change-image-controls {
+		background: #FFF;
+	}
+
+	.glyphicon-ok {
+		background: #FFF;
+		opacity: 0;
+	}
+
+	.progress-wrapper {
+		.progressbar {
+			background: #B0B4BB;
+			opacity: 0.7;
+		}
+	}
+
+	&.check-active .glyphicon-ok {
+		opacity: 1;
+	}
+
+	&.drop-active {
+		outline-width: 0;
+
+		.browse-image-controls {
+			opacity: 0;
+		}
+
+		.glyphicon-ok {
+			opacity: 0;
+		}
+
+		.image-wrapper {
+			opacity: 0.15;
+		}
+
+		.error-wrapper {
+			opacity: 0;
+		}
+	}
+
+	&.progress-active {
+		.image-wrapper {
+			opacity: 0.15;
+		}
+
+		.browse-image-controls {
+			opacity: 0;
+		}
+
+		.drop-here-info {
+			opacity: 0;
+		}
+
+		.glyphicon-ok {
+			opacity: 0;
+		}
+	}
+}

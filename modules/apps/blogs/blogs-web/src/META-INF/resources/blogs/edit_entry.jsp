@@ -43,21 +43,11 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCaption");
 long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
-
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 %>
-
-<c:if test="<%= showHeader %>">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		localizeTitle="<%= (entry == null) %>"
-		title='<%= (entry == null) ? "new-blog-entry" : entry.getTitle() %>'
-	/>
-</c:if>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
-<div class="edit-entry">
+<div class="edit-entry-container">
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -65,6 +55,25 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
+
+		<div class="entry-options">
+			<c:if test="<%= (entry != null) && entry.isApproved() %>">
+				<div class="status">
+					<small class="text-capitalize text-muted">
+						<%= WorkflowConstants.getStatusLabel(entry.getStatus()) %>
+
+						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+					</small>
+				</div>
+			</c:if>
+			<c:if test="<%= (entry == null) || !entry.isApproved() %>">
+				<div class="save-status" id="<portlet:namespace />saveStatus"></div>
+			</c:if>
+
+			<aui:button cssClass="hide icon-monospaced" icon="icon-pencil" id="editIcon" />
+
+			<aui:button cssClass="icon-monospaced" icon="icon-cog" id="settingsIcon" />
+		</div>
 
 		<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
 		<liferay-ui:error exception="<%= EntryDescriptionException.class %>" message="please-enter-a-valid-abstract" />
@@ -93,212 +102,202 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 		<aui:model-context bean="<%= entry %>" model="<%= BlogsEntry.class %>" />
 
-		<c:if test="<%= (entry == null) || !entry.isApproved() %>">
-			<div class="save-status" id="<portlet:namespace />saveStatus"></div>
-		</c:if>
-
 		<%
 		String[] imageExtensions = PrefsPropsUtil.getStringArray(PropsKeys.BLOGS_IMAGE_EXTENSIONS, StringPool.COMMA);
 		%>
 
-		<liferay-ui:tabs
-			names="content,settings"
-			refresh="<%= false %>"
-			type="pills"
-		>
-			<div class="<%= (entry != null) ? "entry-status " + WorkflowConstants.getStatusLabel(entry.getStatus()) : StringPool.BLANK %>">
-				<liferay-ui:section>
-					<c:if test="<%= entry != null %>">
-						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
-					</c:if>
+		<div class="<%= (entry != null) ? "entry-body " : StringPool.BLANK %> row">
+			<div id="<portlet:namespace />editSection">
+				<portlet:actionURL name="/blogs/upload_temp_image" var="uploadTempImageURL" />
 
-					<portlet:actionURL name="/blogs/upload_temp_image" var="uploadTempImageURL" />
+				<div class="lfr-blogs-cover-image-selector">
+					<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE) %>" paramName="coverImageFileEntry" uploadURL="<%= uploadTempImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+				</div>
 
-					<div class="lfr-blogs-cover-image-selector">
-						<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_MAX_SIZE) %>" paramName="coverImageFileEntry" uploadURL="<%= uploadTempImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
-					</div>
+				<aui:input name="coverImageCaption" type="hidden" />
 
-					<aui:input name="coverImageCaption" type="hidden" />
-
-					<div class="entry-cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
+				<div class="cover-image-caption <%= (coverImageFileEntryId == 0) ? "invisible" : "" %>">
+					<small>
 						<liferay-ui:input-editor contents="<%= coverImageCaption %>" editorName="alloyeditor" name="coverImageCaptionEditor" placeholder="caption" showSource="<%= false %>" />
-					</div>
+					</small>
+				</div>
 
+				<div class="col-md-8 col-md-offset-2">
 					<div class="entry-title">
-						<h2><liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h2>
+						<h1><liferay-ui:input-editor contents="<%= HtmlUtil.escape(title) %>" editorName="alloyeditor" name="titleEditor" placeholder="title" showSource="<%= false %>" /></h1>
 					</div>
 
 					<aui:input name="title" type="hidden" />
 
 					<div class="entry-subtitle">
-						<liferay-ui:input-editor contents="<%= HtmlUtil.escape(subtitle) %>" editorName="alloyeditor" name="subtitleEditor" placeholder="subtitle" showSource="<%= false %>" />
+						<h4><liferay-ui:input-editor contents="<%= HtmlUtil.escape(subtitle) %>" editorName="alloyeditor" name="subtitleEditor" placeholder="subtitle" showSource="<%= false %>" /> </h4>
 					</div>
 
 					<aui:input name="subtitle" type="hidden" />
 
-					<div class="entry-body">
+					<div class="entry-content">
 						<liferay-ui:input-editor contents="<%= content %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.portlet.blogs.edit_entry.jsp") %>' name="contentEditor" onChangeMethod="OnChangeEditor" placeholder="content" />
 					</div>
 
 					<aui:input name="content" type="hidden" />
-				</liferay-ui:section>
+				</div>
+			</div>
 
-				<liferay-ui:section>
-					<div class="display-date-wrapper">
-						<h3><liferay-ui:message key="display-date" /></h3>
+			<div class="col-md-8 col-md-offset-2 hide" id="<portlet:namespace />settingsSection">
+				<div class="display-date-wrapper">
+					<h3><liferay-ui:message key="display-date" /></h3>
 
-						<aui:input label="" name="displayDate" />
+					<aui:input label="" name="displayDate" />
+				</div>
+
+				<div class="entry-abstract-wrapper">
+
+					<%
+					long smallImageMaxFileSize = PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE);
+					%>
+
+					<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
+						<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
+					</liferay-ui:error>
+
+					<liferay-ui:error exception="<%= EntrySmallImageSizeException.class %>">
+						<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(smallImageMaxFileSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+					</liferay-ui:error>
+
+					<h3><liferay-ui:message key="abstract" /></h3>
+
+					<p class="explanation">
+						<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE), locale) %>" key="an-abstract-is-a-brief-summary-of-a-blog-entry" />
+					</p>
+
+					<div class="entry-abstract-options" id="<portlet:namespace />entryAbstractOptions">
+						<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-the-first-x-characters-of-the-entry-content", pageAbstractLength, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
+
+						<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
 					</div>
 
-					<div class="entry-abstract-wrapper">
+					<aui:fieldset cssClass="entry-abstract">
+						<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
 
-						<%
-						long smallImageMaxFileSize = PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE);
-						%>
+						<div class="lfr-blogs-small-image-selector">
+							<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" maxFileSize="<%= smallImageMaxFileSize %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
+						</div>
 
-						<liferay-ui:error exception="<%= EntrySmallImageNameException.class %>">
-							<liferay-ui:message key="image-names-must-end-with-one-of-the-following-extensions" /> <%= StringUtil.merge(imageExtensions, ", ") %>.
-						</liferay-ui:error>
+						<div class="entry-description">
+							<liferay-ui:input-editor contents="<%= HtmlUtil.escape(description) %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorName="alloyeditor" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" showSource="<%= false %>" />
+						</div>
 
-						<liferay-ui:error exception="<%= EntrySmallImageSizeException.class %>">
-							<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(smallImageMaxFileSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-						</liferay-ui:error>
+						<aui:input name="description" type="hidden" />
+					</aui:fieldset>
+				</div>
 
-						<h3><liferay-ui:message key="abstract" /></h3>
+				<c:if test="<%= (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>">
+					<div class="email-entry-updated-wrapper">
+						<h3><liferay-ui:message key="email-notifications" /></h3>
 
 						<p class="explanation">
-							<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE), locale) %>" key="an-abstract-is-a-brief-summary-of-a-blog-entry" />
+							<liferay-ui:message key="comments-regarding-the-blog-entry-update" />
 						</p>
 
-						<div class="entry-abstract-options" id="<portlet:namespace />entryAbstractOptions">
-							<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-the-first-x-characters-of-the-entry-content", pageAbstractLength, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
+						<%
+						boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
+						%>
 
-							<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
+						<aui:input name="sendEmailEntryUpdated" type="checkbox" value="<%= sendEmailEntryUpdated %>" />
+
+						<%
+						String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
+						%>
+
+						<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
+							<aui:input label="" name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
 						</div>
-
-						<aui:fieldset cssClass="entry-abstract">
-							<portlet:actionURL name="/blogs/upload_small_image" var="uploadSmallImageURL" />
-
-							<div class="lfr-blogs-small-image-selector">
-								<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" maxFileSize="<%= smallImageMaxFileSize %>" paramName="smallImageFileEntry" uploadURL="<%= uploadSmallImageURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
-							</div>
-
-							<div class="entry-description">
-								<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorName="alloyeditor" name="descriptionEditor" onInitMethod="OnDescriptionEditorInit" placeholder="description" showSource="<%= false %>" />
-							</div>
-
-							<aui:input name="description" type="hidden" />
-						</aui:fieldset>
 					</div>
+				</c:if>
 
-					<c:if test="<%= (entry != null) && blogsGroupServiceSettings.isEmailEntryUpdatedEnabled() %>">
-						<div class="email-entry-updated-wrapper">
-							<h3><liferay-ui:message key="email-notifications" /></h3>
+				<div class="categorization-wrapper">
+					<h3><liferay-ui:message key="categorization" /></h3>
 
-							<p class="explanation">
-								<liferay-ui:message key="comments-regarding-the-blog-entry-update" />
-							</p>
+					<aui:input name="categories" type="assetCategories" />
 
-							<%
-							boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
-							%>
+					<aui:input name="tags" type="assetTags" />
+				</div>
 
-							<aui:input name="sendEmailEntryUpdated" type="checkbox" value="<%= sendEmailEntryUpdated %>" />
+				<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
+					<aui:field-wrapper cssClass="permissions-wrapper">
+						<h3><liferay-ui:message key="permissions" /></h3>
 
-							<%
-							String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
-							%>
+						<liferay-ui:input-permissions
+							modelName="<%= BlogsEntry.class.getName() %>"
+						/>
+					</aui:field-wrapper>
+				</c:if>
 
-							<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
-								<aui:input label="" name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
-							</div>
-						</div>
-					</c:if>
+				<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
+					<div class="custom-attributes-wrapper">
+						<h3><liferay-ui:message key="custom-fields" /></h3>
 
-					<div class="categorization-wrapper">
-						<h3><liferay-ui:message key="categorization" /></h3>
-
-						<aui:input name="categories" type="assetCategories" />
-
-						<aui:input name="tags" type="assetTags" />
-					</div>
-
-					<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
-						<aui:field-wrapper cssClass="permissions-wrapper">
-							<h3><liferay-ui:message key="permissions" /></h3>
-
-							<liferay-ui:input-permissions
-								modelName="<%= BlogsEntry.class.getName() %>"
-							/>
-						</aui:field-wrapper>
-					</c:if>
-
-					<liferay-ui:custom-attributes-available className="<%= BlogsEntry.class.getName() %>">
-						<div class="custom-attributes-wrapper">
-							<h3><liferay-ui:message key="custom-fields" /></h3>
-
-							<liferay-ui:custom-attribute-list
-								className="<%= BlogsEntry.class.getName() %>"
-								classPK="<%= entryId %>"
-								editable="<%= true %>"
-								label="<%= true %>"
-							/>
-						</div>
-					</liferay-ui:custom-attributes-available>
-
-					<div class="related-assets-wrapper">
-						<h3><liferay-ui:message key="related-assets" /></h3>
-
-						<liferay-ui:input-asset-links
+						<liferay-ui:custom-attribute-list
 							className="<%= BlogsEntry.class.getName() %>"
 							classPK="<%= entryId %>"
+							editable="<%= true %>"
+							label="<%= true %>"
 						/>
 					</div>
+				</liferay-ui:custom-attributes-available>
 
-					<c:if test="<%= PropsValues.BLOGS_PINGBACK_ENABLED %>">
-						<div class="pingback-enabled-wrapper">
-							<h3><liferay-ui:message key="pingback" /></h3>
+				<div class="related-assets-wrapper">
+					<h3><liferay-ui:message key="related-assets" /></h3>
 
-							<p class="explanation">
-								<liferay-ui:message key="a-pingback-is-a-comment-that-is-created-when-you-link-to-another-blog-post-where-pingbacks-are-enabled" />
-							</p>
+					<liferay-ui:input-asset-links
+						className="<%= BlogsEntry.class.getName() %>"
+						classPK="<%= entryId %>"
+					/>
+				</div>
 
-							<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="enabled" name="allowPingbacks" value="<%= allowPingbacks %>" />
-						</div>
-					</c:if>
+				<c:if test="<%= PropsValues.BLOGS_PINGBACK_ENABLED %>">
+					<div class="pingback-enabled-wrapper">
+						<h3><liferay-ui:message key="pingback" /></h3>
 
-					<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED %>">
-						<div class="trackback-enabled-wrapper">
-							<h3><liferay-ui:message key="trackbacks" /></h3>
+						<p class="explanation">
+							<liferay-ui:message key="a-pingback-is-a-comment-that-is-created-when-you-link-to-another-blog-post-where-pingbacks-are-enabled" />
+						</p>
 
-							<aui:input helpMessage="to-allow-trackbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" name="allowTrackbacks" value="<%= allowTrackbacks %>" />
+						<aui:input helpMessage="to-allow-pingbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" label="enabled" name="allowPingbacks" value="<%= allowPingbacks %>" />
+					</div>
+				</c:if>
 
-							<aui:input label="trackbacks-to-send" name="trackbacks" />
+				<c:if test="<%= PropsValues.BLOGS_TRACKBACK_ENABLED %>">
+					<div class="trackback-enabled-wrapper">
+						<h3><liferay-ui:message key="trackbacks" /></h3>
 
-							<c:if test="<%= (entry != null) && Validator.isNotNull(entry.getTrackbacks()) %>">
-								<aui:fieldset label="trackbacks-already-sent">
+						<aui:input helpMessage="to-allow-trackbacks,-please-also-ensure-the-entry's-guest-view-permission-is-enabled" name="allowTrackbacks" value="<%= allowTrackbacks %>" />
 
-									<%
-									int i = 0;
+						<aui:input label="trackbacks-to-send" name="trackbacks" />
 
-									for (String trackback : StringUtil.split(entry.getTrackbacks())) {
-									%>
+						<c:if test="<%= (entry != null) && Validator.isNotNull(entry.getTrackbacks()) %>">
+							<aui:fieldset label="trackbacks-already-sent">
 
-										<aui:input label="" name='<%= "trackback" + (i++) %>' title="" type="resource" value="<%= trackback %>" />
+								<%
+								int i = 0;
 
-									<%
-									}
-									%>
+								for (String trackback : StringUtil.split(entry.getTrackbacks())) {
+								%>
 
-								</aui:fieldset>
-							</c:if>
-						</div>
-					</c:if>
-				</liferay-ui:section>
+									<aui:input label="" name='<%= "trackback" + (i++) %>' title="" type="resource" value="<%= trackback %>" />
+
+								<%
+								}
+								%>
+
+							</aui:fieldset>
+						</c:if>
+					</div>
+				</c:if>
 			</div>
-		</liferay-ui:tabs>
+		</div>
 
-		<aui:fieldset>
+		<aui:fieldset cssClass="col-md-8 col-md-offset-2 entry-footer">
 
 			<%
 			boolean pending = false;
@@ -340,7 +339,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 				<aui:button name="saveButton" primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-				<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+				<aui:button cssClass="btn-link" href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
 		</aui:fieldset>
 	</aui:form>

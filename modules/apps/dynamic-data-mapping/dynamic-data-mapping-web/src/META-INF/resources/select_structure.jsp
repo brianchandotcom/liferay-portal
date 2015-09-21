@@ -37,7 +37,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 	</c:if>
 
 	<liferay-ui:search-container
-		searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
+		searchContainer="<%= new StructureSearch(renderRequest, portletURL, WorkflowConstants.STATUS_APPROVED) %>"
 	>
 		<c:if test="<%= showToolbar %>">
 

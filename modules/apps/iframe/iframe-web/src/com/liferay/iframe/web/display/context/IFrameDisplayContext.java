@@ -19,7 +19,7 @@ import com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration;
 import com.liferay.iframe.web.constants.IFrameWebKeys;
 import com.liferay.iframe.web.util.IFrameUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,7 +44,7 @@ public class IFrameDisplayContext {
 
 	public IFrameDisplayContext(
 			IFrameConfiguration iFrameConfiguration, PortletRequest request)
-		throws SettingsException {
+		throws ConfigurationException {
 
 		_iFrameConfiguration = iFrameConfiguration;
 		_request = request;

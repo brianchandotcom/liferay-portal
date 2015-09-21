@@ -14,10 +14,16 @@
 
 package com.liferay.poshi.runner.selenium;
 
+import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.StringUtil;
+
 import io.appium.java_client.android.AndroidDriver;
+
+import java.io.IOException;
 
 import java.net.URL;
 
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 /**
@@ -30,6 +36,126 @@ public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 		super(
 			projectDirName, browserURL,
 			new AndroidDriver(_url, _desiredCapabilities));
+	}
+
+	@Override
+	public void type(String locator, String value) {
+		WebElement webElement = getWebElement(locator);
+
+		if (!webElement.isEnabled()) {
+			return;
+		}
+
+		webElement.clear();
+
+		Runtime runtime = Runtime.getRuntime();
+
+		StringBuilder sb = new StringBuilder(4);
+
+		sb.append(PropsValues.MOBILE_ANDROID_HOME);
+		sb.append("/platform-tools/");
+		sb.append("adb -s emulator-5554 shell input text ");
+
+		value = StringUtil.replace(value, " ", "%s");
+
+		sb.append(value);
+
+		try {
+			runtime.exec(sb.toString());
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void swipeWebElementIntoView(String locator) {
+		int elementPositionCenterY = WebDriverHelper.getElementPositionCenterY(
+			this, locator);
+
+		for (int i = 0; i < 25; i++) {
+			int viewportPositionBottom =
+				WebDriverHelper.getViewportPositionBottom(this);
+			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+
+			StringBuilder sb = new StringBuilder(4);
+
+			sb.append(PropsValues.MOBILE_ANDROID_HOME);
+			sb.append("/platform-tools/");
+
+			if (elementPositionCenterY >= viewportPositionBottom) {
+				try {
+					Runtime runtime = Runtime.getRuntime();
+
+					sb.append("adb -s emulator-5554 shell ");
+					sb.append("/data/local/swipe_up.sh");
+
+					runtime.exec(sb.toString());
+				}
+				catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+			else if (elementPositionCenterY <= viewportPositionTop ) {
+				try {
+					Runtime runtime = Runtime.getRuntime();
+
+					sb.append("adb -s emulator-5554 shell ");
+					sb.append("/data/local/swipe_down.sh");
+
+					runtime.exec(sb.toString());
+				}
+				catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+			else {
+				break;
+			}
+
+			try {
+				LiferaySeleniumHelper.pause("1000");
+			}
+			catch (Exception e) {
+			}
+		}
+	}
+
+	protected void tap(String locator) {
+		try {
+			Runtime runtime = Runtime.getRuntime();
+
+			StringBuilder sb = new StringBuilder(6);
+
+			sb.append(PropsValues.MOBILE_ANDROID_HOME);
+			sb.append("/platform-tools/");
+			sb.append("adb -s emulator-5554 shell /data/local/tap.sh ");
+
+			int elementPositionCenterX =
+				WebDriverHelper.getElementPositionCenterX(this, locator);
+
+			int screenPositionX = elementPositionCenterX * 3 / 2;
+
+			sb.append(screenPositionX);
+
+			sb.append(" ");
+
+			int elementPositionCenterY =
+				WebDriverHelper.getElementPositionCenterY(this, locator);
+			int navigationBarHeight = 116;
+			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+
+			int screenPositionY =
+				(((elementPositionCenterY - viewportPositionTop) * 3) / 2) +
+					navigationBarHeight;
+
+			sb.append(screenPositionY);
+
+			runtime.exec(sb.toString());
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 
 	private static final DesiredCapabilities _desiredCapabilities;

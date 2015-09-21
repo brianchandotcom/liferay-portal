@@ -146,7 +146,7 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*
 	* @return the asset type instances of the portlet
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetRendererFactory> getAssetRendererFactoryInstances();
+	public java.util.List<com.liferay.portlet.asset.model.AssetRendererFactory<?>> getAssetRendererFactoryInstances();
 
 	/**
 	* Returns the names of the classes that represent atom collection adapters
@@ -1260,6 +1260,8 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public boolean isAjaxable();
 
+	public boolean isFullPageDisplayable();
+
 	/**
 	* Returns <code>true</code> to include the portlet and make it available to
 	* be made active.
@@ -1711,6 +1713,8 @@ public interface Portlet extends PortletModel, PersistedModel {
 	URL routes of the portlet
 	*/
 	public void setFriendlyURLRoutes(java.lang.String friendlyURLRoutes);
+
+	public void setFullPageDisplayable(boolean fullPageDisplayable);
 
 	/**
 	* Sets a list of CSS files that will be referenced from the page's header

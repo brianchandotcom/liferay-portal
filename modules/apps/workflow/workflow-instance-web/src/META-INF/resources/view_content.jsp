@@ -17,25 +17,28 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 long assetEntryId = ParamUtil.getLong(request, "assetEntryId");
 String type = ParamUtil.getString(request, "type");
 
-AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
+AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByType(type);
 
 AssetEntry assetEntry = assetRendererFactory.getAssetEntry(assetEntryId);
 
 long assetEntryVersionId = ParamUtil.getLong(request, "assetEntryVersionId");
 
-AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntryVersionId, AssetRendererFactory.TYPE_LATEST);
+AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(assetEntryVersionId, AssetRendererFactory.TYPE_LATEST);
 
 request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(assetRenderer.getTitle(locale));
 %>
 
-<c:if test="<%= (assetEntry != null) %>">
-	<liferay-ui:header
-		localizeTitle="<%= false %>"
-		title="<%= assetRenderer.getTitle(locale) %>"
-	/>
+<c:if test="<%= assetEntry != null %>">
 
 	<liferay-ui:asset-display
 		assetEntry="<%= assetEntry %>"

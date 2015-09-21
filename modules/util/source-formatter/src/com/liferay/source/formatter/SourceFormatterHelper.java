@@ -40,6 +40,7 @@ import java.util.Properties;
 /**
  * @author Igor Spasic
  * @author Brian Wing Shun Chan
+ * @author Hugo Huijser
  */
 public class SourceFormatterHelper {
 
@@ -57,6 +58,46 @@ public class SourceFormatterHelper {
 		if (!_propertiesContent.equals(newPropertiesContent)) {
 			FileUtil.write(_propertiesFile, newPropertiesContent);
 		}
+	}
+
+	public List<String> getFileNames(
+			String baseDir, List<String> recentChangesFileNames,
+			String[] excludes, String[] includes)
+		throws Exception {
+
+		List<PathMatcher> excludeDirPathMatchers = new ArrayList<>();
+		List<PathMatcher> excludeFilePathMatchers = new ArrayList<>();
+		List<PathMatcher> includeFilePathMatchers = new ArrayList<>();
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		for (String exclude : excludes) {
+			if (exclude.endsWith("/**")) {
+				exclude = exclude.substring(0, exclude.length() - 3);
+
+				excludeDirPathMatchers.add(
+					fileSystem.getPathMatcher("glob:" + exclude));
+			}
+			else {
+				excludeFilePathMatchers.add(
+					fileSystem.getPathMatcher("glob:" + exclude));
+			}
+		}
+
+		for (String include : includes) {
+			includeFilePathMatchers.add(
+				fileSystem.getPathMatcher("glob:" + include));
+		}
+
+		if (recentChangesFileNames == null) {
+			return scanForFiles(
+				baseDir, excludeDirPathMatchers, excludeFilePathMatchers,
+				includeFilePathMatchers);
+		}
+
+		return getFileNames(
+			baseDir, recentChangesFileNames, excludeDirPathMatchers,
+			excludeFilePathMatchers, includeFilePathMatchers);
 	}
 
 	public void init() throws IOException {
@@ -98,35 +139,74 @@ public class SourceFormatterHelper {
 		System.out.println(message);
 	}
 
-	public List<String> scanForFiles(
-			String baseDir, String[] excludes, String[] includes)
+	protected List<String> getFileNames(
+			String baseDir, List<String> recentChangesFileNames,
+			List<PathMatcher> excludeDirPathMatchers,
+			List<PathMatcher> excludeFilePathMatchers,
+			List<PathMatcher> includeFilePathMatchers)
+		throws Exception {
+
+		List<String> fileNames = new ArrayList<>();
+
+		recentChangesFileNamesLoop:
+		for (String fileName : recentChangesFileNames) {
+			File file = new File(fileName);
+
+			Path filePath = file.toPath();
+
+			for (PathMatcher pathMatcher : excludeFilePathMatchers) {
+				if (pathMatcher.matches(filePath)) {
+					continue recentChangesFileNamesLoop;
+				}
+			}
+
+			File dir = file.getParentFile();
+
+			while (true) {
+				Path dirPath = dir.toPath();
+
+				for (PathMatcher pathMatcher : excludeDirPathMatchers) {
+					if (pathMatcher.matches(dirPath)) {
+						continue recentChangesFileNamesLoop;
+					}
+				}
+
+				if (Files.exists(dirPath.resolve("source_formatter.ignore"))) {
+					continue recentChangesFileNamesLoop;
+				}
+
+				dir = dir.getParentFile();
+
+				if (dir == null) {
+					break;
+				}
+			}
+
+			for (PathMatcher pathMatcher : includeFilePathMatchers) {
+				if (pathMatcher.matches(filePath)) {
+					fileName = StringUtil.replace(
+						baseDir + fileName, StringPool.SLASH,
+						StringPool.BACK_SLASH);
+
+					fileNames.add(fileName);
+
+					updateProperties(fileName);
+
+					continue recentChangesFileNamesLoop;
+				}
+			}
+		}
+
+		return fileNames;
+	}
+
+	protected List<String> scanForFiles(
+			String baseDir, final List<PathMatcher> excludeDirPathMatchers,
+			final List<PathMatcher> excludeFilePathMatchers,
+			final List<PathMatcher> includeFilePathMatchers)
 		throws Exception {
 
 		final List<String> fileNames = new ArrayList<>();
-
-		final List<PathMatcher> excludeDirPathMatchers = new ArrayList<>();
-		final List<PathMatcher> excludeFilePathMatchers = new ArrayList<>();
-		final List<PathMatcher> includeFilePathMatchers = new ArrayList<>();
-
-		FileSystem fileSystem = FileSystems.getDefault();
-
-		for (String exclude : excludes) {
-			if (exclude.endsWith("/**")) {
-				exclude = exclude.substring(0, exclude.length() - 3);
-
-				excludeDirPathMatchers.add(
-					fileSystem.getPathMatcher("glob:" + exclude));
-			}
-			else {
-				excludeFilePathMatchers.add(
-					fileSystem.getPathMatcher("glob:" + exclude));
-			}
-		}
-
-		for (String include : includes) {
-			includeFilePathMatchers.add(
-				fileSystem.getPathMatcher("glob:" + include));
-		}
 
 		Files.walkFileTree(
 			Paths.get(baseDir),
@@ -170,23 +250,7 @@ public class SourceFormatterHelper {
 
 						fileNames.add(fileName);
 
-						if (!_useProperties) {
-							return FileVisitResult.CONTINUE;
-						}
-
-						File file = new File(fileName);
-
-						String encodedFileName = StringUtil.replace(
-							fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-						long timestamp = GetterUtil.getLong(
-							_properties.getProperty(encodedFileName));
-
-						if (timestamp < file.lastModified()) {
-							_properties.setProperty(
-								encodedFileName,
-								String.valueOf(file.lastModified()));
-						}
+						updateProperties(fileName);
 
 						return FileVisitResult.CONTINUE;
 					}
@@ -197,6 +261,25 @@ public class SourceFormatterHelper {
 			});
 
 		return fileNames;
+	}
+
+	protected void updateProperties(String fileName) {
+		if (!_useProperties) {
+			return;
+		}
+
+		File file = new File(fileName);
+
+		String encodedFileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		long timestamp = GetterUtil.getLong(
+			_properties.getProperty(encodedFileName));
+
+		if (timestamp < file.lastModified()) {
+			_properties.setProperty(
+				encodedFileName, String.valueOf(file.lastModified()));
+		}
 	}
 
 	private final Properties _properties = new Properties();

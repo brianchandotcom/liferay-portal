@@ -15,17 +15,17 @@
 </tr>
 <tr>
 	<td>ADD_ICON</td>
-	<td>//a/i[@class='icon-plus']</td>
+	<td>//a[contains(@class,'control-menu-icon')]/i</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW</td>
-	<td>//a/i[@class='icon-desktop']</td>
+	<td>//a/i[contains(@class,'icon-desktop')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a/i[@class='icon-cog']</td>
+	<td>//a[contains(@href,'layout_admin')]/i[contains(@class,'icon-cog')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>ADMIN</td>
-	<td>//li[@id='_145_adminLinks']/a</td>
+	<td>//a[contains(@href,'sites_administration_sites')]</td>
 	<td>Admin Drop Down Button</td>
 </tr>
 <tr>
@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>MY_SITES</td>
-	<td>//li[@id='_145_mySites']/a</td>
+	<td>//a[contains(@href,'sites_administration_my_sites')]</td>
 	<td></td>
 </tr>
 <tr>

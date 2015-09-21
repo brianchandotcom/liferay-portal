@@ -116,7 +116,7 @@ String iconMenuId = null;
 %>
 
 <liferay-util:buffer var="iconMenu">
-	<liferay-ui:icon-menu cssClass="list-unstyled" direction='<%= dlVisualizationHelper.isShowMinimalActionsButton() ? "down" : "left" %>' icon="<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" message='<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>">
+	<liferay-ui:icon-menu direction='<%= (row != null) ? "left-side" : "down" %>' icon="<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : null %>" markupView='<%= row != null ? "lexicon" : null %>' message='<%= dlVisualizationHelper.isShowMinimalActionsButton() ? StringPool.BLANK : "actions" %>' scroll="<%= row != null %>" showExpanded="<%= view %>" showWhenSingleIcon="<%= showWhenSingleIcon %>">
 
 		<%
 		boolean hasViewPermission = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.VIEW);
@@ -325,7 +325,7 @@ String iconMenuId = null;
 		<c:choose>
 			<c:when test="<%= portletName.equals(DLPortletKeys.DOCUMENT_LIBRARY_DISPLAY) || portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY) %>">
 				<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && ((folder == null) || !folder.isMountPoint()) %>">
-					<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) %>">
+					<c:if test="<%= (folder == null) || folder.isSupportsMultipleUpload() %>">
 						<portlet:renderURL var="editFileEntryURL">
 							<portlet:param name="mvcPath" value="/document_library/upload_multiple_file_entries.jsp" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -459,7 +459,7 @@ String iconMenuId = null;
 
 	</c:when>
 	<c:otherwise>
-		<span class="entry-action overlay">
+		<span class="<%= (row != null) ? StringPool.BLANK : "entry-action overlay" %>">
 
 			<%= iconMenu %>
 

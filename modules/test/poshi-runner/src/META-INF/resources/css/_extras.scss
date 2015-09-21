@@ -1,122 +1,35 @@
 /* ---------- Extras ---------- */
 
-li {
-	transition: background 0.2s ease-in-out;
-}
+@keyframes ping {
+	0% {
+		border-color: transparent;
+		transform: scale(0.2) translateY(-50%);
+	}
 
-.command-logger .pass.macro > .line-container {
-	border-radius: 5px;
-}
+	20% {
+		border-color: transparent
+	}
 
-.xml-log {
-	transition: width 0.6s ease-out;
-
-	.current-scope:after {
-		box-shadow: 4px 31px 0 0 rgba(29, 60, 75, 0.3);
+	100% {
+		transform: scale(1) translateY(-50%);
 	}
 }
 
-.btn {
-	border-radius: 4px;
-	opacity: 0.7;
-
-	&:hover {
-		opacity: 1;
+@keyframes loop {
+	0% {
+		transform: rotate(0) translateY(-50%);
 	}
 
-	&.btn-sidebar {
-		&:before {
-			transform: rotate(180deg);
-			transition: all 0.5s ease-in-out;
-		}
-
-		&.toggle:before {
-			transform: rotate(0);
-		}
+	50% {
+		transform: rotate(180deg) translateY(-50%);
 	}
 
-	&.btn-command-log:hover, &.btn-sidebar:hover {
-		opacity: 1;
+	100% {
+		transform: rotate(360deg) translateY(-50%);
 	}
 }
 
-.fail {
-	.btn {
-		opacity: 1;
-	}
-
-	&:after {
-		box-shadow: 5px 31px 0 0 rgba(29, 60, 75, 0.2);
-
-		&, .current-scope:after {
-			transition: all 0.2s ease;
-		}
-	}
-}
-
-.function.pass > .line-container {
-	border-radius: 6px;
-}
-
-.console, .screenshots {
-	border-radius: 13px;
-	box-shadow: 14px 22px 0 0 rgba(27, 60, 75, 0.4);
-	opacity: 0.9;
-	transform: translateX(-50%);
-	transition: max-height 0.3s ease 0.2s, padding 0.1s ease 0.2s, width 0.2s ease;
-
-	&:hover {
-		opacity: 1;
-	}
-}
-
-.screenshots {
-	transform: translate(-50%, -100%);
-
-	img {
-		border-radius: 13px;
-		cursor: pointer;
-	}
-}
-
-.sidebar .current-scope:after {
-	box-shadow: 3px 31px 0 0 rgba(29, 60, 75, 0.3);
-}
-
-.fullscreen-image {
-	&:before {
-		opacity: 0.9;
-		transition: opacity 0.5s ease;
-	}
-
-	img {
-		cursor: zoom-out;
-		transform: translate(-50%, -50%);
-		transition: height 0.5s ease;
-	}
-
-	&.toggle {
-		transition: all 0s ease 0.5s;
-
-		&:before {
-			opacity: 0;
-		}
-
-		img {
-			transition: all 0s ease 0.5s;
-		}
-	}
-}
-
-.line-container {
-	display: block;
-	transition: background 0.2s ease;
-}
-
-.expand-toggle {
-	transition: all 0.2s ease;
-
-	&.toggle {
-		transform: rotate(90deg);
-	}
+.running *:not(.transitioning) .current-scope.pending > .line-container:nth-child(2):after {
+	animation: loop 1s cubic-bezier(0.41, 0.35, 0.63, 0.88) 0.1s infinite, ping 0.25s cubic-bezier(1, 0.9, 0.47, 1.92);
+	border-left-color: transparent;
 }

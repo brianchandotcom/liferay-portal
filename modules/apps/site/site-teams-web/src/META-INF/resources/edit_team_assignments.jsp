@@ -67,28 +67,29 @@ request.setAttribute("edit_team_assignments.jsp-group", group);
 request.setAttribute("edit_team_assignments.jsp-organization", organization);
 
 request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle(HtmlUtil.escape(team.getName()));
 %>
 
-<liferay-ui:header
-	backURL="<%= redirect %>"
-	localizeTitle="<%= false %>"
-	title="<%= team.getName() %>"
-/>
+<div class="container-fluid-1280">
+	<liferay-ui:tabs
+		names="users,user-groups"
+		param="tabs1"
+		portletURL="<%= portletURL %>"
+	/>
 
-<liferay-ui:tabs
-	names="users,user-groups"
-	param="tabs1"
-	portletURL="<%= portletURL %>"
-/>
-
-<c:choose>
-	<c:when test='<%= tabs1.equals("users") %>'>
-		<liferay-util:include page="/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
-	</c:when>
-	<c:when test='<%= tabs1.equals("user-groups") %>'>
-		<liferay-util:include page="/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
-	</c:when>
-</c:choose>
+	<c:choose>
+		<c:when test='<%= tabs1.equals("users") %>'>
+			<liferay-util:include page="/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= tabs1.equals("user-groups") %>'>
+			<liferay-util:include page="/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
+		</c:when>
+	</c:choose>
+</div>
 
 <%
 if (group.isOrganization()) {

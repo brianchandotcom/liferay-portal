@@ -1,0 +1,87 @@
+import com.liferay.gradle.util.copy.RenameDependencyClosure
+
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.19"
+	}
+}
+
+configurations {
+	portalTools {
+		resolutionStrategy {
+			eachDependency {
+				DependencyResolveDetails dependencyResolveDetails ->
+
+				if ((dependencyResolveDetails.requested.version == "default") && project.hasProperty(dependencyResolveDetails.requested.name + ".version")) {
+					dependencyResolveDetails.useVersion project.properties[dependencyResolveDetails.requested.name + ".version"]
+				}
+			}
+		}
+	}
+}
+
+dependencies {
+	portalTools group: "com.liferay", name: "com.liferay.css.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.jasper.jspc", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.javadoc.formatter", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.lang.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.portal.tools.service.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.portal.tools.upgrade.table.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.portal.tools.wsdd.builder", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
+	portalTools group: "com.liferay", name: "com.liferay.whip", version: "default"
+	portalTools group: "org.codehaus.sonar-plugins", name: "sonar-ant-task", version: "2.1"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+task setUpPortalTools(type: Copy)
+task wrapper(type: Wrapper)
+
+setUpPortalTools {
+	from configurations.portalTools
+	into rootProject.file("../tools/sdk/tmp/portal-tools")
+	rename new RenameDependencyClosure(project, "portalTools")
+}
+
+wrapper {
+	File wrapperDir = rootDir.parentFile
+
+	distributionUrl = "../../tools/gradle-${gradle.gradleVersion}.LIFERAY-PATCHED-1-bin.zip"
+
+	doLast {
+		ant.replace(file: new File(wrapperDir, "gradlew")) {
+			replacetoken "# Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules"
+
+			replacevalue '''\
+# Split up the JVM_OPTS And GRADLE_OPTS values into an array, following the shell quoting and substitution rules
+DEFAULT_JVM_OPTS="$DEFAULT_JVM_OPTS -Dgradle.user.home=$APP_HOME/.gradle"'''
+		}
+
+		ant.replace(file: new File(wrapperDir, "gradlew.bat")) {
+			replacetoken "@rem Setup the command line"
+
+			replacevalue """\
+@rem Setup the command line
+set DEFAULT_JVM_OPTS=%DEFAULT_JVM_OPTS% -Dgradle.user.home=%APP_HOME%\\.gradle"""
+		}
+	}
+
+	jarFile = new File(wrapperDir, "gradle/wrapper/gradle-wrapper.jar")
+	scriptFile = new File(wrapperDir, "gradlew")
+}

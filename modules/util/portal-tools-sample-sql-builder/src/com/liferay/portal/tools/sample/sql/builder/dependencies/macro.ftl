@@ -211,13 +211,21 @@
 	/>
 </#macro>
 
+<#macro insertResourcePermission
+	_resourcePermissionModel
+>
+	insert into ResourcePermission values (${_resourcePermissionModel.mvccVersion}, ${_resourcePermissionModel.resourcePermissionId}, ${_resourcePermissionModel.companyId}, '${_resourcePermissionModel.name}', ${_resourcePermissionModel.scope}, '${_resourcePermissionModel.primKey}', ${_resourcePermissionModel.primKeyId}, ${_resourcePermissionModel.roleId}, ${_resourcePermissionModel.ownerId}, ${_resourcePermissionModel.actionIds}, ${_resourcePermissionModel.viewActionId?string("true", "false")});
+</#macro>
+
 <#macro insertResourcePermissions
 	_entry
 >
 	<#local resourcePermissionModels = dataFactory.newResourcePermissionModels(_entry)>
 
 	<#list resourcePermissionModels as resourcePermissionModel>
-		insert into ResourcePermission values (${resourcePermissionModel.mvccVersion}, ${resourcePermissionModel.resourcePermissionId}, ${resourcePermissionModel.companyId}, '${resourcePermissionModel.name}', ${resourcePermissionModel.scope}, '${resourcePermissionModel.primKey}', ${resourcePermissionModel.roleId}, ${resourcePermissionModel.ownerId}, ${resourcePermissionModel.actionIds});
+		<@insertResourcePermission
+			_resourcePermissionModel = resourcePermissionModel
+		/>
 	</#list>
 </#macro>
 

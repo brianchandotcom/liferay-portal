@@ -44,6 +44,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -190,8 +191,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			TestPropsValues.getUserId(), repository.getRepositoryId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(
-				TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
 	}
 
@@ -208,7 +208,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			serviceContext);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			stagingGroup.getGroupId(), DLFileEntryType.class.getName());
+			stagingGroup.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		portletDataContext.isPathProcessed(
 			ExportImportPathUtil.getModelPath(ddmStructure));
@@ -226,8 +226,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
 			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(
-				TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
 
 		DLAppLocalServiceUtil.addFileShortcut(

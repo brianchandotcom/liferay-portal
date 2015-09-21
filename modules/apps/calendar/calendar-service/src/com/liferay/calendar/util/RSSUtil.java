@@ -15,13 +15,12 @@
 package com.liferay.calendar.util;
 
 import com.liferay.calendar.model.CalendarBooking;
-import com.liferay.calendar.service.configuration.CalendarServiceConfigurationKeys;
+import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.ContentUtil;
-import com.liferay.util.portlet.PortletProps;
 
 import java.text.Format;
 
@@ -46,8 +45,7 @@ public class RSSUtil extends com.liferay.util.RSSUtil {
 		}
 
 		String content = ContentUtil.get(
-			PortletProps.get(
-				CalendarServiceConfigurationKeys.CALENDAR_RSS_TEMPLATE));
+			CalendarServiceConfigurationValues.CALENDAR_RSS_TEMPLATE);
 
 		Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(
 			themeDisplay.getLocale(),

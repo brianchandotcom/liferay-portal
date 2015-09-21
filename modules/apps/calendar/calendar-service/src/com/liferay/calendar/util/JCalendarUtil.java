@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 /**
@@ -72,6 +71,11 @@ public class JCalendarUtil {
 		return shift.intValue();
 	}
 
+	public static Calendar getJCalendar(Calendar jCalendar, TimeZone timeZone) {
+		return CalendarFactoryUtil.getCalendar(
+			jCalendar.getTimeInMillis(), timeZone);
+	}
+
 	public static Calendar getJCalendar(
 		int year, int month, int day, int hour, int minutes, int seconds,
 		int milliseconds, TimeZone timeZone) {
@@ -102,15 +106,7 @@ public class JCalendarUtil {
 	}
 
 	public static int getTimeZoneOffset(TimeZone timeZone) {
-		int offset = timeZone.getRawOffset();
-
-		boolean inDaylightTime = timeZone.inDaylightTime(new Date());
-
-		if (inDaylightTime) {
-			offset += timeZone.getDSTSavings();
-		}
-
-		return offset;
+		return timeZone.getOffset(System.currentTimeMillis());
 	}
 
 	public static int getWeekdayPosition(Calendar jCalendar) {
@@ -127,6 +123,18 @@ public class JCalendarUtil {
 		}
 
 		return weekOfMonth;
+	}
+
+	public static Calendar mergeJCalendar(
+		Calendar dateJCalendar, Calendar timeJCalendar, TimeZone timeZone) {
+
+		return CalendarFactoryUtil.getCalendar(
+			dateJCalendar.get(Calendar.YEAR), dateJCalendar.get(Calendar.MONTH),
+			dateJCalendar.get(Calendar.DAY_OF_MONTH),
+			timeJCalendar.get(Calendar.HOUR_OF_DAY),
+			timeJCalendar.get(Calendar.MINUTE),
+			timeJCalendar.get(Calendar.SECOND),
+			timeJCalendar.get(Calendar.MILLISECOND), timeZone);
 	}
 
 	public static Calendar toLastHourJCalendar(Calendar jCalendar) {

@@ -14,17 +14,16 @@
 
 package com.liferay.dynamic.data.mapping.type.checkbox;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.BaseDDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.registry.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import java.util.Locale;
 import java.util.Map;
@@ -37,9 +36,8 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Renato Rego
  */
 @Component(
-	immediate = true,
-	property = {"templatePath=/META-INF/resources/checkbox.soy"},
-	service = {CheckboxDDMFormFieldRenderer.class, DDMFormFieldRenderer.class}
+	immediate = true, property = "ddm.form.field.type.name=checkbox",
+	service = DDMFormFieldRenderer.class
 )
 public class CheckboxDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
@@ -60,9 +58,8 @@ public class CheckboxDDMFormFieldRenderer extends BaseDDMFormFieldRenderer {
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		String templatePath = MapUtil.getString(properties, "templatePath");
-
-		_templateResource = getTemplateResource(templatePath);
+		_templateResource = getTemplateResource(
+			"/META-INF/resources/checkbox.soy");
 	}
 
 	@Deactivate

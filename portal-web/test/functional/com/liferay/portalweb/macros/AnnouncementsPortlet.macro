@@ -6,19 +6,19 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="PGAnnouncementsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Select" locator1="PGAnnouncementsConfiguration#SETUP_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="5" />
-		<execute function="AssertClick" locator1="PGAnnouncementsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGAnnouncementsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+		<execute function="Select" locator1="Configuration#MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="5" />
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 		<execute function="SelectFrameTop" />
 	</command>
 
 	<command name="configurePaginationManageEntriesPG">
-		<execute function="Select#selectAndWait" locator1="PGAnnouncementsManageentries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
-		<execute function="Click" locator1="PGAnnouncementsManageentries#ITEMS_PER_PAGE_BUTTON" />
+		<execute function="Select#selectAndWait" locator1="AnnouncementsManageEntries#DISTRIBUTION_SCOPE_SELECT" value1="${distributionScope}" />
+		<execute function="Click" locator1="Button#ITEMS_PER_PAGE" />
 
 		<var name="key_itemsPerPage" value="${itemsPerPage}" />
 
-		<execute function="AssertClick" locator1="PGAnnouncementsManageentries#MENULIST_ITEMS_PER_PAGE" value1="${itemsPerPage}" />
+		<execute function="AssertClick" locator1="MenuItem#ITEMS_PER_PAGE" value1="${itemsPerPage}" />
 	</command>
 </definition>

@@ -79,6 +79,7 @@ import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Represents a portal layout, providing access to the layout's URLs, parent
@@ -332,12 +333,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 	@Override
 	public ColorScheme getColorScheme() throws PortalException {
 		if (isInheritLookAndFeel()) {
-			return getLayoutSet().getColorScheme();
+			LayoutSet layoutSet = getLayoutSet();
+
+			return layoutSet.getColorScheme();
 		}
 		else {
+			Theme theme = getTheme();
+
 			return ThemeLocalServiceUtil.getColorScheme(
-				getCompanyId(), getTheme().getThemeId(), getColorSchemeId(),
-				false);
+				getCompanyId(), theme.getThemeId(), getColorSchemeId(), false);
 		}
 	}
 
@@ -357,7 +361,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 	@Override
 	public String getCssText() throws PortalException {
 		if (isInheritLookAndFeel()) {
-			return getLayoutSet().getCss();
+			LayoutSet layoutSet = getLayoutSet();
+
+			return layoutSet.getCss();
 		}
 		else {
 			return getCss();
@@ -666,7 +672,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 	@Override
 	public Theme getTheme() throws PortalException {
 		if (isInheritLookAndFeel()) {
-			return getLayoutSet().getTheme();
+			LayoutSet layoutSet = getLayoutSet();
+
+			return layoutSet.getTheme();
 		}
 		else {
 			return ThemeLocalServiceUtil.getTheme(
@@ -733,19 +741,25 @@ public class LayoutImpl extends LayoutBaseImpl {
 	@Override
 	public ColorScheme getWapColorScheme() throws PortalException {
 		if (isInheritLookAndFeel()) {
-			return getLayoutSet().getWapColorScheme();
+			LayoutSet layoutSet = getLayoutSet();
+
+			return layoutSet.getWapColorScheme();
 		}
 		else {
+			Theme theme = getWapTheme();
+
 			return ThemeLocalServiceUtil.getColorScheme(
-				getCompanyId(), getWapTheme().getThemeId(),
-				getWapColorSchemeId(), true);
+				getCompanyId(), theme.getThemeId(), getWapColorSchemeId(),
+				true);
 		}
 	}
 
 	@Override
 	public Theme getWapTheme() throws PortalException {
 		if (isInheritWapLookAndFeel()) {
-			return getLayoutSet().getWapTheme();
+			LayoutSet layoutSet = getLayoutSet();
+
+			return layoutSet.getWapTheme();
 		}
 		else {
 			return ThemeLocalServiceUtil.getTheme(
@@ -1032,7 +1046,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypeControlPanel() {
-		if (getType().equals(LayoutConstants.TYPE_CONTROL_PANEL)) {
+		if (Validator.equals(getType(), LayoutConstants.TYPE_CONTROL_PANEL) ||
+			Validator.equals(
+				_getLayoutTypeControllerType(),
+				LayoutConstants.TYPE_CONTROL_PANEL)) {
+
 			return true;
 		}
 
@@ -1041,7 +1059,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypeEmbedded() {
-		if (getType().equals(LayoutConstants.TYPE_EMBEDDED)) {
+		if (Validator.equals(getType(), LayoutConstants.TYPE_EMBEDDED) ||
+			Validator.equals(
+				_getLayoutTypeControllerType(),
+				LayoutConstants.TYPE_EMBEDDED)) {
+
 			return true;
 		}
 
@@ -1050,7 +1072,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypeLinkToLayout() {
-		if (getType().equals(LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
+		if (Validator.equals(getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT) ||
+			Validator.equals(
+				_getLayoutTypeControllerType(),
+				LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
+
 			return true;
 		}
 
@@ -1059,7 +1085,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypePanel() {
-		if (getType().equals(LayoutConstants.TYPE_PANEL)) {
+		if (Validator.equals(getType(), LayoutConstants.TYPE_PANEL) ||
+			Validator.equals(
+				_getLayoutTypeControllerType(), LayoutConstants.TYPE_PANEL)) {
+
 			return true;
 		}
 
@@ -1068,7 +1097,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypePortlet() {
-		if (getType().equals(LayoutConstants.TYPE_PORTLET)) {
+		if (Validator.equals(getType(), LayoutConstants.TYPE_PORTLET) ||
+			Validator.equals(
+				_getLayoutTypeControllerType(), LayoutConstants.TYPE_PORTLET)) {
+
 			return true;
 		}
 
@@ -1077,7 +1109,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 	@Override
 	public boolean isTypeURL() {
-		if (getType().equals(LayoutConstants.TYPE_URL)) {
+		if (Validator.equals(getType(), LayoutConstants.TYPE_URL)) {
 			return true;
 		}
 
@@ -1176,6 +1208,15 @@ public class LayoutImpl extends LayoutBaseImpl {
 
 			_friendlyURLKeywords[i] = StringUtil.toLowerCase(keyword);
 		}
+	}
+
+	private String _getLayoutTypeControllerType() {
+		LayoutType layoutType = getLayoutType();
+
+		LayoutTypeController layoutTypeController =
+			layoutType.getLayoutTypeController();
+
+		return layoutTypeController.getType();
 	}
 
 	private LayoutTypePortlet _getLayoutTypePortletClone(
@@ -1282,8 +1323,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 		if (!CookieKeys.hasSessionId(request) &&
 			(url.startsWith(portalURL) || url.startsWith(StringPool.SLASH))) {
 
-			url = PortalUtil.getURLWithSessionId(
-				url, request.getSession().getId());
+			HttpSession session = request.getSession();
+
+			url = PortalUtil.getURLWithSessionId(url, session.getId());
 		}
 
 		if (!resetMaxState) {

@@ -60,6 +60,10 @@ public interface PortalService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getBuildNumber();
 
+	@JSONWebService
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String getVersion();
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

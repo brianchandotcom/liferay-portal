@@ -37,11 +37,6 @@ import org.osgi.service.component.annotations.Reference;
 public class WikiPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.SITE_ADMINISTRATION_CONTENT;
-	}
-
-	@Override
 	public String getPortletId() {
 		return WikiPortletKeys.WIKI_ADMIN;
 	}
@@ -50,7 +45,7 @@ public class WikiPanelApp extends BaseControlPanelEntryPanelApp {
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

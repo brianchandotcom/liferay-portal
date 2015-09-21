@@ -594,8 +594,8 @@ public class BookmarksEntryPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingBookmarksEntry.getUuid(),
 				ReflectionTestUtil.invoke(existingBookmarksEntry,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingBookmarksEntry.getGroupId(),
-			ReflectionTestUtil.invoke(existingBookmarksEntry,
+		Assert.assertEquals(Long.valueOf(existingBookmarksEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingBookmarksEntry,
 				"getOriginalGroupId", new Class<?>[0]));
 	}
 

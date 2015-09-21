@@ -469,13 +469,13 @@ public class RepositoryPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingRepository.getUuid(),
 				ReflectionTestUtil.invoke(existingRepository,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingRepository.getGroupId(),
-			ReflectionTestUtil.invoke(existingRepository, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingRepository.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingRepository,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingRepository.getGroupId(),
-			ReflectionTestUtil.invoke(existingRepository, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingRepository.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingRepository,
+				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingRepository.getName(),
 				ReflectionTestUtil.invoke(existingRepository,
 					"getOriginalName", new Class<?>[0])));

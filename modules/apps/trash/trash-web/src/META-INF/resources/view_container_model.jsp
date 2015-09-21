@@ -69,19 +69,18 @@ containerURL.setParameter("classPK", String.valueOf(classPK));
 containerURL.setParameter("containerModelClassNameId", String.valueOf(containerModelClassNameId));
 
 TrashUtil.addContainerModelBreadcrumbEntries(request, liferayPortletResponse, containerModelClassName, containerModelId, containerURL);
+
+portletDisplay.setShowBackIcon(containerModel != null);
+portletDisplay.setURLBack(backURL);
+
+renderResponse.setTitle(LanguageUtil.format(request, "select-x", containerModelName));
 %>
 
 <div class="alert alert-block">
 	<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(request, containerModelName), HtmlUtil.escape(trashRenderer.getTitle(locale))} %>" key="the-original-x-does-not-exist-anymore" translateArguments="<%= false %>" />
 </div>
 
-<aui:form method="post" name="selectContainerFm">
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		showBackURL="<%= containerModel != null %>"
-		title='<%= LanguageUtil.format(request, "select-x", containerModelName) %>'
-	/>
-
+<aui:form cssClass="container-fluid-1280" method="post" name="selectContainerFm">
 	<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" />
 
 	<c:if test="<%= !rootContainerModelMovable %>">
@@ -171,7 +170,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, liferayPortletResponse, co
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

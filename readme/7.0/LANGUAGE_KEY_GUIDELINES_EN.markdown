@@ -2,6 +2,9 @@
 
 All English language keys must conform to the following guidelines.
 
+To request review of your language key changes, send them in a pull request to
+Cody Hoag (GitHub handle: codyhoag).
+
 ## Text Styles
 
 Title, phrase, and sentence are the three types of text styles used in Liferay's

@@ -430,11 +430,16 @@ public class PoshiRunnerValidation {
 			multiplePrimaryAttributeNames = Arrays.asList(
 				"macro-desktop", "macro-mobile");
 
-			primaryAttributeNames = Arrays.asList("function", "macro");
+			primaryAttributeNames = Arrays.asList(
+				"function", "macro", "macro-desktop", "macro-mobile");
 		}
 		else if (filePath.endsWith(".testcase")) {
+			multiplePrimaryAttributeNames = Arrays.asList(
+				"macro-desktop", "macro-mobile");
+
 			primaryAttributeNames = Arrays.asList(
-				"function", "macro", "test-case");
+				"function", "macro", "macro-desktop", "macro-mobile",
+				"test-case");
 		}
 
 		String primaryAttributeName = getPrimaryAttributeName(

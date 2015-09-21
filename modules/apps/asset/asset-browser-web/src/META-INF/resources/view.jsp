@@ -22,6 +22,7 @@ long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selecte
 long refererAssetEntryId = ParamUtil.getLong(request, "refererAssetEntryId");
 String typeSelection = ParamUtil.getString(request, "typeSelection");
 long subtypeSelectionId = ParamUtil.getLong(request, "subtypeSelectionId");
+boolean showNonindexable = ParamUtil.getBoolean(request, "showNonindexable");
 
 Boolean listable = null;
 
@@ -73,7 +74,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<%
 			AssetBrowserSearchTerms searchTerms = (AssetBrowserSearchTerms)searchContainer.getSearchTerms();
 
-			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
+			AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
 			%>
 
 			<liferay-ui:search-container-results>
@@ -97,10 +98,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						Hits hits = null;
 
 						if (searchTerms.isAdvancedSearch()) {
-							hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[] {searchTerms.getGroupId()}, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), null, null, WorkflowConstants.STATUS_APPROVED, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
+							hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), new long[] {searchTerms.getGroupId()}, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), null, null, showNonindexable, WorkflowConstants.STATUS_APPROVED, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd());
 						}
 						else {
-							hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), selectedGroupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+							hits = AssetEntryLocalServiceUtil.search(themeDisplay.getCompanyId(), selectedGroupIds, themeDisplay.getUserId(), assetRendererFactory.getClassName(), subtypeSelectionId, searchTerms.getKeywords(), showNonindexable, WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
 						}
 
 						List<AssetEntry> assetEntries = AssetUtil.getAssetEntries(hits);

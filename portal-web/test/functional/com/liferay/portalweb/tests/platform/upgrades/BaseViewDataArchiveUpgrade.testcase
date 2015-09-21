@@ -51,7 +51,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGAnnouncements#NAVIGATION_MANAGE_ENTRIES" value1="Manage Entries" />
+		<execute function="AssertClick" locator1="Announcements#NAVIGATION_MANAGE_ENTRIES" value1="Manage Entries" />
 
 		<execute macro="AnnouncementsEntry#viewViaManageEntriesPG">
 			<var name="announcementType" value="${announcementType}" />
@@ -116,12 +116,12 @@
 			<var name="userScreenName" value="usercf" />
 		</execute>
 
-		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
+		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#CUSTOM_FIELDS_TAB" value1="Custom Fields" />
 
 		<var name="key_customFieldName" value="${customFieldName}" />
 
-		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
-		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="False" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
+		<execute function="AssertSelectedLabel" locator1="UsersAndOrganizationsEditUser#CUSTOM_FIELDS_SELECT" value1="False" />
 	</command>
 
 	<command name="ViewDDLRecord" priority="4">

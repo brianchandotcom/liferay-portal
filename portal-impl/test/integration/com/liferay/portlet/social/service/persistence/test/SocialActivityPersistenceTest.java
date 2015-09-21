@@ -500,30 +500,33 @@ public class SocialActivityPersistenceTest {
 
 		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
 
-		Assert.assertEquals(existingSocialActivity.getMirrorActivityId(),
-			ReflectionTestUtil.invoke(existingSocialActivity,
+		Assert.assertEquals(Long.valueOf(
+				existingSocialActivity.getMirrorActivityId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
 				"getOriginalMirrorActivityId", new Class<?>[0]));
 
-		Assert.assertEquals(existingSocialActivity.getGroupId(),
-			ReflectionTestUtil.invoke(existingSocialActivity,
+		Assert.assertEquals(Long.valueOf(existingSocialActivity.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingSocialActivity.getUserId(),
-			ReflectionTestUtil.invoke(existingSocialActivity,
+		Assert.assertEquals(Long.valueOf(existingSocialActivity.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
 				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(existingSocialActivity.getCreateDate(),
-			ReflectionTestUtil.invoke(existingSocialActivity,
+		Assert.assertEquals(Long.valueOf(existingSocialActivity.getCreateDate()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
 				"getOriginalCreateDate", new Class<?>[0]));
-		Assert.assertEquals(existingSocialActivity.getClassNameId(),
-			ReflectionTestUtil.invoke(existingSocialActivity,
+		Assert.assertEquals(Long.valueOf(
+				existingSocialActivity.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingSocialActivity.getClassPK(),
-			ReflectionTestUtil.invoke(existingSocialActivity,
+		Assert.assertEquals(Long.valueOf(existingSocialActivity.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
 				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(existingSocialActivity.getType(),
-			ReflectionTestUtil.invoke(existingSocialActivity,
+		Assert.assertEquals(Integer.valueOf(existingSocialActivity.getType()),
+			ReflectionTestUtil.<Integer>invoke(existingSocialActivity,
 				"getOriginalType", new Class<?>[0]));
-		Assert.assertEquals(existingSocialActivity.getReceiverUserId(),
-			ReflectionTestUtil.invoke(existingSocialActivity,
+		Assert.assertEquals(Long.valueOf(
+				existingSocialActivity.getReceiverUserId()),
+			ReflectionTestUtil.<Long>invoke(existingSocialActivity,
 				"getOriginalReceiverUserId", new Class<?>[0]));
 	}
 

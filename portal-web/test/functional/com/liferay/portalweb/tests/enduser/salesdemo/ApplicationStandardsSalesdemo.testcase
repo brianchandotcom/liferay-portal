@@ -35,6 +35,6 @@
 
 		<take-screenshot />
 
-		<execute function="SikuliAssertElementPresent" locator1="PGWebProxy#SCREENSHOTS_GOOGLE_IMAGES_PNG" />
+		<execute function="SikuliAssertElementPresent" locator1="WebProxy#SCREENSHOTS_GOOGLE_IMAGES_PNG" />
 	</command>
 </definition>

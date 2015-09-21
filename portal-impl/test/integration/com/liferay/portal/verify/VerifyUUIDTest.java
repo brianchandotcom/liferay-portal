@@ -56,6 +56,13 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
+				dbType = DB.TYPE_HYPERSONIC,
+				expectedLog =
+					"Unable to process runnable: user lacks privilege or " +
+						"object not found:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				dbType = DB.TYPE_MYSQL,
 				expectedLog =
 					"Unable to process runnable: Unknown column 'Unknown' " +
@@ -74,6 +81,13 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				expectedLog =
 					"Unable to process runnable: ERROR: column \"unknown\" " +
 						"does not exist",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_SYBASE,
+				expectedLog =
+					"Unable to process runnable: Invalid column name " +
+						"'Unknown'.",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -105,6 +119,13 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
+				dbType = DB.TYPE_HYPERSONIC,
+				expectedLog =
+					"Unable to process runnable: user lacks privilege or " +
+						"object not found:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				dbType = DB.TYPE_MYSQL,
 				expectedLog = "Unable to process runnable: Table ",
 				expectedType = ExpectedType.PREFIX
@@ -121,6 +142,12 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				expectedLog =
 					"Unable to process runnable: ERROR: relation " +
 						"\"unknown\" does not exist",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_SYBASE,
+				expectedLog =
+					"Unable to process runnable: Unknown not found.",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -164,6 +191,13 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(
+				dbType = DB.TYPE_HYPERSONIC,
+				expectedLog =
+					"Unable to process runnable: user lacks privilege or " +
+						"object not found:",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				dbType = DB.TYPE_MYSQL,
 				expectedLog = "Unable to process runnable: Table ",
 				expectedType = ExpectedType.PREFIX
@@ -180,6 +214,12 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				expectedLog =
 					"Unable to process runnable: ERROR: relation \"unknown\" " +
 						"does not exist",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				dbType = DB.TYPE_SYBASE,
+				expectedLog =
+					"Unable to process runnable: Unknown not found.",
 				expectedType = ExpectedType.PREFIX
 			)
 		},

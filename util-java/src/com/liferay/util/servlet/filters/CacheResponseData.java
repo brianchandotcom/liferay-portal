@@ -34,6 +34,15 @@ import java.util.Set;
  */
 public class CacheResponseData implements Serializable {
 
+	public CacheResponseData() {
+		_content = null;
+		_contentType = null;
+		_headers = null;
+		_length = 0;
+		_offset = 0;
+		_valid = false;
+	}
+
 	public CacheResponseData(
 			BufferCacheServletResponse bufferCacheServletResponse)
 		throws IOException {
@@ -45,6 +54,7 @@ public class CacheResponseData implements Serializable {
 		_headers = bufferCacheServletResponse.getHeaders();
 		_length = byteBuffer.remaining();
 		_offset = byteBuffer.arrayOffset() + byteBuffer.position();
+		_valid = true;
 	}
 
 	public Object getAttribute(String name) {
@@ -61,6 +71,10 @@ public class CacheResponseData implements Serializable {
 
 	public Map<String, Set<Header>> getHeaders() {
 		return _headers;
+	}
+
+	public boolean isValid() {
+		return _valid;
 	}
 
 	public void setAttribute(String name, Object value) {
@@ -94,5 +108,6 @@ public class CacheResponseData implements Serializable {
 	private final Map<String, Set<Header>> _headers;
 	private transient int _length;
 	private transient final int _offset;
+	private final boolean _valid;
 
 }

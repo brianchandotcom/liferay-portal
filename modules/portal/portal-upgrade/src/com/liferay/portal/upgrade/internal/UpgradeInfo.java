@@ -14,9 +14,8 @@
 
 package com.liferay.portal.upgrade.internal;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Miguel Pastor
@@ -25,55 +24,43 @@ import com.liferay.portal.kernel.util.StringPool;
 public class UpgradeInfo {
 
 	public UpgradeInfo(
-		String fromVersionString, String toVersionString,
-		UpgradeProcess upgradeProcess) {
+		String fromSchemaVersionString, String toSchemaVersionString,
+		UpgradeStep upgradeStep) {
 
-		_fromVersionString = fromVersionString;
-		_toVersionString = toVersionString;
-		_upgradeProcess = upgradeProcess;
+		_fromSchemaVersionString = fromSchemaVersionString;
+		_toSchemaVersionString = toSchemaVersionString;
+		_upgradeStep = upgradeStep;
 	}
 
-	public int getFromVersionInt() {
-		return toInt(_fromVersionString);
+	public String getFromSchemaVersionString() {
+		return _fromSchemaVersionString;
 	}
 
-	public String getFromVersionString() {
-		return _fromVersionString;
+	public String getToSchemaVersionString() {
+		return _toSchemaVersionString;
 	}
 
-	public int getToVersionInt() {
-		return toInt(_toVersionString);
-	}
-
-	public String getToVersionString() {
-		return _toVersionString;
-	}
-
-	public UpgradeProcess getUpgradeProcess() {
-		return _upgradeProcess;
+	public UpgradeStep getUpgradeStep() {
+		return _upgradeStep;
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(7);
 
-		sb.append("{fromVersionString=");
-		sb.append(_fromVersionString);
-		sb.append(", toVersionString=");
-		sb.append(_toVersionString);
-		sb.append(", upgradeProcess=");
-		sb.append(_upgradeProcess);
+		sb.append("{fromSchemaVersionString=");
+		sb.append(_fromSchemaVersionString);
+		sb.append(", toSchemaVersionString=");
+		sb.append(_toSchemaVersionString);
+		sb.append(", upgradeStep=");
+		sb.append(_upgradeStep);
 		sb.append("}");
 
 		return sb.toString();
 	}
 
-	protected int toInt(String s) {
-		return Integer.parseInt(s.replace(StringPool.PERIOD, StringPool.BLANK));
-	}
-
-	private final String _fromVersionString;
-	private final String _toVersionString;
-	private final UpgradeProcess _upgradeProcess;
+	private final String _fromSchemaVersionString;
+	private final String _toSchemaVersionString;
+	private final UpgradeStep _upgradeStep;
 
 }

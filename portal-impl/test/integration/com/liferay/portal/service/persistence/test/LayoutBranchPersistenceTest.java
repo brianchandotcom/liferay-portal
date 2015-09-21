@@ -430,12 +430,13 @@ public class LayoutBranchPersistenceTest {
 
 		LayoutBranch existingLayoutBranch = _persistence.findByPrimaryKey(newLayoutBranch.getPrimaryKey());
 
-		Assert.assertEquals(existingLayoutBranch.getLayoutSetBranchId(),
-			ReflectionTestUtil.invoke(existingLayoutBranch,
+		Assert.assertEquals(Long.valueOf(
+				existingLayoutBranch.getLayoutSetBranchId()),
+			ReflectionTestUtil.<Long>invoke(existingLayoutBranch,
 				"getOriginalLayoutSetBranchId", new Class<?>[0]));
-		Assert.assertEquals(existingLayoutBranch.getPlid(),
-			ReflectionTestUtil.invoke(existingLayoutBranch, "getOriginalPlid",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingLayoutBranch.getPlid()),
+			ReflectionTestUtil.<Long>invoke(existingLayoutBranch,
+				"getOriginalPlid", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingLayoutBranch.getName(),
 				ReflectionTestUtil.invoke(existingLayoutBranch,
 					"getOriginalName", new Class<?>[0])));

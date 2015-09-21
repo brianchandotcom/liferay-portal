@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import com.liferay.portal.kernel.util.ObjectValuePair;
+
 import java.util.Date;
 
 /**
@@ -32,10 +34,12 @@ public class TriggerFactoryUtil {
 		}
 
 		if (triggerType == TriggerType.SIMPLE) {
-			Number number = (Number)triggerContent;
+			ObjectValuePair<Integer, TimeUnit> objectValuePair =
+				(ObjectValuePair<Integer, TimeUnit>)triggerContent;
 
 			return new IntervalTrigger(
-				jobName, groupName, startDate, endDate, number.longValue());
+				jobName, groupName, startDate, endDate,
+				objectValuePair.getKey(), objectValuePair.getValue());
 		}
 
 		throw new IllegalArgumentException(

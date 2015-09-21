@@ -9,6 +9,9 @@ AUI.add(
 		var LayoutDeserializer = A.Component.create(
 			{
 				ATTRS: {
+					builder: {
+					},
+
 					definition: {
 						validator: Lang.isObject
 					},
@@ -76,6 +79,8 @@ AUI.add(
 						var definition = instance.get('definition');
 
 						var fieldDefinition = RendererUtil.getFieldByKey(definition, fieldName);
+
+						fieldDefinition.parent = instance.get('builder');
 
 						var fieldClass = FormBuilderUtil.getFieldClass(fieldDefinition.type);
 

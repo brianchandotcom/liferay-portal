@@ -1,0 +1,18 @@
+<definition>
+	<command name="search">
+		<execute function="Type" locator1="TextInput#SEARCH_2" value1="${webContentSearchTerm}" />
+
+		<execute function="AssertClick" locator1="Button#SEARCH_2" value1="Search" />
+	</command>
+
+	<command name="viewNoResults">
+		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="No pages were found that matched the keywords: ${webContentSearchTerm}." />
+	</command>
+
+	<command name="viewResultsEntry">
+		<var name="key_webContentSearchResultsName" value="${webContentSearchResultsName}" />
+
+		<execute function="AssertTextEquals" locator1="WebContentSearchResults#RESULTS_TABLE_NAME" value1="${webContentSearchResultsName}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="WebContentSearchResults#RESULTS_TABLE_CONTENT" value1="${webContentSearchResultsContent}" />
+	</command>
+</definition>

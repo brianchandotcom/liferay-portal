@@ -2,23 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-
-	<target name="compile">
-		<download-node-module
-			node.module.name="babel-core"
-			node.module.version="${nodejs.modules.version[babel]}"
-		/>
-
-		<compile
-			module.dir="${basedir}"
-		/>
-
-		<copy
-			file="${sdk.tools.dir}/node-v${nodejs.version}/node_modules/babel-core/browser-polyfill.min.js"
-			tofile="${basedir}/classes/META-INF/resources/browser-polyfill.min.js"
-		/>
-	</target>
+	<import file="../../build-module.xml" />
 </project>

@@ -37,8 +37,6 @@ public class PortletKeys {
 
 	public static final String CHAT = "1_WAR_chatportlet";
 
-	public static final String CONTROL_PANEL_HOME = "190";
-
 	public static final String DIRECTORY = "11";
 
 	public static final String DOCKBAR = "145";
@@ -101,11 +99,13 @@ public class PortletKeys {
 	public static final String NESTED_PORTLETS =
 		"com_liferay_nested_portlets_web_portlet_NestedPortletsPortlet";
 
-	public static final String PLUGINS_ADMIN = "132";
+	public static final String PLUGINS_ADMIN =
+		"com_liferay_plugins_admin_web_portlet_PluginsAdminPortlet";
 
 	public static final String PORTAL = "90";
 
-	public static final String PORTAL_SETTINGS = "130";
+	public static final String PORTAL_SETTINGS =
+		"com_liferay_portal_settings_web_portlet_PortalSettingsPortlet";
 
 	public static final String PORTLET_DISPLAY_TEMPLATE =
 		"com_liferay_dynamic_data_mapping_web_portlet_" +
@@ -132,9 +132,6 @@ public class PortletKeys {
 	public static final String RECENT_DOCUMENTS = "64";
 
 	public static final String REQUESTS = "121";
-
-	public static final String ROLES_ADMIN =
-		"com_liferay_roles_admin_web_portlet_RolesAdminPortlet";
 
 	public static final String SHOPPING = "34";
 

@@ -254,8 +254,8 @@ public class GradleUtil {
 		return null;
 	}
 
-	public static boolean getProperty(
-		ExtensionAware extensionAware, String name, boolean defaultValue) {
+	public static Object getProperty(
+		ExtensionAware extensionAware, String name) {
 
 		ExtensionContainer extensionContainer = extensionAware.getExtensions();
 
@@ -263,10 +263,22 @@ public class GradleUtil {
 			extensionContainer.getExtraProperties();
 
 		if (!extraPropertiesExtension.has(name)) {
-			return defaultValue;
+			return null;
 		}
 
 		Object value = extraPropertiesExtension.get(name);
+
+		if ((value instanceof String) && Validator.isNull((String)value)) {
+			value = null;
+		}
+
+		return value;
+	}
+
+	public static boolean getProperty(
+		ExtensionAware extensionAware, String name, boolean defaultValue) {
+
+		Object value = getProperty(extensionAware, name);
 
 		if (value instanceof Boolean) {
 			return (Boolean)value;
@@ -277,6 +289,30 @@ public class GradleUtil {
 		}
 
 		return defaultValue;
+	}
+
+	public static String getProperty(
+		ExtensionAware extensionAware, String name, String defaultValue) {
+
+		Object value = getProperty(extensionAware, name);
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		return toString(value);
+	}
+
+	public static File getProperty(
+		Project project, String name, File defaultValue) {
+
+		Object value = getProperty(project, name);
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		return toFile(project, value);
 	}
 
 	public static SourceSet getSourceSet(Project project, String name) {
@@ -356,7 +392,49 @@ public class GradleUtil {
 		return project.file(object);
 	}
 
+	public static Integer toInteger(Object object) {
+		object = toObject(object);
+
+		if (object instanceof Integer) {
+			return (Integer)object;
+		}
+
+		if (object instanceof Number) {
+			Number number = (Number)object;
+
+			return number.intValue();
+		}
+
+		if (object instanceof String) {
+			return Integer.parseInt((String)object);
+		}
+
+		return null;
+	}
+
+	public static Object toObject(Object object) {
+		if (object instanceof Callable<?>) {
+			Callable<?> callable = (Callable<?>)object;
+
+			try {
+				object = callable.call();
+			}
+			catch (Exception e) {
+				throw new GradleException(e.getMessage(), e);
+			}
+		}
+		else if (object instanceof Closure<?>) {
+			Closure<?> closure = (Closure<?>)object;
+
+			object = closure.call();
+		}
+
+		return object;
+	}
+
 	public static String toString(Object object) {
+		object = toObject(object);
+
 		if (object == null) {
 			return null;
 		}
@@ -368,7 +446,7 @@ public class GradleUtil {
 		List<String> list = new ArrayList<>();
 
 		for (Object object : iterable) {
-			list.add(object.toString());
+			list.add(toString(object));
 		}
 
 		return list;

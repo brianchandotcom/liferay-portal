@@ -21,6 +21,7 @@ import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCri
 import com.liferay.item.selector.upload.web.display.context.ItemSelectorUploadViewDisplayContext;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -74,10 +75,15 @@ public class ItemSelectorUploadView
 	}
 
 	@Override
+	public boolean isVisible(ThemeDisplay themeDisplay) {
+		return true;
+	}
+
+	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			UploadItemSelectorCriterion uploadItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedEventName)
+			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		ServletContext servletContext = getServletContext();

@@ -57,11 +57,10 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 			Dictionary<String, Object> properties = new Hashtable<>();
 
 			properties.put("accessKey", "");
-			properties.put("bucketName", "");
+			properties.put("bucketName", "test");
 			properties.put("httpClientMaxConnections", "50");
-			properties.put("s3ServiceDefaultBucketLocation", "US");
-			properties.put("s3ServiceDefaultStorageClass", "STANDARD");
-			properties.put("s3ServiceS3Endpoint", "s3.amazonws.com");
+			properties.put("s3Region", "us-east-1");
+			properties.put("s3StorageClass", "STANDARD");
 			properties.put("secretKey", "");
 			properties.put("tempDirCleanUpExpunge", "7");
 			properties.put("tempDirCleanUpFrequency", "100");

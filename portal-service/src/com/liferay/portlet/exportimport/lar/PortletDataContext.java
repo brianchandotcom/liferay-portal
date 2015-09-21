@@ -103,6 +103,12 @@ public interface PortletDataContext extends Serializable {
 	public void addAssetCategories(
 		String className, long classPK, long[] assetCategoryIds);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             BaseStagedModelDataHandler#exportAssetTags(
+	 *             PortletDataContext, StagedModel)}
+	 */
+	@Deprecated
 	public void addAssetTags(Class<?> clazz, long classPK);
 
 	public void addAssetTags(
@@ -439,6 +445,8 @@ public interface PortletDataContext extends Serializable {
 	public List<Element> getReferenceDataElements(
 		StagedModel parentStagedModel, Class<?> clazz, String referenceType);
 
+	public Element getReferenceElement(Class<?> clazz, long classPK);
+
 	public Element getReferenceElement(
 		Element parentElement, Class<?> clazz, long groupId, String uuid,
 		String referenceType);
@@ -448,6 +456,8 @@ public interface PortletDataContext extends Serializable {
 
 	public Element getReferenceElement(
 		StagedModel parentStagedModel, String className, long classPK);
+
+	public Element getReferenceElement(String className, long classPK);
 
 	public List<Element> getReferenceElements(
 		StagedModel parentStagedModel, Class<?> clazz);

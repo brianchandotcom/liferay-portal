@@ -1574,7 +1574,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	}
 
 	private static final String _FINDER_COLUMN_G_LTCD_GROUPID_2 = "trashEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_LTCD_CREATEDATE_1 = "trashEntry.createDate < NULL";
+	private static final String _FINDER_COLUMN_G_LTCD_CREATEDATE_1 = "trashEntry.createDate IS NULL";
 	private static final String _FINDER_COLUMN_G_LTCD_CREATEDATE_2 = "trashEntry.createDate < ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C = new FinderPath(TrashEntryModelImpl.ENTITY_CACHE_ENABLED,
 			TrashEntryModelImpl.FINDER_CACHE_ENABLED, TrashEntryImpl.class,
@@ -2388,7 +2388,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(trashEntry);
+		clearUniqueFindersCache((TrashEntryModelImpl)trashEntry);
 	}
 
 	@Override
@@ -2400,42 +2400,44 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 			EntityCacheUtil.removeResult(TrashEntryModelImpl.ENTITY_CACHE_ENABLED,
 				TrashEntryImpl.class, trashEntry.getPrimaryKey());
 
-			clearUniqueFindersCache(trashEntry);
+			clearUniqueFindersCache((TrashEntryModelImpl)trashEntry);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(TrashEntry trashEntry, boolean isNew) {
+	protected void cacheUniqueFindersCache(
+		TrashEntryModelImpl trashEntryModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					trashEntry.getClassNameId(), trashEntry.getClassPK()
+					trashEntryModelImpl.getClassNameId(),
+					trashEntryModelImpl.getClassPK()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args, trashEntry);
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
+				trashEntryModelImpl);
 		}
 		else {
-			TrashEntryModelImpl trashEntryModelImpl = (TrashEntryModelImpl)trashEntry;
-
 			if ((trashEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						trashEntry.getClassNameId(), trashEntry.getClassPK()
+						trashEntryModelImpl.getClassNameId(),
+						trashEntryModelImpl.getClassPK()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
-					trashEntry);
+					trashEntryModelImpl);
 			}
 		}
 	}
 
-	protected void clearUniqueFindersCache(TrashEntry trashEntry) {
-		TrashEntryModelImpl trashEntryModelImpl = (TrashEntryModelImpl)trashEntry;
-
+	protected void clearUniqueFindersCache(
+		TrashEntryModelImpl trashEntryModelImpl) {
 		Object[] args = new Object[] {
-				trashEntry.getClassNameId(), trashEntry.getClassPK()
+				trashEntryModelImpl.getClassNameId(),
+				trashEntryModelImpl.getClassPK()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
@@ -2572,7 +2574,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 				trashEntry.setNew(false);
 			}
 			else {
-				session.merge(trashEntry);
+				trashEntry = (TrashEntry)session.merge(trashEntry);
 			}
 		}
 		catch (Exception e) {
@@ -2650,8 +2652,8 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		EntityCacheUtil.putResult(TrashEntryModelImpl.ENTITY_CACHE_ENABLED,
 			TrashEntryImpl.class, trashEntry.getPrimaryKey(), trashEntry, false);
 
-		clearUniqueFindersCache(trashEntry);
-		cacheUniqueFindersCache(trashEntry, isNew);
+		clearUniqueFindersCache(trashEntryModelImpl);
+		cacheUniqueFindersCache(trashEntryModelImpl, isNew);
 
 		trashEntry.resetOriginalValues();
 

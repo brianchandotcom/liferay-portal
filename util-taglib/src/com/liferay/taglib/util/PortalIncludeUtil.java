@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.util;
 
+import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -32,6 +33,19 @@ import javax.servlet.jsp.PageContext;
  */
 public class PortalIncludeUtil {
 
+	public static void include(
+			PageContext pageContext, HTMLRenderer htmlRenderer)
+		throws IOException, ServletException {
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+		HttpServletResponse response =
+			(HttpServletResponse)pageContext.getResponse();
+
+		htmlRenderer.renderHTML(
+			request, new PipingServletResponse(response, pageContext.getOut()));
+	}
+
 	public static void include(PageContext pageContext, String path)
 		throws IOException, ServletException {
 
@@ -44,10 +58,19 @@ public class PortalIncludeUtil {
 			WebKeys.CTX);
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(path);
+			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
+				servletContext, path);
 
 		requestDispatcher.include(
 			request, new PipingServletResponse(response, pageContext.getOut()));
+	}
+
+	public interface HTMLRenderer {
+
+		public void renderHTML(
+				HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException;
+
 	}
 
 }

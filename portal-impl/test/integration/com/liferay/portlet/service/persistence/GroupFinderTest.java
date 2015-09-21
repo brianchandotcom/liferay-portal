@@ -31,6 +31,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.RolePermissions;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -233,12 +234,8 @@ public class GroupFinderTest {
 
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
-		List<Object> rolePermissions = new ArrayList<>();
-
-		rolePermissions.add(name);
-		rolePermissions.add(Integer.valueOf(ResourceConstants.SCOPE_GROUP));
-		rolePermissions.add(actionId);
-		rolePermissions.add(roleId);
+		RolePermissions rolePermissions = new RolePermissions(
+			name, ResourceConstants.SCOPE_GROUP, actionId, roleId);
 
 		groupParams.put("rolePermissions", rolePermissions);
 

@@ -443,12 +443,12 @@ public class TeamPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingTeam.getUuid(),
 				ReflectionTestUtil.invoke(existingTeam, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(existingTeam.getGroupId(),
-			ReflectionTestUtil.invoke(existingTeam, "getOriginalGroupId",
+		Assert.assertEquals(Long.valueOf(existingTeam.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingTeam, "getOriginalGroupId",
 				new Class<?>[0]));
 
-		Assert.assertEquals(existingTeam.getGroupId(),
-			ReflectionTestUtil.invoke(existingTeam, "getOriginalGroupId",
+		Assert.assertEquals(Long.valueOf(existingTeam.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingTeam, "getOriginalGroupId",
 				new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingTeam.getName(),
 				ReflectionTestUtil.invoke(existingTeam, "getOriginalName",

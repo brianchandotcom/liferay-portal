@@ -39,31 +39,48 @@ import org.junit.Test;
 public class SpringDependencyAnalyzerPluginTest {
 
 	@Test
-	public void testDependenciesDefinedInFileAndAnnotations() throws Exception {
+	public void testDependenciesDefinedInFileAndAnnotation() throws Exception {
 		JarResource jarResource = new JarResource(
 			"dependencies/META-INF/spring/context.dependencies",
 			"META-INF/spring/context.dependencies");
 
-		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME), jarResource);
+		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_BEAN), jarResource);
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
 
 		String value = IO.collect(resource.openInputStream());
 
-		Assert.assertEquals("bar.foo.Dependency\njava.lang.String\n", value);
+		Assert.assertEquals(
+			"bar.foo.Dependency\n" + _RELEASE_INFO + "java.lang.String\n",
+			value);
 	}
 
 	@Test
-	public void testDependenciesDefinedOnlyInAnnotations() throws Exception {
-		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME));
+	public void testDependenciesDefinedOnlyInAnnotation() throws Exception {
+		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_BEAN));
 
 		Resource resource = jar.getResource(
 			"OSGI-INF/context/context.dependencies");
 
 		String value = IO.collect(resource.openInputStream());
 
-		Assert.assertEquals("java.lang.String\n", value);
+		Assert.assertEquals(_RELEASE_INFO + "java.lang.String\n", value);
+	}
+
+	@Test
+	public void testDependenciesDefinedOnlyInAnnotationWithFilterString()
+		throws Exception {
+
+		Jar jar = analyze(Arrays.asList(_PACKAGE_NAME_FILTER));
+
+		Resource resource = jar.getResource(
+			"OSGI-INF/context/context.dependencies");
+
+		String value = IO.collect(resource.openInputStream());
+
+		Assert.assertEquals(
+			_RELEASE_INFO + "java.lang.String (service.ranking=1)\n", value);
 	}
 
 	@Test
@@ -79,7 +96,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 		String value = IO.collect(resource.openInputStream());
 
-		Assert.assertEquals("bar.foo.Dependency\n", value);
+		Assert.assertEquals("bar.foo.Dependency\n" + _RELEASE_INFO, value);
 	}
 
 	@Test
@@ -95,7 +112,7 @@ public class SpringDependencyAnalyzerPluginTest {
 
 		String value = IO.collect(resource.openInputStream());
 
-		Assert.assertEquals("", value);
+		Assert.assertEquals(_RELEASE_INFO, value);
 	}
 
 	protected Jar analyze(List<String> packages, JarResource... jarResources)
@@ -114,6 +131,9 @@ public class SpringDependencyAnalyzerPluginTest {
 
 		Analyzer analyzer = new Analyzer();
 
+		analyzer.setBundleSymbolicName("test.bundle");
+		analyzer.setBundleVersion("1.0.0");
+		analyzer.setProperty("Require-SchemaVersion", "1.0.0.1");
 		analyzer.setProperty(
 			"-spring-dependency", ServiceReference.class.getName());
 
@@ -135,7 +155,16 @@ public class SpringDependencyAnalyzerPluginTest {
 		return jar;
 	}
 
-	private static final String _PACKAGE_NAME = "com.liferay.ant.bnd.spring";
+	private static final String _PACKAGE_NAME_BEAN =
+		"com.liferay.ant.bnd.spring.bean";
+
+	private static final String _PACKAGE_NAME_FILTER =
+		"com.liferay.ant.bnd.spring.filter";
+
+	private static final String _RELEASE_INFO =
+		"com.liferay.portal.model.Release " +
+			"(&(release.bundle.symbolic.name=test.bundle)" +
+				"(release.schema.version=1.0.0.1))\n";
 
 	private static final class JarResource {
 

@@ -37,7 +37,7 @@ public class BaseSocialActivityTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_userClassNameId = PortalUtil.getClassNameId(User.class.getName());
+		userClassNameId = PortalUtil.getClassNameId(User.class.getName());
 
 		Class<?> clazz = SocialActivitySettingLocalServiceTest.class;
 
@@ -50,13 +50,13 @@ public class BaseSocialActivityTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		group = GroupTestUtil.addGroup();
 
-		_actorUser = UserTestUtil.addUser("actor", _group.getGroupId());
-		_creatorUser = UserTestUtil.addUser("creator", _group.getGroupId());
+		actorUser = UserTestUtil.addUser("actor", group.getGroupId());
+		creatorUser = UserTestUtil.addUser("creator", group.getGroupId());
 
-		_assetEntry = SocialActivityTestUtil.addAssetEntry(
-			_creatorUser, _group, null);
+		assetEntry = SocialActivityTestUtil.addAssetEntry(
+			creatorUser, group, null);
 
 		SocialActivityHierarchyEntryThreadLocal.clear();
 	}
@@ -69,17 +69,17 @@ public class BaseSocialActivityTestCase {
 	protected static final String TEST_MODEL = "test-model";
 
 	@DeleteAfterTestRun
-	protected static User _actorUser;
+	protected static User actorUser;
 
 	@DeleteAfterTestRun
-	protected static AssetEntry _assetEntry;
+	protected static AssetEntry assetEntry;
 
 	@DeleteAfterTestRun
-	protected static User _creatorUser;
+	protected static User creatorUser;
 
 	@DeleteAfterTestRun
-	protected static Group _group;
+	protected static Group group;
 
-	protected static long _userClassNameId;
+	protected static long userClassNameId;
 
 }

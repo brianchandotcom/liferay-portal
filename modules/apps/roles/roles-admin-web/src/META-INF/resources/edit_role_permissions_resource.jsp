@@ -114,12 +114,7 @@ for (int i = 0; i < results.size(); i++) {
 
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
 
-		List<Object> rolePermissions = new ArrayList<Object>();
-
-		rolePermissions.add(curResource);
-		rolePermissions.add(Integer.valueOf(ResourceConstants.SCOPE_GROUP));
-		rolePermissions.add(actionId);
-		rolePermissions.add(Long.valueOf(role.getRoleId()));
+		RolePermissions rolePermissions = new RolePermissions(curResource, ResourceConstants.SCOPE_GROUP, actionId, role.getRoleId());
 
 		groupParams.put("rolePermissions", rolePermissions);
 

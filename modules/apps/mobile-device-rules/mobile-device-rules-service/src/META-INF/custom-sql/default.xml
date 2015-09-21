@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupFinder.countByG_N">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				MDRRuleGroup
+			WHERE
+				[$GROUP_ID$] AND
+				(lower(name) LIKE ? [$AND_OR_NULL_CHECK$])
+		]]>
+	</sql>
+	<sql id="com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupFinder.findByG_N">
+		<![CDATA[
+			SELECT
+				{MDRRuleGroup.*}
+			FROM
+				MDRRuleGroup
+			WHERE
+				[$GROUP_ID$] AND
+				(lower(name) LIKE ? [$AND_OR_NULL_CHECK$])
+			ORDER BY
+				MDRRuleGroup.name DESC
+		]]>
+	</sql>
+</custom-sql>

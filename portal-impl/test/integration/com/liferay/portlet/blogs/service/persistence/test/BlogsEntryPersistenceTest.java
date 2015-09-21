@@ -692,13 +692,13 @@ public class BlogsEntryPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingBlogsEntry.getUuid(),
 				ReflectionTestUtil.invoke(existingBlogsEntry,
 					"getOriginalUuid", new Class<?>[0])));
-		Assert.assertEquals(existingBlogsEntry.getGroupId(),
-			ReflectionTestUtil.invoke(existingBlogsEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingBlogsEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingBlogsEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 
-		Assert.assertEquals(existingBlogsEntry.getGroupId(),
-			ReflectionTestUtil.invoke(existingBlogsEntry, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingBlogsEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingBlogsEntry,
+				"getOriginalGroupId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingBlogsEntry.getUrlTitle(),
 				ReflectionTestUtil.invoke(existingBlogsEntry,
 					"getOriginalUrlTitle", new Class<?>[0])));

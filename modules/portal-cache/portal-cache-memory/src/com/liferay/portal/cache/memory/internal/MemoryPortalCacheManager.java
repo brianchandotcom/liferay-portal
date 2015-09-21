@@ -18,8 +18,7 @@ import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
-import com.liferay.portal.kernel.cache.cluster.ClusterLinkCallbackFactory;
-import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
+import com.liferay.portal.kernel.cache.PortalCacheReplicator;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -30,9 +29,9 @@ import java.io.Serializable;
 
 import java.net.URL;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -123,31 +122,31 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
-		Map<CallbackConfiguration, PortalCacheListenerScope>
-			cacheListenerConfigurations = null;
-		CallbackConfiguration bootstrapLoaderConfiguration = null;
+		Set<Properties> portalCacheListenerPropertiesSet = null;
+		Properties portalCacheBootstrapLoaderProperties = null;
 
 		if (isClusterAware() &&
 			GetterUtil.getBoolean(props.get(PropsKeys.CLUSTER_LINK_ENABLED))) {
 
-			CallbackConfiguration cacheListenerConfiguration =
-				new CallbackConfiguration(
-					ClusterLinkCallbackFactory.INSTANCE, new Properties());
+			Properties properties = new Properties();
 
-			cacheListenerConfigurations = new HashMap<>();
+			properties.put(
+				PortalCacheConfiguration.PORTAL_CACHE_LISTENER_SCOPE,
+				PortalCacheListenerScope.ALL);
+			properties.put(PortalCacheReplicator.REPLICATOR, true);
 
-			cacheListenerConfigurations.put(
-				cacheListenerConfiguration, PortalCacheListenerScope.ALL);
+			portalCacheListenerPropertiesSet = Collections.singleton(
+				properties);
 
-			bootstrapLoaderConfiguration = new CallbackConfiguration(
-				ClusterLinkCallbackFactory.INSTANCE, new Properties());
+			portalCacheBootstrapLoaderProperties = new Properties();
 		}
 
 		return new PortalCacheManagerConfiguration(
 			null,
 			new PortalCacheConfiguration(
 				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME,
-				cacheListenerConfigurations, bootstrapLoaderConfiguration),
+				portalCacheListenerPropertiesSet,
+				portalCacheBootstrapLoaderProperties),
 			null);
 	}
 

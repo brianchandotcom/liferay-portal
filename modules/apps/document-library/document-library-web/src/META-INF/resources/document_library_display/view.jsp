@@ -31,7 +31,7 @@ long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolder
 
 boolean defaultFolderView = false;
 
-if ((folder == null) && (defaultFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+if (defaultFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	defaultFolderView = true;
 }
 
@@ -107,7 +107,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 	</c:when>
 	<c:when test='<%= topLink.equals("home") %>'>
-		<c:if test="<%= (folder != null) %>">
+		<c:if test="<%= folder != null %>">
 			<liferay-ui:header
 				backURL="<%= redirect %>"
 				localizeTitle="<%= false %>"
@@ -131,18 +131,18 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 							</div>
 
 							<%
-							AssetRendererFactory dlFileEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+							AssetRendererFactory<?> dlFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
 							%>
 
-							<div class="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
+							<div class="<%= dlFolderAssetRendererFactory.getIconCssClass() %> lfr-asset-icon">
 								<%= foldersCount %> <liferay-ui:message key='<%= (foldersCount == 1) ? "subfolder" : "subfolders" %>' />
 							</div>
 
 							<%
-							AssetRendererFactory dlFolderAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFolder.class.getName());
+							AssetRendererFactory<?> dlFileEntryAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 							%>
 
-							<div class="<%= dlFolderAssetRendererFactory.getIconCssClass() %> last lfr-asset-icon">
+							<div class="<%= dlFileEntryAssetRendererFactory.getIconCssClass() %> last lfr-asset-icon">
 								<%= fileEntriesCount %> <liferay-ui:message key='<%= (fileEntriesCount == 1) ? "document" : "documents" %>' />
 							</div>
 						</div>
@@ -257,7 +257,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 		>
 
 			<liferay-ui:search-container-results
-				results="<%= DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
+				results="<%= DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status, searchContainer.getStart(), searchContainer.getEnd(), new RepositoryModelModifiedDateComparator()) %>"
 			/>
 
 			<liferay-ui:search-container-row

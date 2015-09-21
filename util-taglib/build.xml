@@ -93,11 +93,11 @@
 		>
 			<jvmarg value="-Dtagbuilder.components.xml=${project.dir}/util-taglib/src/com/liferay/taglib/aui.xml,${project.dir}/util-taglib/src/com/liferay/taglib/liferay-aui.xml" />
 			<jvmarg value="-Dtagbuilder.copyright.year=present" />
-			<jvmarg value="-Dtagbuilder.docroot.dir=${project.dir}/portal-web/docroot/" />
 			<jvmarg value="-Dtagbuilder.java.dir=${project.dir}/util-taglib/src/com/liferay/taglib/" />
 			<jvmarg value="-Dtagbuilder.java.package=com.liferay.taglib" />
 			<jvmarg value="-Dtagbuilder.jsp.common.init.path=/html/taglib/taglib-init.jsp" />
 			<jvmarg value="-Dtagbuilder.jsp.dir=/html/taglib/" />
+			<jvmarg value="-Dtagbuilder.jsp.parent.dir=${project.dir}/portal-web/docroot/" />
 			<jvmarg value="-Dtagbuilder.templates.dir=com/liferay/alloy/tools/tagbuilder/templates/" />
 			<jvmarg value="-Dtagbuilder.tld.dir=${project.dir}/util-taglib/src/META-INF/" />
 		</java>

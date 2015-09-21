@@ -118,6 +118,12 @@ public class ServletPathsTest {
 		ServletPaths servletPaths3 = servletPaths1.down("/test2");
 
 		Assert.assertEquals("/test1/test2", servletPaths3.getResourcePath());
+
+		ServletPaths servletPaths4 = new ServletPaths(servletContext, "test1/");
+
+		ServletPaths servletPaths5 = servletPaths4.down("test2");
+
+		Assert.assertEquals("test1/test2", servletPaths5.getResourcePath());
 	}
 
 	@Test

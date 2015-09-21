@@ -68,9 +68,7 @@ if (!dlFileEntries.isEmpty()) {
 			</div>
 		</c:if>
 
-		<portlet:actionURL var="convertDocumentLibraryExtraSettingsURL">
-			<portlet:param name="struts_action" value="/admin_server/edit_document_library_extra_settings" />
-		</portlet:actionURL>
+		<portlet:actionURL name="/admin_server/edit_document_library_extra_settings" var="convertDocumentLibraryExtraSettingsURL" />
 
 		<aui:form action="<%= convertDocumentLibraryExtraSettingsURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "convertDocumentLibraryExtraSettings();" %>'>
 			<aui:input name="<%= Constants.CMD %>" type="hidden" />

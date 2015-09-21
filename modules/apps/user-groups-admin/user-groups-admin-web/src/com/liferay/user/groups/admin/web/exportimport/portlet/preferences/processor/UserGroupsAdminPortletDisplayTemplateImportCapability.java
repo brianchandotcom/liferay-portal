@@ -40,7 +40,7 @@ public class UserGroupsAdminPortletDisplayTemplateImportCapability
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
-		return UserGroupsAdminExportImportPreferencesProcessorUtil.
+		return UserGroupsAdminExportImportPortletPreferencesProcessorUtil.
 			getDisplayStyle(portletPreferences);
 	}
 
@@ -49,7 +49,7 @@ public class UserGroupsAdminPortletDisplayTemplateImportCapability
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
-		return UserGroupsAdminExportImportPreferencesProcessorUtil.
+		return UserGroupsAdminExportImportPortletPreferencesProcessorUtil.
 			getDisplayStyleGroupId(portletPreferences);
 	}
 

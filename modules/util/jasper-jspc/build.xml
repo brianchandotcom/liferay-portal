@@ -2,9 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="javac.source" value="1.6" />
-	<property name="javac.target" value="1.6" />
-	<property name="osgi.ide.dependencies" value="ant.jar" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+	<import file="../../build-module.xml" />
 </project>

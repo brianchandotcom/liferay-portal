@@ -16,17 +16,17 @@ package com.liferay.portal.security.auto.login.basic.auth.header;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationFactory;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.SettingsException;
-import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.AuthException;
-import com.liferay.portal.security.auto.login.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.basic.auth.header.constants.BasicAuthHeaderAutoLoginConstants;
+import com.liferay.portal.security.auto.login.basic.auth.header.module.configuration.BasicAuthHeaderAutoLoginConfiguration;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +69,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.auto.login.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration",
+	configurationPid = "com.liferay.portal.security.auto.login.basic.auth.header.module.configuration.BasicAuthHeaderAutoLoginConfiguration",
 	immediate = true, service = AutoLogin.class
 )
 public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
@@ -87,6 +87,10 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 		HttpAuthorizationHeader httpAuthorizationHeader =
 			HttpAuthManagerUtil.parse(request);
+
+		if (httpAuthorizationHeader == null) {
+			return null;
+		}
 
 		String scheme = httpAuthorizationHeader.getScheme();
 
@@ -128,9 +132,11 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 		return basicAuthHeaderAutoLoginConfiguration.enabled();
 	}
 
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+	@Reference(unbind = "-")
+	protected void setConfigurationFactory(
+		ConfigurationFactory configurationFactory) {
+
+		_configurationFactory = configurationFactory;
 	}
 
 	private BasicAuthHeaderAutoLoginConfiguration
@@ -139,7 +145,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 		try {
 			BasicAuthHeaderAutoLoginConfiguration
 				basicAuthHeaderAutoLoginConfiguration =
-					_settingsFactory.getSettings(
+					_configurationFactory.getConfiguration(
 						BasicAuthHeaderAutoLoginConfiguration.class,
 						new CompanyServiceSettingsLocator(
 							companyId,
@@ -147,8 +153,8 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 			return basicAuthHeaderAutoLoginConfiguration;
 		}
-		catch (SettingsException se) {
-			_log.error("Unable to get basic auth header configuration", se);
+		catch (ConfigurationException ce) {
+			_log.error("Unable to get basic auth header configuration", ce);
 		}
 
 		return null;
@@ -157,6 +163,6 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicAuthHeaderAutoLogin.class);
 
-	private volatile SettingsFactory _settingsFactory;
+	private volatile ConfigurationFactory _configurationFactory;
 
 }

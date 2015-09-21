@@ -14,7 +14,10 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
+import com.liferay.portal.kernel.cache.PortalCacheBootstrapLoaderFactory;
+import com.liferay.portal.kernel.cache.PortalCacheListenerFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
+import com.liferay.portal.kernel.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
@@ -98,6 +101,14 @@ public class MultiVMEhcachePortalCacheManager
 		this.mBeanServer = mBeanServer;
 	}
 
+	@Reference(unbind = "-")
+	protected void setPortalCacheBootstrapLoaderFactory(
+		PortalCacheBootstrapLoaderFactory portalCacheBootstrapLoaderFactory) {
+
+		this.portalCacheBootstrapLoaderFactory =
+			portalCacheBootstrapLoaderFactory;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -108,6 +119,22 @@ public class MultiVMEhcachePortalCacheManager
 		PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
 
 		reconfigure(portalCacheConfiguratorSettings);
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortalCacheListenerFactory(
+		PortalCacheListenerFactory portalCacheListenerFactory) {
+
+		this.portalCacheListenerFactory = portalCacheListenerFactory;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortalCacheManagerListenerFactory(
+		PortalCacheManagerListenerFactory<PortalCacheManager<K, V>>
+			portalCacheManagerListenerFactory) {
+
+		this.portalCacheManagerListenerFactory =
+			portalCacheManagerListenerFactory;
 	}
 
 	@Reference(unbind = "-")

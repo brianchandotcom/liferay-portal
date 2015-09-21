@@ -69,7 +69,5 @@ plugins.includes=marketplace-portlet</echo>
 
 	<target name="run-tcat">
 		<antcall target="run-simple-server" />
-
-		<antcall target="evaluate-logs" />
 	</target>
 </project>

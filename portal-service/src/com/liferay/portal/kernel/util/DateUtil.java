@@ -131,7 +131,8 @@ public class DateUtil {
 		Calendar startCal = null;
 		Calendar endCal = null;
 
-		int offset = 0;
+		int offsetDate1 = 0;
+		int offsetDate2 = 0;
 
 		if (timeZone == null) {
 			startCal = new GregorianCalendar();
@@ -141,16 +142,17 @@ public class DateUtil {
 			startCal = new GregorianCalendar(timeZone);
 			endCal = new GregorianCalendar(timeZone);
 
-			offset = timeZone.getRawOffset();
+			offsetDate1 = timeZone.getOffset(date1.getTime());
+			offsetDate2 = timeZone.getOffset(date2.getTime());
 		}
 
 		startCal.setTime(date1);
 
-		startCal.add(Calendar.MILLISECOND, offset);
+		startCal.add(Calendar.MILLISECOND, offsetDate1);
 
 		endCal.setTime(date2);
 
-		endCal.add(Calendar.MILLISECOND, offset);
+		endCal.add(Calendar.MILLISECOND, offsetDate2);
 
 		int daysBetween = 0;
 

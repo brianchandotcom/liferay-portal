@@ -9,7 +9,7 @@
 
 		<execute function="AntCommand" locator1="build-test-sharepoint.xml" value1="clean-sharepoint-repository -Dssh.host=${sharepointVMHostName}" />
 
-		<execute macro="User#firstLoginPG">
+		<execute macro="User#loginPG">
 			<var name="authenticationMethod" value="By Screen Name" />
 			<var name="userScreenName" value="test" />
 		</execute>

@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>ControlMenuPreviewPanel</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ControlMenuPreviewPanel</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_AUTOSIZE</td>
+	<td>//li[@data-device='autosize']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_SMARTPHONE</td>
+	<td>//li[@data-device='smartphone']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_TABLET</td>
+	<td>//li[@data-device='tablet']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_DESKTOP</td>
+	<td>//li[@data-device='desktop']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_CUSTOM</td>
+	<td>//li[@data-device='custom']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_CUSTOM_WIDTH_FIELD</td>
+	<td>//input[contains(@id,'_width')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_CUSTOM_HEIGHT_FIELD</td>
+	<td>//input[contains(@id,'_height')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_MESSAGE</td>
+	<td>//div[contains(@id,'_devicePreviewContainer')]/div[contains(@class,'alert-warning')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

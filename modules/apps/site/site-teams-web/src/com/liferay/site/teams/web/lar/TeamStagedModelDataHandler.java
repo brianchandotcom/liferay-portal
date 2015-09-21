@@ -14,6 +14,7 @@
 
 package com.liferay.site.teams.web.lar;
 
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS_ADMIN},
+	property = {"javax.portlet.name=" + SiteTeamsPortletKeys.SITE_TEAMS},
 	service = StagedModelDataHandler.class
 )
 public class TeamStagedModelDataHandler
@@ -101,6 +101,11 @@ public class TeamStagedModelDataHandler
 	}
 
 	@Override
+	public Team fetchStagedModelByUuidAndGroupId(String uuid, long groupId) {
+		return TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
 	public List<Team> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
@@ -119,8 +124,9 @@ public class TeamStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(team.getUserUuid());
 
-		Team existingTeam = TeamLocalServiceUtil.fetchTeamByUuidAndGroupId(
-			team.getUuid(), portletDataContext.getScopeGroupId());
+		Team existingTeam = fetchExistingTeam(
+			team.getUuid(), portletDataContext.getScopeGroupId(),
+			team.getName());
 
 		Team importedTeam = null;
 
@@ -182,6 +188,16 @@ public class TeamStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(team, importedTeam);
+	}
+
+	protected Team fetchExistingTeam(String uuid, long groupId, String name) {
+		Team team = fetchStagedModelByUuidAndGroupId(uuid, groupId);
+
+		if (team != null) {
+			return team;
+		}
+
+		return TeamLocalServiceUtil.fetchTeam(groupId, name);
 	}
 
 	@Override

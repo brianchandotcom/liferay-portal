@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -201,6 +202,11 @@ public class ResourceActionsImpl implements ResourceActions {
 
 			return Collections.emptyList();
 		}
+	}
+
+	@Override
+	public String getCompositeModelNameSeparator() {
+		return _COMPOSITE_MODEL_NAME_SEPARATOR;
 	}
 
 	@Override
@@ -749,6 +755,25 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
+	protected String getCompositeModelName(Element compositeModelNameElement) {
+		StringBundler sb = new StringBundler();
+
+		Iterator<Element> itr = compositeModelNameElement.elementIterator(
+			"model-name");
+
+		while (itr.hasNext()) {
+			Element modelNameElement = itr.next();
+
+			sb.append(modelNameElement.getTextTrim());
+
+			if (itr.hasNext()) {
+				sb.append(_COMPOSITE_MODEL_NAME_SEPARATOR);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	protected ModelResourceActionsBag getModelResourceActionsBag(
 		String modelName) {
 
@@ -1025,6 +1050,11 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		String name = modelResourceElement.elementTextTrim("model-name");
 
+		if (Validator.isNull(name)) {
+			name = getCompositeModelName(
+				modelResourceElement.element("composite-model-name"));
+		}
+
 		if (GetterUtil.getBoolean(
 				modelResourceElement.attributeValue("organization"))) {
 
@@ -1223,6 +1253,9 @@ public class ResourceActionsImpl implements ResourceActions {
 	protected RoleLocalService roleLocalService;
 
 	private static final String _ACTION_NAME_PREFIX = "action.";
+
+	private static final String _COMPOSITE_MODEL_NAME_SEPARATOR =
+		StringPool.DASH;
 
 	private static final String _MODEL_RESOURCE_NAME_PREFIX = "model.resource.";
 

@@ -15,11 +15,13 @@
 package com.liferay.exportimport.web.portlet;
 
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
+import com.liferay.exportimport.web.upgrade.ExportImportWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Kocsis
@@ -28,8 +30,6 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.control-panel-entry-category=site_administration.publishing_tools",
-		"com.liferay.portlet.control-panel-entry-weight=2.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-export-import",
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
@@ -54,4 +54,10 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class ExportImportPortlet extends MVCPortlet {
+
+	@Reference(unbind = "-")
+	protected void setExportImportWebUpgrade(
+		ExportImportWebUpgrade exportImportWebUpgrade) {
+	}
+
 }

@@ -2531,7 +2531,7 @@ public class KaleoNotificationPersistenceImpl extends BasePersistenceImpl<KaleoN
 				kaleoNotification.setNew(false);
 			}
 			else {
-				session.merge(kaleoNotification);
+				kaleoNotification = (KaleoNotification)session.merge(kaleoNotification);
 			}
 		}
 		catch (Exception e) {

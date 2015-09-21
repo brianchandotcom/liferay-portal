@@ -14,11 +14,12 @@
 
 package com.liferay.mobile.device.rules.rule.group.rule;
 
+import com.liferay.mobile.device.rules.model.MDRRule;
+import com.liferay.mobile.device.rules.rule.RuleHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.Dimensions;
-import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 
 import java.util.Arrays;
 import java.util.Collection;

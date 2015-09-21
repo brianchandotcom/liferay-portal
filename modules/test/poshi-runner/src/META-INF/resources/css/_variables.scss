@@ -1,133 +1,128 @@
-/* ---------- Main styling ---------- */
+/* ---------- Common color & fonts ---------- */
+// Font stacks
 
-// Xml-log
+$monospaced-font: 'Source Code Pro', 'Menlo', 'Lucia Console', Monaco, monospace;
 
-$body-font-size: 11px;
+$general-font: 'Open Sans', 'Verdana', 'Geneva', sans-serif;
 
-$body-bg-color: #EBE7DC;
+// General colors
 
-$xml-log-default-text-color: #444;
-$xml-log-font: 'Menlo', 'Source Code Pro', 'Lucia Console', 'Monospace';
+$black: #222;
 
-$child-container-left-border-color: #DDD;
+$grey: #617484;
+$grey-cool: #9AA8B1;
+$grey-dark: #4C5255;
+$grey-light: #989DA9;
+$grey-lighter: #AEBBC2;
+$grey-subtle: #E1E8EB;
 
-$line-number-text-color: #222;
+$neutral: #9FA2A6;
+$neutral-light: #E0E0E0;
+$neutral-med: #CDCDCD;
 
-$parameter-container-border-color: #777;
+$off-white: #F7F7F7;
+$off-white-subtle: #FBFBFB;
 
-$macro-child-container-bg-color: transparentize(#F8CB9B, 0.62);
-$macro-child-container-box-shadow: inset 0 0 0 0 darken($macro-child-container-bg-color, 46);
-
-$scoped-line-bg-color: transparentize(#FFFA61, 0.6);
-
-// Command-logger mode
-
-$passed-line-bg-color: #7FCDD1;
-
-$pending-border-color: #FD9A07;
-
-$pending-border-bg-color: transparentize($pending-border-color, 0.85);
-
-$passed-function-hover-bg-color: #A3D7C9;
-$passed-function-hover-border-color: #FFF;
-
-$logger-mode-hover-line-bg-color: #FFFBF1;
-$logger-mode-scoped-line-bg-color: $passed-function-hover-bg-color;
-
-$running-line-bg-color: #FFB57C;
-
-$fail-line-container-before-bg: #FFF;
-$fail-line-container-bg-color: #E2604C;
-$fail-line-container-border-color: #FFA191;
-$fail-line-number-color: #FF2600;
-
-// Error console & screenshot
-
-$error-panel-border-color: #F9F9EB;
-$error-panel-text-color: $error-panel-border-color;
-
-$console-error-bg-color: #EA461F;
-$screenshot-error-bg-color: #333;
-
-$screenshot-img-border-color: #A19C8C;
-
-// Sidebar
-
-$sidebar-bg-color: #A1978B;
-$sidebar-box-shadow-color: transparentize(darken($sidebar-bg-color, 46), 0.8);
-$sidebar-default-text-color: #FFF;
-$sidebar-font: 'Futura', 'Trebuchet MS', 'Arial', sans-serif;
-
-// Command-log
-
-$command-log-font: 'Verdana', 'Geneva', sans-serif;
-
-$command-log-divider-bg-color: saturate(lighten($sidebar-bg-color, 4), 7);
-$command-log-divider-text-color: desaturate(darken($sidebar-bg-color, 40), 6);
-
-$scoped-command-bg-color: #FFEB7B;
-$scoped-command-border: 2px solid #AAA;
-$scoped-command-expand-toggle-color: #444;
-$scoped-command-text-color: #555;
-
-$scoped-command-hover-bg-color: #FFE75F;
-$scoped-command-hover-text-color: #444;
-
-$command-hover-bg-color: #648590;
-$command-hover-outline-color: #777;
-$command-hover-text-color: #FFF;
-
-$command-child-container-border-color: #EEE;
-$command-child-container-text-color: $sidebar-default-text-color;
-
-$command-log-expand-toggle-hover-color: #FFF;
-
-$command-log-expand-toggle-color: darken($command-log-expand-toggle-hover-color, 6);
-
-$failed-command-bg-color: #E2604C;
-$failed-command-hover-bg-color: #F0652B;
-$failed-command-scoped-bg-color: #EE6C39;
-$failed-command-scoped-hover-bg-color: #FF7742;
-$failed-expand-toggle-color: #FBEFB4;
-
-// Buttons
-
-$button-hover-bg-color: #E6DBD2;
-$button-toggle-bg-color: adjust_hue(darken($button-hover-bg-color, 1), 7);
-
-$button-error-color: #FF5335;
-
-$global-button-color: #444; // These are the buttons floating on the top right
-$global-button-hover-bg-color: transparentize(#DCDCDC, 0.3);
-$global-button-toggle-bg-color: transparentize(#DCDCDC, 0.4);
-
-$command-log-toggle-button-toggle-color: #CCC;
+$failed-color: #FF8787;
+$passed-color: #00FEA3;
+$pending-color: #FFFA89;
 
 /* ---------- Syntax highlight variables ---------- */
 
+$current-scope-name-color: #000;
+
 // Xml-log
 
-$xml-name-color: #111;
-$xml-scoped-name-color: #446090;
-$xml-selectable-name-color: #663615;
-$xml-tag-type-color: #333;
+$xml-misc-color: #C1CFD7;
+$xml-name-color: #728EA0;
+$xml-tag-type-color: #A2B4BE;
 
 // Sidebar
 
-$command-name-color: #8CEFF6;
-$param-type-color: #FFEECB;
-$param-value-color: #FFEB7B;
+$command-name-color: #4E6A7D;
+$param-type-color: #A0A0A0;
+$param-value-color: #8B95A0;
 
-$failed-command-name-color: #FBF4D7;
-$failed-param-type-color: #FFE4C7;
-$failed-param-value-color: #FFC382;
+/* ---------- Styling ---------- */
 
-$scoped-child-container-param-type-color: #916A52;
-$scoped-child-container-command-name-color: $scoped-child-container-param-type-color; //These are the same
-$scoped-child-container-param-value-color: #509688;
-$scoped-child-container-text-color: $scoped-command-text-color; //#555
-$scoped-command-name-color: #2C77AD;
+// Xml-log
 
-$sub-command-name-color: #E9C993;
-$sub-failed-command-name-color: #893030;
-$sub-param-value-color: $param-value-color;
+$body-bg-color: $off-white;
+$body-font-size: 11px;
+$body-letter-spacing: 0.06em;
+$body-line-height: 2.2;
+
+$xml-log-default-text-color: $grey;
+
+$child-container-left-border-color: $neutral-light;
+
+$line-number-text-color: $black;
+
+$parameter-container-border-color: $neutral-light;
+
+$macro-child-container-bg-color: transparentize(darken($off-white, 3), 0.97);
+$macro-child-container-box-shadow: inset 1px 1px 2px 1px rgba(0, 0, 0, 0.04), inset 1px 1px 1px -1px rgba(0, 0, 0, 0.1);
+
+// Command-logger mode
+
+$line-container-bg-color: $off-white;
+
+$line-container-box-shadow: -2px 0 0 0 rgba(0, 0, 0, 0.03), -1px 0 1px 0 rgba(0, 0, 0, 0.08);
+$line-container-box-shadow-hover: 0 1px 4px 1px rgba(0, 0, 0, 0.04), -1px 1px 3px 1px rgba(0, 0, 0, 0.1);
+
+$line-container-current-scope-bg-color: darken($off-white, 1);
+$line-container-current-scope-border-box-shadow: inset -1px 0 1px 0 $neutral;
+
+$line-group-hover-bg-color: transparentize($neutral-med, 0.88);
+
+// Error console & screenshot
+
+$console-bg-color: $off-white-subtle;
+$console-border-color: $neutral-light;
+$console-font-color: $neutral;
+
+$console-header-font-color: $neutral;
+
+$console-status-font-color: lighten($neutral, 2);
+
+$console-step-description-font-color: $grey-light;
+$console-step-font-color: $grey-cool;
+
+$console-cause-font-color: $grey-light;
+
+$console-screenshot-divider: $neutral-med;
+
+$fullscreen-image-scrim: $black;
+
+// Sidebar
+
+$sidebar-bg-color: $off-white-subtle;
+$sidebar-border-color: $child-container-left-border-color;
+$sidebar-default-text-color: $grey-lighter;
+
+$scope-name-hover-box-shadow: -1px 2px 1px 0 rgba(0, 0, 0, 0.1), -3px 4px 2px 0 rgba(0, 0, 0, 0.05);
+
+// Command-log
+
+$command-log-current-scope-bg: $off-white;
+$command-log-current-scope-border: $grey-subtle;
+
+$command-log-hover-bg: lighten($off-white, 1);
+
+$command-log-divider-bg-color: darken($off-white, 0);
+$command-log-divider-border-color: lighten($neutral-light, 1);
+$command-log-divider-text-color: $grey-light;
+
+$command-child-container-border-color: $neutral-light;
+$command-child-container-text-color: $sidebar-default-text-color;
+
+$command-log-expand-toggle-color: $neutral;
+
+// Buttons
+
+$button-border-color: $neutral-med;
+$button-toggle-bg-color: $neutral-light;
+
+$button-error-border-color: $failed-color;
+$button-error-color: $failed-color;
+$button-error-toggle-bg-color: lighten($failed-color, 16);

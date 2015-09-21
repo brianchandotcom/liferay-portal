@@ -77,7 +77,7 @@ if (parentOrganizationId > 0) {
 	}
 	%>
 
-	<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" />
+	<liferay-ui:organization-search-container-results organizationParams="<%= organizationParams %>" parentOrganizationId="<%= parentOrganizationId %>" />
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.Organization"

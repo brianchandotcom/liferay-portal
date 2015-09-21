@@ -2,9 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="registry-api" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/core" />
+	<import file="../../build-module.xml" />
 </project>

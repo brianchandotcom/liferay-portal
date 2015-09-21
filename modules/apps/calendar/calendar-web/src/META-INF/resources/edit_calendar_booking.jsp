@@ -47,6 +47,12 @@ int startTimeDay = ParamUtil.getInteger(request, "startTimeDay", startTimeJCalen
 int startTimeHour = ParamUtil.getInteger(request, "startTimeHour", startTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY));
 int startTimeMinute = ParamUtil.getInteger(request, "startTimeMinute", startTimeJCalendar.get(java.util.Calendar.MINUTE));
 
+int startTimeAmPm = ParamUtil.getInteger(request, "startTimeAmPm");
+
+if (startTimeAmPm == java.util.Calendar.PM) {
+	startTimeHour += 12;
+}
+
 startTimeJCalendar = CalendarFactoryUtil.getCalendar(startTimeYear, startTimeMonth, startTimeDay, startTimeHour, startTimeMinute, 0, 0, calendarBookingTimeZone);
 
 startTimeJCalendar.setFirstDayOfWeek(weekStartsOn + 1);
@@ -67,6 +73,12 @@ int endTimeDay = ParamUtil.getInteger(request, "endTimeDay", endTimeJCalendar.ge
 int endTimeHour = ParamUtil.getInteger(request, "endTimeHour", endTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY));
 int endTimeMinute = ParamUtil.getInteger(request, "endTimeMinute", endTimeJCalendar.get(java.util.Calendar.MINUTE));
 
+int endTimeAmPm = ParamUtil.getInteger(request, "endTimeAmPm");
+
+if (endTimeAmPm == java.util.Calendar.PM) {
+	endTimeHour += 12;
+}
+
 endTimeJCalendar = CalendarFactoryUtil.getCalendar(endTimeYear, endTimeMonth, endTimeDay, endTimeHour, endTimeMinute, 0, 0, calendarBookingTimeZone);
 
 endTimeJCalendar.setFirstDayOfWeek(weekStartsOn + 1);
@@ -78,14 +90,14 @@ String firstReminderType = BeanParamUtil.getString(calendarBooking, request, "fi
 long secondReminder = BeanParamUtil.getLong(calendarBooking, request, "secondReminder");
 String secondReminderType = BeanParamUtil.getString(calendarBooking, request, "secondReminderType", CalendarServiceConfigurationValues.CALENDAR_NOTIFICATION_DEFAULT_TYPE.name());
 
-int status = BeanParamUtil.getInteger(calendarBooking, request, "status");
-
 JSONArray acceptedCalendarsJSONArray = JSONFactoryUtil.createJSONArray();
 JSONArray declinedCalendarsJSONArray = JSONFactoryUtil.createJSONArray();
 JSONArray maybeCalendarsJSONArray = JSONFactoryUtil.createJSONArray();
 JSONArray pendingCalendarsJSONArray = JSONFactoryUtil.createJSONArray();
 
+boolean approved = false;
 boolean hasChildCalendarBookings = false;
+boolean hasWorkflowDefinitionLink = false;
 boolean invitable = true;
 boolean masterBooking = true;
 Recurrence recurrence = null;
@@ -97,7 +109,14 @@ if (calendarBooking != null) {
 	acceptedCalendarsJSONArray = CalendarUtil.toCalendarBookingsJSONArray(themeDisplay, CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId(), CalendarBookingWorkflowConstants.STATUS_APPROVED));
 	declinedCalendarsJSONArray = CalendarUtil.toCalendarBookingsJSONArray(themeDisplay, CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId(), CalendarBookingWorkflowConstants.STATUS_DENIED));
 	maybeCalendarsJSONArray = CalendarUtil.toCalendarBookingsJSONArray(themeDisplay, CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId(), CalendarBookingWorkflowConstants.STATUS_MAYBE));
-	pendingCalendarsJSONArray = CalendarUtil.toCalendarBookingsJSONArray(themeDisplay, CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId(), CalendarBookingWorkflowConstants.STATUS_PENDING));
+
+	List<CalendarBooking> pendingCalendarBookings = new ArrayList<CalendarBooking>();
+
+	pendingCalendarBookings.addAll(CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId(), CalendarBookingWorkflowConstants.STATUS_PENDING));
+	pendingCalendarBookings.addAll(CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId(), CalendarBookingWorkflowConstants.STATUS_DRAFT));
+	pendingCalendarBookings.addAll(CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId(), CalendarBookingWorkflowConstants.STATUS_MASTER_PENDING));
+
+	pendingCalendarsJSONArray = CalendarUtil.toCalendarBookingsJSONArray(themeDisplay, pendingCalendarBookings);
 
 	if (calendarBooking.isMasterBooking()) {
 		List<CalendarBooking> childCalendarBookings = CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId());
@@ -116,9 +135,19 @@ if (calendarBooking != null) {
 	}
 
 	recurrence = calendarBooking.getRecurrenceObj();
+
+	approved = calendarBooking.isApproved();
+
+	calendar = calendarBooking.getCalendar();
+
+	CalendarResource calendarResource = calendar.getCalendarResource();
+
+	hasWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), calendarResource.getGroupId(), CalendarBooking.class.getName());
 }
 else if (calendar != null) {
 	JSONObject calendarJSONObject = CalendarUtil.toCalendarJSONObject(themeDisplay, calendar);
+
+	CalendarResource calendarResource = calendar.getCalendarResource();
 
 	if (calendar.getUserId() == themeDisplay.getUserId()) {
 		acceptedCalendarsJSONArray.put(calendarJSONObject);
@@ -126,11 +155,13 @@ else if (calendar != null) {
 	else {
 		pendingCalendarsJSONArray.put(calendarJSONObject);
 	}
+
+	hasWorkflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), calendarResource.getGroupId(), CalendarBooking.class.getName());
 }
 
 List<Calendar> manageableCalendars = CalendarServiceUtil.search(themeDisplay.getCompanyId(), new long[] {user.getGroupId(), scopeGroupId}, null, null, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new CalendarNameComparator(true), CalendarActionKeys.MANAGE_BOOKINGS);
 
-long[] otherCalendarIds = StringUtil.split(SessionClicks.get(request, "calendar-portlet-other-calendars", StringPool.BLANK), 0L);
+long[] otherCalendarIds = StringUtil.split(SessionClicks.get(request, "com.liferay.calendar.web_otherCalendars", StringPool.BLANK), 0L);
 
 for (long otherCalendarId : otherCalendarIds) {
 	Calendar otherCalendar = CalendarServiceUtil.fetchCalendar(otherCalendarId);
@@ -161,9 +192,9 @@ for (long otherCalendarId : otherCalendarIds) {
 	<aui:input name="calendarBookingId" type="hidden" value="<%= calendarBookingId %>" />
 	<aui:input name="instanceIndex" type="hidden" value="<%= instanceIndex %>" />
 	<aui:input name="childCalendarIds" type="hidden" />
-	<aui:input name="status" type="hidden" value ="<%= status %>" />
 	<aui:input name="allFollowing" type="hidden" />
 	<aui:input name="updateCalendarBookingInstance" type="hidden" />
+	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 	<liferay-ui:error exception="<%= CalendarBookingDurationException.class %>" message="please-enter-a-start-date-that-comes-before-the-end-date" />
 	<liferay-ui:error exception="<%= CalendarBookingRecurrenceException.class %>" message="the-last-repeating-date-should-come-after-the-event-start-date" />
@@ -324,7 +355,22 @@ for (long otherCalendarId : otherCalendarIds) {
 	<%@ include file="/calendar_booking_recurrence_container.jspf" %>
 
 	<aui:button-row>
-		<aui:button type="submit" />
+
+		<div class="alert alert-info <%= (hasWorkflowDefinitionLink && approved) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />approvalProcessAlert">
+			<%= LanguageUtil.format(request, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, CalendarBooking.class.getName()), false) %>
+		</div>
+
+		<%
+		String publishButtonLabel = "publish";
+
+		if (hasWorkflowDefinitionLink) {
+			publishButtonLabel = "submit-for-publication";
+		}
+		%>
+
+		<aui:button name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+
+		<aui:button name="saveButton" primary="<%= false %>" type="submit" value="save-as-draft" />
 
 		<c:if test="<%= calendarBooking != null %>">
 			<liferay-security:permissionsURL
@@ -396,16 +442,44 @@ for (long otherCalendarId : otherCalendarIds) {
 	String titleCurrentValue = ParamUtil.getString(request, "titleCurrentValue");
 	%>
 
-	<c:if test="<%= Validator.isNotNull(titleCurrentValue) && (calendarBooking == null || !Validator.equals(titleCurrentValue, calendarBooking.getTitle(locale))) %>">
+	<c:if test="<%= Validator.isNotNull(titleCurrentValue) && ((calendarBooking == null) || !Validator.equals(titleCurrentValue, calendarBooking.getTitle(locale))) %>">
 		document.<portlet:namespace />fm.<portlet:namespace />title.value = '<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
 		document.<portlet:namespace />fm.<portlet:namespace />title_<%= themeDisplay.getLanguageId() %>.value = '<%= HtmlUtil.escapeJS(titleCurrentValue) %>';
 	</c:if>
+</aui:script>
+
+<aui:script use="liferay-calendar-interval-selector">
+	new Liferay.IntervalSelector(
+		{
+			containerId: 'meetingEventDate',
+			endDatePickerName: 'endTime',
+			endTimePickerName: 'endTimeTime',
+			namespace: '<portlet:namespace/>',
+			startDatePickerName: 'startTime',
+			startTimePickerName: 'startTimeTime',
+			submitButtonId: 'submit'
+		}
+	);
 </aui:script>
 
 <aui:script use="json,liferay-calendar-date-picker-util,liferay-calendar-list,liferay-calendar-recurrence-util,liferay-calendar-reminders,liferay-calendar-simple-menu">
 	var defaultCalendarId = <%= calendarId %>;
 
 	var scheduler = window.<portlet:namespace />scheduler;
+
+	A.one('#<portlet:namespace />saveButton').on(
+		'click',
+		function() {
+			A.one('#<portlet:namespace />workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
+		}
+	);
+
+	A.one('#<portlet:namespace />publishButton').on(
+		'click',
+		function() {
+			A.one('#<portlet:namespace />workflowAction').val('<%= WorkflowConstants.ACTION_PUBLISH %>');
+		}
+	);
 
 	var syncCalendarsMap = function() {
 		Liferay.CalendarUtil.syncCalendarsMap(
@@ -618,6 +692,15 @@ for (long otherCalendarId : otherCalendarIds) {
 				<portlet:namespace />calendarListPending.add(calendar);
 
 				defaultCalendarId = calendarId;
+
+				if (calendar.hasWorkflowDefinitionLink) {
+					A.one('#<portlet:namespace />approvalProcessAlert').toggleClass('hide', <%= !approved %>);
+					A.one('#<portlet:namespace />publishButton').setContent('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "submit-for-publication")) %>');
+				}
+				else {
+					A.one('#<portlet:namespace />approvalProcessAlert').toggleClass('hide', true);
+					A.one('#<portlet:namespace />publishButton').setContent('<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "publish")) %>');
+				}
 			}
 		);
 

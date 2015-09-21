@@ -8,7 +8,7 @@
 				<execute function="Check" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_CHECKBOX" />
 				<execute function="AssertClickNoError" locator1="CPSpamModerationWikis#WIKIS_NOT_SPAM_BUTTON" value1="Not Spam" />
 				<execute function="Confirm" value1="Are you sure you want to mark the selected pages not spam?" />
-				<execute function="AssertTextEquals" locator1="CPSpamModerationWikis#SUCCESS_MESSAGE" value1="Your request completed successfully. " />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully. " />
 			</then>
 		</if>
 	</command>
@@ -22,28 +22,28 @@
 				<execute function="Check" locator1="CPSpamModerationWikis#WIKI_PAGE_TABLE_CHECKBOX" />
 				<execute function="AssertClickNoError" locator1="CPSpamModerationWikis#WIKIS_SPAM_BUTTON" value1="Spam" />
 				<execute function="Confirm" value1="Are you sure you want to mark the selected pages as spam?" />
-				<execute function="AssertTextEquals" locator1="CPSpamModerationWikis#SUCCESS_MESSAGE" value1="Your request completed successfully. " />
+				<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully. " />
 			</then>
 		</if>
 	</command>
 
 	<command name="navigateToDiscussions">
-		<execute function="AssertClick" locator1="CPSpamModerationWikis#NAVIGATION_DISCUSSIONS" value1="Wikis" />
+		<execute function="AssertClick" locator1="SpamModeration#NAVIGATION_DISCUSSIONS" value1="Wikis" />
 	</command>
 
 	<command name="navigateToMessageBoards">
-		<execute function="AssertClick" locator1="CPSpamModerationWikis#NAVIGATION_MESSAGE_BOARDS" value1="Wikis" />
+		<execute function="AssertClick" locator1="SpamModeration#NAVIGATION_MESSAGE_BOARDS" value1="Wikis" />
 	</command>
 
 	<command name="navigateToWikis">
-		<execute function="AssertClick" locator1="CPSpamModerationWikis#NAVIGATION_WIKIS" value1="Wikis" />
+		<execute function="AssertClick" locator1="SpamModeration#NAVIGATION_WIKIS" value1="Wikis" />
 	</command>
 
 	<command name="viewDefault">
 		<if>
 			<equals arg1="${assetType}" arg2="wikiPage" />
 			<then>
-				<execute function="AssertTextEquals" locator1="CPSpamModerationWikis#INFO_MESSAGE" value1="There are no pages. " />
+				<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no pages. " />
 			</then>
 		</if>
 	</command>

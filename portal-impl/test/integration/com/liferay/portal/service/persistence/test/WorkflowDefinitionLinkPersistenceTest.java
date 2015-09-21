@@ -454,20 +454,25 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 		WorkflowDefinitionLink existingWorkflowDefinitionLink = _persistence.findByPrimaryKey(newWorkflowDefinitionLink.getPrimaryKey());
 
-		Assert.assertEquals(existingWorkflowDefinitionLink.getGroupId(),
-			ReflectionTestUtil.invoke(existingWorkflowDefinitionLink,
+		Assert.assertEquals(Long.valueOf(
+				existingWorkflowDefinitionLink.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingWorkflowDefinitionLink,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(existingWorkflowDefinitionLink.getCompanyId(),
-			ReflectionTestUtil.invoke(existingWorkflowDefinitionLink,
+		Assert.assertEquals(Long.valueOf(
+				existingWorkflowDefinitionLink.getCompanyId()),
+			ReflectionTestUtil.<Long>invoke(existingWorkflowDefinitionLink,
 				"getOriginalCompanyId", new Class<?>[0]));
-		Assert.assertEquals(existingWorkflowDefinitionLink.getClassNameId(),
-			ReflectionTestUtil.invoke(existingWorkflowDefinitionLink,
+		Assert.assertEquals(Long.valueOf(
+				existingWorkflowDefinitionLink.getClassNameId()),
+			ReflectionTestUtil.<Long>invoke(existingWorkflowDefinitionLink,
 				"getOriginalClassNameId", new Class<?>[0]));
-		Assert.assertEquals(existingWorkflowDefinitionLink.getClassPK(),
-			ReflectionTestUtil.invoke(existingWorkflowDefinitionLink,
+		Assert.assertEquals(Long.valueOf(
+				existingWorkflowDefinitionLink.getClassPK()),
+			ReflectionTestUtil.<Long>invoke(existingWorkflowDefinitionLink,
 				"getOriginalClassPK", new Class<?>[0]));
-		Assert.assertEquals(existingWorkflowDefinitionLink.getTypePK(),
-			ReflectionTestUtil.invoke(existingWorkflowDefinitionLink,
+		Assert.assertEquals(Long.valueOf(
+				existingWorkflowDefinitionLink.getTypePK()),
+			ReflectionTestUtil.<Long>invoke(existingWorkflowDefinitionLink,
 				"getOriginalTypePK", new Class<?>[0]));
 	}
 

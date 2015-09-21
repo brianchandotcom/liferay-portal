@@ -30,7 +30,6 @@
 />
 
 <@aui["form"] action="${bindConfigActionURL}" method="post" name="fm">
-
 	<@aui["input"] name="redirect" type="hidden" value="${redirectURL}" />
 	<@aui["input"] name="pid" type="hidden" value="${configurationModel.getID()}" />
 	<@aui["input"] name="factoryPid" type="hidden" value="${configurationModel.getFactoryPid()}" />

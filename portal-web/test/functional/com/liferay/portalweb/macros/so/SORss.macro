@@ -10,8 +10,8 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 			</then>
 		</if>
 
@@ -71,8 +71,8 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 			</then>
 		</if>
 
@@ -120,8 +120,8 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 			</then>
 		</if>
 
@@ -228,8 +228,8 @@
 		<if>
 			<condition function="IsElementPresent" locator1="SOUserBar#EDIT_CONTROLS_NOT_FLAGGED" />
 			<then>
-				<execute function="MouseOver" locator1="Dockbar#EDIT_CONTROLS" />
-				<execute function="Click" locator1="Dockbar#EDIT_CONTROLS" />
+				<execute function="MouseOver" locator1="Icon#EDIT_CONTROLS" />
+				<execute function="Click" locator1="Icon#EDIT_CONTROLS" />
 			</then>
 		</if>
 

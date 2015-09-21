@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -32,7 +32,6 @@ import javax.portlet.PortletRequest;
 
 import javax.servlet.ServletContext;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -90,7 +89,7 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 					exportImportConfiguration);
 
 		exportImportConfigurationTrashRenderer.setServletContext(
-			_servletContext);
+			servletContext);
 
 		return exportImportConfigurationTrashRenderer;
 	}
@@ -117,11 +116,7 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	@Activate
-	protected void activate() {
+		this.servletContext = servletContext;
 	}
 
 	@Override
@@ -139,6 +134,6 @@ public class ExportImportConfigurationTrashHandler extends BaseTrashHandler {
 		return GroupPermissionUtil.contains(permissionChecker, group, actionId);
 	}
 
-	protected ServletContext _servletContext;
+	protected ServletContext servletContext;
 
 }

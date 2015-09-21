@@ -15,11 +15,14 @@
 package com.liferay.document.library.events;
 
 import com.liferay.dynamic.data.mapping.io.DDMFormXSDDeserializer;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslator;
 import com.liferay.dynamic.data.mapping.util.DefaultDDMStructureHelper;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
@@ -48,8 +51,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.util.RawMetadataProcessor;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 
 import java.io.StringReader;
 
@@ -139,7 +140,8 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 
 		DDMForm ddmForm = _ddmFormXSDDeserializer.deserialize(definition);
 
-		serviceContext.setAttribute("ddmForm", ddmForm);
+		serviceContext.setAttribute(
+			"ddmForm", _ddmBeanTranslator.translate(ddmForm));
 
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.fetchFileEntryType(
@@ -277,8 +279,8 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 		sb.append(fieldClass.getSimpleName());
 		sb.append(StringPool.UNDERLINE);
 		sb.append(field.getName());
-		sb.append("\" required=\"false\" showLabel=\"true\" type=\"text\">");
-		sb.append("<meta-data locale=\"");
+		sb.append("\" localizable=\"false\" required=\"false\" ");
+		sb.append("showLabel=\"true\" type=\"text\"><meta-data locale=\"");
 		sb.append(locale);
 		sb.append("\">");
 		sb.append("<entry name=\"label\"><![CDATA[metadata.");
@@ -393,6 +395,11 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 	}
 
 	@Reference
+	protected void setDDMBeanTranslator(DDMBeanTranslator ddmBeanTranslator) {
+		_ddmBeanTranslator = ddmBeanTranslator;
+	}
+
+	@Reference
 	protected void setDDMFormXSDDeserializer(
 		DDMFormXSDDeserializer ddmFormXSDDeserializer) {
 
@@ -437,6 +444,7 @@ public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 
 	private CompanyLocalService _companyLocalService;
 	private DDM _ddm;
+	private DDMBeanTranslator _ddmBeanTranslator;
 	private DDMFormXSDDeserializer _ddmFormXSDDeserializer;
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private DefaultDDMStructureHelper _defaultDDMStructureHelper;

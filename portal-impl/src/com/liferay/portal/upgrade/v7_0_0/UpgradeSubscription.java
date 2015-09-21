@@ -28,7 +28,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.shopping.model.ShoppingOrder;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 
 import java.sql.Connection;
@@ -201,8 +200,6 @@ public class UpgradeSubscription extends UpgradeProcess {
 			SCProductEntry.class.getName(),
 			"SCProductEntry,groupId,productEntryId");
 		_getGroupIdSQLPartsMap.put(
-			ShoppingOrder.class.getName(), "ShoppingOrder,groupId,orderId");
-		_getGroupIdSQLPartsMap.put(
 			WorkflowInstance.class.getName(),
 			"WorkflowInstance,groupId,workflowInstanceId");
 		_getGroupIdSQLPartsMap.put(
@@ -212,7 +209,7 @@ public class UpgradeSubscription extends UpgradeProcess {
 			"com.liferay.bookmarks.model.BookmarksFolder",
 			"BookmarksFolder,groupId,folderId");
 		_getGroupIdSQLPartsMap.put(
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure",
+			"com.liferay.portlet.dynamicdatamapping.DDMStructure",
 			"DDMStructure,groupId,structureId");
 		_getGroupIdSQLPartsMap.put(
 			"com.liferay.portlet.journal.model.JournalFolder",

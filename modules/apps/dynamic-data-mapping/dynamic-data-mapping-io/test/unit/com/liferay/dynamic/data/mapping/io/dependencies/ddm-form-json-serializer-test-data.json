@@ -1,0 +1,177 @@
+{
+	"availableLanguageIds": ["en_US", "pt_BR"],
+	"defaultLanguageId": "en_US",
+	"fields": [
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text",
+				"pt_BR": "Texto"
+			},
+			"localizable": false,
+			"name": "ParentField",
+			"nestedFields": [
+				{
+					"dataType": "string",
+					"indexType": "",
+					"localizable": false,
+					"multiple": true,
+					"name": "ChildField",
+					"options": [
+						{
+							"label": {
+								"en_US": "Option 1",
+								"pt_BR": "Opcao 1"
+							},
+							"value": "Value 1"
+						},
+						{
+							"label": {
+								"en_US": "Option 2",
+								"pt_BR": "Opcao 2"
+							},
+							"value": "Value 2"
+						}
+					],
+					"readOnly": false,
+					"repeatable": false,
+					"required": false,
+					"showLabel": true,
+					"type": "select",
+					"validation": {
+						"errorMessage": "Field ChildField must not be empty.",
+						"expression": "!ChildField.isEmpty()"
+					},
+					"visibilityExpression": "true"
+				}
+			],
+			"predefinedValue": {
+				"en_US": "Example",
+				"pt_BR": "Exemplo"
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"type": "text",
+			"validation": {
+				"errorMessage": "Field ParentField must not be empty.",
+				"expression": "!ParentField.isEmpty()"
+			},
+			"visibilityExpression": "true"
+		},
+		{
+			"dataType": "string",
+			"localizable": false,
+			"name": "BooleanField",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option 1",
+						"pt_BR": "Opcao 1"
+					},
+					"value": "Value 1"
+				},
+				{
+					"label": {
+						"en_US": "Option 2",
+						"pt_BR": "Opcao 2"
+					},
+					"value": "Value 2"
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": true,
+			"showLabel": false,
+			"type": "radio",
+			"validation": {
+				"errorMessage": "Field BooleanField must not be empty.",
+				"expression": "!BooleanField.isEmpty()"
+			},
+			"visibilityExpression": "false"
+		},
+		{
+			"dataType": "string",
+			"indexType": "",
+			"localizable": false,
+			"multiple": true,
+			"name": "SelectField",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option 1",
+						"pt_BR": "Opcao 1"
+					},
+					"value": "Value 1"
+				},
+				{
+					"label": {
+						"en_US": "Option 2",
+						"pt_BR": "Opcao 2"
+					},
+					"value": "Value 2"
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"type": "select",
+			"validation": {
+				"errorMessage": "Field SelectField must not be empty.",
+				"expression": "!SelectField.isEmpty()"
+			},
+			"visibilityExpression": "true"
+		},
+		{
+			"dataType": "string",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text",
+				"pt_BR": "Texto"
+			},
+			"localizable": false,
+			"name": "TextField",
+			"predefinedValue": {
+				"en_US": "Example",
+				"pt_BR": "Exemplo"
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"type": "text",
+			"validation": {
+				"errorMessage": "Field TextField must not be empty.",
+				"expression": "!TextField.isEmpty()"
+			},
+			"visibilityExpression": "true"
+		},
+		{
+			"dataType": "html",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "HTML",
+				"pt_BR": "HTML"
+			},
+			"localizable": true,
+			"name": "HTMLField",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "Tip",
+				"pt_BR": "Dica"
+			},
+			"type": "ddm-text-html"
+		}
+	]
+}

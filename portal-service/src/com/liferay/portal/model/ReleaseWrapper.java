@@ -56,6 +56,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("servletContextName", getServletContextName());
+		attributes.put("schemaVersion", getSchemaVersion());
 		attributes.put("buildNumber", getBuildNumber());
 		attributes.put("buildDate", getBuildDate());
 		attributes.put("verified", getVerified());
@@ -95,6 +96,12 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 
 		if (servletContextName != null) {
 			setServletContextName(servletContextName);
+		}
+
+		String schemaVersion = (String)attributes.get("schemaVersion");
+
+		if (schemaVersion != null) {
+			setSchemaVersion(schemaVersion);
 		}
 
 		Integer buildNumber = (Integer)attributes.get("buildNumber");
@@ -158,6 +165,11 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 		return _release.getBuildNumber();
 	}
 
+	@Override
+	public java.lang.String getBundleSymbolicName() {
+		return _release.getBundleSymbolicName();
+	}
+
 	/**
 	* Returns the create date of this release.
 	*
@@ -216,6 +228,16 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	@Override
 	public long getReleaseId() {
 		return _release.getReleaseId();
+	}
+
+	/**
+	* Returns the schema version of this release.
+	*
+	* @return the schema version of this release
+	*/
+	@Override
+	public java.lang.String getSchemaVersion() {
+		return _release.getSchemaVersion();
 	}
 
 	/**
@@ -393,6 +415,16 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	@Override
 	public void setReleaseId(long releaseId) {
 		_release.setReleaseId(releaseId);
+	}
+
+	/**
+	* Sets the schema version of this release.
+	*
+	* @param schemaVersion the schema version of this release
+	*/
+	@Override
+	public void setSchemaVersion(java.lang.String schemaVersion) {
+		_release.setSchemaVersion(schemaVersion);
 	}
 
 	/**

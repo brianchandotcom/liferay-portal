@@ -268,7 +268,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56568" name="AddWithStructure" priority="4">
+	<command name="AddWithStructure" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -324,7 +324,9 @@
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
-		<execute macro="WebContent#expirePGViaWCD" />
+		<execute macro="WebContent#expirePGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
@@ -336,7 +338,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56568" name="ChangeTemplate" priority="4">
+	<command name="ChangeTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -644,7 +646,7 @@
 		<execute macro="WebContent#publish" />
 
 		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title 1" />
+			<var name="webContentTitle" value="Web Content Title 1" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -661,7 +663,7 @@
 		<execute macro="WebContent#publish" />
 
 		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="WC WebContent Title 2" />
+			<var name="webContentTitle" value="Web Content Title 2" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -827,7 +829,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54964" name="ViewEditTemplate" priority="4">
+	<command name="ViewEditTemplate" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -885,13 +887,13 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute function="Click" locator1="PGWebcontentdisplay#LANGUAGE_MENU_CHINESE" />
+		<execute function="Click" locator1="Language#LANGUAGE_MENU_CHINESE" />
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="世界您好 Content" />
 		</execute>
 
-		<execute function="Click" locator1="PGWebcontentdisplay#LANGUAGE_MENU_ENGLISH" />
+		<execute function="Click" locator1="Language#LANGUAGE_MENU_ENGLISH" />
 
 		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="WC WebContent Content" />

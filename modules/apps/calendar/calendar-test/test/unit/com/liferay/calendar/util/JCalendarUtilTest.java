@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.util;
 
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.util.CalendarFactoryImpl;
@@ -90,6 +91,22 @@ public class JCalendarUtilTest {
 	}
 
 	@Test
+	public void testGetJCalendar() {
+		Calendar losAngelesJCalendar = CalendarFactoryUtil.getCalendar(
+			randomYear(), randomMonth(), randomDayOfMonth(), randomHour(),
+			randomMinute(), randomSecond(), randomMillisecond(),
+			_losAngelesTimeZone);
+
+		Calendar madridJCalendar = JCalendarUtil.getJCalendar(
+			losAngelesJCalendar, _madridTimeZone);
+
+		Assert.assertEquals(_madridTimeZone, madridJCalendar.getTimeZone());
+		Assert.assertEquals(
+			losAngelesJCalendar.getTimeInMillis(),
+			madridJCalendar.getTimeInMillis());
+	}
+
+	@Test
 	public void testGetWeekdayPosition2June2014() {
 		Calendar jCalendar = CalendarFactoryUtil.getCalendar(
 			2014, Calendar.JUNE, 2);
@@ -129,7 +146,74 @@ public class JCalendarUtilTest {
 			Calendar.FRIDAY, jCalendar.get(Calendar.DAY_OF_WEEK));
 	}
 
+	@Test
+	public void testMergeJCalendar() {
+		Calendar dateJCalendar = CalendarFactoryUtil.getCalendar(
+			randomYear(), randomMonth(), randomDayOfMonth(), randomHour(),
+			randomMinute(), randomSecond(), randomMillisecond(),
+			_losAngelesTimeZone);
+		Calendar timeJCalendar = CalendarFactoryUtil.getCalendar(
+			randomYear(), randomMonth(), randomDayOfMonth(), randomHour(),
+			randomMinute(), randomSecond(), randomMillisecond(),
+			_madridTimeZone);
+
+		Calendar jCalendar = JCalendarUtil.mergeJCalendar(
+			dateJCalendar, timeJCalendar, _calcuttaTimeZone);
+
+		Assert.assertEquals(
+			dateJCalendar.get(Calendar.YEAR), jCalendar.get(Calendar.YEAR));
+		Assert.assertEquals(
+			dateJCalendar.get(Calendar.MONTH), jCalendar.get(Calendar.MONTH));
+		Assert.assertEquals(
+			dateJCalendar.get(Calendar.DAY_OF_MONTH),
+			jCalendar.get(Calendar.DAY_OF_MONTH));
+		Assert.assertEquals(
+			timeJCalendar.get(Calendar.HOUR), jCalendar.get(Calendar.HOUR));
+		Assert.assertEquals(
+			timeJCalendar.get(Calendar.MINUTE), jCalendar.get(Calendar.MINUTE));
+		Assert.assertEquals(
+			timeJCalendar.get(Calendar.SECOND), jCalendar.get(Calendar.SECOND));
+		Assert.assertEquals(
+			timeJCalendar.get(Calendar.MILLISECOND),
+			jCalendar.get(Calendar.MILLISECOND));
+		Assert.assertEquals(
+			timeJCalendar.get(Calendar.AM_PM), jCalendar.get(Calendar.AM_PM));
+		Assert.assertEquals(_calcuttaTimeZone, jCalendar.getTimeZone());
+	}
+
+	protected int randomDayOfMonth() {
+		return RandomTestUtil.randomInt(1, 29);
+	}
+
+	protected int randomHour() {
+		return RandomTestUtil.randomInt(0, 24);
+	}
+
+	protected int randomMillisecond() {
+		return RandomTestUtil.randomInt(0, 100);
+	}
+
+	protected int randomMinute() {
+		return RandomTestUtil.randomInt(0, 60);
+	}
+
+	protected int randomMonth() {
+		return RandomTestUtil.randomInt(0, 12);
+	}
+
+	protected int randomSecond() {
+		return RandomTestUtil.randomInt(0, 60);
+	}
+
+	protected int randomYear() {
+		return RandomTestUtil.randomInt(2000, 2100);
+	}
+
+	private static final TimeZone _calcuttaTimeZone = TimeZone.getTimeZone(
+		"Asia/Calcutta");
 	private static final TimeZone _losAngelesTimeZone = TimeZone.getTimeZone(
 		"America/Los_Angeles");
+	private static final TimeZone _madridTimeZone = TimeZone.getTimeZone(
+		"Europe/Madrid");
 
 }

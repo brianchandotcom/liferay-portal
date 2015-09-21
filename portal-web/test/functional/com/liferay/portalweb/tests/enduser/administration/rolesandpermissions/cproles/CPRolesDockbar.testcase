@@ -42,7 +42,7 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertElementNotPresent" locator1="Dockbar#PREVIEW" />
+		<execute function="AssertElementNotPresent" locator1="Icon#PREVIEW" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -68,6 +68,6 @@
 
 		<execute macro="Page#openURL" />
 
-		<execute function="AssertElementNotPresent" locator1="Dockbar#PREVIEW" />
+		<execute function="AssertElementNotPresent" locator1="Icon#PREVIEW" />
 	</command>
 </definition>

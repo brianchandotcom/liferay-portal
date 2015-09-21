@@ -143,7 +143,7 @@ public class PortletBagFactory {
 		List<ControlPanelEntry> controlPanelEntryInstances =
 			newControlPanelEntryInstances(portlet);
 
-		List<AssetRendererFactory> assetRendererFactoryInstances =
+		List<AssetRendererFactory<?>> assetRendererFactoryInstances =
 			newAssetRendererFactoryInstances(portlet);
 
 		List<AtomCollectionAdapter<?>> atomCollectionAdapterInstances =
@@ -281,16 +281,21 @@ public class PortletBagFactory {
 		properties.put("javax.portlet.name", portlet.getPortletId());
 
 		return ServiceTrackerCollections.list(
-			clazz, "(javax.portlet.name=" + portlet.getPortletId() + ")",
+			clazz,
+			"(|(javax.portlet.name=" + portlet.getPortletId() +
+				")(javax.portlet.name=ALL))",
 			properties);
 	}
 
-	protected List<AssetRendererFactory> newAssetRendererFactoryInstances(
+	protected List<AssetRendererFactory<?>> newAssetRendererFactoryInstances(
 			Portlet portlet)
 		throws Exception {
 
-		ServiceTrackerList<AssetRendererFactory> assetRendererFactoryInstances =
-			getServiceTrackerList(AssetRendererFactory.class, portlet);
+		ServiceTrackerList<AssetRendererFactory<?>>
+			assetRendererFactoryInstances = getServiceTrackerList(
+				(Class<AssetRendererFactory<?>>)(Class<?>)
+					AssetRendererFactory.class,
+				portlet);
 
 		for (String assetRendererFactoryClass :
 				portlet.getAssetRendererFactoryClasses()) {
@@ -313,8 +318,8 @@ public class PortletBagFactory {
 				assetRendererEnabledPropertyValue, true);
 
 			if (assetRendererEnabledValue) {
-				AssetRendererFactory assetRendererFactoryInstance =
-					(AssetRendererFactory)newInstance(
+				AssetRendererFactory<?> assetRendererFactoryInstance =
+					(AssetRendererFactory<?>)newInstance(
 						AssetRendererFactory.class, assetRendererFactoryClass);
 
 				assetRendererFactoryInstance.setClassName(
@@ -850,9 +855,13 @@ public class PortletBagFactory {
 			WebDAVStorage webDAVStorageInstance = (WebDAVStorage)newInstance(
 				WebDAVStorage.class, portlet.getWebDAVStorageClass());
 
-			webDAVStorageInstance.setToken(portlet.getWebDAVStorageToken());
+			Map<String, Object> properties = new HashMap<>();
 
-			webDAVStorageInstances.add(webDAVStorageInstance);
+			properties.put("javax.portlet.name", portlet.getPortletId());
+			properties.put(
+				"webdav.storage.token", portlet.getWebDAVStorageToken());
+
+			webDAVStorageInstances.add(webDAVStorageInstance, properties);
 		}
 
 		return webDAVStorageInstances;

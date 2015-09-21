@@ -35,15 +35,7 @@ if (action == null) {
 	title = LanguageUtil.format(request, "new-action-for-x", ruleGroup.getName(locale), false);
 }
 else {
-	StringBundler sb = new StringBundler(5);
-
-	sb.append(action.getName(locale));
-	sb.append(StringPool.SPACE);
-	sb.append(StringPool.OPEN_PARENTHESIS);
-	sb.append(ruleGroup.getName(locale));
-	sb.append(StringPool.CLOSE_PARENTHESIS);
-
-	title = sb.toString();
+	title = StringUtil.appendParentheticalSuffix(action.getName(locale), ruleGroup.getName(locale));
 }
 %>
 

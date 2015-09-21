@@ -263,7 +263,7 @@ public interface VelocityTaglib {
 
 	public void portletIconOptions() throws Exception;
 
-	public void portletIconOptions(String direction, String view)
+	public void portletIconOptions(String direction, String markupView)
 		throws Exception;
 
 	public void portletIconPortlet() throws Exception;
@@ -323,11 +323,21 @@ public interface VelocityTaglib {
 			PortletProvider.Action portletProviderAction)
 		throws Exception;
 
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction, String instanceId)
+		throws Exception;
+
 	public void runtime(String portletName, String queryString)
 		throws Exception;
 
 	public void runtime(
 			String portletName, String queryString, String defaultPreferences)
+		throws Exception;
+
+	public void runtime(
+			String portletName, String instanceId, String queryString,
+			String defaultPreferences)
 		throws Exception;
 
 	public void search() throws Exception;

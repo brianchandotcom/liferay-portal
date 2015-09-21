@@ -1,0 +1,115 @@
+.lfr-source-editor {
+	border-color: #CCC;
+
+	.lfr-source-editor-toolbar {
+		li {
+			> .btn {
+				background-color: #FFF;
+				border: transparent;
+				color: #717383;
+				outline: 0;
+			}
+		}
+	}
+
+	.lfr-source-editor-code {
+		background-color: #FFF;
+		color: #2B4259;
+
+		.ace_gutter {
+			background-color: #EDEDEF;
+			color: #868896;
+			overflow : hidden;
+
+			.ace_fold-widget {
+				font-family: fontawesome-alloy;
+				text-align: center;
+				vertical-align: middle;
+
+				&.ace_open, &.ace_closed {
+					background-image: none;
+				}
+
+				&.ace_open:before {
+					content: "\f0d7";
+				}
+
+				&.ace_closed:before {
+					content: "\f0dA";
+				}
+			}
+
+			.ace_gutter-active-cell {
+				color: #FFF;
+			}
+
+			.ace_gutter-active-line {
+				background-color : #717383;
+			}
+
+			.ace_gutter-layer {
+				border-right: solid 1px #CCC;
+			}
+
+			.ace_info {
+				background-image: none;
+			}
+		}
+
+		.ace_content {
+			.ace_active-line {
+				background-color: #EDEDEF;
+			}
+
+			.ace_constant {
+				color: #34ADAB;
+			}
+
+			.ace_tag {
+				color: #1D5EC7;
+			}
+
+			.ace_string {
+				color: #FF6C58;
+
+				&.ace_regex {
+					color: #F00;
+				}
+			}
+		}
+	}
+
+	&.ace_dark {
+		.lfr-source-editor-code {
+			background-color: #47474F;
+			color: #FFF;
+
+			.ace_gutter {
+				background: #54555E;
+				color: #FFF;
+
+				.ace_gutter-active-line {
+					background-color : #009AED;
+				}
+			}
+
+			.ace_content {
+				.ace_active-line {
+					background-color: #11394E;
+				}
+
+				.ace_cursor {
+					color: #FFF;
+				}
+
+				.ace_tag {
+					color: #4D91FF;
+				}
+			}
+		}
+	}
+}
+
+.lfr-fullscreen-source-editor .lfr-fullscreen-source-editor-content .panel-splitter {
+	border-color: #CCC;
+}

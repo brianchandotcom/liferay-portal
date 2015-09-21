@@ -36,12 +36,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PUBLIC_PAGES</td>
-	<td>//li[contains(@id,'_127_tabs')]/a[contains(.,'Public Pages')]</td>
+	<td>//li[contains(@id,'tabs')]/a[contains(.,'Public Pages')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PRIVATE_PAGES</td>
-	<td>//li[contains(@id,'_127_tabs')]/a[contains(.,'Private Pages')]</td>
+	<td>//li[contains(@id,'tabs')]/a[contains(.,'Private Pages')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -239,7 +239,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	* @return the asset type instances of the portlet
 	*/
 	@Override
-	public java.util.List<com.liferay.portlet.asset.model.AssetRendererFactory> getAssetRendererFactoryInstances() {
+	public java.util.List<com.liferay.portlet.asset.model.AssetRendererFactory<?>> getAssetRendererFactoryInstances() {
 		return _portlet.getAssetRendererFactoryInstances();
 	}
 
@@ -1891,6 +1891,11 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 		return _portlet.isEscapedModel();
 	}
 
+	@Override
+	public boolean isFullPageDisplayable() {
+		return _portlet.isFullPageDisplayable();
+	}
+
 	/**
 	* Returns <code>true</code> to include the portlet and make it available to
 	* be made active.
@@ -2549,6 +2554,11 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setFriendlyURLRoutes(java.lang.String friendlyURLRoutes) {
 		_portlet.setFriendlyURLRoutes(friendlyURLRoutes);
+	}
+
+	@Override
+	public void setFullPageDisplayable(boolean fullPageDisplayable) {
+		_portlet.setFullPageDisplayable(fullPageDisplayable);
 	}
 
 	/**

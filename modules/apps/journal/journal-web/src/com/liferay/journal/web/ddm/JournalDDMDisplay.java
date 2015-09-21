@@ -19,7 +19,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.DDMTemplateConstants;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
-import com.liferay.dynamic.data.mapping.util.DDMPermissionHandler;
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
@@ -55,11 +54,6 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
-	public DDMPermissionHandler getDDMPermissionHandler() {
-		return _ddmPermissionHandler;
-	}
-
-	@Override
 	public String getEditStructureDefaultValuesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse,
@@ -90,7 +84,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
-			long classPK, String portletResource)
+			long classPK, long resourceClassNameId, String portletResource)
 		throws Exception {
 
 		String redirect = ParamUtil.getString(
@@ -99,7 +93,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		if (Validator.isNull(redirect)) {
 			return getViewTemplatesURL(
 				liferayPortletRequest, liferayPortletResponse, classNameId,
-				classPK);
+				classPK, resourceClassNameId);
 		}
 
 		return redirect;
@@ -168,8 +162,5 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 		});
 	private static final Set<String> _viewTemplateExcludedColumnNames =
 		SetUtil.fromArray(new String[] {"mode"});
-
-	private final DDMPermissionHandler _ddmPermissionHandler =
-		new JournalDDMPermissionHandler();
 
 }

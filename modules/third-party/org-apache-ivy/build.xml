@@ -2,37 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="javac.source" value="1.6" />
-	<property name="javac.target" value="1.6" />
-	<property name="original.lib.name" value="ivy" />
-	<property name="original.lib.url" value="http://search.maven.org/remotecontent?filepath=org/apache/ivy" />
-	<property name="original.lib.version" value="2.4.0" />
-
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
-
-	<target name="compile">
-		<process-ivy
-			module.dir="${basedir}"
-		/>
-
-		<unzip
-			dest="classes"
-			src="lib/${original.lib.name}.jar"
-		/>
-
-		<antcall target="patch">
-			<param name="patch.destination" value="org/apache/ivy/util/PropertiesFile.java" />
-			<param name="patch.original.lib.name" value="${original.lib.name}" />
-			<param name="patch.original.lib.source.dir" value="." />
-			<param name="patch.original.lib.url" value="${original.lib.url}" />
-			<param name="patch.original.lib.version" value="${original.lib.version}" />
-			<param name="patch.source" value="patches" />
-		</antcall>
-
-		<compile
-			module.dir="${basedir}"
-		/>
-	</target>
+	<import file="../../build-module.xml" />
 </project>

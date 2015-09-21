@@ -4,7 +4,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_site_navigation_language_web_portlet_LanguagePortlet</portlet-name>
+		<portlet-name>com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>

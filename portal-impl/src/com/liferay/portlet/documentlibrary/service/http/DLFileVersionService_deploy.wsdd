@@ -18,6 +18,10 @@
 		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="http://model.documentlibrary.portlet.liferay.com" name="getLatestFileVersion" qname="operNS:getLatestFileVersion" returnQName="getLatestFileVersionReturn" returnType="rtns:DLFileVersionSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="fileEntryId" type="tns:long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="http://model.documentlibrary.portlet.liferay.com" name="getLatestFileVersion" qname="operNS:getLatestFileVersion" returnQName="getLatestFileVersionReturn" returnType="rtns:DLFileVersionSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="fileEntryId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="excludeWorkingCopy" type="tns:boolean"></parameter>
+		</operation>
 		<parameter name="allowedMethods" value="getFileVersion getFileVersions getFileVersionsCount getLatestFileVersion" />
 		<parameter name="className" value="com.liferay.portlet.documentlibrary.service.http.DLFileVersionServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.documentlibrary.portlet.liferay.com,urn:http.service.documentlibrary.portlet.liferay.com" />

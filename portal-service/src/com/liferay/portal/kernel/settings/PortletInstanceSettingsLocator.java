@@ -17,7 +17,9 @@ package com.liferay.portal.kernel.settings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.util.PortletKeys;
 
 /**
  * @author Ivan Zaera
@@ -25,9 +27,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
  */
 public class PortletInstanceSettingsLocator implements SettingsLocator {
 
-	public PortletInstanceSettingsLocator(Layout layout, String portletId) {
+	public PortletInstanceSettingsLocator(Layout layout, String settingsId) {
 		_layout = layout;
-		_portletId = portletId;
+		_settingsId = settingsId;
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 
 		Settings configurationBeanSettings =
 			_settingsLocatorHelper.getConfigurationBeanSettings(
-				_portletId, portalPropertiesSettings);
+				_settingsId, portalPropertiesSettings);
 
 		Settings portalPreferencesSettings =
 			_settingsLocatorHelper.getPortalPreferencesSettings(
@@ -47,21 +49,22 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 
 		Settings companyPortletPreferencesSettings =
 			_settingsLocatorHelper.getCompanyPortletPreferencesSettings(
-				companyId, _portletId, portalPreferencesSettings);
+				companyId, _settingsId, portalPreferencesSettings);
 
 		Settings groupPortletPreferencesSettings =
 			_settingsLocatorHelper.getGroupPortletPreferencesSettings(
-				_layout.getGroupId(), _portletId,
+				_layout.getGroupId(), _settingsId,
 				companyPortletPreferencesSettings);
 
 		return
 			_settingsLocatorHelper.getPortletInstancePortletPreferencesSettings(
-				_layout, _portletId, groupPortletPreferencesSettings);
+				_layout.getCompanyId(), getPlid(), _settingsId,
+				groupPortletPreferencesSettings);
 	}
 
 	@Override
 	public String getSettingsId() {
-		return _portletId;
+		return _settingsId;
 	}
 
 	protected long getCompanyId(long groupId) throws SettingsException {
@@ -75,8 +78,34 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 		}
 	}
 
+	protected long getPlid() {
+		if (isEmbeddedPortlet()) {
+			return PortletKeys.PREFS_PLID_SHARED;
+		}
+
+		return _layout.getPlid();
+	}
+
+	protected boolean isEmbeddedPortlet() {
+		if (_embeddedPortlet != null) {
+			return _embeddedPortlet;
+		}
+
+		_embeddedPortlet = false;
+
+		if (_layout.isSupportsEmbeddedPortlets()) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)_layout.getLayoutType();
+
+			_embeddedPortlet = layoutTypePortlet.isPortletEmbedded(_settingsId);
+		}
+
+		return _embeddedPortlet;
+	}
+
+	private Boolean _embeddedPortlet = null;
 	private final Layout _layout;
-	private final String _portletId;
+	private final String _settingsId;
 	private final SettingsLocatorHelper _settingsLocatorHelper =
 		SettingsLocatorHelperUtil.getSettingsLocatorHelper();
 

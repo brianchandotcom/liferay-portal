@@ -14,9 +14,7 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.kernel.io.DummyOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -24,17 +22,16 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.FileImpl;
 
-import java.io.FileReader;
+import java.io.IOException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.Map;
-
-import org.apache.derby.tools.ij;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,7 +42,8 @@ public class DBLoader {
 		throws Exception {
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new FileReader(fileName))) {
+				new UnsyncBufferedReader(
+					new UnsyncStringReader(_read(fileName)))) {
 
 			StringBundler sb = new StringBundler();
 
@@ -106,105 +104,20 @@ public class DBLoader {
 		_sqlDir = sqlDir;
 		_fileNames = fileNames;
 
-		if (_databaseType.equals("derby")) {
-			_loadDerby();
-		}
-		else if (_databaseType.equals("hypersonic")) {
+		if (_databaseType.equals("hypersonic")) {
 			_loadHypersonic();
 		}
 	}
 
-	private void _loadDerby() throws Exception {
-		Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+	private static String _read(String fileName) throws IOException {
+		String content = _fileUtil.read(fileName);
 
-		Connection con = null;
+		Matcher matcher = _columnLengthPattern.matcher(content);
 
-		try {
-			con = DriverManager.getConnection(
-				"jdbc:derby:" + _sqlDir + "/" + _databaseName + ";create=true",
-				"", "");
-
-			if (Validator.isNull(_fileNames)) {
-				_loadDerby(con, _sqlDir + "/portal/portal-derby.sql");
-				_loadDerby(con, _sqlDir + "/indexes.sql");
-			}
-			else {
-				for (String fileName : StringUtil.split(_fileNames)) {
-					_loadDerby(con, _sqlDir + "/" + fileName);
-				}
-			}
-		}
-		finally {
-			if (con != null) {
-				con.close();
-			}
-		}
-
-		try {
-			con = DriverManager.getConnection(
-				"jdbc:derby:" + _sqlDir + "/" + _databaseName +
-					";shutdown=true",
-				"", "");
-		}
-		catch (SQLException sqle) {
-			String sqlState = sqle.getSQLState();
-
-			if (!sqlState.equals("08006")) {
-				throw sqle;
-			}
-		}
-		finally {
-			if (con != null) {
-				con.close();
-			}
-		}
-	}
-
-	private void _loadDerby(Connection con, String fileName) throws Exception {
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new UnsyncStringReader(_fileUtil.read(fileName)))) {
-
-			StringBundler sb = new StringBundler();
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.startsWith("--")) {
-					continue;
-				}
-
-				sb.append(line);
-
-				if (line.endsWith(";")) {
-					String sql = sb.toString();
-
-					sql = StringUtil.replace(
-						sql,
-						new String[] {"\\'", "\\\"", "\\\\", "\\n", "\\r"},
-						new String[] {"''", "\"", "\\", "\n", "\r"});
-
-					sql = sql.substring(0, sql.length() - 1);
-
-					sb.setIndex(0);
-
-					if (sql.startsWith("commit")) {
-						continue;
-					}
-
-					ij.runScript(
-						con,
-						new UnsyncByteArrayInputStream(
-							sql.getBytes(StringPool.UTF8)),
-						StringPool.UTF8, new DummyOutputStream(),
-						StringPool.UTF8);
-				}
-			}
-		}
+		return matcher.replaceAll(StringPool.BLANK);
 	}
 
 	private void _loadHypersonic() throws Exception {
-		Class.forName("org.hsqldb.jdbcDriver");
 
 		// See LEP-2927. Appending ;shutdown=true to the database connection URL
 		// guarantees that ${_databaseName}.log is purged.
@@ -241,6 +154,8 @@ public class DBLoader {
 		_fileUtil.write(_sqlDir + "/" + _databaseName + ".script", content);
 	}
 
+	private static final Pattern _columnLengthPattern = Pattern.compile(
+		"\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]");
 	private static final FileImpl _fileUtil = FileImpl.getInstance();
 
 	private final String _databaseName;

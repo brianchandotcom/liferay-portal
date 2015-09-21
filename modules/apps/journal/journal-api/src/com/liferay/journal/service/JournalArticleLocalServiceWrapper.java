@@ -183,9 +183,9 @@ public class JournalArticleLocalServiceWrapper
 	* @param serviceContext the service context to be applied. Can set the
 	UUID, creation date, modification date, expando bridge
 	attributes, guest permissions, group permissions, asset category
-	IDs, asset tag names, asset link entry IDs, URL title, and
-	workflow actions for the web content article. Can also set
-	whether to add the default guest and group permissions.
+	IDs, asset tag names, asset link entry IDs, asset priority, URL
+	title, and workflow actions for the web content article. Can also
+	set whether to add the default guest and group permissions.
 	* @return the web content article
 	* @throws PortalException if a portal exception occurred
 	*/
@@ -3594,13 +3594,13 @@ public class JournalArticleLocalServiceWrapper
 	boolean, String, File, Map, String, ServiceContext)} description.
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, expando bridge attributes, asset category IDs,
-	asset tag names, asset link entry IDs, workflow actions, URL
-	title, and can set whether to add the default command update for
-	the web content article. With respect to social activities, by
-	setting the service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
+	asset tag names, asset link entry IDs, asset priority, workflow
+	actions, URL title, and can set whether to add the default
+	command update for the web content article. With respect to
+	social activities, by setting the service context's command to
+	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
+	invocation is considered a web content update activity; otherwise
+	it is considered a web content add activity.
 	* @return the updated web content article
 	* @throws PortalException if a user with the primary key or a matching web
 	content article could not be found, or if a portal exception
@@ -3687,13 +3687,13 @@ public class JournalArticleLocalServiceWrapper
 	<code>null</code>)
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, expando bridge attributes, asset category IDs,
-	asset tag names, asset link entry IDs, workflow actions, URL
-	title , and can set whether to add the default command update for
-	the web content article. With respect to social activities, by
-	setting the service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
+	asset tag names, asset link entry IDs, asset priority, workflow
+	actions, URL title , and can set whether to add the default
+	command update for the web content article. With respect to
+	social activities, by setting the service context's command to
+	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
+	invocation is considered a web content update activity; otherwise
+	it is considered a web content add activity.
 	* @return the updated web content article
 	* @throws PortalException if a user with the primary key or a matching web
 	content article could not be found, or if a portal exception
@@ -3754,13 +3754,13 @@ public class JournalArticleLocalServiceWrapper
 	article's display page
 	* @param serviceContext the service context to be applied. Can set the
 	modification date, expando bridge attributes, asset category IDs,
-	asset tag names, asset link entry IDs, workflow actions, URL
-	title, and can set whether to add the default command update for
-	the web content article. With respect to social activities, by
-	setting the service context's command to {@link
-	com.liferay.portal.kernel.util.Constants#UPDATE}, the invocation
-	is considered a web content update activity; otherwise it is
-	considered a web content add activity.
+	asset tag names, asset link entry IDs, asset priority, workflow
+	actions, URL title, and can set whether to add the default
+	command update for the web content article. With respect to
+	social activities, by setting the service context's command to
+	{@link com.liferay.portal.kernel.util.Constants#UPDATE}, the
+	invocation is considered a web content update activity; otherwise
+	it is considered a web content add activity.
 	* @return the updated web content article
 	* @throws PortalException if a user with the primary key or a matching web
 	content article could not be found, or if a portal exception
@@ -3843,9 +3843,13 @@ public class JournalArticleLocalServiceWrapper
 	* @param article the web content article
 	* @param assetCategoryIds the primary keys of the new asset categories
 	* @param assetTagNames the new asset tag names
-	* @param assetLinkEntryIds the primary keys of the new asset link entries
+	* @param assetLinkEntryIds the primary keys of the new asset link
+	entries
 	* @throws PortalException if a portal exception occurred
+	* @deprecated As of 7.0.0, replaced by {@link #updateAsset(long,
+	JournalArticle, long[], String[], long[], Double)}
 	*/
+	@Deprecated
 	@Override
 	public void updateAsset(long userId,
 		com.liferay.journal.model.JournalArticle article,
@@ -3854,6 +3858,29 @@ public class JournalArticleLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_journalArticleLocalService.updateAsset(userId, article,
 			assetCategoryIds, assetTagNames, assetLinkEntryIds);
+	}
+
+	/**
+	* Updates the web content article's asset with the new asset categories,
+	* tag names, and link entries, removing and adding them as necessary.
+	*
+	* @param userId the primary key of the user updating the web content
+	article's asset
+	* @param article the web content article
+	* @param assetCategoryIds the primary keys of the new asset categories
+	* @param assetTagNames the new asset tag names
+	* @param assetLinkEntryIds the primary keys of the new asset link entries
+	* @param priority the priority of the asset
+	* @throws PortalException if a portal exception occurred
+	*/
+	@Override
+	public void updateAsset(long userId,
+		com.liferay.journal.model.JournalArticle article,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds, java.lang.Double priority)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_journalArticleLocalService.updateAsset(userId, article,
+			assetCategoryIds, assetTagNames, assetLinkEntryIds, priority);
 	}
 
 	/**

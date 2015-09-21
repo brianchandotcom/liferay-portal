@@ -39,7 +39,7 @@ public class BlogsPortletDisplayTemplateExportCapability
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
-		return BlogsExportImportPreferencesProcessorUtil.getDisplayStyle(
+		return BlogsExportImportPortletPreferencesProcessorUtil.getDisplayStyle(
 			portletPreferences);
 	}
 
@@ -48,8 +48,8 @@ public class BlogsPortletDisplayTemplateExportCapability
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
-		return BlogsExportImportPreferencesProcessorUtil.getDisplayStyleGroupId(
-			portletPreferences);
+		return BlogsExportImportPortletPreferencesProcessorUtil.
+			getDisplayStyleGroupId(portletPreferences);
 	}
 
 }

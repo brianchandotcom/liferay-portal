@@ -14,12 +14,9 @@
 
 package com.liferay.gradle.plugins.js.transpiler;
 
+import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
-
-import com.moowork.gradle.node.NodeExtension;
-import com.moowork.gradle.node.task.NodeTask;
-import com.moowork.gradle.node.task.SetupTask;
 
 import groovy.lang.Closure;
 
@@ -29,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
@@ -46,33 +42,11 @@ import org.gradle.util.GUtil;
 /**
  * @author Andrea Di Giorgi
  */
-public class TranspileJSTask extends NodeTask {
+public class TranspileJSTask extends ExecuteNodeTask {
 
 	public TranspileJSTask() {
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_BABEL_TASK_NAME);
 		dependsOn(JSTranspilerPlugin.DOWNLOAD_LFR_AMD_LOADER_TASK_NAME);
-		dependsOn(SetupTask.NAME);
-
-		Project project = getProject();
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					NodeExtension nodeExtension = GradleUtil.getExtension(
-						project, NodeExtension.class);
-
-					File scriptFile = new File(
-						nodeExtension.getNodeModulesDir(),
-						"node_modules/babel/bin/babel/index.js");
-
-					setScript(scriptFile);
-
-					setWorkingDir(_sourceDir);
-				}
-
-			});
 	}
 
 	public TranspileJSTask exclude(Closure<?> closure) {
@@ -100,10 +74,12 @@ public class TranspileJSTask extends NodeTask {
 	}
 
 	@Override
-	public void exec() {
+	public void executeNode() {
 		setArgs(getCompleteArgs());
 
-		super.exec();
+		super.setWorkingDir(getWorkingDir());
+
+		super.executeNode();
 	}
 
 	public Set<String> getExcludes() {
@@ -140,6 +116,11 @@ public class TranspileJSTask extends NodeTask {
 		FileTree fileTree = project.fileTree(_sourceDir);
 
 		return fileTree.matching(_patternFilterable);
+	}
+
+	@Override
+	public File getWorkingDir() {
+		return getSourceDir();
 	}
 
 	public TranspileJSTask include(Closure<?> closure) {
@@ -194,6 +175,11 @@ public class TranspileJSTask extends NodeTask {
 		File sourceDir = getSourceDir();
 
 		List<Object> completeArgs = new ArrayList<>();
+
+		File scriptFile = new File(
+			getNodeDir(), "node_modules/babel/bin/babel/index.js");
+
+		completeArgs.add(FileUtil.getAbsolutePath(scriptFile));
 
 		GUtil.addToCollection(completeArgs, getArgs());
 

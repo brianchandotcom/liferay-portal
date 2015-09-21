@@ -14,20 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.type.select;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
-import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
-
-import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -44,7 +42,7 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 	}
 
 	@Test
-	public void testGetSelectMultipleRenderedValues() throws Exception {
+	public void testRenderMultipleValues() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
@@ -70,17 +68,17 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		SelectDDMFormFieldValueRendererAccessor
-			selectDDMFormFieldValueRendererAccessor =
-				createSelectDDMFormFieldValueRendererAccessor(LocaleUtil.US);
+		SelectDDMFormFieldValueRenderer selectDDMFormFieldValueRenderer =
+			createSelectDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
 			"option 1, option 2",
-			selectDDMFormFieldValueRendererAccessor.get(ddmFormFieldValue));
+			selectDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.US));
 	}
 
 	@Test
-	public void testGetSelectSingleRenderedValue() throws Exception {
+	public void testRenderSingleValue() throws Exception {
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 
 		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
@@ -106,13 +104,13 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 
 		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
 
-		SelectDDMFormFieldValueRendererAccessor
-			selectDDMFormFieldValueRendererAccessor =
-				createSelectDDMFormFieldValueRendererAccessor(LocaleUtil.US);
+		SelectDDMFormFieldValueRenderer selectDDMFormFieldValueRenderer =
+			createSelectDDMFormFieldValueRenderer();
 
 		Assert.assertEquals(
 			"option 1",
-			selectDDMFormFieldValueRendererAccessor.get(ddmFormFieldValue));
+			selectDDMFormFieldValueRenderer.render(
+				ddmFormFieldValue, LocaleUtil.US));
 	}
 
 	protected DDMFormFieldOptions createDDMFormFieldOptions(
@@ -138,14 +136,16 @@ public class SelectDDMFormFieldValueRendererAccessorTest {
 		return jsonArray;
 	}
 
-	protected SelectDDMFormFieldValueRendererAccessor
-		createSelectDDMFormFieldValueRendererAccessor(Locale locale) {
+	protected SelectDDMFormFieldValueRenderer
+		createSelectDDMFormFieldValueRenderer() {
 
-		SelectDDMFormFieldValueAccessor selectDDMFormFieldValueAccessor =
-			new SelectDDMFormFieldValueAccessor(locale);
+		SelectDDMFormFieldValueRenderer selectDDMFormFieldValueRenderer =
+			new SelectDDMFormFieldValueRenderer();
 
-		return new SelectDDMFormFieldValueRendererAccessor(
-			selectDDMFormFieldValueAccessor);
+		selectDDMFormFieldValueRenderer.setSelectDDMFormFieldValueAccessor(
+			new SelectDDMFormFieldValueAccessor());
+
+		return selectDDMFormFieldValueRenderer;
 	}
 
 	protected void setUpJSONFactoryUtil() {

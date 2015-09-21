@@ -74,7 +74,9 @@ import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.beans.PropertyDescriptor;
 
+import java.io.Closeable;
 import java.io.File;
+import java.io.IOException;
 
 import java.lang.reflect.Field;
 
@@ -82,6 +84,8 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
@@ -160,6 +164,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		catch (Exception e) {
 			_log.error(e, e);
 		}
+
+		closeDataSource("counterDataSourceImpl");
+
+		closeDataSource("liferayDataSourceImpl");
 
 		try {
 			super.contextDestroyed(servletContextEvent);
@@ -291,6 +299,10 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			SchedulerEngineHelper.class,
 			SingleDestinationMessageSenderFactory.class);
 
+		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+
+		ClassLoaderPool.register(_portalServletContextName, portalClassLoader);
+
 		PortalContextLoaderLifecycleThreadLocal.setInitializing(true);
 
 		try {
@@ -326,10 +338,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			SingleVMPoolUtil.clear();
 			WebCachePoolUtil.clear();
 		}
-
-		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		ClassLoaderPool.register(_portalServletContextName, portalClassLoader);
 
 		ServletContextPool.put(_portalServletContextName, servletContext);
 
@@ -379,6 +387,21 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	protected void closeDataSource(String name) {
+		DataSource dataSource = (DataSource)PortalBeanLocatorUtil.locate(name);
+
+		if (dataSource instanceof Closeable) {
+			try {
+				Closeable closeable = (Closeable)dataSource;
+
+				closeable.close();
+			}
+			catch (IOException e) {
+				_log.error(e, e);
+			}
 		}
 	}
 

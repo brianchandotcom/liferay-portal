@@ -16,26 +16,12 @@
 
 <%@ include file="/admin/init.jsp" %>
 
-<%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
-%>
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-buttons>
+		<liferay-util:include page="/admin/display_style_buttons.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-buttons>
 
-<aui:nav-bar id="toolbar">
-	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-		<c:if test="<%= ddlFormAdminDisplayContext.isShowAddRecordSetButton() %>">
-			<aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">
-				<portlet:renderURL var="addRecordSetURL">
-					<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
-					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item cssClass="add-form" href="<%= addRecordSetURL %>" iconCssClass="icon-plus" label="new-form" />
-			</aui:nav-item>
-		</c:if>
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-util:include page="/admin/record_set_search.jsp" servletContext="<%= application %>" />
-	</aui:nav-bar-search>
-</aui:nav-bar>
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/admin/sort_buttons.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>

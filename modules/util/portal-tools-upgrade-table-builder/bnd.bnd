@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Tools Upgrade Table Builder
 Bundle-SymbolicName: com.liferay.portal.tools.upgrade.table.builder
-Bundle-Version: 1.0.2
+Bundle-Version: 1.0.3
 Import-Package:\
 	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\

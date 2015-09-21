@@ -182,7 +182,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertText" locator1="PGMessageboards#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+		<execute function="AssertTextEquals#assertText" locator1="Message#INFO" value1="There are no threads in this category." />
 	</command>
 
 	<command name="AddMBCategorySubcategoryNullName" priority="3">
@@ -564,7 +564,7 @@
 
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute function="AssertClick" locator1="PGMessageboards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute function="AssertClick" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 
 		<execute function="SikuliAssertElementPresent" locator1="SOForums#SCREENSHOTS_FORUMS_THREAD_BODY_CODE_PNG" />
 	</command>
@@ -788,7 +788,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#ADD_CATEGORY_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
 
 		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
@@ -1120,7 +1120,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#ADD_CATEGORY_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#ADD_CATEGORY_BUTTON" />
 
 		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
@@ -1901,11 +1901,11 @@
 
 		<var name="key_subCategoryName" value="${subCategoryName}" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_CATEGORIES" value1="0" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_THREADS" value1="0" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_POSTS" value1="0" />
-		<execute function="AssertClick" locator1="PGMessageboardsCategory#SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORIES" value1="0" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_THREADS" value1="0" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#SUBCATEGORY_TABLE_POSTS" value1="0" />
+		<execute function="AssertClick" locator1="MessageBoards#SUBCATEGORY_TABLE_CATEGORY" value1="${subCategoryName}" />
 
 		<execute function="AssertTextEquals#assertText" locator1="PGMessageboardsCategory#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
@@ -1959,13 +1959,13 @@
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORIES" value1="0" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_THREADS" value1="0" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_TABLE_POSTS" value1="0" />
-		<execute function="AssertClick" locator1="PGMessageboards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_CATEGORIES" value1="0" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_THREADS" value1="0" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_POSTS" value1="0" />
+		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 
-		<execute function="AssertTextEquals#assertText" locator1="PGMessageboards#INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
+		<execute function="AssertTextEquals#assertText" locator1="Message#INFO" value1="There are no threads in this category." />
 		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
 	</command>
 
@@ -3233,10 +3233,10 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#TITLE_HEADER" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_USERNAME_1" value1="${adminName}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#TITLE_HEADER" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_USERNAME_1" value1="${adminName}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsThread#MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 
 	<command name="UserFlagsSOCategoryThreadAndAdminViewsNotificationInGmail" priority="4">
@@ -3691,21 +3691,21 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#PERMISSIONS_BUTTON" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#RSS_LINK" value1="RSS" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#SUBSCRIBE_LINK" value1="Subscribe" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#PERMISSIONS_BUTTON" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#RSS_LINK" value1="RSS" />
+		<execute function="AssertTextEquals" locator1="MessageBoards#SUBSCRIBE_LINK" value1="Subscribe" />
 
 		<var name="key_categoryName" value="${categoryName}" />
 
-		<execute function="AssertClick" locator1="PGMessageboards#CATEGORY_TABLE_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="MessageBoards#CATEGORY_TABLE_ACTIONS" value1="Actions" />
 
-		<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_MENULIST_SUBSCRIBE" value1="Subscribe" />
-		<execute function="AssertTextEquals" locator1="PGMessageboards#CATEGORY_MENULIST_RSS" value1="RSS (Opens New Window)" />
+		<execute function="AssertTextEquals" locator1="MenuItem#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertTextEquals" locator1="MenuItem#RSS" value1="RSS (Opens New Window)" />
 
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#CATEGORY_MENULIST_EDIT" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#CATEGORY_MENULIST_MOVE" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#CATEGORY_MENULIST_PERMISSIONS" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboards#CATEGORY_MENULIST_RECYCLE_BIN" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#EDIT" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#MOVE" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#PERMISSIONS" />
+		<execute function="AssertElementNotPresent" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" />
 
 		<execute macro="MessageboardsCategory#gotoPG">
 			<var name="categoryName" value="${categoryName}" />
@@ -3725,8 +3725,8 @@
 			<var name="categoryName" value="${categoryName}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="PGMessageboardsCategory#ADD_SUBCATEGORY_BUTTON" />
-		<execute function="AssertElementNotPresent" locator1="PGMessageboardsCategory#PERMISSIONS_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#CATEGORIES_ADD_SUBCATEGORY_BUTTON" />
+		<execute function="AssertElementNotPresent" locator1="MessageBoards#PERMISSIONS_BUTTON" />
 		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#RSS_LINK" value1="RSS" />
 		<execute function="AssertTextEquals" locator1="PGMessageboardsCategory#SUBSCRIBE_LINK" value1="Subscribe" />
 
@@ -3900,19 +3900,19 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="PGMessageboards#NAVIGATION_STATISTICS" value1="Statistics" />
+		<execute function="AssertClick" locator1="MessageBoards#NAVIGATION_STATISTICS" value1="Statistics" />
 
 		<if>
-			<condition function="IsElementPresent" locator1="PGMessageboardsStatistics#GENERAL_DROPDOWN_COLLAPSED" />
+			<condition function="IsElementPresent" locator1="MessageBoardsStatistics#GENERAL_DROPDOWN_COLLAPSED" />
 			<then>
-				<execute function="AssertClick" locator1="PGMessageboardsStatistics#GENERAL_DROPDOWN" value1="General" />
+				<execute function="AssertClick" locator1="MessageBoardsStatistics#GENERAL_DROPDOWN" value1="General" />
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="PGMessageboardsStatistics#GENERAL_NUMBER_OF_CATEGORIES" value1="1" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsStatistics#GENERAL_NUMBER_OF_POSTS" value1="0" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsStatistics#GENERAL_NUMBER_OF_PARTICIPANTS" value1="0" />
-		<execute function="AssertTextEquals" locator1="PGMessageboardsStatistics#INFO_MESSAGE" value1="There are no top posters." />
+		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_CATEGORIES" value1="1" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_POSTS" value1="0" />
+		<execute function="AssertTextEquals" locator1="MessageBoardsStatistics#GENERAL_NUMBER_OF_PARTICIPANTS" value1="0" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no top posters." />
 	</command>
 
 	<command name="ViewMessageBoardsThreadStatistics" priority="3">

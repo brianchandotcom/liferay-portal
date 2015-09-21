@@ -1,10 +1,12 @@
 @import "variables";
 
 @import "buttons";
-@import "extras";
+@import "error-log";
 @import "global-formatting";
 @import "scope-select";
 @import "sidebar-command-log";
 @import "sidebar-edit-menu";
 @import "syntax-highlighting";
 @import "xml-log";
+
+@import "extras";

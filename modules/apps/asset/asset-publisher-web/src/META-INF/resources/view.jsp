@@ -40,7 +40,7 @@ if (assetPublisherDisplayContext.isEnableTagBasedNavigation() && assetPublisherD
 Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
-<c:if test="<%= assetPublisherDisplayContext.isShowAddContentButton() && (scopeGroup != null) && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
+<c:if test="<%= assetPublisherDisplayContext.isShowAddContentButton() && (scopeGroup != null) && !scopeGroup.isLayoutPrototype() && (!scopeGroup.hasStagingGroup() || scopeGroup.isStagingGroup()) && !portletName.equals(AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.MOST_VIEWED_ASSETS) && !portletName.equals(AssetPublisherPortletKeys.RELATED_ASSETS) %>">
 
 	<%
 	long[] groupIds = assetPublisherDisplayContext.getGroupIds();

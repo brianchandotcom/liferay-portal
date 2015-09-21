@@ -9,7 +9,7 @@
 	<property name="alloy.version" value="3.0.1" />
 	<property name="alloy-font-awesome.version" value="2.0" />
 	<property name="frontend.js.web.dir" value="../modules/frontend/frontend-js-web" />
-	<property name="sass.portal.common.dir" value="../modules/frontend/frontend-common-css/src/META-INF/resources/html/css/common" />
+	<property name="sass.portal.common.dir" value="../modules/frontend/frontend-common-css/tmp/META-INF/resources" />
 
 	<path id="jspc.common.classpath">
 		<pathelement path="docroot/WEB-INF/classes" />
@@ -67,7 +67,7 @@
 				/>
 			</not>
 			<then>
-				<ant dir="../modules/frontend/frontend-common-css" target="deploy" inheritAll="false" />
+				<gradle-execute dir="../modules/frontend/frontend-css-web" task="buildBourbon" />
 			</then>
 		</if>
 	</target>
@@ -77,13 +77,9 @@
 
 		<mkdir dir="${sass.tmp.dir}" />
 
-		<path id="css.builder.classpath">
-			<fileset dir="${sdk.dir}/dependencies/com.liferay.css.builder/lib" includes="*.jar" />
-		</path>
-
 		<java
 			classname="com.liferay.css.builder.CSSBuilder"
-			classpathref="css.builder.classpath"
+			classpathref="portal.tools.classpath"
 			fork="true"
 			newenvironment="true"
 			outputproperty="build-css.output"
@@ -592,6 +588,13 @@ Please set the property "jdk.7.home" in build.properties.
 
 	<target name="npm-execute">
 		<ant antfile="build-node.xml" dir="${sdk.dir}" target="npm-execute" inheritAll="false" />
+	</target>
+
+	<target name="update-gradle-cache">
+		<gradle-execute forcedcacheenabled="false" task="updateGradleCache">
+			<arg value="--build-file=build-test.gradle" />
+			<arg value="-Dmaven.local.ignore=true" />
+		</gradle-execute>
 	</target>
 
 	<target name="war" depends="build-portal-web-dependencies">

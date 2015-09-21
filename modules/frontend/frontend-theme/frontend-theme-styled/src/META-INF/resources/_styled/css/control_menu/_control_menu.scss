@@ -1,0 +1,85 @@
+.control-menu-level-1 {
+	background-color: $control-menu-level-1-bg;
+}
+
+.control-menu-level-2 {
+	background-color: $control-menu-level-2-bg;
+	border-bottom-color: $control-menu-level-2-border;
+
+	.control-menu-nav {
+		> .active {
+			.control-menu-icon .icon-monospaced {
+				background-color: $control-menu-level-2-nav-item-active-bg;
+				border-radius: $control-menu-level-2-nav-item-active-border-radius;
+				color: $control-menu-level-2-nav-item-active-color;
+			}
+
+			.control-menu-icon-label {
+				color: $control-menu-level-2-nav-item-active-label-color;
+			}
+		}
+
+		.control-menu-icon {
+			color: $control-menu-level-2-nav-item-color;
+		}
+	}
+
+	.control-menu-nav-item {
+		font-weight: 300;
+
+		> label {
+			color: $control-menu-level-2-label-color;
+			font-weight: 300;
+		}
+
+		> .checkbox-default {
+			input[type="checkbox"] {
+				background-color: transparent;
+			}
+
+			label {
+				color: $control-menu-level-2-checkbox-default-label-color;
+				font-weight: 300;
+			}
+		}
+
+		> .form-control {
+			color: $control-menu-level-2-form-control-color;
+		}
+
+		> select.form-control {
+			border-color: transparent;
+		}
+	}
+}
+
+.control-menu-nav {
+	> .active .control-menu-icon {
+		&,
+		&:focus,
+		&:hover {
+			color: $control-menu-level-1-nav-item-active-color;
+		}
+	}
+}
+
+.control-menu-icon {
+	color: $control-menu-level-1-nav-item-color;
+
+	&:focus,
+	&:hover {
+		color: $control-menu-level-1-nav-item-hover-color;
+		text-decoration: none;
+	}
+
+	&.icon-monospaced,
+	.icon-monospaced {
+		font-size: $control-menu-icon-font-size;
+	}
+}
+
+.sidenav-transition .control-menu {
+	@include sm() {
+		@include transition($control-menu-css-transition);
+	}
+}

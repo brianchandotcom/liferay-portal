@@ -34,8 +34,27 @@ boolean workflowEnabled = WorkflowEngineManagerUtil.isDeployed() && (WorkflowHan
 List<WorkflowDefinition> workflowDefinitions = null;
 
 if (workflowEnabled) {
-	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
+	workflowDefinitions = WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitions(company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 }
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+String title = StringPool.BLANK;
+
+if (rootFolder) {
+	title = LanguageUtil.get(request, "home");
+}
+else {
+	if (folder == null) {
+		title = LanguageUtil.get(request, "new-folder");
+	}
+	else {
+		title = folder.getName();
+	}
+}
+
+renderResponse.setTitle(title);
 %>
 
 <portlet:actionURL name='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? "addFolder" : "updateFolder") %>' var="editFolderURL">
@@ -50,19 +69,23 @@ if (workflowEnabled) {
 	/>
 </liferay-util:buffer>
 
-<aui:form action="<%= editFolderURL %>" method="post" name="fm">
+<aui:form action="<%= editFolderURL %>" cssClass="container-fluid-1280" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 	<aui:input name="parentFolderId" type="hidden" value="<%= parentFolderId %>" />
 
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		localizeTitle="<%= (folder == null) %>"
-		title='<%= rootFolder ? "home" : ((folder == null) ? "new-folder" : folder.getName()) %>'
-	/>
-
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-folder-name" />
-	<liferay-ui:error exception="<%= FolderNameException.class %>" message="please-enter-a-valid-name" />
+
+	<liferay-ui:error exception="<%= FolderNameException.class %>">
+		<p>
+			<liferay-ui:message arguments="<%= new String[] {JournalFolderConstants.NAME_LABEL, JournalFolderConstants.NAME_GENERAL_RESTRICTIONS, JournalFolderConstants.NAME_RESERVED_WORDS} %>" key="the-x-cannot-be-x-or-a-reserved-word-such-as-x" />
+		</p>
+
+		<p>
+			<liferay-ui:message arguments="<%= new String[] {JournalFolderConstants.NAME_LABEL, JournalFolderConstants.getNameInvalidCharacters(JournalServiceConfigurationValues.CHAR_BLACKLIST)} %>" key="the-x-cannot-contain-the-following-invalid-characters-x" />
+		</p>
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= InvalidDDMStructureException.class %>" message="you-cannot-apply-the-selected-structure-restrictions-for-this-folder.-at-least-one-web-content-references-another-structure" />
 
 	<aui:model-context bean="<%= folder %>" model="<%= JournalFolder.class %>" />
@@ -163,7 +186,7 @@ if (workflowEnabled) {
 			}
 			%>
 
-			<aui:field-wrapper helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "structure-restrictions-and-workflow" : "structure-restrictions") %>'>
+			<aui:fieldset helpMessage='<%= rootFolder ? "" : "structure-restrictions-help" %>' label='<%= rootFolder ? "" : (workflowEnabled ? "structure-restrictions-and-workflow" : "structure-restrictions") %>'>
 				<c:if test="<%= !rootFolder %>">
 
 					<%
@@ -290,7 +313,7 @@ if (workflowEnabled) {
 						</aui:select>
 					</div>
 				</c:if>
-			</aui:field-wrapper>
+			</aui:fieldset>
 		</c:if>
 
 		<c:if test="<%= !rootFolder && (folder == null) %>">

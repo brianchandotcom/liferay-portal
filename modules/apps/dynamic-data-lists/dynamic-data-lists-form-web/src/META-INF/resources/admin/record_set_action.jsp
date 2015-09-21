@@ -22,7 +22,21 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 %>
 
-<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
+<liferay-ui:icon-menu direction="down" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
+	<c:if test="<%= ddlFormAdminDisplayContext.isShowViewEntriesRecordSetIcon(recordSet) %>">
+		<portlet:renderURL var="viewEntriesURL">
+			<portlet:param name="mvcPath" value="/admin/view_records.jsp" />
+			<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
+			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			iconCssClass="icon-view"
+			message="view-entries"
+			url="<%= viewEntriesURL %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= ddlFormAdminDisplayContext.isShowEditRecordSetIcon(recordSet) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
@@ -31,7 +45,6 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 		</portlet:renderURL>
 
 		<liferay-ui:icon
-			iconCssClass="icon-edit"
 			message="edit"
 			url="<%= editURL %>"
 		/>
@@ -42,6 +55,9 @@ DDLRecordSet recordSet = (DDLRecordSet)row.getObject();
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</portlet:actionURL>
 
-		<liferay-ui:icon-delete url="<%= deleteURL %>" />
+		<liferay-ui:icon
+			message="delete"
+			url="<%= deleteURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

@@ -14,7 +14,7 @@
 
 package com.liferay.layout.item.selector.web.display.context;
 
-import com.liferay.item.selector.criteria.layout.criterion.LayoutItemSelectorCriterion;
+import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 
 /**
  * @author Roberto Díaz

@@ -173,6 +173,12 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	}
 
 	@Override
+	public void mergeFolders(long folderId, long parentFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_bookmarksFolderService.mergeFolders(folderId, parentFolderId);
+	}
+
+	@Override
 	public com.liferay.bookmarks.model.BookmarksFolder moveFolder(
 		long folderId, long parentFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -222,6 +228,12 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 		_bookmarksFolderService.unsubscribeFolder(groupId, folderId);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	String, String, ServiceContext)} and {@link #mergeFolders(
+	long, long)}
+	*/
+	@Deprecated
 	@Override
 	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
 		long folderId, long parentFolderId, java.lang.String name,
@@ -230,6 +242,16 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolderService.updateFolder(folderId, parentFolderId,
 			name, description, mergeWithParentFolder, serviceContext);
+	}
+
+	@Override
+	public com.liferay.bookmarks.model.BookmarksFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _bookmarksFolderService.updateFolder(folderId, parentFolderId,
+			name, description, serviceContext);
 	}
 
 	/**

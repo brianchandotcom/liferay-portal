@@ -832,16 +832,18 @@ public class TemplateContextHelper {
 	protected void prepareTiles(
 		Map<String, Object> contextObjects, HttpServletRequest request) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		ComponentContext componentContext =
 			(ComponentContext)request.getAttribute(
 				ComponentConstants.COMPONENT_CONTEXT);
 
 		if (componentContext == null) {
+			themeDisplay.setTilesSelectable(true);
+
 			return;
 		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		String tilesTitle = (String)componentContext.getAttribute("title");
 

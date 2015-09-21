@@ -5,7 +5,6 @@
 	<portlet>
 		<portlet-name>9</portlet-name>
 		<icon>/html/icons/default.png</icon>
-		<struts-path>admin</struts-path>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.admin.messaging.PluginRepositoriesMessageListener</scheduler-event-listener-class>
 			<trigger>
@@ -24,9 +23,8 @@
 				</simple>
 			</trigger>
 		</scheduler-entry>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
@@ -59,20 +57,6 @@
 		<css-class-wrapper>portlet-directory</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>34</portlet-name>
-		<icon>/html/icons/shopping.png</icon>
-		<struts-path>shopping</struts-path>
-		<portlet-data-handler-class>com.liferay.portlet.shopping.lar.ShoppingPortletDataHandler</portlet-data-handler-class>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-shopping</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>47</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>hello_world</struts-path>
@@ -85,10 +69,9 @@
 	<portlet>
 		<portlet-name>58</portlet-name>
 		<icon>/html/icons/login.png</icon>
-		<struts-path>login</struts-path>
 		<configuration-action-class>com.liferay.portlet.login.action.ConfigurationActionImpl</configuration-action-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
@@ -161,40 +144,9 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>130</portlet-name>
-		<icon>/html/icons/portal_settings.png</icon>
-		<struts-path>portal_settings</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<control-panel-entry-category>configuration</control-panel-entry-category>
-		<control-panel-entry-weight>1.0</control-panel-entry-weight>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/portal_settings/css/main.css</header-portlet-css>
-		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>131</portlet-name>
 		<icon>/html/icons/monitoring.png</icon>
-		<struts-path>monitoring</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>users</control-panel-entry-category>
-		<control-panel-entry-weight>5.0</control-panel-entry-weight>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>132</portlet-name>
-		<icon>/html/icons/plugins_admin.png</icon>
-		<control-panel-entry-category>apps</control-panel-entry-category>
 		<control-panel-entry-weight>5.0</control-panel-entry-weight>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>true</use-default-template>
@@ -218,9 +170,6 @@
 	<portlet>
 		<portlet-name>137</portlet-name>
 		<icon>/html/icons/admin_server.png</icon>
-		<struts-path>admin_server</struts-path>
-		<parent-struts-path>admin</parent-struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>server</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/admin/admin-server-friendly-url-routes.xml</friendly-url-routes>
@@ -228,7 +177,7 @@
 		<control-panel-entry-weight>3.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.OmniadminControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
@@ -265,10 +214,9 @@
 	<portlet>
 		<portlet-name>164</portlet-name>
 		<icon>/html/icons/login.png</icon>
-		<parent-struts-path>login</parent-struts-path>
 		<configuration-action-class>com.liferay.portlet.login.action.ConfigurationActionImpl</configuration-action-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
@@ -329,19 +277,6 @@
 		<css-class-wrapper>portlet-directory</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>190</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>control_panel_home</struts-path>
-		<use-default-template>false</use-default-template>
-		<show-portlet-access-denied>false</show-portlet-access-denied>
-		<show-portlet-inactive>false</show-portlet-inactive>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>195</portlet-name>
 		<struts-path>image_uploader</struts-path>
 		<use-default-template>false</use-default-template>
@@ -352,25 +287,6 @@
 		<css-class-wrapper>portlet-image-uploader</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
-	</portlet>
-	<portlet>
-		<portlet-name>197</portlet-name>
-		<icon>/html/icons/shopping.png</icon>
-		<struts-path>shopping_admin</struts-path>
-		<parent-struts-path>shopping</parent-struts-path>
-		<configuration-action-class>com.liferay.portlet.shopping.action.ConfigurationActionImpl</configuration-action-class>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<portlet-data-handler-class>com.liferay.portlet.shopping.lar.ShoppingPortletDataHandler</portlet-data-handler-class>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>6.0</control-panel-entry-weight>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-shopping</css-class-wrapper>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

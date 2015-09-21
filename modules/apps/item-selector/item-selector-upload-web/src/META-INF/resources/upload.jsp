@@ -21,7 +21,7 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 %>
 
 <div class="lfr-item-viewer" id="itemSelectorUploadContainer">
-	<div class="drop-enabled drop-zone upload-view" data-returntype="<%= HtmlUtil.escapeAttribute(UploadableFileReturnType.class.getName()) %>" data-uploadurl="<%= itemSelectorUploadViewDisplayContext.getURL() %>">
+	<div class="drop-enabled drop-zone upload-view">
 		<div id="uploadDescription">
 			<p>
 				<strong><liferay-ui:message arguments="<%= itemSelectorUploadViewDisplayContext.getRepositoryName() %>" key="drag-and-drop-to-upload-to-x-or" /></strong>
@@ -47,7 +47,9 @@ ItemSelectorUploadViewDisplayContext itemSelectorUploadViewDisplayContext = (Ite
 					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectorUploadViewDisplayContext.getItemSelectedEventName() %>', event);
 				}
 			},
-			rootNode: '#itemSelectorUploadContainer'
+			rootNode: '#itemSelectorUploadContainer',
+			uploadItemReturnType: '<%= HtmlUtil.escapeAttribute(UploadableFileReturnType.class.getName()) %>',
+			uploadItemUrl: '<%= itemSelectorUploadViewDisplayContext.getURL() %>'
 		}
 	);
 </aui:script>

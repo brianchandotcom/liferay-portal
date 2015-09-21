@@ -38,7 +38,6 @@ import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.AccountPersistence;
-import com.liferay.portal.service.persistence.BackgroundTaskPersistence;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.CompanyPersistence;
 import com.liferay.portal.service.persistence.GroupFinder;
@@ -88,12 +87,6 @@ import com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
 import com.liferay.portlet.exportimport.service.persistence.ExportImportConfigurationPersistence;
-import com.liferay.portlet.shopping.service.persistence.ShoppingCartPersistence;
-import com.liferay.portlet.shopping.service.persistence.ShoppingCategoryPersistence;
-import com.liferay.portlet.shopping.service.persistence.ShoppingCouponFinder;
-import com.liferay.portlet.shopping.service.persistence.ShoppingCouponPersistence;
-import com.liferay.portlet.shopping.service.persistence.ShoppingOrderFinder;
-import com.liferay.portlet.shopping.service.persistence.ShoppingOrderPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence;
@@ -1028,63 +1021,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the background task local service.
-	 *
-	 * @return the background task local service
-	 */
-	public com.liferay.portal.service.BackgroundTaskLocalService getBackgroundTaskLocalService() {
-		return backgroundTaskLocalService;
-	}
-
-	/**
-	 * Sets the background task local service.
-	 *
-	 * @param backgroundTaskLocalService the background task local service
-	 */
-	public void setBackgroundTaskLocalService(
-		com.liferay.portal.service.BackgroundTaskLocalService backgroundTaskLocalService) {
-		this.backgroundTaskLocalService = backgroundTaskLocalService;
-	}
-
-	/**
-	 * Returns the background task remote service.
-	 *
-	 * @return the background task remote service
-	 */
-	public com.liferay.portal.service.BackgroundTaskService getBackgroundTaskService() {
-		return backgroundTaskService;
-	}
-
-	/**
-	 * Sets the background task remote service.
-	 *
-	 * @param backgroundTaskService the background task remote service
-	 */
-	public void setBackgroundTaskService(
-		com.liferay.portal.service.BackgroundTaskService backgroundTaskService) {
-		this.backgroundTaskService = backgroundTaskService;
-	}
-
-	/**
-	 * Returns the background task persistence.
-	 *
-	 * @return the background task persistence
-	 */
-	public BackgroundTaskPersistence getBackgroundTaskPersistence() {
-		return backgroundTaskPersistence;
-	}
-
-	/**
-	 * Sets the background task persistence.
-	 *
-	 * @param backgroundTaskPersistence the background task persistence
-	 */
-	public void setBackgroundTaskPersistence(
-		BackgroundTaskPersistence backgroundTaskPersistence) {
-		this.backgroundTaskPersistence = backgroundTaskPersistence;
-	}
-
-	/**
 	 * Returns the class name local service.
 	 *
 	 * @return the class name local service
@@ -1704,252 +1640,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setStagingService(
 		com.liferay.portlet.exportimport.service.StagingService stagingService) {
 		this.stagingService = stagingService;
-	}
-
-	/**
-	 * Returns the shopping cart local service.
-	 *
-	 * @return the shopping cart local service
-	 */
-	public com.liferay.portlet.shopping.service.ShoppingCartLocalService getShoppingCartLocalService() {
-		return shoppingCartLocalService;
-	}
-
-	/**
-	 * Sets the shopping cart local service.
-	 *
-	 * @param shoppingCartLocalService the shopping cart local service
-	 */
-	public void setShoppingCartLocalService(
-		com.liferay.portlet.shopping.service.ShoppingCartLocalService shoppingCartLocalService) {
-		this.shoppingCartLocalService = shoppingCartLocalService;
-	}
-
-	/**
-	 * Returns the shopping cart persistence.
-	 *
-	 * @return the shopping cart persistence
-	 */
-	public ShoppingCartPersistence getShoppingCartPersistence() {
-		return shoppingCartPersistence;
-	}
-
-	/**
-	 * Sets the shopping cart persistence.
-	 *
-	 * @param shoppingCartPersistence the shopping cart persistence
-	 */
-	public void setShoppingCartPersistence(
-		ShoppingCartPersistence shoppingCartPersistence) {
-		this.shoppingCartPersistence = shoppingCartPersistence;
-	}
-
-	/**
-	 * Returns the shopping category local service.
-	 *
-	 * @return the shopping category local service
-	 */
-	public com.liferay.portlet.shopping.service.ShoppingCategoryLocalService getShoppingCategoryLocalService() {
-		return shoppingCategoryLocalService;
-	}
-
-	/**
-	 * Sets the shopping category local service.
-	 *
-	 * @param shoppingCategoryLocalService the shopping category local service
-	 */
-	public void setShoppingCategoryLocalService(
-		com.liferay.portlet.shopping.service.ShoppingCategoryLocalService shoppingCategoryLocalService) {
-		this.shoppingCategoryLocalService = shoppingCategoryLocalService;
-	}
-
-	/**
-	 * Returns the shopping category remote service.
-	 *
-	 * @return the shopping category remote service
-	 */
-	public com.liferay.portlet.shopping.service.ShoppingCategoryService getShoppingCategoryService() {
-		return shoppingCategoryService;
-	}
-
-	/**
-	 * Sets the shopping category remote service.
-	 *
-	 * @param shoppingCategoryService the shopping category remote service
-	 */
-	public void setShoppingCategoryService(
-		com.liferay.portlet.shopping.service.ShoppingCategoryService shoppingCategoryService) {
-		this.shoppingCategoryService = shoppingCategoryService;
-	}
-
-	/**
-	 * Returns the shopping category persistence.
-	 *
-	 * @return the shopping category persistence
-	 */
-	public ShoppingCategoryPersistence getShoppingCategoryPersistence() {
-		return shoppingCategoryPersistence;
-	}
-
-	/**
-	 * Sets the shopping category persistence.
-	 *
-	 * @param shoppingCategoryPersistence the shopping category persistence
-	 */
-	public void setShoppingCategoryPersistence(
-		ShoppingCategoryPersistence shoppingCategoryPersistence) {
-		this.shoppingCategoryPersistence = shoppingCategoryPersistence;
-	}
-
-	/**
-	 * Returns the shopping coupon local service.
-	 *
-	 * @return the shopping coupon local service
-	 */
-	public com.liferay.portlet.shopping.service.ShoppingCouponLocalService getShoppingCouponLocalService() {
-		return shoppingCouponLocalService;
-	}
-
-	/**
-	 * Sets the shopping coupon local service.
-	 *
-	 * @param shoppingCouponLocalService the shopping coupon local service
-	 */
-	public void setShoppingCouponLocalService(
-		com.liferay.portlet.shopping.service.ShoppingCouponLocalService shoppingCouponLocalService) {
-		this.shoppingCouponLocalService = shoppingCouponLocalService;
-	}
-
-	/**
-	 * Returns the shopping coupon remote service.
-	 *
-	 * @return the shopping coupon remote service
-	 */
-	public com.liferay.portlet.shopping.service.ShoppingCouponService getShoppingCouponService() {
-		return shoppingCouponService;
-	}
-
-	/**
-	 * Sets the shopping coupon remote service.
-	 *
-	 * @param shoppingCouponService the shopping coupon remote service
-	 */
-	public void setShoppingCouponService(
-		com.liferay.portlet.shopping.service.ShoppingCouponService shoppingCouponService) {
-		this.shoppingCouponService = shoppingCouponService;
-	}
-
-	/**
-	 * Returns the shopping coupon persistence.
-	 *
-	 * @return the shopping coupon persistence
-	 */
-	public ShoppingCouponPersistence getShoppingCouponPersistence() {
-		return shoppingCouponPersistence;
-	}
-
-	/**
-	 * Sets the shopping coupon persistence.
-	 *
-	 * @param shoppingCouponPersistence the shopping coupon persistence
-	 */
-	public void setShoppingCouponPersistence(
-		ShoppingCouponPersistence shoppingCouponPersistence) {
-		this.shoppingCouponPersistence = shoppingCouponPersistence;
-	}
-
-	/**
-	 * Returns the shopping coupon finder.
-	 *
-	 * @return the shopping coupon finder
-	 */
-	public ShoppingCouponFinder getShoppingCouponFinder() {
-		return shoppingCouponFinder;
-	}
-
-	/**
-	 * Sets the shopping coupon finder.
-	 *
-	 * @param shoppingCouponFinder the shopping coupon finder
-	 */
-	public void setShoppingCouponFinder(
-		ShoppingCouponFinder shoppingCouponFinder) {
-		this.shoppingCouponFinder = shoppingCouponFinder;
-	}
-
-	/**
-	 * Returns the shopping order local service.
-	 *
-	 * @return the shopping order local service
-	 */
-	public com.liferay.portlet.shopping.service.ShoppingOrderLocalService getShoppingOrderLocalService() {
-		return shoppingOrderLocalService;
-	}
-
-	/**
-	 * Sets the shopping order local service.
-	 *
-	 * @param shoppingOrderLocalService the shopping order local service
-	 */
-	public void setShoppingOrderLocalService(
-		com.liferay.portlet.shopping.service.ShoppingOrderLocalService shoppingOrderLocalService) {
-		this.shoppingOrderLocalService = shoppingOrderLocalService;
-	}
-
-	/**
-	 * Returns the shopping order remote service.
-	 *
-	 * @return the shopping order remote service
-	 */
-	public com.liferay.portlet.shopping.service.ShoppingOrderService getShoppingOrderService() {
-		return shoppingOrderService;
-	}
-
-	/**
-	 * Sets the shopping order remote service.
-	 *
-	 * @param shoppingOrderService the shopping order remote service
-	 */
-	public void setShoppingOrderService(
-		com.liferay.portlet.shopping.service.ShoppingOrderService shoppingOrderService) {
-		this.shoppingOrderService = shoppingOrderService;
-	}
-
-	/**
-	 * Returns the shopping order persistence.
-	 *
-	 * @return the shopping order persistence
-	 */
-	public ShoppingOrderPersistence getShoppingOrderPersistence() {
-		return shoppingOrderPersistence;
-	}
-
-	/**
-	 * Sets the shopping order persistence.
-	 *
-	 * @param shoppingOrderPersistence the shopping order persistence
-	 */
-	public void setShoppingOrderPersistence(
-		ShoppingOrderPersistence shoppingOrderPersistence) {
-		this.shoppingOrderPersistence = shoppingOrderPersistence;
-	}
-
-	/**
-	 * Returns the shopping order finder.
-	 *
-	 * @return the shopping order finder
-	 */
-	public ShoppingOrderFinder getShoppingOrderFinder() {
-		return shoppingOrderFinder;
-	}
-
-	/**
-	 * Sets the shopping order finder.
-	 *
-	 * @param shoppingOrderFinder the shopping order finder
-	 */
-	public void setShoppingOrderFinder(ShoppingOrderFinder shoppingOrderFinder) {
-		this.shoppingOrderFinder = shoppingOrderFinder;
 	}
 
 	/**
@@ -3746,12 +3436,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.service.AccountService accountService;
 	@BeanReference(type = AccountPersistence.class)
 	protected AccountPersistence accountPersistence;
-	@BeanReference(type = com.liferay.portal.service.BackgroundTaskLocalService.class)
-	protected com.liferay.portal.service.BackgroundTaskLocalService backgroundTaskLocalService;
-	@BeanReference(type = com.liferay.portal.service.BackgroundTaskService.class)
-	protected com.liferay.portal.service.BackgroundTaskService backgroundTaskService;
-	@BeanReference(type = BackgroundTaskPersistence.class)
-	protected BackgroundTaskPersistence backgroundTaskPersistence;
 	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
 	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
@@ -3818,32 +3502,6 @@ public abstract class GroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portlet.exportimport.service.StagingLocalService stagingLocalService;
 	@BeanReference(type = com.liferay.portlet.exportimport.service.StagingService.class)
 	protected com.liferay.portlet.exportimport.service.StagingService stagingService;
-	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCartLocalService.class)
-	protected com.liferay.portlet.shopping.service.ShoppingCartLocalService shoppingCartLocalService;
-	@BeanReference(type = ShoppingCartPersistence.class)
-	protected ShoppingCartPersistence shoppingCartPersistence;
-	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCategoryLocalService.class)
-	protected com.liferay.portlet.shopping.service.ShoppingCategoryLocalService shoppingCategoryLocalService;
-	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCategoryService.class)
-	protected com.liferay.portlet.shopping.service.ShoppingCategoryService shoppingCategoryService;
-	@BeanReference(type = ShoppingCategoryPersistence.class)
-	protected ShoppingCategoryPersistence shoppingCategoryPersistence;
-	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCouponLocalService.class)
-	protected com.liferay.portlet.shopping.service.ShoppingCouponLocalService shoppingCouponLocalService;
-	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingCouponService.class)
-	protected com.liferay.portlet.shopping.service.ShoppingCouponService shoppingCouponService;
-	@BeanReference(type = ShoppingCouponPersistence.class)
-	protected ShoppingCouponPersistence shoppingCouponPersistence;
-	@BeanReference(type = ShoppingCouponFinder.class)
-	protected ShoppingCouponFinder shoppingCouponFinder;
-	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingOrderLocalService.class)
-	protected com.liferay.portlet.shopping.service.ShoppingOrderLocalService shoppingOrderLocalService;
-	@BeanReference(type = com.liferay.portlet.shopping.service.ShoppingOrderService.class)
-	protected com.liferay.portlet.shopping.service.ShoppingOrderService shoppingOrderService;
-	@BeanReference(type = ShoppingOrderPersistence.class)
-	protected ShoppingOrderPersistence shoppingOrderPersistence;
-	@BeanReference(type = ShoppingOrderFinder.class)
-	protected ShoppingOrderFinder shoppingOrderFinder;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityLocalService.class)
 	protected com.liferay.portlet.social.service.SocialActivityLocalService socialActivityLocalService;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityService.class)

@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CATEGORY</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Add Category')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_CHILD_ARTICLE</td>
 	<td>//a[@role='menuitem' and contains(.,'Add Child Article')]</td>
 	<td></td>
@@ -59,18 +64,23 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_SUBCATEGORY</td>
-	<td>//a[@role='menuitem' and contains(.,'Add Subcategory')]</td>
+	<td>ADD_REPOSITORY</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Repository')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_SUBFOLDER</td>
-	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
+	<td>ADD_SUBCATEGORY</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Add Subcategory')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_USER</td>
 	<td>//a[@role='menuitem' and contains(.,'Add User')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_TEMPLATE</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_adtType} Template')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -100,12 +110,12 @@
 </tr>
 <tr>
 	<td>BASIC_DOCUMENT</td>
-	<td>//a[@role='menuitem' and @title='Basic Document']</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Basic Document')] | //li[contains(@class,'open')]//a[contains(.,'Basic Document')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BASIC_WEB_CONTENT</td>
-	<td>//a[@role='menuitem' and @title='Basic Web Content']</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Basic Web Content')] | //li[contains(@class,'open')]//a[contains(.,'Basic Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -116,6 +126,11 @@
 <tr>
 	<td>BLOGS_ENTRY</td>
 	<td>//a[@role='menuitem' and contains(.,'Blogs Entry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BOOKMARKS_ENTRY</td>
+	<td>//a[@role='menuitem' and contains(.,'Bookmarks Entry')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -145,7 +160,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION</td>
-	<td>//a[@role='menuitem' and contains(.,'Configuration')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Configuration')] | //a[@role='menuitem' and .='Configuration']</td>
 	<td></td>
 </tr>
 <tr>
@@ -155,7 +170,7 @@
 </tr>
 <tr>
 	<td>COPY</td>
-	<td>//a[@role='menuitem' and contains(.,'Copy')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Copy')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -220,7 +235,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -240,12 +255,17 @@
 </tr>
 <tr>
 	<td>FEEDS</td>
-	<td>//a[@role='menuitem' and @title='Feeds']</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Feeds')] | //a[@role='menuitem' and contains(.,'Feeds')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER</td>
+	<td>FOLDER_DM</td>
 	<td>//a[@role='menuitem' and @title='Folder']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_WCM</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[.='Folder']</td>
 	<td></td>
 </tr>
 <tr>
@@ -291,16 +311,6 @@
 <tr>
 	<td>LOOK_AND_FEEL</td>
 	<td>//a[@role='menuitem' and contains(.,'Look and Feel')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>OTHER_SITE</td>
-	<td>//a[@role='menuitem' and contains(.,'Other Site...')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PERMISSIONS</td>
-	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -365,12 +375,17 @@
 </tr>
 <tr>
 	<td>MOVE</td>
-	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Move')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE_TO_THE_RECYCLE_BIN</td>
 	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_TO_THE_RECYCLE_BIN_2</td>
+	<td>xpath=(//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -394,18 +409,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OTHER_SITE</td>
+	<td>//a[@role='menuitem' and contains(.,'Other Site...')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_SELECT</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li/a/span[contains(.,'${key_pageNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(.,'Permissions')] | //li[contains(@class,'open')]//a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PREVIEW</td>
 	<td>//a[@role='menuitem' and contains(.,'Preview')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TO_LIVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Publish to Live')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TO_REMOTE_LIVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Publish to Remote Live')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -421,6 +451,11 @@
 <tr>
 	<td>REMOVE_MEMBERSHIP</td>
 	<td>//a[@role='menuitem' and contains(.,'Remove Membership')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTS</td>
+	<td>//a[@role='menuitem' and @title='Reports']</td>
 	<td></td>
 </tr>
 <tr>
@@ -520,12 +555,12 @@
 </tr>
 <tr>
 	<td>STRUCTURE_NAME</td>
-	<td>//a[@role='menuitem' and contains(.,'${key_structureName}')]</td>
+	<td>//ul[contains(@class,'dropdown-menu-left-side-bottom')]/li/a[contains(.,'${key_structureName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STRUCTURES</td>
-	<td>//a[@role='menuitem' and contains(.,'Structures')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Structures')] | //a[@role='menuitem' and .='Structures']</td>
 	<td></td>
 </tr>
 <tr>
@@ -534,8 +569,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBFOLDER</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBFOLDER_2</td>
+	<td>xpath=(//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Subfolder')])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TEMPLATES</td>
-	<td>//a[@role='menuitem' and contains(.,'Templates')]</td>
+	<td>//a[@role='menuitem']//span[contains(.,'Templates')] | //a[@role='menuitem' and .='Templates']</td>
 	<td></td>
 </tr>
 <tr>
@@ -591,6 +636,16 @@
 <tr>
 	<td>VIEW_REMOVED_ATTACHMENTS</td>
 	<td>//a[@role='menuitem' and contains(.,'View Removed Attachments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_LANGUAGE</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_webContentTranslationLanguage}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WITHDRAW_SUBMISSION</td>
+	<td>//a[@role='menuitem' and contains(.,'Withdraw Submission')]</td>
 	<td></td>
 </tr>
 </tbody>

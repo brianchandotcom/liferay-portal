@@ -1,5 +1,5 @@
 <definition component-name="portal-user-management-and-portal-configuration">
-	<property name="testray.main.component.name" value="Administration" />
+	<property name="testray.main.component.name" value="My Account" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

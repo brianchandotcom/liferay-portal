@@ -62,13 +62,18 @@ import javax.servlet.http.HttpServletResponse;
  * @author Zsolt Berentey
  */
 public class DLFileEntryAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<FileEntry> implements TrashRenderer {
 
 	public DLFileEntryAssetRenderer(
 		FileEntry fileEntry, FileVersion fileVersion) {
 
 		_fileEntry = fileEntry;
 		_fileVersion = fileVersion;
+	}
+
+	@Override
+	public FileEntry getAssetObject() {
+		return _fileEntry;
 	}
 
 	@Override
@@ -162,7 +167,8 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<FileEntry> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
@@ -282,7 +288,8 @@ public class DLFileEntryAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<FileEntry> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

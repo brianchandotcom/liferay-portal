@@ -113,7 +113,7 @@ AUI.add(
 						return new Liferay.DDL.FormBuilder(
 							{
 								definition: instance.get('definition'),
-								pages: layout.pages
+								pagesJSON: layout.pages
 							}
 						);
 					}

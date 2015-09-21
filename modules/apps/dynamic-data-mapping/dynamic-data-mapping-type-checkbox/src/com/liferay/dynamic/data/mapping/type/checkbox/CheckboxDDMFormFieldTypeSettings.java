@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.type.checkbox;
 
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.registry.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMForm;
 import com.liferay.dynamic.data.mapping.registry.annotations.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 /**
  * @author Marcellus Tavares
@@ -27,9 +27,17 @@ public interface CheckboxDDMFormFieldTypeSettings
 	extends DefaultDDMFormFieldTypeSettings {
 
 	@DDMFormField(
-		dataType = "boolean", label = "%predefined-value", type = "checkbox"
+		dataType = "boolean", label = "%predefined-value",
+		properties = {"showAsSwitcher=true"}, type = "checkbox"
 	)
 	@Override
 	public LocalizedValue predefinedValue();
+
+	@DDMFormField(
+		dataType = "boolean", label = "%show-as-a-switcher",
+		properties = {"setting.category=basic", "showAsSwitcher=true"},
+		type = "checkbox"
+	)
+	public boolean showAsSwitcher();
 
 }

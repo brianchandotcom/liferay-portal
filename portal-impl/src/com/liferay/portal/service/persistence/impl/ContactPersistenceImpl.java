@@ -1771,7 +1771,7 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 				contact.setNew(false);
 			}
 			else {
-				session.merge(contact);
+				contact = (Contact)session.merge(contact);
 			}
 		}
 		catch (Exception e) {

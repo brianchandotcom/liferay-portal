@@ -118,7 +118,7 @@
 			String linkCssClass = StringPool.BLANK;
 
 			if (!groupType.isControlPanel()) {
-				linkCssClass = "btn btn-success";
+				linkCssClass = "btn btn-default btn-sm";
 			}
 			%>
 
@@ -127,7 +127,11 @@
 			</liferay-util:buffer>
 
 			<liferay-util:buffer var="publishOnLayoutLink">
-				<aui:a cssClass='<%= linkCssClass + " publish-link" %>' href="<%= simplePublishLayoutsURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>' label="publish-to-live" />
+				<li class="control-menu-nav-item">
+					<button class="btn btn-default btn-sm" href="<%= simplePublishLayoutsURL.toString() %>" id='<%= layoutSetBranchId + "publishToLiveLink" %>'>
+						<liferay-ui:message key="publish-to-live" />
+					</button>
+				</li>
 			</liferay-util:buffer>
 
 			<c:choose>
@@ -137,14 +141,12 @@
 					</li>
 				</c:when>
 				<c:otherwise>
-					<div class="<%= cssClass %> publish-link-container">
-						<%= publishOnLayoutLink %>
-					</div>
+					<%= publishOnLayoutLink %>
 				</c:otherwise>
 			</c:choose>
 
 			<aui:script position="inline" sandbox="<%= true %>">
-				var publishLink = $('#<portlet:namespace /><%= layoutSetBranchId + "publishLink" %>');
+				var publishLink = $('#<%= layoutSetBranchId + "publishLink" %>');
 
 				publishLink.on(
 					'click',
@@ -160,7 +162,7 @@
 					}
 				);
 
-				var publishToLiveLink = $('#<portlet:namespace /><%= layoutSetBranchId + "publishToLiveLink" %>');
+				var publishToLiveLink = $('#<%= layoutSetBranchId + "publishToLiveLink" %>');
 
 				publishToLiveLink.on(
 					'click',

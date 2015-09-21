@@ -173,6 +173,11 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
+	public long getRepositoryId() {
+		return _dlFileShortcut.getRepositoryId();
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(DLFileShortcutConstants.getClassName());
 	}

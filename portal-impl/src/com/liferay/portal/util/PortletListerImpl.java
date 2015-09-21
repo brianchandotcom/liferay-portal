@@ -192,9 +192,8 @@ public class PortletListerImpl implements PortletLister {
 	}
 
 	protected void iteratePortlets(
-			TreeNodeView parentNodeView, PortletCategory portletCategory,
-			Set<String> portletIds, int parentNodeId, int depth)
-		throws PortalException {
+		TreeNodeView parentNodeView, PortletCategory portletCategory,
+		Set<String> portletIds, int parentNodeId, int depth) {
 
 		List<Portlet> portlets = new ArrayList<>();
 

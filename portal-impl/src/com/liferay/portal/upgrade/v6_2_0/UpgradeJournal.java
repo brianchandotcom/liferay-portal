@@ -257,7 +257,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 	protected long getDDMStructureClassNameId() {
 		return PortalUtil.getClassNameId(
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure");
+			"com.liferay.portlet.dynamicdatamapping.DDMStructure");
 	}
 
 	protected long getDDMStructureId(
@@ -446,7 +446,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		updateResourcePermission(
 			companyId, "com.liferay.portlet.journal.model.JournalStructure",
-			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure", id_,
+			"com.liferay.portlet.dynamicdatamapping.DDMStructure", id_,
 			ddmStructureId);
 
 		_ddmStructureIds.put(groupId + "#" + structureId, ddmStructureId);
@@ -560,8 +560,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 				updateResourcePermission(
 					companyId,
 					"com.liferay.portlet.journal.model.JournalTemplate",
-					"com.liferay.portlet.dynamicdatamapping.model.DDMTemplate",
-					id_, ddmTemplateId);
+					"com.liferay.portlet.dynamicdatamapping.DDMTemplate", id_,
+					ddmTemplateId);
 			}
 		}
 		finally {

@@ -58,12 +58,7 @@ public class SeleniumUtil extends PropsValues {
 			_selenium = new IOSMobileDriverImpl(projectDirName, portalURL);
 		}
 		else {
-			if (BROWSER_TYPE.equals("*chrome") ||
-				BROWSER_TYPE.equals("*firefox")) {
-
-				_selenium = new FirefoxWebDriverImpl(projectDirName, portalURL);
-			}
-			else if (BROWSER_TYPE.equals("*googlechrome")) {
+			if (BROWSER_TYPE.equals("chrome")) {
 				System.setProperty(
 					"webdriver.chrome.driver",
 					SELENIUM_EXECUTABLE_DIR_NAME +
@@ -71,17 +66,38 @@ public class SeleniumUtil extends PropsValues {
 
 				_selenium = new ChromeWebDriverImpl(projectDirName, portalURL);
 			}
-			else if (BROWSER_TYPE.equals("*iehta") ||
-					 BROWSER_TYPE.equals("*iexplore")) {
+			else if (BROWSER_TYPE.equals("edge") &&
+					 !SELENIUM_REMOTE_DRIVER_ENABLED) {
+
+				_selenium = new EdgeWebDriverImpl(projectDirName, portalURL);
+			}
+			else if (BROWSER_TYPE.equals("edge") &&
+					 SELENIUM_REMOTE_DRIVER_ENABLED) {
+
+				_selenium = new EdgeRemoteWebDriverImpl(
+					projectDirName, portalURL);
+			}
+			else if (BROWSER_TYPE.equals("firefox")) {
+				_selenium = new FirefoxWebDriverImpl(projectDirName, portalURL);
+			}
+			else if (BROWSER_TYPE.equals("internetexplorer") &&
+					 !SELENIUM_REMOTE_DRIVER_ENABLED) {
 
 				System.setProperty(
 					"webdriver.ie.driver",
-					SELENIUM_EXECUTABLE_DIR_NAME + "\\IEDriverServer.exe");
+					SELENIUM_EXECUTABLE_DIR_NAME +
+						SELENIUM_IE_DRIVER_EXECUTABLE);
 
 				_selenium = new InternetExplorerWebDriverImpl(
 					projectDirName, portalURL);
 			}
-			else if (BROWSER_TYPE.equals("*safari")) {
+			else if (BROWSER_TYPE.equals("internetexplorer") &&
+					 SELENIUM_REMOTE_DRIVER_ENABLED) {
+
+				_selenium = new InternetExplorerRemoteWebDriverImpl(
+					projectDirName, portalURL);
+			}
+			else if (BROWSER_TYPE.equals("safari")) {
 				_selenium = new SafariWebDriverImpl(projectDirName, portalURL);
 			}
 			else {

@@ -29,9 +29,7 @@ int numHits = userTracker.getHits();
 userTracker = userTracker.toEscapedModel();
 %>
 
-<portlet:actionURL var="editSessionURL">
-	<portlet:param name="struts_action" value="/monitoring/edit_session" />
-</portlet:actionURL>
+<portlet:actionURL name="/monitoring/edit_session" var="editSessionURL" />
 
 <aui:form action="<%= editSessionURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

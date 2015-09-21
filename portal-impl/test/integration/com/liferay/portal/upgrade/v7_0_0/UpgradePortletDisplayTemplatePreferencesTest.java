@@ -16,6 +16,7 @@ package com.liferay.portal.upgrade.v7_0_0;
 
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
@@ -55,8 +57,12 @@ public class UpgradePortletDisplayTemplatePreferencesTest
 	public void testUpgrade() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		long[] classNameIds = TemplateHandlerRegistryUtil.getClassNameIds();
+		long resourceClassNameId = PortalUtil.getClassNameId(
+			"com.liferay.portlet.display.template.PortletDisplayTemplate");
+
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
-			_group.getGroupId(), 0, 0);
+			_group.getGroupId(), classNameIds[0], 0, resourceClassNameId);
 
 		_layout = LayoutTestUtil.addLayout(_group);
 

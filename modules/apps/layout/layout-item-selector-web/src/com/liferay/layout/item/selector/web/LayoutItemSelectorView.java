@@ -18,9 +18,11 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.item.selector.criteria.layout.criterion.LayoutItemSelectorCriterion;
+import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.item.selector.web.display.context.LayoutItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.IOException;
 
@@ -66,8 +68,8 @@ public class LayoutItemSelectorView
 
 	@Override
 	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content/Language", locale);
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content/Language", locale, getClass());
 
 		return resourceBundle.getString("layouts");
 	}
@@ -78,10 +80,15 @@ public class LayoutItemSelectorView
 	}
 
 	@Override
+	public boolean isVisible(ThemeDisplay themeDisplay) {
+		return true;
+	}
+
+	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			LayoutItemSelectorCriterion layoutItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedEventName)
+			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
 		LayoutItemSelectorViewDisplayContext

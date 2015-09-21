@@ -548,9 +548,9 @@ public class CalEventPersistenceTest {
 		Assert.assertTrue(Validator.equals(existingCalEvent.getUuid(),
 				ReflectionTestUtil.invoke(existingCalEvent, "getOriginalUuid",
 					new Class<?>[0])));
-		Assert.assertEquals(existingCalEvent.getGroupId(),
-			ReflectionTestUtil.invoke(existingCalEvent, "getOriginalGroupId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingCalEvent.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingCalEvent,
+				"getOriginalGroupId", new Class<?>[0]));
 	}
 
 	protected CalEvent addCalEvent() throws Exception {

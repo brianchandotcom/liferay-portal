@@ -373,9 +373,9 @@ public class RegionPersistenceTest {
 
 		Region existingRegion = _persistence.findByPrimaryKey(newRegion.getPrimaryKey());
 
-		Assert.assertEquals(existingRegion.getCountryId(),
-			ReflectionTestUtil.invoke(existingRegion, "getOriginalCountryId",
-				new Class<?>[0]));
+		Assert.assertEquals(Long.valueOf(existingRegion.getCountryId()),
+			ReflectionTestUtil.<Long>invoke(existingRegion,
+				"getOriginalCountryId", new Class<?>[0]));
 		Assert.assertTrue(Validator.equals(existingRegion.getRegionCode(),
 				ReflectionTestUtil.invoke(existingRegion,
 					"getOriginalRegionCode", new Class<?>[0])));

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Layout Item Selector API
+Bundle-SymbolicName: com.liferay.layout.item.selector
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.layout.item.selector.criterion
+Include-Resource: classes

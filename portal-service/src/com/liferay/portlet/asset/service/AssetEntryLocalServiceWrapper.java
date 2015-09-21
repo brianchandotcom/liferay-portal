@@ -646,10 +646,33 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		long[] groupIds, long userId, java.lang.String className,
+		long classTypeId, java.lang.String keywords, boolean showNonindexable,
+		int status, int start, int end) {
+		return _assetEntryLocalService.search(companyId, groupIds, userId,
+			className, classTypeId, keywords, showNonindexable, status, start,
+			end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long[] groupIds, long userId, java.lang.String className,
 		long classTypeId, java.lang.String keywords, int status, int start,
 		int end) {
 		return _assetEntryLocalService.search(companyId, groupIds, userId,
 			className, classTypeId, keywords, status, start, end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long companyId,
+		long[] groupIds, long userId, java.lang.String className,
+		long classTypeId, java.lang.String userName, java.lang.String title,
+		java.lang.String description, java.lang.String assetCategoryIds,
+		java.lang.String assetTagNames, boolean showNonindexable, int status,
+		boolean andSearch, int start, int end) {
+		return _assetEntryLocalService.search(companyId, groupIds, userId,
+			className, classTypeId, userName, title, description,
+			assetCategoryIds, assetTagNames, showNonindexable, status,
+			andSearch, start, end);
 	}
 
 	@Override
@@ -833,7 +856,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 		java.lang.String title, java.lang.String description,
 		java.lang.String summary, java.lang.String url,
 		java.lang.String layoutUuid, int height, int width,
-		java.lang.Integer priority)
+		java.lang.Double priority)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetEntryLocalService.updateEntry(userId, groupId, createDate,
 			modifiedDate, className, classPK, classUuid, classTypeId,
@@ -846,7 +869,7 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	* @deprecated As of 7.0.0, replaced by {@link #updateEntry(long, long,
 	Date, Date, String, long, String, long, long[], String[],
 	boolean, Date, Date, Date, String, String, String, String,
-	String, String, int, int, Integer)}
+	String, String, int, int, Double)}
 	*/
 	@Deprecated
 	@Override

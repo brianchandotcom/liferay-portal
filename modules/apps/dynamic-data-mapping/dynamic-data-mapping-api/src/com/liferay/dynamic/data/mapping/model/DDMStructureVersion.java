@@ -35,14 +35,14 @@ public interface DDMStructureVersion extends DDMStructureVersionModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm();
+	public com.liferay.dynamic.data.mapping.model.DDMForm getDDMForm();
 
-	public com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout getDDMFormLayout()
+	public com.liferay.dynamic.data.mapping.model.DDMFormLayout getDDMFormLayout()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.dynamic.data.mapping.model.DDMStructure getStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void setDDMForm(
-		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm);
+		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm);
 }

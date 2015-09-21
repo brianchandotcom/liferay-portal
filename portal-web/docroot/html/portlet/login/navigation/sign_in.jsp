@@ -17,11 +17,11 @@
 <%@ include file="/html/portlet/login/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 boolean showSignInIcon = false;
 
-if (Validator.isNotNull(strutsAction) && !strutsAction.equals("/login/login")) {
+if (Validator.isNotNull(mvcRenderCommandName) && !mvcRenderCommandName.equals("/login/login")) {
 	showSignInIcon = true;
 }
 %>
@@ -35,7 +35,7 @@ if (Validator.isNotNull(strutsAction) && !strutsAction.equals("/login/login")) {
 		PortletURL fastLoginURL = PortletURLFactoryUtil.create(request, PortletKeys.FAST_LOGIN, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
 		fastLoginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-		fastLoginURL.setParameter("struts_action", "/login/login");
+		fastLoginURL.setParameter("mvcRenderCommandName", "/login/login");
 		fastLoginURL.setPortletMode(PortletMode.VIEW);
 		fastLoginURL.setWindowState(LiferayWindowState.POP_UP);
 

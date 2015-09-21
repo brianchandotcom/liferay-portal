@@ -16,12 +16,10 @@ package com.liferay.portlet.dynamicdatamapping;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ProxyFactory;
-import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -53,29 +51,10 @@ public class DDMTemplateManagerUtil {
 			groupId, classNameId, templateKey);
 	}
 
-	public static Class<?> getDDMTemplateModelClass() {
-		return _ddmTemplateManager.getDDMTemplateModelClass();
-	}
-
 	public static DDMTemplate getTemplate(long templateId)
 		throws PortalException {
 
 		return _ddmTemplateManager.getTemplate(templateId);
-	}
-
-	public static List<DDMTemplate> getTemplates(
-		long[] groupIds, long classNameId, long classPK) {
-
-		return _ddmTemplateManager.getTemplates(groupIds, classNameId, classPK);
-	}
-
-	public static boolean hasPermission(
-			PermissionChecker permissionChecker, long groupId, long templateId,
-			String portletId, String actionId)
-		throws PortalException {
-
-		return _ddmTemplateManager.hasPermission(
-			permissionChecker, groupId, templateId, portletId, actionId);
 	}
 
 	private static final DDMTemplateManager _ddmTemplateManager =

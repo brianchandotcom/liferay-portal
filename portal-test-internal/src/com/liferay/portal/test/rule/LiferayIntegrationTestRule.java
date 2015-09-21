@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.BaseTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRunTestRule;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.test.rule.callback.ClearThreadLocalTestCallback;
 import com.liferay.portal.test.rule.callback.UniqueStringRandomizerBumperTestCallback;
 import com.liferay.portal.util.InitUtil;
@@ -45,7 +46,7 @@ public class LiferayIntegrationTestRule extends AggregateTestRule {
 	@Override
 	public Statement apply(Statement statement, Description description) {
 		if (!InitUtil.isInitialized()) {
-			System.setProperty("catalina.base", ".");
+			ServerDetector.init(ServerDetector.TOMCAT_ID);
 
 			List<String> configLocations = ListUtil.fromArray(
 				PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));

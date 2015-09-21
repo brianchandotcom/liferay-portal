@@ -14,12 +14,20 @@
 
 package com.liferay.dynamic.data.mapping.test.util.search;
 
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.ValueAccessor;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMBeanTranslatorUtil;
 import com.liferay.dynamic.data.mapping.util.DDMIndexerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Hits;
@@ -43,13 +51,6 @@ import com.liferay.portlet.asset.model.DDMFormValuesReader;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.service.persistence.test.AssetEntryQueryTestUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
-import com.liferay.portlet.dynamicdatamapping.model.Value;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.List;
 import java.util.Locale;
@@ -169,7 +170,8 @@ public abstract class TestOrderHelper {
 		throws Exception {
 
 		return DDMTemplateTestUtil.addTemplate(
-			_serviceContext.getScopeGroupId(), ddmStructure.getStructureId());
+			_serviceContext.getScopeGroupId(), ddmStructure.getStructureId(),
+			getClassNameId());
 	}
 
 	protected void addSearchableAssetEntries(
@@ -234,11 +236,13 @@ public abstract class TestOrderHelper {
 		return assetEntryQuery;
 	}
 
-	protected AssetRendererFactory getAssetRendererFactory() {
+	protected AssetRendererFactory<?> getAssetRendererFactory() {
 		return AssetRendererFactoryRegistryUtil.
 			getAssetRendererFactoryByClassName(
 				getSearchableAssetEntryClassName());
 	}
+
+	protected abstract long getClassNameId();
 
 	protected abstract String getSearchableAssetEntryClassName();
 
@@ -247,11 +251,12 @@ public abstract class TestOrderHelper {
 
 	protected abstract String getSearchableAssetEntryStructureClassName();
 
-	protected String getValue(AssetRenderer assetRenderer) throws Exception {
+	protected String getValue(AssetRenderer<?> assetRenderer) throws Exception {
 		DDMFormValuesReader ddmFormValuesReader =
 			assetRenderer.getDDMFormValuesReader();
 
-		DDMFormValues ddmFormValues = ddmFormValuesReader.getDDMFormValues();
+		DDMFormValues ddmFormValues = DDMBeanTranslatorUtil.translate(
+			ddmFormValuesReader.getDDMFormValues());
 
 		Map<String, List<DDMFormFieldValue>> ddmFormFieldValuesMap =
 			ddmFormValues.getDDMFormFieldValuesMap();
@@ -274,15 +279,16 @@ public abstract class TestOrderHelper {
 	protected String[] getValues(List<AssetEntry> assetEntries)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<?> assetRendererFactory =
+			getAssetRendererFactory();
 
 		String[] values = new String[assetEntries.size()];
 
 		for (int i = 0; i < assetEntries.size(); i++) {
 			AssetEntry assetEntry = assetEntries.get(i);
 
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK());
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
 
 			values[i] = getValue(assetRenderer);
 		}
@@ -329,7 +335,7 @@ public abstract class TestOrderHelper {
 			ddmStructure);
 
 		IdempotentRetryAssert.retryAssert(
-			3, TimeUnit.SECONDS,
+			10, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
 			new Callable<Void>() {
 
 				@Override

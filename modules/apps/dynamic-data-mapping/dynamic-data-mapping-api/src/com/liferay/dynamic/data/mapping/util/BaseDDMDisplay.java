@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -30,8 +31,8 @@ import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -69,7 +70,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	public String getEditTemplateBackURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
-			long classPK, String portletResource)
+			long classPK, long resourceClassNameId, String portletResource)
 		throws Exception {
 
 		String redirect = ParamUtil.getString(
@@ -78,7 +79,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		if (Validator.isNull(redirect) || Validator.isNull(portletResource)) {
 			return getViewTemplatesURL(
 				liferayPortletRequest, liferayPortletResponse, classNameId,
-				classPK);
+				classPK, resourceClassNameId);
 		}
 
 		return redirect;
@@ -89,15 +90,8 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		DDMStructure structure, DDMTemplate template, Locale locale) {
 
 		if ((structure != null) && (template != null)) {
-			StringBundler sb = new StringBundler(5);
-
-			sb.append(template.getName(locale));
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(structure.getName(locale));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			return sb.toString();
+			return StringUtil.appendParentheticalSuffix(
+				template.getName(locale), structure.getName(locale));
 		}
 		else if (structure != null) {
 			return LanguageUtil.format(
@@ -231,6 +225,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			liferayPortletRequest, portletId, 0, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
 	}
@@ -289,6 +284,11 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		return false;
 	}
 
+	@Override
+	public boolean isVersioningEnabled() {
+		return false;
+	}
+
 	protected String getDefaultEditTemplateTitle(Locale locale) {
 		return LanguageUtil.get(locale, "new-template");
 	}
@@ -300,7 +300,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	protected String getViewTemplatesURL(
 			LiferayPortletRequest liferayPortletRequest,
 			LiferayPortletResponse liferayPortletResponse, long classNameId,
-			long classPK)
+			long classPK, long resourceClassNameId)
 		throws Exception {
 
 		String portletId = PortletProviderUtil.getPortletId(
@@ -312,6 +312,9 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		portletURL.setParameter("mvcPath", "/view_template.jsp");
 		portletURL.setParameter("classNameId", String.valueOf(classNameId));
 		portletURL.setParameter("classPK", String.valueOf(classPK));
+		portletURL.setParameter(
+			"resourceClassNameId", String.valueOf(resourceClassNameId));
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return portletURL.toString();
 	}

@@ -19,16 +19,16 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
-import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
+import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManagerUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
 
@@ -62,7 +62,7 @@ public class PortletStagingBackgroundTaskExecutor
 		try {
 			ExportImportThreadLocal.setPortletStagingInProcess(true);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_PORTLET_LOCAL_STARTED,
 				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
 				exportImportConfiguration);
@@ -81,7 +81,7 @@ public class PortletStagingBackgroundTaskExecutor
 
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED,
 				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
 				exportImportConfiguration);
@@ -89,7 +89,7 @@ public class PortletStagingBackgroundTaskExecutor
 		catch (Throwable t) {
 			ExportImportThreadLocal.setPortletStagingInProcess(false);
 
-			ExportImportLifecycleManager.fireExportImportLifecycleEvent(
+			ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
 				EVENT_PUBLICATION_PORTLET_LOCAL_FAILED,
 				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
 				exportImportConfiguration);

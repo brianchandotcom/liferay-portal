@@ -5,8 +5,6 @@
 
 	<target name="run-jonas">
 		<antcall target="run-simple-server" />
-
-		<antcall target="evaluate-logs" />
 	</target>
 
 	<target name="run-selenium-jonas">

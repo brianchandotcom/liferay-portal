@@ -1,9 +1,22 @@
 /* ---------- Syntax highlight ---------- */
 
+/* ---------- Breaks ---------- */
+
+.name + .misc {
+	display: inline-block;
+}
+
+.misc:first-child {
+	margin-left: 0;
+}
+
 /* ---------- Sidebar ---------- */
 
 .command-name {
 	color: $command-name-color;
+	font-family: $monospaced-font;
+	font-size: 14px;
+	font-weight: 300;
 }
 
 .param-type {
@@ -12,84 +25,39 @@
 
 .param-value {
 	color: $param-value-color;
-}
-
-.command-log .child-container {
-	.command-name {
-		color: $sub-command-name-color;
-	}
-
-	.param-value {
-		color: $sub-param-value-color;
-	}
-
-	.error-line .command-name {
-		color: $sub-failed-command-name-color;
-	}
-}
-
-.current-scope {
-	.command-name {
-		color: $scoped-command-name-color;
-	}
-
-	.param-type {
-		color: $scoped-child-container-param-type-color;
-	}
-
-	.param-value {
-		color: $scoped-child-container-param-value-color;
-	}
-
-	.child-container {
-		color: $scoped-child-container-text-color;
-
-		.command-name {
-			color: $scoped-child-container-command-name-color;
-		}
-	}
-}
-
-.failed.linkable {
-	&, &.current-scope, &.current-scope:hover {
-		&, .child-container {
-			color: $sidebar-default-text-color;
-		}
-
-		.command-name, .child-container .command-name {
-			color: $failed-command-name-color;
-		}
-
-		.param-type {
-			color: $failed-param-type-color;
-		}
-
-		.param-value, .child-container .param-value {
-			color: $failed-param-value-color;
-		}
-	}
+	cursor: text;
+	display: block;
+	font-family: $monospaced-font;
+	font-weight: 300;
+	letter-spacing: 0.05em;
+	line-height: 2.5;
 }
 
 .action-type, .misc, .tag-type {
-	margin: 2px;
+	margin: 3px;
 }
 
 /* ---------- XML log ---------- */
 
-.name {
-	color: $xml-name-color;
+.xml-log .misc {
+	color: $xml-misc-color;
 }
 
-.current-scope.pass .name {
-	color: $xml-scoped-name-color;
+.name {
+	color: $xml-name-color;
+	font-size: 13px;
+	font-weight: 300;
+	letter-spacing: 0.06em;
 }
 
 .tag-type {
 	color: $xml-tag-type-color;
 }
 
-.function, .macro {
-	> div .name {
-		color: $xml-selectable-name-color;
+/* ---------- Current scope ---------- */
+
+.current-scope {
+	.name, .command-name {
+		color: $current-scope-name-color;
 	}
 }

@@ -42,11 +42,6 @@ public class MarketplaceAppManagerPanelApp
 	extends BaseControlPanelEntryPanelApp {
 
 	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.CONTROL_PANEL_APPS;
-	}
-
-	@Override
 	public String getPortletId() {
 		return MarketplaceAppManagerPortletKeys.MARKETPLACE_APP_MANAGER;
 	}
@@ -63,7 +58,7 @@ public class MarketplaceAppManagerPanelApp
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 }

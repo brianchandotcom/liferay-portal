@@ -94,9 +94,8 @@ public class EntriesChecker extends RowChecker {
 			}
 		}
 
-		boolean showInput = false;
-
 		String name = null;
+		boolean showInput = false;
 
 		if (article != null) {
 			name = JournalArticle.class.getSimpleName();

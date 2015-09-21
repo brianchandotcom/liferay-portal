@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.language.UTF8Control;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletBag;
@@ -38,6 +37,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -182,9 +182,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		Registry registry = RegistryUtil.getRegistry();
 
 		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			ResourceBundle resourceBundle = ResourceBundle.getBundle(
-				portlet.getResourceBundle(), locale, classLoader,
-				UTF8Control.INSTANCE);
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				portlet.getResourceBundle(), locale, classLoader);
 
 			Map<String, Object> properties = new HashMap<>();
 

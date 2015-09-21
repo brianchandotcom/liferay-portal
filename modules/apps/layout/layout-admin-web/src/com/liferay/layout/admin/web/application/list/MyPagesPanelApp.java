@@ -24,9 +24,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortalUtil;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -37,17 +34,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.MY_SPACE_PRODUCTIVITY_CENTER,
+		"panel.category.key=" + PanelCategoryKeys.USER_MY_ACCOUNT,
 		"service.ranking:Integer=200"
 	},
 	service = PanelApp.class
 )
 public class MyPagesPanelApp extends GroupPagesPanelApp {
-
-	@Override
-	public String getParentCategoryKey() {
-		return PanelCategoryKeys.MY_SPACE_PRODUCTIVITY_CENTER;
-	}
 
 	@Override
 	public String getPortletId() {
@@ -64,27 +56,11 @@ public class MyPagesPanelApp extends GroupPagesPanelApp {
 		return super.hasAccessPermission(permissionChecker, user.getGroup());
 	}
 
-	@Override
-	protected Group getGroup(HttpServletRequest request) {
-		Group group = null;
-
-		try {
-			User user = PortalUtil.getUser(request);
-
-			return user.getGroup();
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
-		}
-
-		return group;
-	}
-
 	@Reference(unbind = "-")
 	protected void setPortletLocalService(
 		PortletLocalService portletLocalService) {
 
-		_portletLocalService = portletLocalService;
+		this.portletLocalService = portletLocalService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

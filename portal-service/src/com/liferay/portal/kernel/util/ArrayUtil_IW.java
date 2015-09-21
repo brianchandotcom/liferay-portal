@@ -588,6 +588,10 @@ public class ArrayUtil_IW {
 		return ArrayUtil.toArray(array);
 	}
 
+	public java.lang.String[] toArray(java.lang.String[] array) {
+		return ArrayUtil.toArray(array);
+	}
+
 	public <T, A> A[] toArray(T[] list,
 		com.liferay.portal.kernel.util.Accessor<T, A> accessor) {
 		return ArrayUtil.toArray(list, accessor);
@@ -733,6 +737,10 @@ public class ArrayUtil_IW {
 	}
 
 	public short[] unique(short[] array) {
+		return ArrayUtil.unique(array);
+	}
+
+	public java.lang.String[] unique(java.lang.String[] array) {
 		return ArrayUtil.unique(array);
 	}
 

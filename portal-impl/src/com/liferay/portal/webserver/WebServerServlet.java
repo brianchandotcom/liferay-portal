@@ -1125,7 +1125,7 @@ public class WebServerServlet extends HttpServlet {
 		if (!PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED) {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 
-			return;
+			throw new PrincipalException();
 		}
 
 		List<WebServerEntry> webServerEntries = new ArrayList<>();

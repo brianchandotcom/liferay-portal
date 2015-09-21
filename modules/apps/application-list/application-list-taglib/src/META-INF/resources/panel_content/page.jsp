@@ -18,12 +18,6 @@
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("liferay-application-list:panel-content:panelCategory");
-
-request.setAttribute(ApplicationListWebKeys.PANEL_CATEGORY, panelCategory);
-
-boolean include = panelCategory.include(request, response);
 %>
 
-<c:if test="<%= !include %>">
-	<liferay-application-list:panel panelCategory="<%= panelCategory %>" />
-</c:if>
+<liferay-application-list:panel panelCategory="<%= panelCategory %>" />

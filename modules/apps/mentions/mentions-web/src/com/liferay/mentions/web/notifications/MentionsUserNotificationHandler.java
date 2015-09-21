@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -49,7 +50,7 @@ public class MentionsUserNotificationHandler
 	}
 
 	@Override
-	protected AssetRenderer getAssetRenderer(JSONObject jsonObject) {
+	protected AssetRenderer<?> getAssetRenderer(JSONObject jsonObject) {
 		MBMessage mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
 			jsonObject.getLong("classPK"));
 
@@ -66,21 +67,21 @@ public class MentionsUserNotificationHandler
 
 	@Override
 	protected String getTitle(
-		JSONObject jsonObject, AssetRenderer assetRenderer,
+		JSONObject jsonObject, AssetRenderer<?> assetRenderer,
 		ServiceContext serviceContext) {
 
 		MBMessage mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
 			jsonObject.getLong("classPK"));
 
-		AssetRendererFactory assetRendererFactory =
+		AssetRendererFactory<?> assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				assetRenderer.getClassName());
 
 		String typeName = assetRendererFactory.getTypeName(
 			serviceContext.getLocale());
 
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content.Language", serviceContext.getLocale());
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", serviceContext.getLocale(), getClass());
 
 		if ((mbMessage != null) && mbMessage.isDiscussion()) {
 			return LanguageUtil.format(

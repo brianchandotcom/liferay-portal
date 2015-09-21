@@ -15,6 +15,12 @@
 package com.liferay.layout.admin.web.portlet;
 
 import com.liferay.layout.admin.web.upgrade.LayoutAdminWebUpgrade;
+import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
+import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRActionServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
+import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceServiceUtil;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.LayoutFriendlyURLsException;
@@ -80,12 +86,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.model.MDRAction;
-import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
-import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRActionServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
-import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 

@@ -17,6 +17,7 @@ package com.liferay.counter.service;
 import com.liferay.counter.model.Counter;
 import com.liferay.portal.cache.key.SimpleCacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
@@ -28,12 +29,18 @@ import com.liferay.portal.kernel.process.ProcessExecutorUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.HypersonicServerTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
+
+import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,7 +64,8 @@ public class CounterLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+			HypersonicServerTestRule.INSTANCE, new LiferayIntegrationTestRule(),
+			MainServletTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -77,12 +85,22 @@ public class CounterLocalServiceTest {
 
 	@Test
 	public void testConcurrentIncrement() throws Exception {
-		String classPath = ClassPathUtil.getJVMClassPath(true);
+		String classPath = getClassPath();
+
+		List<String> arguments = new ArrayList<>();
+
+		arguments.add("-Xmx1024m");
+		arguments.add("-XX:MaxPermSize=200m");
+
+		for (String property :
+				HypersonicServerTestRule.INSTANCE.getJdbcProperties()) {
+
+			arguments.add("-D" + property);
+		}
 
 		Builder builder = new Builder();
 
-		builder.setArguments(
-			Arrays.asList("-Xmx1024m", "-XX:MaxPermSize=200m"));
+		builder.setArguments(arguments);
 		builder.setBootstrapClassPath(classPath);
 		builder.setReactClassLoader(PortalClassLoaderUtil.getClassLoader());
 		builder.setRuntimeClassPath(classPath);
@@ -124,6 +142,27 @@ public class CounterLocalServiceTest {
 		}
 	}
 
+	protected String getClassPath() {
+		String classPath = ClassPathUtil.getJVMClassPath(true);
+
+		if (PropsValues.JDBC_DEFAULT_LIFERAY_POOL_PROVIDER.equals("hikaricp")) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(classPath);
+			sb.append(File.pathSeparator);
+			sb.append(PropsValues.LIFERAY_LIB_PORTAL_DIR);
+			sb.append(File.separator);
+			sb.append(
+				PropsUtil.get(
+					PropsKeys.SETUP_LIFERAY_POOL_PROVIDER_JAR_NAME,
+					new Filter("hikaricp")));
+
+			classPath = sb.toString();
+		}
+
+		return classPath;
+	}
+
 	private static String _COUNTER_NAME;
 
 	private static final int _INCREMENT_COUNT = 10000;
@@ -150,8 +189,10 @@ public class CounterLocalServiceTest {
 
 			System.setProperty("catalina.base", ".");
 			System.setProperty("external-properties", "portal-test.properties");
-			System.setProperty("portal:jdbc.default.maxPoolSize", "3");
-			System.setProperty("portal:jdbc.default.minPoolSize", "1");
+			System.setProperty("portal:jdbc.default.maxPoolSize", "1");
+			System.setProperty("portal:jdbc.default.minPoolSize", "0");
+			System.setProperty("portal:jdbc.default.maximumPoolSize", "1");
+			System.setProperty("portal:jdbc.default.minimumIdle", "0");
 
 			CacheKeyGeneratorUtil cacheKeyGeneratorUtil =
 				new CacheKeyGeneratorUtil();

@@ -16,6 +16,7 @@ package com.liferay.taglib.search;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.io.Writer;
@@ -37,6 +38,10 @@ public class JSPSearchEntry extends SearchEntry {
 		BeanPropertiesUtil.copyProperties(this, jspSearchEntry);
 
 		return jspSearchEntry;
+	}
+
+	public String getHref() {
+		return _href;
 	}
 
 	public String getPath() {
@@ -61,6 +66,8 @@ public class JSPSearchEntry extends SearchEntry {
 			HttpServletResponse response)
 		throws Exception {
 
+		request.setAttribute(WebKeys.SEARCH_ENTRY_HREF, getHref());
+
 		if (_servletContext != null) {
 			RequestDispatcher requestDispatcher =
 				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
@@ -75,6 +82,12 @@ public class JSPSearchEntry extends SearchEntry {
 
 			requestDispatcher.include(request, response);
 		}
+
+		request.removeAttribute(WebKeys.SEARCH_ENTRY_HREF);
+	}
+
+	public void setHref(String href) {
+		_href = href;
 	}
 
 	public void setPath(String path) {
@@ -93,6 +106,7 @@ public class JSPSearchEntry extends SearchEntry {
 		_servletContext = servletContext;
 	}
 
+	private String _href;
 	private String _path;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;

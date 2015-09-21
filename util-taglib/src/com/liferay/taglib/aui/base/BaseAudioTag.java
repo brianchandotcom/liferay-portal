@@ -45,11 +45,11 @@ public abstract class BaseAudioTag extends com.liferay.taglib.util.IncludeTag {
 		return _id;
 	}
 
-	public java.lang.String getOggUrl() {
+	public java.lang.String getOggURL() {
 		return _oggURL;
 	}
 
-	public java.lang.String getSwfUrl() {
+	public java.lang.String getSwfURL() {
 		return _swfURL;
 	}
 
@@ -79,13 +79,13 @@ public abstract class BaseAudioTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("id", id);
 	}
 
-	public void setOggUrl(java.lang.String oggURL) {
+	public void setOggURL(java.lang.String oggURL) {
 		_oggURL = oggURL;
 
 		setScopedAttribute("oggURL", oggURL);
 	}
 
-	public void setSwfUrl(java.lang.String swfURL) {
+	public void setSwfURL(java.lang.String swfURL) {
 		_swfURL = swfURL;
 
 		setScopedAttribute("swfURL", swfURL);

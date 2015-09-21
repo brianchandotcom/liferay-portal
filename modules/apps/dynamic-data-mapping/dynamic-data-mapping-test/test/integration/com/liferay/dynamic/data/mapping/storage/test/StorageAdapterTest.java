@@ -15,15 +15,22 @@
 package com.liferay.dynamic.data.mapping.storage.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.exception.StorageFieldRequiredException;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureConstants;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.test.BaseDDMServiceTestCase;
+import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageAdapter;
+import com.liferay.dynamic.data.mapping.storage.StorageAdapterRegistryUtil;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
-import com.liferay.dynamic.data.mapping.storage.impl.JSONStorageAdapter;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverterUtil;
 import com.liferay.dynamic.data.mapping.util.impl.DDMImpl;
@@ -38,14 +45,12 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.io.Serializable;
 
@@ -76,10 +81,14 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_CLASS_NAME_ID = PortalUtil.getClassNameId(StringUtil.randomString());
+		_CLASS_NAME_ID = PortalUtil.getClassNameId(
+			"com.liferay.dynamic.data.lists.model.DDLRecordSet");
 
 		_enLocale = LocaleUtil.fromLanguageId("en_US");
 		_ptLocale = LocaleUtil.fromLanguageId("pt_BR");
+
+		_jsonStorageAdapter = StorageAdapterRegistryUtil.getStorageAdapter(
+			StorageType.JSON.toString());
 	}
 
 	@Test
@@ -117,6 +126,27 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		fields.put(fieldsDisplayField);
 
 		validate(structure.getStructureId(), fields);
+	}
+
+	@Test(expected = StorageFieldRequiredException.class)
+	public void testCreateWithInvalidDDMFormValues() throws Exception {
+		DDMStructure structure = addStructure(
+			_CLASS_NAME_ID, "Default Structure");
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			"text", false, false, true);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		_jsonStorageAdapter.create(
+			TestPropsValues.getCompanyId(), structure.getStructureId(),
+			ddmFormValues,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	@Test
@@ -219,8 +249,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt",
 			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(
-				TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
 
 		String file1Value = getDocLibraryFieldValue(file1);
@@ -229,8 +258,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 2.txt",
 			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(
-				TikaSafeRandomizerBumper.TEXT_PLAIN_INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
 
 		String file2Value = getDocLibraryFieldValue(file2);
@@ -478,6 +506,39 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 		validate(structure.getStructureId(), fields);
 	}
 
+	@Test(expected = StorageFieldRequiredException.class)
+	public void testUpdateWithInvalidDDMFormValues() throws Exception {
+		DDMStructure structure = addStructure(
+			_CLASS_NAME_ID, "Default Structure");
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createTextDDMFormField(
+			"text", false, false, true);
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createUnlocalizedDDMFormFieldValue(
+				"text", "text value");
+
+		ddmFormValues.addDDMFormFieldValue(ddmFormFieldValue);
+
+		long classPK = _jsonStorageAdapter.create(
+			TestPropsValues.getCompanyId(), structure.getStructureId(),
+			ddmFormValues,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(ddmForm);
+
+		_jsonStorageAdapter.update(
+			classPK, ddmFormValues,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
 	protected long create(
 			StorageAdapter storageAdapter, long ddmStructureId, Fields fields)
 		throws Exception {
@@ -536,13 +597,13 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		String expectedFieldsString = jsonSerializer.serializeDeep(fields);
 
-		long classPK = create(_jsonStorageAdapater, ddmStructureId, fields);
+		long classPK = create(_jsonStorageAdapter, ddmStructureId, fields);
 
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructureId);
 
 		DDMFormValues actualDDMFormValues =
-			_jsonStorageAdapater.getDDMFormValues(classPK);
+			_jsonStorageAdapter.getDDMFormValues(classPK);
 
 		Fields actualFields = DDMFormValuesToFieldsConverterUtil.convert(
 			ddmStructure, actualDDMFormValues);
@@ -554,9 +615,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	private static long _CLASS_NAME_ID;
 
 	private static Locale _enLocale;
+	private static StorageAdapter _jsonStorageAdapter;
 	private static Locale _ptLocale;
-
-	private final StorageAdapter _jsonStorageAdapater =
-		new JSONStorageAdapter();
 
 }

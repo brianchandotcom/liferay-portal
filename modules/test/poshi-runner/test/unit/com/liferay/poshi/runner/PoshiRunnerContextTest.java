@@ -140,7 +140,7 @@ public class PoshiRunnerContextTest extends TestCase {
 	}
 
 	@Test
-	public void testGetPathLocator() {
+	public void testGetPathLocator() throws Exception {
 		String locator = PoshiRunnerContext.getPathLocator(
 			"Action1#TEST_TITLE");
 

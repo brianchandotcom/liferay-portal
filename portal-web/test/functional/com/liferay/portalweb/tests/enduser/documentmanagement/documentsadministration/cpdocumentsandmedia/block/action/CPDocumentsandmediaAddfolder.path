@@ -10,17 +10,17 @@
 <tbody>
 <tr>
 	<td>BACK</td>
-	<td>//a[@id='_199_TabsBack']</td>
+	<td>//a[contains(@id,'Back')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
-	<td>//input[@id='_199_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_199_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,7 +41,7 @@
 <!--PERMISSIONS-->
 <tr>
 	<td>PERMISSIONS_SELECT</td>
-	<td>//select[@id='_199_inputPermissionsViewRole']</td>
+	<td>//select[contains(@id,'inputPermissionsViewRole')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -56,37 +56,37 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_ACCESS_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[2]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[2]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[3]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[3]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_ADD_SHORTCUT_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[4]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[4]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_ADD_SUBFOLDER_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[5]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[5]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_DELETE_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[6]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[6]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[7]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[7]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_UPDATE_CHECKBOX</td>
-	<td>//table[@id='_199_inputPermissionsTable']/tbody/tr/td[8]/input</td>
+	<td>//table[contains(@id,'inputPermissionsTable')]/tbody/tr/td[8]/input</td>
 	<td></td>
 </tr>
 </tbody>

@@ -213,19 +213,15 @@ public class EditFolderAction extends PortletAction {
 			BookmarksFolder.class.getName(), actionRequest);
 
 		if (folderId <= 0) {
-
-			// Add folder
-
 			BookmarksFolderServiceUtil.addFolder(
 				parentFolderId, name, description, serviceContext);
 		}
+		else if (mergeWithParentFolder) {
+			BookmarksFolderServiceUtil.mergeFolders(folderId, parentFolderId);
+		}
 		else {
-
-			// Update folder
-
 			BookmarksFolderServiceUtil.updateFolder(
-				folderId, parentFolderId, name, description,
-				mergeWithParentFolder, serviceContext);
+				folderId, parentFolderId, name, description, serviceContext);
 		}
 	}
 

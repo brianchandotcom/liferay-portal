@@ -26,14 +26,10 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, null, null,
 List results = null;
 int total = 0;
 
-long repositoryId = dlItemSelectorViewDisplayContext.getRepositoryId(request);
 long folderId = dlItemSelectorViewDisplayContext.getFolderId(request);
 String[] mimeTypes = dlItemSelectorViewDisplayContext.getMimeTypes();
 
-String keywords = ParamUtil.getString(request, "keywords");
-String selectedTab = ParamUtil.getString(request, "selectedTab");
-
-if (Validator.isNotNull(keywords) && selectedTab.equals(dlItemSelectorViewDisplayContext.getTitle(locale))) {
+if (dlItemSelectorViewDisplayContext.isSearch()) {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 	searchContext.setAttribute("mimeTypes", mimeTypes);
@@ -41,7 +37,7 @@ if (Validator.isNotNull(keywords) && selectedTab.equals(dlItemSelectorViewDispla
 	searchContext.setFolderIds(new long[] {dlItemSelectorViewDisplayContext.getFolderId(request)});
 	searchContext.setStart(searchContainer.getStart());
 
-	Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
+	Hits hits = DLAppServiceUtil.search(themeDisplay.getScopeGroupId(), searchContext);
 
 	total = hits.getLength();
 
@@ -71,8 +67,8 @@ if (Validator.isNotNull(keywords) && selectedTab.equals(dlItemSelectorViewDispla
 	}
 }
 else {
-	total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false);
-	results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false);
+	results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(themeDisplay.getScopeGroupId(), folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 
 searchContainer.setTotal(total);

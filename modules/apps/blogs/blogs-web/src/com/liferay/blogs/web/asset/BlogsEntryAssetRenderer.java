@@ -18,6 +18,8 @@ import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -28,6 +30,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseJSPAssetRenderer;
+import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsEntryPermission;
 
@@ -49,10 +52,15 @@ import javax.servlet.http.HttpServletResponse;
  * @author Zsolt Berentey
  */
 public class BlogsEntryAssetRenderer
-	extends BaseJSPAssetRenderer implements TrashRenderer {
+	extends BaseJSPAssetRenderer<BlogsEntry> implements TrashRenderer {
 
 	public BlogsEntryAssetRenderer(BlogsEntry entry) {
 		_entry = entry;
+	}
+
+	@Override
+	public BlogsEntry getAssetObject() {
+		return _entry;
 	}
 
 	@Override
@@ -104,7 +112,8 @@ public class BlogsEntryAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<BlogsEntry> assetRendererFactory =
+			getAssetRendererFactory();
 
 		return assetRendererFactory.getPortletId();
 	}
@@ -118,10 +127,20 @@ public class BlogsEntryAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
+		int abstractLength = AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH;
+
+		if (portletRequest != null) {
+			abstractLength = GetterUtil.getInteger(
+				portletRequest.getAttribute(
+					WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH),
+				AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
+		}
+
 		String summary = _entry.getDescription();
 
 		if (Validator.isNull(summary)) {
-			summary = StringUtil.shorten(_entry.getContent(), 200);
+			summary = HtmlUtil.stripHtml(
+				StringUtil.shorten(_entry.getContent(), abstractLength));
 		}
 
 		return summary;
@@ -175,7 +194,8 @@ public class BlogsEntryAssetRenderer
 			WindowState windowState)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory = getAssetRendererFactory();
+		AssetRendererFactory<BlogsEntry> assetRendererFactory =
+			getAssetRendererFactory();
 
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);

@@ -63,12 +63,18 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				String openNodesString = get(request, treeId);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
 
 				openNodesString = StringUtil.removeFromList(
 					openNodesString, nodeId);
 
-				put(request, treeId, openNodesString);
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
 
 				return;
 			}
@@ -86,9 +92,12 @@ public class SessionTreeJSClicks {
 	public static void closeNodes(HttpServletRequest request, String treeId) {
 		while (true) {
 			try {
-				String openNodesString = StringPool.BLANK;
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
-				put(request, treeId, openNodesString);
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					StringPool.BLANK);
 
 				return;
 			}
@@ -108,14 +117,20 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				String openNodesString = get(request, treeId);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
 
 				for (String nodeId : nodeIds) {
 					openNodesString = StringUtil.removeFromList(
 						openNodesString, nodeId);
 				}
 
-				put(request, treeId, openNodesString);
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
 
 				return;
 			}
@@ -134,7 +149,11 @@ public class SessionTreeJSClicks {
 		HttpServletRequest request, String treeId) {
 
 		try {
-			return get(request, treeId);
+			PortalPreferences portalPreferences =
+				PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+			return portalPreferences.getValue(
+				SessionTreeJSClicks.class.getName(), treeId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -170,11 +189,17 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				String openNodesString = get(request, treeId);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
 
 				openNodesString = StringUtil.add(openNodesString, nodeId);
 
-				put(request, treeId, openNodesString);
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
 
 				return;
 			}
@@ -194,13 +219,19 @@ public class SessionTreeJSClicks {
 
 		while (true) {
 			try {
-				String openNodesString = get(request, treeId);
+				PortalPreferences portalPreferences =
+					PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+				String openNodesString = portalPreferences.getValue(
+					SessionTreeJSClicks.class.getName(), treeId);
 
 				for (String nodeId : nodeIds) {
 					openNodesString = StringUtil.add(openNodesString, nodeId);
 				}
 
-				put(request, treeId, openNodesString);
+				portalPreferences.setValue(
+					SessionTreeJSClicks.class.getName(), treeId,
+					openNodesString);
 
 				return;
 			}
@@ -212,21 +243,6 @@ public class SessionTreeJSClicks {
 
 				return;
 			}
-		}
-	}
-
-	protected static String get(HttpServletRequest request, String key) {
-		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-			return preferences.getValue(
-				SessionTreeJSClicks.class.getName(), key);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			return null;
 		}
 	}
 
@@ -248,24 +264,6 @@ public class SessionTreeJSClicks {
 		}
 
 		return layoutIds;
-	}
-
-	protected static void put(
-		HttpServletRequest request, String key, String value) {
-
-		try {
-			PortalPreferences preferences =
-				PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-			preferences.setValue(
-				SessionTreeJSClicks.class.getName(), key, value);
-		}
-		catch (ConcurrentModificationException cme) {
-			throw cme;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

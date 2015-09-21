@@ -32,6 +32,10 @@ public class CalendarBookingModelListener
 
 	@Override
 	public void onAfterRemove(CalendarBooking calendarBooking) {
+		if (calendarBooking == null) {
+			return;
+		}
+
 		CalEvent calEvent = _calEventLocalService.fetchCalEventByUuidAndGroupId(
 			calendarBooking.getUuid(), calendarBooking.getGroupId());
 

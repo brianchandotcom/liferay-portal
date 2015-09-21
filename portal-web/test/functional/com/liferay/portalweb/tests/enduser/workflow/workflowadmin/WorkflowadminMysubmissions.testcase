@@ -23,13 +23,15 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMeByActions" priority="4">
+	<command name="WithdrawTaskAssignedToMeByActions" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -73,13 +75,15 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMeByDetails" priority="4">
+	<command name="WithdrawTaskAssignedToMeByDetails" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -125,13 +129,15 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMyRolesByActions" priority="4">
+	<command name="WithdrawTaskAssignedToMyRolesByActions" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -165,13 +171,15 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskAssignedToMyRolesByDetails" priority="4">
+	<command name="WithdrawTaskAssignedToMyRolesByDetails" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -206,13 +214,15 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskCompletedNoByActions" priority="4">
+	<command name="WithdrawTaskCompletedNoByActions" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />
@@ -251,13 +261,15 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="WithdrawTaskCompletedNoByDetails" priority="4">
+	<command name="WithdrawTaskCompletedNoByDetails" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithWorkflowCP">
 			<var name="webContentContent" value="${webContentContent}" />

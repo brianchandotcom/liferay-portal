@@ -76,6 +76,29 @@ public class LoggerElement {
 		setClassName(_className + " " + className);
 	}
 
+	public LoggerElement copy() {
+		LoggerElement loggerElement = new LoggerElement();
+
+		List<LoggerElement> childLoggerElements = loggerElements();
+
+		for (LoggerElement childLoggerElement : childLoggerElements) {
+			loggerElement.addChildLoggerElement(childLoggerElement.copy());
+		}
+
+		List<String> attributeNames = getAttributeNames();
+
+		for (String attributeName : attributeNames) {
+			loggerElement.setAttribute(
+				attributeName, getAttributeValue(attributeName));
+		}
+
+		loggerElement.setClassName(getClassName());
+		loggerElement.setName(getName());
+		loggerElement.setText(getText());
+
+		return loggerElement;
+	}
+
 	public List<String> getAttributeNames() {
 		List<String> attributeNames = new ArrayList<>();
 
@@ -130,6 +153,20 @@ public class LoggerElement {
 		}
 
 		return childLoggerElements;
+	}
+
+	public void removeChildLoggerElements(String name) {
+		List<LoggerElement> childLoggerElements = new ArrayList<>();
+
+		for (LoggerElement childLoggerElement : _childLoggerElements) {
+			if (Validator.equals(childLoggerElement.getName(), name)) {
+				childLoggerElements.add(childLoggerElement);
+			}
+		}
+
+		for (LoggerElement childLoggerElement : childLoggerElements) {
+			_childLoggerElements.remove(childLoggerElement);
+		}
 	}
 
 	public void removeClassName(String className) {

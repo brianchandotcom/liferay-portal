@@ -6,7 +6,7 @@
 <@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
 	<#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated")>
 
-	<@liferay_ui["input-editor"] contentsLanguageId="${requestedLocale}" editorName="${editorName}" initMethod="" name="${namespacedFieldName}Editor" onBlurMethod="${namespacedFieldName}OnBlurEditor" skipEditorLoading=skipEditorLoading />
+	<@liferay_ui["input-editor"] contentsLanguageId="${requestedLocale}" editorName="${editorName}" initMethod="" name="${namespacedFieldName}Editor" onChangeMethod="${namespacedFieldName}OnChangeEditor" skipEditorLoading=skipEditorLoading />
 
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldValue>
 		<#if required>
@@ -19,7 +19,7 @@
 	<@aui.script>
 		Liferay.provide(
 			window,
-			'${portletNamespace}${namespacedFieldName}OnBlurEditor',
+			'${portletNamespace}${namespacedFieldName}OnChangeEditor',
 			function() {
 				var A = AUI();
 

@@ -52,6 +52,8 @@ public class BaseJSONHandler extends BaseHandler {
 
 	@Override
 	public String getException(String response) {
+		String exception = null;
+
 		JsonNode responseJsonNode = null;
 
 		try {
@@ -72,21 +74,50 @@ public class BaseJSONHandler extends BaseHandler {
 				return "";
 			}
 
-			return exceptionJsonNode.asText();
+			exception = exceptionJsonNode.asText();
+
+			if (exception.startsWith("No JSON web service action")) {
+				return
+					"com.liferay.portal.kernel.jsonwebservice." +
+						"NoSuchJSONWebServiceException";
+			}
 		}
 
-		JsonNode typeJsonNode = null;
+		if (exception == null) {
+			JsonNode typeJsonNode = null;
 
-		JsonNode rootCauseJsonNode = responseJsonNode.get("rootCause");
+			JsonNode rootCauseJsonNode = responseJsonNode.get("rootCause");
 
-		if (rootCauseJsonNode != null) {
-			typeJsonNode = rootCauseJsonNode.get("type");
+			if (rootCauseJsonNode != null) {
+				typeJsonNode = rootCauseJsonNode.get("type");
+			}
+			else {
+				typeJsonNode = errorJsonNode.get("type");
+			}
+
+			exception = typeJsonNode.asText();
 		}
-		else {
-			typeJsonNode = errorJsonNode.get("type");
+
+		if (exception.equals("java.lang.RuntimeException")) {
+			JsonNode messageJsonNode = null;
+
+			if (errorJsonNode != null) {
+				messageJsonNode = errorJsonNode.get("message");
+			}
+			else {
+				messageJsonNode = responseJsonNode.get("message");
+			}
+
+			String message = messageJsonNode.asText();
+
+			if (message.startsWith("No JSON web service action")) {
+				return
+					"com.liferay.portal.kernel.jsonwebservice." +
+						"NoSuchJSONWebServiceException";
+			}
 		}
 
-		return typeJsonNode.asText();
+		return exception;
 	}
 
 	@Override
@@ -95,9 +126,10 @@ public class BaseJSONHandler extends BaseHandler {
 			return false;
 		}
 
-		if (!ConnectionRetryUtil.retryInProgress(getSyncAccountId()) &&
-			_logger.isDebugEnabled()) {
+		boolean retryInProgress = ConnectionRetryUtil.retryInProgress(
+			getSyncAccountId());
 
+		if (!retryInProgress && _logger.isDebugEnabled()) {
 			_logger.debug("Handling exception {}", exception);
 		}
 
@@ -184,8 +216,7 @@ public class BaseJSONHandler extends BaseHandler {
 		}
 		else if (exception.equals(
 					"com.liferay.portal.kernel.jsonwebservice." +
-						"NoSuchJSONWebServiceException") ||
-				 exception.equals("java.lang.RuntimeException")) {
+						"NoSuchJSONWebServiceException")) {
 
 			retryServerConnection(SyncAccount.UI_EVENT_SYNC_WEB_MISSING);
 		}
@@ -196,6 +227,10 @@ public class BaseJSONHandler extends BaseHandler {
 				SyncAccount.UI_EVENT_AUTHENTICATION_EXCEPTION);
 		}
 		else {
+			if (retryInProgress && _logger.isDebugEnabled()) {
+				_logger.debug("Handling exception {}", exception);
+			}
+
 			SyncFile syncFile = getLocalSyncFile();
 
 			syncFile.setState(SyncFile.STATE_ERROR);

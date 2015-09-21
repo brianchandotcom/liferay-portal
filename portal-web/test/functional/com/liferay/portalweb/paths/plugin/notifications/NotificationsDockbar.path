@@ -79,6 +79,22 @@
 	<td>//div[@class='user-notifications']/div[@class='message']</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REQUESTS-->
+<tr>
+	<td>REQUESTS_LINK</td>
+	<td>//div[@class='clearfix user-notifications-header']/span/a[contains(.,'${key_requestsLink}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTS_CONTENT</td>
+	<td>//div[@class='clearfix user-notification-delete']//div[@class='title' and contains (.,'${key_requestsContent}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -45,6 +45,10 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		return _id;
 	}
 
+	public java.lang.String getMarkupView() {
+		return _markupView;
+	}
+
 	public java.lang.Class<?> getModel() {
 		return _model;
 	}
@@ -69,10 +73,6 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		return _version;
 	}
 
-	public java.lang.String getView() {
-		return _view;
-	}
-
 	public void setBean(java.lang.Object bean) {
 		_bean = bean;
 
@@ -89,6 +89,12 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		_id = id;
 
 		setScopedAttribute("id", id);
+	}
+
+	public void setMarkupView(java.lang.String markupView) {
+		_markupView = markupView;
+
+		setScopedAttribute("markupView", markupView);
 	}
 
 	public void setModel(java.lang.Class<?> model) {
@@ -127,12 +133,6 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		setScopedAttribute("version", version);
 	}
 
-	public void setView(java.lang.String view) {
-		_view = view;
-
-		setScopedAttribute("view", view);
-	}
-
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -140,13 +140,13 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		_bean = null;
 		_helpMessage = null;
 		_id = null;
+		_markupView = null;
 		_model = null;
 		_showIcon = true;
 		_showLabel = true;
 		_status = null;
 		_statusMessage = null;
 		_version = null;
-		_view = null;
 	}
 
 	@Override
@@ -159,13 +159,13 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 		setNamespacedAttribute(request, "bean", _bean);
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "id", _id);
+		setNamespacedAttribute(request, "markupView", _markupView);
 		setNamespacedAttribute(request, "model", _model);
 		setNamespacedAttribute(request, "showIcon", _showIcon);
 		setNamespacedAttribute(request, "showLabel", _showLabel);
 		setNamespacedAttribute(request, "status", _status);
 		setNamespacedAttribute(request, "statusMessage", _statusMessage);
 		setNamespacedAttribute(request, "version", _version);
-		setNamespacedAttribute(request, "view", _view);
 	}
 
 	protected static final String _ATTRIBUTE_NAMESPACE = "aui:workflow-status:";
@@ -176,12 +176,12 @@ public abstract class BaseWorkflowStatusTag extends com.liferay.taglib.util.Incl
 	private java.lang.Object _bean = null;
 	private java.lang.String _helpMessage = null;
 	private java.lang.String _id = null;
+	private java.lang.String _markupView = null;
 	private java.lang.Class<?> _model = null;
 	private boolean _showIcon = true;
 	private boolean _showLabel = true;
 	private java.lang.Integer _status = null;
 	private java.lang.String _statusMessage = null;
 	private java.lang.String _version = null;
-	private java.lang.String _view = null;
 
 }

@@ -16,7 +16,8 @@ package com.liferay.portal.events;
 
 import com.liferay.portal.fabric.server.FabricServerUtil;
 import com.liferay.portal.jericho.CachedLoggerProvider;
-import com.liferay.portal.kernel.cache.bootstrap.ClusterLinkBootstrapLoaderHelperUtil;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.events.ActionException;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxDatagramReceiveHan
 import com.liferay.portal.kernel.nio.intraband.messaging.MessageDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.proxy.IntrabandProxyDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.rpc.RPCDatagramReceiveHandler;
+import com.liferay.portal.kernel.patcher.PatcherUtil;
 import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
@@ -41,8 +43,10 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageIndexer;
-import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -84,6 +88,21 @@ public class StartupAction extends SimpleAction {
 		// Print release information
 
 		System.out.println("Starting " + ReleaseInfo.getReleaseInfo());
+
+		// Installed patches
+
+		if (_log.isInfoEnabled() && !PatcherUtil.hasInconsistentPatchLevels()) {
+			String installedPatches = StringUtil.merge(
+				PatcherUtil.getInstalledPatches(), StringPool.COMMA_AND_SPACE);
+
+			if (Validator.isNull(installedPatches)) {
+				_log.info("There are no patches installed");
+			}
+			else {
+				_log.info(
+					"The following patches are installed: " + installedPatches);
+			}
+		}
 
 		// Portal resiliency
 
@@ -136,10 +155,6 @@ public class StartupAction extends SimpleAction {
 		}
 
 		DBUpgrader.upgrade();
-
-		// Ehache bootstrap
-
-		ClusterLinkBootstrapLoaderHelperUtil.start();
 
 		// Scheduler
 
@@ -201,8 +216,7 @@ public class StartupAction extends SimpleAction {
 							registry.getService(ClusterMasterExecutor.class);
 
 						if (!clusterMasterExecutor.isEnabled()) {
-							BackgroundTaskLocalServiceUtil.
-								cleanUpBackgroundTasks();
+							BackgroundTaskManagerUtil.cleanUpBackgroundTasks();
 						}
 						else {
 							clusterMasterExecutor.
@@ -217,7 +231,8 @@ public class StartupAction extends SimpleAction {
 				});
 
 		clusterMasterExecutorServiceDependencyManager.registerDependencies(
-			ClusterExecutor.class, ClusterMasterExecutor.class);
+			BackgroundTaskManager.class, ClusterExecutor.class,
+			ClusterMasterExecutor.class);
 
 		// Liferay JspFactory
 

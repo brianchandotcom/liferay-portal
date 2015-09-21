@@ -18,6 +18,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
+import com.liferay.journal.exportimport.content.processor.JournalArticleExportImportContentProcessor;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalArticleImage;
@@ -49,8 +51,6 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
-import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
@@ -344,10 +344,11 @@ public class JournalArticleStagedModelDataHandler
 
 			if (Validator.isNotNull(article.getSmallImageURL())) {
 				String smallImageURL =
-					ExportImportHelperUtil.replaceExportContentReferences(
-						portletDataContext, article,
-						article.getSmallImageURL() + StringPool.SPACE, true,
-						false);
+					_journalArticleExportImportContentProcessor.
+						replaceExportContentReferences(
+							portletDataContext, article,
+							article.getSmallImageURL() + StringPool.SPACE, true,
+							false);
 
 				article.setSmallImageURL(smallImageURL);
 			}
@@ -378,11 +379,13 @@ public class JournalArticleStagedModelDataHandler
 
 		article.setStatusByUserUuid(article.getStatusByUserUuid());
 
-		String content = ExportImportHelperUtil.replaceExportContentReferences(
-			portletDataContext, article, article.getContent(),
-			portletDataContext.getBooleanParameter(
-				"journal", "referenced-content"),
-			false);
+		String content =
+			_journalArticleExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, article, article.getContent(),
+					portletDataContext.getBooleanParameter(
+						"journal", "referenced-content"),
+					false);
 
 		article.setContent(content);
 
@@ -453,8 +456,10 @@ public class JournalArticleStagedModelDataHandler
 
 		String content = article.getContent();
 
-		content = ExportImportHelperUtil.replaceImportContentReferences(
-			portletDataContext, article, content);
+		content =
+			_journalArticleExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, article, content);
 
 		article.setContent(content);
 
@@ -582,9 +587,10 @@ public class JournalArticleStagedModelDataHandler
 
 				if (Validator.isNotNull(article.getSmallImageURL())) {
 					String smallImageURL =
-						ExportImportHelperUtil.replaceImportContentReferences(
-							portletDataContext, article,
-							article.getSmallImageURL());
+						_journalArticleExportImportContentProcessor.
+							replaceImportContentReferences(
+								portletDataContext, article,
+								article.getSmallImageURL());
 
 					article.setSmallImageURL(smallImageURL);
 				}
@@ -892,6 +898,15 @@ public class JournalArticleStagedModelDataHandler
 			groupId, articleId, version);
 	}
 
+	@Reference(unbind = "-")
+	protected void setJournalArticleExportImportContentProcessor(
+		JournalArticleExportImportContentProcessor
+			journalArticleExportImportContentProcessor) {
+
+		_journalArticleExportImportContentProcessor =
+			journalArticleExportImportContentProcessor;
+	}
+
 	@Reference
 	protected void setJournalArticleImageLocalService(
 		JournalArticleImageLocalService journalArticleImageLocalService) {
@@ -914,6 +929,8 @@ public class JournalArticleStagedModelDataHandler
 			journalArticleResourceLocalService;
 	}
 
+	private JournalArticleExportImportContentProcessor
+		_journalArticleExportImportContentProcessor;
 	private JournalArticleImageLocalService _journalArticleImageLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;
 	private JournalArticleResourceLocalService

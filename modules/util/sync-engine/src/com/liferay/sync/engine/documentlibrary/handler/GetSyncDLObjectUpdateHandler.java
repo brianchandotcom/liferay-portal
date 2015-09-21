@@ -18,6 +18,7 @@ import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
 import com.liferay.sync.engine.documentlibrary.model.SyncDLObjectUpdate;
 import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
+import com.liferay.sync.engine.documentlibrary.util.comparator.SyncFileComparator;
 import com.liferay.sync.engine.filesystem.Watcher;
 import com.liferay.sync.engine.filesystem.util.WatcherRegistry;
 import com.liferay.sync.engine.model.SyncAccount;
@@ -47,6 +48,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -176,8 +178,14 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				response, SyncDLObjectUpdate.class);
 		}
 
-		for (SyncFile targetSyncFile : _syncDLObjectUpdate.getSyncDLObjects()) {
-			processSyncFile(targetSyncFile);
+		List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncFiles();
+
+		if (!syncFiles.isEmpty()) {
+			Collections.sort(syncFiles, _syncFileComparator);
+
+			for (SyncFile syncFile : syncFiles) {
+				processSyncFile(syncFile);
+			}
 		}
 
 		if (getParameterValue("parentFolderId") == null) {
@@ -193,7 +201,17 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 			syncSite.setRemoteSyncTime(_syncDLObjectUpdate.getLastAccessTime());
 
+			if (_syncDLObjectUpdate.getResultsTotal() <= syncFiles.size()) {
+				syncSite.setState(SyncSite.STATE_SYNCED);
+			}
+
 			SyncSiteService.update(syncSite);
+
+			if (_syncDLObjectUpdate.getResultsTotal() > syncFiles.size()) {
+				FileEventUtil.getUpdates(
+					syncSite.getCompanyId(), syncSite.getGroupId(),
+					getSyncAccountId(), syncSite);
+			}
 		}
 	}
 
@@ -292,6 +310,10 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 	protected void deleteFile(SyncFile sourceSyncFile, boolean trashed)
 		throws Exception {
+
+		if (sourceSyncFile.getUiEvent() == SyncFile.UI_EVENT_DELETED_LOCAL) {
+			return;
+		}
 
 		if (trashed) {
 			sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_TRASHED_REMOTE);
@@ -395,7 +417,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			_syncDLObjectUpdate = JSONUtil.readValue(
 				response, SyncDLObjectUpdate.class);
 
-			List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncDLObjects();
+			List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncFiles();
 
 			if (!syncFiles.isEmpty()) {
 				super.logResponse(response);
@@ -665,6 +687,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		new HashMap<>();
 	private static final ScheduledExecutorService _scheduledExecutorService =
 		Executors.newScheduledThreadPool(5);
+	private static final Comparator<SyncFile> _syncFileComparator =
+		new SyncFileComparator();
 
 	private final ScheduledFuture<?> _scheduledFuture;
 	private SyncDLObjectUpdate _syncDLObjectUpdate;

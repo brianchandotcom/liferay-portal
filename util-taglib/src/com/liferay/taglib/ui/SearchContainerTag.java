@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SearchContainerReference;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
@@ -45,6 +46,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		pageContext.setAttribute(
 			_searchContainer.getTotalVar(), _searchContainer.getTotal());
 
+		_cssClass = StringPool.BLANK;
 		_curParam = SearchContainer.DEFAULT_CUR_PARAM;
 		_delta = SearchContainer.DEFAULT_DELTA;
 		_deltaConfigurable = SearchContainer.DEFAULT_DELTA_CONFIGURABLE;
@@ -157,6 +159,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		}
 	}
 
+	public String getCssClass() {
+		return _cssClass;
+	}
+
 	public String getCurParam() {
 		return _curParam;
 	}
@@ -239,6 +245,10 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 
 	public boolean isHover() {
 		return _hover;
+	}
+
+	public void setCssClass(String cssClass) {
+		_cssClass = cssClass;
 	}
 
 	public void setCurParam(String curParam) {
@@ -332,6 +342,7 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 		_var = var;
 	}
 
+	private String _cssClass = StringPool.BLANK;
 	private String _curParam = SearchContainer.DEFAULT_CUR_PARAM;
 	private int _delta = SearchContainer.DEFAULT_DELTA;
 	private boolean _deltaConfigurable =

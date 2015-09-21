@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>GENERAL_THREAD_AS_QUESTION_BY_DEFAULT_CHECKBOX</td>
-	<td>//input[contains(@id,'threadAsQuestionByDefaultCheckbox')]</td>
+	<td>//input[contains(@id,'threadAsQuestionByDefault')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,17 +52,17 @@
 <!--EMAIL_FROM-->
 <tr>
 	<td>EMAIL_FROM_NAME</td>
-	<td>//input[@id='_86_emailFromName']</td>
+	<td>//input[contains(@id,'emailFromName')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_FROM_ADDRESS</td>
-	<td>//input[@id='_86_emailFromAddress']</td>
+	<td>//input[contains(@id,'emailFromAddress')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EMAIL_FROM_HTML_FORMAT_CHECKBOX</td>
-	<td>//input[@id='_86_emailHtmlFormat']</td>
+	<td>//input[contains(@id,'emailHtmlFormat')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -73,7 +73,7 @@
 <!--MESSAGE_ADDED_EMAIL-->
 <tr>
 	<td>MESSAGE_ADDED_EMAIL_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_86_emailMessageAddedEnabled']</td>
+	<td>//input[contains(@id,'emailMessageAddedEnabled')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,7 +84,7 @@
 <!--MESSAGE_UPDATED_EMAIL-->
 <tr>
 	<td>MESSAGE_UPDATED_EMAIL_ENABLED_CHECKBOX</td>
-	<td>//input[@id='_86_emailMessageUpdatedEnabled']</td>
+	<td>//input[contains(@id,'emailMessageUpdatedEnabled')]</td>
 	<td></td>
 </tr>
 <tr>

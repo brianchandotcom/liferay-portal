@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.liferay.portal.background.task.model.BackgroundTask" />
+	<class name="com.liferay.portal.background.task.model.impl.BackgroundTaskImpl" table="BackgroundTask" dynamic-update="true">
+		<id name="backgroundTaskId" type="long">
+			<generator class="assigned" />
+		</id>
+		<version name="mvccVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="servletContextNames" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="taskExecutorClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="taskContextMap" type="com.liferay.portal.dao.orm.hibernate.MapType" />
+		<property name="completed" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="completionDate" type="org.hibernate.type.TimestampType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="statusMessage" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+	</class>
+</hibernate-mapping>

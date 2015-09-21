@@ -33,6 +33,7 @@ import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -68,13 +69,15 @@ public class DDLRecordStagedModelDataHandlerTest
 			group.getGroupId(), DDLRecordSet.class.getName());
 
 		DDMTemplate ddmTemplate1 = DDMTemplateTestUtil.addTemplate(
-			group.getGroupId(), ddmStructure.getStructureId());
+			group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(DDLRecordSet.class));
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMTemplate.class, ddmTemplate1);
 
 		DDMTemplate ddmTemplate2 = DDMTemplateTestUtil.addTemplate(
-			group.getGroupId(), ddmStructure.getStructureId());
+			group.getGroupId(), ddmStructure.getStructureId(),
+			PortalUtil.getClassNameId(DDLRecordSet.class));
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMTemplate.class, ddmTemplate2);

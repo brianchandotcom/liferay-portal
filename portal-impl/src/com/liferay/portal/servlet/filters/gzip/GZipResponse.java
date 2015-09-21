@@ -166,6 +166,15 @@ public class GZipResponse extends MetaInfoCacheServletResponse {
 	public void setContentLength(int contentLength) {
 	}
 
+	@Override
+	public void setHeader(String name, String value) {
+		if (HttpHeaders.CONTENT_LENGTH.equals(name)) {
+			return;
+		}
+
+		_response.setHeader(name, value);
+	}
+
 	private ServletOutputStream _createGZipServletOutputStream(
 			OutputStream outputStream)
 		throws IOException {

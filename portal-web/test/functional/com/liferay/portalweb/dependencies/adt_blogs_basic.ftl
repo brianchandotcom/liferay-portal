@@ -21,7 +21,7 @@
 
 			<#assign summary = entry.getDescription() />
 
-			<#if (validator.isNull(summary))>
+			<#if validator.isNull(summary)>
 				<#assign summary = entry.getContent() />
 			</#if>
 

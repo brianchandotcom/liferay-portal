@@ -38,11 +38,12 @@ public class BlogsItemSelectorViewDisplayContext {
 	public BlogsItemSelectorViewDisplayContext(
 		BlogsItemSelectorCriterion blogsItemSelectorCriterion,
 		BlogsItemSelectorView blogsItemSelectorView,
-		String itemSelectedEventName, PortletURL portletURL) {
+		String itemSelectedEventName, boolean search, PortletURL portletURL) {
 
 		_blogsItemSelectorCriterion = blogsItemSelectorCriterion;
 		_blogsItemSelectorView = blogsItemSelectorView;
 		_itemSelectedEventName = itemSelectedEventName;
+		_search = search;
 		_portletURL = portletURL;
 	}
 
@@ -89,9 +90,14 @@ public class BlogsItemSelectorViewDisplayContext {
 		return portletURL;
 	}
 
+	public boolean isSearch() {
+		return _search;
+	}
+
 	private final BlogsItemSelectorCriterion _blogsItemSelectorCriterion;
 	private final BlogsItemSelectorView _blogsItemSelectorView;
 	private final String _itemSelectedEventName;
 	private final PortletURL _portletURL;
+	private final boolean _search;
 
 }

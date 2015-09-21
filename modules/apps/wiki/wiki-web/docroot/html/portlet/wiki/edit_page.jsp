@@ -32,7 +32,7 @@ String title = BeanParamUtil.getString(wikiPage, request, "title");
 boolean editTitle = ParamUtil.getBoolean(request, "editTitle");
 
 String content = BeanParamUtil.getString(wikiPage, request, "content");
-String selectedFormat = BeanParamUtil.getString(wikiPage, request, "format", wikiGroupServiceSettings.defaultFormat());
+String selectedFormat = BeanParamUtil.getString(wikiPage, request, "format", wikiGroupServiceOverriddenConfiguration.defaultFormat());
 String parentTitle = BeanParamUtil.getString(wikiPage, request, "parentTitle");
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
@@ -178,7 +178,7 @@ if (Validator.isNull(redirect)) {
 
 	<aui:model-context bean="<%= !newPage ? wikiPage : templatePage %>" model="<%= WikiPage.class %>" />
 
-	<c:if test="<%= (wikiPage != null) && (!wikiPage.isNew()) %>">
+	<c:if test="<%= (wikiPage != null) && !wikiPage.isNew() %>">
 		<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= wikiPage.getStatus() %>" version="<%= String.valueOf(wikiPage.getVersion()) %>" />
 	</c:if>
 
@@ -306,7 +306,7 @@ if (Validator.isNull(redirect)) {
 			</c:if>
 
 			<aui:fieldset>
-				<c:if test="<%= (attachmentsFileEntries != null) && !attachmentsFileEntries.isEmpty() || ((templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0)) %>">
+				<c:if test="<%= ((attachmentsFileEntries != null) && !attachmentsFileEntries.isEmpty()) || ((templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0)) %>">
 					<aui:field-wrapper label="attachments">
 						<c:if test="<%= (templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0) %>">
 

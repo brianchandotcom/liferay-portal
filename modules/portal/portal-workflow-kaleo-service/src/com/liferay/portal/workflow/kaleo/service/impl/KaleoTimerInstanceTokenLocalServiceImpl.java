@@ -18,12 +18,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.CronText;
-import com.liferay.portal.kernel.scheduler.CronTrigger;
+import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
@@ -42,7 +42,6 @@ import com.liferay.portlet.exportimport.staging.StagingUtil;
 import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -290,36 +289,33 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 
 		DelayDuration delayDuration = new DelayDuration(
 			kaleoTimer.getDuration(),
-			DurationScale.parse(kaleoTimer.getScale()));
+			DurationScale.valueOf(
+				StringUtil.toUpperCase(kaleoTimer.getScale())));
 
 		DueDateCalculator dueDateCalculator = new DefaultDueDateCalculator();
 
 		Date dueDate = dueDateCalculator.getDueDate(new Date(), delayDuration);
 
-		Calendar dueDateCalendar = CalendarFactoryUtil.getCalendar();
+		int interval = 0;
+		TimeUnit timeUnit = TimeUnit.SECOND;
 
-		dueDateCalendar.setTime(dueDate);
-
-		CronText cronText = null;
-
-		if (!kaleoTimer.isRecurring()) {
-			cronText = new CronText(dueDateCalendar);
-		}
-		else {
+		if (kaleoTimer.isRecurring()) {
 			DelayDuration recurrenceDelayDuration = new DelayDuration(
 				kaleoTimer.getRecurrenceDuration(),
-				DurationScale.parse(kaleoTimer.getRecurrenceScale()));
+				DurationScale.valueOf(
+					StringUtil.toUpperCase(kaleoTimer.getRecurrenceScale())));
+
+			interval = (int)recurrenceDelayDuration.getDuration();
 
 			DurationScale durationScale =
 				recurrenceDelayDuration.getDurationScale();
 
-			cronText = new CronText(
-				dueDateCalendar, durationScale.getIntegerValue(),
-				(int)recurrenceDelayDuration.getDuration());
+			timeUnit = TimeUnit.valueOf(
+				StringUtil.toLowerCase(durationScale.getValue()));
 		}
 
-		Trigger trigger = new CronTrigger(
-			groupName, groupName, cronText.toString());
+		Trigger trigger = new IntervalTrigger(
+			groupName, groupName, dueDate, null, interval, timeUnit);
 
 		Message message = new Message();
 

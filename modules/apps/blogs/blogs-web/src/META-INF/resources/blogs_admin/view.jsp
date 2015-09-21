@@ -95,6 +95,22 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	</liferay-ui:search-container>
 </aui:form>
 
+<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
+	<portlet:renderURL var="viewEntriesURL">
+		<portlet:param name="mvcRenderCommandName" value="/blogs_admin/view" />
+	</portlet:renderURL>
+
+	<portlet:renderURL var="addEntryURL">
+		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
+		<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
+		<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
+	</portlet:renderURL>
+
+	<liferay-frontend:add-menu>
+		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-blog-entry") %>' url="<%= addEntryURL %>" />
+	</liferay-frontend:add-menu>
+</c:if>
+
 <aui:script>
 	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 

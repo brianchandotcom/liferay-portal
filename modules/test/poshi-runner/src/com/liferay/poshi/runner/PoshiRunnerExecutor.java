@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner;
 
+import com.liferay.poshi.runner.exception.PoshiRunnerWarningException;
 import com.liferay.poshi.runner.logger.CommandLoggerHandler;
 import com.liferay.poshi.runner.logger.SummaryLoggerHandler;
 import com.liferay.poshi.runner.logger.XMLLoggerHandler;
@@ -21,7 +22,7 @@ import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.PropsValues;
-import com.liferay.poshi.runner.util.StringPool;
+import com.liferay.poshi.runner.util.RegexUtil;
 import com.liferay.poshi.runner.util.Validator;
 
 import java.lang.reflect.Method;
@@ -257,13 +258,23 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerVariablesUtil.pushCommandMap();
 
-		parseElement(commandElement);
-
-		PoshiRunnerVariablesUtil.popCommandMap();
+		try {
+			parseElement(commandElement);
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		finally {
+			PoshiRunnerVariablesUtil.popCommandMap();
+		}
 	}
 
 	public static void runFunctionExecuteElement(Element executeElement)
 		throws Exception {
+
+		if (_functionExecuteElement == null) {
+			_functionExecuteElement = executeElement;
+		}
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
@@ -284,6 +295,8 @@ public class PoshiRunnerExecutor {
 				classCommandName);
 		}
 
+		Exception exception = null;
+
 		int locatorCount = PoshiRunnerContext.getFunctionLocatorCount(
 			className);
 
@@ -298,7 +311,7 @@ public class PoshiRunnerExecutor {
 			if (locator != null) {
 				Matcher matcher = _locatorKeyPattern.matcher(locator);
 
-				if (matcher.find()) {
+				if (matcher.find() && !locator.contains("/")) {
 					String pathClassName =
 						PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 							locator);
@@ -311,8 +324,13 @@ public class PoshiRunnerExecutor {
 					PoshiRunnerVariablesUtil.putIntoExecuteMap(
 						"locator-key" + (i + 1), locatorKey);
 
-					locator = PoshiRunnerContext.getPathLocator(
-						pathClassName + "#" + locatorKey);
+					try {
+						locator = PoshiRunnerContext.getPathLocator(
+							pathClassName + "#" + locatorKey);
+					}
+					catch (Exception e) {
+						exception = e;
+					}
 
 					locator = PoshiRunnerVariablesUtil.replaceExecuteVars(
 						locator);
@@ -335,8 +353,9 @@ public class PoshiRunnerExecutor {
 			}
 		}
 
-		CommandLoggerHandler.startCommand(executeElement);
 		SummaryLoggerHandler.startSummary(executeElement);
+
+		CommandLoggerHandler.startCommand(executeElement);
 
 		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
 
@@ -344,25 +363,52 @@ public class PoshiRunnerExecutor {
 			classCommandName);
 
 		try {
+			if (exception != null) {
+				throw exception;
+			}
+
 			runFunctionCommandElement(classCommandName, commandElement);
 		}
-		catch (Exception e) {
-			PoshiRunnerStackTraceUtil.popStackTrace();
+		catch (Throwable t) {
+			String warningMessage = _getWarningFromThrowable(t);
 
-			PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
+			if (warningMessage != null) {
+				_functionWarningMessage = warningMessage;
+			}
+			else {
+				PoshiRunnerStackTraceUtil.popStackTrace();
 
-			CommandLoggerHandler.failCommand(executeElement);
-			SummaryLoggerHandler.failSummary(executeElement, e.getMessage());
+				PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
-			throw e;
+				SummaryLoggerHandler.failSummary(
+					_functionExecuteElement, t.getMessage());
+
+				CommandLoggerHandler.failCommand(_functionExecuteElement);
+
+				throw t;
+			}
 		}
 
 		PoshiRunnerStackTraceUtil.popStackTrace();
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
-		CommandLoggerHandler.passCommand(executeElement);
-		SummaryLoggerHandler.passSummary(executeElement);
+		if (_functionExecuteElement == executeElement) {
+			if (_functionWarningMessage != null) {
+				SummaryLoggerHandler.warnSummary(
+					_functionExecuteElement, _functionWarningMessage);
+
+				CommandLoggerHandler.warnCommand(_functionExecuteElement);
+			}
+			else {
+				SummaryLoggerHandler.passSummary(executeElement);
+
+				CommandLoggerHandler.passCommand(executeElement);
+			}
+
+			_functionExecuteElement = null;
+			_functionWarningMessage = null;
+		}
 	}
 
 	public static void runIfElement(Element element) throws Exception {
@@ -566,8 +612,16 @@ public class PoshiRunnerExecutor {
 					}
 				}
 				else if (i == 2) {
-					argument = PoshiRunnerVariablesUtil.getValueFromCommandMap(
-						"locator2");
+					if (selenium.equals("assertCssValue")) {
+						argument =
+							PoshiRunnerVariablesUtil.getValueFromCommandMap(
+								"value1");
+					}
+					else {
+						argument =
+							PoshiRunnerVariablesUtil.getValueFromCommandMap(
+								"locator2");
+					}
 				}
 			}
 			else {
@@ -703,18 +757,11 @@ public class PoshiRunnerExecutor {
 					 (element.attributeValue("input") != null) &&
 					 (element.attributeValue("pattern") != null)) {
 
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("RegexUtil#replace(");
-				sb.append(element.attributeValue("input"));
-				sb.append(StringPool.COMMA);
-				sb.append(element.attributeValue("pattern"));
-				sb.append(StringPool.COMMA);
-				sb.append(element.attributeValue("group"));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
-					sb.toString());
+				varValue = RegexUtil.replace(
+					PoshiRunnerVariablesUtil.replaceCommandVars(
+						element.attributeValue("input")),
+					element.attributeValue("pattern"),
+					element.attributeValue("group"));
 			}
 			else if (element.attributeValue("locator") != null) {
 				String locator = element.attributeValue("locator");
@@ -848,6 +895,28 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
+	private static String _getWarningFromThrowable(Throwable throwable) {
+		Class clazz = PoshiRunnerWarningException.class;
+
+		String classCanonicalName = clazz.getCanonicalName();
+
+		String throwableString = throwable.toString();
+
+		if (throwableString.contains(classCanonicalName)) {
+			return throwable.getMessage();
+		}
+
+		Throwable cause = throwable.getCause();
+
+		if (cause != null) {
+			return _getWarningFromThrowable(cause);
+		}
+
+		return null;
+	}
+
+	private static Element _functionExecuteElement;
+	private static String _functionWarningMessage;
 	private static final Pattern _locatorKeyPattern = Pattern.compile(
 		"\\S#\\S");
 	private static Object _returnObject;

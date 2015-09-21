@@ -238,7 +238,7 @@
 
 		<execute function="Refresh" />
 
-		<execute macro="Tag#addViaBlogsPG">
+		<execute macro="Blogs#addWithTag">
 			<var name="entryContent" value="Entry Content" />
 			<var name="entryTitle" value="Entry Title" />
 			<var name="tagName" value="tag name" />

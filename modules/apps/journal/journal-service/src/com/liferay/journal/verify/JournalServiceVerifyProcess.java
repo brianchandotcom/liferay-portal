@@ -358,12 +358,9 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 		try {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			StringBundler sb = new StringBundler(2);
-
-			sb.append("update JournalArticle set expirationDate = ?");
-			sb.append(" where articleId = ? and groupId = ? and status = ?");
-
-			ps = con.prepareStatement(sb.toString());
+			ps = con.prepareStatement(
+				"update JournalArticle set expirationDate = ? " +
+					"where articleId = ? and groupId = ? and status = ?");
 
 			ps.setTimestamp(1, expirationDate);
 			ps.setLong(2, articleId);
@@ -655,55 +652,55 @@ public class JournalServiceVerifyProcess extends VerifyLayout {
 	}
 
 	protected void verifyArticleExpirationDate() throws Exception {
-		if (JournalServiceConfigurationValues.
+		if (!JournalServiceConfigurationValues.
 				JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
 
-			Connection con = null;
-			PreparedStatement ps = null;
-			ResultSet rs = null;
+			return;
+		}
 
-			try {
-				con = DataAccess.getUpgradeOptimizedConnection();
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
-				StringBundler sb = new StringBundler(18);
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
 
-				sb.append("select JournalArticle.* from JournalArticle ");
-				sb.append("left join JournalArticle tempJournalArticle ");
-				sb.append("on (JournalArticle.status = ");
-				sb.append(WorkflowConstants.STATUS_APPROVED);
-				sb.append(") and (tempJournalArticle.status = ");
-				sb.append(WorkflowConstants.STATUS_APPROVED);
-				sb.append(") and (JournalArticle.groupId = ");
-				sb.append(" tempJournalArticle.groupId) and ");
-				sb.append("(JournalArticle.articleId = ");
-				sb.append("tempJournalArticle.articleId) and ");
-				sb.append("(JournalArticle.version < ");
-				sb.append("tempJournalArticle.version) ");
-				sb.append("where (JournalArticle.classNameId = ");
-				sb.append(JournalArticleConstants.CLASSNAME_ID_DEFAULT);
-				sb.append(") and (JournalArticle.status =");
-				sb.append(WorkflowConstants.STATUS_APPROVED);
-				sb.append(") and (JournalArticle.expirationDate is not null) ");
-				sb.append("and (tempJournalArticle.version is null)");
+			StringBundler sb = new StringBundler(17);
 
-				ps = con.prepareStatement(sb.toString());
+			sb.append("select JournalArticle.* from JournalArticle ");
+			sb.append("left join JournalArticle tempJournalArticle on ");
+			sb.append("(JournalArticle.status = ");
+			sb.append(WorkflowConstants.STATUS_APPROVED);
+			sb.append(") and (tempJournalArticle.status = ");
+			sb.append(WorkflowConstants.STATUS_APPROVED);
+			sb.append(") and (JournalArticle.groupId = ");
+			sb.append("tempJournalArticle.groupId) and ");
+			sb.append("(JournalArticle.articleId = ");
+			sb.append("tempJournalArticle.articleId) and ");
+			sb.append("(JournalArticle.version < tempJournalArticle.version) ");
+			sb.append("where (JournalArticle.classNameId = ");
+			sb.append(JournalArticleConstants.CLASSNAME_ID_DEFAULT);
+			sb.append(") and (JournalArticle.status =");
+			sb.append(WorkflowConstants.STATUS_APPROVED);
+			sb.append(") and (JournalArticle.expirationDate is not null) ");
+			sb.append("and (tempJournalArticle.version is null)");
 
-				rs = ps.executeQuery();
+			ps = con.prepareStatement(sb.toString());
 
-				while (rs.next()) {
-					Timestamp expirationDate = rs.getTimestamp(
-						"expirationDate");
-					long articleId = rs.getLong("articleId");
-					long groupId = rs.getLong("groupId");
-					int status = rs.getInt("status");
+			rs = ps.executeQuery();
 
-					updateExpirationDate(
-						expirationDate, articleId, groupId, status);
-				}
+			while (rs.next()) {
+				Timestamp expirationDate = rs.getTimestamp("expirationDate");
+				long articleId = rs.getLong("articleId");
+				long groupId = rs.getLong("groupId");
+				int status = rs.getInt("status");
+
+				updateExpirationDate(
+					expirationDate, articleId, groupId, status);
 			}
-			finally {
-				DataAccess.cleanUp(con, ps, rs);
-			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

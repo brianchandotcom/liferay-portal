@@ -5813,14 +5813,13 @@ public class JournalArticleLocalServiceImpl
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			(article.getExpirationDate() != null) &&
-			(JournalServiceConfigurationValues.
-				JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) &&
+			JournalServiceConfigurationValues.
+				JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS &&
 			!ExportImportThreadLocal.isImportInProcess()) {
 
 			final List<JournalArticle> articles =
 				journalArticlePersistence.findByG_A(
 					article.getGroupId(), article.getArticleId());
-
 			final Date expirationDate = article.getExpirationDate();
 
 			TransactionCommitCallbackUtil.registerCallback(
@@ -5828,15 +5827,16 @@ public class JournalArticleLocalServiceImpl
 
 					@Override
 					public Void call() throws Exception {
-						for (JournalArticle currentArticle : articles) {
-							currentArticle.setExpirationDate(expirationDate);
+						for (JournalArticle curArticle : articles) {
+							curArticle.setExpirationDate(expirationDate);
 
 							journalArticleLocalService.updateJournalArticle(
-								currentArticle);
+								curArticle);
 						}
 
 						return null;
 					}
+
 				});
 		}
 

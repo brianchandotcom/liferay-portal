@@ -18,54 +18,25 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.blogs.constants.BlogsConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-
-import java.io.InputStream;
-
-import java.util.Date;
-
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
  * @author Roberto Díaz
  */
-public class CoverImageTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
-
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-		_user = TestPropsValues.getUser();
-	}
+public abstract class BaseBlogsImageTestCase {
 
 	@Test
 	public void testAddCoverImage() throws Exception {
@@ -81,23 +52,23 @@ public class CoverImageTest {
 	@Test
 	public void testAddOriginalCoverImage() throws Exception {
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-			_user.getUserId(), _group.getGroupId());
+			user.getUserId(), group.getGroupId());
 
 		int initialFolderFileEntriesCount =
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				_group.getGroupId(), folder.getFolderId());
+				group.getGroupId(), folder.getFolderId());
 
 		addBlogsEntry("image1.jpg");
 
 		int portletFileEntriesCount =
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				_group.getGroupId(), folder.getFolderId());
+				group.getGroupId(), folder.getFolderId());
 
 		Assert.assertEquals(
 			initialFolderFileEntriesCount + 1, portletFileEntriesCount);
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
-			_group.getGroupId(), folder.getFolderId(), "image1.jpg");
+			group.getGroupId(), folder.getFolderId(), "image1.jpg");
 	}
 
 	@Test
@@ -105,11 +76,11 @@ public class CoverImageTest {
 		throws Exception {
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-			_user.getUserId(), _group.getGroupId());
+			user.getUserId(), group.getGroupId());
 
 		int initialFolderFileEntriesCount =
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				_group.getGroupId(), folder.getFolderId());
+				group.getGroupId(), folder.getFolderId());
 
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
@@ -117,13 +88,13 @@ public class CoverImageTest {
 
 		int portletFileEntriesCount =
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				_group.getGroupId(), folder.getFolderId());
+				group.getGroupId(), folder.getFolderId());
 
 		Assert.assertEquals(
 			initialFolderFileEntriesCount + 2, portletFileEntriesCount);
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
-			_group.getGroupId(), folder.getFolderId(), "image2.jpg");
+			group.getGroupId(), folder.getFolderId(), "image2.jpg");
 	}
 
 	@Test(expected = NoSuchFileEntryException.class)
@@ -182,10 +153,10 @@ public class CoverImageTest {
 			blogsEntry.getCoverImageFileEntryId());
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-			_user.getUserId(), _group.getGroupId());
+			user.getUserId(), group.getGroupId());
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
-			_group.getGroupId(), folder.getFolderId(), "image1.jpg");
+			group.getGroupId(), folder.getFolderId(), "image1.jpg");
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
 			coverImageFileEntry.getFileEntryId());
@@ -231,10 +202,10 @@ public class CoverImageTest {
 		updateBlogsEntry(blogsEntry.getEntryId(), coverImageSelector);
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-			_user.getUserId(), _group.getGroupId());
+			user.getUserId(), group.getGroupId());
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
-			_group.getGroupId(), folder.getFolderId(), "image1.jpg");
+			group.getGroupId(), folder.getFolderId(), "image1.jpg");
 	}
 
 	@Test
@@ -242,11 +213,11 @@ public class CoverImageTest {
 		throws Exception {
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-			_user.getUserId(), _group.getGroupId());
+			user.getUserId(), group.getGroupId());
 
 		int initialFolderFileEntriesCount =
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				_group.getGroupId(), folder.getFolderId());
+				group.getGroupId(), folder.getFolderId());
 
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
@@ -256,13 +227,13 @@ public class CoverImageTest {
 
 		int portletFileEntriesCount =
 			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				_group.getGroupId(), folder.getFolderId());
+				group.getGroupId(), folder.getFolderId());
 
 		Assert.assertEquals(
 			initialFolderFileEntriesCount + 1, portletFileEntriesCount);
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
-			_group.getGroupId(), folder.getFolderId(), "image1.jpg");
+			group.getGroupId(), folder.getFolderId(), "image1.jpg");
 	}
 
 	@Test
@@ -306,10 +277,10 @@ public class CoverImageTest {
 		updateBlogsEntry(blogsEntry.getEntryId(), "image2.jpg");
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
-			_user.getUserId(), _group.getGroupId());
+			user.getUserId(), group.getGroupId());
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
-			_group.getGroupId(), folder.getFolderId(), "image1.jpg");
+			group.getGroupId(), folder.getFolderId(), "image1.jpg");
 	}
 
 	@Test
@@ -325,84 +296,23 @@ public class CoverImageTest {
 		Assert.assertEquals("image2.jpg", coverImageFileEntry.getTitle());
 	}
 
-	protected BlogsEntry addBlogsEntry(String coverImageTitle)
-		throws Exception {
+	protected abstract BlogsEntry addBlogsEntry(String coverImageTitle)
+		throws Exception;
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
+	protected abstract FileEntry getTempFileEntry(
+		long userId, String title, ServiceContext serviceContext)
+		throws PortalException;
 
-		FileEntry fileEntry = getTempFileEntry(
-			_user.getUserId(), coverImageTitle, serviceContext);
+	protected abstract BlogsEntry updateBlogsEntry(
+		long blogsEntryId, ImageSelector coverImageSelector)
+		throws Exception;
 
-		ImageSelector coverImageSelector = new ImageSelector(
-			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
-		ImageSelector smallImageSelector = null;
-
-		return BlogsEntryLocalServiceUtil.addEntry(
-			_user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, coverImageSelector,
-			smallImageSelector, serviceContext);
-	}
-
-	protected FileEntry getTempFileEntry(
-			long userId, String title, ServiceContext serviceContext)
-		throws PortalException {
-
-		ClassLoader classLoader = getClass().getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portal/util/dependencies/test.jpg");
-
-		return TempFileEntryUtil.addTempFileEntry(
-			serviceContext.getScopeGroupId(), userId,
-			BlogsEntry.class.getName(), title, inputStream,
-			MimeTypesUtil.getContentType(title));
-	}
-
-	protected BlogsEntry updateBlogsEntry(
-			long blogsEntryId, ImageSelector coverImageSelector)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		ImageSelector smallImageSelector = null;
-
-		return BlogsEntryLocalServiceUtil.updateEntry(
-			_user.getUserId(), blogsEntryId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, coverImageSelector,
-			smallImageSelector, serviceContext);
-	}
-
-	protected BlogsEntry updateBlogsEntry(
-			long blogsEntryId, String coverImageTitle)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), _user.getUserId());
-
-		FileEntry fileEntry = getTempFileEntry(
-			_user.getUserId(), coverImageTitle, serviceContext);
-
-		ImageSelector coverImageSelector = new ImageSelector(
-			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);
-
-		return updateBlogsEntry(blogsEntryId, coverImageSelector);
-	}
-
-	private static final String _IMAGE_CROP_REGION =
-		"{\"height\": 10, \"width\": 10, \"x\": 0, \"y\": 0}";
+	protected abstract BlogsEntry updateBlogsEntry(
+		long blogsEntryId, String coverImageTitle)
+		throws Exception;
 
 	@DeleteAfterTestRun
-	private Group _group;
+	protected Group group;
 
-	private User _user;
-
+	protected User user;
 }

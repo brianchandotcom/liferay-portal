@@ -195,8 +195,7 @@
 				<equals arg1="${deleteMethod}" arg2="From Toolbar" />
 				<then>
 					<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX" />
-					<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
-					<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+					<execute function="ClickNoError" locator1="Icon#DELETE" />
 				</then>
 			</elseif>
 			<else>
@@ -347,9 +346,8 @@
 		<if>
 			<condition function="IsElementNotPresent" locator1="Message#INFO" />
 			<then>
-				<execute function="Check" locator1="Tags#ALL_TAGS_CHECKBOX" />
-				<execute function="AssertClick" locator1="Tags#TOOLBAR_ACTIONS" value1="Actions" />
-				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+				<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
+				<execute function="ClickNoError" locator1="Icon#DELETE" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</if>

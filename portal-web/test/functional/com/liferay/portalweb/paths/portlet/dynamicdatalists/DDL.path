@@ -21,7 +21,7 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD</td>
-	<td>//ul[contains(@aria-label,'Dynamic Data List')]//a[@role='menuitem']/span[contains(.,'Add')]</td>
+	<td>//a[contains(@id,'DDLPortlet_menuItem')]</td>
 	<td></td>
 </tr>
 <tr>

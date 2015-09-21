@@ -47,7 +47,9 @@
 		<execute function="AssertTextEquals" locator1="RecycleBin#RECYCLE_BIN_FOLDER_WARNING_INFO" value1="The original Folder does not exist anymore. Choose a different Folder to restore ${documentName}." />
 		<execute function="AssertClick" locator1="RecycleBin#RECYCLE_BIN_FOLDER_WARNING_CHOOSE_THIS_FOLDER_BUTTON" value1="Choose This Folder" />
 		<execute function="SelectFrameTop" value1="relative=top" />
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="The ${assetType2} ${documentName} was restored to ${assetRestoreLocation}." />
+
+		<var name="key_assetType" value="${assetType2}" />
+		<execute function="AssertTextEquals" locator1="Message#RECYCLE_BIN_RESTORE_SUCCESS" value1="The ${assetType2} ${documentName} was restored to ${assetRestoreLocation}." />
 	</command>
 
 	<command name="restoreCP">

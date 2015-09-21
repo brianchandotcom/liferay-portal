@@ -1356,7 +1356,7 @@ public class PropsValues {
 
 	public static final String[] REST_PROXY_URL_PREFIXES_ALLOWED = PropsUtil.getArray(PropsKeys.REST_PROXY_URL_PREFIXES_ALLOWED);
 
-	public static final String RETRY_ADVICE_DEFAULT_RETRIES =  PropsUtil.get(PropsKeys.RETRY_ADVICE_DEFAULT_RETRIES);
+	public static final String RETRY_ADVICE_MAX_RETRIES =  PropsUtil.get(PropsKeys.RETRY_ADVICE_MAX_RETRIES);
 
 	public static final String ROBOTS_TXT_WITH_SITEMAP = PropsUtil.get(PropsKeys.ROBOTS_TXT_WITH_SITEMAP);
 

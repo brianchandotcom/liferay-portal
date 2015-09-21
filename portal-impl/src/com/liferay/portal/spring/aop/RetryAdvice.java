@@ -51,7 +51,7 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 
 		if (numberOfRetries < 0) {
 			numberOfRetries = GetterUtil.getInteger(
-				PropsValues.RETRY_ADVICE_DEFAULT_RETRIES, numberOfRetries);
+				PropsValues.RETRY_ADVICE_MAX_RETRIES, numberOfRetries);
 		}
 
 		int totalRetries = numberOfRetries;

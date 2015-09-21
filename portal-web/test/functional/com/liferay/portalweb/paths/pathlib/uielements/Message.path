@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY</td>
+	<td>//div[contains(@class,'empty-message')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>

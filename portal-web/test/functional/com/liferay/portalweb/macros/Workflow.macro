@@ -652,10 +652,10 @@
 	</command>
 
 	<command name="viewDefaultMySubmissionsCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no pending publications requested by me." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="There are no pending publications requested by me." />
 		<execute function="AssertClick" locator1="MenuItem#COMPLETED" value1="Completed" />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no completed publications requested by me." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="There are no completed publications requested by me." />
 	</command>
 
 	<command name="viewDefaultMyWorkflowTasksCP">
@@ -663,7 +663,7 @@
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#ASSIGNED_TO_MY_ROLES_INFO_MESSAGE" value1="There are no pending tasks assigned to your roles." />
 		<execute function="AssertClick" locator1="MenuItem#COMPLETED" value1="Completed" />
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no completed tasks." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="There are no completed tasks." />
 	</command>
 
 	<command name="viewDefinition">

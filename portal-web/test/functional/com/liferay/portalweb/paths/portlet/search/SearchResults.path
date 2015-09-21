@@ -57,12 +57,12 @@
 </tr>
 <tr>
 	<td>ASSET_TYPE_FACET_FREQUENCY</td>
-	<td>//div[contains(@class,'search-asset_entries')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a/span</td>
+	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_TYPE_FACET_ASSET</td>
-	<td>//div[contains(@class,'search-asset_entries')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a</td>
+	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchAssetType}')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,17 +78,17 @@
 </tr>
 <tr>
 	<td>USER_FACET_ANY_USER</td>
-	<td>//div[contains(@class,'search-users')]/ul/li[contains(@class,'facet-value') and contains(@class,'default') and contains(.,'Any User')]/a</td>
+	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(@class,'default') and contains(.,'Any User')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_FACET_FREQUENCY</td>
-	<td>//div[contains(@class,'search-users')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_userLoginFullName}')]/a/span</td>
+	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_userLoginFullName}')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_FACET_USER_NAME</td>
-	<td>//div[contains(@class,'search-users')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_userLoginFullName}')]/a</td>
+	<td>//div[contains(@class,'search-facet')]/ul/li[contains(@class,'facet-value') and contains(.,'${key_userLoginFullName}')]/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -104,17 +104,17 @@
 </tr>
 <tr>
 	<td>MODIFIED_RANGE_FACET_ANY_TIME</td>
-	<td>//div[contains(@class,'search-modified')]/div/ul/li[contains(@class,'facet-value') and contains(@class,'default') and contains(.,'Any Time')]/a</td>
+	<td>//div[contains(@class,'search-facet')]/div/ul/li[contains(@class,'facet-value') and contains(@class,'default') and contains(.,'Any Time')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MODIFIED_RANGE_FACET_FREQUENCY</td>
-	<td>//div[contains(@class,'search-modified')]/div/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchModifiedRange}')]/a/span</td>
+	<td>//div[contains(@class,'search-facet')]/div/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchModifiedRange}')]/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MODIFIED_RANGE_FACET_TIME_RANGE</td>
-	<td>//div[contains(@class,'search-modified')]/div/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchModifiedRange}')]/a</td>
+	<td>//div[contains(@class,'search-facet')]/div/ul/li[contains(@class,'facet-value') and contains(.,'${key_searchModifiedRange}')]/a</td>
 	<td></td>
 </tr>
 <tr>

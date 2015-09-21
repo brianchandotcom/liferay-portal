@@ -56,7 +56,7 @@
 		</execute>
 
 		<execute macro="SiteTemplates#viewDefaultCP">
-			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="siteTemplateNameList" value="Intranet Site,Community Site" />
 		</execute>
 	</command>
 

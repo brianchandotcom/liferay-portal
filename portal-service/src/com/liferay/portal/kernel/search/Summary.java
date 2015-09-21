@@ -46,11 +46,21 @@ public class Summary {
 			return StringPool.BLANK;
 		}
 
-		if ((_maxContentLength > 0) &&
-			(_content.length() > _maxContentLength)) {
+		if ((_maxContentLength <= 0) ||
+			(_content.length() <= _maxContentLength)) {
 
-			_content = StringUtil.shorten(_content, _maxContentLength);
+			return _content;
 		}
+
+		if (!ArrayUtil.isEmpty(_queryTerms)) {
+			int beginPos = StringUtil.indexOfAny(_content, _queryTerms);
+
+			if (beginPos > _maxContentLength) {
+				_content = _content.substring(beginPos);
+			}
+		}
+
+		_content = StringUtil.shorten(_content, _maxContentLength);
 
 		return _content;
 	}

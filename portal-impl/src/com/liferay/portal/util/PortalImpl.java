@@ -1612,15 +1612,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public Map<String, List<Portlet>> getControlPanelCategoriesMap(
-		HttpServletRequest request) {
-
-		return getCategoriesMap(
-			request, WebKeys.CONTROL_PANEL_CATEGORIES_MAP,
-			PortletCategoryKeys.ALL);
-	}
-
-	@Override
 	public String getControlPanelCategory(
 		String portletId, ThemeDisplay themeDisplay) {
 

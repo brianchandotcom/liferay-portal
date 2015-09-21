@@ -282,119 +282,6 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
-	* Returns all the social relations where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching social relations
-	*/
-	public java.util.List<SocialRelation> findByCompanyId(long companyId);
-
-	/**
-	* Returns a range of all the social relations where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of social relations
-	* @param end the upper bound of the range of social relations (not inclusive)
-	* @return the range of matching social relations
-	*/
-	public java.util.List<SocialRelation> findByCompanyId(long companyId,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the social relations where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of social relations
-	* @param end the upper bound of the range of social relations (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching social relations
-	*/
-	public java.util.List<SocialRelation> findByCompanyId(long companyId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator);
-
-	/**
-	* Returns the first social relation in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching social relation
-	* @throws NoSuchRelationException if a matching social relation could not be found
-	*/
-	public SocialRelation findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRelationException;
-
-	/**
-	* Returns the first social relation in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	*/
-	public SocialRelation fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator);
-
-	/**
-	* Returns the last social relation in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching social relation
-	* @throws NoSuchRelationException if a matching social relation could not be found
-	*/
-	public SocialRelation findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRelationException;
-
-	/**
-	* Returns the last social relation in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	*/
-	public SocialRelation fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator);
-
-	/**
-	* Returns the social relations before and after the current social relation in the ordered set where companyId = &#63;.
-	*
-	* @param relationId the primary key of the current social relation
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next social relation
-	* @throws NoSuchRelationException if a social relation with the primary key could not be found
-	*/
-	public SocialRelation[] findByCompanyId_PrevAndNext(long relationId,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator)
-		throws com.liferay.portlet.social.NoSuchRelationException;
-
-	/**
-	* Removes all the social relations where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public void removeByCompanyId(long companyId);
-
-	/**
-	* Returns the number of social relations where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching social relations
-	*/
-	public int countByCompanyId(long companyId);
-
-	/**
 	* Returns all the social relations where userId1 = &#63;.
 	*
 	* @param userId1 the user id1
@@ -733,127 +620,117 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	public int countByType(int type);
 
 	/**
-	* Returns all the social relations where companyId = &#63; and type = &#63;.
+	* Returns all the social relations where companyId = &#63;.
 	*
 	* @param companyId the company ID
-	* @param type the type
 	* @return the matching social relations
 	*/
-	public java.util.List<SocialRelation> findByC_T(long companyId, int type);
+	public java.util.List<SocialRelation> findByCompanyId(long companyId);
 
 	/**
-	* Returns a range of all the social relations where companyId = &#63; and type = &#63;.
+	* Returns a range of all the social relations where companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
-	* @param type the type
 	* @param start the lower bound of the range of social relations
 	* @param end the upper bound of the range of social relations (not inclusive)
 	* @return the range of matching social relations
 	*/
-	public java.util.List<SocialRelation> findByC_T(long companyId, int type,
+	public java.util.List<SocialRelation> findByCompanyId(long companyId,
 		int start, int end);
 
 	/**
-	* Returns an ordered range of all the social relations where companyId = &#63; and type = &#63;.
+	* Returns an ordered range of all the social relations where companyId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
-	* @param type the type
 	* @param start the lower bound of the range of social relations
 	* @param end the upper bound of the range of social relations (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social relations
 	*/
-	public java.util.List<SocialRelation> findByC_T(long companyId, int type,
+	public java.util.List<SocialRelation> findByCompanyId(long companyId,
 		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator);
 
 	/**
-	* Returns the first social relation in the ordered set where companyId = &#63; and type = &#63;.
+	* Returns the first social relation in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
-	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social relation
 	* @throws NoSuchRelationException if a matching social relation could not be found
 	*/
-	public SocialRelation findByC_T_First(long companyId, int type,
+	public SocialRelation findByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
-	* Returns the first social relation in the ordered set where companyId = &#63; and type = &#63;.
+	* Returns the first social relation in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
-	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
 	*/
-	public SocialRelation fetchByC_T_First(long companyId, int type,
+	public SocialRelation fetchByCompanyId_First(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator);
 
 	/**
-	* Returns the last social relation in the ordered set where companyId = &#63; and type = &#63;.
+	* Returns the last social relation in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
-	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social relation
 	* @throws NoSuchRelationException if a matching social relation could not be found
 	*/
-	public SocialRelation findByC_T_Last(long companyId, int type,
+	public SocialRelation findByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
-	* Returns the last social relation in the ordered set where companyId = &#63; and type = &#63;.
+	* Returns the last social relation in the ordered set where companyId = &#63;.
 	*
 	* @param companyId the company ID
-	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
 	*/
-	public SocialRelation fetchByC_T_Last(long companyId, int type,
+	public SocialRelation fetchByCompanyId_Last(long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator);
 
 	/**
-	* Returns the social relations before and after the current social relation in the ordered set where companyId = &#63; and type = &#63;.
+	* Returns the social relations before and after the current social relation in the ordered set where companyId = &#63;.
 	*
 	* @param relationId the primary key of the current social relation
 	* @param companyId the company ID
-	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social relation
 	* @throws NoSuchRelationException if a social relation with the primary key could not be found
 	*/
-	public SocialRelation[] findByC_T_PrevAndNext(long relationId,
-		long companyId, int type,
+	public SocialRelation[] findByCompanyId_PrevAndNext(long relationId,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator)
 		throws com.liferay.portlet.social.NoSuchRelationException;
 
 	/**
-	* Removes all the social relations where companyId = &#63; and type = &#63; from the database.
+	* Removes all the social relations where companyId = &#63; from the database.
 	*
 	* @param companyId the company ID
-	* @param type the type
 	*/
-	public void removeByC_T(long companyId, int type);
+	public void removeByCompanyId(long companyId);
 
 	/**
-	* Returns the number of social relations where companyId = &#63; and type = &#63;.
+	* Returns the number of social relations where companyId = &#63;.
 	*
 	* @param companyId the company ID
-	* @param type the type
 	* @return the number of matching social relations
 	*/
-	public int countByC_T(long companyId, int type);
+	public int countByCompanyId(long companyId);
 
 	/**
 	* Returns all the social relations where userId1 = &#63; and userId2 = &#63;.
@@ -1223,6 +1100,129 @@ public interface SocialRelationPersistence extends BasePersistence<SocialRelatio
 	* @return the number of matching social relations
 	*/
 	public int countByU2_T(long userId2, int type);
+
+	/**
+	* Returns all the social relations where companyId = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param type the type
+	* @return the matching social relations
+	*/
+	public java.util.List<SocialRelation> findByC_T(long companyId, int type);
+
+	/**
+	* Returns a range of all the social relations where companyId = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param type the type
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @return the range of matching social relations
+	*/
+	public java.util.List<SocialRelation> findByC_T(long companyId, int type,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the social relations where companyId = &#63; and type = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link SocialRelationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param type the type
+	* @param start the lower bound of the range of social relations
+	* @param end the upper bound of the range of social relations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching social relations
+	*/
+	public java.util.List<SocialRelation> findByC_T(long companyId, int type,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator);
+
+	/**
+	* Returns the first social relation in the ordered set where companyId = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching social relation
+	* @throws NoSuchRelationException if a matching social relation could not be found
+	*/
+	public SocialRelation findByC_T_First(long companyId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator)
+		throws com.liferay.portlet.social.NoSuchRelationException;
+
+	/**
+	* Returns the first social relation in the ordered set where companyId = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
+	*/
+	public SocialRelation fetchByC_T_First(long companyId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator);
+
+	/**
+	* Returns the last social relation in the ordered set where companyId = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching social relation
+	* @throws NoSuchRelationException if a matching social relation could not be found
+	*/
+	public SocialRelation findByC_T_Last(long companyId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator)
+		throws com.liferay.portlet.social.NoSuchRelationException;
+
+	/**
+	* Returns the last social relation in the ordered set where companyId = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
+	*/
+	public SocialRelation fetchByC_T_Last(long companyId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator);
+
+	/**
+	* Returns the social relations before and after the current social relation in the ordered set where companyId = &#63; and type = &#63;.
+	*
+	* @param relationId the primary key of the current social relation
+	* @param companyId the company ID
+	* @param type the type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next social relation
+	* @throws NoSuchRelationException if a social relation with the primary key could not be found
+	*/
+	public SocialRelation[] findByC_T_PrevAndNext(long relationId,
+		long companyId, int type,
+		com.liferay.portal.kernel.util.OrderByComparator<SocialRelation> orderByComparator)
+		throws com.liferay.portlet.social.NoSuchRelationException;
+
+	/**
+	* Removes all the social relations where companyId = &#63; and type = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param type the type
+	*/
+	public void removeByC_T(long companyId, int type);
+
+	/**
+	* Returns the number of social relations where companyId = &#63; and type = &#63;.
+	*
+	* @param companyId the company ID
+	* @param type the type
+	* @return the number of matching social relations
+	*/
+	public int countByC_T(long companyId, int type);
 
 	/**
 	* Returns the social relation where userId1 = &#63; and userId2 = &#63; and type = &#63; or throws a {@link NoSuchRelationException} if it could not be found.

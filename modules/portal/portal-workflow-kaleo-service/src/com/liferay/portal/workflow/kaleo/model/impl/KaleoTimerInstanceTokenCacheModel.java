@@ -71,8 +71,6 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 		sb.append(kaleoTimerInstanceTokenId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -107,6 +105,8 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 		sb.append(completionDate);
 		sb.append(", workflowContext=");
 		sb.append(workflowContext);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -118,7 +118,6 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 
 		kaleoTimerInstanceTokenImpl.setKaleoTimerInstanceTokenId(kaleoTimerInstanceTokenId);
 		kaleoTimerInstanceTokenImpl.setGroupId(groupId);
-		kaleoTimerInstanceTokenImpl.setCompanyId(companyId);
 		kaleoTimerInstanceTokenImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -182,6 +181,8 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 			kaleoTimerInstanceTokenImpl.setWorkflowContext(workflowContext);
 		}
 
+		kaleoTimerInstanceTokenImpl.setCompanyId(companyId);
+
 		kaleoTimerInstanceTokenImpl.resetOriginalValues();
 
 		return kaleoTimerInstanceTokenImpl;
@@ -191,7 +192,6 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoTimerInstanceTokenId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -209,6 +209,7 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 		completed = objectInput.readBoolean();
 		completionDate = objectInput.readLong();
 		workflowContext = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -216,7 +217,6 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 		throws IOException {
 		objectOutput.writeLong(kaleoTimerInstanceTokenId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -261,11 +261,12 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 		else {
 			objectOutput.writeUTF(workflowContext);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoTimerInstanceTokenId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -283,4 +284,5 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 	public boolean completed;
 	public long completionDate;
 	public String workflowContext;
+	public long companyId;
 }

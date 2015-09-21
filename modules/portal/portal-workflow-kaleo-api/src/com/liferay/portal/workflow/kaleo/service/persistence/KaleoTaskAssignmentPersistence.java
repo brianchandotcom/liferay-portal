@@ -40,119 +40,6 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	 */
 
 	/**
-	* Returns all the kaleo task assignments where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching kaleo task assignments
-	*/
-	public java.util.List<KaleoTaskAssignment> findByCompanyId(long companyId);
-
-	/**
-	* Returns a range of all the kaleo task assignments where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTaskAssignmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of kaleo task assignments
-	* @param end the upper bound of the range of kaleo task assignments (not inclusive)
-	* @return the range of matching kaleo task assignments
-	*/
-	public java.util.List<KaleoTaskAssignment> findByCompanyId(long companyId,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the kaleo task assignments where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTaskAssignmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of kaleo task assignments
-	* @param end the upper bound of the range of kaleo task assignments (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching kaleo task assignments
-	*/
-	public java.util.List<KaleoTaskAssignment> findByCompanyId(long companyId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
-
-	/**
-	* Returns the first kaleo task assignment in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kaleo task assignment
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
-	*/
-	public KaleoTaskAssignment findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
-
-	/**
-	* Returns the first kaleo task assignment in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
-	*/
-	public KaleoTaskAssignment fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
-
-	/**
-	* Returns the last kaleo task assignment in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kaleo task assignment
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
-	*/
-	public KaleoTaskAssignment findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
-
-	/**
-	* Returns the last kaleo task assignment in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
-	*/
-	public KaleoTaskAssignment fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
-
-	/**
-	* Returns the kaleo task assignments before and after the current kaleo task assignment in the ordered set where companyId = &#63;.
-	*
-	* @param kaleoTaskAssignmentId the primary key of the current kaleo task assignment
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next kaleo task assignment
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentException if a kaleo task assignment with the primary key could not be found
-	*/
-	public KaleoTaskAssignment[] findByCompanyId_PrevAndNext(
-		long kaleoTaskAssignmentId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
-
-	/**
-	* Removes all the kaleo task assignments where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public void removeByCompanyId(long companyId);
-
-	/**
-	* Returns the number of kaleo task assignments where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching kaleo task assignments
-	*/
-	public int countByCompanyId(long companyId);
-
-	/**
 	* Returns all the kaleo task assignments where kaleoDefinitionId = &#63;.
 	*
 	* @param kaleoDefinitionId the kaleo definition ID
@@ -269,6 +156,119 @@ public interface KaleoTaskAssignmentPersistence extends BasePersistence<KaleoTas
 	* @return the number of matching kaleo task assignments
 	*/
 	public int countByKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
+	* Returns all the kaleo task assignments where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching kaleo task assignments
+	*/
+	public java.util.List<KaleoTaskAssignment> findByCompanyId(long companyId);
+
+	/**
+	* Returns a range of all the kaleo task assignments where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTaskAssignmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo task assignments
+	* @param end the upper bound of the range of kaleo task assignments (not inclusive)
+	* @return the range of matching kaleo task assignments
+	*/
+	public java.util.List<KaleoTaskAssignment> findByCompanyId(long companyId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the kaleo task assignments where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTaskAssignmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo task assignments
+	* @param end the upper bound of the range of kaleo task assignments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching kaleo task assignments
+	*/
+	public java.util.List<KaleoTaskAssignment> findByCompanyId(long companyId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
+
+	/**
+	* Returns the first kaleo task assignment in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo task assignment
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
+	*/
+	public KaleoTaskAssignment findByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
+
+	/**
+	* Returns the first kaleo task assignment in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
+	*/
+	public KaleoTaskAssignment fetchByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
+
+	/**
+	* Returns the last kaleo task assignment in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo task assignment
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentException if a matching kaleo task assignment could not be found
+	*/
+	public KaleoTaskAssignment findByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
+
+	/**
+	* Returns the last kaleo task assignment in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo task assignment, or <code>null</code> if a matching kaleo task assignment could not be found
+	*/
+	public KaleoTaskAssignment fetchByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator);
+
+	/**
+	* Returns the kaleo task assignments before and after the current kaleo task assignment in the ordered set where companyId = &#63;.
+	*
+	* @param kaleoTaskAssignmentId the primary key of the current kaleo task assignment
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next kaleo task assignment
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTaskAssignmentException if a kaleo task assignment with the primary key could not be found
+	*/
+	public KaleoTaskAssignment[] findByCompanyId_PrevAndNext(
+		long kaleoTaskAssignmentId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTaskAssignment> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTaskAssignmentException;
+
+	/**
+	* Removes all the kaleo task assignments where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public void removeByCompanyId(long companyId);
+
+	/**
+	* Returns the number of kaleo task assignments where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching kaleo task assignments
+	*/
+	public int countByCompanyId(long companyId);
 
 	/**
 	* Returns all the kaleo task assignments where kaleoClassName = &#63; and kaleoClassPK = &#63;.

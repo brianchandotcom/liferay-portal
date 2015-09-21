@@ -53,11 +53,11 @@ public class PluginSettingWrapper implements PluginSetting,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("pluginSettingId", getPluginSettingId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("pluginId", getPluginId());
 		attributes.put("pluginType", getPluginType());
 		attributes.put("roles", getRoles());
 		attributes.put("active", getActive());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -74,12 +74,6 @@ public class PluginSettingWrapper implements PluginSetting,
 
 		if (pluginSettingId != null) {
 			setPluginSettingId(pluginSettingId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		String pluginId = (String)attributes.get("pluginId");
@@ -104,6 +98,12 @@ public class PluginSettingWrapper implements PluginSetting,
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

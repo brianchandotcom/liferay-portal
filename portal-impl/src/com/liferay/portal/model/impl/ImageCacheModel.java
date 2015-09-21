@@ -79,7 +79,7 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -95,6 +95,8 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable,
 		sb.append(width);
 		sb.append(", size=");
 		sb.append(size);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -124,6 +126,7 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable,
 		imageImpl.setHeight(height);
 		imageImpl.setWidth(width);
 		imageImpl.setSize(size);
+		imageImpl.setCompanyId(companyId);
 
 		imageImpl.resetOriginalValues();
 
@@ -139,6 +142,7 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable,
 		height = objectInput.readInt();
 		width = objectInput.readInt();
 		size = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -158,6 +162,7 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable,
 		objectOutput.writeInt(height);
 		objectOutput.writeInt(width);
 		objectOutput.writeInt(size);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
@@ -167,4 +172,5 @@ public class ImageCacheModel implements CacheModel<Image>, Externalizable,
 	public int height;
 	public int width;
 	public int size;
+	public long companyId;
 }

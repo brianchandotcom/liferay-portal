@@ -126,8 +126,6 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 		newCalendarNotificationTemplate.setGroupId(RandomTestUtil.nextLong());
 
-		newCalendarNotificationTemplate.setCompanyId(RandomTestUtil.nextLong());
-
 		newCalendarNotificationTemplate.setUserId(RandomTestUtil.nextLong());
 
 		newCalendarNotificationTemplate.setUserName(RandomTestUtil.randomString());
@@ -150,6 +148,8 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 		newCalendarNotificationTemplate.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newCalendarNotificationTemplate.setCompanyId(RandomTestUtil.nextLong());
+
 		_calendarNotificationTemplates.add(_persistence.update(
 				newCalendarNotificationTemplate));
 
@@ -161,8 +161,6 @@ public class CalendarNotificationTemplatePersistenceTest {
 			newCalendarNotificationTemplate.getCalendarNotificationTemplateId());
 		Assert.assertEquals(existingCalendarNotificationTemplate.getGroupId(),
 			newCalendarNotificationTemplate.getGroupId());
-		Assert.assertEquals(existingCalendarNotificationTemplate.getCompanyId(),
-			newCalendarNotificationTemplate.getCompanyId());
 		Assert.assertEquals(existingCalendarNotificationTemplate.getUserId(),
 			newCalendarNotificationTemplate.getUserId());
 		Assert.assertEquals(existingCalendarNotificationTemplate.getUserName(),
@@ -191,6 +189,8 @@ public class CalendarNotificationTemplatePersistenceTest {
 				existingCalendarNotificationTemplate.getLastPublishDate()),
 			Time.getShortTimestamp(
 				newCalendarNotificationTemplate.getLastPublishDate()));
+		Assert.assertEquals(existingCalendarNotificationTemplate.getCompanyId(),
+			newCalendarNotificationTemplate.getCompanyId());
 	}
 
 	@Test
@@ -263,11 +263,10 @@ public class CalendarNotificationTemplatePersistenceTest {
 	protected OrderByComparator<CalendarNotificationTemplate> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CalendarNotificationTemplate",
 			"uuid", true, "calendarNotificationTemplateId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "calendarId", true,
-			"notificationType", true, "notificationTypeSettings", true,
-			"notificationTemplateType", true, "subject", true,
-			"lastPublishDate", true);
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "calendarId", true, "notificationType", true,
+			"notificationTypeSettings", true, "notificationTemplateType", true,
+			"subject", true, "lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -527,8 +526,6 @@ public class CalendarNotificationTemplatePersistenceTest {
 
 		calendarNotificationTemplate.setGroupId(RandomTestUtil.nextLong());
 
-		calendarNotificationTemplate.setCompanyId(RandomTestUtil.nextLong());
-
 		calendarNotificationTemplate.setUserId(RandomTestUtil.nextLong());
 
 		calendarNotificationTemplate.setUserName(RandomTestUtil.randomString());
@@ -550,6 +547,8 @@ public class CalendarNotificationTemplatePersistenceTest {
 		calendarNotificationTemplate.setBody(RandomTestUtil.randomString());
 
 		calendarNotificationTemplate.setLastPublishDate(RandomTestUtil.nextDate());
+
+		calendarNotificationTemplate.setCompanyId(RandomTestUtil.nextLong());
 
 		_calendarNotificationTemplates.add(_persistence.update(
 				calendarNotificationTemplate));

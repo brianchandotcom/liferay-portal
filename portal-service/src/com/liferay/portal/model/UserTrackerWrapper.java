@@ -54,13 +54,13 @@ public class UserTrackerWrapper implements UserTracker,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("userTrackerId", getUserTrackerId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("sessionId", getSessionId());
 		attributes.put("remoteAddr", getRemoteAddr());
 		attributes.put("remoteHost", getRemoteHost());
 		attributes.put("userAgent", getUserAgent());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -77,12 +77,6 @@ public class UserTrackerWrapper implements UserTracker,
 
 		if (userTrackerId != null) {
 			setUserTrackerId(userTrackerId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -119,6 +113,12 @@ public class UserTrackerWrapper implements UserTracker,
 
 		if (userAgent != null) {
 			setUserAgent(userAgent);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

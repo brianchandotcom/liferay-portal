@@ -115,8 +115,6 @@ public class ExpandoValuePersistenceTest {
 
 		ExpandoValue newExpandoValue = _persistence.create(pk);
 
-		newExpandoValue.setCompanyId(RandomTestUtil.nextLong());
-
 		newExpandoValue.setTableId(RandomTestUtil.nextLong());
 
 		newExpandoValue.setColumnId(RandomTestUtil.nextLong());
@@ -129,14 +127,14 @@ public class ExpandoValuePersistenceTest {
 
 		newExpandoValue.setData(RandomTestUtil.randomString());
 
+		newExpandoValue.setCompanyId(RandomTestUtil.nextLong());
+
 		_expandoValues.add(_persistence.update(newExpandoValue));
 
 		ExpandoValue existingExpandoValue = _persistence.findByPrimaryKey(newExpandoValue.getPrimaryKey());
 
 		Assert.assertEquals(existingExpandoValue.getValueId(),
 			newExpandoValue.getValueId());
-		Assert.assertEquals(existingExpandoValue.getCompanyId(),
-			newExpandoValue.getCompanyId());
 		Assert.assertEquals(existingExpandoValue.getTableId(),
 			newExpandoValue.getTableId());
 		Assert.assertEquals(existingExpandoValue.getColumnId(),
@@ -149,6 +147,8 @@ public class ExpandoValuePersistenceTest {
 			newExpandoValue.getClassPK());
 		Assert.assertEquals(existingExpandoValue.getData(),
 			newExpandoValue.getData());
+		Assert.assertEquals(existingExpandoValue.getCompanyId(),
+			newExpandoValue.getCompanyId());
 	}
 
 	@Test
@@ -254,8 +254,8 @@ public class ExpandoValuePersistenceTest {
 
 	protected OrderByComparator<ExpandoValue> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExpandoValue", "valueId",
-			true, "companyId", true, "tableId", true, "columnId", true,
-			"rowId", true, "classNameId", true, "classPK", true);
+			true, "tableId", true, "columnId", true, "rowId", true,
+			"classNameId", true, "classPK", true, "companyId", true);
 	}
 
 	@Test
@@ -483,8 +483,6 @@ public class ExpandoValuePersistenceTest {
 
 		ExpandoValue expandoValue = _persistence.create(pk);
 
-		expandoValue.setCompanyId(RandomTestUtil.nextLong());
-
 		expandoValue.setTableId(RandomTestUtil.nextLong());
 
 		expandoValue.setColumnId(RandomTestUtil.nextLong());
@@ -496,6 +494,8 @@ public class ExpandoValuePersistenceTest {
 		expandoValue.setClassPK(RandomTestUtil.nextLong());
 
 		expandoValue.setData(RandomTestUtil.randomString());
+
+		expandoValue.setCompanyId(RandomTestUtil.nextLong());
 
 		_expandoValues.add(_persistence.update(expandoValue));
 

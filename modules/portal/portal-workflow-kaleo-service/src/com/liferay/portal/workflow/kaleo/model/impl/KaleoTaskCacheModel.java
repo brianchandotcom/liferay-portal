@@ -71,8 +71,6 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 		sb.append(kaleoTaskId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -89,6 +87,8 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -100,7 +100,6 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 
 		kaleoTaskImpl.setKaleoTaskId(kaleoTaskId);
 		kaleoTaskImpl.setGroupId(groupId);
-		kaleoTaskImpl.setCompanyId(companyId);
 		kaleoTaskImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -141,6 +140,8 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 			kaleoTaskImpl.setDescription(description);
 		}
 
+		kaleoTaskImpl.setCompanyId(companyId);
+
 		kaleoTaskImpl.resetOriginalValues();
 
 		return kaleoTaskImpl;
@@ -150,7 +151,6 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoTaskId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -159,6 +159,7 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 		kaleoNodeId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -166,7 +167,6 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 		throws IOException {
 		objectOutput.writeLong(kaleoTaskId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -194,11 +194,12 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoTaskId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -207,4 +208,5 @@ public class KaleoTaskCacheModel implements CacheModel<KaleoTask>,
 	public long kaleoNodeId;
 	public String name;
 	public String description;
+	public long companyId;
 }

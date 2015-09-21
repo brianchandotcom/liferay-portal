@@ -117,8 +117,6 @@ public class AnnouncementsEntryPersistenceTest {
 
 		newAnnouncementsEntry.setUuid(RandomTestUtil.randomString());
 
-		newAnnouncementsEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		newAnnouncementsEntry.setUserId(RandomTestUtil.nextLong());
 
 		newAnnouncementsEntry.setUserName(RandomTestUtil.randomString());
@@ -147,6 +145,8 @@ public class AnnouncementsEntryPersistenceTest {
 
 		newAnnouncementsEntry.setAlert(RandomTestUtil.randomBoolean());
 
+		newAnnouncementsEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		_announcementsEntries.add(_persistence.update(newAnnouncementsEntry));
 
 		AnnouncementsEntry existingAnnouncementsEntry = _persistence.findByPrimaryKey(newAnnouncementsEntry.getPrimaryKey());
@@ -155,8 +155,6 @@ public class AnnouncementsEntryPersistenceTest {
 			newAnnouncementsEntry.getUuid());
 		Assert.assertEquals(existingAnnouncementsEntry.getEntryId(),
 			newAnnouncementsEntry.getEntryId());
-		Assert.assertEquals(existingAnnouncementsEntry.getCompanyId(),
-			newAnnouncementsEntry.getCompanyId());
 		Assert.assertEquals(existingAnnouncementsEntry.getUserId(),
 			newAnnouncementsEntry.getUserId());
 		Assert.assertEquals(existingAnnouncementsEntry.getUserName(),
@@ -189,6 +187,8 @@ public class AnnouncementsEntryPersistenceTest {
 			newAnnouncementsEntry.getPriority());
 		Assert.assertEquals(existingAnnouncementsEntry.getAlert(),
 			newAnnouncementsEntry.getAlert());
+		Assert.assertEquals(existingAnnouncementsEntry.getCompanyId(),
+			newAnnouncementsEntry.getCompanyId());
 	}
 
 	@Test
@@ -256,11 +256,11 @@ public class AnnouncementsEntryPersistenceTest {
 
 	protected OrderByComparator<AnnouncementsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AnnouncementsEntry",
-			"uuid", true, "entryId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "title", true, "url", true,
-			"type", true, "displayDate", true, "expirationDate", true,
-			"priority", true, "alert", true);
+			"uuid", true, "entryId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "title", true, "url", true, "type", true,
+			"displayDate", true, "expirationDate", true, "priority", true,
+			"alert", true, "companyId", true);
 	}
 
 	@Test
@@ -465,8 +465,6 @@ public class AnnouncementsEntryPersistenceTest {
 
 		announcementsEntry.setUuid(RandomTestUtil.randomString());
 
-		announcementsEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		announcementsEntry.setUserId(RandomTestUtil.nextLong());
 
 		announcementsEntry.setUserName(RandomTestUtil.randomString());
@@ -494,6 +492,8 @@ public class AnnouncementsEntryPersistenceTest {
 		announcementsEntry.setPriority(RandomTestUtil.nextInt());
 
 		announcementsEntry.setAlert(RandomTestUtil.randomBoolean());
+
+		announcementsEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		_announcementsEntries.add(_persistence.update(announcementsEntry));
 

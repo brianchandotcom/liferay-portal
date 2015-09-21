@@ -67,7 +67,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "cartId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -75,14 +74,14 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 			{ "itemIds", Types.CLOB },
 			{ "couponCodes", Types.VARCHAR },
 			{ "altShipping", Types.INTEGER },
-			{ "insure", Types.BOOLEAN }
+			{ "insure", Types.BOOLEAN },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("cartId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -91,9 +90,10 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		TABLE_COLUMNS_MAP.put("couponCodes", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("altShipping", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("insure", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ShoppingCart (cartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,itemIds TEXT null,couponCodes VARCHAR(75) null,altShipping INTEGER,insure BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table ShoppingCart (cartId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,itemIds TEXT null,couponCodes VARCHAR(75) null,altShipping INTEGER,insure BOOLEAN,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingCart";
 	public static final String ORDER_BY_JPQL = " ORDER BY shoppingCart.cartId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ShoppingCart.cartId ASC";
@@ -154,7 +154,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 		attributes.put("cartId", getCartId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -163,6 +162,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		attributes.put("couponCodes", getCouponCodes());
 		attributes.put("altShipping", getAltShipping());
 		attributes.put("insure", getInsure());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -182,12 +182,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -237,6 +231,12 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		if (insure != null) {
 			setInsure(insure);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -269,16 +269,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -415,6 +405,16 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		_insure = insure;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -448,7 +448,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 		shoppingCartImpl.setCartId(getCartId());
 		shoppingCartImpl.setGroupId(getGroupId());
-		shoppingCartImpl.setCompanyId(getCompanyId());
 		shoppingCartImpl.setUserId(getUserId());
 		shoppingCartImpl.setUserName(getUserName());
 		shoppingCartImpl.setCreateDate(getCreateDate());
@@ -457,6 +456,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		shoppingCartImpl.setCouponCodes(getCouponCodes());
 		shoppingCartImpl.setAltShipping(getAltShipping());
 		shoppingCartImpl.setInsure(getInsure());
+		shoppingCartImpl.setCompanyId(getCompanyId());
 
 		shoppingCartImpl.resetOriginalValues();
 
@@ -540,8 +540,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 		shoppingCartCacheModel.groupId = getGroupId();
 
-		shoppingCartCacheModel.companyId = getCompanyId();
-
 		shoppingCartCacheModel.userId = getUserId();
 
 		shoppingCartCacheModel.userName = getUserName();
@@ -590,6 +588,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 		shoppingCartCacheModel.insure = getInsure();
 
+		shoppingCartCacheModel.companyId = getCompanyId();
+
 		return shoppingCartCacheModel;
 	}
 
@@ -601,8 +601,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		sb.append(getCartId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -619,6 +617,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		sb.append(getAltShipping());
 		sb.append(", insure=");
 		sb.append(getInsure());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -639,10 +639,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -676,6 +672,10 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 			"<column><column-name>insure</column-name><column-value><![CDATA[");
 		sb.append(getInsure());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -690,7 +690,6 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -702,6 +701,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	private String _couponCodes;
 	private int _altShipping;
 	private boolean _insure;
+	private long _companyId;
 	private long _columnBitmask;
 	private ShoppingCart _escapedModel;
 }

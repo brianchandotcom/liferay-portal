@@ -126,8 +126,6 @@ public class DDMContentPersistenceTest {
 
 		newDDMContent.setGroupId(RandomTestUtil.nextLong());
 
-		newDDMContent.setCompanyId(RandomTestUtil.nextLong());
-
 		newDDMContent.setUserId(RandomTestUtil.nextLong());
 
 		newDDMContent.setUserName(RandomTestUtil.randomString());
@@ -142,6 +140,8 @@ public class DDMContentPersistenceTest {
 
 		newDDMContent.setData(RandomTestUtil.randomString());
 
+		newDDMContent.setCompanyId(RandomTestUtil.nextLong());
+
 		_ddmContents.add(_persistence.update(newDDMContent));
 
 		DDMContent existingDDMContent = _persistence.findByPrimaryKey(newDDMContent.getPrimaryKey());
@@ -152,8 +152,6 @@ public class DDMContentPersistenceTest {
 			newDDMContent.getContentId());
 		Assert.assertEquals(existingDDMContent.getGroupId(),
 			newDDMContent.getGroupId());
-		Assert.assertEquals(existingDDMContent.getCompanyId(),
-			newDDMContent.getCompanyId());
 		Assert.assertEquals(existingDDMContent.getUserId(),
 			newDDMContent.getUserId());
 		Assert.assertEquals(existingDDMContent.getUserName(),
@@ -170,6 +168,8 @@ public class DDMContentPersistenceTest {
 			newDDMContent.getDescription());
 		Assert.assertEquals(existingDDMContent.getData(),
 			newDDMContent.getData());
+		Assert.assertEquals(existingDDMContent.getCompanyId(),
+			newDDMContent.getCompanyId());
 	}
 
 	@Test
@@ -237,9 +237,9 @@ public class DDMContentPersistenceTest {
 
 	protected OrderByComparator<DDMContent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMContent", "uuid", true,
-			"contentId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"name", true, "description", true);
+			"contentId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "name", true,
+			"description", true, "companyId", true);
 	}
 
 	@Test
@@ -461,8 +461,6 @@ public class DDMContentPersistenceTest {
 
 		ddmContent.setGroupId(RandomTestUtil.nextLong());
 
-		ddmContent.setCompanyId(RandomTestUtil.nextLong());
-
 		ddmContent.setUserId(RandomTestUtil.nextLong());
 
 		ddmContent.setUserName(RandomTestUtil.randomString());
@@ -476,6 +474,8 @@ public class DDMContentPersistenceTest {
 		ddmContent.setDescription(RandomTestUtil.randomString());
 
 		ddmContent.setData(RandomTestUtil.randomString());
+
+		ddmContent.setCompanyId(RandomTestUtil.nextLong());
 
 		_ddmContents.add(_persistence.update(ddmContent));
 

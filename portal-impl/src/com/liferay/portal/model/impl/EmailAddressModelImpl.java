@@ -75,7 +75,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "emailAddressId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -85,7 +84,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 			{ "address", Types.VARCHAR },
 			{ "typeId", Types.BIGINT },
 			{ "primary_", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -93,7 +93,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("emailAddressId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -104,9 +103,10 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		TABLE_COLUMNS_MAP.put("typeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table EmailAddress (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(75) null,typeId LONG,primary_ BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table EmailAddress (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,emailAddressId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,address VARCHAR(75) null,typeId LONG,primary_ BOOLEAN,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table EmailAddress";
 	public static final String ORDER_BY_JPQL = " ORDER BY emailAddress.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY EmailAddress.createDate ASC";
@@ -146,7 +146,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setEmailAddressId(soapModel.getEmailAddressId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -157,6 +156,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		model.setTypeId(soapModel.getTypeId());
 		model.setPrimary(soapModel.getPrimary());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -224,7 +224,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("emailAddressId", getEmailAddressId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -235,6 +234,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -260,12 +260,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 		if (emailAddressId != null) {
 			setEmailAddressId(emailAddressId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -327,6 +321,12 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -373,29 +373,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	@Override
 	public void setEmailAddressId(long emailAddressId) {
 		_emailAddressId = emailAddressId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -615,6 +592,29 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -655,7 +655,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		emailAddressImpl.setMvccVersion(getMvccVersion());
 		emailAddressImpl.setUuid(getUuid());
 		emailAddressImpl.setEmailAddressId(getEmailAddressId());
-		emailAddressImpl.setCompanyId(getCompanyId());
 		emailAddressImpl.setUserId(getUserId());
 		emailAddressImpl.setUserName(getUserName());
 		emailAddressImpl.setCreateDate(getCreateDate());
@@ -666,6 +665,7 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		emailAddressImpl.setTypeId(getTypeId());
 		emailAddressImpl.setPrimary(getPrimary());
 		emailAddressImpl.setLastPublishDate(getLastPublishDate());
+		emailAddressImpl.setCompanyId(getCompanyId());
 
 		emailAddressImpl.resetOriginalValues();
 
@@ -728,10 +728,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 
 		emailAddressModelImpl._originalUuid = emailAddressModelImpl._uuid;
 
-		emailAddressModelImpl._originalCompanyId = emailAddressModelImpl._companyId;
-
-		emailAddressModelImpl._setOriginalCompanyId = false;
-
 		emailAddressModelImpl._originalUserId = emailAddressModelImpl._userId;
 
 		emailAddressModelImpl._setOriginalUserId = false;
@@ -749,6 +745,10 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		emailAddressModelImpl._originalPrimary = emailAddressModelImpl._primary;
 
 		emailAddressModelImpl._setOriginalPrimary = false;
+
+		emailAddressModelImpl._originalCompanyId = emailAddressModelImpl._companyId;
+
+		emailAddressModelImpl._setOriginalCompanyId = false;
 
 		emailAddressModelImpl._columnBitmask = 0;
 	}
@@ -768,8 +768,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		}
 
 		emailAddressCacheModel.emailAddressId = getEmailAddressId();
-
-		emailAddressCacheModel.companyId = getCompanyId();
 
 		emailAddressCacheModel.userId = getUserId();
 
@@ -824,6 +822,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 			emailAddressCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		emailAddressCacheModel.companyId = getCompanyId();
+
 		return emailAddressCacheModel;
 	}
 
@@ -837,8 +837,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		sb.append(getUuid());
 		sb.append(", emailAddressId=");
 		sb.append(getEmailAddressId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -859,6 +857,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		sb.append(getPrimary());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -883,10 +883,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		sb.append(
 			"<column><column-name>emailAddressId</column-name><column-value><![CDATA[");
 		sb.append(getEmailAddressId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -928,6 +924,10 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -942,9 +942,6 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	private String _uuid;
 	private String _originalUuid;
 	private long _emailAddressId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -964,6 +961,9 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 	private boolean _originalPrimary;
 	private boolean _setOriginalPrimary;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private EmailAddress _escapedModel;
 }

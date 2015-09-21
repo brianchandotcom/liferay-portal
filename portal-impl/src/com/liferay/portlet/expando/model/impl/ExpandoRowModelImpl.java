@@ -58,22 +58,22 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	public static final String TABLE_NAME = "ExpandoRow";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "rowId_", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "tableId", Types.BIGINT },
-			{ "classPK", Types.BIGINT }
+			{ "classPK", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("rowId_", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ExpandoRow (rowId_ LONG not null primary key,companyId LONG,modifiedDate DATE null,tableId LONG,classPK LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ExpandoRow (rowId_ LONG not null primary key,modifiedDate DATE null,tableId LONG,classPK LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ExpandoRow";
 	public static final String ORDER_BY_JPQL = " ORDER BY expandoRow.rowId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ExpandoRow.rowId_ ASC";
@@ -133,10 +133,10 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("rowId", getRowId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("tableId", getTableId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -150,12 +150,6 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 		if (rowId != null) {
 			setRowId(rowId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date modifiedDate = (Date)attributes.get("modifiedDate");
@@ -175,6 +169,12 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		if (classPK != null) {
 			setClassPK(classPK);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -185,16 +185,6 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	@Override
 	public void setRowId(long rowId) {
 		_rowId = rowId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -251,6 +241,16 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		return _originalClassPK;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -270,10 +270,10 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		ExpandoRowImpl expandoRowImpl = new ExpandoRowImpl();
 
 		expandoRowImpl.setRowId(getRowId());
-		expandoRowImpl.setCompanyId(getCompanyId());
 		expandoRowImpl.setModifiedDate(getModifiedDate());
 		expandoRowImpl.setTableId(getTableId());
 		expandoRowImpl.setClassPK(getClassPK());
+		expandoRowImpl.setCompanyId(getCompanyId());
 
 		expandoRowImpl.resetOriginalValues();
 
@@ -353,8 +353,6 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 		expandoRowCacheModel.rowId = getRowId();
 
-		expandoRowCacheModel.companyId = getCompanyId();
-
 		Date modifiedDate = getModifiedDate();
 
 		if (modifiedDate != null) {
@@ -368,6 +366,8 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 		expandoRowCacheModel.classPK = getClassPK();
 
+		expandoRowCacheModel.companyId = getCompanyId();
+
 		return expandoRowCacheModel;
 	}
 
@@ -377,14 +377,14 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 
 		sb.append("{rowId=");
 		sb.append(getRowId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
 		sb.append(", tableId=");
 		sb.append(getTableId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -403,10 +403,6 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		sb.append(getRowId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
@@ -417,6 +413,10 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 		sb.append(
 			"<column><column-name>classPK</column-name><column-value><![CDATA[");
 		sb.append(getClassPK());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -429,7 +429,6 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 			ExpandoRow.class
 		};
 	private long _rowId;
-	private long _companyId;
 	private Date _modifiedDate;
 	private long _tableId;
 	private long _originalTableId;
@@ -437,6 +436,7 @@ public class ExpandoRowModelImpl extends BaseModelImpl<ExpandoRow>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
+	private long _companyId;
 	private long _columnBitmask;
 	private ExpandoRow _escapedModel;
 }

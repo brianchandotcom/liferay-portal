@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplatePersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -45,6 +46,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -11685,6 +11687,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 		ddmTemplate.setUuid(uuid);
 
+		ddmTemplate.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return ddmTemplate;
 	}
 
@@ -12129,7 +12133,6 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		ddmTemplateImpl.setUuid(ddmTemplate.getUuid());
 		ddmTemplateImpl.setTemplateId(ddmTemplate.getTemplateId());
 		ddmTemplateImpl.setGroupId(ddmTemplate.getGroupId());
-		ddmTemplateImpl.setCompanyId(ddmTemplate.getCompanyId());
 		ddmTemplateImpl.setUserId(ddmTemplate.getUserId());
 		ddmTemplateImpl.setUserName(ddmTemplate.getUserName());
 		ddmTemplateImpl.setVersionUserId(ddmTemplate.getVersionUserId());
@@ -12152,6 +12155,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		ddmTemplateImpl.setSmallImageId(ddmTemplate.getSmallImageId());
 		ddmTemplateImpl.setSmallImageURL(ddmTemplate.getSmallImageURL());
 		ddmTemplateImpl.setLastPublishDate(ddmTemplate.getLastPublishDate());
+		ddmTemplateImpl.setCompanyId(ddmTemplate.getCompanyId());
 
 		return ddmTemplateImpl;
 	}
@@ -12532,6 +12536,8 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_DDMTEMPLATE = "SELECT ddmTemplate FROM DDMTemplate ddmTemplate";
 	private static final String _SQL_SELECT_DDMTEMPLATE_WHERE_PKS_IN = "SELECT ddmTemplate FROM DDMTemplate ddmTemplate WHERE templateId IN (";
 	private static final String _SQL_SELECT_DDMTEMPLATE_WHERE = "SELECT ddmTemplate FROM DDMTemplate ddmTemplate WHERE ";

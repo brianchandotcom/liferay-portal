@@ -54,7 +54,6 @@ public class SocialActivityWrapper implements SocialActivity,
 
 		attributes.put("activityId", getActivityId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("activitySetId", getActivitySetId());
@@ -66,6 +65,7 @@ public class SocialActivityWrapper implements SocialActivity,
 		attributes.put("type", getType());
 		attributes.put("extraData", getExtraData());
 		attributes.put("receiverUserId", getReceiverUserId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -82,12 +82,6 @@ public class SocialActivityWrapper implements SocialActivity,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -154,6 +148,12 @@ public class SocialActivityWrapper implements SocialActivity,
 
 		if (receiverUserId != null) {
 			setReceiverUserId(receiverUserId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

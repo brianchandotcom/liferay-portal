@@ -34,7 +34,6 @@ public class MeetupsRegistrationSoap implements Serializable {
 		MeetupsRegistrationSoap soapModel = new MeetupsRegistrationSoap();
 
 		soapModel.setMeetupsRegistrationId(model.getMeetupsRegistrationId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -42,6 +41,7 @@ public class MeetupsRegistrationSoap implements Serializable {
 		soapModel.setMeetupsEntryId(model.getMeetupsEntryId());
 		soapModel.setStatus(model.getStatus());
 		soapModel.setComments(model.getComments());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -105,14 +105,6 @@ public class MeetupsRegistrationSoap implements Serializable {
 		_meetupsRegistrationId = meetupsRegistrationId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -169,8 +161,15 @@ public class MeetupsRegistrationSoap implements Serializable {
 		_comments = comments;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _meetupsRegistrationId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -178,4 +177,5 @@ public class MeetupsRegistrationSoap implements Serializable {
 	private long _meetupsEntryId;
 	private int _status;
 	private String _comments;
+	private long _companyId;
 }

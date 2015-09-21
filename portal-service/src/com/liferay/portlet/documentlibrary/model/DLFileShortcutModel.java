@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -48,7 +49,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
-	StagedGroupedModel, TrashedModel, WorkflowedModel {
+	PartitionableModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -115,22 +116,6 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this document library file shortcut.
-	 *
-	 * @return the company ID of this document library file shortcut
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this document library file shortcut.
-	 *
-	 * @param companyId the company ID of this document library file shortcut
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this document library file shortcut.
@@ -387,6 +372,22 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the company ID of this document library file shortcut.
+	 *
+	 * @return the company ID of this document library file shortcut
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this document library file shortcut.
+	 *
+	 * @param companyId the company ID of this document library file shortcut
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the trash entry created when this document library file shortcut was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file shortcut.

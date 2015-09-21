@@ -55,7 +55,6 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 
 		attributes.put("categoryId", getCategoryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -63,6 +62,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 		attributes.put("parentCategoryId", getParentCategoryId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -79,12 +79,6 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -127,6 +121,12 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

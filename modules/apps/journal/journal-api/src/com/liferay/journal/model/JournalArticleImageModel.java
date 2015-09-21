@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface JournalArticleImageModel extends BaseModel<JournalArticleImage> {
+public interface JournalArticleImageModel extends BaseModel<JournalArticleImage>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -182,6 +184,22 @@ public interface JournalArticleImageModel extends BaseModel<JournalArticleImage>
 	 * @param tempImage the temp image of this journal article image
 	 */
 	public void setTempImage(boolean tempImage);
+
+	/**
+	 * Returns the company ID of this journal article image.
+	 *
+	 * @return the company ID of this journal article image
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this journal article image.
+	 *
+	 * @param companyId the company ID of this journal article image
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -74,7 +74,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "entryId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -82,14 +81,14 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "score", Types.DOUBLE },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -98,9 +97,10 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("score", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table RatingsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table RatingsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,score DOUBLE,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table RatingsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY ratingsEntry.entryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY RatingsEntry.entryId ASC";
@@ -139,7 +139,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		model.setUuid(soapModel.getUuid());
 		model.setEntryId(soapModel.getEntryId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -148,6 +147,7 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		model.setClassPK(soapModel.getClassPK());
 		model.setScore(soapModel.getScore());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -214,7 +214,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("entryId", getEntryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -223,6 +222,7 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		attributes.put("classPK", getClassPK());
 		attributes.put("score", getScore());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -242,12 +242,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		if (entryId != null) {
 			setEntryId(entryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -297,6 +291,12 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -332,29 +332,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	@Override
 	public void setEntryId(long entryId) {
 		_entryId = entryId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -540,6 +517,29 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -579,7 +579,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		ratingsEntryImpl.setUuid(getUuid());
 		ratingsEntryImpl.setEntryId(getEntryId());
-		ratingsEntryImpl.setCompanyId(getCompanyId());
 		ratingsEntryImpl.setUserId(getUserId());
 		ratingsEntryImpl.setUserName(getUserName());
 		ratingsEntryImpl.setCreateDate(getCreateDate());
@@ -588,6 +587,7 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		ratingsEntryImpl.setClassPK(getClassPK());
 		ratingsEntryImpl.setScore(getScore());
 		ratingsEntryImpl.setLastPublishDate(getLastPublishDate());
+		ratingsEntryImpl.setCompanyId(getCompanyId());
 
 		ratingsEntryImpl.resetOriginalValues();
 
@@ -652,10 +652,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		ratingsEntryModelImpl._originalUuid = ratingsEntryModelImpl._uuid;
 
-		ratingsEntryModelImpl._originalCompanyId = ratingsEntryModelImpl._companyId;
-
-		ratingsEntryModelImpl._setOriginalCompanyId = false;
-
 		ratingsEntryModelImpl._originalUserId = ratingsEntryModelImpl._userId;
 
 		ratingsEntryModelImpl._setOriginalUserId = false;
@@ -674,6 +670,10 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		ratingsEntryModelImpl._setOriginalScore = false;
 
+		ratingsEntryModelImpl._originalCompanyId = ratingsEntryModelImpl._companyId;
+
+		ratingsEntryModelImpl._setOriginalCompanyId = false;
+
 		ratingsEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -690,8 +690,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		}
 
 		ratingsEntryCacheModel.entryId = getEntryId();
-
-		ratingsEntryCacheModel.companyId = getCompanyId();
 
 		ratingsEntryCacheModel.userId = getUserId();
 
@@ -736,6 +734,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 			ratingsEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		ratingsEntryCacheModel.companyId = getCompanyId();
+
 		return ratingsEntryCacheModel;
 	}
 
@@ -747,8 +747,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		sb.append(getUuid());
 		sb.append(", entryId=");
 		sb.append(getEntryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -765,6 +763,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		sb.append(getScore());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -785,10 +785,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		sb.append(
 			"<column><column-name>entryId</column-name><column-value><![CDATA[");
 		sb.append(getEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -822,6 +818,10 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -835,9 +835,6 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	private String _uuid;
 	private String _originalUuid;
 	private long _entryId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -855,6 +852,9 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	private double _originalScore;
 	private boolean _setOriginalScore;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private RatingsEntry _escapedModel;
 }

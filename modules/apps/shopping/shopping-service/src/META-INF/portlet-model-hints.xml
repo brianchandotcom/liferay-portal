@@ -4,7 +4,6 @@
 	<model name="com.liferay.shopping.model.ShoppingCart">
 		<field name="cartId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -15,11 +14,11 @@
 		<field name="couponCodes" type="String" />
 		<field name="altShipping" type="int" />
 		<field name="insure" type="boolean" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.shopping.model.ShoppingCategory">
 		<field name="categoryId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -29,13 +28,13 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.shopping.model.ShoppingCoupon">
 		<field name="couponId" type="long">
 			<hint name="upper-case">true</hint>
 		</field>
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -59,11 +58,11 @@
 		<field name="minOrder" type="double" />
 		<field name="discount" type="double" />
 		<field name="discountType" type="String" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.shopping.model.ShoppingItem">
 		<field name="itemId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -111,6 +110,7 @@
 		<field name="largeImageURL" type="String">
 			<hint-collection name="URL" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.shopping.model.ShoppingItemField">
 		<field name="itemFieldId" type="long" />
@@ -128,6 +128,7 @@
 			<hint name="display-height">15</hint>
 			<hint name="display-width">150</hint>
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.shopping.model.ShoppingItemPrice">
 		<default-hints>
@@ -143,6 +144,7 @@
 		<field name="shipping" type="double" />
 		<field name="useShippingFormula" type="boolean" />
 		<field name="status" type="int" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.shopping.model.ShoppingOrder">
 		<default-hints>
@@ -150,7 +152,6 @@
 		</default-hints>
 		<field name="orderId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -205,6 +206,7 @@
 		<field name="ppPayerEmail" type="String" />
 		<field name="sendOrderEmail" type="boolean" />
 		<field name="sendShippingEmail" type="boolean" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.shopping.model.ShoppingOrderItem">
 		<field name="orderItemId" type="long" />
@@ -225,5 +227,6 @@
 		<field name="price" type="double" />
 		<field name="quantity" type="int" />
 		<field name="shippedDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

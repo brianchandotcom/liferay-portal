@@ -57,6 +57,7 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 		attributes.put("event", getEvent());
 		attributes.put("type", getType());
 		attributes.put("typePK", getTypePK());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -92,6 +93,12 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 		if (typePK != null) {
 			setTypePK(typePK);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -103,6 +110,16 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	public int compareTo(
 		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
 		return _dlSyncEvent.compareTo(dlSyncEvent);
+	}
+
+	/**
+	* Returns the company ID of this d l sync event.
+	*
+	* @return the company ID of this d l sync event
+	*/
+	@Override
+	public long getCompanyId() {
+		return _dlSyncEvent.getCompanyId();
 	}
 
 	/**
@@ -203,6 +220,16 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_dlSyncEvent.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this d l sync event.
+	*
+	* @param companyId the company ID of this d l sync event
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_dlSyncEvent.setCompanyId(companyId);
 	}
 
 	/**

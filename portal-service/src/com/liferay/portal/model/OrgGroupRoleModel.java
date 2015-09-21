@@ -37,7 +37,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole>, MVCCModel {
+public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -115,6 +116,22 @@ public interface OrgGroupRoleModel extends BaseModel<OrgGroupRole>, MVCCModel {
 	 * @param roleId the role ID of this org group role
 	 */
 	public void setRoleId(long roleId);
+
+	/**
+	 * Returns the company ID of this org group role.
+	 *
+	 * @return the company ID of this org group role
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this org group role.
+	 *
+	 * @param companyId the company ID of this org group role
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

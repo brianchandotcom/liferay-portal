@@ -126,8 +126,6 @@ public class DDMStructureLayoutPersistenceTest {
 
 		newDDMStructureLayout.setGroupId(RandomTestUtil.nextLong());
 
-		newDDMStructureLayout.setCompanyId(RandomTestUtil.nextLong());
-
 		newDDMStructureLayout.setUserId(RandomTestUtil.nextLong());
 
 		newDDMStructureLayout.setUserName(RandomTestUtil.randomString());
@@ -140,6 +138,8 @@ public class DDMStructureLayoutPersistenceTest {
 
 		newDDMStructureLayout.setDefinition(RandomTestUtil.randomString());
 
+		newDDMStructureLayout.setCompanyId(RandomTestUtil.nextLong());
+
 		_ddmStructureLayouts.add(_persistence.update(newDDMStructureLayout));
 
 		DDMStructureLayout existingDDMStructureLayout = _persistence.findByPrimaryKey(newDDMStructureLayout.getPrimaryKey());
@@ -150,8 +150,6 @@ public class DDMStructureLayoutPersistenceTest {
 			newDDMStructureLayout.getStructureLayoutId());
 		Assert.assertEquals(existingDDMStructureLayout.getGroupId(),
 			newDDMStructureLayout.getGroupId());
-		Assert.assertEquals(existingDDMStructureLayout.getCompanyId(),
-			newDDMStructureLayout.getCompanyId());
 		Assert.assertEquals(existingDDMStructureLayout.getUserId(),
 			newDDMStructureLayout.getUserId());
 		Assert.assertEquals(existingDDMStructureLayout.getUserName(),
@@ -166,6 +164,8 @@ public class DDMStructureLayoutPersistenceTest {
 			newDDMStructureLayout.getStructureVersionId());
 		Assert.assertEquals(existingDDMStructureLayout.getDefinition(),
 			newDDMStructureLayout.getDefinition());
+		Assert.assertEquals(existingDDMStructureLayout.getCompanyId(),
+			newDDMStructureLayout.getCompanyId());
 	}
 
 	@Test
@@ -226,9 +226,9 @@ public class DDMStructureLayoutPersistenceTest {
 
 	protected OrderByComparator<DDMStructureLayout> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMStructureLayout",
-			"uuid", true, "structureLayoutId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "structureVersionId", true);
+			"uuid", true, "structureLayoutId", true, "groupId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"structureVersionId", true, "companyId", true);
 	}
 
 	@Test
@@ -460,8 +460,6 @@ public class DDMStructureLayoutPersistenceTest {
 
 		ddmStructureLayout.setGroupId(RandomTestUtil.nextLong());
 
-		ddmStructureLayout.setCompanyId(RandomTestUtil.nextLong());
-
 		ddmStructureLayout.setUserId(RandomTestUtil.nextLong());
 
 		ddmStructureLayout.setUserName(RandomTestUtil.randomString());
@@ -473,6 +471,8 @@ public class DDMStructureLayoutPersistenceTest {
 		ddmStructureLayout.setStructureVersionId(RandomTestUtil.nextLong());
 
 		ddmStructureLayout.setDefinition(RandomTestUtil.randomString());
+
+		ddmStructureLayout.setCompanyId(RandomTestUtil.nextLong());
 
 		_ddmStructureLayouts.add(_persistence.update(ddmStructureLayout));
 

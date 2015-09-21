@@ -35,7 +35,6 @@ public class SocialActivityCounterSoap implements Serializable {
 
 		soapModel.setActivityCounterId(model.getActivityCounterId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setName(model.getName());
@@ -46,6 +45,7 @@ public class SocialActivityCounterSoap implements Serializable {
 		soapModel.setStartPeriod(model.getStartPeriod());
 		soapModel.setEndPeriod(model.getEndPeriod());
 		soapModel.setActive(model.getActive());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -115,14 +115,6 @@ public class SocialActivityCounterSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getClassNameId() {
@@ -209,9 +201,16 @@ public class SocialActivityCounterSoap implements Serializable {
 		_active = active;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _activityCounterId;
 	private long _groupId;
-	private long _companyId;
 	private long _classNameId;
 	private long _classPK;
 	private String _name;
@@ -222,4 +221,5 @@ public class SocialActivityCounterSoap implements Serializable {
 	private int _startPeriod;
 	private int _endPeriod;
 	private boolean _active;
+	private long _companyId;
 }

@@ -66,7 +66,6 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "kaleoTimerId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -80,14 +79,14 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 			{ "duration", Types.DOUBLE },
 			{ "scale", Types.VARCHAR },
 			{ "recurrenceDuration", Types.DOUBLE },
-			{ "recurrenceScale", Types.VARCHAR }
+			{ "recurrenceScale", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("kaleoTimerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -102,9 +101,10 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		TABLE_COLUMNS_MAP.put("scale", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("recurrenceDuration", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("recurrenceScale", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoTimer (kaleoTimerId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,name VARCHAR(75) null,blocking BOOLEAN,description STRING null,duration DOUBLE,scale VARCHAR(75) null,recurrenceDuration DOUBLE,recurrenceScale VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoTimer (kaleoTimerId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,name VARCHAR(75) null,blocking BOOLEAN,description STRING null,duration DOUBLE,scale VARCHAR(75) null,recurrenceDuration DOUBLE,recurrenceScale VARCHAR(75) null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoTimer";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoTimer.kaleoTimerId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoTimer.kaleoTimerId ASC";
@@ -166,7 +166,6 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 
 		attributes.put("kaleoTimerId", getKaleoTimerId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -181,6 +180,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		attributes.put("scale", getScale());
 		attributes.put("recurrenceDuration", getRecurrenceDuration());
 		attributes.put("recurrenceScale", getRecurrenceScale());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -200,12 +200,6 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -291,6 +285,12 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		if (recurrenceScale != null) {
 			setRecurrenceScale(recurrenceScale);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -313,16 +313,6 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -556,6 +546,16 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		_recurrenceScale = recurrenceScale;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -589,7 +589,6 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 
 		kaleoTimerImpl.setKaleoTimerId(getKaleoTimerId());
 		kaleoTimerImpl.setGroupId(getGroupId());
-		kaleoTimerImpl.setCompanyId(getCompanyId());
 		kaleoTimerImpl.setUserId(getUserId());
 		kaleoTimerImpl.setUserName(getUserName());
 		kaleoTimerImpl.setCreateDate(getCreateDate());
@@ -604,6 +603,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		kaleoTimerImpl.setScale(getScale());
 		kaleoTimerImpl.setRecurrenceDuration(getRecurrenceDuration());
 		kaleoTimerImpl.setRecurrenceScale(getRecurrenceScale());
+		kaleoTimerImpl.setCompanyId(getCompanyId());
 
 		kaleoTimerImpl.resetOriginalValues();
 
@@ -695,8 +695,6 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 
 		kaleoTimerCacheModel.groupId = getGroupId();
 
-		kaleoTimerCacheModel.companyId = getCompanyId();
-
 		kaleoTimerCacheModel.userId = getUserId();
 
 		kaleoTimerCacheModel.userName = getUserName();
@@ -775,6 +773,8 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 			kaleoTimerCacheModel.recurrenceScale = null;
 		}
 
+		kaleoTimerCacheModel.companyId = getCompanyId();
+
 		return kaleoTimerCacheModel;
 	}
 
@@ -786,8 +786,6 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		sb.append(getKaleoTimerId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -816,6 +814,8 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		sb.append(getRecurrenceDuration());
 		sb.append(", recurrenceScale=");
 		sb.append(getRecurrenceScale());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -836,10 +836,6 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -897,6 +893,10 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 			"<column><column-name>recurrenceScale</column-name><column-value><![CDATA[");
 		sb.append(getRecurrenceScale());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -909,7 +909,6 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 		};
 	private long _kaleoTimerId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -930,6 +929,7 @@ public class KaleoTimerModelImpl extends BaseModelImpl<KaleoTimer>
 	private String _scale;
 	private double _recurrenceDuration;
 	private String _recurrenceScale;
+	private long _companyId;
 	private long _columnBitmask;
 	private KaleoTimer _escapedModel;
 }

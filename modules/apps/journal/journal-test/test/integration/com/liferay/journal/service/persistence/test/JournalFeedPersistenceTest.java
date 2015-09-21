@@ -127,8 +127,6 @@ public class JournalFeedPersistenceTest {
 
 		newJournalFeed.setGroupId(RandomTestUtil.nextLong());
 
-		newJournalFeed.setCompanyId(RandomTestUtil.nextLong());
-
 		newJournalFeed.setUserId(RandomTestUtil.nextLong());
 
 		newJournalFeed.setUserName(RandomTestUtil.randomString());
@@ -167,6 +165,8 @@ public class JournalFeedPersistenceTest {
 
 		newJournalFeed.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newJournalFeed.setCompanyId(RandomTestUtil.nextLong());
+
 		_journalFeeds.add(_persistence.update(newJournalFeed));
 
 		JournalFeed existingJournalFeed = _persistence.findByPrimaryKey(newJournalFeed.getPrimaryKey());
@@ -176,8 +176,6 @@ public class JournalFeedPersistenceTest {
 		Assert.assertEquals(existingJournalFeed.getId(), newJournalFeed.getId());
 		Assert.assertEquals(existingJournalFeed.getGroupId(),
 			newJournalFeed.getGroupId());
-		Assert.assertEquals(existingJournalFeed.getCompanyId(),
-			newJournalFeed.getCompanyId());
 		Assert.assertEquals(existingJournalFeed.getUserId(),
 			newJournalFeed.getUserId());
 		Assert.assertEquals(existingJournalFeed.getUserName(),
@@ -219,6 +217,8 @@ public class JournalFeedPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalFeed.getLastPublishDate()),
 			Time.getShortTimestamp(newJournalFeed.getLastPublishDate()));
+		Assert.assertEquals(existingJournalFeed.getCompanyId(),
+			newJournalFeed.getCompanyId());
 	}
 
 	@Test
@@ -294,14 +294,14 @@ public class JournalFeedPersistenceTest {
 
 	protected OrderByComparator<JournalFeed> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalFeed", "uuid", true,
-			"id", true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"feedId", true, "name", true, "description", true,
-			"DDMStructureKey", true, "DDMTemplateKey", true,
-			"DDMRendererTemplateKey", true, "delta", true, "orderByCol", true,
-			"orderByType", true, "targetLayoutFriendlyUrl", true,
-			"targetPortletId", true, "contentField", true, "feedFormat", true,
-			"feedVersion", true, "lastPublishDate", true);
+			"id", true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "feedId", true, "name",
+			true, "description", true, "DDMStructureKey", true,
+			"DDMTemplateKey", true, "DDMRendererTemplateKey", true, "delta",
+			true, "orderByCol", true, "orderByType", true,
+			"targetLayoutFriendlyUrl", true, "targetPortletId", true,
+			"contentField", true, "feedFormat", true, "feedVersion", true,
+			"lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -528,8 +528,6 @@ public class JournalFeedPersistenceTest {
 
 		journalFeed.setGroupId(RandomTestUtil.nextLong());
 
-		journalFeed.setCompanyId(RandomTestUtil.nextLong());
-
 		journalFeed.setUserId(RandomTestUtil.nextLong());
 
 		journalFeed.setUserName(RandomTestUtil.randomString());
@@ -567,6 +565,8 @@ public class JournalFeedPersistenceTest {
 		journalFeed.setFeedVersion(RandomTestUtil.nextDouble());
 
 		journalFeed.setLastPublishDate(RandomTestUtil.nextDate());
+
+		journalFeed.setCompanyId(RandomTestUtil.nextLong());
 
 		_journalFeeds.add(_persistence.update(journalFeed));
 

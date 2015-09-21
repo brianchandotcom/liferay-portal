@@ -124,8 +124,6 @@ public class BackgroundTaskPersistenceTest {
 
 		newBackgroundTask.setGroupId(RandomTestUtil.nextLong());
 
-		newBackgroundTask.setCompanyId(RandomTestUtil.nextLong());
-
 		newBackgroundTask.setUserId(RandomTestUtil.nextLong());
 
 		newBackgroundTask.setUserName(RandomTestUtil.randomString());
@@ -150,6 +148,8 @@ public class BackgroundTaskPersistenceTest {
 
 		newBackgroundTask.setStatusMessage(RandomTestUtil.randomString());
 
+		newBackgroundTask.setCompanyId(RandomTestUtil.nextLong());
+
 		_backgroundTasks.add(_persistence.update(newBackgroundTask));
 
 		BackgroundTask existingBackgroundTask = _persistence.findByPrimaryKey(newBackgroundTask.getPrimaryKey());
@@ -160,8 +160,6 @@ public class BackgroundTaskPersistenceTest {
 			newBackgroundTask.getBackgroundTaskId());
 		Assert.assertEquals(existingBackgroundTask.getGroupId(),
 			newBackgroundTask.getGroupId());
-		Assert.assertEquals(existingBackgroundTask.getCompanyId(),
-			newBackgroundTask.getCompanyId());
 		Assert.assertEquals(existingBackgroundTask.getUserId(),
 			newBackgroundTask.getUserId());
 		Assert.assertEquals(existingBackgroundTask.getUserName(),
@@ -189,6 +187,8 @@ public class BackgroundTaskPersistenceTest {
 			newBackgroundTask.getStatus());
 		Assert.assertEquals(existingBackgroundTask.getStatusMessage(),
 			newBackgroundTask.getStatusMessage());
+		Assert.assertEquals(existingBackgroundTask.getCompanyId(),
+			newBackgroundTask.getCompanyId());
 	}
 
 	@Test
@@ -199,17 +199,17 @@ public class BackgroundTaskPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByStatus() throws Exception {
 		_persistence.countByStatus(RandomTestUtil.nextInt());
 
 		_persistence.countByStatus(0);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -342,10 +342,10 @@ public class BackgroundTaskPersistenceTest {
 	protected OrderByComparator<BackgroundTask> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("BackgroundTask",
 			"mvccVersion", true, "backgroundTaskId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "servletContextNames",
-			true, "taskExecutorClassName", true, "completed", true,
-			"completionDate", true, "status", true);
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "servletContextNames", true,
+			"taskExecutorClassName", true, "completed", true, "completionDate",
+			true, "status", true, "companyId", true);
 	}
 
 	@Test
@@ -553,8 +553,6 @@ public class BackgroundTaskPersistenceTest {
 
 		backgroundTask.setGroupId(RandomTestUtil.nextLong());
 
-		backgroundTask.setCompanyId(RandomTestUtil.nextLong());
-
 		backgroundTask.setUserId(RandomTestUtil.nextLong());
 
 		backgroundTask.setUserName(RandomTestUtil.randomString());
@@ -578,6 +576,8 @@ public class BackgroundTaskPersistenceTest {
 		backgroundTask.setStatus(RandomTestUtil.nextInt());
 
 		backgroundTask.setStatusMessage(RandomTestUtil.randomString());
+
+		backgroundTask.setCompanyId(RandomTestUtil.nextLong());
 
 		_backgroundTasks.add(_persistence.update(backgroundTask));
 

@@ -4,7 +4,6 @@
 	<model name="com.liferay.service.access.policy.model.SAPEntry">
 		<field name="uuid" type="String" />
 		<field name="sapEntryId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -15,5 +14,6 @@
 		<field name="defaultSAPEntry" type="boolean" />
 		<field name="name" type="String" />
 		<field name="title" type="String" localized="true" />
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeClassNames;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.shopping.upgrade.v1_0_0.UpgradeSchema;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeShopping;
 import com.liferay.shopping.upgrade.v1_0_0.UpgradeShoppingPreferences;
 
@@ -51,6 +52,8 @@ public class ShoppingServiceUpgrade {
 	@Activate
 	protected void upgrade() throws PortalException {
 		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
+
+		upgradeProcesses.add(new UpgradeSchema());
 
 		upgradeProcesses.add(new UpgradePortletId());
 

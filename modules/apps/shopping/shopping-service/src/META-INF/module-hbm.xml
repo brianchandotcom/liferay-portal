@@ -15,7 +15,6 @@
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -24,13 +23,13 @@
 		<property name="couponCodes" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="altShipping" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="insure" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.shopping.model.impl.ShoppingCategoryImpl" table="ShoppingCategory">
 		<id name="categoryId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -38,13 +37,13 @@
 		<property name="parentCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.shopping.model.impl.ShoppingCouponImpl" table="ShoppingCoupon">
 		<id name="couponId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -60,13 +59,13 @@
 		<property name="minOrder" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="discount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="discountType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.shopping.model.impl.ShoppingItemImpl" table="ShoppingItem">
 		<id name="itemId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -98,6 +97,7 @@
 		<property name="largeImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="largeImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="largeImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.shopping.model.impl.ShoppingItemFieldImpl" table="ShoppingItemField">
 		<id name="itemFieldId" type="long">
@@ -107,6 +107,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="values" type="com.liferay.portal.dao.orm.hibernate.StringType" column="values_" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.shopping.model.impl.ShoppingItemPriceImpl" table="ShoppingItemPrice">
 		<id name="itemPriceId" type="long">
@@ -121,13 +122,13 @@
 		<property name="shipping" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="useShippingFormula" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.shopping.model.impl.ShoppingOrderImpl" table="ShoppingOrder">
 		<id name="orderId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -176,6 +177,7 @@
 		<property name="ppPayerEmail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="sendOrderEmail" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="sendShippingEmail" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.shopping.model.impl.ShoppingOrderItemImpl" table="ShoppingOrderItem">
 		<id name="orderItemId" type="long">
@@ -190,5 +192,6 @@
 		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="shippedDate" type="org.hibernate.type.TimestampType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

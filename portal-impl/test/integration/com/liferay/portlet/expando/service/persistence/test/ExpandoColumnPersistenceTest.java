@@ -116,8 +116,6 @@ public class ExpandoColumnPersistenceTest {
 
 		ExpandoColumn newExpandoColumn = _persistence.create(pk);
 
-		newExpandoColumn.setCompanyId(RandomTestUtil.nextLong());
-
 		newExpandoColumn.setTableId(RandomTestUtil.nextLong());
 
 		newExpandoColumn.setName(RandomTestUtil.randomString());
@@ -128,14 +126,14 @@ public class ExpandoColumnPersistenceTest {
 
 		newExpandoColumn.setTypeSettings(RandomTestUtil.randomString());
 
+		newExpandoColumn.setCompanyId(RandomTestUtil.nextLong());
+
 		_expandoColumns.add(_persistence.update(newExpandoColumn));
 
 		ExpandoColumn existingExpandoColumn = _persistence.findByPrimaryKey(newExpandoColumn.getPrimaryKey());
 
 		Assert.assertEquals(existingExpandoColumn.getColumnId(),
 			newExpandoColumn.getColumnId());
-		Assert.assertEquals(existingExpandoColumn.getCompanyId(),
-			newExpandoColumn.getCompanyId());
 		Assert.assertEquals(existingExpandoColumn.getTableId(),
 			newExpandoColumn.getTableId());
 		Assert.assertEquals(existingExpandoColumn.getName(),
@@ -146,6 +144,8 @@ public class ExpandoColumnPersistenceTest {
 			newExpandoColumn.getDefaultData());
 		Assert.assertEquals(existingExpandoColumn.getTypeSettings(),
 			newExpandoColumn.getTypeSettings());
+		Assert.assertEquals(existingExpandoColumn.getCompanyId(),
+			newExpandoColumn.getCompanyId());
 	}
 
 	@Test
@@ -197,7 +197,7 @@ public class ExpandoColumnPersistenceTest {
 
 	protected OrderByComparator<ExpandoColumn> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExpandoColumn", "columnId",
-			true, "companyId", true, "tableId", true, "name", true, "type", true);
+			true, "tableId", true, "name", true, "type", true, "companyId", true);
 	}
 
 	@Test
@@ -415,8 +415,6 @@ public class ExpandoColumnPersistenceTest {
 
 		ExpandoColumn expandoColumn = _persistence.create(pk);
 
-		expandoColumn.setCompanyId(RandomTestUtil.nextLong());
-
 		expandoColumn.setTableId(RandomTestUtil.nextLong());
 
 		expandoColumn.setName(RandomTestUtil.randomString());
@@ -426,6 +424,8 @@ public class ExpandoColumnPersistenceTest {
 		expandoColumn.setDefaultData(RandomTestUtil.randomString());
 
 		expandoColumn.setTypeSettings(RandomTestUtil.randomString());
+
+		expandoColumn.setCompanyId(RandomTestUtil.nextLong());
 
 		_expandoColumns.add(_persistence.update(expandoColumn));
 

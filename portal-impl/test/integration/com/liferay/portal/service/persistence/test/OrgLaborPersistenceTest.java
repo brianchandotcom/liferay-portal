@@ -146,6 +146,8 @@ public class OrgLaborPersistenceTest {
 
 		newOrgLabor.setSatClose(RandomTestUtil.nextInt());
 
+		newOrgLabor.setCompanyId(RandomTestUtil.nextLong());
+
 		_orgLabors.add(_persistence.update(newOrgLabor));
 
 		OrgLabor existingOrgLabor = _persistence.findByPrimaryKey(newOrgLabor.getPrimaryKey());
@@ -186,6 +188,8 @@ public class OrgLaborPersistenceTest {
 			newOrgLabor.getSatOpen());
 		Assert.assertEquals(existingOrgLabor.getSatClose(),
 			newOrgLabor.getSatClose());
+		Assert.assertEquals(existingOrgLabor.getCompanyId(),
+			newOrgLabor.getCompanyId());
 	}
 
 	@Test
@@ -223,7 +227,8 @@ public class OrgLaborPersistenceTest {
 			"sunOpen", true, "sunClose", true, "monOpen", true, "monClose",
 			true, "tueOpen", true, "tueClose", true, "wedOpen", true,
 			"wedClose", true, "thuOpen", true, "thuClose", true, "friOpen",
-			true, "friClose", true, "satOpen", true, "satClose", true);
+			true, "friClose", true, "satOpen", true, "satClose", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -458,6 +463,8 @@ public class OrgLaborPersistenceTest {
 		orgLabor.setSatOpen(RandomTestUtil.nextInt());
 
 		orgLabor.setSatClose(RandomTestUtil.nextInt());
+
+		orgLabor.setCompanyId(RandomTestUtil.nextLong());
 
 		_orgLabors.add(_persistence.update(orgLabor));
 

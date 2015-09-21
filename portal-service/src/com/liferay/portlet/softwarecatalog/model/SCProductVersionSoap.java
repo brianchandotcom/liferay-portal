@@ -35,7 +35,6 @@ public class SCProductVersionSoap implements Serializable {
 		SCProductVersionSoap soapModel = new SCProductVersionSoap();
 
 		soapModel.setProductVersionId(model.getProductVersionId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -46,6 +45,7 @@ public class SCProductVersionSoap implements Serializable {
 		soapModel.setDownloadPageURL(model.getDownloadPageURL());
 		soapModel.setDirectDownloadURL(model.getDirectDownloadURL());
 		soapModel.setRepoStoreArtifact(model.getRepoStoreArtifact());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -106,14 +106,6 @@ public class SCProductVersionSoap implements Serializable {
 
 	public void setProductVersionId(long productVersionId) {
 		_productVersionId = productVersionId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -200,8 +192,15 @@ public class SCProductVersionSoap implements Serializable {
 		_repoStoreArtifact = repoStoreArtifact;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _productVersionId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -212,4 +211,5 @@ public class SCProductVersionSoap implements Serializable {
 	private String _downloadPageURL;
 	private String _directDownloadURL;
 	private boolean _repoStoreArtifact;
+	private long _companyId;
 }

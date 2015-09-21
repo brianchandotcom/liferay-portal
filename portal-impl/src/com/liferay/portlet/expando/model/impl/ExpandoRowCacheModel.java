@@ -69,14 +69,14 @@ public class ExpandoRowCacheModel implements CacheModel<ExpandoRow>,
 
 		sb.append("{rowId=");
 		sb.append(rowId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
 		sb.append(", tableId=");
 		sb.append(tableId);
 		sb.append(", classPK=");
 		sb.append(classPK);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -87,7 +87,6 @@ public class ExpandoRowCacheModel implements CacheModel<ExpandoRow>,
 		ExpandoRowImpl expandoRowImpl = new ExpandoRowImpl();
 
 		expandoRowImpl.setRowId(rowId);
-		expandoRowImpl.setCompanyId(companyId);
 
 		if (modifiedDate == Long.MIN_VALUE) {
 			expandoRowImpl.setModifiedDate(null);
@@ -98,6 +97,7 @@ public class ExpandoRowCacheModel implements CacheModel<ExpandoRow>,
 
 		expandoRowImpl.setTableId(tableId);
 		expandoRowImpl.setClassPK(classPK);
+		expandoRowImpl.setCompanyId(companyId);
 
 		expandoRowImpl.resetOriginalValues();
 
@@ -107,25 +107,25 @@ public class ExpandoRowCacheModel implements CacheModel<ExpandoRow>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		rowId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		tableId = objectInput.readLong();
 		classPK = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(rowId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(tableId);
 		objectOutput.writeLong(classPK);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long rowId;
-	public long companyId;
 	public long modifiedDate;
 	public long tableId;
 	public long classPK;
+	public long companyId;
 }

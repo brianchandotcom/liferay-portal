@@ -72,8 +72,6 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 		sb.append(kaleoTaskAssignmentInstanceId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -102,6 +100,8 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 		sb.append(completed);
 		sb.append(", completionDate=");
 		sb.append(completionDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -113,7 +113,6 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 
 		kaleoTaskAssignmentInstanceImpl.setKaleoTaskAssignmentInstanceId(kaleoTaskAssignmentInstanceId);
 		kaleoTaskAssignmentInstanceImpl.setGroupId(groupId);
-		kaleoTaskAssignmentInstanceImpl.setCompanyId(companyId);
 		kaleoTaskAssignmentInstanceImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -169,6 +168,8 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 					completionDate));
 		}
 
+		kaleoTaskAssignmentInstanceImpl.setCompanyId(companyId);
+
 		kaleoTaskAssignmentInstanceImpl.resetOriginalValues();
 
 		return kaleoTaskAssignmentInstanceImpl;
@@ -178,7 +179,6 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoTaskAssignmentInstanceId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -193,6 +193,7 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 		assigneeClassPK = objectInput.readLong();
 		completed = objectInput.readBoolean();
 		completionDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -200,7 +201,6 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 		throws IOException {
 		objectOutput.writeLong(kaleoTaskAssignmentInstanceId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -235,11 +235,11 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 		objectOutput.writeLong(assigneeClassPK);
 		objectOutput.writeBoolean(completed);
 		objectOutput.writeLong(completionDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoTaskAssignmentInstanceId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -254,4 +254,5 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 	public long assigneeClassPK;
 	public boolean completed;
 	public long completionDate;
+	public long companyId;
 }

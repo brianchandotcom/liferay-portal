@@ -74,8 +74,6 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 		sb.append(actionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -100,6 +98,8 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 		sb.append(typeSettings);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -118,7 +118,6 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 
 		mdrActionImpl.setActionId(actionId);
 		mdrActionImpl.setGroupId(groupId);
-		mdrActionImpl.setCompanyId(companyId);
 		mdrActionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -181,6 +180,8 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 			mdrActionImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		mdrActionImpl.setCompanyId(companyId);
+
 		mdrActionImpl.resetOriginalValues();
 
 		return mdrActionImpl;
@@ -191,7 +192,6 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 		uuid = objectInput.readUTF();
 		actionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -204,6 +204,7 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 		type = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -218,7 +219,6 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 
 		objectOutput.writeLong(actionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -263,12 +263,12 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long actionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -281,4 +281,5 @@ public class MDRActionCacheModel implements CacheModel<MDRAction>,
 	public String type;
 	public String typeSettings;
 	public long lastPublishDate;
+	public long companyId;
 }

@@ -55,7 +55,6 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 
 		attributes.put("activityCounterId", getActivityCounterId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("name", getName());
@@ -66,6 +65,7 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 		attributes.put("startPeriod", getStartPeriod());
 		attributes.put("endPeriod", getEndPeriod());
 		attributes.put("active", getActive());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -82,12 +82,6 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -148,6 +142,12 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

@@ -16,6 +16,7 @@ package com.liferay.shopping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -37,6 +38,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.shopping.exception.NoSuchOrderException;
 import com.liferay.shopping.model.ShoppingOrder;
@@ -2630,6 +2632,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		shoppingOrder.setNew(true);
 		shoppingOrder.setPrimaryKey(orderId);
 
+		shoppingOrder.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return shoppingOrder;
 	}
 
@@ -2841,7 +2845,6 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 
 		shoppingOrderImpl.setOrderId(shoppingOrder.getOrderId());
 		shoppingOrderImpl.setGroupId(shoppingOrder.getGroupId());
-		shoppingOrderImpl.setCompanyId(shoppingOrder.getCompanyId());
 		shoppingOrderImpl.setUserId(shoppingOrder.getUserId());
 		shoppingOrderImpl.setUserName(shoppingOrder.getUserName());
 		shoppingOrderImpl.setCreateDate(shoppingOrder.getCreateDate());
@@ -2890,6 +2893,7 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		shoppingOrderImpl.setPpPayerEmail(shoppingOrder.getPpPayerEmail());
 		shoppingOrderImpl.setSendOrderEmail(shoppingOrder.isSendOrderEmail());
 		shoppingOrderImpl.setSendShippingEmail(shoppingOrder.isSendShippingEmail());
+		shoppingOrderImpl.setCompanyId(shoppingOrder.getCompanyId());
 
 		return shoppingOrderImpl;
 	}
@@ -3270,6 +3274,8 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_SHOPPINGORDER = "SELECT shoppingOrder FROM ShoppingOrder shoppingOrder";
 	private static final String _SQL_SELECT_SHOPPINGORDER_WHERE_PKS_IN = "SELECT shoppingOrder FROM ShoppingOrder shoppingOrder WHERE orderId IN (";
 	private static final String _SQL_SELECT_SHOPPINGORDER_WHERE = "SELECT shoppingOrder FROM ShoppingOrder shoppingOrder WHERE ";

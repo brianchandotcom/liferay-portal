@@ -72,8 +72,6 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		sb.append(recordVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -98,6 +96,8 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -109,7 +109,6 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 
 		ddlRecordVersionImpl.setRecordVersionId(recordVersionId);
 		ddlRecordVersionImpl.setGroupId(groupId);
-		ddlRecordVersionImpl.setCompanyId(companyId);
 		ddlRecordVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -155,6 +154,8 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 			ddlRecordVersionImpl.setStatusDate(new Date(statusDate));
 		}
 
+		ddlRecordVersionImpl.setCompanyId(companyId);
+
 		ddlRecordVersionImpl.resetOriginalValues();
 
 		return ddlRecordVersionImpl;
@@ -164,7 +165,6 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		recordVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -177,6 +177,7 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -184,7 +185,6 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		throws IOException {
 		objectOutput.writeLong(recordVersionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -218,11 +218,11 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long recordVersionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -235,4 +235,5 @@ public class DDLRecordVersionCacheModel implements CacheModel<DDLRecordVersion>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

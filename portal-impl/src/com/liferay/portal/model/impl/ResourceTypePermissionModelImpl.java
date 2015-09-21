@@ -61,25 +61,25 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
 			{ "resourceTypePermissionId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "roleId", Types.BIGINT },
-			{ "actionIds", Types.BIGINT }
+			{ "actionIds", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("resourceTypePermissionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("actionIds", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ResourceTypePermission (mvccVersion LONG default 0,resourceTypePermissionId LONG not null primary key,companyId LONG,groupId LONG,name VARCHAR(75) null,roleId LONG,actionIds LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ResourceTypePermission (mvccVersion LONG default 0,resourceTypePermissionId LONG not null primary key,groupId LONG,name VARCHAR(75) null,roleId LONG,actionIds LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ResourceTypePermission";
 	public static final String ORDER_BY_JPQL = " ORDER BY resourceTypePermission.resourceTypePermissionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ResourceTypePermission.resourceTypePermissionId ASC";
@@ -142,11 +142,11 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourceTypePermissionId", getResourceTypePermissionId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
 		attributes.put("roleId", getRoleId());
 		attributes.put("actionIds", getActionIds());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -167,12 +167,6 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 
 		if (resourceTypePermissionId != null) {
 			setResourceTypePermissionId(resourceTypePermissionId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -198,6 +192,12 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 		if (actionIds != null) {
 			setActionIds(actionIds);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -218,28 +218,6 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	@Override
 	public void setResourceTypePermissionId(long resourceTypePermissionId) {
 		_resourceTypePermissionId = resourceTypePermissionId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -321,6 +299,28 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 		_actionIds = actionIds;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -354,11 +354,11 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 
 		resourceTypePermissionImpl.setMvccVersion(getMvccVersion());
 		resourceTypePermissionImpl.setResourceTypePermissionId(getResourceTypePermissionId());
-		resourceTypePermissionImpl.setCompanyId(getCompanyId());
 		resourceTypePermissionImpl.setGroupId(getGroupId());
 		resourceTypePermissionImpl.setName(getName());
 		resourceTypePermissionImpl.setRoleId(getRoleId());
 		resourceTypePermissionImpl.setActionIds(getActionIds());
+		resourceTypePermissionImpl.setCompanyId(getCompanyId());
 
 		resourceTypePermissionImpl.resetOriginalValues();
 
@@ -421,10 +421,6 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	public void resetOriginalValues() {
 		ResourceTypePermissionModelImpl resourceTypePermissionModelImpl = this;
 
-		resourceTypePermissionModelImpl._originalCompanyId = resourceTypePermissionModelImpl._companyId;
-
-		resourceTypePermissionModelImpl._setOriginalCompanyId = false;
-
 		resourceTypePermissionModelImpl._originalGroupId = resourceTypePermissionModelImpl._groupId;
 
 		resourceTypePermissionModelImpl._setOriginalGroupId = false;
@@ -434,6 +430,10 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 		resourceTypePermissionModelImpl._originalRoleId = resourceTypePermissionModelImpl._roleId;
 
 		resourceTypePermissionModelImpl._setOriginalRoleId = false;
+
+		resourceTypePermissionModelImpl._originalCompanyId = resourceTypePermissionModelImpl._companyId;
+
+		resourceTypePermissionModelImpl._setOriginalCompanyId = false;
 
 		resourceTypePermissionModelImpl._columnBitmask = 0;
 	}
@@ -445,8 +445,6 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 		resourceTypePermissionCacheModel.mvccVersion = getMvccVersion();
 
 		resourceTypePermissionCacheModel.resourceTypePermissionId = getResourceTypePermissionId();
-
-		resourceTypePermissionCacheModel.companyId = getCompanyId();
 
 		resourceTypePermissionCacheModel.groupId = getGroupId();
 
@@ -462,6 +460,8 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 
 		resourceTypePermissionCacheModel.actionIds = getActionIds();
 
+		resourceTypePermissionCacheModel.companyId = getCompanyId();
+
 		return resourceTypePermissionCacheModel;
 	}
 
@@ -473,8 +473,6 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 		sb.append(getMvccVersion());
 		sb.append(", resourceTypePermissionId=");
 		sb.append(getResourceTypePermissionId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", name=");
@@ -483,6 +481,8 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 		sb.append(getRoleId());
 		sb.append(", actionIds=");
 		sb.append(getActionIds());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -505,10 +505,6 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 		sb.append(getResourceTypePermissionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
@@ -524,6 +520,10 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 			"<column><column-name>actionIds</column-name><column-value><![CDATA[");
 		sb.append(getActionIds());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -536,9 +536,6 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 		};
 	private long _mvccVersion;
 	private long _resourceTypePermissionId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
@@ -548,6 +545,9 @@ public class ResourceTypePermissionModelImpl extends BaseModelImpl<ResourceTypeP
 	private long _originalRoleId;
 	private boolean _setOriginalRoleId;
 	private long _actionIds;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private ResourceTypePermission _escapedModel;
 }

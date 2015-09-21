@@ -68,7 +68,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 			{ "elInstanceId", Types.VARCHAR },
 			{ "elName", Types.VARCHAR },
 			{ "languageId", Types.VARCHAR },
-			{ "tempImage", Types.BOOLEAN }
+			{ "tempImage", Types.BOOLEAN },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -81,9 +82,10 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		TABLE_COLUMNS_MAP.put("elName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("languageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("tempImage", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalArticleImage (articleImageId LONG not null primary key,groupId LONG,articleId VARCHAR(75) null,version DOUBLE,elInstanceId VARCHAR(75) null,elName VARCHAR(75) null,languageId VARCHAR(75) null,tempImage BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticleImage (articleImageId LONG not null primary key,groupId LONG,articleId VARCHAR(75) null,version DOUBLE,elInstanceId VARCHAR(75) null,elName VARCHAR(75) null,languageId VARCHAR(75) null,tempImage BOOLEAN,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticleImage";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticleImage.articleImageId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticleImage.articleImageId ASC";
@@ -155,6 +157,7 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		attributes.put("elName", getElName());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("tempImage", getTempImage());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -210,6 +213,12 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 
 		if (tempImage != null) {
 			setTempImage(tempImage);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -394,13 +403,23 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		return _originalTempImage;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			JournalArticleImage.class.getName(), getPrimaryKey());
 	}
 
@@ -433,6 +452,7 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		journalArticleImageImpl.setElName(getElName());
 		journalArticleImageImpl.setLanguageId(getLanguageId());
 		journalArticleImageImpl.setTempImage(getTempImage());
+		journalArticleImageImpl.setCompanyId(getCompanyId());
 
 		journalArticleImageImpl.resetOriginalValues();
 
@@ -562,12 +582,14 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 
 		journalArticleImageCacheModel.tempImage = getTempImage();
 
+		journalArticleImageCacheModel.companyId = getCompanyId();
+
 		return journalArticleImageCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{articleImageId=");
 		sb.append(getArticleImageId());
@@ -585,6 +607,8 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 		sb.append(getLanguageId());
 		sb.append(", tempImage=");
 		sb.append(getTempImage());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -592,7 +616,7 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.journal.model.JournalArticleImage");
@@ -630,6 +654,10 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 			"<column><column-name>tempImage</column-name><column-value><![CDATA[");
 		sb.append(getTempImage());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -658,6 +686,7 @@ public class JournalArticleImageModelImpl extends BaseModelImpl<JournalArticleIm
 	private boolean _tempImage;
 	private boolean _originalTempImage;
 	private boolean _setOriginalTempImage;
+	private long _companyId;
 	private long _columnBitmask;
 	private JournalArticleImage _escapedModel;
 }

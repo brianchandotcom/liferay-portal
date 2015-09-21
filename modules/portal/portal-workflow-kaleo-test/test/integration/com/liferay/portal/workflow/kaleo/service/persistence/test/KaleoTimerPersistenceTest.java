@@ -122,8 +122,6 @@ public class KaleoTimerPersistenceTest {
 
 		newKaleoTimer.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoTimer.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoTimer.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoTimer.setUserName(RandomTestUtil.randomString());
@@ -152,6 +150,8 @@ public class KaleoTimerPersistenceTest {
 
 		newKaleoTimer.setRecurrenceScale(RandomTestUtil.randomString());
 
+		newKaleoTimer.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoTimers.add(_persistence.update(newKaleoTimer));
 
 		KaleoTimer existingKaleoTimer = _persistence.findByPrimaryKey(newKaleoTimer.getPrimaryKey());
@@ -160,8 +160,6 @@ public class KaleoTimerPersistenceTest {
 			newKaleoTimer.getKaleoTimerId());
 		Assert.assertEquals(existingKaleoTimer.getGroupId(),
 			newKaleoTimer.getGroupId());
-		Assert.assertEquals(existingKaleoTimer.getCompanyId(),
-			newKaleoTimer.getCompanyId());
 		Assert.assertEquals(existingKaleoTimer.getUserId(),
 			newKaleoTimer.getUserId());
 		Assert.assertEquals(existingKaleoTimer.getUserName(),
@@ -192,6 +190,8 @@ public class KaleoTimerPersistenceTest {
 			newKaleoTimer.getRecurrenceDuration());
 		Assert.assertEquals(existingKaleoTimer.getRecurrenceScale(),
 			newKaleoTimer.getRecurrenceScale());
+		Assert.assertEquals(existingKaleoTimer.getCompanyId(),
+			newKaleoTimer.getCompanyId());
 	}
 
 	@Test
@@ -239,12 +239,12 @@ public class KaleoTimerPersistenceTest {
 
 	protected OrderByComparator<KaleoTimer> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTimer",
-			"kaleoTimerId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"kaleoClassName", true, "kaleoClassPK", true, "kaleoDefinitionId",
-			true, "name", true, "blocking", true, "description", true,
-			"duration", true, "scale", true, "recurrenceDuration", true,
-			"recurrenceScale", true);
+			"kaleoTimerId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "kaleoClassName",
+			true, "kaleoClassPK", true, "kaleoDefinitionId", true, "name",
+			true, "blocking", true, "description", true, "duration", true,
+			"scale", true, "recurrenceDuration", true, "recurrenceScale", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -450,8 +450,6 @@ public class KaleoTimerPersistenceTest {
 
 		kaleoTimer.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoTimer.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoTimer.setUserId(RandomTestUtil.nextLong());
 
 		kaleoTimer.setUserName(RandomTestUtil.randomString());
@@ -479,6 +477,8 @@ public class KaleoTimerPersistenceTest {
 		kaleoTimer.setRecurrenceDuration(RandomTestUtil.nextDouble());
 
 		kaleoTimer.setRecurrenceScale(RandomTestUtil.randomString());
+
+		kaleoTimer.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoTimers.add(_persistence.update(kaleoTimer));
 

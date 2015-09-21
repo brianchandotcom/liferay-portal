@@ -72,8 +72,6 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		sb.append(templateVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -104,6 +102,8 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -115,7 +115,6 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 
 		ddmTemplateVersionImpl.setTemplateVersionId(templateVersionId);
 		ddmTemplateVersionImpl.setGroupId(groupId);
-		ddmTemplateVersionImpl.setCompanyId(companyId);
 		ddmTemplateVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -188,6 +187,8 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 			ddmTemplateVersionImpl.setStatusDate(new Date(statusDate));
 		}
 
+		ddmTemplateVersionImpl.setCompanyId(companyId);
+
 		ddmTemplateVersionImpl.resetOriginalValues();
 
 		return ddmTemplateVersionImpl;
@@ -197,7 +198,6 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		templateVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -213,6 +213,7 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -220,7 +221,6 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		throws IOException {
 		objectOutput.writeLong(templateVersionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -281,11 +281,11 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long templateVersionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -301,4 +301,5 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

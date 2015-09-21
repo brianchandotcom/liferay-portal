@@ -40,119 +40,6 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	 */
 
 	/**
-	* Returns all the kaleo transitions where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching kaleo transitions
-	*/
-	public java.util.List<KaleoTransition> findByCompanyId(long companyId);
-
-	/**
-	* Returns a range of all the kaleo transitions where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTransitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of kaleo transitions
-	* @param end the upper bound of the range of kaleo transitions (not inclusive)
-	* @return the range of matching kaleo transitions
-	*/
-	public java.util.List<KaleoTransition> findByCompanyId(long companyId,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the kaleo transitions where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTransitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of kaleo transitions
-	* @param end the upper bound of the range of kaleo transitions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching kaleo transitions
-	*/
-	public java.util.List<KaleoTransition> findByCompanyId(long companyId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator);
-
-	/**
-	* Returns the first kaleo transition in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kaleo transition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
-	*/
-	public KaleoTransition findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
-
-	/**
-	* Returns the first kaleo transition in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
-	*/
-	public KaleoTransition fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator);
-
-	/**
-	* Returns the last kaleo transition in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kaleo transition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
-	*/
-	public KaleoTransition findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
-
-	/**
-	* Returns the last kaleo transition in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
-	*/
-	public KaleoTransition fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator);
-
-	/**
-	* Returns the kaleo transitions before and after the current kaleo transition in the ordered set where companyId = &#63;.
-	*
-	* @param kaleoTransitionId the primary key of the current kaleo transition
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next kaleo transition
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a kaleo transition with the primary key could not be found
-	*/
-	public KaleoTransition[] findByCompanyId_PrevAndNext(
-		long kaleoTransitionId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
-
-	/**
-	* Removes all the kaleo transitions where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public void removeByCompanyId(long companyId);
-
-	/**
-	* Returns the number of kaleo transitions where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching kaleo transitions
-	*/
-	public int countByCompanyId(long companyId);
-
-	/**
 	* Returns all the kaleo transitions where kaleoDefinitionId = &#63;.
 	*
 	* @param kaleoDefinitionId the kaleo definition ID
@@ -382,6 +269,119 @@ public interface KaleoTransitionPersistence extends BasePersistence<KaleoTransit
 	* @return the number of matching kaleo transitions
 	*/
 	public int countByKaleoNodeId(long kaleoNodeId);
+
+	/**
+	* Returns all the kaleo transitions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching kaleo transitions
+	*/
+	public java.util.List<KaleoTransition> findByCompanyId(long companyId);
+
+	/**
+	* Returns a range of all the kaleo transitions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTransitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo transitions
+	* @param end the upper bound of the range of kaleo transitions (not inclusive)
+	* @return the range of matching kaleo transitions
+	*/
+	public java.util.List<KaleoTransition> findByCompanyId(long companyId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the kaleo transitions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoTransitionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo transitions
+	* @param end the upper bound of the range of kaleo transitions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching kaleo transitions
+	*/
+	public java.util.List<KaleoTransition> findByCompanyId(long companyId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator);
+
+	/**
+	* Returns the first kaleo transition in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo transition
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
+	*/
+	public KaleoTransition findByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
+
+	/**
+	* Returns the first kaleo transition in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
+	*/
+	public KaleoTransition fetchByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator);
+
+	/**
+	* Returns the last kaleo transition in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo transition
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a matching kaleo transition could not be found
+	*/
+	public KaleoTransition findByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
+
+	/**
+	* Returns the last kaleo transition in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo transition, or <code>null</code> if a matching kaleo transition could not be found
+	*/
+	public KaleoTransition fetchByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator);
+
+	/**
+	* Returns the kaleo transitions before and after the current kaleo transition in the ordered set where companyId = &#63;.
+	*
+	* @param kaleoTransitionId the primary key of the current kaleo transition
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next kaleo transition
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchTransitionException if a kaleo transition with the primary key could not be found
+	*/
+	public KaleoTransition[] findByCompanyId_PrevAndNext(
+		long kaleoTransitionId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoTransition> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchTransitionException;
+
+	/**
+	* Removes all the kaleo transitions where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public void removeByCompanyId(long companyId);
+
+	/**
+	* Returns the number of kaleo transitions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching kaleo transitions
+	*/
+	public int countByCompanyId(long companyId);
 
 	/**
 	* Returns the kaleo transition where kaleoNodeId = &#63; and name = &#63; or throws a {@link com.liferay.portal.workflow.kaleo.NoSuchTransitionException} if it could not be found.

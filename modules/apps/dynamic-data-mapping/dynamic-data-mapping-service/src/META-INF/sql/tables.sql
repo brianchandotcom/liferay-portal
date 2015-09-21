@@ -2,14 +2,14 @@ create table DDMContent (
 	uuid_ VARCHAR(75) null,
 	contentId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	name STRING null,
 	description STRING null,
-	data_ TEXT null
+	data_ TEXT null,
+	companyId LONG
 );
 
 create table DDMStorageLink (
@@ -17,14 +17,14 @@ create table DDMStorageLink (
 	storageLinkId LONG not null primary key,
 	classNameId LONG,
 	classPK LONG,
-	structureId LONG
+	structureId LONG,
+	companyId LONG
 );
 
 create table DDMStructure (
 	uuid_ VARCHAR(75) null,
 	structureId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	versionUserId LONG,
@@ -40,33 +40,34 @@ create table DDMStructure (
 	definition TEXT null,
 	storageType VARCHAR(75) null,
 	type_ INTEGER,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	companyId LONG
 );
 
 create table DDMStructureLayout (
 	uuid_ VARCHAR(75) null,
 	structureLayoutId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	structureVersionId LONG,
-	definition TEXT null
+	definition TEXT null,
+	companyId LONG
 );
 
 create table DDMStructureLink (
 	structureLinkId LONG not null primary key,
 	classNameId LONG,
 	classPK LONG,
-	structureId LONG
+	structureId LONG,
+	companyId LONG
 );
 
 create table DDMStructureVersion (
 	structureVersionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -81,14 +82,14 @@ create table DDMStructureVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	companyId LONG
 );
 
 create table DDMTemplate (
 	uuid_ VARCHAR(75) null,
 	templateId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	versionUserId LONG,
@@ -110,20 +111,21 @@ create table DDMTemplate (
 	smallImage BOOLEAN,
 	smallImageId LONG,
 	smallImageURL VARCHAR(75) null,
-	lastPublishDate DATE null
+	lastPublishDate DATE null,
+	companyId LONG
 );
 
 create table DDMTemplateLink (
 	templateLinkId LONG not null primary key,
 	classNameId LONG,
 	classPK LONG,
-	templateId LONG
+	templateId LONG,
+	companyId LONG
 );
 
 create table DDMTemplateVersion (
 	templateVersionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -138,5 +140,6 @@ create table DDMTemplateVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	companyId LONG
 );

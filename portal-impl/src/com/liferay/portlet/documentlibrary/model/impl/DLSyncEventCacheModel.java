@@ -64,7 +64,7 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{syncEventId=");
 		sb.append(syncEventId);
@@ -76,6 +76,8 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 		sb.append(type);
 		sb.append(", typePK=");
 		sb.append(typePK);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -103,6 +105,7 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 		}
 
 		dlSyncEventImpl.setTypePK(typePK);
+		dlSyncEventImpl.setCompanyId(companyId);
 
 		dlSyncEventImpl.resetOriginalValues();
 
@@ -116,6 +119,7 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 		event = objectInput.readUTF();
 		type = objectInput.readUTF();
 		typePK = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -139,6 +143,7 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 		}
 
 		objectOutput.writeLong(typePK);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long syncEventId;
@@ -146,4 +151,5 @@ public class DLSyncEventCacheModel implements CacheModel<DLSyncEvent>,
 	public String event;
 	public String type;
 	public long typePK;
+	public long companyId;
 }

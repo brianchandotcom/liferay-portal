@@ -390,6 +390,139 @@ public class WebsiteUtil {
 	}
 
 	/**
+	* Returns all the websites where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the matching websites
+	*/
+	public static List<Website> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	* Returns a range of all the websites where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WebsiteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of websites
+	* @param end the upper bound of the range of websites (not inclusive)
+	* @return the range of matching websites
+	*/
+	public static List<Website> findByUserId(long userId, int start, int end) {
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the websites where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WebsiteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of websites
+	* @param end the upper bound of the range of websites (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching websites
+	*/
+	public static List<Website> findByUserId(long userId, int start, int end,
+		OrderByComparator<Website> orderByComparator) {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first website in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching website
+	* @throws NoSuchWebsiteException if a matching website could not be found
+	*/
+	public static Website findByUserId_First(long userId,
+		OrderByComparator<Website> orderByComparator)
+		throws com.liferay.portal.NoSuchWebsiteException {
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first website in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching website, or <code>null</code> if a matching website could not be found
+	*/
+	public static Website fetchByUserId_First(long userId,
+		OrderByComparator<Website> orderByComparator) {
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last website in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching website
+	* @throws NoSuchWebsiteException if a matching website could not be found
+	*/
+	public static Website findByUserId_Last(long userId,
+		OrderByComparator<Website> orderByComparator)
+		throws com.liferay.portal.NoSuchWebsiteException {
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last website in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching website, or <code>null</code> if a matching website could not be found
+	*/
+	public static Website fetchByUserId_Last(long userId,
+		OrderByComparator<Website> orderByComparator) {
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the websites before and after the current website in the ordered set where userId = &#63;.
+	*
+	* @param websiteId the primary key of the current website
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next website
+	* @throws NoSuchWebsiteException if a website with the primary key could not be found
+	*/
+	public static Website[] findByUserId_PrevAndNext(long websiteId,
+		long userId, OrderByComparator<Website> orderByComparator)
+		throws com.liferay.portal.NoSuchWebsiteException {
+		return getPersistence()
+				   .findByUserId_PrevAndNext(websiteId, userId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the websites where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	*/
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	* Returns the number of websites where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching websites
+	*/
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
 	* Returns all the websites where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -525,139 +658,6 @@ public class WebsiteUtil {
 	*/
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
-	* Returns all the websites where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the matching websites
-	*/
-	public static List<Website> findByUserId(long userId) {
-		return getPersistence().findByUserId(userId);
-	}
-
-	/**
-	* Returns a range of all the websites where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WebsiteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of websites
-	* @param end the upper bound of the range of websites (not inclusive)
-	* @return the range of matching websites
-	*/
-	public static List<Website> findByUserId(long userId, int start, int end) {
-		return getPersistence().findByUserId(userId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the websites where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link WebsiteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of websites
-	* @param end the upper bound of the range of websites (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching websites
-	*/
-	public static List<Website> findByUserId(long userId, int start, int end,
-		OrderByComparator<Website> orderByComparator) {
-		return getPersistence()
-				   .findByUserId(userId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first website in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching website
-	* @throws NoSuchWebsiteException if a matching website could not be found
-	*/
-	public static Website findByUserId_First(long userId,
-		OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.NoSuchWebsiteException {
-		return getPersistence().findByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the first website in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching website, or <code>null</code> if a matching website could not be found
-	*/
-	public static Website fetchByUserId_First(long userId,
-		OrderByComparator<Website> orderByComparator) {
-		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last website in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching website
-	* @throws NoSuchWebsiteException if a matching website could not be found
-	*/
-	public static Website findByUserId_Last(long userId,
-		OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.NoSuchWebsiteException {
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last website in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching website, or <code>null</code> if a matching website could not be found
-	*/
-	public static Website fetchByUserId_Last(long userId,
-		OrderByComparator<Website> orderByComparator) {
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the websites before and after the current website in the ordered set where userId = &#63;.
-	*
-	* @param websiteId the primary key of the current website
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next website
-	* @throws NoSuchWebsiteException if a website with the primary key could not be found
-	*/
-	public static Website[] findByUserId_PrevAndNext(long websiteId,
-		long userId, OrderByComparator<Website> orderByComparator)
-		throws com.liferay.portal.NoSuchWebsiteException {
-		return getPersistence()
-				   .findByUserId_PrevAndNext(websiteId, userId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the websites where userId = &#63; from the database.
-	*
-	* @param userId the user ID
-	*/
-	public static void removeByUserId(long userId) {
-		getPersistence().removeByUserId(userId);
-	}
-
-	/**
-	* Returns the number of websites where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the number of matching websites
-	*/
-	public static int countByUserId(long userId) {
-		return getPersistence().countByUserId(userId);
 	}
 
 	/**

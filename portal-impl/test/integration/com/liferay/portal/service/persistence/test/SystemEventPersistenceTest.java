@@ -117,8 +117,6 @@ public class SystemEventPersistenceTest {
 
 		newSystemEvent.setGroupId(RandomTestUtil.nextLong());
 
-		newSystemEvent.setCompanyId(RandomTestUtil.nextLong());
-
 		newSystemEvent.setUserId(RandomTestUtil.nextLong());
 
 		newSystemEvent.setUserName(RandomTestUtil.randomString());
@@ -141,6 +139,8 @@ public class SystemEventPersistenceTest {
 
 		newSystemEvent.setExtraData(RandomTestUtil.randomString());
 
+		newSystemEvent.setCompanyId(RandomTestUtil.nextLong());
+
 		_systemEvents.add(_persistence.update(newSystemEvent));
 
 		SystemEvent existingSystemEvent = _persistence.findByPrimaryKey(newSystemEvent.getPrimaryKey());
@@ -151,8 +151,6 @@ public class SystemEventPersistenceTest {
 			newSystemEvent.getSystemEventId());
 		Assert.assertEquals(existingSystemEvent.getGroupId(),
 			newSystemEvent.getGroupId());
-		Assert.assertEquals(existingSystemEvent.getCompanyId(),
-			newSystemEvent.getCompanyId());
 		Assert.assertEquals(existingSystemEvent.getUserId(),
 			newSystemEvent.getUserId());
 		Assert.assertEquals(existingSystemEvent.getUserName(),
@@ -176,6 +174,8 @@ public class SystemEventPersistenceTest {
 			newSystemEvent.getType());
 		Assert.assertEquals(existingSystemEvent.getExtraData(),
 			newSystemEvent.getExtraData());
+		Assert.assertEquals(existingSystemEvent.getCompanyId(),
+			newSystemEvent.getCompanyId());
 	}
 
 	@Test
@@ -235,10 +235,10 @@ public class SystemEventPersistenceTest {
 	protected OrderByComparator<SystemEvent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SystemEvent",
 			"mvccVersion", true, "systemEventId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "classNameId", true, "classPK", true, "classUuid", true,
+			"userId", true, "userName", true, "createDate", true,
+			"classNameId", true, "classPK", true, "classUuid", true,
 			"referrerClassNameId", true, "parentSystemEventId", true,
-			"systemEventSetKey", true, "type", true);
+			"systemEventSetKey", true, "type", true, "companyId", true);
 	}
 
 	@Test
@@ -446,8 +446,6 @@ public class SystemEventPersistenceTest {
 
 		systemEvent.setGroupId(RandomTestUtil.nextLong());
 
-		systemEvent.setCompanyId(RandomTestUtil.nextLong());
-
 		systemEvent.setUserId(RandomTestUtil.nextLong());
 
 		systemEvent.setUserName(RandomTestUtil.randomString());
@@ -469,6 +467,8 @@ public class SystemEventPersistenceTest {
 		systemEvent.setType(RandomTestUtil.nextInt());
 
 		systemEvent.setExtraData(RandomTestUtil.randomString());
+
+		systemEvent.setCompanyId(RandomTestUtil.nextLong());
 
 		_systemEvents.add(_persistence.update(systemEvent));
 

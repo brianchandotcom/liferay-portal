@@ -66,7 +66,8 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 			{ "templateLinkId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "templateId", Types.BIGINT }
+			{ "templateId", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -75,9 +76,10 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("templateId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMTemplateLink (templateLinkId LONG not null primary key,classNameId LONG,classPK LONG,templateId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplateLink (templateLinkId LONG not null primary key,classNameId LONG,classPK LONG,templateId LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplateLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplateLink.templateLinkId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMTemplateLink.templateLinkId ASC";
@@ -141,6 +143,7 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("templateId", getTemplateId());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -172,6 +175,12 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 
 		if (templateId != null) {
 			setTemplateId(templateId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -271,13 +280,23 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 		return _originalTemplateId;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			DDMTemplateLink.class.getName(), getPrimaryKey());
 	}
 
@@ -306,6 +325,7 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 		ddmTemplateLinkImpl.setClassNameId(getClassNameId());
 		ddmTemplateLinkImpl.setClassPK(getClassPK());
 		ddmTemplateLinkImpl.setTemplateId(getTemplateId());
+		ddmTemplateLinkImpl.setCompanyId(getCompanyId());
 
 		ddmTemplateLinkImpl.resetOriginalValues();
 
@@ -395,12 +415,14 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 
 		ddmTemplateLinkCacheModel.templateId = getTemplateId();
 
+		ddmTemplateLinkCacheModel.companyId = getCompanyId();
+
 		return ddmTemplateLinkCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{templateLinkId=");
 		sb.append(getTemplateLinkId());
@@ -410,6 +432,8 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 		sb.append(getClassPK());
 		sb.append(", templateId=");
 		sb.append(getTemplateId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -417,7 +441,7 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.dynamic.data.mapping.model.DDMTemplateLink");
@@ -439,6 +463,10 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 			"<column><column-name>templateId</column-name><column-value><![CDATA[");
 		sb.append(getTemplateId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -459,6 +487,7 @@ public class DDMTemplateLinkModelImpl extends BaseModelImpl<DDMTemplateLink>
 	private long _templateId;
 	private long _originalTemplateId;
 	private boolean _setOriginalTemplateId;
+	private long _companyId;
 	private long _columnBitmask;
 	private DDMTemplateLink _escapedModel;
 }

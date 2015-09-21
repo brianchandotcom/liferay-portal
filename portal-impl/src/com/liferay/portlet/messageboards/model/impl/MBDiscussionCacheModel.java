@@ -74,8 +74,6 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 		sb.append(discussionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -92,6 +90,8 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 		sb.append(threadId);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,7 +110,6 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 
 		mbDiscussionImpl.setDiscussionId(discussionId);
 		mbDiscussionImpl.setGroupId(groupId);
-		mbDiscussionImpl.setCompanyId(companyId);
 		mbDiscussionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -145,6 +144,8 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 			mbDiscussionImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		mbDiscussionImpl.setCompanyId(companyId);
+
 		mbDiscussionImpl.resetOriginalValues();
 
 		return mbDiscussionImpl;
@@ -155,7 +156,6 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 		uuid = objectInput.readUTF();
 		discussionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -164,6 +164,7 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 		classPK = objectInput.readLong();
 		threadId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -178,7 +179,6 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 
 		objectOutput.writeLong(discussionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -194,12 +194,12 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(threadId);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long discussionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -208,4 +208,5 @@ public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 	public long classPK;
 	public long threadId;
 	public long lastPublishDate;
+	public long companyId;
 }

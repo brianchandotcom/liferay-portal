@@ -55,12 +55,12 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 
 		attributes.put("contentId", getContentId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("path", getPath());
 		attributes.put("version", getVersion());
 		attributes.put("data", getData());
 		attributes.put("size", getSize());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -77,12 +77,6 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long repositoryId = (Long)attributes.get("repositoryId");
@@ -113,6 +107,12 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 
 		if (size != null) {
 			setSize(size);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

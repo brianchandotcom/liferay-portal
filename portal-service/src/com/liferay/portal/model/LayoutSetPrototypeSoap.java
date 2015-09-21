@@ -37,7 +37,6 @@ public class LayoutSetPrototypeSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setLayoutSetPrototypeId(model.getLayoutSetPrototypeId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -47,6 +46,7 @@ public class LayoutSetPrototypeSoap implements Serializable {
 		soapModel.setSettings(model.getSettings());
 		soapModel.setActive(model.getActive());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -126,14 +126,6 @@ public class LayoutSetPrototypeSoap implements Serializable {
 		_layoutSetPrototypeId = layoutSetPrototypeId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -210,10 +202,17 @@ public class LayoutSetPrototypeSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _layoutSetPrototypeId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -223,4 +222,5 @@ public class LayoutSetPrototypeSoap implements Serializable {
 	private String _settings;
 	private boolean _active;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

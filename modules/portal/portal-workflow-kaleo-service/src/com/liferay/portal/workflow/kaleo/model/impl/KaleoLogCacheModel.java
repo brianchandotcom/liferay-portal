@@ -70,8 +70,6 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 		sb.append(kaleoLogId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -126,6 +124,8 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 		sb.append(duration);
 		sb.append(", workflowContext=");
 		sb.append(workflowContext);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -137,7 +137,6 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 
 		kaleoLogImpl.setKaleoLogId(kaleoLogId);
 		kaleoLogImpl.setGroupId(groupId);
-		kaleoLogImpl.setCompanyId(companyId);
 		kaleoLogImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -262,6 +261,8 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 			kaleoLogImpl.setWorkflowContext(workflowContext);
 		}
 
+		kaleoLogImpl.setCompanyId(companyId);
+
 		kaleoLogImpl.resetOriginalValues();
 
 		return kaleoLogImpl;
@@ -271,7 +272,6 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoLogId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -299,6 +299,7 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 		endDate = objectInput.readLong();
 		duration = objectInput.readLong();
 		workflowContext = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -306,7 +307,6 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 		throws IOException {
 		objectOutput.writeLong(kaleoLogId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -407,11 +407,12 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 		else {
 			objectOutput.writeUTF(workflowContext);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoLogId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -439,4 +440,5 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog>, Externalizable 
 	public long endDate;
 	public long duration;
 	public String workflowContext;
+	public long companyId;
 }

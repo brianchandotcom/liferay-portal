@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface AssetCategoryPropertyModel extends AuditedModel,
-	BaseModel<AssetCategoryProperty> {
+	BaseModel<AssetCategoryProperty>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -77,22 +78,6 @@ public interface AssetCategoryPropertyModel extends AuditedModel,
 	 * @param categoryPropertyId the category property ID of this asset category property
 	 */
 	public void setCategoryPropertyId(long categoryPropertyId);
-
-	/**
-	 * Returns the company ID of this asset category property.
-	 *
-	 * @return the company ID of this asset category property
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this asset category property.
-	 *
-	 * @param companyId the company ID of this asset category property
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this asset category property.
@@ -218,6 +203,22 @@ public interface AssetCategoryPropertyModel extends AuditedModel,
 	 * @param value the value of this asset category property
 	 */
 	public void setValue(String value);
+
+	/**
+	 * Returns the company ID of this asset category property.
+	 *
+	 * @return the company ID of this asset category property
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this asset category property.
+	 *
+	 * @param companyId the company ID of this asset category property
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

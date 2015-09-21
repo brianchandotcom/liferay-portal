@@ -54,7 +54,6 @@ public class AppWrapper implements App, ModelWrapper<App> {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("appId", getAppId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -65,6 +64,7 @@ public class AppWrapper implements App, ModelWrapper<App> {
 		attributes.put("category", getCategory());
 		attributes.put("iconURL", getIconURL());
 		attributes.put("version", getVersion());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -81,12 +81,6 @@ public class AppWrapper implements App, ModelWrapper<App> {
 
 		if (appId != null) {
 			setAppId(appId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -147,6 +141,12 @@ public class AppWrapper implements App, ModelWrapper<App> {
 
 		if (version != null) {
 			setVersion(version);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

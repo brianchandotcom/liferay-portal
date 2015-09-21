@@ -121,8 +121,6 @@ public class AssetTagPersistenceTest {
 
 		newAssetTag.setGroupId(RandomTestUtil.nextLong());
 
-		newAssetTag.setCompanyId(RandomTestUtil.nextLong());
-
 		newAssetTag.setUserId(RandomTestUtil.nextLong());
 
 		newAssetTag.setUserName(RandomTestUtil.randomString());
@@ -137,6 +135,8 @@ public class AssetTagPersistenceTest {
 
 		newAssetTag.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newAssetTag.setCompanyId(RandomTestUtil.nextLong());
+
 		_assetTags.add(_persistence.update(newAssetTag));
 
 		AssetTag existingAssetTag = _persistence.findByPrimaryKey(newAssetTag.getPrimaryKey());
@@ -145,8 +145,6 @@ public class AssetTagPersistenceTest {
 		Assert.assertEquals(existingAssetTag.getTagId(), newAssetTag.getTagId());
 		Assert.assertEquals(existingAssetTag.getGroupId(),
 			newAssetTag.getGroupId());
-		Assert.assertEquals(existingAssetTag.getCompanyId(),
-			newAssetTag.getCompanyId());
 		Assert.assertEquals(existingAssetTag.getUserId(),
 			newAssetTag.getUserId());
 		Assert.assertEquals(existingAssetTag.getUserName(),
@@ -163,6 +161,8 @@ public class AssetTagPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingAssetTag.getLastPublishDate()),
 			Time.getShortTimestamp(newAssetTag.getLastPublishDate()));
+		Assert.assertEquals(existingAssetTag.getCompanyId(),
+			newAssetTag.getCompanyId());
 	}
 
 	@Test
@@ -258,9 +258,9 @@ public class AssetTagPersistenceTest {
 
 	protected OrderByComparator<AssetTag> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetTag", "uuid", true,
-			"tagId", true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "assetCount", true, "lastPublishDate", true);
+			"tagId", true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "name", true,
+			"assetCount", true, "lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -489,8 +489,6 @@ public class AssetTagPersistenceTest {
 
 		assetTag.setGroupId(RandomTestUtil.nextLong());
 
-		assetTag.setCompanyId(RandomTestUtil.nextLong());
-
 		assetTag.setUserId(RandomTestUtil.nextLong());
 
 		assetTag.setUserName(RandomTestUtil.randomString());
@@ -504,6 +502,8 @@ public class AssetTagPersistenceTest {
 		assetTag.setAssetCount(RandomTestUtil.nextInt());
 
 		assetTag.setLastPublishDate(RandomTestUtil.nextDate());
+
+		assetTag.setCompanyId(RandomTestUtil.nextLong());
 
 		_assetTags.add(_persistence.update(assetTag));
 

@@ -70,8 +70,6 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 		sb.append(contentSearchId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", privateLayout=");
 		sb.append(privateLayout);
 		sb.append(", layoutId=");
@@ -80,6 +78,8 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 		sb.append(portletId);
 		sb.append(", articleId=");
 		sb.append(articleId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -91,7 +91,6 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 
 		journalContentSearchImpl.setContentSearchId(contentSearchId);
 		journalContentSearchImpl.setGroupId(groupId);
-		journalContentSearchImpl.setCompanyId(companyId);
 		journalContentSearchImpl.setPrivateLayout(privateLayout);
 		journalContentSearchImpl.setLayoutId(layoutId);
 
@@ -109,6 +108,8 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 			journalContentSearchImpl.setArticleId(articleId);
 		}
 
+		journalContentSearchImpl.setCompanyId(companyId);
+
 		journalContentSearchImpl.resetOriginalValues();
 
 		return journalContentSearchImpl;
@@ -118,11 +119,11 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		contentSearchId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		privateLayout = objectInput.readBoolean();
 		layoutId = objectInput.readLong();
 		portletId = objectInput.readUTF();
 		articleId = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -130,7 +131,6 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 		throws IOException {
 		objectOutput.writeLong(contentSearchId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeBoolean(privateLayout);
 		objectOutput.writeLong(layoutId);
 
@@ -147,13 +147,15 @@ public class JournalContentSearchCacheModel implements CacheModel<JournalContent
 		else {
 			objectOutput.writeUTF(articleId);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long contentSearchId;
 	public long groupId;
-	public long companyId;
 	public boolean privateLayout;
 	public long layoutId;
 	public String portletId;
 	public String articleId;
+	public long companyId;
 }

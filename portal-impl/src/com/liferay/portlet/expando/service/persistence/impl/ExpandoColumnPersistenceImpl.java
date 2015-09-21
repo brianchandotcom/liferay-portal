@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.expando.NoSuchColumnException;
 import com.liferay.portlet.expando.model.ExpandoColumn;
@@ -1806,6 +1808,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		expandoColumn.setNew(true);
 		expandoColumn.setPrimaryKey(columnId);
 
+		expandoColumn.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return expandoColumn;
 	}
 
@@ -1991,12 +1995,12 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		expandoColumnImpl.setPrimaryKey(expandoColumn.getPrimaryKey());
 
 		expandoColumnImpl.setColumnId(expandoColumn.getColumnId());
-		expandoColumnImpl.setCompanyId(expandoColumn.getCompanyId());
 		expandoColumnImpl.setTableId(expandoColumn.getTableId());
 		expandoColumnImpl.setName(expandoColumn.getName());
 		expandoColumnImpl.setType(expandoColumn.getType());
 		expandoColumnImpl.setDefaultData(expandoColumn.getDefaultData());
 		expandoColumnImpl.setTypeSettings(expandoColumn.getTypeSettings());
+		expandoColumnImpl.setCompanyId(expandoColumn.getCompanyId());
 
 		return expandoColumnImpl;
 	}
@@ -2377,6 +2381,8 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_EXPANDOCOLUMN = "SELECT expandoColumn FROM ExpandoColumn expandoColumn";
 	private static final String _SQL_SELECT_EXPANDOCOLUMN_WHERE_PKS_IN = "SELECT expandoColumn FROM ExpandoColumn expandoColumn WHERE columnId IN (";
 	private static final String _SQL_SELECT_EXPANDOCOLUMN_WHERE = "SELECT expandoColumn FROM ExpandoColumn expandoColumn WHERE ";

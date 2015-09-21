@@ -74,8 +74,6 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		sb.append(fileShortcutId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -104,6 +102,8 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -122,7 +122,6 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 
 		dlFileShortcutImpl.setFileShortcutId(fileShortcutId);
 		dlFileShortcutImpl.setGroupId(groupId);
-		dlFileShortcutImpl.setCompanyId(companyId);
 		dlFileShortcutImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -183,6 +182,8 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 			dlFileShortcutImpl.setStatusDate(new Date(statusDate));
 		}
 
+		dlFileShortcutImpl.setCompanyId(companyId);
+
 		dlFileShortcutImpl.resetOriginalValues();
 
 		return dlFileShortcutImpl;
@@ -193,7 +194,6 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		uuid = objectInput.readUTF();
 		fileShortcutId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -208,6 +208,7 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -222,7 +223,6 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 
 		objectOutput.writeLong(fileShortcutId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -258,12 +258,12 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long fileShortcutId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -278,4 +278,5 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

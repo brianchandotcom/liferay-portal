@@ -23,6 +23,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.MVCCModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -49,7 +50,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface ExportImportConfigurationModel extends BaseModel<ExportImportConfiguration>,
-	GroupedModel, MVCCModel, TrashedModel, WorkflowedModel {
+	GroupedModel, MVCCModel, PartitionableModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -115,22 +116,6 @@ public interface ExportImportConfigurationModel extends BaseModel<ExportImportCo
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this export import configuration.
-	 *
-	 * @return the company ID of this export import configuration
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this export import configuration.
-	 *
-	 * @param companyId the company ID of this export import configuration
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this export import configuration.
@@ -352,6 +337,22 @@ public interface ExportImportConfigurationModel extends BaseModel<ExportImportCo
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the company ID of this export import configuration.
+	 *
+	 * @return the company ID of this export import configuration
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this export import configuration.
+	 *
+	 * @param companyId the company ID of this export import configuration
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the trash entry created when this export import configuration was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this export import configuration.

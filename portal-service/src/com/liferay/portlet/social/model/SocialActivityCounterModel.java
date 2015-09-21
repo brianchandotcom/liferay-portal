@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,7 +42,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface SocialActivityCounterModel extends AttachedModel,
-	BaseModel<SocialActivityCounter> {
+	BaseModel<SocialActivityCounter>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -89,20 +90,6 @@ public interface SocialActivityCounterModel extends AttachedModel,
 	 * @param groupId the group ID of this social activity counter
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this social activity counter.
-	 *
-	 * @return the company ID of this social activity counter
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this social activity counter.
-	 *
-	 * @param companyId the company ID of this social activity counter
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the fully qualified class name of this social activity counter.
@@ -265,6 +252,22 @@ public interface SocialActivityCounterModel extends AttachedModel,
 	 * @param active the active of this social activity counter
 	 */
 	public void setActive(boolean active);
+
+	/**
+	 * Returns the company ID of this social activity counter.
+	 *
+	 * @return the company ID of this social activity counter
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this social activity counter.
+	 *
+	 * @param companyId the company ID of this social activity counter
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

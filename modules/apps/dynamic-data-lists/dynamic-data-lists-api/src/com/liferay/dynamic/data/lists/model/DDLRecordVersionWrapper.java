@@ -55,7 +55,6 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 
 		attributes.put("recordVersionId", getRecordVersionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -68,6 +67,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -84,12 +84,6 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -162,6 +156,12 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

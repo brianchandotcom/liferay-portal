@@ -22,6 +22,7 @@ import com.liferay.calendar.model.impl.CalendarResourceImpl;
 import com.liferay.calendar.model.impl.CalendarResourceModelImpl;
 import com.liferay.calendar.service.persistence.CalendarResourcePersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -45,6 +46,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -6468,6 +6470,8 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 
 		calendarResource.setUuid(uuid);
 
+		calendarResource.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return calendarResource;
 	}
 
@@ -6783,7 +6787,6 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		calendarResourceImpl.setUuid(calendarResource.getUuid());
 		calendarResourceImpl.setCalendarResourceId(calendarResource.getCalendarResourceId());
 		calendarResourceImpl.setGroupId(calendarResource.getGroupId());
-		calendarResourceImpl.setCompanyId(calendarResource.getCompanyId());
 		calendarResourceImpl.setUserId(calendarResource.getUserId());
 		calendarResourceImpl.setUserName(calendarResource.getUserName());
 		calendarResourceImpl.setCreateDate(calendarResource.getCreateDate());
@@ -6797,6 +6800,7 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		calendarResourceImpl.setDescription(calendarResource.getDescription());
 		calendarResourceImpl.setActive(calendarResource.isActive());
 		calendarResourceImpl.setLastPublishDate(calendarResource.getLastPublishDate());
+		calendarResourceImpl.setCompanyId(calendarResource.getCompanyId());
 
 		return calendarResourceImpl;
 	}
@@ -7179,6 +7183,8 @@ public class CalendarResourcePersistenceImpl extends BasePersistenceImpl<Calenda
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_CALENDARRESOURCE = "SELECT calendarResource FROM CalendarResource calendarResource";
 	private static final String _SQL_SELECT_CALENDARRESOURCE_WHERE_PKS_IN = "SELECT calendarResource FROM CalendarResource calendarResource WHERE calendarResourceId IN (";
 	private static final String _SQL_SELECT_CALENDARRESOURCE_WHERE = "SELECT calendarResource FROM CalendarResource calendarResource WHERE ";

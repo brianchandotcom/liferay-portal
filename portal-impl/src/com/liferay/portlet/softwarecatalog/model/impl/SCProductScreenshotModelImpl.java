@@ -60,26 +60,26 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	public static final String TABLE_NAME = "SCProductScreenshot";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "productScreenshotId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "productEntryId", Types.BIGINT },
 			{ "thumbnailId", Types.BIGINT },
 			{ "fullImageId", Types.BIGINT },
-			{ "priority", Types.INTEGER }
+			{ "priority", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("productScreenshotId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("productEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("thumbnailId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fullImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SCProductScreenshot (productScreenshotId LONG not null primary key,companyId LONG,groupId LONG,productEntryId LONG,thumbnailId LONG,fullImageId LONG,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table SCProductScreenshot (productScreenshotId LONG not null primary key,groupId LONG,productEntryId LONG,thumbnailId LONG,fullImageId LONG,priority INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SCProductScreenshot";
 	public static final String ORDER_BY_JPQL = " ORDER BY scProductScreenshot.productEntryId ASC, scProductScreenshot.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SCProductScreenshot.productEntryId ASC, SCProductScreenshot.priority ASC";
@@ -140,12 +140,12 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("productScreenshotId", getProductScreenshotId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("productEntryId", getProductEntryId());
 		attributes.put("thumbnailId", getThumbnailId());
 		attributes.put("fullImageId", getFullImageId());
 		attributes.put("priority", getPriority());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -159,12 +159,6 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 
 		if (productScreenshotId != null) {
 			setProductScreenshotId(productScreenshotId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -196,6 +190,12 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		if (priority != null) {
 			setPriority(priority);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -206,16 +206,6 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	@Override
 	public void setProductScreenshotId(long productScreenshotId) {
 		_productScreenshotId = productScreenshotId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -316,6 +306,16 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		return _originalPriority;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -348,12 +348,12 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		SCProductScreenshotImpl scProductScreenshotImpl = new SCProductScreenshotImpl();
 
 		scProductScreenshotImpl.setProductScreenshotId(getProductScreenshotId());
-		scProductScreenshotImpl.setCompanyId(getCompanyId());
 		scProductScreenshotImpl.setGroupId(getGroupId());
 		scProductScreenshotImpl.setProductEntryId(getProductEntryId());
 		scProductScreenshotImpl.setThumbnailId(getThumbnailId());
 		scProductScreenshotImpl.setFullImageId(getFullImageId());
 		scProductScreenshotImpl.setPriority(getPriority());
+		scProductScreenshotImpl.setCompanyId(getCompanyId());
 
 		scProductScreenshotImpl.resetOriginalValues();
 
@@ -461,8 +461,6 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 
 		scProductScreenshotCacheModel.productScreenshotId = getProductScreenshotId();
 
-		scProductScreenshotCacheModel.companyId = getCompanyId();
-
 		scProductScreenshotCacheModel.groupId = getGroupId();
 
 		scProductScreenshotCacheModel.productEntryId = getProductEntryId();
@@ -473,6 +471,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 
 		scProductScreenshotCacheModel.priority = getPriority();
 
+		scProductScreenshotCacheModel.companyId = getCompanyId();
+
 		return scProductScreenshotCacheModel;
 	}
 
@@ -482,8 +482,6 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 
 		sb.append("{productScreenshotId=");
 		sb.append(getProductScreenshotId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", productEntryId=");
@@ -494,6 +492,8 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		sb.append(getFullImageId());
 		sb.append(", priority=");
 		sb.append(getPriority());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -511,10 +511,6 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 		sb.append(
 			"<column><column-name>productScreenshotId</column-name><column-value><![CDATA[");
 		sb.append(getProductScreenshotId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -536,6 +532,10 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -547,7 +547,6 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 			SCProductScreenshot.class
 		};
 	private long _productScreenshotId;
-	private long _companyId;
 	private long _groupId;
 	private long _productEntryId;
 	private long _originalProductEntryId;
@@ -561,6 +560,7 @@ public class SCProductScreenshotModelImpl extends BaseModelImpl<SCProductScreens
 	private int _priority;
 	private int _originalPriority;
 	private boolean _setOriginalPriority;
+	private long _companyId;
 	private long _columnBitmask;
 	private SCProductScreenshot _escapedModel;
 }

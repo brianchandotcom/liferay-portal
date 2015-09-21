@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -47,7 +48,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
-	LocalizedModel, StagedGroupedModel {
+	LocalizedModel, PartitionableModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -114,22 +115,6 @@ public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this polls question.
-	 *
-	 * @return the company ID of this polls question
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this polls question.
-	 *
-	 * @param companyId the company ID of this polls question
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this polls question.
@@ -455,6 +440,22 @@ public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
 	 * @param lastVoteDate the last vote date of this polls question
 	 */
 	public void setLastVoteDate(Date lastVoteDate);
+
+	/**
+	 * Returns the company ID of this polls question.
+	 *
+	 * @return the company ID of this polls question
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this polls question.
+	 *
+	 * @param companyId the company ID of this polls question
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

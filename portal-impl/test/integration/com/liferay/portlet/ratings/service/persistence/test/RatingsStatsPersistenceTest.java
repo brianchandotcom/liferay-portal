@@ -125,6 +125,8 @@ public class RatingsStatsPersistenceTest {
 
 		newRatingsStats.setAverageScore(RandomTestUtil.nextDouble());
 
+		newRatingsStats.setCompanyId(RandomTestUtil.nextLong());
+
 		_ratingsStatses.add(_persistence.update(newRatingsStats));
 
 		RatingsStats existingRatingsStats = _persistence.findByPrimaryKey(newRatingsStats.getPrimaryKey());
@@ -141,6 +143,8 @@ public class RatingsStatsPersistenceTest {
 			newRatingsStats.getTotalScore());
 		AssertUtils.assertEquals(existingRatingsStats.getAverageScore(),
 			newRatingsStats.getAverageScore());
+		Assert.assertEquals(existingRatingsStats.getCompanyId(),
+			newRatingsStats.getCompanyId());
 	}
 
 	@Test
@@ -176,7 +180,7 @@ public class RatingsStatsPersistenceTest {
 	protected OrderByComparator<RatingsStats> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("RatingsStats", "statsId",
 			true, "classNameId", true, "classPK", true, "totalEntries", true,
-			"totalScore", true, "averageScore", true);
+			"totalScore", true, "averageScore", true, "companyId", true);
 	}
 
 	@Test
@@ -403,6 +407,8 @@ public class RatingsStatsPersistenceTest {
 		ratingsStats.setTotalScore(RandomTestUtil.nextDouble());
 
 		ratingsStats.setAverageScore(RandomTestUtil.nextDouble());
+
+		ratingsStats.setCompanyId(RandomTestUtil.nextLong());
 
 		_ratingsStatses.add(_persistence.update(ratingsStats));
 

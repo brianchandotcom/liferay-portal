@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface ShoppingOrderModel extends BaseModel<ShoppingOrder>,
-	GroupedModel {
+	GroupedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -93,22 +94,6 @@ public interface ShoppingOrderModel extends BaseModel<ShoppingOrder>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this shopping order.
-	 *
-	 * @return the company ID of this shopping order
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this shopping order.
-	 *
-	 * @param companyId the company ID of this shopping order
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this shopping order.
@@ -873,6 +858,22 @@ public interface ShoppingOrderModel extends BaseModel<ShoppingOrder>,
 	 * @param sendShippingEmail the send shipping email of this shopping order
 	 */
 	public void setSendShippingEmail(boolean sendShippingEmail);
+
+	/**
+	 * Returns the company ID of this shopping order.
+	 *
+	 * @return the company ID of this shopping order
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this shopping order.
+	 *
+	 * @param companyId the company ID of this shopping order
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

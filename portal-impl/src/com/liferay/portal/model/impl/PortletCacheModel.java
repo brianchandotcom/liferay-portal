@@ -83,14 +83,14 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable,
 		sb.append(mvccVersion);
 		sb.append(", id=");
 		sb.append(id);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", portletId=");
 		sb.append(portletId);
 		sb.append(", roles=");
 		sb.append(roles);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -102,7 +102,6 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable,
 
 		portletImpl.setMvccVersion(mvccVersion);
 		portletImpl.setId(id);
-		portletImpl.setCompanyId(companyId);
 
 		if (portletId == null) {
 			portletImpl.setPortletId(StringPool.BLANK);
@@ -119,6 +118,7 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable,
 		}
 
 		portletImpl.setActive(active);
+		portletImpl.setCompanyId(companyId);
 
 		portletImpl.resetOriginalValues();
 
@@ -129,10 +129,10 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		id = objectInput.readLong();
-		companyId = objectInput.readLong();
 		portletId = objectInput.readUTF();
 		roles = objectInput.readUTF();
 		active = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -140,7 +140,6 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable,
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(id);
-		objectOutput.writeLong(companyId);
 
 		if (portletId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -157,12 +156,13 @@ public class PortletCacheModel implements CacheModel<Portlet>, Externalizable,
 		}
 
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long id;
-	public long companyId;
 	public String portletId;
 	public String roles;
 	public boolean active;
+	public long companyId;
 }

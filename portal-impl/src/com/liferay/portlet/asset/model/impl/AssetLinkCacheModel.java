@@ -70,8 +70,6 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 
 		sb.append("{linkId=");
 		sb.append(linkId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -86,6 +84,8 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 		sb.append(type);
 		sb.append(", weight=");
 		sb.append(weight);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,7 +96,6 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 		AssetLinkImpl assetLinkImpl = new AssetLinkImpl();
 
 		assetLinkImpl.setLinkId(linkId);
-		assetLinkImpl.setCompanyId(companyId);
 		assetLinkImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -117,6 +116,7 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 		assetLinkImpl.setEntryId2(entryId2);
 		assetLinkImpl.setType(type);
 		assetLinkImpl.setWeight(weight);
+		assetLinkImpl.setCompanyId(companyId);
 
 		assetLinkImpl.resetOriginalValues();
 
@@ -126,7 +126,6 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		linkId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -134,13 +133,13 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 		entryId2 = objectInput.readLong();
 		type = objectInput.readInt();
 		weight = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(linkId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -155,10 +154,10 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 		objectOutput.writeLong(entryId2);
 		objectOutput.writeInt(type);
 		objectOutput.writeInt(weight);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long linkId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -166,4 +165,5 @@ public class AssetLinkCacheModel implements CacheModel<AssetLink>,
 	public long entryId2;
 	public int type;
 	public int weight;
+	public long companyId;
 }

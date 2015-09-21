@@ -121,8 +121,6 @@ public class DLFolderPersistenceTest {
 
 		newDLFolder.setGroupId(RandomTestUtil.nextLong());
 
-		newDLFolder.setCompanyId(RandomTestUtil.nextLong());
-
 		newDLFolder.setUserId(RandomTestUtil.nextLong());
 
 		newDLFolder.setUserName(RandomTestUtil.randomString());
@@ -161,6 +159,8 @@ public class DLFolderPersistenceTest {
 
 		newDLFolder.setStatusDate(RandomTestUtil.nextDate());
 
+		newDLFolder.setCompanyId(RandomTestUtil.nextLong());
+
 		_dlFolders.add(_persistence.update(newDLFolder));
 
 		DLFolder existingDLFolder = _persistence.findByPrimaryKey(newDLFolder.getPrimaryKey());
@@ -170,8 +170,6 @@ public class DLFolderPersistenceTest {
 			newDLFolder.getFolderId());
 		Assert.assertEquals(existingDLFolder.getGroupId(),
 			newDLFolder.getGroupId());
-		Assert.assertEquals(existingDLFolder.getCompanyId(),
-			newDLFolder.getCompanyId());
 		Assert.assertEquals(existingDLFolder.getUserId(),
 			newDLFolder.getUserId());
 		Assert.assertEquals(existingDLFolder.getUserName(),
@@ -214,6 +212,8 @@ public class DLFolderPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFolder.getStatusDate()),
 			Time.getShortTimestamp(newDLFolder.getStatusDate()));
+		Assert.assertEquals(existingDLFolder.getCompanyId(),
+			newDLFolder.getCompanyId());
 	}
 
 	@Test
@@ -251,17 +251,17 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByRepositoryId() throws Exception {
 		_persistence.countByRepositoryId(RandomTestUtil.nextLong());
 
 		_persistence.countByRepositoryId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -270,14 +270,6 @@ public class DLFolderPersistenceTest {
 			RandomTestUtil.nextLong());
 
 		_persistence.countByG_P(0L, 0L);
-	}
-
-	@Test
-	public void testCountByC_NotS() throws Exception {
-		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_NotS(0L, 0);
 	}
 
 	@Test
@@ -303,6 +295,14 @@ public class DLFolderPersistenceTest {
 		_persistence.countByP_N(0L, StringPool.NULL);
 
 		_persistence.countByP_N(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByC_NotS() throws Exception {
+		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_NotS(0L, 0);
 	}
 
 	@Test
@@ -391,14 +391,14 @@ public class DLFolderPersistenceTest {
 
 	protected OrderByComparator<DLFolder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFolder", "uuid", true,
-			"folderId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"repositoryId", true, "mountPoint", true, "parentFolderId", true,
-			"treePath", true, "name", true, "description", true,
-			"lastPostDate", true, "defaultFileEntryTypeId", true, "hidden",
-			true, "restrictionType", true, "lastPublishDate", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"folderId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "repositoryId",
+			true, "mountPoint", true, "parentFolderId", true, "treePath", true,
+			"name", true, "description", true, "lastPostDate", true,
+			"defaultFileEntryTypeId", true, "hidden", true, "restrictionType",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true, "companyId",
+			true);
 	}
 
 	@Test
@@ -637,8 +637,6 @@ public class DLFolderPersistenceTest {
 
 		dlFolder.setGroupId(RandomTestUtil.nextLong());
 
-		dlFolder.setCompanyId(RandomTestUtil.nextLong());
-
 		dlFolder.setUserId(RandomTestUtil.nextLong());
 
 		dlFolder.setUserName(RandomTestUtil.randomString());
@@ -676,6 +674,8 @@ public class DLFolderPersistenceTest {
 		dlFolder.setStatusByUserName(RandomTestUtil.randomString());
 
 		dlFolder.setStatusDate(RandomTestUtil.nextDate());
+
+		dlFolder.setCompanyId(RandomTestUtil.nextLong());
 
 		_dlFolders.add(_persistence.update(dlFolder));
 

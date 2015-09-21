@@ -2,7 +2,6 @@ create table WikiNode (
 	uuid_ VARCHAR(75) null,
 	nodeId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -14,7 +13,8 @@ create table WikiNode (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	companyId LONG
 );
 
 create table WikiPage (
@@ -22,7 +22,6 @@ create table WikiPage (
 	pageId LONG not null primary key,
 	resourcePrimKey LONG,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -41,7 +40,8 @@ create table WikiPage (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	companyId LONG
 );
 
 create table WikiPageResource (
@@ -49,5 +49,6 @@ create table WikiPageResource (
 	resourcePrimKey LONG not null primary key,
 	groupId LONG,
 	nodeId LONG,
-	title VARCHAR(255) null
+	title VARCHAR(255) null,
+	companyId LONG
 );

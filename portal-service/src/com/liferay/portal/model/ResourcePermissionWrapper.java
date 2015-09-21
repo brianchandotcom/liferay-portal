@@ -53,7 +53,6 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourcePermissionId", getResourcePermissionId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("name", getName());
 		attributes.put("scope", getScope());
 		attributes.put("primKey", getPrimKey());
@@ -62,6 +61,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 		attributes.put("ownerId", getOwnerId());
 		attributes.put("actionIds", getActionIds());
 		attributes.put("viewActionId", getViewActionId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -78,12 +78,6 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 
 		if (resourcePermissionId != null) {
 			setResourcePermissionId(resourcePermissionId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -132,6 +126,12 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 
 		if (viewActionId != null) {
 			setViewActionId(viewActionId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

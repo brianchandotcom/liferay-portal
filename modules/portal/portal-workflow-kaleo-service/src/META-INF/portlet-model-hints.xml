@@ -4,7 +4,6 @@
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoAction">
 		<field name="kaleoActionId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -36,11 +35,11 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 		<field name="priority" type="int" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoCondition">
 		<field name="kaleoConditionId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -56,11 +55,11 @@
 		<field name="scriptRequiredContexts" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoDefinition">
 		<field name="kaleoDefinitionId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -82,11 +81,11 @@
 		<field name="version" type="int" />
 		<field name="active" type="boolean" />
 		<field name="startKaleoNodeId" type="long" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoInstance">
 		<field name="kaleoInstanceId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -108,11 +107,11 @@
 		<field name="workflowContext" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken">
 		<field name="kaleoInstanceTokenId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -132,11 +131,11 @@
 		<field name="classPK" type="long" />
 		<field name="completed" type="boolean" />
 		<field name="completionDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoLog">
 		<field name="kaleoLogId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -186,11 +185,11 @@
 		<field name="workflowContext" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoNode">
 		<field name="kaleoNodeId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -212,11 +211,11 @@
 		</field>
 		<field name="initial" type="boolean" />
 		<field name="terminal" type="boolean" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoNotification">
 		<field name="kaleoNotificationId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -247,11 +246,11 @@
 		<field name="notificationTypes" type="String">
 			<hint name="max-length">25</hint>
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient">
 		<field name="kaleoNotificationRecipientId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -278,11 +277,11 @@
 		<field name="notificationReceptionType" type="String">
 			<hint name="max-length">3</hint>
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTask">
 		<field name="kaleoTaskId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -297,11 +296,11 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment">
 		<field name="kaleoTaskAssignmentId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -326,11 +325,11 @@
 		<field name="assigneeScriptRequiredContexts" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignmentInstance">
 		<field name="kaleoTaskAssignmentInstanceId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -351,11 +350,11 @@
 		<field name="assigneeClassPK" type="long" />
 		<field name="completed" type="boolean" />
 		<field name="completionDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken">
 		<field name="kaleoTaskInstanceTokenId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -380,11 +379,11 @@
 		<field name="workflowContext" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTimer">
 		<field name="kaleoTimerId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -405,11 +404,11 @@
 		<field name="scale" type="String" />
 		<field name="recurrenceDuration" type="double" />
 		<field name="recurrenceScale" type="String" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTimerInstanceToken">
 		<field name="kaleoTimerInstanceTokenId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -435,11 +434,11 @@
 		<field name="workflowContext" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.portal.workflow.kaleo.model.KaleoTransition">
 		<field name="kaleoTransitionId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String">
 			<hint name="max-length">200</hint>
@@ -463,5 +462,6 @@
 			<hint name="max-length">200</hint>
 		</field>
 		<field name="defaultTransition" type="boolean" />
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

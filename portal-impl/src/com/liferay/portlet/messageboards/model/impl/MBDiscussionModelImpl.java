@@ -70,7 +70,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 			{ "uuid_", Types.VARCHAR },
 			{ "discussionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -78,7 +77,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "threadId", Types.BIGINT },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -86,7 +86,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("discussionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -95,9 +94,10 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("threadId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBDiscussion (uuid_ VARCHAR(75) null,discussionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBDiscussion (uuid_ VARCHAR(75) null,discussionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,threadId LONG,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MBDiscussion";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbDiscussion.discussionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBDiscussion.discussionId ASC";
@@ -163,7 +163,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		attributes.put("uuid", getUuid());
 		attributes.put("discussionId", getDiscussionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -172,6 +171,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		attributes.put("classPK", getClassPK());
 		attributes.put("threadId", getThreadId());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -197,12 +197,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -251,6 +245,12 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -307,28 +307,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -495,6 +473,28 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	}
 
 	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				MBDiscussion.class.getName()), getClassNameId());
@@ -534,7 +534,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		mbDiscussionImpl.setUuid(getUuid());
 		mbDiscussionImpl.setDiscussionId(getDiscussionId());
 		mbDiscussionImpl.setGroupId(getGroupId());
-		mbDiscussionImpl.setCompanyId(getCompanyId());
 		mbDiscussionImpl.setUserId(getUserId());
 		mbDiscussionImpl.setUserName(getUserName());
 		mbDiscussionImpl.setCreateDate(getCreateDate());
@@ -543,6 +542,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		mbDiscussionImpl.setClassPK(getClassPK());
 		mbDiscussionImpl.setThreadId(getThreadId());
 		mbDiscussionImpl.setLastPublishDate(getLastPublishDate());
+		mbDiscussionImpl.setCompanyId(getCompanyId());
 
 		mbDiscussionImpl.resetOriginalValues();
 
@@ -611,10 +611,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 		mbDiscussionModelImpl._setOriginalGroupId = false;
 
-		mbDiscussionModelImpl._originalCompanyId = mbDiscussionModelImpl._companyId;
-
-		mbDiscussionModelImpl._setOriginalCompanyId = false;
-
 		mbDiscussionModelImpl._setModifiedDate = false;
 
 		mbDiscussionModelImpl._originalClassNameId = mbDiscussionModelImpl._classNameId;
@@ -628,6 +624,10 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		mbDiscussionModelImpl._originalThreadId = mbDiscussionModelImpl._threadId;
 
 		mbDiscussionModelImpl._setOriginalThreadId = false;
+
+		mbDiscussionModelImpl._originalCompanyId = mbDiscussionModelImpl._companyId;
+
+		mbDiscussionModelImpl._setOriginalCompanyId = false;
 
 		mbDiscussionModelImpl._columnBitmask = 0;
 	}
@@ -647,8 +647,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		mbDiscussionCacheModel.discussionId = getDiscussionId();
 
 		mbDiscussionCacheModel.groupId = getGroupId();
-
-		mbDiscussionCacheModel.companyId = getCompanyId();
 
 		mbDiscussionCacheModel.userId = getUserId();
 
@@ -693,6 +691,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 			mbDiscussionCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		mbDiscussionCacheModel.companyId = getCompanyId();
+
 		return mbDiscussionCacheModel;
 	}
 
@@ -706,8 +706,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		sb.append(getDiscussionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -724,6 +722,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		sb.append(getThreadId());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -748,10 +748,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -785,6 +781,10 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -801,9 +801,6 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -819,6 +816,9 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	private long _originalThreadId;
 	private boolean _setOriginalThreadId;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private MBDiscussion _escapedModel;
 }

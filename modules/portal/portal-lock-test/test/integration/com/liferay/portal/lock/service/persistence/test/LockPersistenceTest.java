@@ -125,8 +125,6 @@ public class LockPersistenceTest {
 
 		newLock.setUuid(RandomTestUtil.randomString());
 
-		newLock.setCompanyId(RandomTestUtil.nextLong());
-
 		newLock.setUserId(RandomTestUtil.nextLong());
 
 		newLock.setUserName(RandomTestUtil.randomString());
@@ -143,6 +141,8 @@ public class LockPersistenceTest {
 
 		newLock.setExpirationDate(RandomTestUtil.nextDate());
 
+		newLock.setCompanyId(RandomTestUtil.nextLong());
+
 		_locks.add(_persistence.update(newLock));
 
 		Lock existingLock = _persistence.findByPrimaryKey(newLock.getPrimaryKey());
@@ -151,7 +151,6 @@ public class LockPersistenceTest {
 			newLock.getMvccVersion());
 		Assert.assertEquals(existingLock.getUuid(), newLock.getUuid());
 		Assert.assertEquals(existingLock.getLockId(), newLock.getLockId());
-		Assert.assertEquals(existingLock.getCompanyId(), newLock.getCompanyId());
 		Assert.assertEquals(existingLock.getUserId(), newLock.getUserId());
 		Assert.assertEquals(existingLock.getUserName(), newLock.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(existingLock.getCreateDate()),
@@ -164,6 +163,7 @@ public class LockPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLock.getExpirationDate()),
 			Time.getShortTimestamp(newLock.getExpirationDate()));
+		Assert.assertEquals(existingLock.getCompanyId(), newLock.getCompanyId());
 	}
 
 	@Test
@@ -224,10 +224,9 @@ public class LockPersistenceTest {
 
 	protected OrderByComparator<Lock> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Lock_", "mvccVersion",
-			true, "uuid", true, "lockId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "className", true,
-			"key", true, "owner", true, "inheritable", true, "expirationDate",
-			true);
+			true, "uuid", true, "lockId", true, "userId", true, "userName",
+			true, "createDate", true, "className", true, "key", true, "owner",
+			true, "inheritable", true, "expirationDate", true, "companyId", true);
 	}
 
 	@Test
@@ -445,8 +444,6 @@ public class LockPersistenceTest {
 
 		lock.setUuid(RandomTestUtil.randomString());
 
-		lock.setCompanyId(RandomTestUtil.nextLong());
-
 		lock.setUserId(RandomTestUtil.nextLong());
 
 		lock.setUserName(RandomTestUtil.randomString());
@@ -462,6 +459,8 @@ public class LockPersistenceTest {
 		lock.setInheritable(RandomTestUtil.randomBoolean());
 
 		lock.setExpirationDate(RandomTestUtil.nextDate());
+
+		lock.setCompanyId(RandomTestUtil.nextLong());
 
 		_locks.add(_persistence.update(lock));
 

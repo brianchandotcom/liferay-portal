@@ -82,7 +82,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 			{ "uuid_", Types.VARCHAR },
 			{ "calendarId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -96,7 +95,8 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 			{ "defaultCalendar", Types.BOOLEAN },
 			{ "enableComments", Types.BOOLEAN },
 			{ "enableRatings", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -104,7 +104,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("calendarId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -119,9 +118,10 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		TABLE_COLUMNS_MAP.put("enableComments", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("enableRatings", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Calendar (uuid_ VARCHAR(75) null,calendarId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,calendarResourceId LONG,name STRING null,description STRING null,timeZoneId VARCHAR(75) null,color INTEGER,defaultCalendar BOOLEAN,enableComments BOOLEAN,enableRatings BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Calendar (uuid_ VARCHAR(75) null,calendarId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,calendarResourceId LONG,name STRING null,description STRING null,timeZoneId VARCHAR(75) null,color INTEGER,defaultCalendar BOOLEAN,enableComments BOOLEAN,enableRatings BOOLEAN,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Calendar";
 	public static final String ORDER_BY_JPQL = " ORDER BY calendar.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Calendar.name ASC";
@@ -161,7 +161,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		model.setUuid(soapModel.getUuid());
 		model.setCalendarId(soapModel.getCalendarId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -176,6 +175,7 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		model.setEnableComments(soapModel.getEnableComments());
 		model.setEnableRatings(soapModel.getEnableRatings());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -243,7 +243,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		attributes.put("uuid", getUuid());
 		attributes.put("calendarId", getCalendarId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -258,6 +257,7 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		attributes.put("enableComments", getEnableComments());
 		attributes.put("enableRatings", getEnableRatings());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -283,12 +283,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -374,6 +368,12 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -432,29 +432,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -876,6 +853,29 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -998,7 +998,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		calendarImpl.setUuid(getUuid());
 		calendarImpl.setCalendarId(getCalendarId());
 		calendarImpl.setGroupId(getGroupId());
-		calendarImpl.setCompanyId(getCompanyId());
 		calendarImpl.setUserId(getUserId());
 		calendarImpl.setUserName(getUserName());
 		calendarImpl.setCreateDate(getCreateDate());
@@ -1013,6 +1012,7 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		calendarImpl.setEnableComments(getEnableComments());
 		calendarImpl.setEnableRatings(getEnableRatings());
 		calendarImpl.setLastPublishDate(getLastPublishDate());
+		calendarImpl.setCompanyId(getCompanyId());
 
 		calendarImpl.resetOriginalValues();
 
@@ -1079,10 +1079,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 
 		calendarModelImpl._setOriginalGroupId = false;
 
-		calendarModelImpl._originalCompanyId = calendarModelImpl._companyId;
-
-		calendarModelImpl._setOriginalCompanyId = false;
-
 		calendarModelImpl._setModifiedDate = false;
 
 		calendarModelImpl._originalResourceBlockId = calendarModelImpl._resourceBlockId;
@@ -1096,6 +1092,10 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		calendarModelImpl._originalDefaultCalendar = calendarModelImpl._defaultCalendar;
 
 		calendarModelImpl._setOriginalDefaultCalendar = false;
+
+		calendarModelImpl._originalCompanyId = calendarModelImpl._companyId;
+
+		calendarModelImpl._setOriginalCompanyId = false;
 
 		calendarModelImpl._columnBitmask = 0;
 	}
@@ -1115,8 +1115,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		calendarCacheModel.calendarId = getCalendarId();
 
 		calendarCacheModel.groupId = getGroupId();
-
-		calendarCacheModel.companyId = getCompanyId();
 
 		calendarCacheModel.userId = getUserId();
 
@@ -1191,6 +1189,8 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 			calendarCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		calendarCacheModel.companyId = getCompanyId();
+
 		return calendarCacheModel;
 	}
 
@@ -1204,8 +1204,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		sb.append(getCalendarId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1234,6 +1232,8 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		sb.append(getEnableRatings());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1258,10 +1258,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1319,6 +1315,10 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1335,9 +1335,6 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1361,6 +1358,9 @@ public class CalendarModelImpl extends BaseModelImpl<Calendar>
 	private boolean _enableComments;
 	private boolean _enableRatings;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Calendar _escapedModel;
 }

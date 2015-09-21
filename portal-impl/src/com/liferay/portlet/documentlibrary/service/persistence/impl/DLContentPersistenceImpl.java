@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
@@ -2287,6 +2289,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		dlContent.setNew(true);
 		dlContent.setPrimaryKey(contentId);
 
+		dlContent.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return dlContent;
 	}
 
@@ -2482,12 +2486,12 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 
 		dlContentImpl.setContentId(dlContent.getContentId());
 		dlContentImpl.setGroupId(dlContent.getGroupId());
-		dlContentImpl.setCompanyId(dlContent.getCompanyId());
 		dlContentImpl.setRepositoryId(dlContent.getRepositoryId());
 		dlContentImpl.setPath(dlContent.getPath());
 		dlContentImpl.setVersion(dlContent.getVersion());
 		dlContentImpl.setData(dlContent.getData());
 		dlContentImpl.setSize(dlContent.getSize());
+		dlContentImpl.setCompanyId(dlContent.getCompanyId());
 
 		return dlContentImpl;
 	}
@@ -2868,6 +2872,8 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_DLCONTENT = "SELECT dlContent FROM DLContent dlContent";
 	private static final String _SQL_SELECT_DLCONTENT_WHERE_PKS_IN = "SELECT dlContent FROM DLContent dlContent WHERE contentId IN (";
 	private static final String _SQL_SELECT_DLCONTENT_WHERE = "SELECT dlContent FROM DLContent dlContent WHERE ";

@@ -66,7 +66,6 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "kaleoInstanceId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -79,14 +78,14 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 			{ "classPK", Types.BIGINT },
 			{ "completed", Types.BOOLEAN },
 			{ "completionDate", Types.TIMESTAMP },
-			{ "workflowContext", Types.CLOB }
+			{ "workflowContext", Types.CLOB },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("kaleoInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -100,9 +99,10 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		TABLE_COLUMNS_MAP.put("completed", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("completionDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("workflowContext", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoInstance (kaleoInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoDefinitionName VARCHAR(200) null,kaleoDefinitionVersion INTEGER,rootKaleoInstanceTokenId LONG,className VARCHAR(200) null,classPK LONG,completed BOOLEAN,completionDate DATE null,workflowContext TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoInstance (kaleoInstanceId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoDefinitionName VARCHAR(200) null,kaleoDefinitionVersion INTEGER,rootKaleoInstanceTokenId LONG,className VARCHAR(200) null,classPK LONG,completed BOOLEAN,completionDate DATE null,workflowContext TEXT null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoInstance.kaleoInstanceId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoInstance.kaleoInstanceId ASC";
@@ -170,7 +170,6 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 
 		attributes.put("kaleoInstanceId", getKaleoInstanceId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -184,6 +183,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		attributes.put("completed", getCompleted());
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("workflowContext", getWorkflowContext());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -203,12 +203,6 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -291,6 +285,12 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		if (workflowContext != null) {
 			setWorkflowContext(workflowContext);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -313,28 +313,6 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -604,6 +582,28 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		_workflowContext = workflowContext;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -637,7 +637,6 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 
 		kaleoInstanceImpl.setKaleoInstanceId(getKaleoInstanceId());
 		kaleoInstanceImpl.setGroupId(getGroupId());
-		kaleoInstanceImpl.setCompanyId(getCompanyId());
 		kaleoInstanceImpl.setUserId(getUserId());
 		kaleoInstanceImpl.setUserName(getUserName());
 		kaleoInstanceImpl.setCreateDate(getCreateDate());
@@ -651,6 +650,7 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		kaleoInstanceImpl.setCompleted(getCompleted());
 		kaleoInstanceImpl.setCompletionDate(getCompletionDate());
 		kaleoInstanceImpl.setWorkflowContext(getWorkflowContext());
+		kaleoInstanceImpl.setCompanyId(getCompanyId());
 
 		kaleoInstanceImpl.resetOriginalValues();
 
@@ -719,10 +719,6 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 	public void resetOriginalValues() {
 		KaleoInstanceModelImpl kaleoInstanceModelImpl = this;
 
-		kaleoInstanceModelImpl._originalCompanyId = kaleoInstanceModelImpl._companyId;
-
-		kaleoInstanceModelImpl._setOriginalCompanyId = false;
-
 		kaleoInstanceModelImpl._originalUserId = kaleoInstanceModelImpl._userId;
 
 		kaleoInstanceModelImpl._setOriginalUserId = false;
@@ -751,6 +747,10 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 
 		kaleoInstanceModelImpl._originalCompletionDate = kaleoInstanceModelImpl._completionDate;
 
+		kaleoInstanceModelImpl._originalCompanyId = kaleoInstanceModelImpl._companyId;
+
+		kaleoInstanceModelImpl._setOriginalCompanyId = false;
+
 		kaleoInstanceModelImpl._columnBitmask = 0;
 	}
 
@@ -761,8 +761,6 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		kaleoInstanceCacheModel.kaleoInstanceId = getKaleoInstanceId();
 
 		kaleoInstanceCacheModel.groupId = getGroupId();
-
-		kaleoInstanceCacheModel.companyId = getCompanyId();
 
 		kaleoInstanceCacheModel.userId = getUserId();
 
@@ -836,6 +834,8 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 			kaleoInstanceCacheModel.workflowContext = null;
 		}
 
+		kaleoInstanceCacheModel.companyId = getCompanyId();
+
 		return kaleoInstanceCacheModel;
 	}
 
@@ -847,8 +847,6 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		sb.append(getKaleoInstanceId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -875,6 +873,8 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		sb.append(getCompletionDate());
 		sb.append(", workflowContext=");
 		sb.append(getWorkflowContext());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -895,10 +895,6 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -952,6 +948,10 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 			"<column><column-name>workflowContext</column-name><column-value><![CDATA[");
 		sb.append(getWorkflowContext());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -964,9 +964,6 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 		};
 	private long _kaleoInstanceId;
 	private long _groupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -994,6 +991,9 @@ public class KaleoInstanceModelImpl extends BaseModelImpl<KaleoInstance>
 	private Date _completionDate;
 	private Date _originalCompletionDate;
 	private String _workflowContext;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private KaleoInstance _escapedModel;
 }

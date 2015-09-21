@@ -22,6 +22,7 @@ import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupImpl;
 import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupModelImpl;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -45,6 +46,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -2845,6 +2847,8 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 
 		mdrRuleGroup.setUuid(uuid);
 
+		mdrRuleGroup.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return mdrRuleGroup;
 	}
 
@@ -3078,7 +3082,6 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		mdrRuleGroupImpl.setUuid(mdrRuleGroup.getUuid());
 		mdrRuleGroupImpl.setRuleGroupId(mdrRuleGroup.getRuleGroupId());
 		mdrRuleGroupImpl.setGroupId(mdrRuleGroup.getGroupId());
-		mdrRuleGroupImpl.setCompanyId(mdrRuleGroup.getCompanyId());
 		mdrRuleGroupImpl.setUserId(mdrRuleGroup.getUserId());
 		mdrRuleGroupImpl.setUserName(mdrRuleGroup.getUserName());
 		mdrRuleGroupImpl.setCreateDate(mdrRuleGroup.getCreateDate());
@@ -3086,6 +3089,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		mdrRuleGroupImpl.setName(mdrRuleGroup.getName());
 		mdrRuleGroupImpl.setDescription(mdrRuleGroup.getDescription());
 		mdrRuleGroupImpl.setLastPublishDate(mdrRuleGroup.getLastPublishDate());
+		mdrRuleGroupImpl.setCompanyId(mdrRuleGroup.getCompanyId());
 
 		return mdrRuleGroupImpl;
 	}
@@ -3466,6 +3470,8 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MDRRULEGROUP = "SELECT mdrRuleGroup FROM MDRRuleGroup mdrRuleGroup";
 	private static final String _SQL_SELECT_MDRRULEGROUP_WHERE_PKS_IN = "SELECT mdrRuleGroup FROM MDRRuleGroup mdrRuleGroup WHERE ruleGroupId IN (";
 	private static final String _SQL_SELECT_MDRRULEGROUP_WHERE = "SELECT mdrRuleGroup FROM MDRRuleGroup mdrRuleGroup WHERE ";

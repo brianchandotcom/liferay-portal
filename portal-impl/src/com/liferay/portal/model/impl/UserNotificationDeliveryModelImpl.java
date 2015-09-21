@@ -66,29 +66,29 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
 			{ "userNotificationDeliveryId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "portletId", Types.VARCHAR },
 			{ "classNameId", Types.BIGINT },
 			{ "notificationType", Types.INTEGER },
 			{ "deliveryType", Types.INTEGER },
-			{ "deliver", Types.BOOLEAN }
+			{ "deliver", Types.BOOLEAN },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userNotificationDeliveryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("notificationType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("deliveryType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("deliver", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationDelivery (mvccVersion LONG default 0,userNotificationDeliveryId LONG not null primary key,companyId LONG,userId LONG,portletId VARCHAR(200) null,classNameId LONG,notificationType INTEGER,deliveryType INTEGER,deliver BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationDelivery (mvccVersion LONG default 0,userNotificationDeliveryId LONG not null primary key,userId LONG,portletId VARCHAR(200) null,classNameId LONG,notificationType INTEGER,deliveryType INTEGER,deliver BOOLEAN,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationDelivery";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationDelivery.userNotificationDeliveryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationDelivery.userNotificationDeliveryId ASC";
@@ -153,13 +153,13 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("userNotificationDeliveryId",
 			getUserNotificationDeliveryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("notificationType", getNotificationType());
 		attributes.put("deliveryType", getDeliveryType());
 		attributes.put("deliver", getDeliver());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -180,12 +180,6 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 		if (userNotificationDeliveryId != null) {
 			setUserNotificationDeliveryId(userNotificationDeliveryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -223,6 +217,12 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		if (deliver != null) {
 			setDeliver(deliver);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -243,16 +243,6 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	@Override
 	public void setUserNotificationDeliveryId(long userNotificationDeliveryId) {
 		_userNotificationDeliveryId = userNotificationDeliveryId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -419,6 +409,16 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		_deliver = deliver;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -452,13 +452,13 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 		userNotificationDeliveryImpl.setMvccVersion(getMvccVersion());
 		userNotificationDeliveryImpl.setUserNotificationDeliveryId(getUserNotificationDeliveryId());
-		userNotificationDeliveryImpl.setCompanyId(getCompanyId());
 		userNotificationDeliveryImpl.setUserId(getUserId());
 		userNotificationDeliveryImpl.setPortletId(getPortletId());
 		userNotificationDeliveryImpl.setClassNameId(getClassNameId());
 		userNotificationDeliveryImpl.setNotificationType(getNotificationType());
 		userNotificationDeliveryImpl.setDeliveryType(getDeliveryType());
 		userNotificationDeliveryImpl.setDeliver(getDeliver());
+		userNotificationDeliveryImpl.setCompanyId(getCompanyId());
 
 		userNotificationDeliveryImpl.resetOriginalValues();
 
@@ -550,8 +550,6 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 		userNotificationDeliveryCacheModel.userNotificationDeliveryId = getUserNotificationDeliveryId();
 
-		userNotificationDeliveryCacheModel.companyId = getCompanyId();
-
 		userNotificationDeliveryCacheModel.userId = getUserId();
 
 		userNotificationDeliveryCacheModel.portletId = getPortletId();
@@ -570,6 +568,8 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 		userNotificationDeliveryCacheModel.deliver = getDeliver();
 
+		userNotificationDeliveryCacheModel.companyId = getCompanyId();
+
 		return userNotificationDeliveryCacheModel;
 	}
 
@@ -581,8 +581,6 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		sb.append(getMvccVersion());
 		sb.append(", userNotificationDeliveryId=");
 		sb.append(getUserNotificationDeliveryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", portletId=");
@@ -595,6 +593,8 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		sb.append(getDeliveryType());
 		sb.append(", deliver=");
 		sb.append(getDeliver());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -615,10 +615,6 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		sb.append(
 			"<column><column-name>userNotificationDeliveryId</column-name><column-value><![CDATA[");
 		sb.append(getUserNotificationDeliveryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -644,6 +640,10 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 			"<column><column-name>deliver</column-name><column-value><![CDATA[");
 		sb.append(getDeliver());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -656,7 +656,6 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		};
 	private long _mvccVersion;
 	private long _userNotificationDeliveryId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -672,6 +671,7 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	private int _originalDeliveryType;
 	private boolean _setOriginalDeliveryType;
 	private boolean _deliver;
+	private long _companyId;
 	private long _columnBitmask;
 	private UserNotificationDelivery _escapedModel;
 }

@@ -54,11 +54,11 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourceTypePermissionId", getResourceTypePermissionId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
 		attributes.put("roleId", getRoleId());
 		attributes.put("actionIds", getActionIds());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -76,12 +76,6 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 
 		if (resourceTypePermissionId != null) {
 			setResourceTypePermissionId(resourceTypePermissionId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -106,6 +100,12 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 
 		if (actionIds != null) {
 			setActionIds(actionIds);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

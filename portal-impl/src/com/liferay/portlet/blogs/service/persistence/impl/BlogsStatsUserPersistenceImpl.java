@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.blogs.NoSuchStatsUserException;
 import com.liferay.portlet.blogs.model.BlogsStatsUser;
@@ -1775,508 +1777,6 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 	private static final String _FINDER_COLUMN_G_NOTE_GROUPID_2 = "blogsStatsUser.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_NOTE_ENTRYCOUNT_2 = "blogsStatsUser.entryCount != ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_NOTE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
-			BlogsStatsUserImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_NotE",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_NOTE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
-			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotE",
-			new String[] { Long.class.getName(), Integer.class.getName() });
-
-	/**
-	 * Returns all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param entryCount the entry count
-	 * @return the matching blogs stats users
-	 */
-	@Override
-	public List<BlogsStatsUser> findByC_NotE(long companyId, int entryCount) {
-		return findByC_NotE(companyId, entryCount, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsStatsUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param entryCount the entry count
-	 * @param start the lower bound of the range of blogs stats users
-	 * @param end the upper bound of the range of blogs stats users (not inclusive)
-	 * @return the range of matching blogs stats users
-	 */
-	@Override
-	public List<BlogsStatsUser> findByC_NotE(long companyId, int entryCount,
-		int start, int end) {
-		return findByC_NotE(companyId, entryCount, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsStatsUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param entryCount the entry count
-	 * @param start the lower bound of the range of blogs stats users
-	 * @param end the upper bound of the range of blogs stats users (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching blogs stats users
-	 */
-	@Override
-	public List<BlogsStatsUser> findByC_NotE(long companyId, int entryCount,
-		int start, int end, OrderByComparator<BlogsStatsUser> orderByComparator) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_NOTE;
-		finderArgs = new Object[] {
-				companyId, entryCount,
-				
-				start, end, orderByComparator
-			};
-
-		List<BlogsStatsUser> list = (List<BlogsStatsUser>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (BlogsStatsUser blogsStatsUser : list) {
-				if ((companyId != blogsStatsUser.getCompanyId()) ||
-						(entryCount == blogsStatsUser.getEntryCount())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(4);
-			}
-
-			query.append(_SQL_SELECT_BLOGSSTATSUSER_WHERE);
-
-			query.append(_FINDER_COLUMN_C_NOTE_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_NOTE_ENTRYCOUNT_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(BlogsStatsUserModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(entryCount);
-
-				if (!pagination) {
-					list = (List<BlogsStatsUser>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<BlogsStatsUser>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param entryCount the entry count
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching blogs stats user
-	 * @throws NoSuchStatsUserException if a matching blogs stats user could not be found
-	 */
-	@Override
-	public BlogsStatsUser findByC_NotE_First(long companyId, int entryCount,
-		OrderByComparator<BlogsStatsUser> orderByComparator)
-		throws NoSuchStatsUserException {
-		BlogsStatsUser blogsStatsUser = fetchByC_NotE_First(companyId,
-				entryCount, orderByComparator);
-
-		if (blogsStatsUser != null) {
-			return blogsStatsUser;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", entryCount=");
-		msg.append(entryCount);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchStatsUserException(msg.toString());
-	}
-
-	/**
-	 * Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param entryCount the entry count
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	 */
-	@Override
-	public BlogsStatsUser fetchByC_NotE_First(long companyId, int entryCount,
-		OrderByComparator<BlogsStatsUser> orderByComparator) {
-		List<BlogsStatsUser> list = findByC_NotE(companyId, entryCount, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param entryCount the entry count
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs stats user
-	 * @throws NoSuchStatsUserException if a matching blogs stats user could not be found
-	 */
-	@Override
-	public BlogsStatsUser findByC_NotE_Last(long companyId, int entryCount,
-		OrderByComparator<BlogsStatsUser> orderByComparator)
-		throws NoSuchStatsUserException {
-		BlogsStatsUser blogsStatsUser = fetchByC_NotE_Last(companyId,
-				entryCount, orderByComparator);
-
-		if (blogsStatsUser != null) {
-			return blogsStatsUser;
-		}
-
-		StringBundler msg = new StringBundler(6);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("companyId=");
-		msg.append(companyId);
-
-		msg.append(", entryCount=");
-		msg.append(entryCount);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchStatsUserException(msg.toString());
-	}
-
-	/**
-	 * Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param entryCount the entry count
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	 */
-	@Override
-	public BlogsStatsUser fetchByC_NotE_Last(long companyId, int entryCount,
-		OrderByComparator<BlogsStatsUser> orderByComparator) {
-		int count = countByC_NotE(companyId, entryCount);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<BlogsStatsUser> list = findByC_NotE(companyId, entryCount,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the blogs stats users before and after the current blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * @param statsUserId the primary key of the current blogs stats user
-	 * @param companyId the company ID
-	 * @param entryCount the entry count
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next blogs stats user
-	 * @throws NoSuchStatsUserException if a blogs stats user with the primary key could not be found
-	 */
-	@Override
-	public BlogsStatsUser[] findByC_NotE_PrevAndNext(long statsUserId,
-		long companyId, int entryCount,
-		OrderByComparator<BlogsStatsUser> orderByComparator)
-		throws NoSuchStatsUserException {
-		BlogsStatsUser blogsStatsUser = findByPrimaryKey(statsUserId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			BlogsStatsUser[] array = new BlogsStatsUserImpl[3];
-
-			array[0] = getByC_NotE_PrevAndNext(session, blogsStatsUser,
-					companyId, entryCount, orderByComparator, true);
-
-			array[1] = blogsStatsUser;
-
-			array[2] = getByC_NotE_PrevAndNext(session, blogsStatsUser,
-					companyId, entryCount, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected BlogsStatsUser getByC_NotE_PrevAndNext(Session session,
-		BlogsStatsUser blogsStatsUser, long companyId, int entryCount,
-		OrderByComparator<BlogsStatsUser> orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_BLOGSSTATSUSER_WHERE);
-
-		query.append(_FINDER_COLUMN_C_NOTE_COMPANYID_2);
-
-		query.append(_FINDER_COLUMN_C_NOTE_ENTRYCOUNT_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(BlogsStatsUserModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(companyId);
-
-		qPos.add(entryCount);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(blogsStatsUser);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<BlogsStatsUser> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the blogs stats users where companyId = &#63; and entryCount &ne; &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param entryCount the entry count
-	 */
-	@Override
-	public void removeByC_NotE(long companyId, int entryCount) {
-		for (BlogsStatsUser blogsStatsUser : findByC_NotE(companyId,
-				entryCount, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(blogsStatsUser);
-		}
-	}
-
-	/**
-	 * Returns the number of blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param entryCount the entry count
-	 * @return the number of matching blogs stats users
-	 */
-	@Override
-	public int countByC_NotE(long companyId, int entryCount) {
-		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_NOTE;
-
-		Object[] finderArgs = new Object[] { companyId, entryCount };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_BLOGSSTATSUSER_WHERE);
-
-			query.append(_FINDER_COLUMN_C_NOTE_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_C_NOTE_ENTRYCOUNT_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(companyId);
-
-				qPos.add(entryCount);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_C_NOTE_COMPANYID_2 = "blogsStatsUser.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_NOTE_ENTRYCOUNT_2 = "blogsStatsUser.entryCount != ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_U_L = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
 			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
 			BlogsStatsUserImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -2830,6 +2330,508 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	private static final String _FINDER_COLUMN_U_L_USERID_2 = "blogsStatsUser.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_L_LASTPOSTDATE_1 = "blogsStatsUser.lastPostDate IS NULL";
 	private static final String _FINDER_COLUMN_U_L_LASTPOSTDATE_2 = "blogsStatsUser.lastPostDate = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_NOTE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
+			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED,
+			BlogsStatsUserImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_NotE",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_NOTE = new FinderPath(BlogsStatsUserModelImpl.ENTITY_CACHE_ENABLED,
+			BlogsStatsUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_NotE",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @return the matching blogs stats users
+	 */
+	@Override
+	public List<BlogsStatsUser> findByC_NotE(long companyId, int entryCount) {
+		return findByC_NotE(companyId, entryCount, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsStatsUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @param start the lower bound of the range of blogs stats users
+	 * @param end the upper bound of the range of blogs stats users (not inclusive)
+	 * @return the range of matching blogs stats users
+	 */
+	@Override
+	public List<BlogsStatsUser> findByC_NotE(long companyId, int entryCount,
+		int start, int end) {
+		return findByC_NotE(companyId, entryCount, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsStatsUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @param start the lower bound of the range of blogs stats users
+	 * @param end the upper bound of the range of blogs stats users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching blogs stats users
+	 */
+	@Override
+	public List<BlogsStatsUser> findByC_NotE(long companyId, int entryCount,
+		int start, int end, OrderByComparator<BlogsStatsUser> orderByComparator) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_NOTE;
+		finderArgs = new Object[] {
+				companyId, entryCount,
+				
+				start, end, orderByComparator
+			};
+
+		List<BlogsStatsUser> list = (List<BlogsStatsUser>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (BlogsStatsUser blogsStatsUser : list) {
+				if ((companyId != blogsStatsUser.getCompanyId()) ||
+						(entryCount == blogsStatsUser.getEntryCount())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_BLOGSSTATSUSER_WHERE);
+
+			query.append(_FINDER_COLUMN_C_NOTE_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_NOTE_ENTRYCOUNT_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(BlogsStatsUserModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(entryCount);
+
+				if (!pagination) {
+					list = (List<BlogsStatsUser>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<BlogsStatsUser>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching blogs stats user
+	 * @throws NoSuchStatsUserException if a matching blogs stats user could not be found
+	 */
+	@Override
+	public BlogsStatsUser findByC_NotE_First(long companyId, int entryCount,
+		OrderByComparator<BlogsStatsUser> orderByComparator)
+		throws NoSuchStatsUserException {
+		BlogsStatsUser blogsStatsUser = fetchByC_NotE_First(companyId,
+				entryCount, orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", entryCount=");
+		msg.append(entryCount);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 */
+	@Override
+	public BlogsStatsUser fetchByC_NotE_First(long companyId, int entryCount,
+		OrderByComparator<BlogsStatsUser> orderByComparator) {
+		List<BlogsStatsUser> list = findByC_NotE(companyId, entryCount, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching blogs stats user
+	 * @throws NoSuchStatsUserException if a matching blogs stats user could not be found
+	 */
+	@Override
+	public BlogsStatsUser findByC_NotE_Last(long companyId, int entryCount,
+		OrderByComparator<BlogsStatsUser> orderByComparator)
+		throws NoSuchStatsUserException {
+		BlogsStatsUser blogsStatsUser = fetchByC_NotE_Last(companyId,
+				entryCount, orderByComparator);
+
+		if (blogsStatsUser != null) {
+			return blogsStatsUser;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", entryCount=");
+		msg.append(entryCount);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatsUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	 */
+	@Override
+	public BlogsStatsUser fetchByC_NotE_Last(long companyId, int entryCount,
+		OrderByComparator<BlogsStatsUser> orderByComparator) {
+		int count = countByC_NotE(companyId, entryCount);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<BlogsStatsUser> list = findByC_NotE(companyId, entryCount,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the blogs stats users before and after the current blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param statsUserId the primary key of the current blogs stats user
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next blogs stats user
+	 * @throws NoSuchStatsUserException if a blogs stats user with the primary key could not be found
+	 */
+	@Override
+	public BlogsStatsUser[] findByC_NotE_PrevAndNext(long statsUserId,
+		long companyId, int entryCount,
+		OrderByComparator<BlogsStatsUser> orderByComparator)
+		throws NoSuchStatsUserException {
+		BlogsStatsUser blogsStatsUser = findByPrimaryKey(statsUserId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			BlogsStatsUser[] array = new BlogsStatsUserImpl[3];
+
+			array[0] = getByC_NotE_PrevAndNext(session, blogsStatsUser,
+					companyId, entryCount, orderByComparator, true);
+
+			array[1] = blogsStatsUser;
+
+			array[2] = getByC_NotE_PrevAndNext(session, blogsStatsUser,
+					companyId, entryCount, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected BlogsStatsUser getByC_NotE_PrevAndNext(Session session,
+		BlogsStatsUser blogsStatsUser, long companyId, int entryCount,
+		OrderByComparator<BlogsStatsUser> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_BLOGSSTATSUSER_WHERE);
+
+		query.append(_FINDER_COLUMN_C_NOTE_COMPANYID_2);
+
+		query.append(_FINDER_COLUMN_C_NOTE_ENTRYCOUNT_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(BlogsStatsUserModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		qPos.add(entryCount);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(blogsStatsUser);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<BlogsStatsUser> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the blogs stats users where companyId = &#63; and entryCount &ne; &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 */
+	@Override
+	public void removeByC_NotE(long companyId, int entryCount) {
+		for (BlogsStatsUser blogsStatsUser : findByC_NotE(companyId,
+				entryCount, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(blogsStatsUser);
+		}
+	}
+
+	/**
+	 * Returns the number of blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param entryCount the entry count
+	 * @return the number of matching blogs stats users
+	 */
+	@Override
+	public int countByC_NotE(long companyId, int entryCount) {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_NOTE;
+
+		Object[] finderArgs = new Object[] { companyId, entryCount };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_BLOGSSTATSUSER_WHERE);
+
+			query.append(_FINDER_COLUMN_C_NOTE_COMPANYID_2);
+
+			query.append(_FINDER_COLUMN_C_NOTE_ENTRYCOUNT_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				qPos.add(entryCount);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_NOTE_COMPANYID_2 = "blogsStatsUser.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_NOTE_ENTRYCOUNT_2 = "blogsStatsUser.entryCount != ?";
 
 	public BlogsStatsUserPersistenceImpl() {
 		setModelClass(BlogsStatsUser.class);
@@ -2982,6 +2984,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 		blogsStatsUser.setNew(true);
 		blogsStatsUser.setPrimaryKey(statsUserId);
+
+		blogsStatsUser.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return blogsStatsUser;
 	}
@@ -3187,13 +3191,13 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 
 		blogsStatsUserImpl.setStatsUserId(blogsStatsUser.getStatsUserId());
 		blogsStatsUserImpl.setGroupId(blogsStatsUser.getGroupId());
-		blogsStatsUserImpl.setCompanyId(blogsStatsUser.getCompanyId());
 		blogsStatsUserImpl.setUserId(blogsStatsUser.getUserId());
 		blogsStatsUserImpl.setEntryCount(blogsStatsUser.getEntryCount());
 		blogsStatsUserImpl.setLastPostDate(blogsStatsUser.getLastPostDate());
 		blogsStatsUserImpl.setRatingsTotalEntries(blogsStatsUser.getRatingsTotalEntries());
 		blogsStatsUserImpl.setRatingsTotalScore(blogsStatsUser.getRatingsTotalScore());
 		blogsStatsUserImpl.setRatingsAverageScore(blogsStatsUser.getRatingsAverageScore());
+		blogsStatsUserImpl.setCompanyId(blogsStatsUser.getCompanyId());
 
 		return blogsStatsUserImpl;
 	}
@@ -3570,6 +3574,8 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_BLOGSSTATSUSER = "SELECT blogsStatsUser FROM BlogsStatsUser blogsStatsUser";
 	private static final String _SQL_SELECT_BLOGSSTATSUSER_WHERE_PKS_IN = "SELECT blogsStatsUser FROM BlogsStatsUser blogsStatsUser WHERE statsUserId IN (";
 	private static final String _SQL_SELECT_BLOGSSTATSUSER_WHERE = "SELECT blogsStatsUser FROM BlogsStatsUser blogsStatsUser WHERE ";

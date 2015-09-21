@@ -120,8 +120,6 @@ public class RolePersistenceTest {
 
 		newRole.setUuid(RandomTestUtil.randomString());
 
-		newRole.setCompanyId(RandomTestUtil.nextLong());
-
 		newRole.setUserId(RandomTestUtil.nextLong());
 
 		newRole.setUserName(RandomTestUtil.randomString());
@@ -146,6 +144,8 @@ public class RolePersistenceTest {
 
 		newRole.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newRole.setCompanyId(RandomTestUtil.nextLong());
+
 		_roles.add(_persistence.update(newRole));
 
 		Role existingRole = _persistence.findByPrimaryKey(newRole.getPrimaryKey());
@@ -154,7 +154,6 @@ public class RolePersistenceTest {
 			newRole.getMvccVersion());
 		Assert.assertEquals(existingRole.getUuid(), newRole.getUuid());
 		Assert.assertEquals(existingRole.getRoleId(), newRole.getRoleId());
-		Assert.assertEquals(existingRole.getCompanyId(), newRole.getCompanyId());
 		Assert.assertEquals(existingRole.getUserId(), newRole.getUserId());
 		Assert.assertEquals(existingRole.getUserName(), newRole.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(existingRole.getCreateDate()),
@@ -174,6 +173,7 @@ public class RolePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingRole.getLastPublishDate()),
 			Time.getShortTimestamp(newRole.getLastPublishDate()));
+		Assert.assertEquals(existingRole.getCompanyId(), newRole.getCompanyId());
 	}
 
 	@Test
@@ -192,13 +192,6 @@ public class RolePersistenceTest {
 		_persistence.countByUuid_C(StringPool.NULL, 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -227,6 +220,22 @@ public class RolePersistenceTest {
 	}
 
 	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
+	}
+
+	@Test
+	public void testCountByT_S() throws Exception {
+		_persistence.countByT_S(RandomTestUtil.nextInt(), StringPool.BLANK);
+
+		_persistence.countByT_S(0, StringPool.NULL);
+
+		_persistence.countByT_S(0, (String)null);
+	}
+
+	@Test
 	public void testCountByC_N() throws Exception {
 		_persistence.countByC_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
@@ -247,15 +256,6 @@ public class RolePersistenceTest {
 	public void testCountByC_TArrayable() throws Exception {
 		_persistence.countByC_T(RandomTestUtil.nextLong(),
 			new int[] { RandomTestUtil.nextInt(), 0 });
-	}
-
-	@Test
-	public void testCountByT_S() throws Exception {
-		_persistence.countByT_S(RandomTestUtil.nextInt(), StringPool.BLANK);
-
-		_persistence.countByT_S(0, StringPool.NULL);
-
-		_persistence.countByT_S(0, (String)null);
 	}
 
 	@Test
@@ -290,11 +290,11 @@ public class RolePersistenceTest {
 
 	protected OrderByComparator<Role> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Role_", "mvccVersion",
-			true, "uuid", true, "roleId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "name", true, "title", true,
-			"description", true, "type", true, "subtype", true,
-			"lastPublishDate", true);
+			true, "uuid", true, "roleId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId",
+			true, "classPK", true, "name", true, "title", true, "description",
+			true, "type", true, "subtype", true, "lastPublishDate", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -522,8 +522,6 @@ public class RolePersistenceTest {
 
 		role.setUuid(RandomTestUtil.randomString());
 
-		role.setCompanyId(RandomTestUtil.nextLong());
-
 		role.setUserId(RandomTestUtil.nextLong());
 
 		role.setUserName(RandomTestUtil.randomString());
@@ -547,6 +545,8 @@ public class RolePersistenceTest {
 		role.setSubtype(RandomTestUtil.randomString());
 
 		role.setLastPublishDate(RandomTestUtil.nextDate());
+
+		role.setCompanyId(RandomTestUtil.nextLong());
 
 		_roles.add(_persistence.update(role));
 

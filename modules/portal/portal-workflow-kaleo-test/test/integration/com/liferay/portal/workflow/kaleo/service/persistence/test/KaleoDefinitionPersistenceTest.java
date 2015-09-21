@@ -123,8 +123,6 @@ public class KaleoDefinitionPersistenceTest {
 
 		newKaleoDefinition.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoDefinition.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoDefinition.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoDefinition.setUserName(RandomTestUtil.randomString());
@@ -147,6 +145,8 @@ public class KaleoDefinitionPersistenceTest {
 
 		newKaleoDefinition.setStartKaleoNodeId(RandomTestUtil.nextLong());
 
+		newKaleoDefinition.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoDefinitions.add(_persistence.update(newKaleoDefinition));
 
 		KaleoDefinition existingKaleoDefinition = _persistence.findByPrimaryKey(newKaleoDefinition.getPrimaryKey());
@@ -155,8 +155,6 @@ public class KaleoDefinitionPersistenceTest {
 			newKaleoDefinition.getKaleoDefinitionId());
 		Assert.assertEquals(existingKaleoDefinition.getGroupId(),
 			newKaleoDefinition.getGroupId());
-		Assert.assertEquals(existingKaleoDefinition.getCompanyId(),
-			newKaleoDefinition.getCompanyId());
 		Assert.assertEquals(existingKaleoDefinition.getUserId(),
 			newKaleoDefinition.getUserId());
 		Assert.assertEquals(existingKaleoDefinition.getUserName(),
@@ -181,6 +179,8 @@ public class KaleoDefinitionPersistenceTest {
 			newKaleoDefinition.getActive());
 		Assert.assertEquals(existingKaleoDefinition.getStartKaleoNodeId(),
 			newKaleoDefinition.getStartKaleoNodeId());
+		Assert.assertEquals(existingKaleoDefinition.getCompanyId(),
+			newKaleoDefinition.getCompanyId());
 	}
 
 	@Test
@@ -253,10 +253,10 @@ public class KaleoDefinitionPersistenceTest {
 
 	protected OrderByComparator<KaleoDefinition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoDefinition",
-			"kaleoDefinitionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "title", true, "description",
-			true, "version", true, "active", true, "startKaleoNodeId", true);
+			"kaleoDefinitionId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true, "title", true, "description", true, "version", true,
+			"active", true, "startKaleoNodeId", true, "companyId", true);
 	}
 
 	@Test
@@ -482,8 +482,6 @@ public class KaleoDefinitionPersistenceTest {
 
 		kaleoDefinition.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoDefinition.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoDefinition.setUserId(RandomTestUtil.nextLong());
 
 		kaleoDefinition.setUserName(RandomTestUtil.randomString());
@@ -505,6 +503,8 @@ public class KaleoDefinitionPersistenceTest {
 		kaleoDefinition.setActive(RandomTestUtil.randomBoolean());
 
 		kaleoDefinition.setStartKaleoNodeId(RandomTestUtil.nextLong());
+
+		kaleoDefinition.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoDefinitions.add(_persistence.update(kaleoDefinition));
 

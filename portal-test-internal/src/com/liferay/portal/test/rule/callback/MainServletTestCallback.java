@@ -14,6 +14,7 @@
 
 package com.liferay.portal.test.rule.callback;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.servlet.MainServlet;
 import com.liferay.portal.test.mock.AutoDeployMockServletContext;
@@ -39,7 +41,7 @@ import org.springframework.mock.web.MockServletContext;
 /**
  * @author Shuyang Zhou
  */
-public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
+public class MainServletTestCallback extends BaseTestCallback<Long, Long> {
 
 	public static final MainServletTestCallback INSTANCE =
 		new MainServletTestCallback();
@@ -49,9 +51,11 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 	}
 
 	@Override
-	public void doAfterClass(Description description, Object object) {
+	public void doAfterClass(Description description, Long previousCompanyId) {
 		try {
 			SearchEngineUtil.removeCompany(TestPropsValues.getCompanyId());
+
+			CompanyThreadLocal.setCompanyId(previousCompanyId);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -59,7 +63,7 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 	}
 
 	@Override
-	public Object doBeforeClass(Description description) {
+	public Long doBeforeClass(Description description) {
 		if (_mainServlet == null) {
 			final MockServletContext mockServletContext =
 				new AutoDeployMockServletContext(
@@ -102,7 +106,17 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 
 		ServiceTestUtil.initPermissions();
 
-		return null;
+		try {
+			long previousCompanyId = CompanyThreadLocal.getCompanyId();
+
+			CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+
+			return previousCompanyId;
+		}
+		catch (PortalException pe) {
+			throw new RuntimeException(
+				"The company could not be initialized", pe);
+		}
 	}
 
 	protected MainServletTestCallback() {

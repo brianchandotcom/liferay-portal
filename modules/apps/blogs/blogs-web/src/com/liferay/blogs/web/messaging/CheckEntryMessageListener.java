@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
@@ -51,8 +52,8 @@ public class CheckEntryMessageListener
 		_blogsConfiguration = Configurable.createConfigurable(
 			BlogsConfiguration.class, properties);
 
-		schedulerEntry.setTrigger(
-			_triggerFactory.createTrigger(
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(),
 				_blogsConfiguration.entryCheckInterval(), TimeUnit.MINUTE));
 	}
@@ -73,10 +74,8 @@ public class CheckEntryMessageListener
 
 	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-		_triggerFactory = triggerFactory;
 	}
 
 	private volatile BlogsConfiguration _blogsConfiguration;
-	private TriggerFactory _triggerFactory;
 
 }

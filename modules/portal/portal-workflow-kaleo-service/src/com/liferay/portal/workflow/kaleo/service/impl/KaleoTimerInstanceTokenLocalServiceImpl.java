@@ -22,11 +22,10 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
 import com.liferay.portal.workflow.kaleo.definition.DurationScale;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -315,7 +314,7 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 				StringUtil.toLowerCase(durationScale.getValue()));
 		}
 
-		Trigger trigger = triggerFactory.createTrigger(
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
 			groupName, groupName, dueDate, interval, timeUnit);
 
 		Message message = new Message();
@@ -328,9 +327,6 @@ public class KaleoTimerInstanceTokenLocalServiceImpl
 			trigger, StorageType.PERSISTED, null,
 			SchedulerUtil.WORKFLOW_TIMER_DESTINATION_NAME, message, 0);
 	}
-
-	@ServiceReference(type = TriggerFactory.class)
-	protected TriggerFactory triggerFactory;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoTimerInstanceTokenLocalServiceImpl.class);

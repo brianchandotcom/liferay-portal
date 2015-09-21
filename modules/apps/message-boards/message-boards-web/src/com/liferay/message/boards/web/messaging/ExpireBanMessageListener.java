@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.messageboards.service.MBBanLocalServiceUtil;
 
@@ -52,8 +53,8 @@ public class ExpireBanMessageListener
 		_mbConfiguration = Configurable.createConfigurable(
 			MBConfiguration.class, properties);
 
-		schedulerEntry.setTrigger(
-			_triggerFactory.createTrigger(
+		schedulerEntryImpl.setTrigger(
+			TriggerFactoryUtil.createTrigger(
 				getEventListenerClass(), getEventListenerClass(),
 				_mbConfiguration.expireBanJobInterval(), TimeUnit.MINUTE));
 	}
@@ -77,10 +78,8 @@ public class ExpireBanMessageListener
 
 	@Reference(unbind = "-")
 	protected void setTriggerFactory(TriggerFactory triggerFactory) {
-		_triggerFactory = triggerFactory;
 	}
 
 	private volatile MBConfiguration _mbConfiguration;
-	private TriggerFactory _triggerFactory;
 
 }

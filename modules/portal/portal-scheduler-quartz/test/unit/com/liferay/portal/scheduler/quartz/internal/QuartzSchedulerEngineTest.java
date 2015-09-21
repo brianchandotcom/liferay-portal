@@ -184,7 +184,7 @@ public class QuartzSchedulerEngineTest {
 			0, _synchronousDestination.getMessageListenerCount());
 
 		Trigger trigger = _quartzTriggerFactory.createTrigger(
-			testJobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL,
+			testJobName, _MEMORY_TEST_GROUP_NAME, null, null, _DEFAULT_INTERVAL,
 			TimeUnit.SECOND);
 
 		Message message = new Message();
@@ -314,8 +314,8 @@ public class QuartzSchedulerEngineTest {
 			0, _synchronousDestination.getMessageListenerCount());
 
 		Trigger trigger = _quartzTriggerFactory.createTrigger(
-			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME,
-			_DEFAULT_INTERVAL, TimeUnit.SECOND);
+			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME, null,
+			null, _DEFAULT_INTERVAL, TimeUnit.SECOND);
 
 		Message message = new Message();
 
@@ -347,8 +347,8 @@ public class QuartzSchedulerEngineTest {
 			0, _synchronousDestination.getMessageListenerCount());
 
 		Trigger trigger = _quartzTriggerFactory.createTrigger(
-			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME,
-			_DEFAULT_INTERVAL, TimeUnit.SECOND);
+			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME, null,
+			null, _DEFAULT_INTERVAL, TimeUnit.SECOND);
 
 		_quartzSchedulerEngine.schedule(
 			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, null,
@@ -474,7 +474,7 @@ public class QuartzSchedulerEngineTest {
 		String testJobName = _TEST_JOB_NAME_PREFIX + "memory";
 
 		Trigger trigger = _quartzTriggerFactory.createTrigger(
-			testJobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL,
+			testJobName, _MEMORY_TEST_GROUP_NAME, null, null, _DEFAULT_INTERVAL,
 			TimeUnit.SECOND);
 
 		Message message = new Message();
@@ -521,8 +521,8 @@ public class QuartzSchedulerEngineTest {
 			_DEFAULT_INTERVAL, calendarIntervalTrigger.getRepeatInterval());
 
 		Trigger newTrigger = _quartzTriggerFactory.createTrigger(
-			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL * 2,
-			TimeUnit.SECOND);
+			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, null, null,
+			_DEFAULT_INTERVAL * 2, TimeUnit.SECOND);
 
 		_quartzSchedulerEngine.update(newTrigger, StorageType.MEMORY);
 
@@ -555,7 +555,8 @@ public class QuartzSchedulerEngineTest {
 		String cronExpression = "0 0 12 * * ?";
 
 		Trigger newTrigger = _quartzTriggerFactory.createTrigger(
-			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, cronExpression);
+			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, null, null,
+			cronExpression);
 
 		_quartzSchedulerEngine.update(newTrigger, StorageType.MEMORY);
 
@@ -586,8 +587,8 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertNull(schedulerResponse.getTrigger());
 
 		Trigger trigger = _quartzTriggerFactory.createTrigger(
-			jobName, _MEMORY_TEST_GROUP_NAME, new Date(), _DEFAULT_INTERVAL,
-			TimeUnit.SECOND);
+			jobName, _MEMORY_TEST_GROUP_NAME, new Date(), null,
+			_DEFAULT_INTERVAL, TimeUnit.SECOND);
 
 		_quartzSchedulerEngine.update(trigger, StorageType.MEMORY);
 
@@ -866,7 +867,7 @@ public class QuartzSchedulerEngineTest {
 		public MockScheduler(StorageType storageType, String defaultGroupName) {
 			for (int i = 0; i < _DEFAULT_JOB_NUMBER; i++) {
 				Trigger trigger = _quartzTriggerFactory.createTrigger(
-					_TEST_JOB_NAME_PREFIX + i, defaultGroupName,
+					_TEST_JOB_NAME_PREFIX + i, defaultGroupName, null, null,
 					_DEFAULT_INTERVAL, TimeUnit.SECOND);
 
 				addJob(

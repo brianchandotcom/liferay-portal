@@ -11,6 +11,7 @@ dependencies {
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:export-import:export-import-api")
 	compile project(":apps:export-import:export-import-service")
+	compile project(":apps:portlet-display-template:portlet-display-template")
 	compile project(":apps:wiki:wiki-api")
 	compile project(":core:osgi-service-tracker-map")
 }

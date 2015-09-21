@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.spring.aop;
 
-import com.liferay.portal.service.RetryAdviceAcceptor;
+import com.liferay.portal.service.RetryAcceptor;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -30,7 +30,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Retry {
 
-	public Class<? extends RetryAdviceAcceptor> acceptor();
+	public Class<? extends RetryAcceptor> acceptor();
 
 	public Property[] properties();
 

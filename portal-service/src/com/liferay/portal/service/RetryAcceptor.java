@@ -19,7 +19,7 @@ import java.util.Map;
 /**
  * @author Matthew Tambara
  */
-public interface RetryAdviceAcceptor {
+public interface RetryAcceptor {
 
 	public boolean accept(
 		Object returnValue, Throwable t, Map<String, String> propertyMap);

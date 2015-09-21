@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author Matthew Tambara
  */
-public class ExceptionRetryAdviceAcceptor implements RetryAdviceAcceptor {
+public class ExceptionRetryAcceptor implements RetryAcceptor {
 
 	public static final String EXCEPTION_NAME = "EXCEPTION_NAME";
 

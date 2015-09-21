@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.service.RetryAdviceAcceptor;
+import com.liferay.portal.service.RetryAcceptor;
 import com.liferay.portal.util.PropsValues;
 
 import java.lang.annotation.Annotation;
@@ -65,12 +65,12 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 		Map<String, String> propertyMap = new HashMap<>();
 
 		for (Property property : properties) {
-			propertyMap.put(property.propName(), property.propValue());
+			propertyMap.put(property.name(), property.value());
 		}
 
-		Class<? extends RetryAdviceAcceptor> clazz = retry.acceptor();
+		Class<? extends RetryAcceptor> clazz = retry.acceptor();
 
-		RetryAdviceAcceptor retryAdviceAcceptor = clazz.newInstance();
+		RetryAcceptor retryAdviceAcceptor = clazz.newInstance();
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			(ServiceBeanMethodInvocation)methodInvocation;
@@ -135,7 +135,7 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 	private static final Retry _nullRetry = new Retry() {
 
 		@Override
-		public Class<? extends RetryAdviceAcceptor> acceptor() {
+		public Class<? extends RetryAcceptor> acceptor() {
 			return null;
 		}
 

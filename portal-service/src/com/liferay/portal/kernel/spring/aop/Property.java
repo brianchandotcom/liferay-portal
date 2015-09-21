@@ -28,8 +28,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Property {
 
-	public String propName();
+	public String name();
 
-	public String propValue();
+	public String value();
 
 }

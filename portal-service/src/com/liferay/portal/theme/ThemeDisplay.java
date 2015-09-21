@@ -260,10 +260,6 @@ public class ThemeDisplay
 		return _contact;
 	}
 
-	public String getControlPanelCategory() {
-		return _controlPanelCategory;
-	}
-
 	/**
 	 * Returns the portal instance's default user.
 	 *
@@ -1278,10 +1274,6 @@ public class ThemeDisplay
 		_contact = contact;
 	}
 
-	public void setControlPanelCategory(String controlPanelCategory) {
-		_controlPanelCategory = controlPanelCategory;
-	}
-
 	public void setDevice(Device device) {
 		_device = device;
 	}
@@ -1854,7 +1846,6 @@ public class ThemeDisplay
 	private int _companyLogoHeight;
 	private int _companyLogoWidth;
 	private Contact _contact;
-	private String _controlPanelCategory = StringPool.BLANK;
 	private User _defaultUser;
 	private Device _device;
 	private long _doAsGroupId = 0;

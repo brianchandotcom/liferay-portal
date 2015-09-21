@@ -437,12 +437,23 @@ public class JournalTestUtil {
 			String ddmStructureKey, String ddmTemplateKey, Locale defaultLocale)
 		throws Exception {
 
+		return addArticleWithXMLContent(
+			groupId, folderId, classNameId, 0, xml, ddmStructureKey,
+			ddmTemplateKey, defaultLocale);
+	}
+
+	public static JournalArticle addArticleWithXMLContent(
+			long groupId, long folderId, long classNameId, long classPK,
+			String xml, String ddmStructureKey, String ddmTemplateKey,
+			Locale defaultLocale)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return addArticleWithXMLContent(
-			folderId, classNameId, xml, ddmStructureKey, ddmTemplateKey,
-			defaultLocale, null, serviceContext);
+			folderId, classNameId, classPK, xml, ddmStructureKey,
+			ddmTemplateKey, defaultLocale, null, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
@@ -451,16 +462,27 @@ public class JournalTestUtil {
 			Map<String, byte[]> images, ServiceContext serviceContext)
 		throws Exception {
 
+		return addArticleWithXMLContent(
+			folderId, classNameId, 0, xml, ddmStructureKey, ddmTemplateKey,
+			defaultLocale, images, serviceContext);
+	}
+	public static JournalArticle addArticleWithXMLContent(
+			long folderId, long classNameId, long classPK,
+			String xml, String ddmStructureKey, String ddmTemplateKey,
+			Locale defaultLocale, Map<String, byte[]> images,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		Map<Locale, String> titleMap = new HashMap<>();
 
 		titleMap.put(defaultLocale, "Test Article");
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			folderId, classNameId, 0, StringPool.BLANK, true, 0, titleMap, null,
-			xml, ddmStructureKey, ddmTemplateKey, null, 1, 1, 1965, 0, 0, 0, 0,
-			0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null, images,
-			null, serviceContext);
+			folderId, classNameId, classPK, StringPool.BLANK, true, 0, titleMap,
+			null, xml, ddmStructureKey, ddmTemplateKey, null, 1, 1, 1965, 0, 0,
+			0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null,
+			images, null, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(

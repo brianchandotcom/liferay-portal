@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -31,13 +29,8 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiResourcePermissionChecker;
-import com.liferay.wiki.service.persistence.WikiNodeUtil;
-
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -75,91 +68,6 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 
 		portletPreferences.setValue("title", StringPool.BLANK);
 		portletPreferences.setValue("nodeId", StringPool.BLANK);
-
-		return portletPreferences;
-	}
-
-	@Override
-	protected PortletPreferences doProcessExportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		long nodeId = GetterUtil.getLong(
-			portletPreferences.getValue("nodeId", StringPool.BLANK));
-
-		if (nodeId <= 0) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No node id found in preferences of portlet " + portletId);
-			}
-
-			return portletPreferences;
-		}
-
-		String title = portletPreferences.getValue("title", null);
-
-		if (title == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No title found in preferences of portlet " + portletId);
-			}
-
-			return portletPreferences;
-		}
-
-		WikiNode node = WikiNodeUtil.fetchByPrimaryKey(nodeId);
-
-		if (node == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to find wiki node");
-			}
-
-			return portletPreferences;
-		}
-
-		portletDataContext.addPortletPermissions(
-			WikiResourcePermissionChecker.RESOURCE_NAME);
-
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, portletId, node);
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			getPageActionableDynamicQuery(
-				portletDataContext, node.getNodeId(), portletId);
-
-		actionableDynamicQuery.performActions();
-
-		return portletPreferences;
-	}
-
-	@Override
-	protected PortletPreferences doProcessImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		portletDataContext.importPortletPermissions(
-			WikiResourcePermissionChecker.RESOURCE_NAME);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, WikiNode.class);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, WikiPage.class);
-
-		long nodeId = GetterUtil.getLong(
-			portletPreferences.getValue("nodeId", StringPool.BLANK));
-
-		if (nodeId > 0) {
-			Map<Long, Long> nodeIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					WikiNode.class);
-
-			nodeId = MapUtil.getLong(nodeIds, nodeId, nodeId);
-
-			portletPreferences.setValue("nodeId", String.valueOf(nodeId));
-		}
 
 		return portletPreferences;
 	}

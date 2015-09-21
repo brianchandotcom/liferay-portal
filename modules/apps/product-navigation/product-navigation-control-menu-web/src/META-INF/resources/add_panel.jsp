@@ -107,9 +107,8 @@
 								newPageURL.setParameter("treeId", "layoutsTree");
 								newPageURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
-								String newPageURLString = HttpUtil.setParameter(newPageURL.toString(), "controlPanelCategory", "current_site");
+								String newPageURLString = HttpUtil.setParameter(newPageURL.toString(), "doAsGroupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
 
-								newPageURLString = HttpUtil.setParameter(newPageURLString, "doAsGroupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
 								newPageURLString = HttpUtil.setParameter(newPageURLString, "refererPlid", String.valueOf(selPlid));
 								%>
 

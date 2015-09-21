@@ -179,17 +179,12 @@ public class DownloadFileHandler extends BaseHandler {
 				IOUtils.copyLarge(inputStream, outputStream);
 			}
 			else {
-				if (exists && (boolean)getParameterValue("patch")) {
-					Files.copy(
-						filePath, tempFilePath,
-						StandardCopyOption.REPLACE_EXISTING);
+				Files.copy(
+					filePath, tempFilePath,
+					StandardCopyOption.REPLACE_EXISTING);
 
+				if (exists && (boolean)getParameterValue("patch")) {
 					IODeltaUtil.patch(tempFilePath, inputStream);
-				}
-				else {
-					Files.copy(
-						inputStream, tempFilePath,
-						StandardCopyOption.REPLACE_EXISTING);
 				}
 			}
 

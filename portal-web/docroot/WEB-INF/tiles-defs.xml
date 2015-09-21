@@ -152,12 +152,6 @@
 		<put name="portlet_content" value="/portlet/directory/view_user.jsp" />
 	</definition>
 
-	<!-- Dockbar -->
-
-	<definition name="portlet.dockbar" extends="portlet" />
-
-	<definition name="portlet.dockbar.view" path="/portlet/dockbar/view.jsp" />
-
 	<!-- Flags -->
 
 	<definition name="portlet.flags.edit_entry" path="/portlet/flags/edit_entry.jsp" />

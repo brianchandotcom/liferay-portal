@@ -1612,24 +1612,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public String getControlPanelCategory(
-		String portletId, ThemeDisplay themeDisplay) {
-
-		for (String category : PortletCategoryKeys.ALL) {
-			List<Portlet> portlets = getControlPanelPortlets(
-				category, themeDisplay);
-
-			for (Portlet portlet : portlets) {
-				if (portlet.getPortletId().equals(portletId)) {
-					return category;
-				}
-			}
-		}
-
-		return StringPool.BLANK;
-	}
-
-	@Override
 	public String getControlPanelFullURL(
 			long scopeGroupId, String ppid, Map<String, String[]> params)
 		throws PortalException {

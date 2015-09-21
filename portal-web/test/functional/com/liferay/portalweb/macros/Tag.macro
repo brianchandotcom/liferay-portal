@@ -230,7 +230,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertTextEquals" locator1="TagsEditTag#TAG_HEADER" value1="${tagName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${tagName}" />
 
 		<execute function="Type" locator1="CPTagsEdit#NAME_FIELD" value1="${tagNameEdit}" />
 

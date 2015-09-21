@@ -47,30 +47,28 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 			return methodInvocation.proceed();
 		}
 
-		int numberOfRetries = retry.retries();
+		int retries = retry.retries();
 
-		if (numberOfRetries < 0) {
-			numberOfRetries = GetterUtil.getInteger(
-				PropsValues.RETRY_ADVICE_MAX_RETRIES, numberOfRetries);
+		if (retries < 0) {
+			retries = GetterUtil.getInteger(
+				PropsValues.RETRY_ADVICE_MAX_RETRIES, retries);
 		}
 
-		int totalRetries = numberOfRetries;
+		int totalRetries = retries;
 
-		if (numberOfRetries >= 0) {
-			numberOfRetries++;
+		if (retries >= 0) {
+			retries++;
 		}
-
-		Property[] properties = retry.properties();
 
 		Map<String, String> propertyMap = new HashMap<>();
 
-		for (Property property : properties) {
+		for (Property property : retry.properties()) {
 			propertyMap.put(property.name(), property.value());
 		}
 
 		Class<? extends RetryAcceptor> clazz = retry.acceptor();
 
-		RetryAcceptor retryAdviceAcceptor = clazz.newInstance();
+		RetryAcceptor retryAcceptor = clazz.newInstance();
 
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			(ServiceBeanMethodInvocation)methodInvocation;
@@ -81,13 +79,11 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 
 		Throwable throwable = null;
 
-		while ((numberOfRetries < 0) || (numberOfRetries-- > 0)) {
+		while ((retries < 0) || (retries-- > 0)) {
 			try {
 				returnValue = serviceBeanMethodInvocation.proceed();
 
-				if (!retryAdviceAcceptor.accept(
-						returnValue, null, propertyMap)) {
-
+				if (!retryAcceptor.accept(returnValue, null, propertyMap)) {
 					return returnValue;
 				}
 				else {
@@ -95,14 +91,14 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 						_log.warn(
 							"Unsatisfactory result from " +
 								methodInvocation.getMethod() + ". Retrying " +
-									numberOfRetries + " more times.");
+									retries + " more times.");
 					}
 				}
 			}
 			catch (Throwable t) {
 				throwable = t;
 
-				if (!retryAdviceAcceptor.accept(null, t, propertyMap)) {
+				if (!retryAcceptor.accept(null, t, propertyMap)) {
 					throw t;
 				}
 				else {
@@ -110,7 +106,7 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 						_log.error(
 							"Exception thrown from " +
 								methodInvocation.getMethod() + ". Retrying " +
-									numberOfRetries + " more times.");
+									retries + " more times.");
 					}
 				}
 			}

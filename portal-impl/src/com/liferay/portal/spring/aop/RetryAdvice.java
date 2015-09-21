@@ -117,11 +117,11 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 				"Unable to get a result after " + totalRetries + " retries.");
 		}
 
-		if (returnValue != null) {
-			return returnValue;
+		if (throwable != null) {
+			throw throwable;
 		}
 
-		throw throwable;
+		return returnValue;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(RetryAdvice.class);

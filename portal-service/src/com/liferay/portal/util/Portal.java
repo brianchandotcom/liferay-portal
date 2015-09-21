@@ -1342,9 +1342,6 @@ public interface Portal {
 			String portletId, ThemeDisplay themeDisplay)
 		throws PortalException;
 
-	public boolean isCompanyControlPanelVisible(ThemeDisplay themeDisplay)
-		throws PortalException;
-
 	public boolean isControlPanelPortlet(
 		String portletId, String category, ThemeDisplay themeDisplay);
 

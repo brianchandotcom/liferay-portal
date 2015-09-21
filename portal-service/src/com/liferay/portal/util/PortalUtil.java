@@ -2191,13 +2191,6 @@ public class PortalUtil {
 			portletId, themeDisplay);
 	}
 
-	public static boolean isCompanyControlPanelVisible(
-			ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		return getPortal().isCompanyControlPanelVisible(themeDisplay);
-	}
-
 	public static boolean isControlPanelPortlet(
 		String portletId, String category, ThemeDisplay themeDisplay) {
 

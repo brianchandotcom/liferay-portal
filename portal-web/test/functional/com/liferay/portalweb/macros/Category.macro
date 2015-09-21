@@ -157,8 +157,7 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
-		<execute function="AssertClick" locator1="Categories#ACTIONS_BUTTON" value1="Actions" />
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="ClickNoError" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no categories." />
@@ -200,8 +199,7 @@
 
 		<execute function="AssertClick" locator1="Categories#VOCABULARY_ENTRY_LINK" value1="${vocabularyName}" />
 		<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
-		<execute function="AssertClick" locator1="Categories#ACTIONS_BUTTON" value1="Actions" />
-		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+		<execute function="ClickNoError" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#INFO_RESPONSE" value1="The following items could not be deleted: ${categoryName}" />
 	</command>

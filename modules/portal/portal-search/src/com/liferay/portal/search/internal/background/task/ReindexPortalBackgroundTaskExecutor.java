@@ -12,36 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.search.backgroundtask;
+package com.liferay.portal.search.internal.background.task;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.search.internal.SearchEngineInitializer;
 
 /**
  * @author Andrew Betts
  */
-public class ReindexIndexerBackgroundTaskExecutor
+public class ReindexPortalBackgroundTaskExecutor
 	extends ReindexBackgroundTaskExecutor {
 
 	@Override
 	protected void reindex(String className, long[] companyIds)
 		throws Exception {
 
-		Indexer indexer = IndexerRegistryUtil.getIndexer(className);
-
-		if (indexer == null) {
-			return;
-		}
-
 		for (long companyId : companyIds) {
 			try {
-				SearchEngineUtil.deleteEntityDocuments(
-					indexer.getSearchEngineId(), companyId, className, true);
+				SearchEngineInitializer searchEngineInitializer =
+					new SearchEngineInitializer(companyId);
 
-				indexer.reindex(new String[] {String.valueOf(companyId)});
+				searchEngineInitializer.reindex();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -50,6 +42,6 @@ public class ReindexIndexerBackgroundTaskExecutor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ReindexIndexerBackgroundTaskExecutor.class);
+		ReindexPortalBackgroundTaskExecutor.class);
 
 }

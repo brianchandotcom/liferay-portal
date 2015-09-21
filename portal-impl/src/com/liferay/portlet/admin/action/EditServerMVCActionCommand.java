@@ -63,8 +63,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
-import com.liferay.portal.search.backgroundtask.ReindexIndexerBackgroundTaskExecutor;
-import com.liferay.portal.search.backgroundtask.ReindexPortalBackgroundTaskExecutor;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;

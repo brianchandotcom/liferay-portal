@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.backgroundtask;
+package com.liferay.portal.search.internal.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;

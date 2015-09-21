@@ -315,7 +315,7 @@
 </tr>
 <tr>
 	<td>MANAGE</td>
-	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage')] | //li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -385,7 +385,7 @@
 </tr>
 <tr>
 	<td>MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')] | //li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

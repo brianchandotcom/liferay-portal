@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.staged.model.repository;
 
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -32,12 +33,18 @@ public interface StagedModelRepository<T extends StagedModel> {
 
 	public void deleteStagedModel(T stagedModel) throws PortalException;
 
+	public void deleteStagedModels(PortletDataContext portletDataContext)
+		throws PortalException;
+
 	public T fetchMissingReference(String uuid, long groupId);
 
 	public T fetchStagedModelByUuidAndGroupId(String uuid, long groupId);
 
 	public List<T> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId);
+
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	public void restoreStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)

@@ -25,7 +25,13 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.DuplicateRoleException" %><%@
+<%@ page import="com.liferay.application.list.PanelApp" %><%@
+page import="com.liferay.application.list.PanelAppRegistry" %><%@
+page import="com.liferay.application.list.PanelCategory" %><%@
+page import="com.liferay.application.list.PanelCategoryRegistry" %><%@
+page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
+page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
+page import="com.liferay.portal.DuplicateRoleException" %><%@
 page import="com.liferay.portal.NoSuchRoleException" %><%@
 page import="com.liferay.portal.RequiredRoleException" %><%@
 page import="com.liferay.portal.RoleAssignmentException" %><%@

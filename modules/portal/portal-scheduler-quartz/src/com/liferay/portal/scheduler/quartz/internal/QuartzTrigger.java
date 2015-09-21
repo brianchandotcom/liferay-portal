@@ -27,7 +27,6 @@ public class QuartzTrigger implements Trigger {
 
 	public QuartzTrigger(org.quartz.Trigger trigger) {
 		_trigger = trigger;
-		_jobKey = _trigger.getJobKey();
 	}
 
 	@Override
@@ -37,12 +36,16 @@ public class QuartzTrigger implements Trigger {
 
 	@Override
 	public String getGroupName() {
-		return _jobKey.getGroup();
+		JobKey jobKey = _trigger.getJobKey();
+
+		return jobKey.getGroup();
 	}
 
 	@Override
 	public String getJobName() {
-		return _jobKey.getName();
+		JobKey jobKey = _trigger.getJobKey();
+
+		return jobKey.getName();
 	}
 
 	@Override
@@ -55,7 +58,8 @@ public class QuartzTrigger implements Trigger {
 		return _trigger.getStartTime();
 	}
 
-	private final JobKey _jobKey;
+	private static final long serialVersionUID = 1L;
+
 	private final org.quartz.Trigger _trigger;
 
 }

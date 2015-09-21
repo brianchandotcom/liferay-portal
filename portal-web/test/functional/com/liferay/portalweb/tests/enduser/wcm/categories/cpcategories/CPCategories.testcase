@@ -745,7 +745,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCategoryByArrow" priority="4">
+	<command name="DeleteCategoryByMenu" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -763,7 +763,7 @@
 			<var name="portletName" value="Categories" />
 		</execute>
 
-		<execute macro="Category#deleteCategoryByArrowCP">
+		<execute macro="Category#deleteCategoryByMenuCP">
 			<var name="categoryName" value="Category Name" />
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
@@ -894,12 +894,12 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
-		<execute macro="Vocabulary#deleteByActionsCP">
+		<execute macro="Vocabulary#deleteByIconCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>
 
-	<command name="DeleteVocabularyByDetails" priority="4">
+	<command name="DeleteVocabularyByMenu" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -908,7 +908,7 @@
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 
-		<execute macro="Vocabulary#deleteByDetailsCP">
+		<execute macro="Vocabulary#deleteByMenuCP">
 			<var name="vocabularyName" value="Vocabulary Name" />
 		</execute>
 	</command>

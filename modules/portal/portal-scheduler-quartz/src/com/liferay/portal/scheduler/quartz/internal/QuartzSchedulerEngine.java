@@ -740,8 +740,7 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 			SchedulerEngine.PREVIOUS_FIRE_TIME, trigger.getPreviousFireTime());
 		message.put(SchedulerEngine.START_TIME, trigger.getStartTime());
 
-		schedulerResponse.setTrigger(
-			_quartzTriggerFactory.createTrigger(trigger));
+		schedulerResponse.setTrigger(new QuartzTrigger(trigger));
 
 		return schedulerResponse;
 	}

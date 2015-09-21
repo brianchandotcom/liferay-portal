@@ -41,10 +41,6 @@ import org.quartz.TriggerBuilder;
 )
 public class QuartzTriggerFactory implements TriggerFactory {
 
-	public Trigger createTrigger(org.quartz.Trigger trigger) {
-		return new QuartzTrigger(trigger);
-	}
-
 	@Override
 	public Trigger createTrigger(
 		String jobName, String groupName, Date startDate, Date endDate,

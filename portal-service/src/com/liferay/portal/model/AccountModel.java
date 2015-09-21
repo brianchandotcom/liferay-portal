@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCModel {
+public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -89,22 +90,6 @@ public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCMode
 	 * @param accountId the account ID of this account
 	 */
 	public void setAccountId(long accountId);
-
-	/**
-	 * Returns the company ID of this account.
-	 *
-	 * @return the company ID of this account
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this account.
-	 *
-	 * @param companyId the company ID of this account
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this account.
@@ -335,6 +320,22 @@ public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCMode
 	 * @param size the size of this account
 	 */
 	public void setSize(String size);
+
+	/**
+	 * Returns the company ID of this account.
+	 *
+	 * @return the company ID of this account
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this account.
+	 *
+	 * @param companyId the company ID of this account
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

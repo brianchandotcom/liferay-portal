@@ -70,8 +70,6 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 		sb.append(activitySetId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -88,6 +86,8 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 		sb.append(extraData);
 		sb.append(", activityCount=");
 		sb.append(activityCount);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -99,7 +99,6 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 
 		socialActivitySetImpl.setActivitySetId(activitySetId);
 		socialActivitySetImpl.setGroupId(groupId);
-		socialActivitySetImpl.setCompanyId(companyId);
 		socialActivitySetImpl.setUserId(userId);
 		socialActivitySetImpl.setCreateDate(createDate);
 		socialActivitySetImpl.setModifiedDate(modifiedDate);
@@ -115,6 +114,7 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 		}
 
 		socialActivitySetImpl.setActivityCount(activityCount);
+		socialActivitySetImpl.setCompanyId(companyId);
 
 		socialActivitySetImpl.resetOriginalValues();
 
@@ -125,7 +125,6 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		activitySetId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
@@ -134,6 +133,7 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 		type = objectInput.readInt();
 		extraData = objectInput.readUTF();
 		activityCount = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -141,7 +141,6 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 		throws IOException {
 		objectOutput.writeLong(activitySetId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
@@ -157,11 +156,11 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 		}
 
 		objectOutput.writeInt(activityCount);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long activitySetId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long createDate;
 	public long modifiedDate;
@@ -170,4 +169,5 @@ public class SocialActivitySetCacheModel implements CacheModel<SocialActivitySet
 	public int type;
 	public String extraData;
 	public int activityCount;
+	public long companyId;
 }

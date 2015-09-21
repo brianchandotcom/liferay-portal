@@ -22,6 +22,7 @@ import com.liferay.polls.model.impl.PollsQuestionImpl;
 import com.liferay.polls.model.impl.PollsQuestionModelImpl;
 import com.liferay.polls.service.persistence.PollsQuestionPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -43,6 +44,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -2425,6 +2427,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 		pollsQuestion.setUuid(uuid);
 
+		pollsQuestion.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return pollsQuestion;
 	}
 
@@ -2658,7 +2662,6 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		pollsQuestionImpl.setUuid(pollsQuestion.getUuid());
 		pollsQuestionImpl.setQuestionId(pollsQuestion.getQuestionId());
 		pollsQuestionImpl.setGroupId(pollsQuestion.getGroupId());
-		pollsQuestionImpl.setCompanyId(pollsQuestion.getCompanyId());
 		pollsQuestionImpl.setUserId(pollsQuestion.getUserId());
 		pollsQuestionImpl.setUserName(pollsQuestion.getUserName());
 		pollsQuestionImpl.setCreateDate(pollsQuestion.getCreateDate());
@@ -2668,6 +2671,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		pollsQuestionImpl.setExpirationDate(pollsQuestion.getExpirationDate());
 		pollsQuestionImpl.setLastPublishDate(pollsQuestion.getLastPublishDate());
 		pollsQuestionImpl.setLastVoteDate(pollsQuestion.getLastVoteDate());
+		pollsQuestionImpl.setCompanyId(pollsQuestion.getCompanyId());
 
 		return pollsQuestionImpl;
 	}
@@ -3048,6 +3052,8 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_POLLSQUESTION = "SELECT pollsQuestion FROM PollsQuestion pollsQuestion";
 	private static final String _SQL_SELECT_POLLSQUESTION_WHERE_PKS_IN = "SELECT pollsQuestion FROM PollsQuestion pollsQuestion WHERE questionId IN (";
 	private static final String _SQL_SELECT_POLLSQUESTION_WHERE = "SELECT pollsQuestion FROM PollsQuestion pollsQuestion WHERE ";

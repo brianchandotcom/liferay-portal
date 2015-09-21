@@ -56,6 +56,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("structureId", getStructureId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -84,6 +85,12 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 
 		if (structureId != null) {
 			setStructureId(structureId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -126,6 +133,16 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	@Override
 	public long getClassPK() {
 		return _ddmStructureLink.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this d d m structure link.
+	*
+	* @return the company ID of this d d m structure link
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ddmStructureLink.getCompanyId();
 	}
 
 	@Override
@@ -227,6 +244,16 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	@Override
 	public void setClassPK(long classPK) {
 		_ddmStructureLink.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this d d m structure link.
+	*
+	* @param companyId the company ID of this d d m structure link
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ddmStructureLink.setCompanyId(companyId);
 	}
 
 	@Override

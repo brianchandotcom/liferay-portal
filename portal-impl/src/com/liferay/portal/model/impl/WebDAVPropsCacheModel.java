@@ -85,8 +85,6 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 		sb.append(mvccVersion);
 		sb.append(", webDavPropsId=");
 		sb.append(webDavPropsId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -97,6 +95,8 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 		sb.append(classPK);
 		sb.append(", props=");
 		sb.append(props);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -108,7 +108,6 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 
 		webDAVPropsImpl.setMvccVersion(mvccVersion);
 		webDAVPropsImpl.setWebDavPropsId(webDavPropsId);
-		webDAVPropsImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
 			webDAVPropsImpl.setCreateDate(null);
@@ -134,6 +133,8 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 			webDAVPropsImpl.setProps(props);
 		}
 
+		webDAVPropsImpl.setCompanyId(companyId);
+
 		webDAVPropsImpl.resetOriginalValues();
 
 		return webDAVPropsImpl;
@@ -143,12 +144,12 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		webDavPropsId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		props = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -156,7 +157,6 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(webDavPropsId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(classNameId);
@@ -168,14 +168,16 @@ public class WebDAVPropsCacheModel implements CacheModel<WebDAVProps>,
 		else {
 			objectOutput.writeUTF(props);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long webDavPropsId;
-	public long companyId;
 	public long createDate;
 	public long modifiedDate;
 	public long classNameId;
 	public long classPK;
 	public String props;
+	public long companyId;
 }

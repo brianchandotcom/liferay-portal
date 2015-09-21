@@ -76,7 +76,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			{ "uuid_", Types.VARCHAR },
 			{ "fileVersionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -100,7 +99,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -108,7 +108,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -133,9 +132,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileVersion (uuid_ VARCHAR(75) null,fileVersionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,fileEntryId LONG,treePath STRING null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,changeLog VARCHAR(75) null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,checksum VARCHAR(75) null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileVersion.fileEntryId DESC, dlFileVersion.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileVersion.fileEntryId DESC, DLFileVersion.createDate DESC";
@@ -178,7 +178,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		model.setUuid(soapModel.getUuid());
 		model.setFileVersionId(soapModel.getFileVersionId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -203,6 +202,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -270,7 +270,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		attributes.put("uuid", getUuid());
 		attributes.put("fileVersionId", getFileVersionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -295,6 +294,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -320,12 +320,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -471,6 +465,12 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -529,29 +529,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -984,6 +961,29 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_statusDate = statusDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1113,7 +1113,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionImpl.setUuid(getUuid());
 		dlFileVersionImpl.setFileVersionId(getFileVersionId());
 		dlFileVersionImpl.setGroupId(getGroupId());
-		dlFileVersionImpl.setCompanyId(getCompanyId());
 		dlFileVersionImpl.setUserId(getUserId());
 		dlFileVersionImpl.setUserName(getUserName());
 		dlFileVersionImpl.setCreateDate(getCreateDate());
@@ -1138,6 +1137,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionImpl.setStatusByUserId(getStatusByUserId());
 		dlFileVersionImpl.setStatusByUserName(getStatusByUserName());
 		dlFileVersionImpl.setStatusDate(getStatusDate());
+		dlFileVersionImpl.setCompanyId(getCompanyId());
 
 		dlFileVersionImpl.resetOriginalValues();
 
@@ -1223,10 +1223,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		dlFileVersionModelImpl._setOriginalGroupId = false;
 
-		dlFileVersionModelImpl._originalCompanyId = dlFileVersionModelImpl._companyId;
-
-		dlFileVersionModelImpl._setOriginalCompanyId = false;
-
 		dlFileVersionModelImpl._setModifiedDate = false;
 
 		dlFileVersionModelImpl._originalFolderId = dlFileVersionModelImpl._folderId;
@@ -1247,6 +1243,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		dlFileVersionModelImpl._setOriginalStatus = false;
 
+		dlFileVersionModelImpl._originalCompanyId = dlFileVersionModelImpl._companyId;
+
+		dlFileVersionModelImpl._setOriginalCompanyId = false;
+
 		dlFileVersionModelImpl._columnBitmask = 0;
 	}
 
@@ -1265,8 +1265,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		dlFileVersionCacheModel.fileVersionId = getFileVersionId();
 
 		dlFileVersionCacheModel.groupId = getGroupId();
-
-		dlFileVersionCacheModel.companyId = getCompanyId();
 
 		dlFileVersionCacheModel.userId = getUserId();
 
@@ -1416,6 +1414,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			dlFileVersionCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		dlFileVersionCacheModel.companyId = getCompanyId();
+
 		return dlFileVersionCacheModel;
 	}
 
@@ -1429,8 +1429,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(getFileVersionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1479,6 +1477,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1503,10 +1503,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1604,6 +1600,10 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1620,9 +1620,6 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1657,6 +1654,9 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private DLFileVersion _escapedModel;
 }

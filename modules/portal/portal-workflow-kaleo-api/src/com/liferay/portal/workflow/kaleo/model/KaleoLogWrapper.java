@@ -54,7 +54,6 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 
 		attributes.put("kaleoLogId", getKaleoLogId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -83,6 +82,7 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 		attributes.put("endDate", getEndDate());
 		attributes.put("duration", getDuration());
 		attributes.put("workflowContext", getWorkflowContext());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -99,12 +99,6 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -274,6 +268,12 @@ public class KaleoLogWrapper implements KaleoLog, ModelWrapper<KaleoLog> {
 
 		if (workflowContext != null) {
 			setWorkflowContext(workflowContext);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

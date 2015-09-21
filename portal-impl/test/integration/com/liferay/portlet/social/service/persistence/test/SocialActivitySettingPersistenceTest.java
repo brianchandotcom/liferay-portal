@@ -118,8 +118,6 @@ public class SocialActivitySettingPersistenceTest {
 
 		newSocialActivitySetting.setGroupId(RandomTestUtil.nextLong());
 
-		newSocialActivitySetting.setCompanyId(RandomTestUtil.nextLong());
-
 		newSocialActivitySetting.setClassNameId(RandomTestUtil.nextLong());
 
 		newSocialActivitySetting.setActivityType(RandomTestUtil.nextInt());
@@ -127,6 +125,8 @@ public class SocialActivitySettingPersistenceTest {
 		newSocialActivitySetting.setName(RandomTestUtil.randomString());
 
 		newSocialActivitySetting.setValue(RandomTestUtil.randomString());
+
+		newSocialActivitySetting.setCompanyId(RandomTestUtil.nextLong());
 
 		_socialActivitySettings.add(_persistence.update(
 				newSocialActivitySetting));
@@ -137,8 +137,6 @@ public class SocialActivitySettingPersistenceTest {
 			newSocialActivitySetting.getActivitySettingId());
 		Assert.assertEquals(existingSocialActivitySetting.getGroupId(),
 			newSocialActivitySetting.getGroupId());
-		Assert.assertEquals(existingSocialActivitySetting.getCompanyId(),
-			newSocialActivitySetting.getCompanyId());
 		Assert.assertEquals(existingSocialActivitySetting.getClassNameId(),
 			newSocialActivitySetting.getClassNameId());
 		Assert.assertEquals(existingSocialActivitySetting.getActivityType(),
@@ -147,6 +145,8 @@ public class SocialActivitySettingPersistenceTest {
 			newSocialActivitySetting.getName());
 		Assert.assertEquals(existingSocialActivitySetting.getValue(),
 			newSocialActivitySetting.getValue());
+		Assert.assertEquals(existingSocialActivitySetting.getCompanyId(),
+			newSocialActivitySetting.getCompanyId());
 	}
 
 	@Test
@@ -216,9 +216,8 @@ public class SocialActivitySettingPersistenceTest {
 
 	protected OrderByComparator<SocialActivitySetting> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivitySetting",
-			"activitySettingId", true, "groupId", true, "companyId", true,
-			"classNameId", true, "activityType", true, "name", true, "value",
-			true);
+			"activitySettingId", true, "groupId", true, "classNameId", true,
+			"activityType", true, "name", true, "value", true, "companyId", true);
 	}
 
 	@Test
@@ -455,8 +454,6 @@ public class SocialActivitySettingPersistenceTest {
 
 		socialActivitySetting.setGroupId(RandomTestUtil.nextLong());
 
-		socialActivitySetting.setCompanyId(RandomTestUtil.nextLong());
-
 		socialActivitySetting.setClassNameId(RandomTestUtil.nextLong());
 
 		socialActivitySetting.setActivityType(RandomTestUtil.nextInt());
@@ -464,6 +461,8 @@ public class SocialActivitySettingPersistenceTest {
 		socialActivitySetting.setName(RandomTestUtil.randomString());
 
 		socialActivitySetting.setValue(RandomTestUtil.randomString());
+
+		socialActivitySetting.setCompanyId(RandomTestUtil.nextLong());
 
 		_socialActivitySettings.add(_persistence.update(socialActivitySetting));
 

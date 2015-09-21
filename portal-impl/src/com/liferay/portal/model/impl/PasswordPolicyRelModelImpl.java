@@ -65,7 +65,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 			{ "passwordPolicyRelId", Types.BIGINT },
 			{ "passwordPolicyId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
-			{ "classPK", Types.BIGINT }
+			{ "classPK", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -75,9 +76,10 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		TABLE_COLUMNS_MAP.put("passwordPolicyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table PasswordPolicyRel (mvccVersion LONG default 0,passwordPolicyRelId LONG not null primary key,passwordPolicyId LONG,classNameId LONG,classPK LONG)";
+	public static final String TABLE_SQL_CREATE = "create table PasswordPolicyRel (mvccVersion LONG default 0,passwordPolicyRelId LONG not null primary key,passwordPolicyId LONG,classNameId LONG,classPK LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table PasswordPolicyRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY passwordPolicyRel.passwordPolicyRelId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PasswordPolicyRel.passwordPolicyRelId ASC";
@@ -142,6 +144,7 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		attributes.put("passwordPolicyId", getPasswordPolicyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -179,6 +182,12 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -288,13 +297,23 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		return _originalClassPK;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			PasswordPolicyRel.class.getName(), getPrimaryKey());
 	}
 
@@ -324,6 +343,7 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		passwordPolicyRelImpl.setPasswordPolicyId(getPasswordPolicyId());
 		passwordPolicyRelImpl.setClassNameId(getClassNameId());
 		passwordPolicyRelImpl.setClassPK(getClassPK());
+		passwordPolicyRelImpl.setCompanyId(getCompanyId());
 
 		passwordPolicyRelImpl.resetOriginalValues();
 
@@ -415,12 +435,14 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 
 		passwordPolicyRelCacheModel.classPK = getClassPK();
 
+		passwordPolicyRelCacheModel.companyId = getCompanyId();
+
 		return passwordPolicyRelCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -432,6 +454,8 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -439,7 +463,7 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.PasswordPolicyRel");
@@ -465,6 +489,10 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 			"<column><column-name>classPK</column-name><column-value><![CDATA[");
 		sb.append(getClassPK());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -486,6 +514,7 @@ public class PasswordPolicyRelModelImpl extends BaseModelImpl<PasswordPolicyRel>
 	private long _classPK;
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
+	private long _companyId;
 	private long _columnBitmask;
 	private PasswordPolicyRel _escapedModel;
 }

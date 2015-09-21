@@ -66,7 +66,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "kaleoTaskInstanceTokenId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -82,14 +81,14 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 			{ "completed", Types.BOOLEAN },
 			{ "completionDate", Types.TIMESTAMP },
 			{ "dueDate", Types.TIMESTAMP },
-			{ "workflowContext", Types.CLOB }
+			{ "workflowContext", Types.CLOB },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("kaleoTaskInstanceTokenId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -106,9 +105,10 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		TABLE_COLUMNS_MAP.put("completionDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("dueDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("workflowContext", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoTaskInstanceToken (kaleoTaskInstanceTokenId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskId LONG,kaleoTaskName VARCHAR(200) null,className VARCHAR(200) null,classPK LONG,completionUserId LONG,completed BOOLEAN,completionDate DATE null,dueDate DATE null,workflowContext TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoTaskInstanceToken (kaleoTaskInstanceTokenId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoInstanceId LONG,kaleoInstanceTokenId LONG,kaleoTaskId LONG,kaleoTaskName VARCHAR(200) null,className VARCHAR(200) null,classPK LONG,completionUserId LONG,completed BOOLEAN,completionDate DATE null,dueDate DATE null,workflowContext TEXT null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoTaskInstanceToken";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoTaskInstanceToken.kaleoTaskInstanceTokenId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoTaskInstanceToken.kaleoTaskInstanceTokenId ASC";
@@ -173,7 +173,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 
 		attributes.put("kaleoTaskInstanceTokenId", getKaleoTaskInstanceTokenId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -190,6 +189,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("dueDate", getDueDate());
 		attributes.put("workflowContext", getWorkflowContext());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -210,12 +210,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -313,6 +307,12 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		if (workflowContext != null) {
 			setWorkflowContext(workflowContext);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -335,28 +335,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -640,6 +618,28 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		_workflowContext = workflowContext;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -673,7 +673,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 
 		kaleoTaskInstanceTokenImpl.setKaleoTaskInstanceTokenId(getKaleoTaskInstanceTokenId());
 		kaleoTaskInstanceTokenImpl.setGroupId(getGroupId());
-		kaleoTaskInstanceTokenImpl.setCompanyId(getCompanyId());
 		kaleoTaskInstanceTokenImpl.setUserId(getUserId());
 		kaleoTaskInstanceTokenImpl.setUserName(getUserName());
 		kaleoTaskInstanceTokenImpl.setCreateDate(getCreateDate());
@@ -690,6 +689,7 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		kaleoTaskInstanceTokenImpl.setCompletionDate(getCompletionDate());
 		kaleoTaskInstanceTokenImpl.setDueDate(getDueDate());
 		kaleoTaskInstanceTokenImpl.setWorkflowContext(getWorkflowContext());
+		kaleoTaskInstanceTokenImpl.setCompanyId(getCompanyId());
 
 		kaleoTaskInstanceTokenImpl.resetOriginalValues();
 
@@ -758,10 +758,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 	public void resetOriginalValues() {
 		KaleoTaskInstanceTokenModelImpl kaleoTaskInstanceTokenModelImpl = this;
 
-		kaleoTaskInstanceTokenModelImpl._originalCompanyId = kaleoTaskInstanceTokenModelImpl._companyId;
-
-		kaleoTaskInstanceTokenModelImpl._setOriginalCompanyId = false;
-
 		kaleoTaskInstanceTokenModelImpl._setModifiedDate = false;
 
 		kaleoTaskInstanceTokenModelImpl._originalKaleoDefinitionId = kaleoTaskInstanceTokenModelImpl._kaleoDefinitionId;
@@ -782,6 +778,10 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 
 		kaleoTaskInstanceTokenModelImpl._setOriginalClassPK = false;
 
+		kaleoTaskInstanceTokenModelImpl._originalCompanyId = kaleoTaskInstanceTokenModelImpl._companyId;
+
+		kaleoTaskInstanceTokenModelImpl._setOriginalCompanyId = false;
+
 		kaleoTaskInstanceTokenModelImpl._columnBitmask = 0;
 	}
 
@@ -792,8 +792,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		kaleoTaskInstanceTokenCacheModel.kaleoTaskInstanceTokenId = getKaleoTaskInstanceTokenId();
 
 		kaleoTaskInstanceTokenCacheModel.groupId = getGroupId();
-
-		kaleoTaskInstanceTokenCacheModel.companyId = getCompanyId();
 
 		kaleoTaskInstanceTokenCacheModel.userId = getUserId();
 
@@ -879,6 +877,8 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 			kaleoTaskInstanceTokenCacheModel.workflowContext = null;
 		}
 
+		kaleoTaskInstanceTokenCacheModel.companyId = getCompanyId();
+
 		return kaleoTaskInstanceTokenCacheModel;
 	}
 
@@ -890,8 +890,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		sb.append(getKaleoTaskInstanceTokenId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -924,6 +922,8 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		sb.append(getDueDate());
 		sb.append(", workflowContext=");
 		sb.append(getWorkflowContext());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -945,10 +945,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1014,6 +1010,10 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 			"<column><column-name>workflowContext</column-name><column-value><![CDATA[");
 		sb.append(getWorkflowContext());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1026,9 +1026,6 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 		};
 	private long _kaleoTaskInstanceTokenId;
 	private long _groupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1055,6 +1052,9 @@ public class KaleoTaskInstanceTokenModelImpl extends BaseModelImpl<KaleoTaskInst
 	private Date _completionDate;
 	private Date _dueDate;
 	private String _workflowContext;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private KaleoTaskInstanceToken _escapedModel;
 }

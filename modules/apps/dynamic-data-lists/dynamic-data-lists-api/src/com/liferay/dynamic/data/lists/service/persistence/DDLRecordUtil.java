@@ -456,144 +456,6 @@ public class DDLRecordUtil {
 	}
 
 	/**
-	* Returns all the d d l records where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching d d l records
-	*/
-	public static List<DDLRecord> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	* Returns a range of all the d d l records where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of d d l records
-	* @param end the upper bound of the range of d d l records (not inclusive)
-	* @return the range of matching d d l records
-	*/
-	public static List<DDLRecord> findByCompanyId(long companyId, int start,
-		int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the d d l records where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of d d l records
-	* @param end the upper bound of the range of d d l records (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching d d l records
-	*/
-	public static List<DDLRecord> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<DDLRecord> orderByComparator) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first d d l record in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d l record
-	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
-	*/
-	public static DDLRecord findByCompanyId_First(long companyId,
-		OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the first d d l record in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching d d l record, or <code>null</code> if a matching d d l record could not be found
-	*/
-	public static DDLRecord fetchByCompanyId_First(long companyId,
-		OrderByComparator<DDLRecord> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last d d l record in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d l record
-	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
-	*/
-	public static DDLRecord findByCompanyId_Last(long companyId,
-		OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last d d l record in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching d d l record, or <code>null</code> if a matching d d l record could not be found
-	*/
-	public static DDLRecord fetchByCompanyId_Last(long companyId,
-		OrderByComparator<DDLRecord> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the d d l records before and after the current d d l record in the ordered set where companyId = &#63;.
-	*
-	* @param recordId the primary key of the current d d l record
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next d d l record
-	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a d d l record with the primary key could not be found
-	*/
-	public static DDLRecord[] findByCompanyId_PrevAndNext(long recordId,
-		long companyId, OrderByComparator<DDLRecord> orderByComparator)
-		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
-		return getPersistence()
-				   .findByCompanyId_PrevAndNext(recordId, companyId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the d d l records where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of d d l records where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching d d l records
-	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
 	* Returns all the d d l records where recordSetId = &#63;.
 	*
 	* @param recordSetId the record set ID
@@ -729,6 +591,144 @@ public class DDLRecordUtil {
 	*/
 	public static int countByRecordSetId(long recordSetId) {
 		return getPersistence().countByRecordSetId(recordSetId);
+	}
+
+	/**
+	* Returns all the d d l records where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching d d l records
+	*/
+	public static List<DDLRecord> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the d d l records where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of d d l records
+	* @param end the upper bound of the range of d d l records (not inclusive)
+	* @return the range of matching d d l records
+	*/
+	public static List<DDLRecord> findByCompanyId(long companyId, int start,
+		int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d l records where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDLRecordModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of d d l records
+	* @param end the upper bound of the range of d d l records (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d l records
+	*/
+	public static List<DDLRecord> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<DDLRecord> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d l record in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d l record
+	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
+	*/
+	public static DDLRecord findByCompanyId_First(long companyId,
+		OrderByComparator<DDLRecord> orderByComparator)
+		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d l record in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d l record, or <code>null</code> if a matching d d l record could not be found
+	*/
+	public static DDLRecord fetchByCompanyId_First(long companyId,
+		OrderByComparator<DDLRecord> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d l record in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d l record
+	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a matching d d l record could not be found
+	*/
+	public static DDLRecord findByCompanyId_Last(long companyId,
+		OrderByComparator<DDLRecord> orderByComparator)
+		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d l record in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d l record, or <code>null</code> if a matching d d l record could not be found
+	*/
+	public static DDLRecord fetchByCompanyId_Last(long companyId,
+		OrderByComparator<DDLRecord> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the d d l records before and after the current d d l record in the ordered set where companyId = &#63;.
+	*
+	* @param recordId the primary key of the current d d l record
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d l record
+	* @throws com.liferay.dynamic.data.lists.NoSuchRecordException if a d d l record with the primary key could not be found
+	*/
+	public static DDLRecord[] findByCompanyId_PrevAndNext(long recordId,
+		long companyId, OrderByComparator<DDLRecord> orderByComparator)
+		throws com.liferay.dynamic.data.lists.exception.NoSuchRecordException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(recordId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the d d l records where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of d d l records where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching d d l records
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

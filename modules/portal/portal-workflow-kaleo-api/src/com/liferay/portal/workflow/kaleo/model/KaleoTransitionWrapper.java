@@ -55,7 +55,6 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 
 		attributes.put("kaleoTransitionId", getKaleoTransitionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -69,6 +68,7 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 		attributes.put("targetKaleoNodeId", getTargetKaleoNodeId());
 		attributes.put("targetKaleoNodeName", getTargetKaleoNodeName());
 		attributes.put("defaultTransition", getDefaultTransition());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -85,12 +85,6 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -171,6 +165,12 @@ public class KaleoTransitionWrapper implements KaleoTransition,
 
 		if (defaultTransition != null) {
 			setDefaultTransition(defaultTransition);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

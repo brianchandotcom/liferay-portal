@@ -54,7 +54,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 
 		attributes.put("entryId", getEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -79,6 +78,7 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 		attributes.put("width", getWidth());
 		attributes.put("priority", getPriority());
 		attributes.put("viewCount", getViewCount());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -95,12 +95,6 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -245,6 +239,12 @@ public class AssetEntryWrapper implements AssetEntry, ModelWrapper<AssetEntry> {
 
 		if (viewCount != null) {
 			setViewCount(viewCount);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

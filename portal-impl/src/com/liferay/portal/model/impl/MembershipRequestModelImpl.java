@@ -72,14 +72,14 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 			{ "mvccVersion", Types.BIGINT },
 			{ "membershipRequestId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "comments", Types.VARCHAR },
 			{ "replyComments", Types.VARCHAR },
 			{ "replyDate", Types.TIMESTAMP },
 			{ "replierUserId", Types.BIGINT },
-			{ "statusId", Types.BIGINT }
+			{ "statusId", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -87,7 +87,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("membershipRequestId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
@@ -95,9 +94,10 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		TABLE_COLUMNS_MAP.put("replyDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("replierUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MembershipRequest (mvccVersion LONG default 0,membershipRequestId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate DATE null,comments STRING null,replyComments STRING null,replyDate DATE null,replierUserId LONG,statusId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MembershipRequest (mvccVersion LONG default 0,membershipRequestId LONG not null primary key,groupId LONG,userId LONG,createDate DATE null,comments STRING null,replyComments STRING null,replyDate DATE null,replierUserId LONG,statusId LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MembershipRequest";
 	public static final String ORDER_BY_JPQL = " ORDER BY membershipRequest.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MembershipRequest.createDate DESC";
@@ -134,7 +134,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setMembershipRequestId(soapModel.getMembershipRequestId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setComments(soapModel.getComments());
@@ -142,6 +141,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		model.setReplyDate(soapModel.getReplyDate());
 		model.setReplierUserId(soapModel.getReplierUserId());
 		model.setStatusId(soapModel.getStatusId());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -210,7 +210,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("membershipRequestId", getMembershipRequestId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("comments", getComments());
@@ -218,6 +217,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		attributes.put("replyDate", getReplyDate());
 		attributes.put("replierUserId", getReplierUserId());
 		attributes.put("statusId", getStatusId());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -243,12 +243,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -291,6 +285,12 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 		if (statusId != null) {
 			setStatusId(statusId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -337,17 +337,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -495,6 +484,17 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		return _originalStatusId;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -529,7 +529,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		membershipRequestImpl.setMvccVersion(getMvccVersion());
 		membershipRequestImpl.setMembershipRequestId(getMembershipRequestId());
 		membershipRequestImpl.setGroupId(getGroupId());
-		membershipRequestImpl.setCompanyId(getCompanyId());
 		membershipRequestImpl.setUserId(getUserId());
 		membershipRequestImpl.setCreateDate(getCreateDate());
 		membershipRequestImpl.setComments(getComments());
@@ -537,6 +536,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		membershipRequestImpl.setReplyDate(getReplyDate());
 		membershipRequestImpl.setReplierUserId(getReplierUserId());
 		membershipRequestImpl.setStatusId(getStatusId());
+		membershipRequestImpl.setCompanyId(getCompanyId());
 
 		membershipRequestImpl.resetOriginalValues();
 
@@ -625,8 +625,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 		membershipRequestCacheModel.groupId = getGroupId();
 
-		membershipRequestCacheModel.companyId = getCompanyId();
-
 		membershipRequestCacheModel.userId = getUserId();
 
 		Date createDate = getCreateDate();
@@ -667,6 +665,8 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 
 		membershipRequestCacheModel.statusId = getStatusId();
 
+		membershipRequestCacheModel.companyId = getCompanyId();
+
 		return membershipRequestCacheModel;
 	}
 
@@ -680,8 +680,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		sb.append(getMembershipRequestId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", createDate=");
@@ -696,6 +694,8 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		sb.append(getReplierUserId());
 		sb.append(", statusId=");
 		sb.append(getStatusId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -720,10 +720,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -753,6 +749,10 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 			"<column><column-name>statusId</column-name><column-value><![CDATA[");
 		sb.append(getStatusId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -768,7 +768,6 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -780,6 +779,7 @@ public class MembershipRequestModelImpl extends BaseModelImpl<MembershipRequest>
 	private long _statusId;
 	private long _originalStatusId;
 	private boolean _setOriginalStatusId;
+	private long _companyId;
 	private long _columnBitmask;
 	private MembershipRequest _escapedModel;
 }

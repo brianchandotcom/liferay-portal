@@ -81,7 +81,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "uuid_", Types.VARCHAR },
 			{ "plid", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -108,7 +107,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			{ "layoutPrototypeUuid", Types.VARCHAR },
 			{ "layoutPrototypeLinkEnabled", Types.BOOLEAN },
 			{ "sourcePrototypeLayoutUuid", Types.VARCHAR },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -117,7 +117,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("plid", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -145,9 +144,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		TABLE_COLUMNS_MAP.put("layoutPrototypeLinkEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("sourcePrototypeLayoutUuid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Layout (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,plid LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,name STRING null,title STRING null,description STRING null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,priority INTEGER,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,sourcePrototypeLayoutUuid VARCHAR(75) null,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 	public static final String ORDER_BY_JPQL = " ORDER BY layout.parentLayoutId ASC, layout.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Layout.parentLayoutId ASC, Layout.priority ASC";
@@ -193,7 +193,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setUuid(soapModel.getUuid());
 		model.setPlid(soapModel.getPlid());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -221,6 +220,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		model.setLayoutPrototypeLinkEnabled(soapModel.getLayoutPrototypeLinkEnabled());
 		model.setSourcePrototypeLayoutUuid(soapModel.getSourcePrototypeLayoutUuid());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -289,7 +289,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		attributes.put("uuid", getUuid());
 		attributes.put("plid", getPlid());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -319,6 +318,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		attributes.put("sourcePrototypeLayoutUuid",
 			getSourcePrototypeLayoutUuid());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -350,12 +350,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -522,6 +516,12 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -591,29 +591,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1542,6 +1519,29 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1725,7 +1725,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setUuid(getUuid());
 		layoutImpl.setPlid(getPlid());
 		layoutImpl.setGroupId(getGroupId());
-		layoutImpl.setCompanyId(getCompanyId());
 		layoutImpl.setUserId(getUserId());
 		layoutImpl.setUserName(getUserName());
 		layoutImpl.setCreateDate(getCreateDate());
@@ -1753,6 +1752,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutImpl.setLayoutPrototypeLinkEnabled(getLayoutPrototypeLinkEnabled());
 		layoutImpl.setSourcePrototypeLayoutUuid(getSourcePrototypeLayoutUuid());
 		layoutImpl.setLastPublishDate(getLastPublishDate());
+		layoutImpl.setCompanyId(getCompanyId());
 
 		layoutImpl.resetOriginalValues();
 
@@ -1841,10 +1841,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutModelImpl._setOriginalGroupId = false;
 
-		layoutModelImpl._originalCompanyId = layoutModelImpl._companyId;
-
-		layoutModelImpl._setOriginalCompanyId = false;
-
 		layoutModelImpl._setModifiedDate = false;
 
 		layoutModelImpl._originalPrivateLayout = layoutModelImpl._privateLayout;
@@ -1871,6 +1867,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutModelImpl._originalSourcePrototypeLayoutUuid = layoutModelImpl._sourcePrototypeLayoutUuid;
 
+		layoutModelImpl._originalCompanyId = layoutModelImpl._companyId;
+
+		layoutModelImpl._setOriginalCompanyId = false;
+
 		layoutModelImpl._columnBitmask = 0;
 	}
 
@@ -1891,8 +1891,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		layoutCacheModel.plid = getPlid();
 
 		layoutCacheModel.groupId = getGroupId();
-
-		layoutCacheModel.companyId = getCompanyId();
 
 		layoutCacheModel.userId = getUserId();
 
@@ -2067,6 +2065,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			layoutCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		layoutCacheModel.companyId = getCompanyId();
+
 		return layoutCacheModel;
 	}
 
@@ -2082,8 +2082,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getPlid());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -2138,6 +2136,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(getSourcePrototypeLayoutUuid());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -2166,10 +2166,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -2279,6 +2275,10 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -2296,9 +2296,6 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -2344,6 +2341,9 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private String _sourcePrototypeLayoutUuid;
 	private String _originalSourcePrototypeLayoutUuid;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Layout _escapedModel;
 }

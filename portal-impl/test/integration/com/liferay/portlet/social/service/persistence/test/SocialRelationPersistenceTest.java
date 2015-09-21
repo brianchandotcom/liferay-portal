@@ -117,8 +117,6 @@ public class SocialRelationPersistenceTest {
 
 		newSocialRelation.setUuid(RandomTestUtil.randomString());
 
-		newSocialRelation.setCompanyId(RandomTestUtil.nextLong());
-
 		newSocialRelation.setCreateDate(RandomTestUtil.nextLong());
 
 		newSocialRelation.setUserId1(RandomTestUtil.nextLong());
@@ -126,6 +124,8 @@ public class SocialRelationPersistenceTest {
 		newSocialRelation.setUserId2(RandomTestUtil.nextLong());
 
 		newSocialRelation.setType(RandomTestUtil.nextInt());
+
+		newSocialRelation.setCompanyId(RandomTestUtil.nextLong());
 
 		_socialRelations.add(_persistence.update(newSocialRelation));
 
@@ -135,8 +135,6 @@ public class SocialRelationPersistenceTest {
 			newSocialRelation.getUuid());
 		Assert.assertEquals(existingSocialRelation.getRelationId(),
 			newSocialRelation.getRelationId());
-		Assert.assertEquals(existingSocialRelation.getCompanyId(),
-			newSocialRelation.getCompanyId());
 		Assert.assertEquals(existingSocialRelation.getCreateDate(),
 			newSocialRelation.getCreateDate());
 		Assert.assertEquals(existingSocialRelation.getUserId1(),
@@ -145,6 +143,8 @@ public class SocialRelationPersistenceTest {
 			newSocialRelation.getUserId2());
 		Assert.assertEquals(existingSocialRelation.getType(),
 			newSocialRelation.getType());
+		Assert.assertEquals(existingSocialRelation.getCompanyId(),
+			newSocialRelation.getCompanyId());
 	}
 
 	@Test
@@ -163,13 +163,6 @@ public class SocialRelationPersistenceTest {
 		_persistence.countByUuid_C(StringPool.NULL, 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -194,11 +187,10 @@ public class SocialRelationPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_T() throws Exception {
-		_persistence.countByC_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-		_persistence.countByC_T(0L, 0);
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -223,6 +215,14 @@ public class SocialRelationPersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByU2_T(0L, 0);
+	}
+
+	@Test
+	public void testCountByC_T() throws Exception {
+		_persistence.countByC_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_T(0L, 0);
 	}
 
 	@Test
@@ -257,8 +257,8 @@ public class SocialRelationPersistenceTest {
 
 	protected OrderByComparator<SocialRelation> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialRelation", "uuid",
-			true, "relationId", true, "companyId", true, "createDate", true,
-			"userId1", true, "userId2", true, "type", true);
+			true, "relationId", true, "createDate", true, "userId1", true,
+			"userId2", true, "type", true, "companyId", true);
 	}
 
 	@Test
@@ -481,8 +481,6 @@ public class SocialRelationPersistenceTest {
 
 		socialRelation.setUuid(RandomTestUtil.randomString());
 
-		socialRelation.setCompanyId(RandomTestUtil.nextLong());
-
 		socialRelation.setCreateDate(RandomTestUtil.nextLong());
 
 		socialRelation.setUserId1(RandomTestUtil.nextLong());
@@ -490,6 +488,8 @@ public class SocialRelationPersistenceTest {
 		socialRelation.setUserId2(RandomTestUtil.nextLong());
 
 		socialRelation.setType(RandomTestUtil.nextInt());
+
+		socialRelation.setCompanyId(RandomTestUtil.nextLong());
 
 		_socialRelations.add(_persistence.update(socialRelation));
 

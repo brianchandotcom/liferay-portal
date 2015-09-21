@@ -120,8 +120,6 @@ public class PortletItemPersistenceTest {
 
 		newPortletItem.setGroupId(RandomTestUtil.nextLong());
 
-		newPortletItem.setCompanyId(RandomTestUtil.nextLong());
-
 		newPortletItem.setUserId(RandomTestUtil.nextLong());
 
 		newPortletItem.setUserName(RandomTestUtil.randomString());
@@ -136,6 +134,8 @@ public class PortletItemPersistenceTest {
 
 		newPortletItem.setClassNameId(RandomTestUtil.nextLong());
 
+		newPortletItem.setCompanyId(RandomTestUtil.nextLong());
+
 		_portletItems.add(_persistence.update(newPortletItem));
 
 		PortletItem existingPortletItem = _persistence.findByPrimaryKey(newPortletItem.getPrimaryKey());
@@ -146,8 +146,6 @@ public class PortletItemPersistenceTest {
 			newPortletItem.getPortletItemId());
 		Assert.assertEquals(existingPortletItem.getGroupId(),
 			newPortletItem.getGroupId());
-		Assert.assertEquals(existingPortletItem.getCompanyId(),
-			newPortletItem.getCompanyId());
 		Assert.assertEquals(existingPortletItem.getUserId(),
 			newPortletItem.getUserId());
 		Assert.assertEquals(existingPortletItem.getUserName(),
@@ -164,6 +162,8 @@ public class PortletItemPersistenceTest {
 			newPortletItem.getPortletId());
 		Assert.assertEquals(existingPortletItem.getClassNameId(),
 			newPortletItem.getClassNameId());
+		Assert.assertEquals(existingPortletItem.getCompanyId(),
+			newPortletItem.getCompanyId());
 	}
 
 	@Test
@@ -219,9 +219,9 @@ public class PortletItemPersistenceTest {
 	protected OrderByComparator<PortletItem> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PortletItem",
 			"mvccVersion", true, "portletItemId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "portletId", true,
-			"classNameId", true);
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "portletId", true,
+			"classNameId", true, "companyId", true);
 	}
 
 	@Test
@@ -451,8 +451,6 @@ public class PortletItemPersistenceTest {
 
 		portletItem.setGroupId(RandomTestUtil.nextLong());
 
-		portletItem.setCompanyId(RandomTestUtil.nextLong());
-
 		portletItem.setUserId(RandomTestUtil.nextLong());
 
 		portletItem.setUserName(RandomTestUtil.randomString());
@@ -466,6 +464,8 @@ public class PortletItemPersistenceTest {
 		portletItem.setPortletId(RandomTestUtil.randomString());
 
 		portletItem.setClassNameId(RandomTestUtil.nextLong());
+
+		portletItem.setCompanyId(RandomTestUtil.nextLong());
 
 		_portletItems.add(_persistence.update(portletItem));
 

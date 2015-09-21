@@ -85,8 +85,6 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		sb.append(mvccVersion);
 		sb.append(", contactId=");
 		sb.append(contactId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -149,6 +147,8 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		sb.append(jobClass);
 		sb.append(", hoursOfOperation=");
 		sb.append(hoursOfOperation);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -160,7 +160,6 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 
 		contactImpl.setMvccVersion(mvccVersion);
 		contactImpl.setContactId(contactId);
-		contactImpl.setCompanyId(companyId);
 		contactImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -333,6 +332,8 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 			contactImpl.setHoursOfOperation(hoursOfOperation);
 		}
 
+		contactImpl.setCompanyId(companyId);
+
 		contactImpl.resetOriginalValues();
 
 		return contactImpl;
@@ -342,7 +343,6 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		contactId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -374,6 +374,7 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		jobTitle = objectInput.readUTF();
 		jobClass = objectInput.readUTF();
 		hoursOfOperation = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -381,7 +382,6 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(contactId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -535,11 +535,12 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 		else {
 			objectOutput.writeUTF(hoursOfOperation);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long contactId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -571,4 +572,5 @@ public class ContactCacheModel implements CacheModel<Contact>, Externalizable,
 	public String jobTitle;
 	public String jobClass;
 	public String hoursOfOperation;
+	public long companyId;
 }

@@ -57,7 +57,6 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 		attributes.put("uuid", getUuid());
 		attributes.put("voteId", getVoteId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -66,6 +65,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 		attributes.put("choiceId", getChoiceId());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("voteDate", getVoteDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -88,12 +88,6 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -142,6 +136,12 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 
 		if (voteDate != null) {
 			setVoteDate(voteDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

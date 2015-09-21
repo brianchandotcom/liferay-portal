@@ -57,7 +57,6 @@ public class EmailAddressWrapper implements EmailAddress,
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("emailAddressId", getEmailAddressId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -68,6 +67,7 @@ public class EmailAddressWrapper implements EmailAddress,
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -90,12 +90,6 @@ public class EmailAddressWrapper implements EmailAddress,
 
 		if (emailAddressId != null) {
 			setEmailAddressId(emailAddressId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -156,6 +150,12 @@ public class EmailAddressWrapper implements EmailAddress,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

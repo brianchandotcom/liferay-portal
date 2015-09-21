@@ -83,8 +83,6 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		sb.append(mvccVersion);
 		sb.append(", userNotificationDeliveryId=");
 		sb.append(userNotificationDeliveryId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", portletId=");
@@ -97,6 +95,8 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		sb.append(deliveryType);
 		sb.append(", deliver=");
 		sb.append(deliver);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -108,7 +108,6 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 
 		userNotificationDeliveryImpl.setMvccVersion(mvccVersion);
 		userNotificationDeliveryImpl.setUserNotificationDeliveryId(userNotificationDeliveryId);
-		userNotificationDeliveryImpl.setCompanyId(companyId);
 		userNotificationDeliveryImpl.setUserId(userId);
 
 		if (portletId == null) {
@@ -122,6 +121,7 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		userNotificationDeliveryImpl.setNotificationType(notificationType);
 		userNotificationDeliveryImpl.setDeliveryType(deliveryType);
 		userNotificationDeliveryImpl.setDeliver(deliver);
+		userNotificationDeliveryImpl.setCompanyId(companyId);
 
 		userNotificationDeliveryImpl.resetOriginalValues();
 
@@ -132,13 +132,13 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		userNotificationDeliveryId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		portletId = objectInput.readUTF();
 		classNameId = objectInput.readLong();
 		notificationType = objectInput.readInt();
 		deliveryType = objectInput.readInt();
 		deliver = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -146,7 +146,6 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(userNotificationDeliveryId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (portletId == null) {
@@ -160,15 +159,16 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		objectOutput.writeInt(notificationType);
 		objectOutput.writeInt(deliveryType);
 		objectOutput.writeBoolean(deliver);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long userNotificationDeliveryId;
-	public long companyId;
 	public long userId;
 	public String portletId;
 	public long classNameId;
 	public int notificationType;
 	public int deliveryType;
 	public boolean deliver;
+	public long companyId;
 }

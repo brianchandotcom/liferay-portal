@@ -72,8 +72,6 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 		sb.append(orderId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -170,6 +168,8 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 		sb.append(sendOrderEmail);
 		sb.append(", sendShippingEmail=");
 		sb.append(sendShippingEmail);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -181,7 +181,6 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 
 		shoppingOrderImpl.setOrderId(orderId);
 		shoppingOrderImpl.setGroupId(groupId);
-		shoppingOrderImpl.setCompanyId(companyId);
 		shoppingOrderImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -447,6 +446,7 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 
 		shoppingOrderImpl.setSendOrderEmail(sendOrderEmail);
 		shoppingOrderImpl.setSendShippingEmail(sendShippingEmail);
+		shoppingOrderImpl.setCompanyId(companyId);
 
 		shoppingOrderImpl.resetOriginalValues();
 
@@ -457,7 +457,6 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		orderId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -506,6 +505,7 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 		ppPayerEmail = objectInput.readUTF();
 		sendOrderEmail = objectInput.readBoolean();
 		sendShippingEmail = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -513,7 +513,6 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 		throws IOException {
 		objectOutput.writeLong(orderId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -768,11 +767,11 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 
 		objectOutput.writeBoolean(sendOrderEmail);
 		objectOutput.writeBoolean(sendShippingEmail);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long orderId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -821,4 +820,5 @@ public class ShoppingOrderCacheModel implements CacheModel<ShoppingOrder>,
 	public String ppPayerEmail;
 	public boolean sendOrderEmail;
 	public boolean sendShippingEmail;
+	public long companyId;
 }

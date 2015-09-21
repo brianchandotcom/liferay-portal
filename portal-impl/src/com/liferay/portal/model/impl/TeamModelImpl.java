@@ -72,7 +72,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "teamId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -80,7 +79,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 			{ "groupId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -88,7 +88,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("teamId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -97,9 +96,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Team (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,teamId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Team (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,teamId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Team";
 	public static final String ORDER_BY_JPQL = " ORDER BY team.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Team.name ASC";
@@ -136,7 +136,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setTeamId(soapModel.getTeamId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -145,6 +144,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -171,18 +171,20 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 	public static final String MAPPING_TABLE_USERS_TEAMS_NAME = "Users_Teams";
 	public static final Object[][] MAPPING_TABLE_USERS_TEAMS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "teamId", Types.BIGINT },
 			{ "userId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERS_TEAMS_SQL_CREATE = "create table Users_Teams (teamId LONG not null,userId LONG not null,primary key (teamId, userId))";
+	public static final String MAPPING_TABLE_USERS_TEAMS_SQL_CREATE = "create table Users_Teams (companyId LONG not null,teamId LONG not null,userId LONG not null,primary key (companyId, teamId, userId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERS_TEAMS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_Teams"), true);
 	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_NAME = "UserGroups_Teams";
 	public static final Object[][] MAPPING_TABLE_USERGROUPS_TEAMS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "teamId", Types.BIGINT },
 			{ "userGroupId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE = "create table UserGroups_Teams (teamId LONG not null,userGroupId LONG not null,primary key (teamId, userGroupId))";
+	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE = "create table UserGroups_Teams (companyId LONG not null,teamId LONG not null,userGroupId LONG not null,primary key (companyId, teamId, userGroupId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERGROUPS_TEAMS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.UserGroups_Teams"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
@@ -228,7 +230,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("teamId", getTeamId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -237,6 +238,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -262,12 +264,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 		if (teamId != null) {
 			setTeamId(teamId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -317,6 +313,12 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -363,29 +365,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	@Override
 	public void setTeamId(long teamId) {
 		_teamId = teamId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -535,6 +514,29 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -575,7 +577,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		teamImpl.setMvccVersion(getMvccVersion());
 		teamImpl.setUuid(getUuid());
 		teamImpl.setTeamId(getTeamId());
-		teamImpl.setCompanyId(getCompanyId());
 		teamImpl.setUserId(getUserId());
 		teamImpl.setUserName(getUserName());
 		teamImpl.setCreateDate(getCreateDate());
@@ -584,6 +585,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		teamImpl.setName(getName());
 		teamImpl.setDescription(getDescription());
 		teamImpl.setLastPublishDate(getLastPublishDate());
+		teamImpl.setCompanyId(getCompanyId());
 
 		teamImpl.resetOriginalValues();
 
@@ -646,10 +648,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 
 		teamModelImpl._originalUuid = teamModelImpl._uuid;
 
-		teamModelImpl._originalCompanyId = teamModelImpl._companyId;
-
-		teamModelImpl._setOriginalCompanyId = false;
-
 		teamModelImpl._setModifiedDate = false;
 
 		teamModelImpl._originalGroupId = teamModelImpl._groupId;
@@ -657,6 +655,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		teamModelImpl._setOriginalGroupId = false;
 
 		teamModelImpl._originalName = teamModelImpl._name;
+
+		teamModelImpl._originalCompanyId = teamModelImpl._companyId;
+
+		teamModelImpl._setOriginalCompanyId = false;
 
 		teamModelImpl._columnBitmask = 0;
 	}
@@ -676,8 +678,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		}
 
 		teamCacheModel.teamId = getTeamId();
-
-		teamCacheModel.companyId = getCompanyId();
 
 		teamCacheModel.userId = getUserId();
 
@@ -734,6 +734,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 			teamCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		teamCacheModel.companyId = getCompanyId();
+
 		return teamCacheModel;
 	}
 
@@ -747,8 +749,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		sb.append(getUuid());
 		sb.append(", teamId=");
 		sb.append(getTeamId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -765,6 +765,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		sb.append(getDescription());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -789,10 +791,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		sb.append(
 			"<column><column-name>teamId</column-name><column-value><![CDATA[");
 		sb.append(getTeamId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -826,6 +824,10 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -840,9 +842,6 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private String _uuid;
 	private String _originalUuid;
 	private long _teamId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -855,6 +854,9 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private String _originalName;
 	private String _description;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Team _escapedModel;
 }

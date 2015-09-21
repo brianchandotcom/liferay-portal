@@ -55,11 +55,11 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 
 		attributes.put("contentSearchId", getContentSearchId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("articleId", getArticleId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -76,12 +76,6 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
@@ -106,6 +100,12 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 
 		if (articleId != null) {
 			setArticleId(articleId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

@@ -121,8 +121,6 @@ public class KaleoLogPersistenceTest {
 
 		newKaleoLog.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoLog.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoLog.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoLog.setUserName(RandomTestUtil.randomString());
@@ -177,6 +175,8 @@ public class KaleoLogPersistenceTest {
 
 		newKaleoLog.setWorkflowContext(RandomTestUtil.randomString());
 
+		newKaleoLog.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoLogs.add(_persistence.update(newKaleoLog));
 
 		KaleoLog existingKaleoLog = _persistence.findByPrimaryKey(newKaleoLog.getPrimaryKey());
@@ -185,8 +185,6 @@ public class KaleoLogPersistenceTest {
 			newKaleoLog.getKaleoLogId());
 		Assert.assertEquals(existingKaleoLog.getGroupId(),
 			newKaleoLog.getGroupId());
-		Assert.assertEquals(existingKaleoLog.getCompanyId(),
-			newKaleoLog.getCompanyId());
 		Assert.assertEquals(existingKaleoLog.getUserId(),
 			newKaleoLog.getUserId());
 		Assert.assertEquals(existingKaleoLog.getUserName(),
@@ -244,13 +242,8 @@ public class KaleoLogPersistenceTest {
 			newKaleoLog.getDuration());
 		Assert.assertEquals(existingKaleoLog.getWorkflowContext(),
 			newKaleoLog.getWorkflowContext());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingKaleoLog.getCompanyId(),
+			newKaleoLog.getCompanyId());
 	}
 
 	@Test
@@ -272,6 +265,13 @@ public class KaleoLogPersistenceTest {
 		_persistence.countByKaleoTaskInstanceTokenId(RandomTestUtil.nextLong());
 
 		_persistence.countByKaleoTaskInstanceTokenId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -319,17 +319,17 @@ public class KaleoLogPersistenceTest {
 
 	protected OrderByComparator<KaleoLog> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoLog", "kaleoLogId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"kaleoClassName", true, "kaleoClassPK", true, "kaleoDefinitionId",
-			true, "kaleoInstanceId", true, "kaleoInstanceTokenId", true,
-			"kaleoTaskInstanceTokenId", true, "kaleoNodeName", true,
-			"terminalKaleoNode", true, "kaleoActionId", true,
-			"kaleoActionName", true, "kaleoActionDescription", true,
-			"previousKaleoNodeId", true, "previousKaleoNodeName", true,
-			"previousAssigneeClassName", true, "previousAssigneeClassPK", true,
-			"currentAssigneeClassName", true, "currentAssigneeClassPK", true,
-			"type", true, "startDate", true, "endDate", true, "duration", true);
+			true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "kaleoClassName", true,
+			"kaleoClassPK", true, "kaleoDefinitionId", true, "kaleoInstanceId",
+			true, "kaleoInstanceTokenId", true, "kaleoTaskInstanceTokenId",
+			true, "kaleoNodeName", true, "terminalKaleoNode", true,
+			"kaleoActionId", true, "kaleoActionName", true,
+			"kaleoActionDescription", true, "previousKaleoNodeId", true,
+			"previousKaleoNodeName", true, "previousAssigneeClassName", true,
+			"previousAssigneeClassPK", true, "currentAssigneeClassName", true,
+			"currentAssigneeClassPK", true, "type", true, "startDate", true,
+			"endDate", true, "duration", true, "companyId", true);
 	}
 
 	@Test
@@ -533,8 +533,6 @@ public class KaleoLogPersistenceTest {
 
 		kaleoLog.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoLog.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoLog.setUserId(RandomTestUtil.nextLong());
 
 		kaleoLog.setUserName(RandomTestUtil.randomString());
@@ -588,6 +586,8 @@ public class KaleoLogPersistenceTest {
 		kaleoLog.setDuration(RandomTestUtil.nextLong());
 
 		kaleoLog.setWorkflowContext(RandomTestUtil.randomString());
+
+		kaleoLog.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoLogs.add(_persistence.update(kaleoLog));
 

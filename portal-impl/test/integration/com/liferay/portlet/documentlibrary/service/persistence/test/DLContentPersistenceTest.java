@@ -123,8 +123,6 @@ public class DLContentPersistenceTest {
 
 		newDLContent.setGroupId(RandomTestUtil.nextLong());
 
-		newDLContent.setCompanyId(RandomTestUtil.nextLong());
-
 		newDLContent.setRepositoryId(RandomTestUtil.nextLong());
 
 		newDLContent.setPath(RandomTestUtil.randomString());
@@ -142,6 +140,8 @@ public class DLContentPersistenceTest {
 
 		newDLContent.setSize(RandomTestUtil.nextLong());
 
+		newDLContent.setCompanyId(RandomTestUtil.nextLong());
+
 		_dlContents.add(_persistence.update(newDLContent));
 
 		DLContent existingDLContent = _persistence.findByPrimaryKey(newDLContent.getPrimaryKey());
@@ -150,8 +150,6 @@ public class DLContentPersistenceTest {
 			newDLContent.getContentId());
 		Assert.assertEquals(existingDLContent.getGroupId(),
 			newDLContent.getGroupId());
-		Assert.assertEquals(existingDLContent.getCompanyId(),
-			newDLContent.getCompanyId());
 		Assert.assertEquals(existingDLContent.getRepositoryId(),
 			newDLContent.getRepositoryId());
 		Assert.assertEquals(existingDLContent.getPath(), newDLContent.getPath());
@@ -163,6 +161,8 @@ public class DLContentPersistenceTest {
 		Assert.assertTrue(Arrays.equals(existingData.getBytes(1,
 					(int)existingData.length()), newDataBytes));
 		Assert.assertEquals(existingDLContent.getSize(), newDLContent.getSize());
+		Assert.assertEquals(existingDLContent.getCompanyId(),
+			newDLContent.getCompanyId());
 	}
 
 	@Test
@@ -227,8 +227,8 @@ public class DLContentPersistenceTest {
 
 	protected OrderByComparator<DLContent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLContent", "contentId",
-			true, "groupId", true, "companyId", true, "repositoryId", true,
-			"path", true, "version", true, "size", true);
+			true, "groupId", true, "repositoryId", true, "path", true,
+			"version", true, "size", true, "companyId", true);
 	}
 
 	@Test
@@ -454,8 +454,6 @@ public class DLContentPersistenceTest {
 
 		dlContent.setGroupId(RandomTestUtil.nextLong());
 
-		dlContent.setCompanyId(RandomTestUtil.nextLong());
-
 		dlContent.setRepositoryId(RandomTestUtil.nextLong());
 
 		dlContent.setPath(RandomTestUtil.randomString());
@@ -472,6 +470,8 @@ public class DLContentPersistenceTest {
 		dlContent.setData(dataBlob);
 
 		dlContent.setSize(RandomTestUtil.nextLong());
+
+		dlContent.setCompanyId(RandomTestUtil.nextLong());
 
 		_dlContents.add(_persistence.update(dlContent));
 

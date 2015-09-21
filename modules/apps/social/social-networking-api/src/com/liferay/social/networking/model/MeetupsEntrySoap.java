@@ -34,7 +34,6 @@ public class MeetupsEntrySoap implements Serializable {
 		MeetupsEntrySoap soapModel = new MeetupsEntrySoap();
 
 		soapModel.setMeetupsEntryId(model.getMeetupsEntryId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -47,6 +46,7 @@ public class MeetupsEntrySoap implements Serializable {
 		soapModel.setMaxAttendees(model.getMaxAttendees());
 		soapModel.setPrice(model.getPrice());
 		soapModel.setThumbnailId(model.getThumbnailId());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -105,14 +105,6 @@ public class MeetupsEntrySoap implements Serializable {
 
 	public void setMeetupsEntryId(long meetupsEntryId) {
 		_meetupsEntryId = meetupsEntryId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -211,8 +203,15 @@ public class MeetupsEntrySoap implements Serializable {
 		_thumbnailId = thumbnailId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _meetupsEntryId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -225,4 +224,5 @@ public class MeetupsEntrySoap implements Serializable {
 	private int _maxAttendees;
 	private double _price;
 	private long _thumbnailId;
+	private long _companyId;
 }

@@ -73,8 +73,6 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 		sb.append(nodeId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -99,6 +97,8 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -117,7 +117,6 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 
 		wikiNodeImpl.setNodeId(nodeId);
 		wikiNodeImpl.setGroupId(groupId);
-		wikiNodeImpl.setCompanyId(companyId);
 		wikiNodeImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -186,6 +185,8 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 			wikiNodeImpl.setStatusDate(new Date(statusDate));
 		}
 
+		wikiNodeImpl.setCompanyId(companyId);
+
 		wikiNodeImpl.resetOriginalValues();
 
 		return wikiNodeImpl;
@@ -196,7 +197,6 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 		uuid = objectInput.readUTF();
 		nodeId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -209,6 +209,7 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -223,7 +224,6 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 
 		objectOutput.writeLong(nodeId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -263,12 +263,12 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long nodeId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -281,4 +281,5 @@ public class WikiNodeCacheModel implements CacheModel<WikiNode>, Externalizable 
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

@@ -64,7 +64,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{versionId=");
 		sb.append(versionId);
@@ -78,6 +78,8 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		sb.append(typeSettings);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -100,6 +102,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		}
 
 		trashVersionImpl.setStatus(status);
+		trashVersionImpl.setCompanyId(companyId);
 
 		trashVersionImpl.resetOriginalValues();
 
@@ -114,6 +117,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		classPK = objectInput.readLong();
 		typeSettings = objectInput.readUTF();
 		status = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -132,6 +136,7 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 		}
 
 		objectOutput.writeInt(status);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long versionId;
@@ -140,4 +145,5 @@ public class TrashVersionCacheModel implements CacheModel<TrashVersion>,
 	public long classPK;
 	public String typeSettings;
 	public int status;
+	public long companyId;
 }

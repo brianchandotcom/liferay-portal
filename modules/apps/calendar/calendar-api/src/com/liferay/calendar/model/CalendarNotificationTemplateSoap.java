@@ -38,7 +38,6 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCalendarNotificationTemplateId(model.getCalendarNotificationTemplateId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -50,6 +49,7 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 		soapModel.setSubject(model.getSubject());
 		soapModel.setBody(model.getBody());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -128,14 +128,6 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -226,10 +218,17 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _calendarNotificationTemplateId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -241,4 +240,5 @@ public class CalendarNotificationTemplateSoap implements Serializable {
 	private String _subject;
 	private String _body;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

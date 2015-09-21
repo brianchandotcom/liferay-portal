@@ -62,25 +62,25 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "relationId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.BIGINT },
 			{ "userId1", Types.BIGINT },
 			{ "userId2", Types.BIGINT },
-			{ "type_", Types.INTEGER }
+			{ "type_", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("relationId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId1", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId2", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialRelation (uuid_ VARCHAR(75) null,relationId LONG not null primary key,companyId LONG,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table SocialRelation (uuid_ VARCHAR(75) null,relationId LONG not null primary key,createDate LONG,userId1 LONG,userId2 LONG,type_ INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SocialRelation";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialRelation.relationId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialRelation.relationId ASC";
@@ -144,11 +144,11 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("relationId", getRelationId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("userId1", getUserId1());
 		attributes.put("userId2", getUserId2());
 		attributes.put("type", getType());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -168,12 +168,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 		if (relationId != null) {
 			setRelationId(relationId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long createDate = (Long)attributes.get("createDate");
@@ -198,6 +192,12 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -232,28 +232,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	@Override
 	public void setRelationId(long relationId) {
 		_relationId = relationId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -332,6 +310,28 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		return _originalType;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -365,11 +365,11 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 		socialRelationImpl.setUuid(getUuid());
 		socialRelationImpl.setRelationId(getRelationId());
-		socialRelationImpl.setCompanyId(getCompanyId());
 		socialRelationImpl.setCreateDate(getCreateDate());
 		socialRelationImpl.setUserId1(getUserId1());
 		socialRelationImpl.setUserId2(getUserId2());
 		socialRelationImpl.setType(getType());
+		socialRelationImpl.setCompanyId(getCompanyId());
 
 		socialRelationImpl.resetOriginalValues();
 
@@ -434,10 +434,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 		socialRelationModelImpl._originalUuid = socialRelationModelImpl._uuid;
 
-		socialRelationModelImpl._originalCompanyId = socialRelationModelImpl._companyId;
-
-		socialRelationModelImpl._setOriginalCompanyId = false;
-
 		socialRelationModelImpl._originalUserId1 = socialRelationModelImpl._userId1;
 
 		socialRelationModelImpl._setOriginalUserId1 = false;
@@ -449,6 +445,10 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		socialRelationModelImpl._originalType = socialRelationModelImpl._type;
 
 		socialRelationModelImpl._setOriginalType = false;
+
+		socialRelationModelImpl._originalCompanyId = socialRelationModelImpl._companyId;
+
+		socialRelationModelImpl._setOriginalCompanyId = false;
 
 		socialRelationModelImpl._columnBitmask = 0;
 	}
@@ -467,8 +467,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 
 		socialRelationCacheModel.relationId = getRelationId();
 
-		socialRelationCacheModel.companyId = getCompanyId();
-
 		socialRelationCacheModel.createDate = getCreateDate();
 
 		socialRelationCacheModel.userId1 = getUserId1();
@@ -476,6 +474,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		socialRelationCacheModel.userId2 = getUserId2();
 
 		socialRelationCacheModel.type = getType();
+
+		socialRelationCacheModel.companyId = getCompanyId();
 
 		return socialRelationCacheModel;
 	}
@@ -488,8 +488,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		sb.append(getUuid());
 		sb.append(", relationId=");
 		sb.append(getRelationId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", userId1=");
@@ -498,6 +496,8 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		sb.append(getUserId2());
 		sb.append(", type=");
 		sb.append(getType());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -520,10 +520,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 		sb.append(getRelationId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
 		sb.append("]]></column-value></column>");
@@ -539,6 +535,10 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 			"<column><column-name>type</column-name><column-value><![CDATA[");
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -552,9 +552,6 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	private String _uuid;
 	private String _originalUuid;
 	private long _relationId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _createDate;
 	private long _userId1;
 	private long _originalUserId1;
@@ -565,6 +562,9 @@ public class SocialRelationModelImpl extends BaseModelImpl<SocialRelation>
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private SocialRelation _escapedModel;
 }

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -38,7 +39,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice> {
+public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -212,6 +214,22 @@ public interface ShoppingItemPriceModel extends BaseModel<ShoppingItemPrice> {
 	 * @param status the status of this shopping item price
 	 */
 	public void setStatus(int status);
+
+	/**
+	 * Returns the company ID of this shopping item price.
+	 *
+	 * @return the company ID of this shopping item price
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this shopping item price.
+	 *
+	 * @param companyId the company ID of this shopping item price
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

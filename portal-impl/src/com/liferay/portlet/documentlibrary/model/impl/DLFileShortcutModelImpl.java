@@ -83,7 +83,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			{ "uuid_", Types.VARCHAR },
 			{ "fileShortcutId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -97,7 +96,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -105,7 +105,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileShortcutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -120,9 +119,10 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileShortcut (uuid_ VARCHAR(75) null,fileShortcutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,toFileEntryId LONG,treePath STRING null,active_ BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileShortcut (uuid_ VARCHAR(75) null,fileShortcutId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,toFileEntryId LONG,treePath STRING null,active_ BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileShortcut";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileShortcut.fileShortcutId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileShortcut.fileShortcutId ASC";
@@ -163,7 +163,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		model.setUuid(soapModel.getUuid());
 		model.setFileShortcutId(soapModel.getFileShortcutId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -178,6 +177,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -245,7 +245,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		attributes.put("uuid", getUuid());
 		attributes.put("fileShortcutId", getFileShortcutId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -260,6 +259,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -285,12 +285,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -376,6 +370,12 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -434,29 +434,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -719,6 +696,29 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		_statusDate = statusDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -974,7 +974,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		dlFileShortcutImpl.setUuid(getUuid());
 		dlFileShortcutImpl.setFileShortcutId(getFileShortcutId());
 		dlFileShortcutImpl.setGroupId(getGroupId());
-		dlFileShortcutImpl.setCompanyId(getCompanyId());
 		dlFileShortcutImpl.setUserId(getUserId());
 		dlFileShortcutImpl.setUserName(getUserName());
 		dlFileShortcutImpl.setCreateDate(getCreateDate());
@@ -989,6 +988,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		dlFileShortcutImpl.setStatusByUserId(getStatusByUserId());
 		dlFileShortcutImpl.setStatusByUserName(getStatusByUserName());
 		dlFileShortcutImpl.setStatusDate(getStatusDate());
+		dlFileShortcutImpl.setCompanyId(getCompanyId());
 
 		dlFileShortcutImpl.resetOriginalValues();
 
@@ -1057,10 +1057,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		dlFileShortcutModelImpl._setOriginalGroupId = false;
 
-		dlFileShortcutModelImpl._originalCompanyId = dlFileShortcutModelImpl._companyId;
-
-		dlFileShortcutModelImpl._setOriginalCompanyId = false;
-
 		dlFileShortcutModelImpl._setModifiedDate = false;
 
 		dlFileShortcutModelImpl._originalFolderId = dlFileShortcutModelImpl._folderId;
@@ -1078,6 +1074,10 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		dlFileShortcutModelImpl._originalStatus = dlFileShortcutModelImpl._status;
 
 		dlFileShortcutModelImpl._setOriginalStatus = false;
+
+		dlFileShortcutModelImpl._originalCompanyId = dlFileShortcutModelImpl._companyId;
+
+		dlFileShortcutModelImpl._setOriginalCompanyId = false;
 
 		dlFileShortcutModelImpl._columnBitmask = 0;
 	}
@@ -1097,8 +1097,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		dlFileShortcutCacheModel.fileShortcutId = getFileShortcutId();
 
 		dlFileShortcutCacheModel.groupId = getGroupId();
-
-		dlFileShortcutCacheModel.companyId = getCompanyId();
 
 		dlFileShortcutCacheModel.userId = getUserId();
 
@@ -1174,6 +1172,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			dlFileShortcutCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		dlFileShortcutCacheModel.companyId = getCompanyId();
+
 		return dlFileShortcutCacheModel;
 	}
 
@@ -1187,8 +1187,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		sb.append(getFileShortcutId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1217,6 +1215,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1241,10 +1241,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1302,6 +1298,10 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1318,9 +1318,6 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1344,6 +1341,9 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private DLFileShortcut _escapedModel;
 }

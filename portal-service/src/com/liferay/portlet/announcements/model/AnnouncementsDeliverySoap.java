@@ -35,12 +35,12 @@ public class AnnouncementsDeliverySoap implements Serializable {
 		AnnouncementsDeliverySoap soapModel = new AnnouncementsDeliverySoap();
 
 		soapModel.setDeliveryId(model.getDeliveryId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setType(model.getType());
 		soapModel.setEmail(model.getEmail());
 		soapModel.setSms(model.getSms());
 		soapModel.setWebsite(model.getWebsite());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -104,14 +104,6 @@ public class AnnouncementsDeliverySoap implements Serializable {
 		_deliveryId = deliveryId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -164,11 +156,19 @@ public class AnnouncementsDeliverySoap implements Serializable {
 		_website = website;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _deliveryId;
-	private long _companyId;
 	private long _userId;
 	private String _type;
 	private boolean _email;
 	private boolean _sms;
 	private boolean _website;
+	private long _companyId;
 }

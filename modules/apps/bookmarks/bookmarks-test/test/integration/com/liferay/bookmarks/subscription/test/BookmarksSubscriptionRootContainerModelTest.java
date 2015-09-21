@@ -21,6 +21,7 @@ import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -46,7 +47,8 @@ public class BookmarksSubscriptionRootContainerModelTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), SynchronousMailTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), CompanyProviderTestRule.INSTANCE,
+			SynchronousMailTestRule.INSTANCE);
 
 	@Override
 	protected long addBaseModel(long userId, long containerModelId)

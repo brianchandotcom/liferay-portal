@@ -36,7 +36,6 @@ public class SystemEventSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setSystemEventId(model.getSystemEventId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -48,6 +47,7 @@ public class SystemEventSoap implements Serializable {
 		soapModel.setSystemEventSetKey(model.getSystemEventSetKey());
 		soapModel.setType(model.getType());
 		soapModel.setExtraData(model.getExtraData());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -122,14 +122,6 @@ public class SystemEventSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -220,10 +212,17 @@ public class SystemEventSoap implements Serializable {
 		_extraData = extraData;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _mvccVersion;
 	private long _systemEventId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -235,4 +234,5 @@ public class SystemEventSoap implements Serializable {
 	private long _systemEventSetKey;
 	private int _type;
 	private String _extraData;
+	private long _companyId;
 }

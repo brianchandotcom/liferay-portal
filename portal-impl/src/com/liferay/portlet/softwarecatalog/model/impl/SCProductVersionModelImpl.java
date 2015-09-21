@@ -71,7 +71,6 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	public static final String TABLE_NAME = "SCProductVersion";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "productVersionId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -81,13 +80,13 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 			{ "changeLog", Types.VARCHAR },
 			{ "downloadPageURL", Types.VARCHAR },
 			{ "directDownloadURL", Types.VARCHAR },
-			{ "repoStoreArtifact", Types.BOOLEAN }
+			{ "repoStoreArtifact", Types.BOOLEAN },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("productVersionId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -98,9 +97,10 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		TABLE_COLUMNS_MAP.put("downloadPageURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("directDownloadURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("repoStoreArtifact", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SCProductVersion (productVersionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productEntryId LONG,version VARCHAR(75) null,changeLog STRING null,downloadPageURL STRING null,directDownloadURL VARCHAR(2000) null,repoStoreArtifact BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table SCProductVersion (productVersionId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productEntryId LONG,version VARCHAR(75) null,changeLog STRING null,downloadPageURL STRING null,directDownloadURL VARCHAR(2000) null,repoStoreArtifact BOOLEAN,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SCProductVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY scProductVersion.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SCProductVersion.createDate DESC";
@@ -134,7 +134,6 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		SCProductVersion model = new SCProductVersionImpl();
 
 		model.setProductVersionId(soapModel.getProductVersionId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -145,6 +144,7 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		model.setDownloadPageURL(soapModel.getDownloadPageURL());
 		model.setDirectDownloadURL(soapModel.getDirectDownloadURL());
 		model.setRepoStoreArtifact(soapModel.getRepoStoreArtifact());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -174,11 +174,12 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		"SCFrameworkVersi_SCProductVers";
 	public static final Object[][] MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_COLUMNS =
 		{
+			{ "companyId", Types.BIGINT },
 			{ "frameworkVersionId", Types.BIGINT },
 			{ "productVersionId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_SQL_CREATE =
-		"create table SCFrameworkVersi_SCProductVers (frameworkVersionId LONG not null,productVersionId LONG not null,primary key (frameworkVersionId, productVersionId))";
+		"create table SCFrameworkVersi_SCProductVers (companyId LONG not null,frameworkVersionId LONG not null,productVersionId LONG not null,primary key (companyId, frameworkVersionId, productVersionId))";
 	public static final boolean FINDER_CACHE_ENABLED_SCFRAMEWORKVERSI_SCPRODUCTVERS =
 		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.SCFrameworkVersi_SCProductVers"),
@@ -224,7 +225,6 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("productVersionId", getProductVersionId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -235,6 +235,7 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		attributes.put("downloadPageURL", getDownloadPageURL());
 		attributes.put("directDownloadURL", getDirectDownloadURL());
 		attributes.put("repoStoreArtifact", getRepoStoreArtifact());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -248,12 +249,6 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 		if (productVersionId != null) {
 			setProductVersionId(productVersionId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -315,6 +310,12 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		if (repoStoreArtifact != null) {
 			setRepoStoreArtifact(repoStoreArtifact);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -326,17 +327,6 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	@Override
 	public void setProductVersionId(long productVersionId) {
 		_productVersionId = productVersionId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -525,6 +515,17 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		_repoStoreArtifact = repoStoreArtifact;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -557,7 +558,6 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		SCProductVersionImpl scProductVersionImpl = new SCProductVersionImpl();
 
 		scProductVersionImpl.setProductVersionId(getProductVersionId());
-		scProductVersionImpl.setCompanyId(getCompanyId());
 		scProductVersionImpl.setUserId(getUserId());
 		scProductVersionImpl.setUserName(getUserName());
 		scProductVersionImpl.setCreateDate(getCreateDate());
@@ -568,6 +568,7 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		scProductVersionImpl.setDownloadPageURL(getDownloadPageURL());
 		scProductVersionImpl.setDirectDownloadURL(getDirectDownloadURL());
 		scProductVersionImpl.setRepoStoreArtifact(getRepoStoreArtifact());
+		scProductVersionImpl.setCompanyId(getCompanyId());
 
 		scProductVersionImpl.resetOriginalValues();
 
@@ -648,8 +649,6 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 		scProductVersionCacheModel.productVersionId = getProductVersionId();
 
-		scProductVersionCacheModel.companyId = getCompanyId();
-
 		scProductVersionCacheModel.userId = getUserId();
 
 		scProductVersionCacheModel.userName = getUserName();
@@ -714,6 +713,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 		scProductVersionCacheModel.repoStoreArtifact = getRepoStoreArtifact();
 
+		scProductVersionCacheModel.companyId = getCompanyId();
+
 		return scProductVersionCacheModel;
 	}
 
@@ -723,8 +724,6 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 
 		sb.append("{productVersionId=");
 		sb.append(getProductVersionId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -745,6 +744,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		sb.append(getDirectDownloadURL());
 		sb.append(", repoStoreArtifact=");
 		sb.append(getRepoStoreArtifact());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -761,10 +762,6 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		sb.append(
 			"<column><column-name>productVersionId</column-name><column-value><![CDATA[");
 		sb.append(getProductVersionId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -806,6 +803,10 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 			"<column><column-name>repoStoreArtifact</column-name><column-value><![CDATA[");
 		sb.append(getRepoStoreArtifact());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -817,7 +818,6 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 			SCProductVersion.class
 		};
 	private long _productVersionId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -832,6 +832,7 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	private String _directDownloadURL;
 	private String _originalDirectDownloadURL;
 	private boolean _repoStoreArtifact;
+	private long _companyId;
 	private long _columnBitmask;
 	private SCProductVersion _escapedModel;
 }

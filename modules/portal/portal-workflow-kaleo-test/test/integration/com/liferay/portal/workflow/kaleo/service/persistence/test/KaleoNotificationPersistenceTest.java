@@ -121,8 +121,6 @@ public class KaleoNotificationPersistenceTest {
 
 		newKaleoNotification.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoNotification.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoNotification.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoNotification.setUserName(RandomTestUtil.randomString());
@@ -151,6 +149,8 @@ public class KaleoNotificationPersistenceTest {
 
 		newKaleoNotification.setNotificationTypes(RandomTestUtil.randomString());
 
+		newKaleoNotification.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoNotifications.add(_persistence.update(newKaleoNotification));
 
 		KaleoNotification existingKaleoNotification = _persistence.findByPrimaryKey(newKaleoNotification.getPrimaryKey());
@@ -159,8 +159,6 @@ public class KaleoNotificationPersistenceTest {
 			newKaleoNotification.getKaleoNotificationId());
 		Assert.assertEquals(existingKaleoNotification.getGroupId(),
 			newKaleoNotification.getGroupId());
-		Assert.assertEquals(existingKaleoNotification.getCompanyId(),
-			newKaleoNotification.getCompanyId());
 		Assert.assertEquals(existingKaleoNotification.getUserId(),
 			newKaleoNotification.getUserId());
 		Assert.assertEquals(existingKaleoNotification.getUserName(),
@@ -191,13 +189,8 @@ public class KaleoNotificationPersistenceTest {
 			newKaleoNotification.getTemplateLanguage());
 		Assert.assertEquals(existingKaleoNotification.getNotificationTypes(),
 			newKaleoNotification.getNotificationTypes());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingKaleoNotification.getCompanyId(),
+			newKaleoNotification.getCompanyId());
 	}
 
 	@Test
@@ -205,6 +198,13 @@ public class KaleoNotificationPersistenceTest {
 		_persistence.countByKaleoDefinitionId(RandomTestUtil.nextLong());
 
 		_persistence.countByKaleoDefinitionId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -250,12 +250,12 @@ public class KaleoNotificationPersistenceTest {
 
 	protected OrderByComparator<KaleoNotification> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoNotification",
-			"kaleoNotificationId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoClassName", true, "kaleoClassPK", true,
-			"kaleoDefinitionId", true, "kaleoNodeName", true, "name", true,
-			"description", true, "executionType", true, "templateLanguage",
-			true, "notificationTypes", true);
+			"kaleoNotificationId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoClassName", true, "kaleoClassPK", true, "kaleoDefinitionId",
+			true, "kaleoNodeName", true, "name", true, "description", true,
+			"executionType", true, "templateLanguage", true,
+			"notificationTypes", true, "companyId", true);
 	}
 
 	@Test
@@ -462,8 +462,6 @@ public class KaleoNotificationPersistenceTest {
 
 		kaleoNotification.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoNotification.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoNotification.setUserId(RandomTestUtil.nextLong());
 
 		kaleoNotification.setUserName(RandomTestUtil.randomString());
@@ -491,6 +489,8 @@ public class KaleoNotificationPersistenceTest {
 		kaleoNotification.setTemplateLanguage(RandomTestUtil.randomString());
 
 		kaleoNotification.setNotificationTypes(RandomTestUtil.randomString());
+
+		kaleoNotification.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoNotifications.add(_persistence.update(kaleoNotification));
 

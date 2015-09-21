@@ -126,8 +126,6 @@ public class DDMStructurePersistenceTest {
 
 		newDDMStructure.setGroupId(RandomTestUtil.nextLong());
 
-		newDDMStructure.setCompanyId(RandomTestUtil.nextLong());
-
 		newDDMStructure.setUserId(RandomTestUtil.nextLong());
 
 		newDDMStructure.setUserName(RandomTestUtil.randomString());
@@ -160,6 +158,8 @@ public class DDMStructurePersistenceTest {
 
 		newDDMStructure.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newDDMStructure.setCompanyId(RandomTestUtil.nextLong());
+
 		_ddmStructures.add(_persistence.update(newDDMStructure));
 
 		DDMStructure existingDDMStructure = _persistence.findByPrimaryKey(newDDMStructure.getPrimaryKey());
@@ -170,8 +170,6 @@ public class DDMStructurePersistenceTest {
 			newDDMStructure.getStructureId());
 		Assert.assertEquals(existingDDMStructure.getGroupId(),
 			newDDMStructure.getGroupId());
-		Assert.assertEquals(existingDDMStructure.getCompanyId(),
-			newDDMStructure.getCompanyId());
 		Assert.assertEquals(existingDDMStructure.getUserId(),
 			newDDMStructure.getUserId());
 		Assert.assertEquals(existingDDMStructure.getUserName(),
@@ -207,6 +205,8 @@ public class DDMStructurePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMStructure.getLastPublishDate()),
 			Time.getShortTimestamp(newDDMStructure.getLastPublishDate()));
+		Assert.assertEquals(existingDDMStructure.getCompanyId(),
+			newDDMStructure.getCompanyId());
 	}
 
 	@Test
@@ -351,12 +351,12 @@ public class DDMStructurePersistenceTest {
 
 	protected OrderByComparator<DDMStructure> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMStructure", "uuid",
-			true, "structureId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "versionUserId", true,
-			"versionUserName", true, "createDate", true, "modifiedDate", true,
-			"parentStructureId", true, "classNameId", true, "structureKey",
-			true, "version", true, "name", true, "storageType", true, "type",
-			true, "lastPublishDate", true);
+			true, "structureId", true, "groupId", true, "userId", true,
+			"userName", true, "versionUserId", true, "versionUserName", true,
+			"createDate", true, "modifiedDate", true, "parentStructureId",
+			true, "classNameId", true, "structureKey", true, "version", true,
+			"name", true, "storageType", true, "type", true, "lastPublishDate",
+			true, "companyId", true);
 	}
 
 	@Test
@@ -589,8 +589,6 @@ public class DDMStructurePersistenceTest {
 
 		ddmStructure.setGroupId(RandomTestUtil.nextLong());
 
-		ddmStructure.setCompanyId(RandomTestUtil.nextLong());
-
 		ddmStructure.setUserId(RandomTestUtil.nextLong());
 
 		ddmStructure.setUserName(RandomTestUtil.randomString());
@@ -622,6 +620,8 @@ public class DDMStructurePersistenceTest {
 		ddmStructure.setType(RandomTestUtil.nextInt());
 
 		ddmStructure.setLastPublishDate(RandomTestUtil.nextDate());
+
+		ddmStructure.setCompanyId(RandomTestUtil.nextLong());
 
 		_ddmStructures.add(_persistence.update(ddmStructure));
 

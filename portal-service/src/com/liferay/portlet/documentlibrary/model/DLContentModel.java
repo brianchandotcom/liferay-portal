@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,7 +42,7 @@ import java.sql.Blob;
  * @generated
  */
 @ProviderType
-public interface DLContentModel extends BaseModel<DLContent> {
+public interface DLContentModel extends BaseModel<DLContent>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -89,20 +90,6 @@ public interface DLContentModel extends BaseModel<DLContent> {
 	 * @param groupId the group ID of this document library content
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this document library content.
-	 *
-	 * @return the company ID of this document library content
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this document library content.
-	 *
-	 * @param companyId the company ID of this document library content
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the repository ID of this document library content.
@@ -175,6 +162,22 @@ public interface DLContentModel extends BaseModel<DLContent> {
 	 * @param size the size of this document library content
 	 */
 	public void setSize(long size);
+
+	/**
+	 * Returns the company ID of this document library content.
+	 *
+	 * @return the company ID of this document library content
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this document library content.
+	 *
+	 * @param companyId the company ID of this document library content
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

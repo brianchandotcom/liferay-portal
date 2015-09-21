@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -47,7 +48,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
-	StagedGroupedModel {
+	PartitionableModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -114,22 +115,6 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this m d r rule.
-	 *
-	 * @return the company ID of this m d r rule
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this m d r rule.
-	 *
-	 * @param companyId the company ID of this m d r rule
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this m d r rule.
@@ -471,6 +456,22 @@ public interface MDRRuleModel extends BaseModel<MDRRule>, LocalizedModel,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this m d r rule.
+	 *
+	 * @return the company ID of this m d r rule
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this m d r rule.
+	 *
+	 * @param companyId the company ID of this m d r rule
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

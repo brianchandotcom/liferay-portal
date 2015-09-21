@@ -34,13 +34,13 @@ public class SocialActivityLimitSoap implements Serializable {
 
 		soapModel.setActivityLimitId(model.getActivityLimitId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setActivityType(model.getActivityType());
 		soapModel.setActivityCounterName(model.getActivityCounterName());
 		soapModel.setValue(model.getValue());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -112,14 +112,6 @@ public class SocialActivityLimitSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -168,13 +160,21 @@ public class SocialActivityLimitSoap implements Serializable {
 		_value = value;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _activityLimitId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private long _classNameId;
 	private long _classPK;
 	private int _activityType;
 	private String _activityCounterName;
 	private String _value;
+	private long _companyId;
 }

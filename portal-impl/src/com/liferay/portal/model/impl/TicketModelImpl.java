@@ -64,21 +64,20 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
 			{ "ticketId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "createDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "key_", Types.VARCHAR },
 			{ "type_", Types.INTEGER },
 			{ "extraInfo", Types.CLOB },
-			{ "expirationDate", Types.TIMESTAMP }
+			{ "expirationDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("ticketId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
@@ -86,9 +85,10 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("extraInfo", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Ticket (mvccVersion LONG default 0,ticketId LONG not null primary key,companyId LONG,createDate DATE null,classNameId LONG,classPK LONG,key_ VARCHAR(75) null,type_ INTEGER,extraInfo TEXT null,expirationDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Ticket (mvccVersion LONG default 0,ticketId LONG not null primary key,createDate DATE null,classNameId LONG,classPK LONG,key_ VARCHAR(75) null,type_ INTEGER,extraInfo TEXT null,expirationDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Ticket";
 	public static final String ORDER_BY_JPQL = " ORDER BY ticket.ticketId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Ticket.ticketId ASC";
@@ -151,7 +151,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ticketId", getTicketId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
@@ -159,6 +158,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		attributes.put("type", getType());
 		attributes.put("extraInfo", getExtraInfo());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -178,12 +178,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 		if (ticketId != null) {
 			setTicketId(ticketId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -227,6 +221,12 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -249,16 +249,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		_columnBitmask = -1L;
 
 		_ticketId = ticketId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -407,6 +397,16 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		_expirationDate = expirationDate;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -440,7 +440,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 		ticketImpl.setMvccVersion(getMvccVersion());
 		ticketImpl.setTicketId(getTicketId());
-		ticketImpl.setCompanyId(getCompanyId());
 		ticketImpl.setCreateDate(getCreateDate());
 		ticketImpl.setClassNameId(getClassNameId());
 		ticketImpl.setClassPK(getClassPK());
@@ -448,6 +447,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		ticketImpl.setType(getType());
 		ticketImpl.setExtraInfo(getExtraInfo());
 		ticketImpl.setExpirationDate(getExpirationDate());
+		ticketImpl.setCompanyId(getCompanyId());
 
 		ticketImpl.resetOriginalValues();
 
@@ -541,8 +541,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 
 		ticketCacheModel.ticketId = getTicketId();
 
-		ticketCacheModel.companyId = getCompanyId();
-
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -583,6 +581,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 			ticketCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
+		ticketCacheModel.companyId = getCompanyId();
+
 		return ticketCacheModel;
 	}
 
@@ -594,8 +594,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		sb.append(getMvccVersion());
 		sb.append(", ticketId=");
 		sb.append(getTicketId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", classNameId=");
@@ -610,6 +608,8 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		sb.append(getExtraInfo());
 		sb.append(", expirationDate=");
 		sb.append(getExpirationDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -630,10 +630,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		sb.append(
 			"<column><column-name>ticketId</column-name><column-value><![CDATA[");
 		sb.append(getTicketId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -663,6 +659,10 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
 		sb.append(getExpirationDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -675,7 +675,6 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 		};
 	private long _mvccVersion;
 	private long _ticketId;
-	private long _companyId;
 	private Date _createDate;
 	private long _classNameId;
 	private long _originalClassNameId;
@@ -690,6 +689,7 @@ public class TicketModelImpl extends BaseModelImpl<Ticket>
 	private boolean _setOriginalType;
 	private String _extraInfo;
 	private Date _expirationDate;
+	private long _companyId;
 	private long _columnBitmask;
 	private Ticket _escapedModel;
 }

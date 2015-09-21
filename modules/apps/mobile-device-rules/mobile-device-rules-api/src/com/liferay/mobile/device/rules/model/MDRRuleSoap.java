@@ -37,7 +37,6 @@ public class MDRRuleSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setRuleId(model.getRuleId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -48,6 +47,7 @@ public class MDRRuleSoap implements Serializable {
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -122,14 +122,6 @@ public class MDRRuleSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -212,10 +204,17 @@ public class MDRRuleSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _ruleId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -226,4 +225,5 @@ public class MDRRuleSoap implements Serializable {
 	private String _type;
 	private String _typeSettings;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

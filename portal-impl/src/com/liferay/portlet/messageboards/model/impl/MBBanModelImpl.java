@@ -73,13 +73,13 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 			{ "uuid_", Types.VARCHAR },
 			{ "banId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "banUserId", Types.BIGINT },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -87,16 +87,16 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("banId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("banUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBBan (uuid_ VARCHAR(75) null,banId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,banUserId LONG,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBBan (uuid_ VARCHAR(75) null,banId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,banUserId LONG,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MBBan";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbBan.banId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBBan.banId ASC";
@@ -135,13 +135,13 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		model.setUuid(soapModel.getUuid());
 		model.setBanId(soapModel.getBanId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setBanUserId(soapModel.getBanUserId());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -209,13 +209,13 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		attributes.put("uuid", getUuid());
 		attributes.put("banId", getBanId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("banUserId", getBanUserId());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -241,12 +241,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -283,6 +277,12 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -342,29 +342,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -500,6 +477,29 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -540,13 +540,13 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		mbBanImpl.setUuid(getUuid());
 		mbBanImpl.setBanId(getBanId());
 		mbBanImpl.setGroupId(getGroupId());
-		mbBanImpl.setCompanyId(getCompanyId());
 		mbBanImpl.setUserId(getUserId());
 		mbBanImpl.setUserName(getUserName());
 		mbBanImpl.setCreateDate(getCreateDate());
 		mbBanImpl.setModifiedDate(getModifiedDate());
 		mbBanImpl.setBanUserId(getBanUserId());
 		mbBanImpl.setLastPublishDate(getLastPublishDate());
+		mbBanImpl.setCompanyId(getCompanyId());
 
 		mbBanImpl.resetOriginalValues();
 
@@ -615,10 +615,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 		mbBanModelImpl._setOriginalGroupId = false;
 
-		mbBanModelImpl._originalCompanyId = mbBanModelImpl._companyId;
-
-		mbBanModelImpl._setOriginalCompanyId = false;
-
 		mbBanModelImpl._originalUserId = mbBanModelImpl._userId;
 
 		mbBanModelImpl._setOriginalUserId = false;
@@ -628,6 +624,10 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		mbBanModelImpl._originalBanUserId = mbBanModelImpl._banUserId;
 
 		mbBanModelImpl._setOriginalBanUserId = false;
+
+		mbBanModelImpl._originalCompanyId = mbBanModelImpl._companyId;
+
+		mbBanModelImpl._setOriginalCompanyId = false;
 
 		mbBanModelImpl._columnBitmask = 0;
 	}
@@ -647,8 +647,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		mbBanCacheModel.banId = getBanId();
 
 		mbBanCacheModel.groupId = getGroupId();
-
-		mbBanCacheModel.companyId = getCompanyId();
 
 		mbBanCacheModel.userId = getUserId();
 
@@ -689,6 +687,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 			mbBanCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		mbBanCacheModel.companyId = getCompanyId();
+
 		return mbBanCacheModel;
 	}
 
@@ -702,8 +702,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		sb.append(getBanId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -716,6 +714,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		sb.append(getBanUserId());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -742,10 +742,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
@@ -769,6 +765,10 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -785,9 +785,6 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -799,6 +796,9 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private long _originalBanUserId;
 	private boolean _setOriginalBanUserId;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private MBBan _escapedModel;
 }

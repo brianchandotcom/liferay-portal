@@ -68,14 +68,14 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			{ "mvccVersion", Types.BIGINT },
 			{ "subscriptionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "frequency", Types.VARCHAR }
+			{ "frequency", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -83,7 +83,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("subscriptionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -91,9 +90,10 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("frequency", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Subscription (mvccVersion LONG default 0,subscriptionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,frequency VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Subscription (mvccVersion LONG default 0,subscriptionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,frequency VARCHAR(75) null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Subscription";
 	public static final String ORDER_BY_JPQL = " ORDER BY subscription.subscriptionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subscription.subscriptionId ASC";
@@ -158,7 +158,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("subscriptionId", getSubscriptionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -166,6 +165,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("frequency", getFrequency());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -191,12 +191,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -240,6 +234,12 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		if (frequency != null) {
 			setFrequency(frequency);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -282,28 +282,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -464,6 +442,28 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		_frequency = frequency;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -498,7 +498,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		subscriptionImpl.setMvccVersion(getMvccVersion());
 		subscriptionImpl.setSubscriptionId(getSubscriptionId());
 		subscriptionImpl.setGroupId(getGroupId());
-		subscriptionImpl.setCompanyId(getCompanyId());
 		subscriptionImpl.setUserId(getUserId());
 		subscriptionImpl.setUserName(getUserName());
 		subscriptionImpl.setCreateDate(getCreateDate());
@@ -506,6 +505,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		subscriptionImpl.setClassNameId(getClassNameId());
 		subscriptionImpl.setClassPK(getClassPK());
 		subscriptionImpl.setFrequency(getFrequency());
+		subscriptionImpl.setCompanyId(getCompanyId());
 
 		subscriptionImpl.resetOriginalValues();
 
@@ -572,10 +572,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		subscriptionModelImpl._setOriginalGroupId = false;
 
-		subscriptionModelImpl._originalCompanyId = subscriptionModelImpl._companyId;
-
-		subscriptionModelImpl._setOriginalCompanyId = false;
-
 		subscriptionModelImpl._originalUserId = subscriptionModelImpl._userId;
 
 		subscriptionModelImpl._setOriginalUserId = false;
@@ -590,6 +586,10 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		subscriptionModelImpl._setOriginalClassPK = false;
 
+		subscriptionModelImpl._originalCompanyId = subscriptionModelImpl._companyId;
+
+		subscriptionModelImpl._setOriginalCompanyId = false;
+
 		subscriptionModelImpl._columnBitmask = 0;
 	}
 
@@ -602,8 +602,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		subscriptionCacheModel.subscriptionId = getSubscriptionId();
 
 		subscriptionCacheModel.groupId = getGroupId();
-
-		subscriptionCacheModel.companyId = getCompanyId();
 
 		subscriptionCacheModel.userId = getUserId();
 
@@ -645,6 +643,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			subscriptionCacheModel.frequency = null;
 		}
 
+		subscriptionCacheModel.companyId = getCompanyId();
+
 		return subscriptionCacheModel;
 	}
 
@@ -658,8 +658,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		sb.append(getSubscriptionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -674,6 +672,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		sb.append(getClassPK());
 		sb.append(", frequency=");
 		sb.append(getFrequency());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -698,10 +698,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -731,6 +727,10 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			"<column><column-name>frequency</column-name><column-value><![CDATA[");
 		sb.append(getFrequency());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -746,9 +746,6 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -763,6 +760,9 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private String _frequency;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Subscription _escapedModel;
 }

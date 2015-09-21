@@ -37,7 +37,6 @@ public class LayoutSetSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setLayoutSetId(model.getLayoutSetId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setPrivateLayout(model.getPrivateLayout());
@@ -51,6 +50,7 @@ public class LayoutSetSoap implements Serializable {
 		soapModel.setSettings(model.getSettings());
 		soapModel.setLayoutSetPrototypeUuid(model.getLayoutSetPrototypeUuid());
 		soapModel.setLayoutSetPrototypeLinkEnabled(model.getLayoutSetPrototypeLinkEnabled());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -125,14 +125,6 @@ public class LayoutSetSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public Date getCreateDate() {
@@ -248,10 +240,17 @@ public class LayoutSetSoap implements Serializable {
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _mvccVersion;
 	private long _layoutSetId;
 	private long _groupId;
-	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _privateLayout;
@@ -265,4 +264,5 @@ public class LayoutSetSoap implements Serializable {
 	private String _settings;
 	private String _layoutSetPrototypeUuid;
 	private boolean _layoutSetPrototypeLinkEnabled;
+	private long _companyId;
 }

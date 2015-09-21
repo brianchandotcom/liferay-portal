@@ -37,7 +37,6 @@ public class DDLRecordSetSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setRecordSetId(model.getRecordSetId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -49,6 +48,7 @@ public class DDLRecordSetSoap implements Serializable {
 		soapModel.setMinDisplayRows(model.getMinDisplayRows());
 		soapModel.setScope(model.getScope());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -123,14 +123,6 @@ public class DDLRecordSetSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -221,10 +213,17 @@ public class DDLRecordSetSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _recordSetId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -236,4 +235,5 @@ public class DDLRecordSetSoap implements Serializable {
 	private int _minDisplayRows;
 	private int _scope;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

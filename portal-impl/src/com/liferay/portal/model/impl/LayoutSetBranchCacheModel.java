@@ -87,8 +87,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		sb.append(layoutSetBranchId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -123,6 +121,8 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		sb.append(layoutSetPrototypeUuid);
 		sb.append(", layoutSetPrototypeLinkEnabled=");
 		sb.append(layoutSetPrototypeLinkEnabled);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -135,7 +135,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		layoutSetBranchImpl.setMvccVersion(mvccVersion);
 		layoutSetBranchImpl.setLayoutSetBranchId(layoutSetBranchId);
 		layoutSetBranchImpl.setGroupId(groupId);
-		layoutSetBranchImpl.setCompanyId(companyId);
 		layoutSetBranchImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -228,6 +227,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		}
 
 		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+		layoutSetBranchImpl.setCompanyId(companyId);
 
 		layoutSetBranchImpl.resetOriginalValues();
 
@@ -239,7 +239,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		mvccVersion = objectInput.readLong();
 		layoutSetBranchId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -257,6 +256,7 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		settings = objectInput.readUTF();
 		layoutSetPrototypeUuid = objectInput.readUTF();
 		layoutSetPrototypeLinkEnabled = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -265,7 +265,6 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(layoutSetBranchId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -346,12 +345,12 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 		}
 
 		objectOutput.writeBoolean(layoutSetPrototypeLinkEnabled);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long layoutSetBranchId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -369,4 +368,5 @@ public class LayoutSetBranchCacheModel implements CacheModel<LayoutSetBranch>,
 	public String settings;
 	public String layoutSetPrototypeUuid;
 	public boolean layoutSetPrototypeLinkEnabled;
+	public long companyId;
 }

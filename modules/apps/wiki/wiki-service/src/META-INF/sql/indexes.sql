@@ -28,4 +28,5 @@ create index IX_5DC4BD39 on WikiPage (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_899D3DFB on WikiPage (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_21277664 on WikiPageResource (nodeId, title[$COLUMN_LENGTH:255$]);
+create index IX_13319367 on WikiPageResource (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_F705C7A9 on WikiPageResource (uuid_[$COLUMN_LENGTH:75$], groupId);

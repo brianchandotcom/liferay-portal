@@ -63,7 +63,8 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 			{ "mvccVersion", Types.BIGINT },
 			{ "userGroupId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "roleId", Types.BIGINT }
+			{ "roleId", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -72,9 +73,10 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		TABLE_COLUMNS_MAP.put("userGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("roleId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserGroupGroupRole (mvccVersion LONG default 0,userGroupId LONG not null,groupId LONG not null,roleId LONG not null,primary key (userGroupId, groupId, roleId))";
+	public static final String TABLE_SQL_CREATE = "create table UserGroupGroupRole (mvccVersion LONG default 0,userGroupId LONG not null,groupId LONG not null,roleId LONG not null,companyId LONG,primary key (userGroupId, groupId, roleId))";
 	public static final String TABLE_SQL_DROP = "drop table UserGroupGroupRole";
 	public static final String ORDER_BY_JPQL = " ORDER BY userGroupGroupRole.id.userGroupId ASC, userGroupGroupRole.id.groupId ASC, userGroupGroupRole.id.roleId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserGroupGroupRole.userGroupId ASC, UserGroupGroupRole.groupId ASC, UserGroupGroupRole.roleId ASC";
@@ -111,6 +113,7 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		model.setUserGroupId(soapModel.getUserGroupId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setRoleId(soapModel.getRoleId());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -182,6 +185,7 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		attributes.put("userGroupId", getUserGroupId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -213,6 +217,12 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 		if (roleId != null) {
 			setRoleId(roleId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -296,6 +306,17 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		return _originalRoleId;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -318,6 +339,7 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		userGroupGroupRoleImpl.setUserGroupId(getUserGroupId());
 		userGroupGroupRoleImpl.setGroupId(getGroupId());
 		userGroupGroupRoleImpl.setRoleId(getRoleId());
+		userGroupGroupRoleImpl.setCompanyId(getCompanyId());
 
 		userGroupGroupRoleImpl.resetOriginalValues();
 
@@ -401,12 +423,14 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 		userGroupGroupRoleCacheModel.roleId = getRoleId();
 
+		userGroupGroupRoleCacheModel.companyId = getCompanyId();
+
 		return userGroupGroupRoleCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -416,6 +440,8 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		sb.append(getGroupId());
 		sb.append(", roleId=");
 		sb.append(getRoleId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -423,7 +449,7 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.UserGroupGroupRole");
@@ -445,6 +471,10 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 			"<column><column-name>roleId</column-name><column-value><![CDATA[");
 		sb.append(getRoleId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -465,6 +495,7 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 	private long _roleId;
 	private long _originalRoleId;
 	private boolean _setOriginalRoleId;
+	private long _companyId;
 	private long _columnBitmask;
 	private UserGroupGroupRole _escapedModel;
 }

@@ -36,6 +36,7 @@ public class DDMStructureLinkSoap implements Serializable {
 		soapModel.setClassNameId(model.getClassNameId());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setStructureId(model.getStructureId());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -122,8 +123,17 @@ public class DDMStructureLinkSoap implements Serializable {
 		_structureId = structureId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _structureLinkId;
 	private long _classNameId;
 	private long _classPK;
 	private long _structureId;
+	private long _companyId;
 }

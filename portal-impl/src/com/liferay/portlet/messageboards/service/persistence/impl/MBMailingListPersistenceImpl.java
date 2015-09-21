@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,6 +36,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.messageboards.NoSuchMailingListException;
 import com.liferay.portlet.messageboards.model.MBMailingList;
@@ -2333,6 +2335,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 
 		mbMailingList.setUuid(uuid);
 
+		mbMailingList.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return mbMailingList;
 	}
 
@@ -2567,7 +2571,6 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		mbMailingListImpl.setUuid(mbMailingList.getUuid());
 		mbMailingListImpl.setMailingListId(mbMailingList.getMailingListId());
 		mbMailingListImpl.setGroupId(mbMailingList.getGroupId());
-		mbMailingListImpl.setCompanyId(mbMailingList.getCompanyId());
 		mbMailingListImpl.setUserId(mbMailingList.getUserId());
 		mbMailingListImpl.setUserName(mbMailingList.getUserName());
 		mbMailingListImpl.setCreateDate(mbMailingList.getCreateDate());
@@ -2590,6 +2593,7 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		mbMailingListImpl.setOutPassword(mbMailingList.getOutPassword());
 		mbMailingListImpl.setAllowAnonymous(mbMailingList.isAllowAnonymous());
 		mbMailingListImpl.setActive(mbMailingList.isActive());
+		mbMailingListImpl.setCompanyId(mbMailingList.getCompanyId());
 
 		return mbMailingListImpl;
 	}
@@ -2970,6 +2974,8 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MBMAILINGLIST = "SELECT mbMailingList FROM MBMailingList mbMailingList";
 	private static final String _SQL_SELECT_MBMAILINGLIST_WHERE_PKS_IN = "SELECT mbMailingList FROM MBMailingList mbMailingList WHERE mailingListId IN (";
 	private static final String _SQL_SELECT_MBMAILINGLIST_WHERE = "SELECT mbMailingList FROM MBMailingList mbMailingList WHERE ";

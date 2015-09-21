@@ -52,10 +52,10 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("id", getId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("roles", getRoles());
 		attributes.put("active", getActive());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -74,12 +74,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 			setId(id);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		String portletId = (String)attributes.get("portletId");
 
 		if (portletId != null) {
@@ -96,6 +90,12 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

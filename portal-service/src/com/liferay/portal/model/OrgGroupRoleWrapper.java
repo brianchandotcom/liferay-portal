@@ -55,6 +55,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 		attributes.put("organizationId", getOrganizationId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("roleId", getRoleId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -84,6 +85,12 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 		if (roleId != null) {
 			setRoleId(roleId);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -106,6 +113,16 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	public boolean containsOrganization(
 		java.util.List<com.liferay.portal.model.Organization> organizations) {
 		return _orgGroupRole.containsOrganization(organizations);
+	}
+
+	/**
+	* Returns the company ID of this org group role.
+	*
+	* @return the company ID of this org group role
+	*/
+	@Override
+	public long getCompanyId() {
+		return _orgGroupRole.getCompanyId();
 	}
 
 	@Override
@@ -191,6 +208,16 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_orgGroupRole.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this org group role.
+	*
+	* @param companyId the company ID of this org group role
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_orgGroupRole.setCompanyId(companyId);
 	}
 
 	@Override

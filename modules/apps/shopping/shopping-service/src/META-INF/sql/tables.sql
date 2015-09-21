@@ -1,7 +1,6 @@
 create table ShoppingCart (
 	cartId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -9,26 +8,26 @@ create table ShoppingCart (
 	itemIds TEXT null,
 	couponCodes VARCHAR(75) null,
 	altShipping INTEGER,
-	insure BOOLEAN
+	insure BOOLEAN,
+	companyId LONG
 );
 
 create table ShoppingCategory (
 	categoryId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	parentCategoryId LONG,
 	name VARCHAR(75) null,
-	description STRING null
+	description STRING null,
+	companyId LONG
 );
 
 create table ShoppingCoupon (
 	couponId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -43,13 +42,13 @@ create table ShoppingCoupon (
 	limitSkus STRING null,
 	minOrder DOUBLE,
 	discount DOUBLE,
-	discountType VARCHAR(75) null
+	discountType VARCHAR(75) null,
+	companyId LONG
 );
 
 create table ShoppingItem (
 	itemId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -80,7 +79,8 @@ create table ShoppingItem (
 	mediumImageURL STRING null,
 	largeImage BOOLEAN,
 	largeImageId LONG,
-	largeImageURL STRING null
+	largeImageURL STRING null,
+	companyId LONG
 );
 
 create table ShoppingItemField (
@@ -88,7 +88,8 @@ create table ShoppingItemField (
 	itemId LONG,
 	name VARCHAR(75) null,
 	values_ STRING null,
-	description STRING null
+	description STRING null,
+	companyId LONG
 );
 
 create table ShoppingItemPrice (
@@ -101,13 +102,13 @@ create table ShoppingItemPrice (
 	taxable BOOLEAN,
 	shipping DOUBLE,
 	useShippingFormula BOOLEAN,
-	status INTEGER
+	status INTEGER,
+	companyId LONG
 );
 
 create table ShoppingOrder (
 	orderId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -155,7 +156,8 @@ create table ShoppingOrder (
 	ppReceiverEmail VARCHAR(75) null,
 	ppPayerEmail VARCHAR(75) null,
 	sendOrderEmail BOOLEAN,
-	sendShippingEmail BOOLEAN
+	sendShippingEmail BOOLEAN,
+	companyId LONG
 );
 
 create table ShoppingOrderItem (
@@ -168,5 +170,6 @@ create table ShoppingOrderItem (
 	properties STRING null,
 	price DOUBLE,
 	quantity INTEGER,
-	shippedDate DATE null
+	shippedDate DATE null,
+	companyId LONG
 );

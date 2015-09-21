@@ -74,8 +74,6 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		sb.append(recordId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -98,6 +96,8 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		sb.append(displayIndex);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -116,7 +116,6 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 		ddlRecordImpl.setRecordId(recordId);
 		ddlRecordImpl.setGroupId(groupId);
-		ddlRecordImpl.setCompanyId(companyId);
 		ddlRecordImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -168,6 +167,8 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 			ddlRecordImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		ddlRecordImpl.setCompanyId(companyId);
+
 		ddlRecordImpl.resetOriginalValues();
 
 		return ddlRecordImpl;
@@ -178,7 +179,6 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		uuid = objectInput.readUTF();
 		recordId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		versionUserId = objectInput.readLong();
@@ -190,6 +190,7 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 		version = objectInput.readUTF();
 		displayIndex = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -204,7 +205,6 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 		objectOutput.writeLong(recordId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -237,12 +237,12 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 
 		objectOutput.writeInt(displayIndex);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long recordId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long versionUserId;
@@ -254,4 +254,5 @@ public class DDLRecordCacheModel implements CacheModel<DDLRecord>,
 	public String version;
 	public int displayIndex;
 	public long lastPublishDate;
+	public long companyId;
 }

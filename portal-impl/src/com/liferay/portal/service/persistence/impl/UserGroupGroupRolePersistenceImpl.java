@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchUserGroupGroupRoleException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2665,6 +2666,8 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 		userGroupGroupRole.setNew(true);
 		userGroupGroupRole.setPrimaryKey(userGroupGroupRolePK);
 
+		userGroupGroupRole.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return userGroupGroupRole;
 	}
 
@@ -2910,6 +2913,7 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 		userGroupGroupRoleImpl.setUserGroupId(userGroupGroupRole.getUserGroupId());
 		userGroupGroupRoleImpl.setGroupId(userGroupGroupRole.getGroupId());
 		userGroupGroupRoleImpl.setRoleId(userGroupGroupRole.getRoleId());
+		userGroupGroupRoleImpl.setCompanyId(userGroupGroupRole.getCompanyId());
 
 		return userGroupGroupRoleImpl;
 	}
@@ -3216,6 +3220,8 @@ public class UserGroupGroupRolePersistenceImpl extends BasePersistenceImpl<UserG
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_USERGROUPGROUPROLE = "SELECT userGroupGroupRole FROM UserGroupGroupRole userGroupGroupRole";
 	private static final String _SQL_SELECT_USERGROUPGROUPROLE_WHERE = "SELECT userGroupGroupRole FROM UserGroupGroupRole userGroupGroupRole WHERE ";
 	private static final String _SQL_COUNT_USERGROUPGROUPROLE = "SELECT COUNT(userGroupGroupRole) FROM UserGroupGroupRole userGroupGroupRole";

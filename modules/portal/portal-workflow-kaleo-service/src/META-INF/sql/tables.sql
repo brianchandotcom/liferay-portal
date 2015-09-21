@@ -1,7 +1,6 @@
 create table KaleoAction (
 	kaleoActionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -16,13 +15,13 @@ create table KaleoAction (
 	script TEXT null,
 	scriptLanguage VARCHAR(75) null,
 	scriptRequiredContexts STRING null,
-	priority INTEGER
+	priority INTEGER,
+	companyId LONG
 );
 
 create table KaleoCondition (
 	kaleoConditionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -31,13 +30,13 @@ create table KaleoCondition (
 	kaleoNodeId LONG,
 	script TEXT null,
 	scriptLanguage VARCHAR(75) null,
-	scriptRequiredContexts STRING null
+	scriptRequiredContexts STRING null,
+	companyId LONG
 );
 
 create table KaleoDefinition (
 	kaleoDefinitionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -48,13 +47,13 @@ create table KaleoDefinition (
 	content TEXT null,
 	version INTEGER,
 	active_ BOOLEAN,
-	startKaleoNodeId LONG
+	startKaleoNodeId LONG,
+	companyId LONG
 );
 
 create table KaleoInstance (
 	kaleoInstanceId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -67,13 +66,13 @@ create table KaleoInstance (
 	classPK LONG,
 	completed BOOLEAN,
 	completionDate DATE null,
-	workflowContext TEXT null
+	workflowContext TEXT null,
+	companyId LONG
 );
 
 create table KaleoInstanceToken (
 	kaleoInstanceTokenId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -86,13 +85,13 @@ create table KaleoInstanceToken (
 	className VARCHAR(200) null,
 	classPK LONG,
 	completed BOOLEAN,
-	completionDate DATE null
+	completionDate DATE null,
+	companyId LONG
 );
 
 create table KaleoLog (
 	kaleoLogId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -119,13 +118,13 @@ create table KaleoLog (
 	startDate DATE null,
 	endDate DATE null,
 	duration LONG,
-	workflowContext TEXT null
+	workflowContext TEXT null,
+	companyId LONG
 );
 
 create table KaleoNode (
 	kaleoNodeId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -136,13 +135,13 @@ create table KaleoNode (
 	description STRING null,
 	type_ VARCHAR(20) null,
 	initial_ BOOLEAN,
-	terminal BOOLEAN
+	terminal BOOLEAN,
+	companyId LONG
 );
 
 create table KaleoNotification (
 	kaleoNotificationId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -156,13 +155,13 @@ create table KaleoNotification (
 	executionType VARCHAR(20) null,
 	template TEXT null,
 	templateLanguage VARCHAR(75) null,
-	notificationTypes VARCHAR(25) null
+	notificationTypes VARCHAR(25) null,
+	companyId LONG
 );
 
 create table KaleoNotificationRecipient (
 	kaleoNotificationRecipientId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -176,13 +175,13 @@ create table KaleoNotificationRecipient (
 	recipientScriptLanguage VARCHAR(75) null,
 	recipientScriptContexts STRING null,
 	address VARCHAR(255) null,
-	notificationReceptionType VARCHAR(3) null
+	notificationReceptionType VARCHAR(3) null,
+	companyId LONG
 );
 
 create table KaleoTask (
 	kaleoTaskId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -190,13 +189,13 @@ create table KaleoTask (
 	kaleoDefinitionId LONG,
 	kaleoNodeId LONG,
 	name VARCHAR(200) null,
-	description STRING null
+	description STRING null,
+	companyId LONG
 );
 
 create table KaleoTaskAssignment (
 	kaleoTaskAssignmentId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -210,13 +209,13 @@ create table KaleoTaskAssignment (
 	assigneeActionId VARCHAR(75) null,
 	assigneeScript TEXT null,
 	assigneeScriptLanguage VARCHAR(75) null,
-	assigneeScriptRequiredContexts STRING null
+	assigneeScriptRequiredContexts STRING null,
+	companyId LONG
 );
 
 create table KaleoTaskAssignmentInstance (
 	kaleoTaskAssignmentInstanceId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -230,13 +229,13 @@ create table KaleoTaskAssignmentInstance (
 	assigneeClassName VARCHAR(200) null,
 	assigneeClassPK LONG,
 	completed BOOLEAN,
-	completionDate DATE null
+	completionDate DATE null,
+	companyId LONG
 );
 
 create table KaleoTaskInstanceToken (
 	kaleoTaskInstanceTokenId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -252,13 +251,13 @@ create table KaleoTaskInstanceToken (
 	completed BOOLEAN,
 	completionDate DATE null,
 	dueDate DATE null,
-	workflowContext TEXT null
+	workflowContext TEXT null,
+	companyId LONG
 );
 
 create table KaleoTimer (
 	kaleoTimerId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -272,13 +271,13 @@ create table KaleoTimer (
 	duration DOUBLE,
 	scale VARCHAR(75) null,
 	recurrenceDuration DOUBLE,
-	recurrenceScale VARCHAR(75) null
+	recurrenceScale VARCHAR(75) null,
+	companyId LONG
 );
 
 create table KaleoTimerInstanceToken (
 	kaleoTimerInstanceTokenId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -295,13 +294,13 @@ create table KaleoTimerInstanceToken (
 	completionUserId LONG,
 	completed BOOLEAN,
 	completionDate DATE null,
-	workflowContext TEXT null
+	workflowContext TEXT null,
+	companyId LONG
 );
 
 create table KaleoTransition (
 	kaleoTransitionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(200) null,
 	createDate DATE null,
@@ -314,5 +313,6 @@ create table KaleoTransition (
 	sourceKaleoNodeName VARCHAR(200) null,
 	targetKaleoNodeId LONG,
 	targetKaleoNodeName VARCHAR(200) null,
-	defaultTransition BOOLEAN
+	defaultTransition BOOLEAN,
+	companyId LONG
 );

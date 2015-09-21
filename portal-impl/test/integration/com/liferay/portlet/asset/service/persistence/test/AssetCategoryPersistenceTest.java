@@ -121,8 +121,6 @@ public class AssetCategoryPersistenceTest {
 
 		newAssetCategory.setGroupId(RandomTestUtil.nextLong());
 
-		newAssetCategory.setCompanyId(RandomTestUtil.nextLong());
-
 		newAssetCategory.setUserId(RandomTestUtil.nextLong());
 
 		newAssetCategory.setUserName(RandomTestUtil.randomString());
@@ -145,6 +143,8 @@ public class AssetCategoryPersistenceTest {
 
 		newAssetCategory.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newAssetCategory.setCompanyId(RandomTestUtil.nextLong());
+
 		_assetCategories.add(_persistence.update(newAssetCategory));
 
 		AssetCategory existingAssetCategory = _persistence.findByPrimaryKey(newAssetCategory.getPrimaryKey());
@@ -155,8 +155,6 @@ public class AssetCategoryPersistenceTest {
 			newAssetCategory.getCategoryId());
 		Assert.assertEquals(existingAssetCategory.getGroupId(),
 			newAssetCategory.getGroupId());
-		Assert.assertEquals(existingAssetCategory.getCompanyId(),
-			newAssetCategory.getCompanyId());
 		Assert.assertEquals(existingAssetCategory.getUserId(),
 			newAssetCategory.getUserId());
 		Assert.assertEquals(existingAssetCategory.getUserName(),
@@ -184,6 +182,8 @@ public class AssetCategoryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingAssetCategory.getLastPublishDate()),
 			Time.getShortTimestamp(newAssetCategory.getLastPublishDate()));
+		Assert.assertEquals(existingAssetCategory.getCompanyId(),
+			newAssetCategory.getCompanyId());
 	}
 
 	@Test
@@ -350,11 +350,12 @@ public class AssetCategoryPersistenceTest {
 
 	protected OrderByComparator<AssetCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetCategory", "uuid",
-			true, "categoryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "parentCategoryId", true, "leftCategoryId",
-			true, "rightCategoryId", true, "name", true, "title", true,
-			"description", true, "vocabularyId", true, "lastPublishDate", true);
+			true, "categoryId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"parentCategoryId", true, "leftCategoryId", true,
+			"rightCategoryId", true, "name", true, "title", true,
+			"description", true, "vocabularyId", true, "lastPublishDate", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -588,8 +589,6 @@ public class AssetCategoryPersistenceTest {
 
 		assetCategory.setGroupId(RandomTestUtil.nextLong());
 
-		assetCategory.setCompanyId(RandomTestUtil.nextLong());
-
 		assetCategory.setUserId(RandomTestUtil.nextLong());
 
 		assetCategory.setUserName(RandomTestUtil.randomString());
@@ -611,6 +610,8 @@ public class AssetCategoryPersistenceTest {
 		assetCategory.setVocabularyId(RandomTestUtil.nextLong());
 
 		assetCategory.setLastPublishDate(RandomTestUtil.nextDate());
+
+		assetCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		_assetCategories.add(_persistence.update(assetCategory));
 
@@ -838,8 +839,6 @@ public class AssetCategoryPersistenceTest {
 		assetCategory.setUuid(RandomTestUtil.randomString());
 		assetCategory.setGroupId(groupId);
 
-		assetCategory.setCompanyId(RandomTestUtil.nextLong());
-
 		assetCategory.setUserId(RandomTestUtil.nextLong());
 
 		assetCategory.setUserName(RandomTestUtil.randomString());
@@ -861,6 +860,8 @@ public class AssetCategoryPersistenceTest {
 		assetCategory.setVocabularyId(RandomTestUtil.nextLong());
 
 		assetCategory.setLastPublishDate(RandomTestUtil.nextDate());
+
+		assetCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		if (parentCategoryId != null) {
 			assetCategory.setParentCategoryId(parentCategoryId);

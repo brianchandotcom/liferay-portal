@@ -35,10 +35,10 @@ public class PortletSoap implements Serializable {
 
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setId(model.getId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setPortletId(model.getPortletId());
 		soapModel.setRoles(model.getRoles());
 		soapModel.setActive(model.getActive());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -107,14 +107,6 @@ public class PortletSoap implements Serializable {
 		_id = id;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public String getPortletId() {
 		return _portletId;
 	}
@@ -143,10 +135,18 @@ public class PortletSoap implements Serializable {
 		_active = active;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _mvccVersion;
 	private long _id;
-	private long _companyId;
 	private String _portletId;
 	private String _roles;
 	private boolean _active;
+	private long _companyId;
 }

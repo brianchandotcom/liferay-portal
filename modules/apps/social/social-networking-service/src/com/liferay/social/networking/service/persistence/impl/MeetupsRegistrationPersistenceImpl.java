@@ -16,6 +16,7 @@ package com.liferay.social.networking.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -33,6 +34,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.social.networking.exception.NoSuchMeetupsRegistrationException;
 import com.liferay.social.networking.model.MeetupsRegistration;
@@ -1413,7 +1415,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache(meetupsRegistration);
+		clearUniqueFindersCache((MeetupsRegistrationModelImpl)meetupsRegistration);
 	}
 
 	@Override
@@ -1426,48 +1428,44 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 				MeetupsRegistrationImpl.class,
 				meetupsRegistration.getPrimaryKey());
 
-			clearUniqueFindersCache(meetupsRegistration);
+			clearUniqueFindersCache((MeetupsRegistrationModelImpl)meetupsRegistration);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
-		MeetupsRegistration meetupsRegistration, boolean isNew) {
+		MeetupsRegistrationModelImpl meetupsRegistrationModelImpl, boolean isNew) {
 		if (isNew) {
 			Object[] args = new Object[] {
-					meetupsRegistration.getUserId(),
-					meetupsRegistration.getMeetupsEntryId()
+					meetupsRegistrationModelImpl.getUserId(),
+					meetupsRegistrationModelImpl.getMeetupsEntryId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_ME, args,
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_ME, args,
-				meetupsRegistration);
+				meetupsRegistrationModelImpl);
 		}
 		else {
-			MeetupsRegistrationModelImpl meetupsRegistrationModelImpl = (MeetupsRegistrationModelImpl)meetupsRegistration;
-
 			if ((meetupsRegistrationModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_U_ME.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						meetupsRegistration.getUserId(),
-						meetupsRegistration.getMeetupsEntryId()
+						meetupsRegistrationModelImpl.getUserId(),
+						meetupsRegistrationModelImpl.getMeetupsEntryId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_ME, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_ME, args,
-					meetupsRegistration);
+					meetupsRegistrationModelImpl);
 			}
 		}
 	}
 
 	protected void clearUniqueFindersCache(
-		MeetupsRegistration meetupsRegistration) {
-		MeetupsRegistrationModelImpl meetupsRegistrationModelImpl = (MeetupsRegistrationModelImpl)meetupsRegistration;
-
+		MeetupsRegistrationModelImpl meetupsRegistrationModelImpl) {
 		Object[] args = new Object[] {
-				meetupsRegistration.getUserId(),
-				meetupsRegistration.getMeetupsEntryId()
+				meetupsRegistrationModelImpl.getUserId(),
+				meetupsRegistrationModelImpl.getMeetupsEntryId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_ME, args);
@@ -1497,6 +1495,8 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 
 		meetupsRegistration.setNew(true);
 		meetupsRegistration.setPrimaryKey(meetupsRegistrationId);
+
+		meetupsRegistration.setCompanyId(companyProviderHolder.getCompanyId());
 
 		return meetupsRegistration;
 	}
@@ -1695,9 +1695,8 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 			MeetupsRegistrationImpl.class, meetupsRegistration.getPrimaryKey(),
 			meetupsRegistration, false);
 
-		clearUniqueFindersCache((MeetupsRegistration)meetupsRegistrationModelImpl);
-		cacheUniqueFindersCache((MeetupsRegistration)meetupsRegistrationModelImpl,
-			isNew);
+		clearUniqueFindersCache(meetupsRegistrationModelImpl);
+		cacheUniqueFindersCache(meetupsRegistrationModelImpl, isNew);
 
 		meetupsRegistration.resetOriginalValues();
 
@@ -1716,7 +1715,6 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 		meetupsRegistrationImpl.setPrimaryKey(meetupsRegistration.getPrimaryKey());
 
 		meetupsRegistrationImpl.setMeetupsRegistrationId(meetupsRegistration.getMeetupsRegistrationId());
-		meetupsRegistrationImpl.setCompanyId(meetupsRegistration.getCompanyId());
 		meetupsRegistrationImpl.setUserId(meetupsRegistration.getUserId());
 		meetupsRegistrationImpl.setUserName(meetupsRegistration.getUserName());
 		meetupsRegistrationImpl.setCreateDate(meetupsRegistration.getCreateDate());
@@ -1724,6 +1722,7 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 		meetupsRegistrationImpl.setMeetupsEntryId(meetupsRegistration.getMeetupsEntryId());
 		meetupsRegistrationImpl.setStatus(meetupsRegistration.getStatus());
 		meetupsRegistrationImpl.setComments(meetupsRegistration.getComments());
+		meetupsRegistrationImpl.setCompanyId(meetupsRegistration.getCompanyId());
 
 		return meetupsRegistrationImpl;
 	}
@@ -2102,6 +2101,8 @@ public class MeetupsRegistrationPersistenceImpl extends BasePersistenceImpl<Meet
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MEETUPSREGISTRATION = "SELECT meetupsRegistration FROM MeetupsRegistration meetupsRegistration";
 	private static final String _SQL_SELECT_MEETUPSREGISTRATION_WHERE_PKS_IN = "SELECT meetupsRegistration FROM MeetupsRegistration meetupsRegistration WHERE meetupsRegistrationId IN (";
 	private static final String _SQL_SELECT_MEETUPSREGISTRATION_WHERE = "SELECT meetupsRegistration FROM MeetupsRegistration meetupsRegistration WHERE ";

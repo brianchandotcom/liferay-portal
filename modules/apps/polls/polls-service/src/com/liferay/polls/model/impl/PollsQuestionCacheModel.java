@@ -74,8 +74,6 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 		sb.append(questionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -94,6 +92,8 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 		sb.append(lastPublishDate);
 		sb.append(", lastVoteDate=");
 		sb.append(lastVoteDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -112,7 +112,6 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 
 		pollsQuestionImpl.setQuestionId(questionId);
 		pollsQuestionImpl.setGroupId(groupId);
-		pollsQuestionImpl.setCompanyId(companyId);
 		pollsQuestionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -171,6 +170,8 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 			pollsQuestionImpl.setLastVoteDate(new Date(lastVoteDate));
 		}
 
+		pollsQuestionImpl.setCompanyId(companyId);
+
 		pollsQuestionImpl.resetOriginalValues();
 
 		return pollsQuestionImpl;
@@ -181,7 +182,6 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 		uuid = objectInput.readUTF();
 		questionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -191,6 +191,7 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
 		lastVoteDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -205,7 +206,6 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 
 		objectOutput.writeLong(questionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -235,12 +235,12 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
 		objectOutput.writeLong(lastVoteDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long questionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -250,4 +250,5 @@ public class PollsQuestionCacheModel implements CacheModel<PollsQuestion>,
 	public long expirationDate;
 	public long lastPublishDate;
 	public long lastVoteDate;
+	public long companyId;
 }

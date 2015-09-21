@@ -36,7 +36,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface OrgLaborModel extends BaseModel<OrgLabor>, MVCCModel {
+public interface OrgLaborModel extends BaseModel<OrgLabor>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -310,6 +311,22 @@ public interface OrgLaborModel extends BaseModel<OrgLabor>, MVCCModel {
 	 * @param satClose the sat close of this org labor
 	 */
 	public void setSatClose(int satClose);
+
+	/**
+	 * Returns the company ID of this org labor.
+	 *
+	 * @return the company ID of this org labor
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this org labor.
+	 *
+	 * @param companyId the company ID of this org labor
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

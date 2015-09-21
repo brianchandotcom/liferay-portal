@@ -56,7 +56,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("roleId", getRoleId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -69,6 +68,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 		attributes.put("type", getType());
 		attributes.put("subtype", getSubtype());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -91,12 +91,6 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 
 		if (roleId != null) {
 			setRoleId(roleId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -169,6 +163,12 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

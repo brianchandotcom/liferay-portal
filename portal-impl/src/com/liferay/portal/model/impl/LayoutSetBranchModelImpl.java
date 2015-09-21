@@ -71,7 +71,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			{ "mvccVersion", Types.BIGINT },
 			{ "layoutSetBranchId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -88,7 +87,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			{ "css", Types.CLOB },
 			{ "settings_", Types.CLOB },
 			{ "layoutSetPrototypeUuid", Types.VARCHAR },
-			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN }
+			{ "layoutSetPrototypeLinkEnabled", Types.BOOLEAN },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -96,7 +96,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("layoutSetBranchId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -114,9 +113,10 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		TABLE_COLUMNS_MAP.put("settings_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("layoutSetPrototypeUuid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutSetPrototypeLinkEnabled", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (mvccVersion LONG default 0,layoutSetBranchId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null,master BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutSetBranch (mvccVersion LONG default 0,layoutSetBranchId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,privateLayout BOOLEAN,name VARCHAR(75) null,description STRING null,master BOOLEAN,logoId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,wapThemeId VARCHAR(75) null,wapColorSchemeId VARCHAR(75) null,css TEXT null,settings_ TEXT null,layoutSetPrototypeUuid VARCHAR(75) null,layoutSetPrototypeLinkEnabled BOOLEAN,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutSetBranch";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutSetBranch.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutSetBranch.name ASC";
@@ -153,7 +153,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setLayoutSetBranchId(soapModel.getLayoutSetBranchId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -171,6 +170,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		model.setSettings(soapModel.getSettings());
 		model.setLayoutSetPrototypeUuid(soapModel.getLayoutSetPrototypeUuid());
 		model.setLayoutSetPrototypeLinkEnabled(soapModel.getLayoutSetPrototypeLinkEnabled());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -239,7 +239,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("layoutSetBranchId", getLayoutSetBranchId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -258,6 +257,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		attributes.put("layoutSetPrototypeUuid", getLayoutSetPrototypeUuid());
 		attributes.put("layoutSetPrototypeLinkEnabled",
 			getLayoutSetPrototypeLinkEnabled());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -283,12 +283,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -394,6 +388,12 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		if (layoutSetPrototypeLinkEnabled != null) {
 			setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -439,17 +439,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@JSON
@@ -761,6 +750,17 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		_layoutSetPrototypeLinkEnabled = layoutSetPrototypeLinkEnabled;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -795,7 +795,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		layoutSetBranchImpl.setMvccVersion(getMvccVersion());
 		layoutSetBranchImpl.setLayoutSetBranchId(getLayoutSetBranchId());
 		layoutSetBranchImpl.setGroupId(getGroupId());
-		layoutSetBranchImpl.setCompanyId(getCompanyId());
 		layoutSetBranchImpl.setUserId(getUserId());
 		layoutSetBranchImpl.setUserName(getUserName());
 		layoutSetBranchImpl.setCreateDate(getCreateDate());
@@ -813,6 +812,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		layoutSetBranchImpl.setSettings(getSettings());
 		layoutSetBranchImpl.setLayoutSetPrototypeUuid(getLayoutSetPrototypeUuid());
 		layoutSetBranchImpl.setLayoutSetPrototypeLinkEnabled(getLayoutSetPrototypeLinkEnabled());
+		layoutSetBranchImpl.setCompanyId(getCompanyId());
 
 		layoutSetBranchImpl.resetOriginalValues();
 
@@ -901,8 +901,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		layoutSetBranchCacheModel.layoutSetBranchId = getLayoutSetBranchId();
 
 		layoutSetBranchCacheModel.groupId = getGroupId();
-
-		layoutSetBranchCacheModel.companyId = getCompanyId();
 
 		layoutSetBranchCacheModel.userId = getUserId();
 
@@ -1013,6 +1011,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 
 		layoutSetBranchCacheModel.layoutSetPrototypeLinkEnabled = getLayoutSetPrototypeLinkEnabled();
 
+		layoutSetBranchCacheModel.companyId = getCompanyId();
+
 		return layoutSetBranchCacheModel;
 	}
 
@@ -1026,8 +1026,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		sb.append(getLayoutSetBranchId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1062,6 +1060,8 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		sb.append(getLayoutSetPrototypeUuid());
 		sb.append(", layoutSetPrototypeLinkEnabled=");
 		sb.append(getLayoutSetPrototypeLinkEnabled());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1086,10 +1086,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1159,6 +1155,10 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 			"<column><column-name>layoutSetPrototypeLinkEnabled</column-name><column-value><![CDATA[");
 		sb.append(getLayoutSetPrototypeLinkEnabled());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1174,7 +1174,6 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1198,6 +1197,7 @@ public class LayoutSetBranchModelImpl extends BaseModelImpl<LayoutSetBranch>
 	private String _settings;
 	private String _layoutSetPrototypeUuid;
 	private boolean _layoutSetPrototypeLinkEnabled;
+	private long _companyId;
 	private long _columnBitmask;
 	private LayoutSetBranch _escapedModel;
 }

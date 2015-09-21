@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchLayoutPrototypeException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -3836,6 +3837,8 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 
 		layoutPrototype.setUuid(uuid);
 
+		layoutPrototype.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return layoutPrototype;
 	}
 
@@ -4090,7 +4093,6 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		layoutPrototypeImpl.setMvccVersion(layoutPrototype.getMvccVersion());
 		layoutPrototypeImpl.setUuid(layoutPrototype.getUuid());
 		layoutPrototypeImpl.setLayoutPrototypeId(layoutPrototype.getLayoutPrototypeId());
-		layoutPrototypeImpl.setCompanyId(layoutPrototype.getCompanyId());
 		layoutPrototypeImpl.setUserId(layoutPrototype.getUserId());
 		layoutPrototypeImpl.setUserName(layoutPrototype.getUserName());
 		layoutPrototypeImpl.setCreateDate(layoutPrototype.getCreateDate());
@@ -4100,6 +4102,7 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		layoutPrototypeImpl.setSettings(layoutPrototype.getSettings());
 		layoutPrototypeImpl.setActive(layoutPrototype.isActive());
 		layoutPrototypeImpl.setLastPublishDate(layoutPrototype.getLastPublishDate());
+		layoutPrototypeImpl.setCompanyId(layoutPrototype.getCompanyId());
 
 		return layoutPrototypeImpl;
 	}
@@ -4481,6 +4484,8 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_LAYOUTPROTOTYPE = "SELECT layoutPrototype FROM LayoutPrototype layoutPrototype";
 	private static final String _SQL_SELECT_LAYOUTPROTOTYPE_WHERE_PKS_IN = "SELECT layoutPrototype FROM LayoutPrototype layoutPrototype WHERE layoutPrototypeId IN (";
 	private static final String _SQL_SELECT_LAYOUTPROTOTYPE_WHERE = "SELECT layoutPrototype FROM LayoutPrototype layoutPrototype WHERE ";

@@ -43,7 +43,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
-	LocalizedModel, MVCCModel, StagedAuditedModel {
+	LocalizedModel, MVCCModel, PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -110,22 +110,6 @@ public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
 	 * @param layoutPrototypeId the layout prototype ID of this layout prototype
 	 */
 	public void setLayoutPrototypeId(long layoutPrototypeId);
-
-	/**
-	 * Returns the company ID of this layout prototype.
-	 *
-	 * @return the company ID of this layout prototype
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this layout prototype.
-	 *
-	 * @param companyId the company ID of this layout prototype
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this layout prototype.
@@ -459,6 +443,22 @@ public interface LayoutPrototypeModel extends BaseModel<LayoutPrototype>,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this layout prototype.
+	 *
+	 * @return the company ID of this layout prototype
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this layout prototype.
+	 *
+	 * @param companyId the company ID of this layout prototype
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

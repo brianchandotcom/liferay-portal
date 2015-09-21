@@ -83,7 +83,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "uuid_", Types.VARCHAR },
 			{ "fileEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -109,7 +108,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "custom1ImageId", Types.BIGINT },
 			{ "custom2ImageId", Types.BIGINT },
 			{ "manualCheckInRequired", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -117,7 +117,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fileEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -144,9 +143,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		TABLE_COLUMNS_MAP.put("custom2ImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("manualCheckInRequired", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,fileName VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntry.folderId ASC, DLFileEntry.name ASC";
@@ -190,7 +190,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		model.setUuid(soapModel.getUuid());
 		model.setFileEntryId(soapModel.getFileEntryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -217,6 +216,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		model.setCustom2ImageId(soapModel.getCustom2ImageId());
 		model.setManualCheckInRequired(soapModel.getManualCheckInRequired());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -284,7 +284,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		attributes.put("uuid", getUuid());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -311,6 +310,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		attributes.put("custom2ImageId", getCustom2ImageId());
 		attributes.put("manualCheckInRequired", getManualCheckInRequired());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -336,12 +336,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -500,6 +494,12 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -558,29 +558,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1054,6 +1031,29 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1225,7 +1225,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryImpl.setUuid(getUuid());
 		dlFileEntryImpl.setFileEntryId(getFileEntryId());
 		dlFileEntryImpl.setGroupId(getGroupId());
-		dlFileEntryImpl.setCompanyId(getCompanyId());
 		dlFileEntryImpl.setUserId(getUserId());
 		dlFileEntryImpl.setUserName(getUserName());
 		dlFileEntryImpl.setCreateDate(getCreateDate());
@@ -1252,6 +1251,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryImpl.setCustom2ImageId(getCustom2ImageId());
 		dlFileEntryImpl.setManualCheckInRequired(getManualCheckInRequired());
 		dlFileEntryImpl.setLastPublishDate(getLastPublishDate());
+		dlFileEntryImpl.setCompanyId(getCompanyId());
 
 		dlFileEntryImpl.resetOriginalValues();
 
@@ -1332,10 +1332,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryModelImpl._setOriginalGroupId = false;
 
-		dlFileEntryModelImpl._originalCompanyId = dlFileEntryModelImpl._companyId;
-
-		dlFileEntryModelImpl._setOriginalCompanyId = false;
-
 		dlFileEntryModelImpl._originalUserId = dlFileEntryModelImpl._userId;
 
 		dlFileEntryModelImpl._setOriginalUserId = false;
@@ -1362,6 +1358,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryModelImpl._setOriginalFileEntryTypeId = false;
 
+		dlFileEntryModelImpl._originalCompanyId = dlFileEntryModelImpl._companyId;
+
+		dlFileEntryModelImpl._setOriginalCompanyId = false;
+
 		dlFileEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -1380,8 +1380,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryCacheModel.fileEntryId = getFileEntryId();
 
 		dlFileEntryCacheModel.groupId = getGroupId();
-
-		dlFileEntryCacheModel.companyId = getCompanyId();
 
 		dlFileEntryCacheModel.userId = getUserId();
 
@@ -1516,6 +1514,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			dlFileEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		dlFileEntryCacheModel.companyId = getCompanyId();
+
 		return dlFileEntryCacheModel;
 	}
 
@@ -1529,8 +1529,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(getFileEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1583,6 +1581,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(getManualCheckInRequired());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1607,10 +1607,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1716,6 +1712,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1732,9 +1732,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -1774,6 +1771,9 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private long _custom2ImageId;
 	private boolean _manualCheckInRequired;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private DLFileEntry _escapedModel;
 }

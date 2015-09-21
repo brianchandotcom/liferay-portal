@@ -68,8 +68,6 @@ public class ExpandoValueCacheModel implements CacheModel<ExpandoValue>,
 
 		sb.append("{valueId=");
 		sb.append(valueId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", tableId=");
 		sb.append(tableId);
 		sb.append(", columnId=");
@@ -82,6 +80,8 @@ public class ExpandoValueCacheModel implements CacheModel<ExpandoValue>,
 		sb.append(classPK);
 		sb.append(", data=");
 		sb.append(data);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -92,7 +92,6 @@ public class ExpandoValueCacheModel implements CacheModel<ExpandoValue>,
 		ExpandoValueImpl expandoValueImpl = new ExpandoValueImpl();
 
 		expandoValueImpl.setValueId(valueId);
-		expandoValueImpl.setCompanyId(companyId);
 		expandoValueImpl.setTableId(tableId);
 		expandoValueImpl.setColumnId(columnId);
 		expandoValueImpl.setRowId(rowId);
@@ -106,6 +105,8 @@ public class ExpandoValueCacheModel implements CacheModel<ExpandoValue>,
 			expandoValueImpl.setData(data);
 		}
 
+		expandoValueImpl.setCompanyId(companyId);
+
 		expandoValueImpl.resetOriginalValues();
 
 		return expandoValueImpl;
@@ -114,20 +115,19 @@ public class ExpandoValueCacheModel implements CacheModel<ExpandoValue>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		valueId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		tableId = objectInput.readLong();
 		columnId = objectInput.readLong();
 		rowId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		data = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(valueId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(tableId);
 		objectOutput.writeLong(columnId);
 		objectOutput.writeLong(rowId);
@@ -140,14 +140,16 @@ public class ExpandoValueCacheModel implements CacheModel<ExpandoValue>,
 		else {
 			objectOutput.writeUTF(data);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long valueId;
-	public long companyId;
 	public long tableId;
 	public long columnId;
 	public long rowId;
 	public long classNameId;
 	public long classPK;
 	public String data;
+	public long companyId;
 }

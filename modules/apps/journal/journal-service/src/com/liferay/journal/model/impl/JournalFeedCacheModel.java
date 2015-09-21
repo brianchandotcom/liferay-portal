@@ -74,8 +74,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		sb.append(id);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -114,6 +112,8 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		sb.append(feedVersion);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -132,7 +132,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 
 		journalFeedImpl.setId(id);
 		journalFeedImpl.setGroupId(groupId);
-		journalFeedImpl.setCompanyId(companyId);
 		journalFeedImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -251,6 +250,8 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 			journalFeedImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		journalFeedImpl.setCompanyId(companyId);
+
 		journalFeedImpl.resetOriginalValues();
 
 		return journalFeedImpl;
@@ -261,7 +262,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		uuid = objectInput.readUTF();
 		id = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -281,6 +281,7 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 		feedFormat = objectInput.readUTF();
 		feedVersion = objectInput.readDouble();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -295,7 +296,6 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 
 		objectOutput.writeLong(id);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -396,12 +396,12 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 
 		objectOutput.writeDouble(feedVersion);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long id;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -421,4 +421,5 @@ public class JournalFeedCacheModel implements CacheModel<JournalFeed>,
 	public String feedFormat;
 	public double feedVersion;
 	public long lastPublishDate;
+	public long companyId;
 }

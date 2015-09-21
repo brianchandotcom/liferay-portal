@@ -87,8 +87,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		sb.append(uuid);
 		sb.append(", userId=");
 		sb.append(userId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -165,6 +163,8 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -184,7 +184,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		}
 
 		userImpl.setUserId(userId);
-		userImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
 			userImpl.setCreateDate(null);
@@ -381,6 +380,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		}
 
 		userImpl.setStatus(status);
+		userImpl.setCompanyId(companyId);
 
 		userImpl.resetOriginalValues();
 
@@ -392,7 +392,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		userId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		defaultUser = objectInput.readBoolean();
@@ -431,6 +430,7 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		emailAddressVerified = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 		status = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -446,7 +446,6 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		}
 
 		objectOutput.writeLong(userId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeBoolean(defaultUser);
@@ -594,12 +593,12 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 		objectOutput.writeBoolean(emailAddressVerified);
 		objectOutput.writeLong(lastPublishDate);
 		objectOutput.writeInt(status);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long userId;
-	public long companyId;
 	public long createDate;
 	public long modifiedDate;
 	public boolean defaultUser;
@@ -638,4 +637,5 @@ public class UserCacheModel implements CacheModel<User>, Externalizable,
 	public boolean emailAddressVerified;
 	public long lastPublishDate;
 	public int status;
+	public long companyId;
 }

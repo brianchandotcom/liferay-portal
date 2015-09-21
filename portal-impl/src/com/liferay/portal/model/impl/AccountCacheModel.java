@@ -85,8 +85,6 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 		sb.append(mvccVersion);
 		sb.append(", accountId=");
 		sb.append(accountId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -115,6 +113,8 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 		sb.append(type);
 		sb.append(", size=");
 		sb.append(size);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,7 +126,6 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 
 		accountImpl.setMvccVersion(mvccVersion);
 		accountImpl.setAccountId(accountId);
-		accountImpl.setCompanyId(companyId);
 		accountImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -215,6 +214,8 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 			accountImpl.setSize(size);
 		}
 
+		accountImpl.setCompanyId(companyId);
+
 		accountImpl.resetOriginalValues();
 
 		return accountImpl;
@@ -224,7 +225,6 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		accountId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -239,6 +239,7 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 		industry = objectInput.readUTF();
 		type = objectInput.readUTF();
 		size = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -246,7 +247,6 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(accountId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -322,11 +322,12 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 		else {
 			objectOutput.writeUTF(size);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long accountId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -341,4 +342,5 @@ public class AccountCacheModel implements CacheModel<Account>, Externalizable,
 	public String industry;
 	public String type;
 	public String size;
+	public long companyId;
 }

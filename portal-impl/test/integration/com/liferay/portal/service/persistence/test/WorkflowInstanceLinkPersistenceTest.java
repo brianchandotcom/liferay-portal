@@ -117,8 +117,6 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 		newWorkflowInstanceLink.setGroupId(RandomTestUtil.nextLong());
 
-		newWorkflowInstanceLink.setCompanyId(RandomTestUtil.nextLong());
-
 		newWorkflowInstanceLink.setUserId(RandomTestUtil.nextLong());
 
 		newWorkflowInstanceLink.setUserName(RandomTestUtil.randomString());
@@ -133,6 +131,8 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 		newWorkflowInstanceLink.setWorkflowInstanceId(RandomTestUtil.nextLong());
 
+		newWorkflowInstanceLink.setCompanyId(RandomTestUtil.nextLong());
+
 		_workflowInstanceLinks.add(_persistence.update(newWorkflowInstanceLink));
 
 		WorkflowInstanceLink existingWorkflowInstanceLink = _persistence.findByPrimaryKey(newWorkflowInstanceLink.getPrimaryKey());
@@ -143,8 +143,6 @@ public class WorkflowInstanceLinkPersistenceTest {
 			newWorkflowInstanceLink.getWorkflowInstanceLinkId());
 		Assert.assertEquals(existingWorkflowInstanceLink.getGroupId(),
 			newWorkflowInstanceLink.getGroupId());
-		Assert.assertEquals(existingWorkflowInstanceLink.getCompanyId(),
-			newWorkflowInstanceLink.getCompanyId());
 		Assert.assertEquals(existingWorkflowInstanceLink.getUserId(),
 			newWorkflowInstanceLink.getUserId());
 		Assert.assertEquals(existingWorkflowInstanceLink.getUserName(),
@@ -161,6 +159,8 @@ public class WorkflowInstanceLinkPersistenceTest {
 			newWorkflowInstanceLink.getClassPK());
 		Assert.assertEquals(existingWorkflowInstanceLink.getWorkflowInstanceId(),
 			newWorkflowInstanceLink.getWorkflowInstanceId());
+		Assert.assertEquals(existingWorkflowInstanceLink.getCompanyId(),
+			newWorkflowInstanceLink.getCompanyId());
 	}
 
 	@Test
@@ -198,9 +198,9 @@ public class WorkflowInstanceLinkPersistenceTest {
 	protected OrderByComparator<WorkflowInstanceLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WorkflowInstanceLink",
 			"mvccVersion", true, "workflowInstanceLinkId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true, "workflowInstanceId", true);
+			true, "userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"workflowInstanceId", true, "companyId", true);
 	}
 
 	@Test
@@ -412,8 +412,6 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 		workflowInstanceLink.setGroupId(RandomTestUtil.nextLong());
 
-		workflowInstanceLink.setCompanyId(RandomTestUtil.nextLong());
-
 		workflowInstanceLink.setUserId(RandomTestUtil.nextLong());
 
 		workflowInstanceLink.setUserName(RandomTestUtil.randomString());
@@ -427,6 +425,8 @@ public class WorkflowInstanceLinkPersistenceTest {
 		workflowInstanceLink.setClassPK(RandomTestUtil.nextLong());
 
 		workflowInstanceLink.setWorkflowInstanceId(RandomTestUtil.nextLong());
+
+		workflowInstanceLink.setCompanyId(RandomTestUtil.nextLong());
 
 		_workflowInstanceLinks.add(_persistence.update(workflowInstanceLink));
 

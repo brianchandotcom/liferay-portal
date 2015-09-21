@@ -125,6 +125,8 @@ public class DLFileEntryMetadataPersistenceTest {
 
 		newDLFileEntryMetadata.setFileVersionId(RandomTestUtil.nextLong());
 
+		newDLFileEntryMetadata.setCompanyId(RandomTestUtil.nextLong());
+
 		_dlFileEntryMetadatas.add(_persistence.update(newDLFileEntryMetadata));
 
 		DLFileEntryMetadata existingDLFileEntryMetadata = _persistence.findByPrimaryKey(newDLFileEntryMetadata.getPrimaryKey());
@@ -141,6 +143,8 @@ public class DLFileEntryMetadataPersistenceTest {
 			newDLFileEntryMetadata.getFileEntryId());
 		Assert.assertEquals(existingDLFileEntryMetadata.getFileVersionId(),
 			newDLFileEntryMetadata.getFileVersionId());
+		Assert.assertEquals(existingDLFileEntryMetadata.getCompanyId(),
+			newDLFileEntryMetadata.getCompanyId());
 	}
 
 	@Test
@@ -150,6 +154,15 @@ public class DLFileEntryMetadataPersistenceTest {
 		_persistence.countByUuid(StringPool.NULL);
 
 		_persistence.countByUuid((String)null);
+	}
+
+	@Test
+	public void testCountByUuid_C() throws Exception {
+		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+
+		_persistence.countByUuid_C(StringPool.NULL, 0L);
+
+		_persistence.countByUuid_C((String)null, 0L);
 	}
 
 	@Test
@@ -199,7 +212,8 @@ public class DLFileEntryMetadataPersistenceTest {
 	protected OrderByComparator<DLFileEntryMetadata> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileEntryMetadata",
 			"uuid", true, "fileEntryMetadataId", true, "DDMStorageId", true,
-			"DDMStructureId", true, "fileEntryId", true, "fileVersionId", true);
+			"DDMStructureId", true, "fileEntryId", true, "fileVersionId", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -431,6 +445,8 @@ public class DLFileEntryMetadataPersistenceTest {
 		dlFileEntryMetadata.setFileEntryId(RandomTestUtil.nextLong());
 
 		dlFileEntryMetadata.setFileVersionId(RandomTestUtil.nextLong());
+
+		dlFileEntryMetadata.setCompanyId(RandomTestUtil.nextLong());
 
 		_dlFileEntryMetadatas.add(_persistence.update(dlFileEntryMetadata));
 

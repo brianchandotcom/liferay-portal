@@ -125,8 +125,6 @@ public class ShoppingOrderPersistenceTest {
 
 		newShoppingOrder.setGroupId(RandomTestUtil.nextLong());
 
-		newShoppingOrder.setCompanyId(RandomTestUtil.nextLong());
-
 		newShoppingOrder.setUserId(RandomTestUtil.nextLong());
 
 		newShoppingOrder.setUserName(RandomTestUtil.randomString());
@@ -223,6 +221,8 @@ public class ShoppingOrderPersistenceTest {
 
 		newShoppingOrder.setSendShippingEmail(RandomTestUtil.randomBoolean());
 
+		newShoppingOrder.setCompanyId(RandomTestUtil.nextLong());
+
 		_shoppingOrders.add(_persistence.update(newShoppingOrder));
 
 		ShoppingOrder existingShoppingOrder = _persistence.findByPrimaryKey(newShoppingOrder.getPrimaryKey());
@@ -231,8 +231,6 @@ public class ShoppingOrderPersistenceTest {
 			newShoppingOrder.getOrderId());
 		Assert.assertEquals(existingShoppingOrder.getGroupId(),
 			newShoppingOrder.getGroupId());
-		Assert.assertEquals(existingShoppingOrder.getCompanyId(),
-			newShoppingOrder.getCompanyId());
 		Assert.assertEquals(existingShoppingOrder.getUserId(),
 			newShoppingOrder.getUserId());
 		Assert.assertEquals(existingShoppingOrder.getUserName(),
@@ -331,6 +329,8 @@ public class ShoppingOrderPersistenceTest {
 			newShoppingOrder.getSendOrderEmail());
 		Assert.assertEquals(existingShoppingOrder.getSendShippingEmail(),
 			newShoppingOrder.getSendShippingEmail());
+		Assert.assertEquals(existingShoppingOrder.getCompanyId(),
+			newShoppingOrder.getCompanyId());
 	}
 
 	@Test
@@ -398,12 +398,12 @@ public class ShoppingOrderPersistenceTest {
 
 	protected OrderByComparator<ShoppingOrder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingOrder", "orderId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"number", true, "tax", true, "shipping", true, "altShipping", true,
-			"requiresShipping", true, "insure", true, "insurance", true,
-			"couponCodes", true, "couponDiscount", true, "billingFirstName",
-			true, "billingLastName", true, "billingEmailAddress", true,
+			true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "number", true, "tax",
+			true, "shipping", true, "altShipping", true, "requiresShipping",
+			true, "insure", true, "insurance", true, "couponCodes", true,
+			"couponDiscount", true, "billingFirstName", true,
+			"billingLastName", true, "billingEmailAddress", true,
 			"billingCompany", true, "billingStreet", true, "billingCity", true,
 			"billingState", true, "billingZip", true, "billingCountry", true,
 			"billingPhone", true, "shipToBilling", true, "shippingFirstName",
@@ -415,7 +415,7 @@ public class ShoppingOrderPersistenceTest {
 			true, "ccVerNumber", true, "ppTxnId", true, "ppPaymentStatus",
 			true, "ppPaymentGross", true, "ppReceiverEmail", true,
 			"ppPayerEmail", true, "sendOrderEmail", true, "sendShippingEmail",
-			true);
+			true, "companyId", true);
 	}
 
 	@Test
@@ -636,8 +636,6 @@ public class ShoppingOrderPersistenceTest {
 
 		shoppingOrder.setGroupId(RandomTestUtil.nextLong());
 
-		shoppingOrder.setCompanyId(RandomTestUtil.nextLong());
-
 		shoppingOrder.setUserId(RandomTestUtil.nextLong());
 
 		shoppingOrder.setUserName(RandomTestUtil.randomString());
@@ -733,6 +731,8 @@ public class ShoppingOrderPersistenceTest {
 		shoppingOrder.setSendOrderEmail(RandomTestUtil.randomBoolean());
 
 		shoppingOrder.setSendShippingEmail(RandomTestUtil.randomBoolean());
+
+		shoppingOrder.setCompanyId(RandomTestUtil.nextLong());
 
 		_shoppingOrders.add(_persistence.update(shoppingOrder));
 

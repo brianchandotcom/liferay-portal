@@ -58,6 +58,7 @@ public class RatingsStatsWrapper implements RatingsStats,
 		attributes.put("totalEntries", getTotalEntries());
 		attributes.put("totalScore", getTotalScore());
 		attributes.put("averageScore", getAverageScore());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -98,6 +99,12 @@ public class RatingsStatsWrapper implements RatingsStats,
 
 		if (averageScore != null) {
 			setAverageScore(averageScore);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -150,6 +157,16 @@ public class RatingsStatsWrapper implements RatingsStats,
 	@Override
 	public long getClassPK() {
 		return _ratingsStats.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this ratings stats.
+	*
+	* @return the company ID of this ratings stats
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ratingsStats.getCompanyId();
 	}
 
 	@Override
@@ -265,6 +282,16 @@ public class RatingsStatsWrapper implements RatingsStats,
 	@Override
 	public void setClassPK(long classPK) {
 		_ratingsStats.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this ratings stats.
+	*
+	* @param companyId the company ID of this ratings stats
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ratingsStats.setCompanyId(companyId);
 	}
 
 	@Override

@@ -74,8 +74,6 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 		sb.append(contentId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -90,6 +88,8 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 		sb.append(description);
 		sb.append(", data=");
 		sb.append(data);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -108,7 +108,6 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 
 		ddmContentImpl.setContentId(contentId);
 		ddmContentImpl.setGroupId(groupId);
-		ddmContentImpl.setCompanyId(companyId);
 		ddmContentImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -153,6 +152,8 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 			ddmContentImpl.setData(data);
 		}
 
+		ddmContentImpl.setCompanyId(companyId);
+
 		ddmContentImpl.resetOriginalValues();
 
 		return ddmContentImpl;
@@ -163,7 +164,6 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 		uuid = objectInput.readUTF();
 		contentId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -171,6 +171,7 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		data = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -185,7 +186,6 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 
 		objectOutput.writeLong(contentId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -218,12 +218,13 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 		else {
 			objectOutput.writeUTF(data);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long contentId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -231,4 +232,5 @@ public class DDMContentCacheModel implements CacheModel<DDMContent>,
 	public String name;
 	public String description;
 	public String data;
+	public long companyId;
 }

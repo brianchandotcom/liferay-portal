@@ -16,6 +16,7 @@ package com.liferay.shopping.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.shopping.exception.NoSuchItemPriceException;
 import com.liferay.shopping.model.ShoppingItemPrice;
@@ -658,6 +660,8 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingItemPrice.setNew(true);
 		shoppingItemPrice.setPrimaryKey(itemPriceId);
 
+		shoppingItemPrice.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return shoppingItemPrice;
 	}
 
@@ -830,6 +834,7 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 		shoppingItemPriceImpl.setShipping(shoppingItemPrice.getShipping());
 		shoppingItemPriceImpl.setUseShippingFormula(shoppingItemPrice.isUseShippingFormula());
 		shoppingItemPriceImpl.setStatus(shoppingItemPrice.getStatus());
+		shoppingItemPriceImpl.setCompanyId(shoppingItemPrice.getCompanyId());
 
 		return shoppingItemPriceImpl;
 	}
@@ -1207,6 +1212,8 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_SHOPPINGITEMPRICE = "SELECT shoppingItemPrice FROM ShoppingItemPrice shoppingItemPrice";
 	private static final String _SQL_SELECT_SHOPPINGITEMPRICE_WHERE_PKS_IN = "SELECT shoppingItemPrice FROM ShoppingItemPrice shoppingItemPrice WHERE itemPriceId IN (";
 	private static final String _SQL_SELECT_SHOPPINGITEMPRICE_WHERE = "SELECT shoppingItemPrice FROM ShoppingItemPrice shoppingItemPrice WHERE ";

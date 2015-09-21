@@ -5,7 +5,6 @@
 		<field name="uuid" type="String" />
 		<field name="recordId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="versionUserId" type="long" />
@@ -17,12 +16,12 @@
 		<field name="version" type="String" />
 		<field name="displayIndex" type="int" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordSet">
 		<field name="uuid" type="String" />
 		<field name="recordSetId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -41,11 +40,11 @@
 		<field name="minDisplayRows" type="int" />
 		<field name="scope" type="int" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.lists.model.DDLRecordVersion">
 		<field name="recordVersionId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -58,5 +57,6 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

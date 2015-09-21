@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchUserNotificationDeliveryException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1083,6 +1084,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		userNotificationDelivery.setNew(true);
 		userNotificationDelivery.setPrimaryKey(userNotificationDeliveryId);
 
+		userNotificationDelivery.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return userNotificationDelivery;
 	}
 
@@ -1255,13 +1258,13 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 		userNotificationDeliveryImpl.setMvccVersion(userNotificationDelivery.getMvccVersion());
 		userNotificationDeliveryImpl.setUserNotificationDeliveryId(userNotificationDelivery.getUserNotificationDeliveryId());
-		userNotificationDeliveryImpl.setCompanyId(userNotificationDelivery.getCompanyId());
 		userNotificationDeliveryImpl.setUserId(userNotificationDelivery.getUserId());
 		userNotificationDeliveryImpl.setPortletId(userNotificationDelivery.getPortletId());
 		userNotificationDeliveryImpl.setClassNameId(userNotificationDelivery.getClassNameId());
 		userNotificationDeliveryImpl.setNotificationType(userNotificationDelivery.getNotificationType());
 		userNotificationDeliveryImpl.setDeliveryType(userNotificationDelivery.getDeliveryType());
 		userNotificationDeliveryImpl.setDeliver(userNotificationDelivery.isDeliver());
+		userNotificationDeliveryImpl.setCompanyId(userNotificationDelivery.getCompanyId());
 
 		return userNotificationDeliveryImpl;
 	}
@@ -1642,6 +1645,8 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_USERNOTIFICATIONDELIVERY = "SELECT userNotificationDelivery FROM UserNotificationDelivery userNotificationDelivery";
 	private static final String _SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE_PKS_IN =
 		"SELECT userNotificationDelivery FROM UserNotificationDelivery userNotificationDelivery WHERE userNotificationDeliveryId IN (";

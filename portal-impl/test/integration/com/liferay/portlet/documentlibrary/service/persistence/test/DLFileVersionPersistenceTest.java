@@ -121,8 +121,6 @@ public class DLFileVersionPersistenceTest {
 
 		newDLFileVersion.setGroupId(RandomTestUtil.nextLong());
 
-		newDLFileVersion.setCompanyId(RandomTestUtil.nextLong());
-
 		newDLFileVersion.setUserId(RandomTestUtil.nextLong());
 
 		newDLFileVersion.setUserName(RandomTestUtil.randomString());
@@ -171,6 +169,8 @@ public class DLFileVersionPersistenceTest {
 
 		newDLFileVersion.setStatusDate(RandomTestUtil.nextDate());
 
+		newDLFileVersion.setCompanyId(RandomTestUtil.nextLong());
+
 		_dlFileVersions.add(_persistence.update(newDLFileVersion));
 
 		DLFileVersion existingDLFileVersion = _persistence.findByPrimaryKey(newDLFileVersion.getPrimaryKey());
@@ -181,8 +181,6 @@ public class DLFileVersionPersistenceTest {
 			newDLFileVersion.getFileVersionId());
 		Assert.assertEquals(existingDLFileVersion.getGroupId(),
 			newDLFileVersion.getGroupId());
-		Assert.assertEquals(existingDLFileVersion.getCompanyId(),
-			newDLFileVersion.getCompanyId());
 		Assert.assertEquals(existingDLFileVersion.getUserId(),
 			newDLFileVersion.getUserId());
 		Assert.assertEquals(existingDLFileVersion.getUserName(),
@@ -235,6 +233,8 @@ public class DLFileVersionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileVersion.getStatusDate()),
 			Time.getShortTimestamp(newDLFileVersion.getStatusDate()));
+		Assert.assertEquals(existingDLFileVersion.getCompanyId(),
+			newDLFileVersion.getCompanyId());
 	}
 
 	@Test
@@ -265,13 +265,6 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByFileEntryId() throws Exception {
 		_persistence.countByFileEntryId(RandomTestUtil.nextLong());
 
@@ -288,11 +281,10 @@ public class DLFileVersionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_NotS() throws Exception {
-		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-		_persistence.countByC_NotS(0L, 0);
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -310,6 +302,14 @@ public class DLFileVersionPersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByF_S(0L, 0);
+	}
+
+	@Test
+	public void testCountByC_NotS() throws Exception {
+		_persistence.countByC_NotS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_NotS(0L, 0);
 	}
 
 	@Test
@@ -354,15 +354,15 @@ public class DLFileVersionPersistenceTest {
 
 	protected OrderByComparator<DLFileVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileVersion", "uuid",
-			true, "fileVersionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "repositoryId", true, "folderId", true,
-			"fileEntryId", true, "treePath", true, "fileName", true,
-			"extension", true, "mimeType", true, "title", true, "description",
-			true, "changeLog", true, "fileEntryTypeId", true, "version", true,
-			"size", true, "checksum", true, "lastPublishDate", true, "status",
-			true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			true, "fileVersionId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"repositoryId", true, "folderId", true, "fileEntryId", true,
+			"treePath", true, "fileName", true, "extension", true, "mimeType",
+			true, "title", true, "description", true, "changeLog", true,
+			"fileEntryTypeId", true, "version", true, "size", true, "checksum",
+			true, "lastPublishDate", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true, "companyId",
+			true);
 	}
 
 	@Test
@@ -593,8 +593,6 @@ public class DLFileVersionPersistenceTest {
 
 		dlFileVersion.setGroupId(RandomTestUtil.nextLong());
 
-		dlFileVersion.setCompanyId(RandomTestUtil.nextLong());
-
 		dlFileVersion.setUserId(RandomTestUtil.nextLong());
 
 		dlFileVersion.setUserName(RandomTestUtil.randomString());
@@ -642,6 +640,8 @@ public class DLFileVersionPersistenceTest {
 		dlFileVersion.setStatusByUserName(RandomTestUtil.randomString());
 
 		dlFileVersion.setStatusDate(RandomTestUtil.nextDate());
+
+		dlFileVersion.setCompanyId(RandomTestUtil.nextLong());
 
 		_dlFileVersions.add(_persistence.update(dlFileVersion));
 

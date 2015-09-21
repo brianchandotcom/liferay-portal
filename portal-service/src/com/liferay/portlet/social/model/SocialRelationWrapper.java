@@ -54,11 +54,11 @@ public class SocialRelationWrapper implements SocialRelation,
 
 		attributes.put("uuid", getUuid());
 		attributes.put("relationId", getRelationId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("userId1", getUserId1());
 		attributes.put("userId2", getUserId2());
 		attributes.put("type", getType());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -75,12 +75,6 @@ public class SocialRelationWrapper implements SocialRelation,
 
 		if (relationId != null) {
 			setRelationId(relationId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long createDate = (Long)attributes.get("createDate");
@@ -105,6 +99,12 @@ public class SocialRelationWrapper implements SocialRelation,
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

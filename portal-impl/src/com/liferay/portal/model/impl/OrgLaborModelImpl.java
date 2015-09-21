@@ -80,7 +80,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 			{ "friOpen", Types.INTEGER },
 			{ "friClose", Types.INTEGER },
 			{ "satOpen", Types.INTEGER },
-			{ "satClose", Types.INTEGER }
+			{ "satClose", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -103,9 +104,10 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		TABLE_COLUMNS_MAP.put("friClose", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("satOpen", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("satClose", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table OrgLabor (mvccVersion LONG default 0,orgLaborId LONG not null primary key,organizationId LONG,typeId LONG,sunOpen INTEGER,sunClose INTEGER,monOpen INTEGER,monClose INTEGER,tueOpen INTEGER,tueClose INTEGER,wedOpen INTEGER,wedClose INTEGER,thuOpen INTEGER,thuClose INTEGER,friOpen INTEGER,friClose INTEGER,satOpen INTEGER,satClose INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table OrgLabor (mvccVersion LONG default 0,orgLaborId LONG not null primary key,organizationId LONG,typeId LONG,sunOpen INTEGER,sunClose INTEGER,monOpen INTEGER,monClose INTEGER,tueOpen INTEGER,tueClose INTEGER,wedOpen INTEGER,wedClose INTEGER,thuOpen INTEGER,thuClose INTEGER,friOpen INTEGER,friClose INTEGER,satOpen INTEGER,satClose INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table OrgLabor";
 	public static final String ORDER_BY_JPQL = " ORDER BY orgLabor.organizationId ASC, orgLabor.typeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY OrgLabor.organizationId ASC, OrgLabor.typeId ASC";
@@ -155,6 +157,7 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		model.setFriClose(soapModel.getFriClose());
 		model.setSatOpen(soapModel.getSatOpen());
 		model.setSatClose(soapModel.getSatClose());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -237,6 +240,7 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		attributes.put("friClose", getFriClose());
 		attributes.put("satOpen", getSatOpen());
 		attributes.put("satClose", getSatClose());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -352,6 +356,12 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 		if (satClose != null) {
 			setSatClose(satClose);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -567,13 +577,24 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_satClose = satClose;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			OrgLabor.class.getName(), getPrimaryKey());
 	}
 
@@ -616,6 +637,7 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		orgLaborImpl.setFriClose(getFriClose());
 		orgLaborImpl.setSatOpen(getSatOpen());
 		orgLaborImpl.setSatClose(getSatClose());
+		orgLaborImpl.setCompanyId(getCompanyId());
 
 		orgLaborImpl.resetOriginalValues();
 
@@ -745,12 +767,14 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 		orgLaborCacheModel.satClose = getSatClose();
 
+		orgLaborCacheModel.companyId = getCompanyId();
+
 		return orgLaborCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -788,6 +812,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		sb.append(getSatOpen());
 		sb.append(", satClose=");
 		sb.append(getSatClose());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -795,7 +821,7 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.OrgLabor");
@@ -873,6 +899,10 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 			"<column><column-name>satClose</column-name><column-value><![CDATA[");
 		sb.append(getSatClose());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -903,6 +933,7 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 	private int _friClose;
 	private int _satOpen;
 	private int _satClose;
+	private long _companyId;
 	private long _columnBitmask;
 	private OrgLabor _escapedModel;
 }

@@ -87,8 +87,6 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 		sb.append(workflowInstanceLinkId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -103,6 +101,8 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 		sb.append(classPK);
 		sb.append(", workflowInstanceId=");
 		sb.append(workflowInstanceId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -115,7 +115,6 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 		workflowInstanceLinkImpl.setMvccVersion(mvccVersion);
 		workflowInstanceLinkImpl.setWorkflowInstanceLinkId(workflowInstanceLinkId);
 		workflowInstanceLinkImpl.setGroupId(groupId);
-		workflowInstanceLinkImpl.setCompanyId(companyId);
 		workflowInstanceLinkImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -142,6 +141,7 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 		workflowInstanceLinkImpl.setClassNameId(classNameId);
 		workflowInstanceLinkImpl.setClassPK(classPK);
 		workflowInstanceLinkImpl.setWorkflowInstanceId(workflowInstanceId);
+		workflowInstanceLinkImpl.setCompanyId(companyId);
 
 		workflowInstanceLinkImpl.resetOriginalValues();
 
@@ -153,7 +153,6 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 		mvccVersion = objectInput.readLong();
 		workflowInstanceLinkId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -161,6 +160,7 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		workflowInstanceId = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -169,7 +169,6 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(workflowInstanceLinkId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -184,12 +183,12 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(workflowInstanceId);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long workflowInstanceLinkId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -197,4 +196,5 @@ public class WorkflowInstanceLinkCacheModel implements CacheModel<WorkflowInstan
 	public long classNameId;
 	public long classPK;
 	public long workflowInstanceId;
+	public long companyId;
 }

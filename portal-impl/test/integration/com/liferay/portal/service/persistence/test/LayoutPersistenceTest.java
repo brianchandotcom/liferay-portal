@@ -122,8 +122,6 @@ public class LayoutPersistenceTest {
 
 		newLayout.setGroupId(RandomTestUtil.nextLong());
 
-		newLayout.setCompanyId(RandomTestUtil.nextLong());
-
 		newLayout.setUserId(RandomTestUtil.nextLong());
 
 		newLayout.setUserName(RandomTestUtil.randomString());
@@ -178,6 +176,8 @@ public class LayoutPersistenceTest {
 
 		newLayout.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newLayout.setCompanyId(RandomTestUtil.nextLong());
+
 		_layouts.add(_persistence.update(newLayout));
 
 		Layout existingLayout = _persistence.findByPrimaryKey(newLayout.getPrimaryKey());
@@ -187,8 +187,6 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(existingLayout.getUuid(), newLayout.getUuid());
 		Assert.assertEquals(existingLayout.getPlid(), newLayout.getPlid());
 		Assert.assertEquals(existingLayout.getGroupId(), newLayout.getGroupId());
-		Assert.assertEquals(existingLayout.getCompanyId(),
-			newLayout.getCompanyId());
 		Assert.assertEquals(existingLayout.getUserId(), newLayout.getUserId());
 		Assert.assertEquals(existingLayout.getUserName(),
 			newLayout.getUserName());
@@ -238,6 +236,8 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayout.getLastPublishDate()),
 			Time.getShortTimestamp(newLayout.getLastPublishDate()));
+		Assert.assertEquals(existingLayout.getCompanyId(),
+			newLayout.getCompanyId());
 	}
 
 	@Test
@@ -278,13 +278,6 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByIconImageId() throws Exception {
 		_persistence.countByIconImageId(RandomTestUtil.nextLong());
 
@@ -308,6 +301,13 @@ public class LayoutPersistenceTest {
 		_persistence.countBySourcePrototypeLayoutUuid(StringPool.NULL);
 
 		_persistence.countBySourcePrototypeLayoutUuid((String)null);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -400,16 +400,16 @@ public class LayoutPersistenceTest {
 
 	protected OrderByComparator<Layout> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Layout", "mvccVersion",
-			true, "uuid", true, "plid", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "privateLayout", true, "layoutId", true,
-			"parentLayoutId", true, "name", true, "title", true, "description",
-			true, "keywords", true, "robots", true, "type", true, "hidden",
-			true, "friendlyURL", true, "iconImageId", true, "themeId", true,
-			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
-			true, "priority", true, "layoutPrototypeUuid", true,
-			"layoutPrototypeLinkEnabled", true, "sourcePrototypeLayoutUuid",
-			true, "lastPublishDate", true);
+			true, "uuid", true, "plid", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"privateLayout", true, "layoutId", true, "parentLayoutId", true,
+			"name", true, "title", true, "description", true, "keywords", true,
+			"robots", true, "type", true, "hidden", true, "friendlyURL", true,
+			"iconImageId", true, "themeId", true, "colorSchemeId", true,
+			"wapThemeId", true, "wapColorSchemeId", true, "priority", true,
+			"layoutPrototypeUuid", true, "layoutPrototypeLinkEnabled", true,
+			"sourcePrototypeLayoutUuid", true, "lastPublishDate", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -666,8 +666,6 @@ public class LayoutPersistenceTest {
 
 		layout.setGroupId(RandomTestUtil.nextLong());
 
-		layout.setCompanyId(RandomTestUtil.nextLong());
-
 		layout.setUserId(RandomTestUtil.nextLong());
 
 		layout.setUserName(RandomTestUtil.randomString());
@@ -721,6 +719,8 @@ public class LayoutPersistenceTest {
 		layout.setSourcePrototypeLayoutUuid(RandomTestUtil.randomString());
 
 		layout.setLastPublishDate(RandomTestUtil.nextDate());
+
+		layout.setCompanyId(RandomTestUtil.nextLong());
 
 		_layouts.add(_persistence.update(layout));
 

@@ -53,9 +53,9 @@ public class ExpandoTableWrapper implements ExpandoTable,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("tableId", getTableId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("name", getName());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -68,12 +68,6 @@ public class ExpandoTableWrapper implements ExpandoTable,
 			setTableId(tableId);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long classNameId = (Long)attributes.get("classNameId");
 
 		if (classNameId != null) {
@@ -84,6 +78,12 @@ public class ExpandoTableWrapper implements ExpandoTable,
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

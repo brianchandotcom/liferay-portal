@@ -68,7 +68,8 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 			{ "groupId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "messageCount", Types.INTEGER },
-			{ "lastPostDate", Types.TIMESTAMP }
+			{ "lastPostDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -78,9 +79,10 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("messageCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPostDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBStatsUser (statsUserId LONG not null primary key,groupId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBStatsUser (statsUserId LONG not null primary key,groupId LONG,userId LONG,messageCount INTEGER,lastPostDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MBStatsUser";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbStatsUser.messageCount DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBStatsUser.messageCount DESC";
@@ -144,6 +146,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		attributes.put("userId", getUserId());
 		attributes.put("messageCount", getMessageCount());
 		attributes.put("lastPostDate", getLastPostDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -181,6 +184,12 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 		if (lastPostDate != null) {
 			setLastPostDate(lastPostDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -302,13 +311,23 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		_lastPostDate = lastPostDate;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			MBStatsUser.class.getName(), getPrimaryKey());
 	}
 
@@ -338,6 +357,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		mbStatsUserImpl.setUserId(getUserId());
 		mbStatsUserImpl.setMessageCount(getMessageCount());
 		mbStatsUserImpl.setLastPostDate(getLastPostDate());
+		mbStatsUserImpl.setCompanyId(getCompanyId());
 
 		mbStatsUserImpl.resetOriginalValues();
 
@@ -444,12 +464,14 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 			mbStatsUserCacheModel.lastPostDate = Long.MIN_VALUE;
 		}
 
+		mbStatsUserCacheModel.companyId = getCompanyId();
+
 		return mbStatsUserCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{statsUserId=");
 		sb.append(getStatsUserId());
@@ -461,6 +483,8 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 		sb.append(getMessageCount());
 		sb.append(", lastPostDate=");
 		sb.append(getLastPostDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -468,7 +492,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.messageboards.model.MBStatsUser");
@@ -494,6 +518,10 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 			"<column><column-name>lastPostDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPostDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -515,6 +543,7 @@ public class MBStatsUserModelImpl extends BaseModelImpl<MBStatsUser>
 	private int _originalMessageCount;
 	private boolean _setOriginalMessageCount;
 	private Date _lastPostDate;
+	private long _companyId;
 	private long _columnBitmask;
 	private MBStatsUser _escapedModel;
 }

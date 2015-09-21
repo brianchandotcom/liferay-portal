@@ -68,8 +68,6 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 
 		sb.append("{columnId=");
 		sb.append(columnId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", tableId=");
 		sb.append(tableId);
 		sb.append(", name=");
@@ -80,6 +78,8 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 		sb.append(defaultData);
 		sb.append(", typeSettings=");
 		sb.append(typeSettings);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -90,7 +90,6 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 		ExpandoColumnImpl expandoColumnImpl = new ExpandoColumnImpl();
 
 		expandoColumnImpl.setColumnId(columnId);
-		expandoColumnImpl.setCompanyId(companyId);
 		expandoColumnImpl.setTableId(tableId);
 
 		if (name == null) {
@@ -116,6 +115,8 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 			expandoColumnImpl.setTypeSettings(typeSettings);
 		}
 
+		expandoColumnImpl.setCompanyId(companyId);
+
 		expandoColumnImpl.resetOriginalValues();
 
 		return expandoColumnImpl;
@@ -124,19 +125,18 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		columnId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		tableId = objectInput.readLong();
 		name = objectInput.readUTF();
 		type = objectInput.readInt();
 		defaultData = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(columnId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(tableId);
 
 		if (name == null) {
@@ -161,13 +161,15 @@ public class ExpandoColumnCacheModel implements CacheModel<ExpandoColumn>,
 		else {
 			objectOutput.writeUTF(typeSettings);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long columnId;
-	public long companyId;
 	public long tableId;
 	public String name;
 	public int type;
 	public String defaultData;
 	public String typeSettings;
+	public long companyId;
 }

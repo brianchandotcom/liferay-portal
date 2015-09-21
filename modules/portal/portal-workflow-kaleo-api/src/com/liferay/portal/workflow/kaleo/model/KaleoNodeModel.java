@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoNodeModel extends BaseModel<KaleoNode>, GroupedModel {
+public interface KaleoNodeModel extends BaseModel<KaleoNode>, GroupedModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -92,22 +94,6 @@ public interface KaleoNodeModel extends BaseModel<KaleoNode>, GroupedModel {
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this kaleo node.
-	 *
-	 * @return the company ID of this kaleo node
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this kaleo node.
-	 *
-	 * @param companyId the company ID of this kaleo node
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this kaleo node.
@@ -305,6 +291,22 @@ public interface KaleoNodeModel extends BaseModel<KaleoNode>, GroupedModel {
 	 * @param terminal the terminal of this kaleo node
 	 */
 	public void setTerminal(boolean terminal);
+
+	/**
+	 * Returns the company ID of this kaleo node.
+	 *
+	 * @return the company ID of this kaleo node
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this kaleo node.
+	 *
+	 * @param companyId the company ID of this kaleo node
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

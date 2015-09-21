@@ -5,7 +5,6 @@
 		<field name="uuid" type="String" />
 		<field name="choiceId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -16,12 +15,12 @@
 			<hint name="max-length">1000</hint>
 		</field>
 		<field name="lastPublishDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.polls.model.PollsQuestion">
 		<field name="uuid" type="String" />
 		<field name="questionId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -39,12 +38,12 @@
 		</field>
 		<field name="lastPublishDate" type="Date" />
 		<field name="lastVoteDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.polls.model.PollsVote">
 		<field name="uuid" type="String" />
 		<field name="voteId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -53,5 +52,6 @@
 		<field name="choiceId" type="long" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="voteDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

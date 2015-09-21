@@ -70,8 +70,6 @@ public class SocialActivityAchievementCacheModel implements CacheModel<SocialAct
 		sb.append(activityAchievementId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -80,6 +78,8 @@ public class SocialActivityAchievementCacheModel implements CacheModel<SocialAct
 		sb.append(name);
 		sb.append(", firstInGroup=");
 		sb.append(firstInGroup);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -91,7 +91,6 @@ public class SocialActivityAchievementCacheModel implements CacheModel<SocialAct
 
 		socialActivityAchievementImpl.setActivityAchievementId(activityAchievementId);
 		socialActivityAchievementImpl.setGroupId(groupId);
-		socialActivityAchievementImpl.setCompanyId(companyId);
 		socialActivityAchievementImpl.setUserId(userId);
 		socialActivityAchievementImpl.setCreateDate(createDate);
 
@@ -103,6 +102,7 @@ public class SocialActivityAchievementCacheModel implements CacheModel<SocialAct
 		}
 
 		socialActivityAchievementImpl.setFirstInGroup(firstInGroup);
+		socialActivityAchievementImpl.setCompanyId(companyId);
 
 		socialActivityAchievementImpl.resetOriginalValues();
 
@@ -113,11 +113,11 @@ public class SocialActivityAchievementCacheModel implements CacheModel<SocialAct
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		activityAchievementId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		firstInGroup = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -125,7 +125,6 @@ public class SocialActivityAchievementCacheModel implements CacheModel<SocialAct
 		throws IOException {
 		objectOutput.writeLong(activityAchievementId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 
@@ -137,13 +136,14 @@ public class SocialActivityAchievementCacheModel implements CacheModel<SocialAct
 		}
 
 		objectOutput.writeBoolean(firstInGroup);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long activityAchievementId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long createDate;
 	public String name;
 	public boolean firstInGroup;
+	public long companyId;
 }

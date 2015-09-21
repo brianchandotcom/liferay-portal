@@ -22,6 +22,7 @@ import com.liferay.journal.model.impl.JournalFolderImpl;
 import com.liferay.journal.model.impl.JournalFolderModelImpl;
 import com.liferay.journal.service.persistence.JournalFolderPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -44,6 +45,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -7273,6 +7275,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 
 		journalFolder.setUuid(uuid);
 
+		journalFolder.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return journalFolder;
 	}
 
@@ -7569,7 +7573,6 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		journalFolderImpl.setUuid(journalFolder.getUuid());
 		journalFolderImpl.setFolderId(journalFolder.getFolderId());
 		journalFolderImpl.setGroupId(journalFolder.getGroupId());
-		journalFolderImpl.setCompanyId(journalFolder.getCompanyId());
 		journalFolderImpl.setUserId(journalFolder.getUserId());
 		journalFolderImpl.setUserName(journalFolder.getUserName());
 		journalFolderImpl.setCreateDate(journalFolder.getCreateDate());
@@ -7584,6 +7587,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		journalFolderImpl.setStatusByUserId(journalFolder.getStatusByUserId());
 		journalFolderImpl.setStatusByUserName(journalFolder.getStatusByUserName());
 		journalFolderImpl.setStatusDate(journalFolder.getStatusDate());
+		journalFolderImpl.setCompanyId(journalFolder.getCompanyId());
 
 		return journalFolderImpl;
 	}
@@ -7964,6 +7968,8 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_JOURNALFOLDER = "SELECT journalFolder FROM JournalFolder journalFolder";
 	private static final String _SQL_SELECT_JOURNALFOLDER_WHERE_PKS_IN = "SELECT journalFolder FROM JournalFolder journalFolder WHERE folderId IN (";
 	private static final String _SQL_SELECT_JOURNALFOLDER_WHERE = "SELECT journalFolder FROM JournalFolder journalFolder WHERE ";

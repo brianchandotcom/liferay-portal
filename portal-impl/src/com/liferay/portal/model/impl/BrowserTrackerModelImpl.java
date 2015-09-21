@@ -65,7 +65,8 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 			{ "mvccVersion", Types.BIGINT },
 			{ "browserTrackerId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
-			{ "browserKey", Types.BIGINT }
+			{ "browserKey", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -74,9 +75,10 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		TABLE_COLUMNS_MAP.put("browserTrackerId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("browserKey", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table BrowserTracker (mvccVersion LONG default 0,browserTrackerId LONG not null primary key,userId LONG,browserKey LONG)";
+	public static final String TABLE_SQL_CREATE = "create table BrowserTracker (mvccVersion LONG default 0,browserTrackerId LONG not null primary key,userId LONG,browserKey LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table BrowserTracker";
 	public static final String ORDER_BY_JPQL = " ORDER BY browserTracker.browserTrackerId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY BrowserTracker.browserTrackerId ASC";
@@ -138,6 +140,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		attributes.put("browserTrackerId", getBrowserTrackerId());
 		attributes.put("userId", getUserId());
 		attributes.put("browserKey", getBrowserKey());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -169,6 +172,12 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 
 		if (browserKey != null) {
 			setBrowserKey(browserKey);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -240,13 +249,23 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		_browserKey = browserKey;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			BrowserTracker.class.getName(), getPrimaryKey());
 	}
 
@@ -275,6 +294,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		browserTrackerImpl.setBrowserTrackerId(getBrowserTrackerId());
 		browserTrackerImpl.setUserId(getUserId());
 		browserTrackerImpl.setBrowserKey(getBrowserKey());
+		browserTrackerImpl.setCompanyId(getCompanyId());
 
 		browserTrackerImpl.resetOriginalValues();
 
@@ -356,12 +376,14 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 
 		browserTrackerCacheModel.browserKey = getBrowserKey();
 
+		browserTrackerCacheModel.companyId = getCompanyId();
+
 		return browserTrackerCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -371,6 +393,8 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 		sb.append(getUserId());
 		sb.append(", browserKey=");
 		sb.append(getBrowserKey());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -378,7 +402,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.BrowserTracker");
@@ -400,6 +424,10 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 			"<column><column-name>browserKey</column-name><column-value><![CDATA[");
 		sb.append(getBrowserKey());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -416,6 +444,7 @@ public class BrowserTrackerModelImpl extends BaseModelImpl<BrowserTracker>
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private long _browserKey;
+	private long _companyId;
 	private long _columnBitmask;
 	private BrowserTracker _escapedModel;
 }

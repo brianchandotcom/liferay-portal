@@ -36,7 +36,6 @@ public class ShoppingCouponSoap implements Serializable {
 
 		soapModel.setCouponId(model.getCouponId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -52,6 +51,7 @@ public class ShoppingCouponSoap implements Serializable {
 		soapModel.setMinOrder(model.getMinOrder());
 		soapModel.setDiscount(model.getDiscount());
 		soapModel.setDiscountType(model.getDiscountType());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -118,14 +118,6 @@ public class ShoppingCouponSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -252,9 +244,16 @@ public class ShoppingCouponSoap implements Serializable {
 		_discountType = discountType;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _couponId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -270,4 +269,5 @@ public class ShoppingCouponSoap implements Serializable {
 	private double _minOrder;
 	private double _discount;
 	private String _discountType;
+	private long _companyId;
 }

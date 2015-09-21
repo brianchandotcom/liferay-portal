@@ -67,20 +67,19 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 	public static final String TABLE_NAME = "MeetupsRegistration";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "meetupsRegistrationId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "meetupsEntryId", Types.BIGINT },
 			{ "status", Types.INTEGER },
-			{ "comments", Types.VARCHAR }
+			{ "comments", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("meetupsRegistrationId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -88,9 +87,10 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 		TABLE_COLUMNS_MAP.put("meetupsEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("comments", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MeetupsRegistration (meetupsRegistrationId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,meetupsEntryId LONG,status INTEGER,comments VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table MeetupsRegistration (meetupsRegistrationId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,meetupsEntryId LONG,status INTEGER,comments VARCHAR(75) null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MeetupsRegistration";
 	public static final String ORDER_BY_JPQL = " ORDER BY meetupsRegistration.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MeetupsRegistration.modifiedDate DESC";
@@ -151,7 +151,6 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("meetupsRegistrationId", getMeetupsRegistrationId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -159,6 +158,7 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 		attributes.put("meetupsEntryId", getMeetupsEntryId());
 		attributes.put("status", getStatus());
 		attributes.put("comments", getComments());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -173,12 +173,6 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 
 		if (meetupsRegistrationId != null) {
 			setMeetupsRegistrationId(meetupsRegistrationId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -222,6 +216,12 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 		if (comments != null) {
 			setComments(comments);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -232,16 +232,6 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 	@Override
 	public void setMeetupsRegistrationId(long meetupsRegistrationId) {
 		_meetupsRegistrationId = meetupsRegistrationId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -384,6 +374,16 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 		_comments = comments;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -416,7 +416,6 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 		MeetupsRegistrationImpl meetupsRegistrationImpl = new MeetupsRegistrationImpl();
 
 		meetupsRegistrationImpl.setMeetupsRegistrationId(getMeetupsRegistrationId());
-		meetupsRegistrationImpl.setCompanyId(getCompanyId());
 		meetupsRegistrationImpl.setUserId(getUserId());
 		meetupsRegistrationImpl.setUserName(getUserName());
 		meetupsRegistrationImpl.setCreateDate(getCreateDate());
@@ -424,6 +423,7 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 		meetupsRegistrationImpl.setMeetupsEntryId(getMeetupsEntryId());
 		meetupsRegistrationImpl.setStatus(getStatus());
 		meetupsRegistrationImpl.setComments(getComments());
+		meetupsRegistrationImpl.setCompanyId(getCompanyId());
 
 		meetupsRegistrationImpl.resetOriginalValues();
 
@@ -510,8 +510,6 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 
 		meetupsRegistrationCacheModel.meetupsRegistrationId = getMeetupsRegistrationId();
 
-		meetupsRegistrationCacheModel.companyId = getCompanyId();
-
 		meetupsRegistrationCacheModel.userId = getUserId();
 
 		meetupsRegistrationCacheModel.userName = getUserName();
@@ -552,6 +550,8 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 			meetupsRegistrationCacheModel.comments = null;
 		}
 
+		meetupsRegistrationCacheModel.companyId = getCompanyId();
+
 		return meetupsRegistrationCacheModel;
 	}
 
@@ -561,8 +561,6 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 
 		sb.append("{meetupsRegistrationId=");
 		sb.append(getMeetupsRegistrationId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -577,6 +575,8 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 		sb.append(getStatus());
 		sb.append(", comments=");
 		sb.append(getComments());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -593,10 +593,6 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 		sb.append(
 			"<column><column-name>meetupsRegistrationId</column-name><column-value><![CDATA[");
 		sb.append(getMeetupsRegistrationId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -626,6 +622,10 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 			"<column><column-name>comments</column-name><column-value><![CDATA[");
 		sb.append(getComments());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -637,7 +637,6 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 			MeetupsRegistration.class
 		};
 	private long _meetupsRegistrationId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -652,6 +651,7 @@ public class MeetupsRegistrationModelImpl extends BaseModelImpl<MeetupsRegistrat
 	private int _originalStatus;
 	private boolean _setOriginalStatus;
 	private String _comments;
+	private long _companyId;
 	private long _columnBitmask;
 	private MeetupsRegistration _escapedModel;
 }

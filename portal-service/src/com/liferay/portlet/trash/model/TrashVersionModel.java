@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface TrashVersionModel extends AttachedModel, BaseModel<TrashVersion> {
+public interface TrashVersionModel extends AttachedModel, BaseModel<TrashVersion>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -159,6 +161,22 @@ public interface TrashVersionModel extends AttachedModel, BaseModel<TrashVersion
 	 * @param status the status of this trash version
 	 */
 	public void setStatus(int status);
+
+	/**
+	 * Returns the company ID of this trash version.
+	 *
+	 * @return the company ID of this trash version
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this trash version.
+	 *
+	 * @param companyId the company ID of this trash version
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

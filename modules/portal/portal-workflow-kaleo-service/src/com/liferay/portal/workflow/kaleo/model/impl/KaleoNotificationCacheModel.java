@@ -71,8 +71,6 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 		sb.append(kaleoNotificationId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -101,6 +99,8 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 		sb.append(templateLanguage);
 		sb.append(", notificationTypes=");
 		sb.append(notificationTypes);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -112,7 +112,6 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 
 		kaleoNotificationImpl.setKaleoNotificationId(kaleoNotificationId);
 		kaleoNotificationImpl.setGroupId(groupId);
-		kaleoNotificationImpl.setCompanyId(companyId);
 		kaleoNotificationImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -195,6 +194,8 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 			kaleoNotificationImpl.setNotificationTypes(notificationTypes);
 		}
 
+		kaleoNotificationImpl.setCompanyId(companyId);
+
 		kaleoNotificationImpl.resetOriginalValues();
 
 		return kaleoNotificationImpl;
@@ -204,7 +205,6 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoNotificationId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -219,6 +219,7 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 		template = objectInput.readUTF();
 		templateLanguage = objectInput.readUTF();
 		notificationTypes = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -226,7 +227,6 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 		throws IOException {
 		objectOutput.writeLong(kaleoNotificationId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -297,11 +297,12 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 		else {
 			objectOutput.writeUTF(notificationTypes);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoNotificationId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -316,4 +317,5 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 	public String template;
 	public String templateLanguage;
 	public String notificationTypes;
+	public long companyId;
 }

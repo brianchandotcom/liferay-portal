@@ -37,7 +37,6 @@ public class DDMTemplateSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setTemplateId(model.getTemplateId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setVersionUserId(model.getVersionUserId());
@@ -60,6 +59,7 @@ public class DDMTemplateSoap implements Serializable {
 		soapModel.setSmallImageId(model.getSmallImageId());
 		soapModel.setSmallImageURL(model.getSmallImageURL());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -134,14 +134,6 @@ public class DDMTemplateSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -328,10 +320,17 @@ public class DDMTemplateSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _templateId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private long _versionUserId;
@@ -354,4 +353,5 @@ public class DDMTemplateSoap implements Serializable {
 	private long _smallImageId;
 	private String _smallImageURL;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

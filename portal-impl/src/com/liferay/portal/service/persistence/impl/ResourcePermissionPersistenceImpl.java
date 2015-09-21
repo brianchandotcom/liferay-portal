@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchResourcePermissionException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -5136,6 +5137,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		resourcePermission.setNew(true);
 		resourcePermission.setPrimaryKey(resourcePermissionId);
 
+		resourcePermission.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return resourcePermission;
 	}
 
@@ -5429,7 +5432,6 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 
 		resourcePermissionImpl.setMvccVersion(resourcePermission.getMvccVersion());
 		resourcePermissionImpl.setResourcePermissionId(resourcePermission.getResourcePermissionId());
-		resourcePermissionImpl.setCompanyId(resourcePermission.getCompanyId());
 		resourcePermissionImpl.setName(resourcePermission.getName());
 		resourcePermissionImpl.setScope(resourcePermission.getScope());
 		resourcePermissionImpl.setPrimKey(resourcePermission.getPrimKey());
@@ -5438,6 +5440,7 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		resourcePermissionImpl.setOwnerId(resourcePermission.getOwnerId());
 		resourcePermissionImpl.setActionIds(resourcePermission.getActionIds());
 		resourcePermissionImpl.setViewActionId(resourcePermission.isViewActionId());
+		resourcePermissionImpl.setCompanyId(resourcePermission.getCompanyId());
 
 		return resourcePermissionImpl;
 	}
@@ -5816,6 +5819,8 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_RESOURCEPERMISSION = "SELECT resourcePermission FROM ResourcePermission resourcePermission";
 	private static final String _SQL_SELECT_RESOURCEPERMISSION_WHERE_PKS_IN = "SELECT resourcePermission FROM ResourcePermission resourcePermission WHERE resourcePermissionId IN (";
 	private static final String _SQL_SELECT_RESOURCEPERMISSION_WHERE = "SELECT resourcePermission FROM ResourcePermission resourcePermission WHERE ";

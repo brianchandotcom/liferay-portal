@@ -443,119 +443,6 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	public int countByGroupId(long groupId);
 
 	/**
-	* Returns all the layout friendly u r ls where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching layout friendly u r ls
-	*/
-	public java.util.List<LayoutFriendlyURL> findByCompanyId(long companyId);
-
-	/**
-	* Returns a range of all the layout friendly u r ls where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of layout friendly u r ls
-	* @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	* @return the range of matching layout friendly u r ls
-	*/
-	public java.util.List<LayoutFriendlyURL> findByCompanyId(long companyId,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the layout friendly u r ls where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of layout friendly u r ls
-	* @param end the upper bound of the range of layout friendly u r ls (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching layout friendly u r ls
-	*/
-	public java.util.List<LayoutFriendlyURL> findByCompanyId(long companyId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator);
-
-	/**
-	* Returns the first layout friendly u r l in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching layout friendly u r l
-	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
-	*/
-	public LayoutFriendlyURL findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
-
-	/**
-	* Returns the first layout friendly u r l in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
-	*/
-	public LayoutFriendlyURL fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator);
-
-	/**
-	* Returns the last layout friendly u r l in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching layout friendly u r l
-	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
-	*/
-	public LayoutFriendlyURL findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
-
-	/**
-	* Returns the last layout friendly u r l in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
-	*/
-	public LayoutFriendlyURL fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator);
-
-	/**
-	* Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where companyId = &#63;.
-	*
-	* @param layoutFriendlyURLId the primary key of the current layout friendly u r l
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next layout friendly u r l
-	* @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
-	*/
-	public LayoutFriendlyURL[] findByCompanyId_PrevAndNext(
-		long layoutFriendlyURLId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
-
-	/**
-	* Removes all the layout friendly u r ls where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public void removeByCompanyId(long companyId);
-
-	/**
-	* Returns the number of layout friendly u r ls where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching layout friendly u r ls
-	*/
-	public int countByCompanyId(long companyId);
-
-	/**
 	* Returns all the layout friendly u r ls where plid = &#63;.
 	*
 	* @param plid the plid
@@ -667,6 +554,119 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	* @return the number of matching layout friendly u r ls
 	*/
 	public int countByPlid(long plid);
+
+	/**
+	* Returns all the layout friendly u r ls where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching layout friendly u r ls
+	*/
+	public java.util.List<LayoutFriendlyURL> findByCompanyId(long companyId);
+
+	/**
+	* Returns a range of all the layout friendly u r ls where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of layout friendly u r ls
+	* @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	* @return the range of matching layout friendly u r ls
+	*/
+	public java.util.List<LayoutFriendlyURL> findByCompanyId(long companyId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the layout friendly u r ls where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LayoutFriendlyURLModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of layout friendly u r ls
+	* @param end the upper bound of the range of layout friendly u r ls (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching layout friendly u r ls
+	*/
+	public java.util.List<LayoutFriendlyURL> findByCompanyId(long companyId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator);
+
+	/**
+	* Returns the first layout friendly u r l in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout friendly u r l
+	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	*/
+	public LayoutFriendlyURL findByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator)
+		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
+
+	/**
+	* Returns the first layout friendly u r l in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	*/
+	public LayoutFriendlyURL fetchByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator);
+
+	/**
+	* Returns the last layout friendly u r l in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout friendly u r l
+	* @throws NoSuchLayoutFriendlyURLException if a matching layout friendly u r l could not be found
+	*/
+	public LayoutFriendlyURL findByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator)
+		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
+
+	/**
+	* Returns the last layout friendly u r l in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
+	*/
+	public LayoutFriendlyURL fetchByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator);
+
+	/**
+	* Returns the layout friendly u r ls before and after the current layout friendly u r l in the ordered set where companyId = &#63;.
+	*
+	* @param layoutFriendlyURLId the primary key of the current layout friendly u r l
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next layout friendly u r l
+	* @throws NoSuchLayoutFriendlyURLException if a layout friendly u r l with the primary key could not be found
+	*/
+	public LayoutFriendlyURL[] findByCompanyId_PrevAndNext(
+		long layoutFriendlyURLId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<LayoutFriendlyURL> orderByComparator)
+		throws com.liferay.portal.NoSuchLayoutFriendlyURLException;
+
+	/**
+	* Removes all the layout friendly u r ls where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public void removeByCompanyId(long companyId);
+
+	/**
+	* Returns the number of layout friendly u r ls where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching layout friendly u r ls
+	*/
+	public int countByCompanyId(long companyId);
 
 	/**
 	* Returns all the layout friendly u r ls where plid = &#63; and friendlyURL = &#63;.

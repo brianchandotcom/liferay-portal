@@ -70,8 +70,6 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 		sb.append(uuid);
 		sb.append(", relationId=");
 		sb.append(relationId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", userId1=");
@@ -80,6 +78,8 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 		sb.append(userId2);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -97,11 +97,11 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 		}
 
 		socialRelationImpl.setRelationId(relationId);
-		socialRelationImpl.setCompanyId(companyId);
 		socialRelationImpl.setCreateDate(createDate);
 		socialRelationImpl.setUserId1(userId1);
 		socialRelationImpl.setUserId2(userId2);
 		socialRelationImpl.setType(type);
+		socialRelationImpl.setCompanyId(companyId);
 
 		socialRelationImpl.resetOriginalValues();
 
@@ -112,11 +112,11 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		relationId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		userId1 = objectInput.readLong();
 		userId2 = objectInput.readLong();
 		type = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -130,18 +130,18 @@ public class SocialRelationCacheModel implements CacheModel<SocialRelation>,
 		}
 
 		objectOutput.writeLong(relationId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(userId1);
 		objectOutput.writeLong(userId2);
 		objectOutput.writeInt(type);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long relationId;
-	public long companyId;
 	public long createDate;
 	public long userId1;
 	public long userId2;
 	public int type;
+	public long companyId;
 }

@@ -87,8 +87,6 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		sb.append(systemEventId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -111,6 +109,8 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		sb.append(type);
 		sb.append(", extraData=");
 		sb.append(extraData);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -123,7 +123,6 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		systemEventImpl.setMvccVersion(mvccVersion);
 		systemEventImpl.setSystemEventId(systemEventId);
 		systemEventImpl.setGroupId(groupId);
-		systemEventImpl.setCompanyId(companyId);
 		systemEventImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -162,6 +161,8 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 			systemEventImpl.setExtraData(extraData);
 		}
 
+		systemEventImpl.setCompanyId(companyId);
+
 		systemEventImpl.resetOriginalValues();
 
 		return systemEventImpl;
@@ -172,7 +173,6 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		mvccVersion = objectInput.readLong();
 		systemEventId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -184,6 +184,7 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		systemEventSetKey = objectInput.readLong();
 		type = objectInput.readInt();
 		extraData = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -192,7 +193,6 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(systemEventId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -224,12 +224,13 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 		else {
 			objectOutput.writeUTF(extraData);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long systemEventId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -241,4 +242,5 @@ public class SystemEventCacheModel implements CacheModel<SystemEvent>,
 	public long systemEventSetKey;
 	public int type;
 	public String extraData;
+	public long companyId;
 }

@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface UserTrackerPathModel extends BaseModel<UserTrackerPath>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -133,6 +133,22 @@ public interface UserTrackerPathModel extends BaseModel<UserTrackerPath>,
 	 * @param pathDate the path date of this user tracker path
 	 */
 	public void setPathDate(Date pathDate);
+
+	/**
+	 * Returns the company ID of this user tracker path.
+	 *
+	 * @return the company ID of this user tracker path
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user tracker path.
+	 *
+	 * @param companyId the company ID of this user tracker path
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

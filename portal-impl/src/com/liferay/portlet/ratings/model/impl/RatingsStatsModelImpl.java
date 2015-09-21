@@ -67,7 +67,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 			{ "classPK", Types.BIGINT },
 			{ "totalEntries", Types.INTEGER },
 			{ "totalScore", Types.DOUBLE },
-			{ "averageScore", Types.DOUBLE }
+			{ "averageScore", Types.DOUBLE },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -78,9 +79,10 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		TABLE_COLUMNS_MAP.put("totalEntries", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("totalScore", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("averageScore", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table RatingsStats (statsId LONG not null primary key,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table RatingsStats (statsId LONG not null primary key,classNameId LONG,classPK LONG,totalEntries INTEGER,totalScore DOUBLE,averageScore DOUBLE,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table RatingsStats";
 	public static final String ORDER_BY_JPQL = " ORDER BY ratingsStats.statsId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY RatingsStats.statsId ASC";
@@ -145,6 +147,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		attributes.put("totalEntries", getTotalEntries());
 		attributes.put("totalScore", getTotalScore());
 		attributes.put("averageScore", getAverageScore());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -188,6 +191,12 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 		if (averageScore != null) {
 			setAverageScore(averageScore);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -295,13 +304,23 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		_averageScore = averageScore;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			RatingsStats.class.getName(), getPrimaryKey());
 	}
 
@@ -332,6 +351,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		ratingsStatsImpl.setTotalEntries(getTotalEntries());
 		ratingsStatsImpl.setTotalScore(getTotalScore());
 		ratingsStatsImpl.setAverageScore(getAverageScore());
+		ratingsStatsImpl.setCompanyId(getCompanyId());
 
 		ratingsStatsImpl.resetOriginalValues();
 
@@ -421,12 +441,14 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 		ratingsStatsCacheModel.averageScore = getAverageScore();
 
+		ratingsStatsCacheModel.companyId = getCompanyId();
+
 		return ratingsStatsCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{statsId=");
 		sb.append(getStatsId());
@@ -440,6 +462,8 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 		sb.append(getTotalScore());
 		sb.append(", averageScore=");
 		sb.append(getAverageScore());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -447,7 +471,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.ratings.model.RatingsStats");
@@ -477,6 +501,10 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 			"<column><column-name>averageScore</column-name><column-value><![CDATA[");
 		sb.append(getAverageScore());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -497,6 +525,7 @@ public class RatingsStatsModelImpl extends BaseModelImpl<RatingsStats>
 	private int _totalEntries;
 	private double _totalScore;
 	private double _averageScore;
+	private long _companyId;
 	private long _columnBitmask;
 	private RatingsStats _escapedModel;
 }

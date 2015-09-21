@@ -71,8 +71,6 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 		sb.append(kaleoConditionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -91,6 +89,8 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 		sb.append(scriptLanguage);
 		sb.append(", scriptRequiredContexts=");
 		sb.append(scriptRequiredContexts);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -102,7 +102,6 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 
 		kaleoConditionImpl.setKaleoConditionId(kaleoConditionId);
 		kaleoConditionImpl.setGroupId(groupId);
-		kaleoConditionImpl.setCompanyId(companyId);
 		kaleoConditionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -150,6 +149,8 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 			kaleoConditionImpl.setScriptRequiredContexts(scriptRequiredContexts);
 		}
 
+		kaleoConditionImpl.setCompanyId(companyId);
+
 		kaleoConditionImpl.resetOriginalValues();
 
 		return kaleoConditionImpl;
@@ -159,7 +160,6 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoConditionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -169,6 +169,7 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 		script = objectInput.readUTF();
 		scriptLanguage = objectInput.readUTF();
 		scriptRequiredContexts = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -176,7 +177,6 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 		throws IOException {
 		objectOutput.writeLong(kaleoConditionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -211,11 +211,12 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 		else {
 			objectOutput.writeUTF(scriptRequiredContexts);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoConditionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -225,4 +226,5 @@ public class KaleoConditionCacheModel implements CacheModel<KaleoCondition>,
 	public String script;
 	public String scriptLanguage;
 	public String scriptRequiredContexts;
+	public long companyId;
 }

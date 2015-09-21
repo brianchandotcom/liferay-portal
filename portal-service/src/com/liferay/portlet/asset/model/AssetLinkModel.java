@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,7 +42,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface AssetLinkModel extends BaseModel<AssetLink> {
+public interface AssetLinkModel extends BaseModel<AssetLink>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -75,20 +76,6 @@ public interface AssetLinkModel extends BaseModel<AssetLink> {
 	 * @param linkId the link ID of this asset link
 	 */
 	public void setLinkId(long linkId);
-
-	/**
-	 * Returns the company ID of this asset link.
-	 *
-	 * @return the company ID of this asset link
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this asset link.
-	 *
-	 * @param companyId the company ID of this asset link
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this asset link.
@@ -202,6 +189,22 @@ public interface AssetLinkModel extends BaseModel<AssetLink> {
 	 * @param weight the weight of this asset link
 	 */
 	public void setWeight(int weight);
+
+	/**
+	 * Returns the company ID of this asset link.
+	 *
+	 * @return the company ID of this asset link
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this asset link.
+	 *
+	 * @param companyId the company ID of this asset link
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

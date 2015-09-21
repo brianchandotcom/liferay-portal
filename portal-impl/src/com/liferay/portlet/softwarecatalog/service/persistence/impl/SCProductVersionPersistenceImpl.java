@@ -36,6 +36,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
@@ -987,6 +988,8 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		scProductVersion.setNew(true);
 		scProductVersion.setPrimaryKey(productVersionId);
 
+		scProductVersion.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return scProductVersion;
 	}
 
@@ -1182,7 +1185,6 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		scProductVersionImpl.setPrimaryKey(scProductVersion.getPrimaryKey());
 
 		scProductVersionImpl.setProductVersionId(scProductVersion.getProductVersionId());
-		scProductVersionImpl.setCompanyId(scProductVersion.getCompanyId());
 		scProductVersionImpl.setUserId(scProductVersion.getUserId());
 		scProductVersionImpl.setUserName(scProductVersion.getUserName());
 		scProductVersionImpl.setCreateDate(scProductVersion.getCreateDate());
@@ -1193,6 +1195,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		scProductVersionImpl.setDownloadPageURL(scProductVersion.getDownloadPageURL());
 		scProductVersionImpl.setDirectDownloadURL(scProductVersion.getDirectDownloadURL());
 		scProductVersionImpl.setRepoStoreArtifact(scProductVersion.isRepoStoreArtifact());
+		scProductVersionImpl.setCompanyId(scProductVersion.getCompanyId());
 
 		return scProductVersionImpl;
 	}
@@ -1842,7 +1845,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	public void afterPropertiesSet() {
 		scProductVersionToSCFrameworkVersionTableMapper = TableMapperFactory.getTableMapper("SCFrameworkVersi_SCProductVers",
 				"productVersionId", "frameworkVersionId", this,
-				scFrameworkVersionPersistence);
+				scFrameworkVersionPersistence, companyProviderHolder);
 	}
 
 	public void destroy() {
@@ -1857,6 +1860,8 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	@BeanReference(type = SCFrameworkVersionPersistence.class)
 	protected SCFrameworkVersionPersistence scFrameworkVersionPersistence;
 	protected TableMapper<SCProductVersion, com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> scProductVersionToSCFrameworkVersionTableMapper;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_SCPRODUCTVERSION = "SELECT scProductVersion FROM SCProductVersion scProductVersion";
 	private static final String _SQL_SELECT_SCPRODUCTVERSION_WHERE_PKS_IN = "SELECT scProductVersion FROM SCProductVersion scProductVersion WHERE productVersionId IN (";
 	private static final String _SQL_SELECT_SCPRODUCTVERSION_WHERE = "SELECT scProductVersion FROM SCProductVersion scProductVersion WHERE ";

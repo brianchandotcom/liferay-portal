@@ -63,7 +63,7 @@ public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{structureLinkId=");
 		sb.append(structureLinkId);
@@ -73,6 +73,8 @@ public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
 		sb.append(classPK);
 		sb.append(", structureId=");
 		sb.append(structureId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -86,6 +88,7 @@ public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
 		ddmStructureLinkImpl.setClassNameId(classNameId);
 		ddmStructureLinkImpl.setClassPK(classPK);
 		ddmStructureLinkImpl.setStructureId(structureId);
+		ddmStructureLinkImpl.setCompanyId(companyId);
 
 		ddmStructureLinkImpl.resetOriginalValues();
 
@@ -98,6 +101,7 @@ public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		structureId = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -107,10 +111,12 @@ public class DDMStructureLinkCacheModel implements CacheModel<DDMStructureLink>,
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 		objectOutput.writeLong(structureId);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long structureLinkId;
 	public long classNameId;
 	public long classPK;
 	public long structureId;
+	public long companyId;
 }

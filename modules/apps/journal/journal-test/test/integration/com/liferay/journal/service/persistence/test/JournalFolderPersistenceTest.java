@@ -126,8 +126,6 @@ public class JournalFolderPersistenceTest {
 
 		newJournalFolder.setGroupId(RandomTestUtil.nextLong());
 
-		newJournalFolder.setCompanyId(RandomTestUtil.nextLong());
-
 		newJournalFolder.setUserId(RandomTestUtil.nextLong());
 
 		newJournalFolder.setUserName(RandomTestUtil.randomString());
@@ -156,6 +154,8 @@ public class JournalFolderPersistenceTest {
 
 		newJournalFolder.setStatusDate(RandomTestUtil.nextDate());
 
+		newJournalFolder.setCompanyId(RandomTestUtil.nextLong());
+
 		_journalFolders.add(_persistence.update(newJournalFolder));
 
 		JournalFolder existingJournalFolder = _persistence.findByPrimaryKey(newJournalFolder.getPrimaryKey());
@@ -166,8 +166,6 @@ public class JournalFolderPersistenceTest {
 			newJournalFolder.getFolderId());
 		Assert.assertEquals(existingJournalFolder.getGroupId(),
 			newJournalFolder.getGroupId());
-		Assert.assertEquals(existingJournalFolder.getCompanyId(),
-			newJournalFolder.getCompanyId());
 		Assert.assertEquals(existingJournalFolder.getUserId(),
 			newJournalFolder.getUserId());
 		Assert.assertEquals(existingJournalFolder.getUserName(),
@@ -200,6 +198,8 @@ public class JournalFolderPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalFolder.getStatusDate()),
 			Time.getShortTimestamp(newJournalFolder.getStatusDate()));
+		Assert.assertEquals(existingJournalFolder.getCompanyId(),
+			newJournalFolder.getCompanyId());
 	}
 
 	@Test
@@ -333,12 +333,12 @@ public class JournalFolderPersistenceTest {
 
 	protected OrderByComparator<JournalFolder> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalFolder", "uuid",
-			true, "folderId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "parentFolderId", true, "treePath", true,
-			"name", true, "description", true, "restrictionType", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			true, "folderId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"parentFolderId", true, "treePath", true, "name", true,
+			"description", true, "restrictionType", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true, "companyId", true);
 	}
 
 	@Test
@@ -578,8 +578,6 @@ public class JournalFolderPersistenceTest {
 
 		journalFolder.setGroupId(RandomTestUtil.nextLong());
 
-		journalFolder.setCompanyId(RandomTestUtil.nextLong());
-
 		journalFolder.setUserId(RandomTestUtil.nextLong());
 
 		journalFolder.setUserName(RandomTestUtil.randomString());
@@ -607,6 +605,8 @@ public class JournalFolderPersistenceTest {
 		journalFolder.setStatusByUserName(RandomTestUtil.randomString());
 
 		journalFolder.setStatusDate(RandomTestUtil.nextDate());
+
+		journalFolder.setCompanyId(RandomTestUtil.nextLong());
 
 		_journalFolders.add(_persistence.update(journalFolder));
 

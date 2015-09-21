@@ -56,7 +56,6 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("websiteId", getWebsiteId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -67,6 +66,7 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 		attributes.put("typeId", getTypeId());
 		attributes.put("primary", getPrimary());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -89,12 +89,6 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 
 		if (websiteId != null) {
 			setWebsiteId(websiteId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -155,6 +149,12 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

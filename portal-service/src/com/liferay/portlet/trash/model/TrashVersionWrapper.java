@@ -58,6 +58,7 @@ public class TrashVersionWrapper implements TrashVersion,
 		attributes.put("classPK", getClassPK());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("status", getStatus());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -98,6 +99,12 @@ public class TrashVersionWrapper implements TrashVersion,
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -140,6 +147,16 @@ public class TrashVersionWrapper implements TrashVersion,
 	@Override
 	public long getClassPK() {
 		return _trashVersion.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this trash version.
+	*
+	* @return the company ID of this trash version
+	*/
+	@Override
+	public long getCompanyId() {
+		return _trashVersion.getCompanyId();
 	}
 
 	/**
@@ -271,6 +288,16 @@ public class TrashVersionWrapper implements TrashVersion,
 	@Override
 	public void setClassPK(long classPK) {
 		_trashVersion.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this trash version.
+	*
+	* @param companyId the company ID of this trash version
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_trashVersion.setCompanyId(companyId);
 	}
 
 	/**

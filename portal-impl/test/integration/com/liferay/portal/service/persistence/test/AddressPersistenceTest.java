@@ -118,8 +118,6 @@ public class AddressPersistenceTest {
 
 		newAddress.setUuid(RandomTestUtil.randomString());
 
-		newAddress.setCompanyId(RandomTestUtil.nextLong());
-
 		newAddress.setUserId(RandomTestUtil.nextLong());
 
 		newAddress.setUserName(RandomTestUtil.randomString());
@@ -154,6 +152,8 @@ public class AddressPersistenceTest {
 
 		newAddress.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newAddress.setCompanyId(RandomTestUtil.nextLong());
+
 		_addresses.add(_persistence.update(newAddress));
 
 		Address existingAddress = _persistence.findByPrimaryKey(newAddress.getPrimaryKey());
@@ -163,8 +163,6 @@ public class AddressPersistenceTest {
 		Assert.assertEquals(existingAddress.getUuid(), newAddress.getUuid());
 		Assert.assertEquals(existingAddress.getAddressId(),
 			newAddress.getAddressId());
-		Assert.assertEquals(existingAddress.getCompanyId(),
-			newAddress.getCompanyId());
 		Assert.assertEquals(existingAddress.getUserId(), newAddress.getUserId());
 		Assert.assertEquals(existingAddress.getUserName(),
 			newAddress.getUserName());
@@ -198,6 +196,8 @@ public class AddressPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingAddress.getLastPublishDate()),
 			Time.getShortTimestamp(newAddress.getLastPublishDate()));
+		Assert.assertEquals(existingAddress.getCompanyId(),
+			newAddress.getCompanyId());
 	}
 
 	@Test
@@ -219,17 +219,17 @@ public class AddressPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByUserId() throws Exception {
 		_persistence.countByUserId(RandomTestUtil.nextLong());
 
 		_persistence.countByUserId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -290,12 +290,12 @@ public class AddressPersistenceTest {
 
 	protected OrderByComparator<Address> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Address", "mvccVersion",
-			true, "uuid", true, "addressId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "street1", true, "street2",
-			true, "street3", true, "city", true, "zip", true, "regionId", true,
-			"countryId", true, "typeId", true, "mailing", true, "primary",
-			true, "lastPublishDate", true);
+			true, "uuid", true, "addressId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId",
+			true, "classPK", true, "street1", true, "street2", true, "street3",
+			true, "city", true, "zip", true, "regionId", true, "countryId",
+			true, "typeId", true, "mailing", true, "primary", true,
+			"lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -501,8 +501,6 @@ public class AddressPersistenceTest {
 
 		address.setUuid(RandomTestUtil.randomString());
 
-		address.setCompanyId(RandomTestUtil.nextLong());
-
 		address.setUserId(RandomTestUtil.nextLong());
 
 		address.setUserName(RandomTestUtil.randomString());
@@ -536,6 +534,8 @@ public class AddressPersistenceTest {
 		address.setPrimary(RandomTestUtil.randomBoolean());
 
 		address.setLastPublishDate(RandomTestUtil.nextDate());
+
+		address.setCompanyId(RandomTestUtil.nextLong());
 
 		_addresses.add(_persistence.update(address));
 

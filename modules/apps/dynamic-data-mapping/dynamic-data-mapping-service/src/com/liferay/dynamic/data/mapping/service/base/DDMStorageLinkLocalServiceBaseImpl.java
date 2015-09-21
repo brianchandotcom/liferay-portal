@@ -209,6 +209,20 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the d d m storage link with the matching UUID and company.
+	 *
+	 * @param uuid the d d m storage link's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching d d m storage link, or <code>null</code> if a matching d d m storage link could not be found
+	 */
+	@Override
+	public DDMStorageLink fetchDDMStorageLinkByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return ddmStorageLinkPersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
 	 * Returns the d d m storage link with the primary key.
 	 *
 	 * @param storageLinkId the primary key of the d d m storage link
@@ -256,6 +270,21 @@ public abstract class DDMStorageLinkLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return ddmStorageLinkPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the d d m storage link with the matching UUID and company.
+	 *
+	 * @param uuid the d d m storage link's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching d d m storage link
+	 * @throws PortalException if a matching d d m storage link could not be found
+	 */
+	@Override
+	public DDMStorageLink getDDMStorageLinkByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException {
+		return ddmStorageLinkPersistence.findByUuid_C_First(uuid, companyId,
+			null);
 	}
 
 	/**

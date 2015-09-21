@@ -63,7 +63,7 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -77,6 +77,8 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 		sb.append(bundleVersion);
 		sb.append(", contextName=");
 		sb.append(contextName);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -117,6 +119,8 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 			moduleImpl.setContextName(contextName);
 		}
 
+		moduleImpl.setCompanyId(companyId);
+
 		moduleImpl.resetOriginalValues();
 
 		return moduleImpl;
@@ -130,6 +134,7 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 		bundleSymbolicName = objectInput.readUTF();
 		bundleVersion = objectInput.readUTF();
 		contextName = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -165,6 +170,8 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 		else {
 			objectOutput.writeUTF(contextName);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
@@ -173,4 +180,5 @@ public class ModuleCacheModel implements CacheModel<Module>, Externalizable {
 	public String bundleSymbolicName;
 	public String bundleVersion;
 	public String contextName;
+	public long companyId;
 }

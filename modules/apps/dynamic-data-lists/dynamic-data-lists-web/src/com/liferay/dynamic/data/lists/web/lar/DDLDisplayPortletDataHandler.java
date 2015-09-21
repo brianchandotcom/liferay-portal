@@ -15,8 +15,6 @@
 package com.liferay.dynamic.data.lists.web.lar;
 
 import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.exportimport.lar.DataLevel;
@@ -73,8 +71,5 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDLDisplayPortletDataHandler.class);
 
 }

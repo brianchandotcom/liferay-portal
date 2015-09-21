@@ -18,8 +18,12 @@ import com.liferay.dynamic.data.lists.constants.DDLPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
@@ -30,6 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -62,7 +67,16 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		portletDataContext.addPortletPermissions(DDLPermission.RESOURCE_NAME);
+		try {
+			portletDataContext.addPortletPermissions(
+				DDLPermission.RESOURCE_NAME);
+		}
+		catch (PortalException pe) {
+			throw new PortletDataException(
+				"Unable to export portlet permissions", pe);
+		}
+
+		String portletId = portletDataContext.getPortletId();
 
 		long recordSetId = GetterUtil.getLong(
 			portletPreferences.getValue("recordSetId", null), 0);
@@ -94,8 +108,14 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		portletDataContext.importPortletPermissions(
-			DDLPermission.RESOURCE_NAME);
+		try {
+			portletDataContext.importPortletPermissions(
+				DDLPermission.RESOURCE_NAME);
+		}
+		catch (PortalException pe) {
+			throw new PortletDataException(
+				"Unable to export portlet permissions", pe);
+		}
 
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, DDLRecordSet.class);
@@ -125,13 +145,23 @@ public class DDLDisplayExportImportPortletPreferencesProcessor
 		long formDDMTemplateId = MapUtil.getLong(
 			templateIds, importedFormDDMTemplateId, importedFormDDMTemplateId);
 
-		portletPreferences.setValue("recordSetId", String.valueOf(recordSetId));
-		portletPreferences.setValue(
-			"displayDDMTemplateId", String.valueOf(displayDDMTemplateId));
-		portletPreferences.setValue(
-			"formDDMTemplateId", String.valueOf(formDDMTemplateId));
+		try {
+			portletPreferences.setValue(
+				"recordSetId", String.valueOf(recordSetId));
+			portletPreferences.setValue(
+				"displayDDMTemplateId", String.valueOf(displayDDMTemplateId));
+			portletPreferences.setValue(
+				"formDDMTemplateId", String.valueOf(formDDMTemplateId));
+		}
+		catch (ReadOnlyException roe) {
+			throw new PortletDataException(
+				"Unable to update portlet preferences during import", roe);
+		}
 
 		return portletPreferences;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDLDisplayExportImportPortletPreferencesProcessor.class);
 
 }

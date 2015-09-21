@@ -363,13 +363,13 @@ public class DLAppHelperLocalServiceImpl
 
 				// Trash
 
-				int status = oldStatus;
-
-				if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-					status = WorkflowConstants.STATUS_DRAFT;
-				}
-
 				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+					int status = oldStatus;
+
+					if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+						status = WorkflowConstants.STATUS_DRAFT;
+					}
+
 					trashVersionLocalService.addTrashVersion(
 						trashEntryId, DLFileVersion.class.getName(),
 						dlFileVersion.getFileVersionId(), status, null);

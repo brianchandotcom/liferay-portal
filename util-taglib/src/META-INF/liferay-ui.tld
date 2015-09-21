@@ -1091,11 +1091,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>control-panel-site-selector</name>
-		<tag-class>com.liferay.taglib.ui.ControlPanelSiteSelectorTag</tag-class>
-		<body-content>JSP</body-content>
-	</tag>
-	<tag>
 		<name>custom-attribute</name>
 		<tag-class>com.liferay.taglib.ui.CustomAttributeTag</tag-class>
 		<body-content>JSP</body-content>

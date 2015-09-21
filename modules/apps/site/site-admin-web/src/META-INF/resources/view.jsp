@@ -19,6 +19,12 @@
 <%
 long groupId = ParamUtil.getLong(request, "groupId", GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
+Group group = null;
+
+if (groupId > 0) {
+	group = GroupServiceUtil.getGroup(groupId);
+}
+
 String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -34,6 +40,10 @@ pageContext.setAttribute("searchURL", searchURL);
 String searchURLString = searchURL.toString();
 
 SearchContainer groupSearch = new GroupSearch(renderRequest, portletURL);
+
+if (group != null) {
+	SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
+}
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -80,6 +90,12 @@ SearchContainer groupSearch = new GroupSearch(renderRequest, portletURL);
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 	<aui:input name="deleteGroupIds" type="hidden" />
 
+	<c:if test="<%= layout.isTypeControlPanel() %>">
+		<div id="breadcrumb">
+			<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+		</div>
+	</c:if>
+
 	<liferay-ui:error exception="<%= NoSuchLayoutSetException.class %>">
 
 		<%
@@ -87,10 +103,10 @@ SearchContainer groupSearch = new GroupSearch(renderRequest, portletURL);
 
 		PKParser pkParser = new PKParser(nslse.getMessage());
 
-		Group group = GroupLocalServiceUtil.getGroup(pkParser.getLong("groupId"));
+		Group curGroup = GroupLocalServiceUtil.getGroup(pkParser.getLong("groupId"));
 		%>
 
-		<liferay-ui:message arguments="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" translateArguments="<%= false %>" />
+		<liferay-ui:message arguments="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" key="site-x-does-not-have-any-private-pages" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
 	<liferay-ui:error exception="<%= RequiredGroupException.MustNotDeleteCurrentGroup.class %>" message="the-site-cannot-be-deleted-or-deactivated-because-you-are-accessing-the-site" />

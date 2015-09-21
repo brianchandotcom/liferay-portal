@@ -15,12 +15,6 @@
 --%>
 
 <%
-Group group = null;
-
-if (groupId > 0) {
-	group = GroupServiceUtil.getGroup(groupId);
-}
-
 List<Group> groups = new ArrayList<Group>();
 
 if (filterManageableGroups) {
@@ -32,19 +26,7 @@ if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 
 	groups.add(GroupLocalServiceUtil.getGroup(groupId));
 }
-
-if (group != null) {
-	SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
-}
 %>
-
-<c:if test="<%= group != null %>">
-	<c:if test="<%= layout.isTypeControlPanel() %>">
-		<div id="breadcrumb">
-			<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-		</div>
-	</c:if>
-</c:if>
 
 <aui:row>
 	<aui:col cssClass="lfr-asset-column lfr-asset-column-details" width="<%= (group != null) ? 75 : 100 %>">

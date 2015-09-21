@@ -141,10 +141,6 @@
 		</execute>
 
 		<execute function="AssertTextNotPresent" locator1="SearchResults#USER_FACET_ANY_USER" value1="Any User" />
-
-		<execute macro="User#logoutPG" />
-
-		<execute macro="User#firstLoginPG" />
 	</command>
 
 	<command name="SearchConfiguredAdvanceFacetedSearchImages" priority="4">

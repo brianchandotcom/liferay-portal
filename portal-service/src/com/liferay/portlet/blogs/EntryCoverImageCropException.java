@@ -14,25 +14,28 @@
 
 package com.liferay.portlet.blogs;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class EntrySmallImageSizeException extends PortalException {
+@ProviderType
+public class EntryCoverImageCropException extends PortalException {
 
-	public EntrySmallImageSizeException() {
+	public EntryCoverImageCropException() {
 	}
 
-	public EntrySmallImageSizeException(String msg) {
+	public EntryCoverImageCropException(String msg) {
 		super(msg);
 	}
 
-	public EntrySmallImageSizeException(String msg, Throwable cause) {
+	public EntryCoverImageCropException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public EntrySmallImageSizeException(Throwable cause) {
+	public EntryCoverImageCropException(Throwable cause) {
 		super(cause);
 	}
 

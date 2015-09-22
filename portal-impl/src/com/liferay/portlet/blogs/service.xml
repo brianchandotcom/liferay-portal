@@ -233,10 +233,13 @@
 	</entity>
 	<exceptions>
 		<exception>EntryContent</exception>
+		<exception>EntryCoverImageCrop</exception>
 		<exception>EntryDescription</exception>
 		<exception>EntryDisplayDate</exception>
 		<exception>EntryImageName</exception>
 		<exception>EntryImageSize</exception>
+		<exception>EntrySmallImageName</exception>
+		<exception>EntrySmallImageScale</exception>
 		<exception>EntryTitle</exception>
 		<exception>TrackbackValidation</exception>
 	</exceptions>

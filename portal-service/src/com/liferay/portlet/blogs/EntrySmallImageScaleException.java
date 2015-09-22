@@ -22,20 +22,20 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class EntrySmallImageNameException extends PortalException {
+public class EntrySmallImageScaleException extends PortalException {
 
-	public EntrySmallImageNameException() {
+	public EntrySmallImageScaleException() {
 	}
 
-	public EntrySmallImageNameException(String msg) {
+	public EntrySmallImageScaleException(String msg) {
 		super(msg);
 	}
 
-	public EntrySmallImageNameException(String msg, Throwable cause) {
+	public EntrySmallImageScaleException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public EntrySmallImageNameException(Throwable cause) {
+	public EntrySmallImageScaleException(Throwable cause) {
 		super(cause);
 	}
 

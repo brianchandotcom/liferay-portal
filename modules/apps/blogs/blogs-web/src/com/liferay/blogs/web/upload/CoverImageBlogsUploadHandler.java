@@ -12,31 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.blogs;
-
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.blogs.web.upload;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Sergio González
  */
-@ProviderType
-public class EntrySmallImageNameException extends PortalException {
+public class CoverImageBlogsUploadHandler extends TempImageBlogsUploadHandler {
 
-	public EntrySmallImageNameException() {
-	}
-
-	public EntrySmallImageNameException(String msg) {
-		super(msg);
-	}
-
-	public EntrySmallImageNameException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public EntrySmallImageNameException(Throwable cause) {
-		super(cause);
+	@Override
+	protected long getMaxFileSize() {
+		return 0;
 	}
 
 }

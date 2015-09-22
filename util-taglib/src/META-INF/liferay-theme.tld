@@ -6,50 +6,60 @@
 	<jsp-version>1.1</jsp-version>
 	<short-name>liferay-theme</short-name>
 	<uri>http://liferay.com/tld/theme</uri>
+	<description>Provides the Liferay Theme component tags, prefixed with <![CDATA[<code>theme:</code>]]>.</description>
 	<tag>
 		<name>defineObjects</name>
 		<tag-class>com.liferay.taglib.theme.DefineObjectsTag</tag-class>
 		<tei-class>com.liferay.taglib.theme.DefineObjectsTei</tei-class>
 		<body-content>empty</body-content>
+		<description>Gives access to Theme objects in your JSP.</description>
 	</tag>
 	<tag>
 		<name>include</name>
 		<tag-class>com.liferay.taglib.theme.IncludeTag</tag-class>
 		<body-content>JSP</body-content>
+		<description>Sets a JSP page to include on the current JSP page.</description>
 		<attribute>
 			<name>page</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<description>A JSP page to include.</description>
 		</attribute>
 	</tag>
 	<tag>
 		<name>layout-icon</name>
 		<tag-class>com.liferay.taglib.theme.LayoutIconTag</tag-class>
 		<body-content>empty</body-content>
+		<description>Gets an icon image for a page.</description>
 		<attribute>
 			<name>layout</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<description>The page to get the icon for.</description>
 		</attribute>
 	</tag>
 	<tag>
 		<name>meta-tags</name>
 		<tag-class>com.liferay.taglib.theme.MetaTagsTag</tag-class>
 		<body-content>JSP</body-content>
+		<description>Adds a <![CDATA[&lt;meta&gt;]]> tag to the page.</description>
 	</tag>
 	<tag>
 		<name>param</name>
 		<tag-class>com.liferay.taglib.util.ParamTag</tag-class>
 		<body-content>JSP</body-content>
+		<description>Adds a new parameter with the name and value specified.</description>
 		<attribute>
 			<name>name</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<description>A name for the parameter.</description>
 		</attribute>
 		<attribute>
 			<name>value</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
+			<description>A value for the parameter.</description>
 		</attribute>
 	</tag>
 	<tag>

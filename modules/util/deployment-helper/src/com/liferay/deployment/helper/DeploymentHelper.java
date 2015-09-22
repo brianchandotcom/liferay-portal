@@ -27,7 +27,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.model.ZipParameters;
@@ -45,14 +47,76 @@ import org.jdom2.output.XMLOutputter;
 public class DeploymentHelper {
 
 	public static void main(String[] args) {
+		HashMap<String, String> arguments = parseArgs(args);
+
+		String deploymentFiles = arguments.get("deployment.files");
+		String deploymentPath = arguments.get("deployment.path");
+		String outputPath = arguments.get("output.file");
+
+		try (Scanner scanner = new Scanner(System.in)) {
+			while ((deploymentFiles == null) || deploymentFiles.equals("")) {
+				System.out.println(
+					"Please input a comma delimited list of files to include " +
+						"in the war (absolute paths required)");
+
+				deploymentFiles = scanner.nextLine();
+			}
+
+			while ((deploymentPath == null) || deploymentPath.equals("")) {
+				System.out.println(
+					"Please input the path to the Liferay deploy folder on " +
+						"the target system (absolute path required)");
+
+				deploymentPath = scanner.nextLine();
+			}
+
+			if ((outputPath == null) || outputPath.equals("")) {
+				System.out.println(
+					"Please input the a name for your war (absolute path " +
+						"required)");
+
+				outputPath = scanner.nextLine();
+			}
+		}
+
+		DeploymentHelper deploymentHelper = new DeploymentHelper(
+			deploymentFiles, deploymentPath, outputPath);
+
+		deploymentHelper.run();
+	}
+
+	public static HashMap<String, String> parseArgs(String[] args) {
+		HashMap<String, String> arguments = new HashMap<>();
+
+		for (String arg : args) {
+			int pos = arg.indexOf('=');
+
+			if (pos <= 0) {
+				continue;
+			}
+
+			String key = arg.substring(0, pos).trim();
+			String value = arg.substring(pos + 1).trim();
+
+			if (key.startsWith("-D")) {
+				key = key.substring(2);
+
+				System.setProperty(key, value);
+			}
+			else {
+				arguments.put(key, value);
+			}
+		}
+
+		return arguments;
 	}
 
 	public DeploymentHelper(
-		String deploymentFiles, String deploymentPath, String outputFile) {
+		String deploymentFiles, String deploymentPath, String outputPath) {
 
 		_deploymentFiles = deploymentFiles;
 		_deploymentPath = deploymentPath;
-		_outputFile = outputFile;
+		_outputPath = outputPath;
 	}
 
 	public void run() {
@@ -76,7 +140,7 @@ public class DeploymentHelper {
 
 			addDeploymentFiles(basePath);
 
-			ZipFile zipFile = new ZipFile(_outputFile);
+			ZipFile zipFile = new ZipFile(_outputPath);
 			ZipParameters parameters = new ZipParameters();
 
 			parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
@@ -86,7 +150,7 @@ public class DeploymentHelper {
 			zipFile.addFolder(baseDir, parameters);
 		}
 		catch (Exception e) {
-			System.err.println("Error writing " + _outputFile);
+			System.err.println("Error writing " + _outputPath);
 
 			e.printStackTrace();
 		}
@@ -149,6 +213,6 @@ public class DeploymentHelper {
 
 	private final String _deploymentFiles;
 	private final String _deploymentPath;
-	private final String _outputFile;
+	private final String _outputPath;
 
 }

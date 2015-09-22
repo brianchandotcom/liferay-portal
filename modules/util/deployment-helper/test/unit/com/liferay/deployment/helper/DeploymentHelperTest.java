@@ -33,14 +33,14 @@ public class DeploymentHelperTest {
 		URL deploymentFiles = clazz.getResource("dependencies/license.xml");
 
 		String deploymentPath = "/home";
-		String outputFile =
+		String outputPath =
 			System.getProperty("user.dir") + "/deployment-helper-web.war";
 
 		DeploymentHelper deploymentHelper = new DeploymentHelper(
-			deploymentFiles.getFile(), deploymentPath, outputFile);
+			deploymentFiles.getFile(), deploymentPath, outputPath);
 		deploymentHelper.run();
 
-		File file = new File(outputFile);
+		File file = new File(outputPath);
 		file.deleteOnExit();
 
 		Assert.assertTrue(file.exists());

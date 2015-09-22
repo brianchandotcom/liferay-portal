@@ -151,7 +151,9 @@ public class BaseHandler implements Handler<Void> {
 		try {
 			StatusLine statusLine = httpResponse.getStatusLine();
 
-			if (statusLine.getStatusCode() != HttpStatus.SC_OK) {
+			if ((statusLine.getStatusCode() != HttpStatus.SC_OK) &&
+				(statusLine.getStatusCode() != HttpStatus.SC_PARTIAL_CONTENT)) {
+
 				_logger.error("Status code {}", statusLine.getStatusCode());
 
 				throw new HttpResponseException(

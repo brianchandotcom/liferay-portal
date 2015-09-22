@@ -737,13 +737,16 @@ public class SyncFileService {
 		throws SQLException {
 
 		if (syncFile.isFile()) {
-			final Path filePath = IODeltaUtil.getChecksumsFilePath(syncFile);
+			final Path checksumsFilePath = IODeltaUtil.getChecksumsFilePath(
+				syncFile);
+			final Path tempFilePath = FileUtil.getTempFilePath(syncFile);
 
 			Runnable runnable = new Runnable() {
 
 				@Override
 				public void run() {
-					FileUtil.deleteFile(filePath);
+					FileUtil.deleteFile(checksumsFilePath);
+					FileUtil.deleteFile(tempFilePath);
 				}
 
 			};

@@ -30,15 +30,18 @@ import com.liferay.sync.engine.util.IODeltaUtil;
 import com.liferay.sync.engine.util.StreamUtil;
 
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.input.CountingInputStream;
 import org.apache.http.ConnectionClosedException;
 import org.apache.http.Header;
@@ -155,7 +158,8 @@ public class DownloadFileHandler extends BaseHandler {
 	}
 
 	protected void copyFile(
-			SyncFile syncFile, Path filePath, InputStream inputStream)
+			SyncFile syncFile, Path filePath, InputStream inputStream,
+			boolean append)
 		throws Exception {
 
 		Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());
@@ -164,28 +168,29 @@ public class DownloadFileHandler extends BaseHandler {
 			watcher.getDownloadedFilePathNames();
 
 		try {
-			SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
-				getSyncAccountId());
-
-			Path tempFilePath = FileUtil.getFilePath(
-				syncAccount.getFilePathName(), ".data",
-				String.valueOf(syncFile.getSyncFileId()));
+			Path tempFilePath = FileUtil.getTempFilePath(syncFile);
 
 			boolean exists = Files.exists(filePath);
 
-			if (exists) {
-				Files.copy(
-					filePath, tempFilePath,
-					StandardCopyOption.REPLACE_EXISTING);
-			}
+			if (append) {
+				OutputStream outputStream = Files.newOutputStream(
+					tempFilePath, StandardOpenOption.APPEND);
 
-			if ((Boolean)getParameterValue("patch")) {
-				IODeltaUtil.patch(tempFilePath, inputStream);
+				IOUtils.copyLarge(inputStream, outputStream);
 			}
 			else {
-				Files.copy(
-					inputStream, tempFilePath,
-					StandardCopyOption.REPLACE_EXISTING);
+				if (exists && (boolean)getParameterValue("patch")) {
+					Files.copy(
+						filePath, tempFilePath,
+						StandardCopyOption.REPLACE_EXISTING);
+
+					IODeltaUtil.patch(tempFilePath, inputStream);
+				}
+				else {
+					Files.copy(
+						inputStream, tempFilePath,
+						StandardCopyOption.REPLACE_EXISTING);
+				}
 			}
 
 			downloadedFilePathNames.add(filePath.toString());
@@ -270,7 +275,12 @@ public class DownloadFileHandler extends BaseHandler {
 
 			};
 
-			copyFile(syncFile, filePath, inputStream);
+			if (httpResponse.getFirstHeader("Accept-Ranges") != null) {
+				copyFile(syncFile, filePath, inputStream, true);
+			}
+			else {
+				copyFile(syncFile, filePath, inputStream, false);
+			}
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);

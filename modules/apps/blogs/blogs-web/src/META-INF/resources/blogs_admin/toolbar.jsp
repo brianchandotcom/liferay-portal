@@ -16,25 +16,7 @@
 
 <%@ include file="/blogs_admin/init.jsp" %>
 
-<%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem");
-%>
-
 <aui:nav-bar>
-	<aui:nav cssClass="navbar-nav">
-		<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
-			<liferay-security:permissionsURL
-				modelResource="com.liferay.portlet.blogs"
-				modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
-				resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
-				var="permissionsURL"
-				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-			/>
-
-			<aui:nav-item href="<%= permissionsURL %>" label="permissions" title="edit-permissions" useDialog="<%= true %>" />
-		</c:if>
-	</aui:nav>
-
 	<aui:nav-bar-search>
 		<div class="form-search">
 			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" name="keywords" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />

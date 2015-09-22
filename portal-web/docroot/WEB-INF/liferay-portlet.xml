@@ -175,21 +175,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>145</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>dockbar</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<use-default-template>false</use-default-template>
-		<show-portlet-access-denied>false</show-portlet-access-denied>
-		<show-portlet-inactive>false</show-portlet-inactive>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-dockbar</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>164</portlet-name>
 		<icon>/html/icons/login.png</icon>
 		<configuration-action-class>com.liferay.portlet.login.action.ConfigurationActionImpl</configuration-action-class>

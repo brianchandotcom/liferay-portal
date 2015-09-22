@@ -15,6 +15,7 @@
 package com.liferay.portal.portlet.container.embedded.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
@@ -66,6 +67,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * A portlet is considered explicitly added to a layout if all these
@@ -328,6 +332,105 @@ public class EmbeddedPortletTCKTest {
 		}
 
 		private TestNonEmbeddedPortlet _nonEmbeddedPortlet;
+
+	}
+
+	@RunWith(Arquillian.class)
+	public static class WhenEmbeddingPortletUsingADTTemplates
+		extends BasePortletContainerTestCase {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(),
+				TransactionalTestRule.INSTANCE);
+
+		@Before
+		public void setUp() throws Exception {
+			super.setUp();
+
+			_layoutTypePortlet = (LayoutTypePortlet)layout.getLayoutType();
+
+			_layoutStaticPortletsAll = PropsValues.LAYOUT_STATIC_PORTLETS_ALL;
+		}
+
+		@Test
+		public void shouldRenderADTAndRuntimePortlets() throws Exception {
+			TestPortlet adtPortlet = new TestPortlet(map) {
+
+				@Override
+				public void render(
+						RenderRequest renderRequest,
+						RenderResponse renderResponse)
+					throws IOException, PortletException {
+
+					map.put("render", Boolean.TRUE.toString());
+
+					PortletContext portletContext = getPortletContext();
+
+					PortletRequestDispatcher portletRequestDispatcher =
+						portletContext.getRequestDispatcher("/view.jsp");
+
+					portletRequestDispatcher.include(
+						renderRequest, renderResponse);
+				}
+
+			};
+
+			properties.put(
+				"com.liferay.portlet.instanceable", Boolean.FALSE.toString());
+
+			setUpPortlet(adtPortlet, properties, TEST_PORTLET_ID);
+
+			// register ADT Template Handler
+
+			BundleContext bundleContext = getBundleContext();
+
+			properties.put("javax.portlet.name", TEST_PORTLET_ID);
+
+			ServiceRegistration<?> templateHandlerServiceRegistration =
+				bundleContext.registerService(
+					new String[] {
+						Object.class.getName(), TemplateHandler.class.getName()
+					}, new TestEmbeddedPortletDisplayTemplateHandler(),
+					properties);
+
+			serviceRegistrations.add(templateHandlerServiceRegistration);
+
+			HttpServletRequest httpServletRequest = getHttpServletRequest();
+
+			PortletURL portletURL = new PortletURLImpl(
+				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
+				PortletRequest.RENDER_PHASE);
+
+			String testRuntimePortletId = "testRuntimePortletId";
+
+			TestPortlet testRuntimePortlet = new TestPortlet(map) {
+
+				@Override
+				public void render(
+					RenderRequest renderRequest, RenderResponse renderResponse)
+				throws IOException, PortletException {
+
+					map.put("runtime", Boolean.TRUE.toString());
+				}
+
+			};
+
+			setUpPortlet(
+				testRuntimePortlet, properties, testRuntimePortletId, false);
+
+			portletURL.setParameter(
+				"testRuntimePortletId", testRuntimePortletId);
+
+			Map<String, List<String>> responseMap = request(
+				portletURL.toString());
+
+			Assert.assertEquals("200", getString(responseMap, "code"));
+			Assert.assertTrue(map.containsKey("render"));
+			Assert.assertTrue(map.containsKey("runtime"));
+		}
 
 	}
 

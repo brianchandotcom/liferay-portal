@@ -30,7 +30,9 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="PageComment#tearDownPG" />
+		<execute macro="PageComment#tearDownPG">
+			<var name="pageName" value="Page Comments Page" />
+		</execute>
 
 		<execute macro="Page#tearDownPG" />
 

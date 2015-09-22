@@ -6,7 +6,26 @@
 	background-color: $control-menu-level-2-bg;
 	border-bottom-color: $control-menu-level-2-border;
 
+	a {
+		color: $control-menu-level-2-link-color;
+	}
+
 	.control-menu-nav {
+		> li {
+			.btn-default {
+				background-color: $control-menu-level-2-btn-default-bg;
+				border-color: $control-menu-level-2-btn-default-border;
+				color: $control-menu-level-2-btn-default-color;
+
+				&:focus,
+				&:hover {
+					background-color: $control-menu-level-2-btn-default-hover-bg;
+					border-color: $control-menu-level-2-btn-default-hover-border;
+					color: $control-menu-level-2-btn-default-hover-color;
+				}
+			}
+		}
+
 		> .active {
 			.control-menu-icon .icon-monospaced {
 				background-color: $control-menu-level-2-nav-item-active-bg;
@@ -29,6 +48,7 @@
 
 		> label {
 			color: $control-menu-level-2-label-color;
+			display: block;
 			font-weight: 300;
 		}
 
@@ -48,7 +68,7 @@
 		}
 
 		> select.form-control {
-			border-color: transparent;
+			border-color: $control-menu-level-2-form-control-border;
 		}
 	}
 }
@@ -82,4 +102,14 @@
 	@include sm() {
 		@include transition($control-menu-css-transition);
 	}
+}
+
+.layout-revision-version,
+.staging-variation-selector {
+	color: $control-menu-level-2-form-control-color;
+}
+
+.staging-live-group-name,
+.staging-live-help {
+	color: $control-menu-level-2-color;
 }

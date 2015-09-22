@@ -42,21 +42,19 @@ if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
 		<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && themeDisplay.isShowStagingIcon() %>">
 			<div class="control-menu-level-2">
 				<div class="container-fluid-1280">
-					<ul class="control-menu-nav">
 
-						<%
-						String renderPortletBoundary = GetterUtil.getString(request.getAttribute(WebKeys.RENDER_PORTLET_BOUNDARY));
+					<%
+					String renderPortletBoundary = GetterUtil.getString(request.getAttribute(WebKeys.RENDER_PORTLET_BOUNDARY));
 
-						request.setAttribute(WebKeys.RENDER_PORTLET_BOUNDARY, Boolean.FALSE.toString());
-						%>
+					request.setAttribute(WebKeys.RENDER_PORTLET_BOUNDARY, Boolean.FALSE.toString());
+					%>
 
-						<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
+					<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
 
-						<%
-						request.setAttribute(WebKeys.RENDER_PORTLET_BOUNDARY, renderPortletBoundary);
-						%>
+					<%
+					request.setAttribute(WebKeys.RENDER_PORTLET_BOUNDARY, renderPortletBoundary);
+					%>
 
-					</ul>
 				</div>
 			</div>
 		</c:if>

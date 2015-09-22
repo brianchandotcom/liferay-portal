@@ -1355,7 +1355,7 @@
 		function(options) {
 			var obj = options.obj;
 
-			if (obj && !obj.hasClass('portlet-borderless')) {
+			if (obj) {
 				var title = obj.one('.portlet-title-text');
 
 				if (title && !title.hasClass('not-editable')) {

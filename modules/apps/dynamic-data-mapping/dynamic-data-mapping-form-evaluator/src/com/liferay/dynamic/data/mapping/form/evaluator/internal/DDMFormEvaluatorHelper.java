@@ -25,6 +25,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.expression.Expression;
 import com.liferay.portal.expression.ExpressionFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -108,20 +109,30 @@ public class DDMFormEvaluatorHelper {
 			new DDMFormFieldEvaluationResult(
 				ddmFormFieldValue.getName(), ddmFormFieldValue.getInstanceId());
 
-		DDMFormFieldValidation ddmFormFieldValidation =
-			ddmFormField.getDDMFormFieldValidation();
+		if (ddmFormField.isRequired() &&
+			isDDMFormFieldValueEmpty(ddmFormFieldValue)) {
 
-		String validationExpression = getValidationExpression(
-			ddmFormFieldValidation);
-
-		boolean valid = evaluateBooleanExpression(
-			validationExpression, ancestorDDMFormFieldValues);
-
-		ddmFormFieldEvaluationResult.setValid(valid);
-
-		if (!valid) {
 			ddmFormFieldEvaluationResult.setErrorMessage(
-				ddmFormFieldValidation.getErrorMessage());
+				LanguageUtil.get(_locale, "this-field-is-required"));
+
+			ddmFormFieldEvaluationResult.setValid(false);
+		}
+		else {
+			DDMFormFieldValidation ddmFormFieldValidation =
+				ddmFormField.getDDMFormFieldValidation();
+
+			String validationExpression = getValidationExpression(
+				ddmFormFieldValidation);
+
+			boolean valid = evaluateBooleanExpression(
+				validationExpression, ancestorDDMFormFieldValues);
+
+			ddmFormFieldEvaluationResult.setValid(valid);
+
+			if (!valid) {
+				ddmFormFieldEvaluationResult.setErrorMessage(
+					ddmFormFieldValidation.getErrorMessage());
+			}
 		}
 
 		boolean visible = evaluateBooleanExpression(
@@ -167,6 +178,18 @@ public class DDMFormEvaluatorHelper {
 		}
 
 		return ddmFormFieldValidation.getExpression();
+	}
+
+	protected boolean isDDMFormFieldValueEmpty(
+		DDMFormFieldValue ddmFormFieldValue) {
+
+		Value value = ddmFormFieldValue.getValue();
+
+		if (Validator.isNull(value.getString(_locale))) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void setExpressionFactory(ExpressionFactory expressionFactory) {

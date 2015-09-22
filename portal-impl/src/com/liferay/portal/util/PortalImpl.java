@@ -2372,22 +2372,6 @@ public class PortalImpl implements Portal {
 		return facebookURL;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay) {
-		List<Portlet> portlets = getControlPanelPortlets(
-			PortletCategoryKeys.USER_MY_ACCOUNT, themeDisplay);
-
-		if (portlets.isEmpty()) {
-			return null;
-		}
-
-		return portlets.get(0);
-	}
-
 	@Override
 	public String getFirstPageLayoutTypes(HttpServletRequest request) {
 		StringBundler sb = new StringBundler();
@@ -4915,26 +4899,6 @@ public class PortalImpl implements Portal {
 	@Deprecated
 	@Override
 	public PortletURL getSiteAdministrationURL(
-		HttpServletRequest request, ThemeDisplay themeDisplay) {
-
-		Portlet portlet = getFirstSiteAdministrationPortlet(themeDisplay);
-
-		if (portlet == null) {
-			return null;
-		}
-
-		return getSiteAdministrationURL(
-			request, themeDisplay, portlet.getPortletId());
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             long, String)}
-	 */
-	@Deprecated
-	@Override
-	public PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay,
 		String portletId) {
 
@@ -4944,26 +4908,6 @@ public class PortalImpl implements Portal {
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 
 		return portletURL;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             long, String)}
-	 */
-	@Deprecated
-	@Override
-	public PortletURL getSiteAdministrationURL(
-		PortletResponse portletResponse, ThemeDisplay themeDisplay) {
-
-		Portlet portlet = getFirstSiteAdministrationPortlet(themeDisplay);
-
-		if (portlet == null) {
-			return null;
-		}
-
-		return getSiteAdministrationURL(
-			portletResponse, themeDisplay, portlet.getPortletId());
 	}
 
 	/**

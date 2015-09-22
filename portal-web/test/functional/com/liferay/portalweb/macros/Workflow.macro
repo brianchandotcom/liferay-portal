@@ -255,7 +255,7 @@
 	</command>
 
 	<command name="deactivateAddedWorkflowDefinition">
-		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ACTIONS" />
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS" />
 
 		<execute macro="Workflow#deactivateWorkflowDefinitionCmd" />
 	</command>
@@ -263,13 +263,13 @@
 	<command name="deactivateSpecificWorkflowDefinition">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" value1="Actions" />
 
 		<execute macro="Workflow#deactivateWorkflowDefinitionCmd" />
 	</command>
 
 	<command name="deactivateWorkflowDefinition">
-		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS" value1="Actions" />
 
 		<execute macro="Workflow#deactivateWorkflowDefinitionCmd" />
 	</command>
@@ -283,13 +283,13 @@
 	<command name="deleteSpecificWorkflowDefinition">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" value1="Actions" />
 
 		<execute macro="Workflow#deleteWorkflowDefinitionCmd" />
 	</command>
 
 	<command name="deleteWorkflowDefinition">
-		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_DEACTIVATED_DEFINITION_ACTIONS" />
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_DEACTIVATED_DEFINITION_ELLIPSIS" />
 
 		<execute macro="Workflow#deleteWorkflowDefinitionCmd" />
 	</command>
@@ -318,7 +318,7 @@
 		<var name="key_workflowDefinitionName" value="${workflowDefinitionName}" />
 
 		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_ACTIVE" value1="No" />
-		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_DEACTIVATED_DEFINITION_ACTIONS" />
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_DEACTIVATED_DEFINITION_ELLIPSIS" />
 		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_MENULIST_ACTIVATE" value1="Activate" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_ACTIVE" value1="Yes" />
@@ -494,7 +494,7 @@
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ACTIONS" />
+			<condition function="IsElementPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
 			<then>
 				<execute macro="Workflow#deactivateSpecificWorkflowDefinition">
 					<var name="workflowDefinitionTitle" value="Join Xor" />
@@ -531,7 +531,7 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ACTIONS" />
+			<condition function="IsElementPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS" />
 			<then>
 				<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
 

@@ -1040,6 +1040,66 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<delete file="ServiceBuilder.temp" />
 	</target>
 
+	<target name="prepare-upgrade-table">
+		<for param="zip.file">
+			<path>
+				<fileset
+					dir="${upgrade.table.dir}"
+					includes="*.zip"
+				/>
+			</path>
+			<sequential>
+				<antelope:stringutil string="@{zip.file}" property="zip.version.beginindex">
+					<indexof string="src-" fromindex="0" />
+				</antelope:stringutil>
+
+				<math
+					datatype="int"
+					operand1="${zip.version.beginindex}"
+					operand2="4"
+					operation="+"
+					result="zip.version.beginindex"
+				/>
+
+				<antelope:stringutil string="@{zip.file}" property="zip.version.endindex">
+					<indexof string=".zip" fromindex="0" />
+				</antelope:stringutil>
+
+				<antelope:stringutil string="@{zip.file}" property="zip.version">
+					<substring beginindex="${zip.version.beginindex}" endindex="${zip.version.endindex}" />
+				</antelope:stringutil>
+
+				<if>
+					<or>
+						<not>
+							<uptodate
+								srcfile="@{zip.file}"
+								targetfile="${upgrade.table.dir}/${zip.version}"
+							/>
+						</not>
+						<not>
+							<available file="${upgrade.table.dir}/${zip.version}/indexes.sql" />
+						</not>
+					</or>
+					<then>
+						<mkdir dir="${upgrade.table.dir}/${zip.version}" />
+
+						<unzip
+							dest="${upgrade.table.dir}/${zip.version}"
+							src="@{zip.file}"
+						>
+							<patternset>
+								<include name="**/*ModelImpl.java" />
+								<include name="**/sql/indexes.sql" />
+							</patternset>
+							<mapper type="flatten" />
+						</unzip>
+					</then>
+				</if>
+			</sequential>
+		</for>
+	</target>
+
 	<target name="rebuild-hypersonic">
 		<ant dir="../sql" target="rebuild-hypersonic" />
 	</target>

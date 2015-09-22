@@ -60,10 +60,6 @@ LPS-30525.
 >
 ${dateUtil.getCurrentDate(format, locale)}</#macro>
 
-<#macro dockbar>
-	${theme.runtime("145")}
-</#macro>
-
 <#macro js
 	file_name
 >

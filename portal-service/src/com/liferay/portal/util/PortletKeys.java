@@ -1,4 +1,5 @@
 /**
+/**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
@@ -38,8 +39,6 @@ public class PortletKeys {
 	public static final String CHAT = "1_WAR_chatportlet";
 
 	public static final String DIRECTORY = "11";
-
-	public static final String DOCKBAR = "145";
 
 	public static final String DOCUMENT_LIBRARY =
 		"com_liferay_document_library_web_portlet_DLPortlet";

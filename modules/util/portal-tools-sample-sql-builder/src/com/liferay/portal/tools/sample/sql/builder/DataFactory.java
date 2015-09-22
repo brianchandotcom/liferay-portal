@@ -1118,15 +1118,11 @@ public class DataFactory {
 		newAssetPublisherPortletPreferencesModels(long plid) {
 
 		List<PortletPreferencesModel> portletPreferencesModels =
-			new ArrayList<>(4);
+			new ArrayList<>(3);
 
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
 				plid, BlogsPortletKeys.BLOGS,
-				PortletConstants.DEFAULT_PREFERENCES));
-		portletPreferencesModels.add(
-			newPortletPreferencesModel(
-				plid, PortletKeys.DOCKBAR,
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
@@ -1262,12 +1258,8 @@ public class DataFactory {
 		newDDLPortletPreferencesModels(long plid) {
 
 		List<PortletPreferencesModel> portletPreferencesModels =
-			new ArrayList<>(2);
+			new ArrayList<>(3);
 
-		portletPreferencesModels.add(
-			newPortletPreferencesModel(
-				plid, PortletKeys.DOCKBAR,
-				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
 				plid, DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY,
@@ -1630,12 +1622,8 @@ public class DataFactory {
 		newJournalPortletPreferencesModels(long plid) {
 
 		List<PortletPreferencesModel> portletPreferencesModels =
-			new ArrayList<>(2);
+			new ArrayList<>(1);
 
-		portletPreferencesModels.add(
-			newPortletPreferencesModel(
-				plid, PortletKeys.DOCKBAR,
-				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
 				plid, JournalPortletKeys.JOURNAL,

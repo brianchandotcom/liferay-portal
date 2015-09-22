@@ -108,7 +108,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 			rowIdProperty="urlTitle"
 		>
 			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
+				<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 				<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 			</liferay-portlet:renderURL>

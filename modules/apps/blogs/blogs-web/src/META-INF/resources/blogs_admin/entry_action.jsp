@@ -27,20 +27,6 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.VIEW) %>">
-		<portlet:renderURL var="viewEntryURL">
-			<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon
-			iconCssClass="icon-search"
-			message="view[action]"
-			url="<%= viewEntryURL %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />

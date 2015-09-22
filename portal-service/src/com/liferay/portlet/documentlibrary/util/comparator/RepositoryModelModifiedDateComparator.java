@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util.comparator;
 
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -32,7 +33,13 @@ public class RepositoryModelModifiedDateComparator<T>
 
 	public static final String ORDER_BY_ASC = "modifiedDate ASC";
 
+	public static final String ORDER_BY_ASC_MODEL =
+		"modelFolder DESC, modifiedDate ASC";
+
 	public static final String ORDER_BY_DESC = "modifiedDate DESC";
+
+	public static final String ORDER_BY_DESC_MODEL =
+		"modelFolder DESC, modifiedDate DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"modifiedDate"};
 
@@ -42,6 +49,14 @@ public class RepositoryModelModifiedDateComparator<T>
 
 	public RepositoryModelModifiedDateComparator(boolean ascending) {
 		_ascending = ascending;
+		_orderByModel = false;
+	}
+
+	public RepositoryModelModifiedDateComparator(
+		boolean ascending, boolean orderByModel) {
+
+		_ascending = ascending;
+		_orderByModel = orderByModel;
 	}
 
 	@Override
@@ -49,7 +64,27 @@ public class RepositoryModelModifiedDateComparator<T>
 		Date modifiedDate1 = getModifiedDate(t1);
 		Date modifiedDate2 = getModifiedDate(t2);
 
-		int value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+		int value = 0;
+
+		if (_orderByModel) {
+			if (((t1 instanceof DLFolder) || (t1 instanceof Folder)) &&
+				((t2 instanceof DLFolder) || (t2 instanceof Folder))) {
+
+				value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+			}
+			else if ((t1 instanceof DLFolder) || (t1 instanceof Folder)) {
+				value = -1;
+			}
+			else if ((t2 instanceof DLFolder) || (t2 instanceof Folder)) {
+				value = 1;
+			}
+			else {
+				value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+			}
+		}
+		else {
+			value = DateUtil.compareTo(modifiedDate1, modifiedDate2);
+		}
 
 		if (_ascending) {
 			return value;
@@ -61,11 +96,21 @@ public class RepositoryModelModifiedDateComparator<T>
 
 	@Override
 	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
+		if (_orderByModel) {
+			if (_ascending) {
+				return ORDER_BY_ASC_MODEL;
+			}
+			else {
+				return ORDER_BY_DESC_MODEL;
+			}
 		}
 		else {
-			return ORDER_BY_DESC;
+			if (_ascending) {
+				return ORDER_BY_ASC;
+			}
+			else {
+				return ORDER_BY_DESC;
+			}
 		}
 	}
 
@@ -103,5 +148,6 @@ public class RepositoryModelModifiedDateComparator<T>
 	}
 
 	private final boolean _ascending;
+	private final boolean _orderByModel;
 
 }

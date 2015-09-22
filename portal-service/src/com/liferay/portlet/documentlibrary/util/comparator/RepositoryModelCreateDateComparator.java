@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util.comparator;
 
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -31,7 +32,13 @@ public class RepositoryModelCreateDateComparator<T>
 
 	public static final String ORDER_BY_ASC = "createDate ASC";
 
+	public static final String ORDER_BY_ASC_MODEL =
+		"modelFolder DESC, createDate ASC";
+
 	public static final String ORDER_BY_DESC = "createDate DESC";
+
+	public static final String ORDER_BY_DESC_MODEL =
+		"modelFolder DESC, createDate DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
@@ -41,6 +48,14 @@ public class RepositoryModelCreateDateComparator<T>
 
 	public RepositoryModelCreateDateComparator(boolean ascending) {
 		_ascending = ascending;
+		_orderByModel = false;
+	}
+
+	public RepositoryModelCreateDateComparator(
+		boolean ascending, boolean orderByModel) {
+
+		_ascending = ascending;
+		_orderByModel = orderByModel;
 	}
 
 	@Override
@@ -48,7 +63,27 @@ public class RepositoryModelCreateDateComparator<T>
 		Date createDate1 = getCreateDate(t1);
 		Date createDate2 = getCreateDate(t2);
 
-		int value = DateUtil.compareTo(createDate1, createDate2);
+		int value = 0;
+
+		if (_orderByModel) {
+			if (((t1 instanceof DLFolder) || (t1 instanceof Folder)) &&
+				((t2 instanceof DLFolder) || (t2 instanceof Folder))) {
+
+				value = DateUtil.compareTo(createDate1, createDate2);
+			}
+			else if ((t1 instanceof DLFolder) || (t1 instanceof Folder)) {
+				value = -1;
+			}
+			else if ((t2 instanceof DLFolder) || (t2 instanceof Folder)) {
+				value = 1;
+			}
+			else {
+				value = DateUtil.compareTo(createDate1, createDate2);
+			}
+		}
+		else {
+			value = DateUtil.compareTo(createDate1, createDate2);
+		}
 
 		if (_ascending) {
 			return value;
@@ -60,11 +95,21 @@ public class RepositoryModelCreateDateComparator<T>
 
 	@Override
 	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
+		if (_orderByModel) {
+			if (_ascending) {
+				return ORDER_BY_ASC_MODEL;
+			}
+			else {
+				return ORDER_BY_DESC_MODEL;
+			}
 		}
 		else {
-			return ORDER_BY_DESC;
+			if (_ascending) {
+				return ORDER_BY_ASC;
+			}
+			else {
+				return ORDER_BY_DESC;
+			}
 		}
 	}
 
@@ -102,5 +147,6 @@ public class RepositoryModelCreateDateComparator<T>
 	}
 
 	private final boolean _ascending;
+	private final boolean _orderByModel;
 
 }

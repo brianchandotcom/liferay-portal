@@ -31,7 +31,7 @@ else if (Validator.isNull(searchTerms.getKeywords())) {
 
 	searchContainer.setTotal(total);
 
-	results = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
+	results = BlogsEntryServiceUtil.getGroupEntries(scopeGroupId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 else {
 	Indexer indexer = IndexerRegistryUtil.getIndexer(BlogsEntry.class);

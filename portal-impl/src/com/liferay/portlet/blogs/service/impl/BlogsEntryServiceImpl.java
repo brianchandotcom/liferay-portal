@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -262,6 +263,21 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		else {
 			return blogsEntryPersistence.filterFindByG_S(
 				groupId, status, start, end);
+		}
+	}
+
+	@Override
+	public List<BlogsEntry> getGroupEntries(
+		long groupId, int status, int start, int end,
+		OrderByComparator<BlogsEntry> obc) {
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return blogsEntryPersistence.filterFindByG_NotS(
+				groupId, WorkflowConstants.STATUS_IN_TRASH, start, end, obc);
+		}
+		else {
+			return blogsEntryPersistence.filterFindByG_S(
+				groupId, status, start, end, obc);
 		}
 	}
 

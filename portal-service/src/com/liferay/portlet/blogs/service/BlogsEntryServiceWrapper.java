@@ -152,6 +152,14 @@ public class BlogsEntryServiceWrapper implements BlogsEntryService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> getGroupEntries(
+		long groupId, int status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.blogs.model.BlogsEntry> obc) {
+		return _blogsEntryService.getGroupEntries(groupId, status, start, end,
+			obc);
+	}
+
+	@Override
 	public int getGroupEntriesCount(long groupId, java.util.Date displayDate,
 		int status) {
 		return _blogsEntryService.getGroupEntriesCount(groupId, displayDate,

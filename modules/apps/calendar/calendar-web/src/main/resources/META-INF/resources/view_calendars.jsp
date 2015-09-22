@@ -96,7 +96,7 @@ portletURL.setParameter("calendarResourceId", String.valueOf(calendarResource.ge
 
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator />
+	<liferay-ui:search-iterator markupView="lexicon" />
 </liferay-ui:search-container>
 
 <div class="calendar-portlet-import-container hide" id="<portlet:namespace />importCalendarContainer">

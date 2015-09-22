@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.aop.Property;
 import com.liferay.portal.kernel.spring.aop.Retry;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.RetryAcceptor;
 import com.liferay.portal.util.PropsValues;
 
@@ -50,8 +49,7 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 		int retries = retry.retries();
 
 		if (retries < 0) {
-			retries = GetterUtil.getInteger(
-				PropsValues.RETRY_ADVICE_MAX_RETRIES, retries);
+			retries = PropsValues.RETRY_ADVICE_MAX_RETRIES;
 		}
 
 		int totalRetries = retries;

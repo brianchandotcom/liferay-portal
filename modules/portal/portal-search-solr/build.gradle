@@ -12,6 +12,8 @@ dependencies {
 	provided group: "org.apache.lucene", name: "lucene-suggest", version: "5.2.1"
 	provided group: "org.apache.solr", name: "solr-core", transitive: false, version: "5.2.1"
 	provided group: "org.apache.solr", name: "solr-solrj", version: "5.2.1"
+
+	testCompile group: "com.liferay", name: "com.liferay.portal.search.unit.test.util", version: "1.0.0-SNAPSHOT"
 }
 
 liferay {

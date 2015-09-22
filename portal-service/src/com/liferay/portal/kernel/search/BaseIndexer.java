@@ -1182,12 +1182,24 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		int status = GetterUtil.getInteger(
-			searchContext.getAttribute(Field.STATUS),
-			WorkflowConstants.STATUS_APPROVED);
+		int[] statuses = GetterUtil.getIntegerValues(
+			searchContext.getAttribute(Field.STATUS), null);
 
-		if (status != WorkflowConstants.STATUS_ANY) {
-			contextBooleanFilter.addRequiredTerm(Field.STATUS, status);
+		if (ArrayUtil.isEmpty(statuses)) {
+			int status = GetterUtil.getInteger(
+				searchContext.getAttribute(Field.STATUS),
+				WorkflowConstants.STATUS_APPROVED);
+
+			statuses = new int[] {status};
+		}
+
+		if (!ArrayUtil.contains(statuses, WorkflowConstants.STATUS_ANY)) {
+			TermsFilter statusesTermsFilter = new TermsFilter(Field.STATUS);
+
+			statusesTermsFilter.addValues(ArrayUtil.toStringArray(statuses));
+
+			contextBooleanFilter.add(
+				statusesTermsFilter, BooleanClauseOccur.MUST);
 		}
 		else {
 			contextBooleanFilter.addTerm(

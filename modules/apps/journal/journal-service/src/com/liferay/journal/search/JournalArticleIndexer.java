@@ -522,7 +522,20 @@ public class JournalArticleIndexer
 			"ddmTemplateKey", journalArticle.getDDMTemplateKey());
 		document.addDate("displayDate", journalArticle.getDisplayDate());
 		document.addKeyword("head", isHead(journalArticle));
-		document.addKeyword("headListable", isHeadListable(journalArticle));
+
+		boolean headListable = isHeadListable(journalArticle);
+
+		document.addKeyword("headListable", headListable);
+
+		// Scheduled listable articles should be visible in asset browser
+
+		if (journalArticle.isScheduled() && headListable) {
+			boolean visible = GetterUtil.getBoolean(document.get("visible"));
+
+			if (!visible) {
+				document.addKeyword("visible", true);
+			}
+		}
 
 		addDDMStructureAttributes(document, journalArticle);
 
@@ -790,7 +803,8 @@ public class JournalArticleIndexer
 				article.getResourcePrimKey(),
 				new int[] {
 					WorkflowConstants.STATUS_APPROVED,
-					WorkflowConstants.STATUS_IN_TRASH
+					WorkflowConstants.STATUS_IN_TRASH,
+					WorkflowConstants.STATUS_SCHEDULED
 				});
 
 		if ((latestArticle != null) &&

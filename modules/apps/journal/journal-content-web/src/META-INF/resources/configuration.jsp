@@ -168,6 +168,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 			selectWebContentURL.setParameter("refererAssetEntryId", "[$ARTICLE_REFERER_ASSET_ENTRY_ID$]");
 			selectWebContentURL.setParameter("typeSelection", JournalArticle.class.getName());
 			selectWebContentURL.setParameter("showNonindexable", String.valueOf(Boolean.TRUE));
+			selectWebContentURL.setParameter("showScheduled", String.valueOf(Boolean.TRUE));
 			selectWebContentURL.setParameter("eventName", "selectContent");
 			selectWebContentURL.setWindowState(LiferayWindowState.POP_UP);
 

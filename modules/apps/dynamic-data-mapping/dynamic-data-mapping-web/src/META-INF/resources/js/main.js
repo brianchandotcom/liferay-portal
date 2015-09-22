@@ -614,7 +614,7 @@ AUI.add(
 
 				if (isString(str)) {
 					str = str.trim();
-					
+
 					for (var i = 0; i < str.length; i++) {
 						var item = str[i];
 
@@ -654,7 +654,7 @@ AUI.add(
 			},
 
 			validateFieldName: function(fieldName) {
-				return (/^[\w]+$/).test(fieldName) && !fieldName.includes('\u005F');
+				return (/^[\w]+$/).test(fieldName) && !Lang.String.contains(fieldName, '_');
 			}
 		};
 

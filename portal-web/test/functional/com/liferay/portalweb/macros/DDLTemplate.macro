@@ -21,6 +21,8 @@
 		<execute function="Click" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
+		<execute function="Pause" locator1="10000" />
+
 		<execute function="Click" locator1="Button#PLUS" />
 
 		<execute function="AssertClick" locator1="MenuItem#ADD_DISPLAY_TEMPLATE" value1="add-display-template" />

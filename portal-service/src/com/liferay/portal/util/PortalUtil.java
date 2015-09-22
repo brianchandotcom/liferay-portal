@@ -976,14 +976,6 @@ public class PortalUtil {
 			portlet, facebookCanvasPageURL, themeDisplay);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public static Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay) {
-		return getPortal().getFirstMyAccountPortlet(themeDisplay);
-	}
-
 	public static String getFirstPageLayoutTypes(HttpServletRequest request) {
 		return getPortal().getFirstPageLayoutTypes(request);
 	}
@@ -1803,36 +1795,11 @@ public class PortalUtil {
 	 */
 	@Deprecated
 	public static PortletURL getSiteAdministrationURL(
-		HttpServletRequest request, ThemeDisplay themeDisplay) {
-
-		return getPortal().getSiteAdministrationURL(request, themeDisplay);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             long, String)}
-	 */
-	@Deprecated
-	public static PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay,
 		String portletId) {
 
 		return getPortal().getSiteAdministrationURL(
 			request, themeDisplay, portletId);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             long, String)}
-	 */
-	@Deprecated
-	public static PortletURL getSiteAdministrationURL(
-		PortletResponse portletResponse, ThemeDisplay themeDisplay) {
-
-		return getPortal().getSiteAdministrationURL(
-			portletResponse, themeDisplay);
 	}
 
 	/**

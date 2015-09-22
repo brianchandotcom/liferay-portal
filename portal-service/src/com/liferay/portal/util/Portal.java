@@ -700,12 +700,6 @@ public interface Portal {
 			ThemeDisplay themeDisplay)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay);
-
 	public String getFirstPageLayoutTypes(HttpServletRequest request);
 
 	public Portlet getFirstSiteAdministrationPortlet(ThemeDisplay themeDisplay);
@@ -1116,26 +1110,8 @@ public interface Portal {
 	 */
 	@Deprecated
 	public PortletURL getSiteAdministrationURL(
-		HttpServletRequest request, ThemeDisplay themeDisplay);
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             long, String)}
-	 */
-	@Deprecated
-	public PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay,
 		String portletId);
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #getControlPanelPortletURL(PortletRequest, Group, String,
-	 *             long, String)}
-	 */
-	@Deprecated
-	public PortletURL getSiteAdministrationURL(
-		PortletResponse portletResponse, ThemeDisplay themeDisplay);
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link

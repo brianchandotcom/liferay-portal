@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
@@ -31,6 +33,7 @@ import com.liferay.portlet.blogs.constants.BlogsConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.io.InputStream;
 
@@ -187,6 +190,26 @@ public abstract class BaseBlogsEntryImageTestCase {
 	}
 
 	@Test
+	public void testOriginalImageNotDeletedWhenAddingBlogsEntryExistingImage()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		FileEntry fileEntry = getFileEntry(
+			user.getUserId(), "existingimage1.jpg", serviceContext);
+
+		ImageSelector imageSelector = new ImageSelector(
+			fileEntry.getFileEntryId(), IMAGE_CROP_REGION);
+
+		addBlogsEntry(imageSelector);
+
+		PortletFileRepositoryUtil.getPortletFileEntry(
+			fileEntry.getFileEntryId());
+	}
+
+	@Test
 	public void testOriginalImageNotDeletedWhenUpdatingWithEmptyImageSelector()
 		throws Exception {
 
@@ -298,8 +321,27 @@ public abstract class BaseBlogsEntryImageTestCase {
 		Assert.assertEquals("image2.jpg", imageFileEntry.getTitle());
 	}
 
+	protected abstract BlogsEntry addBlogsEntry(ImageSelector imageSelector)
+		throws Exception;
+
 	protected abstract BlogsEntry addBlogsEntry(String imageTitle)
 		throws Exception;
+
+	protected FileEntry getFileEntry(
+			long userId, String title, ServiceContext serviceContext)
+		throws PortalException {
+
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portal/util/dependencies/test.jpg");
+
+		return PortletFileRepositoryUtil.addPortletFileEntry(
+			serviceContext.getScopeGroupId(), userId,
+			BlogsEntry.class.getName(), 0, StringUtil.randomString(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, inputStream, title,
+			MimeTypesUtil.getContentType(title), false);
+	}
 
 	protected abstract long getImageFileEntry(BlogsEntry blogsEntry);
 
@@ -325,6 +367,9 @@ public abstract class BaseBlogsEntryImageTestCase {
 	protected abstract BlogsEntry updateBlogsEntry(
 			long blogsEntryId, String imageTitle)
 		throws Exception;
+
+	protected static final String IMAGE_CROP_REGION =
+		"{\"height\": 10, \"width\": 10, \"x\": 0, \"y\": 0}";
 
 	@DeleteAfterTestRun
 	protected Group group;

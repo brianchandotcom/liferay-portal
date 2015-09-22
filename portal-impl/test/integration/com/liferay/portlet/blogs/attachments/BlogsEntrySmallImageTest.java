@@ -52,6 +52,22 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 	}
 
 	@Override
+	protected BlogsEntry addBlogsEntry(ImageSelector imageSelector)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), user.getUserId());
+
+		return BlogsEntryLocalServiceUtil.addEntry(
+			user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), new Date(), true, true,
+			new String[0], StringPool.BLANK, null, imageSelector,
+			serviceContext);
+	}
+
+	@Override
 	protected BlogsEntry addBlogsEntry(String imageTitle) throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -63,12 +79,7 @@ public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 		ImageSelector imageSelector = new ImageSelector(
 			fileEntry.getFileEntryId());
 
-		return BlogsEntryLocalServiceUtil.addEntry(
-			user.getUserId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), new Date(), true, true,
-			new String[0], StringPool.BLANK, null, imageSelector,
-			serviceContext);
+		return addBlogsEntry(imageSelector);
 	}
 
 	@Override

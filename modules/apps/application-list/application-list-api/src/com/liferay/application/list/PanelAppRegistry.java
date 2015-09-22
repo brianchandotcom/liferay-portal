@@ -42,6 +42,26 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = PanelAppRegistry.class)
 public class PanelAppRegistry {
 
+	public PanelApp getFirstPanelApp(
+		PanelCategory parentPanelCategory, PermissionChecker permissionChecker,
+		Group group) {
+
+		List<PanelApp> panelApps = getPanelApps(parentPanelCategory);
+
+		for (PanelApp panelApp : panelApps) {
+			try {
+				if (panelApp.hasAccessPermission(permissionChecker, group)) {
+					return panelApp;
+				}
+			}
+			catch (PortalException e) {
+				_log.error(e);
+			}
+		}
+
+		return null;
+	}
+
 	public List<PanelApp> getPanelApps(PanelCategory parentPanelCategory) {
 		List<PanelApp> panelApps = _serviceTrackerMap.getService(
 			parentPanelCategory.getKey());

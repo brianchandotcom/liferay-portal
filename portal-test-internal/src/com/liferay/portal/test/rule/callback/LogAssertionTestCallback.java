@@ -70,23 +70,20 @@ public class LogAssertionTestCallback
 		List<ExpectedLogs> expectedLogses,
 		List<CaptureAppender> captureAppenders) {
 
-		if (!expectedLogses.isEmpty()) {
-			for (CaptureAppender captureAppender : captureAppenders) {
-				try {
-					for (LoggingEvent loggingEvent
-						 : captureAppender.getLoggingEvents()) {
+		for (CaptureAppender captureAppender : captureAppenders) {
+			try {
+				for (LoggingEvent loggingEvent
+					 : captureAppender.getLoggingEvents()) {
 
-						String renderedMessage =
-							loggingEvent.getRenderedMessage();
+					String renderedMessage = loggingEvent.getRenderedMessage();
 
-						if (!isExpected(expectedLogses, renderedMessage)) {
-							Assert.fail(renderedMessage);
-						}
+					if (!isExpected(expectedLogses, renderedMessage)) {
+						Assert.fail(renderedMessage);
 					}
 				}
-				finally {
-					captureAppender.close();
-				}
+			}
+			finally {
+				captureAppender.close();
 			}
 		}
 
@@ -123,7 +120,8 @@ public class LogAssertionTestCallback
 			new LogAssertionUncaughtExceptionHandler(
 				_uncaughtExceptionHandler));
 
-		List<CaptureAppender> captureAppenders = new ArrayList<>();
+		List<CaptureAppender> captureAppenders = new ArrayList<>(
+			expectedLogses.size());
 
 		for (ExpectedLogs expectedLogs : expectedLogses) {
 			Class<?> clazz = expectedLogs.loggerClass();

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
@@ -65,19 +64,19 @@ public abstract class BaseBlogsImageTestCase {
 
 		addBlogsEntry("image1.jpg");
 
-		int portletFileEntriesCount =
-			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				group.getGroupId(), folder.getFolderId());
-
 		Assert.assertEquals(
-			initialFolderFileEntriesCount + 1, portletFileEntriesCount);
+			initialFolderFileEntriesCount + 1,
+			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				group.getGroupId(), folder.getFolderId()));
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
 			group.getGroupId(), folder.getFolderId(), "image1.jpg");
 	}
 
 	@Test
-	public void testAddOriginalImageWhenUpdatingBlogsEntry() throws Exception {
+	public void testAddOriginalImageWhenUpdatingBlogsEntryImage()
+		throws Exception {
+
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 			user.getUserId(), group.getGroupId());
 
@@ -89,12 +88,10 @@ public abstract class BaseBlogsImageTestCase {
 
 		updateBlogsEntry(blogsEntry.getEntryId(), "image2.jpg");
 
-		int portletFileEntriesCount =
-			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				group.getGroupId(), folder.getFolderId());
-
 		Assert.assertEquals(
-			initialFolderFileEntriesCount + 2, portletFileEntriesCount);
+			initialFolderFileEntriesCount + 2,
+			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				group.getGroupId(), folder.getFolderId()));
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
 			group.getGroupId(), folder.getFolderId(), "image2.jpg");
@@ -115,15 +112,16 @@ public abstract class BaseBlogsImageTestCase {
 	}
 
 	@Test(expected = NoSuchFileEntryException.class)
-	public void testImageDeletedWhenEmptyImageSelector() throws Exception {
+	public void testImageDeletedWhenUpdatingWithEmptyImageSelector()
+		throws Exception {
+
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
 		FileEntry imageFileEntry =
 			PortletFileRepositoryUtil.getPortletFileEntry(
 				getImageFileEntry(blogsEntry));
 
-		ImageSelector imageSelector = new ImageSelector(
-			0, StringPool.BLANK, StringPool.BLANK);
+		ImageSelector imageSelector = new ImageSelector(0);
 
 		blogsEntry = updateBlogsEntry(blogsEntry.getEntryId(), imageSelector);
 
@@ -134,7 +132,9 @@ public abstract class BaseBlogsImageTestCase {
 	}
 
 	@Test
-	public void testImageNotChangedWhenNullimageSelector() throws Exception {
+	public void testImageNotUpdatedWhenUpdatingWithNullImageSelector()
+		throws Exception {
+
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
 		FileEntry imageFileEntry =
@@ -187,7 +187,7 @@ public abstract class BaseBlogsImageTestCase {
 	}
 
 	@Test
-	public void testOriginalImageNotDeletedWhenEmptyimageSelector()
+	public void testOriginalImageNotDeletedWhenUpdatingWithEmptyImageSelector()
 		throws Exception {
 
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
@@ -204,7 +204,7 @@ public abstract class BaseBlogsImageTestCase {
 	}
 
 	@Test
-	public void testOriginalImageNotDeletedWhenNullimageSelector()
+	public void testOriginalImageNotDeletedWhenUpdatingWithNullImageSelector()
 		throws Exception {
 
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
@@ -220,12 +220,10 @@ public abstract class BaseBlogsImageTestCase {
 
 		updateBlogsEntry(blogsEntry.getEntryId(), imageSelector);
 
-		int portletFileEntriesCount =
-			PortletFileRepositoryUtil.getPortletFileEntriesCount(
-				group.getGroupId(), folder.getFolderId());
-
 		Assert.assertEquals(
-			initialFolderFileEntriesCount + 1, portletFileEntriesCount);
+			initialFolderFileEntriesCount + 1,
+			PortletFileRepositoryUtil.getPortletFileEntriesCount(
+				group.getGroupId(), folder.getFolderId()));
 
 		PortletFileRepositoryUtil.getPortletFileEntry(
 			group.getGroupId(), folder.getFolderId(), "image1.jpg");
@@ -246,7 +244,7 @@ public abstract class BaseBlogsImageTestCase {
 	}
 
 	@Test(expected = NoSuchFileEntryException.class)
-	public void testPreviousImageDeletedWhenChangingImage() throws Exception {
+	public void testPreviousImageDeletedWhenUpdatingImage() throws Exception {
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
 		FileEntry imageFileEntry =
@@ -260,7 +258,7 @@ public abstract class BaseBlogsImageTestCase {
 	}
 
 	@Test
-	public void testPreviousOriginalImageNotDeletedWhenChangingImage()
+	public void testPreviousOriginalImageNotDeletedWhenUpdatingImage()
 		throws Exception {
 
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");

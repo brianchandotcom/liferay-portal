@@ -38,7 +38,7 @@ public class LoginRedirectMVCRenderCommand implements MVCRenderCommand {
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		return "/html/portlet/login/login_redirect.jsp";
+		return "/login_redirect.jsp";
 	}
 
 }

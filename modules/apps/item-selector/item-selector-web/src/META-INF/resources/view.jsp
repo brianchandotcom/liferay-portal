@@ -52,95 +52,49 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		}
 
 		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(selectedTab);
-
-		ItemSelectorView<ItemSelectorCriterion> initialItemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
 		%>
 
-		<div class="form-search <%= initialItemSelectorView.isShowSearch() ? "" : "hide" %>" id="<portlet:namespace />formSearch">
-			<aui:form action="<%= currentURL %>" cssClass="basic-search input-group"  name="searchFm">
-				<div class="input-group-input">
-					<div class="basic-search-slider">
-						<button class="basic-search-close btn btn-default" type="button"><span class="icon-remove"></span></button>
+		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+			<aui:nav cssClass="navbar-nav">
 
-						<aui:input name="selectedTab" type="hidden" value="<%= selectedTab %>" />
+				<%
+				for (String title : titles) {
+					ItemSelectorViewRenderer curItemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
 
-						<%
-						String keywords = ParamUtil.getString(request, "keywords");
-						%>
+					PortletURL curItemSelectorPortletURL = curItemSelectorViewRenderer.getPortletURL();
+				%>
 
-						<aui:input cssClass="form-control" label="" name="keywords" placeholder="search" type="text" />
-					</div>
-				</div>
-				<div class="input-group-btn">
-					<aui:button cssClass="btn btn-default" icon="icon-search" type="submit" value="" />
-				</div>
-			</aui:form>
-		</div>
+					<aui:nav-item
+						href="<%= curItemSelectorPortletURL.toString() %>"
+						label="<%= title %>"
+						selected="<%= selectedTab.equals(title) %>"
+					/>
 
-		<liferay-ui:tabs names="<%= StringUtil.merge(titles) %>" param="selectedTab" refresh="<%= false %>" type="pills" value="<%= selectedTab %>">
+				<%
+				}
+				%>
+
+			</aui:nav>
 
 			<%
-			for (String title : titles) {
-				ItemSelectorViewRenderer curItemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
-
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				ItemSelectorView<ItemSelectorCriterion> itemSelectorView = curItemSelectorViewRenderer.getItemSelectorView();
-
-				if (selectedTab.equals(itemSelectorView.getTitle(locale))) {
-					data.put("portletURL", currentURL);
-				}
-				else {
-					data.put("portletURL", curItemSelectorViewRenderer.getPortletURL());
-				}
-
-				data.put("showSearch", itemSelectorView.isShowSearch());
+			ItemSelectorView<ItemSelectorCriterion> itemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
 			%>
 
-				<liferay-ui:section data="<%= data %>">
-					<div>
+			<c:if test="<%= itemSelectorView.isShowSearch() %>">
+				<aui:nav-bar-search>
+					<aui:form action="<%= currentURL %>" name="searchFm">
+						<liferay-ui:input-search markupView="lexicon" />
+					</aui:form>
+				</aui:nav-bar-search>
+			</c:if>
+		</aui:nav-bar>
 
-						<%
-						curItemSelectorViewRenderer.renderHTML(pageContext);
-						%>
+		<%
+		itemSelectorViewRenderer.renderHTML(pageContext);
+		%>
 
-					</div>
-				</liferay-ui:section>
-
-			<%
-			}
-			%>
-
-		</liferay-ui:tabs>
 	</c:otherwise>
 </c:choose>
-
-<aui:script use="aui-base">
-	Liferay.on(
-		'showTab',
-		function(event) {
-			var searchForm = A.one('#<portlet:namespace />searchFm');
-
-			if (searchForm) {
-				A.one('#<portlet:namespace />selectedTab').val(event.id);
-
-				var tabSection = event.tabSection;
-
-				var showSearch = tabSection.getData('showSearch');
-
-				var formSearch = A.one('#<portlet:namespace />formSearch');
-
-				if (formSearch) {
-					formSearch.toggle(showSearch === 'true');
-
-					var searchFm = A.one('#<portlet:namespace />searchFm');
-
-					searchFm.setAttribute('action', tabSection.getData('portletURL'));
-				}
-			}
-		}
-	);
-</aui:script>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("com_liferay_item_selector_web.view_jsp");

@@ -30,7 +30,13 @@ public class RepositoryModelTitleComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC = "title ASC";
 
+	public static final String ORDER_BY_ASC_MODEL =
+		"modelFolder DESC, title ASC";
+
 	public static final String ORDER_BY_DESC = "title DESC";
+
+	public static final String ORDER_BY_DESC_MODEL =
+		"modelFolder DESC, title DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 
@@ -40,6 +46,14 @@ public class RepositoryModelTitleComparator<T> extends OrderByComparator<T> {
 
 	public RepositoryModelTitleComparator(boolean ascending) {
 		_ascending = ascending;
+		_orderByModel = false;
+	}
+
+	public RepositoryModelTitleComparator(
+		boolean ascending, boolean orderByModel) {
+
+		_ascending = ascending;
+		_orderByModel = orderByModel;
 	}
 
 	@Override
@@ -47,7 +61,27 @@ public class RepositoryModelTitleComparator<T> extends OrderByComparator<T> {
 		String name1 = getName(t1);
 		String name2 = getName(t2);
 
-		int value = name1.compareToIgnoreCase(name2);
+		int value = 0;
+
+		if (_orderByModel) {
+			if (((t1 instanceof DLFolder) || (t1 instanceof Folder)) &&
+				((t2 instanceof DLFolder) || (t2 instanceof Folder))) {
+
+				name1.compareToIgnoreCase(name2);
+			}
+			else if ((t1 instanceof DLFolder) || (t1 instanceof Folder)) {
+				value = -1;
+			}
+			else if ((t2 instanceof DLFolder) || (t2 instanceof Folder)) {
+				value = 1;
+			}
+			else {
+				name1.compareToIgnoreCase(name2);
+			}
+		}
+		else {
+			value = name1.compareToIgnoreCase(name2);
+		}
 
 		if (_ascending) {
 			return value;
@@ -59,11 +93,21 @@ public class RepositoryModelTitleComparator<T> extends OrderByComparator<T> {
 
 	@Override
 	public String getOrderBy() {
-		if (_ascending) {
-			return ORDER_BY_ASC;
+		if (_orderByModel) {
+			if (_ascending) {
+				return ORDER_BY_ASC_MODEL;
+			}
+			else {
+				return ORDER_BY_DESC_MODEL;
+			}
 		}
 		else {
-			return ORDER_BY_DESC;
+			if (_ascending) {
+				return ORDER_BY_ASC;
+			}
+			else {
+				return ORDER_BY_DESC;
+			}
 		}
 	}
 
@@ -111,5 +155,6 @@ public class RepositoryModelTitleComparator<T> extends OrderByComparator<T> {
 	}
 
 	private final boolean _ascending;
+	private final boolean _orderByModel;
 
 }

@@ -129,8 +129,7 @@ public class ItemSelectorImpl implements ItemSelector {
 				itemSelectorViewRenderers.add(
 					new ItemSelectorViewRendererImpl(
 						itemSelectorView, itemSelectorCriterion, portletURL,
-						itemSelectedEventName,
-						isSearch(portletRequest, title)));
+						itemSelectedEventName, isSearch(portletRequest)));
 			}
 		}
 
@@ -273,11 +272,10 @@ public class ItemSelectorImpl implements ItemSelector {
 		return values[0];
 	}
 
-	protected boolean isSearch(PortletRequest portletRequest, String title) {
+	protected boolean isSearch(PortletRequest portletRequest) {
 		String keywords = portletRequest.getParameter("keywords");
-		String selectedTab = portletRequest.getParameter("selectedTab");
 
-		if (Validator.isNotNull(keywords) && title.equals(selectedTab)) {
+		if (Validator.isNotNull(keywords)) {
 			return true;
 		}
 

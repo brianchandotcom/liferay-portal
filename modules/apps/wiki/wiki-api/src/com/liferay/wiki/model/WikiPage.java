@@ -48,6 +48,10 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getAttachmentsFileEntries(
+		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public int getAttachmentsFileEntriesCount()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

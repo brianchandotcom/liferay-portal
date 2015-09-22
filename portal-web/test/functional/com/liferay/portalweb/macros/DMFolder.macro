@@ -441,6 +441,8 @@
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderNameEdit}" />
 
+		<var method="StringUtil#upperCase('${dmFolderNameEdit}')" name="dmFolderNameEdit" />
+
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_LAST" value1="${dmFolderNameEdit}" />
 	</command>
 

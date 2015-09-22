@@ -2048,6 +2048,9 @@
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName}" />
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName}" />
+
+		<var method="StringUtil#upperCase('${key_dmFolderName}')" name="dmFolderName" />
+
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_LAST" value1="${dmFolderName}" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />

@@ -18,7 +18,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-56378" name="DeleteExportTemplate" priority="4">
+	<command name="DeleteExportTemplate" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Export/Import" />
 		</execute>
@@ -218,7 +218,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57878" name="ExportImportDDLViaGlobal" priority="5">
+	<command name="ExportImportDDLViaGlobal" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -578,7 +578,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57878" name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">
+	<command name="ExportImportSiteWithChangedSiteDefaultLanguage" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -881,7 +881,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-57878" name="ImportCorruptedFile" priority="5">
+	<command name="ImportCorruptedFile" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Bookmarks" />
 		</execute>

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,6 +47,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalService;
 import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence;
 import com.liferay.portal.service.persistence.LayoutPersistence;
 import com.liferay.portal.service.persistence.LayoutSetPersistence;
@@ -221,7 +223,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 	public void validate(
 			long groupId, boolean privateLayout, long layoutId,
 			long parentLayoutId, String name, String type, boolean hidden,
-			Map<Locale, String> friendlyURLMap)
+			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
 		throws PortalException {
 
 		validateName(name);
@@ -270,7 +272,13 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			LayoutTypeControllerTracker.getLayoutTypeController(type);
 
 		if (!layoutTypeController.isInstanceable()) {
-			throw new LayoutTypeException(LayoutTypeException.NOT_INSTANCEABLE);
+			boolean allowNonInstaceableLayout = GetterUtil.getBoolean(
+				serviceContext.getAttribute("allow.non.instanciable.layout"));
+
+			if (!allowNonInstaceableLayout) {
+				throw new LayoutTypeException(
+					LayoutTypeException.NOT_INSTANCEABLE);
+			}
 		}
 
 		if (!layoutTypeController.isParentable()) {

@@ -328,6 +328,12 @@ public interface VelocityTaglib {
 			PortletProvider.Action portletProviderAction, String instanceId)
 		throws Exception;
 
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction, String instanceId,
+			String defaultPreferences)
+		throws Exception;
+
 	public void runtime(String portletName, String queryString)
 		throws Exception;
 

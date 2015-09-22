@@ -45,6 +45,12 @@ public class ThemeLocalServiceUtil {
 		return getService().fetchColorScheme(companyId, themeId, colorSchemeId);
 	}
 
+	public static com.liferay.portal.model.PortletDecorator fetchPortletDecorator(
+		long companyId, java.lang.String themeId, java.lang.String colorSchemeId) {
+		return getService()
+				   .fetchPortletDecorator(companyId, themeId, colorSchemeId);
+	}
+
 	public static com.liferay.portal.model.Theme fetchTheme(long companyId,
 		java.lang.String themeId) {
 		return getService().fetchTheme(companyId, themeId);
@@ -74,6 +80,13 @@ public class ThemeLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.model.Theme> getPageThemes(
 		long companyId, long groupId, long userId, boolean wapTheme) {
 		return getService().getPageThemes(companyId, groupId, userId, wapTheme);
+	}
+
+	public static com.liferay.portal.model.PortletDecorator getPortletDecorator(
+		long companyId, java.lang.String themeId,
+		java.lang.String portletDecoratorId) {
+		return getService()
+				   .getPortletDecorator(companyId, themeId, portletDecoratorId);
 	}
 
 	public static com.liferay.portal.model.Theme getTheme(long companyId,

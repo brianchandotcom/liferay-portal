@@ -191,7 +191,8 @@ public class PortletCSSPortlet extends MVCPortlet {
 
 		String linkToLayoutUuid = GetterUtil.getString(
 			portletDataJSONObject.getString("portletLinksTarget"));
-		String showBorders = portletDataJSONObject.getString("showBorders");
+		String portletDecoratorId = portletDataJSONObject.getString(
+			"portletDecoratorId");
 		JSONObject titlesJSONObject = portletDataJSONObject.getJSONObject(
 			"titles");
 		boolean useCustomTitle = portletDataJSONObject.getBoolean(
@@ -228,15 +229,12 @@ public class PortletCSSPortlet extends MVCPortlet {
 		portletSetup.setValue(
 			"portletSetupUseCustomTitle", String.valueOf(useCustomTitle));
 
-		if (Validator.isNotNull(showBorders)) {
-			boolean showBordersBoolean = portletDataJSONObject.getBoolean(
-				"showBorders");
-
+		if (Validator.isNotNull(portletDecoratorId)) {
 			portletSetup.setValue(
-				"portletSetupShowBorders", String.valueOf(showBordersBoolean));
+				"portletSetupPortletDecoratorId", portletDecoratorId);
 		}
 		else {
-			portletSetup.reset("portletSetupShowBorders");
+			portletSetup.reset("portletSetupPortletDecoratorId");
 		}
 
 		if (Validator.isNotNull(linkToLayoutUuid)) {

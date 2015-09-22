@@ -12,19 +12,26 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.configuration;
+package com.liferay.portal.theme;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.portal.model.PortletDecorator;
 
 /**
- * @author Juergen Kappler
+ * @author Eduardo Garcia
  */
-@Meta.OCD(
-	id = "com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration"
-)
-public interface NestedPortletsPortletInstanceConfiguration {
+public interface PortletDecoratorFactory {
 
-	@Meta.AD(deflt = "", required = false)
-	public String layoutTemplateId();
+	public PortletDecorator getDefaultPortletDecorator();
+
+	public String getDefaultPortletDecoratorCssClass();
+
+	public String getDefaultPortletDecoratorId();
+
+	public PortletDecorator getPortletDecorator();
+
+	public PortletDecorator getPortletDecorator(String portletDecoratorId);
+
+	public PortletDecorator getPortletDecorator(
+		String portletDecoratorId, String name, String cssClass);
 
 }

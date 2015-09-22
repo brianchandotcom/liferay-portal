@@ -445,7 +445,6 @@ public class DLFileEntryLocalServiceTest {
 		}
 	}
 
-
 	protected DLFileEntry addAndApproveFileEntry(
 			DLFolder dlFolder, Map<String, DDMFormValues> ddmFormValuesMap,
 			InputStream inputStream, ServiceContext serviceContext)

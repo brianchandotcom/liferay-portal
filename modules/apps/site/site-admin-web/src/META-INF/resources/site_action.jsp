@@ -48,7 +48,15 @@ boolean hasUpdatePermission = GroupPermissionUtil.contains(permissionChecker, gr
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 
 	<%
-	PortletURL siteAdministrationURL = group.getAdministrationURL(themeDisplay);
+	PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+	String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, group);
+
+	PortletURL siteAdministrationURL = null;
+
+	if (Validator.isNotNull(portletId)) {
+		siteAdministrationURL = PortalUtil.getControlPanelPortletURL(request, group, portletId, 0, PortletRequest.RENDER_PHASE);
+	}
 	%>
 
 	<c:if test="<%= siteAdministrationURL != null %>">

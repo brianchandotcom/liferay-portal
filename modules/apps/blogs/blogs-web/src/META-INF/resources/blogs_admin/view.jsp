@@ -44,6 +44,20 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	</aui:form>
 </aui:nav-bar>
 
+<liferay-frontend:management-bar
+	checkBoxContainerId="blogEntriesSearchContainer"
+	includeCheckBox="<%= true %>"
+>
+	<liferay-frontend:management-bar-action-buttons>
+
+		<%
+		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
+		%>
+
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
+
 <portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
@@ -64,6 +78,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	/>
 
 	<liferay-ui:search-container
+		id="blogEntries"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 		searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
 	>
@@ -98,12 +113,6 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 			/>
 		</liferay-ui:search-container-row>
 
-		<c:if test="<%= total > 0 %>">
-			<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteEntries();" %>' value='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
-
-			<div class="separator"><!-- --></div>
-		</c:if>
-
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </aui:form>
@@ -125,8 +134,6 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 </c:if>
 
 <aui:script>
-	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
-
 	function <portlet:namespace />deleteEntries() {
 		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);

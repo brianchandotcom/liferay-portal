@@ -44,6 +44,8 @@ public interface LayoutTypeController extends Serializable {
 
 	public boolean isBrowsable();
 
+	public boolean isCheckLayoutViewPermission();
+
 	public boolean isFirstPageable();
 
 	public boolean isFullPageDisplayable();

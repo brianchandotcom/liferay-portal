@@ -20,6 +20,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutType;
+import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -118,6 +119,17 @@ public class LayoutPermissionImpl
 			PermissionChecker permissionChecker, Layout layout,
 			boolean checkViewableGroup, String actionId)
 		throws PortalException {
+
+		if (actionId.equals(ActionKeys.VIEW)) {
+			LayoutType layoutType = layout.getLayoutType();
+
+			LayoutTypeController layoutTypeController =
+				layoutType.getLayoutTypeController();
+
+			if (!layoutTypeController.isCheckLayoutViewPermission()) {
+				return true;
+			}
+		}
 
 		if (layout.isTypeControlPanel()) {
 			if (!permissionChecker.isSignedIn()) {

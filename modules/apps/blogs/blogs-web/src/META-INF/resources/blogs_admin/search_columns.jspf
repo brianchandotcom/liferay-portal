@@ -35,6 +35,13 @@
 	property="createDate"
 />
 
+<liferay-ui:search-container-column-date
+	href="<%= rowURL %>"
+	name="display-date"
+	orderable="<%= false %>"
+	property="displayDate"
+/>
+
 <liferay-ui:search-container-column-status
 	href="<%= rowURL %>"
 	name="status"

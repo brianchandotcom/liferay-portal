@@ -25,6 +25,25 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 %>
 
+<liferay-portlet:renderURL varImpl="searchURL">
+	<portlet:param name="mvcPath" value="/blogs/search.jsp" />
+</liferay-portlet:renderURL>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item
+			label="entries"
+			selected="<%= true %>"
+		/>
+	</aui:nav>
+
+	<aui:form action="<%= searchURL.toString() %>" name="searchFm">
+		<aui:nav-bar-search>
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:nav-bar-search>
+	</aui:form>
+</aui:nav-bar>
+
 <portlet:actionURL name="/blogs/edit_entry" var="restoreTrashEntriesURL">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
@@ -33,17 +52,11 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/blogs/search.jsp" />
-</liferay-portlet:renderURL>
-
 <aui:form action="<%= searchURL.toString() %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="deleteEntryIds" type="hidden" />
-
-	<liferay-util:include page="/blogs_admin/toolbar.jsp" servletContext="<%= application %>" />
 
 	<liferay-ui:categorization-filter
 		assetType="entries"

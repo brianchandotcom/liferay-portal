@@ -30,134 +30,50 @@
 	}
 }
 
-.lexicon-x {
-	@include media-query(sm) {
-		@include set-portlet-topper-width();
+@include media-query(sm) {
+	@include set-portlet-topper-width();
+}
+
+@include media-query(md) {
+	@include set-portlet-topper-width("md");
+}
+
+@include media-query(lg) {
+	@include set-portlet-topper-width("lg");
+}
+
+.portlet {
+	margin-bottom: 10px;
+	position: relative;
+
+	> .portlet-content {
+		border-color: transparent;
+		border-top-left-radius: $navbar-border-radius;
+		border-top-right-radius: $navbar-border-radius;
 	}
 
-	@include media-query(md) {
-		@include set-portlet-topper-width("md");
-	}
+	> .portlet-topper {
+		display: none;
 
-	@include media-query(lg) {
-		@include set-portlet-topper-width("lg");
-	}
+		@include media-query(sm) {
+			@include display(flex);
 
-	.portlet {
-		margin-bottom: 10px;
-		position: relative;
+			left: 0;
+			opacity: 0;
+			position: absolute;
+			right: 0;
 
-		&:hover, &.focus {
-			> .portlet-content {
-				@include media-query(sm) {
-					border-color: $portlet-topper-border;
-					border-top-left-radius: 0;
-					border-top-right-radius: 0;
-				}
-			}
+			@include transition(opacity 0.25s, top 0.25s);
 
-			> .portlet-topper {
-				@include media-query(sm) {
-					opacity: 1;
-
-					@include transform(translateY(-100%));
-				}
-			}
+			top: 0;
 		}
+	}
+}
 
+.signed-in .portlet {
+	&:hover, &.focus {
 		> .portlet-content {
-			border-color: transparent;
-			border-top-left-radius: $navbar-border-radius;
-			border-top-right-radius: $navbar-border-radius;
-		}
-
-		> .portlet-topper {
-			display: none;
-
 			@include media-query(sm) {
-				@include display(flex);
-
-				left: 0;
-				opacity: 0;
-				position: absolute;
-				right: 0;
-
-				@include transition(opacity 0.25s, top 0.25s);
-
-				top: 0;
-			}
-		}
-	}
-
-	.portlet-content {
-		border-color: $portlet-topper-border;
-		border-radius: $portlet-content-border-radius;
-		border-style: solid;
-		border-width: $portlet-content-border-width;
-		padding: 10px;
-	}
-
-	// Portlet Topper
-
-	.portlet-actions {
-		float: right;
-	}
-
-	.portlet-options {
-		display: inline-block;
-	}
-
-	.portlet-title-default {
-		@include flex(1 0 0);
-		@include text-overflow;
-	}
-
-	.portlet-title-menu {
-		@include flex(1);
-
-		> span > a {
-			display: inline-block;
-			text-decoration: none;
-		}
-	}
-
-	.portlet-topper {
-		background-color: $portlet-topper-bg;
-		border-color: $portlet-topper-border;
-		border-radius: $portlet-topper-border-radius;
-		border-style: solid;
-		border-width: $portlet-topper-border-width;
-		color: $portlet-topper-color;
-
-		@include display(flex);
-
-		padding-left: 10px;
-		padding-right: 10px;
-		position: relative;
-	}
-
-	.portlet-topper-toolbar {
-		margin-bottom: 0;
-		margin-right: -10px;
-		margin-top: 0;
-		padding-left: 0;
-
-		> a, > span > a, .lfr-icon-menu > a {
-			color: $portlet-topper-link-color;
-		}
-
-		> a {
-			&:focus, &:hover {
-				text-decoration: none;
-			}
-		}
-	}
-
-	// Portlet Controls in Mobile
-
-	.mobile-show-portlet-controls {
-		> .portlet-content {
-			@include media-query(null, $screen-xs-max) {
 				border-color: $portlet-topper-border;
 				border-top-left-radius: 0;
 				border-top-right-radius: 0;
@@ -165,13 +81,99 @@
 		}
 
 		> .portlet-topper {
-			@include media-query(null, $screen-xs-max) {
-				@include display(flex);
+			@include media-query(sm) {
+				opacity: 1;
+
+				@include transform(translateY(-100%));
 			}
 		}
+	}
+}
 
-		> .portlet-topper-toolbar {
-			display: block;
+.portlet-content {
+	border-color: $portlet-topper-border;
+	border-radius: $portlet-content-border-radius;
+	border-style: solid;
+	border-width: $portlet-content-border-width;
+	padding: 10px;
+}
+
+// Portlet Topper
+
+.portlet-actions {
+	float: right;
+}
+
+.portlet-options {
+	display: inline-block;
+}
+
+.portlet-title-default {
+	@include flex(1 0 0);
+	@include text-overflow;
+
+	line-height: 2;
+}
+
+.portlet-title-menu {
+	@include flex(1);
+
+	> span > a {
+		display: inline-block;
+		text-decoration: none;
+	}
+}
+
+.portlet-topper {
+	background-color: $portlet-topper-bg;
+	border-color: $portlet-topper-border;
+	border-radius: $portlet-topper-border-radius;
+	border-style: solid;
+	border-width: $portlet-topper-border-width;
+	color: $portlet-topper-color;
+
+	@include display(flex);
+
+	padding-left: 10px;
+	padding-right: 10px;
+	position: relative;
+}
+
+.portlet-topper-toolbar {
+	margin-bottom: 0;
+	margin-right: -10px;
+	margin-top: 0;
+	padding-left: 0;
+
+	> a, > span > a, .lfr-icon-menu > a {
+		color: $portlet-topper-link-color;
+	}
+
+	> a {
+		&:focus, &:hover {
+			text-decoration: none;
 		}
+	}
+}
+
+// Portlet Controls in Mobile
+
+.controls-visible.signed-in {
+	.portlet-content {
+		@include media-query(null, $screen-xs-max) {
+			border-color: $portlet-topper-border;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
+
+	.portlet-topper {
+		@include media-query(null, $screen-xs-max) {
+			@include display(flex);
+		}
+	}
+
+	.portlet-topper-toolbar {
+		display: block;
 	}
 }

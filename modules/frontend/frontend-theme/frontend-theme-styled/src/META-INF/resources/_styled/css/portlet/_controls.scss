@@ -10,60 +10,14 @@ body.portlet {
 	position: relative;
 
 	.portlet-topper-toolbar {
-		margin: 0;
-		padding: 2px;
-		position: absolute;
-		right: 3px;
-		text-align: right;
-		top: 3px;
-		z-index: 300;
-
-		&.portlet-title-menu {
-			display: inline-block;
-			position: relative;
-		}
-
-		a {
-			color: inherit;
-
-			&, &:hover {
-				text-decoration: none;
-			}
-
-			i {
-				font-size: 19px;
-			}
-		}
-
-		.nobr {
-			display: block;
-			float: left;
-			padding: 1px;
-		}
-
 		.portlet-icon-back {
 			background: url(../images/arrows/12_left.png) no-repeat 0 50%;
-			color: #FFF;
-			font-weight: bold;
 			padding: 5px 5px 5px 18px;
-
-			&:hover {
-				color: #FFF;
-			}
 		}
 
 		.portlet-options .lfr-icon-menu-text {
-			color: transparent;
-			font-size: 0;
+			display: none;
 		}
-	}
-}
-
-.portlet-title {
-	display: inline;
-
-	img {
-		vertical-align: middle;
 	}
 }
 
@@ -76,6 +30,7 @@ body.portlet {
 
 	@include ellipsis;
 
+	margin-top: 0;
 	max-width: 95%;
 	vertical-align: top;
 }
@@ -106,14 +61,8 @@ body.portlet {
 	}
 
 	.portlet-title-default {
-		background: url(../images/portlet/draggable_borderless.png) no-repeat 5px 3px transparent;
+		background: url(../images/portlet/draggable_borderless.png) no-repeat 2px center transparent;
 		cursor: move;
 		padding-left: 25px;
-
-		@include md {
-			background-color: #333;
-			background-position: 0 50%;
-			padding-left: 20px;
-		}
 	}
 }

@@ -22,12 +22,15 @@
 		<roles>
 			<role-name>User</role-name>
 		</roles>
-		<portlet-decorator id="decorate" name="Decorate">
-			<default-portlet-decorator>true</default-portlet-decorator>
-			<portlet-decorator-css-class>portlet-decorate</portlet-decorator-css-class>
+		<portlet-decorator id="barebone" name="Barebone">
+			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>
 		</portlet-decorator>
 		<portlet-decorator id="borderless" name="Borderless">
 			<portlet-decorator-css-class>portlet-borderless</portlet-decorator-css-class>
+		</portlet-decorator>
+		<portlet-decorator id="decorate" name="Decorate">
+			<default-portlet-decorator>true</default-portlet-decorator>
+			<portlet-decorator-css-class>portlet-decorate</portlet-decorator-css-class>
 		</portlet-decorator>
 	</theme>
 	<theme id="admin" name="Admin">

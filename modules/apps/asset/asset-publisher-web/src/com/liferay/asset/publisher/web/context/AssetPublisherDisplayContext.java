@@ -1352,14 +1352,31 @@ public class AssetPublisherDisplayContext {
 			return;
 		}
 
-		_ddmStructureDisplayFieldValue = GetterUtil.getString(
-			_portletPreferences.getValue(
-				"ddmStructureDisplayFieldValue", StringPool.BLANK));
-		_ddmStructureFieldName = GetterUtil.getString(
-			_portletPreferences.getValue(
-				"ddmStructureFieldName", StringPool.BLANK));
-		_ddmStructureFieldValue = _portletPreferences.getValue(
-			"ddmStructureFieldValue", StringPool.BLANK);
+		_ddmStructureDisplayFieldValue = ParamUtil.getString(
+			_request, "ddmStructureDisplayFieldValue");
+
+		if (Validator.isNull(_ddmStructureDisplayFieldValue)) {
+			_ddmStructureDisplayFieldValue = GetterUtil.getString(
+				_portletPreferences.getValue(
+					"ddmStructureDisplayFieldValue", StringPool.BLANK));
+		}
+
+		_ddmStructureFieldName = ParamUtil.getString(
+			_request, "ddmStructureFieldName");
+
+		if (Validator.isNull(_ddmStructureFieldName)) {
+			_ddmStructureFieldName = GetterUtil.getString(
+				_portletPreferences.getValue(
+					"ddmStructureFieldName", StringPool.BLANK));
+		}
+
+		_ddmStructureFieldValue = ParamUtil.getString(
+			_request, "ddmStructureFieldValue");
+
+		if (Validator.isNull(_ddmStructureFieldValue)) {
+			_ddmStructureFieldValue = _portletPreferences.getValue(
+				"ddmStructureFieldValue", StringPool.BLANK);
+		}
 
 		if (Validator.isNotNull(_ddmStructureFieldName) &&
 			Validator.isNotNull(_ddmStructureFieldValue)) {

@@ -50,6 +50,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 		window.<portlet:namespace />dayView = new Liferay.SchedulerDayView(
 			{
 				headerViewConfig: {
+					eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
 					strings: showMoreStrings
 				},
 				height: 700,
@@ -67,6 +68,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			{
 				headerViewConfig: {
 					displayDaysInterval: A.DataType.DateMath.WEEK_LENGTH,
+					eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
 					strings: showMoreStrings
 				},
 				height: 700,
@@ -82,6 +84,7 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 	<c:if test="<%= !hideMonthView %>">
 		window.<portlet:namespace />monthView = new Liferay.SchedulerMonthView(
 			{
+				eventsOverlayConstrain: '#p_p_id<portlet:namespace />',
 				height: 'auto',
 				isoTime: <%= isoTimeFormat %>,
 				readOnly: <%= readOnly %>,

@@ -544,6 +544,8 @@
 	<target name="install-portal-snapshots">
 		<install-portal-snapshot artifact.dir="portal-impl" artifact.name="portal-impl" />
 		<install-portal-snapshot artifact.dir="portal-service" artifact.name="portal-service" />
+		<install-portal-snapshot artifact.dir="portal-test" artifact.name="portal-test" />
+		<install-portal-snapshot artifact.dir="portal-test-internal" artifact.name="portal-test-internal" />
 		<install-portal-snapshot artifact.dir="portal-web" artifact.name="portal-web" />
 		<install-portal-snapshot artifact.dir="util-bridges" artifact.name="util-bridges" />
 		<install-portal-snapshot artifact.dir="util-java" artifact.name="util-java" />

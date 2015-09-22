@@ -30,7 +30,7 @@
         "dependencies": ["exports", "module"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/soy/SoyComponent": {
-        "dependencies": ["exports", "module", "metal/src/core", "metal/src/dom/dom", "metal/src/object/object", "metal/src/component/Component", "metal/src/component/ComponentRegistry", "metal/src/soy/SoyComponentAop"]
+        "dependencies": ["exports", "module", "soyutils", "metal/src/core", "metal/src/dom/dom", "metal/src/object/object", "metal/src/component/Component", "metal/src/component/ComponentRegistry", "metal/src/soy/SoyComponentAop"]
     },
     "frontend-js-metal-web@1.0.0/metal/src/soy/SoyComponentAop": {
         "dependencies": ["exports", "module", "metal/src/component/ComponentRegistry"]

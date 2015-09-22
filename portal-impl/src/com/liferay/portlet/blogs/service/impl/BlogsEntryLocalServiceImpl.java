@@ -1777,19 +1777,20 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	protected void deleteTempImageSelectorImage(ImageSelector imageSelector)
 		throws PortalException {
 
-		if ((imageSelector != null) && (imageSelector.getImageId() != 0)) {
-			long imageSelectorImageId = imageSelector.getImageId();
+		if ((imageSelector == null) || (imageSelector.getImageId() == 0)) {
+			return;
+		}
 
-			FileEntry imageSelectorImageFileEntry =
-				PortletFileRepositoryUtil.getPortletFileEntry(
-					imageSelectorImageId);
+		long imageSelectorImageId = imageSelector.getImageId();
 
-			if (imageSelectorImageFileEntry.isRepositoryCapabilityProvided(
-					TemporaryFileEntriesCapability.class)) {
+		FileEntry imageSelectorImageFileEntry =
+			PortletFileRepositoryUtil.getPortletFileEntry(imageSelectorImageId);
 
-				PortletFileRepositoryUtil.deletePortletFileEntry(
-					imageSelector.getImageId());
-			}
+		if (imageSelectorImageFileEntry.isRepositoryCapabilityProvided(
+				TemporaryFileEntriesCapability.class)) {
+
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				imageSelector.getImageId());
 		}
 	}
 

@@ -1765,14 +1765,6 @@ public class ServicePreAction extends Action {
 			boolean checkViewableGroup)
 		throws PortalException {
 
-		if (layout.isTypeControlPanel()) {
-			if (!permissionChecker.isSignedIn()) {
-				return false;
-			}
-
-			return true;
-		}
-
 		return LayoutPermissionUtil.contains(
 			permissionChecker, layout, checkViewableGroup, ActionKeys.VIEW);
 	}

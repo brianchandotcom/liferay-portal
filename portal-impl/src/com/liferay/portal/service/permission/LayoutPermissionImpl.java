@@ -119,6 +119,14 @@ public class LayoutPermissionImpl
 			boolean checkViewableGroup, String actionId)
 		throws PortalException {
 
+		if (layout.isTypeControlPanel()) {
+			if (!permissionChecker.isSignedIn()) {
+				return false;
+			}
+
+			return true;
+		}
+
 		if (isAttemptToModifyLockedLayout(layout, actionId)) {
 			return false;
 		}

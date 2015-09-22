@@ -50,6 +50,24 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			/>
 
 		</aui:nav>
+
+		<c:if test="<%= tabs1.equals("resources") %>">
+			<aui:nav-bar-search>
+
+				<liferay-portlet:renderURL varImpl="searchURL" />
+
+				<aui:form action="<%= searchURL %>" method="get" name="fm">
+					<liferay-portlet:renderURLParams varImpl="searchURL" />
+					<aui:input name="mvcPath" type="hidden" value="/view.jsp" />
+					<aui:input name="tabs1" type="hidden" value="resources" />
+
+					<liferay-ui:search-form
+						page="/calendar_resource_search.jsp"
+						servletContext="<%= application %>"
+					/>
+				</aui:form>
+			</aui:nav-bar-search>
+		</c:if>
 	</aui:nav-bar>
 </c:if>
 

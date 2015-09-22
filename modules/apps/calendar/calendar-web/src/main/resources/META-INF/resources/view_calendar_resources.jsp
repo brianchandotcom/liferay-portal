@@ -20,20 +20,6 @@
 CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(renderRequest);
 %>
 
-<liferay-portlet:renderURL varImpl="searchURL" />
-
-<aui:form action="<%= searchURL %>" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="searchURL" />
-	<aui:input name="mvcPath" type="hidden" value="/view.jsp" />
-	<aui:input name="tabs1" type="hidden" value="resources" />
-
-	<liferay-ui:search-form
-		page="/calendar_resource_search.jsp"
-		servletContext="<%= application %>"
-	/>
-</aui:form>
-
-<div class="separator"><!-- --></div>
 
 <liferay-portlet:renderURL varImpl="iteratorURL">
 	<portlet:param name="mvcPath" value="/view.jsp" />

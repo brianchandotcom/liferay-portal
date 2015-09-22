@@ -16,12 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
-%>
-
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+	<aui:nav-bar-search>
 		<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
 	</aui:nav-bar-search>
 </aui:nav-bar>

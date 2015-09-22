@@ -37,7 +37,7 @@ String title = LanguageUtil.format(request, "x-version-x", new Object[] {templat
 <div class="container-fluid-1280">
 
 	<c:choose>
-		<c:when test="<%= ddmDisplay.isShowBackUrlInTitleBar() %>">
+		<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
 
 			<%
 				portletDisplay.setShowBackIcon(true);

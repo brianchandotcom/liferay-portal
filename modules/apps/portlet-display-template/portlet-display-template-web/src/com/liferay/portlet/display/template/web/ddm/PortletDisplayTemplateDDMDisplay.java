@@ -148,7 +148,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
-	public boolean isShowBackUrlInTitleBar() {
+	public boolean isShowBackURLInTitleBar() {
 		return true;
 	}
 

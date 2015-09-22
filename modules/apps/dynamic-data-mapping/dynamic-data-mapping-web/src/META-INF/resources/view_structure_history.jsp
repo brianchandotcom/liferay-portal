@@ -40,7 +40,7 @@ String title = LanguageUtil.format(request, "x-history", structure.getName(local
 %>
 
 <c:choose>
-	<c:when test="<%= ddmDisplay.isShowBackUrlInTitleBar() %>">
+	<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
 
 		<%
 			portletDisplay.setShowBackIcon(true);

@@ -280,7 +280,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 	}
 
 	@Override
-	public boolean isShowBackUrlInTitleBar() {
+	public boolean isShowBackURLInTitleBar() {
 		return false;
 	}
 

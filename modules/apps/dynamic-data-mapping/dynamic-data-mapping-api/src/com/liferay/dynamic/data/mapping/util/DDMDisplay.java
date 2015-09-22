@@ -101,7 +101,7 @@ public interface DDMDisplay {
 
 	public boolean isShowAddStructureButton();
 
-	public boolean isShowBackUrlInTitleBar();
+	public boolean isShowBackURLInTitleBar();
 
 	public boolean isShowStructureSelector();
 

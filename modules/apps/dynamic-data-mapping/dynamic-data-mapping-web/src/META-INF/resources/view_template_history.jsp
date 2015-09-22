@@ -39,7 +39,7 @@ String title = LanguageUtil.format(request, "x-history", template.getName(locale
 %>
 
 <c:choose>
-	<c:when test="<%= ddmDisplay.isShowBackUrlInTitleBar() %>">
+	<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
 
 		<%
 			portletDisplay.setShowBackIcon(true);

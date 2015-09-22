@@ -121,8 +121,6 @@ public class KaleoConditionPersistenceTest {
 
 		newKaleoCondition.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoCondition.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoCondition.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoCondition.setUserName(RandomTestUtil.randomString());
@@ -141,6 +139,8 @@ public class KaleoConditionPersistenceTest {
 
 		newKaleoCondition.setScriptRequiredContexts(RandomTestUtil.randomString());
 
+		newKaleoCondition.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoConditions.add(_persistence.update(newKaleoCondition));
 
 		KaleoCondition existingKaleoCondition = _persistence.findByPrimaryKey(newKaleoCondition.getPrimaryKey());
@@ -149,8 +149,6 @@ public class KaleoConditionPersistenceTest {
 			newKaleoCondition.getKaleoConditionId());
 		Assert.assertEquals(existingKaleoCondition.getGroupId(),
 			newKaleoCondition.getGroupId());
-		Assert.assertEquals(existingKaleoCondition.getCompanyId(),
-			newKaleoCondition.getCompanyId());
 		Assert.assertEquals(existingKaleoCondition.getUserId(),
 			newKaleoCondition.getUserId());
 		Assert.assertEquals(existingKaleoCondition.getUserName(),
@@ -171,13 +169,8 @@ public class KaleoConditionPersistenceTest {
 			newKaleoCondition.getScriptLanguage());
 		Assert.assertEquals(existingKaleoCondition.getScriptRequiredContexts(),
 			newKaleoCondition.getScriptRequiredContexts());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingKaleoCondition.getCompanyId(),
+			newKaleoCondition.getCompanyId());
 	}
 
 	@Test
@@ -192,6 +185,13 @@ public class KaleoConditionPersistenceTest {
 		_persistence.countByKaleoNodeId(RandomTestUtil.nextLong());
 
 		_persistence.countByKaleoNodeId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -218,10 +218,10 @@ public class KaleoConditionPersistenceTest {
 
 	protected OrderByComparator<KaleoCondition> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoCondition",
-			"kaleoConditionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionId", true, "kaleoNodeId",
-			true, "scriptLanguage", true, "scriptRequiredContexts", true);
+			"kaleoConditionId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoDefinitionId", true, "kaleoNodeId", true, "scriptLanguage",
+			true, "scriptRequiredContexts", true, "companyId", true);
 	}
 
 	@Test
@@ -441,8 +441,6 @@ public class KaleoConditionPersistenceTest {
 
 		kaleoCondition.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoCondition.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoCondition.setUserId(RandomTestUtil.nextLong());
 
 		kaleoCondition.setUserName(RandomTestUtil.randomString());
@@ -460,6 +458,8 @@ public class KaleoConditionPersistenceTest {
 		kaleoCondition.setScriptLanguage(RandomTestUtil.randomString());
 
 		kaleoCondition.setScriptRequiredContexts(RandomTestUtil.randomString());
+
+		kaleoCondition.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoConditions.add(_persistence.update(kaleoCondition));
 

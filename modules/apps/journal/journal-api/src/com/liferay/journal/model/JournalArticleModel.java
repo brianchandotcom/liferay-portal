@@ -24,6 +24,7 @@ import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
@@ -54,8 +55,8 @@ import java.util.Map;
  */
 @ProviderType
 public interface JournalArticleModel extends AttachedModel,
-	BaseModel<JournalArticle>, LocalizedModel, ResourcedModel, StagedGroupedModel,
-	TrashedModel, WorkflowedModel {
+	BaseModel<JournalArticle>, LocalizedModel, PartitionableModel, ResourcedModel,
+	StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -141,22 +142,6 @@ public interface JournalArticleModel extends AttachedModel,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this journal article.
-	 *
-	 * @return the company ID of this journal article
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this journal article.
-	 *
-	 * @param companyId the company ID of this journal article
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this journal article.
@@ -823,6 +808,22 @@ public interface JournalArticleModel extends AttachedModel,
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the company ID of this journal article.
+	 *
+	 * @return the company ID of this journal article
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this journal article.
+	 *
+	 * @param companyId the company ID of this journal article
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the trash entry created when this journal article was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal article.

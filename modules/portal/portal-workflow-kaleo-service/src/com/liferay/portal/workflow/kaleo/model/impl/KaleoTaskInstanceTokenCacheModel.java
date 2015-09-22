@@ -71,8 +71,6 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		sb.append(kaleoTaskInstanceTokenId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -105,6 +103,8 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		sb.append(dueDate);
 		sb.append(", workflowContext=");
 		sb.append(workflowContext);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -116,7 +116,6 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 
 		kaleoTaskInstanceTokenImpl.setKaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);
 		kaleoTaskInstanceTokenImpl.setGroupId(groupId);
-		kaleoTaskInstanceTokenImpl.setCompanyId(companyId);
 		kaleoTaskInstanceTokenImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -185,6 +184,8 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 			kaleoTaskInstanceTokenImpl.setWorkflowContext(workflowContext);
 		}
 
+		kaleoTaskInstanceTokenImpl.setCompanyId(companyId);
+
 		kaleoTaskInstanceTokenImpl.resetOriginalValues();
 
 		return kaleoTaskInstanceTokenImpl;
@@ -194,7 +195,6 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoTaskInstanceTokenId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -211,6 +211,7 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		completionDate = objectInput.readLong();
 		dueDate = objectInput.readLong();
 		workflowContext = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -218,7 +219,6 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		throws IOException {
 		objectOutput.writeLong(kaleoTaskInstanceTokenId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -261,11 +261,12 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		else {
 			objectOutput.writeUTF(workflowContext);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoTaskInstanceTokenId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -282,4 +283,5 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 	public long completionDate;
 	public long dueDate;
 	public String workflowContext;
+	public long companyId;
 }

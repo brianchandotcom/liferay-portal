@@ -67,7 +67,6 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 	public static final String TABLE_NAME = "MeetupsEntry";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "meetupsEntryId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -79,13 +78,13 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 			{ "totalAttendees", Types.INTEGER },
 			{ "maxAttendees", Types.INTEGER },
 			{ "price", Types.DOUBLE },
-			{ "thumbnailId", Types.BIGINT }
+			{ "thumbnailId", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("meetupsEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -98,9 +97,10 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		TABLE_COLUMNS_MAP.put("maxAttendees", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("thumbnailId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MeetupsEntry (meetupsEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,description VARCHAR(75) null,startDate DATE null,endDate DATE null,totalAttendees INTEGER,maxAttendees INTEGER,price DOUBLE,thumbnailId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table MeetupsEntry (meetupsEntryId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(75) null,description VARCHAR(75) null,startDate DATE null,endDate DATE null,totalAttendees INTEGER,maxAttendees INTEGER,price DOUBLE,thumbnailId LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MeetupsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY meetupsEntry.startDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY MeetupsEntry.startDate DESC";
@@ -160,7 +160,6 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("meetupsEntryId", getMeetupsEntryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -173,6 +172,7 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		attributes.put("maxAttendees", getMaxAttendees());
 		attributes.put("price", getPrice());
 		attributes.put("thumbnailId", getThumbnailId());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -186,12 +186,6 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 
 		if (meetupsEntryId != null) {
 			setMeetupsEntryId(meetupsEntryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -265,6 +259,12 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		if (thumbnailId != null) {
 			setThumbnailId(thumbnailId);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -275,28 +275,6 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 	@Override
 	public void setMeetupsEntryId(long meetupsEntryId) {
 		_meetupsEntryId = meetupsEntryId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -470,6 +448,28 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		_thumbnailId = thumbnailId;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -502,7 +502,6 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		MeetupsEntryImpl meetupsEntryImpl = new MeetupsEntryImpl();
 
 		meetupsEntryImpl.setMeetupsEntryId(getMeetupsEntryId());
-		meetupsEntryImpl.setCompanyId(getCompanyId());
 		meetupsEntryImpl.setUserId(getUserId());
 		meetupsEntryImpl.setUserName(getUserName());
 		meetupsEntryImpl.setCreateDate(getCreateDate());
@@ -515,6 +514,7 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		meetupsEntryImpl.setMaxAttendees(getMaxAttendees());
 		meetupsEntryImpl.setPrice(getPrice());
 		meetupsEntryImpl.setThumbnailId(getThumbnailId());
+		meetupsEntryImpl.setCompanyId(getCompanyId());
 
 		meetupsEntryImpl.resetOriginalValues();
 
@@ -577,15 +577,15 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 	public void resetOriginalValues() {
 		MeetupsEntryModelImpl meetupsEntryModelImpl = this;
 
-		meetupsEntryModelImpl._originalCompanyId = meetupsEntryModelImpl._companyId;
-
-		meetupsEntryModelImpl._setOriginalCompanyId = false;
-
 		meetupsEntryModelImpl._originalUserId = meetupsEntryModelImpl._userId;
 
 		meetupsEntryModelImpl._setOriginalUserId = false;
 
 		meetupsEntryModelImpl._setModifiedDate = false;
+
+		meetupsEntryModelImpl._originalCompanyId = meetupsEntryModelImpl._companyId;
+
+		meetupsEntryModelImpl._setOriginalCompanyId = false;
 
 		meetupsEntryModelImpl._columnBitmask = 0;
 	}
@@ -595,8 +595,6 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		MeetupsEntryCacheModel meetupsEntryCacheModel = new MeetupsEntryCacheModel();
 
 		meetupsEntryCacheModel.meetupsEntryId = getMeetupsEntryId();
-
-		meetupsEntryCacheModel.companyId = getCompanyId();
 
 		meetupsEntryCacheModel.userId = getUserId();
 
@@ -668,6 +666,8 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 
 		meetupsEntryCacheModel.thumbnailId = getThumbnailId();
 
+		meetupsEntryCacheModel.companyId = getCompanyId();
+
 		return meetupsEntryCacheModel;
 	}
 
@@ -677,8 +677,6 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 
 		sb.append("{meetupsEntryId=");
 		sb.append(getMeetupsEntryId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -703,6 +701,8 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		sb.append(getPrice());
 		sb.append(", thumbnailId=");
 		sb.append(getThumbnailId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -719,10 +719,6 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 		sb.append(
 			"<column><column-name>meetupsEntryId</column-name><column-value><![CDATA[");
 		sb.append(getMeetupsEntryId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -772,6 +768,10 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 			"<column><column-name>thumbnailId</column-name><column-value><![CDATA[");
 		sb.append(getThumbnailId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -783,9 +783,6 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 			MeetupsEntry.class
 		};
 	private long _meetupsEntryId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -801,6 +798,9 @@ public class MeetupsEntryModelImpl extends BaseModelImpl<MeetupsEntry>
 	private int _maxAttendees;
 	private double _price;
 	private long _thumbnailId;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private MeetupsEntry _escapedModel;
 }

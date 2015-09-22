@@ -62,20 +62,20 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	public static final String TABLE_NAME = "ExpandoTable";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "tableId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
-			{ "name", Types.VARCHAR }
+			{ "name", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("tableId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ExpandoTable (tableId LONG not null primary key,companyId LONG,classNameId LONG,name VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table ExpandoTable (tableId LONG not null primary key,classNameId LONG,name VARCHAR(75) null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ExpandoTable";
 	public static final String ORDER_BY_JPQL = " ORDER BY expandoTable.tableId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ExpandoTable.tableId ASC";
@@ -136,9 +136,9 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("tableId", getTableId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("name", getName());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -154,12 +154,6 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 			setTableId(tableId);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		Long classNameId = (Long)attributes.get("classNameId");
 
 		if (classNameId != null) {
@@ -170,6 +164,12 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -182,29 +182,6 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	@Override
 	public void setTableId(long tableId) {
 		_tableId = tableId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -276,6 +253,29 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		return GetterUtil.getString(_originalName);
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -295,9 +295,9 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		ExpandoTableImpl expandoTableImpl = new ExpandoTableImpl();
 
 		expandoTableImpl.setTableId(getTableId());
-		expandoTableImpl.setCompanyId(getCompanyId());
 		expandoTableImpl.setClassNameId(getClassNameId());
 		expandoTableImpl.setName(getName());
+		expandoTableImpl.setCompanyId(getCompanyId());
 
 		expandoTableImpl.resetOriginalValues();
 
@@ -360,15 +360,15 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 	public void resetOriginalValues() {
 		ExpandoTableModelImpl expandoTableModelImpl = this;
 
-		expandoTableModelImpl._originalCompanyId = expandoTableModelImpl._companyId;
-
-		expandoTableModelImpl._setOriginalCompanyId = false;
-
 		expandoTableModelImpl._originalClassNameId = expandoTableModelImpl._classNameId;
 
 		expandoTableModelImpl._setOriginalClassNameId = false;
 
 		expandoTableModelImpl._originalName = expandoTableModelImpl._name;
+
+		expandoTableModelImpl._originalCompanyId = expandoTableModelImpl._companyId;
+
+		expandoTableModelImpl._setOriginalCompanyId = false;
 
 		expandoTableModelImpl._columnBitmask = 0;
 	}
@@ -378,8 +378,6 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		ExpandoTableCacheModel expandoTableCacheModel = new ExpandoTableCacheModel();
 
 		expandoTableCacheModel.tableId = getTableId();
-
-		expandoTableCacheModel.companyId = getCompanyId();
 
 		expandoTableCacheModel.classNameId = getClassNameId();
 
@@ -391,6 +389,8 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 			expandoTableCacheModel.name = null;
 		}
 
+		expandoTableCacheModel.companyId = getCompanyId();
+
 		return expandoTableCacheModel;
 	}
 
@@ -400,12 +400,12 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 
 		sb.append("{tableId=");
 		sb.append(getTableId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -424,16 +424,16 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 		sb.append(getTableId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
 		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -446,14 +446,14 @@ public class ExpandoTableModelImpl extends BaseModelImpl<ExpandoTable>
 			ExpandoTable.class
 		};
 	private long _tableId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
 	private String _name;
 	private String _originalName;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private ExpandoTable _escapedModel;
 }

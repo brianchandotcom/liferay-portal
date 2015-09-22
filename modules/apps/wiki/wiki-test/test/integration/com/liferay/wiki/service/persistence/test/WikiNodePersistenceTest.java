@@ -126,8 +126,6 @@ public class WikiNodePersistenceTest {
 
 		newWikiNode.setGroupId(RandomTestUtil.nextLong());
 
-		newWikiNode.setCompanyId(RandomTestUtil.nextLong());
-
 		newWikiNode.setUserId(RandomTestUtil.nextLong());
 
 		newWikiNode.setUserName(RandomTestUtil.randomString());
@@ -152,6 +150,8 @@ public class WikiNodePersistenceTest {
 
 		newWikiNode.setStatusDate(RandomTestUtil.nextDate());
 
+		newWikiNode.setCompanyId(RandomTestUtil.nextLong());
+
 		_wikiNodes.add(_persistence.update(newWikiNode));
 
 		WikiNode existingWikiNode = _persistence.findByPrimaryKey(newWikiNode.getPrimaryKey());
@@ -161,8 +161,6 @@ public class WikiNodePersistenceTest {
 			newWikiNode.getNodeId());
 		Assert.assertEquals(existingWikiNode.getGroupId(),
 			newWikiNode.getGroupId());
-		Assert.assertEquals(existingWikiNode.getCompanyId(),
-			newWikiNode.getCompanyId());
 		Assert.assertEquals(existingWikiNode.getUserId(),
 			newWikiNode.getUserId());
 		Assert.assertEquals(existingWikiNode.getUserName(),
@@ -191,6 +189,8 @@ public class WikiNodePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingWikiNode.getStatusDate()),
 			Time.getShortTimestamp(newWikiNode.getStatusDate()));
+		Assert.assertEquals(existingWikiNode.getCompanyId(),
+			newWikiNode.getCompanyId());
 	}
 
 	@Test
@@ -289,11 +289,11 @@ public class WikiNodePersistenceTest {
 
 	protected OrderByComparator<WikiNode> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WikiNode", "uuid", true,
-			"nodeId", true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true, "name",
-			true, "description", true, "lastPostDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"nodeId", true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "name", true,
+			"description", true, "lastPostDate", true, "lastPublishDate", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true, "companyId", true);
 	}
 
 	@Test
@@ -522,8 +522,6 @@ public class WikiNodePersistenceTest {
 
 		wikiNode.setGroupId(RandomTestUtil.nextLong());
 
-		wikiNode.setCompanyId(RandomTestUtil.nextLong());
-
 		wikiNode.setUserId(RandomTestUtil.nextLong());
 
 		wikiNode.setUserName(RandomTestUtil.randomString());
@@ -547,6 +545,8 @@ public class WikiNodePersistenceTest {
 		wikiNode.setStatusByUserName(RandomTestUtil.randomString());
 
 		wikiNode.setStatusDate(RandomTestUtil.nextDate());
+
+		wikiNode.setCompanyId(RandomTestUtil.nextLong());
 
 		_wikiNodes.add(_persistence.update(wikiNode));
 

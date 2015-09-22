@@ -205,6 +205,20 @@ public class DLFileEntryMetadataLocalServiceWrapper
 		return _dlFileEntryMetadataLocalService.fetchDLFileEntryMetadata(fileEntryMetadataId);
 	}
 
+	/**
+	* Returns the document library file entry metadata with the matching UUID and company.
+	*
+	* @param uuid the document library file entry metadata's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry metadata, or <code>null</code> if a matching document library file entry metadata could not be found
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchDLFileEntryMetadataByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return _dlFileEntryMetadataLocalService.fetchDLFileEntryMetadataByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata fetchFileEntryMetadata(
 		long ddmStructureId, long fileVersionId) {
@@ -245,6 +259,22 @@ public class DLFileEntryMetadataLocalServiceWrapper
 		long fileEntryMetadataId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryMetadataLocalService.getDLFileEntryMetadata(fileEntryMetadataId);
+	}
+
+	/**
+	* Returns the document library file entry metadata with the matching UUID and company.
+	*
+	* @param uuid the document library file entry metadata's UUID
+	* @param companyId the primary key of the company
+	* @return the matching document library file entry metadata
+	* @throws PortalException if a matching document library file entry metadata could not be found
+	*/
+	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata getDLFileEntryMetadataByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryMetadataLocalService.getDLFileEntryMetadataByUuidAndCompanyId(uuid,
+			companyId);
 	}
 
 	/**

@@ -57,6 +57,7 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 		attributes.put("name", getName());
 		attributes.put("values", getValues());
 		attributes.put("description", getDescription());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -92,6 +93,12 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 		if (description != null) {
 			setDescription(description);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -103,6 +110,16 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	public int compareTo(
 		com.liferay.shopping.model.ShoppingItemField shoppingItemField) {
 		return _shoppingItemField.compareTo(shoppingItemField);
+	}
+
+	/**
+	* Returns the company ID of this shopping item field.
+	*
+	* @return the company ID of this shopping item field
+	*/
+	@Override
+	public long getCompanyId() {
+		return _shoppingItemField.getCompanyId();
 	}
 
 	/**
@@ -208,6 +225,16 @@ public class ShoppingItemFieldWrapper implements ShoppingItemField,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_shoppingItemField.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this shopping item field.
+	*
+	* @param companyId the company ID of this shopping item field
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_shoppingItemField.setCompanyId(companyId);
 	}
 
 	/**

@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface LayoutFriendlyURLModel extends BaseModel<LayoutFriendlyURL>,
-	MVCCModel, StagedGroupedModel {
+	MVCCModel, PartitionableModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -123,22 +123,6 @@ public interface LayoutFriendlyURLModel extends BaseModel<LayoutFriendlyURL>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this layout friendly u r l.
-	 *
-	 * @return the company ID of this layout friendly u r l
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this layout friendly u r l.
-	 *
-	 * @param companyId the company ID of this layout friendly u r l
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this layout friendly u r l.
@@ -301,6 +285,22 @@ public interface LayoutFriendlyURLModel extends BaseModel<LayoutFriendlyURL>,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this layout friendly u r l.
+	 *
+	 * @return the company ID of this layout friendly u r l
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this layout friendly u r l.
+	 *
+	 * @param companyId the company ID of this layout friendly u r l
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

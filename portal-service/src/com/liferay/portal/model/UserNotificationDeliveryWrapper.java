@@ -55,13 +55,13 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("userNotificationDeliveryId",
 			getUserNotificationDeliveryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("notificationType", getNotificationType());
 		attributes.put("deliveryType", getDeliveryType());
 		attributes.put("deliver", getDeliver());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -79,12 +79,6 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 
 		if (userNotificationDeliveryId != null) {
 			setUserNotificationDeliveryId(userNotificationDeliveryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -121,6 +115,12 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 
 		if (deliver != null) {
 			setDeliver(deliver);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

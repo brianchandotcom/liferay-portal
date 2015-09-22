@@ -120,8 +120,6 @@ public class TeamPersistenceTest {
 
 		newTeam.setUuid(RandomTestUtil.randomString());
 
-		newTeam.setCompanyId(RandomTestUtil.nextLong());
-
 		newTeam.setUserId(RandomTestUtil.nextLong());
 
 		newTeam.setUserName(RandomTestUtil.randomString());
@@ -138,6 +136,8 @@ public class TeamPersistenceTest {
 
 		newTeam.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newTeam.setCompanyId(RandomTestUtil.nextLong());
+
 		_teams.add(_persistence.update(newTeam));
 
 		Team existingTeam = _persistence.findByPrimaryKey(newTeam.getPrimaryKey());
@@ -146,7 +146,6 @@ public class TeamPersistenceTest {
 			newTeam.getMvccVersion());
 		Assert.assertEquals(existingTeam.getUuid(), newTeam.getUuid());
 		Assert.assertEquals(existingTeam.getTeamId(), newTeam.getTeamId());
-		Assert.assertEquals(existingTeam.getCompanyId(), newTeam.getCompanyId());
 		Assert.assertEquals(existingTeam.getUserId(), newTeam.getUserId());
 		Assert.assertEquals(existingTeam.getUserName(), newTeam.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(existingTeam.getCreateDate()),
@@ -161,6 +160,7 @@ public class TeamPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingTeam.getLastPublishDate()),
 			Time.getShortTimestamp(newTeam.getLastPublishDate()));
+		Assert.assertEquals(existingTeam.getCompanyId(), newTeam.getCompanyId());
 	}
 
 	@Test
@@ -236,10 +236,10 @@ public class TeamPersistenceTest {
 
 	protected OrderByComparator<Team> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Team", "mvccVersion", true,
-			"uuid", true, "teamId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"groupId", true, "name", true, "description", true,
-			"lastPublishDate", true);
+			"uuid", true, "teamId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "groupId", true, "name",
+			true, "description", true, "lastPublishDate", true, "companyId",
+			true);
 	}
 
 	@Test
@@ -464,8 +464,6 @@ public class TeamPersistenceTest {
 
 		team.setUuid(RandomTestUtil.randomString());
 
-		team.setCompanyId(RandomTestUtil.nextLong());
-
 		team.setUserId(RandomTestUtil.nextLong());
 
 		team.setUserName(RandomTestUtil.randomString());
@@ -481,6 +479,8 @@ public class TeamPersistenceTest {
 		team.setDescription(RandomTestUtil.randomString());
 
 		team.setLastPublishDate(RandomTestUtil.nextDate());
+
+		team.setCompanyId(RandomTestUtil.nextLong());
 
 		_teams.add(_persistence.update(team));
 

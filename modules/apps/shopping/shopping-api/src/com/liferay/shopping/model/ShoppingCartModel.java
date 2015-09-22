@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface ShoppingCartModel extends BaseModel<ShoppingCart>, GroupedModel {
+public interface ShoppingCartModel extends BaseModel<ShoppingCart>, GroupedModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -92,22 +94,6 @@ public interface ShoppingCartModel extends BaseModel<ShoppingCart>, GroupedModel
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this shopping cart.
-	 *
-	 * @return the company ID of this shopping cart
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this shopping cart.
-	 *
-	 * @param companyId the company ID of this shopping cart
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this shopping cart.
@@ -254,6 +240,22 @@ public interface ShoppingCartModel extends BaseModel<ShoppingCart>, GroupedModel
 	 * @param insure the insure of this shopping cart
 	 */
 	public void setInsure(boolean insure);
+
+	/**
+	 * Returns the company ID of this shopping cart.
+	 *
+	 * @return the company ID of this shopping cart
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this shopping cart.
+	 *
+	 * @param companyId the company ID of this shopping cart
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -65,25 +65,25 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "activityAchievementId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "firstInGroup", Types.BOOLEAN }
+			{ "firstInGroup", Types.BOOLEAN },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("activityAchievementId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("firstInGroup", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialActivityAchievement (activityAchievementId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,name VARCHAR(75) null,firstInGroup BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivityAchievement (activityAchievementId LONG not null primary key,groupId LONG,userId LONG,createDate LONG,name VARCHAR(75) null,firstInGroup BOOLEAN,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivityAchievement";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivityAchievement.activityAchievementId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialActivityAchievement.activityAchievementId ASC";
@@ -146,11 +146,11 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 		attributes.put("activityAchievementId", getActivityAchievementId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("name", getName());
 		attributes.put("firstInGroup", getFirstInGroup());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -171,12 +171,6 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -201,6 +195,12 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 		if (firstInGroup != null) {
 			setFirstInGroup(firstInGroup);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -234,16 +234,6 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -346,6 +336,16 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		return _originalFirstInGroup;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -379,11 +379,11 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 		socialActivityAchievementImpl.setActivityAchievementId(getActivityAchievementId());
 		socialActivityAchievementImpl.setGroupId(getGroupId());
-		socialActivityAchievementImpl.setCompanyId(getCompanyId());
 		socialActivityAchievementImpl.setUserId(getUserId());
 		socialActivityAchievementImpl.setCreateDate(getCreateDate());
 		socialActivityAchievementImpl.setName(getName());
 		socialActivityAchievementImpl.setFirstInGroup(getFirstInGroup());
+		socialActivityAchievementImpl.setCompanyId(getCompanyId());
 
 		socialActivityAchievementImpl.resetOriginalValues();
 
@@ -471,8 +471,6 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 		socialActivityAchievementCacheModel.groupId = getGroupId();
 
-		socialActivityAchievementCacheModel.companyId = getCompanyId();
-
 		socialActivityAchievementCacheModel.userId = getUserId();
 
 		socialActivityAchievementCacheModel.createDate = getCreateDate();
@@ -487,6 +485,8 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 
 		socialActivityAchievementCacheModel.firstInGroup = getFirstInGroup();
 
+		socialActivityAchievementCacheModel.companyId = getCompanyId();
+
 		return socialActivityAchievementCacheModel;
 	}
 
@@ -498,8 +498,6 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		sb.append(getActivityAchievementId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", createDate=");
@@ -508,6 +506,8 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		sb.append(getName());
 		sb.append(", firstInGroup=");
 		sb.append(getFirstInGroup());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -530,10 +530,6 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
@@ -549,6 +545,10 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 			"<column><column-name>firstInGroup</column-name><column-value><![CDATA[");
 		sb.append(getFirstInGroup());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -563,7 +563,6 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -573,6 +572,7 @@ public class SocialActivityAchievementModelImpl extends BaseModelImpl<SocialActi
 	private boolean _firstInGroup;
 	private boolean _originalFirstInGroup;
 	private boolean _setOriginalFirstInGroup;
+	private long _companyId;
 	private long _columnBitmask;
 	private SocialActivityAchievement _escapedModel;
 }

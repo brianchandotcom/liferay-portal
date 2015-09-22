@@ -117,8 +117,6 @@ public class SCProductVersionPersistenceTest {
 
 		SCProductVersion newSCProductVersion = _persistence.create(pk);
 
-		newSCProductVersion.setCompanyId(RandomTestUtil.nextLong());
-
 		newSCProductVersion.setUserId(RandomTestUtil.nextLong());
 
 		newSCProductVersion.setUserName(RandomTestUtil.randomString());
@@ -139,14 +137,14 @@ public class SCProductVersionPersistenceTest {
 
 		newSCProductVersion.setRepoStoreArtifact(RandomTestUtil.randomBoolean());
 
+		newSCProductVersion.setCompanyId(RandomTestUtil.nextLong());
+
 		_scProductVersions.add(_persistence.update(newSCProductVersion));
 
 		SCProductVersion existingSCProductVersion = _persistence.findByPrimaryKey(newSCProductVersion.getPrimaryKey());
 
 		Assert.assertEquals(existingSCProductVersion.getProductVersionId(),
 			newSCProductVersion.getProductVersionId());
-		Assert.assertEquals(existingSCProductVersion.getCompanyId(),
-			newSCProductVersion.getCompanyId());
 		Assert.assertEquals(existingSCProductVersion.getUserId(),
 			newSCProductVersion.getUserId());
 		Assert.assertEquals(existingSCProductVersion.getUserName(),
@@ -169,6 +167,8 @@ public class SCProductVersionPersistenceTest {
 			newSCProductVersion.getDirectDownloadURL());
 		Assert.assertEquals(existingSCProductVersion.getRepoStoreArtifact(),
 			newSCProductVersion.getRepoStoreArtifact());
+		Assert.assertEquals(existingSCProductVersion.getCompanyId(),
+			newSCProductVersion.getCompanyId());
 	}
 
 	@Test
@@ -211,11 +211,11 @@ public class SCProductVersionPersistenceTest {
 
 	protected OrderByComparator<SCProductVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCProductVersion",
-			"productVersionId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"productEntryId", true, "version", true, "changeLog", true,
-			"downloadPageURL", true, "directDownloadURL", true,
-			"repoStoreArtifact", true);
+			"productVersionId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "productEntryId", true,
+			"version", true, "changeLog", true, "downloadPageURL", true,
+			"directDownloadURL", true, "repoStoreArtifact", true, "companyId",
+			true);
 	}
 
 	@Test
@@ -433,8 +433,6 @@ public class SCProductVersionPersistenceTest {
 
 		SCProductVersion scProductVersion = _persistence.create(pk);
 
-		scProductVersion.setCompanyId(RandomTestUtil.nextLong());
-
 		scProductVersion.setUserId(RandomTestUtil.nextLong());
 
 		scProductVersion.setUserName(RandomTestUtil.randomString());
@@ -454,6 +452,8 @@ public class SCProductVersionPersistenceTest {
 		scProductVersion.setDirectDownloadURL(RandomTestUtil.randomString());
 
 		scProductVersion.setRepoStoreArtifact(RandomTestUtil.randomBoolean());
+
+		scProductVersion.setCompanyId(RandomTestUtil.nextLong());
 
 		_scProductVersions.add(_persistence.update(scProductVersion));
 

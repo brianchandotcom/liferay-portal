@@ -16,6 +16,7 @@ package com.liferay.portlet.exportimport.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -34,6 +35,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.exportimport.NoSuchConfigurationException;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
@@ -2777,6 +2779,8 @@ public class ExportImportConfigurationPersistenceImpl
 		exportImportConfiguration.setNew(true);
 		exportImportConfiguration.setPrimaryKey(exportImportConfigurationId);
 
+		exportImportConfiguration.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return exportImportConfiguration;
 	}
 
@@ -3058,7 +3062,6 @@ public class ExportImportConfigurationPersistenceImpl
 		exportImportConfigurationImpl.setMvccVersion(exportImportConfiguration.getMvccVersion());
 		exportImportConfigurationImpl.setExportImportConfigurationId(exportImportConfiguration.getExportImportConfigurationId());
 		exportImportConfigurationImpl.setGroupId(exportImportConfiguration.getGroupId());
-		exportImportConfigurationImpl.setCompanyId(exportImportConfiguration.getCompanyId());
 		exportImportConfigurationImpl.setUserId(exportImportConfiguration.getUserId());
 		exportImportConfigurationImpl.setUserName(exportImportConfiguration.getUserName());
 		exportImportConfigurationImpl.setCreateDate(exportImportConfiguration.getCreateDate());
@@ -3071,6 +3074,7 @@ public class ExportImportConfigurationPersistenceImpl
 		exportImportConfigurationImpl.setStatusByUserId(exportImportConfiguration.getStatusByUserId());
 		exportImportConfigurationImpl.setStatusByUserName(exportImportConfiguration.getStatusByUserName());
 		exportImportConfigurationImpl.setStatusDate(exportImportConfiguration.getStatusDate());
+		exportImportConfigurationImpl.setCompanyId(exportImportConfiguration.getCompanyId());
 
 		return exportImportConfigurationImpl;
 	}
@@ -3455,6 +3459,8 @@ public class ExportImportConfigurationPersistenceImpl
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_EXPORTIMPORTCONFIGURATION = "SELECT exportImportConfiguration FROM ExportImportConfiguration exportImportConfiguration";
 	private static final String _SQL_SELECT_EXPORTIMPORTCONFIGURATION_WHERE_PKS_IN =
 		"SELECT exportImportConfiguration FROM ExportImportConfiguration exportImportConfiguration WHERE exportImportConfigurationId IN (";

@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -35,6 +36,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.messageboards.NoSuchThreadFlagException;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
@@ -2803,6 +2805,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 
 		mbThreadFlag.setUuid(uuid);
 
+		mbThreadFlag.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return mbThreadFlag;
 	}
 
@@ -3053,13 +3057,13 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		mbThreadFlagImpl.setUuid(mbThreadFlag.getUuid());
 		mbThreadFlagImpl.setThreadFlagId(mbThreadFlag.getThreadFlagId());
 		mbThreadFlagImpl.setGroupId(mbThreadFlag.getGroupId());
-		mbThreadFlagImpl.setCompanyId(mbThreadFlag.getCompanyId());
 		mbThreadFlagImpl.setUserId(mbThreadFlag.getUserId());
 		mbThreadFlagImpl.setUserName(mbThreadFlag.getUserName());
 		mbThreadFlagImpl.setCreateDate(mbThreadFlag.getCreateDate());
 		mbThreadFlagImpl.setModifiedDate(mbThreadFlag.getModifiedDate());
 		mbThreadFlagImpl.setThreadId(mbThreadFlag.getThreadId());
 		mbThreadFlagImpl.setLastPublishDate(mbThreadFlag.getLastPublishDate());
+		mbThreadFlagImpl.setCompanyId(mbThreadFlag.getCompanyId());
 
 		return mbThreadFlagImpl;
 	}
@@ -3440,6 +3444,8 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MBTHREADFLAG = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag";
 	private static final String _SQL_SELECT_MBTHREADFLAG_WHERE_PKS_IN = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag WHERE threadFlagId IN (";
 	private static final String _SQL_SELECT_MBTHREADFLAG_WHERE = "SELECT mbThreadFlag FROM MBThreadFlag mbThreadFlag WHERE ";

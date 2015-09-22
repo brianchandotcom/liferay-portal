@@ -116,8 +116,6 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		AnnouncementsDelivery newAnnouncementsDelivery = _persistence.create(pk);
 
-		newAnnouncementsDelivery.setCompanyId(RandomTestUtil.nextLong());
-
 		newAnnouncementsDelivery.setUserId(RandomTestUtil.nextLong());
 
 		newAnnouncementsDelivery.setType(RandomTestUtil.randomString());
@@ -128,6 +126,8 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		newAnnouncementsDelivery.setWebsite(RandomTestUtil.randomBoolean());
 
+		newAnnouncementsDelivery.setCompanyId(RandomTestUtil.nextLong());
+
 		_announcementsDeliveries.add(_persistence.update(
 				newAnnouncementsDelivery));
 
@@ -135,8 +135,6 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		Assert.assertEquals(existingAnnouncementsDelivery.getDeliveryId(),
 			newAnnouncementsDelivery.getDeliveryId());
-		Assert.assertEquals(existingAnnouncementsDelivery.getCompanyId(),
-			newAnnouncementsDelivery.getCompanyId());
 		Assert.assertEquals(existingAnnouncementsDelivery.getUserId(),
 			newAnnouncementsDelivery.getUserId());
 		Assert.assertEquals(existingAnnouncementsDelivery.getType(),
@@ -147,6 +145,8 @@ public class AnnouncementsDeliveryPersistenceTest {
 			newAnnouncementsDelivery.getSms());
 		Assert.assertEquals(existingAnnouncementsDelivery.getWebsite(),
 			newAnnouncementsDelivery.getWebsite());
+		Assert.assertEquals(existingAnnouncementsDelivery.getCompanyId(),
+			newAnnouncementsDelivery.getCompanyId());
 	}
 
 	@Test
@@ -190,8 +190,8 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 	protected OrderByComparator<AnnouncementsDelivery> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AnnouncementsDelivery",
-			"deliveryId", true, "companyId", true, "userId", true, "type",
-			true, "email", true, "sms", true, "website", true);
+			"deliveryId", true, "userId", true, "type", true, "email", true,
+			"sms", true, "website", true, "companyId", true);
 	}
 
 	@Test
@@ -418,8 +418,6 @@ public class AnnouncementsDeliveryPersistenceTest {
 
 		AnnouncementsDelivery announcementsDelivery = _persistence.create(pk);
 
-		announcementsDelivery.setCompanyId(RandomTestUtil.nextLong());
-
 		announcementsDelivery.setUserId(RandomTestUtil.nextLong());
 
 		announcementsDelivery.setType(RandomTestUtil.randomString());
@@ -429,6 +427,8 @@ public class AnnouncementsDeliveryPersistenceTest {
 		announcementsDelivery.setSms(RandomTestUtil.randomBoolean());
 
 		announcementsDelivery.setWebsite(RandomTestUtil.randomBoolean());
+
+		announcementsDelivery.setCompanyId(RandomTestUtil.nextLong());
 
 		_announcementsDeliveries.add(_persistence.update(announcementsDelivery));
 

@@ -64,7 +64,7 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{licenseId=");
 		sb.append(licenseId);
@@ -78,6 +78,8 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 		sb.append(active);
 		sb.append(", recommended=");
 		sb.append(recommended);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -106,6 +108,7 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 		scLicenseImpl.setOpenSource(openSource);
 		scLicenseImpl.setActive(active);
 		scLicenseImpl.setRecommended(recommended);
+		scLicenseImpl.setCompanyId(companyId);
 
 		scLicenseImpl.resetOriginalValues();
 
@@ -120,6 +123,7 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 		openSource = objectInput.readBoolean();
 		active = objectInput.readBoolean();
 		recommended = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -144,6 +148,7 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 		objectOutput.writeBoolean(openSource);
 		objectOutput.writeBoolean(active);
 		objectOutput.writeBoolean(recommended);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long licenseId;
@@ -152,4 +157,5 @@ public class SCLicenseCacheModel implements CacheModel<SCLicense>,
 	public boolean openSource;
 	public boolean active;
 	public boolean recommended;
+	public long companyId;
 }

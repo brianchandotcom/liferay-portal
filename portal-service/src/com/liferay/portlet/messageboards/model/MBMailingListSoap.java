@@ -36,7 +36,6 @@ public class MBMailingListSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setMailingListId(model.getMailingListId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -59,6 +58,7 @@ public class MBMailingListSoap implements Serializable {
 		soapModel.setOutPassword(model.getOutPassword());
 		soapModel.setAllowAnonymous(model.getAllowAnonymous());
 		soapModel.setActive(model.getActive());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -133,14 +133,6 @@ public class MBMailingListSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -339,10 +331,17 @@ public class MBMailingListSoap implements Serializable {
 		_active = active;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _mailingListId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -365,4 +364,5 @@ public class MBMailingListSoap implements Serializable {
 	private String _outPassword;
 	private boolean _allowAnonymous;
 	private boolean _active;
+	private long _companyId;
 }

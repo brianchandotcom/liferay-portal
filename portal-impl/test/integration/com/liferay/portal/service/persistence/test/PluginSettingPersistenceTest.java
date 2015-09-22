@@ -117,8 +117,6 @@ public class PluginSettingPersistenceTest {
 
 		newPluginSetting.setMvccVersion(RandomTestUtil.nextLong());
 
-		newPluginSetting.setCompanyId(RandomTestUtil.nextLong());
-
 		newPluginSetting.setPluginId(RandomTestUtil.randomString());
 
 		newPluginSetting.setPluginType(RandomTestUtil.randomString());
@@ -126,6 +124,8 @@ public class PluginSettingPersistenceTest {
 		newPluginSetting.setRoles(RandomTestUtil.randomString());
 
 		newPluginSetting.setActive(RandomTestUtil.randomBoolean());
+
+		newPluginSetting.setCompanyId(RandomTestUtil.nextLong());
 
 		_pluginSettings.add(_persistence.update(newPluginSetting));
 
@@ -135,8 +135,6 @@ public class PluginSettingPersistenceTest {
 			newPluginSetting.getMvccVersion());
 		Assert.assertEquals(existingPluginSetting.getPluginSettingId(),
 			newPluginSetting.getPluginSettingId());
-		Assert.assertEquals(existingPluginSetting.getCompanyId(),
-			newPluginSetting.getCompanyId());
 		Assert.assertEquals(existingPluginSetting.getPluginId(),
 			newPluginSetting.getPluginId());
 		Assert.assertEquals(existingPluginSetting.getPluginType(),
@@ -145,6 +143,8 @@ public class PluginSettingPersistenceTest {
 			newPluginSetting.getRoles());
 		Assert.assertEquals(existingPluginSetting.getActive(),
 			newPluginSetting.getActive());
+		Assert.assertEquals(existingPluginSetting.getCompanyId(),
+			newPluginSetting.getCompanyId());
 	}
 
 	@Test
@@ -188,8 +188,8 @@ public class PluginSettingPersistenceTest {
 
 	protected OrderByComparator<PluginSetting> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PluginSetting",
-			"mvccVersion", true, "pluginSettingId", true, "companyId", true,
-			"pluginId", true, "pluginType", true, "roles", true, "active", true);
+			"mvccVersion", true, "pluginSettingId", true, "pluginId", true,
+			"pluginType", true, "roles", true, "active", true, "companyId", true);
 	}
 
 	@Test
@@ -416,8 +416,6 @@ public class PluginSettingPersistenceTest {
 
 		pluginSetting.setMvccVersion(RandomTestUtil.nextLong());
 
-		pluginSetting.setCompanyId(RandomTestUtil.nextLong());
-
 		pluginSetting.setPluginId(RandomTestUtil.randomString());
 
 		pluginSetting.setPluginType(RandomTestUtil.randomString());
@@ -425,6 +423,8 @@ public class PluginSettingPersistenceTest {
 		pluginSetting.setRoles(RandomTestUtil.randomString());
 
 		pluginSetting.setActive(RandomTestUtil.randomBoolean());
+
+		pluginSetting.setCompanyId(RandomTestUtil.nextLong());
 
 		_pluginSettings.add(_persistence.update(pluginSetting));
 

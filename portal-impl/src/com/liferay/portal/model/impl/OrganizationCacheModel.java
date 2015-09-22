@@ -87,8 +87,6 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		sb.append(uuid);
 		sb.append(", organizationId=");
 		sb.append(organizationId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -119,6 +117,8 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		sb.append(logoId);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,7 +138,6 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		}
 
 		organizationImpl.setOrganizationId(organizationId);
-		organizationImpl.setCompanyId(companyId);
 		organizationImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -206,6 +205,8 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 			organizationImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		organizationImpl.setCompanyId(companyId);
+
 		organizationImpl.resetOriginalValues();
 
 		return organizationImpl;
@@ -216,7 +217,6 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		organizationId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -232,6 +232,7 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		comments = objectInput.readUTF();
 		logoId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -247,7 +248,6 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 		}
 
 		objectOutput.writeLong(organizationId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -296,12 +296,12 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 
 		objectOutput.writeLong(logoId);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long organizationId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -317,4 +317,5 @@ public class OrganizationCacheModel implements CacheModel<Organization>,
 	public String comments;
 	public long logoId;
 	public long lastPublishDate;
+	public long companyId;
 }

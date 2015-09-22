@@ -54,7 +54,6 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("meetupsEntryId", getMeetupsEntryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -67,6 +66,7 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 		attributes.put("maxAttendees", getMaxAttendees());
 		attributes.put("price", getPrice());
 		attributes.put("thumbnailId", getThumbnailId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -77,12 +77,6 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 
 		if (meetupsEntryId != null) {
 			setMeetupsEntryId(meetupsEntryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -155,6 +149,12 @@ public class MeetupsEntryWrapper implements MeetupsEntry,
 
 		if (thumbnailId != null) {
 			setThumbnailId(thumbnailId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

@@ -76,8 +76,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		sb.append(resourcePrimKey);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -136,6 +134,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -155,7 +155,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		journalArticleImpl.setId(id);
 		journalArticleImpl.setResourcePrimKey(resourcePrimKey);
 		journalArticleImpl.setGroupId(groupId);
-		journalArticleImpl.setCompanyId(companyId);
 		journalArticleImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -304,6 +303,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 			journalArticleImpl.setStatusDate(new Date(statusDate));
 		}
 
+		journalArticleImpl.setCompanyId(companyId);
+
 		journalArticleImpl.resetOriginalValues();
 
 		journalArticleImpl.setDefaultLanguageId(_defaultLanguageId);
@@ -320,7 +321,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		id = objectInput.readLong();
 		resourcePrimKey = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -350,6 +350,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 
 		_defaultLanguageId = (java.lang.String)objectInput.readObject();
 		_document = (com.liferay.portal.kernel.xml.Document)objectInput.readObject();
@@ -368,7 +369,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		objectOutput.writeLong(id);
 		objectOutput.writeLong(resourcePrimKey);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -475,6 +475,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeObject(_defaultLanguageId);
 		objectOutput.writeObject(_document);
@@ -484,7 +485,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public long id;
 	public long resourcePrimKey;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -514,6 +514,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 	public java.lang.String _defaultLanguageId;
 	public com.liferay.portal.kernel.xml.Document _document;
 }

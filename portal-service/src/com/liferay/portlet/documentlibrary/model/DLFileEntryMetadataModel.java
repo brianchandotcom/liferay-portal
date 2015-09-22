@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +40,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata> {
+public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -144,6 +146,22 @@ public interface DLFileEntryMetadataModel extends BaseModel<DLFileEntryMetadata>
 	 * @param fileVersionId the file version ID of this document library file entry metadata
 	 */
 	public void setFileVersionId(long fileVersionId);
+
+	/**
+	 * Returns the company ID of this document library file entry metadata.
+	 *
+	 * @return the company ID of this document library file entry metadata
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this document library file entry metadata.
+	 *
+	 * @param companyId the company ID of this document library file entry metadata
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -83,7 +83,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 			{ "uuid_", Types.VARCHAR },
 			{ "categoryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -99,7 +98,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -107,7 +107,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("categoryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -124,9 +123,10 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MBCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null,displayStyle VARCHAR(75) null,threadCount INTEGER,messageCount INTEGER,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MBCategory (uuid_ VARCHAR(75) null,categoryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentCategoryId LONG,name VARCHAR(75) null,description STRING null,displayStyle VARCHAR(75) null,threadCount INTEGER,messageCount INTEGER,lastPostDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MBCategory";
 	public static final String ORDER_BY_JPQL = " ORDER BY mbCategory.parentCategoryId ASC, mbCategory.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MBCategory.parentCategoryId ASC, MBCategory.name ASC";
@@ -166,7 +166,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		model.setUuid(soapModel.getUuid());
 		model.setCategoryId(soapModel.getCategoryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -183,6 +182,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -250,7 +250,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		attributes.put("uuid", getUuid());
 		attributes.put("categoryId", getCategoryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -267,6 +266,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -292,12 +292,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -395,6 +389,12 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -465,29 +465,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -753,6 +730,29 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+	}
+
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -1035,7 +1035,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		mbCategoryImpl.setUuid(getUuid());
 		mbCategoryImpl.setCategoryId(getCategoryId());
 		mbCategoryImpl.setGroupId(getGroupId());
-		mbCategoryImpl.setCompanyId(getCompanyId());
 		mbCategoryImpl.setUserId(getUserId());
 		mbCategoryImpl.setUserName(getUserName());
 		mbCategoryImpl.setCreateDate(getCreateDate());
@@ -1052,6 +1051,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		mbCategoryImpl.setStatusByUserId(getStatusByUserId());
 		mbCategoryImpl.setStatusByUserName(getStatusByUserName());
 		mbCategoryImpl.setStatusDate(getStatusDate());
+		mbCategoryImpl.setCompanyId(getCompanyId());
 
 		mbCategoryImpl.resetOriginalValues();
 
@@ -1136,10 +1136,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 		mbCategoryModelImpl._setOriginalGroupId = false;
 
-		mbCategoryModelImpl._originalCompanyId = mbCategoryModelImpl._companyId;
-
-		mbCategoryModelImpl._setOriginalCompanyId = false;
-
 		mbCategoryModelImpl._setModifiedDate = false;
 
 		mbCategoryModelImpl._originalParentCategoryId = mbCategoryModelImpl._parentCategoryId;
@@ -1149,6 +1145,10 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		mbCategoryModelImpl._originalStatus = mbCategoryModelImpl._status;
 
 		mbCategoryModelImpl._setOriginalStatus = false;
+
+		mbCategoryModelImpl._originalCompanyId = mbCategoryModelImpl._companyId;
+
+		mbCategoryModelImpl._setOriginalCompanyId = false;
 
 		mbCategoryModelImpl._columnBitmask = 0;
 	}
@@ -1168,8 +1168,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		mbCategoryCacheModel.categoryId = getCategoryId();
 
 		mbCategoryCacheModel.groupId = getGroupId();
-
-		mbCategoryCacheModel.companyId = getCompanyId();
 
 		mbCategoryCacheModel.userId = getUserId();
 
@@ -1268,6 +1266,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 			mbCategoryCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		mbCategoryCacheModel.companyId = getCompanyId();
+
 		return mbCategoryCacheModel;
 	}
 
@@ -1281,8 +1281,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		sb.append(getCategoryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1315,6 +1313,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1339,10 +1339,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1408,6 +1404,10 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1426,9 +1426,6 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1450,6 +1447,9 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private MBCategory _escapedModel;
 }

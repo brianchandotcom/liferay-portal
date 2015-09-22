@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface SCFrameworkVersionModel extends BaseModel<SCFrameworkVersion>,
-	GroupedModel {
+	GroupedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -93,22 +94,6 @@ public interface SCFrameworkVersionModel extends BaseModel<SCFrameworkVersion>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this s c framework version.
-	 *
-	 * @return the company ID of this s c framework version
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this s c framework version.
-	 *
-	 * @param companyId the company ID of this s c framework version
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this s c framework version.
@@ -255,6 +240,22 @@ public interface SCFrameworkVersionModel extends BaseModel<SCFrameworkVersion>,
 	 * @param priority the priority of this s c framework version
 	 */
 	public void setPriority(int priority);
+
+	/**
+	 * Returns the company ID of this s c framework version.
+	 *
+	 * @return the company ID of this s c framework version
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this s c framework version.
+	 *
+	 * @param companyId the company ID of this s c framework version
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

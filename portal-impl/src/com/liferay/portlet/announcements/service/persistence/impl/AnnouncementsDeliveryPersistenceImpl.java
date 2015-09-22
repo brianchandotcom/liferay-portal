@@ -16,6 +16,7 @@ package com.liferay.portlet.announcements.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.announcements.NoSuchDeliveryException;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
@@ -983,6 +985,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		announcementsDelivery.setNew(true);
 		announcementsDelivery.setPrimaryKey(deliveryId);
 
+		announcementsDelivery.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return announcementsDelivery;
 	}
 
@@ -1151,12 +1155,12 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		announcementsDeliveryImpl.setPrimaryKey(announcementsDelivery.getPrimaryKey());
 
 		announcementsDeliveryImpl.setDeliveryId(announcementsDelivery.getDeliveryId());
-		announcementsDeliveryImpl.setCompanyId(announcementsDelivery.getCompanyId());
 		announcementsDeliveryImpl.setUserId(announcementsDelivery.getUserId());
 		announcementsDeliveryImpl.setType(announcementsDelivery.getType());
 		announcementsDeliveryImpl.setEmail(announcementsDelivery.isEmail());
 		announcementsDeliveryImpl.setSms(announcementsDelivery.isSms());
 		announcementsDeliveryImpl.setWebsite(announcementsDelivery.isWebsite());
+		announcementsDeliveryImpl.setCompanyId(announcementsDelivery.getCompanyId());
 
 		return announcementsDeliveryImpl;
 	}
@@ -1540,6 +1544,8 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY = "SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE_PKS_IN = "SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery WHERE deliveryId IN (";
 	private static final String _SQL_SELECT_ANNOUNCEMENTSDELIVERY_WHERE = "SELECT announcementsDelivery FROM AnnouncementsDelivery announcementsDelivery WHERE ";

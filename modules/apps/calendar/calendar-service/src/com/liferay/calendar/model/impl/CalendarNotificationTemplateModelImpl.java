@@ -75,7 +75,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 			{ "uuid_", Types.VARCHAR },
 			{ "calendarNotificationTemplateId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -86,7 +85,8 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 			{ "notificationTemplateType", Types.VARCHAR },
 			{ "subject", Types.VARCHAR },
 			{ "body", Types.CLOB },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -94,7 +94,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("calendarNotificationTemplateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -106,9 +105,10 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		TABLE_COLUMNS_MAP.put("subject", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("body", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CalendarNotificationTemplate (uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(75) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CalendarNotificationTemplate (uuid_ VARCHAR(75) null,calendarNotificationTemplateId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,calendarId LONG,notificationType VARCHAR(75) null,notificationTypeSettings VARCHAR(75) null,notificationTemplateType VARCHAR(75) null,subject VARCHAR(75) null,body TEXT null,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table CalendarNotificationTemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY calendarNotificationTemplate.calendarNotificationTemplateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CalendarNotificationTemplate.calendarNotificationTemplateId ASC";
@@ -149,7 +149,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		model.setUuid(soapModel.getUuid());
 		model.setCalendarNotificationTemplateId(soapModel.getCalendarNotificationTemplateId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -161,6 +160,7 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		model.setSubject(soapModel.getSubject());
 		model.setBody(soapModel.getBody());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -230,7 +230,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		attributes.put("calendarNotificationTemplateId",
 			getCalendarNotificationTemplateId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -242,6 +241,7 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		attributes.put("subject", getSubject());
 		attributes.put("body", getBody());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -268,12 +268,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -343,6 +337,12 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -402,29 +402,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -632,6 +609,29 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -672,7 +672,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		calendarNotificationTemplateImpl.setUuid(getUuid());
 		calendarNotificationTemplateImpl.setCalendarNotificationTemplateId(getCalendarNotificationTemplateId());
 		calendarNotificationTemplateImpl.setGroupId(getGroupId());
-		calendarNotificationTemplateImpl.setCompanyId(getCompanyId());
 		calendarNotificationTemplateImpl.setUserId(getUserId());
 		calendarNotificationTemplateImpl.setUserName(getUserName());
 		calendarNotificationTemplateImpl.setCreateDate(getCreateDate());
@@ -684,6 +683,7 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		calendarNotificationTemplateImpl.setSubject(getSubject());
 		calendarNotificationTemplateImpl.setBody(getBody());
 		calendarNotificationTemplateImpl.setLastPublishDate(getLastPublishDate());
+		calendarNotificationTemplateImpl.setCompanyId(getCompanyId());
 
 		calendarNotificationTemplateImpl.resetOriginalValues();
 
@@ -754,10 +754,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 
 		calendarNotificationTemplateModelImpl._setOriginalGroupId = false;
 
-		calendarNotificationTemplateModelImpl._originalCompanyId = calendarNotificationTemplateModelImpl._companyId;
-
-		calendarNotificationTemplateModelImpl._setOriginalCompanyId = false;
-
 		calendarNotificationTemplateModelImpl._setModifiedDate = false;
 
 		calendarNotificationTemplateModelImpl._originalCalendarId = calendarNotificationTemplateModelImpl._calendarId;
@@ -767,6 +763,10 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		calendarNotificationTemplateModelImpl._originalNotificationType = calendarNotificationTemplateModelImpl._notificationType;
 
 		calendarNotificationTemplateModelImpl._originalNotificationTemplateType = calendarNotificationTemplateModelImpl._notificationTemplateType;
+
+		calendarNotificationTemplateModelImpl._originalCompanyId = calendarNotificationTemplateModelImpl._companyId;
+
+		calendarNotificationTemplateModelImpl._setOriginalCompanyId = false;
 
 		calendarNotificationTemplateModelImpl._columnBitmask = 0;
 	}
@@ -787,8 +787,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		calendarNotificationTemplateCacheModel.calendarNotificationTemplateId = getCalendarNotificationTemplateId();
 
 		calendarNotificationTemplateCacheModel.groupId = getGroupId();
-
-		calendarNotificationTemplateCacheModel.companyId = getCompanyId();
 
 		calendarNotificationTemplateCacheModel.userId = getUserId();
 
@@ -871,6 +869,8 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 			calendarNotificationTemplateCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		calendarNotificationTemplateCacheModel.companyId = getCompanyId();
+
 		return calendarNotificationTemplateCacheModel;
 	}
 
@@ -884,8 +884,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		sb.append(getCalendarNotificationTemplateId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -908,6 +906,8 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		sb.append(getBody());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -932,10 +932,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -981,6 +977,10 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -997,9 +997,6 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1016,6 +1013,9 @@ public class CalendarNotificationTemplateModelImpl extends BaseModelImpl<Calenda
 	private String _subject;
 	private String _body;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private CalendarNotificationTemplate _escapedModel;
 }

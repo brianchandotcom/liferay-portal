@@ -35,7 +35,6 @@ public class KaleoTaskAssignmentSoap implements Serializable {
 
 		soapModel.setKaleoTaskAssignmentId(model.getKaleoTaskAssignmentId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -50,6 +49,7 @@ public class KaleoTaskAssignmentSoap implements Serializable {
 		soapModel.setAssigneeScript(model.getAssigneeScript());
 		soapModel.setAssigneeScriptLanguage(model.getAssigneeScriptLanguage());
 		soapModel.setAssigneeScriptRequiredContexts(model.getAssigneeScriptRequiredContexts());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -119,14 +119,6 @@ public class KaleoTaskAssignmentSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -242,9 +234,16 @@ public class KaleoTaskAssignmentSoap implements Serializable {
 		_assigneeScriptRequiredContexts = assigneeScriptRequiredContexts;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _kaleoTaskAssignmentId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -259,4 +258,5 @@ public class KaleoTaskAssignmentSoap implements Serializable {
 	private String _assigneeScript;
 	private String _assigneeScriptLanguage;
 	private String _assigneeScriptRequiredContexts;
+	private long _companyId;
 }

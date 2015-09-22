@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -1506,6 +1508,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		ddmStructureVersion.setNew(true);
 		ddmStructureVersion.setPrimaryKey(structureVersionId);
 
+		ddmStructureVersion.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return ddmStructureVersion;
 	}
 
@@ -1700,7 +1704,6 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 
 		ddmStructureVersionImpl.setStructureVersionId(ddmStructureVersion.getStructureVersionId());
 		ddmStructureVersionImpl.setGroupId(ddmStructureVersion.getGroupId());
-		ddmStructureVersionImpl.setCompanyId(ddmStructureVersion.getCompanyId());
 		ddmStructureVersionImpl.setUserId(ddmStructureVersion.getUserId());
 		ddmStructureVersionImpl.setUserName(ddmStructureVersion.getUserName());
 		ddmStructureVersionImpl.setCreateDate(ddmStructureVersion.getCreateDate());
@@ -1716,6 +1719,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		ddmStructureVersionImpl.setStatusByUserId(ddmStructureVersion.getStatusByUserId());
 		ddmStructureVersionImpl.setStatusByUserName(ddmStructureVersion.getStatusByUserName());
 		ddmStructureVersionImpl.setStatusDate(ddmStructureVersion.getStatusDate());
+		ddmStructureVersionImpl.setCompanyId(ddmStructureVersion.getCompanyId());
 
 		return ddmStructureVersionImpl;
 	}
@@ -2099,6 +2103,8 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_DDMSTRUCTUREVERSION = "SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion";
 	private static final String _SQL_SELECT_DDMSTRUCTUREVERSION_WHERE_PKS_IN = "SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion WHERE structureVersionId IN (";
 	private static final String _SQL_SELECT_DDMSTRUCTUREVERSION_WHERE = "SELECT ddmStructureVersion FROM DDMStructureVersion ddmStructureVersion WHERE ";

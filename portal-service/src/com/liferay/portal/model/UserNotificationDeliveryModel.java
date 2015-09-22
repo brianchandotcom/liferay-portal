@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface UserNotificationDeliveryModel extends BaseModel<UserNotificationDelivery>,
-	MVCCModel, TypedModel {
+	MVCCModel, PartitionableModel, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,20 +88,6 @@ public interface UserNotificationDeliveryModel extends BaseModel<UserNotificatio
 	 * @param userNotificationDeliveryId the user notification delivery ID of this user notification delivery
 	 */
 	public void setUserNotificationDeliveryId(long userNotificationDeliveryId);
-
-	/**
-	 * Returns the company ID of this user notification delivery.
-	 *
-	 * @return the company ID of this user notification delivery
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this user notification delivery.
-	 *
-	 * @param companyId the company ID of this user notification delivery
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this user notification delivery.
@@ -220,6 +206,22 @@ public interface UserNotificationDeliveryModel extends BaseModel<UserNotificatio
 	 * @param deliver the deliver of this user notification delivery
 	 */
 	public void setDeliver(boolean deliver);
+
+	/**
+	 * Returns the company ID of this user notification delivery.
+	 *
+	 * @return the company ID of this user notification delivery
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user notification delivery.
+	 *
+	 * @param companyId the company ID of this user notification delivery
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

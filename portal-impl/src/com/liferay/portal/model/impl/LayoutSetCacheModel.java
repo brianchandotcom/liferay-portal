@@ -87,8 +87,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		sb.append(layoutSetId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -115,6 +113,8 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		sb.append(layoutSetPrototypeUuid);
 		sb.append(", layoutSetPrototypeLinkEnabled=");
 		sb.append(layoutSetPrototypeLinkEnabled);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -127,7 +127,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		layoutSetImpl.setMvccVersion(mvccVersion);
 		layoutSetImpl.setLayoutSetId(layoutSetId);
 		layoutSetImpl.setGroupId(groupId);
-		layoutSetImpl.setCompanyId(companyId);
 
 		if (createDate == Long.MIN_VALUE) {
 			layoutSetImpl.setCreateDate(null);
@@ -198,6 +197,7 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		}
 
 		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(layoutSetPrototypeLinkEnabled);
+		layoutSetImpl.setCompanyId(companyId);
 
 		layoutSetImpl.resetOriginalValues();
 
@@ -214,7 +214,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		mvccVersion = objectInput.readLong();
 		layoutSetId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		privateLayout = objectInput.readBoolean();
@@ -228,6 +227,7 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		settings = objectInput.readUTF();
 		layoutSetPrototypeUuid = objectInput.readUTF();
 		layoutSetPrototypeLinkEnabled = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 
 		_companyFallbackVirtualHostname = (java.lang.String)objectInput.readObject();
 		_virtualHostname = (java.lang.String)objectInput.readObject();
@@ -239,7 +239,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(layoutSetId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeBoolean(privateLayout);
@@ -297,6 +296,7 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 		}
 
 		objectOutput.writeBoolean(layoutSetPrototypeLinkEnabled);
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeObject(_companyFallbackVirtualHostname);
 		objectOutput.writeObject(_virtualHostname);
@@ -305,7 +305,6 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	public long mvccVersion;
 	public long layoutSetId;
 	public long groupId;
-	public long companyId;
 	public long createDate;
 	public long modifiedDate;
 	public boolean privateLayout;
@@ -319,6 +318,7 @@ public class LayoutSetCacheModel implements CacheModel<LayoutSet>,
 	public String settings;
 	public String layoutSetPrototypeUuid;
 	public boolean layoutSetPrototypeLinkEnabled;
+	public long companyId;
 	public java.lang.String _companyFallbackVirtualHostname;
 	public java.lang.String _virtualHostname;
 }

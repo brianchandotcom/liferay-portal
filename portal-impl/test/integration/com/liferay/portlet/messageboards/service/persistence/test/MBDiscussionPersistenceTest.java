@@ -121,8 +121,6 @@ public class MBDiscussionPersistenceTest {
 
 		newMBDiscussion.setGroupId(RandomTestUtil.nextLong());
 
-		newMBDiscussion.setCompanyId(RandomTestUtil.nextLong());
-
 		newMBDiscussion.setUserId(RandomTestUtil.nextLong());
 
 		newMBDiscussion.setUserName(RandomTestUtil.randomString());
@@ -139,6 +137,8 @@ public class MBDiscussionPersistenceTest {
 
 		newMBDiscussion.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newMBDiscussion.setCompanyId(RandomTestUtil.nextLong());
+
 		_mbDiscussions.add(_persistence.update(newMBDiscussion));
 
 		MBDiscussion existingMBDiscussion = _persistence.findByPrimaryKey(newMBDiscussion.getPrimaryKey());
@@ -149,8 +149,6 @@ public class MBDiscussionPersistenceTest {
 			newMBDiscussion.getDiscussionId());
 		Assert.assertEquals(existingMBDiscussion.getGroupId(),
 			newMBDiscussion.getGroupId());
-		Assert.assertEquals(existingMBDiscussion.getCompanyId(),
-			newMBDiscussion.getCompanyId());
 		Assert.assertEquals(existingMBDiscussion.getUserId(),
 			newMBDiscussion.getUserId());
 		Assert.assertEquals(existingMBDiscussion.getUserName(),
@@ -170,6 +168,8 @@ public class MBDiscussionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBDiscussion.getLastPublishDate()),
 			Time.getShortTimestamp(newMBDiscussion.getLastPublishDate()));
+		Assert.assertEquals(existingMBDiscussion.getCompanyId(),
+			newMBDiscussion.getCompanyId());
 	}
 
 	@Test
@@ -245,10 +245,10 @@ public class MBDiscussionPersistenceTest {
 
 	protected OrderByComparator<MBDiscussion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBDiscussion", "uuid",
-			true, "discussionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "classNameId", true, "classPK", true,
-			"threadId", true, "lastPublishDate", true);
+			true, "discussionId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "threadId", true,
+			"lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -483,8 +483,6 @@ public class MBDiscussionPersistenceTest {
 
 		mbDiscussion.setGroupId(RandomTestUtil.nextLong());
 
-		mbDiscussion.setCompanyId(RandomTestUtil.nextLong());
-
 		mbDiscussion.setUserId(RandomTestUtil.nextLong());
 
 		mbDiscussion.setUserName(RandomTestUtil.randomString());
@@ -500,6 +498,8 @@ public class MBDiscussionPersistenceTest {
 		mbDiscussion.setThreadId(RandomTestUtil.nextLong());
 
 		mbDiscussion.setLastPublishDate(RandomTestUtil.nextDate());
+
+		mbDiscussion.setCompanyId(RandomTestUtil.nextLong());
 
 		_mbDiscussions.add(_persistence.update(mbDiscussion));
 

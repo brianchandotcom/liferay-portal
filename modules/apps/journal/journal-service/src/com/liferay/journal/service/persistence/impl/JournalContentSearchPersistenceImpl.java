@@ -22,6 +22,7 @@ import com.liferay.journal.model.impl.JournalContentSearchImpl;
 import com.liferay.journal.model.impl.JournalContentSearchModelImpl;
 import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -4610,6 +4612,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		journalContentSearch.setNew(true);
 		journalContentSearch.setPrimaryKey(contentSearchId);
 
+		journalContentSearch.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return journalContentSearch;
 	}
 
@@ -4913,11 +4917,11 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 
 		journalContentSearchImpl.setContentSearchId(journalContentSearch.getContentSearchId());
 		journalContentSearchImpl.setGroupId(journalContentSearch.getGroupId());
-		journalContentSearchImpl.setCompanyId(journalContentSearch.getCompanyId());
 		journalContentSearchImpl.setPrivateLayout(journalContentSearch.isPrivateLayout());
 		journalContentSearchImpl.setLayoutId(journalContentSearch.getLayoutId());
 		journalContentSearchImpl.setPortletId(journalContentSearch.getPortletId());
 		journalContentSearchImpl.setArticleId(journalContentSearch.getArticleId());
+		journalContentSearchImpl.setCompanyId(journalContentSearch.getCompanyId());
 
 		return journalContentSearchImpl;
 	}
@@ -5296,6 +5300,8 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_JOURNALCONTENTSEARCH = "SELECT journalContentSearch FROM JournalContentSearch journalContentSearch";
 	private static final String _SQL_SELECT_JOURNALCONTENTSEARCH_WHERE_PKS_IN = "SELECT journalContentSearch FROM JournalContentSearch journalContentSearch WHERE contentSearchId IN (";
 	private static final String _SQL_SELECT_JOURNALCONTENTSEARCH_WHERE = "SELECT journalContentSearch FROM JournalContentSearch journalContentSearch WHERE ";

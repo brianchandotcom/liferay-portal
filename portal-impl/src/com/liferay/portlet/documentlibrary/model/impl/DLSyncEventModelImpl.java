@@ -64,7 +64,8 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 			{ "modifiedTime", Types.BIGINT },
 			{ "event", Types.VARCHAR },
 			{ "type_", Types.VARCHAR },
-			{ "typePK", Types.BIGINT }
+			{ "typePK", Types.BIGINT },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -74,9 +75,10 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 		TABLE_COLUMNS_MAP.put("event", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("typePK", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLSyncEvent (syncEventId LONG not null primary key,modifiedTime LONG,event VARCHAR(75) null,type_ VARCHAR(75) null,typePK LONG)";
+	public static final String TABLE_SQL_CREATE = "create table DLSyncEvent (syncEventId LONG not null primary key,modifiedTime LONG,event VARCHAR(75) null,type_ VARCHAR(75) null,typePK LONG,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLSyncEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlSyncEvent.modifiedTime ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLSyncEvent.modifiedTime ASC";
@@ -139,6 +141,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 		attributes.put("event", getEvent());
 		attributes.put("type", getType());
 		attributes.put("typePK", getTypePK());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -176,6 +179,12 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 
 		if (typePK != null) {
 			setTypePK(typePK);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -263,13 +272,23 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 		return _originalTypePK;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			DLSyncEvent.class.getName(), getPrimaryKey());
 	}
 
@@ -299,6 +318,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 		dlSyncEventImpl.setEvent(getEvent());
 		dlSyncEventImpl.setType(getType());
 		dlSyncEventImpl.setTypePK(getTypePK());
+		dlSyncEventImpl.setCompanyId(getCompanyId());
 
 		dlSyncEventImpl.resetOriginalValues();
 
@@ -404,12 +424,14 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 
 		dlSyncEventCacheModel.typePK = getTypePK();
 
+		dlSyncEventCacheModel.companyId = getCompanyId();
+
 		return dlSyncEventCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{syncEventId=");
 		sb.append(getSyncEventId());
@@ -421,6 +443,8 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 		sb.append(getType());
 		sb.append(", typePK=");
 		sb.append(getTypePK());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -428,7 +452,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLSyncEvent");
@@ -454,6 +478,10 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 			"<column><column-name>typePK</column-name><column-value><![CDATA[");
 		sb.append(getTypePK());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -473,6 +501,7 @@ public class DLSyncEventModelImpl extends BaseModelImpl<DLSyncEvent>
 	private long _typePK;
 	private long _originalTypePK;
 	private boolean _setOriginalTypePK;
+	private long _companyId;
 	private long _columnBitmask;
 	private DLSyncEvent _escapedModel;
 }

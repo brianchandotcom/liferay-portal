@@ -58,7 +58,6 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 		attributes.put("uuid", getUuid());
 		attributes.put("ruleGroupId", getRuleGroupId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -66,6 +65,7 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -88,12 +88,6 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -136,6 +130,12 @@ public class MDRRuleGroupWrapper implements MDRRuleGroup,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

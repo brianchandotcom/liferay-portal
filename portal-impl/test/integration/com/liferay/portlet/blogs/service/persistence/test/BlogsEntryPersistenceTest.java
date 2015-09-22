@@ -121,8 +121,6 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setGroupId(RandomTestUtil.nextLong());
 
-		newBlogsEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		newBlogsEntry.setUserId(RandomTestUtil.nextLong());
 
 		newBlogsEntry.setUserName(RandomTestUtil.randomString());
@@ -173,6 +171,8 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setStatusDate(RandomTestUtil.nextDate());
 
+		newBlogsEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		_blogsEntries.add(_persistence.update(newBlogsEntry));
 
 		BlogsEntry existingBlogsEntry = _persistence.findByPrimaryKey(newBlogsEntry.getPrimaryKey());
@@ -183,8 +183,6 @@ public class BlogsEntryPersistenceTest {
 			newBlogsEntry.getEntryId());
 		Assert.assertEquals(existingBlogsEntry.getGroupId(),
 			newBlogsEntry.getGroupId());
-		Assert.assertEquals(existingBlogsEntry.getCompanyId(),
-			newBlogsEntry.getCompanyId());
 		Assert.assertEquals(existingBlogsEntry.getUserId(),
 			newBlogsEntry.getUserId());
 		Assert.assertEquals(existingBlogsEntry.getUserName(),
@@ -240,6 +238,8 @@ public class BlogsEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingBlogsEntry.getStatusDate()),
 			Time.getShortTimestamp(newBlogsEntry.getStatusDate()));
+		Assert.assertEquals(existingBlogsEntry.getCompanyId(),
+			newBlogsEntry.getCompanyId());
 	}
 
 	@Test
@@ -317,6 +317,14 @@ public class BlogsEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByLtD_S() throws Exception {
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
 	public void testCountByC_U() throws Exception {
 		_persistence.countByC_U(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
@@ -346,14 +354,6 @@ public class BlogsEntryPersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByC_NotS(0L, 0);
-	}
-
-	@Test
-	public void testCountByLtD_S() throws Exception {
-		_persistence.countByLtD_S(RandomTestUtil.nextDate(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test
@@ -476,15 +476,15 @@ public class BlogsEntryPersistenceTest {
 
 	protected OrderByComparator<BlogsEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("BlogsEntry", "uuid", true,
-			"entryId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"title", true, "subtitle", true, "urlTitle", true, "description",
-			true, "displayDate", true, "allowPingbacks", true,
-			"allowTrackbacks", true, "coverImageCaption", true,
-			"coverImageFileEntryId", true, "coverImageURL", true, "smallImage",
-			true, "smallImageFileEntryId", true, "smallImageId", true,
-			"smallImageURL", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"entryId", true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "title", true,
+			"subtitle", true, "urlTitle", true, "description", true,
+			"displayDate", true, "allowPingbacks", true, "allowTrackbacks",
+			true, "coverImageCaption", true, "coverImageFileEntryId", true,
+			"coverImageURL", true, "smallImage", true, "smallImageFileEntryId",
+			true, "smallImageId", true, "smallImageURL", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true, "companyId", true);
 	}
 
 	@Test
@@ -713,8 +713,6 @@ public class BlogsEntryPersistenceTest {
 
 		blogsEntry.setGroupId(RandomTestUtil.nextLong());
 
-		blogsEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		blogsEntry.setUserId(RandomTestUtil.nextLong());
 
 		blogsEntry.setUserName(RandomTestUtil.randomString());
@@ -764,6 +762,8 @@ public class BlogsEntryPersistenceTest {
 		blogsEntry.setStatusByUserName(RandomTestUtil.randomString());
 
 		blogsEntry.setStatusDate(RandomTestUtil.nextDate());
+
+		blogsEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		_blogsEntries.add(_persistence.update(blogsEntry));
 

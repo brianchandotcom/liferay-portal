@@ -73,8 +73,6 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		sb.append(banId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -87,6 +85,8 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		sb.append(banUserId);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -105,7 +105,6 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 		mbBanImpl.setBanId(banId);
 		mbBanImpl.setGroupId(groupId);
-		mbBanImpl.setCompanyId(companyId);
 		mbBanImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -138,6 +137,8 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 			mbBanImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		mbBanImpl.setCompanyId(companyId);
+
 		mbBanImpl.resetOriginalValues();
 
 		return mbBanImpl;
@@ -148,13 +149,13 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		uuid = objectInput.readUTF();
 		banId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		banUserId = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -169,7 +170,6 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 
 		objectOutput.writeLong(banId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -183,16 +183,17 @@ public class MBBanCacheModel implements CacheModel<MBBan>, Externalizable {
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(banUserId);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long banId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public long banUserId;
 	public long lastPublishDate;
+	public long companyId;
 }

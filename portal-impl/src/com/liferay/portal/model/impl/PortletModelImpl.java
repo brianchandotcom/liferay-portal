@@ -66,23 +66,23 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "mvccVersion", Types.BIGINT },
 			{ "id_", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "portletId", Types.VARCHAR },
 			{ "roles", Types.VARCHAR },
-			{ "active_", Types.BOOLEAN }
+			{ "active_", Types.BOOLEAN },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("id_", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("roles", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Portlet (mvccVersion LONG default 0,id_ LONG not null primary key,companyId LONG,portletId VARCHAR(200) null,roles STRING null,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table Portlet (mvccVersion LONG default 0,id_ LONG not null primary key,portletId VARCHAR(200) null,roles STRING null,active_ BOOLEAN,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Portlet";
 	public static final String ORDER_BY_JPQL = " ORDER BY portlet.id ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Portlet.id_ ASC";
@@ -117,10 +117,10 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setId(soapModel.getId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setPortletId(soapModel.getPortletId());
 		model.setRoles(soapModel.getRoles());
 		model.setActive(soapModel.getActive());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -187,10 +187,10 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("id", getId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("roles", getRoles());
 		attributes.put("active", getActive());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -212,12 +212,6 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 			setId(id);
 		}
 
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
-		}
-
 		String portletId = (String)attributes.get("portletId");
 
 		if (portletId != null) {
@@ -234,6 +228,12 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -257,29 +257,6 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	@Override
 	public void setId(long id) {
 		_id = id;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -340,6 +317,29 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		_active = active;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -373,10 +373,10 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 		portletImpl.setMvccVersion(getMvccVersion());
 		portletImpl.setId(getId());
-		portletImpl.setCompanyId(getCompanyId());
 		portletImpl.setPortletId(getPortletId());
 		portletImpl.setRoles(getRoles());
 		portletImpl.setActive(getActive());
+		portletImpl.setCompanyId(getCompanyId());
 
 		portletImpl.resetOriginalValues();
 
@@ -439,11 +439,11 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 	public void resetOriginalValues() {
 		PortletModelImpl portletModelImpl = this;
 
+		portletModelImpl._originalPortletId = portletModelImpl._portletId;
+
 		portletModelImpl._originalCompanyId = portletModelImpl._companyId;
 
 		portletModelImpl._setOriginalCompanyId = false;
-
-		portletModelImpl._originalPortletId = portletModelImpl._portletId;
 
 		portletModelImpl._columnBitmask = 0;
 	}
@@ -455,8 +455,6 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		portletCacheModel.mvccVersion = getMvccVersion();
 
 		portletCacheModel.id = getId();
-
-		portletCacheModel.companyId = getCompanyId();
 
 		portletCacheModel.portletId = getPortletId();
 
@@ -476,6 +474,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 
 		portletCacheModel.active = getActive();
 
+		portletCacheModel.companyId = getCompanyId();
+
 		return portletCacheModel;
 	}
 
@@ -487,14 +487,14 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		sb.append(getMvccVersion());
 		sb.append(", id=");
 		sb.append(getId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", portletId=");
 		sb.append(getPortletId());
 		sb.append(", roles=");
 		sb.append(getRoles());
 		sb.append(", active=");
 		sb.append(getActive());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -517,10 +517,6 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		sb.append(getId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>portletId</column-name><column-value><![CDATA[");
 		sb.append(getPortletId());
 		sb.append("]]></column-value></column>");
@@ -531,6 +527,10 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		sb.append(
 			"<column><column-name>active</column-name><column-value><![CDATA[");
 		sb.append(getActive());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -544,13 +544,13 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		};
 	private long _mvccVersion;
 	private long _id;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private String _portletId;
 	private String _originalPortletId;
 	private String _roles;
 	private boolean _active;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Portlet _escapedModel;
 }

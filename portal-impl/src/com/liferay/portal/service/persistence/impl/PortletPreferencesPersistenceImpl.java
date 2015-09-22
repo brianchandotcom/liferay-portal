@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchPortletPreferencesException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -4471,6 +4472,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		portletPreferences.setNew(true);
 		portletPreferences.setPrimaryKey(portletPreferencesId);
 
+		portletPreferences.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return portletPreferences;
 	}
 
@@ -4774,6 +4777,7 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		portletPreferencesImpl.setPlid(portletPreferences.getPlid());
 		portletPreferencesImpl.setPortletId(portletPreferences.getPortletId());
 		portletPreferencesImpl.setPreferences(portletPreferences.getPreferences());
+		portletPreferencesImpl.setCompanyId(portletPreferences.getCompanyId());
 
 		return portletPreferencesImpl;
 	}
@@ -5152,6 +5156,8 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_PORTLETPREFERENCES = "SELECT portletPreferences FROM PortletPreferences portletPreferences";
 	private static final String _SQL_SELECT_PORTLETPREFERENCES_WHERE_PKS_IN = "SELECT portletPreferences FROM PortletPreferences portletPreferences WHERE portletPreferencesId IN (";
 	private static final String _SQL_SELECT_PORTLETPREFERENCES_WHERE = "SELECT portletPreferences FROM PortletPreferences portletPreferences WHERE ";

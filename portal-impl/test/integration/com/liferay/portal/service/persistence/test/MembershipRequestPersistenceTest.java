@@ -117,8 +117,6 @@ public class MembershipRequestPersistenceTest {
 
 		newMembershipRequest.setGroupId(RandomTestUtil.nextLong());
 
-		newMembershipRequest.setCompanyId(RandomTestUtil.nextLong());
-
 		newMembershipRequest.setUserId(RandomTestUtil.nextLong());
 
 		newMembershipRequest.setCreateDate(RandomTestUtil.nextDate());
@@ -133,6 +131,8 @@ public class MembershipRequestPersistenceTest {
 
 		newMembershipRequest.setStatusId(RandomTestUtil.nextLong());
 
+		newMembershipRequest.setCompanyId(RandomTestUtil.nextLong());
+
 		_membershipRequests.add(_persistence.update(newMembershipRequest));
 
 		MembershipRequest existingMembershipRequest = _persistence.findByPrimaryKey(newMembershipRequest.getPrimaryKey());
@@ -143,8 +143,6 @@ public class MembershipRequestPersistenceTest {
 			newMembershipRequest.getMembershipRequestId());
 		Assert.assertEquals(existingMembershipRequest.getGroupId(),
 			newMembershipRequest.getGroupId());
-		Assert.assertEquals(existingMembershipRequest.getCompanyId(),
-			newMembershipRequest.getCompanyId());
 		Assert.assertEquals(existingMembershipRequest.getUserId(),
 			newMembershipRequest.getUserId());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -161,6 +159,8 @@ public class MembershipRequestPersistenceTest {
 			newMembershipRequest.getReplierUserId());
 		Assert.assertEquals(existingMembershipRequest.getStatusId(),
 			newMembershipRequest.getStatusId());
+		Assert.assertEquals(existingMembershipRequest.getCompanyId(),
+			newMembershipRequest.getCompanyId());
 	}
 
 	@Test
@@ -218,9 +218,9 @@ public class MembershipRequestPersistenceTest {
 	protected OrderByComparator<MembershipRequest> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MembershipRequest",
 			"mvccVersion", true, "membershipRequestId", true, "groupId", true,
-			"companyId", true, "userId", true, "createDate", true, "comments",
-			true, "replyComments", true, "replyDate", true, "replierUserId",
-			true, "statusId", true);
+			"userId", true, "createDate", true, "comments", true,
+			"replyComments", true, "replyDate", true, "replierUserId", true,
+			"statusId", true, "companyId", true);
 	}
 
 	@Test
@@ -429,8 +429,6 @@ public class MembershipRequestPersistenceTest {
 
 		membershipRequest.setGroupId(RandomTestUtil.nextLong());
 
-		membershipRequest.setCompanyId(RandomTestUtil.nextLong());
-
 		membershipRequest.setUserId(RandomTestUtil.nextLong());
 
 		membershipRequest.setCreateDate(RandomTestUtil.nextDate());
@@ -444,6 +442,8 @@ public class MembershipRequestPersistenceTest {
 		membershipRequest.setReplierUserId(RandomTestUtil.nextLong());
 
 		membershipRequest.setStatusId(RandomTestUtil.nextLong());
+
+		membershipRequest.setCompanyId(RandomTestUtil.nextLong());
 
 		_membershipRequests.add(_persistence.update(membershipRequest));
 

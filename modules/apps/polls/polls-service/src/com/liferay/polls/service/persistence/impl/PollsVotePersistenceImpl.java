@@ -22,6 +22,7 @@ import com.liferay.polls.model.impl.PollsVoteImpl;
 import com.liferay.polls.model.impl.PollsVoteModelImpl;
 import com.liferay.polls.service.persistence.PollsVotePersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -41,6 +42,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -2802,6 +2804,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 
 		pollsVote.setUuid(uuid);
 
+		pollsVote.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return pollsVote;
 	}
 
@@ -3051,7 +3055,6 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		pollsVoteImpl.setUuid(pollsVote.getUuid());
 		pollsVoteImpl.setVoteId(pollsVote.getVoteId());
 		pollsVoteImpl.setGroupId(pollsVote.getGroupId());
-		pollsVoteImpl.setCompanyId(pollsVote.getCompanyId());
 		pollsVoteImpl.setUserId(pollsVote.getUserId());
 		pollsVoteImpl.setUserName(pollsVote.getUserName());
 		pollsVoteImpl.setCreateDate(pollsVote.getCreateDate());
@@ -3060,6 +3063,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		pollsVoteImpl.setChoiceId(pollsVote.getChoiceId());
 		pollsVoteImpl.setLastPublishDate(pollsVote.getLastPublishDate());
 		pollsVoteImpl.setVoteDate(pollsVote.getVoteDate());
+		pollsVoteImpl.setCompanyId(pollsVote.getCompanyId());
 
 		return pollsVoteImpl;
 	}
@@ -3439,6 +3443,8 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_POLLSVOTE = "SELECT pollsVote FROM PollsVote pollsVote";
 	private static final String _SQL_SELECT_POLLSVOTE_WHERE_PKS_IN = "SELECT pollsVote FROM PollsVote pollsVote WHERE voteId IN (";
 	private static final String _SQL_SELECT_POLLSVOTE_WHERE = "SELECT pollsVote FROM PollsVote pollsVote WHERE ";

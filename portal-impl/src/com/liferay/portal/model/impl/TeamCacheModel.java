@@ -87,8 +87,6 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		sb.append(uuid);
 		sb.append(", teamId=");
 		sb.append(teamId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -105,6 +103,8 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		sb.append(description);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -124,7 +124,6 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		}
 
 		teamImpl.setTeamId(teamId);
-		teamImpl.setCompanyId(companyId);
 		teamImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -171,6 +170,8 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 			teamImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		teamImpl.setCompanyId(companyId);
+
 		teamImpl.resetOriginalValues();
 
 		return teamImpl;
@@ -181,7 +182,6 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		teamId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -190,6 +190,7 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -205,7 +206,6 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		}
 
 		objectOutput.writeLong(teamId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -234,12 +234,12 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long teamId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -248,4 +248,5 @@ public class TeamCacheModel implements CacheModel<Team>, Externalizable,
 	public String name;
 	public String description;
 	public long lastPublishDate;
+	public long companyId;
 }

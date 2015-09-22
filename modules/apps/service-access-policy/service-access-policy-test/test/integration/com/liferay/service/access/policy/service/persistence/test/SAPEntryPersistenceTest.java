@@ -124,8 +124,6 @@ public class SAPEntryPersistenceTest {
 
 		newSAPEntry.setUuid(RandomTestUtil.randomString());
 
-		newSAPEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		newSAPEntry.setUserId(RandomTestUtil.nextLong());
 
 		newSAPEntry.setUserName(RandomTestUtil.randomString());
@@ -142,6 +140,8 @@ public class SAPEntryPersistenceTest {
 
 		newSAPEntry.setTitle(RandomTestUtil.randomString());
 
+		newSAPEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		_sapEntries.add(_persistence.update(newSAPEntry));
 
 		SAPEntry existingSAPEntry = _persistence.findByPrimaryKey(newSAPEntry.getPrimaryKey());
@@ -149,8 +149,6 @@ public class SAPEntryPersistenceTest {
 		Assert.assertEquals(existingSAPEntry.getUuid(), newSAPEntry.getUuid());
 		Assert.assertEquals(existingSAPEntry.getSapEntryId(),
 			newSAPEntry.getSapEntryId());
-		Assert.assertEquals(existingSAPEntry.getCompanyId(),
-			newSAPEntry.getCompanyId());
 		Assert.assertEquals(existingSAPEntry.getUserId(),
 			newSAPEntry.getUserId());
 		Assert.assertEquals(existingSAPEntry.getUserName(),
@@ -167,6 +165,8 @@ public class SAPEntryPersistenceTest {
 			newSAPEntry.getDefaultSAPEntry());
 		Assert.assertEquals(existingSAPEntry.getName(), newSAPEntry.getName());
 		Assert.assertEquals(existingSAPEntry.getTitle(), newSAPEntry.getTitle());
+		Assert.assertEquals(existingSAPEntry.getCompanyId(),
+			newSAPEntry.getCompanyId());
 	}
 
 	@Test
@@ -227,10 +227,10 @@ public class SAPEntryPersistenceTest {
 
 	protected OrderByComparator<SAPEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SAPEntry", "uuid", true,
-			"sapEntryId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true,
-			"allowedServiceSignatures", true, "defaultSAPEntry", true, "name",
-			true, "title", true);
+			"sapEntryId", true, "userId", true, "userName", true, "createDate",
+			true, "modifiedDate", true, "allowedServiceSignatures", true,
+			"defaultSAPEntry", true, "name", true, "title", true, "companyId",
+			true);
 	}
 
 	@Test
@@ -450,8 +450,6 @@ public class SAPEntryPersistenceTest {
 
 		sapEntry.setUuid(RandomTestUtil.randomString());
 
-		sapEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		sapEntry.setUserId(RandomTestUtil.nextLong());
 
 		sapEntry.setUserName(RandomTestUtil.randomString());
@@ -467,6 +465,8 @@ public class SAPEntryPersistenceTest {
 		sapEntry.setName(RandomTestUtil.randomString());
 
 		sapEntry.setTitle(RandomTestUtil.randomString());
+
+		sapEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		_sapEntries.add(_persistence.update(sapEntry));
 

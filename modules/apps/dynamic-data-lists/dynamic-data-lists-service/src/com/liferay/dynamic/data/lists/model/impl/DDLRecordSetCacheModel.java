@@ -74,8 +74,6 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		sb.append(recordSetId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -98,6 +96,8 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		sb.append(scope);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -116,7 +116,6 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 
 		ddlRecordSetImpl.setRecordSetId(recordSetId);
 		ddlRecordSetImpl.setGroupId(groupId);
-		ddlRecordSetImpl.setCompanyId(companyId);
 		ddlRecordSetImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -173,6 +172,8 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 			ddlRecordSetImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		ddlRecordSetImpl.setCompanyId(companyId);
+
 		ddlRecordSetImpl.resetOriginalValues();
 
 		return ddlRecordSetImpl;
@@ -183,7 +184,6 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		uuid = objectInput.readUTF();
 		recordSetId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -195,6 +195,7 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		minDisplayRows = objectInput.readInt();
 		scope = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -209,7 +210,6 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 
 		objectOutput.writeLong(recordSetId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -247,12 +247,12 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 		objectOutput.writeInt(minDisplayRows);
 		objectOutput.writeInt(scope);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long recordSetId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -264,4 +264,5 @@ public class DDLRecordSetCacheModel implements CacheModel<DDLRecordSet>,
 	public int minDisplayRows;
 	public int scope;
 	public long lastPublishDate;
+	public long companyId;
 }

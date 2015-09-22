@@ -123,8 +123,6 @@ public class AppPersistenceTest {
 
 		newApp.setUuid(RandomTestUtil.randomString());
 
-		newApp.setCompanyId(RandomTestUtil.nextLong());
-
 		newApp.setUserId(RandomTestUtil.nextLong());
 
 		newApp.setUserName(RandomTestUtil.randomString());
@@ -145,13 +143,14 @@ public class AppPersistenceTest {
 
 		newApp.setVersion(RandomTestUtil.randomString());
 
+		newApp.setCompanyId(RandomTestUtil.nextLong());
+
 		_apps.add(_persistence.update(newApp));
 
 		App existingApp = _persistence.findByPrimaryKey(newApp.getPrimaryKey());
 
 		Assert.assertEquals(existingApp.getUuid(), newApp.getUuid());
 		Assert.assertEquals(existingApp.getAppId(), newApp.getAppId());
-		Assert.assertEquals(existingApp.getCompanyId(), newApp.getCompanyId());
 		Assert.assertEquals(existingApp.getUserId(), newApp.getUserId());
 		Assert.assertEquals(existingApp.getUserName(), newApp.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(existingApp.getCreateDate()),
@@ -167,6 +166,7 @@ public class AppPersistenceTest {
 		Assert.assertEquals(existingApp.getCategory(), newApp.getCategory());
 		Assert.assertEquals(existingApp.getIconURL(), newApp.getIconURL());
 		Assert.assertEquals(existingApp.getVersion(), newApp.getVersion());
+		Assert.assertEquals(existingApp.getCompanyId(), newApp.getCompanyId());
 	}
 
 	@Test
@@ -234,10 +234,10 @@ public class AppPersistenceTest {
 
 	protected OrderByComparator<App> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Marketplace_App", "uuid",
-			true, "appId", true, "companyId", true, "userId", true, "userName",
-			true, "createDate", true, "modifiedDate", true, "remoteAppId",
-			true, "title", true, "description", true, "category", true,
-			"iconURL", true, "version", true);
+			true, "appId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "remoteAppId", true,
+			"title", true, "description", true, "category", true, "iconURL",
+			true, "version", true, "companyId", true);
 	}
 
 	@Test
@@ -449,8 +449,6 @@ public class AppPersistenceTest {
 
 		app.setUuid(RandomTestUtil.randomString());
 
-		app.setCompanyId(RandomTestUtil.nextLong());
-
 		app.setUserId(RandomTestUtil.nextLong());
 
 		app.setUserName(RandomTestUtil.randomString());
@@ -470,6 +468,8 @@ public class AppPersistenceTest {
 		app.setIconURL(RandomTestUtil.randomString());
 
 		app.setVersion(RandomTestUtil.randomString());
+
+		app.setCompanyId(RandomTestUtil.nextLong());
 
 		_apps.add(_persistence.update(app));
 

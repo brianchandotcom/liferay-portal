@@ -18,6 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -38,7 +39,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot> {
+public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -72,20 +74,6 @@ public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot>
 	 * @param productScreenshotId the product screenshot ID of this s c product screenshot
 	 */
 	public void setProductScreenshotId(long productScreenshotId);
-
-	/**
-	 * Returns the company ID of this s c product screenshot.
-	 *
-	 * @return the company ID of this s c product screenshot
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this s c product screenshot.
-	 *
-	 * @param companyId the company ID of this s c product screenshot
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the group ID of this s c product screenshot.
@@ -156,6 +144,22 @@ public interface SCProductScreenshotModel extends BaseModel<SCProductScreenshot>
 	 * @param priority the priority of this s c product screenshot
 	 */
 	public void setPriority(int priority);
+
+	/**
+	 * Returns the company ID of this s c product screenshot.
+	 *
+	 * @return the company ID of this s c product screenshot
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this s c product screenshot.
+	 *
+	 * @param companyId the company ID of this s c product screenshot
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

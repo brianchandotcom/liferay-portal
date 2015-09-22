@@ -129,8 +129,6 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setGroupId(RandomTestUtil.nextLong());
 
-		newJournalArticle.setCompanyId(RandomTestUtil.nextLong());
-
 		newJournalArticle.setUserId(RandomTestUtil.nextLong());
 
 		newJournalArticle.setUserName(RandomTestUtil.randomString());
@@ -189,6 +187,8 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setStatusDate(RandomTestUtil.nextDate());
 
+		newJournalArticle.setCompanyId(RandomTestUtil.nextLong());
+
 		_journalArticles.add(_persistence.update(newJournalArticle));
 
 		JournalArticle existingJournalArticle = _persistence.findByPrimaryKey(newJournalArticle.getPrimaryKey());
@@ -201,8 +201,6 @@ public class JournalArticlePersistenceTest {
 			newJournalArticle.getResourcePrimKey());
 		Assert.assertEquals(existingJournalArticle.getGroupId(),
 			newJournalArticle.getGroupId());
-		Assert.assertEquals(existingJournalArticle.getCompanyId(),
-			newJournalArticle.getCompanyId());
 		Assert.assertEquals(existingJournalArticle.getUserId(),
 			newJournalArticle.getUserId());
 		Assert.assertEquals(existingJournalArticle.getUserName(),
@@ -268,6 +266,8 @@ public class JournalArticlePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingJournalArticle.getStatusDate()),
 			Time.getShortTimestamp(newJournalArticle.getStatusDate()));
+		Assert.assertEquals(existingJournalArticle.getCompanyId(),
+			newJournalArticle.getCompanyId());
 	}
 
 	@Test
@@ -312,13 +312,6 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByDDMStructureKey() throws Exception {
 		_persistence.countByDDMStructureKey(StringPool.BLANK);
 
@@ -358,6 +351,13 @@ public class JournalArticlePersistenceTest {
 		_persistence.countBySmallImageId(RandomTestUtil.nextLong());
 
 		_persistence.countBySmallImageId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -458,6 +458,23 @@ public class JournalArticlePersistenceTest {
 	}
 
 	@Test
+	public void testCountByC_DDMTK() throws Exception {
+		_persistence.countByC_DDMTK(RandomTestUtil.nextLong(), StringPool.BLANK);
+
+		_persistence.countByC_DDMTK(0L, StringPool.NULL);
+
+		_persistence.countByC_DDMTK(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByLtD_S() throws Exception {
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
+	}
+
+	@Test
 	public void testCountByC_V() throws Exception {
 		_persistence.countByC_V(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextDouble());
@@ -479,23 +496,6 @@ public class JournalArticlePersistenceTest {
 			RandomTestUtil.nextInt());
 
 		_persistence.countByC_NotST(0L, 0);
-	}
-
-	@Test
-	public void testCountByC_DDMTK() throws Exception {
-		_persistence.countByC_DDMTK(RandomTestUtil.nextLong(), StringPool.BLANK);
-
-		_persistence.countByC_DDMTK(0L, StringPool.NULL);
-
-		_persistence.countByC_DDMTK(0L, (String)null);
-	}
-
-	@Test
-	public void testCountByLtD_S() throws Exception {
-		_persistence.countByLtD_S(RandomTestUtil.nextDate(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByLtD_S(RandomTestUtil.nextDate(), 0);
 	}
 
 	@Test
@@ -659,15 +659,15 @@ public class JournalArticlePersistenceTest {
 	protected OrderByComparator<JournalArticle> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("JournalArticle", "uuid",
 			true, "id", true, "resourcePrimKey", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "folderId", true, "classNameId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "folderId", true, "classNameId", true,
 			"classPK", true, "treePath", true, "articleId", true, "version",
 			true, "title", true, "urlTitle", true, "DDMStructureKey", true,
 			"DDMTemplateKey", true, "layoutUuid", true, "displayDate", true,
 			"expirationDate", true, "reviewDate", true, "indexable", true,
 			"smallImage", true, "smallImageId", true, "smallImageURL", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"statusByUserName", true, "statusDate", true, "companyId", true);
 	}
 
 	@Test
@@ -913,8 +913,6 @@ public class JournalArticlePersistenceTest {
 
 		journalArticle.setGroupId(RandomTestUtil.nextLong());
 
-		journalArticle.setCompanyId(RandomTestUtil.nextLong());
-
 		journalArticle.setUserId(RandomTestUtil.nextLong());
 
 		journalArticle.setUserName(RandomTestUtil.randomString());
@@ -972,6 +970,8 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setStatusByUserName(RandomTestUtil.randomString());
 
 		journalArticle.setStatusDate(RandomTestUtil.nextDate());
+
+		journalArticle.setCompanyId(RandomTestUtil.nextLong());
 
 		_journalArticles.add(_persistence.update(journalArticle));
 

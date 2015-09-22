@@ -35,7 +35,6 @@ public class MicroblogsEntrySoap implements Serializable {
 		MicroblogsEntrySoap soapModel = new MicroblogsEntrySoap();
 
 		soapModel.setMicroblogsEntryId(model.getMicroblogsEntryId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -46,6 +45,7 @@ public class MicroblogsEntrySoap implements Serializable {
 		soapModel.setType(model.getType());
 		soapModel.setParentMicroblogsEntryId(model.getParentMicroblogsEntryId());
 		soapModel.setSocialRelationType(model.getSocialRelationType());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -106,14 +106,6 @@ public class MicroblogsEntrySoap implements Serializable {
 
 	public void setMicroblogsEntryId(long microblogsEntryId) {
 		_microblogsEntryId = microblogsEntryId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -196,8 +188,15 @@ public class MicroblogsEntrySoap implements Serializable {
 		_socialRelationType = socialRelationType;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _microblogsEntryId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -208,4 +207,5 @@ public class MicroblogsEntrySoap implements Serializable {
 	private int _type;
 	private long _parentMicroblogsEntryId;
 	private int _socialRelationType;
+	private long _companyId;
 }

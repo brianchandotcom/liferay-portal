@@ -118,8 +118,6 @@ public class BlogsStatsUserPersistenceTest {
 
 		newBlogsStatsUser.setGroupId(RandomTestUtil.nextLong());
 
-		newBlogsStatsUser.setCompanyId(RandomTestUtil.nextLong());
-
 		newBlogsStatsUser.setUserId(RandomTestUtil.nextLong());
 
 		newBlogsStatsUser.setEntryCount(RandomTestUtil.nextInt());
@@ -132,6 +130,8 @@ public class BlogsStatsUserPersistenceTest {
 
 		newBlogsStatsUser.setRatingsAverageScore(RandomTestUtil.nextDouble());
 
+		newBlogsStatsUser.setCompanyId(RandomTestUtil.nextLong());
+
 		_blogsStatsUsers.add(_persistence.update(newBlogsStatsUser));
 
 		BlogsStatsUser existingBlogsStatsUser = _persistence.findByPrimaryKey(newBlogsStatsUser.getPrimaryKey());
@@ -140,8 +140,6 @@ public class BlogsStatsUserPersistenceTest {
 			newBlogsStatsUser.getStatsUserId());
 		Assert.assertEquals(existingBlogsStatsUser.getGroupId(),
 			newBlogsStatsUser.getGroupId());
-		Assert.assertEquals(existingBlogsStatsUser.getCompanyId(),
-			newBlogsStatsUser.getCompanyId());
 		Assert.assertEquals(existingBlogsStatsUser.getUserId(),
 			newBlogsStatsUser.getUserId());
 		Assert.assertEquals(existingBlogsStatsUser.getEntryCount(),
@@ -155,6 +153,8 @@ public class BlogsStatsUserPersistenceTest {
 			newBlogsStatsUser.getRatingsTotalScore());
 		AssertUtils.assertEquals(existingBlogsStatsUser.getRatingsAverageScore(),
 			newBlogsStatsUser.getRatingsAverageScore());
+		Assert.assertEquals(existingBlogsStatsUser.getCompanyId(),
+			newBlogsStatsUser.getCompanyId());
 	}
 
 	@Test
@@ -188,19 +188,19 @@ public class BlogsStatsUserPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_NotE() throws Exception {
-		_persistence.countByC_NotE(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
-
-		_persistence.countByC_NotE(0L, 0);
-	}
-
-	@Test
 	public void testCountByU_L() throws Exception {
 		_persistence.countByU_L(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextDate());
 
 		_persistence.countByU_L(0L, RandomTestUtil.nextDate());
+	}
+
+	@Test
+	public void testCountByC_NotE() throws Exception {
+		_persistence.countByC_NotE(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByC_NotE(0L, 0);
 	}
 
 	@Test
@@ -227,10 +227,10 @@ public class BlogsStatsUserPersistenceTest {
 
 	protected OrderByComparator<BlogsStatsUser> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("BlogsStatsUser",
-			"statsUserId", true, "groupId", true, "companyId", true, "userId",
-			true, "entryCount", true, "lastPostDate", true,
-			"ratingsTotalEntries", true, "ratingsTotalScore", true,
-			"ratingsAverageScore", true);
+			"statsUserId", true, "groupId", true, "userId", true, "entryCount",
+			true, "lastPostDate", true, "ratingsTotalEntries", true,
+			"ratingsTotalScore", true, "ratingsAverageScore", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -450,8 +450,6 @@ public class BlogsStatsUserPersistenceTest {
 
 		blogsStatsUser.setGroupId(RandomTestUtil.nextLong());
 
-		blogsStatsUser.setCompanyId(RandomTestUtil.nextLong());
-
 		blogsStatsUser.setUserId(RandomTestUtil.nextLong());
 
 		blogsStatsUser.setEntryCount(RandomTestUtil.nextInt());
@@ -463,6 +461,8 @@ public class BlogsStatsUserPersistenceTest {
 		blogsStatsUser.setRatingsTotalScore(RandomTestUtil.nextDouble());
 
 		blogsStatsUser.setRatingsAverageScore(RandomTestUtil.nextDouble());
+
+		blogsStatsUser.setCompanyId(RandomTestUtil.nextLong());
 
 		_blogsStatsUsers.add(_persistence.update(blogsStatsUser));
 

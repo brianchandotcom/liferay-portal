@@ -70,8 +70,6 @@ public class MeetupsRegistrationCacheModel implements CacheModel<MeetupsRegistra
 
 		sb.append("{meetupsRegistrationId=");
 		sb.append(meetupsRegistrationId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -86,6 +84,8 @@ public class MeetupsRegistrationCacheModel implements CacheModel<MeetupsRegistra
 		sb.append(status);
 		sb.append(", comments=");
 		sb.append(comments);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,7 +96,6 @@ public class MeetupsRegistrationCacheModel implements CacheModel<MeetupsRegistra
 		MeetupsRegistrationImpl meetupsRegistrationImpl = new MeetupsRegistrationImpl();
 
 		meetupsRegistrationImpl.setMeetupsRegistrationId(meetupsRegistrationId);
-		meetupsRegistrationImpl.setCompanyId(companyId);
 		meetupsRegistrationImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -130,6 +129,8 @@ public class MeetupsRegistrationCacheModel implements CacheModel<MeetupsRegistra
 			meetupsRegistrationImpl.setComments(comments);
 		}
 
+		meetupsRegistrationImpl.setCompanyId(companyId);
+
 		meetupsRegistrationImpl.resetOriginalValues();
 
 		return meetupsRegistrationImpl;
@@ -138,7 +139,6 @@ public class MeetupsRegistrationCacheModel implements CacheModel<MeetupsRegistra
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		meetupsRegistrationId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -146,13 +146,13 @@ public class MeetupsRegistrationCacheModel implements CacheModel<MeetupsRegistra
 		meetupsEntryId = objectInput.readLong();
 		status = objectInput.readInt();
 		comments = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(meetupsRegistrationId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -173,10 +173,11 @@ public class MeetupsRegistrationCacheModel implements CacheModel<MeetupsRegistra
 		else {
 			objectOutput.writeUTF(comments);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long meetupsRegistrationId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -184,4 +185,5 @@ public class MeetupsRegistrationCacheModel implements CacheModel<MeetupsRegistra
 	public long meetupsEntryId;
 	public int status;
 	public String comments;
+	public long companyId;
 }

@@ -58,7 +58,6 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		attributes.put("uuid", getUuid());
 		attributes.put("layoutFriendlyURLId", getLayoutFriendlyURLId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -68,6 +67,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -96,12 +96,6 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -156,6 +150,12 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

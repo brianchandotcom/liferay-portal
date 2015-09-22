@@ -20,10 +20,13 @@ import com.liferay.polls.lar.PollsPortletDataHandler;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.util.test.PollsTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 
@@ -34,9 +37,11 @@ import org.junit.runner.RunWith;
 public class PollsPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
+	@ClassRule
 	@Rule
-	public final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), CompanyProviderTestRule.INSTANCE);
 
 	@Override
 	protected void addStagedModels() throws Exception {

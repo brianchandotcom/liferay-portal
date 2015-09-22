@@ -74,7 +74,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "entryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -82,14 +81,14 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 			{ "classPK", Types.BIGINT },
 			{ "systemEventSetKey", Types.BIGINT },
 			{ "typeSettings", Types.CLOB },
-			{ "status", Types.INTEGER }
+			{ "status", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -98,9 +97,10 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		TABLE_COLUMNS_MAP.put("systemEventSetKey", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table TrashEntry (entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table TrashEntry (entryId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classNameId LONG,classPK LONG,systemEventSetKey LONG,typeSettings TEXT null,status INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table TrashEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY trashEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY TrashEntry.createDate DESC";
@@ -137,7 +137,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 		model.setEntryId(soapModel.getEntryId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -146,6 +145,7 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		model.setSystemEventSetKey(soapModel.getSystemEventSetKey());
 		model.setTypeSettings(soapModel.getTypeSettings());
 		model.setStatus(soapModel.getStatus());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -212,7 +212,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 		attributes.put("entryId", getEntryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -221,6 +220,7 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		attributes.put("systemEventSetKey", getSystemEventSetKey());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("status", getStatus());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -240,12 +240,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -295,6 +289,12 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		if (status != null) {
 			setStatus(status);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -329,29 +329,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -522,6 +499,29 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		_status = status;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -555,7 +555,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 		trashEntryImpl.setEntryId(getEntryId());
 		trashEntryImpl.setGroupId(getGroupId());
-		trashEntryImpl.setCompanyId(getCompanyId());
 		trashEntryImpl.setUserId(getUserId());
 		trashEntryImpl.setUserName(getUserName());
 		trashEntryImpl.setCreateDate(getCreateDate());
@@ -564,6 +563,7 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		trashEntryImpl.setSystemEventSetKey(getSystemEventSetKey());
 		trashEntryImpl.setTypeSettings(getTypeSettings());
 		trashEntryImpl.setStatus(getStatus());
+		trashEntryImpl.setCompanyId(getCompanyId());
 
 		trashEntryImpl.resetOriginalValues();
 
@@ -630,10 +630,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 		trashEntryModelImpl._setOriginalGroupId = false;
 
-		trashEntryModelImpl._originalCompanyId = trashEntryModelImpl._companyId;
-
-		trashEntryModelImpl._setOriginalCompanyId = false;
-
 		trashEntryModelImpl._originalCreateDate = trashEntryModelImpl._createDate;
 
 		trashEntryModelImpl._originalClassNameId = trashEntryModelImpl._classNameId;
@@ -643,6 +639,10 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		trashEntryModelImpl._originalClassPK = trashEntryModelImpl._classPK;
 
 		trashEntryModelImpl._setOriginalClassPK = false;
+
+		trashEntryModelImpl._originalCompanyId = trashEntryModelImpl._companyId;
+
+		trashEntryModelImpl._setOriginalCompanyId = false;
 
 		trashEntryModelImpl._columnBitmask = 0;
 	}
@@ -654,8 +654,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		trashEntryCacheModel.entryId = getEntryId();
 
 		trashEntryCacheModel.groupId = getGroupId();
-
-		trashEntryCacheModel.companyId = getCompanyId();
 
 		trashEntryCacheModel.userId = getUserId();
 
@@ -692,6 +690,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 
 		trashEntryCacheModel.status = getStatus();
 
+		trashEntryCacheModel.companyId = getCompanyId();
+
 		return trashEntryCacheModel;
 	}
 
@@ -703,8 +703,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		sb.append(getEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -721,6 +719,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		sb.append(getTypeSettings());
 		sb.append(", status=");
 		sb.append(getStatus());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -741,10 +741,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -778,6 +774,10 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -792,9 +792,6 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -808,6 +805,9 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 	private long _systemEventSetKey;
 	private String _typeSettings;
 	private int _status;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private TrashEntry _escapedModel;
 }

@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface WorkflowInstanceLinkModel extends AttachedModel,
-	BaseModel<WorkflowInstanceLink>, GroupedModel, MVCCModel {
+	BaseModel<WorkflowInstanceLink>, GroupedModel, MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -106,22 +106,6 @@ public interface WorkflowInstanceLinkModel extends AttachedModel,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this workflow instance link.
-	 *
-	 * @return the company ID of this workflow instance link
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this workflow instance link.
-	 *
-	 * @param companyId the company ID of this workflow instance link
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this workflow instance link.
@@ -259,6 +243,22 @@ public interface WorkflowInstanceLinkModel extends AttachedModel,
 	 * @param workflowInstanceId the workflow instance ID of this workflow instance link
 	 */
 	public void setWorkflowInstanceId(long workflowInstanceId);
+
+	/**
+	 * Returns the company ID of this workflow instance link.
+	 *
+	 * @return the company ID of this workflow instance link
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this workflow instance link.
+	 *
+	 * @param companyId the company ID of this workflow instance link
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

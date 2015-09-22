@@ -71,8 +71,6 @@ public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition>,
 		sb.append(kaleoDefinitionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -95,6 +93,8 @@ public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition>,
 		sb.append(active);
 		sb.append(", startKaleoNodeId=");
 		sb.append(startKaleoNodeId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -106,7 +106,6 @@ public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition>,
 
 		kaleoDefinitionImpl.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoDefinitionImpl.setGroupId(groupId);
-		kaleoDefinitionImpl.setCompanyId(companyId);
 		kaleoDefinitionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -161,6 +160,7 @@ public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition>,
 		kaleoDefinitionImpl.setVersion(version);
 		kaleoDefinitionImpl.setActive(active);
 		kaleoDefinitionImpl.setStartKaleoNodeId(startKaleoNodeId);
+		kaleoDefinitionImpl.setCompanyId(companyId);
 
 		kaleoDefinitionImpl.resetOriginalValues();
 
@@ -171,7 +171,6 @@ public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoDefinitionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -183,6 +182,7 @@ public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition>,
 		version = objectInput.readInt();
 		active = objectInput.readBoolean();
 		startKaleoNodeId = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -190,7 +190,6 @@ public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition>,
 		throws IOException {
 		objectOutput.writeLong(kaleoDefinitionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -234,11 +233,11 @@ public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition>,
 		objectOutput.writeInt(version);
 		objectOutput.writeBoolean(active);
 		objectOutput.writeLong(startKaleoNodeId);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoDefinitionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -250,4 +249,5 @@ public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition>,
 	public int version;
 	public boolean active;
 	public long startKaleoNodeId;
+	public long companyId;
 }

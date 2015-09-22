@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchMembershipRequestException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2217,6 +2218,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		membershipRequest.setNew(true);
 		membershipRequest.setPrimaryKey(membershipRequestId);
 
+		membershipRequest.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return membershipRequest;
 	}
 
@@ -2443,7 +2446,6 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		membershipRequestImpl.setMvccVersion(membershipRequest.getMvccVersion());
 		membershipRequestImpl.setMembershipRequestId(membershipRequest.getMembershipRequestId());
 		membershipRequestImpl.setGroupId(membershipRequest.getGroupId());
-		membershipRequestImpl.setCompanyId(membershipRequest.getCompanyId());
 		membershipRequestImpl.setUserId(membershipRequest.getUserId());
 		membershipRequestImpl.setCreateDate(membershipRequest.getCreateDate());
 		membershipRequestImpl.setComments(membershipRequest.getComments());
@@ -2451,6 +2453,7 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		membershipRequestImpl.setReplyDate(membershipRequest.getReplyDate());
 		membershipRequestImpl.setReplierUserId(membershipRequest.getReplierUserId());
 		membershipRequestImpl.setStatusId(membershipRequest.getStatusId());
+		membershipRequestImpl.setCompanyId(membershipRequest.getCompanyId());
 
 		return membershipRequestImpl;
 	}
@@ -2828,6 +2831,8 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MEMBERSHIPREQUEST = "SELECT membershipRequest FROM MembershipRequest membershipRequest";
 	private static final String _SQL_SELECT_MEMBERSHIPREQUEST_WHERE_PKS_IN = "SELECT membershipRequest FROM MembershipRequest membershipRequest WHERE membershipRequestId IN (";
 	private static final String _SQL_SELECT_MEMBERSHIPREQUEST_WHERE = "SELECT membershipRequest FROM MembershipRequest membershipRequest WHERE ";

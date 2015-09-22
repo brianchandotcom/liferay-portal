@@ -289,6 +289,37 @@ public class JournalArticleResourceLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the journal article resources matching the UUID and company.
+	*
+	* @param uuid the UUID of the journal article resources
+	* @param companyId the primary key of the company
+	* @return the matching journal article resources, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.journal.model.JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getJournalArticleResourcesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of journal article resources matching the UUID and company.
+	*
+	* @param uuid the UUID of the journal article resources
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of journal article resources
+	* @param end the upper bound of the range of journal article resources (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching journal article resources, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.journal.model.JournalArticleResource> getJournalArticleResourcesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalArticleResource> orderByComparator) {
+		return getService()
+				   .getJournalArticleResourcesByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of journal article resources.
 	*
 	* @return the number of journal article resources

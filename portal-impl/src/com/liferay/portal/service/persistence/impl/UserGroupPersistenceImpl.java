@@ -4119,6 +4119,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 		userGroup.setUuid(uuid);
 
+		userGroup.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return userGroup;
 	}
 
@@ -4379,7 +4381,6 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		userGroupImpl.setMvccVersion(userGroup.getMvccVersion());
 		userGroupImpl.setUuid(userGroup.getUuid());
 		userGroupImpl.setUserGroupId(userGroup.getUserGroupId());
-		userGroupImpl.setCompanyId(userGroup.getCompanyId());
 		userGroupImpl.setUserId(userGroup.getUserId());
 		userGroupImpl.setUserName(userGroup.getUserName());
 		userGroupImpl.setCreateDate(userGroup.getCreateDate());
@@ -4389,6 +4390,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		userGroupImpl.setDescription(userGroup.getDescription());
 		userGroupImpl.setAddedByLDAPImport(userGroup.isAddedByLDAPImport());
 		userGroupImpl.setLastPublishDate(userGroup.getLastPublishDate());
+		userGroupImpl.setCompanyId(userGroup.getCompanyId());
 
 		return userGroupImpl;
 	}
@@ -5549,13 +5551,16 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	public void afterPropertiesSet() {
 		userGroupToGroupTableMapper = TableMapperFactory.getTableMapper("Groups_UserGroups",
-				"userGroupId", "groupId", this, groupPersistence);
+				"userGroupId", "groupId", this, groupPersistence,
+				companyProviderHolder);
 
 		userGroupToTeamTableMapper = TableMapperFactory.getTableMapper("UserGroups_Teams",
-				"userGroupId", "teamId", this, teamPersistence);
+				"userGroupId", "teamId", this, teamPersistence,
+				companyProviderHolder);
 
 		userGroupToUserTableMapper = TableMapperFactory.getTableMapper("Users_UserGroups",
-				"userGroupId", "userId", this, userPersistence);
+				"userGroupId", "userId", this, userPersistence,
+				companyProviderHolder);
 	}
 
 	public void destroy() {
@@ -5578,6 +5583,8 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	protected TableMapper<UserGroup, com.liferay.portal.model.User> userGroupToUserTableMapper;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_USERGROUP = "SELECT userGroup FROM UserGroup userGroup";
 	private static final String _SQL_SELECT_USERGROUP_WHERE_PKS_IN = "SELECT userGroup FROM UserGroup userGroup WHERE userGroupId IN (";
 	private static final String _SQL_SELECT_USERGROUP_WHERE = "SELECT userGroup FROM UserGroup userGroup WHERE ";

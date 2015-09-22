@@ -39,6 +39,7 @@ public class SCLicenseSoap implements Serializable {
 		soapModel.setOpenSource(model.getOpenSource());
 		soapModel.setActive(model.getActive());
 		soapModel.setRecommended(model.getRecommended());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -151,10 +152,19 @@ public class SCLicenseSoap implements Serializable {
 		_recommended = recommended;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _licenseId;
 	private String _name;
 	private String _url;
 	private boolean _openSource;
 	private boolean _active;
 	private boolean _recommended;
+	private long _companyId;
 }

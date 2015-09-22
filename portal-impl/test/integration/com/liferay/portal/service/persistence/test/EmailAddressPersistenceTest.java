@@ -118,8 +118,6 @@ public class EmailAddressPersistenceTest {
 
 		newEmailAddress.setUuid(RandomTestUtil.randomString());
 
-		newEmailAddress.setCompanyId(RandomTestUtil.nextLong());
-
 		newEmailAddress.setUserId(RandomTestUtil.nextLong());
 
 		newEmailAddress.setUserName(RandomTestUtil.randomString());
@@ -140,6 +138,8 @@ public class EmailAddressPersistenceTest {
 
 		newEmailAddress.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newEmailAddress.setCompanyId(RandomTestUtil.nextLong());
+
 		_emailAddresses.add(_persistence.update(newEmailAddress));
 
 		EmailAddress existingEmailAddress = _persistence.findByPrimaryKey(newEmailAddress.getPrimaryKey());
@@ -150,8 +150,6 @@ public class EmailAddressPersistenceTest {
 			newEmailAddress.getUuid());
 		Assert.assertEquals(existingEmailAddress.getEmailAddressId(),
 			newEmailAddress.getEmailAddressId());
-		Assert.assertEquals(existingEmailAddress.getCompanyId(),
-			newEmailAddress.getCompanyId());
 		Assert.assertEquals(existingEmailAddress.getUserId(),
 			newEmailAddress.getUserId());
 		Assert.assertEquals(existingEmailAddress.getUserName(),
@@ -175,6 +173,8 @@ public class EmailAddressPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingEmailAddress.getLastPublishDate()),
 			Time.getShortTimestamp(newEmailAddress.getLastPublishDate()));
+		Assert.assertEquals(existingEmailAddress.getCompanyId(),
+			newEmailAddress.getCompanyId());
 	}
 
 	@Test
@@ -196,17 +196,17 @@ public class EmailAddressPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByUserId() throws Exception {
 		_persistence.countByUserId(RandomTestUtil.nextLong());
 
 		_persistence.countByUserId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -259,10 +259,10 @@ public class EmailAddressPersistenceTest {
 	protected OrderByComparator<EmailAddress> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("EmailAddress",
 			"mvccVersion", true, "uuid", true, "emailAddressId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "classPK", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
 			"address", true, "typeId", true, "primary", true,
-			"lastPublishDate", true);
+			"lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -470,8 +470,6 @@ public class EmailAddressPersistenceTest {
 
 		emailAddress.setUuid(RandomTestUtil.randomString());
 
-		emailAddress.setCompanyId(RandomTestUtil.nextLong());
-
 		emailAddress.setUserId(RandomTestUtil.nextLong());
 
 		emailAddress.setUserName(RandomTestUtil.randomString());
@@ -491,6 +489,8 @@ public class EmailAddressPersistenceTest {
 		emailAddress.setPrimary(RandomTestUtil.randomBoolean());
 
 		emailAddress.setLastPublishDate(RandomTestUtil.nextDate());
+
+		emailAddress.setCompanyId(RandomTestUtil.nextLong());
 
 		_emailAddresses.add(_persistence.update(emailAddress));
 

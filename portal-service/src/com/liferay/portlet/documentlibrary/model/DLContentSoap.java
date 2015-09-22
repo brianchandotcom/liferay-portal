@@ -36,12 +36,12 @@ public class DLContentSoap implements Serializable {
 
 		soapModel.setContentId(model.getContentId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setRepositoryId(model.getRepositoryId());
 		soapModel.setPath(model.getPath());
 		soapModel.setVersion(model.getVersion());
 		soapModel.setData(model.getData());
 		soapModel.setSize(model.getSize());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -110,14 +110,6 @@ public class DLContentSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -158,12 +150,20 @@ public class DLContentSoap implements Serializable {
 		_size = size;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _contentId;
 	private long _groupId;
-	private long _companyId;
 	private long _repositoryId;
 	private String _path;
 	private String _version;
 	private Blob _data;
 	private long _size;
+	private long _companyId;
 }

@@ -57,7 +57,6 @@ public class OrganizationWrapper implements Organization,
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("organizationId", getOrganizationId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -73,6 +72,7 @@ public class OrganizationWrapper implements Organization,
 		attributes.put("comments", getComments());
 		attributes.put("logoId", getLogoId());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -95,12 +95,6 @@ public class OrganizationWrapper implements Organization,
 
 		if (organizationId != null) {
 			setOrganizationId(organizationId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -191,6 +185,12 @@ public class OrganizationWrapper implements Organization,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

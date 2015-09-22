@@ -71,7 +71,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 			{ "properties", Types.VARCHAR },
 			{ "price", Types.DOUBLE },
 			{ "quantity", Types.INTEGER },
-			{ "shippedDate", Types.TIMESTAMP }
+			{ "shippedDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -86,9 +87,10 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("shippedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ShoppingOrderItem (orderItemId LONG not null primary key,orderId LONG,itemId TEXT null,sku VARCHAR(75) null,name VARCHAR(200) null,description STRING null,properties STRING null,price DOUBLE,quantity INTEGER,shippedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table ShoppingOrderItem (orderItemId LONG not null primary key,orderId LONG,itemId TEXT null,sku VARCHAR(75) null,name VARCHAR(200) null,description STRING null,properties STRING null,price DOUBLE,quantity INTEGER,shippedDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ShoppingOrderItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY shoppingOrderItem.name ASC, shoppingOrderItem.description ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY ShoppingOrderItem.name ASC, ShoppingOrderItem.description ASC";
@@ -157,6 +159,7 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		attributes.put("price", getPrice());
 		attributes.put("quantity", getQuantity());
 		attributes.put("shippedDate", getShippedDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -224,6 +227,12 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 		if (shippedDate != null) {
 			setShippedDate(shippedDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -368,13 +377,23 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		_shippedDate = shippedDate;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			ShoppingOrderItem.class.getName(), getPrimaryKey());
 	}
 
@@ -409,6 +428,7 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		shoppingOrderItemImpl.setPrice(getPrice());
 		shoppingOrderItemImpl.setQuantity(getQuantity());
 		shoppingOrderItemImpl.setShippedDate(getShippedDate());
+		shoppingOrderItemImpl.setCompanyId(getCompanyId());
 
 		shoppingOrderItemImpl.resetOriginalValues();
 
@@ -543,12 +563,14 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 			shoppingOrderItemCacheModel.shippedDate = Long.MIN_VALUE;
 		}
 
+		shoppingOrderItemCacheModel.companyId = getCompanyId();
+
 		return shoppingOrderItemCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{orderItemId=");
 		sb.append(getOrderItemId());
@@ -570,6 +592,8 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 		sb.append(getQuantity());
 		sb.append(", shippedDate=");
 		sb.append(getShippedDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -577,7 +601,7 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.shopping.model.ShoppingOrderItem");
@@ -623,6 +647,10 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 			"<column><column-name>shippedDate</column-name><column-value><![CDATA[");
 		sb.append(getShippedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -645,6 +673,7 @@ public class ShoppingOrderItemModelImpl extends BaseModelImpl<ShoppingOrderItem>
 	private double _price;
 	private int _quantity;
 	private Date _shippedDate;
+	private long _companyId;
 	private long _columnBitmask;
 	private ShoppingOrderItem _escapedModel;
 }

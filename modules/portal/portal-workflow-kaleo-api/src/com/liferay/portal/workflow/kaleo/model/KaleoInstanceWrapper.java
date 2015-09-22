@@ -55,7 +55,6 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 
 		attributes.put("kaleoInstanceId", getKaleoInstanceId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -69,6 +68,7 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 		attributes.put("completed", getCompleted());
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("workflowContext", getWorkflowContext());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -85,12 +85,6 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -172,6 +166,12 @@ public class KaleoInstanceWrapper implements KaleoInstance,
 
 		if (workflowContext != null) {
 			setWorkflowContext(workflowContext);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

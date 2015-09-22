@@ -71,8 +71,6 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 		sb.append(kaleoNodeId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -95,6 +93,8 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 		sb.append(initial);
 		sb.append(", terminal=");
 		sb.append(terminal);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -106,7 +106,6 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 
 		kaleoNodeImpl.setKaleoNodeId(kaleoNodeId);
 		kaleoNodeImpl.setGroupId(groupId);
-		kaleoNodeImpl.setCompanyId(companyId);
 		kaleoNodeImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -162,6 +161,7 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 
 		kaleoNodeImpl.setInitial(initial);
 		kaleoNodeImpl.setTerminal(terminal);
+		kaleoNodeImpl.setCompanyId(companyId);
 
 		kaleoNodeImpl.resetOriginalValues();
 
@@ -172,7 +172,6 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoNodeId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -184,6 +183,7 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 		type = objectInput.readUTF();
 		initial = objectInput.readBoolean();
 		terminal = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -191,7 +191,6 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 		throws IOException {
 		objectOutput.writeLong(kaleoNodeId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -235,11 +234,11 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 
 		objectOutput.writeBoolean(initial);
 		objectOutput.writeBoolean(terminal);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoNodeId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -251,4 +250,5 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode>,
 	public String type;
 	public boolean initial;
 	public boolean terminal;
+	public long companyId;
 }

@@ -57,7 +57,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		attributes.put("uuid", getUuid());
 		attributes.put("threadId", getThreadId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -76,6 +75,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -98,12 +98,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -212,6 +206,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

@@ -122,8 +122,6 @@ public class RepositoryPersistenceTest {
 
 		newRepository.setGroupId(RandomTestUtil.nextLong());
 
-		newRepository.setCompanyId(RandomTestUtil.nextLong());
-
 		newRepository.setUserId(RandomTestUtil.nextLong());
 
 		newRepository.setUserName(RandomTestUtil.randomString());
@@ -146,6 +144,8 @@ public class RepositoryPersistenceTest {
 
 		newRepository.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newRepository.setCompanyId(RandomTestUtil.nextLong());
+
 		_repositories.add(_persistence.update(newRepository));
 
 		Repository existingRepository = _persistence.findByPrimaryKey(newRepository.getPrimaryKey());
@@ -158,8 +158,6 @@ public class RepositoryPersistenceTest {
 			newRepository.getRepositoryId());
 		Assert.assertEquals(existingRepository.getGroupId(),
 			newRepository.getGroupId());
-		Assert.assertEquals(existingRepository.getCompanyId(),
-			newRepository.getCompanyId());
 		Assert.assertEquals(existingRepository.getUserId(),
 			newRepository.getUserId());
 		Assert.assertEquals(existingRepository.getUserName(),
@@ -185,6 +183,8 @@ public class RepositoryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingRepository.getLastPublishDate()),
 			Time.getShortTimestamp(newRepository.getLastPublishDate()));
+		Assert.assertEquals(existingRepository.getCompanyId(),
+			newRepository.getCompanyId());
 	}
 
 	@Test
@@ -256,10 +256,10 @@ public class RepositoryPersistenceTest {
 	protected OrderByComparator<Repository> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Repository", "mvccVersion",
 			true, "uuid", true, "repositoryId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "classNameId", true, "name", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "name", true,
 			"description", true, "portletId", true, "dlFolderId", true,
-			"lastPublishDate", true);
+			"lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -495,8 +495,6 @@ public class RepositoryPersistenceTest {
 
 		repository.setGroupId(RandomTestUtil.nextLong());
 
-		repository.setCompanyId(RandomTestUtil.nextLong());
-
 		repository.setUserId(RandomTestUtil.nextLong());
 
 		repository.setUserName(RandomTestUtil.randomString());
@@ -518,6 +516,8 @@ public class RepositoryPersistenceTest {
 		repository.setDlFolderId(RandomTestUtil.nextLong());
 
 		repository.setLastPublishDate(RandomTestUtil.nextDate());
+
+		repository.setCompanyId(RandomTestUtil.nextLong());
 
 		_repositories.add(_persistence.update(repository));
 

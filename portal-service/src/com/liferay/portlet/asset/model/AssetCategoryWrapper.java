@@ -58,7 +58,6 @@ public class AssetCategoryWrapper implements AssetCategory,
 		attributes.put("uuid", getUuid());
 		attributes.put("categoryId", getCategoryId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -71,6 +70,7 @@ public class AssetCategoryWrapper implements AssetCategory,
 		attributes.put("description", getDescription());
 		attributes.put("vocabularyId", getVocabularyId());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -93,12 +93,6 @@ public class AssetCategoryWrapper implements AssetCategory,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -171,6 +165,12 @@ public class AssetCategoryWrapper implements AssetCategory,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

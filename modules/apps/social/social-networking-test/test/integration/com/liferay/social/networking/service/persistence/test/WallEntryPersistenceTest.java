@@ -121,8 +121,6 @@ public class WallEntryPersistenceTest {
 
 		newWallEntry.setGroupId(RandomTestUtil.nextLong());
 
-		newWallEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		newWallEntry.setUserId(RandomTestUtil.nextLong());
 
 		newWallEntry.setUserName(RandomTestUtil.randomString());
@@ -133,6 +131,8 @@ public class WallEntryPersistenceTest {
 
 		newWallEntry.setComments(RandomTestUtil.randomString());
 
+		newWallEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		_wallEntries.add(_persistence.update(newWallEntry));
 
 		WallEntry existingWallEntry = _persistence.findByPrimaryKey(newWallEntry.getPrimaryKey());
@@ -141,8 +141,6 @@ public class WallEntryPersistenceTest {
 			newWallEntry.getWallEntryId());
 		Assert.assertEquals(existingWallEntry.getGroupId(),
 			newWallEntry.getGroupId());
-		Assert.assertEquals(existingWallEntry.getCompanyId(),
-			newWallEntry.getCompanyId());
 		Assert.assertEquals(existingWallEntry.getUserId(),
 			newWallEntry.getUserId());
 		Assert.assertEquals(existingWallEntry.getUserName(),
@@ -155,6 +153,8 @@ public class WallEntryPersistenceTest {
 			Time.getShortTimestamp(newWallEntry.getModifiedDate()));
 		Assert.assertEquals(existingWallEntry.getComments(),
 			newWallEntry.getComments());
+		Assert.assertEquals(existingWallEntry.getCompanyId(),
+			newWallEntry.getCompanyId());
 	}
 
 	@Test
@@ -203,9 +203,9 @@ public class WallEntryPersistenceTest {
 
 	protected OrderByComparator<WallEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WallEntry", "wallEntryId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"comments", true);
+			true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "comments", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -409,8 +409,6 @@ public class WallEntryPersistenceTest {
 
 		wallEntry.setGroupId(RandomTestUtil.nextLong());
 
-		wallEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		wallEntry.setUserId(RandomTestUtil.nextLong());
 
 		wallEntry.setUserName(RandomTestUtil.randomString());
@@ -420,6 +418,8 @@ public class WallEntryPersistenceTest {
 		wallEntry.setModifiedDate(RandomTestUtil.nextDate());
 
 		wallEntry.setComments(RandomTestUtil.randomString());
+
+		wallEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		_wallEntries.add(_persistence.update(wallEntry));
 

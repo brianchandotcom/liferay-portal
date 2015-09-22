@@ -83,7 +83,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			{ "uuid_", Types.VARCHAR },
 			{ "folderId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -102,7 +101,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -110,7 +110,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("folderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -130,9 +129,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(255) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DLFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFolder.parentFolderId ASC, dlFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFolder.parentFolderId ASC, DLFolder.name ASC";
@@ -175,7 +175,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		model.setUuid(soapModel.getUuid());
 		model.setFolderId(soapModel.getFolderId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -195,6 +194,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -222,11 +222,12 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	public static final String MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_NAME = "DLFileEntryTypes_DLFolders";
 	public static final Object[][] MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_COLUMNS =
 		{
+			{ "companyId", Types.BIGINT },
 			{ "fileEntryTypeId", Types.BIGINT },
 			{ "folderId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_DLFILEENTRYTYPES_DLFOLDERS_SQL_CREATE =
-		"create table DLFileEntryTypes_DLFolders (fileEntryTypeId LONG not null,folderId LONG not null,primary key (fileEntryTypeId, folderId))";
+		"create table DLFileEntryTypes_DLFolders (companyId LONG not null,fileEntryTypeId LONG not null,folderId LONG not null,primary key (companyId, fileEntryTypeId, folderId))";
 	public static final boolean FINDER_CACHE_ENABLED_DLFILEENTRYTYPES_DLFOLDERS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.DLFileEntryTypes_DLFolders"),
 			true);
@@ -273,7 +274,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		attributes.put("uuid", getUuid());
 		attributes.put("folderId", getFolderId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -293,6 +293,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -318,12 +319,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -440,6 +435,12 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -510,29 +511,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -887,6 +865,29 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_statusDate = statusDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public long getContainerModelId() {
 		return getFolderId();
@@ -1167,7 +1168,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		dlFolderImpl.setUuid(getUuid());
 		dlFolderImpl.setFolderId(getFolderId());
 		dlFolderImpl.setGroupId(getGroupId());
-		dlFolderImpl.setCompanyId(getCompanyId());
 		dlFolderImpl.setUserId(getUserId());
 		dlFolderImpl.setUserName(getUserName());
 		dlFolderImpl.setCreateDate(getCreateDate());
@@ -1187,6 +1187,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		dlFolderImpl.setStatusByUserId(getStatusByUserId());
 		dlFolderImpl.setStatusByUserName(getStatusByUserName());
 		dlFolderImpl.setStatusDate(getStatusDate());
+		dlFolderImpl.setCompanyId(getCompanyId());
 
 		dlFolderImpl.resetOriginalValues();
 
@@ -1271,10 +1272,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderModelImpl._setOriginalGroupId = false;
 
-		dlFolderModelImpl._originalCompanyId = dlFolderModelImpl._companyId;
-
-		dlFolderModelImpl._setOriginalCompanyId = false;
-
 		dlFolderModelImpl._setModifiedDate = false;
 
 		dlFolderModelImpl._originalRepositoryId = dlFolderModelImpl._repositoryId;
@@ -1299,6 +1296,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderModelImpl._setOriginalStatus = false;
 
+		dlFolderModelImpl._originalCompanyId = dlFolderModelImpl._companyId;
+
+		dlFolderModelImpl._setOriginalCompanyId = false;
+
 		dlFolderModelImpl._columnBitmask = 0;
 	}
 
@@ -1317,8 +1318,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		dlFolderCacheModel.folderId = getFolderId();
 
 		dlFolderCacheModel.groupId = getGroupId();
-
-		dlFolderCacheModel.companyId = getCompanyId();
 
 		dlFolderCacheModel.userId = getUserId();
 
@@ -1423,6 +1422,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			dlFolderCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		dlFolderCacheModel.companyId = getCompanyId();
+
 		return dlFolderCacheModel;
 	}
 
@@ -1436,8 +1437,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(getFolderId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1476,6 +1475,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1500,10 +1501,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1581,6 +1578,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1599,9 +1600,6 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1633,6 +1631,9 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private DLFolder _escapedModel;
 }

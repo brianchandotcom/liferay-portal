@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -48,7 +49,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface BlogsEntryModel extends BaseModel<BlogsEntry>,
-	StagedGroupedModel, TrashedModel, WorkflowedModel {
+	PartitionableModel, StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -115,22 +116,6 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this blogs entry.
-	 *
-	 * @return the company ID of this blogs entry
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this blogs entry.
-	 *
-	 * @param companyId the company ID of this blogs entry
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this blogs entry.
@@ -563,6 +548,22 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>,
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the company ID of this blogs entry.
+	 *
+	 * @return the company ID of this blogs entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this blogs entry.
+	 *
+	 * @param companyId the company ID of this blogs entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the trash entry created when this blogs entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this blogs entry.

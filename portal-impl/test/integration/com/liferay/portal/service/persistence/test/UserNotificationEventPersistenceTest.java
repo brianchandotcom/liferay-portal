@@ -117,8 +117,6 @@ public class UserNotificationEventPersistenceTest {
 
 		newUserNotificationEvent.setUuid(RandomTestUtil.randomString());
 
-		newUserNotificationEvent.setCompanyId(RandomTestUtil.nextLong());
-
 		newUserNotificationEvent.setUserId(RandomTestUtil.nextLong());
 
 		newUserNotificationEvent.setType(RandomTestUtil.randomString());
@@ -137,6 +135,8 @@ public class UserNotificationEventPersistenceTest {
 
 		newUserNotificationEvent.setArchived(RandomTestUtil.randomBoolean());
 
+		newUserNotificationEvent.setCompanyId(RandomTestUtil.nextLong());
+
 		_userNotificationEvents.add(_persistence.update(
 				newUserNotificationEvent));
 
@@ -148,8 +148,6 @@ public class UserNotificationEventPersistenceTest {
 			newUserNotificationEvent.getUuid());
 		Assert.assertEquals(existingUserNotificationEvent.getUserNotificationEventId(),
 			newUserNotificationEvent.getUserNotificationEventId());
-		Assert.assertEquals(existingUserNotificationEvent.getCompanyId(),
-			newUserNotificationEvent.getCompanyId());
 		Assert.assertEquals(existingUserNotificationEvent.getUserId(),
 			newUserNotificationEvent.getUserId());
 		Assert.assertEquals(existingUserNotificationEvent.getType(),
@@ -168,6 +166,8 @@ public class UserNotificationEventPersistenceTest {
 			newUserNotificationEvent.getActionRequired());
 		Assert.assertEquals(existingUserNotificationEvent.getArchived(),
 			newUserNotificationEvent.getArchived());
+		Assert.assertEquals(existingUserNotificationEvent.getCompanyId(),
+			newUserNotificationEvent.getCompanyId());
 	}
 
 	@Test
@@ -299,9 +299,9 @@ public class UserNotificationEventPersistenceTest {
 	protected OrderByComparator<UserNotificationEvent> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserNotificationEvent",
 			"mvccVersion", true, "uuid", true, "userNotificationEventId", true,
-			"companyId", true, "userId", true, "type", true, "timestamp", true,
-			"deliveryType", true, "deliverBy", true, "delivered", true,
-			"actionRequired", true, "archived", true);
+			"userId", true, "type", true, "timestamp", true, "deliveryType",
+			true, "deliverBy", true, "delivered", true, "actionRequired", true,
+			"archived", true, "companyId", true);
 	}
 
 	@Test
@@ -515,8 +515,6 @@ public class UserNotificationEventPersistenceTest {
 
 		userNotificationEvent.setUuid(RandomTestUtil.randomString());
 
-		userNotificationEvent.setCompanyId(RandomTestUtil.nextLong());
-
 		userNotificationEvent.setUserId(RandomTestUtil.nextLong());
 
 		userNotificationEvent.setType(RandomTestUtil.randomString());
@@ -534,6 +532,8 @@ public class UserNotificationEventPersistenceTest {
 		userNotificationEvent.setActionRequired(RandomTestUtil.randomBoolean());
 
 		userNotificationEvent.setArchived(RandomTestUtil.randomBoolean());
+
+		userNotificationEvent.setCompanyId(RandomTestUtil.nextLong());
 
 		_userNotificationEvents.add(_persistence.update(userNotificationEvent));
 

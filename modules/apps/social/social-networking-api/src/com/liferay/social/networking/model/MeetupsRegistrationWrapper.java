@@ -54,7 +54,6 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("meetupsRegistrationId", getMeetupsRegistrationId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -62,6 +61,7 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 		attributes.put("meetupsEntryId", getMeetupsEntryId());
 		attributes.put("status", getStatus());
 		attributes.put("comments", getComments());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -73,12 +73,6 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 
 		if (meetupsRegistrationId != null) {
 			setMeetupsRegistrationId(meetupsRegistrationId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -121,6 +115,12 @@ public class MeetupsRegistrationWrapper implements MeetupsRegistration,
 
 		if (comments != null) {
 			setComments(comments);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

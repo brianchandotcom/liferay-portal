@@ -74,8 +74,6 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 		sb.append(vocabularyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -94,6 +92,8 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 		sb.append(settings);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -112,7 +112,6 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 
 		assetVocabularyImpl.setVocabularyId(vocabularyId);
 		assetVocabularyImpl.setGroupId(groupId);
-		assetVocabularyImpl.setCompanyId(companyId);
 		assetVocabularyImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -171,6 +170,8 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 			assetVocabularyImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		assetVocabularyImpl.setCompanyId(companyId);
+
 		assetVocabularyImpl.resetOriginalValues();
 
 		return assetVocabularyImpl;
@@ -181,7 +182,6 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 		uuid = objectInput.readUTF();
 		vocabularyId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -191,6 +191,7 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 		description = objectInput.readUTF();
 		settings = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -205,7 +206,6 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 
 		objectOutput.writeLong(vocabularyId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -247,12 +247,12 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long vocabularyId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -262,4 +262,5 @@ public class AssetVocabularyCacheModel implements CacheModel<AssetVocabulary>,
 	public String description;
 	public String settings;
 	public long lastPublishDate;
+	public long companyId;
 }

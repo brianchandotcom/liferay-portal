@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface KaleoInstanceModel extends BaseModel<KaleoInstance>,
-	GroupedModel {
+	GroupedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -93,22 +94,6 @@ public interface KaleoInstanceModel extends BaseModel<KaleoInstance>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this kaleo instance.
-	 *
-	 * @return the company ID of this kaleo instance
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this kaleo instance.
-	 *
-	 * @param companyId the company ID of this kaleo instance
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this kaleo instance.
@@ -326,6 +311,22 @@ public interface KaleoInstanceModel extends BaseModel<KaleoInstance>,
 	 * @param workflowContext the workflow context of this kaleo instance
 	 */
 	public void setWorkflowContext(String workflowContext);
+
+	/**
+	 * Returns the company ID of this kaleo instance.
+	 *
+	 * @return the company ID of this kaleo instance
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this kaleo instance.
+	 *
+	 * @param companyId the company ID of this kaleo instance
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

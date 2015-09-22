@@ -75,7 +75,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 			{ "uuid_", Types.VARCHAR },
 			{ "id_", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -94,7 +93,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 			{ "contentField", Types.VARCHAR },
 			{ "feedFormat", Types.VARCHAR },
 			{ "feedVersion", Types.DOUBLE },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -102,7 +102,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("id_", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -122,9 +121,10 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		TABLE_COLUMNS_MAP.put("feedFormat", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("feedVersion", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalFeed (uuid_ VARCHAR(75) null,id_ LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,feedId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,DDMRendererTemplateKey VARCHAR(75) null,delta INTEGER,orderByCol VARCHAR(75) null,orderByType VARCHAR(75) null,targetLayoutFriendlyUrl VARCHAR(255) null,targetPortletId VARCHAR(75) null,contentField VARCHAR(75) null,feedFormat VARCHAR(75) null,feedVersion DOUBLE,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalFeed (uuid_ VARCHAR(75) null,id_ LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,feedId VARCHAR(75) null,name VARCHAR(75) null,description STRING null,DDMStructureKey VARCHAR(75) null,DDMTemplateKey VARCHAR(75) null,DDMRendererTemplateKey VARCHAR(75) null,delta INTEGER,orderByCol VARCHAR(75) null,orderByType VARCHAR(75) null,targetLayoutFriendlyUrl VARCHAR(255) null,targetPortletId VARCHAR(75) null,contentField VARCHAR(75) null,feedFormat VARCHAR(75) null,feedVersion DOUBLE,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table JournalFeed";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalFeed.feedId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalFeed.feedId ASC";
@@ -161,7 +161,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		model.setUuid(soapModel.getUuid());
 		model.setId(soapModel.getId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -181,6 +180,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		model.setFeedFormat(soapModel.getFeedFormat());
 		model.setFeedVersion(soapModel.getFeedVersion());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -248,7 +248,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		attributes.put("uuid", getUuid());
 		attributes.put("id", getId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -268,6 +267,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		attributes.put("feedFormat", getFeedFormat());
 		attributes.put("feedVersion", getFeedVersion());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -293,12 +293,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -416,6 +410,12 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -474,29 +474,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -805,6 +782,29 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -845,7 +845,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		journalFeedImpl.setUuid(getUuid());
 		journalFeedImpl.setId(getId());
 		journalFeedImpl.setGroupId(getGroupId());
-		journalFeedImpl.setCompanyId(getCompanyId());
 		journalFeedImpl.setUserId(getUserId());
 		journalFeedImpl.setUserName(getUserName());
 		journalFeedImpl.setCreateDate(getCreateDate());
@@ -865,6 +864,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		journalFeedImpl.setFeedFormat(getFeedFormat());
 		journalFeedImpl.setFeedVersion(getFeedVersion());
 		journalFeedImpl.setLastPublishDate(getLastPublishDate());
+		journalFeedImpl.setCompanyId(getCompanyId());
 
 		journalFeedImpl.resetOriginalValues();
 
@@ -931,13 +931,13 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 		journalFeedModelImpl._setOriginalGroupId = false;
 
-		journalFeedModelImpl._originalCompanyId = journalFeedModelImpl._companyId;
-
-		journalFeedModelImpl._setOriginalCompanyId = false;
-
 		journalFeedModelImpl._setModifiedDate = false;
 
 		journalFeedModelImpl._originalFeedId = journalFeedModelImpl._feedId;
+
+		journalFeedModelImpl._originalCompanyId = journalFeedModelImpl._companyId;
+
+		journalFeedModelImpl._setOriginalCompanyId = false;
 
 		journalFeedModelImpl._columnBitmask = 0;
 	}
@@ -957,8 +957,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		journalFeedCacheModel.id = getId();
 
 		journalFeedCacheModel.groupId = getGroupId();
-
-		journalFeedCacheModel.companyId = getCompanyId();
 
 		journalFeedCacheModel.userId = getUserId();
 
@@ -1099,6 +1097,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 			journalFeedCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		journalFeedCacheModel.companyId = getCompanyId();
+
 		return journalFeedCacheModel;
 	}
 
@@ -1112,8 +1112,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		sb.append(getId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1152,6 +1150,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		sb.append(getFeedVersion());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1176,10 +1176,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1257,6 +1253,10 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1273,9 +1273,6 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -1297,6 +1294,9 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	private String _feedFormat;
 	private double _feedVersion;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private JournalFeed _escapedModel;
 }

@@ -73,7 +73,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "userGroupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -82,7 +81,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "addedByLDAPImport", Types.BOOLEAN },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -90,7 +90,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("userGroupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -100,9 +99,10 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("addedByLDAPImport", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table UserGroup (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userGroupId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(75) null,description STRING null,addedByLDAPImport BOOLEAN,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table UserGroup (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,userGroupId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentUserGroupId LONG,name VARCHAR(75) null,description STRING null,addedByLDAPImport BOOLEAN,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table UserGroup";
 	public static final String ORDER_BY_JPQL = " ORDER BY userGroup.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserGroup.name ASC";
@@ -139,7 +139,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		model.setMvccVersion(soapModel.getMvccVersion());
 		model.setUuid(soapModel.getUuid());
 		model.setUserGroupId(soapModel.getUserGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -149,6 +148,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		model.setDescription(soapModel.getDescription());
 		model.setAddedByLDAPImport(soapModel.getAddedByLDAPImport());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -175,26 +175,29 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_NAME = "Groups_UserGroups";
 	public static final Object[][] MAPPING_TABLE_GROUPS_USERGROUPS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "userGroupId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE = "create table Groups_UserGroups (groupId LONG not null,userGroupId LONG not null,primary key (groupId, userGroupId))";
+	public static final String MAPPING_TABLE_GROUPS_USERGROUPS_SQL_CREATE = "create table Groups_UserGroups (companyId LONG not null,groupId LONG not null,userGroupId LONG not null,primary key (companyId, groupId, userGroupId))";
 	public static final boolean FINDER_CACHE_ENABLED_GROUPS_USERGROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Groups_UserGroups"), true);
 	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_NAME = "UserGroups_Teams";
 	public static final Object[][] MAPPING_TABLE_USERGROUPS_TEAMS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "teamId", Types.BIGINT },
 			{ "userGroupId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE = "create table UserGroups_Teams (teamId LONG not null,userGroupId LONG not null,primary key (teamId, userGroupId))";
+	public static final String MAPPING_TABLE_USERGROUPS_TEAMS_SQL_CREATE = "create table UserGroups_Teams (companyId LONG not null,teamId LONG not null,userGroupId LONG not null,primary key (companyId, teamId, userGroupId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERGROUPS_TEAMS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.UserGroups_Teams"), true);
 	public static final String MAPPING_TABLE_USERS_USERGROUPS_NAME = "Users_UserGroups";
 	public static final Object[][] MAPPING_TABLE_USERS_USERGROUPS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userGroupId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_USERS_USERGROUPS_SQL_CREATE = "create table Users_UserGroups (userId LONG not null,userGroupId LONG not null,primary key (userId, userGroupId))";
+	public static final String MAPPING_TABLE_USERS_USERGROUPS_SQL_CREATE = "create table Users_UserGroups (companyId LONG not null,userId LONG not null,userGroupId LONG not null,primary key (companyId, userId, userGroupId))";
 	public static final boolean FINDER_CACHE_ENABLED_USERS_USERGROUPS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.Users_UserGroups"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
@@ -240,7 +243,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("userGroupId", getUserGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -250,6 +252,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		attributes.put("description", getDescription());
 		attributes.put("addedByLDAPImport", getAddedByLDAPImport());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -275,12 +278,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 		if (userGroupId != null) {
 			setUserGroupId(userGroupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -336,6 +333,12 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -382,29 +385,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	@Override
 	public void setUserGroupId(long userGroupId) {
 		_userGroupId = userGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -570,6 +550,29 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -610,7 +613,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		userGroupImpl.setMvccVersion(getMvccVersion());
 		userGroupImpl.setUuid(getUuid());
 		userGroupImpl.setUserGroupId(getUserGroupId());
-		userGroupImpl.setCompanyId(getCompanyId());
 		userGroupImpl.setUserId(getUserId());
 		userGroupImpl.setUserName(getUserName());
 		userGroupImpl.setCreateDate(getCreateDate());
@@ -620,6 +622,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		userGroupImpl.setDescription(getDescription());
 		userGroupImpl.setAddedByLDAPImport(getAddedByLDAPImport());
 		userGroupImpl.setLastPublishDate(getLastPublishDate());
+		userGroupImpl.setCompanyId(getCompanyId());
 
 		userGroupImpl.resetOriginalValues();
 
@@ -682,10 +685,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 		userGroupModelImpl._originalUuid = userGroupModelImpl._uuid;
 
-		userGroupModelImpl._originalCompanyId = userGroupModelImpl._companyId;
-
-		userGroupModelImpl._setOriginalCompanyId = false;
-
 		userGroupModelImpl._setModifiedDate = false;
 
 		userGroupModelImpl._originalParentUserGroupId = userGroupModelImpl._parentUserGroupId;
@@ -693,6 +692,10 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		userGroupModelImpl._setOriginalParentUserGroupId = false;
 
 		userGroupModelImpl._originalName = userGroupModelImpl._name;
+
+		userGroupModelImpl._originalCompanyId = userGroupModelImpl._companyId;
+
+		userGroupModelImpl._setOriginalCompanyId = false;
 
 		userGroupModelImpl._columnBitmask = 0;
 	}
@@ -712,8 +715,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		}
 
 		userGroupCacheModel.userGroupId = getUserGroupId();
-
-		userGroupCacheModel.companyId = getCompanyId();
 
 		userGroupCacheModel.userId = getUserId();
 
@@ -772,6 +773,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 			userGroupCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		userGroupCacheModel.companyId = getCompanyId();
+
 		return userGroupCacheModel;
 	}
 
@@ -785,8 +788,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		sb.append(getUuid());
 		sb.append(", userGroupId=");
 		sb.append(getUserGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -805,6 +806,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		sb.append(getAddedByLDAPImport());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -829,10 +832,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		sb.append(
 			"<column><column-name>userGroupId</column-name><column-value><![CDATA[");
 		sb.append(getUserGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -870,6 +869,10 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -884,9 +887,6 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	private String _uuid;
 	private String _originalUuid;
 	private long _userGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -900,6 +900,9 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	private String _description;
 	private boolean _addedByLDAPImport;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private UserGroup _escapedModel;
 }

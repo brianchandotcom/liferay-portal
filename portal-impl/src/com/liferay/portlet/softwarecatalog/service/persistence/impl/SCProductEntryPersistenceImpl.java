@@ -38,6 +38,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
@@ -2767,6 +2768,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		scProductEntry.setNew(true);
 		scProductEntry.setPrimaryKey(productEntryId);
 
+		scProductEntry.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return scProductEntry;
 	}
 
@@ -2998,7 +3001,6 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 
 		scProductEntryImpl.setProductEntryId(scProductEntry.getProductEntryId());
 		scProductEntryImpl.setGroupId(scProductEntry.getGroupId());
-		scProductEntryImpl.setCompanyId(scProductEntry.getCompanyId());
 		scProductEntryImpl.setUserId(scProductEntry.getUserId());
 		scProductEntryImpl.setUserName(scProductEntry.getUserName());
 		scProductEntryImpl.setCreateDate(scProductEntry.getCreateDate());
@@ -3012,6 +3014,7 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		scProductEntryImpl.setAuthor(scProductEntry.getAuthor());
 		scProductEntryImpl.setRepoGroupId(scProductEntry.getRepoGroupId());
 		scProductEntryImpl.setRepoArtifactId(scProductEntry.getRepoArtifactId());
+		scProductEntryImpl.setCompanyId(scProductEntry.getCompanyId());
 
 		return scProductEntryImpl;
 	}
@@ -3660,7 +3663,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	 */
 	public void afterPropertiesSet() {
 		scProductEntryToSCLicenseTableMapper = TableMapperFactory.getTableMapper("SCLicenses_SCProductEntries",
-				"productEntryId", "licenseId", this, scLicensePersistence);
+				"productEntryId", "licenseId", this, scLicensePersistence,
+				companyProviderHolder);
 	}
 
 	public void destroy() {
@@ -3675,6 +3679,8 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	@BeanReference(type = SCLicensePersistence.class)
 	protected SCLicensePersistence scLicensePersistence;
 	protected TableMapper<SCProductEntry, com.liferay.portlet.softwarecatalog.model.SCLicense> scProductEntryToSCLicenseTableMapper;
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_SCPRODUCTENTRY = "SELECT scProductEntry FROM SCProductEntry scProductEntry";
 	private static final String _SQL_SELECT_SCPRODUCTENTRY_WHERE_PKS_IN = "SELECT scProductEntry FROM SCProductEntry scProductEntry WHERE productEntryId IN (";
 	private static final String _SQL_SELECT_SCPRODUCTENTRY_WHERE = "SELECT scProductEntry FROM SCProductEntry scProductEntry WHERE ";

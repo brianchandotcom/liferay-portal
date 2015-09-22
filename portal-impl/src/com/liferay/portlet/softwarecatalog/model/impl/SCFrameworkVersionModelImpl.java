@@ -71,7 +71,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "frameworkVersionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -79,14 +78,14 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 			{ "name", Types.VARCHAR },
 			{ "url", Types.VARCHAR },
 			{ "active_", Types.BOOLEAN },
-			{ "priority", Types.INTEGER }
+			{ "priority", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("frameworkVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -95,9 +94,10 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		TABLE_COLUMNS_MAP.put("url", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SCFrameworkVersion (frameworkVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,url STRING null,active_ BOOLEAN,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table SCFrameworkVersion (frameworkVersionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,url STRING null,active_ BOOLEAN,priority INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SCFrameworkVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY scFrameworkVersion.name DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SCFrameworkVersion.name DESC";
@@ -133,7 +133,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 		model.setFrameworkVersionId(soapModel.getFrameworkVersionId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -142,6 +141,7 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		model.setUrl(soapModel.getUrl());
 		model.setActive(soapModel.getActive());
 		model.setPriority(soapModel.getPriority());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -171,11 +171,12 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		"SCFrameworkVersi_SCProductVers";
 	public static final Object[][] MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_COLUMNS =
 		{
+			{ "companyId", Types.BIGINT },
 			{ "frameworkVersionId", Types.BIGINT },
 			{ "productVersionId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_SCFRAMEWORKVERSI_SCPRODUCTVERS_SQL_CREATE =
-		"create table SCFrameworkVersi_SCProductVers (frameworkVersionId LONG not null,productVersionId LONG not null,primary key (frameworkVersionId, productVersionId))";
+		"create table SCFrameworkVersi_SCProductVers (companyId LONG not null,frameworkVersionId LONG not null,productVersionId LONG not null,primary key (companyId, frameworkVersionId, productVersionId))";
 	public static final boolean FINDER_CACHE_ENABLED_SCFRAMEWORKVERSI_SCPRODUCTVERS =
 		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.SCFrameworkVersi_SCProductVers"),
@@ -222,7 +223,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 		attributes.put("frameworkVersionId", getFrameworkVersionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -231,6 +231,7 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		attributes.put("url", getUrl());
 		attributes.put("active", getActive());
 		attributes.put("priority", getPriority());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -250,12 +251,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -305,6 +300,12 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		if (priority != null) {
 			setPriority(priority);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -339,29 +340,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -508,6 +486,29 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		_priority = priority;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -541,7 +542,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 		scFrameworkVersionImpl.setFrameworkVersionId(getFrameworkVersionId());
 		scFrameworkVersionImpl.setGroupId(getGroupId());
-		scFrameworkVersionImpl.setCompanyId(getCompanyId());
 		scFrameworkVersionImpl.setUserId(getUserId());
 		scFrameworkVersionImpl.setUserName(getUserName());
 		scFrameworkVersionImpl.setCreateDate(getCreateDate());
@@ -550,6 +550,7 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		scFrameworkVersionImpl.setUrl(getUrl());
 		scFrameworkVersionImpl.setActive(getActive());
 		scFrameworkVersionImpl.setPriority(getPriority());
+		scFrameworkVersionImpl.setCompanyId(getCompanyId());
 
 		scFrameworkVersionImpl.resetOriginalValues();
 
@@ -616,15 +617,15 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 		scFrameworkVersionModelImpl._setOriginalGroupId = false;
 
-		scFrameworkVersionModelImpl._originalCompanyId = scFrameworkVersionModelImpl._companyId;
-
-		scFrameworkVersionModelImpl._setOriginalCompanyId = false;
-
 		scFrameworkVersionModelImpl._setModifiedDate = false;
 
 		scFrameworkVersionModelImpl._originalActive = scFrameworkVersionModelImpl._active;
 
 		scFrameworkVersionModelImpl._setOriginalActive = false;
+
+		scFrameworkVersionModelImpl._originalCompanyId = scFrameworkVersionModelImpl._companyId;
+
+		scFrameworkVersionModelImpl._setOriginalCompanyId = false;
 
 		scFrameworkVersionModelImpl._columnBitmask = 0;
 	}
@@ -636,8 +637,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		scFrameworkVersionCacheModel.frameworkVersionId = getFrameworkVersionId();
 
 		scFrameworkVersionCacheModel.groupId = getGroupId();
-
-		scFrameworkVersionCacheModel.companyId = getCompanyId();
 
 		scFrameworkVersionCacheModel.userId = getUserId();
 
@@ -687,6 +686,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 		scFrameworkVersionCacheModel.priority = getPriority();
 
+		scFrameworkVersionCacheModel.companyId = getCompanyId();
+
 		return scFrameworkVersionCacheModel;
 	}
 
@@ -698,8 +699,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		sb.append(getFrameworkVersionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -716,6 +715,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		sb.append(getActive());
 		sb.append(", priority=");
 		sb.append(getPriority());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -737,10 +738,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -774,6 +771,10 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -788,9 +789,6 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -802,6 +800,9 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	private boolean _originalActive;
 	private boolean _setOriginalActive;
 	private int _priority;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private SCFrameworkVersion _escapedModel;
 }

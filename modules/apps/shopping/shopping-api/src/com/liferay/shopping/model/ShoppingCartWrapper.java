@@ -55,7 +55,6 @@ public class ShoppingCartWrapper implements ShoppingCart,
 
 		attributes.put("cartId", getCartId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -64,6 +63,7 @@ public class ShoppingCartWrapper implements ShoppingCart,
 		attributes.put("couponCodes", getCouponCodes());
 		attributes.put("altShipping", getAltShipping());
 		attributes.put("insure", getInsure());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -80,12 +80,6 @@ public class ShoppingCartWrapper implements ShoppingCart,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -134,6 +128,12 @@ public class ShoppingCartWrapper implements ShoppingCart,
 
 		if (insure != null) {
 			setInsure(insure);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

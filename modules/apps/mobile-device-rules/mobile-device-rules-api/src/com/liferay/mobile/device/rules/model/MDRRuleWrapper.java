@@ -57,7 +57,6 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 		attributes.put("uuid", getUuid());
 		attributes.put("ruleId", getRuleId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -68,6 +67,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 		attributes.put("type", getType());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -90,12 +90,6 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -156,6 +150,12 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

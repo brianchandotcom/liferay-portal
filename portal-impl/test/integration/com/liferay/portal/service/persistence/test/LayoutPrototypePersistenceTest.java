@@ -118,8 +118,6 @@ public class LayoutPrototypePersistenceTest {
 
 		newLayoutPrototype.setUuid(RandomTestUtil.randomString());
 
-		newLayoutPrototype.setCompanyId(RandomTestUtil.nextLong());
-
 		newLayoutPrototype.setUserId(RandomTestUtil.nextLong());
 
 		newLayoutPrototype.setUserName(RandomTestUtil.randomString());
@@ -138,6 +136,8 @@ public class LayoutPrototypePersistenceTest {
 
 		newLayoutPrototype.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newLayoutPrototype.setCompanyId(RandomTestUtil.nextLong());
+
 		_layoutPrototypes.add(_persistence.update(newLayoutPrototype));
 
 		LayoutPrototype existingLayoutPrototype = _persistence.findByPrimaryKey(newLayoutPrototype.getPrimaryKey());
@@ -148,8 +148,6 @@ public class LayoutPrototypePersistenceTest {
 			newLayoutPrototype.getUuid());
 		Assert.assertEquals(existingLayoutPrototype.getLayoutPrototypeId(),
 			newLayoutPrototype.getLayoutPrototypeId());
-		Assert.assertEquals(existingLayoutPrototype.getCompanyId(),
-			newLayoutPrototype.getCompanyId());
 		Assert.assertEquals(existingLayoutPrototype.getUserId(),
 			newLayoutPrototype.getUserId());
 		Assert.assertEquals(existingLayoutPrototype.getUserName(),
@@ -171,6 +169,8 @@ public class LayoutPrototypePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutPrototype.getLastPublishDate()),
 			Time.getShortTimestamp(newLayoutPrototype.getLastPublishDate()));
+		Assert.assertEquals(existingLayoutPrototype.getCompanyId(),
+			newLayoutPrototype.getCompanyId());
 	}
 
 	@Test
@@ -231,9 +231,10 @@ public class LayoutPrototypePersistenceTest {
 	protected OrderByComparator<LayoutPrototype> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutPrototype",
 			"mvccVersion", true, "uuid", true, "layoutPrototypeId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "name", true, "description", true,
-			"settings", true, "active", true, "lastPublishDate", true);
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "name", true, "description", true,
+			"settings", true, "active", true, "lastPublishDate", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -441,8 +442,6 @@ public class LayoutPrototypePersistenceTest {
 
 		layoutPrototype.setUuid(RandomTestUtil.randomString());
 
-		layoutPrototype.setCompanyId(RandomTestUtil.nextLong());
-
 		layoutPrototype.setUserId(RandomTestUtil.nextLong());
 
 		layoutPrototype.setUserName(RandomTestUtil.randomString());
@@ -460,6 +459,8 @@ public class LayoutPrototypePersistenceTest {
 		layoutPrototype.setActive(RandomTestUtil.randomBoolean());
 
 		layoutPrototype.setLastPublishDate(RandomTestUtil.nextDate());
+
+		layoutPrototype.setCompanyId(RandomTestUtil.nextLong());
 
 		_layoutPrototypes.add(_persistence.update(layoutPrototype));
 

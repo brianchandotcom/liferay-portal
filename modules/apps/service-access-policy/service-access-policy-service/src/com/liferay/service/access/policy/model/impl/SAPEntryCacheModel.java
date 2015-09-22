@@ -71,8 +71,6 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		sb.append(uuid);
 		sb.append(", sapEntryId=");
 		sb.append(sapEntryId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -89,6 +87,8 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		sb.append(name);
 		sb.append(", title=");
 		sb.append(title);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -106,7 +106,6 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		}
 
 		sapEntryImpl.setSapEntryId(sapEntryId);
-		sapEntryImpl.setCompanyId(companyId);
 		sapEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -153,6 +152,8 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 			sapEntryImpl.setTitle(title);
 		}
 
+		sapEntryImpl.setCompanyId(companyId);
+
 		sapEntryImpl.resetOriginalValues();
 
 		return sapEntryImpl;
@@ -162,7 +163,6 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		sapEntryId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -171,6 +171,7 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		defaultSAPEntry = objectInput.readBoolean();
 		name = objectInput.readUTF();
 		title = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -184,7 +185,6 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		}
 
 		objectOutput.writeLong(sapEntryId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -219,11 +219,12 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 		else {
 			objectOutput.writeUTF(title);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long sapEntryId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -232,4 +233,5 @@ public class SAPEntryCacheModel implements CacheModel<SAPEntry>, Externalizable 
 	public boolean defaultSAPEntry;
 	public String name;
 	public String title;
+	public long companyId;
 }

@@ -56,7 +56,6 @@ public class MBMailingListWrapper implements MBMailingList,
 		attributes.put("uuid", getUuid());
 		attributes.put("mailingListId", getMailingListId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -79,6 +78,7 @@ public class MBMailingListWrapper implements MBMailingList,
 		attributes.put("outPassword", getOutPassword());
 		attributes.put("allowAnonymous", getAllowAnonymous());
 		attributes.put("active", getActive());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -101,12 +101,6 @@ public class MBMailingListWrapper implements MBMailingList,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -239,6 +233,12 @@ public class MBMailingListWrapper implements MBMailingList,
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

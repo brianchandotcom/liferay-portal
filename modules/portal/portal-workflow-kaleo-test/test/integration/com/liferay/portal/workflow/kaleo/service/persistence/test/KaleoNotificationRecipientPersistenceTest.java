@@ -120,8 +120,6 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		newKaleoNotificationRecipient.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoNotificationRecipient.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoNotificationRecipient.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoNotificationRecipient.setUserName(RandomTestUtil.randomString());
@@ -151,6 +149,8 @@ public class KaleoNotificationRecipientPersistenceTest {
 		newKaleoNotificationRecipient.setNotificationReceptionType(RandomTestUtil.randomString(
 				3));
 
+		newKaleoNotificationRecipient.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoNotificationRecipients.add(_persistence.update(
 				newKaleoNotificationRecipient));
 
@@ -160,8 +160,6 @@ public class KaleoNotificationRecipientPersistenceTest {
 			newKaleoNotificationRecipient.getKaleoNotificationRecipientId());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getGroupId(),
 			newKaleoNotificationRecipient.getGroupId());
-		Assert.assertEquals(existingKaleoNotificationRecipient.getCompanyId(),
-			newKaleoNotificationRecipient.getCompanyId());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getUserId(),
 			newKaleoNotificationRecipient.getUserId());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getUserName(),
@@ -194,13 +192,8 @@ public class KaleoNotificationRecipientPersistenceTest {
 			newKaleoNotificationRecipient.getAddress());
 		Assert.assertEquals(existingKaleoNotificationRecipient.getNotificationReceptionType(),
 			newKaleoNotificationRecipient.getNotificationReceptionType());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingKaleoNotificationRecipient.getCompanyId(),
+			newKaleoNotificationRecipient.getCompanyId());
 	}
 
 	@Test
@@ -215,6 +208,13 @@ public class KaleoNotificationRecipientPersistenceTest {
 		_persistence.countByKaleoNotificationId(RandomTestUtil.nextLong());
 
 		_persistence.countByKaleoNotificationId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -242,13 +242,13 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 	protected OrderByComparator<KaleoNotificationRecipient> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoNotificationRecipient",
-			"kaleoNotificationRecipientId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionId", true,
-			"kaleoNotificationId", true, "recipientClassName", true,
-			"recipientClassPK", true, "recipientRoleType", true,
-			"recipientScriptLanguage", true, "recipientScriptContexts", true,
-			"address", true, "notificationReceptionType", true);
+			"kaleoNotificationRecipientId", true, "groupId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoDefinitionId", true, "kaleoNotificationId", true,
+			"recipientClassName", true, "recipientClassPK", true,
+			"recipientRoleType", true, "recipientScriptLanguage", true,
+			"recipientScriptContexts", true, "address", true,
+			"notificationReceptionType", true, "companyId", true);
 	}
 
 	@Test
@@ -470,8 +470,6 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		kaleoNotificationRecipient.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoNotificationRecipient.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoNotificationRecipient.setUserId(RandomTestUtil.nextLong());
 
 		kaleoNotificationRecipient.setUserName(RandomTestUtil.randomString());
@@ -500,6 +498,8 @@ public class KaleoNotificationRecipientPersistenceTest {
 
 		kaleoNotificationRecipient.setNotificationReceptionType(RandomTestUtil.randomString(
 				3));
+
+		kaleoNotificationRecipient.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoNotificationRecipients.add(_persistence.update(
 				kaleoNotificationRecipient));

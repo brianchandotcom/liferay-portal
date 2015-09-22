@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchLayoutSetException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1482,6 +1483,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSet.setNew(true);
 		layoutSet.setPrimaryKey(layoutSetId);
 
+		layoutSet.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return layoutSet;
 	}
 
@@ -1690,7 +1693,6 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSetImpl.setMvccVersion(layoutSet.getMvccVersion());
 		layoutSetImpl.setLayoutSetId(layoutSet.getLayoutSetId());
 		layoutSetImpl.setGroupId(layoutSet.getGroupId());
-		layoutSetImpl.setCompanyId(layoutSet.getCompanyId());
 		layoutSetImpl.setCreateDate(layoutSet.getCreateDate());
 		layoutSetImpl.setModifiedDate(layoutSet.getModifiedDate());
 		layoutSetImpl.setPrivateLayout(layoutSet.isPrivateLayout());
@@ -1704,6 +1706,7 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		layoutSetImpl.setSettings(layoutSet.getSettings());
 		layoutSetImpl.setLayoutSetPrototypeUuid(layoutSet.getLayoutSetPrototypeUuid());
 		layoutSetImpl.setLayoutSetPrototypeLinkEnabled(layoutSet.isLayoutSetPrototypeLinkEnabled());
+		layoutSetImpl.setCompanyId(layoutSet.getCompanyId());
 
 		return layoutSetImpl;
 	}
@@ -2084,6 +2087,8 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_LAYOUTSET = "SELECT layoutSet FROM LayoutSet layoutSet";
 	private static final String _SQL_SELECT_LAYOUTSET_WHERE_PKS_IN = "SELECT layoutSet FROM LayoutSet layoutSet WHERE layoutSetId IN (";
 	private static final String _SQL_SELECT_LAYOUTSET_WHERE = "SELECT layoutSet FROM LayoutSet layoutSet WHERE ";

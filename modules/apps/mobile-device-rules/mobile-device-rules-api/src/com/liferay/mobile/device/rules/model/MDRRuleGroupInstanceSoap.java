@@ -38,7 +38,6 @@ public class MDRRuleGroupInstanceSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setRuleGroupInstanceId(model.getRuleGroupInstanceId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -48,6 +47,7 @@ public class MDRRuleGroupInstanceSoap implements Serializable {
 		soapModel.setRuleGroupId(model.getRuleGroupId());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -127,14 +127,6 @@ public class MDRRuleGroupInstanceSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -207,10 +199,17 @@ public class MDRRuleGroupInstanceSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _ruleGroupInstanceId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -220,4 +219,5 @@ public class MDRRuleGroupInstanceSoap implements Serializable {
 	private long _ruleGroupId;
 	private int _priority;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

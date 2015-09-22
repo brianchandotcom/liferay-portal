@@ -125,6 +125,8 @@ public class DDMTemplateLinkPersistenceTest {
 
 		newDDMTemplateLink.setTemplateId(RandomTestUtil.nextLong());
 
+		newDDMTemplateLink.setCompanyId(RandomTestUtil.nextLong());
+
 		_ddmTemplateLinks.add(_persistence.update(newDDMTemplateLink));
 
 		DDMTemplateLink existingDDMTemplateLink = _persistence.findByPrimaryKey(newDDMTemplateLink.getPrimaryKey());
@@ -137,6 +139,8 @@ public class DDMTemplateLinkPersistenceTest {
 			newDDMTemplateLink.getClassPK());
 		Assert.assertEquals(existingDDMTemplateLink.getTemplateId(),
 			newDDMTemplateLink.getTemplateId());
+		Assert.assertEquals(existingDDMTemplateLink.getCompanyId(),
+			newDDMTemplateLink.getCompanyId());
 	}
 
 	@Test
@@ -186,7 +190,7 @@ public class DDMTemplateLinkPersistenceTest {
 	protected OrderByComparator<DDMTemplateLink> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMTemplateLink",
 			"templateLinkId", true, "classNameId", true, "classPK", true,
-			"templateId", true);
+			"templateId", true, "companyId", true);
 	}
 
 	@Test
@@ -412,6 +416,8 @@ public class DDMTemplateLinkPersistenceTest {
 		ddmTemplateLink.setClassPK(RandomTestUtil.nextLong());
 
 		ddmTemplateLink.setTemplateId(RandomTestUtil.nextLong());
+
+		ddmTemplateLink.setCompanyId(RandomTestUtil.nextLong());
 
 		_ddmTemplateLinks.add(_persistence.update(ddmTemplateLink));
 

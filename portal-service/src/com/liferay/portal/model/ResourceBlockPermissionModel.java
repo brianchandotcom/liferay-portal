@@ -37,7 +37,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface ResourceBlockPermissionModel extends BaseModel<ResourceBlockPermission>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -129,6 +129,22 @@ public interface ResourceBlockPermissionModel extends BaseModel<ResourceBlockPer
 	 * @param actionIds the action IDs of this resource block permission
 	 */
 	public void setActionIds(long actionIds);
+
+	/**
+	 * Returns the company ID of this resource block permission.
+	 *
+	 * @return the company ID of this resource block permission
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this resource block permission.
+	 *
+	 * @param companyId the company ID of this resource block permission
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

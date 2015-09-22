@@ -70,8 +70,6 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 
 		sb.append("{productVersionId=");
 		sb.append(productVersionId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -92,6 +90,8 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 		sb.append(directDownloadURL);
 		sb.append(", repoStoreArtifact=");
 		sb.append(repoStoreArtifact);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -102,7 +102,6 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 		SCProductVersionImpl scProductVersionImpl = new SCProductVersionImpl();
 
 		scProductVersionImpl.setProductVersionId(productVersionId);
-		scProductVersionImpl.setCompanyId(companyId);
 		scProductVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -157,6 +156,7 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 		}
 
 		scProductVersionImpl.setRepoStoreArtifact(repoStoreArtifact);
+		scProductVersionImpl.setCompanyId(companyId);
 
 		scProductVersionImpl.resetOriginalValues();
 
@@ -166,7 +166,6 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		productVersionId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -177,13 +176,13 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 		downloadPageURL = objectInput.readUTF();
 		directDownloadURL = objectInput.readUTF();
 		repoStoreArtifact = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(productVersionId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -226,10 +225,10 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 		}
 
 		objectOutput.writeBoolean(repoStoreArtifact);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long productVersionId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -240,4 +239,5 @@ public class SCProductVersionCacheModel implements CacheModel<SCProductVersion>,
 	public String downloadPageURL;
 	public String directDownloadURL;
 	public boolean repoStoreArtifact;
+	public long companyId;
 }

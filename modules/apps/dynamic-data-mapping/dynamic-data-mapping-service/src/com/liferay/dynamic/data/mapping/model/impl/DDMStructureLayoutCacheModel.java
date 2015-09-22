@@ -74,8 +74,6 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 		sb.append(structureLayoutId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -88,6 +86,8 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 		sb.append(structureVersionId);
 		sb.append(", definition=");
 		sb.append(definition);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -106,7 +106,6 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 
 		ddmStructureLayoutImpl.setStructureLayoutId(structureLayoutId);
 		ddmStructureLayoutImpl.setGroupId(groupId);
-		ddmStructureLayoutImpl.setCompanyId(companyId);
 		ddmStructureLayoutImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -139,6 +138,8 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 			ddmStructureLayoutImpl.setDefinition(definition);
 		}
 
+		ddmStructureLayoutImpl.setCompanyId(companyId);
+
 		ddmStructureLayoutImpl.resetOriginalValues();
 
 		ddmStructureLayoutImpl.setDDMFormLayout(_ddmFormLayout);
@@ -152,13 +153,13 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 		uuid = objectInput.readUTF();
 		structureLayoutId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		structureVersionId = objectInput.readLong();
 		definition = objectInput.readUTF();
+		companyId = objectInput.readLong();
 
 		_ddmFormLayout = (com.liferay.dynamic.data.mapping.model.DDMFormLayout)objectInput.readObject();
 	}
@@ -175,7 +176,6 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 
 		objectOutput.writeLong(structureLayoutId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -196,18 +196,20 @@ public class DDMStructureLayoutCacheModel implements CacheModel<DDMStructureLayo
 			objectOutput.writeUTF(definition);
 		}
 
+		objectOutput.writeLong(companyId);
+
 		objectOutput.writeObject(_ddmFormLayout);
 	}
 
 	public String uuid;
 	public long structureLayoutId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
 	public long structureVersionId;
 	public String definition;
+	public long companyId;
 	public com.liferay.dynamic.data.mapping.model.DDMFormLayout _ddmFormLayout;
 }

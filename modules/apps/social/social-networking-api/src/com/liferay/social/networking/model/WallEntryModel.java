@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface WallEntryModel extends BaseModel<WallEntry>, GroupedModel {
+public interface WallEntryModel extends BaseModel<WallEntry>, GroupedModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -92,22 +94,6 @@ public interface WallEntryModel extends BaseModel<WallEntry>, GroupedModel {
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this wall entry.
-	 *
-	 * @return the company ID of this wall entry
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this wall entry.
-	 *
-	 * @param companyId the company ID of this wall entry
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this wall entry.
@@ -204,6 +190,22 @@ public interface WallEntryModel extends BaseModel<WallEntry>, GroupedModel {
 	 * @param comments the comments of this wall entry
 	 */
 	public void setComments(String comments);
+
+	/**
+	 * Returns the company ID of this wall entry.
+	 *
+	 * @return the company ID of this wall entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this wall entry.
+	 *
+	 * @param companyId the company ID of this wall entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

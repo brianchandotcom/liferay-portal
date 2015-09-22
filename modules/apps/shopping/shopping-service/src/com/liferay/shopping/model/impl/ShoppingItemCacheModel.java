@@ -72,8 +72,6 @@ public class ShoppingItemCacheModel implements CacheModel<ShoppingItem>,
 		sb.append(itemId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -136,6 +134,8 @@ public class ShoppingItemCacheModel implements CacheModel<ShoppingItem>,
 		sb.append(largeImageId);
 		sb.append(", largeImageURL=");
 		sb.append(largeImageURL);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -147,7 +147,6 @@ public class ShoppingItemCacheModel implements CacheModel<ShoppingItem>,
 
 		shoppingItemImpl.setItemId(itemId);
 		shoppingItemImpl.setGroupId(groupId);
-		shoppingItemImpl.setCompanyId(companyId);
 		shoppingItemImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -251,6 +250,8 @@ public class ShoppingItemCacheModel implements CacheModel<ShoppingItem>,
 			shoppingItemImpl.setLargeImageURL(largeImageURL);
 		}
 
+		shoppingItemImpl.setCompanyId(companyId);
+
 		shoppingItemImpl.resetOriginalValues();
 
 		return shoppingItemImpl;
@@ -260,7 +261,6 @@ public class ShoppingItemCacheModel implements CacheModel<ShoppingItem>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		itemId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -292,6 +292,7 @@ public class ShoppingItemCacheModel implements CacheModel<ShoppingItem>,
 		largeImage = objectInput.readBoolean();
 		largeImageId = objectInput.readLong();
 		largeImageURL = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -299,7 +300,6 @@ public class ShoppingItemCacheModel implements CacheModel<ShoppingItem>,
 		throws IOException {
 		objectOutput.writeLong(itemId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -390,11 +390,12 @@ public class ShoppingItemCacheModel implements CacheModel<ShoppingItem>,
 		else {
 			objectOutput.writeUTF(largeImageURL);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long itemId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -426,4 +427,5 @@ public class ShoppingItemCacheModel implements CacheModel<ShoppingItem>,
 	public boolean largeImage;
 	public long largeImageId;
 	public String largeImageURL;
+	public long companyId;
 }

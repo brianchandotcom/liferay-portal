@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -41,7 +42,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface DDMStorageLinkModel extends AttachedModel,
-	BaseModel<DDMStorageLink> {
+	BaseModel<DDMStorageLink>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -146,6 +147,22 @@ public interface DDMStorageLinkModel extends AttachedModel,
 	 * @param structureId the structure ID of this d d m storage link
 	 */
 	public void setStructureId(long structureId);
+
+	/**
+	 * Returns the company ID of this d d m storage link.
+	 *
+	 * @return the company ID of this d d m storage link
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this d d m storage link.
+	 *
+	 * @param companyId the company ID of this d d m storage link
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

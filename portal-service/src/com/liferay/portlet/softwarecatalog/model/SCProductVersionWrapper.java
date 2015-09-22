@@ -54,7 +54,6 @@ public class SCProductVersionWrapper implements SCProductVersion,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("productVersionId", getProductVersionId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -65,6 +64,7 @@ public class SCProductVersionWrapper implements SCProductVersion,
 		attributes.put("downloadPageURL", getDownloadPageURL());
 		attributes.put("directDownloadURL", getDirectDownloadURL());
 		attributes.put("repoStoreArtifact", getRepoStoreArtifact());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -75,12 +75,6 @@ public class SCProductVersionWrapper implements SCProductVersion,
 
 		if (productVersionId != null) {
 			setProductVersionId(productVersionId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -141,6 +135,12 @@ public class SCProductVersionWrapper implements SCProductVersion,
 
 		if (repoStoreArtifact != null) {
 			setRepoStoreArtifact(repoStoreArtifact);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

@@ -74,8 +74,6 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		sb.append(calendarBookingId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -126,6 +124,8 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -144,7 +144,6 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 
 		calendarBookingImpl.setCalendarBookingId(calendarBookingId);
 		calendarBookingImpl.setGroupId(groupId);
-		calendarBookingImpl.setCompanyId(companyId);
 		calendarBookingImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -254,6 +253,8 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 			calendarBookingImpl.setStatusDate(new Date(statusDate));
 		}
 
+		calendarBookingImpl.setCompanyId(companyId);
+
 		calendarBookingImpl.resetOriginalValues();
 
 		return calendarBookingImpl;
@@ -264,7 +265,6 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		uuid = objectInput.readUTF();
 		calendarBookingId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -290,6 +290,7 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -304,7 +305,6 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 
 		objectOutput.writeLong(calendarBookingId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -390,12 +390,12 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long calendarBookingId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -421,4 +421,5 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

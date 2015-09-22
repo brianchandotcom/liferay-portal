@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.blogs.attachments;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -22,16 +21,12 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-
-import java.io.InputStream;
 
 import java.util.Date;
 
@@ -79,22 +74,6 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 	@Override
 	protected long getImageFileEntry(BlogsEntry blogsEntry) {
 		return blogsEntry.getCoverImageFileEntryId();
-	}
-
-	@Override
-	protected FileEntry getTempFileEntry(
-			long userId, String title, ServiceContext serviceContext)
-		throws PortalException {
-
-		ClassLoader classLoader = getClass().getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portal/util/dependencies/test.jpg");
-
-		return TempFileEntryUtil.addTempFileEntry(
-			serviceContext.getScopeGroupId(), userId,
-			BlogsEntry.class.getName(), title, inputStream,
-			MimeTypesUtil.getContentType(title));
 	}
 
 	@Override

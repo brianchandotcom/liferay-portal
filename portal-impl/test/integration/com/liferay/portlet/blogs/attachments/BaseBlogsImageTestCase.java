@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
@@ -30,6 +32,8 @@ import com.liferay.portlet.blogs.constants.BlogsConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+
+import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -288,9 +292,20 @@ public abstract class BaseBlogsImageTestCase {
 
 	protected abstract long getImageFileEntry(BlogsEntry blogsEntry);
 
-	protected abstract FileEntry getTempFileEntry(
+	protected FileEntry getTempFileEntry(
 			long userId, String title, ServiceContext serviceContext)
-		throws PortalException;
+		throws PortalException {
+
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portal/util/dependencies/test.jpg");
+
+		return TempFileEntryUtil.addTempFileEntry(
+			serviceContext.getScopeGroupId(), userId,
+			BlogsEntry.class.getName(), title, inputStream,
+			MimeTypesUtil.getContentType(title));
+	}
 
 	protected abstract BlogsEntry updateBlogsEntry(
 			long blogsEntryId, ImageSelector imageSelector)

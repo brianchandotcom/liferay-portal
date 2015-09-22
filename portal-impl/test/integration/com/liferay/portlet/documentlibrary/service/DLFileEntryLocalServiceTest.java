@@ -251,39 +251,16 @@ public class DLFileEntryLocalServiceTest {
 
 		Map<String, DDMFormValues> ddmFormValuesMap = Collections.emptyMap();
 
-		DLFileEntry fileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), dlFolder.getGroupId(),
-			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
-			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			ddmFormValuesMap, null, inputStream, 0, serviceContext);
-
-		DLFileVersion fileVersion = fileEntry.getLatestFileVersion(true);
-
-		DLFileEntryLocalServiceUtil.updateStatus(
-			TestPropsValues.getUserId(), fileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext,
-			new HashMap<String, Serializable>());
+		DLFileEntry fileEntry = addAndApproveFileEntry(
+			dlFolder, ddmFormValuesMap, inputStream, serviceContext);
 
 		DLStoreUtil.updateFile(
 			fileEntry.getCompanyId(), fileEntry.getRepositoryId(),
 			fileEntry.getName(), fileEntry.getExtension(), false, "2.0",
 			StringUtil.randomString(), inputStream);
 
-		fileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
-			TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
-			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, true,
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
-			ddmFormValuesMap, null, inputStream, 0, serviceContext);
-
-		fileVersion = fileEntry.getLatestFileVersion(true);
-
-		DLFileEntryLocalServiceUtil.updateStatus(
-			TestPropsValues.getUserId(), fileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_APPROVED, serviceContext,
-			new HashMap<String, Serializable>());
+		fileEntry = updateAndApproveFileEntry(
+			fileEntry, inputStream, ddmFormValuesMap, serviceContext);
 
 		fileEntry = DLFileEntryLocalServiceUtil.getFileEntry(
 			fileEntry.getFileEntryId());
@@ -468,6 +445,28 @@ public class DLFileEntryLocalServiceTest {
 		}
 	}
 
+
+	protected DLFileEntry addAndApproveFileEntry(
+			DLFolder dlFolder, Map<String, DDMFormValues> ddmFormValuesMap,
+			InputStream inputStream, ServiceContext serviceContext)
+		throws Exception {
+
+		DLFileEntry fileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), dlFolder.getGroupId(),
+			dlFolder.getRepositoryId(), dlFolder.getFolderId(),
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			ddmFormValuesMap, null, inputStream, 0, serviceContext);
+
+		DLFileVersion fileVersion = fileEntry.getLatestFileVersion(true);
+
+		return DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
+	}
+
 	protected DDMForm createDDMForm() {
 		DDMForm ddmForm = new DDMForm();
 
@@ -535,6 +534,27 @@ public class DLFileEntryLocalServiceTest {
 			ddmFormValues);
 
 		return dlFileEntryType.getFileEntryTypeId();
+	}
+
+	protected DLFileEntry updateAndApproveFileEntry(
+			DLFileEntry fileEntry, InputStream inputStream,
+			Map<String, DDMFormValues> ddmFormValuesMap,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		fileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
+			TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, true,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			ddmFormValuesMap, null, inputStream, 0, serviceContext);
+
+		DLFileVersion fileVersion = fileEntry.getLatestFileVersion(true);
+
+		return DLFileEntryLocalServiceUtil.updateStatus(
+			TestPropsValues.getUserId(), fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED, serviceContext,
+			new HashMap<String, Serializable>());
 	}
 
 	@DeleteAfterTestRun

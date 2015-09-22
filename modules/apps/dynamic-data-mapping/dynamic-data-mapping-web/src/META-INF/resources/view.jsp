@@ -56,11 +56,6 @@ portletURL.setParameter("tabs1", tabs1);
 	%>
 
 	<c:if test="<%= showToolbar %>">
-
-		<%
-		request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearchContainer);
-		%>
-
 		<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</liferay-util:include>

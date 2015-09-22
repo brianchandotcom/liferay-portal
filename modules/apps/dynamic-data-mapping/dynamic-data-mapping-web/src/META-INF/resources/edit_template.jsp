@@ -88,7 +88,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 </portlet:actionURL>
 
 <div class="container-fluid-1280">
-	<aui:form action="<%= (template == null) ? addTemplateURL : updateTemplateURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%="event.preventDefault();" %>'>
+	<aui:form action="<%= (template == null) ? addTemplateURL : updateTemplateURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
@@ -127,38 +127,36 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 		<c:if test="<%= showHeader %>">
 
 			<%
-				String title = StringPool.BLANK;
+			String title = StringPool.BLANK;
 
-				if ((structure != null) || (template != null)) {
-					title = ddmDisplay.getEditTemplateTitle(structure, template, locale);
-				}
-				else {
-					title = ddmDisplay.getEditTemplateTitle(classNameId, locale);
-				}
+			if ((structure != null) || (template != null)) {
+				title = ddmDisplay.getEditTemplateTitle(structure, template, locale);
+			}
+			else {
+				title = ddmDisplay.getEditTemplateTitle(classNameId, locale);
+			}
 
-				String backUrl = ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource);
+			String backURL = ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, resourceClassNameId, portletResource);
 			%>
 
 			<c:choose>
 				<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
 
 					<%
-						portletDisplay.setShowBackIcon(true);
-						portletDisplay.setURLBack(backUrl);
+					portletDisplay.setShowBackIcon(true);
+					portletDisplay.setURLBack(backURL);
 
-						renderResponse.setTitle(title);
+					renderResponse.setTitle(title);
 					%>
 
 				</c:when>
 				<c:otherwise>
-
 					<liferay-ui:header
-						backURL="<%= backUrl %>"
+						backURL="<%= backURL %>"
 						localizeTitle="<%= false %>"
 						showBackURL="<%= showBackURL %>"
 						title="<%= title %>"
 					/>
-
 				</c:otherwise>
 			</c:choose>
 		</c:if>

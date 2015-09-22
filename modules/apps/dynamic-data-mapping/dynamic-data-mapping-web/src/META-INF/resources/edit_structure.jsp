@@ -120,16 +120,16 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 		<c:if test="<%= showBackURL %>">
 
 			<%
-				boolean localizeTitle = true;
-				String title = "new-structure";
+			boolean localizeTitle = true;
+			String title = "new-structure";
 
-				if (structure != null) {
-					localizeTitle = false;
-					title = structure.getName(locale);
-				}
-				else {
-					title = LanguageUtil.format(request, "new-x", ddmDisplay.getStructureName(locale), false);
-				}
+			if (structure != null) {
+				localizeTitle = false;
+				title = structure.getName(locale);
+			}
+			else {
+				title = LanguageUtil.format(request, "new-x", ddmDisplay.getStructureName(locale), false);
+			}
 			%>
 
 			<c:choose>
@@ -144,14 +144,12 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 
 				</c:when>
 				<c:otherwise>
-
 					<liferay-ui:header
 						backURL="<%= redirect %>"
 						localizeTitle="<%= localizeTitle %>"
 						showBackURL="<%= showBackURL %>"
 						title="<%= title %>"
 					/>
-
 				</c:otherwise>
 			</c:choose>
 		</c:if>

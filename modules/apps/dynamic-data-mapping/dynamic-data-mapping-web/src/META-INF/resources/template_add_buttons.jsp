@@ -53,7 +53,7 @@ String message = "add";
 				</portlet:renderURL>
 
 				<liferay-frontend:add-menu-item
-					title="<%= message %>"
+					title="<%= LanguageUtil.get(request, message) %>"
 					url="<%= addTemplateURL %>"
 				/>
 
@@ -78,7 +78,7 @@ String message = "add";
 				</portlet:renderURL>
 
 				<liferay-frontend:add-menu-item
-					title="<%= message %>"
+					title="<%= LanguageUtil.get(request, message) %>"
 					url="<%= addTemplateURL %>"
 				/>
 			</c:if>

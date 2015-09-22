@@ -21,6 +21,7 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 %>
 
 <liferay-ui:search-toggle
+	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_ddm_structure_search"

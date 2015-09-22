@@ -28,9 +28,7 @@
 			%>
 
 			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" />
-
 		</liferay-frontend:management-bar-buttons>
-
 	</liferay-frontend:management-bar>
 </div>
 

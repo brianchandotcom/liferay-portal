@@ -59,10 +59,6 @@ if (layout != null) {
 TemplateSearch templateSearch = new TemplateSearch(renderRequest, PortletURLUtil.clone(portletURL, renderResponse));
 
 TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.getSearchTerms();
-
-request.setAttribute(WebKeys.SEARCH_CONTAINER, templateSearch);
-
-String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale);
 %>
 
 <liferay-ui:error exception="<%= RequiredTemplateException.MustNotDeleteTemplateReferencedByTemplateLinks.class %>" message="the-template-cannot-be-deleted-because-it-is-required-by-one-or-more-template-links" />
@@ -92,6 +88,13 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 	<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>" />
 
 	<div class="container-fluid-1280">
+		<c:if test="<%= showHeader %>">
+			<liferay-ui:header
+				backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
+				title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale) %>"
+			/>
+		</c:if>
+
 		<liferay-ui:search-container
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"

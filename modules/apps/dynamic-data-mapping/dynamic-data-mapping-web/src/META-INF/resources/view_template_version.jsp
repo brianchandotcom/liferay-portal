@@ -35,26 +35,23 @@ String title = LanguageUtil.format(request, "x-version-x", new Object[] {templat
 %>
 
 <div class="container-fluid-1280">
-
 	<c:choose>
 		<c:when test="<%= ddmDisplay.isShowBackURLInTitleBar() %>">
 
 			<%
-				portletDisplay.setShowBackIcon(true);
-				portletDisplay.setURLBack(backURL.toString());
+			portletDisplay.setShowBackIcon(true);
+			portletDisplay.setURLBack(backURL.toString());
 
-				renderResponse.setTitle(title);
+			renderResponse.setTitle(title);
 			%>
 
 		</c:when>
 		<c:otherwise>
-
 			<liferay-ui:header
 				backURL="<%= backURL.toString() %>"
 				localizeTitle="<%= false %>"
 				title="<%= title %>"
 			/>
-
 		</c:otherwise>
 	</c:choose>
 

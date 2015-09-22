@@ -1665,44 +1665,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public Set<Portlet> getControlPanelPortlets(
-		long companyId, String category) {
-
-		Set<Portlet> portletsSet = new TreeSet<>(
-			new PortletControlPanelWeightComparator());
-
-		if (Validator.isNull(category)) {
-			return portletsSet;
-		}
-
-		List<Portlet> portletsList = PortletLocalServiceUtil.getPortlets(
-			companyId);
-
-		for (Portlet portlet : portletsList) {
-			String portletCategory = portlet.getControlPanelEntryCategory();
-
-			if (category.equals(portletCategory) ||
-				(category.endsWith(StringPool.PERIOD) &&
-				 StringUtil.startsWith(portletCategory, category))) {
-
-				portletsSet.add(portlet);
-			}
-		}
-
-		return portletsSet;
-	}
-
-	@Override
-	public List<Portlet> getControlPanelPortlets(
-		String category, ThemeDisplay themeDisplay) {
-
-		Set<Portlet> portlets = getControlPanelPortlets(
-			themeDisplay.getCompanyId(), category);
-
-		return filterControlPanelPortlets(portlets, themeDisplay);
-	}
-
-	@Override
 	public PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, Group group, String portletId,
 		long refererPlid, String lifecycle) {

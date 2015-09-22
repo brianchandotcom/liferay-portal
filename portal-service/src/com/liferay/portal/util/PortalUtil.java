@@ -640,18 +640,6 @@ public class PortalUtil {
 		return getPortal().getControlPanelPlid(portletRequest);
 	}
 
-	public static Set<Portlet> getControlPanelPortlets(
-		long companyId, String category) {
-
-		return getPortal().getControlPanelPortlets(companyId, category);
-	}
-
-	public static List<Portlet> getControlPanelPortlets(
-		String category, ThemeDisplay themeDisplay) {
-
-		return getPortal().getControlPanelPortlets(category, themeDisplay);
-	}
-
 	public static PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, Group group, String portletId,
 		long refererPlid, String lifecycle) {

@@ -1617,8 +1617,6 @@ rerun your task.
 				auto.deploy.dir=${liferay.home}/osgi/apps
 				clean.delete.ivy.md5=true
 				clean.delete.lib=true
-				ivy.home=${ivy.home}
-				ivy.log.level=${ivy.log.level}
 				junit.java.integration.gc=${junit.java.integration.gc}
 				junit.java.unit.gc=${junit.java.unit.gc}
 				junit.java.unit.gc.logging=${junit.java.unit.gc.logging}

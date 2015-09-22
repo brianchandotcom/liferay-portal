@@ -24,6 +24,7 @@ CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(ren
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_calendar_resource_search"
+	markupView="lexicon"
 >
 	<aui:fieldset>
 		<aui:input name="<%= CalendarResourceDisplayTerms.CODE %>" value="<%= displayTerms.getCode() %>" />

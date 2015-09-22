@@ -425,7 +425,7 @@
 	<command name="editWorkflowDefinitionViaWorkflowCP">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ACTIONS" value1="Actions" />
+		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" value1="Actions" />
 		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_MENULIST_EDIT" value1="Edit" />
 		<execute function="SelectFrame" locator1="KaleoDesignerEditWorkflow#IFRAME" />
 	</command>

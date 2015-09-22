@@ -15,6 +15,7 @@
 package com.liferay.portlet.trash.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -109,9 +110,8 @@ public class TrashImpl implements Trash {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
-		String rootContainerModelTitle =
-			trashHandler.getRootContainerModelTitle(
-				classPK, themeDisplay.getLocale());
+		String rootContainerModelTitle = LanguageUtil.get(
+			themeDisplay.getLocale(), trashHandler.getRootContainerModelName());
 
 		if (classPK == 0) {
 			PortalUtil.addPortletBreadcrumbEntry(

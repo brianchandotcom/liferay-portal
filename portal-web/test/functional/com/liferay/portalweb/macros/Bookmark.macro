@@ -1,4 +1,6 @@
 <definition>
+	<var name="assetType" value="Bookmarks Entry" />
+
 	<command name="addBookmarkViaAP">
 		<execute function="AssertClick" locator1="AP#ADD_NEW_DROPDOWN" value1="Add New" />
 		<execute function="AssertClick" locator1="MenuItem#BOOKMARKS_ENTRY" value1="Bookmarks Entry" />

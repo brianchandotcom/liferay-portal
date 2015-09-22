@@ -1,4 +1,6 @@
 <definition>
+	<var name="assetType" value="Document" />
+
 	<command name="addCommentPG">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 

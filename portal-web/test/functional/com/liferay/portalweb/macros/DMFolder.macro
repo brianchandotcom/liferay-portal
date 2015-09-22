@@ -1,4 +1,6 @@
 <definition>
+	<var name="assetType" value="Documents Folder" />
+
 	<command name="addCP">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 

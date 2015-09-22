@@ -187,15 +187,16 @@
 		<if>
 			<equals arg1="${deleteMethod}" arg2="From List" />
 			<then>
-				<execute function="Click" locator1="Tags#TAG_ENTRY_TABLE_ACTIONS_ARROW" />
+				<var name="key_assetEntry" value="${tagName}" />
+
+				<execute function="Click" locator1="Icon#LIST_VERTICAL_ELLIPSIS" />
 				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
 			</then>
 			<elseif>
 				<equals arg1="${deleteMethod}" arg2="From Toolbar" />
 				<then>
 					<execute function="Check" locator1="Tags#TAG_ENTRY_TABLE_CHECKBOX" />
-					<execute function="Click" locator1="Tags#TOOLBAR_ACTIONS" />
-					<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+					<execute function="ClickNoError" locator1="Icon#DELETE" />
 				</then>
 			</elseif>
 			<else>
@@ -230,7 +231,7 @@
 
 		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
 
-		<execute function="AssertTextEquals" locator1="TagsEditTag#TAG_HEADER" value1="${tagName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${tagName}" />
 
 		<execute function="Type" locator1="CPTagsEdit#NAME_FIELD" value1="${tagNameEdit}" />
 
@@ -317,7 +318,9 @@
 	</command>
 
 	<command name="searchTagCP">
-		<execute function="Type" locator1="Tags#SEARCH_FIELD" value1="3" />
+		<execute function="Type" locator1="TextInput#SEARCH" value1="3" />
+
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<var name="key_tagName" value="${tagName3}" />
 
@@ -346,14 +349,13 @@
 		<if>
 			<condition function="IsElementNotPresent" locator1="Message#INFO" />
 			<then>
-				<execute function="Check" locator1="Tags#ALL_TAGS_CHECKBOX" />
-				<execute function="AssertClick" locator1="Tags#TOOLBAR_ACTIONS" value1="Actions" />
-				<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />
+				<execute function="Check" locator1="Checkbox#CHECK_ALL_NAME" />
+				<execute function="ClickNoError" locator1="Icon#DELETE" />
 				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no tags." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no tags." />
 	</command>
 
 	<command name="viewCP">

@@ -20,7 +20,7 @@
 		<var name="appName" value="WSRP" />
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="WSRP" />
+			<var name="portletName" value="WSRP Admin" />
 		</execute>
 
 		<execute function="AntCommand#antCommand" locator1="build-test.xml" value1="remove-plugin -Dplugin.name=wsrp-portlet" />

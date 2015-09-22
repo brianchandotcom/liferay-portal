@@ -528,6 +528,15 @@
 			</if>
 		</for>
 
+		<if>
+			<not>
+				<isset var="portletCategoryName" />
+			</not>
+			<then>
+				<var name="portletCategoryName" value="Apps" />
+			</then>
+		</if>
+
 		<var name="key_portletCategoryName" value="${portletCategoryName}" />
 
 		<if>

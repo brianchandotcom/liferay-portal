@@ -87,37 +87,37 @@
 <!--INLINE_PERMISSIONS-->
 <tr>
 	<td>INLINE_PERMISSIONS_ADD_DOCUMENT_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ADD_DOCUMENT']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_ADD_DOCUMENT')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INLINE_PERMISSIONS_ADD_ENTRY_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ADD_ENTRY']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_ADD_ENTRY')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_PERMISSIONS']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_PERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_SUBSCRIBE']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_SUBSCRIBE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INLINE_PERMISSIONS_REPLY_TO_MESSAGE_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_REPLY_TO_MESSAGE']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_REPLY_TO_MESSAGE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INLINE_PERMISSIONS_UPDATE</td>
-	<td>//input[@id='${key_roleName}_ACTION_UPDATE']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_UPDATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INLINE_PERMISSIONS_VIEW</td>
-	<td>//input[@id='${key_roleName}_ACTION_VIEW']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_VIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -133,87 +133,87 @@
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_ACCESS_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ACCESS']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_ACCESS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_ASSIGN_MEMBERS_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ASSIGN_MEMBERS']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_ASSIGN_MEMBERS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_ADD_DISCUSSION_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ADD_DISCUSSION']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_ADD_DISCUSSION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_ADD_RECORD_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ADD_RECORD']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_ADD_RECORD')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_ADD_PAGE_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ADD_LAYOUT']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_ADD_LAYOUT')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_CONFIGURE_APPLICATIONS_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_CONFIGURE_PORTLETS']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_CONFIGURE_PORTLETS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_CUSTOMIZE_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_CUSTOMIZE']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_CUSTOMIZE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_DEFINE_PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_DEFINE_PERMISSIONS']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_DEFINE_PERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_ADD_VOTE_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_ADD_VOTE']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_ADD_VOTE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_DELETE_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_DELETE']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_DELETE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_DELETE_DISCUSSION_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_DELETE_DISCUSSION']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_DELETE_DISCUSSION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_MANAGE_ANNOUNCEMENTS_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_MANAGE_ANNOUNCEMENTS']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_MANAGE_ANNOUNCEMENTS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_PERMISSIONS']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_PERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_PREFERENCES_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_PREFERENCES']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_PREFERENCES')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_UPDATE_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_UPDATE']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_UPDATE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_UPDATE_DISCUSSION_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_UPDATE_DISCUSSION']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_UPDATE_DISCUSSION')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_VIEW_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_VIEW']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_VIEW')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -224,12 +224,12 @@
 <!--EVENT_PERMISSIONS-->
 <tr>
 	<td>EVENT_PERMISSIONS_VIEW_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_VIEW']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_VIEW')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EVENT_PERMISSIONS_VIEW_EVENT_DETAILS_CHECKBOX</td>
-	<td>//input[@id='${key_roleName}_ACTION_VIEW_BOOKING_DETAILS']</td>
+	<td>//input[contains(@id,'${key_roleName}_ACTION_VIEW_BOOKING_DETAILS')]</td>
 	<td></td>
 </tr>
 </tbody>

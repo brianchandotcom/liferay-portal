@@ -88,6 +88,8 @@
 	<command name="deleteCP">
 		<var name="key_teamName" value="${teamName}" />
 
+		<execute function="Click" locator1="Icon#DISPLAY_STYLE_LIST" />
+
 		<execute function="AssertTextEquals" locator1="SiteTeams#TEAM_TABLE_NAME" value1="${teamName}" />
 		<execute function="Click" locator1="SiteTeams#TEAM_TABLE_ACTIONS" />
 		<execute function="AssertClickNoError" locator1="MenuItem#DELETE" value1="Delete" />

@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMPTY</td>
+	<td>//div[contains(@class,'empty-message')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
@@ -95,7 +100,7 @@
 </tr>
 <tr>
 	<td>INFO_5</td>
-	<td>//div[contains(@class,'text') and contains(@class,'white-box')]/span</td>
+	<td>//div[contains(@class,'text') and contains(@class,'empty-message')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -144,7 +149,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>EMPTY_RECYCLE_BIN_INFO</td>
+	<td>EMPTY_INFO</td>
 	<td>//div[contains(@class,'empty-message') and contains(@class,'text-center')]/span</td>
 	<td></td>
 </tr>
@@ -155,7 +160,7 @@
 </tr>
 <tr>
 	<td>RECYCLE_BIN_SUCCESS</td>
-	<td>//div[contains(.,'${key_assetType}') and contains(@class,'alert-success')]//a</td>
+	<td>//div[contains(.,'${key_assetType}') and contains(@class,'alert-success')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -210,7 +215,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_RESTORE_LOCATION</td>
-	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')] </td>
+	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')]</td>
 	<td></td>
 </tr>
 <tr>

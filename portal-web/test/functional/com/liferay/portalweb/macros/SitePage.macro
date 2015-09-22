@@ -11,6 +11,14 @@
 				<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 				<execute function="Click" locator1="Sites#SITE_TABLE_ACTIONS" />
 				<execute function="AssertClick" locator1="MenuItem#SITE_ADMINISTRATION" value1="Site Administration" />
+
+				<var name="key_category" value="Page" />
+
+				<execute function="Click" locator1="ProductMenu#CATEGORY_COLLAPSED" />
+
+				<var name="key_portlet" value="Site Pages" />
+
+				<execute function="AssertClick" locator1="ProductMenu#PORTLET" value1="Site Pages" />
 			</then>
 		</if>
 

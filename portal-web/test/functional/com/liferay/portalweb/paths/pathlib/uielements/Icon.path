@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_VERTICAL_ELLIPSIS</td>
-	<td>//li[contains(@class,'selectable') and contains(@class,'active')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//li[@data-title='${key_assetEntry}']//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>LIST_VERTICAL_ELLIPSIS</td>
-	<td>//tr[contains(@class,'info')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td>//tr[td[contains(.,'${key_assetEntry}')]]//span[contains(@class,'icon-ellipsis-vertical')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -67,8 +67,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
@@ -458,9 +456,6 @@ public class JournalArticleIndexer
 	protected Document doGetDocument(JournalArticle journalArticle)
 		throws Exception {
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			journalArticle.getClassName(), journalArticle.getClassPK());
-
 		Document document = getBaseModelDocument(CLASS_NAME, journalArticle);
 
 		long classPK = journalArticle.getId();
@@ -532,13 +527,14 @@ public class JournalArticleIndexer
 
 		document.addKeyword("headListable", headListable);
 
-		// Scheduled article should be listable and visible in asset browser
+		// Scheduled listable articles should be visible in asset browser
 
-		if (headListable && journalArticle.isScheduled()) {
-			document.addKeyword("visible", true);
-		}
-		else if (assetEntry != null) {
-			document.addKeyword("visible", assetEntry.isVisible());
+		if (journalArticle.isScheduled() && headListable) {
+			boolean visible = GetterUtil.getBoolean(document.get("visible"));
+
+			if (!visible) {
+				document.addKeyword("visible", true);
+			}
 		}
 
 		addDDMStructureAttributes(document, journalArticle);

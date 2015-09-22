@@ -4,7 +4,7 @@ import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask
 apply plugin: "com.liferay.cache"
 
 task bowerInstall(type: ExecuteNodeTask)
-task buildSoyutilsCore(type: Copy)
+task buildSoyutils(type: Copy)
 task downloadBower(type: DownloadNodeModuleTask)
 
 String bowerVersion = "1.5.2"
@@ -14,15 +14,15 @@ bowerInstall {
 	dependsOn downloadBower
 }
 
-buildSoyutilsCore {
+buildSoyutils {
 	dependsOn bowerInstall
 	from new File("bower_components", "soyutils/soyutils.js")
 	into "classes/META-INF/resources"
 }
 
 cache {
-	task(buildSoyutilsCore) {
-		baseDir = buildSoyutilsCore.destinationDir
+	task(buildSoyutils) {
+		baseDir = buildSoyutils.destinationDir
 		cacheDir = ".task-cache"
 		include "soyutils.js"
 		testFile "build.gradle"
@@ -30,7 +30,7 @@ cache {
 }
 
 classes {
-	dependsOn buildSoyutilsCore
+	dependsOn buildSoyutils
 }
 
 dependencies {

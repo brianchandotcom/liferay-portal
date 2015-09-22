@@ -43,11 +43,31 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 	title="<%= calendarName %>"
 />
 
-<liferay-ui:tabs
-	names="invite-email,reminder-email"
-	param="tabs3"
-	url="<%= portletURL %>"
-/>
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<%
+			navigationURL.setParameter("tabs3", "invite-email");
+		%>
+
+		<aui:nav-item
+			href="<%= navigationURL.toString() %>"
+			label="invite-email"
+			selected='<%= tabs3.equals("invite-email") %>'
+		/>
+
+		<%
+			navigationURL.setParameter("tabs3", "reminder-email");
+		%>
+
+		<aui:nav-item
+			href="<%= navigationURL.toString() %>"
+			label="reminder-email"
+			selected='<%= tabs3.equals("reminder-email") %>'
+		/>
+
+	</aui:nav>
+</aui:nav-bar>
 
 <liferay-portlet:actionURL name="updateCalendarNotificationTemplate" var="updateCalendarNotificationTemplateURL" />
 

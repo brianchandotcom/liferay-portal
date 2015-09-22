@@ -122,6 +122,8 @@ page import="java.util.Iterator" %><%@
 page import="java.util.List" %><%@
 page import="java.util.TimeZone" %>
 
+<%@ page import="javax.portlet.PortletURL" %>
+
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />

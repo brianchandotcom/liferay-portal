@@ -20,17 +20,37 @@
 String tabs1 = ParamUtil.getString(request, "tabs1", "calendar");
 
 PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("tabs1", tabs1);
 %>
 
 <div id="<portlet:namespace />alert"></div>
 
 <c:if test="<%= themeDisplay.isSignedIn() %>">
-	<liferay-ui:tabs
-		names="calendar,resources"
-		url="<%= portletURL.toString() %>"
-	/>
+
+	<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+		<aui:nav cssClass="navbar-nav">
+
+			<%
+				portletURL.setParameter("tabs1", "calendar");
+			%>
+
+			<aui:nav-item
+				href="<%= portletURL.toString() %>"
+				label="calendar"
+				selected='<%= tabs1.equals("calendar") %>'
+			/>
+
+			<%
+				portletURL.setParameter("tabs1", "resources");
+			%>
+
+			<aui:nav-item
+				href="<%= portletURL.toString() %>"
+				label="resources"
+				selected='<%= tabs1.equals("resources") %>'
+			/>
+
+		</aui:nav>
+	</aui:nav-bar>
 </c:if>
 
 <c:choose>

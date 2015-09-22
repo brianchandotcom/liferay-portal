@@ -32,19 +32,35 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "user-settings");
 
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
-	<%
-	String tabs2Names = "user-settings";
+	<aui:nav-bar markupView="lexicon">
+		<aui:nav cssClass="navbar-nav">
 
-	if (PortalUtil.isRSSFeedsEnabled()) {
-		tabs2Names += ",rss";
-	}
-	%>
+			<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="userSettingsURL">
+				<portlet:param name="tabs2" value="user-settings" />
+			</liferay-portlet:renderURL>
 
-	<liferay-ui:tabs
-		names="<%= tabs2Names %>"
-		param="tabs2"
-		url="<%= configurationRenderURL %>"
-	/>
+			<aui:nav-item
+				href="<%= userSettingsURL %>"
+				label="user-settings"
+				selected='<%= tabs2.equals("user-settings") %>'
+			/>
+
+			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+
+				<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="rssURL">
+					<portlet:param name="tabs2" value="rss" />
+				</liferay-portlet:renderURL>
+
+				<aui:nav-item
+					href="<%= rssURL %>"
+					label="rss"
+					selected='<%= tabs2.equals("rss") %>'
+				/>
+
+			</c:if>
+
+		</aui:nav>
+	</aui:nav-bar>
 
 	<c:choose>
 		<c:when test='<%= tabs2.equals("user-settings") %>'>

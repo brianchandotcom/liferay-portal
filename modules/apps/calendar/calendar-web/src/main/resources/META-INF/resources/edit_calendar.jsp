@@ -46,22 +46,47 @@ String calendarResourceName = calendarResource.getName(locale);
 if (Validator.isNotNull(calendarName) && !calendarName.equals(calendarResourceName)) {
 	calendarName = calendarResourceName + StringPool.SPACE + StringPool.DASH + StringPool.SPACE + calendarName;
 }
+
+String calendarId = (calendar != null) ? String.valueOf(calendar.getCalendarId()) : StringPool.BLANK;
+String calendarResourceId = (calendarResource != null) ? String.valueOf(calendarResource.getCalendarResourceId()) : StringPool.BLANK;
+
+PortletURL navigationURL = renderResponse.createRenderURL();
+
+navigationURL.setParameter("mvcPath", "/edit_calendar.jsp");
+navigationURL.setParameter("redirect", redirect);
+navigationURL.setParameter("backURL", backURL);
+navigationURL.setParameter("calendarId", calendarId);
+navigationURL.setParameter("calendarResourceId", calendarResourceId);
 %>
 
-<liferay-portlet:renderURL var="portletURL">
-	<portlet:param name="mvcPath" value="/edit_calendar.jsp" />
-	<portlet:param name="tabs2" value="<%= tabs2 %>" />
-	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="backURL" value="<%= backURL %>" />
-	<portlet:param name="calendarId" value="<%= (calendar != null) ? String.valueOf(calendar.getCalendarId()) : StringPool.BLANK %>" />
-	<portlet:param name="calendarResourceId" value="<%= (calendarResource != null) ? String.valueOf(calendarResource.getCalendarResourceId()) : StringPool.BLANK %>" />
-</liferay-portlet:renderURL>
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
 
-<liferay-ui:tabs
-	names='<%= (calendar == null) ? "general" : "general,notification-templates" %>'
-	param="tabs2"
-	url="<%= portletURL %>"
-/>
+		<%
+			navigationURL.setParameter("tabs2", "general");
+		%>
+
+		<aui:nav-item
+			href="<%= navigationURL.toString() %>"
+			label="general"
+			selected='<%= tabs2.equals("general") %>'
+		/>
+
+		<c:if test="<%= calendar != null %>">
+
+			<%
+				navigationURL.setParameter("tabs2", "notification-templates");
+			%>
+
+			<aui:nav-item
+				href="<%= navigationURL.toString() %>"
+				label="notification-templates"
+				selected='<%= tabs2.equals("notification-templates") %>'
+			/>
+		</c:if>
+
+	</aui:nav>
+</aui:nav-bar>
 
 <c:choose>
 	<c:when test='<%= tabs2.equals("general") %>'>

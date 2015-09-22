@@ -66,7 +66,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<aui:form action="<%= searchURL.toString() %>" method="get" name="fm">
+<aui:form action="<%= searchURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
@@ -113,7 +113,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator />
+		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

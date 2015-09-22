@@ -2694,7 +2694,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51721" name="EditBooleanFieldShowLabel" priority="4">
+	<command name="EditBooleanFieldShowLabel" priority="4">
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListName" value="List Name" />
 		<var name="ddlRecordFieldData" value="Yes" />

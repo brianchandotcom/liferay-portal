@@ -24,7 +24,7 @@ ItemSelectorURLViewDisplayContext itemSelectorURLViewDisplayContext = (ItemSelec
 	<aui:col cssClass="url-view" width="<%= 60 %>">
 		<aui:input helpMessage='<%= LanguageUtil.format(request, "for-example-x", "http://www.liferay.com/liferay.png", false) %>' label='<%= LanguageUtil.get(resourceBundle, "image-url") %>' name="urlInput" placeholder="http://" />
 
-		<aui:button disabled="<%= true %>" name="previewBtn" value='<%= LanguageUtil.get(resourceBundle, "enter") %>'/>
+		<aui:button disabled="<%= true %>" name="previewBtn" value='<%= LanguageUtil.get(resourceBundle, "enter") %>' />
 	</aui:col>
 </aui:row>
 

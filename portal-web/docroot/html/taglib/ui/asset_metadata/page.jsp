@@ -92,14 +92,14 @@ AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 
 			<span class="metadata-entry <%= "metadata-" + metadataField %> <%= iconCssClass %>">
 				<c:choose>
-					<c:when test='<%= value.equals("categories") %>' >
+					<c:when test='<%= value.equals("categories") %>'>
 						<liferay-ui:asset-categories-summary
 							className="<%= assetEntry.getClassName() %>"
 							classPK="<%= assetEntry.getClassPK () %>"
 							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
 						/>
 					</c:when>
-					<c:when test='<%= value.equals("tags") %>' >
+					<c:when test='<%= value.equals("tags") %>'>
 						<liferay-ui:asset-tags-summary
 							className="<%= assetEntry.getClassName() %>"
 							classPK="<%= assetEntry.getClassPK () %>"

@@ -104,7 +104,15 @@ public class SAPPortlet extends MVCPortlet {
 		for (JSONWebServiceActionMapping jsonWebServiceActionMapping :
 				jsonWebServiceActionMappings) {
 
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonArray.put(jsonObject);
+
 			Method method = jsonWebServiceActionMapping.getActionMethod();
+
+			String methodName = method.getName();
+
+			jsonObject.put("methodName", methodName);
 		}
 
 		PrintWriter writer = resourceResponse.getWriter();

@@ -28,6 +28,11 @@ public class ExceptionRetryAcceptor implements RetryAcceptor {
 
 		String name = propertyMap.get(EXCEPTION_NAME);
 
+		if (name == null) {
+			throw new IllegalArgumentException(
+				"Missing property: " + EXCEPTION_NAME);
+		}
+
 		Class clazz = null;
 
 		try {

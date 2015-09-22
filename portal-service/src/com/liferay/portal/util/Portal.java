@@ -702,8 +702,6 @@ public interface Portal {
 
 	public String getFirstPageLayoutTypes(HttpServletRequest request);
 
-	public Portlet getFirstSiteAdministrationPortlet(ThemeDisplay themeDisplay);
-
 	public String getFullName(
 		String firstName, String middleName, String lastName);
 

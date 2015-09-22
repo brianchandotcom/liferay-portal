@@ -1,4 +1,6 @@
 <definition>
+	<var name="assetType" value="Bookmarks Folder" />
+
 	<command name="addCP">
 		<execute function="AssertClick" locator1="NavListItem#ADD_FOLDER" value1="Add Folder" />
 

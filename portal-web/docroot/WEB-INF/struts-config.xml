@@ -141,12 +141,6 @@
 
 		<action path="/directory/view_user" forward="portlet.directory.view_user" />
 
-		<!-- Dockbar -->
-
-		<action path="/dockbar/view" type="com.liferay.portlet.dockbar.action.ViewAction">
-			<forward name="portlet.dockbar.view" path="portlet.dockbar.view" />
-		</action>
-
 		<!-- Flags -->
 
 		<action path="/flags/edit_entry" type="com.liferay.portlet.flags.action.EditEntryAction">

@@ -667,7 +667,6 @@
 			<execute macro="DMDocument#addPG">
 				<var name="dmDocumentDescription" value="DM Document Description" />
 				<var name="dmDocumentFile" value="Document_${entryCount}.doc" />
-				<var name="dmDocumentTitle" value="${dmDocumentFile}" />
 			</execute>
 		</for>
 

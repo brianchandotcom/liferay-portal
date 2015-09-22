@@ -14,11 +14,19 @@
 
 package com.liferay.portal.kernel.scheduler;
 
-/**
- * @author Brian Wing Shun Chan
- */
-public enum TriggerType {
+import java.util.Date;
 
-	CRON, SIMPLE
+/**
+ * @author Tina Tian
+ */
+public interface TriggerFactory {
+
+	public Trigger createTrigger(
+		String jobName, String groupName, Date startDate, Date endDate,
+		int interval, TimeUnit timeUnit);
+
+	public Trigger createTrigger(
+		String jobName, String groupName, Date startDate, Date endDate,
+		String cronExpression);
 
 }

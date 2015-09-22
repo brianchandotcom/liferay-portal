@@ -19,12 +19,13 @@ import aQute.bnd.annotation.component.Activate;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
-import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
+import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.ldap.configuration.LDAPConfiguration;
 import com.liferay.portal.ldap.settings.LDAPConfigurationSettingsUtil;
@@ -80,7 +81,7 @@ public class MessagingConfigurator {
 
 		int interval = ldapConfiguration.importInterval();
 
-		Trigger trigger = new IntervalTrigger(
+		Trigger trigger = TriggerFactoryUtil.createTrigger(
 			UserImportMessageListener.class.getName(),
 			UserImportMessageListener.class.getName(), interval,
 			TimeUnit.MINUTE);
@@ -127,6 +128,10 @@ public class MessagingConfigurator {
 		SchedulerEngineHelper schedulerEngineHelper) {
 
 		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTriggerFactory(TriggerFactory triggerFactory) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

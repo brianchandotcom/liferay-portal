@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
@@ -62,6 +61,7 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -1757,8 +1757,8 @@ public class ClusterSchedulerEngineTest {
 	protected static Trigger getTrigger(
 		String jobName, String groupName, int interval) {
 
-		return new IntervalTrigger(
-			jobName, groupName, interval, TimeUnit.SECOND);
+		return new MockTrigger(
+			jobName, groupName, null, null, interval, TimeUnit.SECOND);
 	}
 
 	protected void assertSuppressErrorValue(
@@ -1772,12 +1772,9 @@ public class ClusterSchedulerEngineTest {
 	protected void assertTriggerContent(
 		SchedulerResponse schedulerResponse, int expectedInterval) {
 
-		Trigger trigger = schedulerResponse.getTrigger();
+		MockTrigger mockTrigger = (MockTrigger)schedulerResponse.getTrigger();
 
-		ObjectValuePair<Integer, TimeUnit> objectValuePair =
-			(ObjectValuePair<Integer, TimeUnit>)trigger.getTriggerContent();
-
-		Assert.assertEquals(expectedInterval, (int)objectValuePair.getKey());
+		Assert.assertEquals(expectedInterval, mockTrigger.getInterval());
 	}
 
 	protected void assertTriggerState(
@@ -2374,6 +2371,62 @@ public class ClusterSchedulerEngineTest {
 
 		private final Map<String, SchedulerResponse> _defaultJobs =
 			new HashMap<>();
+
+	}
+
+	private static class MockTrigger implements Trigger {
+
+		public MockTrigger(
+			String jobName, String groupName, Date startDate, Date endDate,
+			int interval, TimeUnit timeUnit) {
+
+			_jobName = jobName;
+			_groupName = groupName;
+			_startDate = startDate;
+			_endDate = endDate;
+			_interval = interval;
+			_timeUnit = timeUnit;
+		}
+
+		@Override
+		public Date getEndDate() {
+			return _endDate;
+		}
+
+		@Override
+		public String getGroupName() {
+			return _groupName;
+		}
+
+		public int getInterval() {
+			return _interval;
+		}
+
+		@Override
+		public String getJobName() {
+			return _jobName;
+		}
+
+		@Override
+		public Serializable getRealTrigger() {
+			return null;
+		}
+
+		@Override
+		public Date getStartDate() {
+			return _startDate;
+		}
+
+		public TimeUnit getTimeUnit() {
+			return _timeUnit;
+		}
+
+		private final Date _endDate;
+		private final String _groupName;
+		private final int _interval;
+		private final String _jobName;
+		private final Date _startDate;
+		private final TimeUnit _timeUnit;
 
 	}
 

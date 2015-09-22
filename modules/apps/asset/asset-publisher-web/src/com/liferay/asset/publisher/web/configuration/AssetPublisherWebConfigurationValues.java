@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
  */
 public class AssetPublisherWebConfigurationValues {
 
-	public static final String CHECK_INTERVAL = GetterUtil.getString(
+	public static final int CHECK_INTERVAL = GetterUtil.getInteger(
 		AssetPublisherWebConfigurationUtil.get("check.interval"));
 
 	public static final String DISPLAY_STYLE_DEFAULT = GetterUtil.getString(

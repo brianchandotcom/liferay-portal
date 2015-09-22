@@ -16,10 +16,7 @@ package com.liferay.portal.kernel.messaging;
 
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
-import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
-import com.liferay.portal.kernel.scheduler.TriggerType;
 
 /**
  * @author Brian Wing Shun Chan
@@ -30,69 +27,24 @@ public abstract class BaseSchedulerEntryMessageListener
 	public BaseSchedulerEntryMessageListener() {
 		Class<?> clazz = getClass();
 
-		schedulerEntry.setEventListenerClass(clazz.getName());
+		schedulerEntryImpl.setEventListenerClass(clazz.getName());
 	}
 
 	@Override
 	public String getDescription() {
-		return schedulerEntry.getDescription();
+		return schedulerEntryImpl.getDescription();
 	}
 
 	@Override
 	public String getEventListenerClass() {
-		return schedulerEntry.getEventListenerClass();
+		return schedulerEntryImpl.getEventListenerClass();
 	}
 
 	@Override
-	public TimeUnit getTimeUnit() {
-		return schedulerEntry.getTimeUnit();
+	public Trigger getTrigger() {
+		return schedulerEntryImpl.getTrigger();
 	}
 
-	@Override
-	public Trigger getTrigger() throws SchedulerException {
-		return schedulerEntry.getTrigger();
-	}
-
-	@Override
-	public TriggerType getTriggerType() {
-		return schedulerEntry.getTriggerType();
-	}
-
-	@Override
-	public String getTriggerValue() {
-		return schedulerEntry.getTriggerValue();
-	}
-
-	@Override
-	public void setDescription(String description) {
-		schedulerEntry.setDescription(description);
-	}
-
-	@Override
-	public void setEventListenerClass(String eventListenerClass) {
-		schedulerEntry.setEventListenerClass(eventListenerClass);
-	}
-
-	@Override
-	public void setTimeUnit(TimeUnit timeUnit) {
-		schedulerEntry.setTimeUnit(timeUnit);
-	}
-
-	@Override
-	public void setTriggerType(TriggerType triggerType) {
-		schedulerEntry.setTriggerType(triggerType);
-	}
-
-	@Override
-	public void setTriggerValue(int triggerValue) {
-		schedulerEntry.setTriggerValue(triggerValue);
-	}
-
-	@Override
-	public void setTriggerValue(String triggerValue) {
-		schedulerEntry.setTriggerValue(triggerValue);
-	}
-
-	protected SchedulerEntry schedulerEntry = new SchedulerEntryImpl();
+	protected SchedulerEntryImpl schedulerEntryImpl = new SchedulerEntryImpl();
 
 }

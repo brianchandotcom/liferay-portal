@@ -358,7 +358,7 @@ AUI.add(
 
 						var link = links.item(instance.get('currentIndex'));
 
-						caption = link.attr('title') ? link.attr('title') : link.attr('data-title');
+						var caption = link.attr('title') || link.attr('data-title');
 
 						instance._captionEl.set('text', caption);
 					}

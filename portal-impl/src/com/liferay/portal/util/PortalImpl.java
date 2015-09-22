@@ -2395,26 +2395,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public Portlet getFirstSiteAdministrationPortlet(
-		ThemeDisplay themeDisplay) {
-
-		Portlet siteAdministrationPortlet = null;
-
-		for (String category : PortletCategoryKeys.SITE_ADMINISTRATION_ALL) {
-			List<Portlet> portlets = getControlPanelPortlets(
-				category, themeDisplay);
-
-			if (portlets.isEmpty()) {
-				continue;
-			}
-
-			return portlets.get(0);
-		}
-
-		return siteAdministrationPortlet;
-	}
-
-	@Override
 	public String getFullName(
 		String firstName, String middleName, String lastName) {
 

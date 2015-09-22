@@ -86,20 +86,22 @@ public class RubySassCompilerTest {
 				"/internal/dependencies/sass-spec/14_imports");
 
 		File inputFile = new File(inputDir, "input.scss");
-		File sourceMapFile = new File(inputDir, "input.css.map");
+		File sourceMapFile = new File(inputDir, ".sass-cache/input.css.map");
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
 
 		String actualOutput = sassCompiler.compileFile(
-			inputFile.getCanonicalPath(), "", true);
+			inputFile.getCanonicalPath(), "", true,
+			sourceMapFile.getCanonicalPath());
 
 		Assert.assertNotNull(actualOutput);
 		Assert.assertTrue(sourceMapFile.exists());
 
 		File expectedOutputFile = new File(
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
-				"/internal/dependencies/sourcemaps", "expected_output.css");
+				"/internal/dependencies/sourcemaps",
+			"expected_output.css");
 
 		String expectedOutput = read(expectedOutputFile.toPath());
 
@@ -132,8 +134,7 @@ public class RubySassCompilerTest {
 				"/internal/dependencies/sass-spec/14_imports");
 
 		File inputFile = new File(inputDir, "input.scss");
-		File sourceMapFile = new File(
-			inputDir, ".sass-cache/input.css.map");
+		File sourceMapFile = new File(inputDir, "input.css.map");
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
@@ -141,8 +142,7 @@ public class RubySassCompilerTest {
 		String input = read(inputFile.toPath());
 
 		String actualOutput = sassCompiler.compileString(
-			input, inputFile.getCanonicalPath(), "", true,
-			sourceMapFile.getCanonicalPath());
+			input, inputFile.getCanonicalPath(), "", true);
 
 		Assert.assertNotNull(actualOutput);
 		Assert.assertTrue(sourceMapFile.exists());

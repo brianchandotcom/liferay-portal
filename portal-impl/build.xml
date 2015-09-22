@@ -791,9 +791,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				<equals arg1="${upgrade.table.dir}" arg2="" />
 			</not>
 			<then>
-				<ant antfile="build-common.xml" dir="${sdk.dir}" inheritAll="false" target="prepare-upgrade-table">
-					<property name="upgrade.table.dir" value="${upgrade.table.dir}" />
-				</ant>
+				<antcall target="prepare-upgrade-table" />
 
 				<java
 					classname="com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder"

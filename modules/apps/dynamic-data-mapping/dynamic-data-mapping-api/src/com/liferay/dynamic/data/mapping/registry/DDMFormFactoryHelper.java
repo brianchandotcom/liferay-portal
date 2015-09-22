@@ -200,6 +200,10 @@ public class DDMFormFactoryHelper {
 		return false;
 	}
 
+	public boolean isDDMFormFieldRequired() {
+		return _ddmFormField.required();
+	}
+
 	protected String getKey(String value) {
 		return StringUtil.extractLast(value, StringPool.PERCENT);
 	}

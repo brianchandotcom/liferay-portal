@@ -184,7 +184,7 @@ public class SQLTransformer {
 		Matcher matcher = _castClobTextPattern.matcher(sql);
 
 		if (_vendorOracle) {
-			return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 1, 4000)");
+			return matcher.replaceAll("DBMS_LOB.SUBSTR($1, 4000, 1)");
 		}
 
 		return _replaceCastText(matcher);

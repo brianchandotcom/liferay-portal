@@ -307,13 +307,13 @@ public abstract class JournalArticleLocalServiceBaseImpl
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(stagedModelType,
+					manifestSummary.addModelAdditionCount(stagedModelType.toString(),
 						modelAdditionCount);
 
 					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
 							stagedModelType);
 
-					manifestSummary.addModelDeletionCount(stagedModelType,
+					manifestSummary.addModelDeletionCount(stagedModelType.toString(),
 						modelDeletionCount);
 
 					return modelAdditionCount;
@@ -348,18 +348,12 @@ public abstract class JournalArticleLocalServiceBaseImpl
 
 					StagedModelType stagedModelType = exportActionableDynamicQuery.getStagedModelType();
 
-					long referrerClassNameId = stagedModelType.getReferrerClassNameId();
+					if (stagedModelType.getReferrerClassNameId() >= 0) {
+						Property classNameIdProperty = PropertyFactoryUtil.forName(
+								"classNameId");
 
-					Property classNameIdProperty = PropertyFactoryUtil.forName(
-							"classNameId");
-
-					if ((referrerClassNameId != StagedModelType.REFERRER_CLASS_NAME_ID_ALL) &&
-							(referrerClassNameId != StagedModelType.REFERRER_CLASS_NAME_ID_ANY)) {
 						dynamicQuery.add(classNameIdProperty.eq(
 								stagedModelType.getReferrerClassNameId()));
-					}
-					else if (referrerClassNameId == StagedModelType.REFERRER_CLASS_NAME_ID_ANY) {
-						dynamicQuery.add(classNameIdProperty.isNotNull());
 					}
 
 					Property workflowStatusProperty = PropertyFactoryUtil.forName(
@@ -393,8 +387,7 @@ public abstract class JournalArticleLocalServiceBaseImpl
 				}
 			});
 		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
-				PortalUtil.getClassNameId(JournalArticle.class.getName()),
-				StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
+				PortalUtil.getClassNameId(JournalArticle.class.getName())));
 
 		return exportActionableDynamicQuery;
 	}

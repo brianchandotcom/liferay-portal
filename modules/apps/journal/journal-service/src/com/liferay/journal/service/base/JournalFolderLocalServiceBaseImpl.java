@@ -298,13 +298,13 @@ public abstract class JournalFolderLocalServiceBaseImpl
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(stagedModelType,
+					manifestSummary.addModelAdditionCount(stagedModelType.toString(),
 						modelAdditionCount);
 
 					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
 							stagedModelType);
 
-					manifestSummary.addModelDeletionCount(stagedModelType,
+					manifestSummary.addModelDeletionCount(stagedModelType.toString(),
 						modelDeletionCount);
 
 					return modelAdditionCount;

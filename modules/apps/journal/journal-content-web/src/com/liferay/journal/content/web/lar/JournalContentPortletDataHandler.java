@@ -18,8 +18,6 @@ import com.liferay.journal.content.web.configuration.JournalContentWebConfigurat
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.lar.JournalPortletDataHandler;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.exportimport.lar.DataLevel;
@@ -103,8 +101,5 @@ public class JournalContentPortletDataHandler
 	protected void setModuleServiceLifecycle(
 		ModuleServiceLifecycle moduleServiceLifecycle) {
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		JournalContentPortletDataHandler.class);
 
 }

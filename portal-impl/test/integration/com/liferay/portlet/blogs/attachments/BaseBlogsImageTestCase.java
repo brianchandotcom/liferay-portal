@@ -173,7 +173,7 @@ public abstract class BaseBlogsImageTestCase {
 	}
 
 	@Test
-	public void testImageStoredInImageFolder() throws Exception {
+	public void testImageStoredInInvisibleImageFolder() throws Exception {
 		BlogsEntry blogsEntry = addBlogsEntry("image1.jpg");
 
 		FileEntry imageFileEntry =
@@ -241,6 +241,19 @@ public abstract class BaseBlogsImageTestCase {
 			imageFileEntry.getRepositoryId());
 
 		Assert.assertEquals(BlogsConstants.SERVICE_NAME, repository.getName());
+	}
+
+	@Test
+	public void testOriginalImageStoredInVisibleImageFolder() throws Exception {
+		addBlogsEntry("image1.jpg");
+
+		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+			user.getUserId(), group.getGroupId());
+
+		PortletFileRepositoryUtil.getPortletFileEntry(
+			group.getGroupId(), folder.getFolderId(), "image1.jpg");
+
+		Assert.assertEquals(BlogsConstants.SERVICE_NAME, folder.getName());
 	}
 
 	@Test(expected = NoSuchFileEntryException.class)

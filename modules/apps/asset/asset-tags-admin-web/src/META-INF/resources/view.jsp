@@ -67,6 +67,10 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 			<%
 			String keywords = ParamUtil.getString(request, "keywords", null);
 
+			if (Validator.isNotNull(keywords)) {
+				keywords = StringUtil.quote(keywords, StringPool.PERCENT);
+			}
+
 			total = AssetTagServiceUtil.getTagsCount(scopeGroupId, keywords);
 
 			searchContainer.setTotal(total);

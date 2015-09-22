@@ -15,6 +15,7 @@
 package com.liferay.portal.service;
 
 import java.util.Map;
+
 /**
  * @author Matthew Tambara
  */
@@ -33,33 +34,28 @@ public class ExceptionRetryAcceptor implements RetryAcceptor {
 				"Missing property: " + EXCEPTION_NAME);
 		}
 
-		Class clazz = null;
-
-		try {
-			clazz = t.getClass();
+		while (true) {
+			Class<?> clazz = t.getClass();
 
 			ClassLoader classLoader = clazz.getClassLoader();
 
-			clazz = classLoader.loadClass(name);
-		}
-		catch (ClassNotFoundException cnfe) {
-			return false;
-		}
+			try {
+				Class<?> exceptionClass = classLoader.loadClass(name);
 
-		Throwable cause = t.getCause();
-
-		while (t != cause) {
-			if (clazz.isInstance(t)) {
-				return true;
+				if (exceptionClass.isInstance(t)) {
+					return true;
+				}
+			}
+			catch (ClassNotFoundException cnfe) {
 			}
 
-			if (cause == null) {
-				return false;
+			Throwable cause = t.getCause();
+
+			if ((t == cause) || (cause == null)) {
+				break;
 			}
 
 			t = cause;
-
-			cause = t.getCause();
 		}
 
 		return false;

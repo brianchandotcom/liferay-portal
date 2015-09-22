@@ -16,7 +16,7 @@ package com.liferay.exportimport.lar;
 
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
-import com.liferay.exportimport.stagedmodel.repository.StagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;

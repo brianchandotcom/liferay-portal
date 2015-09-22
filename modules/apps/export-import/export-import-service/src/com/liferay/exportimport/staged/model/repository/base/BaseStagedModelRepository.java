@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.exportimport.stagedmodel.repository.base;
+package com.liferay.exportimport.staged.model.repository.base;
 
-import com.liferay.exportimport.stagedmodel.repository.StagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.stagedmodel.repository;
+package com.liferay.exportimport.staged.model.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.StagedModel;

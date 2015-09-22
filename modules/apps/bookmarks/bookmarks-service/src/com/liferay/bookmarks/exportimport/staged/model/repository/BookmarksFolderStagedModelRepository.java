@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.bookmarks.exportimport.stagedmodel.repository;
+package com.liferay.bookmarks.exportimport.staged.model.repository;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
-import com.liferay.exportimport.stagedmodel.repository.StagedModelRepository;
-import com.liferay.exportimport.stagedmodel.repository.base.BaseStagedModelRepository;
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
+import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -34,17 +34,17 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksEntry"},
+	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"},
 	service = StagedModelRepository.class
 )
-public class BookmarksEntryStagedModelRepository
-	extends BaseStagedModelRepository<BookmarksEntry> {
+public class BookmarksFolderStagedModelRepository
+	extends BaseStagedModelRepository<BookmarksFolder> {
 
 	@Override
-	public void deleteStagedModel(BookmarksEntry bookmarksEntry)
+	public void deleteStagedModel(BookmarksFolder bookmarksFolder)
 		throws PortalException {
 
-		BookmarksEntryLocalServiceUtil.deleteEntry(bookmarksEntry);
+		BookmarksFolderLocalServiceUtil.deleteFolder(bookmarksFolder);
 	}
 
 	@Override
@@ -52,59 +52,54 @@ public class BookmarksEntryStagedModelRepository
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		BookmarksEntry bookmarksEntry = fetchStagedModelByUuidAndGroupId(
+		BookmarksFolder bookmarksFolder = fetchStagedModelByUuidAndGroupId(
 			uuid, groupId);
 
-		if (bookmarksEntry != null) {
-			deleteStagedModel(bookmarksEntry);
+		if (bookmarksFolder != null) {
+			deleteStagedModel(bookmarksFolder);
 		}
 	}
 
 	@Override
-	public BookmarksEntry fetchStagedModelByUuidAndGroupId(
+	public BookmarksFolder fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
-		return BookmarksEntryLocalServiceUtil.
-			fetchBookmarksEntryByUuidAndGroupId(uuid, groupId);
+		return BookmarksFolderLocalServiceUtil.
+			fetchBookmarksFolderByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
-	public List<BookmarksEntry> fetchStagedModelsByUuidAndCompanyId(
+	public List<BookmarksFolder> fetchStagedModelsByUuidAndCompanyId(
 		String uuid, long companyId) {
 
-		return BookmarksEntryLocalServiceUtil.
-			getBookmarksEntriesByUuidAndCompanyId(
+		return BookmarksFolderLocalServiceUtil.
+			getBookmarksFoldersByUuidAndCompanyId(
 				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<BookmarksEntry>());
+				new StagedModelModifiedDateComparator<BookmarksFolder>());
 	}
 
 	@Override
 	public void restoreStagedModel(
 			PortletDataContext portletDataContext,
-			BookmarksEntry bookmarksEntry)
+			BookmarksFolder bookmarksFolder)
 		throws PortletDataException {
 
 		long userId = portletDataContext.getUserId(
-			bookmarksEntry.getUserUuid());
+			bookmarksFolder.getUserUuid());
 
-		BookmarksEntry existingBookmarksEntry =
-			fetchStagedModelByUuidAndGroupId(
-				bookmarksEntry.getUuid(), portletDataContext.getScopeGroupId());
+		BookmarksFolder existingFolder = fetchStagedModelByUuidAndGroupId(
+			bookmarksFolder.getUuid(), portletDataContext.getScopeGroupId());
 
-		if ((existingBookmarksEntry == null) ||
-			!isStagedModelInTrash(existingBookmarksEntry)) {
-
+		if ((existingFolder == null) || !isStagedModelInTrash(existingFolder)) {
 			return;
 		}
 
-		TrashHandler trashHandler = existingBookmarksEntry.getTrashHandler();
+		TrashHandler trashHandler = existingFolder.getTrashHandler();
 
 		try {
-			if (trashHandler.isRestorable(
-					existingBookmarksEntry.getEntryId())) {
-
+			if (trashHandler.isRestorable(existingFolder.getFolderId())) {
 				trashHandler.restoreTrashEntry(
-					userId, existingBookmarksEntry.getEntryId());
+					userId, existingFolder.getFolderId());
 			}
 		}
 		catch (PortalException pe) {

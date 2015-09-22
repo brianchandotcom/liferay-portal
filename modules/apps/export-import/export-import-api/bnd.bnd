@@ -4,5 +4,5 @@ Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.exportimport.content.processor,\
 	com.liferay.exportimport.portlet.preferences.processor,\
-	com.liferay.exportimport.stagedmodel.repository
+	com.liferay.exportimport.staged.model.repository
 Include-Resource: classes

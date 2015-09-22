@@ -9,7 +9,7 @@ Export-Package:\
 	com.liferay.exportimport.messaging,\
 	com.liferay.exportimport.portlet.preferences.processor.base,\
 	com.liferay.exportimport.search,\
-	com.liferay.exportimport.stagedmodel.repository.base,\
+	com.liferay.exportimport.staged.model.repository.base,\
 	com.liferay.exportimport.staging,\
 	com.liferay.exportimport.xstream
 Include-Resource:\

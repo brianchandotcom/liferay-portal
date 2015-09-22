@@ -1180,7 +1180,12 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<unzip src="tools/selenium/${selenium.ie.driver.zip}" dest="tools/selenium" />
 				</then>
 				<else>
-					<fail message="Operating system is not supported." />
+					<if>
+						<equals arg1="${selenium.remote.driver.enabled}" arg2="false" />
+						<then>
+							<fail message="Operating system is not supported." />
+						</then>
+					</if>
 				</else>
 			</if>
 		</sequential>
@@ -4807,6 +4812,8 @@ module.framework.properties.osgi.console=11312</echo>
 			browser.type=${browser.type}
 			selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
 			selenium.chrome.driver.version=${selenium.chrome.driver.version}
+			selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
+			selenium.desired.capabilities.version=${selenium.desired.capabilities.version}
 			selenium.executable.dir.name=${selenium.executable.dir.name}
 			selenium.ie.driver.executable=${selenium.ie.driver.executable}
 			selenium.ie.driver.version=${selenium.ie.driver.version}

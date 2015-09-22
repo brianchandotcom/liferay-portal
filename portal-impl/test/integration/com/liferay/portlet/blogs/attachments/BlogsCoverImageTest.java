@@ -95,7 +95,7 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 
 	@Override
 	protected BlogsEntry updateBlogsEntry(
-			long blogsEntryId, String coverImageTitle)
+			long blogsEntryId, String imageTitle)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -103,7 +103,7 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 				group.getGroupId(), user.getUserId());
 
 		FileEntry fileEntry = getTempFileEntry(
-			user.getUserId(), coverImageTitle, serviceContext);
+			user.getUserId(), imageTitle, serviceContext);
 
 		ImageSelector imageSelector = new ImageSelector(
 			fileEntry.getFileEntryId(), StringPool.BLANK, _IMAGE_CROP_REGION);

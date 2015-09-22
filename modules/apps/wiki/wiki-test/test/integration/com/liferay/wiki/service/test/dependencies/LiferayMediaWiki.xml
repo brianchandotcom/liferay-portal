@@ -6,41 +6,41 @@
 		<generator>MediaWiki 1.26wmf21</generator>
 		<case>first-letter</case>
 		<namespaces>
-			<namespace key="-2" case="first-letter">Media</namespace>
-			<namespace key="-1" case="first-letter">Special</namespace>
-			<namespace key="0" case="first-letter" />
-			<namespace key="1" case="first-letter">Talk</namespace>
-			<namespace key="2" case="first-letter">User</namespace>
-			<namespace key="3" case="first-letter">User talk</namespace>
-			<namespace key="4" case="first-letter">Wikipedia</namespace>
-			<namespace key="5" case="first-letter">Wikipedia talk</namespace>
-			<namespace key="6" case="first-letter">File</namespace>
-			<namespace key="7" case="first-letter">File talk</namespace>
-			<namespace key="8" case="first-letter">MediaWiki</namespace>
-			<namespace key="9" case="first-letter">MediaWiki talk</namespace>
-			<namespace key="10" case="first-letter">Template</namespace>
-			<namespace key="11" case="first-letter">Template talk</namespace>
-			<namespace key="12" case="first-letter">Help</namespace>
-			<namespace key="13" case="first-letter">Help talk</namespace>
-			<namespace key="14" case="first-letter">Category</namespace>
-			<namespace key="15" case="first-letter">Category talk</namespace>
-			<namespace key="100" case="first-letter">Portal</namespace>
-			<namespace key="101" case="first-letter">Portal talk</namespace>
-			<namespace key="108" case="first-letter">Book</namespace>
-			<namespace key="109" case="first-letter">Book talk</namespace>
-			<namespace key="118" case="first-letter">Draft</namespace>
-			<namespace key="119" case="first-letter">Draft talk</namespace>
-			<namespace key="446" case="first-letter">Education Program</namespace>
-			<namespace key="447" case="first-letter">Education Program talk</namespace>
-			<namespace key="710" case="first-letter">TimedText</namespace>
-			<namespace key="711" case="first-letter">TimedText talk</namespace>
-			<namespace key="828" case="first-letter">Module</namespace>
-			<namespace key="829" case="first-letter">Module talk</namespace>
-			<namespace key="2300" case="first-letter">Gadget</namespace>
-			<namespace key="2301" case="first-letter">Gadget talk</namespace>
-			<namespace key="2302" case="case-sensitive">Gadget definition</namespace>
-			<namespace key="2303" case="case-sensitive">Gadget definition talk</namespace>
-			<namespace key="2600" case="first-letter">Topic</namespace>
+			<namespace case="first-letter" key="-2">Media</namespace>
+			<namespace case="first-letter" key="-1">Special</namespace>
+			<namespace case="first-letter" key="0" />
+			<namespace case="first-letter" key="1">Talk</namespace>
+			<namespace case="first-letter" key="2">User</namespace>
+			<namespace case="first-letter" key="3">User talk</namespace>
+			<namespace case="first-letter" key="4">Wikipedia</namespace>
+			<namespace case="first-letter" key="5">Wikipedia talk</namespace>
+			<namespace case="first-letter" key="6">File</namespace>
+			<namespace case="first-letter" key="7">File talk</namespace>
+			<namespace case="first-letter" key="8">MediaWiki</namespace>
+			<namespace case="first-letter" key="9">MediaWiki talk</namespace>
+			<namespace case="first-letter" key="10">Template</namespace>
+			<namespace case="first-letter" key="11">Template talk</namespace>
+			<namespace case="first-letter" key="12">Help</namespace>
+			<namespace case="first-letter" key="13">Help talk</namespace>
+			<namespace case="first-letter" key="14">Category</namespace>
+			<namespace case="first-letter" key="15">Category talk</namespace>
+			<namespace case="first-letter" key="100">Portal</namespace>
+			<namespace case="first-letter" key="101">Portal talk</namespace>
+			<namespace case="first-letter" key="108">Book</namespace>
+			<namespace case="first-letter" key="109">Book talk</namespace>
+			<namespace case="first-letter" key="118">Draft</namespace>
+			<namespace case="first-letter" key="119">Draft talk</namespace>
+			<namespace case="first-letter" key="446">Education Program</namespace>
+			<namespace case="first-letter" key="447">Education Program talk</namespace>
+			<namespace case="first-letter" key="710">TimedText</namespace>
+			<namespace case="first-letter" key="711">TimedText talk</namespace>
+			<namespace case="first-letter" key="828">Module</namespace>
+			<namespace case="first-letter" key="829">Module talk</namespace>
+			<namespace case="first-letter" key="2300">Gadget</namespace>
+			<namespace case="first-letter" key="2301">Gadget talk</namespace>
+			<namespace case="case-sensitive" key="2302">Gadget definition</namespace>
+			<namespace case="case-sensitive" key="2303">Gadget definition talk</namespace>
+			<namespace case="first-letter" key="2600">Topic</namespace>
 		</namespaces>
 	</siteinfo>
 	<page>
@@ -58,7 +58,7 @@
 			<comment>Lead must explain why the the topic is notable. Java is internal information, so pushed a bit further away. List of sub-products not needed in the lead</comment>
 			<model>wikitext</model>
 			<format>text/x-wiki</format>
-			<text xml:space="preserve" bytes="19064">
+			<text bytes="19064" xml:space="preserve">
 				{{Infobox software
 				| logo                   = Liferaylogo.png
 				| logo size              = 120px

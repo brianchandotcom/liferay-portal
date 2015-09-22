@@ -46,6 +46,12 @@ AUI.add(
 			hasValidation: function() {
 				var instance = this;
 
+				var required = instance.get('required');
+
+				if (required) {
+					return true;
+				}
+
 				var validation = instance.get('validation');
 
 				var expression = validation.expression;

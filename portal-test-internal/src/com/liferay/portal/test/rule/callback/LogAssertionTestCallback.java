@@ -149,15 +149,15 @@ public class LogAssertionTestCallback
 
 		List<ExpectedLogs> expectedLogses = new ArrayList<>();
 
-		if (expectedMultipleLogs != null) {
+		if (expectedMultipleLogs == null) {
+			expectedLogses.add(description.getAnnotation(ExpectedLogs.class));
+		}
+		else {
 			for (ExpectedLogs expectedLogs :
 					expectedMultipleLogs.expectedMultipleLogs()) {
 
 				expectedLogses.add(expectedLogs);
 			}
-		}
-		else {
-			expectedLogses.add(description.getAnnotation(ExpectedLogs.class));
 		}
 
 		endAssert(expectedLogses, captureAppenders);
@@ -178,15 +178,15 @@ public class LogAssertionTestCallback
 
 		List<ExpectedLogs> expectedLogses = new ArrayList<>();
 
-		if (expectedMultipleLogs != null) {
+		if (expectedMultipleLogs == null) {
+			expectedLogses.add(description.getAnnotation(ExpectedLogs.class));
+		}
+		else {
 			for (ExpectedLogs expectedLogs :
 					expectedMultipleLogs.expectedMultipleLogs()) {
 
 				expectedLogses.add(expectedLogs);
 			}
-		}
-		else {
-			expectedLogses.add(description.getAnnotation(ExpectedLogs.class));
 		}
 
 		return startAssert(expectedLogses);

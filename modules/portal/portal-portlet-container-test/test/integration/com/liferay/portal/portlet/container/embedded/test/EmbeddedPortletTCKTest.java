@@ -68,9 +68,6 @@ import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
-
 /**
  * A portlet is considered explicitly added to a layout if all these
  * circumstances are satisfied: (See
@@ -383,28 +380,17 @@ public class EmbeddedPortletTCKTest {
 
 			setUpPortlet(adtPortlet, properties, TEST_PORTLET_ID);
 
-			// register ADT Template Handler
-
-			BundleContext bundleContext = getBundleContext();
-
 			properties.put("javax.portlet.name", TEST_PORTLET_ID);
 
-			ServiceRegistration<?> templateHandlerServiceRegistration =
-				bundleContext.registerService(
-					new String[] {
-						Object.class.getName(), TemplateHandler.class.getName()
-					}, new TestEmbeddedPortletDisplayTemplateHandler(),
-					properties);
-
-			serviceRegistrations.add(templateHandlerServiceRegistration);
+			registerService(
+				TemplateHandler.class,
+				new TestEmbeddedPortletDisplayTemplateHandler(), properties);
 
 			HttpServletRequest httpServletRequest = getHttpServletRequest();
 
 			PortletURL portletURL = new PortletURLImpl(
 				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.RENDER_PHASE);
-
-			String testRuntimePortletId = "testRuntimePortletId";
 
 			TestPortlet testRuntimePortlet = new TestPortlet(map) {
 
@@ -417,6 +403,8 @@ public class EmbeddedPortletTCKTest {
 				}
 
 			};
+
+			String testRuntimePortletId = "testRuntimePortletId";
 
 			setUpPortlet(
 				testRuntimePortlet, properties, testRuntimePortletId, false);

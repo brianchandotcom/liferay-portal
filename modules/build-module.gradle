@@ -110,14 +110,6 @@ configurations {
 		extendsFrom configurations.runtime
 		extendsFrom portal
 	}
-
-	whenObjectAdded {
-		Configuration configuration ->
-
-		if (configuration.name == "portalToolsThumbnailBuilder") {
-			configuration.extendsFrom portal
-		}
-	}
 }
 
 if (FileUtil.exists(project, "docroot")) {

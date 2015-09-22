@@ -23,6 +23,9 @@ String assetTagName = ParamUtil.getString(request, "tag");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
@@ -48,6 +51,16 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	checkBoxContainerId="blogEntriesSearchContainer"
 	includeCheckBox="<%= true %>"
 >
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= orderByCol %>"
+			orderByType="<%= orderByType %>"
+			orderColumns='<%= new String[] {"title", "display-date"} %>'
+			portletURL="<%= portletURL %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
 	<liferay-frontend:management-bar-action-buttons>
 
 		<%
@@ -79,6 +92,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 
 	<liferay-ui:search-container
 		id="blogEntries"
+		orderByComparator="<%= BlogsUtil.getOrderByComparator(orderByCol, orderByType) %>"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
 		searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
 	>

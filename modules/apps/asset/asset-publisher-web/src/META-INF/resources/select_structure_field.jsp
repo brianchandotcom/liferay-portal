@@ -33,6 +33,8 @@ portletURL.setParameter("mvcPath", "/select_structure_field.jsp");
 portletURL.setParameter("portletResource", assetPublisherDisplayContext.getPortletResource());
 portletURL.setParameter("className", className);
 portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
+
+String selectedDDMForm = StringPool.BLANK;
 %>
 
 <div class="alert alert-danger hide" id="<portlet:namespace />message">
@@ -58,6 +60,10 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			String name = field.getName();
 			String fieldType = field.getType();
 			long ddmStructureId = field.getClassTypeId();
+
+			if (name.equals(assetPublisherDisplayContext.getDDMStructureFieldName())) {
+				selectedDDMForm = renderResponse.getNamespace() + name + "fieldForm";
+			}
 			%>
 
 			<liferay-ui:search-container-column-text>
@@ -220,4 +226,15 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 	);
 
 	toggleDisabledFormFields(fieldSubtypeForms, true);
+
+	<%
+	if (Validator.isNotNull(selectedDDMForm)) {
+	%>
+
+	toggleDisabledFormFields(A.one('#<%= selectedDDMForm %>'), false);
+
+	<%
+	}
+	%>
+
 </aui:script>

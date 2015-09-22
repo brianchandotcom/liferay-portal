@@ -33,44 +33,42 @@ gradle.beforeProject {
 	}
 }
 
-gradle.buildFinished {
-	if (System.getProperty("line.separator") == "\n") {
-		return;
-	}
+if (System.getProperty("line.separator") != "\n") {
+	gradle.buildFinished {
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
 
-	ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()
+		exec {
+			commandLine "git", "ls-files", "--exclude-standard", "--others"
+			standardOutput = byteArrayOutputStream
+			workingDir = gradle.gradleUserHomeDir
+		}
 
-	exec {
-		commandLine "git", "ls-files", "--exclude-standard", "--others"
-		standardOutput = byteArrayOutputStream
-		workingDir = gradle.gradleUserHomeDir
-	}
+		String output = byteArrayOutputStream.toString()
 
-	String output = byteArrayOutputStream.toString()
+		List<String> fileNames = output.readLines()
 
-	List<String> fileNames = output.readLines()
+		fileNames.retainAll {
+			it.endsWith ".pom"
+		}
 
-	fileNames.retainAll {
-		it.endsWith ".pom"
-	}
+		fileNames.each {
+			String pomFileName ->
 
-	fileNames.each {
-		String pomFileName ->
+			File pomFile = new File(gradle.gradleUserHomeDir, pomFileName)
 
-		File pomFile = new File(gradle.gradleUserHomeDir, pomFileName)
+			ant.fixcrlf eol: "lf", file: pomFile, fixlast: false
 
-		ant.fixcrlf eol: "lf", file: pomFile, fixlast: false
+			HashValue hashValue = HashUtil.sha1(pomFile)
 
-		HashValue hashValue = HashUtil.sha1(pomFile)
+			String hash = hashValue.asHexString()
+			File hashDir = pomFile.parentFile
 
-		String hash = hashValue.asHexString()
-		File hashDir = pomFile.parentFile
+			if (hashDir.name != hash) {
+				boolean success = hashDir.renameTo new File(hashDir.parentFile, hash)
 
-		if (hashDir.name != hash) {
-			boolean success = hashDir.renameTo new File(hashDir.parentFile, hash)
-
-			if (!success) {
-				delete hashDir
+				if (!success) {
+					delete hashDir
+				}
 			}
 		}
 	}

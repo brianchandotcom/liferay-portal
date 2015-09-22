@@ -1118,6 +1118,7 @@
 
 		<for list="${tagNameList}" param="tagName">
 			<var name="key_tagName" value="${tagName}" />
+
 			<execute function="AssertTextEquals" locator1="AssetCategorization#TAG" value1="${tagName}" />
 		</for>
 

@@ -14,6 +14,8 @@
 
 package com.liferay.journal.content.web.exportimport.portlet.preferences.processor;
 
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
@@ -34,8 +36,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.DDMTemplate;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
@@ -151,14 +151,21 @@ public class JournalContentExportImportPortletPreferencesProcessor
 			Validator.isNotNull(preferenceDDMTemplateKey) &&
 			!defaultDDMTemplateKey.equals(preferenceDDMTemplateKey)) {
 
-			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-				article.getGroupId(),
-				PortalUtil.getClassNameId(DDMStructure.class),
-				preferenceDDMTemplateKey, true);
+			try {
+				DDMTemplate ddmTemplate =
+					DDMTemplateLocalServiceUtil.getTemplate(
+						article.getGroupId(),
+						PortalUtil.getClassNameId(DDMStructure.class),
+						preferenceDDMTemplateKey, true);
 
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, article, ddmTemplate,
-				PortletDataContext.REFERENCE_TYPE_STRONG);
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, article, ddmTemplate,
+					PortletDataContext.REFERENCE_TYPE_STRONG);
+			}
+			catch (PortalException pe) {
+				throw new PortletDataException(
+					"Unable to export referenced article template", pe);
+			}
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);

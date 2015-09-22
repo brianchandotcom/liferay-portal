@@ -32,7 +32,7 @@
 						"en_US":""
 					},
 					"type": "ddm-integer",
-					"validation" : {
+					"validation": {
 						"errorMessage": "Integer must be equal to zero.",
 						"expression": "Integer == 0"
 					},
@@ -50,7 +50,7 @@
 				"en_US": ""
 			},
 			"type": "text",
-			"validation" : {
+			"validation": {
 				"errorMessage": "This field is never valid.",
 				"expression": "false"
 			},
@@ -76,11 +76,59 @@
 				"en_US": ""
 			},
 			"type": "checkbox",
-			"validation" : {
+			"validation": {
 				"errorMessage": "This field must be checked.",
 				"expression": "Boolean"
 			},
 			"visibilityExpression": "!Boolean"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text2"
+			},
+			"localizable": true,
+			"name": "Text2",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": true,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"visibilityExpression": "true"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text3"
+			},
+			"localizable": true,
+			"name": "Text3",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": true,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text",
+			"validation": {
+				"errorMessage": "This field should contain 'Joe'.",
+				"expression": "Text3.contains(\"Joe\")"
+			},
+			"visibilityExpression": "true"
 		}
 	]
 }

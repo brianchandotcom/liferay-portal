@@ -49,6 +49,22 @@
 			"nestedFields": [],
 			"valid": true,
 			"visible": false
+		},
+		{
+			"errorMessage": "This field is required.",
+			"instanceId": "uahm",
+			"name": "Text2",
+			"nestedFields": [],
+			"valid": false,
+			"visible": true
+		},
+		{
+			"errorMessage": "This field should contain 'Joe'.",
+			"instanceId": "nahi",
+			"name": "Text3",
+			"nestedFields": [],
+			"valid": false,
+			"visible": true
 		}
 	]
 }

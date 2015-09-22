@@ -64,7 +64,7 @@
 						SyndEntry syndEntry = rssFeedEntry.getSyndEntry();
 					%>
 
-						<liferay-ui:panel cssClass="feed-entry" defaultState='<%= (themeDisplay.isStateMaximized() || (j < rssPortletInstanceConfiguration.expandedEntriesPerFeed())) ? "open" : "closed" %>' extended="<%= false%>" title="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">
+						<liferay-ui:panel cssClass="feed-entry" defaultState='<%= (themeDisplay.isStateMaximized() || (j < rssPortletInstanceConfiguration.expandedEntriesPerFeed())) ? "open" : "closed" %>' extended="<%= false %>" title="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">
 							<div class="feed-entry-content">
 								<c:if test="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() && Validator.isNotNull(syndEntry.getAuthor()) %>">
 									<div class="feed-entry-author">

@@ -23,7 +23,7 @@ LayoutSetPrototype layoutSetPrototype = (LayoutSetPrototype)request.getAttribute
 
 boolean showPrototypes = false;
 
-if(layoutSetPrototype != null) {
+if (layoutSetPrototype != null) {
 	showPrototypes = true;
 }
 

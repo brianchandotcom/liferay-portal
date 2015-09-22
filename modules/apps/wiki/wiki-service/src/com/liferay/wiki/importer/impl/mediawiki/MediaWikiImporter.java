@@ -100,8 +100,18 @@ public class MediaWikiImporter implements WikiImporter {
 		}
 
 		InputStream pagesInputStream = inputStreams[0];
-		InputStream usersInputStream = inputStreams[1];
-		InputStream imagesInputStream = inputStreams[2];
+
+		InputStream usersInputStream = null;
+
+		if (inputStreams.length > 1) {
+			usersInputStream = inputStreams[1];
+		}
+
+		InputStream imagesInputStream = null;
+
+		if (inputStreams.length > 2) {
+			imagesInputStream = inputStreams[2];
+		}
 
 		try {
 			Document document = SAXReaderUtil.read(pagesInputStream);
@@ -396,7 +406,9 @@ public class MediaWikiImporter implements WikiImporter {
 
 					percentage = Math.min(50 + (i * 50) / total, 99);
 
-					progressTracker.setPercent(percentage);
+					if (progressTracker != null) {
+						progressTracker.setPercent(percentage);
+					}
 				}
 			}
 

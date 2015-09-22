@@ -346,6 +346,10 @@ public class FileUtil {
 		SyncAccount syncAccount = SyncAccountService.fetchSyncAccount(
 			syncFile.getSyncAccountId());
 
+		if (syncAccount == null) {
+			return null;
+		}
+
 		return getFilePath(
 			syncAccount.getFilePathName(), ".data",
 			String.valueOf(syncFile.getSyncFileId()));

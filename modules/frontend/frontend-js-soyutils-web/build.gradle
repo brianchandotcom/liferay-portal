@@ -1,0 +1,47 @@
+import com.liferay.gradle.plugins.node.tasks.DownloadNodeModuleTask
+import com.liferay.gradle.plugins.node.tasks.ExecuteNodeTask
+
+apply plugin: "com.liferay.cache"
+
+task bowerInstall(type: ExecuteNodeTask)
+task buildSoyutilsCore(type: Copy)
+task downloadBower(type: DownloadNodeModuleTask)
+
+String bowerVersion = "1.5.2"
+
+bowerInstall {
+	args = [new File(node.nodeDir, "node_modules/bower/bin/bower"), "install", "soyutils", "--allow-root"]
+	dependsOn downloadBower
+}
+
+buildSoyutilsCore {
+	dependsOn bowerInstall
+	from new File("bower_components", "soyutils/soyutils.js")
+	into "classes/META-INF/resources"
+}
+
+cache {
+	task(buildSoyutilsCore) {
+		baseDir = buildSoyutilsCore.destinationDir
+		cacheDir = ".task-cache"
+		include "soyutils.js"
+		testFile "build.gradle"
+	}
+}
+
+classes {
+	dependsOn buildSoyutilsCore
+}
+
+dependencies {
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+}
+
+downloadBower {
+	moduleName = "bower"
+	moduleVersion = bowerVersion
+}
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/modules")
+}

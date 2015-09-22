@@ -1,5 +1,4 @@
 ;(function() {
-	/* global Loader */
 	var LiferayAUI = Liferay.AUI;
 
 	var COMBINE = LiferayAUI.getCombine();
@@ -922,9 +921,6 @@
 				base: PATH_JAVASCRIPT + '/misc/',
 				combine: COMBINE,
 				modules: {
-					'soyutils': {
-						path: '/soyutils.js'
-					},
 					'swfobject': {
 						path: '/swfobject.js'
 					},
@@ -953,15 +949,6 @@
 		root: PATH_JAVASCRIPT + '/aui/',
 		useBrowserConsole: false
 	};
-
-	Loader.addModule(
-		{
-			dependencies: [],
-			exports: 'soy',
-			name: 'soyutils',
-			path: '/o/frontend-js-web/misc/soyutils.js'
-		}
-	);
 
 	CORE_MODULES.push('liferay-browser-selectors');
 })();

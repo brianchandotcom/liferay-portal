@@ -1465,9 +1465,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							StringPool.TAB);
 					}
 
-					line = formatIncorrectSyntax(line, ",}", "}");
+					line = formatIncorrectSyntax(line, ",}", "}", false);
 
-					line = formatWhitespace(line, trimmedLine);
+					line = formatWhitespace(line, trimmedLine, true);
 				}
 
 				if (line.contains(StringPool.TAB + "for (") &&

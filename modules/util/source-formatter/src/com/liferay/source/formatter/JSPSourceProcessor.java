@@ -588,9 +588,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 						continue;
 					}
-
-					line = formatWhitespace(line, trimmedLine);
 				}
+
+				line = formatWhitespace(line, trimmedLine, javaSource);
 
 				// LPS-47179
 

@@ -37,7 +37,7 @@ if (resourceClassNameId == 0) {
 	resourceClassNameId = PortalUtil.getClassNameId(PortletDisplayTemplate.class);
 }
 
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", false);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

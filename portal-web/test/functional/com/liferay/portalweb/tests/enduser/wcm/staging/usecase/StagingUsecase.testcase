@@ -36,7 +36,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LRQA-16325" name="ActivateInitialStagingWithWikiAttachment" priority="4">
+	<command name="ActivateInitialStagingWithWikiAttachment" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -135,7 +135,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="ActivateStagingWithWebContentLinkingDMImage" priority="4">
+	<command name="ActivateStagingWithWebContentLinkingDMImage" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteName" value="Liferay" />
@@ -192,7 +192,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-17954" name="DeleteLivePage" priority="4">
+	<command name="DeleteLivePage" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -247,7 +247,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-17954" name="EditPublishTemplate" priority="4">
+	<command name="EditPublishTemplate" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -441,7 +441,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="EnableAndDeleteSitePageVariationPage" priority="4">
+	<command name="EnableAndDeleteSitePageVariationPage" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -505,7 +505,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="MoveToTheRecycleBinAndRestorePublishTemplate" priority="4">
+	<command name="MoveToTheRecycleBinAndRestorePublishTemplate" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -586,7 +586,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-47429" name="PublishCustomPortletTitle" priority="4">
+	<command name="PublishCustomPortletTitle" priority="4">
 		<execute test-case="super#AddSitePagesVariation" />
 
 		<var name="pageName" value="Staging Test Page" />
@@ -759,7 +759,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-17954" name="StagingBlogs" priority="4">
+	<command name="StagingBlogs" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -989,7 +989,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-17954" name="StagingBlogsCP" priority="4">
+	<command name="StagingBlogsCP" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -1021,7 +1021,7 @@
 		<execute macro="Staging#publishToLive" />
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingDemoDocumentsAndMedia" priority="4">
+	<command name="StagingDemoDocumentsAndMedia" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
@@ -1152,7 +1152,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingDemoLocalLive1" priority="4">
+	<command name="StagingDemoLocalLive1" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -1305,7 +1305,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingDemoLocalLive2" priority="4">
+	<command name="StagingDemoLocalLive2" priority="4">
 		<var name="pageName" value="Home" />
 		<var name="roleName" value="Staging Admin" />
 		<var name="siteName" value="Community Site Name" />
@@ -1430,7 +1430,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingDemoLocalLive3" priority="4">
+	<command name="StagingDemoLocalLive3" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1758,7 +1758,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingDemoLocalLive4" priority="4">
+	<command name="StagingDemoLocalLive4" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1916,7 +1916,7 @@
 		<execute function="AssertTextEquals" locator1="Home#PAGE_2_GUEST_VIEW" value1="New Page Name" />
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingKaleoPageRevision" priority="4">
+	<command name="StagingKaleoPageRevision" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page Name 1" />
 			<var name="siteName" value="Community Site Name" />
@@ -2008,7 +2008,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingKaleoWebContentLinkingUnapprovedContent" priority="4">
+	<command name="StagingKaleoWebContentLinkingUnapprovedContent" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Workflow Configuration" />
 			<var name="siteScopeName" value="Site Name" />
@@ -2110,7 +2110,7 @@
 		<execute function="AssertTextEquals" locator1="Message#WORKFLOW_UNAPPROVED" value1="Web Content Title is not approved." />
 	</command>
 
-	<command known-issues="LRQA-17954" name="StagingLocalLiveLock" priority="4">
+	<command name="StagingLocalLiveLock" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -2172,7 +2172,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingLocalLiveWorkflow" priority="4">
+	<command name="StagingLocalLiveWorkflow" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -2491,7 +2491,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingLogo" priority="4">
+	<command name="StagingLogo" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -2571,7 +2571,7 @@
 		<execute macro="Page#viewCustomLogoPG" />
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingMultipleDM" priority="4">
+	<command name="StagingMultipleDM" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -2625,7 +2625,7 @@
 		<execute macro="DMDocument#viewStagingDetailsPG" />
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingOnlyApprovedPublishToLive" priority="4">
+	<command name="StagingOnlyApprovedPublishToLive" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -2843,7 +2843,7 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="The selected web content no longer exists." />
 	</command>
 
-	<command known-issues="LRQA-17954" name="StagingOrganizations" priority="5">
+	<command name="StagingOrganizations" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -2959,7 +2959,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingPortletPublishContentCount" priority="4">
+	<command name="StagingPortletPublishContentCount" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -3017,7 +3017,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingPublishOnlySelectedPage" priority="4">
+	<command name="StagingPublishOnlySelectedPage" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -3101,7 +3101,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingPublishPage" priority="4">
+	<command name="StagingPublishPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -3279,7 +3279,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingRemoteDMViaGlobalScope" priority="4">
+	<command name="StagingRemoteDMViaGlobalScope" priority="4">
 		<property name="app.server.bundles.size" value="1" />
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
@@ -3374,7 +3374,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55450" name="StagingRemoteDocumentSubtypeViaAP" priority="4">
+	<command name="StagingRemoteDocumentSubtypeViaAP" priority="4">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -3450,7 +3450,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingRemoteLiveWebContent" priority="4">
+	<command name="StagingRemoteLiveWebContent" priority="4">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -3594,7 +3594,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingSiteVariationIncompletePage" priority="4">
+	<command name="StagingSiteVariationIncompletePage" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -3646,7 +3646,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingVersionHistory" priority="4">
+	<command name="StagingVersionHistory" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -3768,7 +3768,7 @@
 		<execute macro="Staging#publishToLive" />
 	</command>
 
-	<command known-issues="LRQA-17954" name="StagingWithPublishTemplate" priority="4" >
+	<command name="StagingWithPublishTemplate" priority="4" >
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -3979,7 +3979,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="StagingWithPublishTemplateSmoke" priority="4">
+	<command name="StagingWithPublishTemplateSmoke" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -4056,7 +4056,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="ViewHistoryVersionWithDeletedUser" priority="4">
+	<command name="ViewHistoryVersionWithDeletedUser" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -4177,7 +4177,7 @@
 		<execute macro="Staging#viewHistoryVersionPG" />
 	</command>
 
-	<command known-issues="LRQA-16325" name="ViewPageOrderWithStaging" priority="4">
+	<command name="ViewPageOrderWithStaging" priority="4">
 		<execute macro="Page#openURL">
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
@@ -4240,7 +4240,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-17954" name="ViewPublishDMWithModifiedTitle" priority="5">
+	<command name="ViewPublishDMWithModifiedTitle" priority="5">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />

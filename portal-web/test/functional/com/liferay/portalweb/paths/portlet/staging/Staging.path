@@ -243,7 +243,7 @@
 <!--STAGING_MENULIST-->
 <tr>
 	<td>STAGING_MENULIST_PUBLISH_TO_LIVE_NOW</td>
-	<td>//a[contains(.,'Publish to Live')]</td>
+	<td>//button[contains(.,'Publish to Live')]</td>
 	<td></td>
 </tr>
 </tbody>

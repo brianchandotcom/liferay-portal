@@ -33,7 +33,7 @@
 		<execute macro="User#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-55450" name="ActivateDeactivateRemoteStaging" priority="4">
+	<command name="ActivateDeactivateRemoteStaging" priority="4">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -101,7 +101,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="ActivateDeactivateStagingLocalLiveDM" priority="4">
+	<command name="ActivateDeactivateStagingLocalLiveDM" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -172,7 +172,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="ActivateRemoteStaging" priority="4">
+	<command name="ActivateRemoteStaging" priority="4">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<var name="siteID" value="${siteID}" />
@@ -218,7 +218,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="AddDMDocumentStagingLocalLive" priority="4">
+	<command name="AddDMDocumentStagingLocalLive" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -270,7 +270,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="AddEventRepeatDaily" priority="4">
+	<command name="AddEventRepeatDaily" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -294,7 +294,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-58342" name="AddPageVariation" priority="5">
+	<command name="AddPageVariation" priority="5">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -329,7 +329,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-58342" name="AddPageWithPageVersioningEnabled" priority="5">
+	<command name="AddPageWithPageVersioningEnabled" priority="5">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -352,7 +352,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-58342" name="AddSitePagesVariation" priority="5">
+	<command name="AddSitePagesVariation" priority="5">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />
@@ -553,7 +553,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="BlogsOrganizationWorkflowStaging" priority="4">
+	<command name="BlogsOrganizationWorkflowStaging" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -935,7 +935,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="DeleteDMDocument" priority="4">
+	<command name="DeleteDMDocument" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -1068,7 +1068,7 @@
 		<execute function="Pause" locator1="5000" />
 	</command>
 
-	<command known-issues="LPS-58641" name="PublishWCIncludingTextsAndImages" priority="4">
+	<command name="PublishWCIncludingTextsAndImages" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteName" value="Liferay" />
@@ -1167,7 +1167,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55450" name="PublishWCViaRemoteStaging" priority="4">
+	<command name="PublishWCViaRemoteStaging" priority="4">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -1205,7 +1205,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="PublishWCWithPagesVariationViaRemoteStaging" priority="4">
+	<command name="PublishWCWithPagesVariationViaRemoteStaging" priority="4">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -1338,7 +1338,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-17954" name="StagingPublishPortlet" priority="4">
+	<command name="StagingPublishPortlet" priority="4">
 		<execute macro="Page#gotoPublishingTools">
 			<var name="portletName" value="Staging Configuration" />
 			<var name="siteName" value="Site Name" />

@@ -456,6 +456,8 @@
 
 		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
+		<execute function="Pause" locator1="5000" />
+
 		<execute function="SelectFrame" locator1="MessageBoardsSelectCategory#IFRAME" />
 
 		<var name="key_categoryName" value="${categoryName2}" />

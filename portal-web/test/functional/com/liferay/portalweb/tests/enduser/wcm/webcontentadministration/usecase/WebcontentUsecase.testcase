@@ -324,7 +324,7 @@
 		<execute function="AssertTextNotPresent" locator1="WCD#WEB_CONTENT_CONTENT" value1="WC WebContent Content" />
 	</command>
 
-	<command known-issues="LPS-56572" name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="4">
+	<command name="AddWebContentViaWCDWithGlobalStructureAndLocalTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -729,7 +729,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56572" name="EditGlobalWebContentTemplate" priority="4">
+	<command name="EditGlobalWebContentTemplate" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />

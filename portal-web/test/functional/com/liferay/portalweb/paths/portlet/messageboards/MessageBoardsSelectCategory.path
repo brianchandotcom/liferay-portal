@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>IFRAME</td>
-	<td>//iframe[@id='_19_selectCategory_iframe_']</td>
+	<td>//iframe[contains(@id,'selectCategory_iframe')]</td>
 	<td></td>
 </tr>
 <tr>

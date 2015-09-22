@@ -944,7 +944,7 @@
 			<var name="threadSubject" value="MB Thread Message Subject" />
 		</execute>
 
-		<for list="Guest,Power User,Site Member,User" param="roleName" >
+		<for list="Power User,User" param="roleName">
 			<execute macro="PermissionsInline#viewPermissionsRemoved">
 				<var name="permissionDefinitionKey" value="CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX" />
 				<var name="roleName" value="${roleName}" />

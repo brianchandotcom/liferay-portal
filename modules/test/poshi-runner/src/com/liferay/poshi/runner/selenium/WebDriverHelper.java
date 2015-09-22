@@ -574,7 +574,6 @@ public class WebDriverHelper {
 				webDriver.get(targetURL);
 
 				if (PropsValues.BROWSER_TYPE.equals("internetexplorer")) {
-
 					refresh(webDriver);
 				}
 

@@ -248,10 +248,6 @@ public class PoshiRunnerContext {
 			String baseDir, String[] includes)
 		throws Exception {
 
-		for (int i = 0; i < includes.length; i++) {
-			includes[i] = "**\\*." + includes[i];
-		}
-
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
 		directoryScanner.setBasedir(baseDir);
@@ -651,7 +647,8 @@ public class PoshiRunnerContext {
 	private static void _readPoshiFiles() throws Exception {
 		List<String> testBasePathsFiles = _findPoshiFiles(
 			_TEST_BASE_DIR_NAME, new String[] {
-				"action", "function", "macro", "path", "testcase"
+				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
+					"**\\*.testcase"
 			});
 
 		_filePathsNames.addAll(testBasePathsFiles);
@@ -659,7 +656,8 @@ public class PoshiRunnerContext {
 		for (String testIncludeDirName : _TEST_INCLUDE_DIR_NAMES) {
 			List<String> testIncludePathsFiles = _findPoshiFiles(
 				testIncludeDirName, new String[] {
-					"action", "function", "macro", "path"
+					"**\\*.action", "**\\*.function", "**\\*.macro",
+						"**\\*.path"
 			});
 
 			_filePathsNames.addAll(testIncludePathsFiles);

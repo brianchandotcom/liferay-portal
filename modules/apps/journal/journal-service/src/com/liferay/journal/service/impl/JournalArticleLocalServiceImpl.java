@@ -7522,10 +7522,11 @@ public class JournalArticleLocalServiceImpl
 
 		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-		Map<String, DDMFormField> ddmFormFieldsMap =
+		Map<String, DDMFormField> ddmFormFieldsFullMap =
 			ddmStructure.getFullHierarchyDDMFormFieldsMap(true);
-
 		Map<String, String> fieldsValuesMap = createFieldsValuesMap(content);
+		Map<String, DDMFormField> ddmFormFieldsMap =
+			ddmForm.getDDMFormFieldsMap(true);
 
 		for (Map.Entry<String, String> fieldValue :
 				fieldsValuesMap.entrySet()) {
@@ -7534,7 +7535,13 @@ public class JournalArticleLocalServiceImpl
 			String ddmFormFieldValue = fieldValue.getValue();
 
 			updateDDMFormFieldPredefinedValue(
-				ddmFormFieldsMap.get(ddmFormFieldName), ddmFormFieldValue);
+				ddmFormFieldsFullMap.get(ddmFormFieldName), ddmFormFieldValue);
+
+			if (ddmFormFieldsMap.containsKey(ddmFormFieldName)) {
+				updateDDMFormFieldPredefinedValue(
+						ddmFormFieldsMap.get(ddmFormFieldName),
+						ddmFormFieldValue);
+			}
 		}
 
 		ddmStructure.updateDDMForm(ddmForm);

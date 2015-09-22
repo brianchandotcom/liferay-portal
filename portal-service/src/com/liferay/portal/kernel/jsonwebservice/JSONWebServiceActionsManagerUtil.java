@@ -83,6 +83,10 @@ public class JSONWebServiceActionsManagerUtil {
 		return getJSONWebServiceActionsManager().getJSONWebServiceNaming();
 	}
 
+	public static List<Map<String, String>> getServiceNames() {
+		return _jsonWebServiceActionsManager.getServiceNames();
+	}
+
 	public static void registerJSONWebServiceAction(
 		String contextName, String contextPath, Class<?> actionClass,
 		Method actionMethod, String path, String method) {

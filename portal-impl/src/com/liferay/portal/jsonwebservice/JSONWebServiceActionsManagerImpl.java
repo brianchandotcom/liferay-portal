@@ -43,6 +43,7 @@ import java.lang.reflect.Method;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -180,6 +181,46 @@ public class JSONWebServiceActionsManagerImpl
 	@Override
 	public JSONWebServiceNaming getJSONWebServiceNaming() {
 		return _jsonWebServiceNaming;
+	}
+
+	@Override
+	public List<Map<String, String>> getServiceNames() {
+		Set<String> contextNames = getContextNames();
+		List<Map<String, String>> serviceNames =
+			new ArrayList<Map<String, String>>();
+
+		for (String context : contextNames) {
+			List<JSONWebServiceActionMapping> jsonWebServiceActionMappings =
+				getJSONWebServiceActionMappings(context);
+
+			for (JSONWebServiceActionMapping jsonWebServiceActionMapping :
+					jsonWebServiceActionMappings) {
+
+				Map<String, String> serviceObject =
+					new HashMap<String, String>();
+
+				Class<?> actionClass =
+					jsonWebServiceActionMapping.getActionClass();
+
+				String className = actionClass.getName();
+
+				className = StringUtil.replace(className, ".impl.", ".");
+
+				if (className.endsWith("Impl")) {
+					className = className.substring(0, className.length() - 4);
+				}
+
+				serviceObject.put(
+					"context", context.length() > 0 ? context : "root");
+				serviceObject.put("serviceClass", className);
+
+				if (!serviceNames.contains(serviceObject)) {
+					serviceNames.add(serviceObject);
+				}
+			}
+		}
+
+		return serviceNames;
 	}
 
 	@Override

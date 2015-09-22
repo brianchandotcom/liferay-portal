@@ -74,6 +74,12 @@ AUI.add(
 						instance._ids = [];
 					},
 
+					destructor: function() {
+						var instance = this;
+
+						A.Array.invoke(instance._eventHandles, 'detach');
+					},
+
 					renderUI: function() {
 						var instance = this;
 
@@ -123,44 +129,10 @@ AUI.add(
 							}
 						);
 
+						instance._eventHandles = [];
+
 						if (instance.get('hover')) {
-							var classNameHover = instance.get('classNameHover');
-
-							var rowClassNameAlternate = instance.get('rowClassNameAlternate');
-							var rowClassNameAlternateHover = instance.get('rowClassNameAlternateHover');
-
-							var rowClassNameBody = instance.get('rowClassNameBody');
-							var rowClassNameBodyHover = instance.get('rowClassNameBodyHover');
-
-							instance._hoverHandle = instance.get('contentBox').delegate(
-								['mouseenter', 'mouseleave'],
-								function(event) {
-									var mouseenter = event.type == 'mouseenter';
-									var row = event.currentTarget;
-
-									var endAlternate = rowClassNameAlternateHover;
-									var endBody = rowClassNameAlternateHover;
-									var startAlternate = rowClassNameAlternate;
-									var startBody = rowClassNameBody;
-
-									if (mouseenter) {
-										endAlternate = rowClassNameAlternate;
-										endBody = rowClassNameBody;
-										startAlternate = rowClassNameAlternateHover;
-										startBody = rowClassNameBodyHover;
-									}
-
-									if (row.hasClass(startAlternate)) {
-										row.replaceClass(startAlternate, endAlternate);
-									}
-									else if (row.hasClass(startBody)) {
-										row.replaceClass(startBody, endBody);
-									}
-
-									row.toggleClass(classNameHover, mouseenter);
-								},
-								'tr'
-							);
+							instance._eventHandles.push(instance.get('contentBox').delegate(['mouseenter', 'mouseleave'], instance._onContentHover, 'tr', instance));
 						}
 					},
 
@@ -331,6 +303,34 @@ AUI.add(
 						}
 
 						instance._parentContainer[action]();
+					},
+
+					_onContentHover: function(event) {
+						var instance = this;
+
+						var mouseenter = event.type == 'mouseenter';
+						var row = event.currentTarget;
+
+						var endAlternate = instance.get('rowClassNameAlternateHover');
+						var endBody = instance.get('rowClassNameAlternateHover');
+						var startAlternate = instance.get('rowClassNameAlternate');
+						var startBody = instance.get('rowClassNameBody');
+
+						if (mouseenter) {
+							endAlternate = instance.get('rowClassNameAlternate');
+							endBody = instance.get('rowClassNameBody');
+							startAlternate = instance.get('rowClassNameAlternateHover');
+							startBody = instance.get('rowClassNameBodyHover');
+						}
+
+						if (row.hasClass(startAlternate)) {
+							row.replaceClass(startAlternate, endAlternate);
+						}
+						else if (row.hasClass(startBody)) {
+							row.replaceClass(startBody, endBody);
+						}
+
+						row.toggleClass(instance.get('classNameHover'), mouseenter);
 					}
 				},
 

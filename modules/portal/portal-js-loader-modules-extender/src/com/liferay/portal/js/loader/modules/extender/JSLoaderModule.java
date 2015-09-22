@@ -16,12 +16,15 @@ package com.liferay.portal.js.loader.modules.extender;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
 import java.net.URL;
 
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
@@ -259,8 +262,15 @@ public class JSLoaderModule {
 			_versionedConfiguration = normalize(
 				generateConfiguration(jsonObject, bundleWiring, true));
 
-			_unversionedMapsConfiguration = normalize(
-				generateMapsConfiguration(_unversionedConfiguration));
+			Dictionary<String, String> headers = _bundle.getHeaders();
+
+			boolean generateJsSubmodules = GetterUtil.getBoolean(
+				headers.get("JS-Submodules"));
+
+			if (generateJsSubmodules) {
+				_unversionedMapsConfiguration = normalize(
+					generateMapsConfiguration(_unversionedConfiguration));
+			}
 		}
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);

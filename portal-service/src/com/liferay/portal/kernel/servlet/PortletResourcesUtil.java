@@ -37,9 +37,11 @@ import javax.servlet.ServletContext;
 public class PortletResourcesUtil {
 
 	public static ServletContext getPathServletContext(String path) {
-		for (ServletContext context : _instance._getPortletResourcesList()) {
-			if (path.startsWith(context.getContextPath())) {
-				return context;
+		for (ServletContext servletContext :
+				_instance._servletContexts.values()) {
+
+			if (path.startsWith(servletContext.getContextPath())) {
+				return servletContext;
 			}
 		}
 
@@ -81,20 +83,15 @@ public class PortletResourcesUtil {
 		_serviceTracker.open();
 	}
 
-	private Collection<ServletContext> _getPortletResourcesList() {
-		return _portletResourcesMap.values();
-	}
-
 	private static final PortletResourcesUtil _instance =
 		new PortletResourcesUtil();
 
 	private final Map<ServiceReference<Portlet>, ServletContext>
-		_portletResourcesMap = new ConcurrentHashMap<>();
+		_servletContexts = new ConcurrentHashMap<>();
 	private final ServiceTracker<Portlet, Portlet> _serviceTracker;
 
 	private class PortletResourcesServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<Portlet, Portlet> {
+		implements ServiceTrackerCustomizer<Portlet, Portlet> {
 
 		@Override
 		public Portlet addingService(
@@ -109,7 +106,7 @@ public class PortletResourcesUtil {
 			ServletContext servletContext = portletApp.getServletContext();
 
 			if (portletApp.isWARFile()) {
-				_portletResourcesMap.put(serviceReference, servletContext);
+				_servletContexts.put(serviceReference, servletContext);
 			}
 
 			return portlet;
@@ -128,7 +125,7 @@ public class PortletResourcesUtil {
 
 			registry.ungetService(serviceReference);
 
-			_portletResourcesMap.remove(serviceReference);
+			_servletContexts.remove(serviceReference);
 		}
 
 	}

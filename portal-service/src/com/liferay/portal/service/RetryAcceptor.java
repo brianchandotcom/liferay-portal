@@ -21,7 +21,10 @@ import java.util.Map;
  */
 public interface RetryAcceptor {
 
-	public boolean accept(
-		Object returnValue, Throwable t, Map<String, String> propertyMap);
+	public boolean acceptException(
+		Throwable t, Map<String, String> propertyMap);
+
+	public boolean acceptResult(
+		Object returnValue, Map<String, String> propertyMap);
 
 }

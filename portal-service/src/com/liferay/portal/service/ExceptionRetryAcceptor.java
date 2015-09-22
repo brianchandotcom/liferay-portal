@@ -23,12 +23,8 @@ public class ExceptionRetryAcceptor implements RetryAcceptor {
 	public static final String EXCEPTION_NAME = "EXCEPTION_NAME";
 
 	@Override
-	public boolean accept(
-		Object returnValue, Throwable t, Map<String, String> propertyMap) {
-
-		if (t == null) {
-			return false;
-		}
+	public boolean acceptException(
+		Throwable t, Map<String, String> propertyMap) {
 
 		String name = propertyMap.get(EXCEPTION_NAME);
 
@@ -60,6 +56,13 @@ public class ExceptionRetryAcceptor implements RetryAcceptor {
 
 			cause = t.getCause();
 		}
+
+		return false;
+	}
+
+	@Override
+	public boolean acceptResult(
+		Object returnValue, Map<String, String> propertyMap) {
 
 		return false;
 	}

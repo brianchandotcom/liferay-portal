@@ -83,42 +83,63 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 			try {
 				returnValue = serviceBeanMethodInvocation.proceed();
 
-				if (!retryAcceptor.accept(returnValue, null, propertyMap)) {
+				if (!retryAcceptor.acceptResult(returnValue, propertyMap)) {
 					return returnValue;
 				}
 
-				if (_log.isWarnEnabled()) {
+				if (_log.isWarnEnabled() && (retries != 0)) {
+					String number = String.valueOf(retries);
+
+					if (retries < 0) {
+						number = "unlimited";
+					}
+
 					_log.warn(
-						"Unsatisfactory result from " +
-							methodInvocation.getMethod() + ". Retrying " +
-								retries + " more times.");
+						"Retry on " + methodInvocation + " for " + number +
+							" more times, due to result: " + returnValue);
 				}
 			}
 			catch (Throwable t) {
 				throwable = t;
 
-				if (!retryAcceptor.accept(null, t, propertyMap)) {
+				if (!retryAcceptor.acceptException(t, propertyMap)) {
 					throw t;
 				}
 
-				if (_log.isWarnEnabled()) {
-					_log.error(
-						"Exception thrown from " +
-							methodInvocation.getMethod() + ". Retrying " +
-								retries + " more times.");
+				if (_log.isWarnEnabled() && (retries != 0)) {
+					String number = String.valueOf(retries);
+
+					if (retries < 0) {
+						number = "unlimited";
+					}
+
+					_log.warn(
+						"Retry on " + methodInvocation + " for " + number +
+							" more times, due to exception: " + throwable,
+						throwable);
 				}
 			}
 
 			serviceBeanMethodInvocation.reset();
 		}
 
-		if (_log.isWarnEnabled()) {
-			_log.warn(
-				"Unable to get a result after " + totalRetries + " retries.");
+		if (throwable != null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Give up retrying on " + methodInvocation + " after " +
+						totalRetries + " retries. Rethrowing last retry's " +
+							"exception: " + throwable,
+					throwable);
+			}
+
+			throw throwable;
 		}
 
-		if (throwable != null) {
-			throw throwable;
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Give up retrying on " + methodInvocation + " after " +
+					totalRetries + " retries. Returning with last retry's " +
+						"result: " + returnValue);
 		}
 
 		return returnValue;

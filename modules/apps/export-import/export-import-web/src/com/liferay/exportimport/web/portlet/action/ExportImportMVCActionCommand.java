@@ -37,6 +37,7 @@ import com.liferay.portlet.exportimport.LARFileNameException;
 import com.liferay.portlet.exportimport.LARFileSizeException;
 import com.liferay.portlet.exportimport.LARTypeException;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portlet.exportimport.lar.ExportImportHelper;
 import com.liferay.portlet.exportimport.lar.MissingReferences;
@@ -91,59 +92,69 @@ public class ExportImportMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		if (Validator.isNull(cmd)) {
+			String portletId = PortalUtil.getPortletId(actionRequest);
+
+			Map<String, String[]> parameterMap =
+				ExportImportConfigurationParameterMapFactory.buildParameterMap(
+					actionRequest);
+
+			SessionMessages.add(
+				actionRequest, portletId + "parameterMap", parameterMap);
+
+			return;
+		}
+
 		try {
-			if (Validator.isNotNull(cmd)) {
-				String redirect = ParamUtil.getString(
-					actionRequest, "redirect");
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
-				if (cmd.equals(Constants.ADD_TEMP)) {
-					addTempFileEntry(
-						actionRequest,
-						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
-
-					validateFile(
-						actionRequest, actionResponse,
-						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
-				}
-				else if (cmd.equals("copy_from_live")) {
-					StagingUtil.copyFromLive(actionRequest, portlet);
-				}
-				else if (cmd.equals(Constants.DELETE_TEMP)) {
-					deleteTempFileEntry(
-						actionRequest, actionResponse,
-						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
-				}
-				else if (cmd.equals(Constants.EXPORT)) {
-					hideDefaultSuccessMessage(actionRequest);
-
-					exportData(actionRequest, portlet);
-
-					sendRedirect(actionRequest, actionResponse, redirect);
-				}
-				else if (cmd.equals(Constants.IMPORT)) {
-					hideDefaultSuccessMessage(actionRequest);
-
-					importData(
-						actionRequest,
-						ExportImportHelper.TEMP_FOLDER_NAME +
-							portlet.getPortletId());
-
-					SessionMessages.add(
-						actionRequest,
-						PortalUtil.getPortletId(actionRequest) +
-							SessionMessages.KEY_SUFFIX_CLOSE_REFRESH_PORTLET,
+			if (cmd.equals(Constants.ADD_TEMP)) {
+				addTempFileEntry(
+					actionRequest,
+					ExportImportHelper.TEMP_FOLDER_NAME +
 						portlet.getPortletId());
 
-					sendRedirect(actionRequest, actionResponse, redirect);
-				}
-				else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-					hideDefaultSuccessMessage(actionRequest);
+				validateFile(
+					actionRequest, actionResponse,
+					ExportImportHelper.TEMP_FOLDER_NAME +
+						portlet.getPortletId());
+			}
+			else if (cmd.equals("copy_from_live")) {
+				StagingUtil.copyFromLive(actionRequest, portlet);
+			}
+			else if (cmd.equals(Constants.DELETE_TEMP)) {
+				deleteTempFileEntry(
+					actionRequest, actionResponse,
+					ExportImportHelper.TEMP_FOLDER_NAME +
+						portlet.getPortletId());
+			}
+			else if (cmd.equals(Constants.EXPORT)) {
+				hideDefaultSuccessMessage(actionRequest);
 
-					StagingUtil.publishToLive(actionRequest, portlet);
-				}
+				exportData(actionRequest, portlet);
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals(Constants.IMPORT)) {
+				hideDefaultSuccessMessage(actionRequest);
+
+				importData(
+					actionRequest,
+					ExportImportHelper.TEMP_FOLDER_NAME +
+						portlet.getPortletId());
+
+				SessionMessages.add(
+					actionRequest,
+					PortalUtil.getPortletId(actionRequest) +
+						SessionMessages.KEY_SUFFIX_CLOSE_REFRESH_PORTLET,
+					portlet.getPortletId());
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
+				hideDefaultSuccessMessage(actionRequest);
+
+				StagingUtil.publishToLive(actionRequest, portlet);
 			}
 		}
 		catch (Exception e) {

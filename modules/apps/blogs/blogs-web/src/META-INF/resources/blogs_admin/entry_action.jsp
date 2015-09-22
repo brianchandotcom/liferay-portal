@@ -17,13 +17,13 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
-
-String redirect = searchContainer.getIteratorURL().toString();
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 BlogsEntry entry = (BlogsEntry)row.getObject();
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
@@ -31,7 +31,7 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 		<portlet:renderURL var="editEntryURL">
 			<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:renderURL>
 
@@ -63,7 +63,7 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/blogs/edit_entry" var="deleteEntryURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 			<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 		</portlet:actionURL>
 

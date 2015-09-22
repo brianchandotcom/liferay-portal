@@ -14,35 +14,83 @@
  */
 --%>
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="title"
-	orderable="<%= false %>"
-	property="title"
-/>
+<c:choose>
+	<c:when test='<%= displayStyle.equals("icon") %>'>
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="author"
-	orderable="<%= false %>"
-	property="userName"
-/>
+		<%
+		row.setCssClass("col-md-2 col-sm-4 col-xs-6");
+		%>
 
-<liferay-ui:search-container-column-date
-	href="<%= rowURL %>"
-	name="create-date"
-	orderable="<%= false %>"
-	property="createDate"
-/>
+		<liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-date
-	href="<%= rowURL %>"
-	name="display-date"
-	orderable="<%= false %>"
-	property="displayDate"
-/>
+			<%
+			String entryImageURL = entry.getCoverImageURL(themeDisplay);
 
-<liferay-ui:search-container-column-status
-	href="<%= rowURL %>"
-	name="status"
-/>
+			if (Validator.isNull(entryImageURL)) {
+				entryImageURL = entry.getSmallImageURL(themeDisplay);
+			}
+
+			User userDisplay = UserLocalServiceUtil.fetchUserById(entry.getUserId());
+			%>
+
+			<liferay-util:buffer var="statusHtml">
+				<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+			</liferay-util:buffer>
+
+			<liferay-frontend:card
+				actionJsp="/blogs_admin/entry_action.jsp"
+				actionJspServletContext="<%= application %>"
+				cssClass="entry-display-style"
+				footer="<%= statusHtml %>"
+				header='<%= LanguageUtil.format(request, "x-ago-by-x", new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - entry.getModifiedDate().getTime(), true), HtmlUtil.escape(entry.getUserName())}, false) %>'
+				imageUrl='<%= Validator.isNotNull(entryImageURL) ? entryImageURL : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
+				resultRow="<%= row %>"
+				rowChecker="<%= rowChecker %>"
+				smallImageCSSClass="user-icon user-icon-lg"
+				smallImageUrl="<%= userDisplay != null ? userDisplay.getPortraitURL(themeDisplay) : UserConstants.getPortraitURL(themeDisplay.getPathImage(), true, 0, null) %>"
+				title="<%= HtmlUtil.escape(entry.getTitle()) %>"
+				url="<%= rowURL.toString() %>"
+			/>
+		</liferay-ui:search-container-column-text>
+	</c:when>
+	<c:otherwise>
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="title"
+			orderable="<%= false %>"
+			property="title"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="author"
+			orderable="<%= false %>"
+			property="userName"
+		/>
+
+		<liferay-ui:search-container-column-date
+			href="<%= rowURL %>"
+			name="create-date"
+			orderable="<%= false %>"
+			property="createDate"
+		/>
+
+		<liferay-ui:search-container-column-date
+			href="<%= rowURL %>"
+			name="display-date"
+			orderable="<%= false %>"
+			property="displayDate"
+		/>
+
+		<liferay-ui:search-container-column-status
+			href="<%= rowURL %>"
+			name="status"
+		/>
+
+		<liferay-ui:search-container-column-jsp
+			align="right"
+			cssClass="entry-action"
+			path="/blogs_admin/entry_action.jsp"
+		/>
+	</c:otherwise>
+</c:choose>

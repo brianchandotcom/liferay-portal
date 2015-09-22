@@ -26,6 +26,12 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+PortletURL displayStyleURL = renderResponse.createRenderURL();
+
+String displayStyle = ParamUtil.getString(request, "displayStyle", "icon");
+
+RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -47,6 +53,13 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	checkBoxContainerId="blogEntriesSearchContainer"
 	includeCheckBox="<%= true %>"
 >
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayStyleURL="<%= displayStyleURL %>"
+			displayViews='<%= new String[] {"icon", "list"} %>'
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-sort
@@ -88,7 +101,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	<liferay-ui:search-container
 		id="blogEntries"
 		orderByComparator="<%= BlogsUtil.getOrderByComparator(orderByCol, orderByType) %>"
-		rowChecker="<%= new RowChecker(renderResponse) %>"
+		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
 	>
 
@@ -114,15 +127,9 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 			</liferay-portlet:renderURL>
 
 			<%@ include file="/blogs_admin/search_columns.jspf" %>
-
-			<liferay-ui:search-container-column-jsp
-				align="right"
-				cssClass="entry-action"
-				path="/blogs_admin/entry_action.jsp"
-			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" />
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
 

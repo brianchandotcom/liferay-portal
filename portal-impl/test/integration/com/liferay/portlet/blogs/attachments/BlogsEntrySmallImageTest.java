@@ -37,7 +37,7 @@ import org.junit.Rule;
 /**
  * @author Roberto Díaz
  */
-public class BlogsSmallImageTest extends BaseBlogsImageTestCase {
+public class BlogsEntrySmallImageTest extends BaseBlogsEntryImageTestCase {
 
 	@ClassRule
 	@Rule

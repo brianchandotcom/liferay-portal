@@ -40,7 +40,7 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  */
-public abstract class BaseBlogsImageTestCase {
+public abstract class BaseBlogsEntryImageTestCase {
 
 	@Test
 	public void testAddImage() throws Exception {

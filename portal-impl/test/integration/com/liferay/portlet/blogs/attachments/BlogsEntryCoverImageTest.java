@@ -37,7 +37,7 @@ import org.junit.Rule;
 /**
  * @author Roberto Díaz
  */
-public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
+public class BlogsEntryCoverImageTest extends BaseBlogsEntryImageTestCase {
 
 	@ClassRule
 	@Rule
@@ -94,8 +94,7 @@ public class BlogsCoverImageTest extends BaseBlogsImageTestCase {
 	}
 
 	@Override
-	protected BlogsEntry updateBlogsEntry(
-			long blogsEntryId, String imageTitle)
+	protected BlogsEntry updateBlogsEntry(long blogsEntryId, String imageTitle)
 		throws Exception {
 
 		ServiceContext serviceContext =

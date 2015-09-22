@@ -16,7 +16,6 @@ package com.liferay.portal.cache;
 
 import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 
@@ -69,11 +68,6 @@ public class DummyPortalCacheManager<K extends Serializable, V>
 			new PortalCacheConfiguration(
 				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME, null, null),
 			null);
-	}
-
-	@Override
-	protected String getPortalCacheManagerType() {
-		return PortalCacheManagerTypes.TEST;
 	}
 
 	@Override

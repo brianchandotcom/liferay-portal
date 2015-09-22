@@ -17,7 +17,6 @@ package com.liferay.portal.cache.ehcache.internal;
 import com.liferay.portal.cache.ehcache.internal.event.PortalCacheManagerEventListener;
 import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
@@ -175,11 +174,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		getPortalCacheManagerConfiguration() {
 
 		return _portalCacheManagerConfiguration;
-	}
-
-	@Override
-	protected String getPortalCacheManagerType() {
-		return PortalCacheManagerTypes.EHCACHE;
 	}
 
 	@Override

@@ -541,7 +541,7 @@ counter.jdbc.prefix=jdbc.counter.]]></echo>
 					<var name="test.url" value="${test.url}" />
 				</then>
 				<elseif>
-					<isset property="${mobile.device.type}" />
+					<isset property="mobile.device.type" />
 					<then>
 						<get-ip-address />
 
@@ -3086,7 +3086,7 @@ go]]></replacevalue>
 		</if>
 
 		<if>
-			<isset property="${mobile.device.type}" />
+			<isset property="mobile.device.type" />
 			<then>
 				<stop-appium />
 			</then>
@@ -4255,7 +4255,7 @@ javascript.fast.load=false</echo>
 		<get-testcase-property property.name="mobile.device.type" />
 
 		<if>
-			<isset property="${mobile.device.type}" />
+			<isset property="mobile.device.type" />
 			<then>
 				<get-ip-address />
 
@@ -5065,7 +5065,7 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
-			<isset property="${mobile.device.type}" />
+			<isset property="mobile.device.type" />
 			<then>
 				<start-appium />
 			</then>
@@ -5384,7 +5384,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<get-testcase-property property.name="mobile.device.type" />
 
 		<if>
-			<isset property="${mobile.device.type}" />
+			<isset property="mobile.device.type" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					mobile.device.type=${mobile.device.type}

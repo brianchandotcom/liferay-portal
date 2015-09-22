@@ -110,7 +110,8 @@ public class CacheRegistryUtil {
 		_serviceTracker;
 
 	private class CacheRegistryItemServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<CacheRegistryItem, CacheRegistryItem> {
+		implements ServiceTrackerCustomizer
+			<CacheRegistryItem, CacheRegistryItem> {
 
 		@Override
 		public CacheRegistryItem addingService(

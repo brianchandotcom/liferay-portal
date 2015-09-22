@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -24,6 +23,9 @@ import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.base.ClassNameLocalServiceBaseImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.util.List;
 import java.util.Map;
@@ -56,7 +58,10 @@ public class ClassNameLocalServiceImpl
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
 
-		CacheRegistryUtil.register(this);
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			CacheRegistryItem.class, this);
 	}
 
 	@Override
@@ -79,7 +84,9 @@ public class ClassNameLocalServiceImpl
 	public void destroy() {
 		super.destroy();
 
-		CacheRegistryUtil.unregister(getRegistryName());
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Override
@@ -160,5 +167,7 @@ public class ClassNameLocalServiceImpl
 	private static final Map<String, ClassName> _classNames =
 		new ConcurrentHashMap<>();
 	private static final ClassName _nullClassName = new ClassNameImpl();
+
+	private ServiceRegistration<CacheRegistryItem> _serviceRegistration;
 
 }

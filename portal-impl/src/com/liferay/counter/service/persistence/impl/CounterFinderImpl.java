@@ -20,7 +20,6 @@ import com.liferay.counter.model.CounterRegister;
 import com.liferay.counter.model.impl.CounterImpl;
 import com.liferay.counter.service.persistence.CounterFinder;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.concurrent.CompeteLatch;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.LockMode;
@@ -34,6 +33,9 @@ import com.liferay.portal.model.Dummy;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,12 +60,17 @@ public class CounterFinderImpl
 
 	@Override
 	public void afterPropertiesSet() {
-		CacheRegistryUtil.register(this);
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			CacheRegistryItem.class, this);
 	}
 
 	@Override
 	public void destroy() {
-		CacheRegistryUtil.unregister(getRegistryName());
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Override
@@ -435,5 +442,6 @@ public class CounterFinderImpl
 		new ConcurrentHashMap<>();
 	private final Map<String, Integer> _rangeSizeMap =
 		new ConcurrentHashMap<>();
+	private ServiceRegistration<CacheRegistryItem> _serviceRegistration;
 
 }

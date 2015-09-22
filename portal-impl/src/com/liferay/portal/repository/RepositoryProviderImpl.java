@@ -17,7 +17,6 @@ package com.liferay.portal.repository;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
@@ -44,6 +43,9 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,11 +59,16 @@ public class RepositoryProviderImpl
 	implements RepositoryProvider, CacheRegistryItem {
 
 	public void afterPropertiesSet() {
-		CacheRegistryUtil.register(this);
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistration = registry.registerService(
+			CacheRegistryItem.class, this);
 	}
 
 	public void destroy() {
-		CacheRegistryUtil.unregister(getRegistryName());
+		if (_serviceRegistration != null) {
+			_serviceRegistration.unregister();
+		}
 	}
 
 	@Override
@@ -463,5 +470,6 @@ public class RepositoryProviderImpl
 		new ConcurrentHashMap<>();
 	private final Map<Long, Repository> _repositories =
 		new ConcurrentHashMap<>();
+	private ServiceRegistration<CacheRegistryItem> _serviceRegistration;
 
 }

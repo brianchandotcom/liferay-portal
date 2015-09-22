@@ -28,10 +28,6 @@ String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 %>
 
-<liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="mvcPath" value="/blogs/search.jsp" />
-</liferay-portlet:renderURL>
-
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item
@@ -40,7 +36,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 		/>
 	</aui:nav>
 
-	<aui:form action="<%= searchURL.toString() %>" name="searchFm">
+	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
 		<aui:nav-bar-search>
 			<liferay-ui:input-search markupView="lexicon" />
 		</aui:nav-bar-search>
@@ -79,8 +75,7 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<aui:form action="<%= searchURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
-	<liferay-portlet:renderURLParams varImpl="searchURL" />
+<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="deleteEntryIds" type="hidden" />

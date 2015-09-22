@@ -20,9 +20,39 @@
 String tabs2 = ParamUtil.getString(request, "tabs2", "user-settings");
 %>
 
+<aui:nav-bar markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
+
+		<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="userSettingsURL">
+			<portlet:param name="tabs2" value="user-settings" />
+		</liferay-portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= userSettingsURL %>"
+			label="user-settings"
+			selected='<%= tabs2.equals("user-settings") %>'
+		/>
+
+		<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
+
+			<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="rssURL">
+				<portlet:param name="tabs2" value="rss" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item
+				href="<%= rssURL %>"
+				label="rss"
+				selected='<%= tabs2.equals("rss") %>'
+			/>
+
+		</c:if>
+
+	</aui:nav>
+</aui:nav-bar>
+
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<aui:form action="<%= configurationActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 
@@ -31,36 +61,6 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "user-settings");
 	</liferay-portlet:renderURL>
 
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
-
-	<aui:nav-bar markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
-
-			<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="userSettingsURL">
-				<portlet:param name="tabs2" value="user-settings" />
-			</liferay-portlet:renderURL>
-
-			<aui:nav-item
-				href="<%= userSettingsURL %>"
-				label="user-settings"
-				selected='<%= tabs2.equals("user-settings") %>'
-			/>
-
-			<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-
-				<liferay-portlet:renderURL portletConfiguration="<%= true %>" var="rssURL">
-					<portlet:param name="tabs2" value="rss" />
-				</liferay-portlet:renderURL>
-
-				<aui:nav-item
-					href="<%= rssURL %>"
-					label="rss"
-					selected='<%= tabs2.equals("rss") %>'
-				/>
-
-			</c:if>
-
-		</aui:nav>
-	</aui:nav-bar>
 
 	<c:choose>
 		<c:when test='<%= tabs2.equals("user-settings") %>'>

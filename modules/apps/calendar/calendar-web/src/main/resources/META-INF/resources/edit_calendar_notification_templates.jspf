@@ -40,10 +40,11 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 
 <liferay-ui:header
 	backURL="<%= backURL %>"
+	cssClass="container-fluid-1280"
 	title="<%= calendarName %>"
 />
 
-<aui:nav-bar markupView="lexicon">
+<aui:nav-bar cssClass="container-fluid-1280" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
 		<%
@@ -71,7 +72,7 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 
 <liferay-portlet:actionURL name="updateCalendarNotificationTemplate" var="updateCalendarNotificationTemplateURL" />
 
-<aui:form action="<%= updateCalendarNotificationTemplateURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCalendarNotificationTemplate();" %>'>
+<aui:form action="<%= updateCalendarNotificationTemplateURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "updateCalendarNotificationTemplate();" %>'>
 	<aui:input name="mvcPath" type="hidden" value="/edit_calendar.jsp" />
 	<aui:input name="calendarNotificationTemplateId" type="hidden" value="<%= calendarNotificationTemplateId %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />

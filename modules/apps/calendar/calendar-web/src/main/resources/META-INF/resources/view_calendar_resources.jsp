@@ -36,17 +36,19 @@ CalendarResourceDisplayTerms displayTerms = new CalendarResourceDisplayTerms(ren
 	<portlet:param name="tabs1" value="resources" />
 </liferay-portlet:renderURL>
 
-<c:choose>
-	<c:when test="<%= displayTerms.getScope() == themeDisplay.getCompanyGroupId() %>">
-		<h3><liferay-ui:message key="users" /></h3>
+<div class="container-fluid-1280">
+	<c:choose>
+		<c:when test="<%= displayTerms.getScope() == themeDisplay.getCompanyGroupId() %>">
+			<h3><liferay-ui:message key="users" /></h3>
 
-		<%@ include file="/calendar_resource_user_search_container.jspf" %>
+			<%@ include file="/calendar_resource_user_search_container.jspf" %>
 
-		<h3><liferay-ui:message key="sites" /></h3>
+			<h3><liferay-ui:message key="sites" /></h3>
 
-		<%@ include file="/calendar_resource_group_search_container.jspf" %>
-	</c:when>
-	<c:otherwise>
-		<%@ include file="/calendar_resource_search_container.jspf" %>
-	</c:otherwise>
-</c:choose>
+			<%@ include file="/calendar_resource_group_search_container.jspf" %>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/calendar_resource_search_container.jspf" %>
+		</c:otherwise>
+	</c:choose>
+</div>

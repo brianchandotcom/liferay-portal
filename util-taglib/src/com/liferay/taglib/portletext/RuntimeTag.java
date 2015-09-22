@@ -154,8 +154,14 @@ public class RuntimeTag extends TagSupport {
 				response, pageContext.getOut());
 		}
 
-		PortletInstance portletInstance = new PortletInstance(
-			portletName, instanceId);
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletInstanceKey(portletName);
+
+		if (Validator.isNotNull(instanceId)) {
+			portletInstance = new PortletInstance(
+				portletInstance.getPortletName(), portletInstance.getUserId(),
+				instanceId);
+		}
 
 		RestrictPortletServletRequest restrictPortletServletRequest =
 			new RestrictPortletServletRequest(
@@ -202,7 +208,8 @@ public class RuntimeTag extends TagSupport {
 			request.setAttribute(WebKeys.PORTLET_DECORATE, false);
 
 			Portlet portlet = getPortlet(
-				themeDisplay.getCompanyId(), portletInstance.getPortletName());
+				themeDisplay.getCompanyId(),
+				portletInstance.getPortletInstanceKey());
 
 			PortletPreferences renderPortletPreferences =
 				getRenderPortletPreferences(

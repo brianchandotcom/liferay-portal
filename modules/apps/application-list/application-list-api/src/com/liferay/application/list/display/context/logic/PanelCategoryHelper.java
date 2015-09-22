@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.application.list.taglib.display.context.logic;
+package com.liferay.application.list.display.context.logic;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Adolfo Pérez
@@ -48,6 +50,28 @@ public class PanelCategoryHelper {
 		}
 
 		return hasPortlet(portletId, panelCategory);
+	}
+
+	public String getFirstPortletId(
+		String panelCategoryKey, PermissionChecker permissionChecker,
+		Group group) {
+
+		PanelCategory panelCategory =
+			_panelCategoryRegistry.getFirstChildPanelCategory(
+				panelCategoryKey, permissionChecker, group);
+
+		if (panelCategory == null) {
+			return null;
+		}
+
+		PanelApp panelApp = _panelAppRegistry.getFirstPanelApp(
+			panelCategory, permissionChecker, group);
+
+		if (panelApp == null) {
+			return null;
+		}
+
+		return panelApp.getPortletId();
 	}
 
 	private boolean hasPortlet(String portletId, PanelCategory panelCategory) {

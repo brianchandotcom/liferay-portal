@@ -326,15 +326,37 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		if ((coverImageImageSelector != null) &&
 			(coverImageImageSelector.getImageId() != 0)) {
 
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				coverImageImageSelector.getImageId());
+			long coverImageSelectorImageId =
+				coverImageImageSelector.getImageId();
+
+			FileEntry coverImageFileEntry =
+				PortletFileRepositoryUtil.getPortletFileEntry(
+					coverImageSelectorImageId);
+
+			if (coverImageFileEntry.isRepositoryCapabilityProvided(
+					TemporaryFileEntriesCapability.class)) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					coverImageImageSelector.getImageId());
+			}
 		}
 
 		if ((smallImageImageSelector != null) &&
 			(smallImageImageSelector.getImageId() != 0)) {
 
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				smallImageImageSelector.getImageId());
+			long smallImageSelectorImageId =
+				smallImageImageSelector.getImageId();
+
+			FileEntry smallImageFileEntry =
+				PortletFileRepositoryUtil.getPortletFileEntry(
+					smallImageSelectorImageId);
+
+			if (smallImageFileEntry.isRepositoryCapabilityProvided(
+					TemporaryFileEntriesCapability.class)) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					smallImageImageSelector.getImageId());
+			}
 		}
 
 		return entry;
@@ -1396,8 +1418,19 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			(coverImageImageSelector.getImageId() !=
 				entry.getCoverImageFileEntryId())) {
 
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				coverImageImageSelector.getImageId());
+			long coverImageSelectorImageId =
+				smallImageImageSelector.getImageId();
+
+			FileEntry coverImageFileEntry =
+				PortletFileRepositoryUtil.getPortletFileEntry(
+					coverImageSelectorImageId);
+
+			if (coverImageFileEntry.isRepositoryCapabilityProvided(
+					TemporaryFileEntriesCapability.class)) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					coverImageImageSelector.getImageId());
+			}
 		}
 
 		if ((smallImageImageSelector != null) &&
@@ -1405,8 +1438,19 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			(smallImageImageSelector.getImageId() !=
 				entry.getCoverImageFileEntryId())) {
 
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				smallImageImageSelector.getImageId());
+			long smallImageSelectorImageId =
+				smallImageImageSelector.getImageId();
+
+			FileEntry smallImageFileEntry =
+				PortletFileRepositoryUtil.getPortletFileEntry(
+					smallImageSelectorImageId);
+
+			if (smallImageFileEntry.isRepositoryCapabilityProvided(
+					TemporaryFileEntriesCapability.class)) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					smallImageImageSelector.getImageId());
+			}
 		}
 
 		return entry;

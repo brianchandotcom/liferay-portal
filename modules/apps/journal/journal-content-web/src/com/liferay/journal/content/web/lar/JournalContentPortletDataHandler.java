@@ -14,35 +14,18 @@
 
 package com.liferay.journal.content.web.lar;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
-import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.journal.content.web.configuration.JournalContentWebConfigurationValues;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
-import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.journal.web.lar.JournalPortletDataHandler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
-
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -112,171 +95,6 @@ public class JournalContentPortletDataHandler
 		portletPreferences.setValue("articleId", StringPool.BLANK);
 		portletPreferences.setValue("ddmTemplateKey", StringPool.BLANK);
 		portletPreferences.setValue("groupId", StringPool.BLANK);
-
-		return portletPreferences;
-	}
-
-	@Override
-	protected PortletPreferences doProcessExportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		portletDataContext.addPortletPermissions(
-			JournalPermission.RESOURCE_NAME);
-
-		String articleId = portletPreferences.getValue("articleId", null);
-
-		if (articleId == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"No article ID found in preferences of portlet " +
-						portletId);
-			}
-
-			return portletPreferences;
-		}
-
-		long articleGroupId = GetterUtil.getLong(
-			portletPreferences.getValue("groupId", StringPool.BLANK));
-
-		if (articleGroupId <= 0) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No group ID found in preferences of portlet " + portletId);
-			}
-
-			return portletPreferences;
-		}
-
-		long previousScopeGroupId = portletDataContext.getScopeGroupId();
-
-		if (articleGroupId != previousScopeGroupId) {
-			portletDataContext.setScopeGroupId(articleGroupId);
-		}
-
-		JournalArticle article = null;
-
-		article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-			articleGroupId, articleId, WorkflowConstants.STATUS_APPROVED);
-
-		if (article == null) {
-			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-				articleGroupId, articleId, WorkflowConstants.STATUS_EXPIRED);
-		}
-
-		if (article == null) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Portlet " + portletId +
-						" refers to an invalid article ID " + articleId);
-			}
-
-			portletDataContext.setScopeGroupId(previousScopeGroupId);
-
-			return portletPreferences;
-		}
-
-		StagedModelDataHandlerUtil.exportReferenceStagedModel(
-			portletDataContext, portletId, article);
-
-		String defaultDDMTemplateKey = article.getDDMTemplateKey();
-		String preferenceDDMTemplateKey = portletPreferences.getValue(
-			"ddmTemplateKey", null);
-
-		if (Validator.isNotNull(defaultDDMTemplateKey) &&
-			Validator.isNotNull(preferenceDDMTemplateKey) &&
-			!defaultDDMTemplateKey.equals(preferenceDDMTemplateKey)) {
-
-			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-				article.getGroupId(),
-				PortalUtil.getClassNameId(DDMStructure.class),
-				preferenceDDMTemplateKey, true);
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, article, ddmTemplate,
-				PortletDataContext.REFERENCE_TYPE_STRONG);
-		}
-
-		portletDataContext.setScopeGroupId(previousScopeGroupId);
-
-		return portletPreferences;
-	}
-
-	@Override
-	protected PortletPreferences doProcessImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		portletDataContext.importPortletPermissions(
-			JournalPermission.RESOURCE_NAME);
-
-		long previousScopeGroupId = portletDataContext.getScopeGroupId();
-
-		Map<Long, Long> groupIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Group.class);
-
-		long importGroupId = GetterUtil.getLong(
-			portletPreferences.getValue("groupId", null));
-
-		long groupId = MapUtil.getLong(groupIds, importGroupId, importGroupId);
-
-		portletDataContext.setScopeGroupId(groupId);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, DDMStructure.class);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, DDMTemplate.class);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, JournalArticle.class);
-
-		String articleId = portletPreferences.getValue("articleId", null);
-
-		if (Validator.isNotNull(articleId)) {
-			Map<String, String> articleIds =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					JournalArticle.class + ".articleId");
-
-			articleId = MapUtil.getString(articleIds, articleId, articleId);
-
-			portletPreferences.setValue("articleId", articleId);
-
-			portletPreferences.setValue("groupId", String.valueOf(groupId));
-
-			Layout layout = LayoutLocalServiceUtil.getLayout(
-				portletDataContext.getPlid());
-
-			JournalContentSearchLocalServiceUtil.updateContentSearch(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), portletId, articleId, true);
-		}
-		else {
-			portletPreferences.setValue("groupId", StringPool.BLANK);
-			portletPreferences.setValue("articleId", StringPool.BLANK);
-		}
-
-		String ddmTemplateKey = portletPreferences.getValue(
-			"ddmTemplateKey", null);
-
-		if (Validator.isNotNull(ddmTemplateKey)) {
-			Map<String, String> ddmTemplateKeys =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					DDMTemplate.class + ".ddmTemplateKey");
-
-			ddmTemplateKey = MapUtil.getString(
-				ddmTemplateKeys, ddmTemplateKey, ddmTemplateKey);
-
-			portletPreferences.setValue("ddmTemplateKey", ddmTemplateKey);
-		}
-		else {
-			portletPreferences.setValue("ddmTemplateKey", StringPool.BLANK);
-		}
-
-		portletDataContext.setScopeGroupId(previousScopeGroupId);
 
 		return portletPreferences;
 	}

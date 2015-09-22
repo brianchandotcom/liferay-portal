@@ -126,8 +126,6 @@ public class BookmarksEntryPersistenceTest {
 
 		newBookmarksEntry.setGroupId(RandomTestUtil.nextLong());
 
-		newBookmarksEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		newBookmarksEntry.setUserId(RandomTestUtil.nextLong());
 
 		newBookmarksEntry.setUserName(RandomTestUtil.randomString());
@@ -162,6 +160,8 @@ public class BookmarksEntryPersistenceTest {
 
 		newBookmarksEntry.setStatusDate(RandomTestUtil.nextDate());
 
+		newBookmarksEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		_bookmarksEntries.add(_persistence.update(newBookmarksEntry));
 
 		BookmarksEntry existingBookmarksEntry = _persistence.findByPrimaryKey(newBookmarksEntry.getPrimaryKey());
@@ -172,8 +172,6 @@ public class BookmarksEntryPersistenceTest {
 			newBookmarksEntry.getEntryId());
 		Assert.assertEquals(existingBookmarksEntry.getGroupId(),
 			newBookmarksEntry.getGroupId());
-		Assert.assertEquals(existingBookmarksEntry.getCompanyId(),
-			newBookmarksEntry.getCompanyId());
 		Assert.assertEquals(existingBookmarksEntry.getUserId(),
 			newBookmarksEntry.getUserId());
 		Assert.assertEquals(existingBookmarksEntry.getUserName(),
@@ -212,6 +210,8 @@ public class BookmarksEntryPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingBookmarksEntry.getStatusDate()),
 			Time.getShortTimestamp(newBookmarksEntry.getStatusDate()));
+		Assert.assertEquals(existingBookmarksEntry.getCompanyId(),
+			newBookmarksEntry.getCompanyId());
 	}
 
 	@Test
@@ -380,13 +380,12 @@ public class BookmarksEntryPersistenceTest {
 
 	protected OrderByComparator<BookmarksEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("BookmarksEntry", "uuid",
-			true, "entryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "resourceBlockId", true, "folderId", true,
-			"treePath", true, "name", true, "url", true, "description", true,
-			"visits", true, "priority", true, "lastPublishDate", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			true, "entryId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "resourceBlockId",
+			true, "folderId", true, "treePath", true, "name", true, "url",
+			true, "description", true, "visits", true, "priority", true,
+			"lastPublishDate", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true, "companyId", true);
 	}
 
 	@Test
@@ -608,8 +607,6 @@ public class BookmarksEntryPersistenceTest {
 
 		bookmarksEntry.setGroupId(RandomTestUtil.nextLong());
 
-		bookmarksEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		bookmarksEntry.setUserId(RandomTestUtil.nextLong());
 
 		bookmarksEntry.setUserName(RandomTestUtil.randomString());
@@ -643,6 +640,8 @@ public class BookmarksEntryPersistenceTest {
 		bookmarksEntry.setStatusByUserName(RandomTestUtil.randomString());
 
 		bookmarksEntry.setStatusDate(RandomTestUtil.nextDate());
+
+		bookmarksEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		_bookmarksEntries.add(_persistence.update(bookmarksEntry));
 

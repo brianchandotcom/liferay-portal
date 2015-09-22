@@ -121,6 +121,8 @@ public class PasswordPolicyRelPersistenceTest {
 
 		newPasswordPolicyRel.setClassPK(RandomTestUtil.nextLong());
 
+		newPasswordPolicyRel.setCompanyId(RandomTestUtil.nextLong());
+
 		_passwordPolicyRels.add(_persistence.update(newPasswordPolicyRel));
 
 		PasswordPolicyRel existingPasswordPolicyRel = _persistence.findByPrimaryKey(newPasswordPolicyRel.getPrimaryKey());
@@ -135,6 +137,8 @@ public class PasswordPolicyRelPersistenceTest {
 			newPasswordPolicyRel.getClassNameId());
 		Assert.assertEquals(existingPasswordPolicyRel.getClassPK(),
 			newPasswordPolicyRel.getClassPK());
+		Assert.assertEquals(existingPasswordPolicyRel.getCompanyId(),
+			newPasswordPolicyRel.getCompanyId());
 	}
 
 	@Test
@@ -177,7 +181,8 @@ public class PasswordPolicyRelPersistenceTest {
 	protected OrderByComparator<PasswordPolicyRel> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("PasswordPolicyRel",
 			"mvccVersion", true, "passwordPolicyRelId", true,
-			"passwordPolicyId", true, "classNameId", true, "classPK", true);
+			"passwordPolicyId", true, "classNameId", true, "classPK", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -406,6 +411,8 @@ public class PasswordPolicyRelPersistenceTest {
 		passwordPolicyRel.setClassNameId(RandomTestUtil.nextLong());
 
 		passwordPolicyRel.setClassPK(RandomTestUtil.nextLong());
+
+		passwordPolicyRel.setCompanyId(RandomTestUtil.nextLong());
 
 		_passwordPolicyRels.add(_persistence.update(passwordPolicyRel));
 

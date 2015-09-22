@@ -173,6 +173,17 @@ public interface ModuleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.marketplace.model.Module fetchModule(long moduleId);
 
+	/**
+	* Returns the module with the matching UUID and company.
+	*
+	* @param uuid the module's UUID
+	* @param companyId the primary key of the company
+	* @return the matching module, or <code>null</code> if a matching module could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.marketplace.model.Module fetchModuleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -193,6 +204,18 @@ public interface ModuleLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.marketplace.model.Module getModule(long moduleId)
 		throws PortalException;
+
+	/**
+	* Returns the module with the matching UUID and company.
+	*
+	* @param uuid the module's UUID
+	* @param companyId the primary key of the company
+	* @return the matching module
+	* @throws PortalException if a matching module could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.marketplace.model.Module getModuleByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.marketplace.model.Module> getModules(

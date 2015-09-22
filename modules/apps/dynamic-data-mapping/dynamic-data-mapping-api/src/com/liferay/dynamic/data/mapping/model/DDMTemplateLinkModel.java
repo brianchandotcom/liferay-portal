@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +41,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface DDMTemplateLinkModel extends AttachedModel,
-	BaseModel<DDMTemplateLink> {
+	BaseModel<DDMTemplateLink>, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -130,6 +131,22 @@ public interface DDMTemplateLinkModel extends AttachedModel,
 	 * @param templateId the template ID of this d d m template link
 	 */
 	public void setTemplateId(long templateId);
+
+	/**
+	 * Returns the company ID of this d d m template link.
+	 *
+	 * @return the company ID of this d d m template link
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this d d m template link.
+	 *
+	 * @param companyId the company ID of this d d m template link
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -73,8 +73,6 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		sb.append(ruleId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -95,6 +93,8 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		sb.append(typeSettings);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -113,7 +113,6 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 
 		mdrRuleImpl.setRuleId(ruleId);
 		mdrRuleImpl.setGroupId(groupId);
-		mdrRuleImpl.setCompanyId(companyId);
 		mdrRuleImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -174,6 +173,8 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 			mdrRuleImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		mdrRuleImpl.setCompanyId(companyId);
+
 		mdrRuleImpl.resetOriginalValues();
 
 		return mdrRuleImpl;
@@ -184,7 +185,6 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		uuid = objectInput.readUTF();
 		ruleId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -195,6 +195,7 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		type = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -209,7 +210,6 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 
 		objectOutput.writeLong(ruleId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -252,12 +252,12 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long ruleId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -268,4 +268,5 @@ public class MDRRuleCacheModel implements CacheModel<MDRRule>, Externalizable {
 	public String type;
 	public String typeSettings;
 	public long lastPublishDate;
+	public long companyId;
 }

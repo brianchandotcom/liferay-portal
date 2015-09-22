@@ -70,8 +70,6 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 		sb.append(contentId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", repositoryId=");
 		sb.append(repositoryId);
 		sb.append(", path=");
@@ -80,6 +78,8 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 		sb.append(version);
 		sb.append(", size=");
 		sb.append(size);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -91,7 +91,6 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 
 		dlContentImpl.setContentId(contentId);
 		dlContentImpl.setGroupId(groupId);
-		dlContentImpl.setCompanyId(companyId);
 		dlContentImpl.setRepositoryId(repositoryId);
 
 		if (path == null) {
@@ -109,6 +108,7 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 		}
 
 		dlContentImpl.setSize(size);
+		dlContentImpl.setCompanyId(companyId);
 
 		dlContentImpl.resetOriginalValues();
 
@@ -119,11 +119,11 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		contentId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		repositoryId = objectInput.readLong();
 		path = objectInput.readUTF();
 		version = objectInput.readUTF();
 		size = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -131,7 +131,6 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 		throws IOException {
 		objectOutput.writeLong(contentId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(repositoryId);
 
 		if (path == null) {
@@ -149,13 +148,14 @@ public class DLContentCacheModel implements CacheModel<DLContent>,
 		}
 
 		objectOutput.writeLong(size);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long contentId;
 	public long groupId;
-	public long companyId;
 	public long repositoryId;
 	public String path;
 	public String version;
 	public long size;
+	public long companyId;
 }

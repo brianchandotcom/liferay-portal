@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,7 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LockModel extends BaseModel<Lock>, MVCCModel {
+public interface LockModel extends BaseModel<Lock>, MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -107,20 +108,6 @@ public interface LockModel extends BaseModel<Lock>, MVCCModel {
 	 * @param lockId the lock ID of this lock
 	 */
 	public void setLockId(long lockId);
-
-	/**
-	 * Returns the company ID of this lock.
-	 *
-	 * @return the company ID of this lock
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this lock.
-	 *
-	 * @param companyId the company ID of this lock
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this lock.
@@ -258,6 +245,22 @@ public interface LockModel extends BaseModel<Lock>, MVCCModel {
 	 * @param expirationDate the expiration date of this lock
 	 */
 	public void setExpirationDate(Date expirationDate);
+
+	/**
+	 * Returns the company ID of this lock.
+	 *
+	 * @return the company ID of this lock
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this lock.
+	 *
+	 * @param companyId the company ID of this lock
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

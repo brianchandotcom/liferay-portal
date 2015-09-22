@@ -17,7 +17,6 @@
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -25,6 +24,7 @@
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="data" type="com.liferay.portal.dao.orm.hibernate.StringClobType" column="data_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStorageLinkImpl" table="DDMStorageLink">
 		<id name="storageLinkId" type="long">
@@ -34,6 +34,7 @@
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl" table="DDMStructure">
 		<id name="structureId" type="long">
@@ -41,7 +42,6 @@
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -58,6 +58,7 @@
 		<property name="storageType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStructureLayoutImpl" table="DDMStructureLayout">
 		<id name="structureLayoutId" type="long">
@@ -65,13 +66,13 @@
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="structureVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="definition" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStructureLinkImpl" table="DDMStructureLink">
 		<id name="structureLinkId" type="long">
@@ -80,13 +81,13 @@
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="structureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl" table="DDMStructureVersion">
 		<id name="structureVersionId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -102,6 +103,7 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl" table="DDMTemplate">
 		<id name="templateId" type="long">
@@ -109,7 +111,6 @@
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -132,6 +133,7 @@
 		<property name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkImpl" table="DDMTemplateLink">
 		<id name="templateLinkId" type="long">
@@ -140,13 +142,13 @@
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="templateId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.dynamic.data.mapping.model.impl.DDMTemplateVersionImpl" table="DDMTemplateVersion">
 		<id name="templateVersionId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
@@ -162,5 +164,6 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

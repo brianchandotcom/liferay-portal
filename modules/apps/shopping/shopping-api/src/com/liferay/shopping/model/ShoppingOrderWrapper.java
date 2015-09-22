@@ -55,7 +55,6 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 
 		attributes.put("orderId", getOrderId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -104,6 +103,7 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 		attributes.put("ppPayerEmail", getPpPayerEmail());
 		attributes.put("sendOrderEmail", getSendOrderEmail());
 		attributes.put("sendShippingEmail", getSendShippingEmail());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -120,12 +120,6 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -416,6 +410,12 @@ public class ShoppingOrderWrapper implements ShoppingOrder,
 
 		if (sendShippingEmail != null) {
 			setSendShippingEmail(sendShippingEmail);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

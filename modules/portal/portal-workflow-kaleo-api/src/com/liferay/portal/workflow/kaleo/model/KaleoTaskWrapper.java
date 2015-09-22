@@ -54,7 +54,6 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 
 		attributes.put("kaleoTaskId", getKaleoTaskId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -63,6 +62,7 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 		attributes.put("kaleoNodeId", getKaleoNodeId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -79,12 +79,6 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -133,6 +127,12 @@ public class KaleoTaskWrapper implements KaleoTask, ModelWrapper<KaleoTask> {
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

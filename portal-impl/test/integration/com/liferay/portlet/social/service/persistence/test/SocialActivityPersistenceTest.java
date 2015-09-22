@@ -116,8 +116,6 @@ public class SocialActivityPersistenceTest {
 
 		newSocialActivity.setGroupId(RandomTestUtil.nextLong());
 
-		newSocialActivity.setCompanyId(RandomTestUtil.nextLong());
-
 		newSocialActivity.setUserId(RandomTestUtil.nextLong());
 
 		newSocialActivity.setCreateDate(RandomTestUtil.nextLong());
@@ -140,6 +138,8 @@ public class SocialActivityPersistenceTest {
 
 		newSocialActivity.setReceiverUserId(RandomTestUtil.nextLong());
 
+		newSocialActivity.setCompanyId(RandomTestUtil.nextLong());
+
 		_socialActivities.add(_persistence.update(newSocialActivity));
 
 		SocialActivity existingSocialActivity = _persistence.findByPrimaryKey(newSocialActivity.getPrimaryKey());
@@ -148,8 +148,6 @@ public class SocialActivityPersistenceTest {
 			newSocialActivity.getActivityId());
 		Assert.assertEquals(existingSocialActivity.getGroupId(),
 			newSocialActivity.getGroupId());
-		Assert.assertEquals(existingSocialActivity.getCompanyId(),
-			newSocialActivity.getCompanyId());
 		Assert.assertEquals(existingSocialActivity.getUserId(),
 			newSocialActivity.getUserId());
 		Assert.assertEquals(existingSocialActivity.getCreateDate(),
@@ -172,6 +170,8 @@ public class SocialActivityPersistenceTest {
 			newSocialActivity.getExtraData());
 		Assert.assertEquals(existingSocialActivity.getReceiverUserId(),
 			newSocialActivity.getReceiverUserId());
+		Assert.assertEquals(existingSocialActivity.getCompanyId(),
+			newSocialActivity.getCompanyId());
 	}
 
 	@Test
@@ -179,13 +179,6 @@ public class SocialActivityPersistenceTest {
 		_persistence.countByGroupId(RandomTestUtil.nextLong());
 
 		_persistence.countByGroupId(0L);
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -221,6 +214,13 @@ public class SocialActivityPersistenceTest {
 		_persistence.countByReceiverUserId(RandomTestUtil.nextLong());
 
 		_persistence.countByReceiverUserId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -291,11 +291,11 @@ public class SocialActivityPersistenceTest {
 
 	protected OrderByComparator<SocialActivity> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SocialActivity",
-			"activityId", true, "groupId", true, "companyId", true, "userId",
-			true, "createDate", true, "activitySetId", true,
-			"mirrorActivityId", true, "classNameId", true, "classPK", true,
-			"parentClassNameId", true, "parentClassPK", true, "type", true,
-			"extraData", true, "receiverUserId", true);
+			"activityId", true, "groupId", true, "userId", true, "createDate",
+			true, "activitySetId", true, "mirrorActivityId", true,
+			"classNameId", true, "classPK", true, "parentClassNameId", true,
+			"parentClassPK", true, "type", true, "extraData", true,
+			"receiverUserId", true, "companyId", true);
 	}
 
 	@Test
@@ -537,8 +537,6 @@ public class SocialActivityPersistenceTest {
 
 		socialActivity.setGroupId(RandomTestUtil.nextLong());
 
-		socialActivity.setCompanyId(RandomTestUtil.nextLong());
-
 		socialActivity.setUserId(RandomTestUtil.nextLong());
 
 		socialActivity.setCreateDate(RandomTestUtil.nextLong());
@@ -560,6 +558,8 @@ public class SocialActivityPersistenceTest {
 		socialActivity.setExtraData(RandomTestUtil.randomString());
 
 		socialActivity.setReceiverUserId(RandomTestUtil.nextLong());
+
+		socialActivity.setCompanyId(RandomTestUtil.nextLong());
 
 		_socialActivities.add(_persistence.update(socialActivity));
 

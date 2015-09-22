@@ -3,7 +3,6 @@
 <model-hints>
 	<model name="com.liferay.microblogs.model.MicroblogsEntry">
 		<field name="microblogsEntryId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -17,5 +16,6 @@
 		<field name="type" type="int" />
 		<field name="parentMicroblogsEntryId" type="long" />
 		<field name="socialRelationType" type="int" />
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

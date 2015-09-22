@@ -120,8 +120,6 @@ public class UserPersistenceTest {
 
 		newUser.setUuid(RandomTestUtil.randomString());
 
-		newUser.setCompanyId(RandomTestUtil.nextLong());
-
 		newUser.setCreateDate(RandomTestUtil.nextDate());
 
 		newUser.setModifiedDate(RandomTestUtil.nextDate());
@@ -198,6 +196,8 @@ public class UserPersistenceTest {
 
 		newUser.setStatus(RandomTestUtil.nextInt());
 
+		newUser.setCompanyId(RandomTestUtil.nextLong());
+
 		_users.add(_persistence.update(newUser));
 
 		User existingUser = _persistence.findByPrimaryKey(newUser.getPrimaryKey());
@@ -206,7 +206,6 @@ public class UserPersistenceTest {
 			newUser.getMvccVersion());
 		Assert.assertEquals(existingUser.getUuid(), newUser.getUuid());
 		Assert.assertEquals(existingUser.getUserId(), newUser.getUserId());
-		Assert.assertEquals(existingUser.getCompanyId(), newUser.getCompanyId());
 		Assert.assertEquals(Time.getShortTimestamp(existingUser.getCreateDate()),
 			Time.getShortTimestamp(newUser.getCreateDate()));
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -277,6 +276,7 @@ public class UserPersistenceTest {
 				existingUser.getLastPublishDate()),
 			Time.getShortTimestamp(newUser.getLastPublishDate()));
 		Assert.assertEquals(existingUser.getStatus(), newUser.getStatus());
+		Assert.assertEquals(existingUser.getCompanyId(), newUser.getCompanyId());
 	}
 
 	@Test
@@ -295,13 +295,6 @@ public class UserPersistenceTest {
 		_persistence.countByUuid_C(StringPool.NULL, 0L);
 
 		_persistence.countByUuid_C((String)null, 0L);
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -325,6 +318,13 @@ public class UserPersistenceTest {
 		_persistence.countByPortraitId(RandomTestUtil.nextLong());
 
 		_persistence.countByPortraitId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -443,11 +443,11 @@ public class UserPersistenceTest {
 
 	protected OrderByComparator<User> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("User_", "mvccVersion",
-			true, "uuid", true, "userId", true, "companyId", true,
-			"createDate", true, "modifiedDate", true, "defaultUser", true,
-			"contactId", true, "password", true, "passwordEncrypted", true,
-			"passwordReset", true, "passwordModifiedDate", true, "digest",
-			true, "reminderQueryQuestion", true, "reminderQueryAnswer", true,
+			true, "uuid", true, "userId", true, "createDate", true,
+			"modifiedDate", true, "defaultUser", true, "contactId", true,
+			"password", true, "passwordEncrypted", true, "passwordReset", true,
+			"passwordModifiedDate", true, "digest", true,
+			"reminderQueryQuestion", true, "reminderQueryAnswer", true,
 			"graceLoginCount", true, "screenName", true, "emailAddress", true,
 			"facebookId", true, "ldapServerId", true, "openId", true,
 			"portraitId", true, "languageId", true, "timeZoneId", true,
@@ -457,7 +457,7 @@ public class UserPersistenceTest {
 			"lastLoginIP", true, "lastFailedLoginDate", true,
 			"failedLoginAttempts", true, "lockout", true, "lockoutDate", true,
 			"agreedToTermsOfUse", true, "emailAddressVerified", true,
-			"lastPublishDate", true, "status", true);
+			"lastPublishDate", true, "status", true, "companyId", true);
 	}
 
 	@Test
@@ -718,8 +718,6 @@ public class UserPersistenceTest {
 
 		user.setUuid(RandomTestUtil.randomString());
 
-		user.setCompanyId(RandomTestUtil.nextLong());
-
 		user.setCreateDate(RandomTestUtil.nextDate());
 
 		user.setModifiedDate(RandomTestUtil.nextDate());
@@ -795,6 +793,8 @@ public class UserPersistenceTest {
 		user.setLastPublishDate(RandomTestUtil.nextDate());
 
 		user.setStatus(RandomTestUtil.nextInt());
+
+		user.setCompanyId(RandomTestUtil.nextLong());
 
 		_users.add(_persistence.update(user));
 

@@ -57,7 +57,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		attributes.put("uuid", getUuid());
 		attributes.put("folderId", getFolderId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -77,6 +76,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -99,12 +99,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -220,6 +214,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

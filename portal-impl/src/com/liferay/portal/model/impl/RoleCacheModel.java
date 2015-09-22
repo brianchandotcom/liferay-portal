@@ -87,8 +87,6 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		sb.append(uuid);
 		sb.append(", roleId=");
 		sb.append(roleId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -113,6 +111,8 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		sb.append(subtype);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -132,7 +132,6 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		}
 
 		roleImpl.setRoleId(roleId);
-		roleImpl.setCompanyId(companyId);
 		roleImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -196,6 +195,8 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 			roleImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		roleImpl.setCompanyId(companyId);
+
 		roleImpl.resetOriginalValues();
 
 		return roleImpl;
@@ -206,7 +207,6 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		roleId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -219,6 +219,7 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		type = objectInput.readInt();
 		subtype = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -234,7 +235,6 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		}
 
 		objectOutput.writeLong(roleId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -280,12 +280,12 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long roleId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -298,4 +298,5 @@ public class RoleCacheModel implements CacheModel<Role>, Externalizable,
 	public int type;
 	public String subtype;
 	public long lastPublishDate;
+	public long companyId;
 }

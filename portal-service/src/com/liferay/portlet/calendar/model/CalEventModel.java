@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -44,7 +45,8 @@ import java.util.Date;
  */
 @Deprecated
 @ProviderType
-public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel {
+public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,22 +111,6 @@ public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel {
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this cal event.
-	 *
-	 * @return the company ID of this cal event
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this cal event.
-	 *
-	 * @param companyId the company ID of this cal event
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this cal event.
@@ -441,6 +427,22 @@ public interface CalEventModel extends BaseModel<CalEvent>, GroupedModel {
 	 * @param secondReminder the second reminder of this cal event
 	 */
 	public void setSecondReminder(int secondReminder);
+
+	/**
+	 * Returns the company ID of this cal event.
+	 *
+	 * @return the company ID of this cal event
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this cal event.
+	 *
+	 * @param companyId the company ID of this cal event
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -42,6 +42,7 @@ public class ShoppingItemPriceSoap implements Serializable {
 		soapModel.setShipping(model.getShipping());
 		soapModel.setUseShippingFormula(model.getUseShippingFormula());
 		soapModel.setStatus(model.getStatus());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -185,6 +186,14 @@ public class ShoppingItemPriceSoap implements Serializable {
 		_status = status;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _itemPriceId;
 	private long _itemId;
 	private int _minQuantity;
@@ -195,4 +204,5 @@ public class ShoppingItemPriceSoap implements Serializable {
 	private double _shipping;
 	private boolean _useShippingFormula;
 	private int _status;
+	private long _companyId;
 }

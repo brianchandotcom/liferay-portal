@@ -54,12 +54,12 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("deliveryId", getDeliveryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("type", getType());
 		attributes.put("email", getEmail());
 		attributes.put("sms", getSms());
 		attributes.put("website", getWebsite());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -70,12 +70,6 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 
 		if (deliveryId != null) {
 			setDeliveryId(deliveryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -106,6 +100,12 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 
 		if (website != null) {
 			setWebsite(website);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

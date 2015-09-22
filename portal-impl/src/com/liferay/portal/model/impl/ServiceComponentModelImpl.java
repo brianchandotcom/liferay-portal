@@ -64,7 +64,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 			{ "buildNamespace", Types.VARCHAR },
 			{ "buildNumber", Types.BIGINT },
 			{ "buildDate", Types.BIGINT },
-			{ "data_", Types.CLOB }
+			{ "data_", Types.CLOB },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -75,9 +76,10 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		TABLE_COLUMNS_MAP.put("buildNumber", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("buildDate", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table ServiceComponent (mvccVersion LONG default 0,serviceComponentId LONG not null primary key,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table ServiceComponent (mvccVersion LONG default 0,serviceComponentId LONG not null primary key,buildNamespace VARCHAR(75) null,buildNumber LONG,buildDate LONG,data_ TEXT null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ServiceComponent";
 	public static final String ORDER_BY_JPQL = " ORDER BY serviceComponent.buildNamespace DESC, serviceComponent.buildNumber DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY ServiceComponent.buildNamespace DESC, ServiceComponent.buildNumber DESC";
@@ -141,6 +143,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		attributes.put("buildNumber", getBuildNumber());
 		attributes.put("buildDate", getBuildDate());
 		attributes.put("data", getData());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -184,6 +187,12 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 		if (data != null) {
 			setData(data);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -279,13 +288,23 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		_data = data;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			ServiceComponent.class.getName(), getPrimaryKey());
 	}
 
@@ -316,6 +335,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		serviceComponentImpl.setBuildNumber(getBuildNumber());
 		serviceComponentImpl.setBuildDate(getBuildDate());
 		serviceComponentImpl.setData(getData());
+		serviceComponentImpl.setCompanyId(getCompanyId());
 
 		serviceComponentImpl.resetOriginalValues();
 
@@ -432,12 +452,14 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 			serviceComponentCacheModel.data = null;
 		}
 
+		serviceComponentCacheModel.companyId = getCompanyId();
+
 		return serviceComponentCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -451,6 +473,8 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 		sb.append(getBuildDate());
 		sb.append(", data=");
 		sb.append(getData());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -458,7 +482,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(22);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.ServiceComponent");
@@ -488,6 +512,10 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 			"<column><column-name>data</column-name><column-value><![CDATA[");
 		sb.append(getData());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -507,6 +535,7 @@ public class ServiceComponentModelImpl extends BaseModelImpl<ServiceComponent>
 	private boolean _setOriginalBuildNumber;
 	private long _buildDate;
 	private String _data;
+	private long _companyId;
 	private long _columnBitmask;
 	private ServiceComponent _escapedModel;
 }

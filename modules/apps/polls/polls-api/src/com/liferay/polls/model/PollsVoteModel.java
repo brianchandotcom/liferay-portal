@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface PollsVoteModel extends BaseModel<PollsVote>, StagedGroupedModel {
+public interface PollsVoteModel extends BaseModel<PollsVote>, PartitionableModel,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -109,22 +111,6 @@ public interface PollsVoteModel extends BaseModel<PollsVote>, StagedGroupedModel
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this polls vote.
-	 *
-	 * @return the company ID of this polls vote
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this polls vote.
-	 *
-	 * @param companyId the company ID of this polls vote
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this polls vote.
@@ -264,6 +250,22 @@ public interface PollsVoteModel extends BaseModel<PollsVote>, StagedGroupedModel
 	 * @param voteDate the vote date of this polls vote
 	 */
 	public void setVoteDate(Date voteDate);
+
+	/**
+	 * Returns the company ID of this polls vote.
+	 *
+	 * @return the company ID of this polls vote
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this polls vote.
+	 *
+	 * @param companyId the company ID of this polls vote
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -38,7 +39,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ExpandoTableModel extends BaseModel<ExpandoTable>, TypedModel {
+public interface ExpandoTableModel extends BaseModel<ExpandoTable>,
+	PartitionableModel, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -72,20 +74,6 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable>, TypedModel {
 	 * @param tableId the table ID of this expando table
 	 */
 	public void setTableId(long tableId);
-
-	/**
-	 * Returns the company ID of this expando table.
-	 *
-	 * @return the company ID of this expando table
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this expando table.
-	 *
-	 * @param companyId the company ID of this expando table
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the fully qualified class name of this expando table.
@@ -127,6 +115,22 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable>, TypedModel {
 	 * @param name the name of this expando table
 	 */
 	public void setName(String name);
+
+	/**
+	 * Returns the company ID of this expando table.
+	 *
+	 * @return the company ID of this expando table
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this expando table.
+	 *
+	 * @param companyId the company ID of this expando table
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

@@ -74,8 +74,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		sb.append(structureId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -108,6 +106,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		sb.append(type);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,7 +126,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		ddmStructureImpl.setStructureId(structureId);
 		ddmStructureImpl.setGroupId(groupId);
-		ddmStructureImpl.setCompanyId(companyId);
 		ddmStructureImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -213,6 +212,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 			ddmStructureImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		ddmStructureImpl.setCompanyId(companyId);
+
 		ddmStructureImpl.resetOriginalValues();
 
 		ddmStructureImpl.setDDMForm(_ddmForm);
@@ -226,7 +227,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		uuid = objectInput.readUTF();
 		structureId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		versionUserId = objectInput.readLong();
@@ -243,6 +243,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		storageType = objectInput.readUTF();
 		type = objectInput.readInt();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 
 		_ddmForm = (com.liferay.dynamic.data.mapping.model.DDMForm)objectInput.readObject();
 	}
@@ -259,7 +260,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		objectOutput.writeLong(structureId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -327,6 +327,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 		objectOutput.writeInt(type);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeObject(_ddmForm);
 	}
@@ -334,7 +335,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String uuid;
 	public long structureId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long versionUserId;
@@ -351,5 +351,6 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public String storageType;
 	public int type;
 	public long lastPublishDate;
+	public long companyId;
 	public com.liferay.dynamic.data.mapping.model.DDMForm _ddmForm;
 }

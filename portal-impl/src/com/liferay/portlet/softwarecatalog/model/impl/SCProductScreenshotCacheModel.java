@@ -67,8 +67,6 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 
 		sb.append("{productScreenshotId=");
 		sb.append(productScreenshotId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", productEntryId=");
@@ -79,6 +77,8 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 		sb.append(fullImageId);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -89,12 +89,12 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 		SCProductScreenshotImpl scProductScreenshotImpl = new SCProductScreenshotImpl();
 
 		scProductScreenshotImpl.setProductScreenshotId(productScreenshotId);
-		scProductScreenshotImpl.setCompanyId(companyId);
 		scProductScreenshotImpl.setGroupId(groupId);
 		scProductScreenshotImpl.setProductEntryId(productEntryId);
 		scProductScreenshotImpl.setThumbnailId(thumbnailId);
 		scProductScreenshotImpl.setFullImageId(fullImageId);
 		scProductScreenshotImpl.setPriority(priority);
+		scProductScreenshotImpl.setCompanyId(companyId);
 
 		scProductScreenshotImpl.resetOriginalValues();
 
@@ -104,31 +104,31 @@ public class SCProductScreenshotCacheModel implements CacheModel<SCProductScreen
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		productScreenshotId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		productEntryId = objectInput.readLong();
 		thumbnailId = objectInput.readLong();
 		fullImageId = objectInput.readLong();
 		priority = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(productScreenshotId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(productEntryId);
 		objectOutput.writeLong(thumbnailId);
 		objectOutput.writeLong(fullImageId);
 		objectOutput.writeInt(priority);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long productScreenshotId;
-	public long companyId;
 	public long groupId;
 	public long productEntryId;
 	public long thumbnailId;
 	public long fullImageId;
 	public int priority;
+	public long companyId;
 }

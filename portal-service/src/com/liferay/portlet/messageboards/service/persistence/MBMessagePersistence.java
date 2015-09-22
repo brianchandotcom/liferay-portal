@@ -502,119 +502,6 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	public int filterCountByGroupId(long groupId);
 
 	/**
-	* Returns all the message-boards messages where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching message-boards messages
-	*/
-	public java.util.List<MBMessage> findByCompanyId(long companyId);
-
-	/**
-	* Returns a range of all the message-boards messages where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of message-boards messages
-	* @param end the upper bound of the range of message-boards messages (not inclusive)
-	* @return the range of matching message-boards messages
-	*/
-	public java.util.List<MBMessage> findByCompanyId(long companyId, int start,
-		int end);
-
-	/**
-	* Returns an ordered range of all the message-boards messages where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of message-boards messages
-	* @param end the upper bound of the range of message-boards messages (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching message-boards messages
-	*/
-	public java.util.List<MBMessage> findByCompanyId(long companyId, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
-
-	/**
-	* Returns the first message-boards message in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching message-boards message
-	* @throws NoSuchMessageException if a matching message-boards message could not be found
-	*/
-	public MBMessage findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
-
-	/**
-	* Returns the first message-boards message in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	*/
-	public MBMessage fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
-
-	/**
-	* Returns the last message-boards message in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching message-boards message
-	* @throws NoSuchMessageException if a matching message-boards message could not be found
-	*/
-	public MBMessage findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
-
-	/**
-	* Returns the last message-boards message in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	*/
-	public MBMessage fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
-
-	/**
-	* Returns the message-boards messages before and after the current message-boards message in the ordered set where companyId = &#63;.
-	*
-	* @param messageId the primary key of the current message-boards message
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next message-boards message
-	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
-	*/
-	public MBMessage[] findByCompanyId_PrevAndNext(long messageId,
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
-
-	/**
-	* Removes all the message-boards messages where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public void removeByCompanyId(long companyId);
-
-	/**
-	* Returns the number of message-boards messages where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching message-boards messages
-	*/
-	public int countByCompanyId(long companyId);
-
-	/**
 	* Returns all the message-boards messages where userId = &#63;.
 	*
 	* @param userId the user ID
@@ -951,6 +838,119 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	* @return the number of matching message-boards messages
 	*/
 	public int countByThreadReplies(long threadId);
+
+	/**
+	* Returns all the message-boards messages where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching message-boards messages
+	*/
+	public java.util.List<MBMessage> findByCompanyId(long companyId);
+
+	/**
+	* Returns a range of all the message-boards messages where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of message-boards messages
+	* @param end the upper bound of the range of message-boards messages (not inclusive)
+	* @return the range of matching message-boards messages
+	*/
+	public java.util.List<MBMessage> findByCompanyId(long companyId, int start,
+		int end);
+
+	/**
+	* Returns an ordered range of all the message-boards messages where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of message-boards messages
+	* @param end the upper bound of the range of message-boards messages (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message-boards messages
+	*/
+	public java.util.List<MBMessage> findByCompanyId(long companyId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
+
+	/**
+	* Returns the first message-boards message in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message-boards message
+	* @throws NoSuchMessageException if a matching message-boards message could not be found
+	*/
+	public MBMessage findByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
+		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+
+	/**
+	* Returns the first message-boards message in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	*/
+	public MBMessage fetchByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
+
+	/**
+	* Returns the last message-boards message in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message-boards message
+	* @throws NoSuchMessageException if a matching message-boards message could not be found
+	*/
+	public MBMessage findByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
+		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+
+	/**
+	* Returns the last message-boards message in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	*/
+	public MBMessage fetchByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
+
+	/**
+	* Returns the message-boards messages before and after the current message-boards message in the ordered set where companyId = &#63;.
+	*
+	* @param messageId the primary key of the current message-boards message
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message-boards message
+	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
+	*/
+	public MBMessage[] findByCompanyId_PrevAndNext(long messageId,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
+		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+
+	/**
+	* Removes all the message-boards messages where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public void removeByCompanyId(long companyId);
+
+	/**
+	* Returns the number of message-boards messages where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching message-boards messages
+	*/
+	public int countByCompanyId(long companyId);
 
 	/**
 	* Returns all the message-boards messages where groupId = &#63; and userId = &#63;.
@@ -1522,129 +1522,6 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	* @return the number of matching message-boards messages that the user has permission to view
 	*/
 	public int filterCountByG_S(long groupId, int status);
-
-	/**
-	* Returns all the message-boards messages where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the matching message-boards messages
-	*/
-	public java.util.List<MBMessage> findByC_S(long companyId, int status);
-
-	/**
-	* Returns a range of all the message-boards messages where companyId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of message-boards messages
-	* @param end the upper bound of the range of message-boards messages (not inclusive)
-	* @return the range of matching message-boards messages
-	*/
-	public java.util.List<MBMessage> findByC_S(long companyId, int status,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the message-boards messages where companyId = &#63; and status = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param start the lower bound of the range of message-boards messages
-	* @param end the upper bound of the range of message-boards messages (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching message-boards messages
-	*/
-	public java.util.List<MBMessage> findByC_S(long companyId, int status,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
-
-	/**
-	* Returns the first message-boards message in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching message-boards message
-	* @throws NoSuchMessageException if a matching message-boards message could not be found
-	*/
-	public MBMessage findByC_S_First(long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
-
-	/**
-	* Returns the first message-boards message in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	*/
-	public MBMessage fetchByC_S_First(long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
-
-	/**
-	* Returns the last message-boards message in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching message-boards message
-	* @throws NoSuchMessageException if a matching message-boards message could not be found
-	*/
-	public MBMessage findByC_S_Last(long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
-
-	/**
-	* Returns the last message-boards message in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	*/
-	public MBMessage fetchByC_S_Last(long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
-
-	/**
-	* Returns the message-boards messages before and after the current message-boards message in the ordered set where companyId = &#63; and status = &#63;.
-	*
-	* @param messageId the primary key of the current message-boards message
-	* @param companyId the company ID
-	* @param status the status
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next message-boards message
-	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
-	*/
-	public MBMessage[] findByC_S_PrevAndNext(long messageId, long companyId,
-		int status,
-		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
-		throws com.liferay.portlet.messageboards.NoSuchMessageException;
-
-	/**
-	* Removes all the message-boards messages where companyId = &#63; and status = &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	*/
-	public void removeByC_S(long companyId, int status);
-
-	/**
-	* Returns the number of message-boards messages where companyId = &#63; and status = &#63;.
-	*
-	* @param companyId the company ID
-	* @param status the status
-	* @return the number of matching message-boards messages
-	*/
-	public int countByC_S(long companyId, int status);
 
 	/**
 	* Returns all the message-boards messages where userId = &#63; and classNameId = &#63;.
@@ -2440,6 +2317,129 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	* @return the number of matching message-boards messages
 	*/
 	public int countByTR_S(long threadId, int status);
+
+	/**
+	* Returns all the message-boards messages where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @return the matching message-boards messages
+	*/
+	public java.util.List<MBMessage> findByC_S(long companyId, int status);
+
+	/**
+	* Returns a range of all the message-boards messages where companyId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of message-boards messages
+	* @param end the upper bound of the range of message-boards messages (not inclusive)
+	* @return the range of matching message-boards messages
+	*/
+	public java.util.List<MBMessage> findByC_S(long companyId, int status,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the message-boards messages where companyId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MBMessageModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param start the lower bound of the range of message-boards messages
+	* @param end the upper bound of the range of message-boards messages (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching message-boards messages
+	*/
+	public java.util.List<MBMessage> findByC_S(long companyId, int status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
+
+	/**
+	* Returns the first message-boards message in the ordered set where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message-boards message
+	* @throws NoSuchMessageException if a matching message-boards message could not be found
+	*/
+	public MBMessage findByC_S_First(long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
+		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+
+	/**
+	* Returns the first message-boards message in the ordered set where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	*/
+	public MBMessage fetchByC_S_First(long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
+
+	/**
+	* Returns the last message-boards message in the ordered set where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message-boards message
+	* @throws NoSuchMessageException if a matching message-boards message could not be found
+	*/
+	public MBMessage findByC_S_Last(long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
+		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+
+	/**
+	* Returns the last message-boards message in the ordered set where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
+	*/
+	public MBMessage fetchByC_S_Last(long companyId, int status,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator);
+
+	/**
+	* Returns the message-boards messages before and after the current message-boards message in the ordered set where companyId = &#63; and status = &#63;.
+	*
+	* @param messageId the primary key of the current message-boards message
+	* @param companyId the company ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next message-boards message
+	* @throws NoSuchMessageException if a message-boards message with the primary key could not be found
+	*/
+	public MBMessage[] findByC_S_PrevAndNext(long messageId, long companyId,
+		int status,
+		com.liferay.portal.kernel.util.OrderByComparator<MBMessage> orderByComparator)
+		throws com.liferay.portlet.messageboards.NoSuchMessageException;
+
+	/**
+	* Removes all the message-boards messages where companyId = &#63; and status = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	*/
+	public void removeByC_S(long companyId, int status);
+
+	/**
+	* Returns the number of message-boards messages where companyId = &#63; and status = &#63;.
+	*
+	* @param companyId the company ID
+	* @param status the status
+	* @return the number of matching message-boards messages
+	*/
+	public int countByC_S(long companyId, int status);
 
 	/**
 	* Returns all the message-boards messages where groupId = &#63; and userId = &#63; and status = &#63;.

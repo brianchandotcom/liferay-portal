@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchSystemEventException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2312,6 +2313,8 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		systemEvent.setNew(true);
 		systemEvent.setPrimaryKey(systemEventId);
 
+		systemEvent.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return systemEvent;
 	}
 
@@ -2545,7 +2548,6 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		systemEventImpl.setMvccVersion(systemEvent.getMvccVersion());
 		systemEventImpl.setSystemEventId(systemEvent.getSystemEventId());
 		systemEventImpl.setGroupId(systemEvent.getGroupId());
-		systemEventImpl.setCompanyId(systemEvent.getCompanyId());
 		systemEventImpl.setUserId(systemEvent.getUserId());
 		systemEventImpl.setUserName(systemEvent.getUserName());
 		systemEventImpl.setCreateDate(systemEvent.getCreateDate());
@@ -2557,6 +2559,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		systemEventImpl.setSystemEventSetKey(systemEvent.getSystemEventSetKey());
 		systemEventImpl.setType(systemEvent.getType());
 		systemEventImpl.setExtraData(systemEvent.getExtraData());
+		systemEventImpl.setCompanyId(systemEvent.getCompanyId());
 
 		return systemEventImpl;
 	}
@@ -2937,6 +2940,8 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_SYSTEMEVENT = "SELECT systemEvent FROM SystemEvent systemEvent";
 	private static final String _SQL_SELECT_SYSTEMEVENT_WHERE_PKS_IN = "SELECT systemEvent FROM SystemEvent systemEvent WHERE systemEventId IN (";
 	private static final String _SQL_SELECT_SYSTEMEVENT_WHERE = "SELECT systemEvent FROM SystemEvent systemEvent WHERE ";

@@ -34,11 +34,11 @@ public class SocialRelationSoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setRelationId(model.getRelationId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setUserId1(model.getUserId1());
 		soapModel.setUserId2(model.getUserId2());
 		soapModel.setType(model.getType());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -107,14 +107,6 @@ public class SocialRelationSoap implements Serializable {
 		_relationId = relationId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getCreateDate() {
 		return _createDate;
 	}
@@ -147,11 +139,19 @@ public class SocialRelationSoap implements Serializable {
 		_type = type;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _relationId;
-	private long _companyId;
 	private long _createDate;
 	private long _userId1;
 	private long _userId2;
 	private int _type;
+	private long _companyId;
 }

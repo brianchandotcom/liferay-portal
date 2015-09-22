@@ -22,6 +22,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -47,7 +48,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface KaleoDefinitionModel extends BaseModel<KaleoDefinition>,
-	GroupedModel, LocalizedModel {
+	GroupedModel, LocalizedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -97,22 +98,6 @@ public interface KaleoDefinitionModel extends BaseModel<KaleoDefinition>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this kaleo definition.
-	 *
-	 * @return the company ID of this kaleo definition
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this kaleo definition.
-	 *
-	 * @param companyId the company ID of this kaleo definition
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this kaleo definition.
@@ -387,6 +372,22 @@ public interface KaleoDefinitionModel extends BaseModel<KaleoDefinition>,
 	 * @param startKaleoNodeId the start kaleo node ID of this kaleo definition
 	 */
 	public void setStartKaleoNodeId(long startKaleoNodeId);
+
+	/**
+	 * Returns the company ID of this kaleo definition.
+	 *
+	 * @return the company ID of this kaleo definition
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this kaleo definition.
+	 *
+	 * @param companyId the company ID of this kaleo definition
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

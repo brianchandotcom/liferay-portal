@@ -64,7 +64,7 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -74,6 +74,8 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 		sb.append(groupId);
 		sb.append(", articleId=");
 		sb.append(articleId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -100,6 +102,8 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 			journalArticleResourceImpl.setArticleId(articleId);
 		}
 
+		journalArticleResourceImpl.setCompanyId(companyId);
+
 		journalArticleResourceImpl.resetOriginalValues();
 
 		return journalArticleResourceImpl;
@@ -111,6 +115,7 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 		resourcePrimKey = objectInput.readLong();
 		groupId = objectInput.readLong();
 		articleId = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -132,10 +137,13 @@ public class JournalArticleResourceCacheModel implements CacheModel<JournalArtic
 		else {
 			objectOutput.writeUTF(articleId);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long resourcePrimKey;
 	public long groupId;
 	public String articleId;
+	public long companyId;
 }

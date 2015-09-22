@@ -126,8 +126,6 @@ public class MDRRulePersistenceTest {
 
 		newMDRRule.setGroupId(RandomTestUtil.nextLong());
 
-		newMDRRule.setCompanyId(RandomTestUtil.nextLong());
-
 		newMDRRule.setUserId(RandomTestUtil.nextLong());
 
 		newMDRRule.setUserName(RandomTestUtil.randomString());
@@ -148,6 +146,8 @@ public class MDRRulePersistenceTest {
 
 		newMDRRule.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newMDRRule.setCompanyId(RandomTestUtil.nextLong());
+
 		_mdrRules.add(_persistence.update(newMDRRule));
 
 		MDRRule existingMDRRule = _persistence.findByPrimaryKey(newMDRRule.getPrimaryKey());
@@ -156,8 +156,6 @@ public class MDRRulePersistenceTest {
 		Assert.assertEquals(existingMDRRule.getRuleId(), newMDRRule.getRuleId());
 		Assert.assertEquals(existingMDRRule.getGroupId(),
 			newMDRRule.getGroupId());
-		Assert.assertEquals(existingMDRRule.getCompanyId(),
-			newMDRRule.getCompanyId());
 		Assert.assertEquals(existingMDRRule.getUserId(), newMDRRule.getUserId());
 		Assert.assertEquals(existingMDRRule.getUserName(),
 			newMDRRule.getUserName());
@@ -178,6 +176,8 @@ public class MDRRulePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMDRRule.getLastPublishDate()),
 			Time.getShortTimestamp(newMDRRule.getLastPublishDate()));
+		Assert.assertEquals(existingMDRRule.getCompanyId(),
+			newMDRRule.getCompanyId());
 	}
 
 	@Test
@@ -238,10 +238,10 @@ public class MDRRulePersistenceTest {
 
 	protected OrderByComparator<MDRRule> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MDRRule", "uuid", true,
-			"ruleId", true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"ruleGroupId", true, "name", true, "description", true, "type",
-			true, "lastPublishDate", true);
+			"ruleId", true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "ruleGroupId", true,
+			"name", true, "description", true, "type", true, "lastPublishDate",
+			true, "companyId", true);
 	}
 
 	@Test
@@ -461,8 +461,6 @@ public class MDRRulePersistenceTest {
 
 		mdrRule.setGroupId(RandomTestUtil.nextLong());
 
-		mdrRule.setCompanyId(RandomTestUtil.nextLong());
-
 		mdrRule.setUserId(RandomTestUtil.nextLong());
 
 		mdrRule.setUserName(RandomTestUtil.randomString());
@@ -482,6 +480,8 @@ public class MDRRulePersistenceTest {
 		mdrRule.setTypeSettings(RandomTestUtil.randomString());
 
 		mdrRule.setLastPublishDate(RandomTestUtil.nextDate());
+
+		mdrRule.setCompanyId(RandomTestUtil.nextLong());
 
 		_mdrRules.add(_persistence.update(mdrRule));
 

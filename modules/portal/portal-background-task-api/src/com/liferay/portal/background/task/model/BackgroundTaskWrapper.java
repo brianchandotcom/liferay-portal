@@ -58,7 +58,6 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("backgroundTaskId", getBackgroundTaskId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -71,6 +70,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		attributes.put("completionDate", getCompletionDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusMessage", getStatusMessage());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -93,12 +93,6 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -174,6 +168,12 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 
 		if (statusMessage != null) {
 			setStatusMessage(statusMessage);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

@@ -22,6 +22,7 @@ import com.liferay.mobile.device.rules.model.impl.MDRActionImpl;
 import com.liferay.mobile.device.rules.model.impl.MDRActionModelImpl;
 import com.liferay.mobile.device.rules.service.persistence.MDRActionPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -41,6 +42,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -2062,6 +2064,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 		mdrAction.setUuid(uuid);
 
+		mdrAction.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return mdrAction;
 	}
 
@@ -2295,7 +2299,6 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		mdrActionImpl.setUuid(mdrAction.getUuid());
 		mdrActionImpl.setActionId(mdrAction.getActionId());
 		mdrActionImpl.setGroupId(mdrAction.getGroupId());
-		mdrActionImpl.setCompanyId(mdrAction.getCompanyId());
 		mdrActionImpl.setUserId(mdrAction.getUserId());
 		mdrActionImpl.setUserName(mdrAction.getUserName());
 		mdrActionImpl.setCreateDate(mdrAction.getCreateDate());
@@ -2308,6 +2311,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		mdrActionImpl.setType(mdrAction.getType());
 		mdrActionImpl.setTypeSettings(mdrAction.getTypeSettings());
 		mdrActionImpl.setLastPublishDate(mdrAction.getLastPublishDate());
+		mdrActionImpl.setCompanyId(mdrAction.getCompanyId());
 
 		return mdrActionImpl;
 	}
@@ -2688,6 +2692,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MDRACTION = "SELECT mdrAction FROM MDRAction mdrAction";
 	private static final String _SQL_SELECT_MDRACTION_WHERE_PKS_IN = "SELECT mdrAction FROM MDRAction mdrAction WHERE actionId IN (";
 	private static final String _SQL_SELECT_MDRACTION_WHERE = "SELECT mdrAction FROM MDRAction mdrAction WHERE ";

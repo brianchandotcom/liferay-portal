@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchLayoutBranchException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -2079,6 +2080,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		layoutBranch.setNew(true);
 		layoutBranch.setPrimaryKey(layoutBranchId);
 
+		layoutBranch.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return layoutBranch;
 	}
 
@@ -2292,7 +2295,6 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		layoutBranchImpl.setMvccVersion(layoutBranch.getMvccVersion());
 		layoutBranchImpl.setLayoutBranchId(layoutBranch.getLayoutBranchId());
 		layoutBranchImpl.setGroupId(layoutBranch.getGroupId());
-		layoutBranchImpl.setCompanyId(layoutBranch.getCompanyId());
 		layoutBranchImpl.setUserId(layoutBranch.getUserId());
 		layoutBranchImpl.setUserName(layoutBranch.getUserName());
 		layoutBranchImpl.setLayoutSetBranchId(layoutBranch.getLayoutSetBranchId());
@@ -2300,6 +2302,7 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		layoutBranchImpl.setName(layoutBranch.getName());
 		layoutBranchImpl.setDescription(layoutBranch.getDescription());
 		layoutBranchImpl.setMaster(layoutBranch.isMaster());
+		layoutBranchImpl.setCompanyId(layoutBranch.getCompanyId());
 
 		return layoutBranchImpl;
 	}
@@ -2675,6 +2678,8 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_LAYOUTBRANCH = "SELECT layoutBranch FROM LayoutBranch layoutBranch";
 	private static final String _SQL_SELECT_LAYOUTBRANCH_WHERE_PKS_IN = "SELECT layoutBranch FROM LayoutBranch layoutBranch WHERE layoutBranchId IN (";
 	private static final String _SQL_SELECT_LAYOUTBRANCH_WHERE = "SELECT layoutBranch FROM LayoutBranch layoutBranch WHERE ";

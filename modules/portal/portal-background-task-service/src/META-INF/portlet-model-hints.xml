@@ -5,7 +5,6 @@
 		<field name="mvccVersion" type="long" />
 		<field name="backgroundTaskId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -26,5 +25,6 @@
 		<field name="statusMessage" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

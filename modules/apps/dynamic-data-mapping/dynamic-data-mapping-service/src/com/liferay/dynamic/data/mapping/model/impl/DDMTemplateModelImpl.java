@@ -82,7 +82,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			{ "uuid_", Types.VARCHAR },
 			{ "templateId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "versionUserId", Types.BIGINT },
@@ -104,7 +103,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			{ "smallImage", Types.BOOLEAN },
 			{ "smallImageId", Types.BIGINT },
 			{ "smallImageURL", Types.VARCHAR },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -112,7 +112,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("templateId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("versionUserId", Types.BIGINT);
@@ -135,9 +134,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		TABLE_COLUMNS_MAP.put("smallImageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("smallImageURL", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name TEXT null,description TEXT null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL VARCHAR(75) null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name TEXT null,description TEXT null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL VARCHAR(75) null,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplate.templateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMTemplate.templateId ASC";
@@ -181,7 +181,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		model.setUuid(soapModel.getUuid());
 		model.setTemplateId(soapModel.getTemplateId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setVersionUserId(soapModel.getVersionUserId());
@@ -204,6 +203,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		model.setSmallImageId(soapModel.getSmallImageId());
 		model.setSmallImageURL(soapModel.getSmallImageURL());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -271,7 +271,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		attributes.put("uuid", getUuid());
 		attributes.put("templateId", getTemplateId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("versionUserId", getVersionUserId());
@@ -294,6 +293,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		attributes.put("smallImageId", getSmallImageId());
 		attributes.put("smallImageURL", getSmallImageURL());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -319,12 +319,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -458,6 +452,12 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@JSON
@@ -516,29 +516,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -1152,6 +1129,29 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1274,7 +1274,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateImpl.setUuid(getUuid());
 		ddmTemplateImpl.setTemplateId(getTemplateId());
 		ddmTemplateImpl.setGroupId(getGroupId());
-		ddmTemplateImpl.setCompanyId(getCompanyId());
 		ddmTemplateImpl.setUserId(getUserId());
 		ddmTemplateImpl.setUserName(getUserName());
 		ddmTemplateImpl.setVersionUserId(getVersionUserId());
@@ -1297,6 +1296,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateImpl.setSmallImageId(getSmallImageId());
 		ddmTemplateImpl.setSmallImageURL(getSmallImageURL());
 		ddmTemplateImpl.setLastPublishDate(getLastPublishDate());
+		ddmTemplateImpl.setCompanyId(getCompanyId());
 
 		ddmTemplateImpl.resetOriginalValues();
 
@@ -1365,10 +1365,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 		ddmTemplateModelImpl._setOriginalGroupId = false;
 
-		ddmTemplateModelImpl._originalCompanyId = ddmTemplateModelImpl._companyId;
-
-		ddmTemplateModelImpl._setOriginalCompanyId = false;
-
 		ddmTemplateModelImpl._setModifiedDate = false;
 
 		ddmTemplateModelImpl._originalClassNameId = ddmTemplateModelImpl._classNameId;
@@ -1391,6 +1387,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 		ddmTemplateModelImpl._setOriginalSmallImageId = false;
 
+		ddmTemplateModelImpl._originalCompanyId = ddmTemplateModelImpl._companyId;
+
+		ddmTemplateModelImpl._setOriginalCompanyId = false;
+
 		ddmTemplateModelImpl._columnBitmask = 0;
 	}
 
@@ -1409,8 +1409,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateCacheModel.templateId = getTemplateId();
 
 		ddmTemplateCacheModel.groupId = getGroupId();
-
-		ddmTemplateCacheModel.companyId = getCompanyId();
 
 		ddmTemplateCacheModel.userId = getUserId();
 
@@ -1543,6 +1541,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			ddmTemplateCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		ddmTemplateCacheModel.companyId = getCompanyId();
+
 		return ddmTemplateCacheModel;
 	}
 
@@ -1556,8 +1556,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append(getTemplateId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -1602,6 +1600,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append(getSmallImageURL());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -1626,10 +1626,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -1719,6 +1715,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1735,9 +1735,6 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private long _versionUserId;
@@ -1773,6 +1770,9 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	private boolean _setOriginalSmallImageId;
 	private String _smallImageURL;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private DDMTemplate _escapedModel;
 }

@@ -22,6 +22,7 @@ import com.liferay.calendar.model.impl.CalendarImpl;
 import com.liferay.calendar.model.impl.CalendarModelImpl;
 import com.liferay.calendar.service.persistence.CalendarPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -42,6 +43,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -3798,6 +3800,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 
 		calendar.setUuid(uuid);
 
+		calendar.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return calendar;
 	}
 
@@ -4073,7 +4077,6 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		calendarImpl.setUuid(calendar.getUuid());
 		calendarImpl.setCalendarId(calendar.getCalendarId());
 		calendarImpl.setGroupId(calendar.getGroupId());
-		calendarImpl.setCompanyId(calendar.getCompanyId());
 		calendarImpl.setUserId(calendar.getUserId());
 		calendarImpl.setUserName(calendar.getUserName());
 		calendarImpl.setCreateDate(calendar.getCreateDate());
@@ -4088,6 +4091,7 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		calendarImpl.setEnableComments(calendar.isEnableComments());
 		calendarImpl.setEnableRatings(calendar.isEnableRatings());
 		calendarImpl.setLastPublishDate(calendar.getLastPublishDate());
+		calendarImpl.setCompanyId(calendar.getCompanyId());
 
 		return calendarImpl;
 	}
@@ -4467,6 +4471,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_CALENDAR = "SELECT calendar FROM Calendar calendar";
 	private static final String _SQL_SELECT_CALENDAR_WHERE_PKS_IN = "SELECT calendar FROM Calendar calendar WHERE calendarId IN (";
 	private static final String _SQL_SELECT_CALENDAR_WHERE = "SELECT calendar FROM Calendar calendar WHERE ";

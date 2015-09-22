@@ -56,7 +56,6 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("teamId", getTeamId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -65,6 +64,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -87,12 +87,6 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 
 		if (teamId != null) {
 			setTeamId(teamId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -141,6 +135,12 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

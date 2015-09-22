@@ -55,7 +55,6 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 
 		attributes.put("kaleoInstanceTokenId", getKaleoInstanceTokenId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -70,6 +69,7 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 		attributes.put("classPK", getClassPK());
 		attributes.put("completed", getCompleted());
 		attributes.put("completionDate", getCompletionDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -86,12 +86,6 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -172,6 +166,12 @@ public class KaleoInstanceTokenWrapper implements KaleoInstanceToken,
 
 		if (completionDate != null) {
 			setCompletionDate(completionDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

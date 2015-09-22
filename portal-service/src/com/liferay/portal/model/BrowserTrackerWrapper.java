@@ -55,6 +55,7 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 		attributes.put("browserTrackerId", getBrowserTrackerId());
 		attributes.put("userId", getUserId());
 		attributes.put("browserKey", getBrowserKey());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -83,6 +84,12 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 
 		if (browserKey != null) {
 			setBrowserKey(browserKey);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -114,6 +121,16 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	@Override
 	public long getBrowserTrackerId() {
 		return _browserTracker.getBrowserTrackerId();
+	}
+
+	/**
+	* Returns the company ID of this browser tracker.
+	*
+	* @return the company ID of this browser tracker
+	*/
+	@Override
+	public long getCompanyId() {
+		return _browserTracker.getCompanyId();
 	}
 
 	@Override
@@ -214,6 +231,16 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_browserTracker.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this browser tracker.
+	*
+	* @param companyId the company ID of this browser tracker
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_browserTracker.setCompanyId(companyId);
 	}
 
 	@Override

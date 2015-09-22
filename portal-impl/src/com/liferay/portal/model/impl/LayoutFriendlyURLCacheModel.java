@@ -89,8 +89,6 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 		sb.append(layoutFriendlyURLId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -109,6 +107,8 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 		sb.append(languageId);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -129,7 +129,6 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 
 		layoutFriendlyURLImpl.setLayoutFriendlyURLId(layoutFriendlyURLId);
 		layoutFriendlyURLImpl.setGroupId(groupId);
-		layoutFriendlyURLImpl.setCompanyId(companyId);
 		layoutFriendlyURLImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -177,6 +176,8 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 			layoutFriendlyURLImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		layoutFriendlyURLImpl.setCompanyId(companyId);
+
 		layoutFriendlyURLImpl.resetOriginalValues();
 
 		return layoutFriendlyURLImpl;
@@ -188,7 +189,6 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 		uuid = objectInput.readUTF();
 		layoutFriendlyURLId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -198,6 +198,7 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 		friendlyURL = objectInput.readUTF();
 		languageId = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -214,7 +215,6 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 
 		objectOutput.writeLong(layoutFriendlyURLId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -244,13 +244,13 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long layoutFriendlyURLId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -260,4 +260,5 @@ public class LayoutFriendlyURLCacheModel implements CacheModel<LayoutFriendlyURL
 	public String friendlyURL;
 	public String languageId;
 	public long lastPublishDate;
+	public long companyId;
 }

@@ -62,6 +62,7 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 		attributes.put("shipping", getShipping());
 		attributes.put("useShippingFormula", getUseShippingFormula());
 		attributes.put("status", getStatus());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -128,6 +129,12 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 		if (status != null) {
 			setStatus(status);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -139,6 +146,16 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 	public int compareTo(
 		com.liferay.shopping.model.ShoppingItemPrice shoppingItemPrice) {
 		return _shoppingItemPrice.compareTo(shoppingItemPrice);
+	}
+
+	/**
+	* Returns the company ID of this shopping item price.
+	*
+	* @return the company ID of this shopping item price
+	*/
+	@Override
+	public long getCompanyId() {
+		return _shoppingItemPrice.getCompanyId();
 	}
 
 	/**
@@ -309,6 +326,16 @@ public class ShoppingItemPriceWrapper implements ShoppingItemPrice,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_shoppingItemPrice.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this shopping item price.
+	*
+	* @param companyId the company ID of this shopping item price
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_shoppingItemPrice.setCompanyId(companyId);
 	}
 
 	/**

@@ -53,11 +53,11 @@ public class ResourceBlockWrapper implements ResourceBlock,
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("resourceBlockId", getResourceBlockId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("name", getName());
 		attributes.put("permissionsHash", getPermissionsHash());
 		attributes.put("referenceCount", getReferenceCount());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -74,12 +74,6 @@ public class ResourceBlockWrapper implements ResourceBlock,
 
 		if (resourceBlockId != null) {
 			setResourceBlockId(resourceBlockId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -104,6 +98,12 @@ public class ResourceBlockWrapper implements ResourceBlock,
 
 		if (referenceCount != null) {
 			setReferenceCount(referenceCount);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

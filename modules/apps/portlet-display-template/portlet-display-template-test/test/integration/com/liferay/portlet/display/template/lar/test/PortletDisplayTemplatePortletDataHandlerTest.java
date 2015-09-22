@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
@@ -46,7 +47,7 @@ public class PortletDisplayTemplatePortletDataHandlerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
+			new LiferayIntegrationTestRule(), CompanyProviderTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override

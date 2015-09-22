@@ -118,8 +118,6 @@ public class LayoutRevisionPersistenceTest {
 
 		newLayoutRevision.setGroupId(RandomTestUtil.nextLong());
 
-		newLayoutRevision.setCompanyId(RandomTestUtil.nextLong());
-
 		newLayoutRevision.setUserId(RandomTestUtil.nextLong());
 
 		newLayoutRevision.setUserName(RandomTestUtil.randomString());
@@ -174,6 +172,8 @@ public class LayoutRevisionPersistenceTest {
 
 		newLayoutRevision.setStatusDate(RandomTestUtil.nextDate());
 
+		newLayoutRevision.setCompanyId(RandomTestUtil.nextLong());
+
 		_layoutRevisions.add(_persistence.update(newLayoutRevision));
 
 		LayoutRevision existingLayoutRevision = _persistence.findByPrimaryKey(newLayoutRevision.getPrimaryKey());
@@ -184,8 +184,6 @@ public class LayoutRevisionPersistenceTest {
 			newLayoutRevision.getLayoutRevisionId());
 		Assert.assertEquals(existingLayoutRevision.getGroupId(),
 			newLayoutRevision.getGroupId());
-		Assert.assertEquals(existingLayoutRevision.getCompanyId(),
-			newLayoutRevision.getCompanyId());
 		Assert.assertEquals(existingLayoutRevision.getUserId(),
 			newLayoutRevision.getUserId());
 		Assert.assertEquals(existingLayoutRevision.getUserName(),
@@ -243,6 +241,8 @@ public class LayoutRevisionPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingLayoutRevision.getStatusDate()),
 			Time.getShortTimestamp(newLayoutRevision.getStatusDate()));
+		Assert.assertEquals(existingLayoutRevision.getCompanyId(),
+			newLayoutRevision.getCompanyId());
 	}
 
 	@Test
@@ -356,15 +356,15 @@ public class LayoutRevisionPersistenceTest {
 	protected OrderByComparator<LayoutRevision> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("LayoutRevision",
 			"mvccVersion", true, "layoutRevisionId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "layoutSetBranchId", true,
-			"layoutBranchId", true, "parentLayoutRevisionId", true, "head",
-			true, "major", true, "plid", true, "privateLayout", true, "name",
-			true, "title", true, "description", true, "keywords", true,
-			"robots", true, "iconImageId", true, "themeId", true,
-			"colorSchemeId", true, "wapThemeId", true, "wapColorSchemeId",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "layoutSetBranchId", true, "layoutBranchId",
+			true, "parentLayoutRevisionId", true, "head", true, "major", true,
+			"plid", true, "privateLayout", true, "name", true, "title", true,
+			"description", true, "keywords", true, "robots", true,
+			"iconImageId", true, "themeId", true, "colorSchemeId", true,
+			"wapThemeId", true, "wapColorSchemeId", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true, "companyId", true);
 	}
 
 	@Test
@@ -592,8 +592,6 @@ public class LayoutRevisionPersistenceTest {
 
 		layoutRevision.setGroupId(RandomTestUtil.nextLong());
 
-		layoutRevision.setCompanyId(RandomTestUtil.nextLong());
-
 		layoutRevision.setUserId(RandomTestUtil.nextLong());
 
 		layoutRevision.setUserName(RandomTestUtil.randomString());
@@ -647,6 +645,8 @@ public class LayoutRevisionPersistenceTest {
 		layoutRevision.setStatusByUserName(RandomTestUtil.randomString());
 
 		layoutRevision.setStatusDate(RandomTestUtil.nextDate());
+
+		layoutRevision.setCompanyId(RandomTestUtil.nextLong());
 
 		_layoutRevisions.add(_persistence.update(layoutRevision));
 

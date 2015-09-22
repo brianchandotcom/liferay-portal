@@ -37,13 +37,13 @@ public class MBBanSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setBanId(model.getBanId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setBanUserId(model.getBanUserId());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -120,14 +120,6 @@ public class MBBanSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -176,14 +168,22 @@ public class MBBanSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _banId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _banUserId;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

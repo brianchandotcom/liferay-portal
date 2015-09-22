@@ -71,8 +71,6 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		sb.append(kaleoInstanceTokenId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -99,6 +97,8 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		sb.append(completed);
 		sb.append(", completionDate=");
 		sb.append(completionDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,7 +110,6 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 
 		kaleoInstanceTokenImpl.setKaleoInstanceTokenId(kaleoInstanceTokenId);
 		kaleoInstanceTokenImpl.setGroupId(groupId);
-		kaleoInstanceTokenImpl.setCompanyId(companyId);
 		kaleoInstanceTokenImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -163,6 +162,8 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 			kaleoInstanceTokenImpl.setCompletionDate(new Date(completionDate));
 		}
 
+		kaleoInstanceTokenImpl.setCompanyId(companyId);
+
 		kaleoInstanceTokenImpl.resetOriginalValues();
 
 		return kaleoInstanceTokenImpl;
@@ -172,7 +173,6 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoInstanceTokenId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -186,6 +186,7 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		classPK = objectInput.readLong();
 		completed = objectInput.readBoolean();
 		completionDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -193,7 +194,6 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		throws IOException {
 		objectOutput.writeLong(kaleoInstanceTokenId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -227,11 +227,11 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		objectOutput.writeLong(classPK);
 		objectOutput.writeBoolean(completed);
 		objectOutput.writeLong(completionDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoInstanceTokenId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -245,4 +245,5 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 	public long classPK;
 	public boolean completed;
 	public long completionDate;
+	public long companyId;
 }

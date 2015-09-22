@@ -115,8 +115,6 @@ public class ContactPersistenceTest {
 
 		newContact.setMvccVersion(RandomTestUtil.nextLong());
 
-		newContact.setCompanyId(RandomTestUtil.nextLong());
-
 		newContact.setUserId(RandomTestUtil.nextLong());
 
 		newContact.setUserName(RandomTestUtil.randomString());
@@ -179,6 +177,8 @@ public class ContactPersistenceTest {
 
 		newContact.setHoursOfOperation(RandomTestUtil.randomString());
 
+		newContact.setCompanyId(RandomTestUtil.nextLong());
+
 		_contacts.add(_persistence.update(newContact));
 
 		Contact existingContact = _persistence.findByPrimaryKey(newContact.getPrimaryKey());
@@ -187,8 +187,6 @@ public class ContactPersistenceTest {
 			newContact.getMvccVersion());
 		Assert.assertEquals(existingContact.getContactId(),
 			newContact.getContactId());
-		Assert.assertEquals(existingContact.getCompanyId(),
-			newContact.getCompanyId());
 		Assert.assertEquals(existingContact.getUserId(), newContact.getUserId());
 		Assert.assertEquals(existingContact.getUserName(),
 			newContact.getUserName());
@@ -247,13 +245,8 @@ public class ContactPersistenceTest {
 			newContact.getJobClass());
 		Assert.assertEquals(existingContact.getHoursOfOperation(),
 			newContact.getHoursOfOperation());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingContact.getCompanyId(),
+			newContact.getCompanyId());
 	}
 
 	@Test
@@ -261,6 +254,13 @@ public class ContactPersistenceTest {
 		_persistence.countByAccountId(RandomTestUtil.nextLong());
 
 		_persistence.countByAccountId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -295,16 +295,16 @@ public class ContactPersistenceTest {
 
 	protected OrderByComparator<Contact> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Contact_", "mvccVersion",
-			true, "contactId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "accountId", true,
-			"parentContactId", true, "emailAddress", true, "firstName", true,
-			"middleName", true, "lastName", true, "prefixId", true, "suffixId",
-			true, "male", true, "birthday", true, "smsSn", true, "aimSn", true,
-			"facebookSn", true, "icqSn", true, "jabberSn", true, "msnSn", true,
-			"mySpaceSn", true, "skypeSn", true, "twitterSn", true, "ymSn",
-			true, "employeeStatusId", true, "employeeNumber", true, "jobTitle",
-			true, "jobClass", true, "hoursOfOperation", true);
+			true, "contactId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "classNameId", true,
+			"classPK", true, "accountId", true, "parentContactId", true,
+			"emailAddress", true, "firstName", true, "middleName", true,
+			"lastName", true, "prefixId", true, "suffixId", true, "male", true,
+			"birthday", true, "smsSn", true, "aimSn", true, "facebookSn", true,
+			"icqSn", true, "jabberSn", true, "msnSn", true, "mySpaceSn", true,
+			"skypeSn", true, "twitterSn", true, "ymSn", true,
+			"employeeStatusId", true, "employeeNumber", true, "jobTitle", true,
+			"jobClass", true, "hoursOfOperation", true, "companyId", true);
 	}
 
 	@Test
@@ -506,8 +506,6 @@ public class ContactPersistenceTest {
 
 		contact.setMvccVersion(RandomTestUtil.nextLong());
 
-		contact.setCompanyId(RandomTestUtil.nextLong());
-
 		contact.setUserId(RandomTestUtil.nextLong());
 
 		contact.setUserName(RandomTestUtil.randomString());
@@ -569,6 +567,8 @@ public class ContactPersistenceTest {
 		contact.setJobClass(RandomTestUtil.randomString());
 
 		contact.setHoursOfOperation(RandomTestUtil.randomString());
+
+		contact.setCompanyId(RandomTestUtil.nextLong());
 
 		_contacts.add(_persistence.update(contact));
 

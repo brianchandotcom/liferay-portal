@@ -4,7 +4,6 @@
 	<model name="com.liferay.marketplace.model.App">
 		<field name="uuid" type="String" />
 		<field name="appId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -19,6 +18,7 @@
 			<hint-collection name="URL" />
 		</field>
 		<field name="version" type="String" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.marketplace.model.Module">
 		<field name="uuid" type="String" />
@@ -29,5 +29,6 @@
 		</field>
 		<field name="bundleVersion" type="String" />
 		<field name="contextName" type="String" />
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

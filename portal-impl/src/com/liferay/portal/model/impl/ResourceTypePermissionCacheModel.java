@@ -83,8 +83,6 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 		sb.append(mvccVersion);
 		sb.append(", resourceTypePermissionId=");
 		sb.append(resourceTypePermissionId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", name=");
@@ -93,6 +91,8 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 		sb.append(roleId);
 		sb.append(", actionIds=");
 		sb.append(actionIds);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -104,7 +104,6 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 
 		resourceTypePermissionImpl.setMvccVersion(mvccVersion);
 		resourceTypePermissionImpl.setResourceTypePermissionId(resourceTypePermissionId);
-		resourceTypePermissionImpl.setCompanyId(companyId);
 		resourceTypePermissionImpl.setGroupId(groupId);
 
 		if (name == null) {
@@ -116,6 +115,7 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 
 		resourceTypePermissionImpl.setRoleId(roleId);
 		resourceTypePermissionImpl.setActionIds(actionIds);
+		resourceTypePermissionImpl.setCompanyId(companyId);
 
 		resourceTypePermissionImpl.resetOriginalValues();
 
@@ -126,11 +126,11 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		resourceTypePermissionId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		name = objectInput.readUTF();
 		roleId = objectInput.readLong();
 		actionIds = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -138,7 +138,6 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(resourceTypePermissionId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 
 		if (name == null) {
@@ -150,13 +149,14 @@ public class ResourceTypePermissionCacheModel implements CacheModel<ResourceType
 
 		objectOutput.writeLong(roleId);
 		objectOutput.writeLong(actionIds);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long resourceTypePermissionId;
-	public long companyId;
 	public long groupId;
 	public String name;
 	public long roleId;
 	public long actionIds;
+	public long companyId;
 }

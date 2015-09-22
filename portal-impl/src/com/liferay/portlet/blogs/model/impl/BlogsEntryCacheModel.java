@@ -74,8 +74,6 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		sb.append(entryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -126,6 +124,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -144,7 +144,6 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 
 		blogsEntryImpl.setEntryId(entryId);
 		blogsEntryImpl.setGroupId(groupId);
-		blogsEntryImpl.setCompanyId(companyId);
 		blogsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -271,6 +270,8 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 			blogsEntryImpl.setStatusDate(new Date(statusDate));
 		}
 
+		blogsEntryImpl.setCompanyId(companyId);
+
 		blogsEntryImpl.resetOriginalValues();
 
 		return blogsEntryImpl;
@@ -281,7 +282,6 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		uuid = objectInput.readUTF();
 		entryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -307,6 +307,7 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -321,7 +322,6 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 
 		objectOutput.writeLong(entryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -419,12 +419,12 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long entryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -450,4 +450,5 @@ public class BlogsEntryCacheModel implements CacheModel<BlogsEntry>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

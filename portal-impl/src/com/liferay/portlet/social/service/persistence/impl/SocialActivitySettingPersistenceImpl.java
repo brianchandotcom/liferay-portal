@@ -16,6 +16,7 @@ package com.liferay.portlet.social.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.social.NoSuchActivitySettingException;
 import com.liferay.portlet.social.model.SocialActivitySetting;
@@ -2667,6 +2669,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		socialActivitySetting.setNew(true);
 		socialActivitySetting.setPrimaryKey(activitySettingId);
 
+		socialActivitySetting.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return socialActivitySetting;
 	}
 
@@ -2901,11 +2905,11 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 
 		socialActivitySettingImpl.setActivitySettingId(socialActivitySetting.getActivitySettingId());
 		socialActivitySettingImpl.setGroupId(socialActivitySetting.getGroupId());
-		socialActivitySettingImpl.setCompanyId(socialActivitySetting.getCompanyId());
 		socialActivitySettingImpl.setClassNameId(socialActivitySetting.getClassNameId());
 		socialActivitySettingImpl.setActivityType(socialActivitySetting.getActivityType());
 		socialActivitySettingImpl.setName(socialActivitySetting.getName());
 		socialActivitySettingImpl.setValue(socialActivitySetting.getValue());
+		socialActivitySettingImpl.setCompanyId(socialActivitySetting.getCompanyId());
 
 		return socialActivitySettingImpl;
 	}
@@ -3284,6 +3288,8 @@ public class SocialActivitySettingPersistenceImpl extends BasePersistenceImpl<So
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_SOCIALACTIVITYSETTING = "SELECT socialActivitySetting FROM SocialActivitySetting socialActivitySetting";
 	private static final String _SQL_SELECT_SOCIALACTIVITYSETTING_WHERE_PKS_IN = "SELECT socialActivitySetting FROM SocialActivitySetting socialActivitySetting WHERE activitySettingId IN (";
 	private static final String _SQL_SELECT_SOCIALACTIVITYSETTING_WHERE = "SELECT socialActivitySetting FROM SocialActivitySetting socialActivitySetting WHERE ";

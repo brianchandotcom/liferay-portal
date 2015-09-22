@@ -55,7 +55,6 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 
 		attributes.put("uuid", getUuid());
 		attributes.put("entryId", getEntryId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -70,6 +69,7 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("priority", getPriority());
 		attributes.put("alert", getAlert());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -86,12 +86,6 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 
 		if (entryId != null) {
 			setEntryId(entryId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -176,6 +170,12 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 
 		if (alert != null) {
 			setAlert(alert);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

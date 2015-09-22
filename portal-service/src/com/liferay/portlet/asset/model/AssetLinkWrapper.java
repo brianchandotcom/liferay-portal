@@ -53,7 +53,6 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("linkId", getLinkId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -61,6 +60,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 		attributes.put("entryId2", getEntryId2());
 		attributes.put("type", getType());
 		attributes.put("weight", getWeight());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -71,12 +71,6 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 
 		if (linkId != null) {
 			setLinkId(linkId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -119,6 +113,12 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 
 		if (weight != null) {
 			setWeight(weight);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

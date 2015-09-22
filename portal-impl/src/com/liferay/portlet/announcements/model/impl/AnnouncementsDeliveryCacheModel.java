@@ -68,8 +68,6 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 
 		sb.append("{deliveryId=");
 		sb.append(deliveryId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", type=");
@@ -80,6 +78,8 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 		sb.append(sms);
 		sb.append(", website=");
 		sb.append(website);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -90,7 +90,6 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 		AnnouncementsDeliveryImpl announcementsDeliveryImpl = new AnnouncementsDeliveryImpl();
 
 		announcementsDeliveryImpl.setDeliveryId(deliveryId);
-		announcementsDeliveryImpl.setCompanyId(companyId);
 		announcementsDeliveryImpl.setUserId(userId);
 
 		if (type == null) {
@@ -103,6 +102,7 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 		announcementsDeliveryImpl.setEmail(email);
 		announcementsDeliveryImpl.setSms(sms);
 		announcementsDeliveryImpl.setWebsite(website);
+		announcementsDeliveryImpl.setCompanyId(companyId);
 
 		announcementsDeliveryImpl.resetOriginalValues();
 
@@ -112,19 +112,18 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		deliveryId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		type = objectInput.readUTF();
 		email = objectInput.readBoolean();
 		sms = objectInput.readBoolean();
 		website = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(deliveryId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (type == null) {
@@ -137,13 +136,14 @@ public class AnnouncementsDeliveryCacheModel implements CacheModel<Announcements
 		objectOutput.writeBoolean(email);
 		objectOutput.writeBoolean(sms);
 		objectOutput.writeBoolean(website);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long deliveryId;
-	public long companyId;
 	public long userId;
 	public String type;
 	public boolean email;
 	public boolean sms;
 	public boolean website;
+	public long companyId;
 }

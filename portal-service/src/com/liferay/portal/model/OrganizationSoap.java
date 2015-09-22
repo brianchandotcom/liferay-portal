@@ -37,7 +37,6 @@ public class OrganizationSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setOrganizationId(model.getOrganizationId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -53,6 +52,7 @@ public class OrganizationSoap implements Serializable {
 		soapModel.setComments(model.getComments());
 		soapModel.setLogoId(model.getLogoId());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -127,14 +127,6 @@ public class OrganizationSoap implements Serializable {
 
 	public void setOrganizationId(long organizationId) {
 		_organizationId = organizationId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -261,10 +253,17 @@ public class OrganizationSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _organizationId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -280,4 +279,5 @@ public class OrganizationSoap implements Serializable {
 	private String _comments;
 	private long _logoId;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

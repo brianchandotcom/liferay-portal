@@ -65,20 +65,19 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	public static final String TABLE_NAME = "AssetLink";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "linkId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "entryId1", Types.BIGINT },
 			{ "entryId2", Types.BIGINT },
 			{ "type_", Types.INTEGER },
-			{ "weight", Types.INTEGER }
+			{ "weight", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("linkId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -86,9 +85,10 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		TABLE_COLUMNS_MAP.put("entryId2", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("weight", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetLink (linkId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetLink (linkId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,entryId1 LONG,entryId2 LONG,type_ INTEGER,weight INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table AssetLink";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetLink.weight ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetLink.weight ASC";
@@ -149,7 +149,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("linkId", getLinkId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -157,6 +156,7 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		attributes.put("entryId2", getEntryId2());
 		attributes.put("type", getType());
 		attributes.put("weight", getWeight());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -170,12 +170,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 		if (linkId != null) {
 			setLinkId(linkId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -219,6 +213,12 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		if (weight != null) {
 			setWeight(weight);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -229,16 +229,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	@Override
 	public void setLinkId(long linkId) {
 		_linkId = linkId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -370,6 +360,16 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		_weight = weight;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -402,7 +402,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		AssetLinkImpl assetLinkImpl = new AssetLinkImpl();
 
 		assetLinkImpl.setLinkId(getLinkId());
-		assetLinkImpl.setCompanyId(getCompanyId());
 		assetLinkImpl.setUserId(getUserId());
 		assetLinkImpl.setUserName(getUserName());
 		assetLinkImpl.setCreateDate(getCreateDate());
@@ -410,6 +409,7 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		assetLinkImpl.setEntryId2(getEntryId2());
 		assetLinkImpl.setType(getType());
 		assetLinkImpl.setWeight(getWeight());
+		assetLinkImpl.setCompanyId(getCompanyId());
 
 		assetLinkImpl.resetOriginalValues();
 
@@ -499,8 +499,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 		assetLinkCacheModel.linkId = getLinkId();
 
-		assetLinkCacheModel.companyId = getCompanyId();
-
 		assetLinkCacheModel.userId = getUserId();
 
 		assetLinkCacheModel.userName = getUserName();
@@ -528,6 +526,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 		assetLinkCacheModel.weight = getWeight();
 
+		assetLinkCacheModel.companyId = getCompanyId();
+
 		return assetLinkCacheModel;
 	}
 
@@ -537,8 +537,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 
 		sb.append("{linkId=");
 		sb.append(getLinkId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -553,6 +551,8 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		sb.append(getType());
 		sb.append(", weight=");
 		sb.append(getWeight());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -569,10 +569,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 		sb.append(
 			"<column><column-name>linkId</column-name><column-value><![CDATA[");
 		sb.append(getLinkId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -602,6 +598,10 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 			"<column><column-name>weight</column-name><column-value><![CDATA[");
 		sb.append(getWeight());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -613,7 +613,6 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 			AssetLink.class
 		};
 	private long _linkId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -627,6 +626,7 @@ public class AssetLinkModelImpl extends BaseModelImpl<AssetLink>
 	private int _originalType;
 	private boolean _setOriginalType;
 	private int _weight;
+	private long _companyId;
 	private long _columnBitmask;
 	private AssetLink _escapedModel;
 }

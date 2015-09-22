@@ -121,8 +121,6 @@ public class MBThreadFlagPersistenceTest {
 
 		newMBThreadFlag.setGroupId(RandomTestUtil.nextLong());
 
-		newMBThreadFlag.setCompanyId(RandomTestUtil.nextLong());
-
 		newMBThreadFlag.setUserId(RandomTestUtil.nextLong());
 
 		newMBThreadFlag.setUserName(RandomTestUtil.randomString());
@@ -135,6 +133,8 @@ public class MBThreadFlagPersistenceTest {
 
 		newMBThreadFlag.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newMBThreadFlag.setCompanyId(RandomTestUtil.nextLong());
+
 		_mbThreadFlags.add(_persistence.update(newMBThreadFlag));
 
 		MBThreadFlag existingMBThreadFlag = _persistence.findByPrimaryKey(newMBThreadFlag.getPrimaryKey());
@@ -145,8 +145,6 @@ public class MBThreadFlagPersistenceTest {
 			newMBThreadFlag.getThreadFlagId());
 		Assert.assertEquals(existingMBThreadFlag.getGroupId(),
 			newMBThreadFlag.getGroupId());
-		Assert.assertEquals(existingMBThreadFlag.getCompanyId(),
-			newMBThreadFlag.getCompanyId());
 		Assert.assertEquals(existingMBThreadFlag.getUserId(),
 			newMBThreadFlag.getUserId());
 		Assert.assertEquals(existingMBThreadFlag.getUserName(),
@@ -162,6 +160,8 @@ public class MBThreadFlagPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBThreadFlag.getLastPublishDate()),
 			Time.getShortTimestamp(newMBThreadFlag.getLastPublishDate()));
+		Assert.assertEquals(existingMBThreadFlag.getCompanyId(),
+			newMBThreadFlag.getCompanyId());
 	}
 
 	@Test
@@ -237,9 +237,9 @@ public class MBThreadFlagPersistenceTest {
 
 	protected OrderByComparator<MBThreadFlag> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBThreadFlag", "uuid",
-			true, "threadFlagId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "threadId", true, "lastPublishDate", true);
+			true, "threadFlagId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"threadId", true, "lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -470,8 +470,6 @@ public class MBThreadFlagPersistenceTest {
 
 		mbThreadFlag.setGroupId(RandomTestUtil.nextLong());
 
-		mbThreadFlag.setCompanyId(RandomTestUtil.nextLong());
-
 		mbThreadFlag.setUserId(RandomTestUtil.nextLong());
 
 		mbThreadFlag.setUserName(RandomTestUtil.randomString());
@@ -483,6 +481,8 @@ public class MBThreadFlagPersistenceTest {
 		mbThreadFlag.setThreadId(RandomTestUtil.nextLong());
 
 		mbThreadFlag.setLastPublishDate(RandomTestUtil.nextDate());
+
+		mbThreadFlag.setCompanyId(RandomTestUtil.nextLong());
 
 		_mbThreadFlags.add(_persistence.update(mbThreadFlag));
 

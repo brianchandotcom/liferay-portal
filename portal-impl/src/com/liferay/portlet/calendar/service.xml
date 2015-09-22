@@ -15,7 +15,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -51,11 +50,11 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="CompanyId" return-type="Collection">
-			<finder-column name="companyId" />
-		</finder>
 		<finder name="NotRemindBy" return-type="Collection">
 			<finder-column name="remindBy" comparator="!=" />
+		</finder>
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
 		</finder>
 		<finder name="G_T" return-type="Collection">
 			<finder-column name="groupId" />

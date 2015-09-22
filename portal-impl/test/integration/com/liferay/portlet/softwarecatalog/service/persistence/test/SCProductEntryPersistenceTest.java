@@ -119,8 +119,6 @@ public class SCProductEntryPersistenceTest {
 
 		newSCProductEntry.setGroupId(RandomTestUtil.nextLong());
 
-		newSCProductEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		newSCProductEntry.setUserId(RandomTestUtil.nextLong());
 
 		newSCProductEntry.setUserName(RandomTestUtil.randomString());
@@ -147,6 +145,8 @@ public class SCProductEntryPersistenceTest {
 
 		newSCProductEntry.setRepoArtifactId(RandomTestUtil.randomString());
 
+		newSCProductEntry.setCompanyId(RandomTestUtil.nextLong());
+
 		_scProductEntries.add(_persistence.update(newSCProductEntry));
 
 		SCProductEntry existingSCProductEntry = _persistence.findByPrimaryKey(newSCProductEntry.getPrimaryKey());
@@ -155,8 +155,6 @@ public class SCProductEntryPersistenceTest {
 			newSCProductEntry.getProductEntryId());
 		Assert.assertEquals(existingSCProductEntry.getGroupId(),
 			newSCProductEntry.getGroupId());
-		Assert.assertEquals(existingSCProductEntry.getCompanyId(),
-			newSCProductEntry.getCompanyId());
 		Assert.assertEquals(existingSCProductEntry.getUserId(),
 			newSCProductEntry.getUserId());
 		Assert.assertEquals(existingSCProductEntry.getUserName(),
@@ -185,6 +183,8 @@ public class SCProductEntryPersistenceTest {
 			newSCProductEntry.getRepoGroupId());
 		Assert.assertEquals(existingSCProductEntry.getRepoArtifactId(),
 			newSCProductEntry.getRepoArtifactId());
+		Assert.assertEquals(existingSCProductEntry.getCompanyId(),
+			newSCProductEntry.getCompanyId());
 	}
 
 	@Test
@@ -248,11 +248,11 @@ public class SCProductEntryPersistenceTest {
 
 	protected OrderByComparator<SCProductEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCProductEntry",
-			"productEntryId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "type", true, "tags", true,
-			"shortDescription", true, "longDescription", true, "pageURL", true,
-			"author", true, "repoGroupId", true, "repoArtifactId", true);
+			"productEntryId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true, "type", true, "tags", true, "shortDescription", true,
+			"longDescription", true, "pageURL", true, "author", true,
+			"repoGroupId", true, "repoArtifactId", true, "companyId", true);
 	}
 
 	@Test
@@ -476,8 +476,6 @@ public class SCProductEntryPersistenceTest {
 
 		scProductEntry.setGroupId(RandomTestUtil.nextLong());
 
-		scProductEntry.setCompanyId(RandomTestUtil.nextLong());
-
 		scProductEntry.setUserId(RandomTestUtil.nextLong());
 
 		scProductEntry.setUserName(RandomTestUtil.randomString());
@@ -503,6 +501,8 @@ public class SCProductEntryPersistenceTest {
 		scProductEntry.setRepoGroupId(RandomTestUtil.randomString());
 
 		scProductEntry.setRepoArtifactId(RandomTestUtil.randomString());
+
+		scProductEntry.setCompanyId(RandomTestUtil.nextLong());
 
 		_scProductEntries.add(_persistence.update(scProductEntry));
 

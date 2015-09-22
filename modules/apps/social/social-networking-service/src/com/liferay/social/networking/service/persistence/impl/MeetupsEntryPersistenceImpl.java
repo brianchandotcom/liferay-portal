@@ -16,6 +16,7 @@ package com.liferay.social.networking.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -32,6 +33,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
 import com.liferay.social.networking.model.MeetupsEntry;
@@ -1135,6 +1137,8 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 		meetupsEntry.setNew(true);
 		meetupsEntry.setPrimaryKey(meetupsEntryId);
 
+		meetupsEntry.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return meetupsEntry;
 	}
 
@@ -1338,7 +1342,6 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 		meetupsEntryImpl.setPrimaryKey(meetupsEntry.getPrimaryKey());
 
 		meetupsEntryImpl.setMeetupsEntryId(meetupsEntry.getMeetupsEntryId());
-		meetupsEntryImpl.setCompanyId(meetupsEntry.getCompanyId());
 		meetupsEntryImpl.setUserId(meetupsEntry.getUserId());
 		meetupsEntryImpl.setUserName(meetupsEntry.getUserName());
 		meetupsEntryImpl.setCreateDate(meetupsEntry.getCreateDate());
@@ -1351,6 +1354,7 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 		meetupsEntryImpl.setMaxAttendees(meetupsEntry.getMaxAttendees());
 		meetupsEntryImpl.setPrice(meetupsEntry.getPrice());
 		meetupsEntryImpl.setThumbnailId(meetupsEntry.getThumbnailId());
+		meetupsEntryImpl.setCompanyId(meetupsEntry.getCompanyId());
 
 		return meetupsEntryImpl;
 	}
@@ -1726,6 +1730,8 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_MEETUPSENTRY = "SELECT meetupsEntry FROM MeetupsEntry meetupsEntry";
 	private static final String _SQL_SELECT_MEETUPSENTRY_WHERE_PKS_IN = "SELECT meetupsEntry FROM MeetupsEntry meetupsEntry WHERE meetupsEntryId IN (";
 	private static final String _SQL_SELECT_MEETUPSENTRY_WHERE = "SELECT meetupsEntry FROM MeetupsEntry meetupsEntry WHERE ";

@@ -36,7 +36,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface BrowserTrackerModel extends BaseModel<BrowserTracker>, MVCCModel {
+public interface BrowserTrackerModel extends BaseModel<BrowserTracker>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -128,6 +129,22 @@ public interface BrowserTrackerModel extends BaseModel<BrowserTracker>, MVCCMode
 	 * @param browserKey the browser key of this browser tracker
 	 */
 	public void setBrowserKey(long browserKey);
+
+	/**
+	 * Returns the company ID of this browser tracker.
+	 *
+	 * @return the company ID of this browser tracker
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this browser tracker.
+	 *
+	 * @param companyId the company ID of this browser tracker
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

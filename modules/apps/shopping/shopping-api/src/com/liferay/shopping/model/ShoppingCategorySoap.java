@@ -36,7 +36,6 @@ public class ShoppingCategorySoap implements Serializable {
 
 		soapModel.setCategoryId(model.getCategoryId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -44,6 +43,7 @@ public class ShoppingCategorySoap implements Serializable {
 		soapModel.setParentCategoryId(model.getParentCategoryId());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -114,14 +114,6 @@ public class ShoppingCategorySoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -178,9 +170,16 @@ public class ShoppingCategorySoap implements Serializable {
 		_description = description;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _categoryId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -188,4 +187,5 @@ public class ShoppingCategorySoap implements Serializable {
 	private long _parentCategoryId;
 	private String _name;
 	private String _description;
+	private long _companyId;
 }

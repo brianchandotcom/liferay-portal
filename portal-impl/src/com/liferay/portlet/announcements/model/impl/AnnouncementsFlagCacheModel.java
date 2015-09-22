@@ -65,7 +65,7 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{flagId=");
 		sb.append(flagId);
@@ -77,6 +77,8 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 		sb.append(entryId);
 		sb.append(", value=");
 		sb.append(value);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -98,6 +100,7 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 
 		announcementsFlagImpl.setEntryId(entryId);
 		announcementsFlagImpl.setValue(value);
+		announcementsFlagImpl.setCompanyId(companyId);
 
 		announcementsFlagImpl.resetOriginalValues();
 
@@ -111,6 +114,7 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 		createDate = objectInput.readLong();
 		entryId = objectInput.readLong();
 		value = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -121,6 +125,7 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(entryId);
 		objectOutput.writeInt(value);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long flagId;
@@ -128,4 +133,5 @@ public class AnnouncementsFlagCacheModel implements CacheModel<AnnouncementsFlag
 	public long createDate;
 	public long entryId;
 	public int value;
+	public long companyId;
 }

@@ -38,7 +38,7 @@ import java.io.Serializable;
  */
 @ProviderType
 public interface ResourcePermissionModel extends BaseModel<ResourcePermission>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,20 +88,6 @@ public interface ResourcePermissionModel extends BaseModel<ResourcePermission>,
 	 * @param resourcePermissionId the resource permission ID of this resource permission
 	 */
 	public void setResourcePermissionId(long resourcePermissionId);
-
-	/**
-	 * Returns the company ID of this resource permission.
-	 *
-	 * @return the company ID of this resource permission
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this resource permission.
-	 *
-	 * @param companyId the company ID of this resource permission
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the name of this resource permission.
@@ -223,6 +209,22 @@ public interface ResourcePermissionModel extends BaseModel<ResourcePermission>,
 	 * @param viewActionId the view action ID of this resource permission
 	 */
 	public void setViewActionId(boolean viewActionId);
+
+	/**
+	 * Returns the company ID of this resource permission.
+	 *
+	 * @return the company ID of this resource permission
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this resource permission.
+	 *
+	 * @param companyId the company ID of this resource permission
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

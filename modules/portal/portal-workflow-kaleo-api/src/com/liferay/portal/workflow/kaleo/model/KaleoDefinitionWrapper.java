@@ -55,7 +55,6 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 
 		attributes.put("kaleoDefinitionId", getKaleoDefinitionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -67,6 +66,7 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 		attributes.put("version", getVersion());
 		attributes.put("active", getActive());
 		attributes.put("startKaleoNodeId", getStartKaleoNodeId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -83,12 +83,6 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -155,6 +149,12 @@ public class KaleoDefinitionWrapper implements KaleoDefinition,
 
 		if (startKaleoNodeId != null) {
 			setStartKaleoNodeId(startKaleoNodeId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

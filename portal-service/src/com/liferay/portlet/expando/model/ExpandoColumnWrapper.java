@@ -53,12 +53,12 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("columnId", getColumnId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("tableId", getTableId());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
 		attributes.put("defaultData", getDefaultData());
 		attributes.put("typeSettings", getTypeSettings());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -69,12 +69,6 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 
 		if (columnId != null) {
 			setColumnId(columnId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long tableId = (Long)attributes.get("tableId");
@@ -105,6 +99,12 @@ public class ExpandoColumnWrapper implements ExpandoColumn,
 
 		if (typeSettings != null) {
 			setTypeSettings(typeSettings);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

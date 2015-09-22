@@ -41,6 +41,7 @@ public class ImageSoap implements Serializable {
 		soapModel.setHeight(model.getHeight());
 		soapModel.setWidth(model.getWidth());
 		soapModel.setSize(model.getSize());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -149,6 +150,14 @@ public class ImageSoap implements Serializable {
 		_size = size;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _mvccVersion;
 	private long _imageId;
 	private Date _modifiedDate;
@@ -156,4 +165,5 @@ public class ImageSoap implements Serializable {
 	private int _height;
 	private int _width;
 	private int _size;
+	private long _companyId;
 }

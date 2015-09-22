@@ -83,8 +83,6 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		sb.append(mvccVersion);
 		sb.append(", resourceBlockId=");
 		sb.append(resourceBlockId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", name=");
@@ -93,6 +91,8 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		sb.append(permissionsHash);
 		sb.append(", referenceCount=");
 		sb.append(referenceCount);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -104,7 +104,6 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 
 		resourceBlockImpl.setMvccVersion(mvccVersion);
 		resourceBlockImpl.setResourceBlockId(resourceBlockId);
-		resourceBlockImpl.setCompanyId(companyId);
 		resourceBlockImpl.setGroupId(groupId);
 
 		if (name == null) {
@@ -122,6 +121,7 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		}
 
 		resourceBlockImpl.setReferenceCount(referenceCount);
+		resourceBlockImpl.setCompanyId(companyId);
 
 		resourceBlockImpl.resetOriginalValues();
 
@@ -132,11 +132,11 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		mvccVersion = objectInput.readLong();
 		resourceBlockId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		name = objectInput.readUTF();
 		permissionsHash = objectInput.readUTF();
 		referenceCount = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -144,7 +144,6 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		throws IOException {
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(resourceBlockId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(groupId);
 
 		if (name == null) {
@@ -162,13 +161,14 @@ public class ResourceBlockCacheModel implements CacheModel<ResourceBlock>,
 		}
 
 		objectOutput.writeLong(referenceCount);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long resourceBlockId;
-	public long companyId;
 	public long groupId;
 	public String name;
 	public String permissionsHash;
 	public long referenceCount;
+	public long companyId;
 }

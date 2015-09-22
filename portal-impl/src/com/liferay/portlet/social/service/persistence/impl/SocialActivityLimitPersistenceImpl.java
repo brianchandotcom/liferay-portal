@@ -16,6 +16,7 @@ package com.liferay.portlet.social.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.social.NoSuchActivityLimitException;
 import com.liferay.portlet.social.model.SocialActivityLimit;
@@ -2111,6 +2113,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		socialActivityLimit.setNew(true);
 		socialActivityLimit.setPrimaryKey(activityLimitId);
 
+		socialActivityLimit.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return socialActivityLimit;
 	}
 
@@ -2318,13 +2322,13 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 
 		socialActivityLimitImpl.setActivityLimitId(socialActivityLimit.getActivityLimitId());
 		socialActivityLimitImpl.setGroupId(socialActivityLimit.getGroupId());
-		socialActivityLimitImpl.setCompanyId(socialActivityLimit.getCompanyId());
 		socialActivityLimitImpl.setUserId(socialActivityLimit.getUserId());
 		socialActivityLimitImpl.setClassNameId(socialActivityLimit.getClassNameId());
 		socialActivityLimitImpl.setClassPK(socialActivityLimit.getClassPK());
 		socialActivityLimitImpl.setActivityType(socialActivityLimit.getActivityType());
 		socialActivityLimitImpl.setActivityCounterName(socialActivityLimit.getActivityCounterName());
 		socialActivityLimitImpl.setValue(socialActivityLimit.getValue());
+		socialActivityLimitImpl.setCompanyId(socialActivityLimit.getCompanyId());
 
 		return socialActivityLimitImpl;
 	}
@@ -2703,6 +2707,8 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_SOCIALACTIVITYLIMIT = "SELECT socialActivityLimit FROM SocialActivityLimit socialActivityLimit";
 	private static final String _SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE_PKS_IN = "SELECT socialActivityLimit FROM SocialActivityLimit socialActivityLimit WHERE activityLimitId IN (";
 	private static final String _SQL_SELECT_SOCIALACTIVITYLIMIT_WHERE = "SELECT socialActivityLimit FROM SocialActivityLimit socialActivityLimit WHERE ";

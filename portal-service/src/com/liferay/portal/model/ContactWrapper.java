@@ -53,7 +53,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("contactId", getContactId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -85,6 +84,7 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("jobClass", getJobClass());
 		attributes.put("hoursOfOperation", getHoursOfOperation());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -101,12 +101,6 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 
 		if (contactId != null) {
 			setContactId(contactId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -293,6 +287,12 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 
 		if (hoursOfOperation != null) {
 			setHoursOfOperation(hoursOfOperation);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

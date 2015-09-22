@@ -71,8 +71,6 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		sb.append(kaleoTransitionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -99,6 +97,8 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		sb.append(targetKaleoNodeName);
 		sb.append(", defaultTransition=");
 		sb.append(defaultTransition);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,7 +110,6 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 
 		kaleoTransitionImpl.setKaleoTransitionId(kaleoTransitionId);
 		kaleoTransitionImpl.setGroupId(groupId);
-		kaleoTransitionImpl.setCompanyId(companyId);
 		kaleoTransitionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -170,6 +169,7 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		}
 
 		kaleoTransitionImpl.setDefaultTransition(defaultTransition);
+		kaleoTransitionImpl.setCompanyId(companyId);
 
 		kaleoTransitionImpl.resetOriginalValues();
 
@@ -180,7 +180,6 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoTransitionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -194,6 +193,7 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		targetKaleoNodeId = objectInput.readLong();
 		targetKaleoNodeName = objectInput.readUTF();
 		defaultTransition = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -201,7 +201,6 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		throws IOException {
 		objectOutput.writeLong(kaleoTransitionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -249,11 +248,11 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 		}
 
 		objectOutput.writeBoolean(defaultTransition);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoTransitionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -267,4 +266,5 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition>,
 	public long targetKaleoNodeId;
 	public String targetKaleoNodeName;
 	public boolean defaultTransition;
+	public long companyId;
 }

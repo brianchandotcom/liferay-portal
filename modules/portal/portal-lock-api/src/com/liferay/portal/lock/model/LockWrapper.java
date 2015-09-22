@@ -55,7 +55,6 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("lockId", getLockId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -64,6 +63,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 		attributes.put("owner", getOwner());
 		attributes.put("inheritable", getInheritable());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -86,12 +86,6 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 
 		if (lockId != null) {
 			setLockId(lockId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -140,6 +134,12 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

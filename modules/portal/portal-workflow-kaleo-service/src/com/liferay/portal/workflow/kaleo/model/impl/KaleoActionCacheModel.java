@@ -71,8 +71,6 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 		sb.append(kaleoActionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -103,6 +101,8 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 		sb.append(scriptRequiredContexts);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -114,7 +114,6 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 
 		kaleoActionImpl.setKaleoActionId(kaleoActionId);
 		kaleoActionImpl.setGroupId(groupId);
-		kaleoActionImpl.setCompanyId(companyId);
 		kaleoActionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -198,6 +197,7 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 		}
 
 		kaleoActionImpl.setPriority(priority);
+		kaleoActionImpl.setCompanyId(companyId);
 
 		kaleoActionImpl.resetOriginalValues();
 
@@ -208,7 +208,6 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoActionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -224,6 +223,7 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 		scriptLanguage = objectInput.readUTF();
 		scriptRequiredContexts = objectInput.readUTF();
 		priority = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -231,7 +231,6 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 		throws IOException {
 		objectOutput.writeLong(kaleoActionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -304,11 +303,11 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 		}
 
 		objectOutput.writeInt(priority);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoActionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -324,4 +323,5 @@ public class KaleoActionCacheModel implements CacheModel<KaleoAction>,
 	public String scriptLanguage;
 	public String scriptRequiredContexts;
 	public int priority;
+	public long companyId;
 }

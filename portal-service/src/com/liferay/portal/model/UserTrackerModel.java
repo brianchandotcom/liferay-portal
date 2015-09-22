@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface UserTrackerModel extends BaseModel<UserTracker>, MVCCModel {
+public interface UserTrackerModel extends BaseModel<UserTracker>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -89,20 +90,6 @@ public interface UserTrackerModel extends BaseModel<UserTracker>, MVCCModel {
 	 * @param userTrackerId the user tracker ID of this user tracker
 	 */
 	public void setUserTrackerId(long userTrackerId);
-
-	/**
-	 * Returns the company ID of this user tracker.
-	 *
-	 * @return the company ID of this user tracker
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this user tracker.
-	 *
-	 * @param companyId the company ID of this user tracker
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this user tracker.
@@ -205,6 +192,22 @@ public interface UserTrackerModel extends BaseModel<UserTracker>, MVCCModel {
 	 * @param userAgent the user agent of this user tracker
 	 */
 	public void setUserAgent(String userAgent);
+
+	/**
+	 * Returns the company ID of this user tracker.
+	 *
+	 * @return the company ID of this user tracker
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user tracker.
+	 *
+	 * @param companyId the company ID of this user tracker
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

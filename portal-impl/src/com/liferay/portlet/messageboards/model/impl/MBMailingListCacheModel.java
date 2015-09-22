@@ -74,8 +74,6 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 		sb.append(mailingListId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -120,6 +118,8 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 		sb.append(allowAnonymous);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -138,7 +138,6 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 
 		mbMailingListImpl.setMailingListId(mailingListId);
 		mbMailingListImpl.setGroupId(groupId);
-		mbMailingListImpl.setCompanyId(companyId);
 		mbMailingListImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -239,6 +238,7 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 
 		mbMailingListImpl.setAllowAnonymous(allowAnonymous);
 		mbMailingListImpl.setActive(active);
+		mbMailingListImpl.setCompanyId(companyId);
 
 		mbMailingListImpl.resetOriginalValues();
 
@@ -250,7 +250,6 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 		uuid = objectInput.readUTF();
 		mailingListId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -273,6 +272,7 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 		outPassword = objectInput.readUTF();
 		allowAnonymous = objectInput.readBoolean();
 		active = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -287,7 +287,6 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 
 		objectOutput.writeLong(mailingListId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -376,12 +375,12 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 
 		objectOutput.writeBoolean(allowAnonymous);
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long mailingListId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -404,4 +403,5 @@ public class MBMailingListCacheModel implements CacheModel<MBMailingList>,
 	public String outPassword;
 	public boolean allowAnonymous;
 	public boolean active;
+	public long companyId;
 }

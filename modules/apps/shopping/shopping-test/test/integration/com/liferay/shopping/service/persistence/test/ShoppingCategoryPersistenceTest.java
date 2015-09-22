@@ -124,8 +124,6 @@ public class ShoppingCategoryPersistenceTest {
 
 		newShoppingCategory.setGroupId(RandomTestUtil.nextLong());
 
-		newShoppingCategory.setCompanyId(RandomTestUtil.nextLong());
-
 		newShoppingCategory.setUserId(RandomTestUtil.nextLong());
 
 		newShoppingCategory.setUserName(RandomTestUtil.randomString());
@@ -140,6 +138,8 @@ public class ShoppingCategoryPersistenceTest {
 
 		newShoppingCategory.setDescription(RandomTestUtil.randomString());
 
+		newShoppingCategory.setCompanyId(RandomTestUtil.nextLong());
+
 		_shoppingCategories.add(_persistence.update(newShoppingCategory));
 
 		ShoppingCategory existingShoppingCategory = _persistence.findByPrimaryKey(newShoppingCategory.getPrimaryKey());
@@ -148,8 +148,6 @@ public class ShoppingCategoryPersistenceTest {
 			newShoppingCategory.getCategoryId());
 		Assert.assertEquals(existingShoppingCategory.getGroupId(),
 			newShoppingCategory.getGroupId());
-		Assert.assertEquals(existingShoppingCategory.getCompanyId(),
-			newShoppingCategory.getCompanyId());
 		Assert.assertEquals(existingShoppingCategory.getUserId(),
 			newShoppingCategory.getUserId());
 		Assert.assertEquals(existingShoppingCategory.getUserName(),
@@ -166,6 +164,8 @@ public class ShoppingCategoryPersistenceTest {
 			newShoppingCategory.getName());
 		Assert.assertEquals(existingShoppingCategory.getDescription(),
 			newShoppingCategory.getDescription());
+		Assert.assertEquals(existingShoppingCategory.getCompanyId(),
+			newShoppingCategory.getCompanyId());
 	}
 
 	@Test
@@ -222,9 +222,9 @@ public class ShoppingCategoryPersistenceTest {
 
 	protected OrderByComparator<ShoppingCategory> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ShoppingCategory",
-			"categoryId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"parentCategoryId", true, "name", true, "description", true);
+			"categoryId", true, "groupId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "parentCategoryId",
+			true, "name", true, "description", true, "companyId", true);
 	}
 
 	@Test
@@ -444,8 +444,6 @@ public class ShoppingCategoryPersistenceTest {
 
 		shoppingCategory.setGroupId(RandomTestUtil.nextLong());
 
-		shoppingCategory.setCompanyId(RandomTestUtil.nextLong());
-
 		shoppingCategory.setUserId(RandomTestUtil.nextLong());
 
 		shoppingCategory.setUserName(RandomTestUtil.randomString());
@@ -459,6 +457,8 @@ public class ShoppingCategoryPersistenceTest {
 		shoppingCategory.setName(RandomTestUtil.randomString());
 
 		shoppingCategory.setDescription(RandomTestUtil.randomString());
+
+		shoppingCategory.setCompanyId(RandomTestUtil.nextLong());
 
 		_shoppingCategories.add(_persistence.update(shoppingCategory));
 

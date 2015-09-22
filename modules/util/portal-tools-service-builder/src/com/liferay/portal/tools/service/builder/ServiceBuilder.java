@@ -119,6 +119,7 @@ import org.dom4j.io.SAXReader;
  * @author Cody Hoag
  * @author James Hinkey
  * @author Hugo Huijser
+ * @author Manuel de la Peña
  */
 public class ServiceBuilder {
 
@@ -1003,7 +1004,7 @@ public class ServiceBuilder {
 
 			if (pos == -1) {
 				throw new ServiceBuilderException(
-					"Unable to to find " + name + " in " +
+					"Unable to find " + name + " in " +
 						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
 
@@ -1175,7 +1176,7 @@ public class ServiceBuilder {
 
 		EntityMapping entityMapping = _entityMappings.get(mappingTable);
 
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < entityMapping.getEntitiesCount(); i++) {
 			Entity entity = getEntity(entityMapping.getEntity(i));
 
 			if (entity == null) {
@@ -3863,7 +3864,7 @@ public class ServiceBuilder {
 			Map<String, List<IndexMetadata>> indexMetadataMap)
 		throws Exception {
 
-		Entity[] entities = new Entity[2];
+		Entity[] entities = new Entity[entityMapping.getEntitiesCount()];
 
 		for (int i = 0; i < entities.length; i++) {
 			entities[i] = getEntity(entityMapping.getEntity(i));
@@ -3895,7 +3896,7 @@ public class ServiceBuilder {
 	private String _getCreateMappingTableSQL(EntityMapping entityMapping)
 		throws Exception {
 
-		Entity[] entities = new Entity[2];
+		Entity[] entities = new Entity[entityMapping.getEntitiesCount()];
 
 		for (int i = 0; i < entities.length; i++) {
 			entities[i] = getEntity(entityMapping.getEntity(i));
@@ -4558,8 +4559,11 @@ public class ServiceBuilder {
 			entityElement.attributeValue("uuid-accessor"));
 		boolean localService = GetterUtil.getBoolean(
 			entityElement.attributeValue("local-service"));
+		boolean partitionable = GetterUtil.getBoolean(
+			entityElement.attributeValue("partitionable"), true);
 		boolean remoteService = GetterUtil.getBoolean(
 			entityElement.attributeValue("remote-service"), true);
+
 		String persistenceClass = GetterUtil.getString(
 			entityElement.attributeValue("persistence-class"),
 			_packagePath + ".service.persistence.impl." + ejbName +
@@ -4732,12 +4736,26 @@ public class ServiceBuilder {
 				Validator.isNotNull(mappingTable)) {
 
 				EntityMapping entityMapping = new EntityMapping(
-					mappingTable, ejbName, collectionEntity);
+					mappingTable, getEntity("com.liferay.portal.Company"),
+					ejbName, collectionEntity);
 
 				if (!_entityMappings.containsKey(mappingTable)) {
 					_entityMappings.put(mappingTable, entityMapping);
 				}
 			}
+		}
+
+		if (partitionable &&
+			!columnList.contains(new EntityColumn("companyId")) &&
+			!columnList.isEmpty()) {
+
+			EntityColumn col = new EntityColumn(
+				"companyId", "companyId", "long", false, false, false, null,
+				null, null, null, true, true, false, false, false, false);
+
+			columnList.add(col);
+
+			regularColList.add(col);
 		}
 
 		EntityOrder order = null;
@@ -4997,7 +5015,7 @@ public class ServiceBuilder {
 				jsonEnabled, mvccEnabled, trashEnabled, deprecated, pkList,
 				regularColList, blobList, collectionList, columnList, order,
 				finderList, referenceList, unresolvedReferenceList,
-				txRequiredList, resourceActionModel));
+				txRequiredList, resourceActionModel, partitionable));
 	}
 
 	private String _processTemplate(String name, Map<String, Object> context)

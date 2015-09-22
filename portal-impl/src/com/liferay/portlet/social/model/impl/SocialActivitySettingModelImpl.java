@@ -69,25 +69,25 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "activitySettingId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "activityType", Types.INTEGER },
 			{ "name", Types.VARCHAR },
-			{ "value", Types.VARCHAR }
+			{ "value", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("activitySettingId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("activityType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialActivitySetting (activitySettingId LONG not null primary key,groupId LONG,companyId LONG,classNameId LONG,activityType INTEGER,name VARCHAR(75) null,value VARCHAR(1024) null)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivitySetting (activitySettingId LONG not null primary key,groupId LONG,classNameId LONG,activityType INTEGER,name VARCHAR(75) null,value VARCHAR(1024) null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivitySetting";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivitySetting.activitySettingId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialActivitySetting.activitySettingId ASC";
@@ -125,11 +125,11 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 
 		model.setActivitySettingId(soapModel.getActivitySettingId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setActivityType(soapModel.getActivityType());
 		model.setName(soapModel.getName());
 		model.setValue(soapModel.getValue());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -197,11 +197,11 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 
 		attributes.put("activitySettingId", getActivitySettingId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("activityType", getActivityType());
 		attributes.put("name", getName());
 		attributes.put("value", getValue());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -221,12 +221,6 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -251,6 +245,12 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 
 		if (value != null) {
 			setValue(value);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -286,17 +286,6 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -407,6 +396,17 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		_value = value;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -440,11 +440,11 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 
 		socialActivitySettingImpl.setActivitySettingId(getActivitySettingId());
 		socialActivitySettingImpl.setGroupId(getGroupId());
-		socialActivitySettingImpl.setCompanyId(getCompanyId());
 		socialActivitySettingImpl.setClassNameId(getClassNameId());
 		socialActivitySettingImpl.setActivityType(getActivityType());
 		socialActivitySettingImpl.setName(getName());
 		socialActivitySettingImpl.setValue(getValue());
+		socialActivitySettingImpl.setCompanyId(getCompanyId());
 
 		socialActivitySettingImpl.resetOriginalValues();
 
@@ -532,8 +532,6 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 
 		socialActivitySettingCacheModel.groupId = getGroupId();
 
-		socialActivitySettingCacheModel.companyId = getCompanyId();
-
 		socialActivitySettingCacheModel.classNameId = getClassNameId();
 
 		socialActivitySettingCacheModel.activityType = getActivityType();
@@ -554,6 +552,8 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 			socialActivitySettingCacheModel.value = null;
 		}
 
+		socialActivitySettingCacheModel.companyId = getCompanyId();
+
 		return socialActivitySettingCacheModel;
 	}
 
@@ -565,8 +565,6 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		sb.append(getActivitySettingId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
 		sb.append(", activityType=");
@@ -575,6 +573,8 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		sb.append(getName());
 		sb.append(", value=");
 		sb.append(getValue());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -597,10 +597,6 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
 		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
@@ -616,6 +612,10 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 			"<column><column-name>value</column-name><column-value><![CDATA[");
 		sb.append(getValue());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -630,7 +630,6 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
@@ -640,6 +639,7 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 	private String _name;
 	private String _originalName;
 	private String _value;
+	private long _companyId;
 	private long _columnBitmask;
 	private SocialActivitySetting _escapedModel;
 }

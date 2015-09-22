@@ -74,8 +74,6 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		sb.append(folderId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -104,6 +102,8 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -122,7 +122,6 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 
 		journalFolderImpl.setFolderId(folderId);
 		journalFolderImpl.setGroupId(groupId);
-		journalFolderImpl.setCompanyId(companyId);
 		journalFolderImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -195,6 +194,8 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 			journalFolderImpl.setStatusDate(new Date(statusDate));
 		}
 
+		journalFolderImpl.setCompanyId(companyId);
+
 		journalFolderImpl.resetOriginalValues();
 
 		return journalFolderImpl;
@@ -205,7 +206,6 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		uuid = objectInput.readUTF();
 		folderId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -220,6 +220,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -234,7 +235,6 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 
 		objectOutput.writeLong(folderId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -282,12 +282,12 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long folderId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -302,4 +302,5 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

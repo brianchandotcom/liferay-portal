@@ -57,6 +57,7 @@ public class SCLicenseWrapper implements SCLicense, ModelWrapper<SCLicense> {
 		attributes.put("openSource", getOpenSource());
 		attributes.put("active", getActive());
 		attributes.put("recommended", getRecommended());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -98,6 +99,12 @@ public class SCLicenseWrapper implements SCLicense, ModelWrapper<SCLicense> {
 		if (recommended != null) {
 			setRecommended(recommended);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -119,6 +126,16 @@ public class SCLicenseWrapper implements SCLicense, ModelWrapper<SCLicense> {
 	@Override
 	public boolean getActive() {
 		return _scLicense.getActive();
+	}
+
+	/**
+	* Returns the company ID of this s c license.
+	*
+	* @return the company ID of this s c license
+	*/
+	@Override
+	public long getCompanyId() {
+		return _scLicense.getCompanyId();
 	}
 
 	@Override
@@ -259,6 +276,16 @@ public class SCLicenseWrapper implements SCLicense, ModelWrapper<SCLicense> {
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_scLicense.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this s c license.
+	*
+	* @param companyId the company ID of this s c license
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_scLicense.setCompanyId(companyId);
 	}
 
 	@Override

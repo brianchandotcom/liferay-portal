@@ -37,7 +37,6 @@ public class CalendarResourceSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setCalendarResourceId(model.getCalendarResourceId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -51,6 +50,7 @@ public class CalendarResourceSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setActive(model.getActive());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -127,14 +127,6 @@ public class CalendarResourceSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -245,10 +237,17 @@ public class CalendarResourceSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _calendarResourceId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -262,4 +261,5 @@ public class CalendarResourceSoap implements Serializable {
 	private String _description;
 	private boolean _active;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

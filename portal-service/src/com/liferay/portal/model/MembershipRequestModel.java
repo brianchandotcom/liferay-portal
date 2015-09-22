@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface MembershipRequestModel extends BaseModel<MembershipRequest>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -104,20 +104,6 @@ public interface MembershipRequestModel extends BaseModel<MembershipRequest>,
 	 * @param groupId the group ID of this membership request
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this membership request.
-	 *
-	 * @return the company ID of this membership request
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this membership request.
-	 *
-	 * @param companyId the company ID of this membership request
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this membership request.
@@ -246,6 +232,22 @@ public interface MembershipRequestModel extends BaseModel<MembershipRequest>,
 	 * @param statusId the status ID of this membership request
 	 */
 	public void setStatusId(long statusId);
+
+	/**
+	 * Returns the company ID of this membership request.
+	 *
+	 * @return the company ID of this membership request
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this membership request.
+	 *
+	 * @param companyId the company ID of this membership request
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

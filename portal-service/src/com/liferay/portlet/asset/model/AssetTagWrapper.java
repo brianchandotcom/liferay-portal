@@ -57,7 +57,6 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		attributes.put("uuid", getUuid());
 		attributes.put("tagId", getTagId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -65,6 +64,7 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 		attributes.put("name", getName());
 		attributes.put("assetCount", getAssetCount());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -87,12 +87,6 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -135,6 +129,12 @@ public class AssetTagWrapper implements AssetTag, ModelWrapper<AssetTag> {
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

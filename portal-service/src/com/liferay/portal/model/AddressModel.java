@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface AddressModel extends AttachedModel, BaseModel<Address>,
-	MVCCModel, StagedAuditedModel {
+	MVCCModel, PartitionableModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -107,22 +107,6 @@ public interface AddressModel extends AttachedModel, BaseModel<Address>,
 	 * @param addressId the address ID of this address
 	 */
 	public void setAddressId(long addressId);
-
-	/**
-	 * Returns the company ID of this address.
-	 *
-	 * @return the company ID of this address
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this address.
-	 *
-	 * @param companyId the company ID of this address
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this address.
@@ -421,6 +405,22 @@ public interface AddressModel extends AttachedModel, BaseModel<Address>,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this address.
+	 *
+	 * @return the company ID of this address
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this address.
+	 *
+	 * @param companyId the company ID of this address
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

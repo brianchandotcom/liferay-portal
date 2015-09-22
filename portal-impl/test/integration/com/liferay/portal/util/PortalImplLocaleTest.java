@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -78,10 +79,21 @@ public class PortalImplLocaleTest {
 		_group = GroupTestUtil.addGroup();
 		_layout = LayoutTestUtil.addLayout(_group);
 
-		GroupTestUtil.updateDisplaySettings(
-			_group.getGroupId(),
-			Arrays.asList(LocaleUtil.UK, LocaleUtil.GERMANY),
-			LocaleUtil.GERMANY);
+		try {
+			GroupTestUtil.updateDisplaySettings(
+				_group.getGroupId(),
+				Arrays.asList(LocaleUtil.UK, LocaleUtil.GERMANY),
+				LocaleUtil.GERMANY);
+		}
+		catch (LocaleException le) {
+			le.printStackTrace();
+
+			System.out.println(
+				"Source Available Locales: " + le.getSourceAvailableLocales());
+
+			System.out.println(
+				"Target Available Locales: " + le.getTargetAvailableLocales());
+		}
 	}
 
 	@After

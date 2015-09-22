@@ -72,8 +72,6 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 		sb.append(cartId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -90,6 +88,8 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 		sb.append(altShipping);
 		sb.append(", insure=");
 		sb.append(insure);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -101,7 +101,6 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 
 		shoppingCartImpl.setCartId(cartId);
 		shoppingCartImpl.setGroupId(groupId);
-		shoppingCartImpl.setCompanyId(companyId);
 		shoppingCartImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -141,6 +140,7 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 
 		shoppingCartImpl.setAltShipping(altShipping);
 		shoppingCartImpl.setInsure(insure);
+		shoppingCartImpl.setCompanyId(companyId);
 
 		shoppingCartImpl.resetOriginalValues();
 
@@ -151,7 +151,6 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		cartId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -160,6 +159,7 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 		couponCodes = objectInput.readUTF();
 		altShipping = objectInput.readInt();
 		insure = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -167,7 +167,6 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 		throws IOException {
 		objectOutput.writeLong(cartId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -196,11 +195,11 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 
 		objectOutput.writeInt(altShipping);
 		objectOutput.writeBoolean(insure);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long cartId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -209,4 +208,5 @@ public class ShoppingCartCacheModel implements CacheModel<ShoppingCart>,
 	public String couponCodes;
 	public int altShipping;
 	public boolean insure;
+	public long companyId;
 }

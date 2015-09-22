@@ -74,14 +74,14 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 			{ "uuid_", Types.VARCHAR },
 			{ "tagId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "assetCount", Types.INTEGER },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -89,7 +89,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("tagId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -97,9 +96,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assetCount", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetTag (uuid_ VARCHAR(75) null,tagId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,assetCount INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table AssetTag (uuid_ VARCHAR(75) null,tagId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,assetCount INTEGER,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table AssetTag";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetTag.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetTag.name ASC";
@@ -136,7 +136,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		model.setUuid(soapModel.getUuid());
 		model.setTagId(soapModel.getTagId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -144,6 +143,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		model.setName(soapModel.getName());
 		model.setAssetCount(soapModel.getAssetCount());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -170,10 +170,11 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_NAME = "AssetEntries_AssetTags";
 	public static final Object[][] MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
 			{ "entryId", Types.BIGINT },
 			{ "tagId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_SQL_CREATE = "create table AssetEntries_AssetTags (entryId LONG not null,tagId LONG not null,primary key (entryId, tagId))";
+	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETTAGS_SQL_CREATE = "create table AssetEntries_AssetTags (entryId LONG not null,tagId LONG not null,companyId LONG not null,primary key (entryId, tagId, companyId))";
 	public static final boolean FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETTAGS = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.AssetEntries_AssetTags"),
 			true);
@@ -220,7 +221,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		attributes.put("uuid", getUuid());
 		attributes.put("tagId", getTagId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -228,6 +228,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		attributes.put("name", getName());
 		attributes.put("assetCount", getAssetCount());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -253,12 +254,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -301,6 +296,12 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -360,29 +361,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -504,6 +482,29 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -544,7 +545,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		assetTagImpl.setUuid(getUuid());
 		assetTagImpl.setTagId(getTagId());
 		assetTagImpl.setGroupId(getGroupId());
-		assetTagImpl.setCompanyId(getCompanyId());
 		assetTagImpl.setUserId(getUserId());
 		assetTagImpl.setUserName(getUserName());
 		assetTagImpl.setCreateDate(getCreateDate());
@@ -552,6 +552,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		assetTagImpl.setName(getName());
 		assetTagImpl.setAssetCount(getAssetCount());
 		assetTagImpl.setLastPublishDate(getLastPublishDate());
+		assetTagImpl.setCompanyId(getCompanyId());
 
 		assetTagImpl.resetOriginalValues();
 
@@ -618,13 +619,13 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 
 		assetTagModelImpl._setOriginalGroupId = false;
 
-		assetTagModelImpl._originalCompanyId = assetTagModelImpl._companyId;
-
-		assetTagModelImpl._setOriginalCompanyId = false;
-
 		assetTagModelImpl._setModifiedDate = false;
 
 		assetTagModelImpl._originalName = assetTagModelImpl._name;
+
+		assetTagModelImpl._originalCompanyId = assetTagModelImpl._companyId;
+
+		assetTagModelImpl._setOriginalCompanyId = false;
 
 		assetTagModelImpl._columnBitmask = 0;
 	}
@@ -644,8 +645,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		assetTagCacheModel.tagId = getTagId();
 
 		assetTagCacheModel.groupId = getGroupId();
-
-		assetTagCacheModel.companyId = getCompanyId();
 
 		assetTagCacheModel.userId = getUserId();
 
@@ -694,6 +693,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 			assetTagCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		assetTagCacheModel.companyId = getCompanyId();
+
 		return assetTagCacheModel;
 	}
 
@@ -707,8 +708,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		sb.append(getTagId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -723,6 +722,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		sb.append(getAssetCount());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -747,10 +748,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -780,6 +777,10 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -796,9 +797,6 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -808,6 +806,9 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private String _originalName;
 	private int _assetCount;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private AssetTag _escapedModel;
 }

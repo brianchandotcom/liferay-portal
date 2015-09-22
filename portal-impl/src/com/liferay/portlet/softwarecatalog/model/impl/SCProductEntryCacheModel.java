@@ -72,8 +72,6 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 		sb.append(productEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -100,6 +98,8 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 		sb.append(repoGroupId);
 		sb.append(", repoArtifactId=");
 		sb.append(repoArtifactId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -111,7 +111,6 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 
 		scProductEntryImpl.setProductEntryId(productEntryId);
 		scProductEntryImpl.setGroupId(groupId);
-		scProductEntryImpl.setCompanyId(companyId);
 		scProductEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -198,6 +197,8 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 			scProductEntryImpl.setRepoArtifactId(repoArtifactId);
 		}
 
+		scProductEntryImpl.setCompanyId(companyId);
+
 		scProductEntryImpl.resetOriginalValues();
 
 		return scProductEntryImpl;
@@ -207,7 +208,6 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		productEntryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -221,6 +221,7 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 		author = objectInput.readUTF();
 		repoGroupId = objectInput.readUTF();
 		repoArtifactId = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -228,7 +229,6 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 		throws IOException {
 		objectOutput.writeLong(productEntryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -303,11 +303,12 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 		else {
 			objectOutput.writeUTF(repoArtifactId);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long productEntryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -321,4 +322,5 @@ public class SCProductEntryCacheModel implements CacheModel<SCProductEntry>,
 	public String author;
 	public String repoGroupId;
 	public String repoArtifactId;
+	public long companyId;
 }

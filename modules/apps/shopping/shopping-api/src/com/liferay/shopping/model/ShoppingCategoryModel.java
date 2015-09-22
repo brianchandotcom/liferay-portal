@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface ShoppingCategoryModel extends BaseModel<ShoppingCategory>,
-	GroupedModel {
+	GroupedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -93,22 +94,6 @@ public interface ShoppingCategoryModel extends BaseModel<ShoppingCategory>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this shopping category.
-	 *
-	 * @return the company ID of this shopping category
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this shopping category.
-	 *
-	 * @param companyId the company ID of this shopping category
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this shopping category.
@@ -234,6 +219,22 @@ public interface ShoppingCategoryModel extends BaseModel<ShoppingCategory>,
 	 * @param description the description of this shopping category
 	 */
 	public void setDescription(String description);
+
+	/**
+	 * Returns the company ID of this shopping category.
+	 *
+	 * @return the company ID of this shopping category
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this shopping category.
+	 *
+	 * @param companyId the company ID of this shopping category
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

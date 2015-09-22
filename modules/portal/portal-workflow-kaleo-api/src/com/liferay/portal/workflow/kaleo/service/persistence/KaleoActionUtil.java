@@ -112,145 +112,6 @@ public class KaleoActionUtil {
 	}
 
 	/**
-	* Returns all the kaleo actions where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching kaleo actions
-	*/
-	public static List<KaleoAction> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	* Returns a range of all the kaleo actions where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of kaleo actions
-	* @param end the upper bound of the range of kaleo actions (not inclusive)
-	* @return the range of matching kaleo actions
-	*/
-	public static List<KaleoAction> findByCompanyId(long companyId, int start,
-		int end) {
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the kaleo actions where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of kaleo actions
-	* @param end the upper bound of the range of kaleo actions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching kaleo actions
-	*/
-	public static List<KaleoAction> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator<KaleoAction> orderByComparator) {
-		return getPersistence()
-				   .findByCompanyId(companyId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first kaleo action in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
-	*/
-	public static KaleoAction findByCompanyId_First(long companyId,
-		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
-		return getPersistence()
-				   .findByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the first kaleo action in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
-	*/
-	public static KaleoAction fetchByCompanyId_First(long companyId,
-		OrderByComparator<KaleoAction> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_First(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last kaleo action in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
-	*/
-	public static KaleoAction findByCompanyId_Last(long companyId,
-		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
-		return getPersistence()
-				   .findByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the last kaleo action in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
-	*/
-	public static KaleoAction fetchByCompanyId_Last(long companyId,
-		OrderByComparator<KaleoAction> orderByComparator) {
-		return getPersistence()
-				   .fetchByCompanyId_Last(companyId, orderByComparator);
-	}
-
-	/**
-	* Returns the kaleo actions before and after the current kaleo action in the ordered set where companyId = &#63;.
-	*
-	* @param kaleoActionId the primary key of the current kaleo action
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next kaleo action
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a kaleo action with the primary key could not be found
-	*/
-	public static KaleoAction[] findByCompanyId_PrevAndNext(
-		long kaleoActionId, long companyId,
-		OrderByComparator<KaleoAction> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
-		return getPersistence()
-				   .findByCompanyId_PrevAndNext(kaleoActionId, companyId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the kaleo actions where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	* Returns the number of kaleo actions where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching kaleo actions
-	*/
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
 	* Returns all the kaleo actions where kaleoDefinitionId = &#63;.
 	*
 	* @param kaleoDefinitionId the kaleo definition ID
@@ -395,6 +256,145 @@ public class KaleoActionUtil {
 	*/
 	public static int countByKaleoDefinitionId(long kaleoDefinitionId) {
 		return getPersistence().countByKaleoDefinitionId(kaleoDefinitionId);
+	}
+
+	/**
+	* Returns all the kaleo actions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching kaleo actions
+	*/
+	public static List<KaleoAction> findByCompanyId(long companyId) {
+		return getPersistence().findByCompanyId(companyId);
+	}
+
+	/**
+	* Returns a range of all the kaleo actions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo actions
+	* @param end the upper bound of the range of kaleo actions (not inclusive)
+	* @return the range of matching kaleo actions
+	*/
+	public static List<KaleoAction> findByCompanyId(long companyId, int start,
+		int end) {
+		return getPersistence().findByCompanyId(companyId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the kaleo actions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo actions
+	* @param end the upper bound of the range of kaleo actions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching kaleo actions
+	*/
+	public static List<KaleoAction> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator<KaleoAction> orderByComparator) {
+		return getPersistence()
+				   .findByCompanyId(companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first kaleo action in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo action
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
+	*/
+	public static KaleoAction findByCompanyId_First(long companyId,
+		OrderByComparator<KaleoAction> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
+		return getPersistence()
+				   .findByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the first kaleo action in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
+	*/
+	public static KaleoAction fetchByCompanyId_First(long companyId,
+		OrderByComparator<KaleoAction> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_First(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last kaleo action in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo action
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a matching kaleo action could not be found
+	*/
+	public static KaleoAction findByCompanyId_Last(long companyId,
+		OrderByComparator<KaleoAction> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
+		return getPersistence()
+				   .findByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the last kaleo action in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo action, or <code>null</code> if a matching kaleo action could not be found
+	*/
+	public static KaleoAction fetchByCompanyId_Last(long companyId,
+		OrderByComparator<KaleoAction> orderByComparator) {
+		return getPersistence()
+				   .fetchByCompanyId_Last(companyId, orderByComparator);
+	}
+
+	/**
+	* Returns the kaleo actions before and after the current kaleo action in the ordered set where companyId = &#63;.
+	*
+	* @param kaleoActionId the primary key of the current kaleo action
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next kaleo action
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchActionException if a kaleo action with the primary key could not be found
+	*/
+	public static KaleoAction[] findByCompanyId_PrevAndNext(
+		long kaleoActionId, long companyId,
+		OrderByComparator<KaleoAction> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchActionException {
+		return getPersistence()
+				   .findByCompanyId_PrevAndNext(kaleoActionId, companyId,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the kaleo actions where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public static void removeByCompanyId(long companyId) {
+		getPersistence().removeByCompanyId(companyId);
+	}
+
+	/**
+	* Returns the number of kaleo actions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching kaleo actions
+	*/
+	public static int countByCompanyId(long companyId) {
+		return getPersistence().countByCompanyId(companyId);
 	}
 
 	/**

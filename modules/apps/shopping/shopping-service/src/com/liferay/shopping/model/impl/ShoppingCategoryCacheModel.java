@@ -72,8 +72,6 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 		sb.append(categoryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -88,6 +86,8 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -99,7 +99,6 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 
 		shoppingCategoryImpl.setCategoryId(categoryId);
 		shoppingCategoryImpl.setGroupId(groupId);
-		shoppingCategoryImpl.setCompanyId(companyId);
 		shoppingCategoryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -139,6 +138,8 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 			shoppingCategoryImpl.setDescription(description);
 		}
 
+		shoppingCategoryImpl.setCompanyId(companyId);
+
 		shoppingCategoryImpl.resetOriginalValues();
 
 		return shoppingCategoryImpl;
@@ -148,7 +149,6 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		categoryId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -156,6 +156,7 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 		parentCategoryId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -163,7 +164,6 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 		throws IOException {
 		objectOutput.writeLong(categoryId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -190,11 +190,12 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long categoryId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -202,4 +203,5 @@ public class ShoppingCategoryCacheModel implements CacheModel<ShoppingCategory>,
 	public long parentCategoryId;
 	public String name;
 	public String description;
+	public long companyId;
 }

@@ -87,8 +87,6 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		sb.append(membershipRequestId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -103,6 +101,8 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		sb.append(replierUserId);
 		sb.append(", statusId=");
 		sb.append(statusId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -115,7 +115,6 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		membershipRequestImpl.setMvccVersion(mvccVersion);
 		membershipRequestImpl.setMembershipRequestId(membershipRequestId);
 		membershipRequestImpl.setGroupId(groupId);
-		membershipRequestImpl.setCompanyId(companyId);
 		membershipRequestImpl.setUserId(userId);
 
 		if (createDate == Long.MIN_VALUE) {
@@ -148,6 +147,7 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 
 		membershipRequestImpl.setReplierUserId(replierUserId);
 		membershipRequestImpl.setStatusId(statusId);
+		membershipRequestImpl.setCompanyId(companyId);
 
 		membershipRequestImpl.resetOriginalValues();
 
@@ -159,7 +159,6 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		mvccVersion = objectInput.readLong();
 		membershipRequestId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		comments = objectInput.readUTF();
@@ -167,6 +166,7 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		replyDate = objectInput.readLong();
 		replierUserId = objectInput.readLong();
 		statusId = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -175,7 +175,6 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		objectOutput.writeLong(mvccVersion);
 		objectOutput.writeLong(membershipRequestId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 
@@ -196,12 +195,12 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 		objectOutput.writeLong(replyDate);
 		objectOutput.writeLong(replierUserId);
 		objectOutput.writeLong(statusId);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public long membershipRequestId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long createDate;
 	public String comments;
@@ -209,4 +208,5 @@ public class MembershipRequestCacheModel implements CacheModel<MembershipRequest
 	public long replyDate;
 	public long replierUserId;
 	public long statusId;
+	public long companyId;
 }

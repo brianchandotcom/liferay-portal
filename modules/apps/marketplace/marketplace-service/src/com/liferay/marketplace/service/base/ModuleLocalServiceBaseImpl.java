@@ -208,6 +208,18 @@ public abstract class ModuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the module with the matching UUID and company.
+	 *
+	 * @param uuid the module's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching module, or <code>null</code> if a matching module could not be found
+	 */
+	@Override
+	public Module fetchModuleByUuidAndCompanyId(String uuid, long companyId) {
+		return modulePersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the module with the primary key.
 	 *
 	 * @param moduleId the primary key of the module
@@ -254,6 +266,20 @@ public abstract class ModuleLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return modulePersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the module with the matching UUID and company.
+	 *
+	 * @param uuid the module's UUID
+	 * @param companyId the primary key of the company
+	 * @return the matching module
+	 * @throws PortalException if a matching module could not be found
+	 */
+	@Override
+	public Module getModuleByUuidAndCompanyId(String uuid, long companyId)
+		throws PortalException {
+		return modulePersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**

@@ -71,8 +71,6 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		sb.append(uuid);
 		sb.append(", appId=");
 		sb.append(appId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -93,6 +91,8 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		sb.append(iconURL);
 		sb.append(", version=");
 		sb.append(version);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,7 +110,6 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		}
 
 		appImpl.setAppId(appId);
-		appImpl.setCompanyId(companyId);
 		appImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -171,6 +170,8 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 			appImpl.setVersion(version);
 		}
 
+		appImpl.setCompanyId(companyId);
+
 		appImpl.resetOriginalValues();
 
 		return appImpl;
@@ -180,7 +181,6 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		appId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -191,6 +191,7 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		category = objectInput.readUTF();
 		iconURL = objectInput.readUTF();
 		version = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -204,7 +205,6 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		}
 
 		objectOutput.writeLong(appId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -252,11 +252,12 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 		else {
 			objectOutput.writeUTF(version);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long appId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -267,4 +268,5 @@ public class AppCacheModel implements CacheModel<App>, Externalizable {
 	public String category;
 	public String iconURL;
 	public String version;
+	public long companyId;
 }

@@ -65,7 +65,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 			{ "tagStatsId", Types.BIGINT },
 			{ "tagId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
-			{ "assetCount", Types.INTEGER }
+			{ "assetCount", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -74,9 +75,10 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		TABLE_COLUMNS_MAP.put("tagId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("assetCount", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetTagStats (tagStatsId LONG not null primary key,tagId LONG,classNameId LONG,assetCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table AssetTagStats (tagStatsId LONG not null primary key,tagId LONG,classNameId LONG,assetCount INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table AssetTagStats";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetTagStats.assetCount DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetTagStats.assetCount DESC";
@@ -139,6 +141,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		attributes.put("tagId", getTagId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("assetCount", getAssetCount());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -170,6 +173,12 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 
 		if (assetCount != null) {
 			setAssetCount(assetCount);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -259,13 +268,23 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		_assetCount = assetCount;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			AssetTagStats.class.getName(), getPrimaryKey());
 	}
 
@@ -294,6 +313,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		assetTagStatsImpl.setTagId(getTagId());
 		assetTagStatsImpl.setClassNameId(getClassNameId());
 		assetTagStatsImpl.setAssetCount(getAssetCount());
+		assetTagStatsImpl.setCompanyId(getCompanyId());
 
 		assetTagStatsImpl.resetOriginalValues();
 
@@ -387,12 +407,14 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 
 		assetTagStatsCacheModel.assetCount = getAssetCount();
 
+		assetTagStatsCacheModel.companyId = getCompanyId();
+
 		return assetTagStatsCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{tagStatsId=");
 		sb.append(getTagStatsId());
@@ -402,6 +424,8 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 		sb.append(getClassNameId());
 		sb.append(", assetCount=");
 		sb.append(getAssetCount());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -409,7 +433,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.asset.model.AssetTagStats");
@@ -431,6 +455,10 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 			"<column><column-name>assetCount</column-name><column-value><![CDATA[");
 		sb.append(getAssetCount());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -449,6 +477,7 @@ public class AssetTagStatsModelImpl extends BaseModelImpl<AssetTagStats>
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
 	private int _assetCount;
+	private long _companyId;
 	private long _columnBitmask;
 	private AssetTagStats _escapedModel;
 }

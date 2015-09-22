@@ -36,7 +36,6 @@ public class RatingsEntrySoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setEntryId(model.getEntryId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -45,6 +44,7 @@ public class RatingsEntrySoap implements Serializable {
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setScore(model.getScore());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -113,14 +113,6 @@ public class RatingsEntrySoap implements Serializable {
 		_entryId = entryId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -185,9 +177,16 @@ public class RatingsEntrySoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _entryId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -196,4 +195,5 @@ public class RatingsEntrySoap implements Serializable {
 	private long _classPK;
 	private double _score;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

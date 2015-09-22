@@ -448,6 +448,62 @@ public class GroupUtil {
 	}
 
 	/**
+	* Returns the group where liveGroupId = &#63; or throws a {@link NoSuchGroupException} if it could not be found.
+	*
+	* @param liveGroupId the live group ID
+	* @return the matching group
+	* @throws NoSuchGroupException if a matching group could not be found
+	*/
+	public static Group findByLiveGroupId(long liveGroupId)
+		throws com.liferay.portal.NoSuchGroupException {
+		return getPersistence().findByLiveGroupId(liveGroupId);
+	}
+
+	/**
+	* Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param liveGroupId the live group ID
+	* @return the matching group, or <code>null</code> if a matching group could not be found
+	*/
+	public static Group fetchByLiveGroupId(long liveGroupId) {
+		return getPersistence().fetchByLiveGroupId(liveGroupId);
+	}
+
+	/**
+	* Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param liveGroupId the live group ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching group, or <code>null</code> if a matching group could not be found
+	*/
+	public static Group fetchByLiveGroupId(long liveGroupId,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByLiveGroupId(liveGroupId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the group where liveGroupId = &#63; from the database.
+	*
+	* @param liveGroupId the live group ID
+	* @return the group that was removed
+	*/
+	public static Group removeByLiveGroupId(long liveGroupId)
+		throws com.liferay.portal.NoSuchGroupException {
+		return getPersistence().removeByLiveGroupId(liveGroupId);
+	}
+
+	/**
+	* Returns the number of groups where liveGroupId = &#63;.
+	*
+	* @param liveGroupId the live group ID
+	* @return the number of matching groups
+	*/
+	public static int countByLiveGroupId(long liveGroupId) {
+		return getPersistence().countByLiveGroupId(liveGroupId);
+	}
+
+	/**
 	* Returns all the groups where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -585,59 +641,147 @@ public class GroupUtil {
 	}
 
 	/**
-	* Returns the group where liveGroupId = &#63; or throws a {@link NoSuchGroupException} if it could not be found.
+	* Returns all the groups where type = &#63; and active = &#63;.
 	*
-	* @param liveGroupId the live group ID
-	* @return the matching group
+	* @param type the type
+	* @param active the active
+	* @return the matching groups
+	*/
+	public static List<Group> findByT_A(int type, boolean active) {
+		return getPersistence().findByT_A(type, active);
+	}
+
+	/**
+	* Returns a range of all the groups where type = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param type the type
+	* @param active the active
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @return the range of matching groups
+	*/
+	public static List<Group> findByT_A(int type, boolean active, int start,
+		int end) {
+		return getPersistence().findByT_A(type, active, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the groups where type = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param type the type
+	* @param active the active
+	* @param start the lower bound of the range of groups
+	* @param end the upper bound of the range of groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching groups
+	*/
+	public static List<Group> findByT_A(int type, boolean active, int start,
+		int end, OrderByComparator<Group> orderByComparator) {
+		return getPersistence()
+				   .findByT_A(type, active, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first group in the ordered set where type = &#63; and active = &#63;.
+	*
+	* @param type the type
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group
 	* @throws NoSuchGroupException if a matching group could not be found
 	*/
-	public static Group findByLiveGroupId(long liveGroupId)
+	public static Group findByT_A_First(int type, boolean active,
+		OrderByComparator<Group> orderByComparator)
 		throws com.liferay.portal.NoSuchGroupException {
-		return getPersistence().findByLiveGroupId(liveGroupId);
+		return getPersistence().findByT_A_First(type, active, orderByComparator);
 	}
 
 	/**
-	* Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the first group in the ordered set where type = &#63; and active = &#63;.
 	*
-	* @param liveGroupId the live group ID
-	* @return the matching group, or <code>null</code> if a matching group could not be found
+	* @param type the type
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching group, or <code>null</code> if a matching group could not be found
 	*/
-	public static Group fetchByLiveGroupId(long liveGroupId) {
-		return getPersistence().fetchByLiveGroupId(liveGroupId);
+	public static Group fetchByT_A_First(int type, boolean active,
+		OrderByComparator<Group> orderByComparator) {
+		return getPersistence().fetchByT_A_First(type, active, orderByComparator);
 	}
 
 	/**
-	* Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the last group in the ordered set where type = &#63; and active = &#63;.
 	*
-	* @param liveGroupId the live group ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching group, or <code>null</code> if a matching group could not be found
+	* @param type the type
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group
+	* @throws NoSuchGroupException if a matching group could not be found
 	*/
-	public static Group fetchByLiveGroupId(long liveGroupId,
-		boolean retrieveFromCache) {
+	public static Group findByT_A_Last(int type, boolean active,
+		OrderByComparator<Group> orderByComparator)
+		throws com.liferay.portal.NoSuchGroupException {
+		return getPersistence().findByT_A_Last(type, active, orderByComparator);
+	}
+
+	/**
+	* Returns the last group in the ordered set where type = &#63; and active = &#63;.
+	*
+	* @param type the type
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching group, or <code>null</code> if a matching group could not be found
+	*/
+	public static Group fetchByT_A_Last(int type, boolean active,
+		OrderByComparator<Group> orderByComparator) {
+		return getPersistence().fetchByT_A_Last(type, active, orderByComparator);
+	}
+
+	/**
+	* Returns the groups before and after the current group in the ordered set where type = &#63; and active = &#63;.
+	*
+	* @param groupId the primary key of the current group
+	* @param type the type
+	* @param active the active
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next group
+	* @throws NoSuchGroupException if a group with the primary key could not be found
+	*/
+	public static Group[] findByT_A_PrevAndNext(long groupId, int type,
+		boolean active, OrderByComparator<Group> orderByComparator)
+		throws com.liferay.portal.NoSuchGroupException {
 		return getPersistence()
-				   .fetchByLiveGroupId(liveGroupId, retrieveFromCache);
+				   .findByT_A_PrevAndNext(groupId, type, active,
+			orderByComparator);
 	}
 
 	/**
-	* Removes the group where liveGroupId = &#63; from the database.
+	* Removes all the groups where type = &#63; and active = &#63; from the database.
 	*
-	* @param liveGroupId the live group ID
-	* @return the group that was removed
+	* @param type the type
+	* @param active the active
 	*/
-	public static Group removeByLiveGroupId(long liveGroupId)
-		throws com.liferay.portal.NoSuchGroupException {
-		return getPersistence().removeByLiveGroupId(liveGroupId);
+	public static void removeByT_A(int type, boolean active) {
+		getPersistence().removeByT_A(type, active);
 	}
 
 	/**
-	* Returns the number of groups where liveGroupId = &#63;.
+	* Returns the number of groups where type = &#63; and active = &#63;.
 	*
-	* @param liveGroupId the live group ID
+	* @param type the type
+	* @param active the active
 	* @return the number of matching groups
 	*/
-	public static int countByLiveGroupId(long liveGroupId) {
-		return getPersistence().countByLiveGroupId(liveGroupId);
+	public static int countByT_A(int type, boolean active) {
+		return getPersistence().countByT_A(type, active);
 	}
 
 	/**
@@ -1206,150 +1350,6 @@ public class GroupUtil {
 	*/
 	public static int countByC_S(long companyId, boolean site) {
 		return getPersistence().countByC_S(companyId, site);
-	}
-
-	/**
-	* Returns all the groups where type = &#63; and active = &#63;.
-	*
-	* @param type the type
-	* @param active the active
-	* @return the matching groups
-	*/
-	public static List<Group> findByT_A(int type, boolean active) {
-		return getPersistence().findByT_A(type, active);
-	}
-
-	/**
-	* Returns a range of all the groups where type = &#63; and active = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param type the type
-	* @param active the active
-	* @param start the lower bound of the range of groups
-	* @param end the upper bound of the range of groups (not inclusive)
-	* @return the range of matching groups
-	*/
-	public static List<Group> findByT_A(int type, boolean active, int start,
-		int end) {
-		return getPersistence().findByT_A(type, active, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the groups where type = &#63; and active = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link GroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param type the type
-	* @param active the active
-	* @param start the lower bound of the range of groups
-	* @param end the upper bound of the range of groups (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching groups
-	*/
-	public static List<Group> findByT_A(int type, boolean active, int start,
-		int end, OrderByComparator<Group> orderByComparator) {
-		return getPersistence()
-				   .findByT_A(type, active, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first group in the ordered set where type = &#63; and active = &#63;.
-	*
-	* @param type the type
-	* @param active the active
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching group
-	* @throws NoSuchGroupException if a matching group could not be found
-	*/
-	public static Group findByT_A_First(int type, boolean active,
-		OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.NoSuchGroupException {
-		return getPersistence().findByT_A_First(type, active, orderByComparator);
-	}
-
-	/**
-	* Returns the first group in the ordered set where type = &#63; and active = &#63;.
-	*
-	* @param type the type
-	* @param active the active
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching group, or <code>null</code> if a matching group could not be found
-	*/
-	public static Group fetchByT_A_First(int type, boolean active,
-		OrderByComparator<Group> orderByComparator) {
-		return getPersistence().fetchByT_A_First(type, active, orderByComparator);
-	}
-
-	/**
-	* Returns the last group in the ordered set where type = &#63; and active = &#63;.
-	*
-	* @param type the type
-	* @param active the active
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching group
-	* @throws NoSuchGroupException if a matching group could not be found
-	*/
-	public static Group findByT_A_Last(int type, boolean active,
-		OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.NoSuchGroupException {
-		return getPersistence().findByT_A_Last(type, active, orderByComparator);
-	}
-
-	/**
-	* Returns the last group in the ordered set where type = &#63; and active = &#63;.
-	*
-	* @param type the type
-	* @param active the active
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching group, or <code>null</code> if a matching group could not be found
-	*/
-	public static Group fetchByT_A_Last(int type, boolean active,
-		OrderByComparator<Group> orderByComparator) {
-		return getPersistence().fetchByT_A_Last(type, active, orderByComparator);
-	}
-
-	/**
-	* Returns the groups before and after the current group in the ordered set where type = &#63; and active = &#63;.
-	*
-	* @param groupId the primary key of the current group
-	* @param type the type
-	* @param active the active
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next group
-	* @throws NoSuchGroupException if a group with the primary key could not be found
-	*/
-	public static Group[] findByT_A_PrevAndNext(long groupId, int type,
-		boolean active, OrderByComparator<Group> orderByComparator)
-		throws com.liferay.portal.NoSuchGroupException {
-		return getPersistence()
-				   .findByT_A_PrevAndNext(groupId, type, active,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the groups where type = &#63; and active = &#63; from the database.
-	*
-	* @param type the type
-	* @param active the active
-	*/
-	public static void removeByT_A(int type, boolean active) {
-		getPersistence().removeByT_A(type, active);
-	}
-
-	/**
-	* Returns the number of groups where type = &#63; and active = &#63;.
-	*
-	* @param type the type
-	* @param active the active
-	* @return the number of matching groups
-	*/
-	public static int countByT_A(int type, boolean active) {
-		return getPersistence().countByT_A(type, active);
 	}
 
 	/**

@@ -37,7 +37,6 @@ public class DDMStructureSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setStructureId(model.getStructureId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setVersionUserId(model.getVersionUserId());
@@ -54,6 +53,7 @@ public class DDMStructureSoap implements Serializable {
 		soapModel.setStorageType(model.getStorageType());
 		soapModel.setType(model.getType());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -128,14 +128,6 @@ public class DDMStructureSoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -266,10 +258,17 @@ public class DDMStructureSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private String _uuid;
 	private long _structureId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private long _versionUserId;
@@ -286,4 +285,5 @@ public class DDMStructureSoap implements Serializable {
 	private String _storageType;
 	private int _type;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

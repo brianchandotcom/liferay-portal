@@ -37,7 +37,6 @@ public class UserGroupSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setUserGroupId(model.getUserGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -47,6 +46,7 @@ public class UserGroupSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setAddedByLDAPImport(model.getAddedByLDAPImport());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -121,14 +121,6 @@ public class UserGroupSoap implements Serializable {
 
 	public void setUserGroupId(long userGroupId) {
 		_userGroupId = userGroupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -207,10 +199,17 @@ public class UserGroupSoap implements Serializable {
 		_lastPublishDate = lastPublishDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _userGroupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -220,4 +219,5 @@ public class UserGroupSoap implements Serializable {
 	private String _description;
 	private boolean _addedByLDAPImport;
 	private Date _lastPublishDate;
+	private long _companyId;
 }

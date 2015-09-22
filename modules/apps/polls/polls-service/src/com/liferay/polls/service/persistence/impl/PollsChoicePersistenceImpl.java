@@ -22,6 +22,7 @@ import com.liferay.polls.model.impl.PollsChoiceImpl;
 import com.liferay.polls.model.impl.PollsChoiceModelImpl;
 import com.liferay.polls.service.persistence.PollsChoicePersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -41,6 +42,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -2364,6 +2366,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 		pollsChoice.setUuid(uuid);
 
+		pollsChoice.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return pollsChoice;
 	}
 
@@ -2598,7 +2602,6 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		pollsChoiceImpl.setUuid(pollsChoice.getUuid());
 		pollsChoiceImpl.setChoiceId(pollsChoice.getChoiceId());
 		pollsChoiceImpl.setGroupId(pollsChoice.getGroupId());
-		pollsChoiceImpl.setCompanyId(pollsChoice.getCompanyId());
 		pollsChoiceImpl.setUserId(pollsChoice.getUserId());
 		pollsChoiceImpl.setUserName(pollsChoice.getUserName());
 		pollsChoiceImpl.setCreateDate(pollsChoice.getCreateDate());
@@ -2607,6 +2610,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		pollsChoiceImpl.setName(pollsChoice.getName());
 		pollsChoiceImpl.setDescription(pollsChoice.getDescription());
 		pollsChoiceImpl.setLastPublishDate(pollsChoice.getLastPublishDate());
+		pollsChoiceImpl.setCompanyId(pollsChoice.getCompanyId());
 
 		return pollsChoiceImpl;
 	}
@@ -2987,6 +2991,8 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_POLLSCHOICE = "SELECT pollsChoice FROM PollsChoice pollsChoice";
 	private static final String _SQL_SELECT_POLLSCHOICE_WHERE_PKS_IN = "SELECT pollsChoice FROM PollsChoice pollsChoice WHERE choiceId IN (";
 	private static final String _SQL_SELECT_POLLSCHOICE_WHERE = "SELECT pollsChoice FROM PollsChoice pollsChoice WHERE ";

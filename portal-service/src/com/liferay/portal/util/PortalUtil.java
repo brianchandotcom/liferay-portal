@@ -980,12 +980,6 @@ public class PortalUtil {
 		return getPortal().getFirstPageLayoutTypes(request);
 	}
 
-	public static Portlet getFirstSiteAdministrationPortlet(
-		ThemeDisplay themeDisplay) {
-
-		return getPortal().getFirstSiteAdministrationPortlet(themeDisplay);
-	}
-
 	public static String getFullName(
 		String firstName, String middleName, String lastName) {
 

@@ -36,7 +36,6 @@ public class SCProductEntrySoap implements Serializable {
 
 		soapModel.setProductEntryId(model.getProductEntryId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -50,6 +49,7 @@ public class SCProductEntrySoap implements Serializable {
 		soapModel.setAuthor(model.getAuthor());
 		soapModel.setRepoGroupId(model.getRepoGroupId());
 		soapModel.setRepoArtifactId(model.getRepoArtifactId());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -116,14 +116,6 @@ public class SCProductEntrySoap implements Serializable {
 
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	public long getUserId() {
@@ -230,9 +222,16 @@ public class SCProductEntrySoap implements Serializable {
 		_repoArtifactId = repoArtifactId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _productEntryId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -246,4 +245,5 @@ public class SCProductEntrySoap implements Serializable {
 	private String _author;
 	private String _repoGroupId;
 	private String _repoArtifactId;
+	private long _companyId;
 }

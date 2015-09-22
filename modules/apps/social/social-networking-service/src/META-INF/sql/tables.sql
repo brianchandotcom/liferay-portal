@@ -1,6 +1,5 @@
 create table MeetupsEntry (
 	meetupsEntryId LONG not null primary key,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -12,28 +11,29 @@ create table MeetupsEntry (
 	totalAttendees INTEGER,
 	maxAttendees INTEGER,
 	price DOUBLE,
-	thumbnailId LONG
+	thumbnailId LONG,
+	companyId LONG
 );
 
 create table MeetupsRegistration (
 	meetupsRegistrationId LONG not null primary key,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	meetupsEntryId LONG,
 	status INTEGER,
-	comments VARCHAR(75) null
+	comments VARCHAR(75) null,
+	companyId LONG
 );
 
 create table WallEntry (
 	wallEntryId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	comments VARCHAR(75) null
+	comments VARCHAR(75) null,
+	companyId LONG
 );

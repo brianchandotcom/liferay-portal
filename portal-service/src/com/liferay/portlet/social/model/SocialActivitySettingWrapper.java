@@ -55,11 +55,11 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 
 		attributes.put("activitySettingId", getActivitySettingId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("activityType", getActivityType());
 		attributes.put("name", getName());
 		attributes.put("value", getValue());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -76,12 +76,6 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -106,6 +100,12 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 
 		if (value != null) {
 			setValue(value);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

@@ -59,7 +59,6 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 		attributes.put("uuid", getUuid());
 		attributes.put("ruleGroupInstanceId", getRuleGroupInstanceId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -69,6 +68,7 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 		attributes.put("ruleGroupId", getRuleGroupId());
 		attributes.put("priority", getPriority());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -91,12 +91,6 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -151,6 +145,12 @@ public class MDRRuleGroupInstanceWrapper implements MDRRuleGroupInstance,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

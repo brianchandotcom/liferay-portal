@@ -87,8 +87,6 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		sb.append(uuid);
 		sb.append(", passwordPolicyId=");
 		sb.append(passwordPolicyId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -153,6 +151,8 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		sb.append(resetTicketMaxAge);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -172,7 +172,6 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		}
 
 		passwordPolicyImpl.setPasswordPolicyId(passwordPolicyId);
-		passwordPolicyImpl.setCompanyId(companyId);
 		passwordPolicyImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -251,6 +250,8 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 			passwordPolicyImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		passwordPolicyImpl.setCompanyId(companyId);
+
 		passwordPolicyImpl.resetOriginalValues();
 
 		return passwordPolicyImpl;
@@ -261,7 +262,6 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		passwordPolicyId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -294,6 +294,7 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		resetFailureCount = objectInput.readLong();
 		resetTicketMaxAge = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -309,7 +310,6 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		}
 
 		objectOutput.writeLong(passwordPolicyId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -369,12 +369,12 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 		objectOutput.writeLong(resetFailureCount);
 		objectOutput.writeLong(resetTicketMaxAge);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long passwordPolicyId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -407,4 +407,5 @@ public class PasswordPolicyCacheModel implements CacheModel<PasswordPolicy>,
 	public long resetFailureCount;
 	public long resetTicketMaxAge;
 	public long lastPublishDate;
+	public long companyId;
 }

@@ -58,6 +58,7 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 		attributes.put("DDMStructureId", getDDMStructureId());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("fileVersionId", getFileVersionId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -99,6 +100,12 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 		if (fileVersionId != null) {
 			setFileVersionId(fileVersionId);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -110,6 +117,16 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	public int compareTo(
 		com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata dlFileEntryMetadata) {
 		return _dlFileEntryMetadata.compareTo(dlFileEntryMetadata);
+	}
+
+	/**
+	* Returns the company ID of this document library file entry metadata.
+	*
+	* @return the company ID of this document library file entry metadata
+	*/
+	@Override
+	public long getCompanyId() {
+		return _dlFileEntryMetadata.getCompanyId();
 	}
 
 	/**
@@ -226,6 +243,16 @@ public class DLFileEntryMetadataWrapper implements DLFileEntryMetadata,
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_dlFileEntryMetadata.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this document library file entry metadata.
+	*
+	* @param companyId the company ID of this document library file entry metadata
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_dlFileEntryMetadata.setCompanyId(companyId);
 	}
 
 	/**

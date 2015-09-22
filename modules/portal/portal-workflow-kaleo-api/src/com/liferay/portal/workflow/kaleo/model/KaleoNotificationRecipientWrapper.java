@@ -58,7 +58,6 @@ public class KaleoNotificationRecipientWrapper
 		attributes.put("kaleoNotificationRecipientId",
 			getKaleoNotificationRecipientId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -74,6 +73,7 @@ public class KaleoNotificationRecipientWrapper
 		attributes.put("address", getAddress());
 		attributes.put("notificationReceptionType",
 			getNotificationReceptionType());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -91,12 +91,6 @@ public class KaleoNotificationRecipientWrapper
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -184,6 +178,12 @@ public class KaleoNotificationRecipientWrapper
 
 		if (notificationReceptionType != null) {
 			setNotificationReceptionType(notificationReceptionType);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

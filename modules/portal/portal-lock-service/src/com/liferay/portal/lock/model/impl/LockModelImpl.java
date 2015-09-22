@@ -66,7 +66,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			{ "mvccVersion", Types.BIGINT },
 			{ "uuid_", Types.VARCHAR },
 			{ "lockId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -74,7 +73,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			{ "key_", Types.VARCHAR },
 			{ "owner", Types.VARCHAR },
 			{ "inheritable", Types.BOOLEAN },
-			{ "expirationDate", Types.TIMESTAMP }
+			{ "expirationDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -82,7 +82,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		TABLE_COLUMNS_MAP.put("mvccVersion", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("lockId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -91,9 +90,10 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		TABLE_COLUMNS_MAP.put("owner", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("inheritable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table Lock_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,lockId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,className VARCHAR(75) null,key_ VARCHAR(200) null,owner VARCHAR(1024) null,inheritable BOOLEAN,expirationDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Lock_ (mvccVersion LONG default 0,uuid_ VARCHAR(75) null,lockId LONG not null primary key,userId LONG,userName VARCHAR(75) null,createDate DATE null,className VARCHAR(75) null,key_ VARCHAR(200) null,owner VARCHAR(1024) null,inheritable BOOLEAN,expirationDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Lock_";
 	public static final String ORDER_BY_JPQL = " ORDER BY lock.lockId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Lock_.lockId ASC";
@@ -158,7 +158,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("lockId", getLockId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -167,6 +166,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		attributes.put("owner", getOwner());
 		attributes.put("inheritable", getInheritable());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -192,12 +192,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 		if (lockId != null) {
 			setLockId(lockId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -247,6 +241,12 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -290,28 +290,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	@Override
 	public void setLockId(long lockId) {
 		_lockId = lockId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -465,6 +443,28 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		return _originalExpirationDate;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -499,7 +499,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		lockImpl.setMvccVersion(getMvccVersion());
 		lockImpl.setUuid(getUuid());
 		lockImpl.setLockId(getLockId());
-		lockImpl.setCompanyId(getCompanyId());
 		lockImpl.setUserId(getUserId());
 		lockImpl.setUserName(getUserName());
 		lockImpl.setCreateDate(getCreateDate());
@@ -508,6 +507,7 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		lockImpl.setOwner(getOwner());
 		lockImpl.setInheritable(getInheritable());
 		lockImpl.setExpirationDate(getExpirationDate());
+		lockImpl.setCompanyId(getCompanyId());
 
 		lockImpl.resetOriginalValues();
 
@@ -572,15 +572,15 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 
 		lockModelImpl._originalUuid = lockModelImpl._uuid;
 
-		lockModelImpl._originalCompanyId = lockModelImpl._companyId;
-
-		lockModelImpl._setOriginalCompanyId = false;
-
 		lockModelImpl._originalClassName = lockModelImpl._className;
 
 		lockModelImpl._originalKey = lockModelImpl._key;
 
 		lockModelImpl._originalExpirationDate = lockModelImpl._expirationDate;
+
+		lockModelImpl._originalCompanyId = lockModelImpl._companyId;
+
+		lockModelImpl._setOriginalCompanyId = false;
 
 		lockModelImpl._columnBitmask = 0;
 	}
@@ -600,8 +600,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		}
 
 		lockCacheModel.lockId = getLockId();
-
-		lockCacheModel.companyId = getCompanyId();
 
 		lockCacheModel.userId = getUserId();
 
@@ -657,6 +655,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			lockCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
+		lockCacheModel.companyId = getCompanyId();
+
 		return lockCacheModel;
 	}
 
@@ -670,8 +670,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		sb.append(getUuid());
 		sb.append(", lockId=");
 		sb.append(getLockId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -688,6 +686,8 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		sb.append(getInheritable());
 		sb.append(", expirationDate=");
 		sb.append(getExpirationDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -712,10 +712,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 		sb.append(
 			"<column><column-name>lockId</column-name><column-value><![CDATA[");
 		sb.append(getLockId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -749,6 +745,10 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 			"<column><column-name>expirationDate</column-name><column-value><![CDATA[");
 		sb.append(getExpirationDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -763,9 +763,6 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private String _uuid;
 	private String _originalUuid;
 	private long _lockId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -777,6 +774,9 @@ public class LockModelImpl extends BaseModelImpl<Lock> implements LockModel {
 	private boolean _inheritable;
 	private Date _expirationDate;
 	private Date _originalExpirationDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Lock _escapedModel;
 }

@@ -87,8 +87,6 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 		sb.append(uuid);
 		sb.append(", addressId=");
 		sb.append(addressId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -123,6 +121,8 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 		sb.append(primary);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -142,7 +142,6 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 		}
 
 		addressImpl.setAddressId(addressId);
-		addressImpl.setCompanyId(companyId);
 		addressImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -217,6 +216,8 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 			addressImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		addressImpl.setCompanyId(companyId);
+
 		addressImpl.resetOriginalValues();
 
 		return addressImpl;
@@ -227,7 +228,6 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		addressId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -245,6 +245,7 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 		mailing = objectInput.readBoolean();
 		primary = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -260,7 +261,6 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 		}
 
 		objectOutput.writeLong(addressId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -316,12 +316,12 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 		objectOutput.writeBoolean(mailing);
 		objectOutput.writeBoolean(primary);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long addressId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -339,4 +339,5 @@ public class AddressCacheModel implements CacheModel<Address>, Externalizable,
 	public boolean mailing;
 	public boolean primary;
 	public long lastPublishDate;
+	public long companyId;
 }

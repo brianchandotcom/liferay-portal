@@ -117,8 +117,6 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		newUserNotificationDelivery.setMvccVersion(RandomTestUtil.nextLong());
 
-		newUserNotificationDelivery.setCompanyId(RandomTestUtil.nextLong());
-
 		newUserNotificationDelivery.setUserId(RandomTestUtil.nextLong());
 
 		newUserNotificationDelivery.setPortletId(RandomTestUtil.randomString());
@@ -131,6 +129,8 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		newUserNotificationDelivery.setDeliver(RandomTestUtil.randomBoolean());
 
+		newUserNotificationDelivery.setCompanyId(RandomTestUtil.nextLong());
+
 		_userNotificationDeliveries.add(_persistence.update(
 				newUserNotificationDelivery));
 
@@ -140,8 +140,6 @@ public class UserNotificationDeliveryPersistenceTest {
 			newUserNotificationDelivery.getMvccVersion());
 		Assert.assertEquals(existingUserNotificationDelivery.getUserNotificationDeliveryId(),
 			newUserNotificationDelivery.getUserNotificationDeliveryId());
-		Assert.assertEquals(existingUserNotificationDelivery.getCompanyId(),
-			newUserNotificationDelivery.getCompanyId());
 		Assert.assertEquals(existingUserNotificationDelivery.getUserId(),
 			newUserNotificationDelivery.getUserId());
 		Assert.assertEquals(existingUserNotificationDelivery.getPortletId(),
@@ -154,6 +152,8 @@ public class UserNotificationDeliveryPersistenceTest {
 			newUserNotificationDelivery.getDeliveryType());
 		Assert.assertEquals(existingUserNotificationDelivery.getDeliver(),
 			newUserNotificationDelivery.getDeliver());
+		Assert.assertEquals(existingUserNotificationDelivery.getCompanyId(),
+			newUserNotificationDelivery.getCompanyId());
 	}
 
 	@Test
@@ -199,10 +199,9 @@ public class UserNotificationDeliveryPersistenceTest {
 
 	protected OrderByComparator<UserNotificationDelivery> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserNotificationDelivery",
-			"mvccVersion", true, "userNotificationDeliveryId", true,
-			"companyId", true, "userId", true, "portletId", true,
-			"classNameId", true, "notificationType", true, "deliveryType",
-			true, "deliver", true);
+			"mvccVersion", true, "userNotificationDeliveryId", true, "userId",
+			true, "portletId", true, "classNameId", true, "notificationType",
+			true, "deliveryType", true, "deliver", true, "companyId", true);
 	}
 
 	@Test
@@ -451,8 +450,6 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		userNotificationDelivery.setMvccVersion(RandomTestUtil.nextLong());
 
-		userNotificationDelivery.setCompanyId(RandomTestUtil.nextLong());
-
 		userNotificationDelivery.setUserId(RandomTestUtil.nextLong());
 
 		userNotificationDelivery.setPortletId(RandomTestUtil.randomString());
@@ -464,6 +461,8 @@ public class UserNotificationDeliveryPersistenceTest {
 		userNotificationDelivery.setDeliveryType(RandomTestUtil.nextInt());
 
 		userNotificationDelivery.setDeliver(RandomTestUtil.randomBoolean());
+
+		userNotificationDelivery.setCompanyId(RandomTestUtil.nextLong());
 
 		_userNotificationDeliveries.add(_persistence.update(
 				userNotificationDelivery));

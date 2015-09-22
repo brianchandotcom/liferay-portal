@@ -55,13 +55,13 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 
 		attributes.put("statsUserId", getStatsUserId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("entryCount", getEntryCount());
 		attributes.put("lastPostDate", getLastPostDate());
 		attributes.put("ratingsTotalEntries", getRatingsTotalEntries());
 		attributes.put("ratingsTotalScore", getRatingsTotalScore());
 		attributes.put("ratingsAverageScore", getRatingsAverageScore());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -78,12 +78,6 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -122,6 +116,12 @@ public class BlogsStatsUserWrapper implements BlogsStatsUser,
 
 		if (ratingsAverageScore != null) {
 			setRatingsAverageScore(ratingsAverageScore);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

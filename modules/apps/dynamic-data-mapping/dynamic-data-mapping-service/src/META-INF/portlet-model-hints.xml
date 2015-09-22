@@ -5,7 +5,6 @@
 		<field name="uuid" type="String" />
 		<field name="contentId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -19,6 +18,7 @@
 		<field name="data" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStorageLink">
 		<field name="uuid" type="String" />
@@ -26,12 +26,12 @@
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="structureId" type="long" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStructure">
 		<field name="uuid" type="String" />
 		<field name="structureId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="versionUserId" type="long" />
@@ -57,12 +57,12 @@
 		<field name="storageType" type="String" />
 		<field name="type" type="int" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStructureLayout">
 		<field name="uuid" type="String" />
 		<field name="structureLayoutId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -71,17 +71,18 @@
 		<field name="definition" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStructureLink">
 		<field name="structureLinkId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="structureId" type="long" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStructureVersion">
 		<field name="structureVersionId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -103,12 +104,12 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMTemplate">
 		<field name="uuid" type="String" />
 		<field name="templateId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="versionUserId" type="long" />
@@ -144,17 +145,18 @@
 		<field name="smallImageId" type="long" />
 		<field name="smallImageURL" type="String" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMTemplateLink">
 		<field name="templateLinkId" type="long" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="templateId" type="long" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMTemplateVersion">
 		<field name="templateVersionId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -180,5 +182,6 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

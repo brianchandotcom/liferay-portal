@@ -71,8 +71,6 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 		sb.append(fileRankId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", createDate=");
@@ -81,6 +79,8 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 		sb.append(fileEntryId);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -92,7 +92,6 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 
 		dlFileRankImpl.setFileRankId(fileRankId);
 		dlFileRankImpl.setGroupId(groupId);
-		dlFileRankImpl.setCompanyId(companyId);
 		dlFileRankImpl.setUserId(userId);
 
 		if (createDate == Long.MIN_VALUE) {
@@ -104,6 +103,7 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 
 		dlFileRankImpl.setFileEntryId(fileEntryId);
 		dlFileRankImpl.setActive(active);
+		dlFileRankImpl.setCompanyId(companyId);
 
 		dlFileRankImpl.resetOriginalValues();
 
@@ -114,11 +114,11 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		fileRankId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		fileEntryId = objectInput.readLong();
 		active = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -126,18 +126,18 @@ public class DLFileRankCacheModel implements CacheModel<DLFileRank>,
 		throws IOException {
 		objectOutput.writeLong(fileRankId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(fileEntryId);
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long fileRankId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long createDate;
 	public long fileEntryId;
 	public boolean active;
+	public long companyId;
 }

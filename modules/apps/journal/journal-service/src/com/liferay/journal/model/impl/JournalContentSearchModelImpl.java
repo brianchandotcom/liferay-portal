@@ -63,25 +63,25 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "contentSearchId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "privateLayout", Types.BOOLEAN },
 			{ "layoutId", Types.BIGINT },
 			{ "portletId", Types.VARCHAR },
-			{ "articleId", Types.VARCHAR }
+			{ "articleId", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("contentSearchId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("privateLayout", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("layoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("portletId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("articleId", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalContentSearch (contentSearchId LONG not null primary key,groupId LONG,companyId LONG,privateLayout BOOLEAN,layoutId LONG,portletId VARCHAR(200) null,articleId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalContentSearch (contentSearchId LONG not null primary key,groupId LONG,privateLayout BOOLEAN,layoutId LONG,portletId VARCHAR(200) null,articleId VARCHAR(75) null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table JournalContentSearch";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalContentSearch.contentSearchId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalContentSearch.contentSearchId ASC";
@@ -145,11 +145,11 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 		attributes.put("contentSearchId", getContentSearchId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("layoutId", getLayoutId());
 		attributes.put("portletId", getPortletId());
 		attributes.put("articleId", getArticleId());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -169,12 +169,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Boolean privateLayout = (Boolean)attributes.get("privateLayout");
@@ -199,6 +193,12 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 		if (articleId != null) {
 			setArticleId(articleId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -232,16 +232,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -343,6 +333,16 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		return GetterUtil.getString(_originalArticleId);
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -376,11 +376,11 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 		journalContentSearchImpl.setContentSearchId(getContentSearchId());
 		journalContentSearchImpl.setGroupId(getGroupId());
-		journalContentSearchImpl.setCompanyId(getCompanyId());
 		journalContentSearchImpl.setPrivateLayout(getPrivateLayout());
 		journalContentSearchImpl.setLayoutId(getLayoutId());
 		journalContentSearchImpl.setPortletId(getPortletId());
 		journalContentSearchImpl.setArticleId(getArticleId());
+		journalContentSearchImpl.setCompanyId(getCompanyId());
 
 		journalContentSearchImpl.resetOriginalValues();
 
@@ -470,8 +470,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 
 		journalContentSearchCacheModel.groupId = getGroupId();
 
-		journalContentSearchCacheModel.companyId = getCompanyId();
-
 		journalContentSearchCacheModel.privateLayout = getPrivateLayout();
 
 		journalContentSearchCacheModel.layoutId = getLayoutId();
@@ -492,6 +490,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 			journalContentSearchCacheModel.articleId = null;
 		}
 
+		journalContentSearchCacheModel.companyId = getCompanyId();
+
 		return journalContentSearchCacheModel;
 	}
 
@@ -503,8 +503,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		sb.append(getContentSearchId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", privateLayout=");
 		sb.append(getPrivateLayout());
 		sb.append(", layoutId=");
@@ -513,6 +511,8 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		sb.append(getPortletId());
 		sb.append(", articleId=");
 		sb.append(getArticleId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -535,10 +535,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>privateLayout</column-name><column-value><![CDATA[");
 		sb.append(getPrivateLayout());
 		sb.append("]]></column-value></column>");
@@ -554,6 +550,10 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 			"<column><column-name>articleId</column-name><column-value><![CDATA[");
 		sb.append(getArticleId());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -568,7 +568,6 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private boolean _privateLayout;
 	private boolean _originalPrivateLayout;
 	private boolean _setOriginalPrivateLayout;
@@ -579,6 +578,7 @@ public class JournalContentSearchModelImpl extends BaseModelImpl<JournalContentS
 	private String _originalPortletId;
 	private String _articleId;
 	private String _originalArticleId;
+	private long _companyId;
 	private long _columnBitmask;
 	private JournalContentSearch _escapedModel;
 }

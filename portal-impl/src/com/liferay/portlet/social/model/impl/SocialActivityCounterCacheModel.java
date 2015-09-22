@@ -70,8 +70,6 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 		sb.append(activityCounterId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -92,6 +90,8 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 		sb.append(endPeriod);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -103,7 +103,6 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 
 		socialActivityCounterImpl.setActivityCounterId(activityCounterId);
 		socialActivityCounterImpl.setGroupId(groupId);
-		socialActivityCounterImpl.setCompanyId(companyId);
 		socialActivityCounterImpl.setClassNameId(classNameId);
 		socialActivityCounterImpl.setClassPK(classPK);
 
@@ -121,6 +120,7 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 		socialActivityCounterImpl.setStartPeriod(startPeriod);
 		socialActivityCounterImpl.setEndPeriod(endPeriod);
 		socialActivityCounterImpl.setActive(active);
+		socialActivityCounterImpl.setCompanyId(companyId);
 
 		socialActivityCounterImpl.resetOriginalValues();
 
@@ -131,7 +131,6 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		activityCounterId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		name = objectInput.readUTF();
@@ -142,6 +141,7 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 		startPeriod = objectInput.readInt();
 		endPeriod = objectInput.readInt();
 		active = objectInput.readBoolean();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -149,7 +149,6 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 		throws IOException {
 		objectOutput.writeLong(activityCounterId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 
@@ -167,11 +166,11 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 		objectOutput.writeInt(startPeriod);
 		objectOutput.writeInt(endPeriod);
 		objectOutput.writeBoolean(active);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long activityCounterId;
 	public long groupId;
-	public long companyId;
 	public long classNameId;
 	public long classPK;
 	public String name;
@@ -182,4 +181,5 @@ public class SocialActivityCounterCacheModel implements CacheModel<SocialActivit
 	public int startPeriod;
 	public int endPeriod;
 	public boolean active;
+	public long companyId;
 }

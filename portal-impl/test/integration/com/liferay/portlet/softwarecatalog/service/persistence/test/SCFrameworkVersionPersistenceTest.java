@@ -116,8 +116,6 @@ public class SCFrameworkVersionPersistenceTest {
 
 		newSCFrameworkVersion.setGroupId(RandomTestUtil.nextLong());
 
-		newSCFrameworkVersion.setCompanyId(RandomTestUtil.nextLong());
-
 		newSCFrameworkVersion.setUserId(RandomTestUtil.nextLong());
 
 		newSCFrameworkVersion.setUserName(RandomTestUtil.randomString());
@@ -134,6 +132,8 @@ public class SCFrameworkVersionPersistenceTest {
 
 		newSCFrameworkVersion.setPriority(RandomTestUtil.nextInt());
 
+		newSCFrameworkVersion.setCompanyId(RandomTestUtil.nextLong());
+
 		_scFrameworkVersions.add(_persistence.update(newSCFrameworkVersion));
 
 		SCFrameworkVersion existingSCFrameworkVersion = _persistence.findByPrimaryKey(newSCFrameworkVersion.getPrimaryKey());
@@ -142,8 +142,6 @@ public class SCFrameworkVersionPersistenceTest {
 			newSCFrameworkVersion.getFrameworkVersionId());
 		Assert.assertEquals(existingSCFrameworkVersion.getGroupId(),
 			newSCFrameworkVersion.getGroupId());
-		Assert.assertEquals(existingSCFrameworkVersion.getCompanyId(),
-			newSCFrameworkVersion.getCompanyId());
 		Assert.assertEquals(existingSCFrameworkVersion.getUserId(),
 			newSCFrameworkVersion.getUserId());
 		Assert.assertEquals(existingSCFrameworkVersion.getUserName(),
@@ -162,6 +160,8 @@ public class SCFrameworkVersionPersistenceTest {
 			newSCFrameworkVersion.getActive());
 		Assert.assertEquals(existingSCFrameworkVersion.getPriority(),
 			newSCFrameworkVersion.getPriority());
+		Assert.assertEquals(existingSCFrameworkVersion.getCompanyId(),
+			newSCFrameworkVersion.getCompanyId());
 	}
 
 	@Test
@@ -216,10 +216,10 @@ public class SCFrameworkVersionPersistenceTest {
 
 	protected OrderByComparator<SCFrameworkVersion> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCFrameworkVersion",
-			"frameworkVersionId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "url", true, "active", true,
-			"priority", true);
+			"frameworkVersionId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true, "name",
+			true, "url", true, "active", true, "priority", true, "companyId",
+			true);
 	}
 
 	@Test
@@ -426,8 +426,6 @@ public class SCFrameworkVersionPersistenceTest {
 
 		scFrameworkVersion.setGroupId(RandomTestUtil.nextLong());
 
-		scFrameworkVersion.setCompanyId(RandomTestUtil.nextLong());
-
 		scFrameworkVersion.setUserId(RandomTestUtil.nextLong());
 
 		scFrameworkVersion.setUserName(RandomTestUtil.randomString());
@@ -443,6 +441,8 @@ public class SCFrameworkVersionPersistenceTest {
 		scFrameworkVersion.setActive(RandomTestUtil.randomBoolean());
 
 		scFrameworkVersion.setPriority(RandomTestUtil.nextInt());
+
+		scFrameworkVersion.setCompanyId(RandomTestUtil.nextLong());
 
 		_scFrameworkVersions.add(_persistence.update(scFrameworkVersion));
 

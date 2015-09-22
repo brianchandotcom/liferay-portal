@@ -56,7 +56,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("userId", getUserId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("defaultUser", getDefaultUser());
@@ -95,6 +94,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		attributes.put("emailAddressVerified", getEmailAddressVerified());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -117,12 +117,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 		if (userId != null) {
 			setUserId(userId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -356,6 +350,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 		if (status != null) {
 			setStatus(status);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

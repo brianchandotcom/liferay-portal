@@ -70,8 +70,6 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 		sb.append(activityLimitId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", classNameId=");
@@ -84,6 +82,8 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 		sb.append(activityCounterName);
 		sb.append(", value=");
 		sb.append(value);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -95,7 +95,6 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 
 		socialActivityLimitImpl.setActivityLimitId(activityLimitId);
 		socialActivityLimitImpl.setGroupId(groupId);
-		socialActivityLimitImpl.setCompanyId(companyId);
 		socialActivityLimitImpl.setUserId(userId);
 		socialActivityLimitImpl.setClassNameId(classNameId);
 		socialActivityLimitImpl.setClassPK(classPK);
@@ -115,6 +114,8 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 			socialActivityLimitImpl.setValue(value);
 		}
 
+		socialActivityLimitImpl.setCompanyId(companyId);
+
 		socialActivityLimitImpl.resetOriginalValues();
 
 		return socialActivityLimitImpl;
@@ -124,13 +125,13 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		activityLimitId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		activityType = objectInput.readInt();
 		activityCounterName = objectInput.readUTF();
 		value = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -138,7 +139,6 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 		throws IOException {
 		objectOutput.writeLong(activityLimitId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
@@ -157,15 +157,17 @@ public class SocialActivityLimitCacheModel implements CacheModel<SocialActivityL
 		else {
 			objectOutput.writeUTF(value);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long activityLimitId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public long classNameId;
 	public long classPK;
 	public int activityType;
 	public String activityCounterName;
 	public String value;
+	public long companyId;
 }

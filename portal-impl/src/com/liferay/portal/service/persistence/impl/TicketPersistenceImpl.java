@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchTicketException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -1013,6 +1014,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		ticket.setNew(true);
 		ticket.setPrimaryKey(ticketId);
 
+		ticket.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return ticket;
 	}
 
@@ -1180,7 +1183,6 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 
 		ticketImpl.setMvccVersion(ticket.getMvccVersion());
 		ticketImpl.setTicketId(ticket.getTicketId());
-		ticketImpl.setCompanyId(ticket.getCompanyId());
 		ticketImpl.setCreateDate(ticket.getCreateDate());
 		ticketImpl.setClassNameId(ticket.getClassNameId());
 		ticketImpl.setClassPK(ticket.getClassPK());
@@ -1188,6 +1190,7 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		ticketImpl.setType(ticket.getType());
 		ticketImpl.setExtraInfo(ticket.getExtraInfo());
 		ticketImpl.setExpirationDate(ticket.getExpirationDate());
+		ticketImpl.setCompanyId(ticket.getCompanyId());
 
 		return ticketImpl;
 	}
@@ -1566,6 +1569,8 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_TICKET = "SELECT ticket FROM Ticket ticket";
 	private static final String _SQL_SELECT_TICKET_WHERE_PKS_IN = "SELECT ticket FROM Ticket ticket WHERE ticketId IN (";
 	private static final String _SQL_SELECT_TICKET_WHERE = "SELECT ticket FROM Ticket ticket WHERE ";

@@ -57,7 +57,6 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("layoutSetPrototypeId", getLayoutSetPrototypeId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -67,6 +66,7 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 		attributes.put("settings", getSettings());
 		attributes.put("active", getActive());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -89,12 +89,6 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 
 		if (layoutSetPrototypeId != null) {
 			setLayoutSetPrototypeId(layoutSetPrototypeId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -149,6 +143,12 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

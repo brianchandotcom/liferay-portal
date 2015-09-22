@@ -120,8 +120,6 @@ public class MeetupsRegistrationPersistenceTest {
 
 		MeetupsRegistration newMeetupsRegistration = _persistence.create(pk);
 
-		newMeetupsRegistration.setCompanyId(RandomTestUtil.nextLong());
-
 		newMeetupsRegistration.setUserId(RandomTestUtil.nextLong());
 
 		newMeetupsRegistration.setUserName(RandomTestUtil.randomString());
@@ -136,14 +134,14 @@ public class MeetupsRegistrationPersistenceTest {
 
 		newMeetupsRegistration.setComments(RandomTestUtil.randomString());
 
+		newMeetupsRegistration.setCompanyId(RandomTestUtil.nextLong());
+
 		_meetupsRegistrations.add(_persistence.update(newMeetupsRegistration));
 
 		MeetupsRegistration existingMeetupsRegistration = _persistence.findByPrimaryKey(newMeetupsRegistration.getPrimaryKey());
 
 		Assert.assertEquals(existingMeetupsRegistration.getMeetupsRegistrationId(),
 			newMeetupsRegistration.getMeetupsRegistrationId());
-		Assert.assertEquals(existingMeetupsRegistration.getCompanyId(),
-			newMeetupsRegistration.getCompanyId());
 		Assert.assertEquals(existingMeetupsRegistration.getUserId(),
 			newMeetupsRegistration.getUserId());
 		Assert.assertEquals(existingMeetupsRegistration.getUserName(),
@@ -160,6 +158,8 @@ public class MeetupsRegistrationPersistenceTest {
 			newMeetupsRegistration.getStatus());
 		Assert.assertEquals(existingMeetupsRegistration.getComments(),
 			newMeetupsRegistration.getComments());
+		Assert.assertEquals(existingMeetupsRegistration.getCompanyId(),
+			newMeetupsRegistration.getCompanyId());
 	}
 
 	@Test
@@ -209,9 +209,9 @@ public class MeetupsRegistrationPersistenceTest {
 
 	protected OrderByComparator<MeetupsRegistration> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MeetupsRegistration",
-			"meetupsRegistrationId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"meetupsEntryId", true, "status", true, "comments", true);
+			"meetupsRegistrationId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "meetupsEntryId", true,
+			"status", true, "comments", true, "companyId", true);
 	}
 
 	@Test
@@ -419,11 +419,13 @@ public class MeetupsRegistrationPersistenceTest {
 
 		MeetupsRegistration existingMeetupsRegistration = _persistence.findByPrimaryKey(newMeetupsRegistration.getPrimaryKey());
 
-		Assert.assertEquals(existingMeetupsRegistration.getUserId(),
-			ReflectionTestUtil.invoke(existingMeetupsRegistration,
+		Assert.assertEquals(Long.valueOf(
+				existingMeetupsRegistration.getUserId()),
+			ReflectionTestUtil.<Long>invoke(existingMeetupsRegistration,
 				"getOriginalUserId", new Class<?>[0]));
-		Assert.assertEquals(existingMeetupsRegistration.getMeetupsEntryId(),
-			ReflectionTestUtil.invoke(existingMeetupsRegistration,
+		Assert.assertEquals(Long.valueOf(
+				existingMeetupsRegistration.getMeetupsEntryId()),
+			ReflectionTestUtil.<Long>invoke(existingMeetupsRegistration,
 				"getOriginalMeetupsEntryId", new Class<?>[0]));
 	}
 
@@ -432,8 +434,6 @@ public class MeetupsRegistrationPersistenceTest {
 		long pk = RandomTestUtil.nextLong();
 
 		MeetupsRegistration meetupsRegistration = _persistence.create(pk);
-
-		meetupsRegistration.setCompanyId(RandomTestUtil.nextLong());
 
 		meetupsRegistration.setUserId(RandomTestUtil.nextLong());
 
@@ -448,6 +448,8 @@ public class MeetupsRegistrationPersistenceTest {
 		meetupsRegistration.setStatus(RandomTestUtil.nextInt());
 
 		meetupsRegistration.setComments(RandomTestUtil.randomString());
+
+		meetupsRegistration.setCompanyId(RandomTestUtil.nextLong());
 
 		_meetupsRegistrations.add(_persistence.update(meetupsRegistration));
 

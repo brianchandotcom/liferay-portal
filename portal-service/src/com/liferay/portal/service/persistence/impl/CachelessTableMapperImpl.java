@@ -40,11 +40,12 @@ public class CachelessTableMapperImpl
 	public CachelessTableMapperImpl(
 		String tableName, String leftColumnName, String rightColumnName,
 		BasePersistence<L> leftBasePersistence,
-		BasePersistence<R> rightBasePersistence) {
+		BasePersistence<R> rightBasePersistence,
+		CompanyProviderHolder companyProviderHolder) {
 
 		super(
 			tableName, leftColumnName, rightColumnName, leftBasePersistence,
-			rightBasePersistence);
+			rightBasePersistence, companyProviderHolder);
 
 		getTableMappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(
 			leftBasePersistence.getDataSource(),

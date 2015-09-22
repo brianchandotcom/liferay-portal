@@ -22,6 +22,7 @@ import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -47,7 +48,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface SAPEntryModel extends AuditedModel, BaseModel<SAPEntry>,
-	LocalizedModel {
+	LocalizedModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -96,22 +97,6 @@ public interface SAPEntryModel extends AuditedModel, BaseModel<SAPEntry>,
 	 * @param sapEntryId the sap entry ID of this s a p entry
 	 */
 	public void setSapEntryId(long sapEntryId);
-
-	/**
-	 * Returns the company ID of this s a p entry.
-	 *
-	 * @return the company ID of this s a p entry
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this s a p entry.
-	 *
-	 * @param companyId the company ID of this s a p entry
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this s a p entry.
@@ -343,6 +328,22 @@ public interface SAPEntryModel extends AuditedModel, BaseModel<SAPEntry>,
 	 * @param defaultLocale the default locale
 	 */
 	public void setTitleMap(Map<Locale, String> titleMap, Locale defaultLocale);
+
+	/**
+	 * Returns the company ID of this s a p entry.
+	 *
+	 * @return the company ID of this s a p entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this s a p entry.
+	 *
+	 * @param companyId the company ID of this s a p entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

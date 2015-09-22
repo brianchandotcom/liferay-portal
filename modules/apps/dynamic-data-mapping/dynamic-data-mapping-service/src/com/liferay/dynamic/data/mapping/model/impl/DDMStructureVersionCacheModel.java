@@ -72,8 +72,6 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		sb.append(structureVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -104,6 +102,8 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -115,7 +115,6 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 
 		ddmStructureVersionImpl.setStructureVersionId(structureVersionId);
 		ddmStructureVersionImpl.setGroupId(groupId);
-		ddmStructureVersionImpl.setCompanyId(companyId);
 		ddmStructureVersionImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -189,6 +188,8 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 			ddmStructureVersionImpl.setStatusDate(new Date(statusDate));
 		}
 
+		ddmStructureVersionImpl.setCompanyId(companyId);
+
 		ddmStructureVersionImpl.resetOriginalValues();
 
 		ddmStructureVersionImpl.setDDMForm(_ddmForm);
@@ -201,7 +202,6 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		throws ClassNotFoundException, IOException {
 		structureVersionId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -217,6 +217,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 
 		_ddmForm = (com.liferay.dynamic.data.mapping.model.DDMForm)objectInput.readObject();
 	}
@@ -226,7 +227,6 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		throws IOException {
 		objectOutput.writeLong(structureVersionId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -288,13 +288,13 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 
 		objectOutput.writeObject(_ddmForm);
 	}
 
 	public long structureVersionId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -310,5 +310,6 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 	public com.liferay.dynamic.data.mapping.model.DDMForm _ddmForm;
 }

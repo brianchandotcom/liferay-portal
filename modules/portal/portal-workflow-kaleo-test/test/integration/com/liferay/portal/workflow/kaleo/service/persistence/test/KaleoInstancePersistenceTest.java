@@ -121,8 +121,6 @@ public class KaleoInstancePersistenceTest {
 
 		newKaleoInstance.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoInstance.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoInstance.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoInstance.setUserName(RandomTestUtil.randomString());
@@ -149,6 +147,8 @@ public class KaleoInstancePersistenceTest {
 
 		newKaleoInstance.setWorkflowContext(RandomTestUtil.randomString());
 
+		newKaleoInstance.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoInstances.add(_persistence.update(newKaleoInstance));
 
 		KaleoInstance existingKaleoInstance = _persistence.findByPrimaryKey(newKaleoInstance.getPrimaryKey());
@@ -157,8 +157,6 @@ public class KaleoInstancePersistenceTest {
 			newKaleoInstance.getKaleoInstanceId());
 		Assert.assertEquals(existingKaleoInstance.getGroupId(),
 			newKaleoInstance.getGroupId());
-		Assert.assertEquals(existingKaleoInstance.getCompanyId(),
-			newKaleoInstance.getCompanyId());
 		Assert.assertEquals(existingKaleoInstance.getUserId(),
 			newKaleoInstance.getUserId());
 		Assert.assertEquals(existingKaleoInstance.getUserName(),
@@ -188,13 +186,8 @@ public class KaleoInstancePersistenceTest {
 			Time.getShortTimestamp(newKaleoInstance.getCompletionDate()));
 		Assert.assertEquals(existingKaleoInstance.getWorkflowContext(),
 			newKaleoInstance.getWorkflowContext());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingKaleoInstance.getCompanyId(),
+			newKaleoInstance.getCompanyId());
 	}
 
 	@Test
@@ -205,11 +198,10 @@ public class KaleoInstancePersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_U() throws Exception {
-		_persistence.countByC_U(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-		_persistence.countByC_U(0L, 0L);
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -227,6 +219,14 @@ public class KaleoInstancePersistenceTest {
 		_persistence.countByCN_CPK(StringPool.NULL, 0L);
 
 		_persistence.countByCN_CPK((String)null, 0L);
+	}
+
+	@Test
+	public void testCountByC_U() throws Exception {
+		_persistence.countByC_U(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByC_U(0L, 0L);
 	}
 
 	@Test
@@ -266,12 +266,12 @@ public class KaleoInstancePersistenceTest {
 
 	protected OrderByComparator<KaleoInstance> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoInstance",
-			"kaleoInstanceId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionId", true,
-			"kaleoDefinitionName", true, "kaleoDefinitionVersion", true,
-			"rootKaleoInstanceTokenId", true, "className", true, "classPK",
-			true, "completed", true, "completionDate", true);
+			"kaleoInstanceId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoDefinitionId", true, "kaleoDefinitionName", true,
+			"kaleoDefinitionVersion", true, "rootKaleoInstanceTokenId", true,
+			"className", true, "classPK", true, "completed", true,
+			"completionDate", true, "companyId", true);
 	}
 
 	@Test
@@ -477,8 +477,6 @@ public class KaleoInstancePersistenceTest {
 
 		kaleoInstance.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoInstance.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoInstance.setUserId(RandomTestUtil.nextLong());
 
 		kaleoInstance.setUserName(RandomTestUtil.randomString());
@@ -504,6 +502,8 @@ public class KaleoInstancePersistenceTest {
 		kaleoInstance.setCompletionDate(RandomTestUtil.nextDate());
 
 		kaleoInstance.setWorkflowContext(RandomTestUtil.randomString());
+
+		kaleoInstance.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoInstances.add(_persistence.update(kaleoInstance));
 

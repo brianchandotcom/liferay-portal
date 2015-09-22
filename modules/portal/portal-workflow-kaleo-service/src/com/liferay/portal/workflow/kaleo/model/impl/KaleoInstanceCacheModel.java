@@ -71,8 +71,6 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 		sb.append(kaleoInstanceId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -99,6 +97,8 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 		sb.append(completionDate);
 		sb.append(", workflowContext=");
 		sb.append(workflowContext);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,7 +110,6 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 
 		kaleoInstanceImpl.setKaleoInstanceId(kaleoInstanceId);
 		kaleoInstanceImpl.setGroupId(groupId);
-		kaleoInstanceImpl.setCompanyId(companyId);
 		kaleoInstanceImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -170,6 +169,8 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 			kaleoInstanceImpl.setWorkflowContext(workflowContext);
 		}
 
+		kaleoInstanceImpl.setCompanyId(companyId);
+
 		kaleoInstanceImpl.resetOriginalValues();
 
 		return kaleoInstanceImpl;
@@ -179,7 +180,6 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		kaleoInstanceId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -193,6 +193,7 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 		completed = objectInput.readBoolean();
 		completionDate = objectInput.readLong();
 		workflowContext = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -200,7 +201,6 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 		throws IOException {
 		objectOutput.writeLong(kaleoInstanceId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -241,11 +241,12 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 		else {
 			objectOutput.writeUTF(workflowContext);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long kaleoInstanceId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -259,4 +260,5 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance>,
 	public boolean completed;
 	public long completionDate;
 	public String workflowContext;
+	public long companyId;
 }

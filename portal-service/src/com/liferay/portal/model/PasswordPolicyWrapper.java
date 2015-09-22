@@ -57,7 +57,6 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("uuid", getUuid());
 		attributes.put("passwordPolicyId", getPasswordPolicyId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -90,6 +89,7 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 		attributes.put("resetFailureCount", getResetFailureCount());
 		attributes.put("resetTicketMaxAge", getResetTicketMaxAge());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -112,12 +112,6 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 
 		if (passwordPolicyId != null) {
 			setPasswordPolicyId(passwordPolicyId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -311,6 +305,12 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

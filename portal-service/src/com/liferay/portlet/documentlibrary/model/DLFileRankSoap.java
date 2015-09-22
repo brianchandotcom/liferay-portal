@@ -35,11 +35,11 @@ public class DLFileRankSoap implements Serializable {
 
 		soapModel.setFileRankId(model.getFileRankId());
 		soapModel.setGroupId(model.getGroupId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setFileEntryId(model.getFileEntryId());
 		soapModel.setActive(model.getActive());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -108,14 +108,6 @@ public class DLFileRankSoap implements Serializable {
 		_groupId = groupId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -152,11 +144,19 @@ public class DLFileRankSoap implements Serializable {
 		_active = active;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _fileRankId;
 	private long _groupId;
-	private long _companyId;
 	private long _userId;
 	private Date _createDate;
 	private long _fileEntryId;
 	private boolean _active;
+	private long _companyId;
 }

@@ -70,8 +70,6 @@ public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategory
 
 		sb.append("{categoryPropertyId=");
 		sb.append(categoryPropertyId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -86,6 +84,8 @@ public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategory
 		sb.append(key);
 		sb.append(", value=");
 		sb.append(value);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -96,7 +96,6 @@ public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategory
 		AssetCategoryPropertyImpl assetCategoryPropertyImpl = new AssetCategoryPropertyImpl();
 
 		assetCategoryPropertyImpl.setCategoryPropertyId(categoryPropertyId);
-		assetCategoryPropertyImpl.setCompanyId(companyId);
 		assetCategoryPropertyImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -136,6 +135,8 @@ public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategory
 			assetCategoryPropertyImpl.setValue(value);
 		}
 
+		assetCategoryPropertyImpl.setCompanyId(companyId);
+
 		assetCategoryPropertyImpl.resetOriginalValues();
 
 		return assetCategoryPropertyImpl;
@@ -144,7 +145,6 @@ public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategory
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		categoryPropertyId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -152,13 +152,13 @@ public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategory
 		categoryId = objectInput.readLong();
 		key = objectInput.readUTF();
 		value = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(categoryPropertyId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -185,10 +185,11 @@ public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategory
 		else {
 			objectOutput.writeUTF(value);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long categoryPropertyId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -196,4 +197,5 @@ public class AssetCategoryPropertyCacheModel implements CacheModel<AssetCategory
 	public long categoryId;
 	public String key;
 	public String value;
+	public long companyId;
 }

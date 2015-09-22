@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionImpl;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -1495,6 +1497,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		ddlRecordVersion.setNew(true);
 		ddlRecordVersion.setPrimaryKey(recordVersionId);
 
+		ddlRecordVersion.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return ddlRecordVersion;
 	}
 
@@ -1683,7 +1687,6 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 
 		ddlRecordVersionImpl.setRecordVersionId(ddlRecordVersion.getRecordVersionId());
 		ddlRecordVersionImpl.setGroupId(ddlRecordVersion.getGroupId());
-		ddlRecordVersionImpl.setCompanyId(ddlRecordVersion.getCompanyId());
 		ddlRecordVersionImpl.setUserId(ddlRecordVersion.getUserId());
 		ddlRecordVersionImpl.setUserName(ddlRecordVersion.getUserName());
 		ddlRecordVersionImpl.setCreateDate(ddlRecordVersion.getCreateDate());
@@ -1696,6 +1699,7 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		ddlRecordVersionImpl.setStatusByUserId(ddlRecordVersion.getStatusByUserId());
 		ddlRecordVersionImpl.setStatusByUserName(ddlRecordVersion.getStatusByUserName());
 		ddlRecordVersionImpl.setStatusDate(ddlRecordVersion.getStatusDate());
+		ddlRecordVersionImpl.setCompanyId(ddlRecordVersion.getCompanyId());
 
 		return ddlRecordVersionImpl;
 	}
@@ -2073,6 +2077,8 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_DDLRECORDVERSION = "SELECT ddlRecordVersion FROM DDLRecordVersion ddlRecordVersion";
 	private static final String _SQL_SELECT_DDLRECORDVERSION_WHERE_PKS_IN = "SELECT ddlRecordVersion FROM DDLRecordVersion ddlRecordVersion WHERE recordVersionId IN (";
 	private static final String _SQL_SELECT_DDLRECORDVERSION_WHERE = "SELECT ddlRecordVersion FROM DDLRecordVersion ddlRecordVersion WHERE ";

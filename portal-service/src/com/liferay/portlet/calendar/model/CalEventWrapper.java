@@ -57,7 +57,6 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 		attributes.put("uuid", getUuid());
 		attributes.put("eventId", getEventId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -77,6 +76,7 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 		attributes.put("remindBy", getRemindBy());
 		attributes.put("firstReminder", getFirstReminder());
 		attributes.put("secondReminder", getSecondReminder());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -99,12 +99,6 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -219,6 +213,12 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 
 		if (secondReminder != null) {
 			setSecondReminder(secondReminder);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

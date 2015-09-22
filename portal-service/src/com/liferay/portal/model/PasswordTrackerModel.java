@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface PasswordTrackerModel extends BaseModel<PasswordTracker>,
-	MVCCModel {
+	MVCCModel, PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -147,6 +147,22 @@ public interface PasswordTrackerModel extends BaseModel<PasswordTracker>,
 	 * @param password the password of this password tracker
 	 */
 	public void setPassword(String password);
+
+	/**
+	 * Returns the company ID of this password tracker.
+	 *
+	 * @return the company ID of this password tracker
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this password tracker.
+	 *
+	 * @param companyId the company ID of this password tracker
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

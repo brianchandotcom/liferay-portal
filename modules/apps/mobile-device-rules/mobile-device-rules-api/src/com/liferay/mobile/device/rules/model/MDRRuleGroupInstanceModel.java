@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface MDRRuleGroupInstanceModel extends AttachedModel,
-	BaseModel<MDRRuleGroupInstance>, StagedGroupedModel {
+	BaseModel<MDRRuleGroupInstance>, PartitionableModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -111,22 +112,6 @@ public interface MDRRuleGroupInstanceModel extends AttachedModel,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this m d r rule group instance.
-	 *
-	 * @return the company ID of this m d r rule group instance
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this m d r rule group instance.
-	 *
-	 * @param companyId the company ID of this m d r rule group instance
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this m d r rule group instance.
@@ -294,6 +279,22 @@ public interface MDRRuleGroupInstanceModel extends AttachedModel,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this m d r rule group instance.
+	 *
+	 * @return the company ID of this m d r rule group instance
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this m d r rule group instance.
+	 *
+	 * @param companyId the company ID of this m d r rule group instance
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

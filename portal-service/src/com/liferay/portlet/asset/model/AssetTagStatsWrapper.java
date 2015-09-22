@@ -56,6 +56,7 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 		attributes.put("tagId", getTagId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("assetCount", getAssetCount());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -84,6 +85,12 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 
 		if (assetCount != null) {
 			setAssetCount(assetCount);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -126,6 +133,16 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	@Override
 	public long getClassNameId() {
 		return _assetTagStats.getClassNameId();
+	}
+
+	/**
+	* Returns the company ID of this asset tag stats.
+	*
+	* @return the company ID of this asset tag stats
+	*/
+	@Override
+	public long getCompanyId() {
+		return _assetTagStats.getCompanyId();
 	}
 
 	@Override
@@ -221,6 +238,16 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	@Override
 	public void setClassNameId(long classNameId) {
 		_assetTagStats.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the company ID of this asset tag stats.
+	*
+	* @param companyId the company ID of this asset tag stats
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_assetTagStats.setCompanyId(companyId);
 	}
 
 	@Override

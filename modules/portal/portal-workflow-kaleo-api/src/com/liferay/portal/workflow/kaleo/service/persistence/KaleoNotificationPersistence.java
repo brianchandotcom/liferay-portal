@@ -40,119 +40,6 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	 */
 
 	/**
-	* Returns all the kaleo notifications where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the matching kaleo notifications
-	*/
-	public java.util.List<KaleoNotification> findByCompanyId(long companyId);
-
-	/**
-	* Returns a range of all the kaleo notifications where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of kaleo notifications
-	* @param end the upper bound of the range of kaleo notifications (not inclusive)
-	* @return the range of matching kaleo notifications
-	*/
-	public java.util.List<KaleoNotification> findByCompanyId(long companyId,
-		int start, int end);
-
-	/**
-	* Returns an ordered range of all the kaleo notifications where companyId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param start the lower bound of the range of kaleo notifications
-	* @param end the upper bound of the range of kaleo notifications (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching kaleo notifications
-	*/
-	public java.util.List<KaleoNotification> findByCompanyId(long companyId,
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
-
-	/**
-	* Returns the first kaleo notification in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
-	*/
-	public KaleoNotification findByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
-
-	/**
-	* Returns the first kaleo notification in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
-	*/
-	public KaleoNotification fetchByCompanyId_First(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
-
-	/**
-	* Returns the last kaleo notification in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
-	*/
-	public KaleoNotification findByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
-
-	/**
-	* Returns the last kaleo notification in the ordered set where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
-	*/
-	public KaleoNotification fetchByCompanyId_Last(long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
-
-	/**
-	* Returns the kaleo notifications before and after the current kaleo notification in the ordered set where companyId = &#63;.
-	*
-	* @param kaleoNotificationId the primary key of the current kaleo notification
-	* @param companyId the company ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next kaleo notification
-	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a kaleo notification with the primary key could not be found
-	*/
-	public KaleoNotification[] findByCompanyId_PrevAndNext(
-		long kaleoNotificationId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
-		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
-
-	/**
-	* Removes all the kaleo notifications where companyId = &#63; from the database.
-	*
-	* @param companyId the company ID
-	*/
-	public void removeByCompanyId(long companyId);
-
-	/**
-	* Returns the number of kaleo notifications where companyId = &#63;.
-	*
-	* @param companyId the company ID
-	* @return the number of matching kaleo notifications
-	*/
-	public int countByCompanyId(long companyId);
-
-	/**
 	* Returns all the kaleo notifications where kaleoDefinitionId = &#63;.
 	*
 	* @param kaleoDefinitionId the kaleo definition ID
@@ -269,6 +156,119 @@ public interface KaleoNotificationPersistence extends BasePersistence<KaleoNotif
 	* @return the number of matching kaleo notifications
 	*/
 	public int countByKaleoDefinitionId(long kaleoDefinitionId);
+
+	/**
+	* Returns all the kaleo notifications where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching kaleo notifications
+	*/
+	public java.util.List<KaleoNotification> findByCompanyId(long companyId);
+
+	/**
+	* Returns a range of all the kaleo notifications where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo notifications
+	* @param end the upper bound of the range of kaleo notifications (not inclusive)
+	* @return the range of matching kaleo notifications
+	*/
+	public java.util.List<KaleoNotification> findByCompanyId(long companyId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the kaleo notifications where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link KaleoNotificationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of kaleo notifications
+	* @param end the upper bound of the range of kaleo notifications (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching kaleo notifications
+	*/
+	public java.util.List<KaleoNotification> findByCompanyId(long companyId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
+
+	/**
+	* Returns the first kaleo notification in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo notification
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
+	*/
+	public KaleoNotification findByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
+
+	/**
+	* Returns the first kaleo notification in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
+	*/
+	public KaleoNotification fetchByCompanyId_First(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
+
+	/**
+	* Returns the last kaleo notification in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo notification
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a matching kaleo notification could not be found
+	*/
+	public KaleoNotification findByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
+
+	/**
+	* Returns the last kaleo notification in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching kaleo notification, or <code>null</code> if a matching kaleo notification could not be found
+	*/
+	public KaleoNotification fetchByCompanyId_Last(long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator);
+
+	/**
+	* Returns the kaleo notifications before and after the current kaleo notification in the ordered set where companyId = &#63;.
+	*
+	* @param kaleoNotificationId the primary key of the current kaleo notification
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next kaleo notification
+	* @throws com.liferay.portal.workflow.kaleo.NoSuchNotificationException if a kaleo notification with the primary key could not be found
+	*/
+	public KaleoNotification[] findByCompanyId_PrevAndNext(
+		long kaleoNotificationId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<KaleoNotification> orderByComparator)
+		throws com.liferay.portal.workflow.kaleo.exception.NoSuchNotificationException;
+
+	/**
+	* Removes all the kaleo notifications where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	*/
+	public void removeByCompanyId(long companyId);
+
+	/**
+	* Returns the number of kaleo notifications where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching kaleo notifications
+	*/
+	public int countByCompanyId(long companyId);
 
 	/**
 	* Returns all the kaleo notifications where kaleoClassName = &#63; and kaleoClassPK = &#63;.

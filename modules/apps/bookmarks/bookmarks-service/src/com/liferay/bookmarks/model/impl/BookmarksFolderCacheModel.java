@@ -74,8 +74,6 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		sb.append(folderId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -104,6 +102,8 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -122,7 +122,6 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 
 		bookmarksFolderImpl.setFolderId(folderId);
 		bookmarksFolderImpl.setGroupId(groupId);
-		bookmarksFolderImpl.setCompanyId(companyId);
 		bookmarksFolderImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -194,6 +193,8 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 			bookmarksFolderImpl.setStatusDate(new Date(statusDate));
 		}
 
+		bookmarksFolderImpl.setCompanyId(companyId);
+
 		bookmarksFolderImpl.resetOriginalValues();
 
 		return bookmarksFolderImpl;
@@ -204,7 +205,6 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		uuid = objectInput.readUTF();
 		folderId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -219,6 +219,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -233,7 +234,6 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 
 		objectOutput.writeLong(folderId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -281,12 +281,12 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long folderId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -301,4 +301,5 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

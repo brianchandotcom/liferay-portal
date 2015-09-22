@@ -117,8 +117,6 @@ public class ResourceBlockPersistenceTest {
 
 		newResourceBlock.setMvccVersion(RandomTestUtil.nextLong());
 
-		newResourceBlock.setCompanyId(RandomTestUtil.nextLong());
-
 		newResourceBlock.setGroupId(RandomTestUtil.nextLong());
 
 		newResourceBlock.setName(RandomTestUtil.randomString());
@@ -126,6 +124,8 @@ public class ResourceBlockPersistenceTest {
 		newResourceBlock.setPermissionsHash(RandomTestUtil.randomString());
 
 		newResourceBlock.setReferenceCount(RandomTestUtil.nextLong());
+
+		newResourceBlock.setCompanyId(RandomTestUtil.nextLong());
 
 		_resourceBlocks.add(_persistence.update(newResourceBlock));
 
@@ -135,8 +135,6 @@ public class ResourceBlockPersistenceTest {
 			newResourceBlock.getMvccVersion());
 		Assert.assertEquals(existingResourceBlock.getResourceBlockId(),
 			newResourceBlock.getResourceBlockId());
-		Assert.assertEquals(existingResourceBlock.getCompanyId(),
-			newResourceBlock.getCompanyId());
 		Assert.assertEquals(existingResourceBlock.getGroupId(),
 			newResourceBlock.getGroupId());
 		Assert.assertEquals(existingResourceBlock.getName(),
@@ -145,6 +143,8 @@ public class ResourceBlockPersistenceTest {
 			newResourceBlock.getPermissionsHash());
 		Assert.assertEquals(existingResourceBlock.getReferenceCount(),
 			newResourceBlock.getReferenceCount());
+		Assert.assertEquals(existingResourceBlock.getCompanyId(),
+			newResourceBlock.getCompanyId());
 	}
 
 	@Test
@@ -200,9 +200,9 @@ public class ResourceBlockPersistenceTest {
 
 	protected OrderByComparator<ResourceBlock> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ResourceBlock",
-			"mvccVersion", true, "resourceBlockId", true, "companyId", true,
-			"groupId", true, "name", true, "permissionsHash", true,
-			"referenceCount", true);
+			"mvccVersion", true, "resourceBlockId", true, "groupId", true,
+			"name", true, "permissionsHash", true, "referenceCount", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -431,8 +431,6 @@ public class ResourceBlockPersistenceTest {
 
 		resourceBlock.setMvccVersion(RandomTestUtil.nextLong());
 
-		resourceBlock.setCompanyId(RandomTestUtil.nextLong());
-
 		resourceBlock.setGroupId(RandomTestUtil.nextLong());
 
 		resourceBlock.setName(RandomTestUtil.randomString());
@@ -440,6 +438,8 @@ public class ResourceBlockPersistenceTest {
 		resourceBlock.setPermissionsHash(RandomTestUtil.randomString());
 
 		resourceBlock.setReferenceCount(RandomTestUtil.nextLong());
+
+		resourceBlock.setCompanyId(RandomTestUtil.nextLong());
 
 		_resourceBlocks.add(_persistence.update(resourceBlock));
 

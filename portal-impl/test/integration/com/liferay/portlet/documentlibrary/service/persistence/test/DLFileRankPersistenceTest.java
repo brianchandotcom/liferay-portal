@@ -117,8 +117,6 @@ public class DLFileRankPersistenceTest {
 
 		newDLFileRank.setGroupId(RandomTestUtil.nextLong());
 
-		newDLFileRank.setCompanyId(RandomTestUtil.nextLong());
-
 		newDLFileRank.setUserId(RandomTestUtil.nextLong());
 
 		newDLFileRank.setCreateDate(RandomTestUtil.nextDate());
@@ -126,6 +124,8 @@ public class DLFileRankPersistenceTest {
 		newDLFileRank.setFileEntryId(RandomTestUtil.nextLong());
 
 		newDLFileRank.setActive(RandomTestUtil.randomBoolean());
+
+		newDLFileRank.setCompanyId(RandomTestUtil.nextLong());
 
 		_dlFileRanks.add(_persistence.update(newDLFileRank));
 
@@ -135,8 +135,6 @@ public class DLFileRankPersistenceTest {
 			newDLFileRank.getFileRankId());
 		Assert.assertEquals(existingDLFileRank.getGroupId(),
 			newDLFileRank.getGroupId());
-		Assert.assertEquals(existingDLFileRank.getCompanyId(),
-			newDLFileRank.getCompanyId());
 		Assert.assertEquals(existingDLFileRank.getUserId(),
 			newDLFileRank.getUserId());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -146,6 +144,8 @@ public class DLFileRankPersistenceTest {
 			newDLFileRank.getFileEntryId());
 		Assert.assertEquals(existingDLFileRank.getActive(),
 			newDLFileRank.getActive());
+		Assert.assertEquals(existingDLFileRank.getCompanyId(),
+			newDLFileRank.getCompanyId());
 	}
 
 	@Test
@@ -210,8 +210,8 @@ public class DLFileRankPersistenceTest {
 
 	protected OrderByComparator<DLFileRank> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileRank", "fileRankId",
-			true, "groupId", true, "companyId", true, "userId", true,
-			"createDate", true, "fileEntryId", true, "active", true);
+			true, "groupId", true, "userId", true, "createDate", true,
+			"fileEntryId", true, "active", true, "companyId", true);
 	}
 
 	@Test
@@ -434,8 +434,6 @@ public class DLFileRankPersistenceTest {
 
 		dlFileRank.setGroupId(RandomTestUtil.nextLong());
 
-		dlFileRank.setCompanyId(RandomTestUtil.nextLong());
-
 		dlFileRank.setUserId(RandomTestUtil.nextLong());
 
 		dlFileRank.setCreateDate(RandomTestUtil.nextDate());
@@ -443,6 +441,8 @@ public class DLFileRankPersistenceTest {
 		dlFileRank.setFileEntryId(RandomTestUtil.nextLong());
 
 		dlFileRank.setActive(RandomTestUtil.randomBoolean());
+
+		dlFileRank.setCompanyId(RandomTestUtil.nextLong());
 
 		_dlFileRanks.add(_persistence.update(dlFileRank));
 

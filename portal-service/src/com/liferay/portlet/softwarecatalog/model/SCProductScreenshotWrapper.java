@@ -53,12 +53,12 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("productScreenshotId", getProductScreenshotId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("productEntryId", getProductEntryId());
 		attributes.put("thumbnailId", getThumbnailId());
 		attributes.put("fullImageId", getFullImageId());
 		attributes.put("priority", getPriority());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -69,12 +69,6 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot,
 
 		if (productScreenshotId != null) {
 			setProductScreenshotId(productScreenshotId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -105,6 +99,12 @@ public class SCProductScreenshotWrapper implements SCProductScreenshot,
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

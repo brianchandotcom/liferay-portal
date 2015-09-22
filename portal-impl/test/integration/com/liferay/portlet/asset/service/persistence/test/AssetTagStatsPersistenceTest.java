@@ -120,6 +120,8 @@ public class AssetTagStatsPersistenceTest {
 
 		newAssetTagStats.setAssetCount(RandomTestUtil.nextInt());
 
+		newAssetTagStats.setCompanyId(RandomTestUtil.nextLong());
+
 		_assetTagStatses.add(_persistence.update(newAssetTagStats));
 
 		AssetTagStats existingAssetTagStats = _persistence.findByPrimaryKey(newAssetTagStats.getPrimaryKey());
@@ -132,6 +134,8 @@ public class AssetTagStatsPersistenceTest {
 			newAssetTagStats.getClassNameId());
 		Assert.assertEquals(existingAssetTagStats.getAssetCount(),
 			newAssetTagStats.getAssetCount());
+		Assert.assertEquals(existingAssetTagStats.getCompanyId(),
+			newAssetTagStats.getCompanyId());
 	}
 
 	@Test
@@ -181,7 +185,7 @@ public class AssetTagStatsPersistenceTest {
 	protected OrderByComparator<AssetTagStats> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("AssetTagStats",
 			"tagStatsId", true, "tagId", true, "classNameId", true,
-			"assetCount", true);
+			"assetCount", true, "companyId", true);
 	}
 
 	@Test
@@ -404,6 +408,8 @@ public class AssetTagStatsPersistenceTest {
 		assetTagStats.setClassNameId(RandomTestUtil.nextLong());
 
 		assetTagStats.setAssetCount(RandomTestUtil.nextInt());
+
+		assetTagStats.setCompanyId(RandomTestUtil.nextLong());
 
 		_assetTagStatses.add(_persistence.update(assetTagStats));
 

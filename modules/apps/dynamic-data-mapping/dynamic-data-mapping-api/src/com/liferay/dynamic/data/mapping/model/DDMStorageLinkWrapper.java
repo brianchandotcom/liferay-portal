@@ -57,6 +57,7 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("structureId", getStructureId());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -91,6 +92,12 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 
 		if (structureId != null) {
 			setStructureId(structureId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -133,6 +140,16 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	@Override
 	public long getClassPK() {
 		return _ddmStorageLink.getClassPK();
+	}
+
+	/**
+	* Returns the company ID of this d d m storage link.
+	*
+	* @return the company ID of this d d m storage link
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ddmStorageLink.getCompanyId();
 	}
 
 	@Override
@@ -250,6 +267,16 @@ public class DDMStorageLinkWrapper implements DDMStorageLink,
 	@Override
 	public void setClassPK(long classPK) {
 		_ddmStorageLink.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the company ID of this d d m storage link.
+	*
+	* @param companyId the company ID of this d d m storage link
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ddmStorageLink.setCompanyId(companyId);
 	}
 
 	@Override

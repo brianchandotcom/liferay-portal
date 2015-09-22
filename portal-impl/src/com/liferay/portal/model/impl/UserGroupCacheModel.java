@@ -87,8 +87,6 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		sb.append(uuid);
 		sb.append(", userGroupId=");
 		sb.append(userGroupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -107,6 +105,8 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		sb.append(addedByLDAPImport);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,7 +126,6 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		}
 
 		userGroupImpl.setUserGroupId(userGroupId);
-		userGroupImpl.setCompanyId(companyId);
 		userGroupImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -175,6 +174,8 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 			userGroupImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		userGroupImpl.setCompanyId(companyId);
+
 		userGroupImpl.resetOriginalValues();
 
 		return userGroupImpl;
@@ -185,7 +186,6 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		userGroupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -195,6 +195,7 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		description = objectInput.readUTF();
 		addedByLDAPImport = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -210,7 +211,6 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 		}
 
 		objectOutput.writeLong(userGroupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -240,12 +240,12 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 
 		objectOutput.writeBoolean(addedByLDAPImport);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long userGroupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -255,4 +255,5 @@ public class UserGroupCacheModel implements CacheModel<UserGroup>,
 	public String description;
 	public boolean addedByLDAPImport;
 	public long lastPublishDate;
+	public long companyId;
 }

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 
@@ -43,7 +44,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
-	WorkflowedModel {
+	PartitionableModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -91,20 +92,6 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 * @param groupId the group ID of this d d l record version
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this d d l record version.
-	 *
-	 * @return the company ID of this d d l record version
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this d d l record version.
-	 *
-	 * @param companyId the company ID of this d d l record version
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this d d l record version.
@@ -314,6 +301,22 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the company ID of this d d l record version.
+	 *
+	 * @return the company ID of this d d l record version
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this d d l record version.
+	 *
+	 * @param companyId the company ID of this d d l record version
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}

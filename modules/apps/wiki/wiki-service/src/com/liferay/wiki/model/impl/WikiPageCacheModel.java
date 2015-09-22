@@ -75,8 +75,6 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		sb.append(resourcePrimKey);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -115,6 +113,8 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -134,7 +134,6 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		wikiPageImpl.setPageId(pageId);
 		wikiPageImpl.setResourcePrimKey(resourcePrimKey);
 		wikiPageImpl.setGroupId(groupId);
-		wikiPageImpl.setCompanyId(companyId);
 		wikiPageImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -231,6 +230,8 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 			wikiPageImpl.setStatusDate(new Date(statusDate));
 		}
 
+		wikiPageImpl.setCompanyId(companyId);
+
 		wikiPageImpl.resetOriginalValues();
 
 		return wikiPageImpl;
@@ -242,7 +243,6 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		pageId = objectInput.readLong();
 		resourcePrimKey = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -262,6 +262,7 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -277,7 +278,6 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		objectOutput.writeLong(pageId);
 		objectOutput.writeLong(resourcePrimKey);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -350,13 +350,13 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 		}
 
 		objectOutput.writeLong(statusDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long pageId;
 	public long resourcePrimKey;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -376,4 +376,5 @@ public class WikiPageCacheModel implements CacheModel<WikiPage>, Externalizable 
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
+	public long companyId;
 }

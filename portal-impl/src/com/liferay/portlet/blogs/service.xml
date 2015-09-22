@@ -15,7 +15,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 		<column name="userName" type="String" />
 		<column name="createDate" type="Date" />
@@ -76,6 +75,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" comparator="!=" />
 		</finder>
+		<finder name="LtD_S" return-type="Collection">
+			<finder-column name="displayDate" comparator="&lt;" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="C_U" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
@@ -91,10 +94,6 @@
 		<finder name="C_NotS" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
-		</finder>
-		<finder name="LtD_S" return-type="Collection">
-			<finder-column name="displayDate" comparator="&lt;" />
-			<finder-column name="status" />
 		</finder>
 		<finder name="G_U_LtD" return-type="Collection">
 			<finder-column name="groupId" />
@@ -184,7 +183,6 @@
 
 		<!-- Audit fields -->
 
-		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
 
 		<!-- Other fields -->
@@ -217,13 +215,13 @@
 			<finder-column name="groupId" />
 			<finder-column name="entryCount" comparator="!=" />
 		</finder>
-		<finder name="C_NotE" return-type="Collection">
-			<finder-column name="companyId" />
-			<finder-column name="entryCount" comparator="!=" />
-		</finder>
 		<finder name="U_L" return-type="Collection">
 			<finder-column name="userId" />
 			<finder-column name="lastPostDate" />
+		</finder>
+		<finder name="C_NotE" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="entryCount" comparator="!=" />
 		</finder>
 
 		<!-- References -->

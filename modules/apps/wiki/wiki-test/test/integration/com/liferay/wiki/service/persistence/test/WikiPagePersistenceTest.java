@@ -129,8 +129,6 @@ public class WikiPagePersistenceTest {
 
 		newWikiPage.setGroupId(RandomTestUtil.nextLong());
 
-		newWikiPage.setCompanyId(RandomTestUtil.nextLong());
-
 		newWikiPage.setUserId(RandomTestUtil.nextLong());
 
 		newWikiPage.setUserName(RandomTestUtil.randomString());
@@ -169,6 +167,8 @@ public class WikiPagePersistenceTest {
 
 		newWikiPage.setStatusDate(RandomTestUtil.nextDate());
 
+		newWikiPage.setCompanyId(RandomTestUtil.nextLong());
+
 		_wikiPages.add(_persistence.update(newWikiPage));
 
 		WikiPage existingWikiPage = _persistence.findByPrimaryKey(newWikiPage.getPrimaryKey());
@@ -180,8 +180,6 @@ public class WikiPagePersistenceTest {
 			newWikiPage.getResourcePrimKey());
 		Assert.assertEquals(existingWikiPage.getGroupId(),
 			newWikiPage.getGroupId());
-		Assert.assertEquals(existingWikiPage.getCompanyId(),
-			newWikiPage.getCompanyId());
 		Assert.assertEquals(existingWikiPage.getUserId(),
 			newWikiPage.getUserId());
 		Assert.assertEquals(existingWikiPage.getUserName(),
@@ -222,6 +220,8 @@ public class WikiPagePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingWikiPage.getStatusDate()),
 			Time.getShortTimestamp(newWikiPage.getStatusDate()));
+		Assert.assertEquals(existingWikiPage.getCompanyId(),
+			newWikiPage.getCompanyId());
 	}
 
 	@Test
@@ -573,13 +573,13 @@ public class WikiPagePersistenceTest {
 
 	protected OrderByComparator<WikiPage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WikiPage", "uuid", true,
-			"pageId", true, "resourcePrimKey", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "nodeId", true, "title", true,
-			"version", true, "minorEdit", true, "summary", true, "format",
-			true, "head", true, "parentTitle", true, "redirectTitle", true,
-			"lastPublishDate", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"pageId", true, "resourcePrimKey", true, "groupId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"nodeId", true, "title", true, "version", true, "minorEdit", true,
+			"summary", true, "format", true, "head", true, "parentTitle", true,
+			"redirectTitle", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true, "companyId", true);
 	}
 
 	@Test
@@ -823,8 +823,6 @@ public class WikiPagePersistenceTest {
 
 		wikiPage.setGroupId(RandomTestUtil.nextLong());
 
-		wikiPage.setCompanyId(RandomTestUtil.nextLong());
-
 		wikiPage.setUserId(RandomTestUtil.nextLong());
 
 		wikiPage.setUserName(RandomTestUtil.randomString());
@@ -862,6 +860,8 @@ public class WikiPagePersistenceTest {
 		wikiPage.setStatusByUserName(RandomTestUtil.randomString());
 
 		wikiPage.setStatusDate(RandomTestUtil.nextDate());
+
+		wikiPage.setCompanyId(RandomTestUtil.nextLong());
 
 		_wikiPages.add(_persistence.update(wikiPage));
 

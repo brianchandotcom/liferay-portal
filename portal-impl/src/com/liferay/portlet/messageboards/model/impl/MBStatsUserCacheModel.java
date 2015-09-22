@@ -65,7 +65,7 @@ public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{statsUserId=");
 		sb.append(statsUserId);
@@ -77,6 +77,8 @@ public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
 		sb.append(messageCount);
 		sb.append(", lastPostDate=");
 		sb.append(lastPostDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -98,6 +100,8 @@ public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
 			mbStatsUserImpl.setLastPostDate(new Date(lastPostDate));
 		}
 
+		mbStatsUserImpl.setCompanyId(companyId);
+
 		mbStatsUserImpl.resetOriginalValues();
 
 		return mbStatsUserImpl;
@@ -110,6 +114,7 @@ public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
 		userId = objectInput.readLong();
 		messageCount = objectInput.readInt();
 		lastPostDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -120,6 +125,7 @@ public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
 		objectOutput.writeLong(userId);
 		objectOutput.writeInt(messageCount);
 		objectOutput.writeLong(lastPostDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long statsUserId;
@@ -127,4 +133,5 @@ public class MBStatsUserCacheModel implements CacheModel<MBStatsUser>,
 	public long userId;
 	public int messageCount;
 	public long lastPostDate;
+	public long companyId;
 }

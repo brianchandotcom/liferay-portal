@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.documentlibrary.NoSuchFileRankException;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
@@ -2526,6 +2528,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		dlFileRank.setNew(true);
 		dlFileRank.setPrimaryKey(fileRankId);
 
+		dlFileRank.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return dlFileRank;
 	}
 
@@ -2753,11 +2757,11 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 
 		dlFileRankImpl.setFileRankId(dlFileRank.getFileRankId());
 		dlFileRankImpl.setGroupId(dlFileRank.getGroupId());
-		dlFileRankImpl.setCompanyId(dlFileRank.getCompanyId());
 		dlFileRankImpl.setUserId(dlFileRank.getUserId());
 		dlFileRankImpl.setCreateDate(dlFileRank.getCreateDate());
 		dlFileRankImpl.setFileEntryId(dlFileRank.getFileEntryId());
 		dlFileRankImpl.setActive(dlFileRank.isActive());
+		dlFileRankImpl.setCompanyId(dlFileRank.getCompanyId());
 
 		return dlFileRankImpl;
 	}
@@ -3138,6 +3142,8 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_DLFILERANK = "SELECT dlFileRank FROM DLFileRank dlFileRank";
 	private static final String _SQL_SELECT_DLFILERANK_WHERE_PKS_IN = "SELECT dlFileRank FROM DLFileRank dlFileRank WHERE fileRankId IN (";
 	private static final String _SQL_SELECT_DLFILERANK_WHERE = "SELECT dlFileRank FROM DLFileRank dlFileRank WHERE ";

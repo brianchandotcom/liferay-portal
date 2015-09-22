@@ -55,7 +55,6 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 
 		attributes.put("couponId", getCouponId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -71,6 +70,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 		attributes.put("minOrder", getMinOrder());
 		attributes.put("discount", getDiscount());
 		attributes.put("discountType", getDiscountType());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -87,12 +87,6 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -183,6 +177,12 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 
 		if (discountType != null) {
 			setDiscountType(discountType);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

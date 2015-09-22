@@ -74,8 +74,6 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		sb.append(calendarResourceId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -102,6 +100,8 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		sb.append(active);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -120,7 +120,6 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 
 		calendarResourceImpl.setCalendarResourceId(calendarResourceId);
 		calendarResourceImpl.setGroupId(groupId);
-		calendarResourceImpl.setCompanyId(companyId);
 		calendarResourceImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -185,6 +184,8 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 			calendarResourceImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		calendarResourceImpl.setCompanyId(companyId);
+
 		calendarResourceImpl.resetOriginalValues();
 
 		return calendarResourceImpl;
@@ -195,7 +196,6 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		uuid = objectInput.readUTF();
 		calendarResourceId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -209,6 +209,7 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 		description = objectInput.readUTF();
 		active = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -223,7 +224,6 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 
 		objectOutput.writeLong(calendarResourceId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -269,12 +269,12 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 
 		objectOutput.writeBoolean(active);
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long calendarResourceId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -288,4 +288,5 @@ public class CalendarResourceCacheModel implements CacheModel<CalendarResource>,
 	public String description;
 	public boolean active;
 	public long lastPublishDate;
+	public long companyId;
 }

@@ -16,6 +16,7 @@ package com.liferay.users.admin.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
@@ -39,7 +40,8 @@ public class UsersAdminPortletDataHandlerTest
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), CompanyProviderTestRule.INSTANCE);
 
 	@Override
 	protected void addStagedModels() throws Exception {

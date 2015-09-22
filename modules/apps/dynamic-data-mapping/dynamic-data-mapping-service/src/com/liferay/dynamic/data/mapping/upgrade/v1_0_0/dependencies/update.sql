@@ -1,3 +1,7 @@
+alter table DDMStorageLink add companyId LONG;
+
+create index IX_DB81EB42 on DDMStorageLink (uuid_, companyId);
+
 alter table DDMStructure add versionUserId LONG;
 alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;
@@ -19,12 +23,13 @@ create table DDMStructureLayout (
 	definition TEXT null
 );
 
+alter table DDMStructureLink add companyId LONG;
+
 drop index IX_C803899D on DDMStructureLink;
 
 create table DDMStructureVersion (
 	structureVersionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -39,7 +44,8 @@ create table DDMStructureVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	companyId LONG
 );
 
 alter table DDMTemplate add versionUserId LONG;
@@ -55,13 +61,13 @@ create table DDMTemplateLink (
 	templateLinkId LONG not null primary key,
 	classNameId LONG,
 	classPK LONG,
-	templateId LONG
+	templateId LONG,
+	companyId LONG
 );
 
 create table DDMTemplateVersion (
 	templateVersionId LONG not null primary key,
 	groupId LONG,
-	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
@@ -76,7 +82,8 @@ create table DDMTemplateVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null
+	statusDate DATE null,
+	companyId LONG
 );
 
 COMMIT_TRANSACTION;

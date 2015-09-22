@@ -36,7 +36,6 @@ public class LockSoap implements Serializable {
 		soapModel.setMvccVersion(model.getMvccVersion());
 		soapModel.setUuid(model.getUuid());
 		soapModel.setLockId(model.getLockId());
-		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
@@ -45,6 +44,7 @@ public class LockSoap implements Serializable {
 		soapModel.setOwner(model.getOwner());
 		soapModel.setInheritable(model.getInheritable());
 		soapModel.setExpirationDate(model.getExpirationDate());
+		soapModel.setCompanyId(model.getCompanyId());
 
 		return soapModel;
 	}
@@ -121,14 +121,6 @@ public class LockSoap implements Serializable {
 		_lockId = lockId;
 	}
 
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
-	}
-
 	public long getUserId() {
 		return _userId;
 	}
@@ -197,10 +189,17 @@ public class LockSoap implements Serializable {
 		_expirationDate = expirationDate;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	private long _mvccVersion;
 	private String _uuid;
 	private long _lockId;
-	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -209,4 +208,5 @@ public class LockSoap implements Serializable {
 	private String _owner;
 	private boolean _inheritable;
 	private Date _expirationDate;
+	private long _companyId;
 }

@@ -5,7 +5,6 @@
 		<field name="uuid" type="String" />
 		<field name="calendarId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -22,12 +21,12 @@
 		<field name="enableComments" type="boolean" />
 		<field name="enableRatings" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.calendar.model.CalendarBooking">
 		<field name="uuid" type="String" />
 		<field name="calendarBookingId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -65,12 +64,12 @@
 		<field name="statusByUserId" type="long" />
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.calendar.model.CalendarNotificationTemplate">
 		<field name="uuid" type="String" />
 		<field name="calendarNotificationTemplateId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -84,12 +83,12 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="lastPublishDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 	<model name="com.liferay.calendar.model.CalendarResource">
 		<field name="uuid" type="String" />
 		<field name="calendarResourceId" type="long" />
 		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
@@ -105,5 +104,6 @@
 		</field>
 		<field name="active" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
+		<field name="companyId" type="long" />
 	</model>
 </model-hints>

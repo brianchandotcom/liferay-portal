@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchWebDAVPropsException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -460,6 +461,8 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		webDAVProps.setNew(true);
 		webDAVProps.setPrimaryKey(webDavPropsId);
 
+		webDAVProps.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return webDAVProps;
 	}
 
@@ -629,12 +632,12 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 
 		webDAVPropsImpl.setMvccVersion(webDAVProps.getMvccVersion());
 		webDAVPropsImpl.setWebDavPropsId(webDAVProps.getWebDavPropsId());
-		webDAVPropsImpl.setCompanyId(webDAVProps.getCompanyId());
 		webDAVPropsImpl.setCreateDate(webDAVProps.getCreateDate());
 		webDAVPropsImpl.setModifiedDate(webDAVProps.getModifiedDate());
 		webDAVPropsImpl.setClassNameId(webDAVProps.getClassNameId());
 		webDAVPropsImpl.setClassPK(webDAVProps.getClassPK());
 		webDAVPropsImpl.setProps(webDAVProps.getProps());
+		webDAVPropsImpl.setCompanyId(webDAVProps.getCompanyId());
 
 		return webDAVPropsImpl;
 	}
@@ -1010,6 +1013,8 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_WEBDAVPROPS = "SELECT webDAVProps FROM WebDAVProps webDAVProps";
 	private static final String _SQL_SELECT_WEBDAVPROPS_WHERE_PKS_IN = "SELECT webDAVProps FROM WebDAVProps webDAVProps WHERE webDavPropsId IN (";
 	private static final String _SQL_SELECT_WEBDAVPROPS_WHERE = "SELECT webDAVProps FROM WebDAVProps webDAVProps WHERE ";

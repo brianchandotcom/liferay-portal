@@ -118,8 +118,6 @@ public class WebsitePersistenceTest {
 
 		newWebsite.setUuid(RandomTestUtil.randomString());
 
-		newWebsite.setCompanyId(RandomTestUtil.nextLong());
-
 		newWebsite.setUserId(RandomTestUtil.nextLong());
 
 		newWebsite.setUserName(RandomTestUtil.randomString());
@@ -140,6 +138,8 @@ public class WebsitePersistenceTest {
 
 		newWebsite.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newWebsite.setCompanyId(RandomTestUtil.nextLong());
+
 		_websites.add(_persistence.update(newWebsite));
 
 		Website existingWebsite = _persistence.findByPrimaryKey(newWebsite.getPrimaryKey());
@@ -149,8 +149,6 @@ public class WebsitePersistenceTest {
 		Assert.assertEquals(existingWebsite.getUuid(), newWebsite.getUuid());
 		Assert.assertEquals(existingWebsite.getWebsiteId(),
 			newWebsite.getWebsiteId());
-		Assert.assertEquals(existingWebsite.getCompanyId(),
-			newWebsite.getCompanyId());
 		Assert.assertEquals(existingWebsite.getUserId(), newWebsite.getUserId());
 		Assert.assertEquals(existingWebsite.getUserName(),
 			newWebsite.getUserName());
@@ -171,6 +169,8 @@ public class WebsitePersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingWebsite.getLastPublishDate()),
 			Time.getShortTimestamp(newWebsite.getLastPublishDate()));
+		Assert.assertEquals(existingWebsite.getCompanyId(),
+			newWebsite.getCompanyId());
 	}
 
 	@Test
@@ -192,17 +192,17 @@ public class WebsitePersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
-	}
-
-	@Test
 	public void testCountByUserId() throws Exception {
 		_persistence.countByUserId(RandomTestUtil.nextLong());
 
 		_persistence.countByUserId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -254,10 +254,10 @@ public class WebsitePersistenceTest {
 
 	protected OrderByComparator<Website> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Website", "mvccVersion",
-			true, "uuid", true, "websiteId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "url", true, "typeId", true,
-			"primary", true, "lastPublishDate", true);
+			true, "uuid", true, "websiteId", true, "userId", true, "userName",
+			true, "createDate", true, "modifiedDate", true, "classNameId",
+			true, "classPK", true, "url", true, "typeId", true, "primary",
+			true, "lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -461,8 +461,6 @@ public class WebsitePersistenceTest {
 
 		website.setUuid(RandomTestUtil.randomString());
 
-		website.setCompanyId(RandomTestUtil.nextLong());
-
 		website.setUserId(RandomTestUtil.nextLong());
 
 		website.setUserName(RandomTestUtil.randomString());
@@ -482,6 +480,8 @@ public class WebsitePersistenceTest {
 		website.setPrimary(RandomTestUtil.randomBoolean());
 
 		website.setLastPublishDate(RandomTestUtil.nextDate());
+
+		website.setCompanyId(RandomTestUtil.nextLong());
 
 		_websites.add(_persistence.update(website));
 

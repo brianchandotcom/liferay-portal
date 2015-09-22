@@ -121,8 +121,6 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 
 		newKaleoTaskAssignmentInstance.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoTaskAssignmentInstance.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoTaskAssignmentInstance.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoTaskAssignmentInstance.setUserName(RandomTestUtil.randomString());
@@ -151,6 +149,8 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 
 		newKaleoTaskAssignmentInstance.setCompletionDate(RandomTestUtil.nextDate());
 
+		newKaleoTaskAssignmentInstance.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoTaskAssignmentInstances.add(_persistence.update(
 				newKaleoTaskAssignmentInstance));
 
@@ -160,8 +160,6 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 			newKaleoTaskAssignmentInstance.getKaleoTaskAssignmentInstanceId());
 		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getGroupId(),
 			newKaleoTaskAssignmentInstance.getGroupId());
-		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getCompanyId(),
-			newKaleoTaskAssignmentInstance.getCompanyId());
 		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getUserId(),
 			newKaleoTaskAssignmentInstance.getUserId());
 		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getUserName(),
@@ -196,13 +194,8 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 				existingKaleoTaskAssignmentInstance.getCompletionDate()),
 			Time.getShortTimestamp(
 				newKaleoTaskAssignmentInstance.getCompletionDate()));
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingKaleoTaskAssignmentInstance.getCompanyId(),
+			newKaleoTaskAssignmentInstance.getCompanyId());
 	}
 
 	@Test
@@ -233,6 +226,13 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 		_persistence.countByassigneeClassName(StringPool.NULL);
 
 		_persistence.countByassigneeClassName((String)null);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -277,13 +277,13 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 
 	protected OrderByComparator<KaleoTaskAssignmentInstance> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTaskAssignmentInstance",
-			"kaleoTaskAssignmentInstanceId", true, "groupId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "kaleoDefinitionId", true,
-			"kaleoInstanceId", true, "kaleoInstanceTokenId", true,
-			"kaleoTaskInstanceTokenId", true, "kaleoTaskId", true,
-			"kaleoTaskName", true, "assigneeClassName", true,
-			"assigneeClassPK", true, "completed", true, "completionDate", true);
+			"kaleoTaskAssignmentInstanceId", true, "groupId", true, "userId",
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoDefinitionId", true, "kaleoInstanceId", true,
+			"kaleoInstanceTokenId", true, "kaleoTaskInstanceTokenId", true,
+			"kaleoTaskId", true, "kaleoTaskName", true, "assigneeClassName",
+			true, "assigneeClassPK", true, "completed", true, "completionDate",
+			true, "companyId", true);
 	}
 
 	@Test
@@ -505,8 +505,6 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 
 		kaleoTaskAssignmentInstance.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoTaskAssignmentInstance.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoTaskAssignmentInstance.setUserId(RandomTestUtil.nextLong());
 
 		kaleoTaskAssignmentInstance.setUserName(RandomTestUtil.randomString());
@@ -534,6 +532,8 @@ public class KaleoTaskAssignmentInstancePersistenceTest {
 		kaleoTaskAssignmentInstance.setCompleted(RandomTestUtil.randomBoolean());
 
 		kaleoTaskAssignmentInstance.setCompletionDate(RandomTestUtil.nextDate());
+
+		kaleoTaskAssignmentInstance.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoTaskAssignmentInstances.add(_persistence.update(
 				kaleoTaskAssignmentInstance));

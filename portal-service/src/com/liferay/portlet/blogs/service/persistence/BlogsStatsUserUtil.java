@@ -589,158 +589,6 @@ public class BlogsStatsUserUtil {
 	}
 
 	/**
-	* Returns all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param entryCount the entry count
-	* @return the matching blogs stats users
-	*/
-	public static List<BlogsStatsUser> findByC_NotE(long companyId,
-		int entryCount) {
-		return getPersistence().findByC_NotE(companyId, entryCount);
-	}
-
-	/**
-	* Returns a range of all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsStatsUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param entryCount the entry count
-	* @param start the lower bound of the range of blogs stats users
-	* @param end the upper bound of the range of blogs stats users (not inclusive)
-	* @return the range of matching blogs stats users
-	*/
-	public static List<BlogsStatsUser> findByC_NotE(long companyId,
-		int entryCount, int start, int end) {
-		return getPersistence().findByC_NotE(companyId, entryCount, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsStatsUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param companyId the company ID
-	* @param entryCount the entry count
-	* @param start the lower bound of the range of blogs stats users
-	* @param end the upper bound of the range of blogs stats users (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching blogs stats users
-	*/
-	public static List<BlogsStatsUser> findByC_NotE(long companyId,
-		int entryCount, int start, int end,
-		OrderByComparator<BlogsStatsUser> orderByComparator) {
-		return getPersistence()
-				   .findByC_NotE(companyId, entryCount, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param entryCount the entry count
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs stats user
-	* @throws NoSuchStatsUserException if a matching blogs stats user could not be found
-	*/
-	public static BlogsStatsUser findByC_NotE_First(long companyId,
-		int entryCount, OrderByComparator<BlogsStatsUser> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
-		return getPersistence()
-				   .findByC_NotE_First(companyId, entryCount, orderByComparator);
-	}
-
-	/**
-	* Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param entryCount the entry count
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	*/
-	public static BlogsStatsUser fetchByC_NotE_First(long companyId,
-		int entryCount, OrderByComparator<BlogsStatsUser> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_NotE_First(companyId, entryCount, orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param entryCount the entry count
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs stats user
-	* @throws NoSuchStatsUserException if a matching blogs stats user could not be found
-	*/
-	public static BlogsStatsUser findByC_NotE_Last(long companyId,
-		int entryCount, OrderByComparator<BlogsStatsUser> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
-		return getPersistence()
-				   .findByC_NotE_Last(companyId, entryCount, orderByComparator);
-	}
-
-	/**
-	* Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param entryCount the entry count
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	*/
-	public static BlogsStatsUser fetchByC_NotE_Last(long companyId,
-		int entryCount, OrderByComparator<BlogsStatsUser> orderByComparator) {
-		return getPersistence()
-				   .fetchByC_NotE_Last(companyId, entryCount, orderByComparator);
-	}
-
-	/**
-	* Returns the blogs stats users before and after the current blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
-	*
-	* @param statsUserId the primary key of the current blogs stats user
-	* @param companyId the company ID
-	* @param entryCount the entry count
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next blogs stats user
-	* @throws NoSuchStatsUserException if a blogs stats user with the primary key could not be found
-	*/
-	public static BlogsStatsUser[] findByC_NotE_PrevAndNext(long statsUserId,
-		long companyId, int entryCount,
-		OrderByComparator<BlogsStatsUser> orderByComparator)
-		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
-		return getPersistence()
-				   .findByC_NotE_PrevAndNext(statsUserId, companyId,
-			entryCount, orderByComparator);
-	}
-
-	/**
-	* Removes all the blogs stats users where companyId = &#63; and entryCount &ne; &#63; from the database.
-	*
-	* @param companyId the company ID
-	* @param entryCount the entry count
-	*/
-	public static void removeByC_NotE(long companyId, int entryCount) {
-		getPersistence().removeByC_NotE(companyId, entryCount);
-	}
-
-	/**
-	* Returns the number of blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
-	*
-	* @param companyId the company ID
-	* @param entryCount the entry count
-	* @return the number of matching blogs stats users
-	*/
-	public static int countByC_NotE(long companyId, int entryCount) {
-		return getPersistence().countByC_NotE(companyId, entryCount);
-	}
-
-	/**
 	* Returns all the blogs stats users where userId = &#63; and lastPostDate = &#63;.
 	*
 	* @param userId the user ID
@@ -894,6 +742,158 @@ public class BlogsStatsUserUtil {
 	*/
 	public static int countByU_L(long userId, java.util.Date lastPostDate) {
 		return getPersistence().countByU_L(userId, lastPostDate);
+	}
+
+	/**
+	* Returns all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param entryCount the entry count
+	* @return the matching blogs stats users
+	*/
+	public static List<BlogsStatsUser> findByC_NotE(long companyId,
+		int entryCount) {
+		return getPersistence().findByC_NotE(companyId, entryCount);
+	}
+
+	/**
+	* Returns a range of all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsStatsUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param entryCount the entry count
+	* @param start the lower bound of the range of blogs stats users
+	* @param end the upper bound of the range of blogs stats users (not inclusive)
+	* @return the range of matching blogs stats users
+	*/
+	public static List<BlogsStatsUser> findByC_NotE(long companyId,
+		int entryCount, int start, int end) {
+		return getPersistence().findByC_NotE(companyId, entryCount, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BlogsStatsUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param entryCount the entry count
+	* @param start the lower bound of the range of blogs stats users
+	* @param end the upper bound of the range of blogs stats users (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching blogs stats users
+	*/
+	public static List<BlogsStatsUser> findByC_NotE(long companyId,
+		int entryCount, int start, int end,
+		OrderByComparator<BlogsStatsUser> orderByComparator) {
+		return getPersistence()
+				   .findByC_NotE(companyId, entryCount, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param entryCount the entry count
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs stats user
+	* @throws NoSuchStatsUserException if a matching blogs stats user could not be found
+	*/
+	public static BlogsStatsUser findByC_NotE_First(long companyId,
+		int entryCount, OrderByComparator<BlogsStatsUser> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
+		return getPersistence()
+				   .findByC_NotE_First(companyId, entryCount, orderByComparator);
+	}
+
+	/**
+	* Returns the first blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param entryCount the entry count
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	*/
+	public static BlogsStatsUser fetchByC_NotE_First(long companyId,
+		int entryCount, OrderByComparator<BlogsStatsUser> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_NotE_First(companyId, entryCount, orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param entryCount the entry count
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs stats user
+	* @throws NoSuchStatsUserException if a matching blogs stats user could not be found
+	*/
+	public static BlogsStatsUser findByC_NotE_Last(long companyId,
+		int entryCount, OrderByComparator<BlogsStatsUser> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
+		return getPersistence()
+				   .findByC_NotE_Last(companyId, entryCount, orderByComparator);
+	}
+
+	/**
+	* Returns the last blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param entryCount the entry count
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
+	*/
+	public static BlogsStatsUser fetchByC_NotE_Last(long companyId,
+		int entryCount, OrderByComparator<BlogsStatsUser> orderByComparator) {
+		return getPersistence()
+				   .fetchByC_NotE_Last(companyId, entryCount, orderByComparator);
+	}
+
+	/**
+	* Returns the blogs stats users before and after the current blogs stats user in the ordered set where companyId = &#63; and entryCount &ne; &#63;.
+	*
+	* @param statsUserId the primary key of the current blogs stats user
+	* @param companyId the company ID
+	* @param entryCount the entry count
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next blogs stats user
+	* @throws NoSuchStatsUserException if a blogs stats user with the primary key could not be found
+	*/
+	public static BlogsStatsUser[] findByC_NotE_PrevAndNext(long statsUserId,
+		long companyId, int entryCount,
+		OrderByComparator<BlogsStatsUser> orderByComparator)
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
+		return getPersistence()
+				   .findByC_NotE_PrevAndNext(statsUserId, companyId,
+			entryCount, orderByComparator);
+	}
+
+	/**
+	* Removes all the blogs stats users where companyId = &#63; and entryCount &ne; &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param entryCount the entry count
+	*/
+	public static void removeByC_NotE(long companyId, int entryCount) {
+		getPersistence().removeByC_NotE(companyId, entryCount);
+	}
+
+	/**
+	* Returns the number of blogs stats users where companyId = &#63; and entryCount &ne; &#63;.
+	*
+	* @param companyId the company ID
+	* @param entryCount the entry count
+	* @return the number of matching blogs stats users
+	*/
+	public static int countByC_NotE(long companyId, int entryCount) {
+		return getPersistence().countByC_NotE(companyId, entryCount);
 	}
 
 	/**

@@ -87,8 +87,6 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		sb.append(uuid);
 		sb.append(", lockId=");
 		sb.append(lockId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -105,6 +103,8 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		sb.append(inheritable);
 		sb.append(", expirationDate=");
 		sb.append(expirationDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -124,7 +124,6 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		}
 
 		lockImpl.setLockId(lockId);
-		lockImpl.setCompanyId(companyId);
 		lockImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -171,6 +170,8 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 			lockImpl.setExpirationDate(new Date(expirationDate));
 		}
 
+		lockImpl.setCompanyId(companyId);
+
 		lockImpl.resetOriginalValues();
 
 		return lockImpl;
@@ -181,7 +182,6 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 		lockId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -190,6 +190,7 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		owner = objectInput.readUTF();
 		inheritable = objectInput.readBoolean();
 		expirationDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -205,7 +206,6 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 		}
 
 		objectOutput.writeLong(lockId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -240,12 +240,12 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 
 		objectOutput.writeBoolean(inheritable);
 		objectOutput.writeLong(expirationDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long mvccVersion;
 	public String uuid;
 	public long lockId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -254,4 +254,5 @@ public class LockCacheModel implements CacheModel<Lock>, Externalizable,
 	public String owner;
 	public boolean inheritable;
 	public long expirationDate;
+	public long companyId;
 }

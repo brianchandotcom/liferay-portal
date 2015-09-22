@@ -70,8 +70,6 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 
 		sb.append("{microblogsEntryId=");
 		sb.append(microblogsEntryId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -92,6 +90,8 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 		sb.append(parentMicroblogsEntryId);
 		sb.append(", socialRelationType=");
 		sb.append(socialRelationType);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -102,7 +102,6 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 		MicroblogsEntryImpl microblogsEntryImpl = new MicroblogsEntryImpl();
 
 		microblogsEntryImpl.setMicroblogsEntryId(microblogsEntryId);
-		microblogsEntryImpl.setCompanyId(companyId);
 		microblogsEntryImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -139,6 +138,7 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 		microblogsEntryImpl.setType(type);
 		microblogsEntryImpl.setParentMicroblogsEntryId(parentMicroblogsEntryId);
 		microblogsEntryImpl.setSocialRelationType(socialRelationType);
+		microblogsEntryImpl.setCompanyId(companyId);
 
 		microblogsEntryImpl.resetOriginalValues();
 
@@ -148,7 +148,6 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		microblogsEntryId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -159,13 +158,13 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 		type = objectInput.readInt();
 		parentMicroblogsEntryId = objectInput.readLong();
 		socialRelationType = objectInput.readInt();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(microblogsEntryId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -190,10 +189,10 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 		objectOutput.writeInt(type);
 		objectOutput.writeLong(parentMicroblogsEntryId);
 		objectOutput.writeInt(socialRelationType);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long microblogsEntryId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -204,4 +203,5 @@ public class MicroblogsEntryCacheModel implements CacheModel<MicroblogsEntry>,
 	public int type;
 	public long parentMicroblogsEntryId;
 	public int socialRelationType;
+	public long companyId;
 }

@@ -66,7 +66,6 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "kaleoTaskAssignmentId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -80,14 +79,14 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 			{ "assigneeActionId", Types.VARCHAR },
 			{ "assigneeScript", Types.CLOB },
 			{ "assigneeScriptLanguage", Types.VARCHAR },
-			{ "assigneeScriptRequiredContexts", Types.VARCHAR }
+			{ "assigneeScriptRequiredContexts", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("kaleoTaskAssignmentId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -102,9 +101,10 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		TABLE_COLUMNS_MAP.put("assigneeScript", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("assigneeScriptLanguage", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("assigneeScriptRequiredContexts", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoTaskAssignment (kaleoTaskAssignmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoNodeId LONG,assigneeClassName VARCHAR(200) null,assigneeClassPK LONG,assigneeActionId VARCHAR(75) null,assigneeScript TEXT null,assigneeScriptLanguage VARCHAR(75) null,assigneeScriptRequiredContexts STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoTaskAssignment (kaleoTaskAssignmentId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoClassName VARCHAR(200) null,kaleoClassPK LONG,kaleoDefinitionId LONG,kaleoNodeId LONG,assigneeClassName VARCHAR(200) null,assigneeClassPK LONG,assigneeActionId VARCHAR(75) null,assigneeScript TEXT null,assigneeScriptLanguage VARCHAR(75) null,assigneeScriptRequiredContexts STRING null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoTaskAssignment";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoTaskAssignment.kaleoTaskAssignmentId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoTaskAssignment.kaleoTaskAssignmentId ASC";
@@ -168,7 +168,6 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 
 		attributes.put("kaleoTaskAssignmentId", getKaleoTaskAssignmentId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -184,6 +183,7 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		attributes.put("assigneeScriptLanguage", getAssigneeScriptLanguage());
 		attributes.put("assigneeScriptRequiredContexts",
 			getAssigneeScriptRequiredContexts());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -204,12 +204,6 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -297,6 +291,12 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		if (assigneeScriptRequiredContexts != null) {
 			setAssigneeScriptRequiredContexts(assigneeScriptRequiredContexts);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -319,28 +319,6 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -585,6 +563,28 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		_assigneeScriptRequiredContexts = assigneeScriptRequiredContexts;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -618,7 +618,6 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 
 		kaleoTaskAssignmentImpl.setKaleoTaskAssignmentId(getKaleoTaskAssignmentId());
 		kaleoTaskAssignmentImpl.setGroupId(getGroupId());
-		kaleoTaskAssignmentImpl.setCompanyId(getCompanyId());
 		kaleoTaskAssignmentImpl.setUserId(getUserId());
 		kaleoTaskAssignmentImpl.setUserName(getUserName());
 		kaleoTaskAssignmentImpl.setCreateDate(getCreateDate());
@@ -633,6 +632,7 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		kaleoTaskAssignmentImpl.setAssigneeScript(getAssigneeScript());
 		kaleoTaskAssignmentImpl.setAssigneeScriptLanguage(getAssigneeScriptLanguage());
 		kaleoTaskAssignmentImpl.setAssigneeScriptRequiredContexts(getAssigneeScriptRequiredContexts());
+		kaleoTaskAssignmentImpl.setCompanyId(getCompanyId());
 
 		kaleoTaskAssignmentImpl.resetOriginalValues();
 
@@ -701,10 +701,6 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 	public void resetOriginalValues() {
 		KaleoTaskAssignmentModelImpl kaleoTaskAssignmentModelImpl = this;
 
-		kaleoTaskAssignmentModelImpl._originalCompanyId = kaleoTaskAssignmentModelImpl._companyId;
-
-		kaleoTaskAssignmentModelImpl._setOriginalCompanyId = false;
-
 		kaleoTaskAssignmentModelImpl._setModifiedDate = false;
 
 		kaleoTaskAssignmentModelImpl._originalKaleoClassName = kaleoTaskAssignmentModelImpl._kaleoClassName;
@@ -719,6 +715,10 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 
 		kaleoTaskAssignmentModelImpl._originalAssigneeClassName = kaleoTaskAssignmentModelImpl._assigneeClassName;
 
+		kaleoTaskAssignmentModelImpl._originalCompanyId = kaleoTaskAssignmentModelImpl._companyId;
+
+		kaleoTaskAssignmentModelImpl._setOriginalCompanyId = false;
+
 		kaleoTaskAssignmentModelImpl._columnBitmask = 0;
 	}
 
@@ -729,8 +729,6 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		kaleoTaskAssignmentCacheModel.kaleoTaskAssignmentId = getKaleoTaskAssignmentId();
 
 		kaleoTaskAssignmentCacheModel.groupId = getGroupId();
-
-		kaleoTaskAssignmentCacheModel.companyId = getCompanyId();
 
 		kaleoTaskAssignmentCacheModel.userId = getUserId();
 
@@ -818,6 +816,8 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 			kaleoTaskAssignmentCacheModel.assigneeScriptRequiredContexts = null;
 		}
 
+		kaleoTaskAssignmentCacheModel.companyId = getCompanyId();
+
 		return kaleoTaskAssignmentCacheModel;
 	}
 
@@ -829,8 +829,6 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		sb.append(getKaleoTaskAssignmentId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -859,6 +857,8 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		sb.append(getAssigneeScriptLanguage());
 		sb.append(", assigneeScriptRequiredContexts=");
 		sb.append(getAssigneeScriptRequiredContexts());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -879,10 +879,6 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -940,6 +936,10 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 			"<column><column-name>assigneeScriptRequiredContexts</column-name><column-value><![CDATA[");
 		sb.append(getAssigneeScriptRequiredContexts());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -952,9 +952,6 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 		};
 	private long _kaleoTaskAssignmentId;
 	private long _groupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -976,6 +973,9 @@ public class KaleoTaskAssignmentModelImpl extends BaseModelImpl<KaleoTaskAssignm
 	private String _assigneeScript;
 	private String _assigneeScriptLanguage;
 	private String _assigneeScriptRequiredContexts;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private KaleoTaskAssignment _escapedModel;
 }

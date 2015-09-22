@@ -64,7 +64,7 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{itemFieldId=");
 		sb.append(itemFieldId);
@@ -76,6 +76,8 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 		sb.append(values);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -109,6 +111,8 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 			shoppingItemFieldImpl.setDescription(description);
 		}
 
+		shoppingItemFieldImpl.setCompanyId(companyId);
+
 		shoppingItemFieldImpl.resetOriginalValues();
 
 		return shoppingItemFieldImpl;
@@ -121,6 +125,7 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 		name = objectInput.readUTF();
 		values = objectInput.readUTF();
 		description = objectInput.readUTF();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -149,6 +154,8 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(companyId);
 	}
 
 	public long itemFieldId;
@@ -156,4 +163,5 @@ public class ShoppingItemFieldCacheModel implements CacheModel<ShoppingItemField
 	public String name;
 	public String values;
 	public String description;
+	public long companyId;
 }

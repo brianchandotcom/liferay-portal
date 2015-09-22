@@ -67,29 +67,29 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "activityLimitId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "activityType", Types.INTEGER },
 			{ "activityCounterName", Types.VARCHAR },
-			{ "value", Types.VARCHAR }
+			{ "value", Types.VARCHAR },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("activityLimitId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("activityType", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("activityCounterName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("value", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialActivityLimit (activityLimitId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivityLimit (activityLimitId LONG not null primary key,groupId LONG,userId LONG,classNameId LONG,classPK LONG,activityType INTEGER,activityCounterName VARCHAR(75) null,value VARCHAR(75) null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivityLimit";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivityLimit.activityLimitId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialActivityLimit.activityLimitId ASC";
@@ -154,13 +154,13 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 		attributes.put("activityLimitId", getActivityLimitId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("activityType", getActivityType());
 		attributes.put("activityCounterName", getActivityCounterName());
 		attributes.put("value", getValue());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -180,12 +180,6 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -224,6 +218,12 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		if (value != null) {
 			setValue(value);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -256,16 +256,6 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -432,6 +422,16 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		_value = value;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -465,13 +465,13 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 		socialActivityLimitImpl.setActivityLimitId(getActivityLimitId());
 		socialActivityLimitImpl.setGroupId(getGroupId());
-		socialActivityLimitImpl.setCompanyId(getCompanyId());
 		socialActivityLimitImpl.setUserId(getUserId());
 		socialActivityLimitImpl.setClassNameId(getClassNameId());
 		socialActivityLimitImpl.setClassPK(getClassPK());
 		socialActivityLimitImpl.setActivityType(getActivityType());
 		socialActivityLimitImpl.setActivityCounterName(getActivityCounterName());
 		socialActivityLimitImpl.setValue(getValue());
+		socialActivityLimitImpl.setCompanyId(getCompanyId());
 
 		socialActivityLimitImpl.resetOriginalValues();
 
@@ -567,8 +567,6 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 
 		socialActivityLimitCacheModel.groupId = getGroupId();
 
-		socialActivityLimitCacheModel.companyId = getCompanyId();
-
 		socialActivityLimitCacheModel.userId = getUserId();
 
 		socialActivityLimitCacheModel.classNameId = getClassNameId();
@@ -594,6 +592,8 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 			socialActivityLimitCacheModel.value = null;
 		}
 
+		socialActivityLimitCacheModel.companyId = getCompanyId();
+
 		return socialActivityLimitCacheModel;
 	}
 
@@ -605,8 +605,6 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		sb.append(getActivityLimitId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", classNameId=");
@@ -619,6 +617,8 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		sb.append(getActivityCounterName());
 		sb.append(", value=");
 		sb.append(getValue());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -639,10 +639,6 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -668,6 +664,10 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 			"<column><column-name>value</column-name><column-value><![CDATA[");
 		sb.append(getValue());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -682,7 +682,6 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -698,6 +697,7 @@ public class SocialActivityLimitModelImpl extends BaseModelImpl<SocialActivityLi
 	private String _activityCounterName;
 	private String _originalActivityCounterName;
 	private String _value;
+	private long _companyId;
 	private long _columnBitmask;
 	private SocialActivityLimit _escapedModel;
 }

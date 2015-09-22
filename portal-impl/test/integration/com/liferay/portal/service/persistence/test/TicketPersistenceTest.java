@@ -118,8 +118,6 @@ public class TicketPersistenceTest {
 
 		newTicket.setMvccVersion(RandomTestUtil.nextLong());
 
-		newTicket.setCompanyId(RandomTestUtil.nextLong());
-
 		newTicket.setCreateDate(RandomTestUtil.nextDate());
 
 		newTicket.setClassNameId(RandomTestUtil.nextLong());
@@ -134,6 +132,8 @@ public class TicketPersistenceTest {
 
 		newTicket.setExpirationDate(RandomTestUtil.nextDate());
 
+		newTicket.setCompanyId(RandomTestUtil.nextLong());
+
 		_tickets.add(_persistence.update(newTicket));
 
 		Ticket existingTicket = _persistence.findByPrimaryKey(newTicket.getPrimaryKey());
@@ -142,8 +142,6 @@ public class TicketPersistenceTest {
 			newTicket.getMvccVersion());
 		Assert.assertEquals(existingTicket.getTicketId(),
 			newTicket.getTicketId());
-		Assert.assertEquals(existingTicket.getCompanyId(),
-			newTicket.getCompanyId());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingTicket.getCreateDate()),
 			Time.getShortTimestamp(newTicket.getCreateDate()));
@@ -157,6 +155,8 @@ public class TicketPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingTicket.getExpirationDate()),
 			Time.getShortTimestamp(newTicket.getExpirationDate()));
+		Assert.assertEquals(existingTicket.getCompanyId(),
+			newTicket.getCompanyId());
 	}
 
 	@Test
@@ -200,9 +200,9 @@ public class TicketPersistenceTest {
 
 	protected OrderByComparator<Ticket> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Ticket", "mvccVersion",
-			true, "ticketId", true, "companyId", true, "createDate", true,
-			"classNameId", true, "classPK", true, "key", true, "type", true,
-			"expirationDate", true);
+			true, "ticketId", true, "createDate", true, "classNameId", true,
+			"classPK", true, "key", true, "type", true, "expirationDate", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -415,8 +415,6 @@ public class TicketPersistenceTest {
 
 		ticket.setMvccVersion(RandomTestUtil.nextLong());
 
-		ticket.setCompanyId(RandomTestUtil.nextLong());
-
 		ticket.setCreateDate(RandomTestUtil.nextDate());
 
 		ticket.setClassNameId(RandomTestUtil.nextLong());
@@ -430,6 +428,8 @@ public class TicketPersistenceTest {
 		ticket.setExtraInfo(RandomTestUtil.randomString());
 
 		ticket.setExpirationDate(RandomTestUtil.nextDate());
+
+		ticket.setCompanyId(RandomTestUtil.nextLong());
 
 		_tickets.add(_persistence.update(ticket));
 

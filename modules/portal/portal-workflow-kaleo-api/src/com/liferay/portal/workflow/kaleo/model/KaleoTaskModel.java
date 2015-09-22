@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface KaleoTaskModel extends BaseModel<KaleoTask>, GroupedModel {
+public interface KaleoTaskModel extends BaseModel<KaleoTask>, GroupedModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -92,22 +94,6 @@ public interface KaleoTaskModel extends BaseModel<KaleoTask>, GroupedModel {
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this kaleo task.
-	 *
-	 * @return the company ID of this kaleo task
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this kaleo task.
-	 *
-	 * @param companyId the company ID of this kaleo task
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this kaleo task.
@@ -247,6 +233,22 @@ public interface KaleoTaskModel extends BaseModel<KaleoTask>, GroupedModel {
 	 * @param description the description of this kaleo task
 	 */
 	public void setDescription(String description);
+
+	/**
+	 * Returns the company ID of this kaleo task.
+	 *
+	 * @return the company ID of this kaleo task
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this kaleo task.
+	 *
+	 * @param companyId the company ID of this kaleo task
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

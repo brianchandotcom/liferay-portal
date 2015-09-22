@@ -66,7 +66,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "kaleoTransitionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -79,14 +78,14 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 			{ "sourceKaleoNodeName", Types.VARCHAR },
 			{ "targetKaleoNodeId", Types.BIGINT },
 			{ "targetKaleoNodeName", Types.VARCHAR },
-			{ "defaultTransition", Types.BOOLEAN }
+			{ "defaultTransition", Types.BOOLEAN },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("kaleoTransitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -100,9 +99,10 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		TABLE_COLUMNS_MAP.put("targetKaleoNodeId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("targetKaleoNodeName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultTransition", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table KaleoTransition (kaleoTransitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null,sourceKaleoNodeId LONG,sourceKaleoNodeName VARCHAR(200) null,targetKaleoNodeId LONG,targetKaleoNodeName VARCHAR(200) null,defaultTransition BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table KaleoTransition (kaleoTransitionId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(200) null,createDate DATE null,modifiedDate DATE null,kaleoDefinitionId LONG,kaleoNodeId LONG,name VARCHAR(200) null,description STRING null,sourceKaleoNodeId LONG,sourceKaleoNodeName VARCHAR(200) null,targetKaleoNodeId LONG,targetKaleoNodeName VARCHAR(200) null,defaultTransition BOOLEAN,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table KaleoTransition";
 	public static final String ORDER_BY_JPQL = " ORDER BY kaleoTransition.kaleoTransitionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY KaleoTransition.kaleoTransitionId ASC";
@@ -166,7 +166,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 
 		attributes.put("kaleoTransitionId", getKaleoTransitionId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -180,6 +179,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		attributes.put("targetKaleoNodeId", getTargetKaleoNodeId());
 		attributes.put("targetKaleoNodeName", getTargetKaleoNodeName());
 		attributes.put("defaultTransition", getDefaultTransition());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -199,12 +199,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -286,6 +280,12 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		if (defaultTransition != null) {
 			setDefaultTransition(defaultTransition);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -308,28 +308,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	@Override
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@Override
@@ -560,6 +538,28 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		return _originalDefaultTransition;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -593,7 +593,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 
 		kaleoTransitionImpl.setKaleoTransitionId(getKaleoTransitionId());
 		kaleoTransitionImpl.setGroupId(getGroupId());
-		kaleoTransitionImpl.setCompanyId(getCompanyId());
 		kaleoTransitionImpl.setUserId(getUserId());
 		kaleoTransitionImpl.setUserName(getUserName());
 		kaleoTransitionImpl.setCreateDate(getCreateDate());
@@ -607,6 +606,7 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		kaleoTransitionImpl.setTargetKaleoNodeId(getTargetKaleoNodeId());
 		kaleoTransitionImpl.setTargetKaleoNodeName(getTargetKaleoNodeName());
 		kaleoTransitionImpl.setDefaultTransition(getDefaultTransition());
+		kaleoTransitionImpl.setCompanyId(getCompanyId());
 
 		kaleoTransitionImpl.resetOriginalValues();
 
@@ -675,10 +675,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	public void resetOriginalValues() {
 		KaleoTransitionModelImpl kaleoTransitionModelImpl = this;
 
-		kaleoTransitionModelImpl._originalCompanyId = kaleoTransitionModelImpl._companyId;
-
-		kaleoTransitionModelImpl._setOriginalCompanyId = false;
-
 		kaleoTransitionModelImpl._setModifiedDate = false;
 
 		kaleoTransitionModelImpl._originalKaleoDefinitionId = kaleoTransitionModelImpl._kaleoDefinitionId;
@@ -695,6 +691,10 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 
 		kaleoTransitionModelImpl._setOriginalDefaultTransition = false;
 
+		kaleoTransitionModelImpl._originalCompanyId = kaleoTransitionModelImpl._companyId;
+
+		kaleoTransitionModelImpl._setOriginalCompanyId = false;
+
 		kaleoTransitionModelImpl._columnBitmask = 0;
 	}
 
@@ -705,8 +705,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		kaleoTransitionCacheModel.kaleoTransitionId = getKaleoTransitionId();
 
 		kaleoTransitionCacheModel.groupId = getGroupId();
-
-		kaleoTransitionCacheModel.companyId = getCompanyId();
 
 		kaleoTransitionCacheModel.userId = getUserId();
 
@@ -780,6 +778,8 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 
 		kaleoTransitionCacheModel.defaultTransition = getDefaultTransition();
 
+		kaleoTransitionCacheModel.companyId = getCompanyId();
+
 		return kaleoTransitionCacheModel;
 	}
 
@@ -791,8 +791,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		sb.append(getKaleoTransitionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -819,6 +817,8 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		sb.append(getTargetKaleoNodeName());
 		sb.append(", defaultTransition=");
 		sb.append(getDefaultTransition());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -839,10 +839,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -896,6 +892,10 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 			"<column><column-name>defaultTransition</column-name><column-value><![CDATA[");
 		sb.append(getDefaultTransition());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -908,9 +908,6 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 		};
 	private long _kaleoTransitionId;
 	private long _groupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -932,6 +929,9 @@ public class KaleoTransitionModelImpl extends BaseModelImpl<KaleoTransition>
 	private boolean _defaultTransition;
 	private boolean _originalDefaultTransition;
 	private boolean _setOriginalDefaultTransition;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private KaleoTransition _escapedModel;
 }

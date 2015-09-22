@@ -54,7 +54,6 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 
 		attributes.put("kaleoTimerId", getKaleoTimerId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -69,6 +68,7 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 		attributes.put("scale", getScale());
 		attributes.put("recurrenceDuration", getRecurrenceDuration());
 		attributes.put("recurrenceScale", getRecurrenceScale());
+		attributes.put("companyId", getCompanyId());
 
 		return attributes;
 	}
@@ -85,12 +85,6 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -175,6 +169,12 @@ public class KaleoTimerWrapper implements KaleoTimer, ModelWrapper<KaleoTimer> {
 
 		if (recurrenceScale != null) {
 			setRecurrenceScale(recurrenceScale);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 

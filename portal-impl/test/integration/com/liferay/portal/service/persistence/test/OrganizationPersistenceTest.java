@@ -120,8 +120,6 @@ public class OrganizationPersistenceTest {
 
 		newOrganization.setUuid(RandomTestUtil.randomString());
 
-		newOrganization.setCompanyId(RandomTestUtil.nextLong());
-
 		newOrganization.setUserId(RandomTestUtil.nextLong());
 
 		newOrganization.setUserName(RandomTestUtil.randomString());
@@ -152,6 +150,8 @@ public class OrganizationPersistenceTest {
 
 		newOrganization.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newOrganization.setCompanyId(RandomTestUtil.nextLong());
+
 		_organizations.add(_persistence.update(newOrganization));
 
 		Organization existingOrganization = _persistence.findByPrimaryKey(newOrganization.getPrimaryKey());
@@ -162,8 +162,6 @@ public class OrganizationPersistenceTest {
 			newOrganization.getUuid());
 		Assert.assertEquals(existingOrganization.getOrganizationId(),
 			newOrganization.getOrganizationId());
-		Assert.assertEquals(existingOrganization.getCompanyId(),
-			newOrganization.getCompanyId());
 		Assert.assertEquals(existingOrganization.getUserId(),
 			newOrganization.getUserId());
 		Assert.assertEquals(existingOrganization.getUserName(),
@@ -197,6 +195,8 @@ public class OrganizationPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingOrganization.getLastPublishDate()),
 			Time.getShortTimestamp(newOrganization.getLastPublishDate()));
+		Assert.assertEquals(existingOrganization.getCompanyId(),
+			newOrganization.getCompanyId());
 	}
 
 	@Test
@@ -290,11 +290,11 @@ public class OrganizationPersistenceTest {
 	protected OrderByComparator<Organization> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("Organization_",
 			"mvccVersion", true, "uuid", true, "organizationId", true,
-			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "parentOrganizationId", true,
-			"treePath", true, "name", true, "type", true, "recursable", true,
-			"regionId", true, "countryId", true, "statusId", true, "comments",
-			true, "logoId", true, "lastPublishDate", true);
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "parentOrganizationId", true, "treePath",
+			true, "name", true, "type", true, "recursable", true, "regionId",
+			true, "countryId", true, "statusId", true, "comments", true,
+			"logoId", true, "lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -518,8 +518,6 @@ public class OrganizationPersistenceTest {
 
 		organization.setUuid(RandomTestUtil.randomString());
 
-		organization.setCompanyId(RandomTestUtil.nextLong());
-
 		organization.setUserId(RandomTestUtil.nextLong());
 
 		organization.setUserName(RandomTestUtil.randomString());
@@ -549,6 +547,8 @@ public class OrganizationPersistenceTest {
 		organization.setLogoId(RandomTestUtil.nextLong());
 
 		organization.setLastPublishDate(RandomTestUtil.nextDate());
+
+		organization.setCompanyId(RandomTestUtil.nextLong());
 
 		_organizations.add(_persistence.update(organization));
 

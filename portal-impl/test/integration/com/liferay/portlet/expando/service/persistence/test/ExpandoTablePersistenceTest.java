@@ -116,11 +116,11 @@ public class ExpandoTablePersistenceTest {
 
 		ExpandoTable newExpandoTable = _persistence.create(pk);
 
-		newExpandoTable.setCompanyId(RandomTestUtil.nextLong());
-
 		newExpandoTable.setClassNameId(RandomTestUtil.nextLong());
 
 		newExpandoTable.setName(RandomTestUtil.randomString());
+
+		newExpandoTable.setCompanyId(RandomTestUtil.nextLong());
 
 		_expandoTables.add(_persistence.update(newExpandoTable));
 
@@ -128,12 +128,12 @@ public class ExpandoTablePersistenceTest {
 
 		Assert.assertEquals(existingExpandoTable.getTableId(),
 			newExpandoTable.getTableId());
-		Assert.assertEquals(existingExpandoTable.getCompanyId(),
-			newExpandoTable.getCompanyId());
 		Assert.assertEquals(existingExpandoTable.getClassNameId(),
 			newExpandoTable.getClassNameId());
 		Assert.assertEquals(existingExpandoTable.getName(),
 			newExpandoTable.getName());
+		Assert.assertEquals(existingExpandoTable.getCompanyId(),
+			newExpandoTable.getCompanyId());
 	}
 
 	@Test
@@ -178,7 +178,7 @@ public class ExpandoTablePersistenceTest {
 
 	protected OrderByComparator<ExpandoTable> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("ExpandoTable", "tableId",
-			true, "companyId", true, "classNameId", true, "name", true);
+			true, "classNameId", true, "name", true, "companyId", true);
 	}
 
 	@Test
@@ -399,11 +399,11 @@ public class ExpandoTablePersistenceTest {
 
 		ExpandoTable expandoTable = _persistence.create(pk);
 
-		expandoTable.setCompanyId(RandomTestUtil.nextLong());
-
 		expandoTable.setClassNameId(RandomTestUtil.nextLong());
 
 		expandoTable.setName(RandomTestUtil.randomString());
+
+		expandoTable.setCompanyId(RandomTestUtil.nextLong());
 
 		_expandoTables.add(_persistence.update(expandoTable));
 

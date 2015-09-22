@@ -39,7 +39,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel {
+public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -103,20 +104,6 @@ public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel {
 	 * @param groupId the group ID of this layout set
 	 */
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this layout set.
-	 *
-	 * @return the company ID of this layout set
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this layout set.
-	 *
-	 * @param companyId the company ID of this layout set
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the create date of this layout set.
@@ -321,6 +308,22 @@ public interface LayoutSetModel extends BaseModel<LayoutSet>, MVCCModel {
 	 */
 	public void setLayoutSetPrototypeLinkEnabled(
 		boolean layoutSetPrototypeLinkEnabled);
+
+	/**
+	 * Returns the company ID of this layout set.
+	 *
+	 * @return the company ID of this layout set
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this layout set.
+	 *
+	 * @param companyId the company ID of this layout set
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

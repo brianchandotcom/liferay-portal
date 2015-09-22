@@ -22,6 +22,7 @@ import com.liferay.bookmarks.model.impl.BookmarksFolderImpl;
 import com.liferay.bookmarks.model.impl.BookmarksFolderModelImpl;
 import com.liferay.bookmarks.service.persistence.BookmarksFolderPersistence;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -42,6 +43,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import java.io.Serializable;
 
@@ -6893,6 +6895,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 
 		bookmarksFolder.setUuid(uuid);
 
+		bookmarksFolder.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return bookmarksFolder;
 	}
 
@@ -7210,7 +7214,6 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		bookmarksFolderImpl.setUuid(bookmarksFolder.getUuid());
 		bookmarksFolderImpl.setFolderId(bookmarksFolder.getFolderId());
 		bookmarksFolderImpl.setGroupId(bookmarksFolder.getGroupId());
-		bookmarksFolderImpl.setCompanyId(bookmarksFolder.getCompanyId());
 		bookmarksFolderImpl.setUserId(bookmarksFolder.getUserId());
 		bookmarksFolderImpl.setUserName(bookmarksFolder.getUserName());
 		bookmarksFolderImpl.setCreateDate(bookmarksFolder.getCreateDate());
@@ -7225,6 +7228,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		bookmarksFolderImpl.setStatusByUserId(bookmarksFolder.getStatusByUserId());
 		bookmarksFolderImpl.setStatusByUserName(bookmarksFolder.getStatusByUserName());
 		bookmarksFolderImpl.setStatusDate(bookmarksFolder.getStatusDate());
+		bookmarksFolderImpl.setCompanyId(bookmarksFolder.getCompanyId());
 
 		return bookmarksFolderImpl;
 	}
@@ -7606,6 +7610,8 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_BOOKMARKSFOLDER = "SELECT bookmarksFolder FROM BookmarksFolder bookmarksFolder";
 	private static final String _SQL_SELECT_BOOKMARKSFOLDER_WHERE_PKS_IN = "SELECT bookmarksFolder FROM BookmarksFolder bookmarksFolder WHERE folderId IN (";
 	private static final String _SQL_SELECT_BOOKMARKSFOLDER_WHERE = "SELECT bookmarksFolder FROM BookmarksFolder bookmarksFolder WHERE ";

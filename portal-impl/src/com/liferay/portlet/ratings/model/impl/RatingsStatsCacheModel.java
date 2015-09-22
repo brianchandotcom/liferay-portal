@@ -63,7 +63,7 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append("{statsId=");
 		sb.append(statsId);
@@ -77,6 +77,8 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 		sb.append(totalScore);
 		sb.append(", averageScore=");
 		sb.append(averageScore);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -92,6 +94,7 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 		ratingsStatsImpl.setTotalEntries(totalEntries);
 		ratingsStatsImpl.setTotalScore(totalScore);
 		ratingsStatsImpl.setAverageScore(averageScore);
+		ratingsStatsImpl.setCompanyId(companyId);
 
 		ratingsStatsImpl.resetOriginalValues();
 
@@ -106,6 +109,7 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 		totalEntries = objectInput.readInt();
 		totalScore = objectInput.readDouble();
 		averageScore = objectInput.readDouble();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -117,6 +121,7 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 		objectOutput.writeInt(totalEntries);
 		objectOutput.writeDouble(totalScore);
 		objectOutput.writeDouble(averageScore);
+		objectOutput.writeLong(companyId);
 	}
 
 	public long statsId;
@@ -125,4 +130,5 @@ public class RatingsStatsCacheModel implements CacheModel<RatingsStats>,
 	public int totalEntries;
 	public double totalScore;
 	public double averageScore;
+	public long companyId;
 }

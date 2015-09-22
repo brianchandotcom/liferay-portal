@@ -122,8 +122,6 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 
 		newKaleoTaskInstanceToken.setGroupId(RandomTestUtil.nextLong());
 
-		newKaleoTaskInstanceToken.setCompanyId(RandomTestUtil.nextLong());
-
 		newKaleoTaskInstanceToken.setUserId(RandomTestUtil.nextLong());
 
 		newKaleoTaskInstanceToken.setUserName(RandomTestUtil.randomString());
@@ -156,6 +154,8 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 
 		newKaleoTaskInstanceToken.setWorkflowContext(RandomTestUtil.randomString());
 
+		newKaleoTaskInstanceToken.setCompanyId(RandomTestUtil.nextLong());
+
 		_kaleoTaskInstanceTokens.add(_persistence.update(
 				newKaleoTaskInstanceToken));
 
@@ -165,8 +165,6 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 			newKaleoTaskInstanceToken.getKaleoTaskInstanceTokenId());
 		Assert.assertEquals(existingKaleoTaskInstanceToken.getGroupId(),
 			newKaleoTaskInstanceToken.getGroupId());
-		Assert.assertEquals(existingKaleoTaskInstanceToken.getCompanyId(),
-			newKaleoTaskInstanceToken.getCompanyId());
 		Assert.assertEquals(existingKaleoTaskInstanceToken.getUserId(),
 			newKaleoTaskInstanceToken.getUserId());
 		Assert.assertEquals(existingKaleoTaskInstanceToken.getUserName(),
@@ -204,13 +202,8 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 			Time.getShortTimestamp(newKaleoTaskInstanceToken.getDueDate()));
 		Assert.assertEquals(existingKaleoTaskInstanceToken.getWorkflowContext(),
 			newKaleoTaskInstanceToken.getWorkflowContext());
-	}
-
-	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
-
-		_persistence.countByCompanyId(0L);
+		Assert.assertEquals(existingKaleoTaskInstanceToken.getCompanyId(),
+			newKaleoTaskInstanceToken.getCompanyId());
 	}
 
 	@Test
@@ -225,6 +218,13 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 		_persistence.countByKaleoInstanceId(RandomTestUtil.nextLong());
 
 		_persistence.countByKaleoInstanceId(0L);
+	}
+
+	@Test
+	public void testCountByCompanyId() throws Exception {
+		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+
+		_persistence.countByCompanyId(0L);
 	}
 
 	@Test
@@ -269,13 +269,13 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 
 	protected OrderByComparator<KaleoTaskInstanceToken> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("KaleoTaskInstanceToken",
-			"kaleoTaskInstanceTokenId", true, "groupId", true, "companyId",
-			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "kaleoDefinitionId", true, "kaleoInstanceId",
-			true, "kaleoInstanceTokenId", true, "kaleoTaskId", true,
-			"kaleoTaskName", true, "className", true, "classPK", true,
-			"completionUserId", true, "completed", true, "completionDate",
-			true, "dueDate", true);
+			"kaleoTaskInstanceTokenId", true, "groupId", true, "userId", true,
+			"userName", true, "createDate", true, "modifiedDate", true,
+			"kaleoDefinitionId", true, "kaleoInstanceId", true,
+			"kaleoInstanceTokenId", true, "kaleoTaskId", true, "kaleoTaskName",
+			true, "className", true, "classPK", true, "completionUserId", true,
+			"completed", true, "completionDate", true, "dueDate", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -510,8 +510,6 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 
 		kaleoTaskInstanceToken.setGroupId(RandomTestUtil.nextLong());
 
-		kaleoTaskInstanceToken.setCompanyId(RandomTestUtil.nextLong());
-
 		kaleoTaskInstanceToken.setUserId(RandomTestUtil.nextLong());
 
 		kaleoTaskInstanceToken.setUserName(RandomTestUtil.randomString());
@@ -543,6 +541,8 @@ public class KaleoTaskInstanceTokenPersistenceTest {
 		kaleoTaskInstanceToken.setDueDate(RandomTestUtil.nextDate());
 
 		kaleoTaskInstanceToken.setWorkflowContext(RandomTestUtil.randomString());
+
+		kaleoTaskInstanceToken.setCompanyId(RandomTestUtil.nextLong());
 
 		_kaleoTaskInstanceTokens.add(_persistence.update(kaleoTaskInstanceToken));
 

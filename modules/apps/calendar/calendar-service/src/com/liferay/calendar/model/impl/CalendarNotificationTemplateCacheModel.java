@@ -75,8 +75,6 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 		sb.append(calendarNotificationTemplateId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -99,6 +97,8 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 		sb.append(body);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -117,7 +117,6 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 
 		calendarNotificationTemplateImpl.setCalendarNotificationTemplateId(calendarNotificationTemplateId);
 		calendarNotificationTemplateImpl.setGroupId(groupId);
-		calendarNotificationTemplateImpl.setCompanyId(companyId);
 		calendarNotificationTemplateImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -187,6 +186,8 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 					lastPublishDate));
 		}
 
+		calendarNotificationTemplateImpl.setCompanyId(companyId);
+
 		calendarNotificationTemplateImpl.resetOriginalValues();
 
 		return calendarNotificationTemplateImpl;
@@ -197,7 +198,6 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 		uuid = objectInput.readUTF();
 		calendarNotificationTemplateId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -209,6 +209,7 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 		subject = objectInput.readUTF();
 		body = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -223,7 +224,6 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 
 		objectOutput.writeLong(calendarNotificationTemplateId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -273,12 +273,12 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long calendarNotificationTemplateId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -290,4 +290,5 @@ public class CalendarNotificationTemplateCacheModel implements CacheModel<Calend
 	public String subject;
 	public String body;
 	public long lastPublishDate;
+	public long companyId;
 }

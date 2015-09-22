@@ -74,8 +74,6 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 		sb.append(choiceId);
 		sb.append(", groupId=");
 		sb.append(groupId);
-		sb.append(", companyId=");
-		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
 		sb.append(", userName=");
@@ -92,6 +90,8 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 		sb.append(description);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append("}");
 
 		return sb.toString();
@@ -110,7 +110,6 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 
 		pollsChoiceImpl.setChoiceId(choiceId);
 		pollsChoiceImpl.setGroupId(groupId);
-		pollsChoiceImpl.setCompanyId(companyId);
 		pollsChoiceImpl.setUserId(userId);
 
 		if (userName == null) {
@@ -157,6 +156,8 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 			pollsChoiceImpl.setLastPublishDate(new Date(lastPublishDate));
 		}
 
+		pollsChoiceImpl.setCompanyId(companyId);
+
 		pollsChoiceImpl.resetOriginalValues();
 
 		return pollsChoiceImpl;
@@ -167,7 +168,6 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 		uuid = objectInput.readUTF();
 		choiceId = objectInput.readLong();
 		groupId = objectInput.readLong();
-		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
@@ -176,6 +176,7 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
+		companyId = objectInput.readLong();
 	}
 
 	@Override
@@ -190,7 +191,6 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 
 		objectOutput.writeLong(choiceId);
 		objectOutput.writeLong(groupId);
-		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
@@ -219,12 +219,12 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 		}
 
 		objectOutput.writeLong(lastPublishDate);
+		objectOutput.writeLong(companyId);
 	}
 
 	public String uuid;
 	public long choiceId;
 	public long groupId;
-	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
@@ -233,4 +233,5 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 	public String name;
 	public String description;
 	public long lastPublishDate;
+	public long companyId;
 }

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -48,7 +49,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
-	StagedGroupedModel, TrashedModel {
+	PartitionableModel, StagedGroupedModel, TrashedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -115,22 +116,6 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this document library file entry.
-	 *
-	 * @return the company ID of this document library file entry
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this document library file entry.
-	 *
-	 * @param companyId the company ID of this document library file entry
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this document library file entry.
@@ -552,6 +537,22 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this document library file entry.
+	 *
+	 * @return the company ID of this document library file entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this document library file entry.
+	 *
+	 * @param companyId the company ID of this document library file entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the status of this document library file entry.

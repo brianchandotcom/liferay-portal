@@ -67,7 +67,6 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "activitySetId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "createDate", Types.BIGINT },
 			{ "modifiedDate", Types.BIGINT },
@@ -75,14 +74,14 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 			{ "classPK", Types.BIGINT },
 			{ "type_", Types.INTEGER },
 			{ "extraData", Types.VARCHAR },
-			{ "activityCount", Types.INTEGER }
+			{ "activityCount", Types.INTEGER },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("activitySetId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.BIGINT);
@@ -91,9 +90,10 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("extraData", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("activityCount", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SocialActivitySet (activitySetId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,createDate LONG,modifiedDate LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,activityCount INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table SocialActivitySet (activitySetId LONG not null primary key,groupId LONG,userId LONG,createDate LONG,modifiedDate LONG,classNameId LONG,classPK LONG,type_ INTEGER,extraData STRING null,activityCount INTEGER,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table SocialActivitySet";
 	public static final String ORDER_BY_JPQL = " ORDER BY socialActivitySet.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY SocialActivitySet.modifiedDate DESC";
@@ -157,7 +157,6 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 
 		attributes.put("activitySetId", getActivitySetId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -166,6 +165,7 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 		attributes.put("type", getType());
 		attributes.put("extraData", getExtraData());
 		attributes.put("activityCount", getActivityCount());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -185,12 +185,6 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -240,6 +234,12 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 		if (activityCount != null) {
 			setActivityCount(activityCount);
 		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
+		}
 	}
 
 	@Override
@@ -272,16 +272,6 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_companyId = companyId;
 	}
 
 	@Override
@@ -455,6 +445,16 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 		_activityCount = activityCount;
 	}
 
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -488,7 +488,6 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 
 		socialActivitySetImpl.setActivitySetId(getActivitySetId());
 		socialActivitySetImpl.setGroupId(getGroupId());
-		socialActivitySetImpl.setCompanyId(getCompanyId());
 		socialActivitySetImpl.setUserId(getUserId());
 		socialActivitySetImpl.setCreateDate(getCreateDate());
 		socialActivitySetImpl.setModifiedDate(getModifiedDate());
@@ -497,6 +496,7 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 		socialActivitySetImpl.setType(getType());
 		socialActivitySetImpl.setExtraData(getExtraData());
 		socialActivitySetImpl.setActivityCount(getActivityCount());
+		socialActivitySetImpl.setCompanyId(getCompanyId());
 
 		socialActivitySetImpl.resetOriginalValues();
 
@@ -598,8 +598,6 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 
 		socialActivitySetCacheModel.groupId = getGroupId();
 
-		socialActivitySetCacheModel.companyId = getCompanyId();
-
 		socialActivitySetCacheModel.userId = getUserId();
 
 		socialActivitySetCacheModel.createDate = getCreateDate();
@@ -622,6 +620,8 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 
 		socialActivitySetCacheModel.activityCount = getActivityCount();
 
+		socialActivitySetCacheModel.companyId = getCompanyId();
+
 		return socialActivitySetCacheModel;
 	}
 
@@ -633,8 +633,6 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 		sb.append(getActivitySetId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", createDate=");
@@ -651,6 +649,8 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 		sb.append(getExtraData());
 		sb.append(", activityCount=");
 		sb.append(getActivityCount());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -671,10 +671,6 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -708,6 +704,10 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 			"<column><column-name>activityCount</column-name><column-value><![CDATA[");
 		sb.append(getActivityCount());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -722,7 +722,6 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
 	private long _userId;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
@@ -739,6 +738,7 @@ public class SocialActivitySetModelImpl extends BaseModelImpl<SocialActivitySet>
 	private boolean _setOriginalType;
 	private String _extraData;
 	private int _activityCount;
+	private long _companyId;
 	private long _columnBitmask;
 	private SocialActivitySet _escapedModel;
 }

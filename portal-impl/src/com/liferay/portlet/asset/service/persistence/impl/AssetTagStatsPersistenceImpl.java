@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.CompanyProviderHolder;
 
 import com.liferay.portlet.asset.NoSuchTagStatsException;
 import com.liferay.portlet.asset.model.AssetTagStats;
@@ -1422,6 +1424,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		assetTagStats.setNew(true);
 		assetTagStats.setPrimaryKey(tagStatsId);
 
+		assetTagStats.setCompanyId(companyProviderHolder.getCompanyId());
+
 		return assetTagStats;
 	}
 
@@ -1608,6 +1612,7 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		assetTagStatsImpl.setTagId(assetTagStats.getTagId());
 		assetTagStatsImpl.setClassNameId(assetTagStats.getClassNameId());
 		assetTagStatsImpl.setAssetCount(assetTagStats.getAssetCount());
+		assetTagStatsImpl.setCompanyId(assetTagStats.getCompanyId());
 
 		return assetTagStatsImpl;
 	}
@@ -1983,6 +1988,8 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CompanyProviderHolder.class)
+	protected CompanyProviderHolder companyProviderHolder;
 	private static final String _SQL_SELECT_ASSETTAGSTATS = "SELECT assetTagStats FROM AssetTagStats assetTagStats";
 	private static final String _SQL_SELECT_ASSETTAGSTATS_WHERE_PKS_IN = "SELECT assetTagStats FROM AssetTagStats assetTagStats WHERE tagStatsId IN (";
 	private static final String _SQL_SELECT_ASSETTAGSTATS_WHERE = "SELECT assetTagStats FROM AssetTagStats assetTagStats WHERE ";

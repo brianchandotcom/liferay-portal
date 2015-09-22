@@ -388,6 +388,138 @@ public class PhoneUtil {
 	}
 
 	/**
+	* Returns all the phones where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the matching phones
+	*/
+	public static List<Phone> findByUserId(long userId) {
+		return getPersistence().findByUserId(userId);
+	}
+
+	/**
+	* Returns a range of all the phones where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PhoneModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of phones
+	* @param end the upper bound of the range of phones (not inclusive)
+	* @return the range of matching phones
+	*/
+	public static List<Phone> findByUserId(long userId, int start, int end) {
+		return getPersistence().findByUserId(userId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the phones where userId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PhoneModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userId the user ID
+	* @param start the lower bound of the range of phones
+	* @param end the upper bound of the range of phones (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching phones
+	*/
+	public static List<Phone> findByUserId(long userId, int start, int end,
+		OrderByComparator<Phone> orderByComparator) {
+		return getPersistence()
+				   .findByUserId(userId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first phone in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching phone
+	* @throws NoSuchPhoneException if a matching phone could not be found
+	*/
+	public static Phone findByUserId_First(long userId,
+		OrderByComparator<Phone> orderByComparator)
+		throws com.liferay.portal.NoSuchPhoneException {
+		return getPersistence().findByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the first phone in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching phone, or <code>null</code> if a matching phone could not be found
+	*/
+	public static Phone fetchByUserId_First(long userId,
+		OrderByComparator<Phone> orderByComparator) {
+		return getPersistence().fetchByUserId_First(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last phone in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching phone
+	* @throws NoSuchPhoneException if a matching phone could not be found
+	*/
+	public static Phone findByUserId_Last(long userId,
+		OrderByComparator<Phone> orderByComparator)
+		throws com.liferay.portal.NoSuchPhoneException {
+		return getPersistence().findByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the last phone in the ordered set where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching phone, or <code>null</code> if a matching phone could not be found
+	*/
+	public static Phone fetchByUserId_Last(long userId,
+		OrderByComparator<Phone> orderByComparator) {
+		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
+	}
+
+	/**
+	* Returns the phones before and after the current phone in the ordered set where userId = &#63;.
+	*
+	* @param phoneId the primary key of the current phone
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next phone
+	* @throws NoSuchPhoneException if a phone with the primary key could not be found
+	*/
+	public static Phone[] findByUserId_PrevAndNext(long phoneId, long userId,
+		OrderByComparator<Phone> orderByComparator)
+		throws com.liferay.portal.NoSuchPhoneException {
+		return getPersistence()
+				   .findByUserId_PrevAndNext(phoneId, userId, orderByComparator);
+	}
+
+	/**
+	* Removes all the phones where userId = &#63; from the database.
+	*
+	* @param userId the user ID
+	*/
+	public static void removeByUserId(long userId) {
+		getPersistence().removeByUserId(userId);
+	}
+
+	/**
+	* Returns the number of phones where userId = &#63;.
+	*
+	* @param userId the user ID
+	* @return the number of matching phones
+	*/
+	public static int countByUserId(long userId) {
+		return getPersistence().countByUserId(userId);
+	}
+
+	/**
 	* Returns all the phones where companyId = &#63;.
 	*
 	* @param companyId the company ID
@@ -522,138 +654,6 @@ public class PhoneUtil {
 	*/
 	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
-	}
-
-	/**
-	* Returns all the phones where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the matching phones
-	*/
-	public static List<Phone> findByUserId(long userId) {
-		return getPersistence().findByUserId(userId);
-	}
-
-	/**
-	* Returns a range of all the phones where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PhoneModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of phones
-	* @param end the upper bound of the range of phones (not inclusive)
-	* @return the range of matching phones
-	*/
-	public static List<Phone> findByUserId(long userId, int start, int end) {
-		return getPersistence().findByUserId(userId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the phones where userId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link PhoneModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param userId the user ID
-	* @param start the lower bound of the range of phones
-	* @param end the upper bound of the range of phones (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching phones
-	*/
-	public static List<Phone> findByUserId(long userId, int start, int end,
-		OrderByComparator<Phone> orderByComparator) {
-		return getPersistence()
-				   .findByUserId(userId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first phone in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching phone
-	* @throws NoSuchPhoneException if a matching phone could not be found
-	*/
-	public static Phone findByUserId_First(long userId,
-		OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException {
-		return getPersistence().findByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the first phone in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching phone, or <code>null</code> if a matching phone could not be found
-	*/
-	public static Phone fetchByUserId_First(long userId,
-		OrderByComparator<Phone> orderByComparator) {
-		return getPersistence().fetchByUserId_First(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last phone in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching phone
-	* @throws NoSuchPhoneException if a matching phone could not be found
-	*/
-	public static Phone findByUserId_Last(long userId,
-		OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException {
-		return getPersistence().findByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the last phone in the ordered set where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching phone, or <code>null</code> if a matching phone could not be found
-	*/
-	public static Phone fetchByUserId_Last(long userId,
-		OrderByComparator<Phone> orderByComparator) {
-		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
-	}
-
-	/**
-	* Returns the phones before and after the current phone in the ordered set where userId = &#63;.
-	*
-	* @param phoneId the primary key of the current phone
-	* @param userId the user ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next phone
-	* @throws NoSuchPhoneException if a phone with the primary key could not be found
-	*/
-	public static Phone[] findByUserId_PrevAndNext(long phoneId, long userId,
-		OrderByComparator<Phone> orderByComparator)
-		throws com.liferay.portal.NoSuchPhoneException {
-		return getPersistence()
-				   .findByUserId_PrevAndNext(phoneId, userId, orderByComparator);
-	}
-
-	/**
-	* Removes all the phones where userId = &#63; from the database.
-	*
-	* @param userId the user ID
-	*/
-	public static void removeByUserId(long userId) {
-		getPersistence().removeByUserId(userId);
-	}
-
-	/**
-	* Returns the number of phones where userId = &#63;.
-	*
-	* @param userId the user ID
-	* @return the number of matching phones
-	*/
-	public static int countByUserId(long userId) {
-		return getPersistence().countByUserId(userId);
 	}
 
 	/**

@@ -40,7 +40,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
-	MVCCModel, StagedGroupedModel {
+	MVCCModel, PartitionableModel, StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -123,22 +123,6 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
 	 */
 	@Override
 	public void setGroupId(long groupId);
-
-	/**
-	 * Returns the company ID of this repository entry.
-	 *
-	 * @return the company ID of this repository entry
-	 */
-	@Override
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this repository entry.
-	 *
-	 * @param companyId the company ID of this repository entry
-	 */
-	@Override
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the user ID of this repository entry.
@@ -286,6 +270,22 @@ public interface RepositoryEntryModel extends BaseModel<RepositoryEntry>,
 	 */
 	@Override
 	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
+	 * Returns the company ID of this repository entry.
+	 *
+	 * @return the company ID of this repository entry
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this repository entry.
+	 *
+	 * @param companyId the company ID of this repository entry
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

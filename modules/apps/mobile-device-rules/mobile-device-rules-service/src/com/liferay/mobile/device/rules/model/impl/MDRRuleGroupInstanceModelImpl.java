@@ -76,7 +76,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 			{ "uuid_", Types.VARCHAR },
 			{ "ruleGroupInstanceId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
-			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
@@ -85,7 +84,8 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 			{ "classPK", Types.BIGINT },
 			{ "ruleGroupId", Types.BIGINT },
 			{ "priority", Types.INTEGER },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "lastPublishDate", Types.TIMESTAMP },
+			{ "companyId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -93,7 +93,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("ruleGroupInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
@@ -103,9 +102,10 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		TABLE_COLUMNS_MAP.put("ruleGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table MDRRuleGroupInstance (uuid_ VARCHAR(75) null,ruleGroupInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupId LONG,priority INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table MDRRuleGroupInstance (uuid_ VARCHAR(75) null,ruleGroupInstanceId LONG not null primary key,groupId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,ruleGroupId LONG,priority INTEGER,lastPublishDate DATE null,companyId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table MDRRuleGroupInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY mdrRuleGroupInstance.ruleGroupInstanceId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY MDRRuleGroupInstance.ruleGroupInstanceId ASC";
@@ -146,7 +146,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		model.setUuid(soapModel.getUuid());
 		model.setRuleGroupInstanceId(soapModel.getRuleGroupInstanceId());
 		model.setGroupId(soapModel.getGroupId());
-		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
@@ -156,6 +155,7 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		model.setRuleGroupId(soapModel.getRuleGroupId());
 		model.setPriority(soapModel.getPriority());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
+		model.setCompanyId(soapModel.getCompanyId());
 
 		return model;
 	}
@@ -224,7 +224,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		attributes.put("uuid", getUuid());
 		attributes.put("ruleGroupInstanceId", getRuleGroupInstanceId());
 		attributes.put("groupId", getGroupId());
-		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
@@ -234,6 +233,7 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		attributes.put("ruleGroupId", getRuleGroupId());
 		attributes.put("priority", getPriority());
 		attributes.put("lastPublishDate", getLastPublishDate());
+		attributes.put("companyId", getCompanyId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -259,12 +259,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 
 		if (groupId != null) {
 			setGroupId(groupId);
-		}
-
-		Long companyId = (Long)attributes.get("companyId");
-
-		if (companyId != null) {
-			setCompanyId(companyId);
 		}
 
 		Long userId = (Long)attributes.get("userId");
@@ -319,6 +313,12 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 
 		if (lastPublishDate != null) {
 			setLastPublishDate(lastPublishDate);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 	}
 
@@ -378,29 +378,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
-	public long getCompanyId() {
-		return _companyId;
-	}
-
-	@Override
-	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
-		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -585,6 +562,29 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		_lastPublishDate = lastPublishDate;
 	}
 
+	@JSON(include = false)
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
+		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -625,7 +625,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		mdrRuleGroupInstanceImpl.setUuid(getUuid());
 		mdrRuleGroupInstanceImpl.setRuleGroupInstanceId(getRuleGroupInstanceId());
 		mdrRuleGroupInstanceImpl.setGroupId(getGroupId());
-		mdrRuleGroupInstanceImpl.setCompanyId(getCompanyId());
 		mdrRuleGroupInstanceImpl.setUserId(getUserId());
 		mdrRuleGroupInstanceImpl.setUserName(getUserName());
 		mdrRuleGroupInstanceImpl.setCreateDate(getCreateDate());
@@ -635,6 +634,7 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		mdrRuleGroupInstanceImpl.setRuleGroupId(getRuleGroupId());
 		mdrRuleGroupInstanceImpl.setPriority(getPriority());
 		mdrRuleGroupInstanceImpl.setLastPublishDate(getLastPublishDate());
+		mdrRuleGroupInstanceImpl.setCompanyId(getCompanyId());
 
 		mdrRuleGroupInstanceImpl.resetOriginalValues();
 
@@ -703,10 +703,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 
 		mdrRuleGroupInstanceModelImpl._setOriginalGroupId = false;
 
-		mdrRuleGroupInstanceModelImpl._originalCompanyId = mdrRuleGroupInstanceModelImpl._companyId;
-
-		mdrRuleGroupInstanceModelImpl._setOriginalCompanyId = false;
-
 		mdrRuleGroupInstanceModelImpl._setModifiedDate = false;
 
 		mdrRuleGroupInstanceModelImpl._originalClassNameId = mdrRuleGroupInstanceModelImpl._classNameId;
@@ -720,6 +716,10 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		mdrRuleGroupInstanceModelImpl._originalRuleGroupId = mdrRuleGroupInstanceModelImpl._ruleGroupId;
 
 		mdrRuleGroupInstanceModelImpl._setOriginalRuleGroupId = false;
+
+		mdrRuleGroupInstanceModelImpl._originalCompanyId = mdrRuleGroupInstanceModelImpl._companyId;
+
+		mdrRuleGroupInstanceModelImpl._setOriginalCompanyId = false;
 
 		mdrRuleGroupInstanceModelImpl._columnBitmask = 0;
 	}
@@ -739,8 +739,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		mdrRuleGroupInstanceCacheModel.ruleGroupInstanceId = getRuleGroupInstanceId();
 
 		mdrRuleGroupInstanceCacheModel.groupId = getGroupId();
-
-		mdrRuleGroupInstanceCacheModel.companyId = getCompanyId();
 
 		mdrRuleGroupInstanceCacheModel.userId = getUserId();
 
@@ -787,6 +785,8 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 			mdrRuleGroupInstanceCacheModel.lastPublishDate = Long.MIN_VALUE;
 		}
 
+		mdrRuleGroupInstanceCacheModel.companyId = getCompanyId();
+
 		return mdrRuleGroupInstanceCacheModel;
 	}
 
@@ -800,8 +800,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		sb.append(getRuleGroupInstanceId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
-		sb.append(", companyId=");
-		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
 		sb.append(", userName=");
@@ -820,6 +818,8 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		sb.append(getPriority());
 		sb.append(", lastPublishDate=");
 		sb.append(getLastPublishDate());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append("}");
 
 		return sb.toString();
@@ -844,10 +844,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>companyId</column-name><column-value><![CDATA[");
-		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userId</column-name><column-value><![CDATA[");
@@ -885,6 +881,10 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
 		sb.append(getLastPublishDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -901,9 +901,6 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
-	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
@@ -920,6 +917,9 @@ public class MDRRuleGroupInstanceModelImpl extends BaseModelImpl<MDRRuleGroupIns
 	private boolean _setOriginalRuleGroupId;
 	private int _priority;
 	private Date _lastPublishDate;
+	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private MDRRuleGroupInstance _escapedModel;
 }

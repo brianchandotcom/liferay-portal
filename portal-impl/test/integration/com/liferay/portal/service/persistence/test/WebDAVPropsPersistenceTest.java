@@ -116,8 +116,6 @@ public class WebDAVPropsPersistenceTest {
 
 		newWebDAVProps.setMvccVersion(RandomTestUtil.nextLong());
 
-		newWebDAVProps.setCompanyId(RandomTestUtil.nextLong());
-
 		newWebDAVProps.setCreateDate(RandomTestUtil.nextDate());
 
 		newWebDAVProps.setModifiedDate(RandomTestUtil.nextDate());
@@ -128,6 +126,8 @@ public class WebDAVPropsPersistenceTest {
 
 		newWebDAVProps.setProps(RandomTestUtil.randomString());
 
+		newWebDAVProps.setCompanyId(RandomTestUtil.nextLong());
+
 		_webDAVPropses.add(_persistence.update(newWebDAVProps));
 
 		WebDAVProps existingWebDAVProps = _persistence.findByPrimaryKey(newWebDAVProps.getPrimaryKey());
@@ -136,8 +136,6 @@ public class WebDAVPropsPersistenceTest {
 			newWebDAVProps.getMvccVersion());
 		Assert.assertEquals(existingWebDAVProps.getWebDavPropsId(),
 			newWebDAVProps.getWebDavPropsId());
-		Assert.assertEquals(existingWebDAVProps.getCompanyId(),
-			newWebDAVProps.getCompanyId());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingWebDAVProps.getCreateDate()),
 			Time.getShortTimestamp(newWebDAVProps.getCreateDate()));
@@ -150,6 +148,8 @@ public class WebDAVPropsPersistenceTest {
 			newWebDAVProps.getClassPK());
 		Assert.assertEquals(existingWebDAVProps.getProps(),
 			newWebDAVProps.getProps());
+		Assert.assertEquals(existingWebDAVProps.getCompanyId(),
+			newWebDAVProps.getCompanyId());
 	}
 
 	@Test
@@ -184,9 +184,9 @@ public class WebDAVPropsPersistenceTest {
 
 	protected OrderByComparator<WebDAVProps> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("WebDAVProps",
-			"mvccVersion", true, "webDavPropsId", true, "companyId", true,
-			"createDate", true, "modifiedDate", true, "classNameId", true,
-			"classPK", true);
+			"mvccVersion", true, "webDavPropsId", true, "createDate", true,
+			"modifiedDate", true, "classNameId", true, "classPK", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -408,8 +408,6 @@ public class WebDAVPropsPersistenceTest {
 
 		webDAVProps.setMvccVersion(RandomTestUtil.nextLong());
 
-		webDAVProps.setCompanyId(RandomTestUtil.nextLong());
-
 		webDAVProps.setCreateDate(RandomTestUtil.nextDate());
 
 		webDAVProps.setModifiedDate(RandomTestUtil.nextDate());
@@ -419,6 +417,8 @@ public class WebDAVPropsPersistenceTest {
 		webDAVProps.setClassPK(RandomTestUtil.nextLong());
 
 		webDAVProps.setProps(RandomTestUtil.randomString());
+
+		webDAVProps.setCompanyId(RandomTestUtil.nextLong());
 
 		_webDAVPropses.add(_persistence.update(webDAVProps));
 

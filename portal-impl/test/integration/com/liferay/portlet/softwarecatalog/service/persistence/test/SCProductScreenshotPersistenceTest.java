@@ -114,8 +114,6 @@ public class SCProductScreenshotPersistenceTest {
 
 		SCProductScreenshot newSCProductScreenshot = _persistence.create(pk);
 
-		newSCProductScreenshot.setCompanyId(RandomTestUtil.nextLong());
-
 		newSCProductScreenshot.setGroupId(RandomTestUtil.nextLong());
 
 		newSCProductScreenshot.setProductEntryId(RandomTestUtil.nextLong());
@@ -126,14 +124,14 @@ public class SCProductScreenshotPersistenceTest {
 
 		newSCProductScreenshot.setPriority(RandomTestUtil.nextInt());
 
+		newSCProductScreenshot.setCompanyId(RandomTestUtil.nextLong());
+
 		_scProductScreenshots.add(_persistence.update(newSCProductScreenshot));
 
 		SCProductScreenshot existingSCProductScreenshot = _persistence.findByPrimaryKey(newSCProductScreenshot.getPrimaryKey());
 
 		Assert.assertEquals(existingSCProductScreenshot.getProductScreenshotId(),
 			newSCProductScreenshot.getProductScreenshotId());
-		Assert.assertEquals(existingSCProductScreenshot.getCompanyId(),
-			newSCProductScreenshot.getCompanyId());
 		Assert.assertEquals(existingSCProductScreenshot.getGroupId(),
 			newSCProductScreenshot.getGroupId());
 		Assert.assertEquals(existingSCProductScreenshot.getProductEntryId(),
@@ -144,6 +142,8 @@ public class SCProductScreenshotPersistenceTest {
 			newSCProductScreenshot.getFullImageId());
 		Assert.assertEquals(existingSCProductScreenshot.getPriority(),
 			newSCProductScreenshot.getPriority());
+		Assert.assertEquals(existingSCProductScreenshot.getCompanyId(),
+			newSCProductScreenshot.getCompanyId());
 	}
 
 	@Test
@@ -199,9 +199,9 @@ public class SCProductScreenshotPersistenceTest {
 
 	protected OrderByComparator<SCProductScreenshot> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("SCProductScreenshot",
-			"productScreenshotId", true, "companyId", true, "groupId", true,
-			"productEntryId", true, "thumbnailId", true, "fullImageId", true,
-			"priority", true);
+			"productScreenshotId", true, "groupId", true, "productEntryId",
+			true, "thumbnailId", true, "fullImageId", true, "priority", true,
+			"companyId", true);
 	}
 
 	@Test
@@ -434,8 +434,6 @@ public class SCProductScreenshotPersistenceTest {
 
 		SCProductScreenshot scProductScreenshot = _persistence.create(pk);
 
-		scProductScreenshot.setCompanyId(RandomTestUtil.nextLong());
-
 		scProductScreenshot.setGroupId(RandomTestUtil.nextLong());
 
 		scProductScreenshot.setProductEntryId(RandomTestUtil.nextLong());
@@ -445,6 +443,8 @@ public class SCProductScreenshotPersistenceTest {
 		scProductScreenshot.setFullImageId(RandomTestUtil.nextLong());
 
 		scProductScreenshot.setPriority(RandomTestUtil.nextInt());
+
+		scProductScreenshot.setCompanyId(RandomTestUtil.nextLong());
 
 		_scProductScreenshots.add(_persistence.update(scProductScreenshot));
 

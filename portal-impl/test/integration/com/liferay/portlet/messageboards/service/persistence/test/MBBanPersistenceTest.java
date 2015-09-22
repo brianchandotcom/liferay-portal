@@ -121,8 +121,6 @@ public class MBBanPersistenceTest {
 
 		newMBBan.setGroupId(RandomTestUtil.nextLong());
 
-		newMBBan.setCompanyId(RandomTestUtil.nextLong());
-
 		newMBBan.setUserId(RandomTestUtil.nextLong());
 
 		newMBBan.setUserName(RandomTestUtil.randomString());
@@ -135,6 +133,8 @@ public class MBBanPersistenceTest {
 
 		newMBBan.setLastPublishDate(RandomTestUtil.nextDate());
 
+		newMBBan.setCompanyId(RandomTestUtil.nextLong());
+
 		_mbBans.add(_persistence.update(newMBBan));
 
 		MBBan existingMBBan = _persistence.findByPrimaryKey(newMBBan.getPrimaryKey());
@@ -142,8 +142,6 @@ public class MBBanPersistenceTest {
 		Assert.assertEquals(existingMBBan.getUuid(), newMBBan.getUuid());
 		Assert.assertEquals(existingMBBan.getBanId(), newMBBan.getBanId());
 		Assert.assertEquals(existingMBBan.getGroupId(), newMBBan.getGroupId());
-		Assert.assertEquals(existingMBBan.getCompanyId(),
-			newMBBan.getCompanyId());
 		Assert.assertEquals(existingMBBan.getUserId(), newMBBan.getUserId());
 		Assert.assertEquals(existingMBBan.getUserName(), newMBBan.getUserName());
 		Assert.assertEquals(Time.getShortTimestamp(
@@ -157,6 +155,8 @@ public class MBBanPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingMBBan.getLastPublishDate()),
 			Time.getShortTimestamp(newMBBan.getLastPublishDate()));
+		Assert.assertEquals(existingMBBan.getCompanyId(),
+			newMBBan.getCompanyId());
 	}
 
 	@Test
@@ -239,9 +239,9 @@ public class MBBanPersistenceTest {
 
 	protected OrderByComparator<MBBan> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("MBBan", "uuid", true,
-			"banId", true, "groupId", true, "companyId", true, "userId", true,
-			"userName", true, "createDate", true, "modifiedDate", true,
-			"banUserId", true, "lastPublishDate", true);
+			"banId", true, "groupId", true, "userId", true, "userName", true,
+			"createDate", true, "modifiedDate", true, "banUserId", true,
+			"lastPublishDate", true, "companyId", true);
 	}
 
 	@Test
@@ -465,8 +465,6 @@ public class MBBanPersistenceTest {
 
 		mbBan.setGroupId(RandomTestUtil.nextLong());
 
-		mbBan.setCompanyId(RandomTestUtil.nextLong());
-
 		mbBan.setUserId(RandomTestUtil.nextLong());
 
 		mbBan.setUserName(RandomTestUtil.randomString());
@@ -478,6 +476,8 @@ public class MBBanPersistenceTest {
 		mbBan.setBanUserId(RandomTestUtil.nextLong());
 
 		mbBan.setLastPublishDate(RandomTestUtil.nextDate());
+
+		mbBan.setCompanyId(RandomTestUtil.nextLong());
 
 		_mbBans.add(_persistence.update(mbBan));
 

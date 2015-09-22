@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.PartitionableModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
@@ -37,7 +38,8 @@ import java.io.Serializable;
  * @generated
  */
 @ProviderType
-public interface ExpandoColumnModel extends BaseModel<ExpandoColumn> {
+public interface ExpandoColumnModel extends BaseModel<ExpandoColumn>,
+	PartitionableModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -71,20 +73,6 @@ public interface ExpandoColumnModel extends BaseModel<ExpandoColumn> {
 	 * @param columnId the column ID of this expando column
 	 */
 	public void setColumnId(long columnId);
-
-	/**
-	 * Returns the company ID of this expando column.
-	 *
-	 * @return the company ID of this expando column
-	 */
-	public long getCompanyId();
-
-	/**
-	 * Sets the company ID of this expando column.
-	 *
-	 * @param companyId the company ID of this expando column
-	 */
-	public void setCompanyId(long companyId);
 
 	/**
 	 * Returns the table ID of this expando column.
@@ -158,6 +146,22 @@ public interface ExpandoColumnModel extends BaseModel<ExpandoColumn> {
 	 * @param typeSettings the type settings of this expando column
 	 */
 	public void setTypeSettings(String typeSettings);
+
+	/**
+	 * Returns the company ID of this expando column.
+	 *
+	 * @return the company ID of this expando column
+	 */
+	@Override
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this expando column.
+	 *
+	 * @param companyId the company ID of this expando column
+	 */
+	@Override
+	public void setCompanyId(long companyId);
 
 	@Override
 	public boolean isNew();

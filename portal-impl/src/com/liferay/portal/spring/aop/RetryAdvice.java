@@ -86,13 +86,12 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 				if (!retryAcceptor.accept(returnValue, null, propertyMap)) {
 					return returnValue;
 				}
-				else {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unsatisfactory result from " +
-								methodInvocation.getMethod() + ". Retrying " +
-									retries + " more times.");
-					}
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unsatisfactory result from " +
+							methodInvocation.getMethod() + ". Retrying " +
+								retries + " more times.");
 				}
 			}
 			catch (Throwable t) {
@@ -101,13 +100,12 @@ public class RetryAdvice extends AnnotationChainableMethodAdvice<Retry> {
 				if (!retryAcceptor.accept(null, t, propertyMap)) {
 					throw t;
 				}
-				else {
-					if (_log.isWarnEnabled()) {
-						_log.error(
-							"Exception thrown from " +
-								methodInvocation.getMethod() + ". Retrying " +
-									retries + " more times.");
-					}
+
+				if (_log.isWarnEnabled()) {
+					_log.error(
+						"Exception thrown from " +
+							methodInvocation.getMethod() + ". Retrying " +
+								retries + " more times.");
 				}
 			}
 

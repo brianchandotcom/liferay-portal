@@ -54,7 +54,6 @@ import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.MembershipRequest;
@@ -204,47 +203,32 @@ public class SiteAdminPortlet extends MVCPortlet {
 		Group group = TransactionInvokerUtil.invoke(
 			_transactionAttribute, groupCallable);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
 		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
+		PortletURL siteAdministrationURL = PortalUtil.getControlPanelPortletURL(
+			actionRequest, group, SiteAdminPortletKeys.SITE_SETTINGS, 0,
+			PortletRequest.RENDER_PHASE);
+
+		String controlPanelURL = HttpUtil.setParameter(
+			themeDisplay.getURLControlPanel(), "p_p_id",
+			SiteAdminPortletKeys.SITE_ADMIN);
+
+		controlPanelURL = HttpUtil.setParameter(
+			controlPanelURL, "controlPanelCategory",
+			themeDisplay.getControlPanelCategory());
+
+		siteAdministrationURL.setParameter("redirect", controlPanelURL);
+
 		if (liveGroupId <= 0) {
-			PortletURL siteAdministrationURL =
-				PortalUtil.getControlPanelPortletURL(
-					actionRequest, group, SiteAdminPortletKeys.SITE_SETTINGS, 0,
-					PortletRequest.RENDER_PHASE);
-
-			String controlPanelURL = HttpUtil.setParameter(
-				themeDisplay.getURLControlPanel(), "p_p_id",
-				SiteAdminPortletKeys.SITE_ADMIN);
-
-			controlPanelURL = HttpUtil.setParameter(
-				controlPanelURL, "controlPanelCategory",
-				themeDisplay.getControlPanelCategory());
-
-			siteAdministrationURL.setParameter("redirect", controlPanelURL);
-
-			redirect = siteAdministrationURL.toString();
-
 			hideDefaultSuccessMessage(actionRequest);
 
 			MultiSessionMessages.add(
 				actionRequest,
 				SiteAdminPortletKeys.SITE_SETTINGS + "requestProcessed");
 		}
-		else {
-			long newRefererPlid = getRefererPlid(
-				group, themeDisplay.getScopeGroupId(), redirect);
 
-			redirect = HttpUtil.setParameter(
-				redirect, "doAsGroupId", group.getGroupId());
-			redirect = HttpUtil.setParameter(
-				redirect, "refererPlid", newRefererPlid);
-		}
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-
-		sendRedirect(actionRequest, actionResponse);
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT, siteAdministrationURL.toString());
 	}
 
 	public void editGroupAssignments(
@@ -380,33 +364,6 @@ public class SiteAdminPortlet extends MVCPortlet {
 		}
 
 		return refererGroupId;
-	}
-
-	protected long getRefererPlid(
-		Group liveGroup, long scopeGroupId, String redirect) {
-
-		long refererPlid = GetterUtil.getLong(
-			HttpUtil.getParameter(redirect, "refererPlid", false));
-
-		if ((refererPlid > 0) && liveGroup.hasStagingGroup() &&
-			(scopeGroupId != liveGroup.getGroupId())) {
-
-			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-				liveGroup.getGroupId(), false,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-			if (firstLayout == null) {
-				firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-					liveGroup.getGroupId(), true,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-			}
-
-			if (firstLayout != null) {
-				return firstLayout.getPlid();
-			}
-		}
-
-		return LayoutConstants.DEFAULT_PLID;
 	}
 
 	protected List<Role> getRoles(PortletRequest portletRequest)

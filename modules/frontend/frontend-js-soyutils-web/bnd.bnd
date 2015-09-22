@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Frontend JS Soyutils Web
+Bundle-SymbolicName: com.liferay.frontend.js.soyutils.web
+Bundle-Version: 1.0.0
+Include-Resource: classes
+JS-Config: /META-INF/resources/config.js
+Web-ContextPath: /frontend-js-soyutils-web

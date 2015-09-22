@@ -102,13 +102,14 @@ public class JniSassCompilerTest {
 		File inputDir = new File(url.toURI());
 
 		File inputFile = new File(inputDir, "input.scss");
-		File sourceMapFile = new File(inputDir, "input.css.map");
+		File sourceMapFile = new File(inputDir, ".sass-cache/input.css.map");
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
 
 		String actualOutput = sassCompiler.compileFile(
-			inputFile.getCanonicalPath(), "", true);
+			inputFile.getCanonicalPath(), "", true,
+			sourceMapFile.getCanonicalPath());
 
 		Assert.assertNotNull(actualOutput);
 		Assert.assertTrue(sourceMapFile.exists());
@@ -153,8 +154,7 @@ public class JniSassCompilerTest {
 		File inputDir = new File(url.toURI());
 
 		File inputFile = new File(inputDir, "input.scss");
-		File sourceMapFile = new File(
-			inputDir, ".sass-cache/input.css.map");
+		File sourceMapFile = new File(inputDir, "input.css.map");
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
@@ -162,8 +162,7 @@ public class JniSassCompilerTest {
 		String input = read(inputFile.toPath());
 
 		String actualOutput = sassCompiler.compileString(
-			input, inputFile.getCanonicalPath(), "", true,
-			sourceMapFile.getCanonicalPath());
+			input, inputFile.getCanonicalPath(), "", true);
 
 		Assert.assertNotNull(actualOutput);
 		Assert.assertTrue(sourceMapFile.exists());

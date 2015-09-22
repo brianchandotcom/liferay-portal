@@ -1130,7 +1130,7 @@
 				<execute function="AssertClick" locator1="Button#CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="CHOOSE_BUTTON_GENERIC" value1="Choose" />
+				<execute function="AssertClick" locator1="DocumentsAndMediaSelectFolder#CHOOSE_BUTTON_GENERIC" value1="Choose" />
 			</else>
 		</if>
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.application.list.taglib.display.context.logic;
+package com.liferay.application.list.display.context.logic;
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;

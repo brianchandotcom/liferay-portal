@@ -293,12 +293,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		newContent = StringUtil.replace(
 			newContent,
 			new String[] {
-				"<br/>", "\"/>", "\" >", "@page import", "\"%>", ")%>",
-				"function (", "javascript: ", "){\n", ";;\n", "\n\n\n"
+				"<br/>", "\"/>", "\" >", ">'/>", ">' >", "@page import", "\"%>",
+				")%>", "function (", "javascript: ", "){\n", ";;\n", "\n\n\n"
 			},
 			new String[] {
-				"<br />", "\" />", "\">", "@ page import", "\" %>", ") %>",
-				"function(", "javascript:", ") {\n", ";\n", "\n\n"
+				"<br />", "\" />", "\">", ">' />", ">'>", "@ page import",
+				"\" %>", ") %>", "function(", "javascript:", ") {\n", ";\n",
+				"\n\n"
 			});
 
 		newContent = fixRedirectBackURL(newContent);

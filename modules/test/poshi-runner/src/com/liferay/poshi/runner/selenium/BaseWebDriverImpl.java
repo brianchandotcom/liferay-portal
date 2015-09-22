@@ -835,9 +835,8 @@ public abstract class BaseWebDriverImpl
 			FileUtil.getSeparator() + _testDependenciesDirName +
 				FileUtil.getSeparator() + value;
 
-		String fileName =
-			LiferaySeleniumHelper.getFullPathNameFromRelativePathName(
-				_TEST_SEARCH_DIR_NAMES, relativePathName);
+		String fileName = LiferaySeleniumHelper.getSourceFileCanonicalPath(
+			_TEST_SEARCH_DIR_NAMES, relativePathName);
 
 		uploadFile(location, fileName);
 	}

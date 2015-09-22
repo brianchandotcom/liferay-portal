@@ -707,7 +707,30 @@ public class LiferaySeleniumHelper {
 		return EmailCommands.getEmailSubject(GetterUtil.getInteger(index));
 	}
 
-	public static String getFullPathNameFromRelativePathName(
+	public static ImageTarget getImageTarget(
+			LiferaySelenium liferaySelenium, String image)
+		throws Exception {
+
+		String relativePathName =
+			FileUtil.getSeparator() + liferaySelenium.getSikuliImagesDirName() +
+				image;
+
+		File file = new File(
+			getSourceFileCanonicalPath(
+				_TEST_SEARCH_DIR_NAMES, relativePathName));
+
+		return new ImageTarget(file);
+	}
+
+	public static String getNumberDecrement(String value) {
+		return StringUtil.valueOf(GetterUtil.getInteger(value) - 1);
+	}
+
+	public static String getNumberIncrement(String value) {
+		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
+	}
+
+	public static String getSourceFileCanonicalPath(
 			String[] baseDirNames, String fileName)
 		throws Exception {
 
@@ -728,35 +751,11 @@ public class LiferaySeleniumHelper {
 			}
 		}
 
-		if (fileName == null) {
+		if (filePath == null) {
 			throw new Exception("File not found " + fileName);
 		}
 
 		return filePath;
-	}
-
-	public static ImageTarget getImageTarget(
-			LiferaySelenium liferaySelenium, String image)
-		throws Exception {
-
-		String relativePathName =
-			FileUtil.getSeparator() + liferaySelenium.getSikuliImagesDirName() +
-				image;
-
-		String fileName = getFullPathNameFromRelativePathName(
-			_TEST_SEARCH_DIR_NAMES, relativePathName);
-
-		File file = new File(fileName);
-
-		return new ImageTarget(file);
-	}
-
-	public static String getNumberDecrement(String value) {
-		return StringUtil.valueOf(GetterUtil.getInteger(value) - 1);
-	}
-
-	public static String getNumberIncrement(String value) {
-		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
 	}
 
 	public static boolean isConfirmation(
@@ -1300,14 +1299,10 @@ public class LiferaySeleniumHelper {
 			FileUtil.getSeparator() + _TEST_DEPENDENCIES_DIR_NAME +
 				FileUtil.getSeparator() + value;
 
-		String fileName = getFullPathNameFromRelativePathName(
-			_TEST_SEARCH_DIR_NAMES, relativePathName);
-
-		if (OSDetector.isWindows()) {
-			fileName = StringUtil.replace(fileName, "/", "\\");
-		}
-
-		sikuliType(liferaySelenium, image, fileName);
+		sikuliType(
+			liferaySelenium, image,
+			getSourceFileCanonicalPath(
+				_TEST_SEARCH_DIR_NAMES, relativePathName));
 
 		keyboard.type(Key.ENTER);
 	}

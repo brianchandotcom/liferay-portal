@@ -109,8 +109,8 @@ public class PoshiRunnerContext {
 		return _filePaths.get(fileName);
 	}
 
-	public static List<String> getFilePathsNames() {
-		return _filePathsNames;
+	public static List<String> getFilePathsList() {
+		return _filePathsList;
 	}
 
 	public static Element getFunctionCommandElement(String classCommandName) {
@@ -244,34 +244,6 @@ public class PoshiRunnerContext {
 		_componentClassCommandNames.put(componentName, classCommandNames);
 	}
 
-	private static List<String> _findPoshiFiles(
-			String baseDir, String[] includes)
-		throws Exception {
-
-		DirectoryScanner directoryScanner = new DirectoryScanner();
-
-		directoryScanner.setBasedir(baseDir);
-		directoryScanner.setIncludes(includes);
-
-		directoryScanner.scan();
-
-		List<String> filePathsNames = new ArrayList<>();
-
-		String[] filePathsArray = directoryScanner.getIncludedFiles();
-
-		for (String filePath : filePathsArray) {
-			filePath = baseDir + "/" + filePath;
-
-			if (OSDetector.isWindows()) {
-				filePath = filePath.replace("/", "\\");
-			}
-
-			filePathsNames.add(filePath);
-		}
-
-		return filePathsNames;
-	}
-
 	private static String _getCommandSummary(
 		String classCommandName, String classType, Element commandElement) {
 
@@ -300,6 +272,34 @@ public class PoshiRunnerContext {
 		}
 
 		return classCommandName;
+	}
+
+	private static List<String> _getFilePathNames(
+			String baseDir, String[] includes)
+		throws Exception {
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(baseDir);
+		directoryScanner.setIncludes(includes);
+
+		directoryScanner.scan();
+
+		List<String> filePathsNames = new ArrayList<>();
+
+		String[] filePathsArray = directoryScanner.getIncludedFiles();
+
+		for (String filePath : filePathsArray) {
+			filePath = baseDir + "/" + filePath;
+
+			if (OSDetector.isWindows()) {
+				filePath = filePath.replace("/", "\\");
+			}
+
+			filePathsNames.add(filePath);
+		}
+
+		return filePathsNames;
 	}
 
 	private static List<String> _getRelatedActionClassCommandNames(
@@ -516,7 +516,7 @@ public class PoshiRunnerContext {
 			String locator = locatorElement.getText();
 
 			if (locatorKey.equals("EXTEND_ACTION_PATH")) {
-				for (String extendFilePath : _filePathsNames) {
+				for (String extendFilePath : _filePathsList) {
 					String expectedExtendedPath = "/" + locator + ".path";
 
 					if (OSDetector.isWindows()) {
@@ -645,31 +645,31 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _readPoshiFiles() throws Exception {
-		List<String> testBasePathsFiles = _findPoshiFiles(
+		List<String> testBaseDirFilePathNames = _getFilePathNames(
 			_TEST_BASE_DIR_NAME, new String[] {
 				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
 					"**\\*.testcase"
 			});
 
-		_filePathsNames.addAll(testBasePathsFiles);
+		_filePathsList.addAll(testBaseDirFilePathNames);
 
 		for (String testIncludeDirName : _TEST_INCLUDE_DIR_NAMES) {
-			List<String> testIncludePathsFiles = _findPoshiFiles(
+			List<String> testIncludeDirFilePathNames = _getFilePathNames(
 				testIncludeDirName, new String[] {
 					"**\\*.action", "**\\*.function", "**\\*.macro",
 						"**\\*.path"
 			});
 
-			_filePathsNames.addAll(testIncludePathsFiles);
+			_filePathsList.addAll(testIncludeDirFilePathNames);
 		}
 
-		for (String filePath : _filePathsNames) {
+		for (String filePath : _filePathsList) {
 			_filePaths.put(
 				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
 				filePath);
 		}
 
-		for (String filePath : _filePathsNames) {
+		for (String filePath : _filePathsList) {
 			_readPoshiFile(filePath);
 		}
 
@@ -907,7 +907,7 @@ public class PoshiRunnerContext {
 		new TreeMap<>();
 	private static final Set<String> _componentNames = new TreeSet<>();
 	private static final Map<String, String> _filePaths = new HashMap<>();
-	private static final List<String> _filePathsNames = new ArrayList<>();
+	private static final List<String> _filePathsList = new ArrayList<>();
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();

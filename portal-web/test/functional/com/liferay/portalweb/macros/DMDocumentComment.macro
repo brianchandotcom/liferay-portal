@@ -33,7 +33,7 @@
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<var name="key_commentBody" value="${commentBody}" />
+		<var name="key_entryComment" value="${commentBody}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 	</command>

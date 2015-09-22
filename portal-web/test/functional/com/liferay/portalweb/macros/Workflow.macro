@@ -263,13 +263,13 @@
 	<command name="deactivateSpecificWorkflowDefinition">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" value1="Actions" />
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
 
 		<execute macro="Workflow#deactivateWorkflowDefinitionCmd" />
 	</command>
 
 	<command name="deactivateWorkflowDefinition">
-		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS" value1="Actions" />
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS" />
 
 		<execute macro="Workflow#deactivateWorkflowDefinitionCmd" />
 	</command>
@@ -283,7 +283,7 @@
 	<command name="deleteSpecificWorkflowDefinition">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="AssertClick" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" value1="Actions" />
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
 
 		<execute macro="Workflow#deleteWorkflowDefinitionCmd" />
 	</command>

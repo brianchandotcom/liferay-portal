@@ -1765,44 +1765,6 @@ public class ServicePreAction extends Action {
 			boolean checkViewableGroup)
 		throws PortalException {
 
-		if (layout.isTypeControlPanel()) {
-			if (!permissionChecker.isSignedIn()) {
-				return false;
-			}
-
-			if (controlPanelCategory.startsWith(
-					PortletCategoryKeys.CURRENT_SITE) ||
-				controlPanelCategory.startsWith(
-					PortletCategoryKeys.CONTROL_PANEL_SITES)) {
-
-				if (doAsGroupId <= 0) {
-					doAsGroupId = layout.getGroupId();
-				}
-
-				Group group = GroupLocalServiceUtil.getGroup(doAsGroupId);
-
-				if (group.isLayout()) {
-					group = group.getParentGroup();
-				}
-
-				if (GroupPermissionUtil.contains(
-						permissionChecker, group,
-						ActionKeys.VIEW_SITE_ADMINISTRATION)) {
-
-					return true;
-				}
-			}
-			else if (controlPanelCategory.equals(PortletCategoryKeys.PORTLET) ||
-					 controlPanelCategory.equals(
-						 PortletCategoryKeys.USER_MY_ACCOUNT)) {
-
-				return true;
-			}
-
-			return PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL);
-		}
-
 		return LayoutPermissionUtil.contains(
 			permissionChecker, layout, checkViewableGroup, ActionKeys.VIEW);
 	}

@@ -76,6 +76,11 @@ public class TestLayoutTypeController implements LayoutTypeController {
 	}
 
 	@Override
+	public boolean isCheckLayoutViewPermission() {
+		return true;
+	}
+
+	@Override
 	public boolean isFirstPageable() {
 		return false;
 	}

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.impl.BaseLayoutTypeControllerImpl;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;
@@ -45,6 +47,18 @@ public class ControlPanelLayoutTypeController
 	@Override
 	public String getURL() {
 		return _URL;
+	}
+
+	@Override
+	public boolean isCheckLayoutViewPermission() {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (!permissionChecker.isSignedIn()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

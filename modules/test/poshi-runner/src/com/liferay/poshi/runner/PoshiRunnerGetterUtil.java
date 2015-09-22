@@ -21,6 +21,7 @@ import com.liferay.poshi.runner.util.MathUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.poshi.runner.util.Validator;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -261,12 +262,9 @@ public class PoshiRunnerGetterUtil {
 	public static String[] getTestIncludeDirNames() {
 		String[] testIncludeDirNames = PropsValues.TEST_INCLUDE_DIR_NAMES;
 
-		if (testIncludeDirNames == null) {
-			testIncludeDirNames = new String[0];
-		}
-
-		if ((testIncludeDirNames.length == 1) &&
-			testIncludeDirNames[0].equals("")) {
+		if ((testIncludeDirNames == null) ||
+			((testIncludeDirNames.length == 1) &&
+			 Validator.isNull(testIncludeDirNames[0]))) {
 
 			testIncludeDirNames = new String[0];
 		}

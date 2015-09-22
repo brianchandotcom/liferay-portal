@@ -32,6 +32,7 @@ import com.liferay.portal.test.rule.LogAssertionUncaughtExceptionHandler;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -125,13 +126,11 @@ public class LogAssertionTestCallback
 		List<CaptureAppender> captureAppenders = new ArrayList<>();
 
 		for (ExpectedLogs expectedLogs : expectedLogses) {
-			if (expectedLogs != null) {
-				Class<?> clazz = expectedLogs.loggerClass();
+			Class<?> clazz = expectedLogs.loggerClass();
 
-				captureAppenders.add(
-					Log4JLoggerTestUtil.configureLog4JLogger(
-						clazz.getName(), Level.toLevel(expectedLogs.level())));
-			}
+			captureAppenders.add(
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					clazz.getName(), Level.toLevel(expectedLogs.level())));
 		}
 
 		installJdk14Handler();
@@ -150,14 +149,16 @@ public class LogAssertionTestCallback
 		List<ExpectedLogs> expectedLogses = new ArrayList<>();
 
 		if (expectedMultipleLogs == null) {
-			expectedLogses.add(description.getAnnotation(ExpectedLogs.class));
-		}
-		else {
-			for (ExpectedLogs expectedLogs :
-					expectedMultipleLogs.expectedMultipleLogs()) {
+			ExpectedLogs expectedLogs = description.getAnnotation(
+				ExpectedLogs.class);
 
+			if (expectedLogs != null) {
 				expectedLogses.add(expectedLogs);
 			}
+		}
+		else {
+			expectedLogses.addAll(
+				Arrays.asList(expectedMultipleLogs.expectedMultipleLogs()));
 		}
 
 		endAssert(expectedLogses, captureAppenders);
@@ -179,14 +180,16 @@ public class LogAssertionTestCallback
 		List<ExpectedLogs> expectedLogses = new ArrayList<>();
 
 		if (expectedMultipleLogs == null) {
-			expectedLogses.add(description.getAnnotation(ExpectedLogs.class));
-		}
-		else {
-			for (ExpectedLogs expectedLogs :
-					expectedMultipleLogs.expectedMultipleLogs()) {
+			ExpectedLogs expectedLogs = description.getAnnotation(
+				ExpectedLogs.class);
 
+			if (expectedLogs != null) {
 				expectedLogses.add(expectedLogs);
 			}
+		}
+		else {
+			expectedLogses.addAll(
+				Arrays.asList(expectedMultipleLogs.expectedMultipleLogs()));
 		}
 
 		return startAssert(expectedLogses);

@@ -16,11 +16,17 @@ package com.liferay.deployment.helper;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
 import java.net.URL;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.util.Date;
 import java.util.List;
 
 import net.lingala.zip4j.core.ZipFile;
@@ -54,27 +60,56 @@ public class DeploymentHelper {
 			URL url = this.getClass().getResource(
 				"dependencies/deployment-helper-web.war");
 
-			ZipFile source = new ZipFile(url.getFile());
-			source.extractAll(_TMP_DIR);
+			Date now = new Date();
 
-			File webXml = new File(_TMP_DIR + "/WEB-INF/web.xml");
+			Path tempPath = Paths.get(_TMP_DIR);
+			Path basePath = Files.createTempDirectory(tempPath, null);
+			File baseDir = basePath.toFile();
+			baseDir.deleteOnExit();
+
+			ZipFile source = new ZipFile(url.getFile());
+			source.extractAll(basePath.toString());
+
+			File webXml = new File(basePath + "/WEB-INF/web.xml");
 
 			updateWebXml(webXml);
+
+			addDeploymentFiles(basePath);
 
 			ZipFile zipFile = new ZipFile(_outputFile);
 			ZipParameters parameters = new ZipParameters();
 
 			parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
 			parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
+			parameters.setIncludeRootFolder(false);
 
-			zipFile.addFolder(new File(_TMP_DIR + "/WEB-INF"), parameters);
+			zipFile.addFolder(baseDir, parameters);
 		}
 		catch (Exception e) {
 			System.err.println("Error writing " + _outputFile);
+
+			e.printStackTrace();
 		}
 	}
 
-	public void updateWebXml(File webXml) {
+	private void addDeploymentFiles(Path basePath) {
+		for (String file : _deploymentFiles.split(",")) {
+			Path path = Paths.get(file);
+
+			try {
+				Path target = basePath.resolve(path.getFileName());
+
+				Files.copy(path, target);
+			}
+			catch (IOException ioe) {
+				System.err.println("Error adding " + file.toString());
+
+				ioe.printStackTrace();
+			}
+		}
+	}
+
+	private void updateWebXml(File webXml) {
 		SAXBuilder builder = new SAXBuilder();
 
 		try {
@@ -105,6 +140,8 @@ public class DeploymentHelper {
 		}
 		catch (Exception e) {
 			System.err.println("Error writing the web.xml");
+
+			e.printStackTrace();
 		}
 	}
 

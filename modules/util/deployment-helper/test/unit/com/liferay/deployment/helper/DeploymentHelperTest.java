@@ -16,6 +16,8 @@ package com.liferay.deployment.helper;
 
 import java.io.File;
 
+import java.net.URL;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,13 +28,16 @@ public class DeploymentHelperTest {
 
 	@Test
 	public void testDeploymentHelper() throws Exception {
-		String deploymentFiles = "1,2,3,4";
-		String deploymentPath = "home";
+		Class<?> clazz = this.getClass();
+
+		URL deploymentFiles = clazz.getResource("dependencies/license.xml");
+
+		String deploymentPath = "/home";
 		String outputFile =
 			System.getProperty("user.dir") + "/deployment-helper-web.war";
 
 		DeploymentHelper deploymentHelper = new DeploymentHelper(
-			deploymentFiles, deploymentPath, outputFile);
+			deploymentFiles.getFile(), deploymentPath, outputFile);
 		deploymentHelper.run();
 
 		File file = new File(outputFile);

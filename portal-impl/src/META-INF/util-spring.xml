@@ -247,6 +247,7 @@
 			<bean class="com.liferay.portal.servlet.DirectServletRegistryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.servlet.PortletResourcesUtil" class="com.liferay.portal.kernel.servlet.PortletResourcesUtil" />
 	<bean id="com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil" class="com.liferay.portal.kernel.spring.orm.LastSessionRecorderHelperUtil">
 		<property name="lastSessionRecorderHelper">
 			<bean class="com.liferay.portal.spring.hibernate.LastSessionRecorderHelperImpl" />

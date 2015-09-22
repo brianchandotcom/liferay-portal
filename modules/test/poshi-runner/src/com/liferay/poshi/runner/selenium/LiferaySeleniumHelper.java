@@ -708,7 +708,8 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static String getFullPathNameFromRelativePathName(
-		String[] baseDirNames, String fileName) throws Exception {
+			String[] baseDirNames, String fileName)
+		throws Exception {
 
 		String filePath = null;
 
@@ -718,9 +719,11 @@ public class LiferaySeleniumHelper {
 
 			if (FileUtil.exists(uncheckedFilePath)) {
 				if (filePath != null) {
-					throw new Exception("Duplicate file names found at\n" +
-						fileName + "\n" + uncheckedFilePath);
+					throw new Exception(
+						"Duplicate file names found at\n" + fileName + "\n" +
+							uncheckedFilePath);
 				}
+
 				filePath = uncheckedFilePath;
 			}
 		}
@@ -728,6 +731,7 @@ public class LiferaySeleniumHelper {
 		if (fileName == null) {
 			throw new Exception("File not found " + fileName);
 		}
+
 		return filePath;
 	}
 
@@ -735,8 +739,9 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		String relativePathName = FileUtil.getSeparator() +
-			liferaySelenium.getSikuliImagesDirName() + image;
+		String relativePathName =
+			FileUtil.getSeparator() + liferaySelenium.getSikuliImagesDirName() +
+				image;
 
 		String fileName = getFullPathNameFromRelativePathName(
 			_TEST_SEARCH_DIR_NAMES, relativePathName);
@@ -1291,8 +1296,9 @@ public class LiferaySeleniumHelper {
 
 		keyboard.keyUp(Key.CTRL);
 
-		String relativePathName = FileUtil.getSeparator() +
-			_TEST_DEPENDENCIES_DIR_NAME + FileUtil.getSeparator() + value;
+		String relativePathName =
+			FileUtil.getSeparator() + _TEST_DEPENDENCIES_DIR_NAME +
+				FileUtil.getSeparator() + value;
 
 		String fileName = getFullPathNameFromRelativePathName(
 			_TEST_SEARCH_DIR_NAMES, relativePathName);
@@ -1791,11 +1797,11 @@ public class LiferaySeleniumHelper {
 	private static final String _CURRENT_DIR_NAME =
 		PoshiRunnerGetterUtil.getCanonicalPath(".");
 
-	private static final String[] _TEST_SEARCH_DIR_NAMES =
-		PoshiRunnerGetterUtil.getTestSearchDirNames();
-
 	private static final String _TEST_DEPENDENCIES_DIR_NAME =
 		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
+
+	private static final String[] _TEST_SEARCH_DIR_NAMES =
+		PoshiRunnerGetterUtil.getTestSearchDirNames();
 
 	private static final Pattern _aceEditorPattern = Pattern.compile(
 		"\\(|\\$\\{line\\.separator\\}");

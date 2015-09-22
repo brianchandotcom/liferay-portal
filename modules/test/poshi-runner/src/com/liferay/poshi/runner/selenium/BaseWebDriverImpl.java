@@ -828,17 +828,18 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void uploadCommonFile(String location, String value) 
+	public void uploadCommonFile(String location, String value)
 		throws Exception {
-		
-		String relativePathName = FileUtil.getSeparator() + 
-			_testDependenciesDirName + FileUtil.getSeparator() + value;
+
+		String relativePathName =
+			FileUtil.getSeparator() + _testDependenciesDirName +
+				FileUtil.getSeparator() + value;
 
 		String fileName =
 			LiferaySeleniumHelper.getFullPathNameFromRelativePathName(
-			_TEST_SEARCH_DIR_NAMES, relativePathName);
+				_TEST_SEARCH_DIR_NAMES, relativePathName);
 
-		uploadFile(location,fileName);
+		uploadFile(location, fileName);
 	}
 
 	@Override
@@ -948,11 +949,11 @@ public abstract class BaseWebDriverImpl
 
 	private static final String _OUTPUT_DIR_NAME = PropsValues.OUTPUT_DIR_NAME;
 
-	private static final String[] _TEST_SEARCH_DIR_NAMES = 
-		PoshiRunnerGetterUtil.getTestSearchDirNames();
-	
 	private static final String _TEST_DEPENDENCIES_DIR_NAME =
 		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
+
+	private static final String[] _TEST_SEARCH_DIR_NAMES =
+		PoshiRunnerGetterUtil.getTestSearchDirNames();
 
 	private String _clipBoard = "";
 	private final String _outputDirName;

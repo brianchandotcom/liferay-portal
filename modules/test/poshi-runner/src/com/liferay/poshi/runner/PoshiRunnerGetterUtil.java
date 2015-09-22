@@ -264,6 +264,7 @@ public class PoshiRunnerGetterUtil {
 		if (testIncludeDirNames == null) {
 			testIncludeDirNames = new String[0];
 		}
+
 		if ((testIncludeDirNames.length == 1) &&
 			testIncludeDirNames[0].equals("")) {
 

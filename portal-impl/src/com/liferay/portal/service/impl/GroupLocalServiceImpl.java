@@ -3471,6 +3471,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		ServiceContext serviceContext = new ServiceContext();
 
+		serviceContext.setAttribute("allow.non.instanciable.layout", true);
+
 		layoutLocalService.addLayout(
 			defaultUserId, group.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,

@@ -86,6 +86,11 @@ public class TestLayoutTypeController implements LayoutTypeController {
 	}
 
 	@Override
+	public boolean isInstanceable() {
+		return true;
+	}
+
+	@Override
 	public boolean isParentable() {
 		return false;
 	}

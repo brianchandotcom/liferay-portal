@@ -38,6 +38,10 @@ SitesUtil.addPortletBreadcrumbEntries(group, layoutsAdminDisplayContext.getPages
 		<liferay-ui:message key="you-cannot-delete-this-page-because-the-next-page-is-not-vieweable-by-unathenticated-users-and-so-cannot-be-the-first-page" />
 	</c:if>
 
+	<c:if test="<%= lte.getType() == LayoutTypeException.NOT_INSTANCEABLE %>">
+		<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-be-selected" />
+	</c:if>
+
 	<c:if test="<%= lte.getType() == LayoutTypeException.NOT_PARENTABLE %>">
 		<liferay-ui:message arguments="<%= type %>" key="pages-of-type-x-cannot-have-child-pages" />
 	</c:if>

@@ -124,6 +124,11 @@ public abstract class BaseLayoutTypeControllerImpl
 	}
 
 	@Override
+	public boolean isInstanceable() {
+		return true;
+	}
+
+	@Override
 	public boolean matches(
 		HttpServletRequest request, String friendlyURL, Layout layout) {
 

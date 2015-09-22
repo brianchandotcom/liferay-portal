@@ -198,6 +198,11 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 	}
 
 	@Override
+	public boolean isInstanceable() {
+		return true;
+	}
+
+	@Override
 	public boolean isParentable() {
 		return _parentable;
 	}

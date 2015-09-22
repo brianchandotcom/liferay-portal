@@ -5,7 +5,7 @@ buildscript {
 		mavenLocal()
 
 		maven {
-			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+			url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
 		}
 	}
 
@@ -46,7 +46,7 @@ repositories {
 	mavenLocal()
 
 	maven {
-		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		url System.properties["repository.url"] ?: "http://cdn.repository.liferay.com/nexus/content/groups/public"
 	}
 }
 

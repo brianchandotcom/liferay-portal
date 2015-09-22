@@ -1119,7 +1119,7 @@
 	<command name="moveToFolderCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_ACTIONS" />
 		<execute function="AssertElementPresent" locator1="MenuItem#MOVE" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 

@@ -101,11 +101,7 @@ public class DBBuilder {
 
 	private void _buildCreateFile(String sqlDir) throws IOException {
 		for (String databaseType : _databaseTypes) {
-			if (databaseType.equals(DB.TYPE_HYPERSONIC) ||
-				databaseType.equals(DB.TYPE_INTERBASE) ||
-				databaseType.equals(DB.TYPE_JDATASTORE) ||
-				databaseType.equals(DB.TYPE_SAP)) {
-
+			if (databaseType.equals(DB.TYPE_HYPERSONIC)) {
 				continue;
 			}
 

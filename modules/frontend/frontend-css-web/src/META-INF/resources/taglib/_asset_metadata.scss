@@ -7,9 +7,26 @@
 		display: inline-block;
 	}
 
-	.metadata-author {
-		display: none;
-		margin-right: 10px;
+  	.metadata-author {
+		overflow: hidden;
+		padding: 10px;
+
+		.asset-avatar {
+			float: left;
+			padding-right: 10px;
+
+			.avatar {
+				width: 45px;
+			}
+		}
+
+		.asset-user-info {
+			margin-top: 5px;
+
+			.user-info {
+				display: block;
+			}
+		}
 	}
 
 	.metadata-entry {

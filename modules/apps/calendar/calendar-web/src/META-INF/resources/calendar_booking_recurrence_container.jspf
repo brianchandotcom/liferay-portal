@@ -350,27 +350,31 @@ if (recurrence != null) {
 	recurrenceContainerNode.delegate('change', onInputChange, 'select,input');
 	recurrenceContainerNode.delegate('keypress', onInputChange, 'select');
 
-	repeatCheckboxNode.on(
-		'change',
-		function(event) {
-			var checked = event.currentTarget.get('checked');
+	if (!!repeatCheckboxNode) {
+		repeatCheckboxNode.on(
+			'change',
+			function(event) {
+				var checked = event.currentTarget.get('checked');
 
-			if (!checked) {
-				summaryNode.empty();
+				if (!checked) {
+					summaryNode.empty();
+				}
+
+				<portlet:namespace />openRecurrenceDialog(checked);
 			}
+		);
+	}
 
-			<portlet:namespace />openRecurrenceDialog(checked);
-		}
-	);
+	if (!!summaryNode) {
+		summaryNode.on(
+			'click',
+			function(event) {
+				<portlet:namespace />openRecurrenceDialog(true);
 
-	summaryNode.on(
-		'click',
-		function(event) {
-			<portlet:namespace />openRecurrenceDialog(true);
-
-			event.halt();
-		}
-	);
+				event.halt();
+			}
+		);
+	}
 
 	untilDateDatePicker.after(
 		'selectionChange',

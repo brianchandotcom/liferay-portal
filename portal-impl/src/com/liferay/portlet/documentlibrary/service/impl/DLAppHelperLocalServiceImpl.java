@@ -1820,21 +1820,9 @@ public class DLAppHelperLocalServiceImpl
 
 			// Asset
 
-			if (moveToTrash) {
-				assetEntryLocalService.updateVisible(
-					DLFileEntryConstants.getClassName(),
-					dlFileEntry.getFileEntryId(), false);
-			}
-			else {
-				DLFileVersion latestDlFileVersion =
-					dlFileEntry.getLatestFileVersion(false);
-
-				if (latestDlFileVersion.isApproved()) {
-					assetEntryLocalService.updateVisible(
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId(), true);
-				}
-			}
+			assetEntryLocalService.updateVisible(
+				DLFileEntryConstants.getClassName(),
+				dlFileEntry.getFileEntryId(), !moveToTrash);
 
 			// Index
 

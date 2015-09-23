@@ -19,7 +19,7 @@
 
 	<command name="removeUserFacetDisplayPG">
 		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletNameBorderless" value="${portletNameBorderless}" />
+			<var name="portletNameBorderless" value="Search" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -92,8 +92,7 @@
 	<command name="viewAssetTypeFacetPG">
 		<var name="key_searchAssetType" value="${searchAssetType}" />
 
-		<execute function="AssertElementPresent" locator1="SearchResults#ASSET_TYPE_FACET_SEARCH_ASSETS_BOX" />
-		<execute function="AssertTextEquals" locator1="SearchResults#ASSET_TYPE_FACET_EVERYTHING" value1="Everything" />
+		<execute function="AssertTextEquals" locator1="SearchResults#ASSET_TYPE_FACET_ANY_ASSET" value1="Any Asset" />
 		<execute function="AssertTextEquals" locator1="SearchResults#ASSET_TYPE_FACET_FREQUENCY" value1="${facetFrequency}" />
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#ASSET_TYPE_FACET_ASSET" value1="${searchAssetType}" />
 
@@ -216,12 +215,13 @@
 
 	<command name="viewUserFacetPG">
 		<var name="key_facetFrequency" value="${facetFrequency}" />
-		<var name="key_userLoginFullName" value="${userLoginFullName}" />
 
-		<execute function="AssertElementPresent" locator1="SearchResults#USER_FACET_SEARCH_USERS_BOX" />
 		<execute function="AssertTextEquals" locator1="SearchResults#USER_FACET_ANY_USER" value1="Any User" />
+
+		<var method="StringUtil#lowerCase('${userLoginFullName}')" name="key_userLoginFullName" />
+
 		<execute function="AssertTextEquals" locator1="SearchResults#USER_FACET_FREQUENCY" value1="${facetFrequency}" />
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_USER_NAME" value1="${userLoginFullName}" />
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="SearchResults#USER_FACET_USER_NAME" value1="${key_userLoginFullName}" />
 
 		<execute macro="Search#viewSearchResultPG">
 			<var name="searchAssetSummary" value="${searchAssetSummary}" />

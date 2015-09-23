@@ -43,6 +43,11 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCaption");
 long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
+
+portletDisplay.setShowBackIcon(true);
+portletDisplay.setURLBack(redirect);
+
+renderResponse.setTitle((entry != null) ? entry.getTitle() : LanguageUtil.get(request, "new-blog-entry"));
 %>
 
 <portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />

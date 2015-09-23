@@ -41,13 +41,15 @@ public class ReleaseGraphManagerTest {
 			Arrays.asList(
 				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4));
 
-		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
-			"0.0.0");
+		List<List<UpgradeInfo>> upgradePaths =
+			releaseGraphManager.getUpgradeInfos("0.0.0");
+
+		Assert.assertEquals(1, upgradePaths.size());
 
 		Assert.assertEquals(
 			Arrays.asList(
 				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4),
-			upgradePath);
+			upgradePaths.get(0));
 	}
 
 	@Test
@@ -64,16 +66,18 @@ public class ReleaseGraphManagerTest {
 				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4,
 				upgradeInfo5, upgradeInfo6));
 
-		List<UpgradeInfo> upgradePath = releaseGraphManager.getUpgradeInfos(
-			"0.1.0.1");
+		List<List<UpgradeInfo>> upgradePaths =
+			releaseGraphManager.getUpgradeInfos("0.1.0.1");
+
+		Assert.assertEquals(1, upgradePaths.size());
 
 		Assert.assertEquals(
 			Arrays.asList(
 				upgradeInfo6, upgradeInfo2, upgradeInfo3, upgradeInfo4),
-			upgradePath);
+			upgradePaths.get(0));
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void testGetAutoUpgradePathWhenInEndNodeAndMultipleSinkNodes() {
 		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
 		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.2.0");
@@ -88,10 +92,13 @@ public class ReleaseGraphManagerTest {
 				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4,
 				upgradeInfo5, upgradeInfo6, upgradeInfo7));
 
-		releaseGraphManager.getUpgradeInfos("0.1.0.1");
+		List<List<UpgradeInfo>> upgradePaths =
+			releaseGraphManager.getUpgradeInfos("0.1.0.1");
+
+		Assert.assertEquals(1, upgradePaths);
 	}
 
-	@Test(expected = IllegalStateException.class)
+	@Test
 	public void testGetAutoUpgradePathWhithoutEndNodes() {
 		UpgradeInfo upgradeInfo1 = createUpgradeInfo("0.0.0", "0.1.0");
 		UpgradeInfo upgradeInfo2 = createUpgradeInfo("0.1.0", "0.0.0");
@@ -102,7 +109,10 @@ public class ReleaseGraphManagerTest {
 			Arrays.asList(
 				upgradeInfo1, upgradeInfo2, upgradeInfo3, upgradeInfo4));
 
-		releaseGraphManager.getUpgradeInfos("0.0.0");
+		List<List<UpgradeInfo>> upgradeInfos =
+			releaseGraphManager.getUpgradeInfos("0.0.0");
+
+		Assert.assertEquals(0, upgradeInfos);
 	}
 
 	@Test

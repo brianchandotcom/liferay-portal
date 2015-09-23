@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
-import java.util.concurrent.Future;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
@@ -103,10 +102,8 @@ public class CompanyIndexFactory implements IndexFactory {
 		DeleteIndexRequestBuilder deleteIndexRequestBuilder =
 			indicesAdminClient.prepareDelete(String.valueOf(companyId));
 
-		Future<DeleteIndexResponse> future =
-			deleteIndexRequestBuilder.execute();
-
-		DeleteIndexResponse deleteIndexResponse = future.get();
+		DeleteIndexResponse deleteIndexResponse =
+			deleteIndexRequestBuilder.get();
 
 		LogUtil.logActionResponse(_log, deleteIndexResponse);
 	}
@@ -191,10 +188,8 @@ public class CompanyIndexFactory implements IndexFactory {
 		IndicesExistsRequestBuilder indicesExistsRequestBuilder =
 			indicesAdminClient.prepareExists(String.valueOf(companyId));
 
-		Future<IndicesExistsResponse> future =
-			indicesExistsRequestBuilder.execute();
-
-		IndicesExistsResponse indicesExistsResponse = future.get();
+		IndicesExistsResponse indicesExistsResponse =
+			indicesExistsRequestBuilder.get();
 
 		return indicesExistsResponse.isExists();
 	}

@@ -32,9 +32,8 @@ import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
+import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesRequestBuilder;
@@ -94,10 +93,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		try {
 			createBackupRepository(clusterAdminClient);
 
-			Future<CreateSnapshotResponse> future =
-				createSnapshotRequestBuilder.execute();
-
-			CreateSnapshotResponse createSnapshotResponse = future.get();
+			CreateSnapshotResponse createSnapshotResponse =
+				createSnapshotRequestBuilder.get();
 
 			LogUtil.logActionResponse(_log, createSnapshotResponse);
 
@@ -156,10 +153,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 				clusterAdminClient.prepareDeleteSnapshot(
 					_BACKUP_REPOSITORY_NAME, backupName);
 
-			Future<DeleteSnapshotResponse> future =
-				deleteSnapshotRequestBuilder.execute();
-
-			DeleteSnapshotResponse deleteSnapshotResponse = future.get();
+			DeleteSnapshotResponse deleteSnapshotResponse =
+				deleteSnapshotRequestBuilder.get();
 
 			LogUtil.logActionResponse(_log, deleteSnapshotResponse);
 		}
@@ -200,10 +195,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			indicesAdminClient.prepareClose(String.valueOf(companyId));
 
 		try {
-			Future<CloseIndexResponse> future =
-				closeIndexRequestBuilder.execute();
-
-			CloseIndexResponse closeIndexResponse = future.get();
+			CloseIndexResponse closeIndexResponse =
+				closeIndexRequestBuilder.get();
 
 			LogUtil.logActionResponse(_log, closeIndexResponse);
 		}
@@ -222,10 +215,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		restoreSnapshotRequestBuilder.setWaitForCompletion(true);
 
 		try {
-			Future<RestoreSnapshotResponse> future =
-				restoreSnapshotRequestBuilder.execute();
-
-			RestoreSnapshotResponse restoreSnapshotResponse = future.get();
+			RestoreSnapshotResponse restoreSnapshotResponse =
+				restoreSnapshotRequestBuilder.get();
 
 			LogUtil.logActionResponse(_log, restoreSnapshotResponse);
 		}
@@ -298,11 +289,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		putRepositoryRequestBuilder.setType("fs");
 
-		Future<PutRepositoryResponse> putRepositoryResponseFuture =
-			putRepositoryRequestBuilder.execute();
-
 		PutRepositoryResponse putRepositoryResponse =
-			putRepositoryResponseFuture.get();
+			putRepositoryRequestBuilder.get();
 
 		LogUtil.logActionResponse(_log, putRepositoryResponse);
 	}
@@ -314,11 +302,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			clusterAdminClient.prepareGetRepositories(_BACKUP_REPOSITORY_NAME);
 
 		try {
-			Future<GetRepositoriesResponse> getRepositoriesResponseFuture =
-				getRepositoriesRequestBuilder.execute();
-
 			GetRepositoriesResponse getRepositoriesResponse =
-				getRepositoriesResponseFuture.get();
+				getRepositoriesRequestBuilder.get();
 
 			ImmutableList<RepositoryMetaData> repositoryMetaDatas =
 				getRepositoriesResponse.repositories();
@@ -329,7 +314,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 			return true;
 		}
-		catch (ExecutionException ee) {
+		catch (ElasticsearchException ee) {
 			if (ee.getCause() instanceof RepositoryMissingException) {
 				return false;
 			}

@@ -935,6 +935,43 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	}
 
 	@Override
+	public AssetEntry updateVisible(AssetEntry entry, boolean visible)
+		throws PortalException {
+
+		if (visible == entry.isVisible()) {
+			return assetEntryPersistence.update(entry);
+		}
+
+		entry.setVisible(visible);
+
+		assetEntryPersistence.update(entry);
+
+		List<AssetTag> tags = assetEntryPersistence.getAssetTags(
+			entry.getEntryId());
+
+		if (visible) {
+			for (AssetTag tag : tags) {
+				assetTagLocalService.incrementAssetCount(
+					tag.getTagId(), entry.getClassNameId());
+			}
+
+			socialActivityCounterLocalService.enableActivityCounters(
+				entry.getClassNameId(), entry.getClassPK());
+		}
+		else {
+			for (AssetTag tag : tags) {
+				assetTagLocalService.decrementAssetCount(
+					tag.getTagId(), entry.getClassNameId());
+			}
+
+			socialActivityCounterLocalService.disableActivityCounters(
+				entry.getClassNameId(), entry.getClassPK());
+		}
+
+		return entry;
+	}
+
+	@Override
 	public AssetEntry updateVisible(
 			String className, long classPK, boolean visible)
 		throws PortalException {
@@ -1092,42 +1129,6 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		Indexer<?> indexer = IndexerRegistryUtil.nullSafeGetIndexer(className);
 
 		indexer.reindex(className, entry.getClassPK());
-	}
-
-	protected AssetEntry updateVisible(AssetEntry entry, boolean visible)
-		throws PortalException {
-
-		if (visible == entry.isVisible()) {
-			return assetEntryPersistence.update(entry);
-		}
-
-		entry.setVisible(visible);
-
-		assetEntryPersistence.update(entry);
-
-		List<AssetTag> tags = assetEntryPersistence.getAssetTags(
-			entry.getEntryId());
-
-		if (visible) {
-			for (AssetTag tag : tags) {
-				assetTagLocalService.incrementAssetCount(
-					tag.getTagId(), entry.getClassNameId());
-			}
-
-			socialActivityCounterLocalService.enableActivityCounters(
-				entry.getClassNameId(), entry.getClassPK());
-		}
-		else {
-			for (AssetTag tag : tags) {
-				assetTagLocalService.decrementAssetCount(
-					tag.getTagId(), entry.getClassNameId());
-			}
-
-			socialActivityCounterLocalService.disableActivityCounters(
-				entry.getClassNameId(), entry.getClassPK());
-		}
-
-		return entry;
 	}
 
 }

@@ -16,7 +16,6 @@ package com.liferay.document.library.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.web.constants.DLPortletKeys;
-import com.liferay.document.library.web.lar.DLPortletDataHandler;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -57,7 +56,6 @@ import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.ManifestSummary;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import java.util.Map;
 
@@ -232,11 +230,6 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		DLAppLocalServiceUtil.addFileShortcut(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 			folder.getFolderId(), fileEntry.getFileEntryId(), serviceContext);
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		return new DLPortletDataHandler();
 	}
 
 	@Override

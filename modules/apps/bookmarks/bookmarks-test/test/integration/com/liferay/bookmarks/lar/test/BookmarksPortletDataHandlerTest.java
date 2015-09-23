@@ -16,7 +16,6 @@ package com.liferay.bookmarks.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.lar.BookmarksPortletDataHandler;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
@@ -34,7 +33,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import java.util.List;
 
@@ -103,11 +101,6 @@ public class BookmarksPortletDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(stagingGroup.getGroupId());
 
 		BookmarksTestUtil.addEntry(folder.getFolderId(), true, serviceContext);
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		return new BookmarksPortletDataHandler();
 	}
 
 	@Override

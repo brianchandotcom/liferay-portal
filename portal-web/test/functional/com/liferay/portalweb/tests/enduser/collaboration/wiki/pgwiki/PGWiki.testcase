@@ -56,7 +56,7 @@
 		</execute>
 
 		<execute macro="WikiPage#viewViewCount">
-			<var name="viewCountNumber" value="3" />
+			<var name="viewCountNumber" value="2" />
 		</execute>
 
 		<execute macro="WikiPage#gotoPG">

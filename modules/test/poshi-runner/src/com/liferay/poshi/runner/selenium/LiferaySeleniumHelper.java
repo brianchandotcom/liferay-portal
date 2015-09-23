@@ -1021,9 +1021,8 @@ public class LiferaySeleniumHelper {
 		_screenshotCount++;
 
 		captureScreen(
-			liferaySelenium.getProjectDirName() +
-				"portal-web/test-results/functional/screenshots/" +
-					_screenshotCount + ".jpg");
+			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
+				_screenshotCount + ".jpg");
 	}
 
 	public static void saveScreenshotBeforeAction(
@@ -1039,9 +1038,8 @@ public class LiferaySeleniumHelper {
 		}
 
 		captureScreen(
-			liferaySelenium.getProjectDirName() +
-				"portal-web/test-results/functional/screenshots/" +
-					"ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
+			_CURRENT_DIR_NAME + "test-results/functional/screenshots/" +
+				"ScreenshotBeforeAction" + _screenshotErrorCount + ".jpg");
 	}
 
 	public static void sendEmail(
@@ -1759,6 +1757,9 @@ public class LiferaySeleniumHelper {
 
 		return screenRegion.findAll(imageTarget);
 	}
+
+	private static final String _CURRENT_DIR_NAME =
+		PoshiRunnerGetterUtil.getCanonicalPath(".");
 
 	private static final String _TEST_BASE_DIR_NAME =
 		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);

@@ -46,6 +46,7 @@ import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -118,11 +119,13 @@ public class LayoutAction extends Action {
 
 				if (Validator.isNull(authLoginURL)) {
 					PortletURL loginURL = PortletURLFactoryUtil.create(
-						request, PortletKeys.LOGIN, themeDisplay.getPlid(), 
+						request, PortletKeys.LOGIN, themeDisplay.getPlid(),
 						PortletRequest.RENDER_PHASE);
 
-					loginURL.setParameter("saveLastPath", Boolean.FALSE.toString());
-					loginURL.setParameter("mvcRenderCommandName", "/login/login");
+					loginURL.setParameter(
+						"saveLastPath", Boolean.FALSE.toString());
+					loginURL.setParameter(
+						"mvcRenderCommandName", "/login/login");
 					loginURL.setPortletMode(PortletMode.VIEW);
 					loginURL.setWindowState(WindowState.MAXIMIZED);
 

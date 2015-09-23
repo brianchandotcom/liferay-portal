@@ -49,10 +49,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
-		"search.asset.type=com.liferay.portlet.blogs.model.BlogsEntry"
-	},
+	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
 	service = AssetRendererFactory.class
 )
 public class BlogsEntryAssetRendererFactory

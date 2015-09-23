@@ -18,11 +18,13 @@ import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMapListener;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.RunnableUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Release;
@@ -38,6 +40,9 @@ import java.io.OutputStream;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.felix.utils.log.Logger;
 
@@ -46,6 +51,7 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -55,7 +61,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"osgi.command.function=execute", "osgi.command.function=list",
 		"osgi.command.scope=upgrade"
@@ -70,9 +77,22 @@ public class ReleaseManager {
 
 		String schemaVersionString = getSchemaVersionString(bundleSymbolicName);
 
-		executeUpgradeInfos(
-			bundleSymbolicName,
-			releaseGraphManager.getUpgradeInfos(schemaVersionString));
+		List<List<UpgradeInfo>> upgradePaths =
+			releaseGraphManager.getUpgradeInfos(schemaVersionString);
+
+		int size = upgradePaths.size();
+
+		if (size > 1) {
+			throw new IllegalStateException(
+				"There are " + size + " possible end nodes to go from " +
+					schemaVersionString);
+		}
+
+		if (size == 0) {
+			return;
+		}
+
+		executeUpgradeInfos(bundleSymbolicName, upgradePaths.get(0));
 	}
 
 	public void execute(String bundleSymbolicName, String toVersionString) {
@@ -116,12 +136,21 @@ public class ReleaseManager {
 	}
 
 	@Activate
-	protected void activate(final BundleContext bundleContext)
+	protected void activate(
+			final BundleContext bundleContext, Map<String, Object> properties)
 		throws InvalidSyntaxException {
 
 		_logger = new Logger(bundleContext);
 
 		DB db = DBFactoryUtil.getDB();
+
+		ServiceTrackerMapListener<String, UpgradeInfo, List<UpgradeInfo>>
+			serviceTrackerMapListener = null;
+
+		if (GetterUtil.getBoolean(properties.get("autoUpgrade"), true)) {
+			serviceTrackerMapListener =
+				new UpgradeInfoServiceTrackerMapListener();
+		}
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
 			bundleContext, UpgradeStep.class,
@@ -132,7 +161,8 @@ public class ReleaseManager {
 			new UpgradeServiceTrackerCustomizer(bundleContext),
 			Collections.reverseOrder(
 				new PropertyServiceReferenceComparator<UpgradeStep>(
-					"upgrade.from.version")));
+					"upgrade.from.version")),
+			serviceTrackerMapListener);
 
 		_serviceTrackerMap.open();
 	}
@@ -140,6 +170,8 @@ public class ReleaseManager {
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+
+		_executorService.shutdown();
 	}
 
 	protected void executeUpgradeInfos(
@@ -198,11 +230,32 @@ public class ReleaseManager {
 
 	private static Logger _logger;
 
+	private final ExecutorService _executorService =
+		Executors.newSingleThreadExecutor();
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
 	private ReleaseLocalService _releaseLocalService;
 	private ReleasePublisher _releasePublisher;
 	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
+
+	private class UpgradeInfoServiceTrackerMapListener
+		implements ServiceTrackerMapListener
+			<String, UpgradeInfo, List<UpgradeInfo>> {
+
+		@Override
+		public void update(
+			ServiceTrackerMap<String, List<UpgradeInfo>> map, final String key,
+			UpgradeInfo service, List<UpgradeInfo> content) {
+
+			_executorService.submit(new Runnable() {
+				@Override
+				public void run() {
+					execute(key);
+				}
+			});
+		}
+
+	}
 
 	private class UpgradeInfosRunnable implements Runnable {
 

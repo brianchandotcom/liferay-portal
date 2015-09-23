@@ -385,15 +385,16 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		taskContextMap.put("companyIds", companyIds);
 		taskContextMap.put("className", className);
 
-		Class taskExecutorClass = ReindexPortalBackgroundTaskExecutor.class;
+		String taskExecutorClassName = _REINDEX_PORTAL_BACKGROUND_TASK_EXECUTOR;
 
 		if (Validator.isNotNull(className)) {
-			taskExecutorClass = ReindexIndexerBackgroundTaskExecutor.class;
+			taskExecutorClassName =
+				_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR;
 		}
 
 		BackgroundTaskManagerUtil.addBackgroundTask(
 			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), "reindex",
-			null, taskExecutorClass, taskContextMap, new ServiceContext());
+			taskExecutorClassName, taskContextMap, new ServiceContext());
 	}
 
 	protected void reindexDictionaries(ActionRequest actionRequest)
@@ -821,5 +822,14 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditServerMVCActionCommand.class);
+
+	private static final String _REINDEX_PORTAL_BACKGROUND_TASK_EXECUTOR =
+		"com.liferay.portal.search.internal.background.task." +
+			"ReindexPortalBackgroundTaskExecutor";
+
+	private static final String
+		_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR =
+		"com.liferay.portal.search.internal.background.task." +
+			"ReindexSingleIndexerBackgroundTaskExecutor";
 
 }

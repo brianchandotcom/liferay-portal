@@ -24,6 +24,9 @@ import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.permission.PollsResourcePermissionChecker;
 import com.liferay.polls.service.persistence.PollsQuestionUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -35,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -65,6 +69,8 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
+		String portletId = portletDataContext.getPortletId();
+
 		long questionId = GetterUtil.getLong(
 			portletPreferences.getValue("questionId", StringPool.BLANK));
 
@@ -91,8 +97,14 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
-		portletDataContext.addPortletPermissions(
-			PollsResourcePermissionChecker.RESOURCE_NAME);
+		try {
+			portletDataContext.addPortletPermissions(
+				PollsResourcePermissionChecker.RESOURCE_NAME);
+		}
+		catch (PortalException pe) {
+			throw new PortletDataException(
+				"Unable to export portlet permissions", pe);
+		}
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, portletId, question);
@@ -120,8 +132,14 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		portletDataContext.importPortletPermissions(
-			PollsResourcePermissionChecker.RESOURCE_NAME);
+		try {
+			portletDataContext.importPortletPermissions(
+				PollsResourcePermissionChecker.RESOURCE_NAME);
+		}
+		catch (PortalException pe) {
+			throw new PortletDataException(
+				"Unable to import portlet permissions", pe);
+		}
 
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, PollsQuestion.class);
@@ -142,11 +160,20 @@ public class PollsDisplayExportImportPortletPreferencesProcessor
 
 			questionId = MapUtil.getLong(questionIds, questionId, questionId);
 
-			portletPreferences.setValue(
-				"questionId", String.valueOf(questionId));
+			try {
+				portletPreferences.setValue(
+					"questionId", String.valueOf(questionId));
+			}
+			catch (ReadOnlyException roe) {
+				throw new PortletDataException(
+					"Unable to update portlet preferences during import", roe);
+			}
 		}
 
 		return portletPreferences;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PollsDisplayExportImportPortletPreferencesProcessor.class);
 
 }

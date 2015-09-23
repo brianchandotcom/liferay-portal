@@ -16,6 +16,11 @@
 
 <c:choose>
 	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-user
+			showDetails="<%= false %>"
+			userId="<%= entry.getUserId() %>"
+		/>
+
 		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
 			<liferay-ui:app-view-entry
 				actionJsp="/blogs_admin/entry_action.jsp"

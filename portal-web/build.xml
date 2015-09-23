@@ -380,24 +380,10 @@ ${oversize.files.jsp}</fail>
 	</target>
 
 	<target name="compile-resin">
-		<if>
-			<not>
-				<isset property="jdk.7.home" />
-			</not>
-			<then>
-				<fail>
-.
-
-Please set the property "jdk.7.home" in build.properties.
-				</fail>
-			</then>
-		</if>
-
 		<property name="jspc.classes.dir" value="classes/${app.server.type}" />
 
 		<path id="jspc.classpath">
-			<pathelement location="${jdk.7.home}/jre/lib/rt.jar" />
-			<pathelement location="${jdk.7.home}/lib/tools.jar" />
+			<pathelement location="${env.JAVA_HOME}/jre/lib/rt.jar" />
 			<path refid="jspc.common.classpath" />
 			<pathelement location="${app.server.dir}/lib/resin.jar" />
 			<pathelement location="${project.dir}/lib/portal/abdera.jar" />
@@ -406,6 +392,7 @@ Please set the property "jdk.7.home" in build.properties.
 			<pathelement location="${project.dir}/lib/portal/commons-configuration.jar" />
 			<pathelement location="${project.dir}/lib/portal/commons-digester.jar" />
 			<pathelement location="${project.dir}/lib/portal/commons-httpclient.jar" />
+			<pathelement location="${project.dir}/lib/portal/commons-io.jar" />
 			<pathelement location="${project.dir}/lib/portal/portletbridge-core.jar" />
 			<pathelement location="${project.dir}/lib/portal/portletbridge-portlet.jar" />
 			<pathelement location="${project.dir}/lib/portal/spring-beans.jar" />
@@ -428,7 +415,6 @@ Please set the property "jdk.7.home" in build.properties.
 			fork="true"
 			maxmemory="512m"
 			newenvironment="true"
-			jvm="${jdk.7.home}\bin\java"
 		>
 			<arg line="docroot ${jspc.classes.dir}" />
 		</java>

@@ -67,7 +67,7 @@
 				<not>
 					<or>
 						<equals arg1="${database.type}" arg2="db2" />
-						<equals arg1="${database.type}" arg2="hsql" />
+						<equals arg1="${database.type}" arg2="hypersonic" />
 						<equals arg1="${database.type}" arg2="mysql" />
 						<equals arg1="${database.type}" arg2="oracle" />
 						<equals arg1="${database.type}" arg2="postgresql" />
@@ -76,7 +76,7 @@
 					</or>
 				</not>
 				<then>
-					<fail>Please set "database.type" to one of the following:${line.separator}db2, hsql, mysql, oracle, postgresql, sql.server, sybase.</fail>
+					<fail>Please set "database.type" to one of the following:${line.separator}db2, hypersonic, mysql, oracle, postgresql, sql.server, sybase.</fail>
 				</then>
 			</if>
 		</sequential>
@@ -2220,7 +2220,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					</if>
 
 					<antcall target="delete-liferay-home">
-						<param name="keep.hsqldb" value="true" />
+						<param name="keep.hypersonicdb" value="true" />
 					</antcall>
 
 					<if>
@@ -2577,7 +2577,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 		<if>
 			<not>
-				<equals arg1="${database.type}" arg2="hsql" />
+				<equals arg1="${database.type}" arg2="hypersonic" />
 			</not>
 			<then>
 				<get-testcase-property property.name="databases.size" />
@@ -3317,8 +3317,8 @@ go]]></replacevalue>
 
 				<delete failonerror="false" includeemptydirs="true">
 					<fileset dir="${test.app.server.liferay.home}/data">
-						<exclude name="hsql/lportal.properties" if:true="${keep.hsqldb}" />
-						<exclude name="hsql/lportal.script" if:true="${keep.hsqldb}" />
+						<exclude name="hypersonic/lportal.properties" if:true="${keep.hypersonicdb}" />
+						<exclude name="hypersonic/lportal.script" if:true="${keep.hypersonicdb}" />
 					</fileset>
 				</delete>
 				<delete dir="${test.app.server.liferay.home}/logs" />
@@ -4110,7 +4110,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 	<target name="prepare-log4j-ext-xml">
 		<if>
-			<equals arg1="${database.type}" arg2="hsql" />
+			<equals arg1="${database.type}" arg2="hypersonic" />
 			<then>
 				<echo file="${app.server.classes.portal.dir}/META-INF/portal-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
@@ -4861,37 +4861,37 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
-			<isset property="database.hsql.driver" />
+			<isset property="database.hypersonic.driver" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					database.hsql.driver=${database.hsql.driver}
+					database.hypersonic.driver=${database.hypersonic.driver}
 				</echo>
 			</then>
 		</if>
 
 		<if>
-			<isset property="database.hsql.password" />
+			<isset property="database.hypersonic.password" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					database.hsql.password=${database.hsql.password}
+					database.hypersonic.password=${database.hypersonic.password}
 				</echo>
 			</then>
 		</if>
 
 		<if>
-			<isset property="database.hsql.url" />
+			<isset property="database.hypersonic.url" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					database.hsql.url=${database.hsql.url}
+					database.hypersonic.url=${database.hypersonic.url}
 				</echo>
 			</then>
 		</if>
 
 		<if>
-			<isset property="database.hsql.username" />
+			<isset property="database.hypersonic.username" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					database.hsql.username=${database.hsql.username}
+					database.hypersonic.username=${database.hypersonic.username}
 				</echo>
 			</then>
 		</if>
@@ -5752,12 +5752,12 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 						</exec>
 					</then>
 					<elseif>
-						<equals arg1="${database.type}" arg2="hsql" />
+						<equals arg1="${database.type}" arg2="hypersonic" />
 						<then>
 							<delete dir="${liferay.home}/data" includeemptydirs="true" />
 
-							<copy file="sql/${database.name}.properties" tofile="${liferay.home}/data/hsql/${database.name}.properties" />
-							<copy file="sql/${database.name}.script" tofile="${liferay.home}/data/hsql/${database.name}.script" />
+							<copy file="sql/${database.name}.properties" tofile="${liferay.home}/data/hypersonic/${database.name}.properties" />
+							<copy file="sql/${database.name}.script" tofile="${liferay.home}/data/hypersonic/${database.name}.script" />
 						</then>
 					</elseif>
 					<elseif>
@@ -6222,7 +6222,7 @@ if (ppstate.equals("normal")) {
 			<and>
 				<equals arg1="${test.class}" arg2="PortalWebTestSuite" />
 				<not>
-					<equals arg1="${database.type}" arg2="hsql" />
+					<equals arg1="${database.type}" arg2="hypersonic" />
 				</not>
 			</and>
 			<then>
@@ -6237,7 +6237,7 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
-			<equals arg1="${database.type}" arg2="hsql" />
+			<equals arg1="${database.type}" arg2="hypersonic" />
 			<then>
 				<antcall target="rebuild-database" inheritAll="false">
 					<param name="database.type" value="mysql" />

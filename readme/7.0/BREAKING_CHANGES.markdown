@@ -2307,7 +2307,7 @@ this tag.
 #### How should I update my code?
 
 Embedding another portlet is only supported from a template. You should embed
-the portlet using the call to `theme.runtime`.
+the portlet by passing its name in a call to `theme.runtime`.
 
 **Example**
 

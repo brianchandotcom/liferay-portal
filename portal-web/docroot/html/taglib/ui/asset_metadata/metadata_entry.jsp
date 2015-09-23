@@ -106,6 +106,7 @@ else if (metadataField.equals("tags")) {
 			displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
 		}
 		%>
+
 		<div class="metadata-author">
 			<div class="asset-avatar">
 				<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />

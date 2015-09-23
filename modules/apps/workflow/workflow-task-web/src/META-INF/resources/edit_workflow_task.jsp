@@ -144,7 +144,7 @@ renderResponse.setTitle(headerTitle);
 
 										<c:if test="<%= assetEntry != null %>">
 											<portlet:param name="assetEntryId" value="<%= String.valueOf(assetEntry.getEntryId()) %>" />
-											<portlet:param name="assetEntryVersionId" value="<%= String.valueOf(classPK) %>" />
+											<portlet:param name="assetEntryClassPK" value="<%= String.valueOf(assetEntry.getClassPK()) %>" />
 										</c:if>
 
 										<portlet:param name="type" value="<%= assetRendererFactory.getType() %>" />

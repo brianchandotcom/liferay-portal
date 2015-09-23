@@ -14,6 +14,7 @@
 
 package com.liferay.poshi.runner.util;
 
+import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 
 import java.io.BufferedReader;
@@ -42,7 +43,7 @@ public class AntCommands implements Callable<Void> {
 
 		StringBuilder sb = new StringBuilder();
 
-		String projectDirName = _liferaySelenium.getProjectDirName();
+		String projectDirName = PoshiRunnerGetterUtil.getProjectDirName();
 
 		if (!OSDetector.isWindows()) {
 			projectDirName = StringUtil.replace(projectDirName, "\\", "//");

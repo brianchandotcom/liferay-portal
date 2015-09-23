@@ -58,6 +58,9 @@ public class AssetEntryFinderImpl
 	public static final String FIND_BY_AND_TAG_IDS =
 		AssetEntryFinder.class.getName() + ".findByAndTagIds";
 
+	public static final String FIND_BY_CLASS_NAME_ID =
+		AssetEntryFinder.class.getName() + ".findByClassNameId";
+
 	@Override
 	public int countEntries(AssetEntryQuery entryQuery) {
 		Session session = null;

@@ -29,6 +29,8 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 import java.io.Serializable;
 
@@ -42,6 +44,25 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = WorkflowHandler.class)
 public class DDLRecordWorkflowHandler extends BaseWorkflowHandler<DDLRecord> {
+
+	@Override
+	public AssetRenderer<DDLRecord> getAssetRenderer(long classPK)
+		throws PortalException {
+
+		AssetRendererFactory<DDLRecord> assetRendererFactory =
+			getAssetRendererFactory();
+
+		if (assetRendererFactory != null) {
+			DDLRecordVersion recordVersion =
+				DDLRecordVersionLocalServiceUtil.getRecordVersion(classPK);
+
+			return assetRendererFactory.getAssetRenderer(
+				recordVersion.getRecordId(), AssetRendererFactory.TYPE_LATEST);
+		}
+		else {
+			return null;
+		}
+	}
 
 	@Override
 	public String getClassName() {

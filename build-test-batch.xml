@@ -1001,6 +1001,10 @@
 		<run-integration-test database.type="db2" />
 	</target>
 
+	<target name="integration-hsql">
+		<run-integration-test database.type="hsql" />
+	</target>
+
 	<target name="integration-mysql">
 		<run-integration-test database.type="mysql" />
 	</target>
@@ -1019,6 +1023,10 @@
 
 	<target name="modules-integration-db2">
 		<run-modules-integration-test database.type="db2" />
+	</target>
+
+	<target name="modules-integration-hsql">
+		<run-modules-integration-test database.type="hsql" />
 	</target>
 
 	<target name="modules-integration-mysql">

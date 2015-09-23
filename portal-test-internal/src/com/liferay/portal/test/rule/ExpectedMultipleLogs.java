@@ -14,11 +14,20 @@
 
 package com.liferay.portal.test.rule;
 
-/**
- * @author Shuyang Zhou
- */
-public enum ExpectedType {
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-	CONTAINS, EXACT, POSTFIX, PREFIX
+/**
+ * @author Matthew Tambara
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface ExpectedMultipleLogs {
+
+	public ExpectedLogs[] expectedMultipleLogs();
 
 }

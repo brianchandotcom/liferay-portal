@@ -200,6 +200,12 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 
 <c:if test="<%= calendarBooking.isRecurring() %>">
 
+	<%
+	Recurrence recurrence = calendarBooking.getRecurrenceObj();
+
+	boolean recurring = true;
+	%>
+
 	<%@ include file="/calendar_booking_recurrence_container.jspf" %>
 
 	<aui:script use="liferay-calendar-recurrence-util">
@@ -207,12 +213,6 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 
 		var endValue = 'never';
 		var untilDate = null;
-
-		<%
-		Recurrence recurrence = calendarBooking.getRecurrenceObj();
-
-		java.util.Calendar untilJCalendar = recurrence.getUntilJCalendar();
-		%>
 
 		<c:choose>
 			<c:when test="<%= (untilJCalendar != null) %>">
@@ -227,12 +227,6 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 
 		<%
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-
-		List<Weekday> weekdays = new ArrayList<Weekday>();
-
-		for (PositionalWeekday positionalWeekday : recurrence.getPositionalWeekdays()) {
-			weekdays.add(positionalWeekday.getWeekday());
-		}
 		%>
 
 		var recurrence = {

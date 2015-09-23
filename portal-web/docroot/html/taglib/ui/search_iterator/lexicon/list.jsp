@@ -258,12 +258,6 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 	</c:if>
 </div>
 
-<c:if test="<%= (rowChecker != null) && !resultRows.isEmpty() && Validator.isNotNull(rowChecker.getAllRowsId()) && allRowsIsChecked %>">
-	<aui:script>
-		document.<%= rowChecker.getFormName() %>.<%= rowChecker.getAllRowsId() %>.checked = true;
-	</aui:script>
-</c:if>
-
 <c:if test="<%= Validator.isNotNull(id) %>">
 	<input id="<%= namespace + id %>PrimaryKeys" name="<%= namespace + id %>PrimaryKeys" type="hidden" value="" />
 

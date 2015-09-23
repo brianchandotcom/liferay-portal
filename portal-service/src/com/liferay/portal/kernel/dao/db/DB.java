@@ -72,11 +72,17 @@ public interface DB {
 
 	public List<Index> getIndexes(Connection con) throws SQLException;
 
+	public int getMajorVersion();
+
+	public int getMinorVersion();
+
 	public String getTemplateFalse();
 
 	public String getTemplateTrue();
 
 	public String getType();
+
+	public String getVersionString();
 
 	public long increment();
 

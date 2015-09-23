@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.db;
 
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -44,8 +43,8 @@ import java.util.regex.Pattern;
  */
 public class OracleDB extends BaseDB {
 
-	public static DB getInstance() {
-		return _instance;
+	public OracleDB(int majorVersion, int minorVersion) {
+		super(TYPE_ORACLE, majorVersion, minorVersion);
 	}
 
 	@Override
@@ -145,10 +144,6 @@ public class OracleDB extends BaseDB {
 	@Override
 	public boolean isSupportsInlineDistinct() {
 		return _SUPPORTS_INLINE_DISTINCT;
-	}
-
-	protected OracleDB() {
-		super(TYPE_ORACLE);
 	}
 
 	@Override
@@ -325,8 +320,6 @@ public class OracleDB extends BaseDB {
 	};
 
 	private static final boolean _SUPPORTS_INLINE_DISTINCT = false;
-
-	private static final OracleDB _instance = new OracleDB();
 
 	private static final Pattern _varchar2CharPattern = Pattern.compile(
 		"VARCHAR2\\((\\d+) CHAR\\)");

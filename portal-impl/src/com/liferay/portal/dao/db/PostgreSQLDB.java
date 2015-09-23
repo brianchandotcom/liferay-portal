@@ -14,7 +14,6 @@
 
 package com.liferay.portal.dao.db;
 
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.Index;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -39,8 +38,8 @@ import java.util.List;
  */
 public class PostgreSQLDB extends BaseDB {
 
-	public static DB getInstance() {
-		return _instance;
+	public PostgreSQLDB(int majorVersion, int minorVersion) {
+		super(TYPE_POSTGRESQL, majorVersion, minorVersion);
 	}
 
 	@Override
@@ -98,10 +97,6 @@ public class PostgreSQLDB extends BaseDB {
 	@Override
 	public boolean isSupportsQueryingAfterException() {
 		return _SUPPORTS_QUERYING_AFTER_EXCEPTION;
-	}
-
-	protected PostgreSQLDB() {
-		super(TYPE_POSTGRESQL);
 	}
 
 	@Override
@@ -209,7 +204,5 @@ public class PostgreSQLDB extends BaseDB {
 	};
 
 	private static final boolean _SUPPORTS_QUERYING_AFTER_EXCEPTION = false;
-
-	private static final PostgreSQLDB _instance = new PostgreSQLDB();
 
 }

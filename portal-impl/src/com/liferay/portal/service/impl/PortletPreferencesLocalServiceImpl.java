@@ -274,6 +274,16 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	@Override
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value =
+					"org.springframework.dao.DataIntegrityViolationException"
+			)
+		}
+	)
 	public javax.portlet.PortletPreferences getPreferences(
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId) {
@@ -303,6 +313,16 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	@Override
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value =
+					"org.springframework.dao.DataIntegrityViolationException"
+			)
+		}
+	)
 	public javax.portlet.PortletPreferences getPreferences(
 		PortletPreferencesIds portletPreferencesIds) {
 
@@ -315,6 +335,16 @@ public class PortletPreferencesLocalServiceImpl
 	}
 
 	@Override
+	@Retry(
+		acceptor = ExceptionRetryAcceptor.class,
+		properties = {
+			@Property(
+				name = ExceptionRetryAcceptor.EXCEPTION_NAME,
+				value =
+					"org.springframework.dao.DataIntegrityViolationException"
+			)
+		}
+	)
 	public javax.portlet.PortletPreferences getStrictPreferences(
 		long companyId, long ownerId, int ownerType, long plid,
 		String portletId) {

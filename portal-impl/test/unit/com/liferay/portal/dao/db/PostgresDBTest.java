@@ -34,7 +34,7 @@ public class PostgresDBTest extends BaseDBTestCase {
 
 	@Override
 	protected DB getDB() {
-		return PostgreSQLDB.getInstance();
+		return new PostgreSQLDB(0, 0);
 	}
 
 }

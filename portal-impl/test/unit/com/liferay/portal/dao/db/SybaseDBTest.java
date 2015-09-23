@@ -34,7 +34,7 @@ public class SybaseDBTest extends BaseDBTestCase {
 
 	@Override
 	protected DB getDB() {
-		return SybaseDB.getInstance();
+		return new SybaseDB(0, 0);
 	}
 
 }

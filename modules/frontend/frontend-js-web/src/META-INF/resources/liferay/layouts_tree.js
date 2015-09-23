@@ -358,7 +358,6 @@ AUI.add(
 						data: function(node) {
 							return {
 								cmd: 'get',
-								controlPanelCategory: 'current_site.pages',
 								doAsGroupId: themeDisplay.getScopeGroupId(),
 								groupId: instance.extractGroupId(node),
 								incomplete: instance.get('incomplete'),
@@ -517,7 +516,6 @@ AUI.add(
 						data: A.mix(
 							data,
 							{
-								controlPanelCategory: 'current_site.pages',
 								doAsGroupId: themeDisplay.getScopeGroupId(),
 								p_auth: Liferay.authToken,
 								p_l_id: themeDisplay.getPlid(),

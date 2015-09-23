@@ -46,10 +46,10 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 	}
 
 	public RubySassCompiler(
-			String compileMode, int compilerThreshold, String tmpDir)
+			String compileMode, int compilerThreshold, String tmpDirName)
 		throws Exception {
 
-		_tmpDir = tmpDir;
+		_tmpDirName = tmpDirName;
 
 		_scriptingContainer = new ScriptingContainer(
 			LocalContextScope.THREADSAFE);
@@ -146,8 +146,8 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 			String[] results = _scriptingContainer.callMethod(
 				_scriptObject, "process",
-				new Object[] {inputFileName, includeDirNames, _tmpDir, false,
-					outputFileName, generateSourceMap,
+				new Object[] {inputFileName, includeDirNames, _tmpDirName,
+					false, outputFileName, generateSourceMap,
 					sourceMapFileName
 				},
 				String[].class);
@@ -193,7 +193,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 		try {
 			if ((inputFileName == null) || inputFileName.equals("")) {
-				inputFileName = _tmpDir + "tmp.scss";
+				inputFileName = _tmpDirName + "tmp.scss";
 
 				if (generateSourceMap) {
 					System.out.println("Source maps require a valid fileName");
@@ -249,7 +249,9 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 	private void write(File file, String string) throws IOException {
 		if (!file.exists()) {
-			file.getParentFile().mkdirs();
+			File parentFile = file.getParentFile();
+
+			parentFile.mkdirs();
 
 			file.createNewFile();
 		}
@@ -269,6 +271,6 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 	private final ScriptingContainer _scriptingContainer;
 	private final Object _scriptObject;
-	private final String _tmpDir;
+	private final String _tmpDirName;
 
 }

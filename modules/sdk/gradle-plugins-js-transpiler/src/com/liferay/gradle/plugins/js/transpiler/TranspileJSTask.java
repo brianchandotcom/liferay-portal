@@ -100,6 +100,10 @@ public class TranspileJSTask extends ExecuteNodeTask {
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
+	public String getScriptFileName() {
+		return _scriptFileName;
+	}
+
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}
@@ -177,6 +181,10 @@ public class TranspileJSTask extends ExecuteNodeTask {
 		_outputDir = outputDir;
 	}
 
+	public void setScriptFileName(String scriptFileName) {
+		_scriptFileName = scriptFileName;
+	}
+
 	public void setSourceDir(Object sourceDir) {
 		_sourceDir = sourceDir;
 	}
@@ -200,8 +208,7 @@ public class TranspileJSTask extends ExecuteNodeTask {
 
 		List<Object> completeArgs = new ArrayList<>();
 
-		File scriptFile = new File(
-			getNodeDir(), "node_modules/babel/bin/babel/index.js");
+		File scriptFile = new File(getNodeDir(), getScriptFileName());
 
 		completeArgs.add(FileUtil.getAbsolutePath(scriptFile));
 
@@ -236,6 +243,7 @@ public class TranspileJSTask extends ExecuteNodeTask {
 	private Object _modules = "amd";
 	private Object _outputDir;
 	private final PatternFilterable _patternFilterable = new PatternSet();
+	private String _scriptFileName = "node_modules/babel/bin/babel.js";
 	private Object _sourceDir;
 	private SourceMaps _sourceMaps = SourceMaps.ENABLED;
 	private int _stage = 0;

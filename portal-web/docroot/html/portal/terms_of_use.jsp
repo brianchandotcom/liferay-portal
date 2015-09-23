@@ -28,12 +28,6 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) 
 TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderRegistryUtil.getTermsOfUseContentProvider();
 %>
 
-<style type="text/css">
-	.dockbar .container-fluid .nav.nav-add-controls {
-		display: none;
-	}
-</style>
-
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_terms_of_use" %>' name="fm">
 	<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
 	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />

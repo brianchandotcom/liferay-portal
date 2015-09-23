@@ -271,28 +271,6 @@
 							'liferay-portlet-base'
 						]
 					},
-					'liferay-dockbar': {
-						path: 'dockbar.js',
-						requires: [
-							'aui-node',
-							'event-touch'
-						]
-					},
-					'liferay-dockbar-keyboard-interaction': {
-						path: 'dockbar_keyboard_interaction.js',
-						requires: [
-							'node-focusmanager',
-							'plugin'
-						]
-					},
-					'liferay-dockbar-underlay': {
-						path: 'dockbar_underlay.js',
-						requires: [
-							'aui-button',
-							'aui-io-plugin-deprecated',
-							'aui-overlay-manager-deprecated'
-						]
-					},
 					'liferay-dynamic-select': {
 						path: 'dynamic_select.js',
 						requires: [

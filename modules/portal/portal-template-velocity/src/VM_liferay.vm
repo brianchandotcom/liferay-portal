@@ -19,10 +19,6 @@
 #macro (date $date_format)
 $dateUtil.getCurrentDate($date_format, $locale)#end
 
-#macro (dockbar)
-	$theme.runtime("145")
-#end
-
 #macro (js $file_name)
 	#if ($file_name == $js_main_file)
 		<script id="mainLiferayThemeJavaScript" src="$file_name" type="text/javascript"></script>

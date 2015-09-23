@@ -25,8 +25,6 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 AssetRendererFactory<?> assetRendererFactory = (AssetRendererFactory<?>)request.getAttribute("view.jsp-assetRendererFactory");
 AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute("view.jsp-assetRenderer");
 
-String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
-
 String title = (String)request.getAttribute("view.jsp-title");
 
 if (Validator.isNull(title)) {
@@ -56,39 +54,12 @@ String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, lif
 
 		<liferay-util:include page="/asset_actions.jsp" servletContext="<%= application %>" />
 
-		<c:if test="<%= metadataFields.length > 0 %>">
-			<div class="asset-metadata-toggler" id="<portlet:namespace /><%= assetEntry.getEntryId() %>_toggler">
-				<span class="text-primary toggler-header toggler-header-collapsed">
-
-				<%= LanguageUtil.get(request, "more-details") %>
-
-				</span>
-
-				<div class="toggler-content toggler-content-collapsed">
-					<liferay-ui:asset-metadata
-						className="<%= assetEntry.getClassName() %>"
-						classPK="<%= assetEntry.getClassPK() %>"
-						filterByMetadata="<%= true %>"
-						metadataFields="<%= metadataFields %>"
-					/>
-				</div>
-			</div>
-
-			<aui:script use="aui-toggler">
-				new A.TogglerDelegate(
-					{
-						animated: true,
-						container: '#<portlet:namespace /><%= assetEntry.getEntryId() %>_toggler',
-						content: '.toggler-content',
-						expanded: false,
-						header: '.toggler-header',
-						transition: {
-						duration: 0.2,
-						easing: 'cubic-bezier(0, 0.1, 0, 1)'
-					}
-				});
-			</aui:script>
-		</c:if>
+		<liferay-ui:asset-metadata
+			className="<%= assetEntry.getClassName() %>"
+			classPK="<%= assetEntry.getClassPK() %>"
+			filterByMetadata="<%= true %>"
+			metadataFields="<%= assetPublisherDisplayContext.getMetadataFields() %>"
+		/>
 	</li>
 
 	<c:if test="<%= (assetEntryIndex + 1) == results.size() %>">

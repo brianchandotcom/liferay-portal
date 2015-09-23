@@ -102,6 +102,31 @@ else if (metadataField.equals("tags")) {
 
 		<dd class="metadata-entry <%= metadataFieldCssClass %> <%= iconCssClass %>">
 			<c:choose>
+				<c:when test='<%= value.equals("author") %>' >
+
+					<%
+					User userDisplay = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
+
+					String displayDate = StringPool.BLANK;
+
+					if (assetEntry.getPublishDate() != null) {
+						displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
+					}
+					else if (assetEntry.getModifiedDate() != null) {
+						displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
+					}
+					%>
+
+					<div class="asset-avatar">
+						<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
+					</div>
+
+					<div class="asset-user-info">
+						<span class="user-info"><%= userDisplay.getFullName() %></span>
+
+						<span class="date-info"><%= displayDate %></span>
+					</div>
+				</c:when>
 				<c:when test='<%= value.equals("categories") %>' >
 					<liferay-ui:asset-categories-summary
 						className="<%= assetEntry.getClassName() %>"

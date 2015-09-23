@@ -49,8 +49,6 @@ assetPublisherDisplayContext.setLayoutAssetEntry(assetEntry);
 
 assetEntry = assetPublisherDisplayContext.incrementViewCounter(assetEntry);
 
-String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
-
 request.setAttribute("view.jsp-fullContentRedirect", currentURL);
 request.setAttribute("view.jsp-showIconLabel", true);
 %>
@@ -193,39 +191,12 @@ request.setAttribute("view.jsp-showIconLabel", true);
 		</c:if>
 	</div>
 
-	<c:if test="<%= metadataFields.length > 0 %>">
-		<div class="asset-metadata-toggler" id="<portlet:namespace /><%= assetEntry.getEntryId() %>_toggler">
-			<span class="text-primary toggler-header toggler-header-collapsed">
-
-				<%= LanguageUtil.get(request, "more-details") %>
-
-			</span>
-
-			<div class="toggler-content toggler-content-collapsed">
-				<liferay-ui:asset-metadata
-					className="<%= assetEntry.getClassName() %>"
-					classPK="<%= assetEntry.getClassPK() %>"
-					filterByMetadata="<%= true %>"
-					metadataFields="<%= metadataFields %>"
-				/>
-			</div>
-		</div>
-
-		<aui:script use="aui-toggler">
-			new A.TogglerDelegate(
-				{
-					animated: true,
-					container: '#<portlet:namespace /><%= assetEntry.getEntryId() %>_toggler',
-					content: '.toggler-content',
-					expanded: false,
-					header: '.toggler-header',
-					transition: {
-					duration: 0.2,
-					easing: 'cubic-bezier(0, 0.1, 0, 1)'
-				}
-			});
-		</aui:script>
-	</c:if>
+	<liferay-ui:asset-metadata
+		className="<%= assetEntry.getClassName() %>"
+		classPK="<%= assetEntry.getClassPK() %>"
+		filterByMetadata="<%= true %>"
+		metadataFields="<%= assetPublisherDisplayContext.getMetadataFields() %>"
+	/>
 </div>
 
 <c:if test="<%= !assetPublisherDisplayContext.isShowAssetTitle() && ((assetEntryIndex + 1) < results.size()) %>">

@@ -17,12 +17,10 @@
 <%@ include file="/html/taglib/ui/asset_metadata/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("liferay-ui:asset-metadata:className");
-long classPK = GetterUtil.getLong(request.getAttribute("liferay-ui:asset-metadata:classPK"));
+AssetEntry assetEntry = (AssetEntry)request.getAttribute("liferay-ui:asset-metadata:assetEntry");
+AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute("liferay-ui:asset-metadata:assetRenderer");
 boolean filterByMetadata = GetterUtil.getBoolean(request.getAttribute("liferay-ui:asset-metadata:filterByMetadata"));
 String metadataField = (String)request.getAttribute("liferay-ui:asset-metadata:metadataField");
-
-AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
 
 String iconCssClass = StringPool.BLANK;
 String label = LanguageUtil.get(request, metadataField);
@@ -66,10 +64,6 @@ else if (metadataField.equals("author")) {
 	iconCssClass = "icon-user";
 
 	metadataFieldCssClass = StringPool.BLANK;
-
-	AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-
-	AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 
 	String userName = PortalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName());
 

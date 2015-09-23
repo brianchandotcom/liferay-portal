@@ -108,12 +108,6 @@ public class CompanyIndexFactory implements IndexFactory {
 		LogUtil.logActionResponse(_log, deleteIndexResponse);
 	}
 
-	public void setAdditionalIndexConfigurations(
-		String[] additionalIndexConfigurations) {
-
-		_additionalIndexConfigurations = additionalIndexConfigurations;
-	}
-
 	public void setIndexConfigFileName(String indexConfigFileName) {
 		_indexConfigFileName = indexConfigFileName;
 	}
@@ -231,6 +225,12 @@ public class CompanyIndexFactory implements IndexFactory {
 		IndexSettingsContributor indexSettingsContributor) {
 
 		_indexSettingsContributors.remove(indexSettingsContributor);
+	}
+
+	protected void setAdditionalIndexConfigurations(
+		String[] additionalIndexConfigurations) {
+
+		_additionalIndexConfigurations = additionalIndexConfigurations;
 	}
 
 	protected void setSettings(

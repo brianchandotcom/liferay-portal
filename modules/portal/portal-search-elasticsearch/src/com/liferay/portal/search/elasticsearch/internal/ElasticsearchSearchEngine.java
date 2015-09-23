@@ -56,7 +56,6 @@ import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.collect.ImmutableList;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.repositories.RepositoryMissingException;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -314,13 +313,11 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 			return true;
 		}
+		catch (RepositoryMissingException ee) {
+			return false;
+		}
 		catch (ElasticsearchException ee) {
-			if (ee.getCause() instanceof RepositoryMissingException) {
-				return false;
-			}
-			else {
-				throw ee;
-			}
+			throw ee;
 		}
 	}
 

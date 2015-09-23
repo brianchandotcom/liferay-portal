@@ -2325,3 +2325,26 @@ This change improves the performance of web content articles while enforcing a
 single way to embed portlets into the page for better testing.
 
 ---------------------------------------
+
+### Taglib liferay-ui:control-panel-site-selector has been removed
+- **Date:** 2015-Sep-23
+- **JIRA Ticket:** LPS-58210
+
+#### What changed?
+
+The taglib liferay-ui:control-panel-site-selector has been deleted.
+
+#### Who is affected?
+
+This affects developers who use this taglib in their code.
+
+#### How should I update my code?
+
+Consider using the taglib liferay-ui:my-sites or creating your own markup using
+the GroupService API.
+
+#### Why was this change made?
+
+This taglib is not used anymore and it won't be maintained properly.
+
+---------------------------------------

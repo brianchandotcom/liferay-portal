@@ -412,6 +412,11 @@ public class DLFileShortcutLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
+	public static void setFileShortcutsEnabled(long toFileEntryId,
+		boolean enabled) {
+		getService().setFileShortcutsEnabled(toFileEntryId, enabled);
+	}
+
 	public static void setTreePaths(long folderId, java.lang.String treePath)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().setTreePaths(folderId, treePath);

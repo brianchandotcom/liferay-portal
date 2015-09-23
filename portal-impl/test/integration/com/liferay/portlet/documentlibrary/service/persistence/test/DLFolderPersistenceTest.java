@@ -343,6 +343,19 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_M_T_H() throws Exception {
+		_persistence.countByG_M_T_H(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), StringPool.BLANK,
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_M_T_H(0L, RandomTestUtil.randomBoolean(),
+			StringPool.NULL, RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_M_T_H(0L, RandomTestUtil.randomBoolean(),
+			(String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_P_H_S() throws Exception {
 		_persistence.countByG_P_H_S(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),

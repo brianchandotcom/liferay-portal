@@ -135,7 +135,7 @@ public class DLAppHelperLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#moveDependentsToTrash(DLFolder, long)}
+	#moveDependentsToTrash(DLFolder)}
 	*/
 	@Deprecated
 	public static void moveDependentsToTrash(
@@ -147,10 +147,9 @@ public class DLAppHelperLocalServiceUtil {
 	}
 
 	public static void moveDependentsToTrash(
-		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
-		long trashEntryId)
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().moveDependentsToTrash(dlFolder, trashEntryId);
+		getService().moveDependentsToTrash(dlFolder);
 	}
 
 	public static com.liferay.portal.kernel.repository.model.FileEntry moveFileEntryFromTrash(

@@ -633,6 +633,12 @@
 			<finder-column name="parentFolderId" />
 			<finder-column name="hidden" />
 		</finder>
+		<finder name="G_M_T_H" return-type="Collection" db-index="false">
+			<finder-column name="groupId" />
+			<finder-column name="mountPoint" />
+			<finder-column name="treePath" comparator="LIKE" />
+			<finder-column name="hidden" />
+		</finder>
 		<finder name="G_P_H_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="parentFolderId" />

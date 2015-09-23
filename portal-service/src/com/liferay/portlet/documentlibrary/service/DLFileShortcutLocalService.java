@@ -339,6 +339,8 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
+	public void setFileShortcutsEnabled(long toFileEntryId, boolean enabled);
+
 	public void setTreePaths(long folderId, java.lang.String treePath)
 		throws PortalException;
 

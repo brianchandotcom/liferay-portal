@@ -239,26 +239,12 @@ public class DLFileShortcutLocalServiceImpl
 
 	@Override
 	public void disableFileShortcuts(long toFileEntryId) {
-		List<DLFileShortcut> fileShortcuts =
-			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
-
-		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			fileShortcut.setActive(false);
-
-			dlFileShortcutPersistence.update(fileShortcut);
-		}
+		setFileShortcutsEnabled(toFileEntryId, false);
 	}
 
 	@Override
 	public void enableFileShortcuts(long toFileEntryId) {
-		List<DLFileShortcut> fileShortcuts =
-			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
-
-		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			fileShortcut.setActive(true);
-
-			dlFileShortcutPersistence.update(fileShortcut);
-		}
+		setFileShortcutsEnabled(toFileEntryId, true);
 	}
 
 	@Override
@@ -293,6 +279,18 @@ public class DLFileShortcutLocalServiceImpl
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
 		dlFolderLocalService.rebuildTree(companyId);
+	}
+
+	@Override
+	public void setFileShortcutsEnabled(long toFileEntryId, boolean enabled) {
+		List<DLFileShortcut> fileShortcuts =
+			dlFileShortcutPersistence.findByToFileEntryId(toFileEntryId);
+
+		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			fileShortcut.setActive(enabled);
+
+			dlFileShortcutPersistence.update(fileShortcut);
+		}
 	}
 
 	@Override

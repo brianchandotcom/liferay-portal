@@ -47,6 +47,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -244,6 +245,8 @@ public class RemoteMVCPortlet extends MVCPortlet {
 		setRequestParameters(actionRequest, actionResponse, oAuthRequest);
 
 		addOAuthParameter(oAuthRequest, "p_p_lifecycle", "1");
+		addOAuthParameter(
+			oAuthRequest, "p_p_state", WindowState.NORMAL.toString());
 
 		getResponse(themeDisplay.getUser(), oAuthRequest);
 	}

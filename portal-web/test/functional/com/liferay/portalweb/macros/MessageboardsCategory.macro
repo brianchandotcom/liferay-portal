@@ -130,7 +130,7 @@
 			<then>
 				<execute function="Check" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_ALL_CHECKBOX" />
 				<execute function="AssertClick" locator1="MessageBoardsAdmin#CATEGORIES_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin"  />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RECYCLE_BIN" value1="The ${assetType} ${categoryName} was moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
 	</command>

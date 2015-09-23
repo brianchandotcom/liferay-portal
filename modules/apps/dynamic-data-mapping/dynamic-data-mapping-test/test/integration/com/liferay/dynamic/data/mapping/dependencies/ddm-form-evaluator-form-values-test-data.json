@@ -47,6 +47,20 @@
 			"value": {
 				"en_US": "true"
 			}
+		},
+		{
+			"instanceId": "uahm",
+			"name": "Text2",
+			"value": {
+				"en_US": ""
+			}
+		},
+		{
+			"instanceId": "nahi",
+			"name": "Text3",
+			"value": {
+				"en_US": "Bloggs"
+			}
 		}
 	]
 }

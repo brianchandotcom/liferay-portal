@@ -46,11 +46,13 @@ AUI.add(
 			hasValidation: function() {
 				var instance = this;
 
+				var required = instance.get('required');
+
 				var validation = instance.get('validation');
 
 				var expression = validation.expression;
 
-				return !!expression && expression !== 'true';
+				return required || (!!expression && expression !== 'true');
 			},
 
 			processEvaluation: function(result) {
@@ -75,22 +77,23 @@ AUI.add(
 
 				var instanceId = instance.get('instanceId');
 
-				var validation = Util.getFieldByKey(result, instanceId, 'instanceId');
+				var fieldData = Util.getFieldByKey(result, instanceId, 'instanceId');
 
-				if (validation) {
-					var errorMessage = validation.errorMessage;
+				if (fieldData) {
+					instance.hideErrorMessage();
 
-					if (!errorMessage && !validation.valid) {
-						var strings = instance.get('strings');
+					if (fieldData.visible) {
+						var errorMessage = fieldData.errorMessage;
 
-						errorMessage = strings.defaultErrorMessage;
-					}
+						if (!errorMessage && !fieldData.valid) {
+							var strings = instance.get('strings');
 
-					if (errorMessage) {
-						instance.set('errorMessage', errorMessage);
-					}
-					else {
-						instance.hideErrorMessage();
+							errorMessage = strings.defaultErrorMessage;
+						}
+
+						if (errorMessage) {
+							instance.set('errorMessage', errorMessage);
+						}
 					}
 				}
 			},

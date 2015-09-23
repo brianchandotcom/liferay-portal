@@ -25,7 +25,7 @@ PanelCategory mySitesPanelCategory = panelCategoryRegistry.getPanelCategory(Pane
 Group group = themeDisplay.getSiteGroup();
 %>
 
-<div class="toolbar site-administration-toolbar">
+<div class="site-administration-toolbar toolbar">
 	<c:if test="<%= (mySitesPanelCategory != null) && mySitesPanelCategory.hasAccessPermission(permissionChecker, group) %>">
 		<div class="toolbar-group-field">
 			<a class="icon-angle-left icon-monospaced" href="javascript:;" id="<portlet:namespace />mySitesLink"></a>

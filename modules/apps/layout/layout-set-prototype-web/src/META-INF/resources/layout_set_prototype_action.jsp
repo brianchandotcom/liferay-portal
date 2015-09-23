@@ -34,15 +34,15 @@ Group group = layoutSetPrototype.getGroup();
 	<c:if test="<%= LayoutSetPrototypePermissionUtil.contains(permissionChecker, layoutSetPrototypeId, ActionKeys.UPDATE) %>">
 
 		<%
-		PortletURL siteAdministrationURL = group.getAdministrationURL(themeDisplay);
+		String href = (String)request.getAttribute(WebKeys.SEARCH_ENTRY_HREF);
 		%>
 
-		<c:if test="<%= siteAdministrationURL != null %>">
+		<c:if test="<%= Validator.isNotNull(href) %>">
 			<liferay-ui:icon
 				iconCssClass="icon-edit"
 				message="manage"
 				method="get"
-				url="<%= siteAdministrationURL.toString() %>"
+				url="<%= href %>"
 			/>
 		</c:if>
 

@@ -130,7 +130,7 @@ public class HypersonicServerTestCallback
 	}
 
 	private static final String _HSQL_HOME =
-		PropsValues.LIFERAY_HOME + "/data/hsql/";
+		PropsValues.LIFERAY_HOME + "/data/hypersonic/";
 
 	private final String _databaseName;
 

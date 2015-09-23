@@ -115,7 +115,7 @@
 
 			<delete failonerror="false">
 				<fileset
-					dir="${liferay.home}/data/hsql"
+					dir="${liferay.home}/data/hypersonic"
 					includes="${database.name}.*"
 				/>
 			</delete>
@@ -291,7 +291,7 @@
 
 		<ant dir="portal-web" target="deploy" inheritAll="false" />
 
-		<copy todir="${liferay.home}/data/hsql">
+		<copy todir="${liferay.home}/data/hypersonic">
 			<fileset dir="sql">
 				<include name="${database.name}.properties" />
 				<include name="${database.name}.script" />

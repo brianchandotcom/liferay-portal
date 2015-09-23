@@ -695,12 +695,25 @@ public class PoshiRunnerContext {
 		}
 
 		if ((PropsValues.TEST_BATCH_MAX_GROUP_SIZE > 0) &&
-			(PropsValues.TEST_BATCH_PROPERTY_NAME != null) &&
-			(PropsValues.TEST_BATCH_PROPERTY_VALUE != null)) {
+			(PropsValues.TEST_BATCH_PROPERTY_NAMES != null) &&
+			(PropsValues.TEST_BATCH_PROPERTY_VALUES != null)) {
 
-			Set<String> classCommandNames = _getRunTestCaseCommandNames(
-				PropsValues.TEST_BATCH_PROPERTY_NAME,
-				PropsValues.TEST_BATCH_PROPERTY_VALUE);
+			String[] propertyNames = PropsValues.TEST_BATCH_PROPERTY_NAMES;
+			String[] propertyValues = PropsValues.TEST_BATCH_PROPERTY_VALUES;
+
+			Set<String> classCommandNames = new TreeSet<>();
+
+			if (propertyNames.length != propertyValues.length) {
+				throw new Exception(
+					"test.batch.property.names/test.batch.property.values " +
+						"must have matching amounts of entries!");
+			}
+
+			for (int i = 0; i < propertyNames.length; i++) {
+				classCommandNames.addAll(
+					_getRunTestCaseCommandNames(
+						propertyNames[i], propertyValues[i]));
+			}
 
 			int totalGroupCount =
 				classCommandNames.size() /

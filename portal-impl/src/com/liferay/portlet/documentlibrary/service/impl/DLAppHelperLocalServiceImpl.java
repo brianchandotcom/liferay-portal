@@ -1706,6 +1706,29 @@ public class DLAppHelperLocalServiceImpl
 				DLFolderConstants.getClassName(), dlFolder.getFolderId());
 		}
 
+		// Asset
+
+		long dlFileEntryClassNameId = classNameLocalService.getClassNameId(
+			DLFileEntry.class);
+
+		List<AssetEntry> dlFileEntryAssets = dlFileEntryFinder.findAE_ByC_T(
+			dlFileEntryClassNameId, dlFolder.getTreePath());
+
+		for (AssetEntry dlFileEntryAsset : dlFileEntryAssets) {
+			assetEntryLocalService.updateVisible(
+				dlFileEntryAsset, !moveToTrash);
+		}
+
+		long dlFolderClassNameId = classNameLocalService.getClassNameId(
+			DLFolder.class);
+
+		List<AssetEntry> dlFolderAssets = dlFolderFinder.findAE_ByC_T(
+			dlFolderClassNameId, dlFolder.getTreePath());
+
+		for (AssetEntry dlFolderAsset : dlFolderAssets) {
+			assetEntryLocalService.updateVisible(dlFolderAsset, !moveToTrash);
+		}
+
 		List<DLFolder> dlFolders = dlFolderPersistence.findByG_M_T_H(
 			dlFolder.getGroupId(), false,
 			CustomSQLUtil.keywords(
@@ -1818,12 +1841,6 @@ public class DLAppHelperLocalServiceImpl
 				}
 			}
 
-			// Asset
-
-			assetEntryLocalService.updateVisible(
-				DLFileEntryConstants.getClassName(),
-				dlFileEntry.getFileEntryId(), !moveToTrash);
-
 			// Index
 
 			Indexer<DLFileEntry> indexer =
@@ -1930,12 +1947,6 @@ public class DLAppHelperLocalServiceImpl
 				trashVersionLocalService.deleteTrashVersion(trashVersion);
 			}
 		}
-
-		// Asset
-
-		assetEntryLocalService.updateVisible(
-			DLFolderConstants.getClassName(), childDLFolder.getFolderId(),
-			!moveToTrash);
 
 		// Index
 

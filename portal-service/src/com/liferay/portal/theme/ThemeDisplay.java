@@ -963,10 +963,6 @@ public class ThemeDisplay
 		return _urlSignOut;
 	}
 
-	public String getURLSiteAdministration() {
-		return _urlSiteAdministration;
-	}
-
 	@JSON(include = false)
 	public PortletURL getURLUpdateManager() {
 		if (_urlUpdateManager == null) {
@@ -1801,10 +1797,6 @@ public class ThemeDisplay
 		_urlSignOut = urlSignOut;
 	}
 
-	public void setURLSiteAdministration(String urlSiteAdministration) {
-		_urlSiteAdministration = urlSiteAdministration;
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
@@ -1949,7 +1941,6 @@ public class ThemeDisplay
 	private transient PortletURL _urlPublishToLive = null;
 	private String _urlSignIn = StringPool.BLANK;
 	private String _urlSignOut = StringPool.BLANK;
-	private String _urlSiteAdministration = StringPool.BLANK;
 	private transient PortletURL _urlUpdateManager = null;
 	private User _user;
 	private boolean _widget;

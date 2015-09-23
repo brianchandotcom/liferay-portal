@@ -28,27 +28,22 @@ AssetRendererFactory<?> assetRendererFactory = AssetRendererFactoryRegistryUtil.
 AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 %>
 
-<div class="taglib-asset-metadata">
+<dl class="taglib-asset-metadata">
 	<aui:layout>
 
 		<%
 		for (String metadataField : metadataFields) {
 			String iconCssClass = StringPool.BLANK;
-
 			String label = LanguageUtil.get(request, metadataField);
-
 			String metadataFieldCssClass = "metadata-" + metadataField;
-
 			String value = null;
 
 			if (metadataField.equals("create-date")) {
 				iconCssClass = "icon-calendar";
-
 				value = dateFormatDate.format(assetEntry.getCreateDate());
 			}
 			else if (metadataField.equals("modified-date")) {
 				iconCssClass = "icon-calendar";
-
 				value = dateFormatDate.format(assetEntry.getModifiedDate());
 			}
 			else if (metadataField.equals("publish-date")) {
@@ -101,11 +96,9 @@ AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 		%>
 
 				<aui:column cssClass="help-block">
-					<div>
-						<%= label %>
-					</div>
+					<dt class="metadata-entry-label"><%= label %></dt>
 
-					<span class="metadata-entry <%= metadataFieldCssClass %> <%= iconCssClass %>">
+					<dd class="metadata-entry <%= metadataFieldCssClass %> <%= iconCssClass %>">
 						<c:choose>
 							<c:when test='<%= value.equals("categories") %>' >
 								<liferay-ui:asset-categories-summary
@@ -125,7 +118,7 @@ AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 								<%= value %>
 							</c:otherwise>
 						</c:choose>
-					</span>
+					</dd>
 				</aui:column>
 
 		<%
@@ -134,4 +127,4 @@ AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 		%>
 
 	</aui:layout>
-</div>
+</dl>

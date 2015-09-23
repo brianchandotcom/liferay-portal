@@ -1266,7 +1266,8 @@ public class LiferaySeleniumHelper {
 		keyboard.keyUp(Key.CTRL);
 
 		String fileName =
-			_TEST_BASE_DIR_NAME + "/" + _TEST_DEPENDENCIES_DIR_NAME + value;
+			_TEST_BASE_DIR_NAME + "/" + _TEST_DEPENDENCIES_DIR_NAME + "/" +
+				value;
 
 		if (OSDetector.isWindows()) {
 			fileName = StringUtil.replace(fileName, "/", "\\");

@@ -25,7 +25,7 @@ PanelCategory mySitesPanelCategory = panelCategoryRegistry.getPanelCategory(Pane
 Group group = themeDisplay.getSiteGroup();
 %>
 
-<div class="toolbar">
+<div class="toolbar site-administration-toolbar">
 	<c:if test="<%= (mySitesPanelCategory != null) && mySitesPanelCategory.hasAccessPermission(permissionChecker, group) %>">
 		<div class="toolbar-group-field">
 			<a class="icon-angle-left icon-monospaced" href="javascript:;" id="<portlet:namespace />mySitesLink"></a>
@@ -42,7 +42,7 @@ Group group = themeDisplay.getSiteGroup();
 	</c:if>
 
 	<div class="toolbar-group-content">
-		<aui:a href="<%= group.getDisplayURL(themeDisplay) %>">
+		<aui:a cssClass="site-administration-title" href="<%= group.getDisplayURL(themeDisplay) %>">
 			<%= group.getDescriptiveName(locale) %>
 
 			<c:if test="<%= themeDisplay.isShowStagingIcon() %>">

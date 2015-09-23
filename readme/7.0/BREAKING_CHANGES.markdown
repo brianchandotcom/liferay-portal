@@ -2383,3 +2383,35 @@ These methods are not used anymore and they won't work properly since they can't
 call the application-list-api from the context of the portal.
 
 ---------------------------------------
+
+### Methods related to Control Panel or Site Administration in ThemeDisplay have been removed
+- **Date:** 2015-Sep-23
+- **JIRA Ticket:** LPS-58210
+
+#### What changed?
+
+The following methods been deleted:
+
+- getControlPanelCategory
+- getURLSiteAdministration
+
+
+#### Who is affected?
+
+This affects developers who use any of these methods.
+
+#### How should I update my code?
+
+Site Administration isn't a site per se anymore. Some apps are displayed in that
+context. In order to create a link to an app that is displayed in the site 
+administration, developers should use the method PortalUtil.getControlPanelURL.
+In order to obtain the first app displayed in a section of the product menu,
+developers should use the application-list-api calling the 
+PanelCategoryRegistry and the PanelAppRegistry.
+
+#### Why was this change made?
+
+These methods are not used anymore and they won't work properly since they can't
+call the application-list-api from the context of the portal.
+
+---------------------------------------

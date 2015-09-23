@@ -131,4 +131,17 @@
 			</then>
 		</if>
 	</command>
+
+	<command name="viewPG">
+		<var name="key_pageTemplateName" value="${pageTemplateName}" />
+
+		<execute function="AssertClick" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="${pageTemplateName}" />
+
+		<execute function="AssertClick" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
+
+		<execute function="SelectWindow" locator1="title=${pageTemplateName} - Liferay" />
+
+		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="${pageTemplateName}" />
+		<execute function="AssertTextEquals" locator1="Home#PAGE_TEMPLATE" value1="${pageTemplateName}" />
+	</command>
 </definition>

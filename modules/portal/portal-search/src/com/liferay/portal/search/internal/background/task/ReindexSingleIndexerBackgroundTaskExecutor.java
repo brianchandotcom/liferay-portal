@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 /**
  * @author Andrew Betts
  */
-public class ReindexIndexerBackgroundTaskExecutor
+public class ReindexSingleIndexerBackgroundTaskExecutor
 	extends ReindexBackgroundTaskExecutor {
 
 	@Override
@@ -50,6 +50,6 @@ public class ReindexIndexerBackgroundTaskExecutor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ReindexIndexerBackgroundTaskExecutor.class);
+		ReindexSingleIndexerBackgroundTaskExecutor.class);
 
 }

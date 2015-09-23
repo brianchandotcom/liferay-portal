@@ -42,10 +42,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
-		"search.asset.type=com.liferay.bookmarks.model.BookmarksFolder"
-	},
+	property = {"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS},
 	service = AssetRendererFactory.class
 )
 public class BookmarksFolderAssetRendererFactory

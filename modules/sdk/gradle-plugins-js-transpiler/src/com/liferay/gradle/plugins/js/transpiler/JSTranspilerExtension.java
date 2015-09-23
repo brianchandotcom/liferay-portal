@@ -42,7 +42,7 @@ public class JSTranspilerExtension {
 		_lfrAmdLoaderVersion = lfrAmdLoaderVersion;
 	}
 
-	private Object _babelVersion = "5.6.14";
+	private Object _babelVersion = "5.8.23";
 	private Object _lfrAmdLoaderVersion = "1.3.5";
 
 }

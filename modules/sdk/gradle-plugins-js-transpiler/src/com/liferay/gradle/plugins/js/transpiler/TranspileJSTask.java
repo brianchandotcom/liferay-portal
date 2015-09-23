@@ -100,6 +100,10 @@ public class TranspileJSTask extends ExecuteNodeTask {
 		return GradleUtil.toFile(getProject(), _outputDir);
 	}
 
+	public String getScriptFileName() {
+		return _scriptFileName;
+	}
+
 	public File getSourceDir() {
 		return GradleUtil.toFile(getProject(), _sourceDir);
 	}
@@ -116,6 +120,16 @@ public class TranspileJSTask extends ExecuteNodeTask {
 		FileTree fileTree = project.fileTree(_sourceDir);
 
 		return fileTree.matching(_patternFilterable);
+	}
+
+	@Input
+	public SourceMaps getSourceMaps() {
+		return _sourceMaps;
+	}
+
+	@Input
+	public int getStage() {
+		return _stage;
 	}
 
 	@Override
@@ -167,8 +181,26 @@ public class TranspileJSTask extends ExecuteNodeTask {
 		_outputDir = outputDir;
 	}
 
+	public void setScriptFileName(String scriptFileName) {
+		_scriptFileName = scriptFileName;
+	}
+
 	public void setSourceDir(Object sourceDir) {
 		_sourceDir = sourceDir;
+	}
+
+	public void setSourceMaps(SourceMaps sourceMaps) {
+		_sourceMaps = sourceMaps;
+	}
+
+	public void setStage(int stage) {
+		_stage = stage;
+	}
+
+	public static enum SourceMaps {
+
+		DISABLED, ENABLED, ENABLED_INLINE
+
 	}
 
 	protected List<Object> getCompleteArgs() {
@@ -176,8 +208,7 @@ public class TranspileJSTask extends ExecuteNodeTask {
 
 		List<Object> completeArgs = new ArrayList<>();
 
-		File scriptFile = new File(
-			getNodeDir(), "node_modules/babel/bin/babel/index.js");
+		File scriptFile = new File(getNodeDir(), getScriptFileName());
 
 		completeArgs.add(FileUtil.getAbsolutePath(scriptFile));
 
@@ -189,6 +220,19 @@ public class TranspileJSTask extends ExecuteNodeTask {
 		completeArgs.add("--out-dir");
 		completeArgs.add(FileUtil.relativize(getOutputDir(), sourceDir));
 
+		SourceMaps sourceMaps = getSourceMaps();
+
+		if (sourceMaps != SourceMaps.DISABLED) {
+			completeArgs.add("--source-maps");
+		}
+
+		if (sourceMaps == SourceMaps.ENABLED_INLINE) {
+			completeArgs.add("inline");
+		}
+
+		completeArgs.add("--stage");
+		completeArgs.add(getStage());
+
 		for (File file : getSourceFiles()) {
 			completeArgs.add(FileUtil.relativize(file, sourceDir));
 		}
@@ -199,6 +243,9 @@ public class TranspileJSTask extends ExecuteNodeTask {
 	private Object _modules = "amd";
 	private Object _outputDir;
 	private final PatternFilterable _patternFilterable = new PatternSet();
+	private String _scriptFileName = "node_modules/babel/bin/babel.js";
 	private Object _sourceDir;
+	private SourceMaps _sourceMaps = SourceMaps.ENABLED;
+	private int _stage = 0;
 
 }

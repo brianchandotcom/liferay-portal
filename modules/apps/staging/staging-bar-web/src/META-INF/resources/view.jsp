@@ -93,7 +93,7 @@ if (layout != null) {
 				</c:when>
 				<c:otherwise>
 					<li class="control-menu-nav-item">
-						<a class='control-menu-icon' href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" value="staging">
+						<a class="control-menu-icon" href="<%= (layoutSetBranches != null) ? null : stagingFriendlyURL %>" value="staging">
 							<span class="icon-fb-radio icon-monospaced"></span>
 							<span class="control-menu-icon-label">
 								<liferay-ui:message key="staging" />

@@ -51,7 +51,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayStyleURL="<%= renderResponse.createRenderURL() %>"
-			displayViews='<%= new String[] {"icon", "list"} %>'
+			displayViews='<%= new String[] {"icon", "descriptive", "list"} %>'
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
 	</liferay-frontend:management-bar-buttons>
@@ -83,50 +83,52 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="get" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="deleteEntryIds" type="hidden" />
+<div class="container-fluid-1280">
+	<aui:form action="<%= portletURL.toString() %>" cssClass="row" method="get" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+		<aui:input name="deleteEntryIds" type="hidden" />
 
-	<liferay-ui:categorization-filter
-		assetType="entries"
-		portletURL="<%= portletURL %>"
-	/>
+		<liferay-ui:categorization-filter
+			assetType="entries"
+			portletURL="<%= portletURL %>"
+		/>
 
-	<liferay-ui:search-container
-		id="blogEntries"
-		orderByComparator="<%= BlogsUtil.getOrderByComparator(orderByCol, orderByType) %>"
-		rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
-		searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
-	>
-
-		<%
-		EntrySearchTerms searchTerms = (EntrySearchTerms)searchContainer.getSearchTerms();
-		%>
-
-		<liferay-ui:search-container-results>
-			<%@ include file="/blogs_admin/entry_search_results.jspf" %>
-		</liferay-ui:search-container-results>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.portlet.blogs.model.BlogsEntry"
-			escapedModel="<%= true %>"
-			keyProperty="entryId"
-			modelVar="entry"
-			rowIdProperty="urlTitle"
+		<liferay-ui:search-container
+			id="blogEntries"
+			orderByComparator="<%= BlogsUtil.getOrderByComparator(orderByCol, orderByType) %>"
+			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+			searchContainer="<%= new EntrySearch(renderRequest, portletURL) %>"
 		>
-			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
-				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
-				<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
-			</liferay-portlet:renderURL>
 
-			<%@ include file="/blogs_admin/search_columns.jspf" %>
-		</liferay-ui:search-container-row>
+			<%
+			EntrySearchTerms searchTerms = (EntrySearchTerms)searchContainer.getSearchTerms();
+			%>
 
-		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
-	</liferay-ui:search-container>
-</aui:form>
+			<liferay-ui:search-container-results>
+				<%@ include file="/blogs_admin/entry_search_results.jspf" %>
+			</liferay-ui:search-container-results>
+
+			<liferay-ui:search-container-row
+				className="com.liferay.portlet.blogs.model.BlogsEntry"
+				escapedModel="<%= true %>"
+				keyProperty="entryId"
+				modelVar="entry"
+				rowIdProperty="urlTitle"
+			>
+				<liferay-portlet:renderURL varImpl="rowURL">
+					<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
+					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
+				</liferay-portlet:renderURL>
+
+				<%@ include file="/blogs_admin/search_columns.jspf" %>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+		</liferay-ui:search-container>
+	</aui:form>
+</div>
 
 <c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 	<portlet:renderURL var="viewEntriesURL">

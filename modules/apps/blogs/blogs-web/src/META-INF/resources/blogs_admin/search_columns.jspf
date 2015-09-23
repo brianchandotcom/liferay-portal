@@ -15,6 +15,35 @@
 --%>
 
 <c:choose>
+	<c:when test='<%= displayStyle.equals("descriptive") %>'>
+		<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+			<liferay-ui:app-view-entry
+				actionJsp="/blogs_admin/entry_action.jsp"
+				actionJspServletContext="<%= application %>"
+				assetCategoryClassName="<%= BlogsEntry.class.getName() %>"
+				assetCategoryClassPK="<%= entry.getEntryId() %>"
+				assetTagClassName="<%= BlogsEntry.class.getName() %>"
+				assetTagClassPK="<%= entry.getEntryId() %>"
+				author="<%= entry.getUserName() %>"
+				createDate="<%= entry.getCreateDate() %>"
+				description="<%= HtmlUtil.escape(entry.getDescription()) %>"
+				displayDate="<%= entry.getDisplayDate() %>"
+				displayStyle="descriptive"
+				markupView="lexicon"
+				modifiedDate="<%= entry.getModifiedDate() %>"
+				rowCheckerId="<%= String.valueOf(entry.getEntryId()) %>"
+				rowCheckerName="<%= BlogsEntry.class.getSimpleName() %>"
+				showCheckbox="<%= true %>"
+				status="<%= entry.getStatus() %>"
+				title="<%= HtmlUtil.escape(entry.getTitle()) %>"
+				url="<%= rowURL.toString() %>"
+			/>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-jsp
+			path="/blogs_admin/entry_action.jsp"
+		/>
+	</c:when>
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 
 		<%

@@ -16,56 +16,43 @@ package com.liferay.dynamic.data.mapping.web.context.util;
 
 import com.liferay.dynamic.data.mapping.configuration.DDMConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
+import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Lino Alves
  */
-
-public class DDMWebRequestHelper {
+public class DDMWebRequestHelper extends BaseRequestHelper {
 
 	public DDMWebRequestHelper(HttpServletRequest request) {
-		_request = request;
+		super(request);
 	}
 
-	public DDMConfiguration
-		getDDMConfiguration() {
-
+	public DDMConfiguration getDDMConfiguration() {
 		try {
 			if (_ddmConfiguration == null) {
-				ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				if (Validator.isNotNull(portletDisplay.getPortletResource())) {
+				if (Validator.isNotNull(getPortletResource())) {
 					_ddmConfiguration =
 						ConfigurationFactoryUtil.getConfiguration(
 								DDMConfiguration.class,
 						new ParameterMapSettingsLocator(
-							_request.getParameterMap(),
+							getRequest().getParameterMap(),
 							new GroupServiceSettingsLocator(
-								themeDisplay.getSiteGroupId(),
-								DDMConstants.SERVICE_NAME)));
+								getSiteGroupId(), DDMConstants.SERVICE_NAME)));
 				}
 				else {
 					_ddmConfiguration =
 						ConfigurationFactoryUtil.getConfiguration(
 								DDMConfiguration.class,
 							new GroupServiceSettingsLocator(
-								themeDisplay.getSiteGroupId(),
-								DDMConstants.SERVICE_NAME));
+								getSiteGroupId(), DDMConstants.SERVICE_NAME));
 				}
 			}
 
@@ -77,6 +64,5 @@ public class DDMWebRequestHelper {
 	}
 
 	private DDMConfiguration _ddmConfiguration;
-	private final HttpServletRequest _request;
 
 }

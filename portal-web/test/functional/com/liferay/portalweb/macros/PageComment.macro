@@ -30,6 +30,8 @@
 			</else>
 		</if>
 
+		<var name="key_entryComment" value="${commentBody}" />
+
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
@@ -57,6 +59,9 @@
 		<var name="key_commentBody" value="${commentBody}" />
 
 		<execute function="AssertElementNotPresent" locator1="Comments#WORKFLOW_STATUS" />
+
+		<var name="key_entryComment" value="${commentBody}" />
+
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>
@@ -65,6 +70,9 @@
 		<var name="key_commentBody" value="${commentBody}" />
 
 		<execute function="AssertTextEquals" locator1="Comments#WORKFLOW_STATUS" value1="${commentStatus}" />
+
+		<var name="key_entryComment" value="${commentBody}" />
+
 		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${commentBody}" />
 		<execute function="AssertTextEquals" locator1="PGPagecomments#COMMENT_AUTHOR" value1="${commentAuthor}" />
 	</command>

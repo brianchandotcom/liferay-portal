@@ -271,6 +271,8 @@
 	</command>
 
 	<command name="addPG">
+		<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
 			<then>
@@ -1117,7 +1119,7 @@
 	<command name="moveToFolderCP">
 		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
 
-		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_ACTIONS" />
+		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_ACTIONS" />
 		<execute function="AssertElementPresent" locator1="MenuItem#MOVE" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE" value1="Move" />
 
@@ -1130,7 +1132,7 @@
 				<execute function="AssertClick" locator1="Button#CHOOSE_THIS_FOLDER" value1="Choose This Folder" />
 			</then>
 			<else>
-				<execute function="AssertClick" locator1="CHOOSE_BUTTON_GENERIC" value1="Choose" />
+				<execute function="AssertClick" locator1="DocumentsAndMediaSelectFolder#CHOOSE_BUTTON_GENERIC" value1="Choose" />
 			</else>
 		</if>
 
@@ -2048,6 +2050,9 @@
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName}" />
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" value1="${dmFolderName}" />
+
+		<var method="StringUtil#upperCase('${key_dmFolderName}')" name="dmFolderName" />
+
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#BREADCRUMB_LAST" value1="${dmFolderName}" />
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_DOCUMENT" />
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />

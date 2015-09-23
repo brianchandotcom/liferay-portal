@@ -86,9 +86,21 @@ AssetRenderer<?> assetRenderer = assetRendererFactory.getAssetRenderer(classPK);
 				value = viewCount + StringPool.SPACE + LanguageUtil.get(request, (viewCount == 1) ? "view" : "views");
 			}
 			else if (metadataField.equals("categories")) {
+				List<AssetCategory> categories = assetEntry.getCategories();
+
+				if (categories.isEmpty()) {
+					continue;
+				}
+
 				value = "categories";
 			}
 			else if (metadataField.equals("tags")) {
+				List<AssetTag> tags = assetEntry.getTags();
+
+				if (tags.isEmpty()) {
+					continue;
+				}
+
 				value = "tags";
 			}
 

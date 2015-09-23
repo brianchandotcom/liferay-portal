@@ -4,7 +4,7 @@
 	<import file="build-test-tomcat.xml" />
 
 	<target name="run-selenium-tomcat-hypersonic">
-		<echo file="test.${user.name}.properties">database.type=hsql</echo>
+		<echo file="test.${user.name}.properties">database.type=hypersonic</echo>
 
 		<antcall target="run-selenium-tomcat" inheritAll="false">
 			<param name="test.class" value="${test.class}" />

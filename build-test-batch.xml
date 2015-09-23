@@ -1002,7 +1002,7 @@
 	</target>
 
 	<target name="integration-hypersonic">
-		<run-integration-test database.type="hsql" />
+		<run-integration-test database.type="hypersonic" />
 	</target>
 
 	<target name="integration-mysql">
@@ -1026,7 +1026,7 @@
 	</target>
 
 	<target name="modules-integration-hypersonic">
-		<run-modules-integration-test database.type="hsql" />
+		<run-modules-integration-test database.type="hypersonic" />
 	</target>
 
 	<target name="modules-integration-mysql">

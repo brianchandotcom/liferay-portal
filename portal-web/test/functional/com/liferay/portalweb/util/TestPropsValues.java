@@ -49,17 +49,17 @@ public class TestPropsValues
 	public static final String DATABASE_DB2_USERNAME = TestPropsUtil.get(
 		"database.db2.username");
 
-	public static final String DATABASE_HSQL_DRIVER = TestPropsUtil.get(
-		"database.hsql.driver");
+	public static final String DATABASE_HYPERSONIC_DRIVER = TestPropsUtil.get(
+		"database.hypersonic.driver");
 
-	public static final String DATABASE_HSQL_PASSWORD = TestPropsUtil.get(
-		"database.hsql.password");
+	public static final String DATABASE_HYPERSONIC_PASSWORD = TestPropsUtil.get(
+		"database.hypersonic.password");
 
-	public static final String DATABASE_HSQL_URL = TestPropsUtil.get(
-		"database.hsql.url");
+	public static final String DATABASE_HYPERSONIC_URL = TestPropsUtil.get(
+		"database.hypersonic.url");
 
-	public static final String DATABASE_HSQL_USERNAME = TestPropsUtil.get(
-		"database.hsql.username");
+	public static final String DATABASE_HYPERSONIC_USERNAME = TestPropsUtil.get(
+		"database.hypersonic.username");
 
 	public static final String DATABASE_MYSQL_DRIVER = TestPropsUtil.get(
 		"database.mysql.driver");

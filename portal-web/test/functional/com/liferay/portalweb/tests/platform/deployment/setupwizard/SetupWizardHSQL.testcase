@@ -65,11 +65,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.hsql.password" />
+			<var name="databasePassword" property-value="database.hypersonic.password" />
 			<var name="databaseType" value="Hypersonic" />
-			<var name="databaseUserName" property-value="database.hsql.username" />
-			<var name="jdbcDriverClassName" property-value="database.hsql.driver" />
-			<var name="jdbcURL" property-value="database.hsql.url" />
+			<var name="databaseUserName" property-value="database.hypersonic.username" />
+			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
+			<var name="jdbcURL" property-value="database.hypersonic.url" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -83,11 +83,11 @@
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databaseName" value="lportal1" />
-			<var name="databasePassword" property-value="database.hsql.password" />
+			<var name="databasePassword" property-value="database.hypersonic.password" />
 			<var name="databaseType" value="Hypersonic" />
-			<var name="databaseUserName" property-value="database.hsql.username" />
-			<var name="jdbcDriverClassName" property-value="database.hsql.driver" />
-			<var name="jdbcURL" property-value="database.hsql.url" />
+			<var name="databaseUserName" property-value="database.hypersonic.username" />
+			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
+			<var name="jdbcURL" property-value="database.hypersonic.url" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage">
@@ -105,11 +105,11 @@
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databaseName" value="lportal1" />
-			<var name="databasePassword" property-value="database.hsql.password" />
+			<var name="databasePassword" property-value="database.hypersonic.password" />
 			<var name="databaseType" value="Hypersonic" />
-			<var name="databaseUserName" property-value="database.hsql.username" />
-			<var name="jdbcDriverClassName" property-value="database.hsql.driver" />
-			<var name="jdbcURL" property-value="database.hsql.url" />
+			<var name="databaseUserName" property-value="database.hypersonic.username" />
+			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
+			<var name="jdbcURL" property-value="database.hypersonic.url" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -123,11 +123,11 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databasePassword" property-value="database.hsql.password" />
+			<var name="databasePassword" property-value="database.hypersonic.password" />
 			<var name="databaseType" value="Hypersonic" />
-			<var name="databaseUserName" property-value="database.hsql.username" />
-			<var name="jdbcDriverClassName" property-value="database.hsql.driver" />
-			<var name="jdbcURL" property-value="database.hsql.url" />
+			<var name="databaseUserName" property-value="database.hypersonic.username" />
+			<var name="jdbcDriverClassName" property-value="database.hypersonic.driver" />
+			<var name="jdbcURL" property-value="database.hypersonic.url" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />

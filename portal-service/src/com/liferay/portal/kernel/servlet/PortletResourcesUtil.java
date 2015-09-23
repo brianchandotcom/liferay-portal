@@ -25,7 +25,6 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -86,9 +85,9 @@ public class PortletResourcesUtil {
 	private static final PortletResourcesUtil _instance =
 		new PortletResourcesUtil();
 
+	private final ServiceTracker<Portlet, Portlet> _serviceTracker;
 	private final Map<ServiceReference<Portlet>, ServletContext>
 		_servletContexts = new ConcurrentHashMap<>();
-	private final ServiceTracker<Portlet, Portlet> _serviceTracker;
 
 	private class PortletResourcesServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Portlet, Portlet> {

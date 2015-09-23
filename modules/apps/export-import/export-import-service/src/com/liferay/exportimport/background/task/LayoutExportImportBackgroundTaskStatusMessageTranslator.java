@@ -12,31 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.backgroundtask;
+package com.liferay.exportimport.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Daniel Kocsis
  */
-public class PortletExportImportBackgroundTaskStatusMessageTranslator
+public class LayoutExportImportBackgroundTaskStatusMessageTranslator
 	extends DefaultExportImportBackgroundTaskStatusMessageTranslator {
 
 	@Override
-	protected synchronized void translatePortletMessage(
+	protected synchronized void translateLayoutMessage(
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 
 		clearBackgroundTaskStatus(backgroundTaskStatus);
 
-		long portletModelAdditionCountersTotal = GetterUtil.getLong(
-			message.get("portletModelAdditionCountersTotal"));
-
-		backgroundTaskStatus.setAttribute(
-			"allModelAdditionCountersTotal", portletModelAdditionCountersTotal);
-
-		super.translatePortletMessage(backgroundTaskStatus, message);
+		super.translateLayoutMessage(backgroundTaskStatus, message);
 	}
 
 }

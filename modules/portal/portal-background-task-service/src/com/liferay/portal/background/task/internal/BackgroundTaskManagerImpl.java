@@ -54,6 +54,22 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	@Override
 	public BackgroundTask addBackgroundTask(
 			long userId, long groupId, String name,
+			String taskExecutorClassName,
+			Map<String, Serializable> taskContextMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =
+			_backgroundTaskLocalService.addBackgroundTask(
+				userId, groupId, name, taskExecutorClassName, taskContextMap,
+				serviceContext);
+
+		return new BackgroundTaskImpl(backgroundTask);
+	}
+
+	@Override
+	public BackgroundTask addBackgroundTask(
+			long userId, long groupId, String name,
 			String[] servletContextNames, Class<?> taskExecutorClass,
 			Map<String, Serializable> taskContextMap,
 			ServiceContext serviceContext)

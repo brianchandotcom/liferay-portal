@@ -103,9 +103,7 @@ import com.liferay.portlet.exportimport.LARFileSizeException;
 import com.liferay.portlet.exportimport.LARTypeException;
 import com.liferay.portlet.exportimport.MissingReferenceException;
 import com.liferay.portlet.exportimport.RemoteExportException;
-import com.liferay.portlet.exportimport.backgroundtask.LayoutRemoteStagingBackgroundTaskExecutor;
-import com.liferay.portlet.exportimport.backgroundtask.LayoutStagingBackgroundTaskExecutor;
-import com.liferay.portlet.exportimport.backgroundtask.PortletStagingBackgroundTaskExecutor;
+import com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationConstants;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory;
@@ -1309,7 +1307,8 @@ public class StagingImpl implements Staging {
 
 		BackgroundTaskManagerUtil.addBackgroundTask(
 			userId, exportImportConfiguration.getGroupId(), StringPool.BLANK,
-			null, LayoutStagingBackgroundTaskExecutor.class, taskContextMap,
+			BackgroundTaskExecutorNames.
+				LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR, taskContextMap,
 			new ServiceContext());
 	}
 
@@ -1433,9 +1432,10 @@ public class StagingImpl implements Staging {
 
 		BackgroundTaskManagerUtil.addBackgroundTask(
 			userId, exportImportConfiguration.getGroupId(),
-			exportImportConfiguration.getName(), null,
-			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
-			new ServiceContext());
+			exportImportConfiguration.getName(),
+			BackgroundTaskExecutorNames.
+				PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR,
+			taskContextMap, new ServiceContext());
 	}
 
 	@Override
@@ -2037,9 +2037,10 @@ public class StagingImpl implements Staging {
 
 		BackgroundTaskManagerUtil.addBackgroundTask(
 			user.getUserId(), exportImportConfiguration.getGroupId(),
-			StringPool.BLANK, null,
-			LayoutRemoteStagingBackgroundTaskExecutor.class, taskContextMap,
-			new ServiceContext());
+			StringPool.BLANK,
+			BackgroundTaskExecutorNames.
+				LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR,
+			taskContextMap, new ServiceContext());
 	}
 
 	protected boolean getBoolean(

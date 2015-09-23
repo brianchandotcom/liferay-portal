@@ -237,7 +237,7 @@ if (layout != null) {
 				{
 					completed: false,
 					groupId: '<%= liveGroup.getGroupId() %>',
-					taskExecutorClassName: '<%= LayoutStagingBackgroundTaskExecutor.class.getName() %>'
+					taskExecutorClassName: '<%= BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR %>'
 				},
 				function(obj) {
 					var incomplete = obj > 0;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.backgroundtask;
+package com.liferay.exportimport.background.task;
 
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_FAILED;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_LOCAL_STARTED;
@@ -20,6 +20,7 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -55,6 +56,21 @@ public class LayoutStagingBackgroundTaskExecutor
 	public LayoutStagingBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new LayoutStagingBackgroundTaskStatusMessageTranslator());
+	}
+
+	@Override
+	public BackgroundTaskExecutor clone() {
+		LayoutStagingBackgroundTaskExecutor
+			layoutStagingBackgroundTaskExecutor =
+				new LayoutStagingBackgroundTaskExecutor();
+
+		layoutStagingBackgroundTaskExecutor.
+			setBackgroundTaskStatusMessageTranslator(
+				getBackgroundTaskStatusMessageTranslator());
+		layoutStagingBackgroundTaskExecutor.setIsolationLevel(
+			getIsolationLevel());
+
+		return layoutStagingBackgroundTaskExecutor;
 	}
 
 	@Override

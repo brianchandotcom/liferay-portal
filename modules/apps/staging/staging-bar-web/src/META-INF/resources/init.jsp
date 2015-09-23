@@ -66,7 +66,7 @@ page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.comparator.LayoutRevisionCreateDateComparator" %><%@
 page import="com.liferay.portal.util.comparator.LayoutRevisionIdComparator" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.exportimport.backgroundtask.LayoutStagingBackgroundTaskExecutor" %><%@
+page import="com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames" %><%@
 page import="com.liferay.portlet.exportimport.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portlet.exportimport.staging.StagingUtil" %>
 

@@ -139,8 +139,7 @@ public class CacheRegistryUtil {
 			ServiceReference<CacheRegistryItem> serviceReference,
 			CacheRegistryItem cacheRegistryItem) {
 
-			_cacheRegistryItems.put(
-				cacheRegistryItem.getRegistryName(), cacheRegistryItem);
+			_cacheRegistryItems.remove(cacheRegistryItem.getRegistryName());
 		}
 
 	}

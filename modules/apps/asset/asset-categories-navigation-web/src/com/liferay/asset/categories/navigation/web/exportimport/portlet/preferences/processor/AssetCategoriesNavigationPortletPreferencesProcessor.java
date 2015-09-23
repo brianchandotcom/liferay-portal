@@ -18,7 +18,10 @@ import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavi
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
+import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 
@@ -28,6 +31,7 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -44,12 +48,14 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 
 	@Override
 	public List<Capability> getExportCapabilities() {
-		return null;
+		return ListUtil.toList(
+			new Capability[] {_portletDisplayTemplateExportCapability});
 	}
 
 	@Override
 	public List<Capability> getImportCapabilities() {
-		return null;
+		return ListUtil.toList(
+			new Capability[] {_portletDisplayTemplateImportCapability});
 	}
 
 	@Override
@@ -87,5 +93,28 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 
 		return null;
 	}
+
+	@Reference(unbind = "-")
+	protected void setPortletDisplayTemplateExportCapability(
+		PortletDisplayTemplateExportCapability
+			portletDisplayTemplateExportCapability) {
+
+		_portletDisplayTemplateExportCapability =
+			portletDisplayTemplateExportCapability;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletDisplayTemplateImportCapability(
+		PortletDisplayTemplateImportCapability
+			portletDisplayTemplateImportCapability) {
+
+		_portletDisplayTemplateImportCapability =
+			portletDisplayTemplateImportCapability;
+	}
+
+	private PortletDisplayTemplateExportCapability
+		_portletDisplayTemplateExportCapability;
+	private PortletDisplayTemplateImportCapability
+		_portletDisplayTemplateImportCapability;
 
 }

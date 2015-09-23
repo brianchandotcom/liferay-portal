@@ -87,6 +87,9 @@ public interface DLFileEntryFinder {
 		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.documentlibrary.model.DLFileEntry> queryDefinition);
 
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findAE_ByC_T(
+		long classNameId, java.lang.String treePath);
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry findByAnyImageId(
 		long imageId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException;

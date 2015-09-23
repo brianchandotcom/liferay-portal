@@ -14,7 +14,7 @@
 				<execute function="Open" locator1="http://localhost:920${numberOfNodesCounter}/_cluster/health?pretty=true" />
 
 				<execute function="AssertLocation" value1="http://localhost:920${numberOfNodesCounter}/_cluster/health?pretty=true" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;cluster_name&quot; : &quot;LiferayElasticSearch&quot;" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;cluster_name&quot; : &quot;LiferayElasticsearchCluster&quot;" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;timed_out&quot; : false" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;number_of_nodes&quot; : ${numberOfNodes}" />
 				<execute function="AssertTextEquals#assertPartialText" locator1="//body" value1="&quot;number_of_data_nodes&quot; : ${numberOfNodes}" />
@@ -23,10 +23,10 @@
 	</command>
 
 	<command name="viewReplicaAddedInConsole">
-		<execute function="AssertConsoleTextPresent" value1="elasticsearch.*[clusterService#updateTask].*added.*reason: zen-disco-receive" />
+		<execute function="AssertConsoleTextPresent" value1="added.*reason: zen-disco-receive" />
 	</command>
 
 	<command name="viewReplicaRemovedInConsole">
-		<execute function="AssertConsoleTextPresent" value1="elasticsearch.*[clusterService#updateTask].*removed.*reason: zen-disco-node_left" />
+		<execute function="AssertConsoleTextPresent" value1="removed.*reason: zen-disco-node_left" />
 	</command>
 </definition>

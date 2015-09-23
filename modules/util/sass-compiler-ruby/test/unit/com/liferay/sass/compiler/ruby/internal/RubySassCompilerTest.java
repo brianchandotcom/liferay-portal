@@ -85,11 +85,13 @@ public class RubySassCompilerTest {
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
 				"/internal/dependencies/sass-spec/14_imports");
 
-		File inputFile = new File(inputDir, "input.scss");
 		File sourceMapFile = new File(inputDir, ".sass-cache/input.css.map");
+
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
+
+		File inputFile = new File(inputDir, "input.scss");
 
 		String actualOutput = sassCompiler.compileFile(
 			inputFile.getCanonicalPath(), "", true,
@@ -133,11 +135,13 @@ public class RubySassCompilerTest {
 			"../sass-compiler-jni/test/unit/com/liferay/sass/compiler/jni" +
 				"/internal/dependencies/sass-spec/14_imports");
 
-		File inputFile = new File(inputDir, "input.scss");
 		File sourceMapFile = new File(inputDir, "input.css.map");
+
 		sourceMapFile.deleteOnExit();
 
 		Assert.assertFalse(sourceMapFile.exists());
+
+		File inputFile = new File(inputDir, "input.scss");
 
 		String input = read(inputFile.toPath());
 

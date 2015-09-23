@@ -118,6 +118,11 @@ public class TranspileJSTask extends ExecuteNodeTask {
 		return fileTree.matching(_patternFilterable);
 	}
 
+	@Input
+	public int getStage() {
+		return _stage;
+	}
+
 	@Override
 	public File getWorkingDir() {
 		return getSourceDir();
@@ -171,6 +176,10 @@ public class TranspileJSTask extends ExecuteNodeTask {
 		_sourceDir = sourceDir;
 	}
 
+	public void setStage(int stage) {
+		_stage = stage;
+	}
+
 	protected List<Object> getCompleteArgs() {
 		File sourceDir = getSourceDir();
 
@@ -189,6 +198,9 @@ public class TranspileJSTask extends ExecuteNodeTask {
 		completeArgs.add("--out-dir");
 		completeArgs.add(FileUtil.relativize(getOutputDir(), sourceDir));
 
+		completeArgs.add("--stage");
+		completeArgs.add(getStage());
+
 		for (File file : getSourceFiles()) {
 			completeArgs.add(FileUtil.relativize(file, sourceDir));
 		}
@@ -200,5 +212,6 @@ public class TranspileJSTask extends ExecuteNodeTask {
 	private Object _outputDir;
 	private final PatternFilterable _patternFilterable = new PatternSet();
 	private Object _sourceDir;
+	private int _stage = 0;
 
 }

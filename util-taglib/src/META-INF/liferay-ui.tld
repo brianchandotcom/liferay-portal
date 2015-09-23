@@ -4674,6 +4674,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>showDetails</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>userId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

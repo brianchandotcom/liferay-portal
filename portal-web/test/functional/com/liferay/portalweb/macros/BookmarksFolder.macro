@@ -102,7 +102,7 @@
 		<execute function="AssertElementPresent" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN" />
 		<execute function="Click" locator1="Bookmarks#FOLDERS_TABLE_FOLDER_ACTIONS_DROPDOWN" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RECYCLE_BIN" value1="The ${assetType} ${folderName} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${folderName} was moved to the Recycle Bin. Undo" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />
@@ -227,7 +227,7 @@
 
 	<command name="moveSubfolderToRecycleBinPG">
 		<execute function="AssertClick" locator1="NavListItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RECYCLE_BIN" value1="The ${assetType} ${subfolderName} was moved to the Recycle Bin." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${subfolderName} was moved to the Recycle Bin." />
 	</command>
 
 	<command name="moveToRecycleBinCP">

@@ -607,6 +607,30 @@
 		<build-dist-tomcat-bare />
 	</target>
 
+	<target name="build-dist-websphere">
+		<app-server-properties-update>
+			app.server.type=websphere
+		</app-server-properties-update>
+
+		<antcall target="update-sdk-properties" inheritAll="false" />
+
+		<antcall target="unzip-websphere" inheritAll="false" />
+
+		<delete dir="${project.dir}/portal-web/classes" />
+
+		<ant target="deploy" inheritAll="false" />
+
+		<antcall target="resolve-dynamic-jars" inheritAll="false" />
+
+		<app-server-properties-reset />
+
+		<antcall target="deploy-plugins">
+			<param name="deployer.dest.dir" value="${app.server.websphere.deploy.dir}" />
+			<param name="deployer.app.server.type" value="websphere" />
+			<param name="deployer.app.server.lib.portal.dir" value="${app.server.websphere.portal.dir}/WEB-INF/lib" />
+		</antcall>
+	</target>
+
 	<target name="build-dist-wildfly">
 		<app-server-properties-update>
 			app.server.type=wildfly
@@ -2160,155 +2184,379 @@ closeTemplate()
 	<target name="unzip-websphere-custom">
 		<remake-dir dir="${app.server.websphere.dir}" />
 
-		<!--<unzip
+		<unzip
 			dest="${app.server.websphere.dir}"
 			src="${app.server.parent.dir}/${app.server.websphere.custom.zip.name}"
-		/>-->
-
-		<exec executable="cmd">
-			<arg line="/c 7z x ${app.server.parent.dir}/${app.server.websphere.custom.zip.name} -o${app.server.websphere.dir.windows} -y > nul" />
-		</exec>
-
-		<propertyregex
-			input="${app.server.websphere.dir.windows}"
-			property="app.server.websphere.dir.windows.double.slash"
-			regexp="\\"
-			replace="\\\\\\\\"
 		/>
 
-		<propertyregex
-			input="${app.server.websphere.dir.windows.double.slash}"
-			property="app.server.websphere.dir.windows.escaped"
-			regexp=":"
-			replace="\\\\:"
-		/>
+		<if>
+			<os family="windows" />
+			<then>
+				<propertyregex
+					input="${app.server.websphere.dir.windows}"
+					property="app.server.websphere.dir.windows.double.slash"
+					regexp="\\"
+					replace="\\\\\\\\"
+				/>
 
-		<replace
-			dir="${app.server.websphere.dir}"
-			includes="**/*.bat,**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.txt,**/*.xml"
-		>
-			<replacefilter token="@app.server.websphere.dir@" value="${app.server.websphere.dir}" />
-			<replacefilter token="@app.server.websphere.dir.windows@" value="${app.server.websphere.dir.windows}" />
-			<replacefilter token="@app.server.websphere.dir.windows.escaped@" value="${app.server.websphere.dir.windows.escaped}" />
-		</replace>
+				<propertyregex
+					input="${app.server.websphere.dir.windows.double.slash}"
+					property="app.server.websphere.dir.windows.escaped"
+					regexp=":"
+					replace="\\\\:"
+				/>
+
+				<replace
+					dir="${app.server.websphere.dir}"
+					includes="**/*.bat,**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.txt,**/*.xml"
+				>
+					<replacefilter token="@app.server.websphere.dir@" value="${app.server.websphere.dir}" />
+					<replacefilter token="@app.server.websphere.dir.windows@" value="${app.server.websphere.dir.windows}" />
+					<replacefilter token="@app.server.websphere.dir.windows.escaped@" value="${app.server.websphere.dir.windows.escaped}" />
+				</replace>
+			</then>
+		</if>
 	</target>
 
 	<target name="unzip-websphere-original">
 		<if>
-			<or>
+			<and>
 				<not>
-					<available file="${app.server.parent.dir}/${app.server.websphere.fix.pack.jdk.name}" />
+					<available file="${app.server.parent.dir}/${app.server.websphere.installation.manager.zip.name.linux}" />
 				</not>
-				<not>
-					<available file="${app.server.parent.dir}/${app.server.websphere.fix.pack.was.name}" />
-				</not>
-				<not>
-					<available file="${app.server.parent.dir}/${app.server.websphere.update.installer.zip.name}" />
-				</not>
-				<not>
-					<available file="${app.server.parent.dir}/${app.server.websphere.zip.name}" />
-				</not>
-			</or>
+				<os family="unix" />
+			</and>
 			<then>
 				<mkdir dir="${app.server.parent.dir}" />
 
 				<fail>
 .
 
-Please download ${app.server.websphere.fix.pack.jdk.name},
-${app.server.websphere.fix.pack.was.name},
-${app.server.websphere.update.installer.zip.name}, and
-${app.server.websphere.zip.name} from ${app.server.websphere.zip.url} and put
-them in ${app.server.parent.dir}. Then rerun this task.
+Please download ${app.server.websphere.installation.manager.zip.name.linux} from ${app.server.websphere.installation.manager.zip.url}
+and put it in ${app.server.parent.dir}. Then rerun this task.
 				</fail>
 			</then>
+			<elseif>
+				<and>
+					<not>
+						<available file="${app.server.parent.dir}/${app.server.websphere.installation.manager.zip.name.windows}" />
+					</not>
+					<os family="windows" />
+				</and>
+				<then>
+					<mkdir dir="${app.server.parent.dir}" />
+
+					<fail>
+.
+
+Please download ${app.server.websphere.installation.manager.zip.name.windows} from ${app.server.websphere.installation.manager.zip.url}
+and put it in ${app.server.parent.dir}. Then rerun this task.
+					</fail>
+				</then>
+			</elseif>
 		</if>
 
+		<for list="${app.server.websphere.repo.zip.names}" param="app.server.websphere.repo.zip.name">
+			<sequential>
+				<if>
+					<not>
+						<available file="${app.server.parent.dir}/@{app.server.websphere.repo.zip.name}" />
+					</not>
+					<then>
+						<mkdir dir="${app.server.parent.dir}" />
+
+						<fail>
+.
+
+Please download @{app.server.websphere.repo.zip.name} from ${app.server.websphere.zip.url}
+and put it in ${app.server.parent.dir}. Then rerun this task.
+						</fail>
+					</then>
+				</if>
+			</sequential>
+		</for>
+
+		<for list="${app.server.websphere.fix.pack.jdk.zip.names}" param="app.server.websphere.fix.pack.jdk.zip.name">
+			<sequential>
+				<if>
+					<not>
+						<available file="${app.server.parent.dir}/@{app.server.websphere.fix.pack.jdk.zip.name}" />
+					</not>
+					<then>
+						<mkdir dir="${app.server.parent.dir}" />
+
+						<fail>
+.
+
+Please download @{app.server.websphere.fix.pack.jdk.zip.name} from ${app.server.websphere.fix.pack.zip.url}
+and put it in ${app.server.parent.dir}. Then rerun this task.
+						</fail>
+					</then>
+				</if>
+			</sequential>
+		</for>
+
+		<for list="${app.server.websphere.fix.pack.was.zip.names}" param="app.server.websphere.fix.pack.was.zip.name">
+			<sequential>
+				<if>
+					<not>
+						<available file="${app.server.parent.dir}/@{app.server.websphere.fix.pack.was.zip.name}" />
+					</not>
+					<then>
+						<mkdir dir="${app.server.parent.dir}" />
+
+						<fail>
+.
+
+Please download @{app.server.websphere.fix.pack.was.zip.name} from ${app.server.websphere.fix.pack.zip.url}
+and put it in ${app.server.parent.dir}. Then rerun this task.
+						</fail>
+					</then>
+				</if>
+			</sequential>
+		</for>
+
 		<delete dir="${app.server.websphere.dir}" />
+
+		<echo>Installing installation manager. This may take a few minutes.</echo>
 
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
 		</tstamp>
 
-		<unzip
-			dest="${tstamp.value}/was"
-			src="${app.server.parent.dir}/${app.server.websphere.zip.name}"
-		/>
+		<if>
+			<os family="unix" />
+			<then>
+				<unzip
+					dest="${tstamp.value}/was_im"
+					src="${app.server.parent.dir}/${app.server.websphere.installation.manager.zip.name.linux}"
+				/>
 
-		<echo file="${tstamp.value}/was/WAS/liferay-responsefile.txt">
-			-OPT disableOSPrereqChecking="true"
-			-OPT feature="noFeature"
-			-OPT installLocation="${app.server.websphere.dir}"
-			-OPT installType="installNew"
-			-OPT PROF_cellName=liferay-cell
-			-OPT PROF_enableAdminSecurity="false"
-			-OPT PROF_enableService="false"
-			-OPT PROF_isDefault="true"
-			-OPT PROF_isDeveloperServer="true"
-			-OPT PROF_nodeName=liferay-node
-			-OPT PROF_omitAction="defaultAppDeployAndConfig"
-			-OPT PROF_omitAction="deployAdminConsole"
-			-OPT PROF_omitAction="samplesInstallAndConfig"
-			-OPT PROF_portsFile="liferay-portdef.props"
-			-OPT PROF_profileName="liferay"
-			-OPT PROF_winserviceCheck="false"
-			-OPT profileType="standAlone"
-			-OPT silentInstallLicenseAcceptance="true"
-		</echo>
+				<chmod perm="a+x">
+					<fileset dir="${tstamp.value}/was_im">
+						<include name="installc" />
+						<include name="**/jre/bin/java" />
+					</fileset>
+				</chmod>
 
-		<echo file="${tstamp.value}/was/WAS/liferay-portdef.props">
-			WC_defaulthost=8080
-		</echo>
+				<exec dir="${tstamp.value}/was_im" executable="sh">
+					<arg value="-c" />
+					<arg value="./installc -acceptLicense" />
+				</exec>
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<unzip
+						dest="${tstamp.value}/was_im"
+						src="${app.server.parent.dir}/${app.server.websphere.installation.manager.zip.name.windows}"
+					/>
+
+					<exec dir="${tstamp.value}/was_im" executable="cmd.exe">
+						<arg value="/c" />
+						<arg value="installc.exe -acceptLicense" />
+					</exec>
+				</then>
+			</elseif>
+		</if>
+
+		<delete dir="${tstamp.value}" />
 
 		<echo>Installing application server. This may take a few minutes.</echo>
 
-		<exec dir="${tstamp.value}/was/WAS" executable="cmd.exe">
-			<arg line="/c install.exe -options liferay-responsefile.txt -silent" />
-		</exec>
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<for list="${app.server.websphere.repo.zip.names}" param="app.server.websphere.repo.zip.name">
+			<sequential>
+				<unzip
+					dest="${tstamp.value}/was"
+					src="${app.server.parent.dir}/@{app.server.websphere.repo.zip.name}"
+				/>
+			</sequential>
+		</for>
+
+		<echoxml file="${tstamp.value}/was/liferay-responseFile.xml">
+			<agent-input clean='true' temporary='false'>
+
+			<install modify="false">
+			 	<offering
+			  		id='com.ibm.websphere.DEVELOPERSILAN.v85'
+			  		profile='IBM Websphere 8.5.5.0'>
+			  	</offering>
+			</install>
+
+			<profile
+				id='IBM Websphere 8.5.5.0'
+				installLocation='${app.server.websphere.dir}'>
+			</profile>
+
+			<server>
+				<repository location='${project.dir}/${tstamp.value}/was/repository.config' />
+			</server>
+
+			</agent-input>
+		</echoxml>
+
+		<if>
+			<os family="unix" />
+			<then>
+				<chmod file="/opt/IBM/InstallationManager/eclipse/tools/imcl" perm="a+x" />
+
+				<exec dir="/opt/IBM/InstallationManager/eclipse/tools" executable="sh">
+					<arg value="-c" />
+					<arg value="./imcl input ${project.dir}/${tstamp.value}/was/liferay-responseFile.xml -acceptLicense" />
+				</exec>
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<exec dir="C:/Program Files/IBM/Installation Manager/eclipse/tools" executable="cmd.exe">
+						<arg value="/c" />
+						<arg value="imcl input ${project.dir}/${tstamp.value}/was/liferay-responseFile.xml -acceptLicense" />
+					</exec>
+				</then>
+			</elseif>
+		</if>
+
+		<delete dir="${tstamp.value}" />
+
+		<echo file="${app.server.websphere.dir}/liferay-portdef.props">
+			WC_defaulthost=8080
+		</echo>
+
+		<echo file="${app.server.websphere.dir}/liferay-responsefile.txt">
+			create
+			cellName=liferay-cell
+			enableAdminSecurity=false
+			enableService=false
+			isDefault=true
+			isDeveloperServer=true
+			nodeName=liferay-node
+			omitAction=deployAdminConsole,defaultAppDeployAndConfig,samplesInstallAndConfig
+			portsFile=${app.server.websphere.dir}/liferay-portdef.props
+			profileName=liferay
+			profilePath=${app.server.websphere.dir}/profiles/liferay
+			templatePath=${app.server.websphere.dir}/profileTemplates/default
+			winserviceCheck=false
+		</echo>
+
+		<echo>Creating profile. This may take a few minutes.</echo>
+
+		<if>
+			<os family="unix" />
+			<then>
+				<chmod file="${app.server.websphere.dir}/bin/manageprofiles.sh" perm="a+x" />
+
+				<exec dir="${app.server.websphere.dir}/bin" executable="sh">
+					<arg value="-c" />
+					<arg value="./manageprofiles.sh -response ${app.server.websphere.dir}/liferay-responsefile.txt" />
+				</exec>
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<exec dir="${app.server.websphere.dir}/bin" executable="cmd.exe">
+						<arg value="/c" />
+						<arg value="manageprofiles.bat -response ${app.server.websphere.dir}/liferay-responsefile.txt" />
+					</exec>
+				</then>
+			</elseif>
+		</if>
+
+		<delete file="${app.server.websphere.dir}/liferay-portdef.props" failonerror="false" />
+		<delete file="${app.server.websphere.dir}/liferay-responsefile.txt" failonerror="false" />
 
 		<replace file="${app.server.websphere.instance.dir}/config/cells/liferay-cell/nodes/liferay-node/servers/server1/server.xml">
 			<replacetoken><![CDATA[disableJIT="false">]]></replacetoken>
 			<replacevalue><![CDATA[disableJIT="false" maximumHeapSize="1024">]]></replacevalue>
 		</replace>
 
-		<unzip
-			dest="${tstamp.value}/updi"
-			src="${app.server.parent.dir}/${app.server.websphere.update.installer.zip.name}"
-		/>
+		<echo>Installing fix pack. This may take a few minutes</echo>
 
-		<echo file="${tstamp.value}/updi/UpdateInstaller/liferay-responsefile.txt">
-			-OPT installLocation="${app.server.websphere.dir}/UpdateInstaller"
-			-OPT silentInstallLicenseAcceptance="true"
-			-OPT skipStartMenu=true
-		</echo>
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
 
-		<echo>Installing update installer.</echo>
+		<for list="${app.server.websphere.fix.pack.was.zip.names}" param="app.server.websphere.fix.pack.was.zip.name">
+			<sequential>
+				<unzip
+					dest="${tstamp.value}/was_fixpack"
+					src="${app.server.parent.dir}/@{app.server.websphere.fix.pack.was.zip.name}"
+				/>
+			</sequential>
+		</for>
 
-		<exec dir="${tstamp.value}/updi/UpdateInstaller" executable="cmd.exe">
-			<arg line="/c install.exe -options liferay-responsefile.txt -silent" />
-		</exec>
+		<for list="${app.server.websphere.fix.pack.jdk.zip.names}" param="app.server.websphere.fix.pack.jdk.zip.name">
+			<sequential>
+				<unzip
+					dest="${tstamp.value}/was_fixpack_jdk"
+					src="${app.server.parent.dir}/@{app.server.websphere.fix.pack.jdk.zip.name}"
+				/>
+			</sequential>
+		</for>
 
-		<echo file="${app.server.websphere.dir}/UpdateInstaller/liferay-responsefile.txt">
-			-W maintenance.package="${app.server.parent.dir}/${app.server.websphere.fix.pack.jdk.name};${app.server.parent.dir}/${app.server.websphere.fix.pack.was.name}"
-			-W product.location="${app.server.websphere.dir}"
-			-W update.type="install"
-		</echo>
+		<echoxml file="${tstamp.value}/was_fixpack/liferay-responseFile.xml">
+			<agent-input clean='true' temporary='false'>
 
-		<echo>Installing fix pack.</echo>
+			<install modify="false">
+			 	<offering
+			  		id='com.ibm.websphere.DEVELOPERSILAN.v85'
+			  		profile='IBM Websphere 8.5.5.0'>
+			  	</offering>
+
+			 	<offering
+			  		id='com.ibm.websphere.IBMJAVA.v71'
+			  		profile='IBM Websphere 8.5.5.0'>
+			  	</offering>
+			</install>
+
+			<profile
+				id='IBM Websphere 8.5.5.0'
+				installLocation='${app.server.websphere.dir}'>
+			</profile>
+
+			<server>
+				<repository location='${project.dir}/${tstamp.value}/was_fixpack/repository.config' />
+				<repository location='${project.dir}/${tstamp.value}/was_fixpack_jdk/repository.config' />
+			</server>
+
+			</agent-input>
+		</echoxml>
 
 		<if>
-			<available file="${app.server.websphere.dir}/UpdateInstaller/update.exe" />
+			<os family="unix" />
 			<then>
-				<property name="update.executable" value="update.exe" />
-			</then>
-			<else>
-				<property name="update.executable" value="update.bat" />
-			</else>
-		</if>
+				<chmod file="/opt/IBM/InstallationManager/eclipse/tools/imcl" perm="a+x" />
 
-		<exec dir="${app.server.websphere.dir}/UpdateInstaller" executable="cmd.exe">
-			<arg line="/c ${update.executable} -options liferay-responsefile.txt -silent" />
-		</exec>
+				<exec dir="/opt/IBM/InstallationManager/eclipse/tools" executable="sh">
+					<arg value="-c" />
+					<arg value="./imcl input ${project.dir}/${tstamp.value}/was_fixpack/liferay-responseFile.xml -acceptLicense" />
+				</exec>
+
+				<chmod file="${app.server.websphere.dir}/bin/managesdk.sh" perm="a+x" />
+
+				<exec dir="${app.server.websphere.dir}/bin" executable="sh">
+					<arg value="-c" />
+					<arg value="./managesdk.sh -enableProfileAll -sdkName 1.7.1_64 -enableServers" />
+				</exec>
+			</then>
+			<elseif>
+				<os family="windows" />
+				<then>
+					<exec dir="C:/Program Files/IBM/Installation Manager/eclipse/tools" executable="cmd.exe">
+						<arg value="/c" />
+						<arg value="imcl input ${project.dir}/${tstamp.value}/was_fixpack/liferay-responseFile.xml -acceptLicense" />
+					</exec>
+
+					<exec dir="${app.server.websphere.dir}/bin" executable="cmd.exe">
+						<arg value="/c" />
+						<arg value="managesdk.bat -enableProfileAll -sdkName 1.7.1_64 -enableServers" />
+					</exec>
+				</then>
+			</elseif>
+		</if>
 
 		<delete dir="${tstamp.value}" />
 	</target>
@@ -3121,28 +3369,33 @@ plugins.includes=</echo>
 			<fileset dir="${app.server.websphere.dir}" includes="logs/**" />
 		</delete>
 
-		<propertyregex
-			input="${app.server.websphere.dir.windows}"
-			property="app.server.websphere.dir.windows.double.slash"
-			regexp="\\"
-			replace="\\\\\\\\"
-		/>
+		<if>
+			<os family="windows" />
+			<then>
+				<propertyregex
+					input="${app.server.websphere.dir.windows}"
+					property="app.server.websphere.dir.windows.double.slash"
+					regexp="\\"
+					replace="\\\\\\\\"
+				/>
 
-		<propertyregex
-			input="${app.server.websphere.dir.windows.double.slash}"
-			property="app.server.websphere.dir.windows.escaped"
-			regexp=":"
-			replace="\\\\:"
-		/>
+				<propertyregex
+					input="${app.server.websphere.dir.windows.double.slash}"
+					property="app.server.websphere.dir.windows.escaped"
+					regexp=":"
+					replace="\\\\:"
+				/>
 
-		<replace
-			dir="${app.server.websphere.dir}"
-			includes="**/*.bat,**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.txt,**/*.xml"
-		>
-			<replacefilter token="${app.server.websphere.dir}" value="@app.server.websphere.dir@" />
-			<replacefilter token="${app.server.websphere.dir.windows}" value="@app.server.websphere.dir.windows@" />
-			<replacefilter token="${app.server.websphere.dir.windows.escaped}" value="@app.server.websphere.dir.windows.escaped@" />
-		</replace>
+				<replace
+					dir="${app.server.websphere.dir}"
+					includes="**/*.bat,**/*.js,**/*.metadata,**/*.properties,**/*.props,**/*.txt,**/*.xml"
+				>
+					<replacefilter token="${app.server.websphere.dir}" value="@app.server.websphere.dir@" />
+					<replacefilter token="${app.server.websphere.dir.windows}" value="@app.server.websphere.dir.windows@" />
+					<replacefilter token="${app.server.websphere.dir.windows.escaped}" value="@app.server.websphere.dir.windows.escaped@" />
+				</replace>
+			</then>
+		</if>
 
 		<zip
 			destfile="${app.server.parent.dir}/${app.server.websphere.custom.zip.name}"

@@ -337,6 +337,7 @@
 		<gradle-execute dir="${project.dir}/modules" task="deploy">
 			<arg value="--parallel" />
 			<arg value="-Dportal.build=true" />
+			<env key="WAS_HOME" value="${app.server.websphere.dir}" />
 		</gradle-execute>
 
 		<stopwatch action="elapsed" name="modules.stopwatch" />
@@ -820,13 +821,26 @@
 		<if>
 			<equals arg1="${app.server.type}" arg2="websphere" />
 			<then>
-				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
-					<arg line="startServer.sh server1" />
-				</exec>
+				<if>
+					<os family="unix" />
+					<then>
+						<chmod file="${app.server.websphere.bin.dir}/startServer.sh" perm="a+x" />
 
-				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c startServer.bat server1" />
-				</exec>
+						<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh">
+							<arg value="-c" />
+							<arg value="./startServer.sh server1" />
+						</exec>
+					</then>
+					<elseif>
+						<os family="windows" />
+						<then>
+							<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe">
+								<arg value="/c" />
+								<arg value="startServer.bat server1" />
+							</exec>
+						</then>
+					</elseif>
+				</if>
 
 				<echo>Installing liferay-portal.war.</echo>
 
@@ -862,23 +876,36 @@ print AdminConfig.save()
 print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 				</echo>
 
-				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
-					<arg line="wsadmin.sh -f ${basedir}/wsadmin.py" />
-				</exec>
+				<if>
+					<os family="unix" />
+					<then>
+						<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh">
+							<arg value="-c" />
+							<arg value="./wsadmin.sh -f ${basedir}/wsadmin.py" />
+						</exec>
 
-				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c wsadmin.bat -f ${basedir}\wsadmin.py" />
-				</exec>
+						<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh">
+							<arg value="-c" />
+							<arg value="./stopServer.sh server1" />
+						</exec>
+					</then>
+					<elseif>
+						<os family="windows" />
+						<then>
+							<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe">
+								<arg value="/c" />
+								<arg value="wsadmin.bat -f ${basedir}\wsadmin.py" />
+							</exec>
+
+							<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe">
+								<arg value="/c" />
+								<arg value="stopServer.bat server1" />
+							</exec>
+						</then>
+					</elseif>
+				</if>
 
 				<delete file="wsadmin.py" />
-
-				<exec dir="${app.server.websphere.bin.dir}" executable="/bin/sh" os="${os.unix}">
-					<arg line="stopServer.sh server1" />
-				</exec>
-
-				<exec dir="${app.server.websphere.bin.dir}" executable="cmd.exe" os="${os.windows}">
-					<arg line="/c stopServer.bat server1" />
-				</exec>
 			</then>
 		</if>
 	</target>

@@ -2348,3 +2348,38 @@ the GroupService API.
 This taglib is not used anymore and it won't be maintained properly.
 
 ---------------------------------------
+
+### Methods related to Control Panel in PortalUtil have been removed
+- **Date:** 2015-Sep-23
+- **JIRA Ticket:** LPS-58210
+
+#### What changed?
+
+The following methods been deleted:
+
+- getControlPanelCategoriesMap
+- getControlPanelCategory
+- getControlPanelPortlets
+- getFirstMyAccountPortlet
+- getFirstSiteAdministrationPortlet
+- getSiteAdministrationCategoriesMap
+- getSiteAdministrationURL
+- isCompanyControlPanelVisible
+
+
+#### Who is affected?
+
+This affects developers who use any of these methods.
+
+#### How should I update my code?
+
+In order to work with the apps displayed in the product menu, developers should
+use the application-list-api calling the PanelCategoryRegistry and the
+PanelAppRegistry.
+
+#### Why was this change made?
+
+These methods are not used anymore and they won't work properly since they can't
+call the application-list-api from the context of the portal.
+
+---------------------------------------

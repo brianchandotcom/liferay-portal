@@ -405,7 +405,7 @@ AUI.add(
 							function(fieldTemplate) {
 								var fieldNode = A.Node.create(fieldTemplate);
 
-								instance.get('container').insert(fieldNode, 'after');
+								instance.get('container').placeAfter(fieldNode);
 
 								var parent = instance.get('parent');
 
@@ -462,12 +462,7 @@ AUI.add(
 						var inputNode = instance.getInputNode();
 
 						if (inputNode) {
-							if (instance.get('readOnly')) {
-								inputNode.attr('disabled', true);
-							}
-							else {
-								inputNode.removeAttribute('disabled');
-							}
+							inputNode.attr('disabled', instance.get('readOnly'));
 						}
 					},
 
@@ -925,12 +920,7 @@ AUI.add(
 
 						var selectButtonNode = container.one('#' + instance.getInputName() + 'SelectButton');
 
-						if (instance.get('readOnly')) {
-							selectButtonNode.attr('disabled', true);
-						}
-						else {
-							selectButtonNode.removeAttribute('disabled');
-						}
+						selectButtonNode.attr('disabled', instance.get('readOnly'));
 					},
 
 					_handleButtonsClick: function(event) {
@@ -1263,10 +1253,9 @@ AUI.add(
 
 						var container = instance.get('container');
 
-						container.insert(instance.readOnlyText, 'after');
-						container.insert(instance.readOnlyLabel, 'after');
+						container.placeAfter(instance.readOnlyText);
+						container.placeAfter(instance.readOnlyLabel);
 					}
-
 				}
 			}
 		);
@@ -1355,12 +1344,7 @@ AUI.add(
 
 						var radioNodes = instance.getRadioNodes();
 
-						if (instance.get('readOnly')) {
-							radioNodes.attr('disabled', true);
-						}
-						else {
-							radioNodes.removeAttribute('disabled');
-						}
+						radioNodes.attr('disabled', instance.get('readOnly'));
 					}
 				}
 			}

@@ -43,7 +43,7 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	@Override
-	public FacetConfiguration getDefaultConfiguration() {
+	public FacetConfiguration getDefaultConfiguration(long companyId) {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
 		facetConfiguration.setClassName(getFacetClassName());

@@ -41,7 +41,7 @@ if (dataJSONObject.has("values")) {
 
 List<KeyValuePair> availableAssetTypes = new ArrayList<KeyValuePair>();
 
-for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getAssetRendererFactories()) {
+for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getAssetRendererFactories(company.getCompanyId())) {
 	String className = assetRendererFactory.getClassName();
 
 	if (!ArrayUtil.contains(assetTypes, className)) {

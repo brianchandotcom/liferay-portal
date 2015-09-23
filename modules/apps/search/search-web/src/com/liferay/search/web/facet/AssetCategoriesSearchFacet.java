@@ -41,7 +41,7 @@ public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 	}
 
 	@Override
-	public FacetConfiguration getDefaultConfiguration() {
+	public FacetConfiguration getDefaultConfiguration(long companyId) {
 		FacetConfiguration facetConfiguration = new FacetConfiguration();
 
 		facetConfiguration.setClassName(getFacetClassName());

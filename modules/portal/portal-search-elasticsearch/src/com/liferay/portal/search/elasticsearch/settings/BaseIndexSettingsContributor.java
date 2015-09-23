@@ -21,15 +21,15 @@ public abstract class BaseIndexSettingsContributor
 	implements IndexSettingsContributor {
 
 	public BaseIndexSettingsContributor(int priority) {
-		this.priority = priority;
+		_priority = priority;
 	}
 
 	@Override
 	public int compareTo(IndexSettingsContributor indexSettingsContributor) {
-		if (priority > indexSettingsContributor.getPriority()) {
+		if (_priority > indexSettingsContributor.getPriority()) {
 			return 1;
 		}
-		else if (priority == indexSettingsContributor.getPriority()) {
+		else if (_priority == indexSettingsContributor.getPriority()) {
 			return 0;
 		}
 
@@ -38,9 +38,9 @@ public abstract class BaseIndexSettingsContributor
 
 	@Override
 	public int getPriority() {
-		return priority;
+		return _priority;
 	}
 
-	protected int priority;
+	private int _priority;
 
 }

@@ -282,6 +282,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PAGE_TEMPLATE</td>
+	<td>//div[@id='heading']/span[contains(@title,'${key_pageTemplateName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_TEMPLATE_4</td>
 	<td>//div[contains(@class,'navbar-classic')]/ul/li[4]/a</td>
 	<td></td>

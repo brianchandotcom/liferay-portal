@@ -30,7 +30,6 @@ public class ReindexSingleIndexerBackgroundTaskExecutor
 	@Override
 	public BackgroundTaskExecutor clone() {
 		return new ReindexSingleIndexerBackgroundTaskExecutor();
-
 	}
 
 	@Override

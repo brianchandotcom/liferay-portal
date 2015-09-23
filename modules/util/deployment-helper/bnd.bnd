@@ -2,3 +2,4 @@ Bundle-Name: Liferay Deployment Helper
 Bundle-SymbolicName: com.liferay.deployment.helper
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.deployment.helper
+Include-Resource: classes

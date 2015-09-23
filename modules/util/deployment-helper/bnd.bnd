@@ -2,4 +2,12 @@ Bundle-Name: Liferay Deployment Helper
 Bundle-SymbolicName: com.liferay.deployment.helper
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.deployment.helper
-Include-Resource: classes
+Include-Resource:\
+	classes,\
+	@lib/slf4j-api.jar,\
+	@lib/zt-zip.jar,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class
+Main-Class: com.liferay.deployment.helper.DeploymentHelper

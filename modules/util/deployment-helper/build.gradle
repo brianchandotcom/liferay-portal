@@ -1,0 +1,6 @@
+dependencies {
+	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
+	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
+	provided group: "org.zeroturnaround", name: "zt-zip", version: "1.8"
+}

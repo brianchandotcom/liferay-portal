@@ -14,6 +14,8 @@
 
 package com.liferay.configuration.admin.web.util;
 
+import com.liferay.configuration.admin.api.ExtendedMetaTypeInformation;
+import com.liferay.configuration.admin.api.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -32,8 +34,6 @@ import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.metatype.MetaTypeInformation;
-import org.osgi.service.metatype.MetaTypeService;
 
 /**
  * @author Kamesh Sampath
@@ -43,11 +43,11 @@ public class ConfigurationHelper {
 
 	public ConfigurationHelper(
 		BundleContext bundleContext, ConfigurationAdmin configurationAdmin,
-		MetaTypeService metaTypeService, String languageId) {
+		ExtendedMetaTypeService extendedMetaTypeService, String languageId) {
 
 		_bundleContext = bundleContext;
 		_configurationAdmin = configurationAdmin;
-		_metaTypeService = metaTypeService;
+		_extendedMetaTypeService = extendedMetaTypeService;
 
 		_configurationModels = _getConfigurationModels(languageId);
 	}
@@ -124,20 +124,20 @@ public class ConfigurationHelper {
 		Bundle bundle, Map<String, ConfigurationModel> modelMap, String locale,
 		boolean factory) {
 
-		MetaTypeInformation metaTypeInformation =
-			_metaTypeService.getMetaTypeInformation(bundle);
+		ExtendedMetaTypeInformation extendedMetaTypeInformation =
+			_extendedMetaTypeService.getMetaTypeInformation(bundle);
 
-		if (metaTypeInformation == null) {
+		if (extendedMetaTypeInformation == null) {
 			return;
 		}
 
 		String[] pids = null;
 
 		if (factory) {
-			pids = metaTypeInformation.getFactoryPids();
+			pids = extendedMetaTypeInformation.getFactoryPids();
 		}
 		else {
-			pids = metaTypeInformation.getPids();
+			pids = extendedMetaTypeInformation.getPids();
 		}
 
 		for (String pid : pids) {
@@ -155,8 +155,8 @@ public class ConfigurationHelper {
 	private ConfigurationModel _getConfigurationModel(
 		Bundle bundle, String pid, boolean factory, String locale) {
 
-		MetaTypeInformation metaTypeInformation =
-			_metaTypeService.getMetaTypeInformation(bundle);
+		ExtendedMetaTypeInformation metaTypeInformation =
+			_extendedMetaTypeService.getMetaTypeInformation(bundle);
 
 		if (metaTypeInformation == null) {
 			return null;
@@ -206,6 +206,6 @@ public class ConfigurationHelper {
 	private final BundleContext _bundleContext;
 	private final ConfigurationAdmin _configurationAdmin;
 	private final Map<String, ConfigurationModel> _configurationModels;
-	private final MetaTypeService _metaTypeService;
+	private final ExtendedMetaTypeService _extendedMetaTypeService;
 
 }

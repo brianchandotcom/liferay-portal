@@ -110,7 +110,7 @@ public class PanelAppTag extends BasePanelTag {
 
 		request.setAttribute("liferay-application-list:panel-app:id", _id);
 
-		if (Validator.isNull(_label)) {
+		if (Validator.isNull(_label) && (_panelApp != null)) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(
 				themeDisplay.getCompanyId(), _panelApp.getPortletId());
 
@@ -124,7 +124,7 @@ public class PanelAppTag extends BasePanelTag {
 		request.setAttribute(
 			"liferay-application-list:panel-app:panelApp", _panelApp);
 
-		if (Validator.isNull(_url)) {
+		if (Validator.isNull(_url) && (_panelApp != null)) {
 			PortletURL portletURL = null;
 
 			try {

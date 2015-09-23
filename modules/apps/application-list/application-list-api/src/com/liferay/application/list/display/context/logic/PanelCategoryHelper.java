@@ -21,6 +21,8 @@ import com.liferay.application.list.PanelCategoryRegistry;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.List;
+
 /**
  * @author Adolfo Pérez
  */
@@ -56,22 +58,24 @@ public class PanelCategoryHelper {
 		String panelCategoryKey, PermissionChecker permissionChecker,
 		Group group) {
 
-		PanelCategory panelCategory =
-			_panelCategoryRegistry.getFirstChildPanelCategory(
+		List<PanelCategory> panelCategories =
+			_panelCategoryRegistry.getChildPanelCategories(
 				panelCategoryKey, permissionChecker, group);
 
-		if (panelCategory == null) {
+		if (panelCategories.isEmpty()) {
 			return null;
 		}
 
-		PanelApp panelApp = _panelAppRegistry.getFirstPanelApp(
-			panelCategory, permissionChecker, group);
+		for (PanelCategory panelCategory : panelCategories) {
+			PanelApp panelApp = _panelAppRegistry.getFirstPanelApp(
+				panelCategory, permissionChecker, group);
 
-		if (panelApp == null) {
-			return null;
+			if (panelApp != null) {
+				return panelApp.getPortletId();
+			}
 		}
 
-		return panelApp.getPortletId();
+		return null;
 	}
 
 	private boolean hasPortlet(String portletId, PanelCategory panelCategory) {

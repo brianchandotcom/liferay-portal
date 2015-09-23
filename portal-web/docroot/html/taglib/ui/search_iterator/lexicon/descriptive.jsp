@@ -46,12 +46,6 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 	<liferay-ui:empty-result-message message="<%= emptyResultsMessage %>" />
 </c:if>
 
-<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (resultRows.size() > PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA) && paginate %>">
-	<div class="taglib-search-iterator-page-iterator-top">
-		<liferay-ui:search-paginator id='<%= id + "PageIteratorTop" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />
-	</div>
-</c:if>
-
 <ul class="<%= searchContainer.getCssClass() %> <%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> tabular-list-group" id="<%= namespace + id %>SearchContainer">
 	<c:if test="<%= (headerNames != null) && Validator.isNotNull(headerNames.get(0)) %>">
 		<li class="list-group-heading"><liferay-ui:message key="<%= headerNames.get(0) %>" /></li>

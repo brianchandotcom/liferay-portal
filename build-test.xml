@@ -4598,6 +4598,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<echo append="true" file="${test.ext.properties.file}">
 			component.names=${component.names}
 			ignore.errors.file.name=${project.dir.unix}/portal-web/test-ignorable-error-lines.xml
+			output.dir.name=${liferay.home}/output-dir
 			product.names=${product.names}
 			project.dir=${project.dir.unix}
 			test.case.available.property.names=${test.case.available.property.names}

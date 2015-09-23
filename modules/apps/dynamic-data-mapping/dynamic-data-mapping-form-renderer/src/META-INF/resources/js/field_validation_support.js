@@ -48,15 +48,11 @@ AUI.add(
 
 				var required = instance.get('required');
 
-				if (required) {
-					return true;
-				}
-
 				var validation = instance.get('validation');
 
 				var expression = validation.expression;
 
-				return !!expression && expression !== 'true';
+				return required || (!!expression && expression !== 'true');
 			},
 
 			processEvaluation: function(result) {

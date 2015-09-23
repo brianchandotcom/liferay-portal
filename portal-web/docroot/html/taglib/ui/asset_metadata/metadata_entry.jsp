@@ -25,6 +25,7 @@ String metadataField = (String)request.getAttribute("liferay-ui:asset-metadata:m
 String iconCssClass = StringPool.BLANK;
 String label = LanguageUtil.get(request, metadataField);
 String metadataFieldCssClass = "metadata-" + metadataField;
+boolean showLabel = true;
 String value = null;
 
 if (metadataField.equals("create-date")) {
@@ -65,6 +66,8 @@ else if (metadataField.equals("author")) {
 
 	metadataFieldCssClass = StringPool.BLANK;
 
+	showLabel = false;
+
 	String userName = PortalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName());
 
 	value = LanguageUtil.get(request, "by") + StringPool.SPACE + HtmlUtil.escape(userName);
@@ -77,12 +80,16 @@ else if (metadataField.equals("view-count")) {
 else if (metadataField.equals("categories")) {
 	List<AssetCategory> categories = assetEntry.getCategories();
 
+	showLabel = false;
+
 	if (!categories.isEmpty()) {
 		value = "categories";
 	}
 }
 else if (metadataField.equals("tags")) {
 	List<AssetTag> tags = assetEntry.getTags();
+
+	showLabel = false;
 
 	if (!tags.isEmpty()) {
 		value = "tags";
@@ -92,11 +99,11 @@ else if (metadataField.equals("tags")) {
 
 <c:if test="<%= Validator.isNotNull(value) %>">
 	<aui:column cssClass="help-block">
-		<dt class="metadata-entry-label"><%= label %></dt>
+		<dt class="metadata-entry-label <%= showLabel ? StringPool.BLANK : "hide" %>"><%= label %></dt>
 
 		<dd class="metadata-entry <%= metadataFieldCssClass %> <%= iconCssClass %>">
 			<c:choose>
-				<c:when test='<%= value.equals("author") %>' >
+				<c:when test='<%= value.equals("author") %>'>
 
 					<%
 					User userDisplay = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
@@ -121,14 +128,14 @@ else if (metadataField.equals("tags")) {
 						<span class="date-info"><%= displayDate %></span>
 					</div>
 				</c:when>
-				<c:when test='<%= value.equals("categories") %>' >
+				<c:when test='<%= value.equals("categories") %>'>
 					<liferay-ui:asset-categories-summary
 						className="<%= assetEntry.getClassName() %>"
 						classPK="<%= assetEntry.getClassPK () %>"
 						portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
 					/>
 				</c:when>
-				<c:when test='<%= value.equals("tags") %>' >
+				<c:when test='<%= value.equals("tags") %>'>
 					<liferay-ui:asset-tags-summary
 						className="<%= assetEntry.getClassName() %>"
 						classPK="<%= assetEntry.getClassPK () %>"

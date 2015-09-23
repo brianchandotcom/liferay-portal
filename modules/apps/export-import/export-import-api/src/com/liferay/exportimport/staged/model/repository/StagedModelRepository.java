@@ -27,6 +27,10 @@ import java.util.List;
  */
 public interface StagedModelRepository<T extends StagedModel> {
 
+	public T addStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortalException;
+
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException;
@@ -49,5 +53,11 @@ public interface StagedModelRepository<T extends StagedModel> {
 	public void restoreStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
+
+	public T saveStagedModel(T stagedModel) throws PortalException;
+
+	public T updateStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortalException;
 
 }

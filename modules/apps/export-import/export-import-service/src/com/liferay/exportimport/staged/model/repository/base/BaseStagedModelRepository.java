@@ -37,6 +37,11 @@ public abstract class BaseStagedModelRepository<T extends StagedModel>
 	implements StagedModelRepository<T> {
 
 	@Override
+	public abstract T addStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortalException;
+
+	@Override
 	public abstract void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException;
@@ -149,6 +154,14 @@ public abstract class BaseStagedModelRepository<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 	}
+
+	@Override
+	public abstract T saveStagedModel(T stagedModel) throws PortalException;
+
+	@Override
+	public abstract T updateStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortalException;
 
 	protected boolean isStagedModelInTrash(T stagedModel) {
 		String className = ExportImportClassedModelUtil.getClassName(

@@ -34,7 +34,7 @@ page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.util.PortalUtil" %>
+page import="com.liferay.portlet.PortletURLUtil" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.ResourceBundle" %>
@@ -46,5 +46,5 @@ page import="java.util.ResourceBundle" %>
 <liferay-theme:defineObjects />
 
 <%
-String currentURL = PortalUtil.getCurrentURL(request);
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 %>

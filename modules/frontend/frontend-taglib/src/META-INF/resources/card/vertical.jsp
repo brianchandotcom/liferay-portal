@@ -40,37 +40,39 @@
 				</c:if>
 			</div>
 
-			<div class="card-footer">
-				<div class="card-dm-more-options">
-					<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
+			<c:if test="<%= Validator.isNotNull(actionJsp) || Validator.isNotNull(header) || Validator.isNotNull(title) || Validator.isNotNull(subtitle) || Validator.isNotNull(footer) %>">
+				<div class="card-footer">
+					<div class="card-dm-more-options">
+						<liferay-util:include page="<%= actionJsp %>" servletContext="<%= actionJspServletContext %>" />
+					</div>
+
+					<div class="card-dm-details">
+						<c:if test="<%= Validator.isNotNull(header) %>">
+							<div class="card-dm-text-small">
+								<%= header %>
+							</div>
+						</c:if>
+
+						<c:if test="<%= Validator.isNotNull(title) %>">
+							<aui:a href="<%= url %>">
+								<div class="card-dm-text-large"><%= title %></div>
+							</aui:a>
+						</c:if>
+
+						<c:if test="<%= Validator.isNotNull(subtitle) %>">
+							<div class="card-dm-text">
+								<%= subtitle %>
+							</div>
+						</c:if>
+
+						<c:if test="<%= Validator.isNotNull(footer) %>">
+							<div class="card-dm-text-small">
+								<%= footer %>
+							</div>
+						</c:if>
+					</div>
 				</div>
-
-				<div class="card-dm-details">
-					<c:if test="<%= Validator.isNotNull(header) %>">
-						<div class="card-dm-text-small">
-							<%= header %>
-						</div>
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(title) %>">
-						<aui:a href="<%= url %>">
-							<div class="card-dm-text-large"><%= title %></div>
-						</aui:a>
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(subtitle) %>">
-						<div class="card-dm-text">
-							<%= subtitle %>
-						</div>
-					</c:if>
-
-					<c:if test="<%= Validator.isNotNull(footer) %>">
-						<div class="card-dm-text-small">
-							<%= footer %>
-						</div>
-					</c:if>
-				</div>
-			</div>
+			</c:if>
 		</div>
 	</div>
 </div>

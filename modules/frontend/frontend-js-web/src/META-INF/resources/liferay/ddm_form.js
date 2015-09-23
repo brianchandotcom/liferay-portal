@@ -243,6 +243,9 @@ AUI.add(
 					parent: {
 					},
 
+					readOnly: {
+					},
+
 					repeatable: {
 						getter: '_getRepeatable',
 						readOnly: true
@@ -259,14 +262,12 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						if (instance.get('localizable')) {
-							instance.after(
-								{
-									'translationmanager:deleteAvailableLocale': instance._afterDeleteAvailableLocale,
-									'translationmanager:editingLocaleChange': instance._afterEditingLocaleChange
-								}
-							);
-						}
+						instance.after(
+							{
+								'translationmanager:deleteAvailableLocale': instance._afterDeleteAvailableLocale,
+								'translationmanager:editingLocaleChange': instance._afterEditingLocaleChange
+							}
+						);
 					},
 
 					renderUI: function() {
@@ -455,6 +456,19 @@ AUI.add(
 						instance.setLabel(labelsMap[instance.get('displayLocale')]);
 					},
 
+					syncReadOnly: function() {
+						var instance = this;
+
+						var inputNode = instance.getInputNode();
+
+						if (instance.get('readOnly')) {
+							inputNode.attr('disabled',true);
+						}
+						else {
+							inputNode.removeAttribute('disabled');
+						}
+					},
+
 					syncRepeatablelUI: function() {
 						var instance = this;
 
@@ -604,8 +618,11 @@ AUI.add(
 
 						instance.set('displayLocale', event.newVal);
 
+						instance.set('readOnly', defaultLocale !== event.newVal && !instance.get('localizable'));
+
 						instance.syncLabelUI();
 						instance.syncValueUI();
+						instance.syncReadOnly();
 					},
 
 					_getLocalizable: function() {
@@ -1051,6 +1068,19 @@ AUI.add(
 						instance.syncUI();
 					},
 
+					syncReadOnly: function() {
+						var instance = this;
+
+						var selectButtonNode = A.one('#' + instance.getInputName() + 'SelectButton');
+
+						if (instance.get('readOnly')) {
+							selectButtonNode.attr('disabled',true);
+						}
+						else {
+							selectButtonNode.removeAttribute('disabled');
+						}
+					},
+
 					_getImagePreviewURL: function() {
 						var instance = this;
 
@@ -1165,6 +1195,23 @@ AUI.add(
 				EXTENDS: Field,
 
 				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						var readOnlyText = A.Node.create('<div class="hide"></div>');
+
+						var readOnlyLabel = A.Node.create('<label class="control-label hide"></label>');
+
+						instance.readOnlyText = readOnlyText;
+						instance.readOnlyLabel = readOnlyLabel;
+
+						instance.after(
+							{
+								'render': instance._renderReadOnlyText
+							}
+						);
+					},
+
 					getEditor: function() {
 						var instance = this;
 
@@ -1190,7 +1237,30 @@ AUI.add(
 						else {
 							editor.setHTML(value);
 						}
+					},
+
+					syncReadOnly: function() {
+						var instance = this;
+
+						instance.readOnlyLabel.html(instance.getLabelNode().getHTML());
+
+						instance.readOnlyText.html('<p>' + editor.getHTML() + '</p>');
+
+						instance.readOnlyLabel.toggle(instance.get('readOnly'));
+						instance.readOnlyText.toggle(instance.get('readOnly'));
+
+						instance.get('container').toggle(!instance.get('readOnly'));
+					},
+
+					_renderReadOnlyText: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						container.insert(instance.readOnlyLabel, 'after');
+						container.insert(instance.readOnlyText, 'after');
 					}
+
 				}
 			}
 		);

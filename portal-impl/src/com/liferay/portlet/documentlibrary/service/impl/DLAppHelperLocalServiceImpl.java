@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1707,7 +1708,9 @@ public class DLAppHelperLocalServiceImpl
 
 		List<DLFolder> dlFolders = dlFolderPersistence.findByG_M_T_H(
 			dlFolder.getGroupId(), false,
-			CustomSQLUtil.keywords(dlFolder.getTreePath())[0], false);
+			CustomSQLUtil.keywords(
+				dlFolder.getTreePath(), WildcardMode.TRAILING)[0],
+			false);
 
 		for (DLFolder curFolder : dlFolders) {
 			List<DLFileEntry> dlFileEntries =

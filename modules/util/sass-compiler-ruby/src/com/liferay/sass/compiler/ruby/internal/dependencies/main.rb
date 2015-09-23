@@ -9,49 +9,50 @@ class SASSWrapper
 		@load_paths = Compass.configuration.sass_load_paths
 	end
 
-	def process(inputFileName, includePath, sassCachePath, debug=false, outputFileName, sourceMap, sourceMapFileName)
+	def process(inputFileName, includePath, sassCachePath, debug=false,
+			outputFileName, generateSourceMap, sourceMapFileName)
+
 		load_paths = includePath.split(File::PATH_SEPARATOR)
 		load_paths += @load_paths
 
-		if sourceMap
-      inputFilePath = Pathname.new(inputFileName)
-      basePath = inputFilePath.parent
-      sourceMapFilePath = Pathname.new(sourceMapFileName)
+		if generateSourceMap
+			inputFilePath = Pathname.new(inputFileName)
+			basePath = inputFilePath.parent
+			sourceMapFilePath = Pathname.new(sourceMapFileName)
 
-      engine = Sass::Engine.for_file(
-          inputFileName,
-          {
-              :cache_location => sassCachePath,
-              :debug_info => debug,
-              :full_exception => debug,
-              :line => 0,
-              :load_paths => load_paths,
-              :sourcemap => :file,
-              :syntax => :scss
-          }
-      )
+			engine = Sass::Engine.for_file(
+				inputFileName,
+				{
+					:cache_location => sassCachePath,
+					:debug_info => debug,
+					:full_exception => debug,
+					:line => 0,
+					:load_paths => load_paths,
+					:sourcemap => :file,
+					:syntax => :scss
+				})
 
-      result = engine.render_with_sourcemap(sourceMapFilePath.relative_path_from(basePath).to_s)
-      return result[0], result[1].to_json(
-          {
-              :css_path => outputFileName,
-              :sourcemap_path => sourceMapFileName
-          })
-    else
-      engine = Sass::Engine.for_file(
-          inputFileName,
-          {
-              :cache_location => sassCachePath,
-              :debug_info => debug,
-              :full_exception => debug,
-              :line => 0,
-              :load_paths => load_paths,
-              :syntax => :scss
-          }
-      )
+			result = engine.render_with_sourcemap(sourceMapFilePath.relative_path_from(basePath).to_s)
 
-      return engine.render, ""
-    end
+			return result[0], result[1].to_json(
+				{
+					:css_path => outputFileName,
+					:sourcemap_path => sourceMapFileName
+				})
+		else
+			engine = Sass::Engine.for_file(
+				inputFileName,
+				{
+					:cache_location => sassCachePath,
+					:debug_info => debug,
+					:full_exception => debug,
+					:line => 0,
+					:load_paths => load_paths,
+					:syntax => :scss
+				})
+
+			return engine.render, ""
+		end
 	end
 end
 

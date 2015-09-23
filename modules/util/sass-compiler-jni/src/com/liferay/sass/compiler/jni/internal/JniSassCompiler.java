@@ -39,8 +39,8 @@ public class JniSassCompiler implements SassCompiler {
 		this(System.getProperty("java.io.tmpdir"));
 	}
 
-	public JniSassCompiler(String tmpDir) {
-		_tmpDir = tmpDir;
+	public JniSassCompiler(String tmpDirName) {
+		_tmpDirName = tmpDirName;
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class JniSassCompiler implements SassCompiler {
 
 		try {
 			if ((inputFileName == null) || inputFileName.equals("")) {
-				inputFileName = _tmpDir + "tmp.scss";
+				inputFileName = _tmpDirName + "tmp.scss";
 
 				if (generateSourceMap) {
 					System.out.println("Source maps require a valid fileName");
@@ -255,7 +255,9 @@ public class JniSassCompiler implements SassCompiler {
 
 	private void write(File file, String string) throws IOException {
 		if (!file.exists()) {
-			file.getParentFile().mkdirs();
+			File parentFile = file.getParentFile();
+
+			parentFile.mkdirs();
 
 			file.createNewFile();
 		}
@@ -270,6 +272,6 @@ public class JniSassCompiler implements SassCompiler {
 	private static final LiferaysassLibrary _liferaysassLibrary =
 		LiferaysassLibrary.INSTANCE;
 
-	private final String _tmpDir;
+	private final String _tmpDirName;
 
 }

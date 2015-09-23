@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.internal.background.task;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -25,6 +26,12 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
  */
 public class ReindexSingleIndexerBackgroundTaskExecutor
 	extends ReindexBackgroundTaskExecutor {
+
+	@Override
+	public BackgroundTaskExecutor clone() {
+		return new ReindexSingleIndexerBackgroundTaskExecutor();
+
+	}
 
 	@Override
 	protected void reindex(String className, long[] companyIds)

@@ -14,6 +14,7 @@
 
 package com.liferay.configuration.admin.web.portlet.action;
 
+import com.liferay.configuration.admin.api.ExtendedMetaTypeService;
 import com.liferay.configuration.admin.web.constants.ConfigurationAdminPortletKeys;
 import com.liferay.configuration.admin.web.util.ConfigurationHelper;
 import com.liferay.portal.kernel.log.Log;
@@ -33,7 +34,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.metatype.MetaTypeService;
 
 /**
  * @author Kamesh Sampath
@@ -62,7 +62,8 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 
 		try {
 			ConfigurationHelper configurationHelper = new ConfigurationHelper(
-				bundleContext, configurationAdmin, metaTypeService, pid);
+				bundleContext, configurationAdmin, extendedMetaTypeService,
+				pid);
 
 			Configuration configuration = configurationHelper.getConfiguration(
 				pid);
@@ -89,13 +90,15 @@ public class DeleteConfigurationMVCActionCommand implements MVCActionCommand {
 	}
 
 	@Reference(unbind = "-")
-	protected void setMetaTypeService(MetaTypeService metaTypeService) {
-		this.metaTypeService = metaTypeService;
+	protected void setExtendedMetaTypeService(
+		ExtendedMetaTypeService extendedMetaTypeService) {
+
+		this.extendedMetaTypeService = extendedMetaTypeService;
 	}
 
 	protected BundleContext bundleContext;
 	protected ConfigurationAdmin configurationAdmin;
-	protected MetaTypeService metaTypeService;
+	protected ExtendedMetaTypeService extendedMetaTypeService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeleteConfigurationMVCActionCommand.class);

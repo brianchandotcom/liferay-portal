@@ -16,15 +16,12 @@ package com.liferay.portal.background.task.model.impl;
 
 import com.liferay.portal.background.task.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -155,33 +152,13 @@ public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 			_attachmentsFolderId = folder.getFolderId();
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"No portlet repository for : " + getBackgroundTaskId(), e);
+			}
 		}
 
 		return _attachmentsFolderId;
-	}
-
-	@Override
-	public BackgroundTaskExecutor getBackgroundTaskExecutor() {
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-		String servletContextNames = getServletContextNames();
-
-		if (Validator.isNotNull(servletContextNames)) {
-			classLoader = ClassLoaderUtil.getAggregatePluginsClassLoader(
-				StringUtil.split(servletContextNames), false);
-		}
-
-		BackgroundTaskExecutor backgroundTaskExecutor = null;
-
-		try {
-			backgroundTaskExecutor =
-				(BackgroundTaskExecutor)InstanceFactory.newInstance(
-					classLoader, getTaskExecutorClassName());
-		}
-		catch (Exception e) {
-		}
-
-		return backgroundTaskExecutor;
 	}
 
 	@Override
@@ -197,6 +174,9 @@ public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BackgroundTaskImpl.class);
 
 	private long _attachmentsFolderId;
 

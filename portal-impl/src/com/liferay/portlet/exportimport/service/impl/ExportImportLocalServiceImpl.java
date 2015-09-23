@@ -26,10 +26,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 import com.liferay.portlet.exportimport.LARFileNameException;
-import com.liferay.portlet.exportimport.backgroundtask.LayoutExportBackgroundTaskExecutor;
-import com.liferay.portlet.exportimport.backgroundtask.LayoutImportBackgroundTaskExecutor;
-import com.liferay.portlet.exportimport.backgroundtask.PortletExportBackgroundTaskExecutor;
-import com.liferay.portlet.exportimport.backgroundtask.PortletImportBackgroundTaskExecutor;
+import com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames;
 import com.liferay.portlet.exportimport.controller.ExportController;
 import com.liferay.portlet.exportimport.controller.ExportImportControllerRegistryUtil;
 import com.liferay.portlet.exportimport.controller.ImportController;
@@ -90,9 +87,10 @@ public class ExportImportLocalServiceImpl
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
 				userId, exportImportConfiguration.getGroupId(),
-				exportImportConfiguration.getName(), null,
-				LayoutExportBackgroundTaskExecutor.class, taskContextMap,
-				new ServiceContext());
+				exportImportConfiguration.getName(),
+				BackgroundTaskExecutorNames.
+					LAYOUT_EXPORT_BACKGROUND_TASK_EXECUTOR,
+				taskContextMap, new ServiceContext());
 
 		return backgroundTask.getBackgroundTaskId();
 	}
@@ -153,9 +151,10 @@ public class ExportImportLocalServiceImpl
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
 				userId, exportImportConfiguration.getGroupId(),
-				exportImportConfiguration.getName(), null,
-				PortletExportBackgroundTaskExecutor.class, taskContextMap,
-				new ServiceContext());
+				exportImportConfiguration.getName(),
+				BackgroundTaskExecutorNames.
+					PORTLET_EXPORT_BACKGROUND_TASK_EXECUTOR,
+				taskContextMap, new ServiceContext());
 
 		return backgroundTask.getBackgroundTaskId();
 	}
@@ -270,9 +269,10 @@ public class ExportImportLocalServiceImpl
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
 				userId, exportImportConfiguration.getGroupId(),
-				exportImportConfiguration.getName(), null,
-				LayoutImportBackgroundTaskExecutor.class, taskContextMap,
-				new ServiceContext());
+				exportImportConfiguration.getName(),
+				BackgroundTaskExecutorNames.
+					LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR,
+				taskContextMap, new ServiceContext());
 
 		backgroundTask.addAttachment(userId, file.getName(), file);
 
@@ -440,9 +440,10 @@ public class ExportImportLocalServiceImpl
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
 				userId, exportImportConfiguration.getGroupId(),
-				exportImportConfiguration.getName(), null,
-				PortletImportBackgroundTaskExecutor.class, taskContextMap,
-				new ServiceContext());
+				exportImportConfiguration.getName(),
+				BackgroundTaskExecutorNames.
+					PORTLET_IMPORT_BACKGROUND_TASK_EXECUTOR,
+				taskContextMap, new ServiceContext());
 
 		backgroundTask.addAttachment(userId, file.getName(), file);
 

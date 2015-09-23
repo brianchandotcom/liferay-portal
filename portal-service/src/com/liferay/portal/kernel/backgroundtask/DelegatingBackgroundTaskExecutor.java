@@ -27,6 +27,14 @@ public class DelegatingBackgroundTaskExecutor
 	}
 
 	@Override
+	public BackgroundTaskExecutor clone() {
+		BackgroundTaskExecutor backgroundTaskExecutor = new
+			DelegatingBackgroundTaskExecutor(getBackgroundTaskExecutor());
+
+		return backgroundTaskExecutor;
+	}
+
+	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 

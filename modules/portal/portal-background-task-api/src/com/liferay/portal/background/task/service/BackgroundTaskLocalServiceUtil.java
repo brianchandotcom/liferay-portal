@@ -67,6 +67,17 @@ public class BackgroundTaskLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.portal.background.task.model.BackgroundTask addBackgroundTask(
+		long userId, long groupId, java.lang.String name,
+		java.lang.String taskExecutorClassName,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addBackgroundTask(userId, groupId, name,
+			taskExecutorClassName, taskContextMap, serviceContext);
+	}
+
 	public static void addBackgroundTaskAttachment(long userId,
 		long backgroundTaskId, java.lang.String fileName, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {

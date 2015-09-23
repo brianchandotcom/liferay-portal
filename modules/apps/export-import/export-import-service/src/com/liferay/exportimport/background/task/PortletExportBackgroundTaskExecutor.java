@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.backgroundtask;
+package com.liferay.exportimport.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -37,6 +38,22 @@ public class PortletExportBackgroundTaskExecutor
 	public PortletExportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new PortletExportImportBackgroundTaskStatusMessageTranslator());
+	}
+
+	@Override
+	public BackgroundTaskExecutor clone() {
+		PortletExportBackgroundTaskExecutor
+			portletExportBackgroundTaskExecutor =
+				new PortletExportBackgroundTaskExecutor();
+
+		portletExportBackgroundTaskExecutor.
+			setBackgroundTaskStatusMessageTranslator(
+				getBackgroundTaskStatusMessageTranslator());
+
+		portletExportBackgroundTaskExecutor.setIsolationLevel(
+			getIsolationLevel());
+
+		return portletExportBackgroundTaskExecutor;
 	}
 
 	@Override

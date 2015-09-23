@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -94,53 +95,27 @@ public class BackgroundTaskLocalServiceImpl
 	@Override
 	public BackgroundTask addBackgroundTask(
 			long userId, long groupId, String name,
+			String taskExecutorClassName,
+			Map<String, Serializable> taskContextMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return doAddBackgroundTask(
+			userId, groupId, name, null, taskExecutorClassName, taskContextMap,
+			serviceContext);
+	}
+
+	@Override
+	public BackgroundTask addBackgroundTask(
+			long userId, long groupId, String name,
 			String[] servletContextNames, Class<?> taskExecutorClass,
 			Map<String, Serializable> taskContextMap,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		final long backgroundTaskId = counterLocalService.increment();
-
-		BackgroundTask backgroundTask = backgroundTaskPersistence.create(
-			backgroundTaskId);
-
-		backgroundTask.setCompanyId(user.getCompanyId());
-		backgroundTask.setGroupId(groupId);
-		backgroundTask.setUserId(userId);
-		backgroundTask.setUserName(user.getFullName());
-		backgroundTask.setName(name);
-		backgroundTask.setServletContextNames(
-			StringUtil.merge(servletContextNames));
-		backgroundTask.setTaskExecutorClassName(taskExecutorClass.getName());
-
-		if (taskContextMap == null) {
-			taskContextMap = new HashMap<>();
-		}
-
-		_backgroundTaskThreadLocalManager.serializeThreadLocals(taskContextMap);
-
-		backgroundTask.setTaskContextMap(taskContextMap);
-
-		backgroundTask.setStatus(BackgroundTaskConstants.STATUS_NEW);
-
-		backgroundTaskPersistence.update(backgroundTask);
-
-		TransactionCommitCallbackUtil.registerCallback(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					backgroundTaskLocalService.triggerBackgroundTask(
-						backgroundTaskId);
-
-					return null;
-				}
-
-			});
-
-		return backgroundTask;
+		return doAddBackgroundTask(
+			userId, groupId, name, servletContextNames,
+			taskExecutorClass.getName(), taskContextMap, serviceContext);
 	}
 
 	@Override
@@ -559,6 +534,61 @@ public class BackgroundTaskLocalServiceImpl
 		message.put("backgroundTaskId", backgroundTaskId);
 
 		MessageBusUtil.sendMessage(DestinationNames.BACKGROUND_TASK, message);
+	}
+
+	protected BackgroundTask doAddBackgroundTask(
+			long userId, long groupId, String name,
+			String[] servletContextNames, String taskExecutorClassName,
+			Map<String, Serializable> taskContextMap,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		final long backgroundTaskId = counterLocalService.increment();
+
+		BackgroundTask backgroundTask = backgroundTaskPersistence.create(
+			backgroundTaskId);
+
+		backgroundTask.setCompanyId(user.getCompanyId());
+		backgroundTask.setGroupId(groupId);
+		backgroundTask.setUserId(userId);
+		backgroundTask.setUserName(user.getFullName());
+		backgroundTask.setName(name);
+
+		if (ArrayUtil.isNotEmpty(servletContextNames)) {
+			backgroundTask.setServletContextNames(
+				StringUtil.merge(servletContextNames));
+		}
+
+		backgroundTask.setTaskExecutorClassName(taskExecutorClassName);
+
+		if (taskContextMap == null) {
+			taskContextMap = new HashMap<>();
+		}
+
+		_backgroundTaskThreadLocalManager.serializeThreadLocals(taskContextMap);
+
+		backgroundTask.setTaskContextMap(taskContextMap);
+
+		backgroundTask.setStatus(BackgroundTaskConstants.STATUS_NEW);
+
+		backgroundTaskPersistence.update(backgroundTask);
+
+		TransactionCommitCallbackUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					backgroundTaskLocalService.triggerBackgroundTask(
+						backgroundTaskId);
+
+					return null;
+				}
+
+			});
+
+		return backgroundTask;
 	}
 
 	protected void setBackgroundTaskStatusRegistry(

@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.backgroundtask;
+package com.liferay.exportimport.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -41,6 +42,21 @@ public class LayoutExportBackgroundTaskExecutor
 	public LayoutExportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new LayoutExportImportBackgroundTaskStatusMessageTranslator());
+	}
+
+	@Override
+	public BackgroundTaskExecutor clone() {
+		LayoutExportBackgroundTaskExecutor layoutExportBackgroundTaskExecutor =
+			new LayoutExportBackgroundTaskExecutor();
+
+		layoutExportBackgroundTaskExecutor.
+			setBackgroundTaskStatusMessageTranslator(
+				getBackgroundTaskStatusMessageTranslator());
+
+		layoutExportBackgroundTaskExecutor.setIsolationLevel(
+			getIsolationLevel());
+
+		return layoutExportBackgroundTaskExecutor;
 	}
 
 	@Override

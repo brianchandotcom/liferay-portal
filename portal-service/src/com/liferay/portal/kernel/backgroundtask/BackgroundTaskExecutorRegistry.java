@@ -12,24 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.backgroundtask;
-
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
-import com.liferay.portal.kernel.messaging.Message;
+package com.liferay.portal.kernel.backgroundtask;
 
 /**
- * @author Daniel Kocsis
+ * @author Michael C. Han
  */
-public class LayoutExportImportBackgroundTaskStatusMessageTranslator
-	extends DefaultExportImportBackgroundTaskStatusMessageTranslator {
+public interface BackgroundTaskExecutorRegistry {
 
-	@Override
-	protected synchronized void translateLayoutMessage(
-		BackgroundTaskStatus backgroundTaskStatus, Message message) {
+	public BackgroundTaskExecutor getBackgroundTaskExecutor(String className);
 
-		clearBackgroundTaskStatus(backgroundTaskStatus);
+	public void registerBackgroundTaskExecutor(
+		String className, BackgroundTaskExecutor backgroundTaskExecutor);
 
-		super.translateLayoutMessage(backgroundTaskStatus, message);
-	}
+	public void unregisterBackgroundTaskExecutor(String className);
 
 }

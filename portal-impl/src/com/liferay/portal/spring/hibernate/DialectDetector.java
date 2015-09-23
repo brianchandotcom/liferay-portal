@@ -19,7 +19,6 @@ import com.liferay.portal.dao.orm.hibernate.HSQLDialect;
 import com.liferay.portal.dao.orm.hibernate.SQLServer2005Dialect;
 import com.liferay.portal.dao.orm.hibernate.SQLServer2008Dialect;
 import com.liferay.portal.dao.orm.hibernate.SybaseASE157Dialect;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -49,11 +48,7 @@ public class DialectDetector {
 		String dialectKey = null;
 		Dialect dialect = null;
 
-		Connection connection = null;
-
-		try {
-			connection = dataSource.getConnection();
-
+		try (Connection connection = dataSource.getConnection()) {
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 			String dbName = databaseMetaData.getDatabaseProductName();
@@ -134,9 +129,6 @@ public class DialectDetector {
 			else {
 				_log.error(e, e);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(connection);
 		}
 
 		if (dialect == null) {

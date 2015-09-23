@@ -14,7 +14,15 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,6 +79,27 @@ public class AssetMetadataTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			_className, _classPK);
+
+		request.setAttribute(
+			"liferay-ui:asset-metadata:assetEntry", assetEntry);
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_className);
+
+		try {
+			AssetRenderer<?> assetRenderer =
+				assetRendererFactory.getAssetRenderer(_classPK);
+
+			request.setAttribute(
+				"liferay-ui:asset-metadata:assetRenderer", assetRenderer);
+		}
+		catch (PortalException pe) {
+			_log.error(pe);
+		}
+
 		request.setAttribute("liferay-ui:asset-metadata:className", _className);
 		request.setAttribute("liferay-ui:asset-metadata:classPK", _classPK);
 		request.setAttribute(
@@ -81,6 +110,9 @@ public class AssetMetadataTag extends IncludeTag {
 
 	private static final String _PAGE =
 		"/html/taglib/ui/asset_metadata/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetMetadataTag.class);
 
 	private String _className = StringPool.BLANK;
 	private long _classPK;

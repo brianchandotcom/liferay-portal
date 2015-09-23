@@ -20,7 +20,7 @@
 String[] metadataFields = (String[])request.getAttribute("liferay-ui:asset-metadata:metadataFields");
 %>
 
-<c:if test="<%= !ArrayUtil.isEmpty(metadataFields)%>">
+<c:if test="<%= !ArrayUtil.isEmpty(metadataFields) %>">
 	<dl class="taglib-asset-metadata">
 		<aui:layout>
 			<c:choose>
@@ -33,7 +33,6 @@ String[] metadataFields = (String[])request.getAttribute("liferay-ui:asset-metad
 					<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
 				</c:when>
 				<c:otherwise>
-
 					<c:if test='<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>'>
 
 						<%
@@ -45,17 +44,20 @@ String[] metadataFields = (String[])request.getAttribute("liferay-ui:asset-metad
 						<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
 					</c:if>
 
-					<%
-					for (String metadataField : metadataFields) {
-						request.setAttribute("liferay-ui:asset-metadata:metadataField", metadataField);
-					%>
+					<liferay-ui:panel collapsible="<%= true %>" cssClass="asset-metadata-panel" defaultState="closed" extended="<%= false %>" id="vocabularyExtraFieldsPanelContainer" persistState="<%= false %>" title="more-details">
 
-						<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
+						<%
+						for (String metadataField : metadataFields) {
+							request.setAttribute("liferay-ui:asset-metadata:metadataField", metadataField);
+						%>
 
-					<%
-					}
-					%>
+							<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
 
+						<%
+						}
+						%>
+
+					</liferay-ui:panel>
 				</c:otherwise>
 			</c:choose>
 		</aui:layout>

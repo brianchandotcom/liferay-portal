@@ -33,9 +33,6 @@ import com.liferay.portal.model.Dummy;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -57,21 +54,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class CounterFinderImpl
 	extends BasePersistenceImpl<Dummy>
 	implements CacheRegistryItem, CounterFinder {
-
-	@Override
-	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceRegistration = registry.registerService(
-			CacheRegistryItem.class, this);
-	}
-
-	@Override
-	public void destroy() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
-	}
 
 	@Override
 	public List<String> getNames() {
@@ -442,6 +424,5 @@ public class CounterFinderImpl
 		new ConcurrentHashMap<>();
 	private final Map<String, Integer> _rangeSizeMap =
 		new ConcurrentHashMap<>();
-	private ServiceRegistration<CacheRegistryItem> _serviceRegistration;
 
 }

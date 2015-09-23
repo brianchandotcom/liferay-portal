@@ -32,7 +32,6 @@ import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
@@ -60,11 +59,6 @@ public class FinderCacheImpl
 	public static final String CACHE_NAME = FinderCache.class.getName();
 
 	public void afterPropertiesSet() {
-		final Registry registry = RegistryUtil.getRegistry();
-
-		_serviceRegistration = registry.registerService(
-			CacheRegistryItem.class, this);
-
 		ServiceDependencyManager serviceDependencyManager =
 			new ServiceDependencyManager();
 
@@ -73,6 +67,8 @@ public class FinderCacheImpl
 
 				@Override
 				public void dependenciesFulfilled() {
+					Registry registry = RegistryUtil.getRegistry();
+
 					_multiVMPool = registry.getService(MultiVMPool.class);
 
 					PortalCacheManager
@@ -118,12 +114,6 @@ public class FinderCacheImpl
 	public void clearLocalCache() {
 		if (_LOCAL_CACHE_AVAILABLE) {
 			_localCache.remove();
-		}
-	}
-
-	public void destroy() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
 		}
 	}
 
@@ -398,6 +388,5 @@ public class FinderCacheImpl
 	private MultiVMPool _multiVMPool;
 	private final ConcurrentMap<String, PortalCache<Serializable, Serializable>>
 		_portalCaches = new ConcurrentHashMap<>();
-	private ServiceRegistration<CacheRegistryItem> _serviceRegistration;
 
 }

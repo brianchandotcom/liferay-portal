@@ -43,9 +43,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,19 +54,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RepositoryProviderImpl
 	implements RepositoryProvider, CacheRegistryItem {
-
-	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceRegistration = registry.registerService(
-			CacheRegistryItem.class, this);
-	}
-
-	public void destroy() {
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
-		}
-	}
 
 	@Override
 	public LocalRepository getFileEntryLocalRepository(long fileEntryId)
@@ -470,6 +454,5 @@ public class RepositoryProviderImpl
 		new ConcurrentHashMap<>();
 	private final Map<Long, Repository> _repositories =
 		new ConcurrentHashMap<>();
-	private ServiceRegistration<CacheRegistryItem> _serviceRegistration;
 
 }

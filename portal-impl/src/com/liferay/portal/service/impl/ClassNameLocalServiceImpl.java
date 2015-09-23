@@ -23,9 +23,6 @@ import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.impl.ClassNameImpl;
 import com.liferay.portal.service.base.ClassNameLocalServiceBaseImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceRegistration;
 
 import java.util.List;
 import java.util.Map;
@@ -55,16 +52,6 @@ public class ClassNameLocalServiceImpl
 	}
 
 	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceRegistration = registry.registerService(
-			CacheRegistryItem.class, this);
-	}
-
-	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public void checkClassNames() {
 		List<ClassName> classNames = classNamePersistence.findAll();
@@ -77,15 +64,6 @@ public class ClassNameLocalServiceImpl
 
 		for (String model : models) {
 			getClassName(model);
-		}
-	}
-
-	@Override
-	public void destroy() {
-		super.destroy();
-
-		if (_serviceRegistration != null) {
-			_serviceRegistration.unregister();
 		}
 	}
 
@@ -167,7 +145,5 @@ public class ClassNameLocalServiceImpl
 	private static final Map<String, ClassName> _classNames =
 		new ConcurrentHashMap<>();
 	private static final ClassName _nullClassName = new ClassNameImpl();
-
-	private ServiceRegistration<CacheRegistryItem> _serviceRegistration;
 
 }

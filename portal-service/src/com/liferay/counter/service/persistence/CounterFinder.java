@@ -22,9 +22,6 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface CounterFinder {
-	public void afterPropertiesSet();
-
-	public void destroy();
 
 	public java.util.List<java.lang.String> getNames();
 

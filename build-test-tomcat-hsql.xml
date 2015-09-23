@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-tomcat-hsql" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-test-tomcat-hypersonic" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test-tomcat.xml" />
 
-	<target name="run-selenium-tomcat-hsql">
+	<target name="run-selenium-tomcat-hypersonic">
 		<echo file="test.${user.name}.properties">database.type=hsql</echo>
 
 		<antcall target="run-selenium-tomcat" inheritAll="false">

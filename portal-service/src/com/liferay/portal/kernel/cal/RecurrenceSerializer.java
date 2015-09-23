@@ -14,8 +14,14 @@
 
 package com.liferay.portal.kernel.cal;
 
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.text.Format;
 
 import java.util.Calendar;
 
@@ -66,7 +72,7 @@ public class RecurrenceSerializer {
 						dayOfWeek += StringPool.COMMA;
 					}
 
-					dayOfWeek += byDay[i].getDayOfWeek();
+					dayOfWeek += getDayOfWeek(byDay[i]);
 				}
 			}
 		}
@@ -83,7 +89,7 @@ public class RecurrenceSerializer {
 						dayOfWeek += StringPool.COMMA;
 					}
 
-					dayOfWeek += byDay[i].getDayOfWeek();
+					dayOfWeek += getDayOfWeek(byDay[i]);
 				}
 			}
 
@@ -102,11 +108,10 @@ public class RecurrenceSerializer {
 				String pos = String.valueOf(byDay[0].getDayPosition());
 
 				if (pos.equals("-1")) {
-					dayOfWeek = byDay[0].getDayOfWeek() + "L";
+					dayOfWeek = getDayOfWeek(byDay[0]) + "L";
 				}
 				else {
-					dayOfWeek =
-						byDay[0].getDayOfWeek() + StringPool.POUND + pos;
+					dayOfWeek = getDayOfWeek(byDay[0]) + StringPool.POUND + pos;
 				}
 			}
 		}
@@ -125,11 +130,11 @@ public class RecurrenceSerializer {
 					String pos = String.valueOf(byDay[0].getDayPosition());
 
 					if (pos.equals("-1")) {
-						dayOfWeek = byDay[0].getDayOfWeek() + "L";
+						dayOfWeek = getDayOfWeek(byDay[0]) + "L";
 					}
 					else {
 						dayOfWeek =
-							byDay[0].getDayOfWeek() + StringPool.POUND + pos;
+							getDayOfWeek(byDay[0]) + StringPool.POUND + pos;
 					}
 				}
 			}
@@ -152,6 +157,17 @@ public class RecurrenceSerializer {
 		sb.append(year);
 
 		return sb.toString();
+	}
+
+	protected static String getDayOfWeek(DayAndPosition dayPos) {
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
+		calendar.set(Calendar.DAY_OF_WEEK, dayPos.getDayOfWeek());
+
+		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"EEE", LocaleUtil.US);
+
+		return StringUtil.toUpperCase(dateFormat.format(calendar));
 	}
 
 }

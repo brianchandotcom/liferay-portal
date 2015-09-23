@@ -456,16 +456,18 @@ AUI.add(
 						instance.setLabel(labelsMap[instance.get('displayLocale')]);
 					},
 
-					syncReadOnly: function() {
+					syncReadOnlyUI: function() {
 						var instance = this;
 
 						var inputNode = instance.getInputNode();
 
-						if (instance.get('readOnly')) {
-							inputNode.attr('disabled',true);
-						}
-						else {
-							inputNode.removeAttribute('disabled');
+						if (inputNode) {
+							if (instance.get('readOnly')) {
+								inputNode.attr('disabled', true);
+							}
+							else {
+								inputNode.removeAttribute('disabled');
+							}
 						}
 					},
 
@@ -608,21 +610,24 @@ AUI.add(
 
 						var translationManager = event.target;
 
-						var defaultLocale = translationManager.get('defaultLocale');
-
 						var availableLocales = translationManager.get('availableLocales');
 
-						if ([defaultLocale].concat(availableLocales).indexOf(event.prevVal) > -1) {
+						var defaultLocale = translationManager.get('defaultLocale');
+
+						var localizable = instance.get('localizable');
+
+						var locales = [defaultLocale].concat(availableLocales);
+
+						if (localizable && locales.indexOf(event.prevVal) > -1) {
 							instance.updateLocalizationMap(event.prevVal);
 						}
 
 						instance.set('displayLocale', event.newVal);
-
-						instance.set('readOnly', defaultLocale !== event.newVal && !instance.get('localizable'));
+						instance.set('readOnly', defaultLocale !== event.newVal && !localizable);
 
 						instance.syncLabelUI();
 						instance.syncValueUI();
-						instance.syncReadOnly();
+						instance.syncReadOnlyUI();
 					},
 
 					_getLocalizable: function() {
@@ -913,16 +918,33 @@ AUI.add(
 						instance.notice.show();
 					},
 
+					syncReadOnlyUI: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						var selectButtonNode = container.one('#' + instance.getInputName() + 'SelectButton');
+
+						if (instance.get('readOnly')) {
+							selectButtonNode.attr('disabled', true);
+						}
+						else {
+							selectButtonNode.removeAttribute('disabled');
+						}
+					},
+
 					_handleButtonsClick: function(event) {
 						var instance = this;
 
-						var currentTarget = event.currentTarget;
+						if (!instance.get('readOnly')) {
+							var currentTarget = event.currentTarget;
 
-						if (currentTarget.test('.select-button')) {
-							instance._handleSelectButtonClick(event);
-						}
-						else if (currentTarget.test('.clear-button')) {
-							instance._handleClearButtonClick(event);
+							if (currentTarget.test('.select-button')) {
+								instance._handleSelectButtonClick(event);
+							}
+							else if (currentTarget.test('.clear-button')) {
+								instance._handleClearButtonClick(event);
+							}
 						}
 					},
 
@@ -1068,19 +1090,6 @@ AUI.add(
 						instance.syncUI();
 					},
 
-					syncReadOnly: function() {
-						var instance = this;
-
-						var selectButtonNode = A.one('#' + instance.getInputName() + 'SelectButton');
-
-						if (instance.get('readOnly')) {
-							selectButtonNode.attr('disabled',true);
-						}
-						else {
-							selectButtonNode.removeAttribute('disabled');
-						}
-					},
-
 					_getImagePreviewURL: function() {
 						var instance = this;
 
@@ -1198,16 +1207,12 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var readOnlyText = A.Node.create('<div class="hide"></div>');
-
-						var readOnlyLabel = A.Node.create('<label class="control-label hide"></label>');
-
-						instance.readOnlyText = readOnlyText;
-						instance.readOnlyLabel = readOnlyLabel;
+						instance.readOnlyLabel = A.Node.create('<label class="control-label hide"></label>');
+						instance.readOnlyText = A.Node.create('<div class="hide"></div>');
 
 						instance.after(
 							{
-								'render': instance._renderReadOnlyText
+								'render': instance._afterRenderTextHTMLField
 							}
 						);
 					},
@@ -1239,26 +1244,27 @@ AUI.add(
 						}
 					},
 
-					syncReadOnly: function() {
+					syncReadOnlyUI: function() {
 						var instance = this;
 
 						instance.readOnlyLabel.html(instance.getLabelNode().getHTML());
+						instance.readOnlyText.html('<p>' + instance.getValue() + '</p>');
 
-						instance.readOnlyText.html('<p>' + editor.getHTML() + '</p>');
+						var readOnly = instance.get('readOnly');
 
-						instance.readOnlyLabel.toggle(instance.get('readOnly'));
-						instance.readOnlyText.toggle(instance.get('readOnly'));
+						instance.readOnlyLabel.toggle(readOnly);
+						instance.readOnlyText.toggle(readOnly);
 
-						instance.get('container').toggle(!instance.get('readOnly'));
+						instance.get('container').toggle(!readOnly);
 					},
 
-					_renderReadOnlyText: function() {
+					_afterRenderTextHTMLField: function() {
 						var instance = this;
 
 						var container = instance.get('container');
 
-						container.insert(instance.readOnlyLabel, 'after');
 						container.insert(instance.readOnlyText, 'after');
+						container.insert(instance.readOnlyLabel, 'after');
 					}
 
 				}
@@ -1278,6 +1284,14 @@ AUI.add(
 						var container = instance.get('container');
 
 						return container.one('[name=' + instance.getInputName() + ']:checked');
+					},
+
+					getRadioNodes: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						return container.all('[name=' + instance.getInputName() + ']');
 					},
 
 					getValue: function() {
@@ -1321,9 +1335,7 @@ AUI.add(
 					setValue: function(value) {
 						var instance = this;
 
-						var container = instance.get('container');
-
-						var radioNodes = container.all('[name=' + instance.getInputName() + ']');
+						var radioNodes = instance.getRadioNodes();
 
 						radioNodes.set('checked', false);
 
@@ -1336,6 +1348,19 @@ AUI.add(
 						}
 
 						radioNodes.filter('[value=' + value + ']').set('checked', true);
+					},
+
+					syncReadOnlyUI: function() {
+						var instance = this;
+
+						var radioNodes = instance.getRadioNodes();
+
+						if (instance.get('readOnly')) {
+							radioNodes.attr('disabled', true);
+						}
+						else {
+							radioNodes.removeAttribute('disabled');
+						}
 					}
 				}
 			}

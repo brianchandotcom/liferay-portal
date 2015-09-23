@@ -25,6 +25,24 @@ boolean showPrivateLabel = (Boolean)request.getAttribute("my_sites.jsp-showPriva
 boolean showStagingLabel = (Boolean)request.getAttribute("my_sites.jsp-showStagingLabel");
 
 String groupFriendlyURL = siteGroup.getFriendlyURL();
+
+String groupDisplayURL = siteGroup.getDisplayURL(themeDisplay, privateLayout);
+
+if (Validator.isNull(groupDisplayURL)) {
+	PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+	String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, siteGroup);
+
+	PortletURL groupAdministrationURL = null;
+
+	if (Validator.isNotNull(portletId)) {
+		groupAdministrationURL = PortalUtil.getControlPanelPortletURL(request, siteGroup, portletId, 0, PortletRequest.RENDER_PHASE);
+
+		if (groupAdministrationURL != null) {
+			groupDisplayURL = groupAdministrationURL.toString();
+		}
+	}
+}
 %>
 
 <liferay-util:buffer var="siteHtml">
@@ -41,7 +59,7 @@ String groupFriendlyURL = siteGroup.getFriendlyURL();
 	active="<%= selectedSite %>"
 	id='<%= groupFriendlyURL.substring(1) + (privateLayout ? "Private" : "Public") + "SiteLink" %>'
 	label="<%= HtmlUtil.escape(siteName) + siteHtml %>"
-	url='<%= selectedSite ? "javascript:;" : siteGroup.getDisplayURL(themeDisplay, privateLayout) %>'
+	url='<%= selectedSite ? "javascript:;" : groupDisplayURL %>'
 />
 
 <c:if test="<%= selectedSite %>">

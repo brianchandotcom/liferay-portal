@@ -57,7 +57,15 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 			Group group = layoutSetPrototype.getGroup();
 
-			PortletURL siteAdministrationURL = group.getAdministrationURL(themeDisplay);
+			PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+			String portletId = panelCategoryHelper.getFirstPortletId(PanelCategoryKeys.SITE_ADMINISTRATION, permissionChecker, group);
+
+			PortletURL siteAdministrationURL = null;
+
+			if (Validator.isNotNull(portletId)) {
+				siteAdministrationURL = PortalUtil.getControlPanelPortletURL(request, group, portletId, 0, PortletRequest.RENDER_PHASE);
+			}
 
 			if (siteAdministrationURL != null) {
 				rowURL = siteAdministrationURL.toString();
@@ -96,6 +104,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="checkbox-cell entry-action"
+				href="<%= rowURL %>"
 				path="/layout_set_prototype_action.jsp"
 			/>
 		</liferay-ui:search-container-row>

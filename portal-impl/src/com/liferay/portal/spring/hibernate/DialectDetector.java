@@ -58,9 +58,17 @@ public class DialectDetector {
 
 			String dbName = databaseMetaData.getDatabaseProductName();
 			int dbMajorVersion = databaseMetaData.getDatabaseMajorVersion();
+			int dbMinorVersion = databaseMetaData.getDatabaseMinorVersion();
 
-			dialectKey = dbName.concat(StringPool.COLON).concat(
-				String.valueOf(dbMajorVersion));
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(dbName);
+			sb.append(StringPool.COLON);
+			sb.append(dbMajorVersion);
+			sb.append(StringPool.COLON);
+			sb.append(dbMinorVersion);
+
+			dialectKey = sb.toString();
 
 			dialect = _dialects.get(dialectKey);
 
@@ -70,14 +78,15 @@ public class DialectDetector {
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Determine dialect for " + dbName + " " + dbMajorVersion);
+					"Determine dialect for " + dbName + " " + dbMajorVersion +
+						"." + dbMinorVersion);
 			}
 
 			if (dbName.startsWith("HSQL")) {
 				dialect = new HSQLDialect();
 
 				if (_log.isWarnEnabled()) {
-					StringBundler sb = new StringBundler(6);
+					sb = new StringBundler(6);
 
 					sb.append("Liferay is configured to use Hypersonic as ");
 					sb.append("its database. Do NOT use Hypersonic in ");

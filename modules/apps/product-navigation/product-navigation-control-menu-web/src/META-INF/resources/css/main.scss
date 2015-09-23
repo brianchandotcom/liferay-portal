@@ -66,6 +66,7 @@ body.open {
 
 		> li {
 			margin-bottom: 5px;
+			margin-left: 0;
 			text-align: center;
 
 			@include sm() {
@@ -97,11 +98,4 @@ body.open {
 
 .control-menu-icon-label {
 	display: block;
-}
-
-.portlet-control-menu ul > li {
-	@include sm() {
-		padding-left: 20px;
-		padding-right: 20px;
-	}
 }

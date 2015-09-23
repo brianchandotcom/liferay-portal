@@ -16,17 +16,28 @@ $control-menu-level-1-nav-item-active-color: $control-menu-level-1-nav-item-hove
 
 $control-menu-level-2-bg: rgba(31, 40, 46, 0.85) !default;
 $control-menu-level-2-border: rgb(31, 40, 46) !default;
+$control-menu-level-2-color: #FFF !default;
 
-$control-menu-level-2-nav-item-color: #869CAD !default;
+$control-menu-level-2-link-color: #FFF !default;
 
-$control-menu-level-2-nav-item-hover-color: $control-menu-level-2-nav-item-color !default;
+$control-menu-level-2-btn-default-bg: transparent !default;
+$control-menu-level-2-btn-default-border: #869CAD !default;
+$control-menu-level-2-btn-default-color: #FFF !default;
+
+$control-menu-level-2-btn-default-hover-bg: $control-menu-level-2-btn-default-bg !default;
+$control-menu-level-2-btn-default-hover-border: $control-menu-level-2-btn-default-border !default;
+$control-menu-level-2-btn-default-hover-color: $control-menu-level-2-btn-default-color !default;
+
+$control-menu-level-2-checkbox-default-label-color: #FFF !default;
+$control-menu-level-2-form-control-border: transparent !default;
+$control-menu-level-2-form-control-color: #FFF !default;
+
+$control-menu-level-2-label-color: #869CAD !default;
 
 $control-menu-level-2-nav-item-active-bg: #3A4D5A !default;
 $control-menu-level-2-nav-item-active-border-radius: 4px !default;
 $control-menu-level-2-nav-item-active-color: #88C37C !default;
 $control-menu-level-2-nav-item-active-label-color: #FFF !default;
 
-$control-menu-level-2-label-color: $control-menu-level-2-nav-item-color !default;
-
-$control-menu-level-2-checkbox-default-label-color: #FFF !default;
-$control-menu-level-2-form-control-color: #FFF !default;
+$control-menu-level-2-nav-item-color: #869CAD !default;
+$control-menu-level-2-nav-item-hover-color: $control-menu-level-2-nav-item-color !default;

@@ -169,6 +169,25 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				_component.add(serviceDependency);
 			}
 
+			Dictionary<String, String> headers = _bundle.getHeaders();
+
+			String requireSchemaVersion = headers.get("Require-SchemaVersion");
+
+			if (Validator.isNull(GetterUtil.getString(requireSchemaVersion))) {
+				ServiceDependency serviceDependency =
+					_dependencyManager.createServiceDependency();
+
+				serviceDependency.setRequired(true);
+
+				serviceDependency.setService(
+					Release.class,
+					"(&(release.bundle.symbolic.name=" +
+						_bundle.getSymbolicName()+ ")(release.schema.version=" +
+							_bundle.getVersion() + "))");
+
+				_component.add(serviceDependency);
+			}
+
 			_dependencyManager.add(_component);
 		}
 

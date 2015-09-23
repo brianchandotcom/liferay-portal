@@ -948,9 +948,11 @@ public class DDMTemplateFinderImpl
 				sql, "[$CLASS_PK$]", getClassPKs(classPKs));
 			sql = StringUtil.replace(sql, "[$STATUS$]", getStatus(status));
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(CAST_TEXT(name))", StringPool.LIKE, false, names);
+				sql, "lower(CAST_TEXT(DDMTemplate.name))", StringPool.LIKE,
+				false, names);
 			sql = CustomSQLUtil.replaceKeywords(
-				sql, "description", StringPool.LIKE, false, descriptions);
+				sql, "DDMTemplate.description", StringPool.LIKE, false,
+				descriptions);
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "type", StringPool.LIKE, false, types);
 			sql = CustomSQLUtil.replaceKeywords(

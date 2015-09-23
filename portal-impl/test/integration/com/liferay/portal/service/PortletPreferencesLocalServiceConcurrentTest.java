@@ -12,16 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.service.impl;
+package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.service.base.PortletPreferencesLocalServiceBaseImpl;
+import com.liferay.portal.service.impl.PortletPreferencesLocalServiceImpl;
+import com.liferay.portal.service.impl.SynchronousInvocationHandler;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.transaction.DefaultTransactionExecutor;
 import com.liferay.portal.test.rule.ExpectedLog;
@@ -30,17 +36,21 @@ import com.liferay.portal.test.rule.ExpectedMultipleLogs;
 import com.liferay.portal.test.rule.ExpectedType;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.PortletPreferencesImpl;
+import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
+import javax.portlet.PortletPreferences;
+
 import org.hibernate.util.JDBCExceptionReporter;
 
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -51,9 +61,9 @@ import org.springframework.aop.framework.AdvisedSupport;
 
 /**
  * @author Matthew Tambara
+ * @author Shuyang Zhou
  */
-public class PortletPreferencesLocalServiceImplTest
-	extends ConcurrentTestCase<PortletPreferencesImpl> {
+public class PortletPreferencesLocalServiceConcurrentTest {
 
 	@ClassRule
 	@Rule
@@ -62,39 +72,51 @@ public class PortletPreferencesLocalServiceImplTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
-	public void setUp() throws Throwable {
-		PortletPreferencesLocalServiceUtil.deletePortletPreferences(
-			_OWNER_ID, _OWNER_TYPE, _PLID);
+	public void setUp() throws Exception {
+		Assume.assumeTrue(PropsValues.RETRY_ADVICE_MAX_RETRIES != 0);
+
+		_threadCount = ServiceTestUtil.THREAD_COUNT;
+
+		if ((PropsValues.RETRY_ADVICE_MAX_RETRIES > 0) &&
+			(_threadCount > PropsValues.RETRY_ADVICE_MAX_RETRIES)) {
+
+			_threadCount = PropsValues.RETRY_ADVICE_MAX_RETRIES;
+		}
 
 		AdvisedSupport advisedSupport = ServiceBeanAopProxy.getAdvisedSupport(
 			PortletPreferencesLocalServiceUtil.getService());
 
 		TargetSource targetSource = advisedSupport.getTargetSource();
 
-		localServiceBaseImpl =
-			(PortletPreferencesLocalServiceBaseImpl)targetSource.getTarget();
+		final PortletPreferencesLocalServiceImpl
+			portletPreferencesLocalServiceImpl =
+				(PortletPreferencesLocalServiceImpl)targetSource.getTarget();
 
-		originalPersistence =
-			((PortletPreferencesLocalServiceBaseImpl)localServiceBaseImpl).
+		final PortletPreferencesPersistence portletPreferencesPersistence =
+			portletPreferencesLocalServiceImpl.
 				getPortletPreferencesPersistence();
 
-		persistenceField = "portletPreferencesPersistence";
-
 		ReflectionTestUtil.setFieldValue(
-			localServiceBaseImpl, persistenceField,
+			portletPreferencesLocalServiceImpl, "portletPreferencesPersistence",
 			ProxyUtil.newProxyInstance(
 				PortletPreferencesPersistence.class.getClassLoader(),
 				new Class<?>[] {PortletPreferencesPersistence.class},
-				new SynchronousInvocationHandler()));
+				new SynchronousInvocationHandler(
+					_threadCount,
+					new Runnable() {
 
-		syncMethod = PortletPreferencesPersistence.class.getMethod(
-			"update", BaseModel.class);
-	}
+						@Override
+						public void run() {
+							ReflectionTestUtil.setFieldValue(
+								portletPreferencesLocalServiceImpl,
+								"portletPreferencesPersistence",
+								portletPreferencesPersistence);
+						}
 
-	@After
-	public void tearDown() throws Throwable {
-		PortletPreferencesLocalServiceUtil.deletePortletPreferences(
-			_OWNER_ID, _OWNER_TYPE, _PLID);
+					},
+					PortletPreferencesPersistence.class.getMethod(
+						"update", BaseModel.class),
+					portletPreferencesPersistence)));
 	}
 
 	@ExpectedMultipleLogs(
@@ -128,10 +150,7 @@ public class PortletPreferencesLocalServiceImplTest
 					),
 					@ExpectedLog(
 						dbType = DB.TYPE_MYSQL,
-						expectedLog =
-							"Duplicate entry '" + _OWNER_ID + "-" +
-								_OWNER_TYPE + "-" + _PLID + "-" + _PORTLET_ID +
-									"' for key",
+						expectedLog = "Duplicate entry '",
 						expectedType = ExpectedType.PREFIX
 					),
 					@ExpectedLog(
@@ -161,46 +180,67 @@ public class PortletPreferencesLocalServiceImplTest
 	)
 	@Test
 	public void testAddPortletPreferencesConcurrently() throws Exception {
-		doConcurrentTest();
-	}
+		SynchronousInvocationHandler.enable();
 
-	@Override
-	protected void assertResults(
-			Set<FutureTask<PortletPreferencesImpl>> futureTasks)
-		throws Exception {
+		try {
+			final long ownerId = RandomTestUtil.randomLong();
+			final int ownerType = RandomTestUtil.randomInt();
+			final long plid = RandomTestUtil.randomLong();
+			final String portletId = RandomTestUtil.randomString(
+				UniqueStringRandomizerBumper.INSTANCE);
 
-		Set<PortletPreferencesImpl> portletPreferencesImpls = new HashSet<>();
+			Callable<PortletPreferences> callable =
+				new Callable<PortletPreferences>() {
 
-		for (FutureTask<PortletPreferencesImpl> futureTask : futureTasks) {
-			portletPreferencesImpls.add(futureTask.get());
-		}
+					@Override
+					public PortletPreferences call() throws PortalException {
+						return
+							PortletPreferencesLocalServiceUtil.getPreferences(
+								TestPropsValues.getCompanyId(), ownerId,
+								ownerType, plid, portletId);
+					}
 
-		Assert.assertEquals(1, portletPreferencesImpls.size());
-	}
+				};
 
-	@Override
-	protected Callable<PortletPreferencesImpl> createCallable() {
-		return new Callable<PortletPreferencesImpl>() {
+			List<FutureTask<PortletPreferences>> futureTasks =
+				new ArrayList<>();
 
-			@Override
-			public PortletPreferencesImpl call() {
-				return (PortletPreferencesImpl)
-					PortletPreferencesLocalServiceUtil.getPreferences(
-						_COMPANY_ID, _OWNER_ID, _OWNER_TYPE, _PLID, _PORTLET_ID,
-						null);
+			for (int i = 0; i < _threadCount; i++) {
+				FutureTask<PortletPreferences> futureTask = new FutureTask<>(
+					callable);
+
+				Thread thread = new Thread(
+					futureTask,
+					PortletPreferencesLocalServiceConcurrentTest.class.
+						getName() + "-concurrent-getPreferences-" + i);
+
+				thread.start();
+
+				futureTasks.add(futureTask);
 			}
 
-		};
+			Set<PortletPreferences> portletPreferencesSet = new HashSet<>();
+
+			for (FutureTask<PortletPreferences> futureTask : futureTasks) {
+				portletPreferencesSet.add(futureTask.get());
+			}
+
+			Assert.assertEquals(
+				portletPreferencesSet.toString(), 1,
+				portletPreferencesSet.size());
+
+			_portletPreferences =
+				PortletPreferencesLocalServiceUtil.getPortletPreferences(
+					ownerId, ownerType, plid, portletId);
+		}
+		finally {
+			SynchronousInvocationHandler.disable();
+		}
 	}
 
-	private static final long _COMPANY_ID = 0;
+	@DeleteAfterTestRun
+	private com.liferay.portal.model.PortletPreferences _portletPreferences;
 
-	private static final long _OWNER_ID = 0;
-
-	private static final int _OWNER_TYPE = 3;
-
-	private static final long _PLID = 99999;
-
-	private static final String _PORTLET_ID = "Test";
+	private int _threadCount;
 
 }

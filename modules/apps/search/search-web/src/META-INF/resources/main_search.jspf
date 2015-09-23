@@ -53,7 +53,7 @@ searchContext.addFacet(scopeFacet);
 List<SearchFacet> searchFacets = searchDisplayContext.getEnabledSearchFacets();
 
 for (SearchFacet searchFacet : searchFacets) {
-	searchFacet.init(searchDisplayContext.getSearchConfiguration(), searchContext);
+	searchFacet.init(company.getCompanyId(), searchDisplayContext.getSearchConfiguration(), searchContext);
 
 	Facet facet = searchFacet.getFacet();
 

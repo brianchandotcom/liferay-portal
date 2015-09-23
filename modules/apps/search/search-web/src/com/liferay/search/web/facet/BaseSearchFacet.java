@@ -73,18 +73,22 @@ public abstract class BaseSearchFacet implements SearchFacet {
 	}
 
 	@Override
-	public void init(String searchConfiguration) throws Exception {
-		init(searchConfiguration, null);
+	public void init(long companyId, String searchConfiguration)
+		throws Exception {
+
+		init(companyId, searchConfiguration, null);
 	}
 
 	@Override
-	public void init(String searchConfiguration, SearchContext searchContext)
+	public void init(
+			long companyId, String searchConfiguration,
+			SearchContext searchContext)
 		throws Exception {
 
 		_facetConfiguration = _getFacetConfiguration(searchConfiguration);
 
 		if (_facetConfiguration == null) {
-			_facetConfiguration = getDefaultConfiguration();
+			_facetConfiguration = getDefaultConfiguration(companyId);
 		}
 
 		if (searchContext != null) {

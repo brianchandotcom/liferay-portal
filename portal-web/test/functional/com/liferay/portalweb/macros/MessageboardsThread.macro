@@ -254,7 +254,7 @@
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
 		<execute function="Click" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
 		<execute function="AssertElementNotPresent" locator1="MessageBoards#THREAD_TABLE_THREAD" />
 
 		<execute macro="RecycleBin#emptyCP" />
@@ -536,7 +536,7 @@
 		<execute function="Click" locator1="MessageBoards#THREAD_TABLE_ACTIONS" />
 		<execute function="AssertElementPresent#assertVisible" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" />
 		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
 		<execute function="AssertTextEquals#assertText" locator1="Message#INFO" value1="There are no threads in this category." />
 	</command>
 
@@ -745,7 +745,7 @@
 			<then>
 				<execute function="Check" locator1="MessageBoards#THREAD_TABLE_ALL_CHECKBOX" />
 				<execute function="AssertClick" locator1="MessageBoardsAdmin#THREADS_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
-				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
 

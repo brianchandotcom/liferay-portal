@@ -922,16 +922,6 @@ public class ServicePreAction extends Action {
 
 		themeDisplay.setURLHome(urlHome);
 
-		String siteAdministrationURL = urlControlPanel;
-
-		siteAdministrationURL = HttpUtil.addParameter(
-			siteAdministrationURL, "controlPanelCategory",
-			PortletCategoryKeys.CURRENT_SITE);
-		siteAdministrationURL = HttpUtil.addParameter(
-			siteAdministrationURL, "doAsGroupId", siteGroupId);
-
-		themeDisplay.setURLSiteAdministration(siteAdministrationURL);
-
 		if (layout != null) {
 			if (layout.isTypePortlet()) {
 				boolean freeformLayout =

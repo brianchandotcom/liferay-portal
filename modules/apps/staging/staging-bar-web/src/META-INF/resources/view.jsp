@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -237,7 +239,7 @@ if (layout != null) {
 				{
 					completed: false,
 					groupId: '<%= liveGroup.getGroupId() %>',
-					taskExecutorClassName: '<%= LayoutStagingBackgroundTaskExecutor.class.getName() %>'
+					taskExecutorClassName: '<%= BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR %>'
 				},
 				function(obj) {
 					var incomplete = obj > 0;

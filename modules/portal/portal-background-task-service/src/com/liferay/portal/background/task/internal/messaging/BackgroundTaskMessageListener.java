@@ -17,6 +17,7 @@ package com.liferay.portal.background.task.internal.messaging;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageTranslator;
@@ -56,6 +57,13 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BackgroundTaskMessageListener extends BaseMessageListener {
 
+	@Reference(unbind = "-")
+	public void setBackgroundTaskExecutorRegistry(
+		BackgroundTaskExecutorRegistry backgroundTaskExecutorRegistry) {
+
+		_backgroundTaskExecutorRegistry = backgroundTaskExecutorRegistry;
+	}
+
 	@Override
 	protected void doReceive(Message message) throws Exception {
 		long backgroundTaskId = (Long)message.get("backgroundTaskId");
@@ -81,22 +89,11 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		String statusMessage = null;
 
 		try {
-			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
-
-			String servletContextNames =
-				backgroundTask.getServletContextNames();
-
-			if (Validator.isNotNull(servletContextNames)) {
-				classLoader = ClassLoaderUtil.getAggregatePluginsClassLoader(
-					StringUtil.split(servletContextNames), false);
-			}
-
-			backgroundTaskExecutor =
-				(BackgroundTaskExecutor)InstanceFactory.newInstance(
-					classLoader, backgroundTask.getTaskExecutorClassName());
+			ClassLoader classLoader = getBackgroundTaskExecutorClassLoader(
+				backgroundTask);
 
 			backgroundTaskExecutor = wrapBackgroundTaskExecutor(
-				backgroundTaskExecutor, classLoader);
+				backgroundTask, classLoader);
 
 			_backgroundTaskStatusRegistry.registerBackgroundTaskStatus(
 				backgroundTaskId);
@@ -185,6 +182,63 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		}
 	}
 
+	protected BackgroundTaskExecutor getBackgroundTaskExecutor(
+		BackgroundTask backgroundTask) {
+
+		String servletContextNames = backgroundTask.getServletContextNames();
+
+		BackgroundTaskExecutor backgroundTaskExecutor = null;
+
+		if (Validator.isNull(servletContextNames)) {
+			backgroundTaskExecutor =
+				_backgroundTaskExecutorRegistry.getBackgroundTaskExecutor(
+					backgroundTask.getTaskExecutorClassName());
+
+			backgroundTaskExecutor = backgroundTaskExecutor.clone();
+		}
+		else {
+			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
+
+			if (Validator.isNotNull(servletContextNames)) {
+				classLoader = ClassLoaderUtil.getAggregatePluginsClassLoader(
+					StringUtil.split(servletContextNames), false);
+			}
+
+			try {
+				backgroundTaskExecutor =
+					(BackgroundTaskExecutor)InstanceFactory.newInstance(
+						classLoader, backgroundTask.getTaskExecutorClassName());
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unable to create new BackgroundTaskExecutor", e);
+				}
+			}
+		}
+
+		return backgroundTaskExecutor;
+	}
+
+	protected ClassLoader getBackgroundTaskExecutorClassLoader(
+		BackgroundTask backgroundTask) {
+
+		if (Validator.isNull(backgroundTask.getServletContextNames())) {
+			return null;
+		}
+
+		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
+
+		String servletContextNames = backgroundTask.getServletContextNames();
+
+		if (Validator.isNotNull(servletContextNames)) {
+			classLoader = ClassLoaderUtil.getAggregatePluginsClassLoader(
+				StringUtil.split(servletContextNames), false);
+		}
+
+		return classLoader;
+	}
+
 	@Reference(unbind = "-")
 	protected void setBackgroundTaskManager(
 		BackgroundTaskManager backgroundTaskManager) {
@@ -219,10 +273,12 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 	}
 
 	protected BackgroundTaskExecutor wrapBackgroundTaskExecutor(
-		BackgroundTaskExecutor backgroundTaskExecutor,
-		ClassLoader classLoader) {
+		BackgroundTask backgroundTask, ClassLoader classLoader) {
 
-		if (classLoader != ClassLoaderUtil.getPortalClassLoader()) {
+		BackgroundTaskExecutor backgroundTaskExecutor =
+			getBackgroundTaskExecutor(backgroundTask);
+
+		if (classLoader != null) {
 			backgroundTaskExecutor = new ClassLoaderAwareBackgroundTaskExecutor(
 				backgroundTaskExecutor, classLoader);
 		}
@@ -241,6 +297,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BackgroundTaskMessageListener.class);
 
+	private BackgroundTaskExecutorRegistry _backgroundTaskExecutorRegistry;
 	private BackgroundTaskManager _backgroundTaskManager;
 	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
 	private BackgroundTaskThreadLocalManager _backgroundTaskThreadLocalManager;

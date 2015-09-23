@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.background.task.model.listener;
+package com.liferay.exportimport.model.listener;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.background.task.model.BackgroundTask;

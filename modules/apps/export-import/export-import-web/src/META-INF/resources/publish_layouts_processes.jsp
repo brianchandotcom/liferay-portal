@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portlet.exportimport.background.task.BackgroundTaskExecutorNames" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -51,7 +53,7 @@ else {
 
 OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFactoryUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
 
-String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExecutor.class.getName() : LayoutRemoteStagingBackgroundTaskExecutor.class.getName();
+String taskExecutorClassName = localPublishing ? BackgroundTaskExecutorNames.LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR : BackgroundTaskExecutorNames.LAYOUT_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR;
 %>
 
 <liferay-ui:search-container

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.backgroundtask;
+package com.liferay.exportimport.background.task;
 
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_FAILED;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_STARTED;
@@ -20,6 +20,7 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -47,6 +48,22 @@ public class PortletStagingBackgroundTaskExecutor
 	public PortletStagingBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new PortletStagingBackgroundTaskStatusMessageTranslator());
+	}
+
+	@Override
+	public BackgroundTaskExecutor clone() {
+		PortletStagingBackgroundTaskExecutor
+			portletStagingBackgroundTaskExecutor =
+				new PortletStagingBackgroundTaskExecutor();
+
+		portletStagingBackgroundTaskExecutor.
+			setBackgroundTaskStatusMessageTranslator(
+				getBackgroundTaskStatusMessageTranslator());
+
+		portletStagingBackgroundTaskExecutor.setIsolationLevel(
+			getIsolationLevel());
+
+		return portletStagingBackgroundTaskExecutor;
 	}
 
 	@Override

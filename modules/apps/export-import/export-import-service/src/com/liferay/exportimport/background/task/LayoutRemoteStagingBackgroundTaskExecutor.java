@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.backgroundtask;
+package com.liferay.exportimport.background.task;
 
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_FAILED;
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_LAYOUT_REMOTE_STARTED;
@@ -21,6 +21,7 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -60,6 +61,22 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 	public LayoutRemoteStagingBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
 			new LayoutStagingBackgroundTaskStatusMessageTranslator());
+	}
+
+	@Override
+	public BackgroundTaskExecutor clone() {
+		LayoutRemoteStagingBackgroundTaskExecutor
+			layoutRemoteStagingBackgroundTaskExecutor =
+				new LayoutRemoteStagingBackgroundTaskExecutor();
+
+		layoutRemoteStagingBackgroundTaskExecutor.
+			setBackgroundTaskStatusMessageTranslator(
+				getBackgroundTaskStatusMessageTranslator());
+
+		layoutRemoteStagingBackgroundTaskExecutor.setIsolationLevel(
+			getIsolationLevel());
+
+		return layoutRemoteStagingBackgroundTaskExecutor;
 	}
 
 	@Override

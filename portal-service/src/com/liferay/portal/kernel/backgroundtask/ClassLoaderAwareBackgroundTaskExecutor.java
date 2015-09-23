@@ -30,6 +30,15 @@ public class ClassLoaderAwareBackgroundTaskExecutor
 	}
 
 	@Override
+	public BackgroundTaskExecutor clone() {
+		BackgroundTaskExecutor backgroundTaskExecutor = new
+			ClassLoaderAwareBackgroundTaskExecutor(
+				getBackgroundTaskExecutor(), _classLoader);
+
+		return backgroundTaskExecutor;
+	}
+
+	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception {
 

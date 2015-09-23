@@ -232,11 +232,6 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 		return _backgroundTask.getAttachmentsFolderId();
 	}
 
-	@Override
-	public com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor getBackgroundTaskExecutor() {
-		return _backgroundTask.getBackgroundTaskExecutor();
-	}
-
 	/**
 	* Returns the background task ID of this background task.
 	*

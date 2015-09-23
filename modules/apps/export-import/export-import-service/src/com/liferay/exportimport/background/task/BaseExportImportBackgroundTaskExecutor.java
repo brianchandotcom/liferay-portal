@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.backgroundtask;
+package com.liferay.exportimport.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTask;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;

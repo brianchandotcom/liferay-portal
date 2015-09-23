@@ -55,7 +55,8 @@ public class BackgroundTaskLockHelperUtil {
 
 	protected static String getLockKey(BackgroundTask backgroundTask) {
 		BackgroundTaskExecutor backgroundTaskExecutor =
-			backgroundTask.getBackgroundTaskExecutor();
+			BackgroundTaskExecutorRegistryUtil.getBackgroundTaskExecutor(
+				backgroundTask.getTaskExecutorClassName());
 
 		String lockKey = StringPool.BLANK;
 

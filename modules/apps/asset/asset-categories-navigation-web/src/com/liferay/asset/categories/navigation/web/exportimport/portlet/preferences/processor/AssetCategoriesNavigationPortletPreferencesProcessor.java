@@ -18,13 +18,25 @@ import com.liferay.asset.categories.navigation.web.constants.AssetCategoriesNavi
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
 
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +76,15 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		return null;
+		try {
+			return updateExportPortletPreferences(
+				portletDataContext, portletPreferences,
+				portletDataContext.getPortletId());
+		}
+		catch (Exception e) {
+			throw new PortletDataException(
+				"Unable to update portlet preferences during export", e);
+		}
 	}
 
 	@Override
@@ -73,7 +93,14 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
-		return null;
+		try {
+			return updateImportPortletPreferences(
+				portletDataContext, portletPreferences);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(
+				"Unable to update portlet preferences during import", e);
+		}
 	}
 
 	@Override
@@ -82,7 +109,25 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 			String className, long primaryKeyLong)
 		throws Exception {
 
-		return null;
+		String uuid = null;
+
+		Element rootElement = portletDataContext.getExportDataRootElement();
+
+		if (className.equals(AssetVocabulary.class.getName())) {
+			AssetVocabulary assetVocabulary =
+				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
+					primaryKeyLong);
+
+			if (assetVocabulary != null) {
+				uuid = assetVocabulary.getUuid();
+
+				portletDataContext.addReferenceElement(
+					portlet, rootElement, assetVocabulary,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+			}
+		}
+
+		return uuid;
 	}
 
 	@Override
@@ -90,6 +135,28 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 			PortletDataContext portletDataContext, Class<?> clazz,
 			long companyGroupId, Map<Long, Long> primaryKeys, String uuid)
 		throws Exception {
+
+		if (Validator.isNumber(uuid)) {
+			long oldPrimaryKey = GetterUtil.getLong(uuid);
+
+			return MapUtil.getLong(primaryKeys, oldPrimaryKey, oldPrimaryKey);
+		}
+
+		String className = clazz.getName();
+
+		if (className.equals(AssetVocabulary.class.getName())) {
+			AssetVocabulary assetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
+				uuid, portletDataContext.getScopeGroupId());
+
+			if (assetVocabulary == null) {
+				assetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
+					uuid, companyGroupId);
+			}
+
+			if (assetVocabulary != null) {
+				return assetVocabulary.getVocabularyId();
+			}
+		}
 
 		return null;
 	}
@@ -110,6 +177,54 @@ public class AssetCategoriesNavigationPortletPreferencesProcessor
 
 		_portletDisplayTemplateImportCapability =
 			portletDisplayTemplateImportCapability;
+	}
+
+	protected PortletPreferences updateExportPortletPreferences(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences, String portletId)
+		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
+
+		Enumeration<String> enu = portletPreferences.getNames();
+
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (name.equals("assetVocabularyIds")) {
+				updateExportPortletPreferencesClassPKs(
+					portletDataContext, portlet, portletPreferences, name,
+					AssetVocabulary.class.getName());
+			}
+		}
+
+		return portletPreferences;
+	}
+
+	protected PortletPreferences updateImportPortletPreferences(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.getCompanyById(
+			portletDataContext.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		Enumeration<String> enu = portletPreferences.getNames();
+
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (name.equals("assetVocabularyIds")) {
+				updateImportPortletPreferencesClassPKs(
+					portletDataContext, portletPreferences, name,
+					AssetVocabulary.class, companyGroup.getGroupId());
+			}
+		}
+
+		return portletPreferences;
 	}
 
 	private PortletDisplayTemplateExportCapability

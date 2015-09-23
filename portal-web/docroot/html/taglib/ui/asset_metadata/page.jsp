@@ -20,19 +20,44 @@
 String[] metadataFields = (String[])request.getAttribute("liferay-ui:asset-metadata:metadataFields");
 %>
 
-<dl class="taglib-asset-metadata">
-	<aui:layout>
+<c:if test="<%= !ArrayUtil.isEmpty(metadataFields)%>">
+	<dl class="taglib-asset-metadata">
+		<aui:layout>
+			<c:choose>
+				<c:when test="<%= metadataFields.length == 1 %>">
 
-		<%
-		for (String metadataField : metadataFields) {
-			request.setAttribute("liferay-ui:asset-metadata:metadataField", metadataField);
-		%>
+					<%
+					request.setAttribute("liferay-ui:asset-metadata:metadataField", metadataFields[0]);
+					%>
 
-			<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
+					<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
+				</c:when>
+				<c:otherwise>
 
-		<%
-		}
-		%>
+					<c:if test='<%= ArrayUtil.contains(metadataFields, String.valueOf("author")) %>'>
 
-	</aui:layout>
-</dl>
+						<%
+						request.setAttribute("liferay-ui:asset-metadata:metadataField", "author");
+
+						metadataFields = ArrayUtil.remove(metadataFields, String.valueOf("author"));
+						%>
+
+						<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
+					</c:if>
+
+					<%
+					for (String metadataField : metadataFields) {
+						request.setAttribute("liferay-ui:asset-metadata:metadataField", metadataField);
+					%>
+
+						<liferay-util:include page="/html/taglib/ui/asset_metadata/metadata_entry.jsp" />
+
+					<%
+					}
+					%>
+
+				</c:otherwise>
+			</c:choose>
+		</aui:layout>
+	</dl>
+</c:if>

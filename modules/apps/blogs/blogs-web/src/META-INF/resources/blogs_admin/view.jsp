@@ -39,7 +39,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 
 	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
 		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
+			<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
 		</aui:nav-bar-search>
 	</aui:form>
 </aui:nav-bar>

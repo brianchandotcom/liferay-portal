@@ -31,35 +31,16 @@ import java.nio.file.Files;
 
 /**
  * @author Gregory Amerson
+ * @author David Truong
  */
 public class JniSassCompiler implements SassCompiler {
 
-	public static void main(String[] args) {
-		try {
-			new JniSassCompiler(args);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public JniSassCompiler() {
+		this(System.getProperty("java.io.tmpdir"));
 	}
 
-	public JniSassCompiler(String[] fileNames) throws Exception {
-		final JniSassCompiler sassCompiler = new JniSassCompiler();
-
-		for (String fileName : fileNames) {
-			File file = new File(fileName);
-
-			if (!isValidFile(file)) {
-				continue;
-			}
-
-			write(
-				getOutputFile(file),
-				sassCompiler.compileFile(fileName, "", false));
-		}
+	public JniSassCompiler(String tmpDir) {
+		_tmpDir = tmpDir;
 	}
 
 	@Override
@@ -175,35 +156,27 @@ public class JniSassCompiler implements SassCompiler {
 		throws JniSassCompilerException {
 
 		try {
-			File parentFile = new File(inputFileName).getParentFile();
-			File tempFile = null;
-			boolean modifySourceMap = false;
-
 			if ((inputFileName == null) || inputFileName.equals("")) {
-				tempFile = new File(_TMP_DIR, "tmp.scss");
+				inputFileName = _tmpDir + "tmp.scss";
 
 				if (generateSourceMap) {
-					System.out.println("Source maps require a fileName");
+					System.out.println("Source maps require a valid fileName");
 
 					generateSourceMap = false;
 				}
 			}
-			else {
-				modifySourceMap = true;
 
-				tempFile = new File(parentFile.getCanonicalPath(), "tmp.scss");
+			int pos = inputFileName.lastIndexOf("/") + 1;
 
-				if ((sourceMapFileName == null) ||
-					sourceMapFileName.equals("")) {
+			String path = inputFileName.substring(0, pos);
+			String fileName = inputFileName.substring(pos);
+			String outputFileName = getOutputFileName(fileName);
 
-					String outputFileName = getOutputFileName(
-						inputFileName.substring(
-							inputFileName.lastIndexOf("/")));
-
-					sourceMapFileName =
-						parentFile.getPath() + outputFileName + ".map";
-				}
+			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
+				sourceMapFileName = path + outputFileName + ".map";
 			}
+
+			File tempFile = new File(path, "tmp.scss");
 
 			tempFile.deleteOnExit();
 
@@ -213,17 +186,16 @@ public class JniSassCompiler implements SassCompiler {
 				tempFile.getCanonicalPath(), includeDirName, generateSourceMap,
 				sourceMapFileName);
 
-			if (modifySourceMap) {
-				String fileName = inputFileName.substring(
-					inputFileName.lastIndexOf("/") + 1);
+			if (generateSourceMap) {
 				File sourceMapFile = new File(sourceMapFileName);
+
 				String sourceMapContent = new String(
 					Files.readAllBytes(sourceMapFile.toPath()));
 
 				sourceMapContent = sourceMapContent.replaceAll(
 					"tmp\\.scss", fileName);
 				sourceMapContent = sourceMapContent.replaceAll(
-					"tmp\\.css", getOutputFileName(fileName));
+					"tmp\\.css", outputFileName);
 
 				write(sourceMapFile, sourceMapContent);
 			}
@@ -277,30 +249,8 @@ public class JniSassCompiler implements SassCompiler {
 		return sassFileContext;
 	}
 
-	private File getOutputFile(File file) {
-		return new File(file.getParentFile(), getOutputFileName(file));
-	}
-
-	private String getOutputFileName(File file) {
-		return getOutputFileName(file.getName());
-	}
-
 	private String getOutputFileName(String fileName) {
 		return fileName.replaceAll("scss$", "css");
-	}
-
-	private boolean isValidFile(File file) {
-		if (file == null) {
-			return false;
-		}
-
-		if (!file.exists()) {
-			return false;
-		}
-
-		String fileName = file.getName();
-
-		return fileName.endsWith(".scss");
 	}
 
 	private void write(File file, String string) throws IOException {
@@ -317,9 +267,9 @@ public class JniSassCompiler implements SassCompiler {
 		}
 	}
 
-	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
-
 	private static final LiferaysassLibrary _liferaysassLibrary =
 		LiferaysassLibrary.INSTANCE;
+
+	private final String _tmpDir;
 
 }

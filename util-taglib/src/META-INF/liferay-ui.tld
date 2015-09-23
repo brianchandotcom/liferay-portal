@@ -3602,6 +3602,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>markupView</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>A maximum number of pages to iterate through.</description>
 			<name>maxPages</name>
 			<required>false</required>
@@ -4878,6 +4883,11 @@
 		<attribute>
 			<description>An ID for the component instance.</description>
 			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>markupView</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

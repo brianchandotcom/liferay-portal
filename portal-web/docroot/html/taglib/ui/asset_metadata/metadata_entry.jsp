@@ -62,15 +62,9 @@ else if (metadataField.equals("priority")) {
 	value = LanguageUtil.get(request, "priority") + StringPool.COLON + StringPool.SPACE + assetEntry.getPriority();
 }
 else if (metadataField.equals("author")) {
-	iconCssClass = "icon-user";
-
-	metadataFieldCssClass = StringPool.BLANK;
-
 	showLabel = false;
 
-	String userName = PortalUtil.getUserName(assetRenderer.getUserId(), assetRenderer.getUserName());
-
-	value = LanguageUtil.get(request, "by") + StringPool.SPACE + HtmlUtil.escape(userName);
+	value = "author";
 }
 else if (metadataField.equals("view-count")) {
 	int viewCount = assetEntry.getViewCount();
@@ -97,55 +91,59 @@ else if (metadataField.equals("tags")) {
 }
 %>
 
-<c:if test="<%= Validator.isNotNull(value) %>">
-	<aui:column cssClass="help-block">
-		<dt class="metadata-entry-label <%= showLabel ? StringPool.BLANK : "hide" %>"><%= label %></dt>
+<c:choose>
+	<c:when test='<%= Validator.equals(value, "author") %>'>
 
-		<dd class="metadata-entry <%= metadataFieldCssClass %> <%= iconCssClass %>">
-			<c:choose>
-				<c:when test='<%= value.equals("author") %>'>
+		<%
+		User userDisplay = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
 
-					<%
-					User userDisplay = UserLocalServiceUtil.getUser(assetRenderer.getUserId());
+		String displayDate = StringPool.BLANK;
 
-					String displayDate = StringPool.BLANK;
+		if (assetEntry.getPublishDate() != null) {
+			displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
+		}
+		else if (assetEntry.getModifiedDate() != null) {
+			displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
+		}
+		%>
+		<div class="metadata-author">
+			<div class="asset-avatar">
+				<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
+			</div>
 
-					if (assetEntry.getPublishDate() != null) {
-						displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getPublishDate().getTime(), true), false);
-					}
-					else if (assetEntry.getModifiedDate() != null) {
-						displayDate = LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - assetEntry.getModifiedDate().getTime(), true), false);
-					}
-					%>
+			<div class="asset-user-info">
+				<span class="user-info"><%= userDisplay.getFullName() %></span>
 
-					<div class="asset-avatar">
-						<img alt="<%= HtmlUtil.escapeAttribute(userDisplay.getFullName()) %>" class="avatar img-circle" src="<%= HtmlUtil.escape(userDisplay.getPortraitURL(themeDisplay)) %>" />
-					</div>
+				<span class="date-info"><%= displayDate %></span>
+			</div>
+		</div>
+	</c:when>
+	<c:when test="<%= Validator.isNotNull(value) %>">
+		<aui:column cssClass="help-block">
+			<dt class="metadata-entry-label <%= showLabel ? StringPool.BLANK : "hide" %>"><%= label %></dt>
 
-					<div class="asset-user-info">
-						<span class="user-info"><%= userDisplay.getFullName() %></span>
+			<dd class="metadata-entry <%= metadataFieldCssClass %> <%= iconCssClass %>">
+				<c:choose>
 
-						<span class="date-info"><%= displayDate %></span>
-					</div>
-				</c:when>
-				<c:when test='<%= value.equals("categories") %>'>
-					<liferay-ui:asset-categories-summary
-						className="<%= assetEntry.getClassName() %>"
-						classPK="<%= assetEntry.getClassPK () %>"
-						portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
-					/>
-				</c:when>
-				<c:when test='<%= value.equals("tags") %>'>
-					<liferay-ui:asset-tags-summary
-						className="<%= assetEntry.getClassName() %>"
-						classPK="<%= assetEntry.getClassPK () %>"
-						portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
-					/>
-				</c:when>
-				<c:otherwise>
-					<%= value %>
-				</c:otherwise>
-			</c:choose>
-		</dd>
-	</aui:column>
-</c:if>
+					<c:when test='<%= value.equals("categories") %>'>
+						<liferay-ui:asset-categories-summary
+							className="<%= assetEntry.getClassName() %>"
+							classPK="<%= assetEntry.getClassPK () %>"
+							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
+						/>
+					</c:when>
+					<c:when test='<%= value.equals("tags") %>'>
+						<liferay-ui:asset-tags-summary
+							className="<%= assetEntry.getClassName() %>"
+							classPK="<%= assetEntry.getClassPK () %>"
+							portletURL="<%= filterByMetadata ? renderResponse.createRenderURL() : null %>"
+						/>
+					</c:when>
+					<c:otherwise>
+						<%= value %>
+					</c:otherwise>
+				</c:choose>
+			</dd>
+		</aui:column>
+	</c:when>
+</c:choose>

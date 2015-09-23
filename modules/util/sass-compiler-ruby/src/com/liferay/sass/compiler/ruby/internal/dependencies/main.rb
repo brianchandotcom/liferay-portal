@@ -9,15 +9,16 @@ class SASSWrapper
 		@load_paths = Compass.configuration.sass_load_paths
 	end
 
-	def process(inputFileName, includePath, sassCachePath, debug=false,
-			outputFileName, generateSourceMap, sourceMapFileName)
-
+	def process(inputFileName, includePath, sassCachePath, debug=false, outputFileName, generateSourceMap, sourceMapFileName)
 		load_paths = includePath.split(File::PATH_SEPARATOR)
+
 		load_paths += @load_paths
 
 		if generateSourceMap
 			inputFilePath = Pathname.new(inputFileName)
+
 			basePath = inputFilePath.parent
+
 			sourceMapFilePath = Pathname.new(sourceMapFileName)
 
 			engine = Sass::Engine.for_file(

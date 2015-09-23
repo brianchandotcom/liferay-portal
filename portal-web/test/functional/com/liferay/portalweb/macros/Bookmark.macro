@@ -177,6 +177,7 @@
 	</command>
 
 	<command name="deletePG">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_bookmarkName" value="${bookmarkName}" />
 
 		<execute function="AssertTextEquals" locator1="Bookmarks#BOOKMARKS_TABLE_NAME" value1="${bookmarkName}" />

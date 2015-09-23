@@ -199,6 +199,9 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 </aui:script>
 
 <c:if test="<%= calendarBooking.isRecurring() %>">
+
+	<%@ include file="/calendar_booking_recurrence_container.jspf" %>
+
 	<aui:script use="liferay-calendar-recurrence-util">
 		var summaryNode = A.one('#<portlet:namespace />recurrenceSummary');
 

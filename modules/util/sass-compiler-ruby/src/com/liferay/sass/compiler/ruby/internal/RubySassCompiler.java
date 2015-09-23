@@ -141,7 +141,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 			String outputFileName = getOutputFileName(inputFileName);
 
 			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
-				sourceMapFileName = getOutputFileName(inputFileName) + ".map";
+				sourceMapFileName = outputFileName + ".map";
 			}
 
 			String[] results = _scriptingContainer.callMethod(
@@ -154,11 +154,7 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 			if (generateSourceMap) {
 				try {
-					File sourceMapFile = new File(sourceMapFileName);
-
-					String sourcemapOutput = results[1];
-
-					write(sourceMapFile, sourcemapOutput);
+					write(new File(sourceMapFileName), results[1]);
 				}
 				catch (Exception e) {
 					System.out.println("Unable to create source map");
@@ -196,35 +192,27 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 		throws RubySassCompilerException {
 
 		try {
-			File parentFile = new File(inputFileName).getParentFile();
-			File tempFile = null;
-			boolean modifySourceMap = false;
-
 			if ((inputFileName == null) || inputFileName.equals("")) {
-				tempFile = new File(_tmpDir, "tmp.scss");
+				inputFileName = _tmpDir + "tmp.scss";
 
 				if (generateSourceMap) {
-					System.out.println("Source maps require a fileName");
+					System.out.println("Source maps require a valid fileName");
 
 					generateSourceMap = false;
 				}
 			}
-			else {
-				modifySourceMap = true;
 
-				tempFile = new File(parentFile.getCanonicalPath(), "tmp.scss");
+			int pos = inputFileName.lastIndexOf("/") + 1;
 
-				if ((sourceMapFileName == null) ||
-					sourceMapFileName.equals("")) {
+			String path = inputFileName.substring(0, pos);
+			String fileName = inputFileName.substring(pos);
+			String outputFileName = getOutputFileName(fileName);
 
-					String outputFileName = getOutputFileName(
-						inputFileName.substring(
-							inputFileName.lastIndexOf("/")));
-
-					sourceMapFileName =
-						parentFile.getPath() + outputFileName + ".map";
-				}
+			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
+				sourceMapFileName = path + outputFileName + ".map";
 			}
+
+			File tempFile = new File(path, "tmp.scss");
 
 			tempFile.deleteOnExit();
 
@@ -234,17 +222,16 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 				tempFile.getCanonicalPath(), includeDirName, generateSourceMap,
 				sourceMapFileName);
 
-			if (modifySourceMap) {
-				String fileName = inputFileName.substring(
-					inputFileName.lastIndexOf("/") + 1);
+			if (generateSourceMap) {
 				File sourceMapFile = new File(sourceMapFileName);
+
 				String sourceMapContent = new String(
 					Files.readAllBytes(sourceMapFile.toPath()));
 
 				sourceMapContent = sourceMapContent.replaceAll(
 					"tmp\\.scss", fileName);
 				sourceMapContent = sourceMapContent.replaceAll(
-					"tmp\\.css", getOutputFileName(fileName));
+					"tmp\\.css", outputFileName);
 
 				write(sourceMapFile, sourceMapContent);
 			}

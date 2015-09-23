@@ -22,22 +22,25 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 public class BackgroundTaskExecutorRegistryUtil {
 
 	public static BackgroundTaskExecutor getBackgroundTaskExecutor(
-		String className) {
+		String backgroundTaskExecutorClassName) {
 
 		return _backgroundTaskExecutorRegistry.getBackgroundTaskExecutor(
-			className);
+			backgroundTaskExecutorClassName);
 	}
 
 	public static void registerBackgroundTaskExecutor(
-		String className, BackgroundTaskExecutor backgroundTaskExecutor) {
+		String backgroundTaskExecutorClassName,
+		BackgroundTaskExecutor backgroundTaskExecutor) {
 
 		_backgroundTaskExecutorRegistry.registerBackgroundTaskExecutor(
-			className, backgroundTaskExecutor);
+			backgroundTaskExecutorClassName, backgroundTaskExecutor);
 	}
 
-	public static void unregisterBackgroundTaskExecutor(String className) {
+	public static void unregisterBackgroundTaskExecutor(
+		String backgroundTaskExecutorClassName) {
+
 		_backgroundTaskExecutorRegistry.unregisterBackgroundTaskExecutor(
-			className);
+			backgroundTaskExecutorClassName);
 	}
 
 	private static final BackgroundTaskExecutorRegistry

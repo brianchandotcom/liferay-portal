@@ -49,11 +49,13 @@ public class BackgroundTaskExecutorRegistryImpl
 
 	@Override
 	public synchronized void registerBackgroundTaskExecutor(
-		String className, BackgroundTaskExecutor backgroundTaskExecutor) {
+		String backgroundTaskExecutorClassName,
+		BackgroundTaskExecutor backgroundTaskExecutor) {
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("class.name", className);
+		properties.put(
+			BACKGROUND_TASK_EXECUTOR_REGISTRY_KEY, backgroundTaskExecutor);
 
 		ServiceRegistration<BackgroundTaskExecutor> serviceRegistration =
 			_bundleContext.registerService(
@@ -61,19 +63,22 @@ public class BackgroundTaskExecutorRegistryImpl
 				properties);
 
 		_backgroundTaskExecutorRegistrations.put(
-			className, serviceRegistration);
+			backgroundTaskExecutorClassName, serviceRegistration);
 	}
 
 	@Override
 	public synchronized void unregisterBackgroundTaskExecutor(
-		String className) {
+		String backgroundTaskExecutorClassName) {
 
-		if (!_backgroundTaskExecutorRegistrations.containsKey(className)) {
+		if (!_backgroundTaskExecutorRegistrations.containsKey(
+				backgroundTaskExecutorClassName)) {
+
 			return;
 		}
 
 		ServiceRegistration<BackgroundTaskExecutor> serviceRegistration =
-			_backgroundTaskExecutorRegistrations.get(className);
+			_backgroundTaskExecutorRegistrations.get(
+				backgroundTaskExecutorClassName);
 
 		serviceRegistration.unregister();
 	}
@@ -93,15 +98,17 @@ public class BackgroundTaskExecutorRegistryImpl
 		BackgroundTaskExecutor backgroundTaskExecutor,
 		Map<String, Object> properties) {
 
-		String className = (String)properties.get("class.name");
+		String backgroundTaskExecutorClassName = (String)properties.get(
+			BACKGROUND_TASK_EXECUTOR_REGISTRY_KEY);
 
-		if (Validator.isNull(className)) {
+		if (Validator.isNull(backgroundTaskExecutorClassName)) {
 			throw new IllegalArgumentException(
-				"Property \"class.name\" is not set for " +
-					backgroundTaskExecutor);
+				"Property \"" + BACKGROUND_TASK_EXECUTOR_REGISTRY_KEY +
+					"\" is not set for " + backgroundTaskExecutor);
 		}
 
-		_backgroundTaskExecutors.put(className, backgroundTaskExecutor);
+		_backgroundTaskExecutors.put(
+			backgroundTaskExecutorClassName, backgroundTaskExecutor);
 	}
 
 	@Deactivate
@@ -121,7 +128,8 @@ public class BackgroundTaskExecutorRegistryImpl
 		BackgroundTaskExecutor backgroundTaskExecutor,
 		Map<String, Object> properties) {
 
-		String className = (String)properties.get("class.name");
+		String className = (String)properties.get(
+			BACKGROUND_TASK_EXECUTOR_REGISTRY_KEY);
 
 		if (Validator.isNull(className)) {
 			return;

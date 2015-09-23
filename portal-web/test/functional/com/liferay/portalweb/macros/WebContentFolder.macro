@@ -112,6 +112,7 @@
 			<var name="displayStyle" value="Descriptive" />
 		</execute>
 
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_webContentTitle" value="${folderName}" />
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="WC#ENTRY_DESCRIPTIVE_TITLE" value1="${folderName}" />

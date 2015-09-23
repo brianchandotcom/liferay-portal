@@ -249,6 +249,7 @@
 	</command>
 
 	<command name="deletePG">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />
@@ -530,6 +531,7 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_threadSubject" value="${threadSubject}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#THREAD_TABLE_THREAD" value1="${threadSubject}" />

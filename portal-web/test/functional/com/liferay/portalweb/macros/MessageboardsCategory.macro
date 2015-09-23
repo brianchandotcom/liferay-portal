@@ -125,6 +125,8 @@
 			<var name="portletName" value="Message Boards" />
 		</execute>
 
+		<var name="key_assetType" value="${assetType}" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="MessageBoards#CATEGORY_TABLE_ADMIN_ALL_CHECKBOX" />
 			<then>
@@ -136,6 +138,7 @@
 	</command>
 
 	<command name="deletePG">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="AssertTextEquals" locator1="MessageBoards#CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />

@@ -167,6 +167,7 @@
 	</command>
 
 	<command name="deleteCP">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="Click" locator1="DocumentsAndMedia#ICON_FOLDER_ACTIONS" />
@@ -186,6 +187,7 @@
 	</command>
 
 	<command name="deletePG">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="AssertTextEquals" locator1="DocumentsAndMedia#ICON_FOLDER_TITLE" value1="${dmFolderName}" />
@@ -336,6 +338,7 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
+		<var name="key_assetType" value="${assetType}" />
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute function="AssertElementPresent" locator1="DocumentsAndMedia#ICON_FOLDER_THUMBNAIL" />

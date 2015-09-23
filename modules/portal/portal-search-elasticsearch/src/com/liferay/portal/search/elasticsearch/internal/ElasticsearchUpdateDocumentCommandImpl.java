@@ -36,7 +36,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.bulk.BulkItemResponse;
@@ -176,9 +175,7 @@ public class ElasticsearchUpdateDocumentCommandImpl
 				bulkRequestBuilder.setRefresh(true);
 			}
 
-			Future<BulkResponse> future = bulkRequestBuilder.execute();
-
-			BulkResponse bulkResponse = future.get();
+			BulkResponse bulkResponse = bulkRequestBuilder.get();
 
 			LogUtil.logActionResponse(_log, bulkResponse);
 

@@ -25,7 +25,6 @@ import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.elasticsearch.action.ActionFuture;
 import org.elasticsearch.action.search.ClearScrollRequestBuilder;
 import org.elasticsearch.action.search.ClearScrollResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -62,10 +61,8 @@ public class SearchResponseScroller {
 
 			clearScrollRequestBuilder.setScrollIds(_previousScrollIds);
 
-			ActionFuture<ClearScrollResponse> future =
-				clearScrollRequestBuilder.execute();
-
-			ClearScrollResponse clearScrollResponse = future.get();
+			ClearScrollResponse clearScrollResponse =
+				clearScrollRequestBuilder.get();
 
 			LogUtil.logActionResponse(_log, clearScrollResponse);
 
@@ -93,10 +90,7 @@ public class SearchResponseScroller {
 
 		searchRequestBuilder.setScroll(scroll);
 
-		ActionFuture<SearchResponse> searchResponseActionFuture =
-			searchRequestBuilder.execute();
-
-		SearchResponse searchResponse = searchResponseActionFuture.get();
+		SearchResponse searchResponse = searchRequestBuilder.get();
 
 		_scrollId = searchResponse.getScrollId();
 
@@ -117,10 +111,7 @@ public class SearchResponseScroller {
 
 		searchScrollRequestBuilder.setScroll(scroll);
 
-		ActionFuture<SearchResponse> searchResponseActionFuture =
-			searchScrollRequestBuilder.execute();
-
-		SearchResponse searchResponse = searchResponseActionFuture.get();
+		SearchResponse searchResponse = searchScrollRequestBuilder.get();
 
 		LogUtil.logActionResponse(_log, searchResponse);
 

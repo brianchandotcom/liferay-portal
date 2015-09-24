@@ -161,8 +161,6 @@
 	<command name="ViewEditedPageTemplatePageName" priority="4">
 		<property name="testray.component.names" value="Site and Page Templates" />
 
-		<var name="pageTemplateName" value="Page Template Name" />
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>

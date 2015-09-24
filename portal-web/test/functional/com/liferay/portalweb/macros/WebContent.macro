@@ -942,7 +942,7 @@
 
 	<command name="moveToRecycleBinCP">
 		<var name="key_assetType" value="${assetType}" />
-		
+
 		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentTitleEscapeCharacter" value="${webContentTitleEscapeCharacter}" />

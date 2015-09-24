@@ -27,9 +27,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  */
 public class ChromeWebDriverImpl extends BaseWebDriverImpl {
 
-	public ChromeWebDriverImpl(String projectDirName, String browserURL) {
-		super(
-			projectDirName, browserURL, new ChromeDriver(_desiredCapabilities));
+	public ChromeWebDriverImpl(String browserURL) {
+		super(browserURL, new ChromeDriver(_desiredCapabilities));
 	}
 
 	private static final DesiredCapabilities _desiredCapabilities;

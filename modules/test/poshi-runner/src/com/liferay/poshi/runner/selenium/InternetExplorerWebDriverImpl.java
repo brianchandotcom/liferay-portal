@@ -25,16 +25,14 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  */
 public class InternetExplorerWebDriverImpl extends BaseWebDriverImpl {
 
-	public InternetExplorerWebDriverImpl(
-		String projectDirName, String browserURL) {
-
-		super(projectDirName, browserURL, new InternetExplorerDriver());
+	public InternetExplorerWebDriverImpl(String browserURL) {
+		super(browserURL, new InternetExplorerDriver());
 	}
 
 	public InternetExplorerWebDriverImpl(
-		String projectDirName, String browserURL, WebDriver webDriver) {
+		String browserURL, WebDriver webDriver) {
 
-		super(projectDirName, browserURL, webDriver);
+		super(browserURL, webDriver);
 	}
 
 	@Override

@@ -27,10 +27,9 @@ import org.openqa.selenium.remote.RemoteWebDriver;
  */
 public class EdgeRemoteWebDriverImpl extends EdgeWebDriverImpl {
 
-	public EdgeRemoteWebDriverImpl(String projectDirName, String browserURL) {
+	public EdgeRemoteWebDriverImpl(String browserURL) {
 		super(
-			projectDirName, browserURL,
-			new RemoteWebDriver(_remoteURL, _desiredCapabilities));
+			browserURL, new RemoteWebDriver(_remoteURL, _desiredCapabilities));
 	}
 
 	private static final DesiredCapabilities _desiredCapabilities;

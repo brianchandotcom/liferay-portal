@@ -273,8 +273,6 @@
 	</command>
 
 	<command name="addPG">
-		<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-
 		<if>
 			<equals arg1="${stagingActivated}" arg2="true" />
 			<then>

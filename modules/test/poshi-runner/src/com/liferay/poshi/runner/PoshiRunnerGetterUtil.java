@@ -21,7 +21,6 @@ import com.liferay.poshi.runner.util.MathUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -257,35 +256,6 @@ public class PoshiRunnerGetterUtil {
 		Element rootElement = document.getRootElement();
 
 		return rootElement;
-	}
-
-	public static String[] getTestIncludeDirNames() {
-		String[] testIncludeDirNames = PropsValues.TEST_INCLUDE_DIR_NAMES;
-
-		if ((testIncludeDirNames == null) ||
-			((testIncludeDirNames.length == 1) &&
-			 Validator.isNull(testIncludeDirNames[0]))) {
-
-			testIncludeDirNames = new String[0];
-		}
-
-		return testIncludeDirNames;
-	}
-
-	public static String[] getTestSearchDirNames() {
-		String[] testIncludeDirNames = getTestIncludeDirNames();
-
-		int length = testIncludeDirNames.length + 1;
-
-		String[] testSearchDirNames = new String[length];
-
-		testSearchDirNames[0] = PropsValues.TEST_BASE_DIR_NAME;
-
-		for (int i = 1; i < length; i++) {
-			testSearchDirNames[i] = testIncludeDirNames[i-1];
-		}
-
-		return testSearchDirNames;
 	}
 
 	public static String getVarMethodValue(String classCommandName)

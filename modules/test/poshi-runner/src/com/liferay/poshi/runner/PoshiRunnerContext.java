@@ -49,6 +49,7 @@ public class PoshiRunnerContext {
 		_commandElements.clear();
 		_commandSummaries.clear();
 		_filePaths.clear();
+		_filePathsList.clear();
 		_functionLocatorCounts.clear();
 		_pathLocators.clear();
 		_rootElements.clear();
@@ -274,32 +275,29 @@ public class PoshiRunnerContext {
 		return classCommandName;
 	}
 
-	private static List<String> _getFilePathNames(
-			String baseDir, String[] includes)
+	private static List<String> _getFilePaths(String basedir, String[] includes)
 		throws Exception {
+
+		List<String> filePaths = new ArrayList<>();
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
-		directoryScanner.setBasedir(baseDir);
+		directoryScanner.setBasedir(basedir);
 		directoryScanner.setIncludes(includes);
 
 		directoryScanner.scan();
 
-		List<String> filePathsNames = new ArrayList<>();
-
-		String[] filePathsArray = directoryScanner.getIncludedFiles();
-
-		for (String filePath : filePathsArray) {
-			filePath = baseDir + "/" + filePath;
+		for (String filePath : directoryScanner.getIncludedFiles()) {
+			filePath = basedir + "/" + filePath;
 
 			if (OSDetector.isWindows()) {
 				filePath = filePath.replace("/", "\\");
 			}
 
-			filePathsNames.add(filePath);
+			filePaths.add(filePath);
 		}
 
-		return filePathsNames;
+		return filePaths;
 	}
 
 	private static List<String> _getRelatedActionClassCommandNames(
@@ -645,31 +643,41 @@ public class PoshiRunnerContext {
 	}
 
 	private static void _readPoshiFiles() throws Exception {
-		List<String> testBaseDirFilePathNames = _getFilePathNames(
-			_TEST_BASE_DIR_NAME, new String[] {
+		List<String> testBaseDirFilePaths = _getFilePaths(
+			_TEST_BASE_DIR_NAME,
+			new String[] {
 				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
-					"**\\*.testcase"
-			});
+				"**\\*.testcase"
+			}
+		);
 
-		_filePathsList.addAll(testBaseDirFilePathNames);
+		_filePathsList.addAll(testBaseDirFilePaths);
 
-		for (String testIncludeDirName : _TEST_INCLUDE_DIR_NAMES) {
-			List<String> testIncludeDirFilePathNames = _getFilePathNames(
-				testIncludeDirName, new String[] {
-					"**\\*.action", "**\\*.function", "**\\*.macro",
+		String[] testIncludeDirNames = PropsValues.TEST_INCLUDE_DIR_NAMES;
+
+		if (Validator.isNotNull(testIncludeDirNames)) {
+			for (String testIncludeDirName : testIncludeDirNames) {
+				if (Validator.isNull(testIncludeDirName)) {
+					continue;
+				}
+
+				List<String> testIncludeDirFilePaths = _getFilePaths(
+					testIncludeDirName,
+					new String[] {
+						"**\\*.action", "**\\*.function", "**\\*.macro",
 						"**\\*.path"
-			});
+					}
+				);
 
-			_filePathsList.addAll(testIncludeDirFilePathNames);
+				_filePathsList.addAll(testIncludeDirFilePaths);
+			}
 		}
 
 		for (String filePath : _filePathsList) {
 			_filePaths.put(
 				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
 				filePath);
-		}
 
-		for (String filePath : _filePathsList) {
 			_readPoshiFile(filePath);
 		}
 
@@ -893,9 +901,6 @@ public class PoshiRunnerContext {
 
 	private static final String _TEST_BASE_DIR_NAME =
 		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
-
-	private static final String[] _TEST_INCLUDE_DIR_NAMES =
-		PoshiRunnerGetterUtil.getTestIncludeDirNames();
 
 	private static final Map<String, String> _actionExtendClassName =
 		new HashMap<>();

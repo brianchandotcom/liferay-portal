@@ -711,13 +711,11 @@ public class LiferaySeleniumHelper {
 			LiferaySelenium liferaySelenium, String image)
 		throws Exception {
 
-		String relativePathName =
+		String filePath =
 			FileUtil.getSeparator() + liferaySelenium.getSikuliImagesDirName() +
 				image;
 
-		File file = new File(
-			getSourceFileCanonicalPath(
-				_TEST_SEARCH_DIR_NAMES, relativePathName));
+		File file = new File(getSourceDirFilePath(filePath));
 
 		return new ImageTarget(file);
 	}
@@ -730,32 +728,42 @@ public class LiferaySeleniumHelper {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
 	}
 
-	public static String getSourceFileCanonicalPath(
-			String[] baseDirNames, String fileName)
+	public static String getSourceDirFilePath(String fileName)
 		throws Exception {
 
-		String filePath = null;
+		List<String> filePaths = new ArrayList<>();
+
+		List<String> baseDirNames = new ArrayList<>();
+
+		baseDirNames.add(PropsValues.TEST_BASE_DIR_NAME);
+		baseDirNames.addAll(Arrays.asList(PropsValues.TEST_INCLUDE_DIR_NAMES));
 
 		for (String baseDirName : baseDirNames) {
-			String uncheckedFilePath = PoshiRunnerGetterUtil.getCanonicalPath(
+			String filePath = PoshiRunnerGetterUtil.getCanonicalPath(
 				baseDirName + FileUtil.getSeparator() + fileName);
 
-			if (FileUtil.exists(uncheckedFilePath)) {
-				if (filePath != null) {
-					throw new Exception(
-						"Duplicate file names found at\n" + fileName + "\n" +
-							uncheckedFilePath);
-				}
-
-				filePath = uncheckedFilePath;
+			if (FileUtil.exists(filePath)) {
+				filePaths.add(filePath);
 			}
 		}
 
-		if (filePath == null) {
+		if (filePaths.size() > 1) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Duplicate file names found!\n");
+
+			for (String filePath : filePaths) {
+				sb.append(filePath);
+				sb.append("\n");
+			}
+
+			throw new Exception(sb.toString());
+		}
+		else if (filePaths.isEmpty()) {
 			throw new Exception("File not found " + fileName);
 		}
 
-		return filePath;
+		return filePaths.get(0);
 	}
 
 	public static boolean isConfirmation(
@@ -1295,14 +1303,17 @@ public class LiferaySeleniumHelper {
 
 		keyboard.keyUp(Key.CTRL);
 
-		String relativePathName =
+		String filePath =
 			FileUtil.getSeparator() + _TEST_DEPENDENCIES_DIR_NAME +
 				FileUtil.getSeparator() + value;
 
-		sikuliType(
-			liferaySelenium, image,
-			getSourceFileCanonicalPath(
-				_TEST_SEARCH_DIR_NAMES, relativePathName));
+		filePath = getSourceDirFilePath(filePath);
+
+		if (OSDetector.isWindows()) {
+			filePath = StringUtil.replace(filePath, "/", "\\");
+		}
+
+		sikuliType(liferaySelenium, image, filePath);
 
 		keyboard.type(Key.ENTER);
 	}
@@ -1794,9 +1805,6 @@ public class LiferaySeleniumHelper {
 
 	private static final String _TEST_DEPENDENCIES_DIR_NAME =
 		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
-
-	private static final String[] _TEST_SEARCH_DIR_NAMES =
-		PoshiRunnerGetterUtil.getTestSearchDirNames();
 
 	private static final Pattern _aceEditorPattern = Pattern.compile(
 		"\\(|\\$\\{line\\.separator\\}");

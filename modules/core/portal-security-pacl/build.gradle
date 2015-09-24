@@ -1,12 +1,16 @@
 dependencies {
-	compile group: "com.github.jsqlparser", name: "jsqlparser", version: "0.9.3"
+	compile group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
+	compile group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	compile group: "javax.ccpp", name: "ccpp", version: "1.0"
+	compile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	compile group: "org.eclipse.osgi", name: "org.eclipse.osgi", version: "3.10.200-SNAPSHOT"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile group: "org.springframework", name: "spring-aop", version: "3.2.10.RELEASE"
 	compile group: "org.springframework", name: "spring-beans", version: "3.2.10.RELEASE"
 	compile group: "org.springframework", name: "spring-web", version: "3.2.10.RELEASE"
+
+	provided group: "com.github.jsqlparser", name: "jsqlparser", version: "0.9.3"
 }
 
 liferay {

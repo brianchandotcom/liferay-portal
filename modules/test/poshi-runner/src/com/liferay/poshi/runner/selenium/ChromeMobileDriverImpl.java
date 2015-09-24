@@ -38,6 +38,26 @@ public class ChromeMobileDriverImpl extends BaseMobileDriverImpl {
 			new AndroidDriver(_url, _desiredCapabilities));
 	}
 
+	@Override
+	public void hideKeyboard() {
+		context("NATIVE_APP");
+
+		boolean keyboardVisible = false;
+
+		try {
+			keyboardVisible = isKeyboardVisible();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (keyboardVisible) {
+			super.hideKeyboard();
+		}
+
+		context("WEBVIEW_1");
+	}
+
 	public boolean isKeyboardVisible() throws Exception {
 		Runtime runtime = Runtime.getRuntime();
 

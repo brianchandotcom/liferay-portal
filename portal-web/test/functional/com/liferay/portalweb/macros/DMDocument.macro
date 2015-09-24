@@ -1496,7 +1496,7 @@
 					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="asdf" />
 					<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
 
-					<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no media files in this folder." />
+					<execute function="AssertTextEquals" locator1="Message#INFO" value1="No documents were found that matched the keywords: asdf." />
 				</then>
 			</elseif>
 			<elseif>

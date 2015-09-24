@@ -27,12 +27,44 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Drew Brokke
  */
 public class UserGroupRoleFinderImpl
 	extends UserGroupRoleFinderBaseImpl implements UserGroupRoleFinder {
 
+	public static final String FIND_BY_GROUP_ROLE_TYPE =
+		UserGroupRoleFinder.class.getName() + ".findByGroupRoleType";
+
 	public static final String FIND_BY_USER_USER_GROUP_GROUP_ROLE =
 		UserGroupRoleFinder.class.getName() + ".findByUserUserGroupGroupRole";
+
+	@Override
+	public List<UserGroupRole> findByGroupRoleType(long groupId, int roleType) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_GROUP_ROLE_TYPE);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("UserGroupRole", UserGroupRoleImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(groupId);
+			qPos.add(roleType);
+
+			return q.list(true);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	public List<UserGroupRole> findByUserUserGroupGroupRole(

@@ -35,7 +35,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 
 		<if>
 			<equals arg1="${siteType}" arg2="Blank" />
@@ -575,7 +575,7 @@
 	</command>
 
 	<command name="gotoManageSitesTemplatesViaAddDropdown">
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_SITES_TEMPLATES" value1="Manage Sites Templates" />
 	</command>
 
@@ -864,7 +864,7 @@
 	</command>
 
 	<command name="viewCannotAdd">
-		<execute function="AssertClick" locator1="Button#ADD" value1="Add" />
+		<execute function="Click" locator1="Button#PLUS" />
 		<execute function="AssertClick" locator1="MenuItem#BLANK_SITE" value1="Blank Site" />
 		<execute function="Type" locator1="TextInput#NAME" value1="${siteName}" />
 		<execute function="Click" locator1="Button#SAVE" value1="Save" />

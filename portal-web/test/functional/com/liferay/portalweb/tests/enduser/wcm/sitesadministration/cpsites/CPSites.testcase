@@ -322,9 +322,8 @@
 			<var name="siteScopeSelected" value="true" />
 		</execute>
 
-		<execute macro="Page#gotoConfigurationCP">
+		<execute macro="ProductMenu#gotoSitesConfiguration">
 			<var name="portletName" value="Site Settings" />
-			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#editFriendlyURLCP">

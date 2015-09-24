@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>BLANK_SITE</td>
-	<td>//a[@role='menuitem' and contains(.,'Blank Site')]</td>
+	<td>//a[contains(@id,'menuItem') and contains(.,'Blank Site')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -155,7 +155,7 @@
 </tr>
 <tr>
 	<td>COMMUNITY_SITE</td>
-	<td>//a[@role='menuitem' and contains(.,'Community Site')]</td>
+	<td>//a[contains(@id,'menuItem') and contains(.,'Community Site')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -290,7 +290,7 @@
 </tr>
 <tr>
 	<td>INTRANET_SITE</td>
-	<td>//a[@role='menuitem' and contains(.,'Intranet Site')]</td>
+	<td>//a[contains(@id,'menuItem') and contains(.,'Intranet Site')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -340,7 +340,7 @@
 </tr>
 <tr>
 	<td>MANAGE_SITES_TEMPLATES</td>
-	<td>//a[@role='menuitem' and contains(.,'Manage Sites Templates')]</td>
+	<td>//a[contains(@id,'menuItem') and contains(.,'Manage Sites Templates')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -525,7 +525,7 @@
 </tr>
 <tr>
 	<td>SITE_TEMPLATE_SITE</td>
-	<td>//a[@role='menuitem' and contains(.,'${key_siteTemplateName}')]</td>
+	<td>//a[contains(@id,'menuItem') and contains(.,'${key_siteTemplateName}')]</td>
 	<td></td>
 </tr>
 <tr>

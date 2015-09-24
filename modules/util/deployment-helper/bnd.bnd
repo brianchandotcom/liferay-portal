@@ -5,6 +5,7 @@ Export-Package: com.liferay.deployment.helper
 Include-Resource:\
 	classes,\
 	@lib/slf4j-api.jar,\
+	@lib/slf4j-simple.jar,\
 	@lib/zt-zip.jar,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\

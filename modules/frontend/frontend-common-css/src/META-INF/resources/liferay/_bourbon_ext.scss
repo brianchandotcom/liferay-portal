@@ -19,7 +19,6 @@ $experimental-support-for-khtml: false !default;
 		if($webkit or $experimental-support-for-webkit, webkit, ''),
 		if($o or $experimental-support-for-opera, o, ''),
 		if($ms or $experimental-support-for-microsoft, ms, ''),
-		if($khtml or $experimental-support-for-khtml, khtml, ''),
 		if($official, spec, '')
 	);
 

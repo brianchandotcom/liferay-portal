@@ -314,6 +314,8 @@
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
 		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
+		<var name="key_ddlDataDefinitionName" value="${ddlDataDefinitionName}" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS" />
 			<then>

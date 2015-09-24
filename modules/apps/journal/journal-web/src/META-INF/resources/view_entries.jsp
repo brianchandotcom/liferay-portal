@@ -497,9 +497,5 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 		</c:choose>
 	</liferay-ui:search-container-row>
 
-	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= articleSearchContainer %>" />
+	<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= articleSearchContainer %>" />
 </liferay-ui:search-container>
-
-<div class="article-entries-pagination">
-	<liferay-ui:search-paginator searchContainer="<%= articleSearchContainer %>" />
-</div>

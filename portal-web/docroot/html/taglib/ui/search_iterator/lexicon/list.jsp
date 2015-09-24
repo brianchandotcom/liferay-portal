@@ -19,6 +19,7 @@
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
 
+String markupView = (String)request.getAttribute("liferay-ui:search-iterator:markupView");
 boolean paginate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:search-iterator:paginate"));
 String type = (String)request.getAttribute("liferay-ui:search:type");
 
@@ -46,12 +47,6 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 </c:if>
 
 <div class="<%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> <%= searchContainer.getCssClass() %>">
-	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP && (resultRows.size() > PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA) && paginate %>">
-		<div class="taglib-search-iterator-page-iterator-top">
-			<liferay-ui:search-paginator id='<%= id + "PageIteratorTop" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />
-		</div>
-	</c:if>
-
 	<div id="<%= namespace + id %>SearchContainer">
 		<table class="table table-list">
 
@@ -258,16 +253,10 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 
 	<c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_BOTTOM && paginate %>">
 		<div class="taglib-search-iterator-page-iterator-bottom">
-			<liferay-ui:search-paginator id='<%= id + "PageIteratorBottom" %>' searchContainer="<%= searchContainer %>" type="<%= type %>" />
+			<liferay-ui:search-paginator id='<%= id + "PageIteratorBottom" %>' markupView="<%= markupView %>" searchContainer="<%= searchContainer %>" type="<%= type %>" />
 		</div>
 	</c:if>
 </div>
-
-<c:if test="<%= (rowChecker != null) && !resultRows.isEmpty() && Validator.isNotNull(rowChecker.getAllRowsId()) && allRowsIsChecked %>">
-	<aui:script>
-		document.<%= rowChecker.getFormName() %>.<%= rowChecker.getAllRowsId() %>.checked = true;
-	</aui:script>
-</c:if>
 
 <c:if test="<%= Validator.isNotNull(id) %>">
 	<input id="<%= namespace + id %>PrimaryKeys" name="<%= namespace + id %>PrimaryKeys" type="hidden" value="" />

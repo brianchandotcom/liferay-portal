@@ -14,6 +14,9 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -25,6 +28,10 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 		_id = id;
 	}
 
+	public void setMarkupView(String markupView) {
+		_markupView = markupView;
+	}
+
 	public void setType(String type) {
 		_type = type;
 	}
@@ -33,12 +40,18 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_markupView = StringPool.BLANK;
 		_type = "regular";
 	}
 
 	@Override
 	protected String getPage() {
-		return _PAGE;
+		if (Validator.isNotNull(_markupView)) {
+			return "/html/taglib/ui/search_paginator/" + _markupView +
+				"/page.jsp";
+		}
+
+		return "/html/taglib/ui/search_paginator/page.jsp";
 	}
 
 	@Override
@@ -46,6 +59,7 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 		super.setAttributes(request);
 
 		request.setAttribute("liferay-ui:search:id", _id);
+		request.setAttribute("liferay-ui:search:markupView", _markupView);
 		request.setAttribute("liferay-ui:search:type", _type);
 	}
 
@@ -53,6 +67,7 @@ public class SearchPaginatorTag<R> extends SearchFormTag<R> {
 		"/html/taglib/ui/search_paginator/page.jsp";
 
 	private String _id;
+	private String _markupView;
 	private String _type = "regular";
 
 }

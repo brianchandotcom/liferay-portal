@@ -20,10 +20,16 @@ $label-entry-padding: 0 0 0 12px !default;
 
 /* ---------- Product menu ---------- */
 
+$product-menu-body-bg: #1F282E !default;
+
 $product-menu-collapse-icon-bg: #1A2126 !default;
 
+$product-menu-footer-color: #869CAD !default;
+$product-menu-footer-link-color: $product-menu-footer-color !default;
+$product-menu-footer-link-hover-color: $product-menu-footer-link-color !default;
+
 $product-menu-header-bg: #1B2228 !default;
-$product-menu-header-color: #869CAD !default;
+$product-menu-header-color: #FFF !default;
 $product-menu-header-link-color: #FFF !default;
 $product-menu-header-link-hover-color: $product-menu-header-link-color !default;
 $product-menu-header-logo-bg: #65B6F0 !default;
@@ -31,16 +37,19 @@ $product-menu-header-logo-border-radius: 4px !default;
 
 $product-menu-list-group-heading-bg: transparent !default;
 $product-menu-list-group-heading-border: transparent !default;
-$product-menu-list-group-heading-border-width: 2px !default;
+$product-menu-list-group-heading-border-width: 0 !default;
 
 $product-menu-list-group-heading-collapsed-bg: transparent !default;
 $product-menu-list-group-heading-collapsed-border: transparent !default;
-$product-menu-list-group-heading-collapsed-border-width: 1px !default;
+$product-menu-list-group-heading-collapsed-border-width: 0 !default;
+
+$product-menu-list-group-heading-color: #869CAD !default;
 
 $product-menu-list-group-heading-hover-bg: $product-menu-list-group-heading-bg !default;
 $product-menu-list-group-heading-hover-border: $product-menu-list-group-heading-border !default;
 
 $product-menu-list-group-item-bg: #1A2126 !default;
+$product-menu-list-group-item-border-width: 0 !default;
 
 $product-menu-nav-equal-height-heading-closed-collapse-icon: '\f0fe' !default;
 $product-menu-nav-equal-height-heading-open-collapse-icon: '\f146' !default;

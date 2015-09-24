@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
@@ -84,15 +85,18 @@ public class DLExportImportPortletPreferencesProcessor
 				folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 			}
 			catch (PortalException e) {
-				String errorMessage =
-					"Portlet " + portletId +
-						" refers to an invalid root folder ID " + rootFolderId;
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Portlet ");
+				sb.append(portletId);
+				sb.append(" refers to an invalid root folder ID ");
+				sb.append(rootFolderId);
 
 				if (_log.isErrorEnabled()) {
-					_log.error(errorMessage);
+					_log.error(sb.toString());
 				}
 
-				throw new PortletDataException(errorMessage, e);
+				throw new PortletDataException(sb.toString(), e);
 			}
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(

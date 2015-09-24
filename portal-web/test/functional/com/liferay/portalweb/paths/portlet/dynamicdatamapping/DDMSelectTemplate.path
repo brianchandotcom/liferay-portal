@@ -126,7 +126,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_ACTIONS</td>
+	<td>TEMPLATE_TABLE_ELLIPSIS</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr[contains(.,'${key_ddlTemplateName}')]/td[9]/div/a)[1]</td>
 	<td></td>
 </tr>
@@ -136,7 +136,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_ACTIONS_1</td>
+	<td>TEMPLATE_TABLE_ELLIPSIS_1</td>
 	<td>xpath=(//div[contains(@id,'ddmTemplatesSearchContainer')]//tr/td[9]/div/a)[1]</td>
 	<td></td>
 </tr>

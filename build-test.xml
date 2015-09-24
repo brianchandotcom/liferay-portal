@@ -4633,6 +4633,15 @@ module.framework.properties.osgi.console=11312</echo>
 		</echo>
 
 		<if>
+			<isset property="test.base.dir.name" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.base.dir.name=${test.base.dir.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<and>
 				<isset property="test.batch.max.group.size" />
 				<isset property="test.batch.property.name" />
@@ -4654,6 +4663,15 @@ module.framework.properties.osgi.console=11312</echo>
 
 				<echo append="true" file="${test.ext.properties.file}">
 					test.name=${poshi.test.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="test.include.dir.names" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.include.dir.names=${test.include.dir.names}
 				</echo>
 			</then>
 		</if>

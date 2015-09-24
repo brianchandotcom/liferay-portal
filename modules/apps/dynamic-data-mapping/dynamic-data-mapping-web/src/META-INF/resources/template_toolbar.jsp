@@ -16,31 +16,36 @@
 
 <%@ include file="/init.jsp" %>
 
-<div class="hide" id="<portlet:namespace />actionsButtonContainer">
-	<liferay-frontend:management-bar
-		includeCheckBox="<%= false %>"
-	>
+<liferay-frontend:management-bar
+	checkBoxContainerId="entriesContainer"
+	includeCheckBox="<%= !user.isDefaultUser() %>"
+>
 
-		<liferay-frontend:management-bar-buttons>
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/template_sort_button.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
 
-			<%
-			String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteTemplates();";
-			%>
+	<liferay-frontend:management-bar-action-buttons>
 
-			<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" />
+		<%
+		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteTemplates();";
+		%>
 
-		</liferay-frontend:management-bar-buttons>
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" />
 
-	</liferay-frontend:management-bar>
-</div>
+	</liferay-frontend:management-bar-action-buttons>
+
+</liferay-frontend:management-bar>
 
 <aui:script>
 	function <portlet:namespace />deleteTemplates() {
 		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
+			var searchContainer = AUI.$('#<portlet:namespace />entriesContainer', form);
+
 			form.attr('method', 'post');
-			form.fm('deleteTemplateIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+			form.fm('deleteTemplateIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
 
 			submitForm(form, '<portlet:actionURL name="deleteTemplate"><portlet:param name="mvcPath" value="/view_template.jsp" /></portlet:actionURL>');
 		}

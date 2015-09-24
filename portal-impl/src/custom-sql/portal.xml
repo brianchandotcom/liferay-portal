@@ -1793,6 +1793,28 @@
 				(Users_UserGroups.userId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.UserGroupGroupRoleFinder.findByGroupRoleType">
+		<![CDATA[
+			(
+				SELECT
+					{UserGroupGroupRole.*}
+				FROM
+					UserGroupGroupRole
+				WHERE
+					(UserGroupGroupRole.groupId = ?) AND
+					(UserGroupGroupRole.roleId IN
+						(
+							SELECT
+								Role_.roleId
+							FROM
+								Role_
+							WHERE
+								(Role_.type_ = ?)
+						)
+					)
+			)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.UserGroupGroupRoleFinder.findByUserGroupsUsers">
 		<![CDATA[
 			(

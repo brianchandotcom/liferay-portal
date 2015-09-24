@@ -48,8 +48,7 @@ public class ClusterSettingsTest {
 		ElasticsearchFixture elasticsearchFixture = _testCluster.getNode(0);
 
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection =
-			(EmbeddedElasticsearchConnection)
-				elasticsearchFixture.getElasticsearchConnection();
+			elasticsearchFixture.getEmbeddedElasticsearchConnection();
 
 		InternalNode internalNode = ReflectionTestUtil.getFieldValue(
 			embeddedElasticsearchConnection, "_node");

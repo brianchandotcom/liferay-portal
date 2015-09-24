@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch.internal.cluster.UnicastSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
@@ -60,6 +59,7 @@ public class ElasticsearchFixture {
 
 		elasticsearchConfigurationProperties.put(
 			"configurationPid", ElasticsearchConfiguration.class.getName());
+		elasticsearchConfigurationProperties.put("logExceptionsOnly", false);
 
 		_elasticsearchConfigurationProperties =
 			elasticsearchConfigurationProperties;
@@ -92,17 +92,17 @@ public class ElasticsearchFixture {
 	public void createNode() throws Exception {
 		deleteTmpDir();
 
-		_elasticsearchConnection = createElasticsearchConnection();
+		_embeddedElasticsearchConnection = createElasticsearchConnection();
 	}
 
 	public void destroyNode() throws Exception {
-		_elasticsearchConnection.close();
+		_embeddedElasticsearchConnection.close();
 
 		deleteTmpDir();
 	}
 
 	public AdminClient getAdminClient() {
-		Client client = _elasticsearchConnection.getClient();
+		Client client = _embeddedElasticsearchConnection.getClient();
 
 		return client.admin();
 	}
@@ -134,8 +134,10 @@ public class ElasticsearchFixture {
 		return health.actionGet();
 	}
 
-	public ElasticsearchConnection getElasticsearchConnection() {
-		return _elasticsearchConnection;
+	public EmbeddedElasticsearchConnection
+		getEmbeddedElasticsearchConnection() {
+
+		return _embeddedElasticsearchConnection;
 	}
 
 	public GetIndexResponse getIndex(String... indices) {
@@ -236,7 +238,7 @@ public class ElasticsearchFixture {
 			unicastSettingsContributor);
 	}
 
-	protected ElasticsearchConnection createElasticsearchConnection() {
+	protected EmbeddedElasticsearchConnection createElasticsearchConnection() {
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection =
 			new EmbeddedElasticsearchConnection();
 
@@ -270,7 +272,7 @@ public class ElasticsearchFixture {
 
 	private ClusterSettingsContext _clusterSettingsContext;
 	private final Map<String, Object> _elasticsearchConfigurationProperties;
-	private ElasticsearchConnection _elasticsearchConnection;
+	private EmbeddedElasticsearchConnection _embeddedElasticsearchConnection;
 	private final String _tmpDirName;
 
 }

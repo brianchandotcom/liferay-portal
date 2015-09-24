@@ -21,6 +21,7 @@ import com.google.ical.values.DateValue;
 import com.google.ical.values.DateValueImpl;
 
 import com.liferay.calendar.model.CalendarBooking;
+import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -52,7 +53,11 @@ public class CalendarBookingIterator implements Iterator<CalendarBooking> {
 
 	@Override
 	public boolean hasNext() {
-		return _recurrenceIterator.hasNext();
+		if (_recurrenceIterator.hasNext() && !_isExceededCount()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -118,6 +123,22 @@ public class CalendarBookingIterator implements Iterator<CalendarBooking> {
 		}
 
 		return TimeZoneUtil.getDefault();
+	}
+
+	private boolean _isExceededCount() {
+		Recurrence recurrence = _calendarBooking.getRecurrenceObj();
+
+		if (recurrence == null) {
+			return false;
+		}
+
+		int count = recurrence.getCount();
+
+		if ((count != 0) && (_instanceIndex >= count)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private DateValue _toDateValue(long time) {

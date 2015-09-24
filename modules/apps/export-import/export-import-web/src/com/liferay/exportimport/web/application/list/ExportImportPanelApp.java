@@ -18,7 +18,12 @@ import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.exportimport.web.constants.ExportImportPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.PortletLocalService;
+import com.liferay.portal.service.permission.GroupPermissionUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,6 +44,19 @@ public class ExportImportPanelApp extends BaseControlPanelEntryPanelApp {
 	@Override
 	public String getPortletId() {
 		return ExportImportPortletKeys.EXPORT_IMPORT;
+	}
+
+	@Override
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
+			return false;
+		}
+
+		return GroupPermissionUtil.contains(
+			permissionChecker, group, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 	}
 
 	@Reference(unbind = "-")

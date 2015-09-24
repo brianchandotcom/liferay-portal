@@ -23,7 +23,7 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ADD_DISPLAY_TEMPLATE" value1="add-display-template" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_DISPLAY_TEMPLATE" value1="Add Display Template" />
 
 		<execute function="Type" locator1="TextInput#NAME" value1="${ddlDisplayTemplateName}" />
 
@@ -70,7 +70,7 @@
 
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ADD_FORM_TEMPLATE" value1="add-form-template" />
+		<execute function="AssertClick" locator1="MenuItem#ADD_FORM_TEMPLATE" value1="Add Form Template" />
 
 		<execute function="Type#clickAtSendKeys" locator1="TextInput#NAME" value1="${ddlFormTemplateName}" />
 

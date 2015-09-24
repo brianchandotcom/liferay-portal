@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>ADD_DISPLAY_TEMPLATE</td>
-	<td>//div[contains(@class,'open')]//a[contains(@id,'menuItem') and contains(.,'add-display-template')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(@id,'menuItem') and contains(.,'Add Display Template')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>ADD_FORM_TEMPLATE</td>
-	<td>//div[contains(@class,'open')]//a[contains(@id,'menuItem') and contains(.,'add-form-template')]</td>
+	<td>//div[contains(@class,'open')]//a[contains(@id,'menuItem') and contains(.,'Add Form Template')]</td>
 	<td></td>
 </tr>
 <tr>

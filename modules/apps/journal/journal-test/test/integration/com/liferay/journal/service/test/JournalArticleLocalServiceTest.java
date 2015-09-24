@@ -15,27 +15,45 @@
 package com.liferay.journal.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLinkLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.journal.exception.DuplicateArticleIdException;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
+import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -141,6 +159,67 @@ public class JournalArticleLocalServiceTest {
 
 		Assert.assertEquals(1, articles.size());
 		Assert.assertEquals(article, articles.get(0));
+	}
+
+	@Test
+	public void testUpdateDDMStructurePredefinedValues() throws Exception {
+		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm("name");
+
+		LocalizedValue value = new LocalizedValue(LocaleUtil.US);
+		value.addString(LocaleUtil.US, "Test1");
+		value.getAvailableLocales();
+		DDMFormField ddmFormField = ddmForm.getDDMFormFields().get(0);
+		ddmFormField.setPredefinedValue(value);
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+					JournalArticle.class.getName(), ddmForm);
+
+		ddmFormField = ddmStructure.getDDMFormField("name");
+		Assert.assertEquals(
+				"Test1",
+				ddmFormField.getPredefinedValue().getString(LocaleUtil.US));
+
+		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
+				ddmStructure.getStructureId(),
+				PortalUtil.getClassNameId(JournalArticle.class),
+				TemplateConstants.LANG_TYPE_VM,
+				JournalTestUtil.getSampleTemplateXSL());
+
+		Map<Locale, String> values = new HashMap<>();
+		values.put(LocaleUtil.US, "Test2");
+		String content = DDMStructureTestUtil.getSampleStructuredContent(
+					values, LocaleUtil.US.toString());
+
+		ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					TestPropsValues.getGroupId());
+
+		Map<Locale, String> titleMap = new HashMap<>();
+		titleMap.put(LocaleUtil.US, "Test Article");
+
+		JournalArticle journal = JournalArticleLocalServiceUtil.addArticle(
+				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				ClassNameLocalServiceUtil.getClassNameId(DDMStructure.class),
+				ddmStructure.getStructureId(), StringPool.BLANK, true, 0,
+				titleMap, null, content, ddmStructure.getStructureKey(),
+				ddmTemplate.getTemplateKey(), null, 1, 1, 1965, 0, 0, 0, 0, 0,
+				0, 0, true, 0, 0, 0, 0, 0, true, true, false, null, null, null,
+				null, serviceContext);
+
+		Assert.assertEquals(
+				journal.getDDMStructure().getStructureId(),
+				ddmStructure.getStructureId());
+
+		ddmStructure = DDMStructureLocalServiceUtil.getDDMStructure(
+			ddmStructure.getStructureId());
+
+		ddmFormField = ddmStructure.getDDMFormField("name");
+
+		Assert.assertNotEquals(ddmFormField, null);
+		Assert.assertEquals(
+				"Test2",
+				ddmFormField.getPredefinedValue().getString(LocaleUtil.US));
 	}
 
 	@DeleteAfterTestRun

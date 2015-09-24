@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+<td>SAVE_BUTTON</td>
+<td>//button[contains(@type,'submit')]/span[contains(.,'Save')]</td>
+<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

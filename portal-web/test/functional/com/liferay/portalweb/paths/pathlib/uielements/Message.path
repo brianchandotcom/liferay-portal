@@ -209,11 +209,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_RECYCLE_BIN</td>
-	<td>//form[contains(@id,'undoForm')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_RESTORE_LOCATION</td>
 	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')]</td>
 	<td></td>

@@ -127,7 +127,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectDynamicdatalistCP" priority="4">
+	<command name="RejectDynamicdatalistCP" priority="5">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
 		<var name="ddlRecordFieldData" value="Record Text" />

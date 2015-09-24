@@ -198,9 +198,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 												<portlet:param name="portletResource" value="<%= assetPublisherDisplayContext.getPortletResource() %>" />
 												<portlet:param name="className" value="<%= assetRendererFactory.getClassName() %>" />
 												<portlet:param name="classTypeId" value="<%= String.valueOf(classType.getClassTypeId()) %>" />
-												<portlet:param name="ddmStructureDisplayFieldValue" value="[$DDM_STRUCTURE_DISPLAY_FIELD_VALUE$]" />
-												<portlet:param name="ddmStructureFieldName" value="[$DDM_STRUCTURE_FIELD_NAMES$]" />
-												<portlet:param name="ddmStructureFieldValue" value="[$DDM_STRUCTURE_FIELD_VALUE$]" />
 												<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectDDMStructureField" %>' />
 											</liferay-portlet:renderURL>
 
@@ -541,6 +538,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 </aui:button-row>
 
 <aui:script sandbox="<%= true %>">
+	var Util = Liferay.Util;
+
 	var MAP_DDM_STRUCTURES = {};
 
 	var assetSelector = $('#<portlet:namespace />anyAssetType');
@@ -555,7 +554,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		String className = AssetPublisherUtil.getClassName(curRendererFactory);
 	%>
 
-		Liferay.Util.toggleSelectBox('<portlet:namespace />anyClassType<%= className %>', 'false', '<portlet:namespace /><%= className %>Boxes');
+		Util.toggleSelectBox('<portlet:namespace />anyClassType<%= className %>', 'false', '<portlet:namespace /><%= className %>Boxes');
 
 		var <%= className %>Options = $('#<portlet:namespace /><%= className %>Options');
 
@@ -722,7 +721,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		function(event) {
 			var assetSubtypeFieldsPopupNodes = $('.asset-subtypefields-popup .btn');
 
-			Liferay.Util.toggleDisabled(assetSubtypeFieldsPopupNodes, !$(event.target).prop('checked'));
+			Util.toggleDisabled(assetSubtypeFieldsPopupNodes, !$(event.target).prop('checked'));
 		}
 	);
 
@@ -743,11 +742,11 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			var btn = $('.btn', currentTarget);
 			var uri = btn.data('href');
 
-			uri = uri.replace(escape('[$DDM_STRUCTURE_DISPLAY_FIELD_VALUE$]'), $('#<portlet:namespace />ddmStructureDisplayFieldValue').val());
-			uri = uri.replace(escape('[$DDM_STRUCTURE_FIELD_NAMES$]'), $('#<portlet:namespace />ddmStructureFieldName').val());
-			uri = uri.replace(escape('[$DDM_STRUCTURE_FIELD_VALUE$]'), $('#<portlet:namespace />ddmStructureFieldValue').val());
+			uri = Util.addParams('<portlet:namespace />ddmStructureDisplayFieldValue=' + $('#<portlet:namespace />ddmStructureDisplayFieldValue').val(), uri);
+			uri = Util.addParams('<portlet:namespace />ddmStructureFieldName=' + $('#<portlet:namespace />ddmStructureFieldName').val(), uri);
+			uri = Util.addParams('<portlet:namespace />ddmStructureFieldValue=' + $('#<portlet:namespace />ddmStructureFieldValue').val(), uri);
 
-			Liferay.Util.selectEntity(
+			Util.selectEntity(
 				{
 					dialog: {
 						constrain: true,

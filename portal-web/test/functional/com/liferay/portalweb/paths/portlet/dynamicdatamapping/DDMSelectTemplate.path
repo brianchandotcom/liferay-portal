@@ -82,7 +82,7 @@
 <!--TEMPLATE_TABLE-->
 <tr>
 	<td>TEMPLATE_TABLE_ALL_CHECKBOX</td>
-	<td>//div[contains(@id,'ddmTemplatesSearchContainer')]//input[contains(@name,'allRowIds')]</td>
+	<td>//div[contains(@id,'DDMPortlet_managementBarContainerId')]//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

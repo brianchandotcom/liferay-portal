@@ -25,6 +25,8 @@ apply plugin: "findbugs"
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 
+boolean addPortalDependencies = true
+
 distsDirName = FileUtil.relativize(rootProject.file("../tools/sdk/dist"), buildDir)
 group = "com.liferay"
 libsDirName = distsDirName
@@ -52,8 +54,10 @@ afterEvaluate {
 		}
 	}
 
-	javadoc {
-		classpath = sourceSets.main.output + sourceSets.main.compileClasspath
+	if (addPortalDependencies) {
+		javadoc {
+			classpath = sourceSets.main.output + sourceSets.main.compileClasspath
+		}
 	}
 }
 
@@ -165,18 +169,25 @@ eclipse {
 				}
 			}
 
-			withXml {
-				Node node = it.asNode()
+			if (addPortalDependencies) {
+				withXml {
+					Node node = it.asNode()
 
-				node.appendNode "classpathentry", [kind: "src", path: "/portal-master"]
+					node.appendNode "classpathentry", [kind: "src", path: "/portal-master"]
 
-				["portal-service", "util-bridges", "util-java", "util-taglib"].each {
-					node.appendNode "classpathentry", [kind: "lib", path: "/portal-master/${it}/${it}.jar"]
+					["portal-service", "util-bridges", "util-java", "util-taglib"].each {
+						node.appendNode "classpathentry", [kind: "lib", path: "/portal-master/${it}/${it}.jar"]
+					}
 				}
 			}
 		}
 
-		plusConfigurations += [configurations.portalEclipse]
+		if (addPortalDependencies) {
+			plusConfigurations += [configurations.portalEclipse]
+		}
+		else {
+			plusConfigurations += [configurations.testIntegrationRuntime]
+		}
 	}
 }
 
@@ -222,8 +233,10 @@ repositories {
 }
 
 sourceSets {
-	main {
-		compileClasspath += configurations.portal
+	if (addPortalDependencies) {
+		main {
+			compileClasspath += configurations.portal
+		}
 	}
 
 	test {

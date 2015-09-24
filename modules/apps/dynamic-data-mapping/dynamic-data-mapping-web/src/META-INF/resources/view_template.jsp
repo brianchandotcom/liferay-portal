@@ -261,16 +261,4 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 		);
 	}
 
-	AUI.$(document.<portlet:namespace />fm).on(
-		'click',
-		'input[type=checkbox]',
-		function() {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds').length == 0;
-
-			AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
-		}
-	);
-
 </aui:script>

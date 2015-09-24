@@ -63,7 +63,7 @@ portletURL.setParameter("tabs1", tabs1);
 		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<div class="container-fluid-1280">
+	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
@@ -186,16 +186,4 @@ portletURL.setParameter("tabs1", tabs1);
 			}
 		);
 	}
-
-	AUI.$(document.<portlet:namespace />fm).on(
-		'click',
-		'input[type=checkbox]',
-		function() {
-			var form = AUI.$(document.<portlet:namespace />fm);
-
-			var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds').length == 0;
-
-			AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
-		}
-	);
 </aui:script>

@@ -214,7 +214,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 						label="<%= true %>"
 						linkCssClass="btn btn-default"
 						message="install-more"
-						url='<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>'
+						url="<%= marketplaceURL.toString() %>"
 					/>
 				</c:if>
 			</legend>

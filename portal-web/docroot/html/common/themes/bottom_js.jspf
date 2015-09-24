@@ -17,13 +17,8 @@
 <%@ include file="/html/portal/layout/view/portlet_js.jspf" %>
 
 <aui:script position="inline">
-
-	<%
-	String controlPanelCategory = ParamUtil.getString(request, "controlPanelCategory");
-	%>
-
 	<c:choose>
-		<c:when test="<%= themeDisplay.isStatePopUp() || Validator.isNotNull(controlPanelCategory) %>">
+		<c:when test="<%= themeDisplay.isStatePopUp() %>">
 			Liferay.Util.getTop().Liferay.fire(
 				'popupReady',
 				{

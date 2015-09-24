@@ -260,10 +260,6 @@ public class ThemeDisplay
 		return _contact;
 	}
 
-	public String getControlPanelCategory() {
-		return _controlPanelCategory;
-	}
-
 	/**
 	 * Returns the portal instance's default user.
 	 *
@@ -967,10 +963,6 @@ public class ThemeDisplay
 		return _urlSignOut;
 	}
 
-	public String getURLSiteAdministration() {
-		return _urlSiteAdministration;
-	}
-
 	@JSON(include = false)
 	public PortletURL getURLUpdateManager() {
 		if (_urlUpdateManager == null) {
@@ -1276,10 +1268,6 @@ public class ThemeDisplay
 
 	public void setContact(Contact contact) {
 		_contact = contact;
-	}
-
-	public void setControlPanelCategory(String controlPanelCategory) {
-		_controlPanelCategory = controlPanelCategory;
 	}
 
 	public void setDevice(Device device) {
@@ -1809,10 +1797,6 @@ public class ThemeDisplay
 		_urlSignOut = urlSignOut;
 	}
 
-	public void setURLSiteAdministration(String urlSiteAdministration) {
-		_urlSiteAdministration = urlSiteAdministration;
-	}
-
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
@@ -1854,7 +1838,6 @@ public class ThemeDisplay
 	private int _companyLogoHeight;
 	private int _companyLogoWidth;
 	private Contact _contact;
-	private String _controlPanelCategory = StringPool.BLANK;
 	private User _defaultUser;
 	private Device _device;
 	private long _doAsGroupId = 0;
@@ -1958,7 +1941,6 @@ public class ThemeDisplay
 	private transient PortletURL _urlPublishToLive = null;
 	private String _urlSignIn = StringPool.BLANK;
 	private String _urlSignOut = StringPool.BLANK;
-	private String _urlSiteAdministration = StringPool.BLANK;
 	private transient PortletURL _urlUpdateManager = null;
 	private User _user;
 	private boolean _widget;

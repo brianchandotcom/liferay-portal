@@ -17,6 +17,9 @@ package com.liferay.staging.configuration.web.application.list;
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.staging.configuration.web.portlet.constants.StagingConfigurationPortletKeys;
 
@@ -40,6 +43,18 @@ public class StagingConfigurationPanelApp
 	@Override
 	public String getPortletId() {
 		return StagingConfigurationPortletKeys.STAGING_CONFIGURATION;
+	}
+
+	@Override
+	public boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		if (group.isLayoutPrototype() || group.isLayoutSetPrototype()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Reference(unbind = "-")

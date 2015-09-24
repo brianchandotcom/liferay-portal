@@ -18,6 +18,7 @@ Include-Resource:\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class
 Liferay-Service: true
 Require-Capability:\

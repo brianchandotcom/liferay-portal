@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.search.web.util;
+package com.liferay.search.api.util;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

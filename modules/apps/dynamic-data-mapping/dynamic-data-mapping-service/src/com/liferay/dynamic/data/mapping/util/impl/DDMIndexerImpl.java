@@ -84,7 +84,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 
 				for (Locale locale : locales) {
 					String name = encodeName(
-						ddmStructure.getStructureId(), field.getName(), locale);
+						ddmStructure.getStructureId(), field.getName(), locale,
+						indexType);
 
 					Serializable value = field.getValue(locale);
 
@@ -218,10 +219,10 @@ public class DDMIndexerImpl implements DDMIndexer {
 			ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
 
 		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
-			GetterUtil.getLong(ddmStructureFieldNameParts[1]));
+			GetterUtil.getLong(ddmStructureFieldNameParts[2]));
 
 		String fieldName = StringUtil.replaceLast(
-			ddmStructureFieldNameParts[2],
+			ddmStructureFieldNameParts[3],
 			StringPool.UNDERLINE.concat(LocaleUtil.toLanguageId(locale)),
 			StringPool.BLANK);
 
@@ -246,9 +247,41 @@ public class DDMIndexerImpl implements DDMIndexer {
 	public String encodeName(
 		long ddmStructureId, String fieldName, Locale locale) {
 
-		StringBundler sb = new StringBundler(7);
+		String indexType = StringPool.BLANK;
+
+		if (Validator.isNotNull(ddmStructureId)) {
+			DDMStructure ddmStructure =
+				DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId);
+
+			if (Validator.isNotNull(ddmStructure)) {
+				try {
+					indexType = ddmStructure.getFieldProperty(
+						fieldName, "indexType");
+				}
+				catch (PortalException e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(e, e);
+					}
+				}
+			}
+		}
+
+		return encodeName(ddmStructureId, fieldName, locale, indexType);
+	}
+
+	protected String encodeName(
+		long ddmStructureId, String fieldName, Locale locale,
+		String indexType) {
+
+		StringBundler sb = new StringBundler(8);
 
 		sb.append(DDM_FIELD_PREFIX);
+
+		if (Validator.isNotNull(indexType)) {
+			sb.append(indexType);
+			sb.append(DDM_FIELD_SEPARATOR);
+		}
+
 		sb.append(ddmStructureId);
 		sb.append(DDM_FIELD_SEPARATOR);
 		sb.append(fieldName);

@@ -3823,7 +3823,6 @@
 		<var name="character29"><![CDATA[?]]></var>
 		<var name="character30"><![CDATA[_]]></var>
 		<var name="character31" value="test space" />
-		<var name="character32" value=" frontSpace" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -3840,7 +3839,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<for list="${character1},${character2},${character3},${character4},${character5},${character6},${character7},${character8},${character9},${character10},${character11},${character12},${character13},${character14},${character15},${character16},${character17}.${character18},${character19},${character20},${character21},${character22},${character23},${character24},${character25},${character26},${character27},${character28},${character29},${character30},${character31},${character32}" param="fieldName">
+		<for list="${character1},${character2},${character3},${character4},${character5},${character6},${character7},${character8},${character9},${character10},${character11},${character12},${character13},${character14},${character15},${character16},${character17}.${character18},${character19},${character20},${character21},${character22},${character23},${character24},${character25},${character26},${character27},${character28},${character29},${character30},${character31}" param="fieldName">
 			<execute macro="DynamicDataMapping#editFieldNameInvalidCharacter">
 				<var name="field" value="Text" />
 				<var name="fieldFieldLabel" value="Text" />

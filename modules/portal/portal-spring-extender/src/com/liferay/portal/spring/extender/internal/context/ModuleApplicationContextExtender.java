@@ -41,6 +41,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -61,6 +62,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 		start(bundleContext);
 	}
 
+	@Deactivate
 	protected void deactivate() throws Exception {
 		stop(_bundleContext);
 

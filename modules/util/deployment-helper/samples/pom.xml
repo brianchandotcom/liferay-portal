@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>sample.deployment.helper</groupId>
+	<artifactId>sample.deployment.helper</artifactId>
+	<name>Sample Deployment Helper Project</name>
+	<version>1.0.0</version>
+	<description>Sample Deployment Helper Project</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.deployment.helper</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<deploymentFileNames>license.xml</deploymentFileNames>
+					<deploymentPath>deploy</deploymentPath>
+					<outputFileName>samples.war</outputFileName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

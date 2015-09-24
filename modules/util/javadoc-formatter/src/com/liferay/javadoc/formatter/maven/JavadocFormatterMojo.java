@@ -86,6 +86,10 @@ public class JavadocFormatterMojo extends AbstractMojo {
 		_javadocFormatterArgs.setUpdateJavadocs(updateJavadocs);
 	}
 
+	/**
+	 * @parameter default-value="${project.basedir}
+	 * @readonly
+	 */
 	protected File baseDir;
 
 	private final JavadocFormatterArgs _javadocFormatterArgs =

@@ -50,6 +50,10 @@ public class UpgradeTableBuilderMojo extends AbstractMojo {
 		_upgradeTableBuilderArgs.setUpgradeTableDirName(upgradeTableDirName);
 	}
 
+	/**
+	 * @parameter default-value="${project.basedir}
+	 * @readonly
+	 */
 	protected File baseDir;
 
 	private final UpgradeTableBuilderArgs _upgradeTableBuilderArgs =

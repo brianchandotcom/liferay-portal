@@ -850,7 +850,7 @@
 		</execute>
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Name" />
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 
 		<while>
 			<condition function="IsElementPresent" locator1="Sites#SITE_TABLE_ACTIONS_GENERIC" />

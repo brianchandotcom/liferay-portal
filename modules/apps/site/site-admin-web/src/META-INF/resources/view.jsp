@@ -102,7 +102,7 @@ if (group != null) {
 	</div>
 
 	<div class="sidenav-content">
-		<aui:form action="<%= searchURLString %>" method="get" name="fm">
+		<aui:form action="<%= searchURLString %>" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 			<aui:input name="deleteGroupIds" type="hidden" />
 

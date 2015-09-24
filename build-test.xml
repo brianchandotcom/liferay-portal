@@ -5456,6 +5456,17 @@ module.framework.properties.osgi.console=11312</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="test.assert.console.errors" />
+
+		<if>
+			<equals arg1="${test.assert.console.errors}" arg2="false" />
+			<then>
+				<echo append="true" file="${test.assert.console.errors}">
+					test.assert.console.errors=false
+				</echo>
+			</then>
+		</if>
+
 		<get-testcase-property property.name="test.assert.javascript.errors" />
 
 		<if>

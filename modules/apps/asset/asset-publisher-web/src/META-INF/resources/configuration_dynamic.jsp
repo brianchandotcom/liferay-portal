@@ -742,9 +742,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			var btn = $('.btn', currentTarget);
 			var uri = btn.data('href');
 
-			uri = Util.addParams('<portlet:namespace />ddmStructureDisplayFieldValue=' + $('#<portlet:namespace />ddmStructureDisplayFieldValue').val(), uri);
-			uri = Util.addParams('<portlet:namespace />ddmStructureFieldName=' + $('#<portlet:namespace />ddmStructureFieldName').val(), uri);
-			uri = Util.addParams('<portlet:namespace />ddmStructureFieldValue=' + $('#<portlet:namespace />ddmStructureFieldValue').val(), uri);
+			uri = Util.addParams('<portlet:namespace />ddmStructureDisplayFieldValue="' + $('#<portlet:namespace />ddmStructureDisplayFieldValue').val() + '"', uri);
+			uri = Util.addParams('<portlet:namespace />ddmStructureFieldName="' + $('#<portlet:namespace />ddmStructureFieldName').val() + '"', uri);
+			uri = Util.addParams('<portlet:namespace />ddmStructureFieldValue="' + $('#<portlet:namespace />ddmStructureFieldValue').val() + '"', uri);
 
 			Util.selectEntity(
 				{

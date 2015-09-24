@@ -495,7 +495,7 @@
 		</execute>
 	</command>
 
-	<command name="DeactivateAndDeleteUploadedDefinition" priority="4">
+	<command name="DeactivateAndDeleteUploadedDefinition" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Workflow Definition" />
 		</execute>

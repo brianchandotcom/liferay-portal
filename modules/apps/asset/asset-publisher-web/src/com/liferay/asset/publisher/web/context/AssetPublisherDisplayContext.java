@@ -1353,30 +1353,19 @@ public class AssetPublisherDisplayContext {
 		}
 
 		_ddmStructureDisplayFieldValue = ParamUtil.getString(
-			_request, "ddmStructureDisplayFieldValue");
-
-		if (Validator.isNull(_ddmStructureDisplayFieldValue)) {
-			_ddmStructureDisplayFieldValue = GetterUtil.getString(
-				_portletPreferences.getValue(
-					"ddmStructureDisplayFieldValue", StringPool.BLANK));
-		}
+			_request, "ddmStructureDisplayFieldValue",
+			_portletPreferences.getValue(
+				"ddmStructureDisplayFieldValue", StringPool.BLANK));
 
 		_ddmStructureFieldName = ParamUtil.getString(
-			_request, "ddmStructureFieldName");
-
-		if (Validator.isNull(_ddmStructureFieldName)) {
-			_ddmStructureFieldName = GetterUtil.getString(
-				_portletPreferences.getValue(
-					"ddmStructureFieldName", StringPool.BLANK));
-		}
+			_request, "ddmStructureFieldName",
+			_portletPreferences.getValue(
+				"ddmStructureFieldName", StringPool.BLANK));
 
 		_ddmStructureFieldValue = ParamUtil.getString(
-			_request, "ddmStructureFieldValue");
-
-		if (Validator.isNull(_ddmStructureFieldValue)) {
+			_request, "ddmStructureFieldValue",
 			_ddmStructureFieldValue = _portletPreferences.getValue(
-				"ddmStructureFieldValue", StringPool.BLANK);
-		}
+				"ddmStructureFieldValue", StringPool.BLANK));
 
 		if (Validator.isNotNull(_ddmStructureFieldName) &&
 			Validator.isNotNull(_ddmStructureFieldValue)) {

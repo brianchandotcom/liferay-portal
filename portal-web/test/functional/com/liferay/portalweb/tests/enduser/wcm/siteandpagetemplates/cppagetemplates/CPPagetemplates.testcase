@@ -104,7 +104,7 @@
 	</command>
 
 	<command name="LocalizeDefaultPageTemplates" priority="4">
-		<execute macro="ProductMenu#gotoSitesAdministration">
+		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Page Templates" />
 		</execute>
 
@@ -124,14 +124,14 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
-			<var name="category" value="Administración" />
+		<execute macro="ProductMenu#gotoLocalizedControlPanel">
+			<var name="category" value="Sitios web" />
 			<var name="portlet" value="Plantillas de página" />
-			<var name="tab" value="Sitios Web" />
+			<var name="tab" value="Panel de control" />
 		</execute>
 
 		<execute macro="PageTemplate#viewDefaultLocalizedCP">
-			<var name="pageTemplateDescriptionList" value="editar y ver los blogs de esta página. Explorar temas utilizando etiquetas y conectar con otros miembros de ese blog.,editar y explorar el contenido de la web con esta página. Buscar contenido disponible, explorar contenido relacionado con las etiquetas y ver contenidos categorias.,Colaborar con los miembros a través de la wiki en esta página. Descubra el contenido relacionado a través de etiquetas y navegar rápida y fácilmente con categorías." />
+			<var name="pageTemplateDescriptionList" value="editar y ver los blogs de esta página. Explorar temas utilizando etiquetas y conectar con otros miembros de ese blog.,editar y explorar el contenido de la web desde esta página. Contenido disponible, explorar contenido relacionado con las etiquetas y buscar por categorías de contenido.,Colaborar con los miembros a través de la wiki en esta página. Descubra el contenido relacionado a través de etiquetas y navegar rápida y fácilmente con categorías." />
 			<var name="pageTemplateNameList" value="Blog,Seleccione una página de visualización,Wiki" />
 		</execute>
 

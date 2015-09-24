@@ -35,13 +35,11 @@ class SASSWrapper
 
 			result = engine.render_with_sourcemap(sourceMapFilePath.relative_path_from(basePath).to_s)
 
-			return
-				result[0],
-				result[1].to_json(
-					{
-						:css_path => outputFileName,
-						:sourcemap_path => sourceMapFileName
-					})
+			return result[0], result[1].to_json(
+				{
+					:css_path => outputFileName,
+					:sourcemap_path => sourceMapFileName
+				})
 		else
 			engine = Sass::Engine.for_file(
 				inputFileName,

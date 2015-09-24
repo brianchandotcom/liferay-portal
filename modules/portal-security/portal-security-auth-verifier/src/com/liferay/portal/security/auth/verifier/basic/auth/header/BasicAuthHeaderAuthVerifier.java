@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
@@ -70,11 +71,13 @@ public class BasicAuthHeaderAuthVerifier
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 			}
 			else {
-
-				// Deprecated
-
 				boolean forcedBasicAuth = MapUtil.getBoolean(
 					accessControlContext.getSettings(), "basic_auth");
+
+				if (!forcedBasicAuth) {
+					forcedBasicAuth = GetterUtil.getBoolean(
+						properties.getProperty("basic_auth"));
+				}
 
 				if (forcedBasicAuth) {
 					HttpAuthorizationHeader httpAuthorizationHeader =

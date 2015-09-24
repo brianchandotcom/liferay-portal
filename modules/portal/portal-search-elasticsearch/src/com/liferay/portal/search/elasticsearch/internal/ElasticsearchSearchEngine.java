@@ -33,7 +33,6 @@ import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
 
 import java.util.Map;
 
-import org.elasticsearch.ElasticsearchException;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesRequestBuilder;
@@ -56,6 +55,7 @@ import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.collect.ImmutableList;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.repositories.RepositoryMissingException;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -315,9 +315,6 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		}
 		catch (RepositoryMissingException ee) {
 			return false;
-		}
-		catch (ElasticsearchException ee) {
-			throw ee;
 		}
 	}
 

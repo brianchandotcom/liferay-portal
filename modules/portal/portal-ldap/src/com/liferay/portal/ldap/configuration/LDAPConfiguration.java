@@ -83,7 +83,7 @@ public interface LDAPConfiguration {
 	public int rangeSize();
 
 	@Meta.AD(
-		deflt = "follow", optionValues = {"follow", "ingore", "throws"},
+		deflt = "follow", optionValues = {"follow", "ignore", "throws"},
 		required = false
 	)
 	public String referral();

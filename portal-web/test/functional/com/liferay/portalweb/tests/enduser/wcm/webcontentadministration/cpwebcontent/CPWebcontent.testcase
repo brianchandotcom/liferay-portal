@@ -1318,7 +1318,7 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Link to Page" />
 			<var name="fieldFieldLabel" value="Link to Page" />
-			<var name="fieldName" value="Link_to_Page" />
+			<var name="fieldName" value="LinkToPage" />
 		</execute>
 
 		<execute macro="WebContentStructures#saveCP">

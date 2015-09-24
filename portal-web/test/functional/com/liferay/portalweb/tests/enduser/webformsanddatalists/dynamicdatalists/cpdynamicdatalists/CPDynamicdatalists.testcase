@@ -984,7 +984,7 @@
 		<var name="document" value="Document_1.txt" />
 		<var name="field" value="Documents and Media" />
 		<var name="fieldFieldLabel" value="Documents and Media" />
-		<var name="fieldName" value="Documents_and_Media" />
+		<var name="fieldName" value="DocumentsAndMedia" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -1324,7 +1324,7 @@
 		<var name="ddlRecordFieldData" value="Test Page" />
 		<var name="field" value="Link to Page" />
 		<var name="fieldFieldLabel" value="Link to Page" />
-		<var name="fieldName" value="Link_to_Page" />
+		<var name="fieldName" value="LinkToPage" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${ddlRecordFieldData}" />
@@ -1668,7 +1668,7 @@
 		<var name="ddlRecordFieldData" value="Text Box Data" />
 		<var name="field" value="Text Box" />
 		<var name="fieldFieldLabel" value="Text Box" />
-		<var name="fieldName" value="Text_Box" />
+		<var name="fieldName" value="TextBox" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -2491,7 +2491,7 @@
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldFieldLabelEdit" value="Boolean Edit" />
 		<var name="fieldName" value="Boolean" />
-		<var name="fieldNameEdit" value="Boolean_Edit" />
+		<var name="fieldNameEdit" value="BooleanEdit" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -2596,7 +2596,7 @@
 		<var name="field" value="Boolean" />
 		<var name="fieldFieldLabel" value="Boolean" />
 		<var name="fieldName" value="Boolean" />
-		<var name="fieldNameEdit" value="Boolean_Edit" />
+		<var name="fieldNameEdit" value="BooleanEdit" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />

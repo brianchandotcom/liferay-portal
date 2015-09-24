@@ -63,6 +63,8 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
+import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
@@ -393,8 +395,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		BackgroundTaskManagerUtil.addBackgroundTask(
-			themeDisplay.getUserId(), themeDisplay.getScopeGroupId(), "reindex",
-			taskExecutorClassName, taskContextMap, new ServiceContext());
+			themeDisplay.getUserId(), CompanyConstants.SYSTEM,
+			"reindex", taskExecutorClassName, taskContextMap,
+			new ServiceContext());
 	}
 
 	protected void reindexDictionaries(ActionRequest actionRequest)

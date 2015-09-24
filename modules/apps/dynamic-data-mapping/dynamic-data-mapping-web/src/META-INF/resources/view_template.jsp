@@ -47,6 +47,7 @@ portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
 portletURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
+portletURL.setParameter("showHeader", String.valueOf(showHeader));
 
 boolean controlPanel = false;
 
@@ -83,17 +84,19 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 	OrderByComparator<DDMTemplate> orderByComparator = DDMUtil.getTemplateOrderByComparator(orderByCol, orderByType);
 	%>
 
+	<c:if test="<%= showHeader %>">
+		<liferay-ui:header
+			backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
+			cssClass="container-fluid-1280"
+			title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale) %>"
+		/>
+	</c:if>
+
 	<liferay-util:include page="/template_search_bar.jsp" servletContext="<%= application %>" />
 
 	<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>" />
 
-	<div class="container-fluid-1280">
-		<c:if test="<%= showHeader %>">
-			<liferay-ui:header
-				backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
-				title="<%= ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templateSearchTerms.isSearch(), locale) %>"
-			/>
-		</c:if>
+	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 
 		<liferay-ui:search-container
 			orderByCol="<%= orderByCol %>"

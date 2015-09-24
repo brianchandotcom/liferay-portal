@@ -1,8 +1,11 @@
+apply plugin: "com.liferay.maven.plugin.builder"
+
 dependencies {
 	provided group: "com.liferay.portal", name: "portal-impl", version: liferay.portalVersion
 	provided group: "com.liferay.portal", name: "portal-service", version: liferay.portalVersion
 	provided group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
+	provided group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
 	provided group: "org.slf4j", name: "slf4j-simple", version: "1.6.6"
 	provided group: "org.zeroturnaround", name: "zt-zip", version: "1.8"
 }

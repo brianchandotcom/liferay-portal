@@ -3,6 +3,7 @@ Bundle-SymbolicName: com.liferay.deployment.helper
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.deployment.helper
 Import-Package:\
+	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
 	*
 Include-Resource:\

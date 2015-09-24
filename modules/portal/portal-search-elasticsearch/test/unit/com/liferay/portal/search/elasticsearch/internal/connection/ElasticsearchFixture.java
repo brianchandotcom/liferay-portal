@@ -60,6 +60,7 @@ public class ElasticsearchFixture {
 
 		elasticsearchConfigurationProperties.put(
 			"configurationPid", ElasticsearchConfiguration.class.getName());
+		elasticsearchConfigurationProperties.put("logExceptionsOnly", false);
 
 		_elasticsearchConfigurationProperties =
 			elasticsearchConfigurationProperties;
@@ -92,17 +93,17 @@ public class ElasticsearchFixture {
 	public void createNode() throws Exception {
 		deleteTmpDir();
 
-		_elasticsearchConnection = createElasticsearchConnection();
+		_embeddedElasticsearchConnection = createElasticsearchConnection();
 	}
 
 	public void destroyNode() throws Exception {
-		_elasticsearchConnection.close();
+		_embeddedElasticsearchConnection.close();
 
 		deleteTmpDir();
 	}
 
 	public AdminClient getAdminClient() {
-		Client client = _elasticsearchConnection.getClient();
+		Client client = _embeddedElasticsearchConnection.getClient();
 
 		return client.admin();
 	}
@@ -132,6 +133,10 @@ public class ElasticsearchFixture {
 			clusterHealthRequest);
 
 		return health.actionGet();
+	}
+
+	public ElasticsearchConnection getEmbeddedElasticsearchConnection() {
+		return _embeddedElasticsearchConnection;
 	}
 
 	public GetIndexResponse getIndex(String... indices) {
@@ -215,7 +220,7 @@ public class ElasticsearchFixture {
 			unicastSettingsContributor);
 	}
 
-	protected ElasticsearchConnection createElasticsearchConnection() {
+	protected EmbeddedElasticsearchConnection createElasticsearchConnection() {
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection =
 			new EmbeddedElasticsearchConnection();
 
@@ -248,7 +253,7 @@ public class ElasticsearchFixture {
 
 	private ClusterSettingsContext _clusterSettingsContext;
 	private final Map<String, Object> _elasticsearchConfigurationProperties;
-	private ElasticsearchConnection _elasticsearchConnection;
+	private EmbeddedElasticsearchConnection _embeddedElasticsearchConnection;
 	private final String _tmpDirName;
 
 }

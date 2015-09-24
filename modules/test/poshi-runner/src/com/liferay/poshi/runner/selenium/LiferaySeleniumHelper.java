@@ -158,6 +158,10 @@ public class LiferaySeleniumHelper {
 	}
 
 	public static void assertConsoleErrors() throws Exception {
+		if (!PropsValues.TEST_ASSERT_CONSOLE_ERRORS) {
+			return;
+		}
+
 		String fileName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
 
 		if (!FileUtil.exists(fileName)) {

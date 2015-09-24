@@ -364,7 +364,7 @@ public class GroupServiceTest {
 
 		try {
 			List<Group> groups = GroupServiceUtil.getUserSitesGroups(
-				TestPropsValues.getUserId(), null, false, QueryUtil.ALL_POS);
+				TestPropsValues.getUserId(), null, QueryUtil.ALL_POS);
 
 			Assert.assertTrue(groups.contains(parentOrganizationGroup));
 		}

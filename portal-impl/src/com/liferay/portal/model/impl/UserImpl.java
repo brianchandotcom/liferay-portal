@@ -534,35 +534,33 @@ public class UserImpl extends UserBaseImpl {
 
 	@Override
 	public List<Group> getMySiteGroups() throws PortalException {
-		return getMySiteGroups(null, false, QueryUtil.ALL_POS);
-	}
-
-	@Override
-	public List<Group> getMySiteGroups(boolean includeControlPanel, int max)
-		throws PortalException {
-
-		return getMySiteGroups(null, includeControlPanel, max);
+		return getMySiteGroups(null, QueryUtil.ALL_POS);
 	}
 
 	@Override
 	public List<Group> getMySiteGroups(int max) throws PortalException {
-		return getMySiteGroups(null, false, max);
+		return getMySiteGroups(null, max);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
+	 *             int)}
+	 */
+	@Deprecated
 	@Override
 	public List<Group> getMySiteGroups(
 			String[] classNames, boolean includeControlPanel, int max)
 		throws PortalException {
 
-		return GroupServiceUtil.getUserSitesGroups(
-			getUserId(), classNames, includeControlPanel, max);
+		return getMySiteGroups(classNames, max);
 	}
 
 	@Override
 	public List<Group> getMySiteGroups(String[] classNames, int max)
 		throws PortalException {
 
-		return getMySiteGroups(classNames, false, max);
+		return GroupServiceUtil.getUserSitesGroups(
+			getUserId(), classNames, max);
 	}
 
 	/**
@@ -575,15 +573,14 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(boolean,
-	 *             int)}
+	 * @deprecated As of 6.2.0, replaced by {@link User#getMySiteGroups(int)}
 	 */
 	@Deprecated
 	@Override
 	public List<Group> getMySites(boolean includeControlPanel, int max)
 		throws PortalException {
 
-		return getMySiteGroups(includeControlPanel, max);
+		return getMySiteGroups(max);
 	}
 
 	/**
@@ -597,7 +594,7 @@ public class UserImpl extends UserBaseImpl {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
-	 *             boolean, int)}
+	 *              int)}
 	 */
 	@Deprecated
 	@Override
@@ -605,7 +602,7 @@ public class UserImpl extends UserBaseImpl {
 			String[] classNames, boolean includeControlPanel, int max)
 		throws PortalException {
 
-		return getMySiteGroups(classNames, includeControlPanel, max);
+		return getMySiteGroups(classNames, max);
 	}
 
 	/**
@@ -850,7 +847,7 @@ public class UserImpl extends UserBaseImpl {
 			max++;
 		}
 
-		List<Group> groups = getMySiteGroups(true, max);
+		List<Group> groups = getMySiteGroups(max);
 
 		return !groups.isEmpty();
 	}

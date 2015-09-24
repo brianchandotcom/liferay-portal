@@ -19,14 +19,13 @@
 <%
 String[] classNames = (String[])request.getAttribute("liferay-ui:my_sites:classNames");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:my_sites:cssClass"));
-boolean includeControlPanel = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:my_sites:includeControlPanel"));
 int max = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:my_sites:max"));
 
 if (max <= 0) {
 	max = PropsValues.MY_SITES_MAX_ELEMENTS;
 }
 
-List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel, max);
+List<Group> mySiteGroups = user.getMySiteGroups(classNames, max);
 %>
 
 <c:if test="<%= !mySiteGroups.isEmpty() %>">

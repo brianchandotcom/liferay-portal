@@ -985,6 +985,11 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getMySiteGroups();
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
+	int)}
+	*/
+	@Deprecated
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
 		java.lang.String[] classNames, boolean includeControlPanel, int max)
@@ -997,13 +1002,6 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getMySiteGroups(classNames, max);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
-		boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _user.getMySiteGroups(includeControlPanel, max);
 	}
 
 	@Override
@@ -1024,7 +1022,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
-	boolean, int)}
+	int)}
 	*/
 	@Deprecated
 	@Override
@@ -1047,8 +1045,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(boolean,
-	int)}
+	* @deprecated As of 6.2.0, replaced by {@link User#getMySiteGroups(int)}
 	*/
 	@Deprecated
 	@Override

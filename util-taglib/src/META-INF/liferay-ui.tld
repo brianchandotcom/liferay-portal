@@ -3470,11 +3470,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>includeControlPanel</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>max</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

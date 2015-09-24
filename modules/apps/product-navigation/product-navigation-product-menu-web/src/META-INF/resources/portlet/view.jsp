@@ -106,7 +106,7 @@ if (Validator.isNotNull(themeDisplay.getPpid())) {
 			<ul class="user-subheading">
 
 				<%
-				List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, false, QueryUtil.ALL_POS);
+				List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, QueryUtil.ALL_POS);
 
 				for (Group mySiteGroup : mySiteGroups) {
 				%>

@@ -284,12 +284,13 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
-		boolean includeControlPanel, int max)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
 		int max) throws com.liferay.portal.kernel.exception.PortalException;
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
+	int)}
+	*/
+	@java.lang.Deprecated()
 	public java.util.List<com.liferay.portal.model.Group> getMySiteGroups(
 		java.lang.String[] classNames, boolean includeControlPanel, int max)
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -306,8 +307,7 @@ public interface User extends UserModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(boolean,
-	int)}
+	* @deprecated As of 6.2.0, replaced by {@link User#getMySiteGroups(int)}
 	*/
 	@java.lang.Deprecated()
 	public java.util.List<com.liferay.portal.model.Group> getMySites(
@@ -323,7 +323,7 @@ public interface User extends UserModel, PersistedModel {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getMySiteGroups(String[],
-	boolean, int)}
+	int)}
 	*/
 	@java.lang.Deprecated()
 	public java.util.List<com.liferay.portal.model.Group> getMySites(

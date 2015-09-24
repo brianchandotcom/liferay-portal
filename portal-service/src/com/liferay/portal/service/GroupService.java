@@ -392,7 +392,7 @@ public interface GroupService extends BaseService {
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
-	String[], boolean, int)}
+	String[], int)}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -500,7 +500,7 @@ public interface GroupService extends BaseService {
 	*
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link
-	#getUserSitesGroups(long, String[], boolean, int)}.
+	#getUserSitesGroups(long, String[], int)}.
 	* @param max the maximum number of groups to return
 	* @return the user's groups &quot;sites&quot;
 	* @throws PortalException if a portal exception occurred
@@ -509,6 +509,11 @@ public interface GroupService extends BaseService {
 	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		java.lang.String[] classNames, int max) throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #getUserSitesGroups(
+	long, String[], int)}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		long userId, java.lang.String[] classNames,
@@ -542,7 +547,7 @@ public interface GroupService extends BaseService {
 	* @param userId the primary key of the user
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link
-	#getUserSitesGroups(long, String[], boolean, int)}.
+	#getUserSitesGroups(long, String[], int)}.
 	* @param max the maximum number of groups to return
 	* @return the user's groups &quot;sites&quot;
 	* @throws PortalException if a portal exception occurred

@@ -74,7 +74,7 @@ public class MySitesPanelCategory extends BaseJSPPanelCategory {
 
 		List<Group> siteGroups = user.getMySiteGroups(
 			new String[] {Group.class.getName(), Organization.class.getName()},
-			false, 1);
+			1);
 
 		if (siteGroups.isEmpty()) {
 			return false;

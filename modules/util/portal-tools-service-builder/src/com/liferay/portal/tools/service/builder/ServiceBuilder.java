@@ -691,8 +691,8 @@ public class ServiceBuilder {
 						}
 
 						_createFinder(entity);
-						_createFinderUtil(entity);
 						_createFinderBaseImpl(entity);
+						_createFinderUtil(entity);
 
 						if (entity.hasLocalService()) {
 							_createServiceImpl(entity, _SESSION_TYPE_LOCAL);

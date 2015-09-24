@@ -23,6 +23,7 @@ public class ${entity.name}FinderBaseImpl
 	extends BasePersistenceImpl<${entity.name}> {
 
 	<#if entity.hasColumns() && entity.name != "Counter">
+
 		/**
 		 * Returns the ${entity.humanName} persistence.
 		 *
@@ -42,7 +43,6 @@ public class ${entity.name}FinderBaseImpl
 		}
 	</#if>
 
-
 	<#if entity.badNamedColumnsList?size != 0>
 		@Override
 		protected Set<String> getBadColumnNames() {
@@ -53,6 +53,7 @@ public class ${entity.name}FinderBaseImpl
 	<#if entity.hasColumns() && entity.name != "Counter">
 		@BeanReference(type = ${entity.name}Persistence.class)
 		protected ${entity.name}Persistence ${entity.varName}Persistence;
+
 	</#if>
 
 }

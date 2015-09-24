@@ -39,8 +39,7 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TeamFinderImpl
-	extends TeamFinderBaseImpl implements TeamFinder {
+public class TeamFinderImpl extends TeamFinderBaseImpl implements TeamFinder {
 
 	public static final String COUNT_BY_G_N_D =
 		TeamFinder.class.getName() + ".countByG_N_D";

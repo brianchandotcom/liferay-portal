@@ -47,8 +47,7 @@ import java.util.Map;
  * @author Marcellus Tavares
  * @author Connor McKay
  */
-public class RoleFinderImpl
-	extends RoleFinderBaseImpl implements RoleFinder {
+public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 
 	public static final String COUNT_BY_ORGANIZATION =
 		RoleFinder.class.getName() + ".countByOrganization";

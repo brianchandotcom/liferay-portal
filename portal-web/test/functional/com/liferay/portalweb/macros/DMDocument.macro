@@ -731,6 +731,7 @@
 		<var name="key_mgDocumentTitle" value="${mgDocumentTitle}" />
 
 		<execute function="AssertClick" locator1="MediaGallery#ENTRY_TITLE" value1="${mgDocumentTitle}" />
+		
 		<execute function="Click" locator1="MediaGallery#ENTRY_RECYCLE_BIN_ICON" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="moved to the Recycle Bin. Undo" />
 		<execute function="AssertElementNotPresent" locator1="MediaGallery#ENTRY_TITLE" value1="${mgDocumentTitle}" />

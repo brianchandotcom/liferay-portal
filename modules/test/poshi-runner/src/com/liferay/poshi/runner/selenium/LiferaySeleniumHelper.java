@@ -157,6 +157,71 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void assertConsoleErrors() throws Exception {
+		String fileName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
+
+		if (!FileUtil.exists(fileName)) {
+			return;
+		}
+
+		String content = FileUtil.read(fileName);
+
+		if (content.equals("")) {
+			return;
+		}
+
+		SAXReader saxReader = new SAXReader();
+
+		content = "<log4j>" + content + "</log4j>";
+		content = content.replaceAll("log4j:", "");
+
+		InputStream inputStream = new ByteArrayInputStream(
+			content.getBytes("UTF-8"));
+
+		Document document = saxReader.read(inputStream);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> eventElements = rootElement.elements("event");
+		List<Exception> exceptions = new ArrayList<>();
+
+		for (Element eventElement : eventElements) {
+			String level = eventElement.attributeValue("level");
+
+			if (level.equals("ERROR")) {
+				String fileContent = FileUtil.read(fileName);
+
+				fileContent = fileContent.replaceFirst(
+					"level=\"ERROR\"", "level=\"ERROR_FOUND\"");
+
+				FileUtil.write(fileName, fileContent);
+
+				Element messageElement = eventElement.element("message");
+
+				String messageText = messageElement.getText();
+
+				if (isIgnorableErrorLine(messageText)) {
+					continue;
+				}
+
+				StringBuilder sb = new StringBuilder();
+
+				sb.append("LIFERAY_ERROR: ");
+				sb.append(messageText);
+
+				System.out.println(sb.toString());
+
+				exceptions.add(new PoshiRunnerWarningException(sb.toString()));
+			}
+		}
+
+		if (!exceptions.isEmpty()) {
+			addToLiferayExceptions(exceptions);
+
+			throw exceptions.get(0);
+		}
+	}
+
 	public static void assertConsoleTextNotPresent(String text)
 		throws Exception {
 
@@ -231,71 +296,6 @@ public class LiferaySeleniumHelper {
 		if (!isHTMLSourceTextPresent(liferaySelenium, value)) {
 			throw new Exception(
 				"Pattern \"" + value + "\" does not exists in the HTML source");
-		}
-	}
-
-	public static void assertLiferayErrors() throws Exception {
-		String fileName = PropsValues.TEST_CONSOLE_LOG_FILE_NAME;
-
-		if (!FileUtil.exists(fileName)) {
-			return;
-		}
-
-		String content = FileUtil.read(fileName);
-
-		if (content.equals("")) {
-			return;
-		}
-
-		SAXReader saxReader = new SAXReader();
-
-		content = "<log4j>" + content + "</log4j>";
-		content = content.replaceAll("log4j:", "");
-
-		InputStream inputStream = new ByteArrayInputStream(
-			content.getBytes("UTF-8"));
-
-		Document document = saxReader.read(inputStream);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> eventElements = rootElement.elements("event");
-		List<Exception> exceptions = new ArrayList<>();
-
-		for (Element eventElement : eventElements) {
-			String level = eventElement.attributeValue("level");
-
-			if (level.equals("ERROR")) {
-				String fileContent = FileUtil.read(fileName);
-
-				fileContent = fileContent.replaceFirst(
-					"level=\"ERROR\"", "level=\"ERROR_FOUND\"");
-
-				FileUtil.write(fileName, fileContent);
-
-				Element messageElement = eventElement.element("message");
-
-				String messageText = messageElement.getText();
-
-				if (isIgnorableErrorLine(messageText)) {
-					continue;
-				}
-
-				StringBuilder sb = new StringBuilder();
-
-				sb.append("LIFERAY_ERROR: ");
-				sb.append(messageText);
-
-				System.out.println(sb.toString());
-
-				exceptions.add(new PoshiRunnerWarningException(sb.toString()));
-			}
-		}
-
-		if (!exceptions.isEmpty()) {
-			addToLiferayExceptions(exceptions);
-
-			throw exceptions.get(0);
 		}
 	}
 

@@ -172,18 +172,9 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<var name="key_pageTemplateName" value="Page Template Name" />
-
-		<execute function="AssertClick" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="Page Template Name" />
-
-		<execute function="AssertClick" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
-
-		<execute function="SelectWindow" locator1="title=Page Template Name - Liferay" />
-
-		<var name="key_pageName" value="Page Template Name" />
-
-		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="Page Template Name" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Page Template Name" />
+		<execute macro="PageTemplate#viewPG">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
@@ -194,17 +185,8 @@
 			<var name="pageTemplateName" value="Page Template Name" />
 		</execute>
 
-		<var name="key_pageTemplateName" value="Page Template Name" />
-
-		<execute function="AssertClick" locator1="PageTemplates#PAGE_TEMPLATE_TABLE_NAME" value1="Page Template Name Edit" />
-
-		<execute function="AssertClick" locator1="PageTemplates#OPEN_PAGE_TEMPLATE" value1="Open Page Template" />
-
-		<execute function="SelectWindow" locator1="title=Page Template Name Edit - Liferay" />
-
-		<var name="key_pageName" value="Page Template Name" />
-
-		<execute function="AssertTextEquals" locator1="Home#SITE_NAME" value1="Page Template Name Edit" />
-		<execute function="AssertTextEquals" locator1="Home#PAGE" value1="Page Template Name Edit" />
+		<execute macro="PageTemplate#viewPG">
+			<var name="pageTemplateName" value="Page Template Name Edit" />
+		</execute>
 	</command>
 </definition>

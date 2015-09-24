@@ -17,7 +17,6 @@ package com.liferay.portal.repository;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
@@ -55,14 +54,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class RepositoryProviderImpl
 	implements RepositoryProvider, CacheRegistryItem {
-
-	public void afterPropertiesSet() {
-		CacheRegistryUtil.register(this);
-	}
-
-	public void destroy() {
-		CacheRegistryUtil.unregister(getRegistryName());
-	}
 
 	@Override
 	public LocalRepository getFileEntryLocalRepository(long fileEntryId)

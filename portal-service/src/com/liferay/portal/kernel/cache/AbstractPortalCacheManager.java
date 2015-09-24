@@ -229,8 +229,6 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	protected abstract PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration();
 
-	protected abstract String getPortalCacheManagerType();
-
 	protected void initialize() {
 		if ((_portalCacheManagerConfiguration != null) ||
 			(_mpiOnly && SPIUtil.isSPI())) {

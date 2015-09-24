@@ -14,13 +14,12 @@
 
 package com.liferay.portal.tools;
 
-import com.liferay.portal.cache.DummyPortalCacheManager;
+import com.liferay.portal.cache.DummyPortalCache;
 import com.liferay.portal.cache.key.SimpleCacheKeyGenerator;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,6 +58,9 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Raymond Augé
@@ -162,16 +164,8 @@ public class ToolDependencies {
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		registry.registerService(
-			SingleVMPool.class,
-			new TestSingleVMPool(
-				new DummyPortalCacheManager<>(
-					PortalCacheManagerNames.SINGLE_VM)));
-		registry.registerService(
-			MultiVMPool.class,
-			new TestMultiVMPool(
-				new DummyPortalCacheManager<>(
-					PortalCacheManagerNames.MULTI_VM)));
+		registry.registerService(SingleVMPool.class, new TestSingleVMPool());
+		registry.registerService(MultiVMPool.class, new TestMultiVMPool());
 	}
 
 	public static void wireDeployers() {
@@ -196,19 +190,8 @@ public class ToolDependencies {
 
 	private static class TestMultiVMPool implements MultiVMPool {
 
-		public TestMultiVMPool(
-			PortalCacheManager<? extends Serializable, ?>
-				portalCacheManager) {
-
-			_portalCacheManager =
-				(PortalCacheManager
-					<? extends Serializable, ? extends Serializable>)
-						portalCacheManager;
-		}
-
 		@Override
 		public void clear() {
-			_portalCacheManager.clearAll();
 		}
 
 		/**
@@ -250,15 +233,25 @@ public class ToolDependencies {
 		public PortalCache<? extends Serializable, ? extends Serializable>
 			getPortalCache(String portalCacheName) {
 
-			return _portalCacheManager.getPortalCache(portalCacheName);
+			PortalCache<? extends Serializable, ? extends Serializable>
+				portalCache = _portalCaches.get(portalCacheName);
+
+			if (portalCache != null) {
+				return portalCache;
+			}
+
+			portalCache = new DummyPortalCache<>(portalCacheName);
+
+			_portalCaches.putIfAbsent(portalCacheName, portalCache);
+
+			return _portalCaches.get(portalCacheName);
 		}
 
 		@Override
 		public PortalCache<? extends Serializable, ? extends Serializable>
 			getPortalCache(String portalCacheName, boolean blocking) {
 
-			return _portalCacheManager.getPortalCache(
-				portalCacheName, blocking);
+			return getPortalCache(portalCacheName);
 		}
 
 		@Override
@@ -266,7 +259,7 @@ public class ToolDependencies {
 			<? extends Serializable, ? extends Serializable>
 			 getPortalCacheManager() {
 
-			return _portalCacheManager;
+			return null;
 		}
 
 		/**
@@ -281,26 +274,23 @@ public class ToolDependencies {
 
 		@Override
 		public void removePortalCache(String portalCacheName) {
-			_portalCacheManager.removePortalCache(portalCacheName);
+			_portalCaches.remove(portalCacheName);
 		}
 
-		private final PortalCacheManager
-			<? extends Serializable, ? extends Serializable>
-				_portalCacheManager;
+		private final
+			ConcurrentMap<String,
+				PortalCache<? extends Serializable, ? extends Serializable>>
+					_portalCaches = new ConcurrentHashMap<>();
 
 	}
 
 	private static class TestSingleVMPool implements SingleVMPool {
 
-		public TestSingleVMPool(
-			PortalCacheManager<? extends Serializable, ?> portalCacheManager) {
-
-			_portalCacheManager = portalCacheManager;
+		public TestSingleVMPool() {
 		}
 
 		@Override
 		public void clear() {
-			_portalCacheManager.clearAll();
 		}
 
 		/**
@@ -339,22 +329,32 @@ public class ToolDependencies {
 		public PortalCache<? extends Serializable, ?> getPortalCache(
 			String portalCacheName) {
 
-			return _portalCacheManager.getPortalCache(portalCacheName);
+			PortalCache<? extends Serializable, ?> portalCache =
+				_portalCaches.get(portalCacheName);
+
+			if (portalCache != null) {
+				return portalCache;
+			}
+
+			portalCache = new DummyPortalCache<>(portalCacheName);
+
+			_portalCaches.putIfAbsent(portalCacheName, portalCache);
+
+			return _portalCaches.get(portalCacheName);
 		}
 
 		@Override
 		public PortalCache<? extends Serializable, ?> getPortalCache(
 			String portalCacheName, boolean blocking) {
 
-			return _portalCacheManager.getPortalCache(
-				portalCacheName, blocking);
+			return getPortalCache(portalCacheName);
 		}
 
 		@Override
 		public PortalCacheManager<? extends Serializable, ?>
 			getPortalCacheManager() {
 
-			return _portalCacheManager;
+			return null;
 		}
 
 		/**
@@ -369,11 +369,12 @@ public class ToolDependencies {
 
 		@Override
 		public void removePortalCache(String portalCacheName) {
-			_portalCacheManager.removePortalCache(portalCacheName);
+			_portalCaches.remove(portalCacheName);
 		}
 
-		private final PortalCacheManager<? extends Serializable, ?>
-			_portalCacheManager;
+		private final
+			ConcurrentMap<String, PortalCache<? extends Serializable, ?>>
+				_portalCaches = new ConcurrentHashMap<>();
 
 	}
 

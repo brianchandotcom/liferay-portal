@@ -2083,8 +2083,7 @@ public class TableMapperTest {
 			_tableMapper = tableMapper;
 		}
 
-		private final Map<String, Object[]> _records = new
-			HashMap<String, Object[]>();
+		private final Map<String, Object[]> _records = new HashMap<>();
 		private TableMapper<?, ?> _tableMapper;
 
 	}

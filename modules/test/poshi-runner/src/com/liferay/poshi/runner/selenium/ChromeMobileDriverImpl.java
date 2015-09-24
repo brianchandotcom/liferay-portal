@@ -38,6 +38,31 @@ public class ChromeMobileDriverImpl extends BaseMobileDriverImpl {
 			new AndroidDriver(_url, _desiredCapabilities));
 	}
 
+	public boolean isKeyboardVisible() throws Exception {
+		Runtime runtime = Runtime.getRuntime();
+
+		StringBuilder sb = new StringBuilder(4);
+
+		sb.append(PropsValues.MOBILE_ANDROID_HOME);
+		sb.append("/platform-tools/adb -s ");
+		sb.append(PropsValues.MOBILE_DEVICE_NAME);
+		sb.append(" shell dumpsys input_method | grep mInputShown");
+
+		Process process = runtime.exec(sb.toString());
+
+		InputStreamReader inputStreamReader = new InputStreamReader(
+			process.getInputStream());
+
+		BufferedReader inputBufferedReader = new BufferedReader(
+			inputStreamReader);
+
+		String inputShownString = inputBufferedReader.readLine();
+
+		inputShownString = inputShownString.replaceAll(".*mInputShown=", "");
+
+		return Boolean.parseBoolean(inputShownString);
+	}
+
 	private static final DesiredCapabilities _desiredCapabilities;
 	private static final URL _url;
 

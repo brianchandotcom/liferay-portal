@@ -63,14 +63,7 @@ public class PanelAppRegistry {
 	}
 
 	public List<PanelApp> getPanelApps(PanelCategory parentPanelCategory) {
-		List<PanelApp> panelApps = _serviceTrackerMap.getService(
-			parentPanelCategory.getKey());
-
-		if (panelApps == null) {
-			return Collections.emptyList();
-		}
-
-		return panelApps;
+		return getPanelApps(parentPanelCategory.getKey());
 	}
 
 	public List<PanelApp> getPanelApps(
@@ -101,6 +94,17 @@ public class PanelAppRegistry {
 				}
 
 			});
+	}
+
+	public List<PanelApp> getPanelApps(String parentPanelCategoryKey) {
+		List<PanelApp> panelApps = _serviceTrackerMap.getService(
+			parentPanelCategoryKey);
+
+		if (panelApps == null) {
+			return Collections.emptyList();
+		}
+
+		return panelApps;
 	}
 
 	@Activate

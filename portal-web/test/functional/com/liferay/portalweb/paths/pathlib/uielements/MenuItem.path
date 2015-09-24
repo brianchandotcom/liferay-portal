@@ -205,7 +205,7 @@
 </tr>
 <tr>
 	<td>DELETE</td>
-	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -290,7 +290,7 @@
 </tr>
 <tr>
 	<td>IMPORT</td>
-	<td>//ul[@class='dropdown-menu']//a[contains(.,'Import')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -325,7 +325,7 @@
 </tr>
 <tr>
 	<td>MANAGE</td>
-	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage')] | //li[contains(@class,'open')]//a[@role='menuitem' and contains(.,'Manage')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'Manage')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -430,7 +430,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//div[contains(@class,'open')]//a[contains(.,'Permissions')] | //li[contains(@class,'open')]//a[contains(.,'Permissions')] | //a[contains(.,'Permissions')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[contains(.,'Permissions')] | //li[contains(@class,'open')]//a[contains(.,'Permissions')] | //a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -635,7 +635,7 @@
 </tr>
 <tr>
 	<td>VIEW_PAGES</td>
-	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'View Pages')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'dropdown')]//a[@role='menuitem' and contains(.,'View Pages')]</td>
 	<td></td>
 </tr>
 <tr>

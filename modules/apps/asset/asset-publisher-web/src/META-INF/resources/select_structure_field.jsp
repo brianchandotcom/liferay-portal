@@ -78,7 +78,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 					<portlet:param name="fieldsNamespace" value="<%= fieldsNamespace %>" />
 				</liferay-portlet:resourceURL>
 
-				<aui:form action="<%= structureFieldURL %>" name='<%= name + "fieldForm" %>' onSubmit="event.preventDefault()">
+				<aui:form action="<%= structureFieldURL %>" disabled="<%= !name.equals(assetPublisherDisplayContext.getDDMStructureFieldName()) %>" name='<%= name + "fieldForm" %>' onSubmit="event.preventDefault()">
 					<aui:input disabled="<%= true %>" name="buttonId" type="hidden" value='<%= renderResponse.getNamespace() + "applyButton" + name %>' />
 
 					<%
@@ -218,6 +218,4 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 		},
 		'input[name=<portlet:namespace />selectStructureFieldSubtype]'
 	);
-
-	toggleDisabledFormFields(fieldSubtypeForms, true);
 </aui:script>

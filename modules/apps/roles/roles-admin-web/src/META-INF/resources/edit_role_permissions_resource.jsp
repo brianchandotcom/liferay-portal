@@ -17,6 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
+PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
 Role role = (Role)request.getAttribute("edit_role_permissions.jsp-role");
 
 String portletResource = (String)request.getAttribute("edit_role_permissions.jsp-portletResource");
@@ -27,12 +28,10 @@ String curModelResourceName = (String)request.getAttribute("edit_role_permission
 
 Portlet curPortlet = null;
 String curPortletId = StringPool.BLANK;
-String curPortletControlPanelEntryCategory = StringPool.BLANK;
 
 if (Validator.isNotNull(curPortletResource)) {
 	curPortlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), curPortletResource);
 	curPortletId = curPortlet.getPortletId();
-	curPortletControlPanelEntryCategory = curPortlet.getControlPanelEntryCategory();
 }
 
 List curActions = ResourceActionsUtil.getResourceActions(curPortletResource, curModelResource);
@@ -45,7 +44,7 @@ List<String> headerNames = new ArrayList<String>();
 
 headerNames.add("action");
 
-boolean showScope = _isShowScope(role, curModelResource, curPortletId);
+boolean showScope = _isShowScope(request, role, curModelResource, curPortletId);
 
 if (showScope) {
 	headerNames.add("sites");
@@ -73,7 +72,7 @@ for (int i = 0; i < results.size(); i++) {
 	}
 
 	if (Validator.isNotNull(curPortletResource)) {
-		if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) && Validator.isNull(curPortlet.getControlPanelEntryCategory())) {
+		if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) && !panelCategoryHelper.containsPortlet(curPortletId, PanelCategoryKeys.CONTROL_PANEL)) {
 			continue;
 		}
 
@@ -103,7 +102,7 @@ for (int i = 0; i < results.size(); i++) {
 		if (Validator.isNotNull(portletResource)) {
 			Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
-			if (Validator.isNotNull(portlet.getControlPanelEntryCategory()) && portlet.getControlPanelEntryCategory().startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
+			if ((portlet!= null) && panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.SITE_ADMINISTRATION)) {
 				supportsFilterByGroup = true;
 			}
 		}

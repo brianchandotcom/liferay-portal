@@ -31,6 +31,7 @@ page import="com.liferay.application.list.PanelCategory" %><%@
 page import="com.liferay.application.list.PanelCategoryRegistry" %><%@
 page import="com.liferay.application.list.constants.ApplicationListWebKeys" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
+page import="com.liferay.application.list.display.context.logic.PanelCategoryHelper" %><%@
 page import="com.liferay.portal.DuplicateRoleException" %><%@
 page import="com.liferay.portal.NoSuchRoleException" %><%@
 page import="com.liferay.portal.RequiredRoleException" %><%@
@@ -96,7 +97,6 @@ page import="com.liferay.portal.service.permission.PortalPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.RolePermissionUtil" %><%@
 page import="com.liferay.portal.theme.ThemeDisplay" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.PortletCategoryKeys" %><%@
 page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.portal.util.WebAppPool" %><%@
@@ -153,16 +153,14 @@ private String _getActionLabel(HttpServletRequest request, ThemeDisplay themeDis
 	String actionLabel = null;
 
 	if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+		PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), resourceName);
 
-		String controlPanelCategory = portlet.getControlPanelEntryCategory();
-
-		if (Validator.isNull(controlPanelCategory)) {
-		}
-		else if (controlPanelCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
+		if (panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.SITE_ADMINISTRATION)) {
 			actionLabel = LanguageUtil.get(request, "access-in-site-administration");
 		}
-		else if (controlPanelCategory.equals(PortletCategoryKeys.USER_MY_ACCOUNT)) {
+		else if (panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.USER)) {
 			actionLabel = LanguageUtil.get(request, "access-in-my-account");
 		}
 	}
@@ -183,16 +181,8 @@ private StringBundler _getResourceHtmlId(String resource) {
 	return sb;
 }
 
-private boolean _isShowScope(Role role, String curModelResource, String curPortletResource) throws SystemException {
+private boolean _isShowScope(HttpServletRequest request, Role role, String curModelResource, String curPortletResource) throws SystemException {
 	boolean showScope = true;
-
-	Portlet curPortlet = null;
-	String curPortletControlPanelEntryCategory = StringPool.BLANK;
-
-	if (Validator.isNotNull(curPortletResource)) {
-		curPortlet = PortletLocalServiceUtil.getPortletById(role.getCompanyId(), curPortletResource);
-		curPortletControlPanelEntryCategory = curPortlet.getControlPanelEntryCategory();
-	}
 
 	if (curPortletResource.equals(PortletKeys.PORTAL)) {
 		showScope = false;
@@ -200,8 +190,14 @@ private boolean _isShowScope(Role role, String curModelResource, String curPortl
 	else if (role.getType() != RoleConstants.TYPE_REGULAR) {
 		showScope = false;
 	}
-	else if (Validator.isNotNull(curPortletControlPanelEntryCategory) && !curPortletControlPanelEntryCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
-		showScope = false;
+	else if (Validator.isNotNull(curPortletResource)) {
+		Portlet curPortlet = PortletLocalServiceUtil.getPortletById(role.getCompanyId(), curPortletResource);
+
+		PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
+		if ((curPortlet != null) && panelCategoryHelper.containsPortlet(curPortlet.getPortletId(), PanelCategoryKeys.SITE_ADMINISTRATION)) {
+			showScope = false;
+		}
 	}
 
 	if (Validator.isNotNull(curModelResource) && curModelResource.equals(Group.class.getName())) {

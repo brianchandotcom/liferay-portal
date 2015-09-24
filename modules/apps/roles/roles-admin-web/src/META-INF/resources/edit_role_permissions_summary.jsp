@@ -205,7 +205,7 @@ for (int i = 0; i < results.size(); i++) {
 	row.addText(sb.toString());
 
 	if (scope == ResourceConstants.SCOPE_COMPANY) {
-		row.addText(LanguageUtil.get(request, _isShowScope(role, curResource, curPortletName)? "all-sites" : StringPool.BLANK));
+		row.addText(LanguageUtil.get(request, _isShowScope(request, role, curResource, curPortletName)? "all-sites" : StringPool.BLANK));
 	}
 	else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
 	}

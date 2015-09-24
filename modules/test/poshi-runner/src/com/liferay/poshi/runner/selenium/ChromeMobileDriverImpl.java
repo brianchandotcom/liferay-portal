@@ -20,7 +20,6 @@ import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 import java.net.URL;
@@ -56,6 +55,11 @@ public class ChromeMobileDriverImpl extends BaseMobileDriverImpl {
 		}
 
 		context("WEBVIEW_1");
+	}
+
+	@Override
+	public boolean isInViewport(String locator) {
+		return true;
 	}
 
 	public boolean isKeyboardVisible() throws Exception {

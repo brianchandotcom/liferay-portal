@@ -45,68 +45,69 @@ public class VerifyLayoutSet extends VerifyProcess {
 		ActionableDynamicQuery actionableDynamicQuery =
 			LayoutSetLocalServiceUtil.getActionableDynamicQuery();
 
-			actionableDynamicQuery.setAddCriteriaMethod(
-				new ActionableDynamicQuery.AddCriteriaMethod() {
-					@Override
-					public void addCriteria(DynamicQuery dynamicQuery) {
-						Property layoutSetPrototypeUuidProperty =
-							PropertyFactoryUtil.forName(
-								"layoutSetPrototypeUuid");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-						dynamicQuery.add(
-							RestrictionsFactoryUtil.and(
-								layoutSetPrototypeUuidProperty.isNotNull(),
-								layoutSetPrototypeUuidProperty.ne(
-									StringPool.BLANK)));
-					}
-				});
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property layoutSetPrototypeUuidProperty =
+						PropertyFactoryUtil.forName("layoutSetPrototypeUuid");
 
-			actionableDynamicQuery.setPerformActionMethod(
-				new ActionableDynamicQuery.PerformActionMethod() {
-					@Override
-					public void performAction(Object object)
-						throws PortalException {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.and(
+							layoutSetPrototypeUuidProperty.isNotNull(),
+							layoutSetPrototypeUuidProperty.ne(
+								StringPool.BLANK)));
+				}
 
-						LayoutSet layoutSet = (LayoutSet)object;
+			});
 
-						Group layoutSetGroup = layoutSet.getGroup();
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-						boolean updateRequired = false;
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
 
-						if (layoutSetGroup.isSite()) {
-							List<Layout> layoutList =
-								LayoutLocalServiceUtil.getLayouts(
-										layoutSetGroup.getGroupId(),
-										layoutSet.isPrivateLayout());
+					LayoutSet layoutSet = (LayoutSet)object;
 
-							if (layoutList.isEmpty() &&
-								layoutSetGroup.isOrganization()) {
+					Group layoutSetGroup = layoutSet.getGroup();
 
-								updateRequired = true;
-							}
-						}
-						else if (layoutSetGroup.isOrganization()) {
-							updateRequired = true;
-						}
+					boolean updateLayoutSet = false;
 
-						if (updateRequired) {
-							layoutSet.setLayoutSetPrototypeLinkEnabled(
-								Boolean.FALSE);
-							layoutSet.setLayoutSetPrototypeUuid(
-								StringPool.BLANK);
-							layoutSet.setModifiedDate(new Date());
-							layoutSet.setPageCount(0);
+					if (layoutSetGroup.isSite()) {
+						List<Layout> layouts =
+							LayoutLocalServiceUtil.getLayouts(
+								layoutSetGroup.getGroupId(),
+								layoutSet.isPrivateLayout());
 
-							LayoutSetLocalServiceUtil.updateLayoutSet(
-								layoutSet);
+						if (layouts.isEmpty() &&
+							layoutSetGroup.isOrganization()) {
 
-							GroupLocalServiceUtil.updateSite(
-								layoutSetGroup.getGroupId(), false);
+							updateLayoutSet = true;
 						}
 					}
-				});
+					else if (layoutSetGroup.isOrganization()) {
+						updateLayoutSet = true;
+					}
 
-			actionableDynamicQuery.performActions();
+					if (updateLayoutSet) {
+						layoutSet.setLayoutSetPrototypeLinkEnabled(
+							Boolean.FALSE);
+						layoutSet.setLayoutSetPrototypeUuid(StringPool.BLANK);
+						layoutSet.setModifiedDate(new Date());
+						layoutSet.setPageCount(0);
+
+						LayoutSetLocalServiceUtil.updateLayoutSet(layoutSet);
+
+						GroupLocalServiceUtil.updateSite(
+							layoutSetGroup.getGroupId(), false);
+					}
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 }

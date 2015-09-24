@@ -14,7 +14,6 @@
 
 package com.liferay.poshi.runner.selenium;
 
-import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
 import com.liferay.poshi.runner.util.OSDetector;
@@ -831,14 +830,17 @@ public abstract class BaseWebDriverImpl
 	public void uploadCommonFile(String location, String value)
 		throws Exception {
 
-		String relativePathName =
+		String filePath =
 			FileUtil.getSeparator() + _testDependenciesDirName +
 				FileUtil.getSeparator() + value;
 
-		String fileName = LiferaySeleniumHelper.getSourceFileCanonicalPath(
-			_TEST_SEARCH_DIR_NAMES, relativePathName);
+		filePath = LiferaySeleniumHelper.getSourceDirFilePath(filePath);
 
-		uploadFile(location, fileName);
+		if (OSDetector.isWindows()) {
+			filePath = StringUtil.replace(filePath, "/", "\\");
+		}
+
+		uploadFile(location, filePath);
 	}
 
 	@Override
@@ -852,7 +854,13 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void uploadTempFile(String location, String value) {
-		uploadFile(location, _outputDirName + FileUtil.getSeparator() + value);
+		String filePath = _outputDirName + FileUtil.getSeparator() + value;
+
+		if (OSDetector.isWindows()) {
+			filePath = StringUtil.replace(filePath, "/", "\\");
+		}
+
+		uploadFile(location, filePath);
 	}
 
 	@Override
@@ -950,9 +958,6 @@ public abstract class BaseWebDriverImpl
 
 	private static final String _TEST_DEPENDENCIES_DIR_NAME =
 		PropsValues.TEST_DEPENDENCIES_DIR_NAME;
-
-	private static final String[] _TEST_SEARCH_DIR_NAMES =
-		PoshiRunnerGetterUtil.getTestSearchDirNames();
 
 	private String _clipBoard = "";
 	private final String _outputDirName;

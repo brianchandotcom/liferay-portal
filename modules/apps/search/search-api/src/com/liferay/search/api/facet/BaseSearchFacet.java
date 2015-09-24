@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.search.web.facet;
+package com.liferay.search.api.facet;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.search.web.util.SearchFacet;
+import com.liferay.search.api.util.SearchFacet;
 
 /**
  * @author Eudaldo Alonso

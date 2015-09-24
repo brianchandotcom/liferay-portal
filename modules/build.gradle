@@ -56,7 +56,7 @@ if (System.getProperty("line.separator") != "\n") {
 
 			File pomFile = new File(gradle.gradleUserHomeDir, pomFileName)
 
-			ant.fixcrlf eol: "lf", file: pomFile, fixlast: false
+			ant.fixcrlf encoding: "UTF-8", eol: "lf", file: pomFile, fixlast: false
 
 			HashValue hashValue = HashUtil.sha1(pomFile)
 

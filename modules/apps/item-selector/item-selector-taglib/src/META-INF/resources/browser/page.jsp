@@ -392,31 +392,31 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 									JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 								%>
 
-								<liferay-ui:search-container-column-image
-									src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
-								/>
+									<liferay-ui:search-container-column-image
+										src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
+									/>
 
-								<liferay-ui:search-container-column-text colspan="<%= 2 %>">
-									<div class="item-preview" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-title="<%= HtmlUtil.escapeAttribute(title) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>">
-										<liferay-ui:app-view-entry
-											assetCategoryClassName="<%= DLFileEntry.class.getName() %>"
-											assetCategoryClassPK="<%= fileEntry.getFileEntryId() %>"
-											assetTagClassName="<%= DLFileEntry.class.getName() %>"
-											assetTagClassPK="<%= fileEntry.getFileEntryId() %>"
-											author="<%= fileEntry.getUserName() %>"
-											createDate="<%= fileEntry.getCreateDate() %>"
-											description="<%= HtmlUtil.escape(fileEntry.getDescription()) %>"
-											displayStyle="descriptive"
-											groupId="<%= fileEntry.getGroupId() %>"
-											markupView="lexicon"
-											modifiedDate="<%= fileEntry.getModifiedDate() %>"
-											showCheckbox="<%= false %>"
-											status="<%= latestFileVersion.getStatus() %>"
-											title="<%= HtmlUtil.escape(title) %>"
-											version="<%= String.valueOf(fileEntry.getVersion()) %>"
-										/>
-									</div>
-								</liferay-ui:search-container-column-text>
+									<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+										<div class="item-preview" data-href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-title="<%= HtmlUtil.escapeAttribute(title) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>">
+											<liferay-ui:app-view-entry
+												assetCategoryClassName="<%= DLFileEntry.class.getName() %>"
+												assetCategoryClassPK="<%= fileEntry.getFileEntryId() %>"
+												assetTagClassName="<%= DLFileEntry.class.getName() %>"
+												assetTagClassPK="<%= fileEntry.getFileEntryId() %>"
+												author="<%= fileEntry.getUserName() %>"
+												createDate="<%= fileEntry.getCreateDate() %>"
+												description="<%= HtmlUtil.escape(fileEntry.getDescription()) %>"
+												displayStyle="descriptive"
+												groupId="<%= fileEntry.getGroupId() %>"
+												markupView="lexicon"
+												modifiedDate="<%= fileEntry.getModifiedDate() %>"
+												showCheckbox="<%= false %>"
+												status="<%= latestFileVersion.getStatus() %>"
+												title="<%= HtmlUtil.escape(title) %>"
+												version="<%= String.valueOf(fileEntry.getVersion()) %>"
+											/>
+										</div>
+									</liferay-ui:search-container-column-text>
 
 								<%
 								}
@@ -428,7 +428,7 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 				</c:choose>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" paginate="<%= false %>" resultRowSplitter="<%= new RepositoryEntryResultRowSplitter() %>" searchContainer="<%= searchContainer %>" />
 
 			<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
 		</liferay-ui:search-container>

@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,6 +30,10 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		return _displayStyle;
 	}
 
+	public ResultRowSplitter getResultRowSplitter() {
+		return _resultRowSplitter;
+	}
+
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
@@ -39,6 +44,10 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 
 	public void setPaginate(boolean paginate) {
 		_paginate = paginate;
+	}
+
+	public void setResultRowSplitter(ResultRowSplitter resultRowSplitter) {
+		_resultRowSplitter = resultRowSplitter;
 	}
 
 	@Override
@@ -69,11 +78,14 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		super.setAttributes(request);
 
 		request.setAttribute(
+			"liferay-ui:search-iterator:resultRowSplitter", _resultRowSplitter);
+		request.setAttribute(
 			"liferay-ui:search-iterator:paginate", String.valueOf(_paginate));
 	}
 
 	private String _displayStyle = DEFAULT_DISPLAY_STYPE;
 	private String _markupView;
 	private boolean _paginate = true;
+	private ResultRowSplitter _resultRowSplitter;
 
 }

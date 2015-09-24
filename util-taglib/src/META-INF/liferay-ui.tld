@@ -4858,6 +4858,11 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
+			<name>resultRowSplitter</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>All configurable properties of the search container, such as <![CDATA[<code>cur</code>]]> and <![CDATA[<code>curParam</code>]]>. These properties are set with <![CDATA[<code>searchContainer.getCur()</code>]]> and <![CDATA[<code>searchContainer.getCurParam()</code>]]> respectively.</description>
 			<name>searchContainer</name>
 			<required>false</required>

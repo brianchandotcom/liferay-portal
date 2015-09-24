@@ -30,6 +30,7 @@ page import="com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil"
 page import="com.liferay.item.selector.taglib.servlet.ServletContextUtil" %><%@
 page import="com.liferay.item.selector.taglib.servlet.taglib.BrowserTag" %><%@
 page import="com.liferay.item.selector.taglib.util.ItemSelectorBrowserUtil" %><%@
+page import="com.liferay.item.selector.taglib.util.RepositoryEntryResultRowSplitter" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@

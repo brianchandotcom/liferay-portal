@@ -85,9 +85,7 @@ public class VerifyLayoutSet extends VerifyProcess {
 								updateRequired = true;
 							}
 						}
-						else if (!layoutSetGroup.isSite() &&
-								 layoutSetGroup.isOrganization()) {
-
+						else if (layoutSetGroup.isOrganization()) {
 							updateRequired = true;
 						}
 

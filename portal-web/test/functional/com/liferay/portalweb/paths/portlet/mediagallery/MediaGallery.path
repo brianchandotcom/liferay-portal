@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ENTRY_RECYCLE_BIN_ICON</td>
-	<td>//span[contains(.,'Move to the Recycle Bin')]/a/i</td>
+	<td>//ul//span[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <!--ENTRY-->
@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TITLE</td>
-	<td>//span[@class='image-title' and contains(.,'${key_mgDocumentTitle}')]</td>
+	<td>//span[@class='entry-title' and contains(.,'${key_mgDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

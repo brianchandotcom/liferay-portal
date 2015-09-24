@@ -129,14 +129,14 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	public AssetRenderer<?> getAssetRenderer() throws PortalException {
-		long assetEntryVersionId = ParamUtil.getLong(
-			_workflowTaskRequestHelper.getRequest(), "assetEntryVersionId");
+		long assetEntryClassPK = ParamUtil.getLong(
+			_workflowTaskRequestHelper.getRequest(), "assetEntryClassPK");
 
 		AssetRendererFactory<?> assetRendererFactory =
 			getAssetRendererFactory();
 
 		return assetRendererFactory.getAssetRenderer(
-			assetEntryVersionId, AssetRendererFactory.TYPE_LATEST);
+			assetEntryClassPK, AssetRendererFactory.TYPE_LATEST);
 	}
 
 	public AssetRenderer<?> getAssetRenderer(WorkflowTask workflowTask)

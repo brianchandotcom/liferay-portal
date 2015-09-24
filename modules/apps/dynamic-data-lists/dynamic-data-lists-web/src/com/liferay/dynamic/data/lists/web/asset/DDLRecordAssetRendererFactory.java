@@ -67,7 +67,18 @@ public class DDLRecordAssetRendererFactory
 
 		DDLRecord record = DDLRecordLocalServiceUtil.getRecord(classPK);
 
-		DDLRecordVersion recordVersion = record.getRecordVersion();
+		DDLRecordVersion recordVersion = null;
+
+		if (type == TYPE_LATEST) {
+			recordVersion = record.getLatestRecordVersion();
+		}
+		else if (type == TYPE_LATEST_APPROVED) {
+			recordVersion = record.getRecordVersion();
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Unknown asset renderer type " + type);
+		}
 
 		DDLRecordAssetRenderer ddlRecordAssetRenderer =
 			new DDLRecordAssetRenderer(record, recordVersion);

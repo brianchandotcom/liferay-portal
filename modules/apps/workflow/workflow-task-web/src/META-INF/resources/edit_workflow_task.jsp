@@ -144,7 +144,7 @@ renderResponse.setTitle(headerTitle);
 
 										<c:if test="<%= assetEntry != null %>">
 											<portlet:param name="assetEntryId" value="<%= String.valueOf(assetEntry.getEntryId()) %>" />
-											<portlet:param name="assetEntryVersionId" value="<%= String.valueOf(classPK) %>" />
+											<portlet:param name="assetEntryClassPK" value="<%= String.valueOf(assetEntry.getClassPK()) %>" />
 										</c:if>
 
 										<portlet:param name="type" value="<%= assetRendererFactory.getType() %>" />
@@ -154,16 +154,13 @@ renderResponse.setTitle(headerTitle);
 									<liferay-ui:icon iconCssClass="icon-search" message="view[action]" method="get" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' url="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, null) : viewFullContentURL.toString() %>" />
 
 									<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
-
 										<liferay-ui:icon iconCssClass="icon-copy" message="diffs" url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>" />
 									</c:if>
 								</c:if>
 
 								<c:if test="<%= workflowTaskDisplayContext.hasEditPortletURL(workflowTask) %>">
-
 									<c:choose>
 										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && showEditURL %>">
-
 											<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>" />
 										</c:when>
 										<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !showEditURL && !workflowTask.isCompleted() %>">

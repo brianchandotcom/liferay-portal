@@ -820,16 +820,16 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		ServiceComponentLocalServiceUtil.verifyDB();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		EditServerMVCActionCommand.class);
-
 	private static final String _REINDEX_PORTAL_BACKGROUND_TASK_EXECUTOR =
 		"com.liferay.portal.search.internal.background.task." +
 			"ReindexPortalBackgroundTaskExecutor";
 
 	private static final String
 		_REINDEX_SINGLE_INDEXER_BACKGROUND_TASK_EXECUTOR =
-		"com.liferay.portal.search.internal.background.task." +
-			"ReindexSingleIndexerBackgroundTaskExecutor";
+			"com.liferay.portal.search.internal.background.task." +
+				"ReindexSingleIndexerBackgroundTaskExecutor";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditServerMVCActionCommand.class);
 
 }

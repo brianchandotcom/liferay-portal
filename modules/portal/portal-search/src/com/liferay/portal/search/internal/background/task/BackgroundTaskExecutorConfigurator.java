@@ -15,7 +15,6 @@
 package com.liferay.portal.search.internal.background.task;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutorRegistry;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;

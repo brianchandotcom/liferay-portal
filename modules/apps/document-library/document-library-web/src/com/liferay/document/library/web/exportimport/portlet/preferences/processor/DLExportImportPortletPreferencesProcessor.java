@@ -18,6 +18,8 @@ import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -36,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.ReadOnlyException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,6 +72,8 @@ public class DLExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
+		String portletId = portletDataContext.getPortletId();
+
 		long rootFolderId = GetterUtil.getLong(
 			portletPreferences.getValue("rootFolderId", null));
 
@@ -79,14 +84,15 @@ public class DLExportImportPortletPreferencesProcessor
 				folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 			}
 			catch (PortalException e) {
+				String errorMessage =
+					"Portlet " + portletId +
+						" refers to an invalid root folder ID " + rootFolderId;
+
 				if (_log.isErrorEnabled()) {
-					_log.error(
-						"Portlet " + portletId +
-							" refers to an invalid root folder ID " +
-								rootFolderId);
+					_log.error(errorMessage);
 				}
 
-				throw e;
+				throw new PortletDataException(errorMessage, e);
 			}
 
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -122,8 +128,15 @@ public class DLExportImportPortletPreferencesProcessor
 				rootFolderId = MapUtil.getLong(
 					folderIds, rootFolderId, rootFolderId);
 
-				portletPreferences.setValue(
-					"rootFolderId", String.valueOf(rootFolderId));
+				try {
+					portletPreferences.setValue(
+						"rootFolderId", String.valueOf(rootFolderId));
+				}
+				catch (ReadOnlyException roe) {
+					throw new PortletDataException(
+						"Unable to update portlet preferences during import",
+						roe);
+				}
 			}
 		}
 
@@ -147,6 +160,9 @@ public class DLExportImportPortletPreferencesProcessor
 		_portletDisplayTemplateImportCapability =
 			portletDisplayTemplateImportCapability;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLExportImportPortletPreferencesProcessor.class);
 
 	private PortletDisplayTemplateExportCapability
 		_portletDisplayTemplateExportCapability;

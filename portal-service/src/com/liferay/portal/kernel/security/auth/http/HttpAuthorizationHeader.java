@@ -70,6 +70,26 @@ public class HttpAuthorizationHeader {
 		_scheme = scheme;
 	}
 
+	public String toChallengeString() {
+		StringBundler sb = new StringBundler(_authParameters.size() * 6 + 2);
+
+		sb.append(_scheme);
+		sb.append(StringPool.SPACE);
+
+		for (Map.Entry<String, String> entry : _authParameters.entrySet()) {
+			sb.append(entry.getKey());
+			sb.append(StringPool.EQUAL);
+			sb.append(StringPool.QUOTE);
+			sb.append(entry.getValue());
+			sb.append(StringPool.QUOTE);
+			sb.append(StringPool.COMMA_AND_SPACE);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
 	@Override
 	public String toString() {
 		if (StringUtil.equalsIgnoreCase(_scheme, SCHEME_BASIC)) {
@@ -95,7 +115,7 @@ public class HttpAuthorizationHeader {
 	}
 
 	protected String toStringDigest() {
-		StringBundler sb = new StringBundler(_authParameters.size() * 6 + 1);
+		StringBundler sb = new StringBundler(_authParameters.size() * 6 + 2);
 
 		sb.append(SCHEME_DIGEST);
 		sb.append(StringPool.SPACE);

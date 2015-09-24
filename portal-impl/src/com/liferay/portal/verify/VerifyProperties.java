@@ -503,17 +503,17 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed",
-			"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed",
+			"auth.verifier.TunnelAuthVerifier.hosts.allowed",
 			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.TunnelingServletAuthVerifier.urls.excludes",
-			"auth.verifier.TunnelingServletAuthVerifier.urls.excludes",
+			"auth.verifier.TunnelAuthVerifier.urls.excludes",
 			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.TunnelingServletAuthVerifier.urls.includes",
-			"auth.verifier.TunnelingServletAuthVerifier.urls.includes",
+			"auth.verifier.TunnelAuthVerifier.urls.includes",
 			"com.liferay.portal.security.auth.verifier"
 		},
 

@@ -27,6 +27,10 @@ File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 
 boolean addPortalDependencies = true
 
+if (project.path.startsWith(":core:")) {
+	addPortalDependencies = false
+}
+
 distsDirName = FileUtil.relativize(rootProject.file("../tools/sdk/dist"), buildDir)
 group = "com.liferay"
 libsDirName = distsDirName

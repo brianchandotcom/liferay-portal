@@ -56,7 +56,7 @@ public class HypersonicLoader {
 			sb.append(StringPool.NEW_LINE);
 		}
 
-		DB db = HypersonicDB.getInstance();
+		DB db = new HypersonicDB(0, 0);
 
 		db.runSQLTemplateString(con, sb.toString(), false, true);
 	}
@@ -82,7 +82,7 @@ public class HypersonicLoader {
 
 		ToolDependencies.wireBasic();
 
-		DBFactoryUtil.setDB(DB.TYPE_HYPERSONIC);
+		DBFactoryUtil.setDB(DB.TYPE_HYPERSONIC, null);
 
 		// See LEP-2927. Appending ;shutdown=true to the database connection URL
 		// guarantees that ${databaseName}.log is purged.

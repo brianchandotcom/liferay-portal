@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class SampleMySQLDB extends MySQLDB {
 
+	public SampleMySQLDB(int majorVersion, int minorVersion) {
+		super(majorVersion, minorVersion);
+	}
+
 	@Override
 	public String buildSQL(String template) {
 		return StringUtil.replace(template, _GENERIC_TEMPLATE, _MYSQL_TEMPLATE);

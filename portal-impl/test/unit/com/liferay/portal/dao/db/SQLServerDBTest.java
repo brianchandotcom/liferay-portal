@@ -34,7 +34,7 @@ public class SQLServerDBTest extends BaseDBTestCase {
 
 	@Override
 	protected DB getDB() {
-		return SQLServerDB.getInstance();
+		return new SQLServerDB(0, 0);
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.dao.db;
 
+import javax.sql.DataSource;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -21,12 +23,12 @@ public interface DBFactory {
 
 	public DB getDB();
 
-	public DB getDB(Object dialect);
+	public DB getDB(Object dialect, DataSource dataSource);
 
-	public DB getDB(String type);
+	public DB getDB(String type, DataSource dataSource);
 
-	public void setDB(Object dialect);
+	public void setDB(Object dialect, DataSource dataSource);
 
-	public void setDB(String type);
+	public void setDB(String type, DataSource dataSource);
 
 }

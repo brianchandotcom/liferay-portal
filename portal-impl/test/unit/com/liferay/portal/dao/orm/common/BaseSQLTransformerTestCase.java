@@ -28,7 +28,7 @@ public abstract class BaseSQLTransformerTestCase {
 	public void setUp() {
 		DBFactoryUtil.setDBFactory(new DBFactoryImpl());
 
-		DBFactoryUtil.setDB(getDBType());
+		DBFactoryUtil.setDB(getDBType(), null);
 	}
 
 	protected abstract String getDBType();

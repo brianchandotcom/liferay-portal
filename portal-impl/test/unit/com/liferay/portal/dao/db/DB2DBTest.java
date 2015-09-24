@@ -34,7 +34,7 @@ public class DB2DBTest extends BaseDBTestCase {
 
 	@Override
 	protected DB getDB() {
-		return DB2DB.getInstance();
+		return new DB2DB(0, 0);
 	}
 
 }

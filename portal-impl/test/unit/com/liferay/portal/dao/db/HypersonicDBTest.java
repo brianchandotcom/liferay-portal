@@ -34,7 +34,7 @@ public class HypersonicDBTest extends BaseDBTestCase {
 
 	@Override
 	protected DB getDB() {
-		return HypersonicDB.getInstance();
+		return new HypersonicDB(0, 0);
 	}
 
 }

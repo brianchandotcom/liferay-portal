@@ -35,7 +35,7 @@ public class OracleDBTest extends BaseDBTestCase {
 
 	@Override
 	protected DB getDB() {
-		return OracleDB.getInstance();
+		return new OracleDB(0, 0);
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier;
+package com.liferay.portal.security.auth.verifier.digest.authentication;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
 import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
@@ -62,11 +63,13 @@ public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 			long userId = HttpAuthManagerUtil.getDigestUserId(request);
 
 			if (userId == 0) {
-
-				// Deprecated
-
 				boolean forcedDigestAuth = MapUtil.getBoolean(
 					accessControlContext.getSettings(), "digest_auth");
+
+				if (!forcedDigestAuth) {
+					forcedDigestAuth = GetterUtil.getBoolean(
+						configuration.getProperty("digest_auth"));
+				}
 
 				if (forcedDigestAuth) {
 					HttpAuthorizationHeader httpAuthorizationHeader =

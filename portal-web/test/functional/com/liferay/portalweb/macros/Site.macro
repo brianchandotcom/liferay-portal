@@ -632,7 +632,9 @@
 					<execute function="AssertClick" locator1="MySitesAvailableSites#SITE_TABLE_REQUEST_MEMBERSHIP" value1="Request Membership" />
 					<execute function="Type" locator1="TextArea#COMMENTS" value1="Please allow me to join the Restricted Site." />
 					<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request was sent. You will receive a reply by email." />
+
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+					<execute function="AssertTextEquals" locator1="Message#SUCCESS_1" value1="Your request was sent. You will receive a reply by email." />
 					<execute function="AssertTextEquals" locator1="MySitesAvailableSites#SITE_TABLE_MEMBERSHIP_REQUESTED" value1="Membership Requested" />
 				</then>
 			</elseif>

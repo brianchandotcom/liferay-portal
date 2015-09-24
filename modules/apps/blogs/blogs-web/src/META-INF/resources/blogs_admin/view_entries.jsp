@@ -108,7 +108,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 					<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 				</liferay-portlet:renderURL>
 
-				<%@ include file="/blogs_admin/search_columns.jspf" %>
+				<%@ include file="/blogs_admin/entry_search_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
@@ -122,7 +122,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH :Constants.DELETE %>');
+			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>');
 			form.fm('deleteEntryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 			submitForm(form, '<portlet:actionURL name="/blogs/edit_entry" />');

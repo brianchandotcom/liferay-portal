@@ -17,6 +17,8 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
+String navigation = ParamUtil.getString(request, "navigation");
+
 long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 String assetTagName = ParamUtil.getString(request, "tag");
 
@@ -32,9 +34,22 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
+		<portlet:renderURL var="viewEntriesURL" />
+
 		<aui:nav-item
+			href="<%= viewEntriesURL %>"
 			label="entries"
 			selected="<%= true %>"
+		/>
+
+		<portlet:renderURL var="viewImagesURL">
+			<portlet:param name="navigation" value="images" />
+		</portlet:renderURL>
+
+		<aui:nav-item
+			href="<%= viewImagesURL %>"
+			label="images"
+			selected='<%= navigation.equals("images") %>'
 		/>
 	</aui:nav>
 

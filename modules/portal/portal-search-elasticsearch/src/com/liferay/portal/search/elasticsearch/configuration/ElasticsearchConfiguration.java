@@ -29,6 +29,9 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "", required = false)
 	public String[] additionalConfigurations();
 
+	@Meta.AD(deflt = "", required = false)
+	public String[] additionalIndexConfigurations();
+
 	@Meta.AD(deflt = "false", required = false)
 	public boolean bootstrapMlockAll();
 

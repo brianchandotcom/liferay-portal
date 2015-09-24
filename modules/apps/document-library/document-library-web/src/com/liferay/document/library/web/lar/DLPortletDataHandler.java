@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
@@ -81,7 +79,6 @@ import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.exportimport.xstream.XStreamConverterRegistryUtil;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -334,73 +331,6 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			getRepositoryActionableDynamicQuery(portletDataContext);
 
 		repositoryActionableDynamicQuery.performCount();
-	}
-
-	@Override
-	protected PortletPreferences doProcessExportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		long rootFolderId = GetterUtil.getLong(
-			portletPreferences.getValue("rootFolderId", null));
-
-		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			Folder folder = null;
-
-			try {
-				folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
-			}
-			catch (PortalException e) {
-				if (_log.isErrorEnabled()) {
-					_log.error(
-						"Portlet " + portletId +
-							" refers to an invalid root folder ID " +
-								rootFolderId);
-				}
-
-				throw e;
-			}
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portletId, folder);
-		}
-
-		return portletPreferences;
-	}
-
-	@Override
-	protected PortletPreferences doProcessImportPortletPreferences(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		long rootFolderId = GetterUtil.getLong(
-			portletPreferences.getValue("rootFolderId", null));
-
-		if (rootFolderId > 0) {
-			Element foldersElement =
-				portletDataContext.getImportDataGroupElement(DLFolder.class);
-
-			List<Element> folderElements = foldersElement.elements();
-
-			if (!folderElements.isEmpty()) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, folderElements.get(0));
-
-				Map<Long, Long> folderIds =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						Folder.class + ".folderIdsAndRepositoryEntryIds");
-
-				rootFolderId = MapUtil.getLong(
-					folderIds, rootFolderId, rootFolderId);
-
-				portletPreferences.setValue(
-					"rootFolderId", String.valueOf(rootFolderId));
-			}
-		}
-
-		return portletPreferences;
 	}
 
 	protected ActionableDynamicQuery getDLFileEntryTypeActionableDynamicQuery(

@@ -66,29 +66,15 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 <div id="<%= namespace + id %>SearchContainer">
 
 	<%
-	String ulCssClass = searchContainer.getCssClass() + " row list-unstyled";
+	request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_CHECKER, rowChecker);
 
-	if (resultRows.isEmpty()) {
-		ulCssClass += " hide";
-	}
+	boolean allRowsIsChecked = true;
+
+	for (int i = 0; i < resultRowsList.size(); i++) {
+		List<com.liferay.portal.kernel.dao.search.ResultRow> curResultRows = resultRowsList.get(i);
 	%>
 
-	<ul class="<%= ulCssClass %>">
-
-		<%
-		request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_CHECKER, rowChecker);
-
-		boolean allRowsIsChecked = true;
-
-		for (int i = 0; i < resultRowsList.size(); i++) {
-			List<com.liferay.portal.kernel.dao.search.ResultRow> curResultRows = resultRowsList.get(i);
-		%>
-
-			<c:if test="<%= i != 0 %>">
-				</ul>
-
-				<ul class="<%= ulCssClass %>">
-			</c:if>
+		<ul class="<%= searchContainer.getCssClass() %> <%= resultRows.isEmpty() ? "hide" : StringPool.BLANK %> list-unstyled row">
 
 			<%
 			for (int j = 0; j < curResultRows.size(); j++) {
@@ -136,17 +122,23 @@ JSONArray primaryKeysJSONArray = JSONFactoryUtil.createJSONArray();
 
 				</li>
 
-		<%
+			<%
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 				request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY);
 
 				request.removeAttribute("liferay-ui:search-container-row:rowId");
 			}
+			%>
+
+			<c:if test="<%= i == (resultRowsList.size() - 1) %>">
+				<li></li>
+			</c:if>
+		</ul>
+
+		<%
 		}
 		%>
 
-		<li></li>
-	</ul>
 </div>
 
 <c:if test="<%= PropsValues.SEARCH_CONTAINER_SHOW_PAGINATION_BOTTOM && paginate %>">

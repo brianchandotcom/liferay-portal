@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+PanelCategoryHelper panelCategoryHelper = (PanelCategoryHelper)request.getAttribute(ApplicationListWebKeys.PANEL_CATEGORY_HELPER);
+
 String tabs1 = "roles";
 String tabs2 = ParamUtil.getString(request, "tabs2", "current");
 
@@ -76,7 +78,7 @@ if (Validator.isNotNull(portletResource)) {
 	if (portletResource.equals(PortletKeys.PORTAL)) {
 		applicationPermissionsLabel = StringPool.BLANK;
 	}
-	else if ((portlet != null) && Validator.isNotNull(portlet.getControlPanelEntryCategory())) {
+	else if ((portlet != null) && panelCategoryHelper.containsPortlet(portlet.getPortletId(), PanelCategoryKeys.ROOT)) {
 		applicationPermissionsLabel = "general-permissions";
 	}
 	%>

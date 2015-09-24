@@ -33,8 +33,6 @@ portletURL.setParameter("mvcPath", "/select_structure_field.jsp");
 portletURL.setParameter("portletResource", assetPublisherDisplayContext.getPortletResource());
 portletURL.setParameter("className", className);
 portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
-
-String selectedDDMForm = StringPool.BLANK;
 %>
 
 <div class="alert alert-danger hide" id="<portlet:namespace />message">
@@ -60,10 +58,6 @@ String selectedDDMForm = StringPool.BLANK;
 			String name = field.getName();
 			String fieldType = field.getType();
 			long ddmStructureId = field.getClassTypeId();
-
-			if (name.equals(assetPublisherDisplayContext.getDDMStructureFieldName())) {
-				selectedDDMForm = renderResponse.getNamespace() + name + "fieldForm";
-			}
 			%>
 
 			<liferay-ui:search-container-column-text>
@@ -84,7 +78,7 @@ String selectedDDMForm = StringPool.BLANK;
 					<portlet:param name="fieldsNamespace" value="<%= fieldsNamespace %>" />
 				</liferay-portlet:resourceURL>
 
-				<aui:form action="<%= structureFieldURL %>" name='<%= name + "fieldForm" %>' onSubmit="event.preventDefault()">
+				<aui:form action="<%= structureFieldURL %>" disabled="<%= !name.equals(assetPublisherDisplayContext.getDDMStructureFieldName()) %>" name='<%= name + "fieldForm" %>' onSubmit="event.preventDefault()">
 					<aui:input disabled="<%= true %>" name="buttonId" type="hidden" value='<%= renderResponse.getNamespace() + "applyButton" + name %>' />
 
 					<%
@@ -224,17 +218,4 @@ String selectedDDMForm = StringPool.BLANK;
 		},
 		'input[name=<portlet:namespace />selectStructureFieldSubtype]'
 	);
-
-	toggleDisabledFormFields(fieldSubtypeForms, true);
-
-	<%
-	if (Validator.isNotNull(selectedDDMForm)) {
-	%>
-
-	toggleDisabledFormFields(A.one('#<%= selectedDDMForm %>'), false);
-
-	<%
-	}
-	%>
-
 </aui:script>

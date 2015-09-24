@@ -245,7 +245,7 @@
 
 		<var name="key_mgFolderName" value="${mgFolderName}" />
 
-		<execute function="AssertTextEquals" locator1="MediaGallery#FOLDER_NAME" value1="${mgFolderNameEdit}" />
+		<execute function="AssertTextEquals" locator1="MediaGallery#FOLDER_AVATAR_NAME" value1="${mgFolderNameEdit}" />
 	</command>
 
 	<command name="gotoCP">

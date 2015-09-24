@@ -16,7 +16,6 @@ package com.liferay.portal.cache.memory.internal;
 
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
@@ -37,8 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		PortalCacheManager.PORTAL_CACHE_MANAGER_NAME + "=" + PortalCacheManagerNames.MULTI_VM,
-		PortalCacheManager.PORTAL_CACHE_MANAGER_TYPE + "=" + PortalCacheManagerTypes.MEMORY
+		PortalCacheManager.PORTAL_CACHE_MANAGER_NAME + "=" + PortalCacheManagerNames.MULTI_VM
 	},
 	service = PortalCacheManager.class
 )
@@ -56,9 +54,7 @@ public class MultiVMMemoryPortalCacheManager
 		initialize();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Activated " + PortalCacheManagerNames.MULTI_VM + " " +
-					PortalCacheManagerTypes.MEMORY);
+			_log.debug("Activated " + PortalCacheManagerNames.MULTI_VM);
 		}
 	}
 

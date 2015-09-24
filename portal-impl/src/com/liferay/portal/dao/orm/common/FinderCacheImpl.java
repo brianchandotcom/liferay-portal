@@ -59,8 +59,6 @@ public class FinderCacheImpl
 	public static final String CACHE_NAME = FinderCache.class.getName();
 
 	public void afterPropertiesSet() {
-		CacheRegistryUtil.register(this);
-
 		ServiceDependencyManager serviceDependencyManager =
 			new ServiceDependencyManager();
 
@@ -117,10 +115,6 @@ public class FinderCacheImpl
 		if (_LOCAL_CACHE_AVAILABLE) {
 			_localCache.remove();
 		}
-	}
-
-	public void destroy() {
-		CacheRegistryUtil.unregister(getRegistryName());
 	}
 
 	@Override

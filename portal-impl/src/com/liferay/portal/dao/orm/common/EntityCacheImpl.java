@@ -58,8 +58,6 @@ public class EntityCacheImpl
 	public static final String CACHE_NAME = EntityCache.class.getName();
 
 	public void afterPropertiesSet() {
-		CacheRegistryUtil.register(this);
-
 		ServiceDependencyManager serviceDependencyManager =
 			new ServiceDependencyManager();
 
@@ -116,10 +114,6 @@ public class EntityCacheImpl
 		if (_LOCAL_CACHE_AVAILABLE) {
 			_localCache.remove();
 		}
-	}
-
-	public void destroy() {
-		CacheRegistryUtil.unregister(getRegistryName());
 	}
 
 	@Override

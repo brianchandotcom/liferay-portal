@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.cache.PortalCacheListenerFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerListenerFactory;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
-import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -49,8 +48,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	immediate = true,
 	property = {
-		PortalCacheManager.PORTAL_CACHE_MANAGER_NAME + "=" + PortalCacheManagerNames.MULTI_VM,
-		PortalCacheManager.PORTAL_CACHE_MANAGER_TYPE + "=" + PortalCacheManagerTypes.EHCACHE
+		PortalCacheManager.PORTAL_CACHE_MANAGER_NAME + "=" + PortalCacheManagerNames.MULTI_VM
 	},
 	service = PortalCacheManager.class
 )
@@ -85,9 +83,7 @@ public class MultiVMEhcachePortalCacheManager
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Activated " + PortalCacheManagerNames.MULTI_VM + " " +
-					PortalCacheManagerTypes.EHCACHE);
+			_log.debug("Activated " + PortalCacheManagerNames.MULTI_VM);
 		}
 	}
 

@@ -25,7 +25,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dynamic.data.mapping.configuration.DDMConfiguration" %><%@
+<%@ page import="com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration" %><%@
 page import="com.liferay.dynamic.data.mapping.configuration.DDMServiceConfigurationKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMPortletKeys" %><%@
 page import="com.liferay.dynamic.data.mapping.constants.DDMWebKeys" %><%@
@@ -153,7 +153,7 @@ PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPre
 
 DDMWebRequestHelper ddmWebRequestHelper = new DDMWebRequestHelper(request);
 
-DDMConfiguration ddmConfiguration = ddmWebRequestHelper.getDDMConfiguration();
+DDMServiceConfiguration ddmServiceConfiguration = ddmWebRequestHelper.getDDMServiceConfiguration();
 
 String refererPortletName = ParamUtil.getString(request, "refererPortletName", portletName);
 String refererWebDAVToken = ParamUtil.getString(request, "refererWebDAVToken", portletConfig.getInitParameter("refererWebDAVToken"));

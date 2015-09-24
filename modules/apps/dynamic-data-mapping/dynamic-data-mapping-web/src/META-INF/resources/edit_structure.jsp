@@ -218,7 +218,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 					</c:choose>
 				</aui:row>
 
-				<c:if test="<%= !ddmConfiguration.ddmStructureForceAutogenerateKey() %>">
+				<c:if test="<%= !ddmServiceConfiguration.autogenerateStructureKey() %>">
 					<aui:input disabled="<%= (structure != null) ? true : false %>" label='<%= LanguageUtil.format(request, "x-key", ddmDisplay.getStructureName(locale), false) %>' name="structureKey" />
 				</c:if>
 

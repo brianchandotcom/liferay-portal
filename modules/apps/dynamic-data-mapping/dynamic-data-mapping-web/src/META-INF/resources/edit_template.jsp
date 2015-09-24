@@ -46,7 +46,7 @@ if ((structure == null) && (template != null)) {
 
 String type = BeanParamUtil.getString(template, request, "type", DDMTemplateConstants.TEMPLATE_TYPE_FORM);
 String mode = BeanParamUtil.getString(template, request, "mode", DDMTemplateConstants.TEMPLATE_MODE_CREATE);
-String language = BeanParamUtil.getString(template, request, "language", ddmConfiguration.ddmTemplateLanguageDefault());
+String language = BeanParamUtil.getString(template, request, "language", ddmServiceConfiguration.defaultTemplateLanguage());
 String script = BeanParamUtil.getString(template, request, "script");
 
 if (Validator.isNull(script) && type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
@@ -226,7 +226,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 					</aui:select>
 				</c:if>
 
-				<c:if test="<%= !ddmConfiguration.ddmTemplateForceAutogenerateKey() %>">
+				<c:if test="<%= !ddmServiceConfiguration.autogenerateTemplateKey() %>">
 					<aui:input disabled="<%= (template != null) ? true : false %>" name="templateKey" />
 				</c:if>
 

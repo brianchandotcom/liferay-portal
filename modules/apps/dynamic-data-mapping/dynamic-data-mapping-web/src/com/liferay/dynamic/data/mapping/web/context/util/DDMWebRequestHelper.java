@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.web.context.util;
 
-import com.liferay.dynamic.data.mapping.configuration.DDMConfiguration;
+import com.liferay.dynamic.data.mapping.configuration.DDMServiceConfiguration;
 import com.liferay.dynamic.data.mapping.constants.DDMConstants;
 import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,34 +35,34 @@ public class DDMWebRequestHelper extends BaseRequestHelper {
 		super(request);
 	}
 
-	public DDMConfiguration getDDMConfiguration() {
+	public DDMServiceConfiguration getDDMServiceConfiguration() {
 		try {
-			if (_ddmConfiguration == null) {
+			if (_ddmServiceConfiguration == null) {
 				if (Validator.isNotNull(getPortletResource())) {
-					_ddmConfiguration =
+					_ddmServiceConfiguration =
 						ConfigurationFactoryUtil.getConfiguration(
-								DDMConfiguration.class,
+							DDMServiceConfiguration.class,
 						new ParameterMapSettingsLocator(
 							getRequest().getParameterMap(),
 							new GroupServiceSettingsLocator(
 								getSiteGroupId(), DDMConstants.SERVICE_NAME)));
 				}
 				else {
-					_ddmConfiguration =
+					_ddmServiceConfiguration =
 						ConfigurationFactoryUtil.getConfiguration(
-								DDMConfiguration.class,
+							DDMServiceConfiguration.class,
 							new GroupServiceSettingsLocator(
 								getSiteGroupId(), DDMConstants.SERVICE_NAME));
 				}
 			}
 
-			return _ddmConfiguration;
+			return _ddmServiceConfiguration;
 		}
 		catch (PortalException pe) {
 			throw new SystemException(pe);
 		}
 	}
 
-	private DDMConfiguration _ddmConfiguration;
+	private DDMServiceConfiguration _ddmServiceConfiguration;
 
 }

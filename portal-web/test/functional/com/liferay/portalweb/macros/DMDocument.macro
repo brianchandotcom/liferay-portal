@@ -1447,7 +1447,7 @@
 
 		<execute function="AssertClick" locator1="DocumentsAndMedia#ICON_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 
-		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#VERSION_HISTORY_TABLE_VERSION" value1="${dmDocumentVersionNumber}" />
+		<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#VERSION_HISTORY_TABLE_VERSION_GENERIC" value1="${dmDocumentVersionNumber}" />
 		<execute function="Click" locator1="DocumentsAndMediaDocument#VERSION_HISTORY_TABLE_DROPDOWN" />
 		<execute function="AssertClick" locator1="MenuItem#REVERT" value1="Revert" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGDocumentsandmediaDocument#SUCCESS_MESSAGE" value1="Your request completed successfully." />

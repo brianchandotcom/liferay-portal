@@ -5,6 +5,8 @@ dependencies {
 	compile project(":apps:document-library:document-library-api")
 	compile project(":apps:document-library:document-library-service")
 	compile project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
+	compile project(":apps:export-import:export-import-api")
+	compile project(":apps:portlet-display-template:portlet-display-template")
 }
 
 liferay {

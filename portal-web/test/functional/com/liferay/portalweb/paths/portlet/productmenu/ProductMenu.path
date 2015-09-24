@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>BACK_ARROW</td>
-	<td>//a[contains(@id,'allSitesLink')]</td>
+	<td>//a[contains(@id,'mySitesLink')]</td>
 	<td></td>
 </tr>
 <tr>

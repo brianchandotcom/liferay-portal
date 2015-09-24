@@ -211,10 +211,13 @@ public class ServiceTrackerMapImpl<K, SR, TS, R>
 
 			if (_listener != null) {
 				try {
-					_listener.update(
+					ServiceTrackerBucket<SR, TS, R> serviceTrackerBucket =
+						_serviceTrackerBuckets.get(key);
+
+					_listener.keyEmitted(
 						ServiceTrackerMapImpl.this, key,
 						_serviceReferenceServiceTuple.getService(),
-						_serviceTrackerBuckets.get(key).getContent());
+						serviceTrackerBucket.getContent());
 				}
 				catch (Throwable t) {
 					_logger.log(

@@ -69,9 +69,10 @@ public class JniSassCompiler implements SassCompiler {
 		Sass_File_Context sassFileContext = null;
 
 		try {
+			File inputFile = new File(inputFileName);
+
 			String includeDirNames =
-				includeDirName + File.pathSeparator + new File(
-					inputFileName).getParent();
+				includeDirName + File.pathSeparator + inputFile.getParent();
 
 			if ((sourceMapFileName == null) || sourceMapFileName.equals("")) {
 				sourceMapFileName = getOutputFileName(inputFileName) + ".map";

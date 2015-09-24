@@ -6052,6 +6052,10 @@ public class WikiPageUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static WikiPagePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

@@ -38,7 +38,6 @@ import com.liferay.portal.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenModelImpl;
 import com.liferay.portal.workflow.kaleo.service.persistence.KaleoTaskInstanceTokenFinder;
@@ -59,7 +58,7 @@ import java.util.Map;
  * @author Michael C. Han
  */
 public class KaleoTaskInstanceTokenFinderImpl
-	extends BasePersistenceImpl<KaleoTaskInstanceToken>
+	extends KaleoTaskInstanceTokenFinderBaseImpl
 	implements KaleoTaskInstanceTokenFinder {
 
 	public static final String COUNT_BY_C_KTAI =

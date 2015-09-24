@@ -704,4 +704,6 @@ public interface KaleoDefinitionPersistence extends BasePersistence<KaleoDefinit
 	* @return the number of kaleo definitions
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

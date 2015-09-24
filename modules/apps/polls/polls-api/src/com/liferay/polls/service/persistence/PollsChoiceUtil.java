@@ -781,6 +781,10 @@ public class PollsChoiceUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static PollsChoicePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

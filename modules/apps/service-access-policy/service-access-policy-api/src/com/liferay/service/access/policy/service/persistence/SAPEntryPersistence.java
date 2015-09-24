@@ -734,4 +734,6 @@ public interface SAPEntryPersistence extends BasePersistence<SAPEntry> {
 	* @return the number of s a p entries
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

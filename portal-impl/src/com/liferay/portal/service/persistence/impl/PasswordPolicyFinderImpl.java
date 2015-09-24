@@ -33,7 +33,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class PasswordPolicyFinderImpl
-	extends BasePersistenceImpl<PasswordPolicy>
+	extends PasswordPolicyFinderBaseImpl
 	implements PasswordPolicyFinder {
 
 	public static final String COUNT_BY_C_N =

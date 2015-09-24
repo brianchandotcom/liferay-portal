@@ -435,4 +435,6 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	* @return the number of d d m structure versions
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

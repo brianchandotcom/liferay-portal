@@ -1184,7 +1184,7 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

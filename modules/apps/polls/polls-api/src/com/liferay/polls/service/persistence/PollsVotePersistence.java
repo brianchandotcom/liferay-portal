@@ -704,4 +704,6 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @return the number of polls votes
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

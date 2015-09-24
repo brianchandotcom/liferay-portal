@@ -1012,4 +1012,6 @@ public interface WebsitePersistence extends BasePersistence<Website> {
 	* @return the number of websites
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

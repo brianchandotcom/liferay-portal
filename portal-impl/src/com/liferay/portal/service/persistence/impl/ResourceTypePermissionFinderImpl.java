@@ -30,7 +30,7 @@ import java.util.List;
  * @author Connor McKay
  */
 public class ResourceTypePermissionFinderImpl
-	extends BasePersistenceImpl<ResourceTypePermission>
+	extends ResourceTypePermissionFinderBaseImpl
 	implements ResourceTypePermissionFinder {
 
 	public static final String FIND_BY_EITHER_SCOPE_C_G_N =

@@ -1082,6 +1082,10 @@ public class SCProductEntryUtil {
 		getPersistence().setSCLicenses(pk, scLicenses);
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static SCProductEntryPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (SCProductEntryPersistence)PortalBeanLocatorUtil.locate(SCProductEntryPersistence.class.getName());

@@ -1028,6 +1028,10 @@ public class SCFrameworkVersionUtil {
 		getPersistence().setSCProductVersions(pk, scProductVersions);
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static SCFrameworkVersionPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (SCFrameworkVersionPersistence)PortalBeanLocatorUtil.locate(SCFrameworkVersionPersistence.class.getName());

@@ -29,7 +29,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class UserGroupRoleFinderImpl
-	extends BasePersistenceImpl<UserGroupRole> implements UserGroupRoleFinder {
+	extends UserGroupRoleFinderBaseImpl implements UserGroupRoleFinder {
 
 	public static final String FIND_BY_USER_USER_GROUP_GROUP_ROLE =
 		UserGroupRoleFinder.class.getName() + ".findByUserUserGroupGroupRole";

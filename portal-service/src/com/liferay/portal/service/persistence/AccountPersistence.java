@@ -140,4 +140,6 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @return the number of accounts
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

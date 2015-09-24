@@ -311,4 +311,6 @@ public interface ServiceComponentPersistence extends BasePersistence<ServiceComp
 	* @return the number of service components
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

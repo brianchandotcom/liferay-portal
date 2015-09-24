@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.impl.AssetTagImpl;
@@ -42,7 +41,7 @@ import java.util.List;
  * @author Bruno Farache
  */
 public class AssetTagFinderImpl
-	extends BasePersistenceImpl<AssetTag> implements AssetTagFinder {
+	extends AssetTagFinderBaseImpl implements AssetTagFinder {
 
 	public static final String COUNT_BY_G_N =
 		AssetTagFinder.class.getName() + ".countByG_N";

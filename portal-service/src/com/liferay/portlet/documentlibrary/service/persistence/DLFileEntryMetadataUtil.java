@@ -729,6 +729,10 @@ public class DLFileEntryMetadataUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static DLFileEntryMetadataPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (DLFileEntryMetadataPersistence)PortalBeanLocatorUtil.locate(DLFileEntryMetadataPersistence.class.getName());

@@ -492,4 +492,6 @@ public interface KaleoNodePersistence extends BasePersistence<KaleoNode> {
 	* @return the number of kaleo nodes
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

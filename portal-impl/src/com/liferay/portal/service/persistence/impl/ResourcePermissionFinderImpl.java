@@ -43,7 +43,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  */
 public class ResourcePermissionFinderImpl
-	extends BasePersistenceImpl<ResourcePermission>
+	extends ResourcePermissionFinderBaseImpl
 	implements ResourcePermissionFinder {
 
 	public static final String COUNT_BY_R_S =

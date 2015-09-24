@@ -2915,7 +2915,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

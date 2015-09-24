@@ -4255,4 +4255,6 @@ public interface MBMessagePersistence extends BasePersistence<MBMessage> {
 	* @return the number of message-boards messages
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

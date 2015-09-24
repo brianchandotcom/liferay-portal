@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.impl.RatingsEntryImpl;
 import com.liferay.portlet.ratings.model.impl.RatingsEntryModelImpl;
@@ -40,7 +39,7 @@ import java.util.Set;
  * @author Brian Wing Shun Chan
  */
 public class RatingsEntryFinderImpl
-	extends BasePersistenceImpl<RatingsEntry> implements RatingsEntryFinder {
+	extends RatingsEntryFinderBaseImpl implements RatingsEntryFinder {
 
 	public static final String FIND_BY_U_C_C =
 		RatingsEntryFinder.class.getName() + ".findByU_C_C";

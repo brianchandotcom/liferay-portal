@@ -4104,7 +4104,7 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

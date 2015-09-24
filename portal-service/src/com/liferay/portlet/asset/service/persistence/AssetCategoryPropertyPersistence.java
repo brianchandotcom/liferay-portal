@@ -552,4 +552,6 @@ public interface AssetCategoryPropertyPersistence extends BasePersistence<AssetC
 	* @return the number of asset category properties
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

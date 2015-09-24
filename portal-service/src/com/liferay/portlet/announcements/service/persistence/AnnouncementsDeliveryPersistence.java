@@ -307,4 +307,6 @@ public interface AnnouncementsDeliveryPersistence extends BasePersistence<Announ
 	* @return the number of announcements deliveries
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryTypeImpl;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder;
@@ -41,7 +40,7 @@ import java.util.List;
  * @author Alexander Chow
  */
 public class DLFileEntryTypeFinderImpl
-	extends BasePersistenceImpl<DLFileEntryType>
+	extends DLFileEntryTypeFinderBaseImpl
 	implements DLFileEntryTypeFinder {
 
 	public static final String COUNT_BY_C_G_N_D_S =

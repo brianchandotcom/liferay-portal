@@ -1309,4 +1309,6 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	* @return the number of calendar bookings
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

@@ -2875,4 +2875,6 @@ public interface MBThreadPersistence extends BasePersistence<MBThread> {
 	* @return the number of message boards threads
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

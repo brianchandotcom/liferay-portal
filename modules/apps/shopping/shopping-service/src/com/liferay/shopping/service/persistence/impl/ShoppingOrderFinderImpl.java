@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.model.ShoppingOrderConstants;
 import com.liferay.shopping.model.impl.ShoppingOrderImpl;
@@ -38,7 +37,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class ShoppingOrderFinderImpl
-	extends BasePersistenceImpl<ShoppingOrder> implements ShoppingOrderFinder {
+	extends ShoppingOrderFinderBaseImpl implements ShoppingOrderFinder {
 
 	public static final String COUNT_BY_G_C_U_N_PPPS =
 		ShoppingOrderFinder.class.getName() + ".countByG_C_U_N_PPPS";

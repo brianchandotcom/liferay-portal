@@ -299,4 +299,6 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @return the number of d l sync events
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

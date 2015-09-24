@@ -2633,4 +2633,6 @@ public interface DLFileEntryPersistence extends BasePersistence<DLFileEntry> {
 	* @return the number of document library file entries
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

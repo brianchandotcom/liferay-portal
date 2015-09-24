@@ -597,4 +597,6 @@ public interface RepositoryEntryPersistence extends BasePersistence<RepositoryEn
 	* @return the number of repository entries
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

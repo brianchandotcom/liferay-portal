@@ -9323,7 +9323,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

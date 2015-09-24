@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -44,7 +43,7 @@ import java.util.List;
  * @author Shuyang Zhou
  */
 public class MBThreadFinderImpl
-	extends BasePersistenceImpl<MBThread> implements MBThreadFinder {
+	extends MBThreadFinderBaseImpl implements MBThreadFinder {
 
 	public static final String COUNT_BY_G_U =
 		MBThreadFinder.class.getName() + ".countByG_U";

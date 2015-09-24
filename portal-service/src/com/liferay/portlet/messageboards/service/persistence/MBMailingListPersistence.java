@@ -596,4 +596,6 @@ public interface MBMailingListPersistence extends BasePersistence<MBMailingList>
 	* @return the number of message boards mailing lists
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

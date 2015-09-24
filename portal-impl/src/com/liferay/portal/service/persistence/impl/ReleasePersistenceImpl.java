@@ -1005,7 +1005,7 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

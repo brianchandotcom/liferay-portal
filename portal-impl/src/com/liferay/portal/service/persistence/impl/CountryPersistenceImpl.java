@@ -1986,7 +1986,7 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

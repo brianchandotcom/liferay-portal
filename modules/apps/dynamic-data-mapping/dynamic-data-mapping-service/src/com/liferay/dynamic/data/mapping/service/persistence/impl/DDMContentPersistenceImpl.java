@@ -3146,7 +3146,7 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

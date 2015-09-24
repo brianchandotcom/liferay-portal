@@ -1273,4 +1273,6 @@ public interface CalEventPersistence extends BasePersistence<CalEvent> {
 	* @return the number of cal events
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

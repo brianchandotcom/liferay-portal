@@ -709,4 +709,6 @@ public interface MBThreadFlagPersistence extends BasePersistence<MBThreadFlag> {
 	* @return the number of message boards thread flags
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

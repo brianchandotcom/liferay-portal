@@ -593,6 +593,10 @@ public class ExpandoColumnUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static ExpandoColumnPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (ExpandoColumnPersistence)PortalBeanLocatorUtil.locate(ExpandoColumnPersistence.class.getName());

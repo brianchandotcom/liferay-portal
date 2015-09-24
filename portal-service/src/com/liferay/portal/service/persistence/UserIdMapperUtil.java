@@ -495,6 +495,10 @@ public class UserIdMapperUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static UserIdMapperPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (UserIdMapperPersistence)PortalBeanLocatorUtil.locate(UserIdMapperPersistence.class.getName());

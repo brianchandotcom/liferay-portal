@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
 import com.liferay.portlet.asset.model.impl.AssetCategoryPropertyImpl;
 import com.liferay.portlet.asset.service.persistence.AssetCategoryPropertyFinder;
@@ -35,7 +34,7 @@ import java.util.List;
  * @author Jorge Ferrer
  */
 public class AssetCategoryPropertyFinderImpl
-	extends BasePersistenceImpl<AssetCategoryProperty>
+	extends AssetCategoryPropertyFinderBaseImpl
 	implements AssetCategoryPropertyFinder {
 
 	public static final String COUNT_BY_G_K =

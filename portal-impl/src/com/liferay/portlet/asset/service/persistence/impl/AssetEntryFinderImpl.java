@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -51,7 +50,7 @@ import java.util.List;
  * @author Shuyang Zhou
  */
 public class AssetEntryFinderImpl
-	extends BasePersistenceImpl<AssetEntry> implements AssetEntryFinder {
+	extends AssetEntryFinderBaseImpl implements AssetEntryFinder {
 
 	public static final String FIND_BY_AND_CATEGORY_IDS =
 		AssetEntryFinder.class.getName() + ".findByAndCategoryIds";

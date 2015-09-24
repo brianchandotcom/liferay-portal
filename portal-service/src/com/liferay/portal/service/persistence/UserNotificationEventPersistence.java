@@ -1742,4 +1742,6 @@ public interface UserNotificationEventPersistence extends BasePersistence<UserNo
 	* @return the number of user notification events
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

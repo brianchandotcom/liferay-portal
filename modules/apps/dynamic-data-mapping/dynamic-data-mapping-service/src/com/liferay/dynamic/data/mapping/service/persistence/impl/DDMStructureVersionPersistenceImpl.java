@@ -2077,7 +2077,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

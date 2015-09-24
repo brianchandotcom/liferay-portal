@@ -788,4 +788,6 @@ public interface AssetLinkPersistence extends BasePersistence<AssetLink> {
 	* @return the number of asset links
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

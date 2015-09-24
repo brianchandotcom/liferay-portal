@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.announcements.model.AnnouncementsEntry;
 import com.liferay.portlet.announcements.model.AnnouncementsFlagConstants;
@@ -46,7 +45,7 @@ import java.util.Map;
  * @author Raymond Augé
  */
 public class AnnouncementsEntryFinderImpl
-	extends BasePersistenceImpl<AnnouncementsEntry>
+	extends AnnouncementsEntryFinderBaseImpl
 	implements AnnouncementsEntryFinder {
 
 	public static final String COUNT_BY_HIDDEN =

@@ -758,4 +758,6 @@ public interface DDLRecordSetPersistence extends BasePersistence<DDLRecordSet> {
 	* @return the number of d d l record sets
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

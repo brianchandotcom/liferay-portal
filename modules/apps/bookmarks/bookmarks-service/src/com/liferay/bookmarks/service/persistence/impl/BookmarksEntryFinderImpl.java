@@ -20,7 +20,6 @@ import com.liferay.bookmarks.service.persistence.BookmarksEntryFinder;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.List;
@@ -29,7 +28,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class BookmarksEntryFinderImpl
-	extends BasePersistenceImpl<BookmarksEntry>
+	extends BookmarksEntryFinderBaseImpl
 	implements BookmarksEntryFinder {
 
 	public static final String FIND_BY_NO_ASSETS =

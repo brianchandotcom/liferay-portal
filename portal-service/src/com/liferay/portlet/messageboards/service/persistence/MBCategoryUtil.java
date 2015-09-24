@@ -2862,6 +2862,10 @@ public class MBCategoryUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static MBCategoryPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (MBCategoryPersistence)PortalBeanLocatorUtil.locate(MBCategoryPersistence.class.getName());

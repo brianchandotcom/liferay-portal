@@ -1009,4 +1009,6 @@ public interface PhonePersistence extends BasePersistence<Phone> {
 	* @return the number of phones
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

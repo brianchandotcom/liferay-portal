@@ -442,4 +442,6 @@ public interface ExpandoColumnPersistence extends BasePersistence<ExpandoColumn>
 	* @return the number of expando columns
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

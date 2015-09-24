@@ -544,4 +544,6 @@ public interface MDRActionPersistence extends BasePersistence<MDRAction> {
 	* @return the number of m d r actions
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

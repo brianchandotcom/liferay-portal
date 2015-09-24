@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.model.CalEventConstants;
 import com.liferay.portlet.calendar.model.impl.CalEventImpl;
@@ -45,7 +44,7 @@ import java.util.List;
  */
 @Deprecated
 public class CalEventFinderImpl
-	extends BasePersistenceImpl<CalEvent> implements CalEventFinder {
+	extends CalEventFinderBaseImpl implements CalEventFinder {
 
 	public static final String COUNT_BY_G_SD_T =
 		CalEventFinder.class.getName() + ".countByG_SD_T";

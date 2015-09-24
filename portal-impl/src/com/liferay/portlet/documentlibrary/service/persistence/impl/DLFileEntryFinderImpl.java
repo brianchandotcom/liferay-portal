@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
@@ -46,7 +45,7 @@ import java.util.List;
  * @author Shuyang Zhou
  */
 public class DLFileEntryFinderImpl
-	extends BasePersistenceImpl<DLFileEntry> implements DLFileEntryFinder {
+	extends DLFileEntryFinderBaseImpl implements DLFileEntryFinder {
 
 	public static final String COUNT_BY_EXTRA_SETTINGS =
 		DLFileEntryFinder.class.getName() + ".countByExtraSettings";

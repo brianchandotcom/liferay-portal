@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.service.persistence.impl;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataImpl;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryMetadataFinder;
@@ -29,7 +28,7 @@ import java.util.List;
  * @author Michael C. Han
  */
 public class DLFileEntryMetadataFinderImpl
-	extends BasePersistenceImpl<DLFileEntryMetadata>
+	extends DLFileEntryMetadataFinderBaseImpl
 	implements DLFileEntryMetadataFinder {
 
 	public static final String FIND_BY_MISMATCHED_COMPANY_ID =

@@ -1019,4 +1019,6 @@ public interface EmailAddressPersistence extends BasePersistence<EmailAddress> {
 	* @return the number of email addresses
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

@@ -477,4 +477,6 @@ public interface JournalArticleResourcePersistence extends BasePersistence<Journ
 	* @return the number of journal article resources
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

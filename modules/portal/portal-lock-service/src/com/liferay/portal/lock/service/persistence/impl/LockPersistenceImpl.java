@@ -2645,7 +2645,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

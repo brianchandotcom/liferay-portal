@@ -621,4 +621,6 @@ public interface ShoppingOrderPersistence extends BasePersistence<ShoppingOrder>
 	* @return the number of shopping orders
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

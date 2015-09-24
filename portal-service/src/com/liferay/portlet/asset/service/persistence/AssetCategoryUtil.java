@@ -3154,6 +3154,10 @@ public class AssetCategoryUtil {
 		getPersistence().setAssetEntries(pk, assetEntries);
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static long countAncestors(AssetCategory assetCategory) {
 		return getPersistence().countAncestors(assetCategory);
 	}

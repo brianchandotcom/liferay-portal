@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.social.model.SocialActivityCounter;
 import com.liferay.portlet.social.model.impl.SocialActivityCounterImpl;
@@ -46,7 +45,7 @@ import java.util.List;
  * @author Zsolt Berentey
  */
 public class SocialActivityCounterFinderImpl
-	extends BasePersistenceImpl<SocialActivityCounter>
+	extends SocialActivityCounterFinderBaseImpl
 	implements SocialActivityCounterFinder {
 
 	public static final String COUNT_U_BY_G_C_N_S_E =

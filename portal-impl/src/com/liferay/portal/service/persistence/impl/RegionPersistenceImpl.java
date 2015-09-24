@@ -2514,7 +2514,7 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

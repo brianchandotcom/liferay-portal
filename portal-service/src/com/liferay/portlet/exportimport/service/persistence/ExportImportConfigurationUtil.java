@@ -997,6 +997,10 @@ public class ExportImportConfigurationUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static ExportImportConfigurationPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (ExportImportConfigurationPersistence)PortalBeanLocatorUtil.locate(ExportImportConfigurationPersistence.class.getName());

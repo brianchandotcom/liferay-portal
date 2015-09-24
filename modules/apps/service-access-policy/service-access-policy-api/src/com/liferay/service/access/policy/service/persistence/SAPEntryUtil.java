@@ -950,6 +950,10 @@ public class SAPEntryUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static SAPEntryPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

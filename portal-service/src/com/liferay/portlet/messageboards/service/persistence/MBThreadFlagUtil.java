@@ -910,6 +910,10 @@ public class MBThreadFlagUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static MBThreadFlagPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (MBThreadFlagPersistence)PortalBeanLocatorUtil.locate(MBThreadFlagPersistence.class.getName());

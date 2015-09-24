@@ -28,7 +28,7 @@ import java.util.List;
  * @author Alberto Chaparro
  */
 public class ServiceComponentFinderImpl
-	extends BasePersistenceImpl<ServiceComponent>
+	extends ServiceComponentFinderBaseImpl
 	implements ServiceComponentFinder {
 
 	public static final String FIND_BY_MAX_BUILD_NUMBER =

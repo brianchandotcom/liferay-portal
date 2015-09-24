@@ -879,4 +879,6 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @return the number of layout prototypes
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

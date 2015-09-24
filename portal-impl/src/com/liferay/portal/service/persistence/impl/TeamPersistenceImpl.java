@@ -3809,7 +3809,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

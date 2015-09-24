@@ -711,7 +711,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

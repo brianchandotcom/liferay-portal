@@ -2274,6 +2274,10 @@ public class OrganizationUtil {
 		getPersistence().setUsers(pk, users);
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static OrganizationPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (OrganizationPersistence)PortalBeanLocatorUtil.locate(OrganizationPersistence.class.getName());

@@ -707,4 +707,6 @@ public interface ModulePersistence extends BasePersistence<Module> {
 	* @return the number of modules
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

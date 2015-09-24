@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileRankImpl;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileRankFinder;
@@ -31,7 +30,7 @@ import java.util.List;
  * @author Alexander Chow
  */
 public class DLFileRankFinderImpl
-	extends BasePersistenceImpl<DLFileRank> implements DLFileRankFinder {
+	extends DLFileRankFinderBaseImpl implements DLFileRankFinder {
 
 	public static final String FIND_BY_STALE_RANKS =
 		DLFileRankFinder.class.getName() + ".findByStaleRanks";

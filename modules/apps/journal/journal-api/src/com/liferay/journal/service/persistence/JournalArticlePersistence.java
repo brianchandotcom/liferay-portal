@@ -6350,4 +6350,6 @@ public interface JournalArticlePersistence extends BasePersistence<JournalArticl
 	* @return the number of journal articles
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

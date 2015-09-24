@@ -3823,7 +3823,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

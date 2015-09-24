@@ -31,7 +31,6 @@ import com.liferay.portal.model.Subscription;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -49,7 +48,7 @@ import java.util.List;
  * @author Raymond Augé
  */
 public class MBCategoryFinderImpl
-	extends BasePersistenceImpl<MBCategory> implements MBCategoryFinder {
+	extends MBCategoryFinderBaseImpl implements MBCategoryFinder {
 
 	public static final String COUNT_BY_S_G_U_P =
 		MBCategoryFinder.class.getName() + ".countByS_G_U_P";

@@ -254,4 +254,6 @@ public interface UserTrackerPathPersistence extends BasePersistence<UserTrackerP
 	* @return the number of user tracker paths
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

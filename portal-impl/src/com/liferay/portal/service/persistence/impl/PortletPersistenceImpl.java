@@ -1490,7 +1490,7 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

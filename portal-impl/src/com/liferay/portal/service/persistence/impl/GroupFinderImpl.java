@@ -57,7 +57,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Shuyang Zhou
  */
 public class GroupFinderImpl
-	extends BasePersistenceImpl<Group> implements GroupFinder {
+	extends GroupFinderBaseImpl implements GroupFinder {
 
 	public static final String COUNT_BY_LAYOUTS =
 		GroupFinder.class.getName() + ".countByLayouts";

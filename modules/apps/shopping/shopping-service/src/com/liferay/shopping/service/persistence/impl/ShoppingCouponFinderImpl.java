@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.model.impl.ShoppingCouponImpl;
 import com.liferay.shopping.service.persistence.ShoppingCouponFinder;
@@ -33,7 +32,7 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class ShoppingCouponFinderImpl
-	extends BasePersistenceImpl<ShoppingCoupon>
+	extends ShoppingCouponFinderBaseImpl
 	implements ShoppingCouponFinder {
 
 	public static final String COUNT_BY_G_C_C_A_DT =

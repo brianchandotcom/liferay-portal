@@ -1183,6 +1183,10 @@ public class KaleoLogUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static KaleoLogPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

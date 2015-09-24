@@ -568,6 +568,10 @@ public class DDMStorageLinkUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static DDMStorageLinkPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

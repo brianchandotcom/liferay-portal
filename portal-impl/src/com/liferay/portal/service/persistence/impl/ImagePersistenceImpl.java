@@ -1129,7 +1129,7 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

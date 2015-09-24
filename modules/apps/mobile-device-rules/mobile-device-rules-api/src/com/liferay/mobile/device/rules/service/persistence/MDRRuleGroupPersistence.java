@@ -708,4 +708,6 @@ public interface MDRRuleGroupPersistence extends BasePersistence<MDRRuleGroup> {
 	* @return the number of m d r rule groups
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

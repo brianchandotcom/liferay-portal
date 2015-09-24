@@ -1158,4 +1158,6 @@ public interface LayoutFriendlyURLPersistence extends BasePersistence<LayoutFrie
 	* @return the number of layout friendly u r ls
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

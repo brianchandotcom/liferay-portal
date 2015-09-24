@@ -2215,6 +2215,10 @@ public class UserNotificationEventUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static UserNotificationEventPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (UserNotificationEventPersistence)PortalBeanLocatorUtil.locate(UserNotificationEventPersistence.class.getName());

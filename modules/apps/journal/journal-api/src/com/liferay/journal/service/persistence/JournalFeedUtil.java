@@ -849,6 +849,10 @@ public class JournalFeedUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static JournalFeedPersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

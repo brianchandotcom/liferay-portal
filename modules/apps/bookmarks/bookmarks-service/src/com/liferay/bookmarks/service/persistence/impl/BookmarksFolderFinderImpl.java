@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ import java.util.List;
  * @author Alexander Chow
  */
 public class BookmarksFolderFinderImpl
-		extends BasePersistenceImpl<BookmarksFolder>
+		extends BookmarksFolderFinderBaseImpl
 	implements BookmarksFolderFinder {
 
 	public static final String COUNT_F_BY_G_P =

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.sql.Timestamp;
@@ -52,7 +51,7 @@ import java.util.List;
  * @author Connor McKay
  */
 public class JournalArticleFinderImpl
-	extends BasePersistenceImpl<JournalArticle>
+	extends JournalArticleFinderBaseImpl
 	implements JournalArticleFinder {
 
 	public static final String COUNT_BY_G_F =

@@ -811,4 +811,6 @@ public interface MBBanPersistence extends BasePersistence<MBBan> {
 	* @return the number of message boards bans
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

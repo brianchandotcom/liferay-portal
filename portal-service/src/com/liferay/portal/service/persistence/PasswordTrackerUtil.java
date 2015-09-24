@@ -371,6 +371,10 @@ public class PasswordTrackerUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static PasswordTrackerPersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (PasswordTrackerPersistence)PortalBeanLocatorUtil.locate(PasswordTrackerPersistence.class.getName());

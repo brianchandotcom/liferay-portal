@@ -945,4 +945,6 @@ public interface SocialActivitySetPersistence extends BasePersistence<SocialActi
 	* @return the number of social activity sets
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

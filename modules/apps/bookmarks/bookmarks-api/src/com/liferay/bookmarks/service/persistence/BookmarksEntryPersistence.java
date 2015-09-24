@@ -2904,4 +2904,6 @@ public interface BookmarksEntryPersistence extends BasePersistence<BookmarksEntr
 	* @return the number of bookmarks entries
 	*/
 	public int countAll();
+
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

@@ -3097,7 +3097,7 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
 	}
 

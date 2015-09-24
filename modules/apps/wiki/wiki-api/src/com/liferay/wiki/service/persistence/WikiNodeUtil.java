@@ -1360,6 +1360,10 @@ public class WikiNodeUtil {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static WikiNodePersistence getPersistence() {
 		return _serviceTracker.getService();
 	}

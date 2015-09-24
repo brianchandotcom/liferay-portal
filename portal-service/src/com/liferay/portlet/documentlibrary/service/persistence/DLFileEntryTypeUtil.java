@@ -1176,6 +1176,10 @@ public class DLFileEntryTypeUtil {
 		getPersistence().setDLFolders(pk, dlFolders);
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static DLFileEntryTypePersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (DLFileEntryTypePersistence)PortalBeanLocatorUtil.locate(DLFileEntryTypePersistence.class.getName());

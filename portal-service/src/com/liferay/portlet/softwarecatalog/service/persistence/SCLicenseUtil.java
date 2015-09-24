@@ -879,6 +879,10 @@ public class SCLicenseUtil {
 		getPersistence().setSCProductEntries(pk, scProductEntries);
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static SCLicensePersistence getPersistence() {
 		if (_persistence == null) {
 			_persistence = (SCLicensePersistence)PortalBeanLocatorUtil.locate(SCLicensePersistence.class.getName());

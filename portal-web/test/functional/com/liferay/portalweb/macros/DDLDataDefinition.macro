@@ -213,7 +213,7 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Date" />
 			<var name="fieldFieldLabel" value="Start Date" />
-			<var name="fieldName" value="Start_Date" />
+			<var name="fieldName" value="StartDate" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -225,7 +225,7 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Documents and Media" />
 			<var name="fieldFieldLabel" value="Profile Picture" />
-			<var name="fieldName" value="Profile_Picture" />
+			<var name="fieldName" value="ProfilePicture" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -243,7 +243,7 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Number" />
 			<var name="fieldFieldLabel" value="Weekly Hours" />
-			<var name="fieldName" value="Weekly_Hours" />
+			<var name="fieldName" value="WeeklyHours" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">
@@ -267,13 +267,13 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="Years Worked" />
-			<var name="fieldName" value="Years_Worked" />
+			<var name="fieldName" value="YearsWorked" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#editFieldOptions">
 			<var name="field" value="Select" />
 			<var name="fieldFieldLabel" value="Years Worked" />
-			<var name="fieldName" value="Years_Worked" />
+			<var name="fieldName" value="YearsWorked" />
 			<var name="fieldOptionsName" value="${fieldOptionsName}" />
 			<var name="fieldOptionsNames" value="1-2,3-5,5+" />
 			<var name="fieldOptionsValue" value="${fieldOptionsValue}" />

@@ -1927,7 +1927,7 @@
 		<var name="ddlRecordFieldData" value="Test 2" />
 		<var name="field" value="Text Box" />
 		<var name="fieldFieldLabel" value="Text Box" />
-		<var name="fieldName" value="Text_Box" />
+		<var name="fieldName" value="TextBox" />
 		<var name="fieldPredefinedValue" value="Test 1" />
 
 		<execute macro="Page#gotoContentCP">

@@ -1704,7 +1704,7 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Text Box" />
-			<var name="fieldName" value="Text_Box" />
+			<var name="fieldName" value="TextBox" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#addField">

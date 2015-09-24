@@ -250,7 +250,7 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Text Label" />
-			<var name="fieldName" value="Text_Name" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#saveCP" />
@@ -280,7 +280,7 @@
 			<var name="ddlRecordFieldData" value="DDL Definition Record" />
 			<var name="field" value="Text" />
 			<var name="fieldFieldLabel" value="Text Label" />
-			<var name="fieldName" value="Text_Name" />
+			<var name="fieldName" value="TextName" />
 		</execute>
 
 		<execute macro="DDLRecord#publishCP" />

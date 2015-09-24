@@ -51,7 +51,7 @@
 		<execute macro="DynamicDataMapping#addField">
 			<var name="field" value="Documents and Media" />
 			<var name="fieldFieldLabel" value="DM Test Field" />
-			<var name="fieldName" value="DM_Test_Field" />
+			<var name="fieldName" value="DMTestField" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#saveFieldSet">

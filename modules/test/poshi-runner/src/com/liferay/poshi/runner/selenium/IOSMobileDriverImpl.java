@@ -26,10 +26,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  */
 public class IOSMobileDriverImpl extends BaseMobileDriverImpl {
 
-	public IOSMobileDriverImpl(String projectDirName, String browserURL) {
-		super(
-			projectDirName, browserURL,
-			new IOSDriver(_url, _desiredCapabilities));
+	public IOSMobileDriverImpl(String browserURL) {
+		super(browserURL, new IOSDriver(_url, _desiredCapabilities));
 	}
 
 	protected void tap(String locator) {

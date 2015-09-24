@@ -32,10 +32,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
  */
 public class AndroidMobileDriverImpl extends BaseMobileDriverImpl {
 
-	public AndroidMobileDriverImpl(String projectDirName, String browserURL) {
-		super(
-			projectDirName, browserURL,
-			new AndroidDriver(_url, _desiredCapabilities));
+	public AndroidMobileDriverImpl(String browserURL) {
+		super(browserURL, new AndroidDriver(_url, _desiredCapabilities));
 	}
 
 	@Override

@@ -143,8 +143,6 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getPrimaryTestSuiteName();
 
-	public String getProjectDirName();
-
 	public String getSikuliImagesDirName();
 
 	public String getTestDependenciesDirName();

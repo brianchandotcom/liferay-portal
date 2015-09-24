@@ -29,12 +29,9 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class InternetExplorerRemoteWebDriverImpl
 	extends InternetExplorerWebDriverImpl {
 
-	public InternetExplorerRemoteWebDriverImpl(
-		String projectDirName, String browserURL) {
-
+	public InternetExplorerRemoteWebDriverImpl(String browserURL) {
 		super(
-			projectDirName, browserURL,
-			new RemoteWebDriver(_remoteURL, _desiredCapabilities));
+			browserURL, new RemoteWebDriver(_remoteURL, _desiredCapabilities));
 	}
 
 	private static final DesiredCapabilities _desiredCapabilities;

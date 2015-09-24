@@ -22,14 +22,12 @@ import org.openqa.selenium.edge.EdgeDriver;
  */
 public class EdgeWebDriverImpl extends BaseWebDriverImpl {
 
-	public EdgeWebDriverImpl(String projectDirName, String browserURL) {
-		super(projectDirName, browserURL, new EdgeDriver());
+	public EdgeWebDriverImpl(String browserURL) {
+		super(browserURL, new EdgeDriver());
 	}
 
-	public EdgeWebDriverImpl(
-		String projectDirName, String browserURL, WebDriver webDriver) {
-
-		super(projectDirName, browserURL, webDriver);
+	public EdgeWebDriverImpl(String browserURL, WebDriver webDriver) {
+		super(browserURL, webDriver);
 	}
 
 }

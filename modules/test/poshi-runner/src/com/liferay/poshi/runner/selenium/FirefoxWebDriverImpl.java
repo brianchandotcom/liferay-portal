@@ -28,8 +28,8 @@ import org.openqa.selenium.firefox.FirefoxProfile;
  */
 public class FirefoxWebDriverImpl extends BaseWebDriverImpl {
 
-	public FirefoxWebDriverImpl(String projectDirName, String browserURL) {
-		super(projectDirName, browserURL, new FirefoxDriver(_firefoxProfile));
+	public FirefoxWebDriverImpl(String browserURL) {
+		super(browserURL, new FirefoxDriver(_firefoxProfile));
 	}
 
 	private static final FirefoxProfile _firefoxProfile = new FirefoxProfile();

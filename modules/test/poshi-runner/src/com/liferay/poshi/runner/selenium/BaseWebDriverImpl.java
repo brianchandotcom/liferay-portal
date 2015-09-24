@@ -38,9 +38,7 @@ import org.openqa.selenium.internal.WrapsDriver;
 public abstract class BaseWebDriverImpl
 	extends WebDriverToSeleniumBridge implements LiferaySelenium {
 
-	public BaseWebDriverImpl(
-		String projectDirName, String browserURL, WebDriver webDriver) {
-
+	public BaseWebDriverImpl(String browserURL, WebDriver webDriver) {
 		super(webDriver);
 
 		System.setProperty("java.awt.headless", "false");
@@ -52,7 +50,6 @@ public abstract class BaseWebDriverImpl
 
 		if (OSDetector.isWindows()) {
 			outputDirName = StringUtil.replace(outputDirName, "//", "\\");
-			projectDirName = StringUtil.replace(projectDirName, "//", "\\");
 
 			sikuliImagesDirName = StringUtil.replace(
 				sikuliImagesDirName, "//", "\\");
@@ -64,7 +61,6 @@ public abstract class BaseWebDriverImpl
 		}
 
 		_outputDirName = outputDirName;
-		_projectDirName = projectDirName;
 		_sikuliImagesDirName = sikuliImagesDirName;
 		_testDependenciesDirName = testDependenciesDirName;
 
@@ -414,11 +410,6 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public String getPrimaryTestSuiteName() {
 		return _primaryTestSuiteName;
-	}
-
-	@Override
-	public String getProjectDirName() {
-		return _projectDirName;
 	}
 
 	@Override
@@ -971,7 +962,6 @@ public abstract class BaseWebDriverImpl
 	private String _clipBoard = "";
 	private final String _outputDirName;
 	private String _primaryTestSuiteName;
-	private final String _projectDirName;
 	private final String _sikuliImagesDirName;
 	private final String _testDependenciesDirName;
 

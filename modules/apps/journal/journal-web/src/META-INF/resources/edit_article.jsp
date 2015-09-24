@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs2 = ParamUtil.getString(request, "tabs2");
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL");
@@ -136,7 +134,6 @@ request.setAttribute("edit_article.jsp-changeStructure", changeStructure);
 
 	<aui:form action="<%= editArticleActionURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm1" onSubmit="event.preventDefault();">
 		<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
-		<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 		<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />

@@ -6,3 +6,5 @@ Include-Resource: \
 	classes,\
 	@../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
 	@../../../util-java/util-java.jar!/com/liferay/util/EncryptorException.class
+
+-metatype-inherit: True

@@ -1,4 +1,5 @@
 dependencies {
+	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":portal-security:portal-security-auto-login")
 }
 

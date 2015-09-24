@@ -303,7 +303,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		_sessionFactory = sessionFactory;
 		_dialect = _sessionFactory.getDialect();
-		_db = DBFactoryUtil.getDB(_dialect);
+		_db = DBFactoryUtil.getDB(_dialect, getDataSource());
 
 		_databaseOrderByMaxColumns = GetterUtil.getInteger(
 			PropsUtil.get(

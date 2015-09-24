@@ -105,7 +105,7 @@ public class DBBuilder {
 				continue;
 			}
 
-			DB db = DBFactoryUtil.getDB(databaseType);
+			DB db = DBFactoryUtil.getDB(databaseType, null);
 
 			if (db != null) {
 				if (!sqlDir.endsWith("/WEB-INF/sql")) {
@@ -126,7 +126,7 @@ public class DBBuilder {
 		}
 
 		for (String _databaseType : _databaseTypes) {
-			DB db = DBFactoryUtil.getDB(_databaseType);
+			DB db = DBFactoryUtil.getDB(_databaseType, null);
 
 			if (db != null) {
 				db.buildSQLFile(sqlDir, fileName);

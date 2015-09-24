@@ -205,10 +205,10 @@ public class SampleSQLBuilder {
 	}
 
 	protected void compressSQL(Reader reader, File dir) throws Exception {
-		DB db = DBFactoryUtil.getDB(_dbType);
+		DB db = DBFactoryUtil.getDB(_dbType, null);
 
 		if (db instanceof MySQLDB) {
-			db = new SampleMySQLDB();
+			db = new SampleMySQLDB(db.getMajorVersion(), db.getMinorVersion());
 		}
 
 		Map<String, Writer> insertSQLWriters = new HashMap<>();

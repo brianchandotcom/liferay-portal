@@ -29,20 +29,9 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Tomas Polesovsky
  */
-@Component(
-	immediate = true,
-	property = {
-		"auth.verifier.DigestAuthenticationAuthVerifier.digest_auth=false",
-		"auth.verifier.DigestAuthenticationAuthVerifier.hosts.allowed=",
-		"auth.verifier.DigestAuthenticationAuthVerifier.urls.excludes=*",
-		"auth.verifier.DigestAuthenticationAuthVerifier.urls.includes="
-	}
-)
 public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 
 	@Override

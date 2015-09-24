@@ -35,21 +35,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Zsolt Berentey
  */
-@Component(
-	immediate = true,
-	property = {
-		"auth.verifier.TunnelAuthVerifier.hosts.allowed=255.255.255.255",
-		"auth.verifier.TunnelAuthVerifier.urls.excludes=",
-		"auth.verifier.TunnelAuthVerifier.urls.includes=/api/liferay/do",
-		"service.access.profile.name=DEFAULT_USER"
-	}
-)
 public class TunnelAuthVerifier implements AuthVerifier {
 
 	@Activate

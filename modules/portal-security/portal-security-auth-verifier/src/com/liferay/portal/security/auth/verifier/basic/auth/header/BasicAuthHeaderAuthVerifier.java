@@ -29,21 +29,9 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Tomas Polesovsky
  */
-@Component(
-	immediate = true,
-	property = {
-		"auth.verifier.BasicAuthHeaderAuthVerifier.basic_auth=false",
-		"auth.verifier.BasicAuthHeaderAuthVerifier.hosts.allowed=",
-		"auth.verifier.BasicAuthHeaderAuthVerifier.urls.excludes=/api/liferay/*",
-		"auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=/api/*,/xmlrpc/*"
-	},
-	service = AuthVerifier.class
-)
 public class BasicAuthHeaderAuthVerifier
 	extends BasicAuthHeaderAutoLogin implements AuthVerifier {
 

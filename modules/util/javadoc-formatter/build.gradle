@@ -8,5 +8,5 @@ dependencies {
 }
 
 liferay {
-	deployDir = file("../../../tools/sdk/dependencies/${bundle.instructions['Bundle-SymbolicName']}/lib")
+	deployDir = "../../../tools/sdk/tmp/portal-tools"
 }

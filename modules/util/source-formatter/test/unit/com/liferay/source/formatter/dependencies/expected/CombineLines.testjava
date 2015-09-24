@@ -97,6 +97,9 @@ public class CombineLines extends SuperClass {
 
 		for (String test2 : testList) {
 		}
+
+		List<String> listWithALongNameSoThatItWillNotAllFitOnOneLine =
+			new ArrayList<>();
 	}
 
 	public String method4() {
@@ -130,6 +133,14 @@ public class CombineLines extends SuperClass {
 		return StringUtil.replace(
 			s, new String[] {StringPool.PERIOD, StringPool.SLASH},
 			new String[] {StringPool.COMMA, StringPool.BACK_SLASH});
+	}
+
+	private class SubClass1
+		extends SomeOtherClassWithALongNameThatDoesNotFitOnPreviousLine {
+	}
+
+	private class SubClass2
+		implements SomeOtherClassWithALongNameThatDoesNotFitOnPreviousLine {
 	}
 
 }

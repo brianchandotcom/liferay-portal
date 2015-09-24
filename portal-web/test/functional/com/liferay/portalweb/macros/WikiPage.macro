@@ -51,13 +51,13 @@
 	</command>
 
 	<command name="addComment">
-		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
+		<execute function="Click#clickAt" locator1="Comments#COMMENT_FIELD" />
 
-		<execute function="Type" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
+		<execute function="Type#typeAlloyEditor" locator1="Comments#COMMENT_FIELD" value1="${entryComment}" />
 
-		<execute function="AssertClick" locator1="Button#REPLY" value1="Reply" />
+		<execute function="AssertClick#assertTextClickAtAndWait" locator1="Button#REPLY" value1="Reply" />
 
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS_1" value1="Your request processed successfully." />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
 	</command>
 
 	<command name="addCommentPG">
@@ -695,7 +695,7 @@
 
 		<execute function="AssertClick" locator1="Comments#EDIT_LINK" value1="Edit" />
 
-		<execute function="Type" locator1="Comments#EDIT_COMMENT_FIELD" value1="${entryCommentEdit}" />
+		<execute function="Type#typeAlloyEditor" locator1="Comments#EDIT_COMMENT_FIELD" value1="${entryCommentEdit}" />
 
 		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
 	</command>

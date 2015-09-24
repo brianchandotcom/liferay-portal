@@ -20,8 +20,16 @@ import com.liferay.portal.kernel.dao.db.DBFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.util.PropsValues;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
 
 import org.hibernate.dialect.DB2Dialect;
 import org.hibernate.dialect.Dialect;
@@ -55,7 +63,7 @@ public class DBFactoryImpl implements DBFactory {
 				Dialect dialect = (Dialect)InstanceFactory.newInstance(
 					PropsValues.HIBERNATE_DIALECT);
 
-				setDB(dialect);
+				setDB(dialect, InfrastructureUtil.getDataSource());
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -66,9 +74,7 @@ public class DBFactoryImpl implements DBFactory {
 	}
 
 	@Override
-	public DB getDB(Object dialect) {
-		DB db = null;
-
+	public DB getDB(Object dialect, DataSource dataSource) {
 		if (dialect instanceof DialectImpl) {
 			DialectImpl dialectImpl = (DialectImpl)dialect;
 
@@ -76,105 +82,113 @@ public class DBFactoryImpl implements DBFactory {
 		}
 
 		if (dialect instanceof DB2Dialect) {
-			db = DB2DB.getInstance();
-		}
-		else if (dialect instanceof HSQLDialect) {
-			db = HypersonicDB.getInstance();
-		}
-		else if (dialect instanceof MySQLDialect) {
-			db = MySQLDB.getInstance();
-		}
-		else if (dialect instanceof Oracle8iDialect ||
-				 dialect instanceof Oracle9Dialect) {
-
-			db = OracleDB.getInstance();
-		}
-		else if (dialect instanceof PostgreSQLDialect) {
-			db = PostgreSQLDB.getInstance();
-		}
-		else if (dialect instanceof SQLServerDialect) {
-			db = SQLServerDB.getInstance();
-		}
-		else if (dialect instanceof SybaseDialect ||
-				 dialect instanceof Sybase11Dialect ||
-				 dialect instanceof SybaseAnywhereDialect ||
-				 dialect instanceof SybaseASE15Dialect) {
-
-			db = SybaseDB.getInstance();
+			return getDB(DB.TYPE_DB2, dataSource);
 		}
 
-		return db;
+		if (dialect instanceof HSQLDialect) {
+			return getDB(DB.TYPE_HYPERSONIC, dataSource);
+		}
+
+		if (dialect instanceof MySQLDialect) {
+			return getDB(DB.TYPE_MYSQL, dataSource);
+		}
+
+		if (dialect instanceof Oracle8iDialect ||
+			dialect instanceof Oracle9Dialect) {
+
+			return getDB(DB.TYPE_ORACLE, dataSource);
+		}
+
+		if (dialect instanceof PostgreSQLDialect) {
+			return getDB(DB.TYPE_POSTGRESQL, dataSource);
+		}
+
+		if (dialect instanceof SQLServerDialect) {
+			return getDB(DB.TYPE_SQLSERVER, dataSource);
+		}
+
+		if (dialect instanceof SybaseDialect ||
+			dialect instanceof Sybase11Dialect ||
+			dialect instanceof SybaseAnywhereDialect ||
+			dialect instanceof SybaseASE15Dialect) {
+
+			return getDB(DB.TYPE_SYBASE, dataSource);
+		}
+
+		throw new IllegalArgumentException("Unknown dialect type " + dialect);
 	}
 
 	@Override
-	public DB getDB(String type) {
-		DB db = null;
+	public DB getDB(String type, DataSource dataSource) {
+		int dbMajorVersion = 0;
+		int dbMinorVersion = 0;
+
+		if (dataSource != null) {
+			try (Connection connection = dataSource.getConnection()) {
+				DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+				dbMajorVersion = databaseMetaData.getDatabaseMajorVersion();
+				dbMinorVersion = databaseMetaData.getDatabaseMinorVersion();
+			}
+			catch (SQLException sqle) {
+				return ReflectionUtil.throwException(sqle);
+			}
+		}
 
 		if (type.equals(DB.TYPE_DB2)) {
-			db = DB2DB.getInstance();
-		}
-		else if (type.equals(DB.TYPE_HYPERSONIC)) {
-			db = HypersonicDB.getInstance();
-		}
-		else if (type.equals(DB.TYPE_MYSQL)) {
-			db = MySQLDB.getInstance();
-		}
-		else if (type.equals(DB.TYPE_ORACLE)) {
-			db = OracleDB.getInstance();
-		}
-		else if (type.equals(DB.TYPE_POSTGRESQL)) {
-			db = PostgreSQLDB.getInstance();
-		}
-		else if (type.equals(DB.TYPE_SQLSERVER)) {
-			db = SQLServerDB.getInstance();
-		}
-		else if (type.equals(DB.TYPE_SYBASE)) {
-			db = SybaseDB.getInstance();
+			return new DB2DB(dbMajorVersion, dbMinorVersion);
 		}
 
-		return db;
+		if (type.equals(DB.TYPE_HYPERSONIC)) {
+			return new HypersonicDB(dbMajorVersion, dbMinorVersion);
+		}
+
+		if (type.equals(DB.TYPE_MYSQL)) {
+			return new MySQLDB(dbMajorVersion, dbMinorVersion);
+		}
+
+		if (type.equals(DB.TYPE_ORACLE)) {
+			return new OracleDB(dbMajorVersion, dbMinorVersion);
+		}
+
+		if (type.equals(DB.TYPE_POSTGRESQL)) {
+			return new PostgreSQLDB(dbMajorVersion, dbMinorVersion);
+		}
+
+		if (type.equals(DB.TYPE_SQLSERVER)) {
+			return new SQLServerDB(dbMajorVersion, dbMinorVersion);
+		}
+
+		if (type.equals(DB.TYPE_SYBASE)) {
+			return new SybaseDB(dbMajorVersion, dbMinorVersion);
+		}
+
+		throw new IllegalArgumentException("Unknown database type " + type);
 	}
 
 	@Override
-	public void setDB(Object dialect) {
-		_db = getDB(dialect);
+	public void setDB(Object dialect, DataSource dataSource) {
+		_db = getDB(dialect, dataSource);
 
-		if (_db == null) {
-			Class<?> clazz = dialect.getClass();
+		if (_log.isDebugEnabled()) {
+			Class<?> dbClazz = _db.getClass();
+			Class<?> dialectClazz = dialect.getClass();
 
-			_log.error("No DB implementation exists for " + clazz.getName());
-		}
-		else {
-			if (_log.isDebugEnabled()) {
-				Class<?> dbClazz = _db.getClass();
-				Class<?> dialectClazz = dialect.getClass();
-
-				_log.debug(
-					"Using DB implementation " + dbClazz.getName() + " for " +
-						dialectClazz.getName());
-			}
+			_log.debug(
+				"Using DB implementation " + dbClazz.getName() + " for " +
+					dialectClazz.getName());
 		}
 	}
 
 	@Override
-	public void setDB(String type) {
-		if (_db != null) {
-			return;
-		}
+	public void setDB(String type, DataSource dataSource) {
+		_db = getDB(type, dataSource);
 
-		_db = getDB(type);
+		if (_log.isDebugEnabled()) {
+			Class<?> clazz = _db.getClass();
 
-		if (_db == null) {
-			_log.error("No DB implementation exists for " + type);
-		}
-		else {
-			if (_log.isDebugEnabled()) {
-				Class<?> clazz = _db.getClass();
-
-				_log.debug(
-					"Using DB implementation " + clazz.getName() + " for " +
-						type);
-			}
+			_log.debug(
+				"Using DB implementation " + clazz.getName() + " for " + type);
 		}
 	}
 

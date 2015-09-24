@@ -6252,8 +6252,6 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="run-poshi-runner">
-		<property name="test.console.log.file.name" value="${liferay.home}/logs/liferay.${current.date}.xml" />
-
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />

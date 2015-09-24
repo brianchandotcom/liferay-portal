@@ -843,6 +843,7 @@ public class JavadocFormatter {
 		if (fileName.contains("modules/third-party") ||
 			fileName.endsWith("Application.java") ||
 			fileName.endsWith("JavadocFormatter.java") ||
+			fileName.endsWith("Mojo.java") ||
 			fileName.endsWith("SourceFormatter.java") ||
 			fileName.endsWith("WebProxyPortlet.java") ||
 			_hasGeneratedTag(originalContent)) {

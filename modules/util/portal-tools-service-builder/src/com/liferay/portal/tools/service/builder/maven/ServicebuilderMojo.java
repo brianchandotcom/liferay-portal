@@ -178,6 +178,10 @@ public class ServicebuilderMojo extends AbstractMojo {
 		_serviceBuilderArgs.setTestDirName(testDirName);
 	}
 
+	/**
+	 * @parameter default-value="${project.basedir}
+	 * @readonly
+	 */
 	protected File baseDir;
 
 	private final ServiceBuilderArgs _serviceBuilderArgs;

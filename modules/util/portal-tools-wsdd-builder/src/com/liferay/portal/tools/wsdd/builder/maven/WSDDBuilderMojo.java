@@ -57,6 +57,10 @@ public class WSDDBuilderMojo extends AbstractMojo {
 		_wsddBuilderArgs.setServiceNamespace(serviceNamespace);
 	}
 
+	/**
+	 * @parameter default-value="${project.basedir}
+	 * @readonly
+	 */
 	protected File baseDir;
 
 	private final WSDDBuilderArgs _wsddBuilderArgs = new WSDDBuilderArgs();

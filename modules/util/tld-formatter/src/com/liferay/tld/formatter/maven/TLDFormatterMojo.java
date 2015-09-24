@@ -58,6 +58,10 @@ public class TLDFormatterMojo extends AbstractMojo {
 		_tldFormatterArgs.setPlugin(plugin);
 	}
 
+	/**
+	 * @parameter default-value="${project.basedir}
+	 * @readonly
+	 */
 	protected File baseDir;
 
 	private final TLDFormatterArgs _tldFormatterArgs = new TLDFormatterArgs();

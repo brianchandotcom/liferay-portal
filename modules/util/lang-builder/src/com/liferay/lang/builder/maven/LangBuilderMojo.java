@@ -68,6 +68,10 @@ public class LangBuilderMojo extends AbstractMojo {
 		_langBuilderArgs.setTranslateClientSecret(translateClientSecret);
 	}
 
+	/**
+	 * @parameter default-value="${project.basedir}
+	 * @readonly
+	 */
 	protected File baseDir;
 
 	private final LangBuilderArgs _langBuilderArgs = new LangBuilderArgs();

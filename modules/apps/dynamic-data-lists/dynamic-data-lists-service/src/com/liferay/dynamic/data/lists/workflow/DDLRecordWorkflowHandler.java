@@ -52,16 +52,15 @@ public class DDLRecordWorkflowHandler extends BaseWorkflowHandler<DDLRecord> {
 		AssetRendererFactory<DDLRecord> assetRendererFactory =
 			getAssetRendererFactory();
 
-		if (assetRendererFactory != null) {
-			DDLRecordVersion recordVersion =
-				DDLRecordVersionLocalServiceUtil.getRecordVersion(classPK);
-
-			return assetRendererFactory.getAssetRenderer(
-				recordVersion.getRecordId(), AssetRendererFactory.TYPE_LATEST);
-		}
-		else {
+		if (assetRendererFactory == null) {
 			return null;
 		}
+
+		DDLRecordVersion recordVersion =
+			DDLRecordVersionLocalServiceUtil.getRecordVersion(classPK);
+
+		return assetRendererFactory.getAssetRenderer(
+			recordVersion.getRecordId(), AssetRendererFactory.TYPE_LATEST);
 	}
 
 	@Override

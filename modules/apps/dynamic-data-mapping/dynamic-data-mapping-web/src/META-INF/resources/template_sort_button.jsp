@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean showHeader = ParamUtil.getBoolean(request, "showHeader", false);
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
 long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
@@ -40,7 +39,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 <li class="<%= orderByType.equals("asc") ? "active" : StringPool.BLANK %>">
 	<portlet:renderURL var="orderByColAscURL">
 		<portlet:param name="mvcPath" value="/view_template.jsp" />
-		<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
@@ -54,7 +52,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 <li class="<%= orderByType.equals("desc") ? "active" : StringPool.BLANK %>">
 	<portlet:renderURL var="orderByColDescURL">
 		<portlet:param name="mvcPath" value="/view_template.jsp" />
-		<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
@@ -68,7 +65,6 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 <aui:script>
 	<portlet:renderURL var="orderByTypeURL">
 		<portlet:param name="mvcPath" value="/view_template.jsp" />
-		<portlet:param name="showHeader" value="<%= String.valueOf(showHeader) %>" />
 		<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 		<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />

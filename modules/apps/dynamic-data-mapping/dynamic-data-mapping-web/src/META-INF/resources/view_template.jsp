@@ -47,7 +47,6 @@ portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
 portletURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
-portletURL.setParameter("showHeader", String.valueOf(showHeader));
 
 boolean controlPanel = false;
 

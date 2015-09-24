@@ -87,6 +87,37 @@ public class ChromeMobileDriverImpl extends BaseMobileDriverImpl {
 		return Boolean.parseBoolean(inputShownString);
 	}
 
+	@Override
+	protected void tap(String locator) {
+		TouchAction touchAction = new TouchAction(this);
+
+		hideKeyboard();
+
+		super.swipeWebElementIntoView(locator);
+
+		int elementPositionCenterX = WebDriverHelper.getElementPositionCenterX(
+			this, locator);
+
+		int screenPositionX = elementPositionCenterX * 2;
+
+		int elementPositionCenterY = WebDriverHelper.getElementPositionCenterY(
+			this, locator);
+		int navigationBarHeight = 162;
+		int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+
+		int screenPositionY =
+			((elementPositionCenterY - viewportPositionTop) * 2) +
+				navigationBarHeight;
+
+		context("NATIVE_APP");
+
+		touchAction.tap(screenPositionX, screenPositionY);
+
+		touchAction.perform();
+
+		context("WEBVIEW_1");
+	}
+
 	private static final DesiredCapabilities _desiredCapabilities;
 	private static final URL _url;
 

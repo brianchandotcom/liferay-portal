@@ -17,7 +17,7 @@
 <%@ include file="/blogs_admin/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation");
+String navigation = ParamUtil.getString(request, "navigation", "entries");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -31,7 +31,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 		<aui:nav-item
 			href="<%= viewEntriesURL %>"
 			label="entries"
-			selected="<%= true %>"
+			selected="<%= navigation.equals("entries") %>"
 		/>
 
 		<portlet:renderURL var="viewImagesURL">
@@ -52,7 +52,14 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	</aui:form>
 </aui:nav-bar>
 
-<liferay-util:include page="/blogs_admin/view_entries.jsp" servletContext="<%= application %>" />
+<c:choose>
+	<c:when test="<%= navigation.equals("entries") %>">
+		<liferay-util:include page="/blogs_admin/view_entries.jsp" servletContext="<%= application %>" />
+	</c:when>
+	<c:otherwise>
+		<liferay-util:include page="/blogs_admin/view_images.jsp" servletContext="<%= application %>" />
+	</c:otherwise>
+</c:choose>
 
 <c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 	<portlet:renderURL var="viewEntriesURL">

@@ -20,6 +20,6 @@ buildAlloyTheme {
 	into "src/META-INF/resources/portal"
 }
 
-classes {
+buildCSS {
 	dependsOn buildAlloyTheme
 }

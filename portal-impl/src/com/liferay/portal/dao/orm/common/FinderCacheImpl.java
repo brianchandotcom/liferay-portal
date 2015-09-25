@@ -74,7 +74,7 @@ public class FinderCacheImpl
 	public void clearCache(String className) {
 		clearLocalCache();
 
-		PortalCache<?, ?> portalCache = _getPortalCache(className, true);
+		PortalCache<?, ?> portalCache = _getPortalCache(className);
 
 		if (portalCache != null) {
 			portalCache.removeAll();
@@ -126,7 +126,7 @@ public class FinderCacheImpl
 
 		if (primaryKey == null) {
 			PortalCache<Serializable, Serializable> portalCache =
-				_getPortalCache(finderPath.getCacheName(), true);
+				_getPortalCache(finderPath.getCacheName());
 
 			Serializable cacheKey = finderPath.encodeCacheKey(args);
 
@@ -192,7 +192,7 @@ public class FinderCacheImpl
 		}
 
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
-			finderPath.getCacheName(), true);
+			finderPath.getCacheName());
 
 		Serializable cacheKey = finderPath.encodeCacheKey(args);
 
@@ -232,7 +232,7 @@ public class FinderCacheImpl
 		}
 
 		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
-			finderPath.getCacheName(), true);
+			finderPath.getCacheName());
 
 		Serializable cacheKey = finderPath.encodeCacheKey(args);
 
@@ -288,25 +288,27 @@ public class FinderCacheImpl
 	}
 
 	private PortalCache<Serializable, Serializable> _getPortalCache(
-		String className, boolean createIfAbsent) {
+		String className) {
 
 		PortalCache<Serializable, Serializable> portalCache = _portalCaches.get(
 			className);
 
-		if ((portalCache == null) && createIfAbsent) {
-			String groupKey = _GROUP_KEY_PREFIX.concat(className);
+		if (portalCache != null) {
+			return portalCache;
+		}
 
-			portalCache =
-				(PortalCache<Serializable, Serializable>)
-					_multiVMPool.getPortalCache(
-						groupKey, _valueObjectEntityBlockingCacheEnabled);
+		String groupKey = _GROUP_KEY_PREFIX.concat(className);
 
-			PortalCache<Serializable, Serializable> previousPortalCache =
-				_portalCaches.putIfAbsent(className, portalCache);
+		portalCache =
+			(PortalCache<Serializable, Serializable>)
+				_multiVMPool.getPortalCache(
+					groupKey, _valueObjectEntityBlockingCacheEnabled);
 
-			if (previousPortalCache != null) {
-				portalCache = previousPortalCache;
-			}
+		PortalCache<Serializable, Serializable> previousPortalCache =
+			_portalCaches.putIfAbsent(className, portalCache);
+
+		if (previousPortalCache != null) {
+			return previousPortalCache;
 		}
 
 		return portalCache;

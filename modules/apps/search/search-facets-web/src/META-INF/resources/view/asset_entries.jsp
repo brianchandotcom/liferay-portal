@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/facets/init.jsp" %>
+<%@ include file="/view/init.jsp" %>
 
 <%
 int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");

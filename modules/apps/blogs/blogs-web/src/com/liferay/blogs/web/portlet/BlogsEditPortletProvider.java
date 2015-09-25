@@ -12,28 +12,33 @@
  * details.
  */
 
-package com.liferay.site.browser.web.portlet;
+package com.liferay.blogs.web.portlet;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
-import com.liferay.site.browser.web.constants.SiteBrowserPortletKeys;
+import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Sergio González
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.portal.model.Group"},
-	service = BrowsePortletProvider.class
+	property = {
+		"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry",
+		"service.ranking:Integer=100"
+	},
+	service = {EditPortletProvider.class, ViewPortletProvider.class}
 )
-public class SiteBrowserPortletProvider
-	extends BasePortletProvider implements BrowsePortletProvider {
+public class BlogsEditPortletProvider
+	extends BasePortletProvider
+	implements EditPortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return SiteBrowserPortletKeys.SITE_BROWSER;
+		return BlogsPortletKeys.BLOGS;
 	}
 
 }

@@ -12,32 +12,34 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.web.portlet;
+package com.liferay.blogs.web.portlet;
 
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Rafael Praxedes
+ * @author Sergio González
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
-		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"
-	},
-	service = {EditPortletProvider.class, ViewPortletProvider.class}
+	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
+	service = {
+		EditPortletProvider.class, ManagePortletProvider.class,
+		ViewPortletProvider.class
+	}
 )
-public class DynamicDataMappingEditPortletProvider extends BasePortletProvider
-	implements EditPortletProvider, ViewPortletProvider {
+public class BlogsAdminEditPortletProvider
+	extends BasePortletProvider
+	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return DDMPortletKeys.DYNAMIC_DATA_MAPPING;
+		return BlogsPortletKeys.BLOGS_ADMIN;
 	}
 
 }

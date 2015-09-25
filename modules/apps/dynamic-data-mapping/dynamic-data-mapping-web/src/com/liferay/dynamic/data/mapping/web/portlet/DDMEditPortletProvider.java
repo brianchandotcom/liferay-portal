@@ -12,28 +12,32 @@
  * details.
  */
 
-package com.liferay.asset.browser.web.portlet;
+package com.liferay.dynamic.data.mapping.web.portlet;
 
-import com.liferay.asset.browser.web.constants.AssetBrowserPortletKeys;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
+import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Rafael Praxedes
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.portlet.asset.model.AssetEntry"},
-	service = BrowsePortletProvider.class
+	property = {
+		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMStructure",
+		"model.class.name=com.liferay.dynamic.data.mapping.model.DDMTemplate"
+	},
+	service = {EditPortletProvider.class, ViewPortletProvider.class}
 )
-public class AssetBrowserPortletProvider
-	extends BasePortletProvider implements BrowsePortletProvider {
+public class DDMEditPortletProvider extends BasePortletProvider
+	implements EditPortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return AssetBrowserPortletKeys.ASSET_BROWSER;
+		return DDMPortletKeys.DYNAMIC_DATA_MAPPING;
 	}
 
 }

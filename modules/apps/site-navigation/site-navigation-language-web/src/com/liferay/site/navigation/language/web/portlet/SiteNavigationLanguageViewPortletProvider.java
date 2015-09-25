@@ -12,37 +12,37 @@
  * details.
  */
 
-package com.liferay.document.library.web.portlet;
+package com.liferay.site.navigation.language.web.provider;
 
-import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
-		"model.class.name=com.liferay.portal.kernel.repository.model.Folder",
-		"model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut",
-		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntryType",
-		"service.ranking:Integer=100"
+		"model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
 	},
-	service = {EditPortletProvider.class, ViewPortletProvider.class}
+	service = ViewPortletProvider.class
 )
-public class DLPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+public class SiteNavigationLanguageViewPortletProvider
+	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return DLPortletKeys.DOCUMENT_LIBRARY;
+		return SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE;
+	}
+
+	@Override
+	protected long getPlid(ThemeDisplay themeDisplay) throws PortalException {
+		return themeDisplay.getPlid();
 	}
 
 }

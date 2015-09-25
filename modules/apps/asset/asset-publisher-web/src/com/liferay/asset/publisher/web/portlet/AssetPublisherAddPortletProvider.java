@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"model.class.name=com.liferay.portlet.asset.model.AssetEntry"},
 	service = {AddPortletProvider.class, ViewPortletProvider.class}
 )
-public class AssetPublisherPortletProvider extends BasePortletProvider
+public class AssetPublisherAddPortletProvider extends BasePortletProvider
 	implements AddPortletProvider, ViewPortletProvider {
 
 	@Override

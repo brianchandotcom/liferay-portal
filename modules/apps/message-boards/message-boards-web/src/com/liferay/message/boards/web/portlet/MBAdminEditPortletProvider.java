@@ -12,33 +12,39 @@
  * details.
  */
 
-package com.liferay.blogs.web.portlet;
+package com.liferay.message.boards.web.portlet;
 
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Adolfo Pérez
  */
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry",
-		"service.ranking:Integer=100"
+		"model.class.name=com.liferay.portlet.messageboards.model.MBCategory",
+		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion",
+		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
+		"model.class.name=com.liferay.portlet.messageboards.model.MBThread"
 	},
-	service = {EditPortletProvider.class, ViewPortletProvider.class}
+	service = {
+		EditPortletProvider.class, ManagePortletProvider.class,
+		ViewPortletProvider.class
+	}
 )
-public class BlogsEditViewPortletProvider
+public class MBAdminEditPortletProvider
 	extends BasePortletProvider
-	implements EditPortletProvider, ViewPortletProvider {
+	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return BlogsPortletKeys.BLOGS;
+		return MBPortletKeys.MESSAGE_BOARDS_ADMIN;
 	}
 
 }

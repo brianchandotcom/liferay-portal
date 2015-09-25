@@ -12,34 +12,28 @@
  * details.
  */
 
-package com.liferay.blogs.web.portlet;
+package com.liferay.asset.browser.web.portlet;
 
-import com.liferay.blogs.web.constants.BlogsPortletKeys;
+import com.liferay.asset.browser.web.constants.AssetBrowserPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry"},
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	property = {"model.class.name=com.liferay.portlet.asset.model.AssetEntry"},
+	service = BrowsePortletProvider.class
 )
-public class BlogsAdminPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+public class AssetBrowserBrowsePortletProvider
+	extends BasePortletProvider implements BrowsePortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return BlogsPortletKeys.BLOGS_ADMIN;
+		return AssetBrowserPortletKeys.ASSET_BROWSER;
 	}
 
 }

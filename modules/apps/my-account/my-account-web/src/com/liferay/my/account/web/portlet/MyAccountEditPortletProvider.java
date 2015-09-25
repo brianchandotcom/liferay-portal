@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Component;
 		ViewPortletProvider.class
 	}
 )
-public class MyAccountPortletProvider
+public class MyAccountEditPortletProvider
 	extends BasePortletProvider
 	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 

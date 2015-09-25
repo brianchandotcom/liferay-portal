@@ -12,13 +12,11 @@
  * details.
  */
 
-package com.liferay.site.navigation.language.web.provider;
+package com.liferay.site.browser.web.portlet;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.site.navigation.language.web.constants.SiteNavigationLanguagePortletKeys;
+import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
+import com.liferay.site.browser.web.constants.SiteBrowserPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,22 +25,15 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
-	},
-	service = ViewPortletProvider.class
+	property = {"model.class.name=com.liferay.portal.model.Group"},
+	service = BrowsePortletProvider.class
 )
-public class SiteNavigationLanguageEntryViewPortletProvider
-	extends BasePortletProvider implements ViewPortletProvider {
+public class SiteBrowserBrowsePortletProvider
+	extends BasePortletProvider implements BrowsePortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return SiteNavigationLanguagePortletKeys.SITE_NAVIGATION_LANGUAGE;
-	}
-
-	@Override
-	protected long getPlid(ThemeDisplay themeDisplay) throws PortalException {
-		return themeDisplay.getPlid();
+		return SiteBrowserPortletKeys.SITE_BROWSER;
 	}
 
 }

@@ -12,36 +12,34 @@
  * details.
  */
 
-package com.liferay.message.boards.web.portlet;
+package com.liferay.users.admin.web.portlet;
 
-import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
+import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Adolfo Pérez
+ * @author Pei-Jung Lan
  */
 @Component(
 	immediate = true,
-	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBCategory",
-		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion",
-		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
-		"model.class.name=com.liferay.portlet.messageboards.model.MBThread",
-		"service.ranking:Integer=100"
-	},
-	service = {EditPortletProvider.class, ViewPortletProvider.class}
+	property = {"model.class.name=com.liferay.portal.model.User"},
+	service = {
+		EditPortletProvider.class, ManagePortletProvider.class,
+		ViewPortletProvider.class
+	}
 )
-public class MBPortletProvider
+public class UsersAdminEditPortletProvider
 	extends BasePortletProvider
-	implements EditPortletProvider, ViewPortletProvider {
+	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return MBPortletKeys.MESSAGE_BOARDS;
+		return UsersAdminPortletKeys.USERS_ADMIN;
 	}
 
 }

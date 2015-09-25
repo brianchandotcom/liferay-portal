@@ -17,7 +17,6 @@ package com.liferay.message.boards.web.portlet;
 import com.liferay.message.boards.web.constants.MBPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,20 +30,18 @@ import org.osgi.service.component.annotations.Component;
 		"model.class.name=com.liferay.portlet.messageboards.model.MBCategory",
 		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion",
 		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
-		"model.class.name=com.liferay.portlet.messageboards.model.MBThread"
+		"model.class.name=com.liferay.portlet.messageboards.model.MBThread",
+		"service.ranking:Integer=100"
 	},
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	service = {EditPortletProvider.class, ViewPortletProvider.class}
 )
-public class MBAdminPortletProvider
+public class MBEditPortletProvider
 	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+	implements EditPortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return MBPortletKeys.MESSAGE_BOARDS_ADMIN;
+		return MBPortletKeys.MESSAGE_BOARDS;
 	}
 
 }

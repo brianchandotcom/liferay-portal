@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord"},
 	service = AddPortletProvider.class
 )
-public class AddDDLDisplayPortletProvider
+public class DDLDisplayAddPortletProvider
 	extends BasePortletProvider implements AddPortletProvider {
 
 	@Override

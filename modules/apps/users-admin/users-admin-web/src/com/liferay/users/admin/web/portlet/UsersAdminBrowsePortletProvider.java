@@ -14,11 +14,14 @@
 
 package com.liferay.users.admin.web.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.portlet.ManagePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.BrowsePortletProvider;
 import com.liferay.users.admin.web.constants.UsersAdminPortletKeys;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,19 +30,26 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.portal.model.User"},
-	service = {
-		EditPortletProvider.class, ManagePortletProvider.class,
-		ViewPortletProvider.class
-	}
+	property = {"model.class.name=com.liferay.portal.model.Organization"},
+	service = BrowsePortletProvider.class
 )
-public class UsersAdminPortletProvider
-	extends BasePortletProvider
-	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
+public class UsersAdminBrowsePortletProvider
+	extends BasePortletProvider implements BrowsePortletProvider {
 
 	@Override
 	public String getPortletId() {
 		return UsersAdminPortletKeys.USERS_ADMIN;
+	}
+
+	@Override
+	public PortletURL getPortletURL(HttpServletRequest request)
+		throws PortalException {
+
+		PortletURL portletURL = super.getPortletURL(request);
+
+		portletURL.setParameter("mvcPath", "/select_organization.jsp");
+
+		return portletURL;
 	}
 
 }

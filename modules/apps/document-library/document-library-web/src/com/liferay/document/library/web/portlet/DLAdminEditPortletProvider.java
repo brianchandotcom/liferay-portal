@@ -12,31 +12,39 @@
  * details.
  */
 
-package com.liferay.social.activity.web.portlet;
+package com.liferay.document.library.web.portlet;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.social.activity.web.constants.SocialActivityPortletKeys;
+import com.liferay.portal.kernel.portlet.ManagePortletProvider;
+import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Roberto Díaz
+ * @author Sergio González
  */
 @Component(
 	immediate = true,
 	property = {
-		"model.class.name=" +
-			"com.liferay.portlet.social.model.SocialActivitySetting"
+		"model.class.name=com.liferay.portal.kernel.repository.model.FileEntry",
+		"model.class.name=com.liferay.portal.kernel.repository.model.Folder",
+		"model.class.name=com.liferay.portal.kernel.repository.model.FileShortcut",
+		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntryType"
 	},
-	service = {EditPortletProvider.class}
+	service = {
+		EditPortletProvider.class, ManagePortletProvider.class,
+		ViewPortletProvider.class
+	}
 )
-public class SocialActivityPortletProvider extends BasePortletProvider
-	implements EditPortletProvider {
+public class DLAdminEditPortletProvider
+	extends BasePortletProvider
+	implements EditPortletProvider, ManagePortletProvider, ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return SocialActivityPortletKeys.SOCIAL_ACTIVITY;
+		return DLPortletKeys.DOCUMENT_LIBRARY_ADMIN;
 	}
 
 }

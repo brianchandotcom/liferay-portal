@@ -28,6 +28,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 portletURL.setParameter("navigation", "images");
+
+String keywords = ParamUtil.getString(request, "keywords");
 %>
 
 <liferay-frontend:management-bar
@@ -74,12 +76,59 @@ portletURL.setParameter("navigation", "images");
 			orderByComparator="<%= DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType) %>"
 			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
 			searchContainer="<%= new EntrySearch(renderRequest, PortletURLUtil.clone(portletURL, liferayPortletResponse)) %>"
-			total="<%= PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, attachmentsFolder.getFolderId()) %>"
 		>
 
-			<liferay-ui:search-container-results
-				results="<%= PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, attachmentsFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-			/>
+			<%
+			List<FileEntry> results = null;
+
+			if (Validator.isNull(keywords)) {
+				total = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, attachmentsFolder.getFolderId());
+				results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, attachmentsFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+			}
+			else {
+				SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+				searchContext.setEnd(searchContainer.getEnd());
+				searchContext.setFolderIds(new long[] {attachmentsFolder.getFolderId()});
+				searchContext.setStart(searchContainer.getStart());
+
+				Folder folder = DLAppLocalServiceUtil.getFolder(attachmentsFolder.getFolderId());
+
+				Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
+
+				total = hits.getLength();
+
+				Document[] docs = hits.getDocs();
+
+				results = new ArrayList<FileEntry>();
+
+				for (Document doc : docs) {
+					long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+					FileEntry fileEntry = null;
+
+					try {
+						fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+
+						System.out.println("fileEntry: " + fileEntry);
+
+						results.add(fileEntry);
+
+						System.out.println("results size: " + results.size());
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
+						}
+
+						continue;
+					}
+				}
+			}
+
+			searchContainer.setTotal(total);
+			searchContainer.setResults(results);
+			%>
 
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.repository.model.FileEntry"
@@ -111,3 +160,7 @@ portletURL.setParameter("navigation", "images");
 		}
 	}
 </aui:script>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("com_liferay_blogs_web.blogs_admin.view_images.jsp");
+%>

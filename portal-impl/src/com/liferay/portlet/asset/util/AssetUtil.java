@@ -863,25 +863,25 @@ public class AssetUtil {
 		return new Sort[] {sort1, sort2};
 	}
 
-	protected static int getSortType(String sortField) {
+	protected static int getSortType(String fieldType) {
 		int sortType = Sort.STRING_TYPE;
 
-		if (sortField.equals(Field.CREATE_DATE) ||
-			sortField.equals(Field.EXPIRATION_DATE) ||
-			sortField.equals(Field.PUBLISH_DATE) ||
-			sortField.equals("ddm-date") || sortField.equals("modifiedDate")) {
+		if (fieldType.equals(Field.CREATE_DATE) ||
+			fieldType.equals(Field.EXPIRATION_DATE) ||
+			fieldType.equals(Field.PUBLISH_DATE) ||
+			fieldType.equals("ddm-date") || fieldType.equals("modifiedDate")) {
 
 			sortType = Sort.LONG_TYPE;
 		}
-		else if (sortField.equals(Field.PRIORITY) ||
-				 sortField.equals(Field.RATINGS) ||
-				 sortField.equals("ddm-decimal") ||
-				 sortField.equals("ddm-number")) {
+		else if (fieldType.equals(Field.PRIORITY) ||
+				 fieldType.equals(Field.RATINGS) ||
+				 fieldType.equals("ddm-decimal") ||
+				 fieldType.equals("ddm-number")) {
 
 			sortType = Sort.DOUBLE_TYPE;
 		}
-		else if (sortField.equals(Field.VIEW_COUNT) ||
-				 sortField.equals("ddm-integer")) {
+		else if (fieldType.equals(Field.VIEW_COUNT) ||
+				 fieldType.equals("ddm-integer")) {
 
 			sortType = Sort.INT_TYPE;
 		}

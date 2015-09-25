@@ -455,7 +455,7 @@
 
 		<var name="key_templateName" value="Advertisement Template Name" />
 
-		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ACTIONS" />
+		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">
@@ -488,7 +488,7 @@
 
 		<var name="key_templateName" value="Press Release Template Name" />
 
-		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ACTIONS" />
+		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS" />
 		<execute function="Click" locator1="MenuItem#PERMISSIONS" />
 
 		<execute macro="PermissionsInline#addOrRemoveViewPermissionFromAllRoles">

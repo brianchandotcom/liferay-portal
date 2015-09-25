@@ -16,138 +16,38 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+<liferay-frontend:management-bar
+	checkBoxContainerId="entriesContainer"
+	includeCheckBox="<%= !user.isDefaultUser() %>"
+>
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/template_sort_button.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
 
-String redirect = ParamUtil.getString(request, "redirect");
-
-long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
-long classNameId = ParamUtil.getLong(request, "classNameId");
-long classPK = ParamUtil.getLong(request, "classPK");
-long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
-%>
-
-<aui:nav-bar>
-	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
+	<liferay-frontend:management-bar-action-buttons>
 
 		<%
-		String message = "add";
+		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteTemplates();";
 		%>
 
-		<c:choose>
-			<c:when test="<%= classNameId == PortalUtil.getClassNameId(DDMStructure.class) %>">
-				<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, groupId, classNameId, scopeClassNameId) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) %>">
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" />
 
-					<%
-					if (Validator.isNull(templateTypeValue)) {
-						message = "add-form-template";
-					}
-					%>
+	</liferay-frontend:management-bar-action-buttons>
 
-					<portlet:renderURL var="addTemplateURL">
-						<portlet:param name="mvcPath" value="/edit_template.jsp" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-						<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-						<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
-						<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "getAvailableFields" %>' />
-					</portlet:renderURL>
+</liferay-frontend:management-bar>
 
-					<aui:nav-item href="<%= addTemplateURL %>" iconCssClass="icon-plus" label="<%= message %>" selected='<%= toolbarItem.equals("add-form-template") %>' />
-				</c:if>
+<aui:script>
+	function <portlet:namespace />deleteTemplates() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
 
-				<c:if test="<%= DDMTemplatePermission.containsAddTemplatePermission(permissionChecker, groupId, classNameId, scopeClassNameId) && (Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) %>">
+			var searchContainer = AUI.$('#<portlet:namespace />entriesContainer', form);
 
-					<%
-					if (Validator.isNull(templateTypeValue)) {
-						message = "add-display-template";
-					}
-					%>
+			form.attr('method', 'post');
+			form.fm('deleteTemplateIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
 
-					<portlet:renderURL var="addTemplateURL">
-						<portlet:param name="mvcPath" value="/edit_template.jsp" />
-						<portlet:param name="redirect" value="<%= redirect %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-						<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-						<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-						<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
-						<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
-					</portlet:renderURL>
-
-					<aui:nav-item href="<%= addTemplateURL %>" iconCssClass="icon-plus" label="<%= message %>" selected='<%= toolbarItem.equals("add-display-template") %>' />
-				</c:if>
-			</c:when>
-			<c:otherwise>
-
-				<%
-				List<TemplateHandler> templateHandlers = new ArrayList<TemplateHandler>();
-
-				if (classNameId > 0) {
-					TemplateHandler templateHandler = TemplateHandlerRegistryUtil.getTemplateHandler(classNameId);
-
-					if (permissionChecker.hasPermission(scopeGroupId, templateHandler.getResourceName(), scopeGroupId, ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
-						templateHandlers.add(templateHandler);
-					}
-				}
-				else {
-					PortletDisplayTemplate portletDisplayTemplate = _getPortletDisplayTemplate();
-
-					templateHandlers = portletDisplayTemplate.getPortletDisplayTemplateHandlers();
-
-					Iterator<TemplateHandler> itr = templateHandlers.iterator();
-
-					while (itr.hasNext()) {
-						TemplateHandler templateHandler = itr.next();
-
-						if (!permissionChecker.hasPermission(scopeGroupId, templateHandler.getResourceName(), scopeGroupId, ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE)) {
-							itr.remove();
-						}
-					}
-				}
-
-				if (!templateHandlers.isEmpty()) {
-					ListUtil.sort(templateHandlers, new TemplateHandlerComparator(locale));
-				%>
-
-					<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add">
-						<liferay-portlet:renderURL varImpl="addPortletDisplayTemplateURL">
-							<portlet:param name="mvcPath" value="/edit_template.jsp" />
-							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-							<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
-						</liferay-portlet:renderURL>
-
-						<%
-						for (TemplateHandler templateHandler : templateHandlers) {
-							addPortletDisplayTemplateURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(templateHandler.getClassName())));
-							addPortletDisplayTemplateURL.setParameter("classPK", String.valueOf(0));
-							addPortletDisplayTemplateURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
-						%>
-
-							<aui:nav-item
-								href="<%= addPortletDisplayTemplateURL.toString() %>"
-								iconCssClass="icon-list-alt"
-								label="<%= templateHandler.getName(locale) %>"
-							/>
-
-						<%
-						}
-						%>
-
-					</aui:nav-item>
-
-					<%
-					}
-					%>
-
-			</c:otherwise>
-		</c:choose>
-	</aui:nav>
-
-	<aui:nav-bar-search searchContainer="<%= searchContainer %>">
-		<liferay-util:include page="/template_search.jsp" servletContext="<%= application %>" />
-	</aui:nav-bar-search>
-</aui:nav-bar>
+			submitForm(form, '<portlet:actionURL name="deleteTemplate"><portlet:param name="mvcPath" value="/view_template.jsp" /></portlet:actionURL>');
+		}
+	}
+</aui:script>

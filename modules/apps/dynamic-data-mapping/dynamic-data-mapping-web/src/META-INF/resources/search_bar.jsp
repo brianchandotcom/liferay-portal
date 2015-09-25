@@ -16,16 +16,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/view.jsp");
-%>
-
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-			<liferay-util:include page="/record_set_search.jsp" servletContext="<%= application %>" />
-		</aui:form>
+		<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
 	</aui:nav-bar-search>
 </aui:nav-bar>

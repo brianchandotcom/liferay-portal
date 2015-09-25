@@ -16,33 +16,36 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
+<liferay-frontend:management-bar
+	checkBoxContainerId="entriesContainer"
+	includeCheckBox="<%= !user.isDefaultUser() %>"
+>
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem");
+	<liferay-frontend:management-bar-filters>
+		<liferay-util:include page="/sort_button.jsp" servletContext="<%= application %>" />
+	</liferay-frontend:management-bar-filters>
 
-long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
-%>
+	<liferay-frontend:management-bar-action-buttons>
 
-<aui:nav-bar>
-	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMStructurePermission.containsAddStruturePermission(permissionChecker, groupId, scopeClassNameId) %>">
-			<liferay-portlet:renderURL var="viewStructuresURL">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</liferay-portlet:renderURL>
+		<%
+		String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteStructures();";
+		%>
 
-			<liferay-portlet:renderURL var="addStructureURL">
-				<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-				<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</liferay-portlet:renderURL>
+		<aui:a cssClass="btn" href="<%= taglibURL %>" iconCssClass="icon-trash" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
 
-			<aui:nav-item href="<%= addStructureURL %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
-		</c:if>
-	</aui:nav>
+<aui:script>
+	function <portlet:namespace />deleteStructures() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-this") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
 
-	<aui:nav-bar-search searchContainer="<%= searchContainer %>">
-		<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
-	</aui:nav-bar-search>
-</aui:nav-bar>
+			var searchContainer = AUI.$('#<portlet:namespace />entriesContainer', form);
+
+			form.attr('method', 'post');
+			form.fm('deleteStructureIds').val(Liferay.Util.listCheckedExcept(searchContainer, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="deleteStructure"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+		}
+	}
+</aui:script>

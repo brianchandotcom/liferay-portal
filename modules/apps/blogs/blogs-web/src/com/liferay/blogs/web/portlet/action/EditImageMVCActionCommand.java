@@ -27,10 +27,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -73,7 +75,15 @@ public class EditImageMVCActionCommand extends BaseMVCActionCommand {
 			FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 				deleteFileEntryId);
 
-			if (fileEntry.getFolderId() == folder.getFolderId()) {
+			if (fileEntry.getFolderId() != folder.getFolderId()) {
+				continue;
+			}
+
+			if ((fileEntry.getUserId() == themeDisplay.getUserId()) ||
+				BlogsPermission.contains(
+					themeDisplay.getPermissionChecker(),
+					themeDisplay.getScopeGroupId(), ActionKeys.UPDATE)) {
+
 				PortletFileRepositoryUtil.deletePortletFileEntry(
 					deleteFileEntryId);
 			}

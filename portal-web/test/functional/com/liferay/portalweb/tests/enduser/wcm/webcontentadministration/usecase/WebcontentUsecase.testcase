@@ -387,6 +387,7 @@
 
 	<command known-issues="LPS-50660" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
 		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
 		</execute>
 

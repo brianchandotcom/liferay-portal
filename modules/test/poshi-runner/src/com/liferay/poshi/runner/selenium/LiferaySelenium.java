@@ -295,7 +295,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public void typeScreen(String value);
 
-	public void uploadCommonFile(String locator, String value);
+	public void uploadCommonFile(String locator, String value) throws Exception;
 
 	public void uploadFile(String locator, String value);
 

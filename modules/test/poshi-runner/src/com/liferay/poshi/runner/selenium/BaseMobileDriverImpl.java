@@ -717,7 +717,9 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void uploadCommonFile(String locator, String value) {
+	public void uploadCommonFile(String locator, String value)
+		throws Exception {
+
 		throw new UnsupportedOperationException();
 	}
 

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManagerUtil;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerLifecycle;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
@@ -147,6 +150,22 @@ public class StartupAction extends SimpleAction {
 				}
 
 			});
+
+		// MySQL version checking
+
+		DB db = DBFactoryUtil.getDB();
+
+		String dbType = db.getType();
+
+		if (dbType.equals(DB.TYPE_MYSQL) &&
+			GetterUtil.getFloat(db.getVersionString()) < 5.6F) {
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Please upgrade to MySQL 5.6.4+. Portal will drop off " +
+						"support to all MySQL releases before 5.6.4 soon!");
+			}
+		}
 
 		// Upgrade
 

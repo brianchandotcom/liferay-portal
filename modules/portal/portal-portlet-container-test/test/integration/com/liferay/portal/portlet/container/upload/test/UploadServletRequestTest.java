@@ -167,25 +167,6 @@ public class UploadServletRequestTest {
 	}
 
 	@Test
-	public void testCleanUpShouldNotFailFromMainConstructor() throws Exception {
-		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.getMultipartRequest(
-				_fileNameParameter, _bytes);
-
-		UploadServletRequestImpl uploadServletRequest =
-			new UploadServletRequestImpl(
-				(HttpServletRequest)liferayServletRequest.getRequest());
-
-		uploadServletRequest.cleanUp();
-
-		Map<String, FileItem[]> multipartParameterMap =
-			uploadServletRequest.getMultipartParameterMap();
-
-		Assert.assertNotNull(multipartParameterMap);
-		Assert.assertEquals(0, multipartParameterMap.size());
-	}
-
-	@Test
 	public void testCleanUpShouldNotRemoveMultipartParameters()
 		throws Exception {
 
@@ -202,38 +183,13 @@ public class UploadServletRequestTest {
 				(HttpServletRequest)liferayServletRequest.getRequest(),
 				fileParameters, new HashMap<String, List<String>>());
 
-		try {
-			uploadServletRequest.cleanUp();
-		}
-		catch (NullPointerException npe) {
-
-			// the _liferayServletRequest is null!
-
-		}
+		uploadServletRequest.cleanUp();
 
 		Map<String, FileItem[]> multipartParameterMap =
 			uploadServletRequest.getMultipartParameterMap();
 
 		Assert.assertNotNull(multipartParameterMap);
 		Assert.assertEquals(1, multipartParameterMap.size());
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void
-			testCleanUpShouldThrowNullPointerExceptionIfUsedAfterConstructor()
-		throws Exception {
-
-		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.getMultipartRequest(
-				_fileNameParameter, _bytes);
-
-		UploadServletRequestImpl uploadServletRequest =
-			new UploadServletRequestImpl(
-				(HttpServletRequest)liferayServletRequest.getRequest(),
-				new HashMap<String, FileItem[]>(),
-				new HashMap<String, List<String>>());
-
-		uploadServletRequest.cleanUp();
 	}
 
 	@Test

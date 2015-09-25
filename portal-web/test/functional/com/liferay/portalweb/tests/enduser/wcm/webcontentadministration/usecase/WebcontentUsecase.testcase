@@ -1050,6 +1050,10 @@
 				<var name="categoryName" value="${categoryName}" />
 				<var name="vocabularyName" value="Vocabulary Name" />
 			</execute>
+
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Categories" />
+			</execute>
 		</for>
 
 		<execute macro="Page#gotoContentCP">

@@ -21,6 +21,8 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 
 String id = (String)request.getAttribute("liferay-ui:search:id");
 
+String markupView = (String)request.getAttribute("liferay-ui:search-iterator:markupView");
+
 if (Validator.isNull(id) && (searchContainer != null)) {
 	id = searchContainer.getId(request, namespace);
 
@@ -48,6 +50,7 @@ if (iteratorURL != null) {
 		deltaConfigurable="<%= searchContainer.isDeltaConfigurable() %>"
 		deltaParam="<%= searchContainer.getDeltaParam() %>"
 		id="<%= id %>"
+		markupView="<%= markupView %>"
 		maxPages="<%= PropsValues.SEARCH_CONTAINER_PAGE_ITERATOR_MAX_PAGES %>"
 		total="<%= searchContainer.getTotal() %>"
 		type="<%= type %>"

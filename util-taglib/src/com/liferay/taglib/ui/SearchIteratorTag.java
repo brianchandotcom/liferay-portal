@@ -81,6 +81,9 @@ public class SearchIteratorTag<R> extends SearchPaginatorTag<R> {
 		super.setAttributes(request);
 
 		request.setAttribute(
+			"liferay-ui:search-iterator:markupView",
+			String.valueOf(_markupView));
+		request.setAttribute(
 			"liferay-ui:search-iterator:paginate", String.valueOf(_paginate));
 		request.setAttribute(
 			"liferay-ui:search-iterator:resultRowSplitter", _resultRowSplitter);

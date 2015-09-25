@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.search.web.facet;
+package com.liferay.search.facets.web.facet;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -38,7 +38,7 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/facets/configuration/users.jsp";
+		return "/configuration/users.jsp";
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/facets/view/users.jsp";
+		return "/view/users.jsp";
 	}
 
 	public String getFacetClassName() {
@@ -108,7 +108,7 @@ public class UserSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.search.facets.web)", unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

@@ -14,52 +14,63 @@
  */
 --%>
 
-<%@ include file="/facets/init.jsp" %>
+<%@ include file="/view/init.jsp" %>
 
 <%
 if (termCollectors.isEmpty()) {
-%>
-
-	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="0" />
-
-<%
 	return;
 }
 
 int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-int maxTerms = dataJSONObject.getInt("maxTerms");
+int maxTerms = dataJSONObject.getInt("maxTerms", 10);
 boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
+
+Indexer<?> indexer = FolderSearcher.getInstance();
+
+SearchContext searchContext = SearchContextFactory.getInstance(request);
 %>
 
 <div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="nav nav-pills nav-stacked scopes">
-		<li class="default facet-value <%= fieldParam.equals("0") ? "active" : StringPool.BLANK %>">
-			<a data-value="0" href="javascript:;"><aui:icon image="sitemap" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+	<ul class="folders nav nav-pills nav-stacked">
+		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
+			<a data-value="" href="javascript:;"><aui:icon image="folder-open" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 
 		<%
-		long groupId = GetterUtil.getInteger(fieldParam);
+		long folderId = GetterUtil.getLong(fieldParam);
 
 		for (int i = 0; i < termCollectors.size(); i++) {
 			TermCollector termCollector = termCollectors.get(i);
 
-			long curGroupId = GetterUtil.getInteger(termCollector.getTerm());
+			long curFolderId = GetterUtil.getLong(termCollector.getTerm());
 
-			Group group = GroupLocalServiceUtil.fetchGroup(curGroupId);
-
-			if (group == null) {
+			if (curFolderId == 0) {
 				continue;
 			}
+
+			searchContext.setFolderIds(new long[] {curFolderId});
+			searchContext.setKeywords(StringPool.BLANK);
+
+			Hits results = indexer.search(searchContext);
+
+			if (results.getLength() == 0) {
+				continue;
+			}
+
+			Document document = results.doc(0);
+
+			Field title = document.getField(Field.TITLE);
 		%>
 
-			<c:if test="<%= groupId == curGroupId %>">
+			<c:if test="<%= folderId == curFolderId %>">
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
-							fieldValues: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "|0" %>',
-							text: '<%= HtmlUtil.escapeJS(group.getDescriptiveName(locale)) %>'
+							clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
+							fieldValues: '<%= curFolderId %>',
+							text: '<%= HtmlUtil.escapeJS(title.getValue()) %>'
 						}
 					);
 				</aui:script>
@@ -71,9 +82,9 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			}
 			%>
 
-			<li class="facet-value <%= groupId == curGroupId ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= curGroupId %>" href="javascript:;">
-					<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
+			<li class="facet-value <%= (folderId == curFolderId) ? "active" : StringPool.BLANK %>">
+				<a data-value="<%= curFolderId %>" href="javascript:;">
+					<%= HtmlUtil.escape(title.getValue()) %>
 
 					<c:if test="<%= showAssetCount %>">
 						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>

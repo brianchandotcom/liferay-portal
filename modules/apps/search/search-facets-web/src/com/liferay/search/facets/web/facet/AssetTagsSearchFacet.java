@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.search.web.facet;
+package com.liferay.search.facets.web.facet;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class FolderSearchFacet extends BaseJSPSearchFacet {
+public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/facets/configuration/folders.jsp";
+		return "/configuration/asset_tags.jsp";
 	}
 
 	@Override
@@ -49,6 +49,7 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		jsonObject.put("displayStyle", "list");
 		jsonObject.put("frequencyThreshold", 1);
 		jsonObject.put("maxTerms", 10);
 		jsonObject.put("showAssetCount", true);
@@ -59,30 +60,31 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 		facetConfiguration.setLabel(getLabel());
 		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
-		facetConfiguration.setWeight(1.2);
+		facetConfiguration.setWeight(1.4);
 
 		return facetConfiguration;
 	}
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/facets/view/folders.jsp";
+		return "/view/asset_tags.jsp";
 	}
 
-	@Override
 	public String getFacetClassName() {
 		return MultiValueFacet.class.getName();
 	}
 
 	@Override
 	public String getFieldName() {
-		return Field.FOLDER_ID;
+		return Field.ASSET_TAG_NAMES;
 	}
 
 	@Override
 	public JSONObject getJSONData(ActionRequest actionRequest) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		String displayStyleFacet = ParamUtil.getString(
+			actionRequest, getClassName() + "displayStyleFacet", "list");
 		int frequencyThreshold = ParamUtil.getInteger(
 			actionRequest, getClassName() + "frequencyThreshold", 1);
 		int maxTerms = ParamUtil.getInteger(
@@ -90,6 +92,7 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 		boolean showAssetCount = ParamUtil.getBoolean(
 			actionRequest, getClassName() + "showAssetCount", true);
 
+		jsonObject.put("displayStyle", displayStyleFacet);
 		jsonObject.put("frequencyThreshold", frequencyThreshold);
 		jsonObject.put("maxTerms", maxTerms);
 		jsonObject.put("showAssetCount", showAssetCount);
@@ -99,17 +102,17 @@ public class FolderSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
-		return "any-folder";
+		return "any-tag";
 	}
 
 	@Override
 	public String getTitle() {
-		return "folder";
+		return "tag";
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.search.facets.web)", unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

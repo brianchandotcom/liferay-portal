@@ -14,41 +14,52 @@
  */
 --%>
 
-<%@ include file="/facets/init.jsp" %>
+<%@ include file="/view/init.jsp" %>
 
 <%
 if (termCollectors.isEmpty()) {
+%>
+
+	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldName()) %>" type="hidden" value="0" />
+
+<%
 	return;
 }
 
 int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
-int maxTerms = dataJSONObject.getInt("maxTerms", 10);
+int maxTerms = dataJSONObject.getInt("maxTerms");
 boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 %>
 
 <div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="nav nav-pills nav-stacked users">
-		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
-			<a data-value="" href="javascript:;"><aui:icon image="user" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+	<ul class="nav nav-pills nav-stacked scopes">
+		<li class="default facet-value <%= fieldParam.equals("0") ? "active" : StringPool.BLANK %>">
+			<a data-value="0" href="javascript:;"><aui:icon image="sitemap" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 
 		<%
-		String userName = GetterUtil.getString(fieldParam);
+		long groupId = GetterUtil.getInteger(fieldParam);
 
 		for (int i = 0; i < termCollectors.size(); i++) {
 			TermCollector termCollector = termCollectors.get(i);
 
-			String curUserName = GetterUtil.getString(termCollector.getTerm());
+			long curGroupId = GetterUtil.getInteger(termCollector.getTerm());
+
+			Group group = GroupLocalServiceUtil.fetchGroup(curGroupId);
+
+			if (group == null) {
+				continue;
+			}
 		%>
 
-			<c:if test="<%= userName.equals(curUserName) %>">
+			<c:if test="<%= groupId == curGroupId %>">
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
-							clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-							text: '<%= HtmlUtil.escapeJS(curUserName) %>'
+							fieldValues: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) + "|0" %>',
+							text: '<%= HtmlUtil.escapeJS(group.getDescriptiveName(locale)) %>'
 						}
 					);
 				</aui:script>
@@ -60,9 +71,9 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			}
 			%>
 
-			<li class="facet-value <%= userName.equals(curUserName) ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= curUserName %>" href="javascript:;">
-					<%= HtmlUtil.escape(curUserName) %>
+			<li class="facet-value <%= groupId == curGroupId ? "active" : StringPool.BLANK %>">
+				<a data-value="<%= curGroupId %>" href="javascript:;">
+					<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 
 					<c:if test="<%= showAssetCount %>">
 						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>

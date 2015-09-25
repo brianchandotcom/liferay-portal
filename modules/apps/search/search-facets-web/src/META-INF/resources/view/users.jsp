@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/facets/init.jsp" %>
+<%@ include file="/view/init.jsp" %>
 
 <%
 if (termCollectors.isEmpty()) {
@@ -24,53 +24,31 @@ if (termCollectors.isEmpty()) {
 int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 int maxTerms = dataJSONObject.getInt("maxTerms", 10);
 boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
-
-Indexer<?> indexer = FolderSearcher.getInstance();
-
-SearchContext searchContext = SearchContextFactory.getInstance(request);
 %>
 
 <div class="<%= cssClass %>" data-facetFieldName="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" id="<%= randomNamespace %>facet">
 	<aui:input name="<%= HtmlUtil.escapeAttribute(facet.getFieldId()) %>" type="hidden" value="<%= fieldParam %>" />
 
-	<ul class="folders nav nav-pills nav-stacked">
+	<ul class="nav nav-pills nav-stacked users">
 		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
-			<a data-value="" href="javascript:;"><aui:icon image="folder-open" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+			<a data-value="" href="javascript:;"><aui:icon image="user" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 
 		<%
-		long folderId = GetterUtil.getLong(fieldParam);
+		String userName = GetterUtil.getString(fieldParam);
 
 		for (int i = 0; i < termCollectors.size(); i++) {
 			TermCollector termCollector = termCollectors.get(i);
 
-			long curFolderId = GetterUtil.getLong(termCollector.getTerm());
-
-			if (curFolderId == 0) {
-				continue;
-			}
-
-			searchContext.setFolderIds(new long[] {curFolderId});
-			searchContext.setKeywords(StringPool.BLANK);
-
-			Hits results = indexer.search(searchContext);
-
-			if (results.getLength() == 0) {
-				continue;
-			}
-
-			Document document = results.doc(0);
-
-			Field title = document.getField(Field.TITLE);
+			String curUserName = GetterUtil.getString(termCollector.getTerm());
 		%>
 
-			<c:if test="<%= folderId == curFolderId %>">
+			<c:if test="<%= userName.equals(curUserName) %>">
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
 							clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-							fieldValues: '<%= curFolderId %>',
-							text: '<%= HtmlUtil.escapeJS(title.getValue()) %>'
+							text: '<%= HtmlUtil.escapeJS(curUserName) %>'
 						}
 					);
 				</aui:script>
@@ -82,9 +60,9 @@ SearchContext searchContext = SearchContextFactory.getInstance(request);
 			}
 			%>
 
-			<li class="facet-value <%= (folderId == curFolderId) ? "active" : StringPool.BLANK %>">
-				<a data-value="<%= curFolderId %>" href="javascript:;">
-					<%= HtmlUtil.escape(title.getValue()) %>
+			<li class="facet-value <%= userName.equals(curUserName) ? "active" : StringPool.BLANK %>">
+				<a data-value="<%= curUserName %>" href="javascript:;">
+					<%= HtmlUtil.escape(curUserName) %>
 
 					<c:if test="<%= showAssetCount %>">
 						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>

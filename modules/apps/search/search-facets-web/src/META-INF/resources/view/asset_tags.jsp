@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/facets/init.jsp" %>
+<%@ include file="/view/init.jsp" %>
 
 <%
 if (termCollectors.isEmpty()) {
@@ -32,7 +32,7 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 	<ul class="<%= (showAssetCount && displayStyle.equals("cloud")) ? "tag-cloud" : "tag-list" %> nav nav-pills nav-stacked">
 		<li class="default facet-value <%= Validator.isNull(fieldParam) ? "active" : StringPool.BLANK %>">
-			<a data-value="" href="javascript:;"><aui:icon image="tags" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
+			<a data-value="" href="javascript:;"><aui:icon image="tag" /> <liferay-ui:message key="<%= HtmlUtil.escape(facetConfiguration.getLabel()) %>" /></a>
 		</li>
 
 		<%
@@ -77,16 +77,6 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 			}
 
 			TermCollector termCollector = termCollectors.get(i);
-
-			long assetCategoryId = GetterUtil.getLong(termCollector.getTerm());
-
-			if (assetCategoryId == 0) {
-				continue;
-			}
-
-			AssetCategory curAssetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(assetCategoryId);
-
-			if (AssetCategoryPermission.contains(permissionChecker, curAssetCategory, ActionKeys.VIEW)) {
 		%>
 
 				<c:if test="<%= fieldParam.equals(termCollector.getTerm()) %>">
@@ -94,34 +84,33 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 						Liferay.Search.tokenList.add(
 							{
 								clearFields: '<%= renderResponse.getNamespace() + HtmlUtil.escapeJS(facet.getFieldId()) %>',
-								text: '<%= HtmlUtil.escapeJS(curAssetCategory.getTitle(locale)) %>'
+								text: '<%= HtmlUtil.escapeJS(termCollector.getTerm()) %>'
 							}
 						);
 					</aui:script>
 				</c:if>
 
-				<%
-				int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
+		<%
+			int popularity = (int)(1 + ((maxCount - (maxCount - (termCollector.getFrequency() - minCount))) * multiplier));
 
-				if (frequencyThreshold > termCollector.getFrequency()) {
-					j--;
+			if (frequencyThreshold > termCollector.getFrequency()) {
+				j--;
 
-					continue;
-				}
-				%>
+				continue;
+			}
+		%>
 
-				<li class="facet-value tag-popularity-<%= popularity %> <%= fieldParam.equals(termCollector.getTerm()) ? "active" : StringPool.BLANK %>">
-					<a data-value="<%= HtmlUtil.escapeAttribute(String.valueOf(assetCategoryId)) %>" href="javascript:;">
-						<%= HtmlUtil.escape(curAssetCategory.getTitle(locale)) %>
+			<li class="facet-value tag-popularity-<%= popularity %> <%= fieldParam.equals(termCollector.getTerm()) ? "active" : StringPool.BLANK %>">
+				<a data-value="<%= HtmlUtil.escapeAttribute(termCollector.getTerm()) %>" href="javascript:;">
+					<%= HtmlUtil.escape(termCollector.getTerm()) %>
 
-						<c:if test="<%= showAssetCount %>">
-							<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
-						</c:if>
-					</a>
-				</li>
+					<c:if test="<%= showAssetCount %>">
+						<span class="badge badge-info frequency"><%= termCollector.getFrequency() %></span>
+					</c:if>
+				</a>
+			</li>
 
 		<%
-			}
 		}
 		%>
 

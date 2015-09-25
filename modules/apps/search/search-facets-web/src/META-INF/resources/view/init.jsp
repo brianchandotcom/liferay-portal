@@ -17,6 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+
+String currentURL = currentURLObj.toString();
+
 String randomNamespace = PortalUtil.generateRandomKey(request, _RANDOM_KEY_INPUT) + StringPool.UNDERLINE;
 
 Facet facet = (Facet)request.getAttribute("search.jsp-facet");

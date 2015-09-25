@@ -73,6 +73,7 @@ public class ClassUtil {
 				else if (st.sval.startsWith("@")) {
 					st.ordinaryChar(' ');
 					st.wordChars('=', '=');
+					st.wordChars('+', '+');
 
 					String[] annotationClasses = _processAnnotation(
 						st.sval, st);

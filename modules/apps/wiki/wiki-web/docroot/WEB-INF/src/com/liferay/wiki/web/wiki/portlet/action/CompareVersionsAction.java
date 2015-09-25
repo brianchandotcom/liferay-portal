@@ -97,7 +97,7 @@ public class CompareVersionsAction extends PortletAction {
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			portletContext.getRequestDispatcher(
-				"/html/taglib/ui/diff_version_comparator/diff_html.jsp");
+				"/html/portlet/wiki/compare_versions_diff_html.jsp");
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/configuration/init.jsp" %>
 
 <%
 AssetEntriesSearchFacet assetEntriesSearchFacet = (AssetEntriesSearchFacet)request.getAttribute("facet_configuration.jsp-searchFacet");
@@ -50,7 +50,7 @@ for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getA
 }
 %>
 
-<aui:input label="frequency-threshold" name='<%= assetEntriesSearchFacet.getClassName() + "frequencyThreshold" %>' value="<%= frequencyThreshold %>" />
+<aui:input label='<%= resourceBundle.getString("frequency-threshold") %>' name='<%= assetEntriesSearchFacet.getClassName() + "frequencyThreshold" %>' value="<%= frequencyThreshold %>" />
 
 <aui:input name='<%= assetEntriesSearchFacet.getClassName() + "assetTypes" %>' type="hidden" />
 

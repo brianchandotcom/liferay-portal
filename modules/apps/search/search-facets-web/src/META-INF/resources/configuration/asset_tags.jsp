@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/configuration/init.jsp" %>
 
 <%
 SearchFacet searchFacet = (SearchFacet)request.getAttribute("facet_configuration.jsp-searchFacet");
@@ -32,8 +32,8 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 	<aui:option label="list" selected='<%= displayStyle.equals("list") %>' />
 </aui:select>
 
-<aui:input label="frequency-threshold" name='<%= searchFacet.getClassName() + "frequencyThreshold" %>' value="<%= frequencyThreshold %>" />
+<aui:input label='<%= resourceBundle.getString("frequency-threshold") %>' name='<%= searchFacet.getClassName() + "frequencyThreshold" %>' value="<%= frequencyThreshold %>" />
 
-<aui:input label="max-terms" name='<%= searchFacet.getClassName() + "maxTerms" %>' value="<%= maxTerms %>" />
+<aui:input label='<%= resourceBundle.getString("max-terms") %>' name='<%= searchFacet.getClassName() + "maxTerms" %>' value="<%= maxTerms %>" />
 
 <aui:input label="show-asset-count" name='<%= searchFacet.getClassName() + "showAssetCount" %>' type="checkbox" value="<%= showAssetCount %>" />

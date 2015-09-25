@@ -141,6 +141,8 @@ public class SynchronousDestinationTestCallback
 				DestinationNames.ASYNC_SERVICE);
 			Filter backgroundTaskFilter = _registerDestinationFilter(
 				DestinationNames.BACKGROUND_TASK);
+			Filter backgroundTaskStatusFilter = _registerDestinationFilter(
+				DestinationNames.BACKGROUND_TASK_STATUS);
 			Filter mailFilter = _registerDestinationFilter(
 				DestinationNames.MAIL);
 			Filter pdfProcessorFilter = _registerDestinationFilter(
@@ -151,8 +153,8 @@ public class SynchronousDestinationTestCallback
 				DestinationNames.SUBSCRIPTION_SENDER);
 
 			serviceDependencyManager.registerDependencies(
-				asyncFilter, backgroundTaskFilter, mailFilter,
-				pdfProcessorFilter, rawMetaDataProcessorFilter,
+				asyncFilter, backgroundTaskFilter, backgroundTaskStatusFilter,
+				mailFilter, pdfProcessorFilter, rawMetaDataProcessorFilter,
 				subscrpitionSenderFilter);
 
 			serviceDependencyManager.waitForDependencies();
@@ -161,6 +163,7 @@ public class SynchronousDestinationTestCallback
 
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
 			replaceDestination(DestinationNames.BACKGROUND_TASK);
+			replaceDestination(DestinationNames.BACKGROUND_TASK_STATUS);
 			replaceDestination(DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR);
 			replaceDestination(
 				DestinationNames.DOCUMENT_LIBRARY_RAW_METADATA_PROCESSOR);

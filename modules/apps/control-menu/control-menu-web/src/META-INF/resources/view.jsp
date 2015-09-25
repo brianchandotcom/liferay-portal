@@ -21,24 +21,13 @@ List<ControlMenuCategory> controlMenuCategories = (List<ControlMenuCategory>)req
 ControlMenuEntryRegistry controlMenuEntryRegistry = (ControlMenuEntryRegistry)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_ENTRY_REGISTRY);
 
 Group group = null;
-LayoutSet layoutSet = null;
 
 if (layout != null) {
 	group = layout.getGroup();
-	layoutSet = layout.getLayoutSet();
-}
-
-boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE);
-boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
-
-boolean userSetupComplete = false;
-
-if (user.isSetupComplete() || themeDisplay.isImpersonated()) {
-	userSetupComplete = true;
 }
 %>
 
-<c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() && userSetupComplete %>">
+<c:if test="<%= !layout.isTypeControlPanel() && !group.isControlPanel() %>">
 	<div class="control-menu">
 		<c:if test="<%= (user.isSetupComplete() || themeDisplay.isImpersonated()) && themeDisplay.isShowStagingIcon() %>">
 			<div class="control-menu-level-2">

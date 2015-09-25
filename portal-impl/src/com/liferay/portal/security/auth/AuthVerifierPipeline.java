@@ -397,8 +397,7 @@ public class AuthVerifierPipeline {
 				properties.setProperty(propertiesKey, String.valueOf(value));
 			}
 
-
- 			return properties;
+			return properties;
 		}
 
 		private boolean _validate(

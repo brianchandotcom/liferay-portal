@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search;
+package com.liferay.portal.search.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

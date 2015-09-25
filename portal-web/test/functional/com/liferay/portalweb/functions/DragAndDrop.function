@@ -9,7 +9,7 @@
 
 	<command name="dragAndDropPortletToObject">
 		<execute argument1="${locator1}" selenium="waitForElementPresent" />
-		
+
 		<execute argument1="${locator1}" selenium="mouseOver" />
 
 		<execute argument1="${locator1}" selenium="waitForVisible" />

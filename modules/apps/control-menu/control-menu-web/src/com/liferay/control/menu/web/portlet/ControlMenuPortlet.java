@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.web.portlet;
+package com.liferay.control.menu.web.portlet;
 
+import com.liferay.control.menu.web.constants.ControlMenuPortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
@@ -25,7 +26,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.util.SitesUtil;
-import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -45,12 +45,12 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.instanceable=false",
 		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + ProductNavigationControlMenuPortletKeys.PRODUCT_NAVIGATION_CONTROL_MENU,
+		"javax.portlet.name=" + ControlMenuPortletKeys.CONTROL_MENU,
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = Portlet.class
 )
-public class ProductNavigationControlMenuPortlet extends MVCPortlet {
+public class ControlMenuPortlet extends MVCPortlet {
 
 	public void resetCustomizationView(
 			ActionRequest actionRequest, ActionResponse actionResponse)

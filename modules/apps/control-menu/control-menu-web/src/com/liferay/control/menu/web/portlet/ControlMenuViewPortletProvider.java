@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.web.portlet;
+package com.liferay.control.menu.web.portlet;
 
+import com.liferay.control.menu.web.constants.ControlMenuPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
 import com.liferay.portlet.admin.util.PortalControlMenuApplicationType;
-import com.liferay.product.navigation.control.menu.web.constants.ProductNavigationControlMenuPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,13 +31,12 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = ViewPortletProvider.class
 )
-public class ProductNavigationControlMenuViewPortletProvider
+public class ControlMenuViewPortletProvider
 	extends BasePortletProvider implements ViewPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return ProductNavigationControlMenuPortletKeys.
-			PRODUCT_NAVIGATION_CONTROL_MENU;
+		return ControlMenuPortletKeys.CONTROL_MENU;
 	}
 
 }

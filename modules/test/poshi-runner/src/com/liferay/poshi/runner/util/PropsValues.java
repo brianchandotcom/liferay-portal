@@ -86,6 +86,9 @@ public class PropsValues {
 	public static final String MOBILE_ANDROID_HOME = PropsUtil.get(
 		"mobile.android.home");
 
+	public static final boolean MOBILE_BROWSER = GetterUtil.getBoolean(
+		PropsUtil.get("mobile.browser"));
+
 	public static final String MOBILE_DEVICE_NAME = PropsUtil.get(
 		"mobile.device.name");
 

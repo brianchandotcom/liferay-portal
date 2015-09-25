@@ -259,8 +259,7 @@ public final class XMLLoggerHandler {
 					}
 					else if (Validator.isNotNull(
 								childElement.attributeValue("macro-desktop")) &&
-							 Validator.isNull(
-								 PropsValues.MOBILE_DEVICE_TYPE)) {
+							 !PropsValues.MOBILE_BROWSER) {
 
 						loggerElement.addChildLoggerElement(
 							_getMacroExecuteLoggerElement(
@@ -268,8 +267,7 @@ public final class XMLLoggerHandler {
 					}
 					else if (Validator.isNotNull(
 								childElement.attributeValue("macro-mobile")) &&
-							 Validator.isNotNull(
-								 PropsValues.MOBILE_DEVICE_TYPE)) {
+							 PropsValues.MOBILE_BROWSER) {
 
 						loggerElement.addChildLoggerElement(
 							_getMacroExecuteLoggerElement(

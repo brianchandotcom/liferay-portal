@@ -5480,10 +5480,6 @@ public class PortalImpl implements Portal {
 
 		if (path.equals("/portal/session_click") ||
 			mvcRenderCommandName.equals("/document_library/edit_file_entry") ||
-			mvcRenderCommandName.equals(
-				"/document_library_display/edit_file_entry") ||
-			mvcRenderCommandName.equals(
-				"/image_gallery_display/edit_file_entry") ||
 			actionName.equals("addFile") ||
 			isAlwaysAllowDoAsUser(path, mvcRenderCommandName, actionName)) {
 

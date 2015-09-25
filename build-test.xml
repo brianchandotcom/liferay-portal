@@ -4937,6 +4937,7 @@ module.framework.properties.osgi.console=11312</echo>
 	<target name="prepare-selenium-browser-properties">
 		<echo append="true" file="${test.ext.properties.file}">
 			browser.type=${browser.type}
+			mobile.android.home=${mobile.android.home}
 			selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
 			selenium.chrome.driver.version=${selenium.chrome.driver.version}
 			selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
@@ -4957,19 +4958,8 @@ module.framework.properties.osgi.console=11312</echo>
 				</exec>
 
 				<propertyregex input="${mobile.device.name}" override="true" property="mobile.device.name" regexp=".*\n([A-z0-9]*)" select="\1" />
-			</then>
-		</if>
 
-		<if>
-			<or>
-				<equals arg1="${browser.type}" arg2="android" />
-				<equals arg1="${browser.type}" arg2="androidchrome" />
-				<equals arg1="${browser.type}" arg2="iossafari" />
-			</or>
-			<then>
 				<echo append="true" file="${test.ext.properties.file}">
-					browser.type=${browser.type}
-					mobile.android.home=${mobile.android.home}
 					mobile.device.name=${mobile.device.name}
 				</echo>
 			</then>

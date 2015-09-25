@@ -192,7 +192,7 @@ public class DefaultGroupByTranslator implements GroupByTranslator {
 		int groupBySize = groupBy.getSize();
 
 		if (groupBySize == 0) {
-			groupBySize = end;
+			groupBySize = end - start + 1;
 		}
 
 		topHitsBuilder.setSize(groupBySize);

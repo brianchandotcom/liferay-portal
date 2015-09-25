@@ -43,7 +43,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -176,25 +176,19 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 				updateWorkflowDefinitions(actionRequest);
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
+		catch (NoSuchFolderException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
 
 				actionResponse.setRenderParameter(
 					"mvcPath", "/document_library/error.jsp");
-			}
-			else if (e instanceof DuplicateFileException ||
-					 e instanceof DuplicateFolderNameException ||
-					 e instanceof FolderNameException ||
-					 e instanceof RequiredFileEntryTypeException) {
+		}
+		catch (DuplicateFileEntryException | DuplicateFolderNameException |
+				FolderNameException | RequiredFileEntryTypeException e) {
 
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw new PortletException(e);
-			}
+			SessionErrors.add(actionRequest, e.getClass());
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
 		}
 	}
 

@@ -22,6 +22,11 @@ import org.junit.Test;
 public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testAnnotationParameterImports() throws Exception {
+		test("AnnotationParameterImports.testjava");
+	}
+
+	@Test
 	public void testAssertUsage() throws Exception {
 		test(
 			"AssertUsage.testjava",

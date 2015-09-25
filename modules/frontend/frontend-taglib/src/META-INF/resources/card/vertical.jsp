@@ -28,9 +28,9 @@
 		</c:choose>
 
 		<div class="card card-dm <%= showCheckbox ? "toggle-card-container" : StringPool.BLANK %>">
-			<div class="aspect-ratio">
+			<div class="aspect-ratio <%= backgroundImage ? "aspect-ratio-bg-center aspect-ratio-bg-cover" : "" %>" style="<%= backgroundImage ? "background-image: url('" + imageUrl + "')" : "" %>">
 				<aui:a href="<%= url %>">
-					<img alt="" class="<%= imageCSSClass %>" src="<%= imageUrl %>" />
+					<img alt="" class="<%= imageCSSClass %><%= backgroundImage ? " sr-only" : "" %>" src="<%= imageUrl %>" />
 				</aui:a>
 
 				<c:if test="<%= Validator.isNotNull(smallImageUrl) %>">

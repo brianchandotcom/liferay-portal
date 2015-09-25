@@ -1078,7 +1078,7 @@
 		<execute macro="Gmail#gotoHtmlMode" />
 
 		<execute macro="Gmail#viewMail">
-			<var name="emailFromUserName" value="Joe Bloggs" />
+			<var name="emailFromUserName" value="Test Test" />
 			<var name="gmailAssetType" value="MB Category Name New Message" />
 			<var name="gmailMailTableMessageTitle" value="MB Thread Message Subject" />
 			<var name="gmailMessageBody" value="MB Thread Message Body Liferay Message Boards" />

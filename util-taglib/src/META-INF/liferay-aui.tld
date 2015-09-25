@@ -909,7 +909,7 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
+			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[A URL to navigate to when the link is clicked.]]></description>
@@ -1336,7 +1336,7 @@
 			<name>options</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
+			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
 			<name>scriptPosition</name>
@@ -1611,7 +1611,7 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
+			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[An ID for the component instance.]]></description>
@@ -1859,7 +1859,7 @@
 			<name>model</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.lang.Class<?>]]></type>
+			<type>java.lang.Class</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[The minimum value for the input if its <code>type</code> is <code>number</code> or <code>range</code>. Note that the min value is inclusive if the input's <code>type</code> is <code>range</code>.]]></description>
@@ -2019,7 +2019,7 @@
 			<name>model</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.lang.Class<?>]]></type>
+			<type>java.lang.Class</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -2072,7 +2072,7 @@
 			<name>searchContainer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></type>
+			<type>com.liferay.portal.kernel.dao.search.SearchContainer</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[Whether to use the default portlet namespace, to avoid name conflicts. The default value is <code>true</code>.]]></description>
@@ -2140,7 +2140,7 @@
 			<name>searchContainer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[com.liferay.portal.kernel.dao.search.SearchContainer<?>]]></type>
+			<type>com.liferay.portal.kernel.dao.search.SearchContainer</type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
@@ -2317,7 +2317,7 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
+			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[Whether the component is disabled. The default value is <code>false</code>.]]></description>
@@ -2488,7 +2488,7 @@
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
+			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[Whether the component is disabled. The default value is <code>false</code>.]]></description>
@@ -2840,7 +2840,7 @@
 			<name>model</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.lang.Class<?>]]></type>
+			<type>java.lang.Class</type>
 		</attribute>
 		<attribute>
 			<description><![CDATA[Whether to show the workflow status icon. The default value is <code>true</code>.]]></description>

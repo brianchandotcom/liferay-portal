@@ -54,10 +54,10 @@
 
 		<liferay-ui:search-container-column-text>
 			<liferay-frontend:card
-				cssClass="item-preview"
 				imageUrl="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
 				resultRow="<%= row %>"
 				rowChecker="<%= searchContainer.getRowChecker() %>"
+				title="<%= HtmlUtil.escape(fileEntry.getTitle()) %>"
 			/>
 		</liferay-ui:search-container-column-text>
 	</c:when>

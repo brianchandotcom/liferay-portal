@@ -24,37 +24,13 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class VerifyMySQL extends VerifyProcess {
-
-	protected void alterTableEngine(String tableName) throws Exception {
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Updating table " + tableName + " to use engine " +
-					PropsValues.DATABASE_MYSQL_ENGINE);
-		}
-
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
-
-			ps = con.prepareStatement(
-				"alter table " + tableName + " engine " +
-					PropsValues.DATABASE_MYSQL_ENGINE);
-
-			ps.executeUpdate();
-		}
-		finally {
-			DataAccess.cleanUp(con, ps);
-		}
-	}
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -66,17 +42,15 @@ public class VerifyMySQL extends VerifyProcess {
 			return;
 		}
 
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;
+		try (Connection connection = DataAccess.getUpgradeOptimizedConnection();
+			Statement statement = connection.createStatement()) {
 
-		try {
-			con = DataAccess.getUpgradeOptimizedConnection();
+			verifyTableEngine(statement);
+		}
+	}
 
-			ps = con.prepareStatement("show table status");
-
-			rs = ps.executeQuery();
-
+	protected void verifyTableEngine(Statement statement) throws Exception {
+		try (ResultSet rs = statement.executeQuery("show table status")) {
 			while (rs.next()) {
 				String tableName = rs.getString("Name");
 
@@ -97,11 +71,16 @@ public class VerifyMySQL extends VerifyProcess {
 					continue;
 				}
 
-				alterTableEngine(tableName);
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Updating table " + tableName + " to use engine " +
+							PropsValues.DATABASE_MYSQL_ENGINE);
+				}
+
+				statement.executeUpdate(
+					"alter table " + tableName + " engine " +
+						PropsValues.DATABASE_MYSQL_ENGINE);
 			}
-		}
-		finally {
-			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
 

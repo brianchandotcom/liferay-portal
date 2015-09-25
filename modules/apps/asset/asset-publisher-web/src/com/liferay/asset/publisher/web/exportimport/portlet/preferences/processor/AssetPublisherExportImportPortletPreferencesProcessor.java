@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureUtil;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.base.BaseExportImportPortletPreferencesProcessor;
+import com.liferay.exportimport.portlet.preferences.processor.capability.ReferencedStagedModelImporterCapability;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
@@ -96,7 +97,8 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	public List<Capability> getImportCapabilities() {
 		return ListUtil.toList(
 			new Capability[] {
-				_assetPublisherPortletDisplayTemplateImportCapability
+				_assetPublisherPortletDisplayTemplateImportCapability,
+				_referencedStagedModelImporterCapability
 			});
 	}
 
@@ -391,6 +393,15 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 		_portletLocalService = portletLocalService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setReferencedStagedModelImporterCapability(
+		ReferencedStagedModelImporterCapability
+			referencedStagedModelImporterCapability) {
+
+		_referencedStagedModelImporterCapability =
+			referencedStagedModelImporterCapability;
+	}
+
 	protected void updateExportClassNameIds(
 			PortletPreferences portletPreferences, String key)
 		throws Exception {
@@ -630,12 +641,6 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, AssetVocabulary.class);
-
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, AssetCategory.class);
-
 		Company company = _companyLocalService.getCompanyById(
 			portletDataContext.getCompanyId());
 
@@ -785,5 +790,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 	private LayoutLocalService _layoutLocalService;
 	private OrganizationLocalService _organizationLocalService;
 	private PortletLocalService _portletLocalService;
+	private ReferencedStagedModelImporterCapability
+		_referencedStagedModelImporterCapability;
 
 }

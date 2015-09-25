@@ -57,6 +57,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to display the image as a background image.</description>
+			<name>backgroundImage</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<description>Whether to select the card checkbox. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>checkboxChecked</name>
 			<required>false</required>

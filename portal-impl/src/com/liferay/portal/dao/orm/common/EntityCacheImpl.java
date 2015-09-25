@@ -73,7 +73,7 @@ public class EntityCacheImpl
 	public void clearCache(Class<?> clazz) {
 		clearLocalCache();
 
-		PortalCache<?, ?> portalCache = _getPortalCache(clazz, true);
+		PortalCache<?, ?> portalCache = getPortalCache(clazz);
 
 		if (portalCache != null) {
 			portalCache.removeAll();
@@ -96,7 +96,39 @@ public class EntityCacheImpl
 	public PortalCache<Serializable, Serializable> getPortalCache(
 		Class<?> clazz) {
 
-		return _getPortalCache(clazz, true);
+		String className = clazz.getName();
+
+		PortalCache<Serializable, Serializable> portalCache = _portalCaches.get(
+			className);
+
+		if (portalCache != null) {
+			return portalCache;
+		}
+
+		String groupKey = _GROUP_KEY_PREFIX.concat(className);
+
+		portalCache =
+			(PortalCache<Serializable, Serializable>)
+				_multiVMPool.getPortalCache(
+					groupKey, _valueObjectEntityBlockingCacheEnabled);
+
+		if (_valueObjectMVCCEntityCacheEnabled &&
+			MVCCModel.class.isAssignableFrom(clazz)) {
+
+			portalCache =
+				(PortalCache<Serializable, Serializable>)
+					MVCCPortalCacheFactory.createMVCCEhcachePortalCache(
+						portalCache);
+		}
+
+		PortalCache<Serializable, Serializable> previousPortalCache =
+			_portalCaches.putIfAbsent(className, portalCache);
+
+		if (previousPortalCache != null) {
+			return previousPortalCache;
+		}
+
+		return portalCache;
 	}
 
 	@Override
@@ -130,7 +162,7 @@ public class EntityCacheImpl
 
 		if (result == null) {
 			PortalCache<Serializable, Serializable> portalCache =
-				_getPortalCache(clazz, true);
+				getPortalCache(clazz);
 
 			Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -195,7 +227,7 @@ public class EntityCacheImpl
 
 		if (result == null) {
 			PortalCache<Serializable, Serializable> portalCache =
-				_getPortalCache(clazz, true);
+				getPortalCache(clazz);
 
 			Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -280,8 +312,8 @@ public class EntityCacheImpl
 			localCache.put(localCacheKey, result);
 		}
 
-		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
-			clazz, true);
+		PortalCache<Serializable, Serializable> portalCache = getPortalCache(
+			clazz);
 
 		Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -322,8 +354,8 @@ public class EntityCacheImpl
 			localCache.remove(localCacheKey);
 		}
 
-		PortalCache<Serializable, Serializable> portalCache = _getPortalCache(
-			clazz, true);
+		PortalCache<Serializable, Serializable> portalCache = getPortalCache(
+			clazz);
 
 		Serializable cacheKey = _encodeCacheKey(primaryKey);
 
@@ -383,42 +415,6 @@ public class EntityCacheImpl
 		Class<?> clazz, Serializable primaryKey) {
 
 		return new LocalCacheKey(clazz.getName(), primaryKey);
-	}
-
-	private PortalCache<Serializable, Serializable> _getPortalCache(
-		Class<?> clazz, boolean createIfAbsent) {
-
-		String className = clazz.getName();
-
-		PortalCache<Serializable, Serializable> portalCache = _portalCaches.get(
-			className);
-
-		if ((portalCache == null) && createIfAbsent) {
-			String groupKey = _GROUP_KEY_PREFIX.concat(className);
-
-			portalCache =
-				(PortalCache<Serializable, Serializable>)
-					_multiVMPool.getPortalCache(
-						groupKey, _valueObjectEntityBlockingCacheEnabled);
-
-			if (_valueObjectMVCCEntityCacheEnabled &&
-				MVCCModel.class.isAssignableFrom(clazz)) {
-
-				portalCache =
-					(PortalCache<Serializable, Serializable>)
-						MVCCPortalCacheFactory.createMVCCEhcachePortalCache(
-							portalCache);
-			}
-
-			PortalCache<Serializable, Serializable> previousPortalCache =
-				_portalCaches.putIfAbsent(className, portalCache);
-
-			if (previousPortalCache != null) {
-				portalCache = previousPortalCache;
-			}
-		}
-
-		return portalCache;
 	}
 
 	private Serializable _toEntityModel(Serializable result) {

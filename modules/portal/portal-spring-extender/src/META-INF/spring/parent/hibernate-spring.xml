@@ -9,6 +9,11 @@
 >
 	<bean id="liferayHibernateSessionFactory" class="com.liferay.portal.spring.extender.internal.hibernate.configuration.ModuleHibernateConfiguration">
 		<property name="dataSource" ref="liferayDataSource" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="javax.persistence.validation.mode">none</prop>
+			</props>
+		</property>
 	</bean>
 	<bean id="liferaySessionFactory" class="com.liferay.portal.spring.extender.internal.hibernate.session.ModuleSessionFactory">
 		<property name="dataSource" ref="liferayDataSource" />

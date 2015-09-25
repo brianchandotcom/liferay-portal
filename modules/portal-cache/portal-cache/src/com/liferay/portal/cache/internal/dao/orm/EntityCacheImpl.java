@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.dao.orm.common;
+package com.liferay.portal.cache.internal.dao.orm;
 
 import com.liferay.portal.cache.mvcc.MVCCPortalCacheFactory;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;

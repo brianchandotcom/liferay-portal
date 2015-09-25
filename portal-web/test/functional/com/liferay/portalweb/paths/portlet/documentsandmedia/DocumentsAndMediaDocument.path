@@ -300,6 +300,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VERSION_HISTORY_TABLE_VERSION_GENERIC</td>
+	<td>//td[contains(.,'${key_dmDocumentVersionNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VERSION_HISTORY_TABLE_DATE</td>
 	<td>//td[contains(.,'Ago')]</td>
 	<td></td>

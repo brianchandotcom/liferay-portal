@@ -90,7 +90,7 @@ public class PortalImplTest {
 			"/com/liferay/portal/util/dependencies/test.txt");
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				"fileParameterName", FileUtil.getBytes(inputStream));
 
 		UploadServletRequest uploadServletRequest =

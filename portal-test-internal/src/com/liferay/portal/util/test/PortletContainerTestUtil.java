@@ -78,6 +78,32 @@ import org.springframework.mock.web.MockMultipartHttpServletRequest;
  */
 public class PortletContainerTestUtil {
 
+	public static Map<String, FileItem[]> getFileParameters(
+			int size, Class<?> clazz, String dependency)
+		throws Exception {
+
+		return getFileParameters(size, null, clazz, dependency);
+	}
+
+	public static Map<String, FileItem[]> getFileParameters(
+			int size, String namespace, Class<?> clazz, String dependency)
+		throws Exception {
+
+		Map<String, FileItem[]> fileParameters = new HashMap<>(size);
+
+		for (int i = 0; i < size; i++) {
+			String fileParameter = "fileParameter" + i;
+
+			if (namespace != null) {
+				fileParameter = namespace.concat(fileParameter);
+			}
+
+			fileParameters.put(fileParameter, _getFileItems(clazz, dependency));
+		}
+
+		return fileParameters;
+	}
+
 	public static HttpServletRequest getHttpServletRequest(
 			Group group, Layout layout)
 		throws Exception {
@@ -110,33 +136,7 @@ public class PortletContainerTestUtil {
 		return httpServletRequest;
 	}
 
-	public static PortalAuthentication getPortalAuthentication(
-			HttpServletRequest httpServletRequest, Layout layout,
-			String portletId)
-		throws Exception {
-
-		// Get the portal authentication token by making a resource request
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			httpServletRequest, portletId, layout.getPlid(),
-			PortletRequest.RESOURCE_PHASE);
-
-		Map<String, List<String>> responseMap = request(portletURL.toString());
-
-		String portalAuthenticationToken = getString(responseMap, "body");
-
-		List<String> cookies = responseMap.get("Set-Cookie");
-
-		return new PortalAuthentication(portalAuthenticationToken, cookies);
-	}
-
-	public static String getString(Map<String, List<String>> map, String key) {
-		List<String> values = map.get(key);
-
-		return values.get(0);
-	}
-
-	public static LiferayServletRequest mockLiferayServletRequest(
+	public static LiferayServletRequest getMultipartRequest(
 			String fileNameParameter, byte[] bytes)
 		throws Exception {
 
@@ -175,6 +175,48 @@ public class PortletContainerTestUtil {
 			mockMultipartHttpServletRequest);
 
 		return liferayServletRequest;
+	}
+
+	public static PortalAuthentication getPortalAuthentication(
+			HttpServletRequest httpServletRequest, Layout layout,
+			String portletId)
+		throws Exception {
+
+		// Get the portal authentication token by making a resource request
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			httpServletRequest, portletId, layout.getPlid(),
+			PortletRequest.RESOURCE_PHASE);
+
+		Map<String, List<String>> responseMap = request(portletURL.toString());
+
+		String portalAuthenticationToken = getString(responseMap, "body");
+
+		List<String> cookies = responseMap.get("Set-Cookie");
+
+		return new PortalAuthentication(portalAuthenticationToken, cookies);
+	}
+
+	public static Map<String, List<String>> getRegularParameters(int size) {
+		Map<String, List<String>> regularParameters = new HashMap<>(size);
+
+		for (int i = 0; i < size; i++) {
+			List<String> items = new ArrayList<>();
+
+			for (int j = 0; j < 10; j++) {
+				items.add(RandomTestUtil.randomString());
+			}
+
+			regularParameters.put("regularParameter" + i, items);
+		}
+
+		return regularParameters;
+	}
+
+	public static String getString(Map<String, List<String>> map, String key) {
+		List<String> values = map.get(key);
+
+		return values.get(0);
 	}
 
 	public static Map<String, List<String>> postMultipart(
@@ -245,75 +287,6 @@ public class PortletContainerTestUtil {
 			responseMap.put("body", Arrays.asList(read(inputStream)));
 
 		return responseMap;
-	}
-
-	public static void putFileParameter(
-			Class<?> clazz, String dependency,
-			Map<String, FileItem[]> fileParameters)
-		throws Exception {
-
-		putFileParameter(clazz, dependency, fileParameters, null);
-	}
-
-	public static void putFileParameter(
-			Class<?> clazz, String dependency,
-			Map<String, FileItem[]> fileParameters, String namespace)
-		throws Exception {
-
-		InputStream inputStream = clazz.getResourceAsStream(dependency);
-
-		byte[] bytes = FileUtil.getBytes(inputStream);
-
-		int currentIndex = fileParameters.size();
-
-		String fileParameter = "fileParameter" + currentIndex;
-
-		if (namespace != null) {
-			fileParameter = namespace.concat(fileParameter);
-		}
-
-		FileItem[] fileItems = new FileItem[2];
-
-		LiferayFileItemFactory fileItemFactory = new LiferayFileItemFactory(
-			UploadServletRequestImpl.getTempDir());
-
-		for (int i = 0; i < fileItems.length; i++) {
-			org.apache.commons.fileupload.FileItem fileItem =
-				fileItemFactory.createItem(
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), true,
-					RandomTestUtil.randomString());
-
-			LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
-
-			// force a temp file for the file item
-
-			OutputStream outputStream = liferayFileItem.getOutputStream();
-
-			outputStream.write(bytes);
-			outputStream.flush();
-			outputStream.close();
-
-			fileItems[i] = liferayFileItem;
-		}
-
-		fileParameters.put(fileParameter, fileItems);
-	}
-
-	public static void putRegularParameter(
-		Map<String, List<String>> fileParameters) {
-
-		int currentIndex = fileParameters.size();
-
-		String fileParameter = "regularParameter" + currentIndex;
-
-		List<String> regularItems = new ArrayList<>();
-
-		for (int i = 0; i < 10; i++) {
-			regularItems.add(RandomTestUtil.randomString());
-		}
-
-		fileParameters.put(fileParameter, regularItems);
 	}
 
 	public static Map<String, List<String>> request(String url)
@@ -407,6 +380,41 @@ public class PortletContainerTestUtil {
 		}
 
 		return StringUtil.read(inputStream);
+	}
+
+	private static FileItem[] _getFileItems(Class<?> clazz, String dependency)
+		throws Exception {
+
+		InputStream inputStream = clazz.getResourceAsStream(dependency);
+
+		byte[] bytes = FileUtil.getBytes(inputStream);
+
+		FileItem[] fileItems = new FileItem[2];
+
+		LiferayFileItemFactory fileItemFactory = new LiferayFileItemFactory(
+			UploadServletRequestImpl.getTempDir());
+
+		for (int i = 0; i < fileItems.length; i++) {
+			org.apache.commons.fileupload.FileItem fileItem =
+				fileItemFactory.createItem(
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), true,
+					RandomTestUtil.randomString());
+
+			LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
+
+			OutputStream outputStream = liferayFileItem.getOutputStream();
+
+			outputStream.write(bytes);
+
+			outputStream.flush();
+
+			outputStream.close();
+
+			fileItems[i] = liferayFileItem;
+		}
+
+		return fileItems;
 	}
 
 }

@@ -83,10 +83,10 @@ public class UploadServletRequestTest {
 	public void testBuildWithEmptyParametersShouldNotPopulateParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
+		Map<String, FileItem[]> fileParameters = Collections.emptyMap();
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -111,13 +111,12 @@ public class UploadServletRequestTest {
 	public void testBuildWithFileParametersShouldPopulateMultipartParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -142,14 +141,11 @@ public class UploadServletRequestTest {
 	public void testBuildWithRegularParametersShouldPopulateRegularParameters()
 		throws Exception {
 
-		Map<String, List<String>> regularParameters = new HashMap<>();
-
-		for (int i = 0; i < 10; i++) {
-			PortletContainerTestUtil.putRegularParameter(regularParameters);
-		}
+		Map<String, List<String>> regularParameters =
+			PortletContainerTestUtil.getRegularParameters(10);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -173,7 +169,7 @@ public class UploadServletRequestTest {
 	@Test
 	public void testCleanUpShouldNotFailFromMainConstructor() throws Exception {
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -193,13 +189,12 @@ public class UploadServletRequestTest {
 	public void testCleanUpShouldNotRemoveMultipartParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -229,7 +224,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -245,13 +240,12 @@ public class UploadServletRequestTest {
 	public void testGetContentTypeShouldReturnFirstFileItemContentType()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -282,7 +276,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -296,13 +290,12 @@ public class UploadServletRequestTest {
 
 	@Test
 	public void testGetFileAsStreamShouldReturnAStream() throws Exception {
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -333,7 +326,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -352,13 +345,12 @@ public class UploadServletRequestTest {
 	public void testGetFileAsStreamShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -376,13 +368,12 @@ public class UploadServletRequestTest {
 	public void testGetFileNameShouldReturnFirstFileNameFromFileParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -413,7 +404,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -429,13 +420,12 @@ public class UploadServletRequestTest {
 	public void testGetFileNameShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -452,15 +442,12 @@ public class UploadServletRequestTest {
 			testGetFileNamesShouldReturnAnArrayWithFileNamesFromFileParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		for (int i = 0; i < 10; i++) {
-			PortletContainerTestUtil.putFileParameter(
-				getClass(), _TXT_DEPENDENCY, fileParameters);
-		}
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				10, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -494,7 +481,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -510,13 +497,12 @@ public class UploadServletRequestTest {
 	public void testGetFileNamesShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -533,15 +519,12 @@ public class UploadServletRequestTest {
 			testGetFilesAsStreamShouldReturnArrayWithStreamsFromFileParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		for (int i = 0; i < 10; i++) {
-			PortletContainerTestUtil.putFileParameter(
-				getClass(), _TXT_DEPENDENCY, fileParameters);
-		}
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				10, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -578,7 +561,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -595,13 +578,12 @@ public class UploadServletRequestTest {
 	public void testGetFilesAsStreamShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -615,13 +597,12 @@ public class UploadServletRequestTest {
 
 	@Test
 	public void testGetFileShouldReturnAFile() throws Exception {
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -654,7 +635,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -672,13 +653,12 @@ public class UploadServletRequestTest {
 	public void testGetFileShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -696,15 +676,12 @@ public class UploadServletRequestTest {
 			testGetFilesShouldReturnArrayWithStoreLocationsFromFileParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		for (int i = 0; i < 10; i++) {
-			PortletContainerTestUtil.putFileParameter(
-				getClass(), _TXT_DEPENDENCY, fileParameters);
-		}
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				10, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -742,7 +719,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -758,13 +735,12 @@ public class UploadServletRequestTest {
 	public void testGetFilesShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -779,13 +755,12 @@ public class UploadServletRequestTest {
 	public void testGetFullFileNameShouldReturnFirstFileNameFromFileParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -816,7 +791,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -833,13 +808,12 @@ public class UploadServletRequestTest {
 	public void testGetFullFileNameShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -863,7 +837,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -899,7 +873,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -916,17 +890,15 @@ public class UploadServletRequestTest {
 			testGetParameterNamesShouldMergeRegular_File_And_RequestParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-		Map<String, List<String>> regularParameters = new HashMap<>();
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				10, getClass(), _TXT_DEPENDENCY);
 
-		for (int i = 0; i < 10; i++) {
-			PortletContainerTestUtil.putFileParameter(
-				getClass(), _TXT_DEPENDENCY, fileParameters);
-			PortletContainerTestUtil.putRegularParameter(regularParameters);
-		}
+		Map<String, List<String>> regularParameters =
+			PortletContainerTestUtil.getRegularParameters(10);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		String parameter = RandomTestUtil.randomString();
@@ -969,17 +941,15 @@ public class UploadServletRequestTest {
 	public void testGetParameterValuesShouldMergeRegular_And_RequestParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-		Map<String, List<String>> regularParameters = new HashMap<>();
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				10, getClass(), _TXT_DEPENDENCY);
 
-		for (int i = 0; i < 10; i++) {
-			PortletContainerTestUtil.putFileParameter(
-				getClass(), _TXT_DEPENDENCY, fileParameters);
-			PortletContainerTestUtil.putRegularParameter(regularParameters);
-		}
+		Map<String, List<String>> regularParameters =
+			PortletContainerTestUtil.getRegularParameters(10);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		String parameter = RandomTestUtil.randomString();
@@ -1037,13 +1007,12 @@ public class UploadServletRequestTest {
 	public void testGetSizeShouldReturnFirstSizeFromFileParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -1074,7 +1043,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -1090,13 +1059,12 @@ public class UploadServletRequestTest {
 	public void testGetSizeShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -1147,13 +1115,12 @@ public class UploadServletRequestTest {
 	public void testIsFormFieldShouldReturnFirstSizeFromFileParameters()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -1184,7 +1151,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -1200,13 +1167,12 @@ public class UploadServletRequestTest {
 	public void testIsFormFieldShouldReturnNullIfNameIsNotAFileParameter()
 		throws Exception {
 
-		Map<String, FileItem[]> fileParameters = new HashMap<>();
-
-		PortletContainerTestUtil.putFileParameter(
-			getClass(), _TXT_DEPENDENCY, fileParameters);
+		Map<String, FileItem[]> fileParameters =
+			PortletContainerTestUtil.getFileParameters(
+				1, getClass(), _TXT_DEPENDENCY);
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		UploadServletRequestImpl uploadServletRequest =
@@ -1223,7 +1189,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		HttpServletRequest mockHttpServletRequest =
@@ -1242,7 +1208,7 @@ public class UploadServletRequestTest {
 		throws Exception {
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				_fileNameParameter, _bytes);
 
 		HttpServletRequest mockHttpServletRequest =

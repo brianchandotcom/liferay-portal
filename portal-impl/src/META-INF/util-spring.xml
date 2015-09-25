@@ -69,16 +69,6 @@
 			<bean class="com.liferay.portal.dao.jdbc.spring.SqlUpdateFactoryImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.dao.orm.EntityCacheUtil" class="com.liferay.portal.kernel.dao.orm.EntityCacheUtil">
-		<property name="entityCache">
-			<bean class="com.liferay.portal.dao.orm.common.EntityCacheImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.kernel.dao.orm.FinderCacheUtil" class="com.liferay.portal.kernel.dao.orm.FinderCacheUtil">
-		<property name="finderCache">
-			<bean class="com.liferay.portal.dao.orm.common.FinderCacheImpl" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil" class="com.liferay.portal.kernel.dao.orm.PortalCustomSQLUtil">
 		<property name="portalCustomSQL">
 			<bean class="com.liferay.portal.dao.orm.common.PortalCustomSQLImpl" />

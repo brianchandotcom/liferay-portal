@@ -132,7 +132,7 @@
 			<name>contextObjects</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.Map<java.lang.String, java.lang.Object>]]></type>
+			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
 			<name>displayStyle</name>
@@ -150,7 +150,7 @@
 			<name>entries</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.List<?>]]></type>
+			<type>java.util.List</type>
 		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
@@ -186,7 +186,7 @@
 			<name>displayStyles</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type><![CDATA[java.util.List<java.lang.String>]]></type>
+			<type>java.util.List</type>
 		</attribute>
 		<attribute>
 			<name>icon</name>

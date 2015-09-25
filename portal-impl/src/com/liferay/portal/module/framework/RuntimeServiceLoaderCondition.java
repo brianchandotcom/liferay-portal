@@ -33,6 +33,10 @@ public class RuntimeServiceLoaderCondition implements ServiceLoaderCondition {
 		path = StringUtil.replace(
 			path, StringPool.BACK_SLASH, StringPool.SLASH);
 
+		if (!path.startsWith("file:/") && path.startsWith("file:")) {
+			path = "file:/" + path.substring(5, path.length());
+		}
+
 		return path.contains(PropsValues.MODULE_FRAMEWORK_BASE_DIR);
 	}
 

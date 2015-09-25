@@ -352,7 +352,7 @@ String iconMenuId = null;
 								<portlet:param name="mvcPath" value="/document_library_display/select_add_file_entry_type.jsp" />
 							</c:when>
 							<c:otherwise>
-								<portlet:param name="mvcRenderCommandName" value="/document_library_display/edit_file_entry" />
+								<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
 							</c:otherwise>
 						</c:choose>
 

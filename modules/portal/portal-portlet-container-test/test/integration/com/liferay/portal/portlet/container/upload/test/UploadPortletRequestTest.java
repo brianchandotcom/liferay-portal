@@ -215,12 +215,14 @@ public class UploadPortletRequestTest {
 					fileParameters, new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Map<String, FileItem[]> map =
+		Map<String, FileItem[]> multipartParameterMap =
 			uploadPortletRequest.getMultipartParameterMap();
 
-		Assert.assertEquals(1, map.size());
+		Assert.assertEquals(1, multipartParameterMap.size());
 
-		for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
+		for (Map.Entry<String, FileItem[]> entry :
+				multipartParameterMap.entrySet()) {
+
 			String key = entry.getKey();
 
 			FileItem[] fileItems = entry.getValue();
@@ -269,12 +271,14 @@ public class UploadPortletRequestTest {
 					fileParameters, new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Map<String, FileItem[]> map =
+		Map<String, FileItem[]> multipartParametersMap =
 			uploadPortletRequest.getMultipartParameterMap();
 
-		Assert.assertEquals(1, map.size());
+		Assert.assertEquals(1, multipartParametersMap.size());
 
-		for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
+		for (Map.Entry<String, FileItem[]> entry :
+				multipartParametersMap.entrySet()) {
+
 			String key = entry.getKey();
 
 			InputStream inputStream = uploadPortletRequest.getFileAsStream(key);
@@ -304,9 +308,9 @@ public class UploadPortletRequestTest {
 				_portletNamespace);
 
 		Assert.assertNull(
-			uploadPortletRequest.getFileAsStream("never-mind-name"));
+			uploadPortletRequest.getFileAsStream("nevermind-name"));
 		Assert.assertNull(
-			uploadPortletRequest.getFileAsStream("never-mind-name", true));
+			uploadPortletRequest.getFileAsStream("nevermind-name", true));
 	}
 
 	@Test
@@ -387,7 +391,7 @@ public class UploadPortletRequestTest {
 					new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Assert.assertNull(uploadPortletRequest.getFileName("never-mind-name"));
+		Assert.assertNull(uploadPortletRequest.getFileName("nevermind-name"));
 	}
 
 	@Test
@@ -432,12 +436,14 @@ public class UploadPortletRequestTest {
 					fileParameters, new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Map<String, FileItem[]> map =
+		Map<String, FileItem[]> multipartParameterMap =
 			uploadPortletRequest.getMultipartParameterMap();
 
-		Assert.assertEquals(10, map.size());
+		Assert.assertEquals(10, multipartParameterMap.size());
 
-		for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
+		for (Map.Entry<String, FileItem[]> entry :
+				multipartParameterMap.entrySet()) {
+
 			String key = entry.getKey();
 
 			String[] fileNames = uploadPortletRequest.getFileNames(key);
@@ -469,7 +475,7 @@ public class UploadPortletRequestTest {
 					new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Assert.assertNull(uploadPortletRequest.getFileNames("never-mind-name"));
+		Assert.assertNull(uploadPortletRequest.getFileNames("nevermind-name"));
 	}
 
 	@Test
@@ -512,7 +518,7 @@ public class UploadPortletRequestTest {
 				_portletNamespace);
 
 		Assert.assertNull(
-			uploadPortletRequest.getFilesAsStream("never-mind-name"));
+			uploadPortletRequest.getFilesAsStream("nevermind-name"));
 	}
 
 	@Test
@@ -634,9 +640,9 @@ public class UploadPortletRequestTest {
 					new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Assert.assertNull(uploadPortletRequest.getFile("never-mind-name"));
+		Assert.assertNull(uploadPortletRequest.getFile("nevermind-name"));
 		Assert.assertNull(
-			uploadPortletRequest.getFile("never-mind-name", true));
+			uploadPortletRequest.getFile("nevermind-name", true));
 	}
 
 	@Test
@@ -679,7 +685,7 @@ public class UploadPortletRequestTest {
 					new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Assert.assertNull(uploadPortletRequest.getFiles("never-mind-name"));
+		Assert.assertNull(uploadPortletRequest.getFiles("nevermind-name"));
 	}
 
 	@Test
@@ -723,12 +729,14 @@ public class UploadPortletRequestTest {
 					fileParameters, new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Map<String, FileItem[]> map =
+		Map<String, FileItem[]> multipartParameterMap =
 			uploadPortletRequest.getMultipartParameterMap();
 
-		Assert.assertEquals(10, map.size());
+		Assert.assertEquals(10, multipartParameterMap.size());
 
-		for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
+		for (Map.Entry<String, FileItem[]> entry :
+				multipartParameterMap.entrySet()) {
+
 			String key = entry.getKey();
 
 			File[] files = uploadPortletRequest.getFiles(key);
@@ -767,12 +775,14 @@ public class UploadPortletRequestTest {
 					fileParameters, new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Map<String, FileItem[]> map =
+		Map<String, FileItem[]> multipartParameterMap =
 			uploadPortletRequest.getMultipartParameterMap();
 
-		Assert.assertEquals(1, map.size());
+		Assert.assertEquals(1, multipartParameterMap.size());
 
-		for (Map.Entry<String, FileItem[]> entry : map.entrySet()) {
+		for (Map.Entry<String, FileItem[]> entry :
+				multipartParameterMap.entrySet()) {
+
 			String key = entry.getKey();
 
 			String fullFileName = uploadPortletRequest.getFullFileName(key);
@@ -802,7 +812,7 @@ public class UploadPortletRequestTest {
 				_portletNamespace);
 
 		Assert.assertNull(
-			uploadPortletRequest.getFullFileName("never-mind-name"));
+			uploadPortletRequest.getFullFileName("nevermind-name"));
 	}
 
 	@Test
@@ -927,23 +937,17 @@ public class UploadPortletRequestTest {
 
 		List<String> parameterNamesList = Collections.list(parameterNames);
 
-		// regular parameters
-
 		for (Map.Entry<String, List<String>> entry :
 				regularParameters.entrySet()) {
 
 			Assert.assertTrue(parameterNamesList.contains(entry.getKey()));
 		}
 
-		// file parameters
-
 		for (Map.Entry<String, FileItem[]> entry : fileParameters.entrySet()) {
 			Assert.assertTrue(parameterNamesList.contains(entry.getKey()));
 		}
 
-		// request parameters
-
-		parameterNamesList.contains(parameter);
+		Assert.assertTrue(parameterNamesList.contains(parameter));
 	}
 
 	@Test
@@ -975,8 +979,6 @@ public class UploadPortletRequestTest {
 					fileParameters, regularParameters), null,
 				_portletNamespace);
 
-		// regular parameters
-
 		for (Map.Entry<String, List<String>> entry :
 				regularParameters.entrySet()) {
 
@@ -992,14 +994,11 @@ public class UploadPortletRequestTest {
 				parameterValuesList.containsAll(entry.getValue()));
 		}
 
-		// request parameters
-
 		String[] requestParameterValues =
 			uploadPortletRequest.getParameterValues(parameter);
 
-		ArrayUtil.contains(requestParameterValues, parameter);
-
-		// file parameters
+		Assert.assertTrue(
+			ArrayUtil.contains(requestParameterValues, parameter));
 
 		for (Map.Entry<String, FileItem[]> entry : fileParameters.entrySet()) {
 			String key = entry.getKey();
@@ -1067,7 +1066,7 @@ public class UploadPortletRequestTest {
 					new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Long size = uploadPortletRequest.getSize("never-mind-name");
+		Long size = uploadPortletRequest.getSize("nevermind-name");
 
 		Assert.assertEquals(0, size.longValue());
 	}
@@ -1149,7 +1148,7 @@ public class UploadPortletRequestTest {
 					new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		Assert.assertTrue(uploadPortletRequest.isFormField("never-mind-name"));
+		Assert.assertTrue(uploadPortletRequest.isFormField("nevermind-name"));
 	}
 
 	@Test
@@ -1190,10 +1189,10 @@ public class UploadPortletRequestTest {
 			new UploadServletRequestImpl(mockHttpServletRequest), null,
 			_portletNamespace);
 
-		HttpSession mockHttpSession = mockHttpServletRequest.getSession();
+		HttpSession httpSession = mockHttpServletRequest.getSession();
 
 		Assert.assertNotNull(
-			mockHttpSession.getAttribute(ProgressTracker.PERCENT));
+			httpSession.getAttribute(ProgressTracker.PERCENT));
 	}
 
 	@Test

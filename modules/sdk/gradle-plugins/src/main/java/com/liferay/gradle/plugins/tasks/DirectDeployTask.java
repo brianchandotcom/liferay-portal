@@ -30,25 +30,25 @@ import java.util.List;
 public class DirectDeployTask extends BasePortalImplToolsTask {
 
 	public File getAppServerDeployDir() {
-		return _appServerDeployDir;
+		return GradleUtil.toFile(project, _appServerDeployDir);
 	}
 
 	public File getAppServerDir() {
-		return _appServerDir;
+		return GradleUtil.toFile(project, _appServerDir);
 	}
 
 	public String getAppServerType() {
-		return _appServerType;
+		return GradleUtil.toString(_appServerType);
 	}
 
 	public String getArgAppServerType() {
-		String argAppServerType = _argAppServerType;
+		String argAppServerType = GradleUtil.toString(_argAppServerType);
 
 		if (Validator.isNull(argAppServerType)) {
 			argAppServerType = getAppServerType();
 		}
 
-		return _argAppServerType;
+		return argAppServerType;
 	}
 
 	@Override
@@ -144,11 +144,11 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 	}
 
 	public File getWebAppFile() {
-		return _webAppFile;
+		return GradleUtil.toFile(project, _webAppFile);
 	}
 
 	public String getWebAppType() {
-		return _webAppType;
+		return GradleUtil.toString(_webAppType);
 	}
 
 	public boolean isCustomPortletXml() {
@@ -159,20 +159,20 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 		return _unpackWar;
 	}
 
-	public void setAppServerDeployDir(File appServerDeployDir) {
+	public void setAppServerDeployDir(Object appServerDeployDir) {
 		_appServerDeployDir = appServerDeployDir;
 	}
 
-	public void setAppServerDir(File appServerDir) {
+	public void setAppServerDir(Object appServerDir) {
 		_appServerDir = appServerDir;
 	}
 
-	public void setAppServerType(String appServerType) {
+	public void setAppServerType(Object appServerType) {
 		_appServerType = appServerType;
 	}
 
-	public void setArgAppServerType(String actualAppServerType) {
-		_argAppServerType = actualAppServerType;
+	public void setArgAppServerType(Object argAppServerType) {
+		_argAppServerType = argAppServerType;
 	}
 
 	public void setCustomPortletXml(boolean customPortletXml) {
@@ -183,11 +183,11 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 		_unpackWar = unpackWar;
 	}
 
-	public void setWebAppFile(File webAppFile) {
+	public void setWebAppFile(Object webAppFile) {
 		_webAppFile = webAppFile;
 	}
 
-	public void setWebAppType(String webAppType) {
+	public void setWebAppType(Object webAppType) {
 		_webAppType = webAppType;
 	}
 
@@ -210,13 +210,13 @@ public class DirectDeployTask extends BasePortalImplToolsTask {
 		return "Deployer";
 	}
 
-	private File _appServerDeployDir;
-	private File _appServerDir;
-	private String _appServerType;
-	private String _argAppServerType;
+	private Object _appServerDeployDir;
+	private Object _appServerDir;
+	private Object _appServerType;
+	private Object _argAppServerType;
 	private boolean _customPortletXml;
 	private boolean _unpackWar = true;
-	private File _webAppFile;
-	private String _webAppType;
+	private Object _webAppFile;
+	private Object _webAppType;
 
 }

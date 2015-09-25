@@ -51,6 +51,7 @@ public class DLFolderAssetRendererFactory
 	public DLFolderAssetRendererFactory() {
 		setCategorizable(false);
 		setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
+		setSearchable(true);
 	}
 
 	@Override

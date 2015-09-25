@@ -55,6 +55,7 @@ public class MBMessageAssetRendererFactory
 		setCategorizable(false);
 		setLinkable(true);
 		setPortletId(MBPortletKeys.MESSAGE_BOARDS);
+		setSearchable(true);
 	}
 
 	@Override

@@ -16,8 +16,8 @@ package com.liferay.wiki.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -45,6 +45,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
@@ -178,7 +179,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -257,10 +258,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -561,8 +562,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -600,10 +600,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -693,7 +693,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -747,7 +747,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				List<WikiPage> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -760,14 +760,13 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					if ((wikiPage.getUuid() == null) ||
 							!wikiPage.getUuid().equals(uuid) ||
 							(wikiPage.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, wikiPage);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -812,8 +811,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -855,10 +853,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -966,7 +964,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -1050,10 +1048,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1374,8 +1372,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1417,10 +1414,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1525,7 +1522,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -1590,10 +1587,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1883,8 +1880,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { resourcePrimKey };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1908,10 +1904,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2006,7 +2002,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			finderArgs = new Object[] { nodeId, start, end, orderByComparator };
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -2071,10 +2067,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2361,8 +2357,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2386,10 +2381,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2484,7 +2479,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			finderArgs = new Object[] { format, start, end, orderByComparator };
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -2563,10 +2558,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2867,8 +2862,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { format };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2906,10 +2900,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3014,7 +3008,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -3084,10 +3078,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3394,8 +3388,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { resourcePrimKey, nodeId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3423,10 +3416,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3531,7 +3524,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -3601,10 +3594,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3911,8 +3904,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { resourcePrimKey, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3940,10 +3932,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4046,7 +4038,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -4130,10 +4122,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4451,8 +4443,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, title };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -4494,10 +4485,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4603,7 +4594,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -4673,10 +4664,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -4980,8 +4971,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, head };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -5009,10 +4999,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5116,7 +5106,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -5200,10 +5190,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5524,8 +5514,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, parentTitle };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -5567,10 +5556,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -5676,7 +5665,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -5761,10 +5750,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6085,8 +6074,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, redirectTitle };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -6128,10 +6116,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6236,7 +6224,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -6306,10 +6294,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6613,8 +6601,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -6642,10 +6629,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -6748,7 +6735,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_R_N_V,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_R_N_V,
 					finderArgs, this);
 		}
 
@@ -6793,7 +6780,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				List<WikiPage> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_N_V,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_R_N_V,
 						finderArgs, list);
 				}
 				else {
@@ -6806,14 +6793,13 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					if ((wikiPage.getResourcePrimKey() != resourcePrimKey) ||
 							(wikiPage.getNodeId() != nodeId) ||
 							(wikiPage.getVersion() != version)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_N_V,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_R_N_V,
 							finderArgs, wikiPage);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_N_V,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_R_N_V, finderArgs);
 
 				throw processException(e);
 			}
@@ -6860,8 +6846,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { resourcePrimKey, nodeId, version };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -6893,10 +6878,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7014,7 +6999,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -7089,10 +7074,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7417,8 +7402,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { resourcePrimKey, nodeId, head };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -7450,10 +7434,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7571,7 +7555,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -7646,10 +7630,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -7974,8 +7958,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { resourcePrimKey, nodeId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -8007,10 +7990,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8126,7 +8109,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -8201,10 +8184,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -8864,8 +8847,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { groupId, nodeId, head };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -8897,10 +8879,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9074,7 +9056,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -9149,10 +9131,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -9812,8 +9794,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { groupId, nodeId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -9845,10 +9826,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10022,7 +10003,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -10097,10 +10078,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10424,8 +10405,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { userId, nodeId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -10457,10 +10437,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10563,7 +10543,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_N_T_V,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_N_T_V,
 					finderArgs, this);
 		}
 
@@ -10622,7 +10602,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				List<WikiPage> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_N_T_V,
 						finderArgs, list);
 				}
 				else {
@@ -10636,14 +10616,13 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 							(wikiPage.getTitle() == null) ||
 							!wikiPage.getTitle().equals(title) ||
 							(wikiPage.getVersion() != version)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_N_T_V,
 							finderArgs, wikiPage);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_N_T_V, finderArgs);
 
 				throw processException(e);
 			}
@@ -10690,8 +10669,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, title, version };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -10737,10 +10715,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -10857,7 +10835,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -10946,10 +10924,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -11288,8 +11266,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, title, head };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -11335,10 +11312,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -11455,7 +11432,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -11544,10 +11521,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -11885,8 +11862,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, title, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -11932,10 +11908,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -12055,7 +12031,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -12144,10 +12120,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -12486,8 +12462,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, head, parentTitle };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -12533,10 +12508,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -12656,7 +12631,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -12746,10 +12721,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -13088,8 +13063,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, head, redirectTitle };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -13135,10 +13109,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -13256,7 +13230,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -13331,10 +13305,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -13658,8 +13632,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, head, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -13691,10 +13664,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -13791,7 +13764,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				start, end, orderByComparator
 			};
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -13866,10 +13839,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -14193,8 +14166,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, head, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -14226,10 +14198,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -14352,7 +14324,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -14432,10 +14404,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -15128,8 +15100,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { groupId, userId, nodeId, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -15165,10 +15136,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -15355,7 +15326,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -15449,10 +15420,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -16193,8 +16164,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { groupId, nodeId, title, head };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -16244,10 +16214,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -16451,7 +16421,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -16531,10 +16501,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -17228,8 +17198,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { groupId, nodeId, head, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -17265,10 +17234,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -17456,7 +17425,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -17550,10 +17519,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -17916,8 +17885,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, head, parentTitle, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -17967,10 +17935,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -18077,7 +18045,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				start, end, orderByComparator
 			};
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -18171,10 +18139,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -18537,8 +18505,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, head, parentTitle, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -18588,10 +18555,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -18718,7 +18685,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -18813,10 +18780,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -19179,8 +19146,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, head, redirectTitle, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -19230,10 +19196,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -19340,7 +19306,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				start, end, orderByComparator
 			};
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -19435,10 +19401,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -19801,8 +19767,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 		Object[] finderArgs = new Object[] { nodeId, head, redirectTitle, status };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(5);
@@ -19852,10 +19817,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -19990,7 +19955,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				};
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -20089,10 +20054,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -20867,8 +20832,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				groupId, nodeId, head, parentTitle, status
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(6);
@@ -20922,10 +20886,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -21039,19 +21003,19 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public void cacheResult(WikiPage wikiPage) {
-		EntityCacheUtil.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageImpl.class, wikiPage.getPrimaryKey(), wikiPage);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { wikiPage.getUuid(), wikiPage.getGroupId() }, wikiPage);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_N_V,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_R_N_V,
 			new Object[] {
 				wikiPage.getResourcePrimKey(), wikiPage.getNodeId(),
 				wikiPage.getVersion()
 			}, wikiPage);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_N_T_V,
 			new Object[] {
 				wikiPage.getNodeId(), wikiPage.getTitle(), wikiPage.getVersion()
 			}, wikiPage);
@@ -21067,8 +21031,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	@Override
 	public void cacheResult(List<WikiPage> wikiPages) {
 		for (WikiPage wikiPage : wikiPages) {
-			if (EntityCacheUtil.getResult(
-						WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 						WikiPageImpl.class, wikiPage.getPrimaryKey()) == null) {
 				cacheResult(wikiPage);
 			}
@@ -21082,43 +21045,43 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 * Clears the cache for all wiki pages.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(WikiPageImpl.class);
+		entityCache.clearCache(WikiPageImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the wiki page.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(WikiPage wikiPage) {
-		EntityCacheUtil.removeResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageImpl.class, wikiPage.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((WikiPageModelImpl)wikiPage);
 	}
 
 	@Override
 	public void clearCache(List<WikiPage> wikiPages) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (WikiPage wikiPage : wikiPages) {
-			EntityCacheUtil.removeResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 				WikiPageImpl.class, wikiPage.getPrimaryKey());
 
 			clearUniqueFindersCache((WikiPageModelImpl)wikiPage);
@@ -21132,9 +21095,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					wikiPageModelImpl.getUuid(), wikiPageModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				wikiPageModelImpl);
 
 			args = new Object[] {
@@ -21143,9 +21106,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					wikiPageModelImpl.getVersion()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_N_V, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_R_N_V, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_N_V, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_R_N_V, args,
 				wikiPageModelImpl);
 
 			args = new Object[] {
@@ -21153,9 +21116,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					wikiPageModelImpl.getVersion()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T_V, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_N_T_V, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_N_T_V, args,
 				wikiPageModelImpl);
 		}
 		else {
@@ -21166,9 +21129,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					wikiPageModelImpl);
 			}
 
@@ -21180,9 +21143,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getVersion()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_N_V, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_R_N_V, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_N_V, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_R_N_V, args,
 					wikiPageModelImpl);
 			}
 
@@ -21194,9 +21157,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getVersion()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T_V, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_N_T_V, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T_V, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_N_T_V, args,
 					wikiPageModelImpl);
 			}
 		}
@@ -21207,8 +21170,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				wikiPageModelImpl.getUuid(), wikiPageModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((wikiPageModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -21217,8 +21180,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					wikiPageModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
 		args = new Object[] {
@@ -21226,8 +21189,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				wikiPageModelImpl.getNodeId(), wikiPageModelImpl.getVersion()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_V, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_N_V, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_R_N_V, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_R_N_V, args);
 
 		if ((wikiPageModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_R_N_V.getColumnBitmask()) != 0) {
@@ -21237,8 +21200,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					wikiPageModelImpl.getOriginalVersion()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_V, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_N_V, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_R_N_V, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_R_N_V, args);
 		}
 
 		args = new Object[] {
@@ -21246,8 +21209,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				wikiPageModelImpl.getVersion()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_V, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T_V, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_N_T_V, args);
 
 		if ((wikiPageModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_N_T_V.getColumnBitmask()) != 0) {
@@ -21257,8 +21220,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					wikiPageModelImpl.getOriginalVersion()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_V, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T_V, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T_V, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_N_T_V, args);
 		}
 	}
 
@@ -21447,10 +21410,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !WikiPageModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -21458,14 +21421,14 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { wikiPageModelImpl.getOriginalUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { wikiPageModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -21476,8 +21439,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -21485,8 +21448,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -21496,16 +21459,16 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalResourcePrimKey()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEPRIMKEY,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RESOURCEPRIMKEY,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEPRIMKEY,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEPRIMKEY,
 					args);
 
 				args = new Object[] { wikiPageModelImpl.getResourcePrimKey() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RESOURCEPRIMKEY,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RESOURCEPRIMKEY,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEPRIMKEY,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RESOURCEPRIMKEY,
 					args);
 			}
 
@@ -21515,14 +21478,14 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalNodeId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NODEID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NODEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_NODEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NODEID,
 					args);
 
 				args = new Object[] { wikiPageModelImpl.getNodeId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_NODEID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NODEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_NODEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NODEID,
 					args);
 			}
 
@@ -21532,14 +21495,14 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalFormat()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FORMAT, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FORMAT,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_FORMAT, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FORMAT,
 					args);
 
 				args = new Object[] { wikiPageModelImpl.getFormat() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_FORMAT, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FORMAT,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_FORMAT, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_FORMAT,
 					args);
 			}
 
@@ -21550,8 +21513,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalNodeId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_N, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N,
 					args);
 
 				args = new Object[] {
@@ -21559,8 +21522,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getNodeId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_N, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N,
 					args);
 			}
 
@@ -21571,8 +21534,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S,
 					args);
 
 				args = new Object[] {
@@ -21580,8 +21543,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_S,
 					args);
 			}
 
@@ -21592,8 +21555,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalTitle()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T,
 					args);
 
 				args = new Object[] {
@@ -21601,8 +21564,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getTitle()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T,
 					args);
 			}
 
@@ -21613,8 +21576,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalHead()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H,
 					args);
 
 				args = new Object[] {
@@ -21622,8 +21585,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getHead()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H,
 					args);
 			}
 
@@ -21634,8 +21597,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalParentTitle()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_P,
 					args);
 
 				args = new Object[] {
@@ -21643,8 +21606,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getParentTitle()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_P,
 					args);
 			}
 
@@ -21655,8 +21618,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalRedirectTitle()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_R,
 					args);
 
 				args = new Object[] {
@@ -21664,8 +21627,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getRedirectTitle()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_R,
 					args);
 			}
 
@@ -21676,8 +21639,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_S,
 					args);
 
 				args = new Object[] {
@@ -21685,8 +21648,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_S,
 					args);
 			}
 
@@ -21698,8 +21661,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalHead()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_H, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N_H,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_N_H, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N_H,
 					args);
 
 				args = new Object[] {
@@ -21708,8 +21671,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getHead()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_H, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N_H,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_N_H, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N_H,
 					args);
 			}
 
@@ -21721,8 +21684,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_N_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N_S,
 					args);
 
 				args = new Object[] {
@@ -21731,8 +21694,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_N_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_N_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_N_S,
 					args);
 			}
 
@@ -21744,8 +21707,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalHead()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_H, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_H, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H,
 					args);
 
 				args = new Object[] {
@@ -21754,8 +21717,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getHead()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_H, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_H, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H,
 					args);
 			}
 
@@ -21767,8 +21730,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_S,
 					args);
 
 				args = new Object[] {
@@ -21777,8 +21740,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_S,
 					args);
 			}
 
@@ -21790,8 +21753,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_N_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_N_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_N_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_N_S,
 					args);
 
 				args = new Object[] {
@@ -21800,8 +21763,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_N_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_N_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_U_N_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_U_N_S,
 					args);
 			}
 
@@ -21813,8 +21776,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalHead()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_H, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_H,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T_H, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_H,
 					args);
 
 				args = new Object[] {
@@ -21823,8 +21786,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getHead()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_H, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_H,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T_H, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_H,
 					args);
 			}
 
@@ -21836,8 +21799,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_S,
 					args);
 
 				args = new Object[] {
@@ -21846,8 +21809,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_T_S,
 					args);
 			}
 
@@ -21859,8 +21822,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalParentTitle()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P,
 					args);
 
 				args = new Object[] {
@@ -21869,8 +21832,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getParentTitle()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_P, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H_P, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P,
 					args);
 			}
 
@@ -21882,8 +21845,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalRedirectTitle()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_R,
 					args);
 
 				args = new Object[] {
@@ -21892,8 +21855,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getRedirectTitle()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_R,
 					args);
 			}
 
@@ -21905,8 +21868,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_S,
 					args);
 
 				args = new Object[] {
@@ -21915,8 +21878,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_S,
 					args);
 			}
 
@@ -21929,8 +21892,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_N_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_N_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_N_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_N_S,
 					args);
 
 				args = new Object[] {
@@ -21940,8 +21903,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U_N_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_N_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U_N_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U_N_S,
 					args);
 			}
 
@@ -21954,8 +21917,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalHead()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_T_H, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T_H,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_T_H, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T_H,
 					args);
 
 				args = new Object[] {
@@ -21965,8 +21928,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getHead()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_T_H, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T_H,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_T_H, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_T_H,
 					args);
 			}
 
@@ -21979,8 +21942,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_H_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_H_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H_S,
 					args);
 
 				args = new Object[] {
@@ -21990,8 +21953,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_H_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_H_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H_S,
 					args);
 			}
 
@@ -22004,8 +21967,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_P_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H_P_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P_S,
 					args);
 
 				args = new Object[] {
@@ -22015,8 +21978,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_P_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H_P_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_P_S,
 					args);
 			}
 
@@ -22029,8 +21992,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_R_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_R_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H_R_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_R_S,
 					args);
 
 				args = new Object[] {
@@ -22040,8 +22003,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_H_R_S, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_R_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_N_H_R_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_N_H_R_S,
 					args);
 			}
 
@@ -22055,9 +22018,8 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getOriginalStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_H_P_S,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H_P_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_H_P_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H_P_S,
 					args);
 
 				args = new Object[] {
@@ -22068,14 +22030,13 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 						wikiPageModelImpl.getStatus()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_N_H_P_S,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H_P_S,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_N_H_P_S, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_N_H_P_S,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageImpl.class, wikiPage.getPrimaryKey(), wikiPage, false);
 
 		clearUniqueFindersCache(wikiPageModelImpl);
@@ -22168,7 +22129,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public WikiPage fetchByPrimaryKey(Serializable primaryKey) {
-		WikiPage wikiPage = (WikiPage)EntityCacheUtil.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+		WikiPage wikiPage = (WikiPage)entityCache.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 				WikiPageImpl.class, primaryKey);
 
 		if (wikiPage == _nullWikiPage) {
@@ -22187,12 +22148,12 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 					cacheResult(wikiPage);
 				}
 				else {
-					EntityCacheUtil.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 						WikiPageImpl.class, primaryKey, _nullWikiPage);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 					WikiPageImpl.class, primaryKey);
 
 				throw processException(e);
@@ -22242,7 +22203,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			WikiPage wikiPage = (WikiPage)EntityCacheUtil.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPage wikiPage = (WikiPage)entityCache.getResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 					WikiPageImpl.class, primaryKey);
 
 			if (wikiPage == null) {
@@ -22294,7 +22255,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(WikiPageModelImpl.ENTITY_CACHE_ENABLED,
 					WikiPageImpl.class, primaryKey, _nullWikiPage);
 			}
 		}
@@ -22364,7 +22325,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<WikiPage> list = (List<WikiPage>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPage> list = (List<WikiPage>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -22412,10 +22373,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -22445,7 +22406,7 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -22458,11 +22419,11 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -22492,10 +22453,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(WikiPageImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(WikiPageImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_WIKIPAGE = "SELECT wikiPage FROM WikiPage wikiPage";
@@ -22538,4 +22499,9 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 				return _nullWikiPage;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

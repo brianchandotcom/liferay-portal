@@ -16,8 +16,8 @@ package com.liferay.social.networking.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -32,6 +32,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.social.networking.exception.NoSuchWallEntryException;
 import com.liferay.social.networking.model.WallEntry;
@@ -164,7 +165,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<WallEntry> list = (List<WallEntry>)FinderCacheUtil.getResult(finderPath,
+		List<WallEntry> list = (List<WallEntry>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -229,10 +230,10 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -519,8 +520,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -544,10 +544,10 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -640,7 +640,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 			finderArgs = new Object[] { userId, start, end, orderByComparator };
 		}
 
-		List<WallEntry> list = (List<WallEntry>)FinderCacheUtil.getResult(finderPath,
+		List<WallEntry> list = (List<WallEntry>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -705,10 +705,10 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -995,8 +995,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 		Object[] finderArgs = new Object[] { userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1020,10 +1019,10 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1125,7 +1124,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 				};
 		}
 
-		List<WallEntry> list = (List<WallEntry>)FinderCacheUtil.getResult(finderPath,
+		List<WallEntry> list = (List<WallEntry>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -1195,10 +1194,10 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1504,8 +1503,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 		Object[] finderArgs = new Object[] { groupId, userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1533,10 +1531,10 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1562,7 +1560,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 	 */
 	@Override
 	public void cacheResult(WallEntry wallEntry) {
-		EntityCacheUtil.putResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
 			WallEntryImpl.class, wallEntry.getPrimaryKey(), wallEntry);
 
 		wallEntry.resetOriginalValues();
@@ -1576,8 +1574,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 	@Override
 	public void cacheResult(List<WallEntry> wallEntries) {
 		for (WallEntry wallEntry : wallEntries) {
-			if (EntityCacheUtil.getResult(
-						WallEntryModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
 						WallEntryImpl.class, wallEntry.getPrimaryKey()) == null) {
 				cacheResult(wallEntry);
 			}
@@ -1591,41 +1588,41 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 	 * Clears the cache for all wall entries.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(WallEntryImpl.class);
+		entityCache.clearCache(WallEntryImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the wall entry.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(WallEntry wallEntry) {
-		EntityCacheUtil.removeResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
 			WallEntryImpl.class, wallEntry.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<WallEntry> wallEntries) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (WallEntry wallEntry : wallEntries) {
-			EntityCacheUtil.removeResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
 				WallEntryImpl.class, wallEntry.getPrimaryKey());
 		}
 	}
@@ -1781,10 +1778,10 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !WallEntryModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1794,14 +1791,14 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 						wallEntryModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { wallEntryModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 
@@ -1811,14 +1808,14 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 						wallEntryModelImpl.getOriginalUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
 				args = new Object[] { wallEntryModelImpl.getUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
 
@@ -1829,8 +1826,8 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 						wallEntryModelImpl.getOriginalUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
 					args);
 
 				args = new Object[] {
@@ -1838,13 +1835,13 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 						wallEntryModelImpl.getUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_U,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
 			WallEntryImpl.class, wallEntry.getPrimaryKey(), wallEntry, false);
 
 		wallEntry.resetOriginalValues();
@@ -1919,7 +1916,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 	 */
 	@Override
 	public WallEntry fetchByPrimaryKey(Serializable primaryKey) {
-		WallEntry wallEntry = (WallEntry)EntityCacheUtil.getResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
+		WallEntry wallEntry = (WallEntry)entityCache.getResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
 				WallEntryImpl.class, primaryKey);
 
 		if (wallEntry == _nullWallEntry) {
@@ -1939,12 +1936,12 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 					cacheResult(wallEntry);
 				}
 				else {
-					EntityCacheUtil.putResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
 						WallEntryImpl.class, primaryKey, _nullWallEntry);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
 					WallEntryImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1994,7 +1991,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			WallEntry wallEntry = (WallEntry)EntityCacheUtil.getResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
+			WallEntry wallEntry = (WallEntry)entityCache.getResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
 					WallEntryImpl.class, primaryKey);
 
 			if (wallEntry == null) {
@@ -2046,7 +2043,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(WallEntryModelImpl.ENTITY_CACHE_ENABLED,
 					WallEntryImpl.class, primaryKey, _nullWallEntry);
 			}
 		}
@@ -2116,7 +2113,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<WallEntry> list = (List<WallEntry>)FinderCacheUtil.getResult(finderPath,
+		List<WallEntry> list = (List<WallEntry>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2164,10 +2161,10 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2197,7 +2194,7 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2210,11 +2207,11 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2239,10 +2236,10 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(WallEntryImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(WallEntryImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_WALLENTRY = "SELECT wallEntry FROM WallEntry wallEntry";
@@ -2272,4 +2269,9 @@ public class WallEntryPersistenceImpl extends BasePersistenceImpl<WallEntry>
 				return _nullWallEntry;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

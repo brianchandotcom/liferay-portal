@@ -380,10 +380,10 @@ public class PoshiRunnerExecutor {
 
 				PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
+				CommandLoggerHandler.failCommand(_functionExecuteElement);
+
 				SummaryLoggerHandler.failSummary(
 					_functionExecuteElement, t.getMessage());
-
-				CommandLoggerHandler.failCommand(_functionExecuteElement);
 
 				throw t;
 			}
@@ -395,15 +395,15 @@ public class PoshiRunnerExecutor {
 
 		if (_functionExecuteElement == executeElement) {
 			if (_functionWarningMessage != null) {
+				CommandLoggerHandler.warnCommand(_functionExecuteElement);
+
 				SummaryLoggerHandler.warnSummary(
 					_functionExecuteElement, _functionWarningMessage);
-
-				CommandLoggerHandler.warnCommand(_functionExecuteElement);
 			}
 			else {
-				SummaryLoggerHandler.passSummary(executeElement);
-
 				CommandLoggerHandler.passCommand(executeElement);
+
+				SummaryLoggerHandler.passSummary(executeElement);
 			}
 
 			_functionExecuteElement = null;

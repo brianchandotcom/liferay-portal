@@ -49,6 +49,7 @@ public class PoshiRunnerContext {
 		_commandElements.clear();
 		_commandSummaries.clear();
 		_filePaths.clear();
+		_filePathsList.clear();
 		_functionLocatorCounts.clear();
 		_pathLocators.clear();
 		_rootElements.clear();
@@ -109,8 +110,8 @@ public class PoshiRunnerContext {
 		return _filePaths.get(fileName);
 	}
 
-	public static String[] getFilePathsArray() {
-		return _filePathsArray;
+	public static List<String> getFilePathsList() {
+		return _filePathsList;
 	}
 
 	public static Element getFunctionCommandElement(String classCommandName) {
@@ -272,6 +273,31 @@ public class PoshiRunnerContext {
 		}
 
 		return classCommandName;
+	}
+
+	private static List<String> _getFilePaths(String basedir, String[] includes)
+		throws Exception {
+
+		List<String> filePaths = new ArrayList<>();
+
+		DirectoryScanner directoryScanner = new DirectoryScanner();
+
+		directoryScanner.setBasedir(basedir);
+		directoryScanner.setIncludes(includes);
+
+		directoryScanner.scan();
+
+		for (String filePath : directoryScanner.getIncludedFiles()) {
+			filePath = basedir + "/" + filePath;
+
+			if (OSDetector.isWindows()) {
+				filePath = filePath.replace("/", "\\");
+			}
+
+			filePaths.add(filePath);
+		}
+
+		return filePaths;
 	}
 
 	private static List<String> _getRelatedActionClassCommandNames(
@@ -488,7 +514,7 @@ public class PoshiRunnerContext {
 			String locator = locatorElement.getText();
 
 			if (locatorKey.equals("EXTEND_ACTION_PATH")) {
-				for (String extendFilePath : _filePathsArray) {
+				for (String extendFilePath : _filePathsList) {
 					String expectedExtendedPath = "/" + locator + ".path";
 
 					if (OSDetector.isWindows()) {
@@ -496,9 +522,6 @@ public class PoshiRunnerContext {
 					}
 
 					if (extendFilePath.endsWith(expectedExtendedPath)) {
-						extendFilePath =
-							_TEST_BASE_DIR_NAME + "/" + extendFilePath;
-
 						_readPathFile(
 							extendFilePath, className,
 							PoshiRunnerGetterUtil.getClassNameFromFilePath(
@@ -515,132 +538,147 @@ public class PoshiRunnerContext {
 		}
 	}
 
-	private static void _readPoshiFiles() throws Exception {
-		DirectoryScanner directoryScanner = new DirectoryScanner();
+	private static void _readPoshiFile(String filePath) throws Exception {
+		String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
+			filePath);
+		String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
+			filePath);
 
-		directoryScanner.setBasedir(_TEST_BASE_DIR_NAME);
-		directoryScanner.setIncludes(
+		if (classType.equals("action") || classType.equals("function") ||
+			classType.equals("macro") || classType.equals("test-case")) {
+
+			Element rootElement =
+				PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
+
+			_rootElements.put(classType + "#" + className, rootElement);
+
+			if (classType.equals("test-case")) {
+				_testCaseClassNames.add(className);
+			}
+
+			if (rootElement.element("set-up") != null) {
+				Element setUpElement = rootElement.element("set-up");
+
+				String classCommandName = className + "#set-up";
+
+				_commandElements.put(
+					classType + "#" + classCommandName, setUpElement);
+			}
+
+			if (rootElement.element("tear-down") != null) {
+				Element tearDownElement = rootElement.element("tear-down");
+
+				String classCommandName = className + "#tear-down";
+
+				_commandElements.put(
+					classType + "#" + classCommandName, tearDownElement);
+			}
+
+			List<Element> commandElements = rootElement.elements("command");
+
+			for (Element commandElement : commandElements) {
+				String classCommandName =
+					className + "#" + commandElement.attributeValue("name");
+
+				if (isCommandElement(classType + "#" + classCommandName)) {
+					throw new Exception(
+						"Duplicate command name\n" + filePath + ":" +
+							commandElement.attributeValue("line-number"));
+				}
+
+				_commandElements.put(
+					classType + "#" + classCommandName, commandElement);
+
+				_commandSummaries.put(
+					classType + "#" + classCommandName,
+					_getCommandSummary(
+						classCommandName, classType, commandElement));
+
+				if (Validator.equals(classType, "test-case") &&
+					Validator.isNotNull(
+						commandElement.attributeValue("description"))) {
+
+					_testCaseDescriptions.put(
+						classCommandName,
+						commandElement.attributeValue("description"));
+				}
+			}
+
+			if (classType.equals("function")) {
+				String defaultClassCommandName =
+					className + "#" + rootElement.attributeValue("default");
+
+				Element defaultCommandElement = getFunctionCommandElement(
+					defaultClassCommandName);
+
+				_commandElements.put(
+					classType + "#" + className, defaultCommandElement);
+
+				_commandSummaries.put(
+					classType + "#" + className,
+					_getCommandSummary(
+						defaultClassCommandName, classType,
+						defaultCommandElement));
+
+				String xml = rootElement.asXML();
+
+				for (int i = 1;; i++) {
+					if (xml.contains("${locator" + i + "}")) {
+						continue;
+					}
+
+					if (i > 1) {
+						i--;
+					}
+
+					_functionLocatorCounts.put(className, i);
+
+					break;
+				}
+			}
+		}
+		else if (classType.equals("path")) {
+			_readPathFile(filePath, className, null);
+		}
+	}
+
+	private static void _readPoshiFiles() throws Exception {
+		List<String> testBaseDirFilePaths = _getFilePaths(
+			_TEST_BASE_DIR_NAME,
 			new String[] {
 				"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.path",
 				"**\\*.testcase"
-			});
-
-		directoryScanner.scan();
-
-		_filePathsArray = directoryScanner.getIncludedFiles();
-
-		for (String filePath : _filePathsArray) {
-			filePath = _TEST_BASE_DIR_NAME + "/" + filePath;
-
-			if (OSDetector.isWindows()) {
-				filePath = filePath.replace("/", "\\");
 			}
+		);
 
+		_filePathsList.addAll(testBaseDirFilePaths);
+
+		String[] testIncludeDirNames = PropsValues.TEST_INCLUDE_DIR_NAMES;
+
+		if (Validator.isNotNull(testIncludeDirNames)) {
+			for (String testIncludeDirName : testIncludeDirNames) {
+				if (Validator.isNull(testIncludeDirName)) {
+					continue;
+				}
+
+				List<String> testIncludeDirFilePaths = _getFilePaths(
+					testIncludeDirName,
+					new String[] {
+						"**\\*.action", "**\\*.function", "**\\*.macro",
+						"**\\*.path"
+					}
+				);
+
+				_filePathsList.addAll(testIncludeDirFilePaths);
+			}
+		}
+
+		for (String filePath : _filePathsList) {
 			_filePaths.put(
 				PoshiRunnerGetterUtil.getFileNameFromFilePath(filePath),
 				filePath);
 
-			String className = PoshiRunnerGetterUtil.getClassNameFromFilePath(
-				filePath);
-			String classType = PoshiRunnerGetterUtil.getClassTypeFromFilePath(
-				filePath);
-
-			if (classType.equals("action") || classType.equals("function") ||
-				classType.equals("macro") || classType.equals("test-case")) {
-
-				Element rootElement =
-					PoshiRunnerGetterUtil.getRootElementFromFilePath(filePath);
-
-				_rootElements.put(classType + "#" + className, rootElement);
-
-				if (classType.equals("test-case")) {
-					_testCaseClassNames.add(className);
-				}
-
-				if (rootElement.element("set-up") != null) {
-					Element setUpElement = rootElement.element("set-up");
-
-					String classCommandName = className + "#set-up";
-
-					_commandElements.put(
-						classType + "#" + classCommandName, setUpElement);
-				}
-
-				if (rootElement.element("tear-down") != null) {
-					Element tearDownElement = rootElement.element("tear-down");
-
-					String classCommandName = className + "#tear-down";
-
-					_commandElements.put(
-						classType + "#" + classCommandName, tearDownElement);
-				}
-
-				List<Element> commandElements = rootElement.elements("command");
-
-				for (Element commandElement : commandElements) {
-					String classCommandName =
-						className + "#" + commandElement.attributeValue("name");
-
-					if (isCommandElement(classType + "#" + classCommandName)) {
-						throw new Exception(
-							"Duplicate command name\n" + filePath + ":" +
-								commandElement.attributeValue("line-number"));
-					}
-
-					_commandElements.put(
-						classType + "#" + classCommandName, commandElement);
-
-					_commandSummaries.put(
-						classType + "#" + classCommandName,
-						_getCommandSummary(
-							classCommandName, classType, commandElement));
-
-					if (Validator.equals(classType, "test-case") &&
-						Validator.isNotNull(
-							commandElement.attributeValue("description"))) {
-
-						_testCaseDescriptions.put(
-							classCommandName,
-							commandElement.attributeValue("description"));
-					}
-				}
-
-				if (classType.equals("function")) {
-					String defaultClassCommandName =
-						className + "#" + rootElement.attributeValue("default");
-
-					Element defaultCommandElement = getFunctionCommandElement(
-						defaultClassCommandName);
-
-					_commandElements.put(
-						classType + "#" + className, defaultCommandElement);
-
-					_commandSummaries.put(
-						classType + "#" + className,
-						_getCommandSummary(
-							defaultClassCommandName, classType,
-							defaultCommandElement));
-
-					String xml = rootElement.asXML();
-
-					for (int i = 1;; i++) {
-						if (xml.contains("${locator" + i + "}")) {
-							continue;
-						}
-
-						if (i > 1) {
-							i--;
-						}
-
-						_functionLocatorCounts.put(className, i);
-
-						break;
-					}
-				}
-			}
-			else if (classType.equals("path")) {
-				_readPathFile(filePath, className, null);
-			}
+			_readPoshiFile(filePath);
 		}
 
 		_initComponentCommandNamesMap();
@@ -874,7 +912,7 @@ public class PoshiRunnerContext {
 		new TreeMap<>();
 	private static final Set<String> _componentNames = new TreeSet<>();
 	private static final Map<String, String> _filePaths = new HashMap<>();
-	private static String[] _filePathsArray;
+	private static final List<String> _filePathsList = new ArrayList<>();
 	private static final Map<String, Integer> _functionLocatorCounts =
 		new HashMap<>();
 	private static final Map<String, String> _pathLocators = new HashMap<>();

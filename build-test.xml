@@ -4310,23 +4310,6 @@ javascript.fast.load=false</echo>
 			</then>
 		</if>
 
-		<get-testcase-property property.name="browser.type" />
-
-		<if>
-			<or>
-				<equals arg1="${browser.type}" arg2="android" />
-				<equals arg1="${browser.type}" arg2="androidchrome" />
-				<equals arg1="${browser.type}" arg2="iossafari" />
-			</or>
-			<then>
-				<get-ip-address />
-
-				<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-virtual.hosts.valid.hosts=localhost,127.0.0.1,${ip.address}</echo>
-			</then>
-		</if>
-
 		<get-testcase-property property.name="portal.version" />
 
 		<propertyregex

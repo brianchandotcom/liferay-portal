@@ -15,8 +15,8 @@
 package com.liferay.portal.messaging.internal.sender;
 
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusException;
@@ -31,11 +31,14 @@ import java.util.concurrent.TimeUnit;
 public class SynchronousMessageListener implements MessageListener {
 
 	public SynchronousMessageListener(
-		MessageBus messageBus, Message message, long timeout) {
+		MessageBus messageBus, Message message, long timeout,
+		EntityCache entityCache, FinderCache finderCache) {
 
 		_messageBus = messageBus;
 		_message = message;
 		_timeout = timeout;
+		_entityCache = entityCache;
+		_finderCache = finderCache;
 		_responseId = _message.getResponseId();
 	}
 
@@ -80,13 +83,15 @@ public class SynchronousMessageListener implements MessageListener {
 			_messageBus.unregisterMessageListener(
 				responseDestinationName, this);
 
-			EntityCacheUtil.clearLocalCache();
-			FinderCacheUtil.clearLocalCache();
+			_entityCache.clearLocalCache();
+			_finderCache.clearLocalCache();
 			ThreadLocalCacheManager.destroy();
 		}
 	}
 
 	private final CountDownLatch _countDownLatch = new CountDownLatch(1);
+	private final EntityCache _entityCache;
+	private final FinderCache _finderCache;
 	private final Message _message;
 	private final MessageBus _messageBus;
 	private final String _responseId;

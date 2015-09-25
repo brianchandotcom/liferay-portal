@@ -16,12 +16,13 @@ package com.liferay.dynamic.data.lists.lar;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONDeserializerUtil;
+import com.liferay.dynamic.data.mapping.io.DDMFormValuesJSONSerializerUtil;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.dynamic.data.mapping.storage.StorageEngineUtil;
-import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverterUtil;
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -104,24 +105,9 @@ public class DDLRecordStagedModelDataHandler
 			portletDataContext, record, record.getRecordSet(),
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 
-		DDLRecordVersion recordVersion = record.getRecordVersion();
-
-		DDLRecordSet recordSet = record.getRecordSet();
-
-		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
-			recordVersion.getDDMStorageId());
-
-		Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
-			recordSet.getDDMStructure(), ddmFormValues);
-
-		String fieldsPath = ExportImportPathUtil.getModelPath(
-			record, "fields.xml");
-
-		portletDataContext.addZipEntry(fieldsPath, fields);
-
 		Element recordElement = portletDataContext.getExportDataElement(record);
 
-		recordElement.addAttribute("fields-path", fieldsPath);
+		exportDDMFormValues(portletDataContext, record, recordElement);
 
 		portletDataContext.addClassedModel(
 			recordElement, ExportImportPathUtil.getModelPath(record), record);
@@ -141,13 +127,13 @@ public class DDLRecordStagedModelDataHandler
 		long recordSetId = MapUtil.getLong(
 			recordSetIds, record.getRecordSetId(), record.getRecordSetId());
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			record);
-
 		Element recordElement = portletDataContext.getImportDataElement(record);
 
-		Fields fields = (Fields)portletDataContext.getZipEntryAsObject(
-			recordElement.attributeValue("fields-path"));
+		DDMFormValues ddmFormValues = getImportDDMFormValues(
+			portletDataContext, recordElement, recordSetId);
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			record);
 
 		DDLRecord importedRecord = null;
 
@@ -160,21 +146,59 @@ public class DDLRecordStagedModelDataHandler
 
 				importedRecord = DDLRecordLocalServiceUtil.addRecord(
 					userId, portletDataContext.getScopeGroupId(), recordSetId,
-					record.getDisplayIndex(), fields, serviceContext);
+					record.getDisplayIndex(), ddmFormValues, serviceContext);
 			}
 			else {
 				importedRecord = DDLRecordLocalServiceUtil.updateRecord(
 					userId, existingRecord.getRecordId(), false,
-					record.getDisplayIndex(), fields, true, serviceContext);
+					record.getDisplayIndex(), ddmFormValues, serviceContext);
 			}
 		}
 		else {
 			importedRecord = DDLRecordLocalServiceUtil.addRecord(
 				userId, portletDataContext.getScopeGroupId(), recordSetId,
-				record.getDisplayIndex(), fields, serviceContext);
+				record.getDisplayIndex(), ddmFormValues, serviceContext);
 		}
 
 		portletDataContext.importClassedModel(record, importedRecord);
+	}
+
+	protected void exportDDMFormValues(
+			PortletDataContext portletDataContext, DDLRecord record,
+			Element recordElement)
+		throws PortalException {
+
+		String ddmFormValuesPath = ExportImportPathUtil.getModelPath(
+			record, "ddm-form-values.json");
+
+		recordElement.addAttribute("ddm-form-values-path", ddmFormValuesPath);
+
+		DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
+			record.getDDMStorageId());
+
+		portletDataContext.addZipEntry(
+			ddmFormValuesPath,
+			DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues));
+	}
+
+	protected DDMFormValues getImportDDMFormValues(
+			PortletDataContext portletDataContext, Element recordElement,
+			long recordSetId)
+		throws PortalException {
+
+		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
+			recordSetId);
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
+
+		String ddmFormValuesPath = recordElement.attributeValue(
+			"ddm-form-values-path");
+
+		String serializedDDMFormValues = portletDataContext.getZipEntryAsString(
+			ddmFormValuesPath);
+
+		return DDMFormValuesJSONDeserializerUtil.deserialize(
+			ddmStructure.getDDMForm(), serializedDDMFormValues);
 	}
 
 	@Override

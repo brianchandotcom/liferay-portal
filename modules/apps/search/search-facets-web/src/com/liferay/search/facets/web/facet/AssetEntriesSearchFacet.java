@@ -30,6 +30,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.search.api.facet.BaseJSPSearchFacet;
 import com.liferay.search.api.util.SearchFacet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -154,16 +155,20 @@ public class AssetEntriesSearchFacet extends BaseJSPSearchFacet {
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
 				companyId);
 
-		String[] assetTypes = new String[assetRendererFactories.size()];
+		List<String> assetTypes = new ArrayList<>();
 
 		for (int i = 0; i < assetRendererFactories.size(); i++) {
 			AssetRendererFactory<?> assetRendererFactory =
 				assetRendererFactories.get(i);
 
-			assetTypes[i] = assetRendererFactory.getClassName();
+			if (!assetRendererFactory.isSearchable()) {
+				continue;
+			}
+
+			assetTypes.add(assetRendererFactory.getClassName());
 		}
 
-		return assetTypes;
+		return ArrayUtil.toStringArray(assetTypes);
 	}
 
 }

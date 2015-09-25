@@ -823,7 +823,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 			long groupId = jsonObject.getLong("groupId");
 
-			String layoutId = jsonObject.getString("layoutId");
+			long layoutId = jsonObject.getLong("layoutId");
 
 			boolean privateLayout = jsonObject.getBoolean("privateLayout");
 

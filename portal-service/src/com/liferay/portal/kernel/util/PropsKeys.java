@@ -513,6 +513,10 @@ public interface PropsKeys {
 
 	public static final String DEFAULT_LOGOUT_PAGE_PATH = "default.logout.page.path";
 
+	public static final String DEFAULT_PORTLET_DECORATOR_CSS_CLASS = "default.portlet.decorator.css.class";
+
+	public static final String DEFAULT_PORTLET_DECORATOR_ID = "default.portlet.decorator.id";
+
 	public static final String DEFAULT_REGULAR_COLOR_SCHEME_ID = "default.regular.color.scheme.id";
 
 	public static final String DEFAULT_REGULAR_THEME_ID = "default.regular.theme.id";

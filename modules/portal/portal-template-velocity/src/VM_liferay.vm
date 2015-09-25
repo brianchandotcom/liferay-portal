@@ -1,5 +1,5 @@
-#macro (breadcrumbs)
-	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", $portletProviderAction.VIEW)
+#macro (breadcrumbs $default_preferences)
+	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.BreadcrumbEntry", $portletProviderAction.VIEW, "", $!default_preferences)
 #end
 
 #macro (control_menu)
@@ -33,8 +33,8 @@ $languageUtil.get($locale, $lang_key)#end
 #macro (language_format $lang_key $arguments)
 $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 
-#macro (languages)
-	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry", $portletProviderAction.VIEW)
+#macro (languages $default_preferences)
+	$theme.runtime("com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry", $portletProviderAction.VIEW, "", $!default_preferences)
 #end
 
 #macro (menu $menu)
@@ -45,8 +45,8 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	$menu_tag.runTag()
 #end
 
-#macro (navigation_menu)
-	$theme.runtime("com.liferay.portal.theme.NavItem", $portletProviderAction.VIEW)
+#macro (navigation_menu $default_preferences)
+	$theme.runtime("com.liferay.portal.theme.NavItem", $portletProviderAction.VIEW, "", $!default_preferences)
 #end
 
 #macro (product_menu)
@@ -77,9 +77,9 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	#set ($foo = $foo)
 #end
 
-#macro (search)
+#macro (search $default_preferences)
 	#if ($is_setup_complete)
-		$theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", $portletProviderAction.VIEW)
+		$theme.runtime("com.liferay.portlet.admin.util.PortalSearchApplicationType$Search", $portletProviderAction.VIEW, "", $!default_preferences)
 	#end
 #end
 

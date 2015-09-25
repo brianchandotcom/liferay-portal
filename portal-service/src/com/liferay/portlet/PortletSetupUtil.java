@@ -107,13 +107,13 @@ public class PortletSetupUtil {
 
 		boolean useCustomTitle = GetterUtil.getBoolean(
 			portletSetup.getValue("portletSetupUseCustomTitle", null));
-		String showBorders = GetterUtil.getString(
-			portletSetup.getValue("portletSetupShowBorders", null));
+		String portletDecoratorId = GetterUtil.getString(
+			portletSetup.getValue("portletSetupPortletDecoratorId", null));
 		String linkToLayoutUuid = GetterUtil.getString(
 			portletSetup.getValue("portletSetupLinkToLayoutUuid", null));
 
 		portletDataJSONObject.put("useCustomTitle", useCustomTitle);
-		portletDataJSONObject.put("showBorders", showBorders);
+		portletDataJSONObject.put("portletDecoratorId", portletDecoratorId);
 		portletDataJSONObject.put("portletLinksTarget", linkToLayoutUuid);
 
 		return cssJSONObject;

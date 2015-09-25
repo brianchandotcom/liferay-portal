@@ -1,0 +1,16 @@
+.portlet-decorate .portlet-content {
+	background: #FFF;
+	border: 1px solid #DEEEEE;
+}
+
+.portlet-barebone {
+	position: relative;
+
+	.portlet-content {
+		padding: 0;
+	}
+
+	.portlet-topper {
+		z-index: 1;
+	}
+}

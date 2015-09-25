@@ -120,33 +120,6 @@ public class SAPPortlet extends MVCPortlet {
 		writer.write(jsonArray.toString());
 	}
 
-	public void getServices(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws IOException {
-
-		Set<String> contextNames =
-			_jsonWebServiceActionsManager.getContextNames();
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (String contextName : contextNames) {
-			Map<String, Set> jsonWebServiceClasses = getJsonWebServiceClasses(
-				contextName);
-
-			for (String className : jsonWebServiceClasses.keySet()) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				jsonArray.put(jsonObject);
-
-				jsonObject.put("serviceClass", className);
-			}
-		}
-
-		PrintWriter writer = resourceResponse.getWriter();
-
-		writer.write(jsonArray.toString());
-	}
-
 	public void updateSAPEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

@@ -4756,7 +4756,6 @@ module.framework.properties.osgi.console=11312</echo>
 		<antcall target="prepare-selenium-database-properties" />
 		<antcall target="prepare-selenium-driver" />
 		<antcall target="prepare-selenium-email-properties" />
-		<antcall target="prepare-selenium-mobile-properties" />
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
 
@@ -4948,6 +4947,33 @@ module.framework.properties.osgi.console=11312</echo>
 			selenium.remote.driver.enabled=${selenium.remote.driver.enabled}
 			selenium.remote.driver.hub=${selenium.remote.driver.hub}
 		</echo>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="androidchrome" />
+			<then>
+				<exec executable="/bin/bash" outputproperty="mobile.device.name" os="${os.apple},${os.unix}">
+					<arg value="-c" />
+					<arg value="${mobile.android.home}/platform-tools/adb devices" />
+				</exec>
+
+				<propertyregex input="${mobile.device.name}" override="true" property="mobile.device.name" regexp=".*\n([A-z0-9]*)" select="\1" />
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<equals arg1="${browser.type}" arg2="android" />
+				<equals arg1="${browser.type}" arg2="androidchrome" />
+				<equals arg1="${browser.type}" arg2="iossafari" />
+			</or>
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					browser.type=${browser.type}
+					mobile.android.home=${mobile.android.home}
+					mobile.device.name=${mobile.device.name}
+				</echo>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-selenium-database-properties">
@@ -5469,35 +5495,6 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
 					marketplace.email.password.5=${marketplace.email.password.5}
-				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-mobile-properties">
-		<if>
-			<equals arg1="${browser.type}" arg2="androidchrome" />
-			<then>
-				<exec executable="/bin/bash" outputproperty="mobile.device.name" os="${os.apple},${os.unix}">
-					<arg value="-c" />
-					<arg value="${mobile.android.home}/platform-tools/adb devices" />
-				</exec>
-
-				<propertyregex input="${mobile.device.name}" override="true" property="mobile.device.name" regexp=".*\n([A-z0-9]*)" select="\1" />
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${browser.type}" arg2="android" />
-				<equals arg1="${browser.type}" arg2="androidchrome" />
-				<equals arg1="${browser.type}" arg2="iossafari" />
-			</or>
-			<then>
-				<echo append="true" file="${test.ext.properties.file}">
-					browser.type=${browser.type}
-					mobile.android.home=${mobile.android.home}
-					mobile.device.name=${mobile.device.name}
 				</echo>
 			</then>
 		</if>

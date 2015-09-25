@@ -205,12 +205,9 @@ if (Validator.isNotNull(languageId)) {
 				</div>
 
 				<div class="diff-container">
-
-					<%
-					request.setAttribute(WebKeys.DIFF_HTML_RESULTS, diffHtmlResults);
-					%>
-
-					<liferay-util:include page="/html/taglib/ui/diff_version_comparator/diff_html.jsp" />
+					<liferay-ui:diff-html
+						diffHtmlResults="<%= diffHtmlResults %>"
+					/>
 				</div>
 
 				<div class="legend-info">

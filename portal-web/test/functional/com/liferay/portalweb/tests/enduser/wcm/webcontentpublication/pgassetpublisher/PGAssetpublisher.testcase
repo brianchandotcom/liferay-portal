@@ -1142,8 +1142,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAPSelectMoreThanOnePG">
-			<var name="contentName" value="Bookmarks Entry" />
-			<var name="selectContent" value="${contentName}" />
+			<var name="selectContent" value="Bookmarks Entry" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1159,9 +1158,8 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureAPSelectMoreThanOnePG" >
-			<var name="contentName" value="Bookmarks Entry" />
 			<var name="moveSelected" value="true" />
-			<var name="selectContent" value="${contentName}" />
+			<var name="selectContent" value="Bookmarks Entry" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

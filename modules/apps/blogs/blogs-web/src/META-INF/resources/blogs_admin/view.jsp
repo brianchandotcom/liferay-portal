@@ -31,7 +31,7 @@ portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 		<aui:nav-item
 			href="<%= viewEntriesURL %>"
 			label="entries"
-			selected="<%= navigation.equals("entries") %>"
+			selected='<%= navigation.equals("entries") %>'
 		/>
 
 		<portlet:renderURL var="viewImagesURL">

@@ -231,11 +231,9 @@ public class RoleStagedModelDataHandler
 				}
 			}
 			catch (NoSuchResourceActionException nsrae) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Can't import ResourceAction " +
-							nsrae.getMessage() + " for " +
-								importedRole.getName() + " role");
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Individually scoped permissions are not imported");
 				}
 			}
 		}

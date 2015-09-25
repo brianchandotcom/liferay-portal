@@ -60,7 +60,7 @@
 							{
 								form: document.<portlet:namespace />fm,
 								namespace: '<portlet:namespace />',
-								url: '<portlet:actionURL><portlet:param name="mvcRenderCommandName" value="/admin/edit_server" /></portlet:actionURL>'
+								url: '<portlet:actionURL name="/admin/edit_server" />'
 							}
 						);
 					</aui:script>

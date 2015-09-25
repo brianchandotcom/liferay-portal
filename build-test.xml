@@ -4752,9 +4752,8 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<antcall target="prepare-selenium-app-server-properties" />
-		<antcall target="prepare-selenium-browser-properties" />
+		<antcall target="prepare-selenium-browser" />
 		<antcall target="prepare-selenium-database-properties" />
-		<antcall target="prepare-selenium-driver" />
 		<antcall target="prepare-selenium-email-properties" />
 		<antcall target="prepare-selenium-required-properties" />
 		<antcall target="prepare-selenium-testcase-properties" />
@@ -4934,19 +4933,9 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 	</target>
 
-	<target name="prepare-selenium-browser-properties">
+	<target name="prepare-selenium-browser">
 		<echo append="true" file="${test.ext.properties.file}">
 			browser.type=${browser.type}
-			mobile.android.home=${mobile.android.home}
-			selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
-			selenium.chrome.driver.version=${selenium.chrome.driver.version}
-			selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
-			selenium.desired.capabilities.version=${selenium.desired.capabilities.version}
-			selenium.executable.dir.name=${selenium.executable.dir.name}
-			selenium.ie.driver.executable=${selenium.ie.driver.executable}
-			selenium.ie.driver.version=${selenium.ie.driver.version}
-			selenium.remote.driver.enabled=${selenium.remote.driver.enabled}
-			selenium.remote.driver.hub=${selenium.remote.driver.hub}
 		</echo>
 
 		<if>
@@ -4956,7 +4945,10 @@ module.framework.properties.osgi.console=11312</echo>
 				<equals arg1="${browser.type}" arg2="iossafari" />
 			</or>
 			<then>
+				<start-appium />
+
 				<echo append="true" file="${test.ext.properties.file}">
+					mobile.android.home=${mobile.android.home}
 					mobile.browser=true
 				</echo>
 			</then>
@@ -4974,6 +4966,51 @@ module.framework.properties.osgi.console=11312</echo>
 
 				<echo append="true" file="${test.ext.properties.file}">
 					mobile.device.name=${mobile.device.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="chrome" />
+			<then>
+				<prepare-chrome-driver />
+
+				<echo append="true" file="${test.ext.properties.file}">
+					selenium.chrome.driver.executable=${selenium.chrome.driver.executable}
+					selenium.chrome.driver.version=${selenium.chrome.driver.version}
+					selenium.executable.dir.name=${selenium.executable.dir.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="internetexplorer" />
+			<then>
+				<prepare-ie-driver />
+
+				<echo append="true" file="${test.ext.properties.file}">
+					selenium.ie.driver.executable=${selenium.ie.driver.executable}
+					selenium.ie.driver.version=${selenium.ie.driver.version}
+					selenium.executable.dir.name=${selenium.executable.dir.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${browser.type}" arg2="safari" />
+			<then>
+				<prepare-safari-driver />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${selenium.remote.driver.enabled}" arg2="true" />
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					selenium.desired.capabilities.platform=${selenium.desired.capabilities.platform}
+					selenium.desired.capabilities.version=${selenium.desired.capabilities.version}
+					selenium.remote.driver.enabled=${selenium.remote.driver.enabled}
+					selenium.remote.driver.hub=${selenium.remote.driver.hub}
 				</echo>
 			</then>
 		</if>
@@ -5202,40 +5239,6 @@ module.framework.properties.osgi.console=11312</echo>
 				<echo append="true" file="${test.ext.properties.file}">
 					database.type=${database.type}
 				</echo>
-			</then>
-		</if>
-	</target>
-
-	<target name="prepare-selenium-driver">
-		<if>
-			<equals arg1="${browser.type}" arg2="chrome" />
-			<then>
-				<prepare-chrome-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="internetexplorer" />
-			<then>
-				<prepare-ie-driver />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${browser.type}" arg2="safari" />
-			<then>
-				<prepare-safari-driver />
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<equals arg1="${browser.type}" arg2="android" />
-				<equals arg1="${browser.type}" arg2="androidchrome" />
-				<equals arg1="${browser.type}" arg2="iossafari" />
-			</or>
-			<then>
-				<start-appium />
 			</then>
 		</if>
 	</target>

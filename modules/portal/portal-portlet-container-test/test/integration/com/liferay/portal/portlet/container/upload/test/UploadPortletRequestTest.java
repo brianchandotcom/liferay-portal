@@ -1169,7 +1169,14 @@ public class UploadPortletRequestTest {
 			for (Map.Entry<String, FileItem[]> entry :
 					fileParameters.entrySet()) {
 
-				Assert.assertTrue(parameterNamesList.contains(entry.getKey()));
+				Assert.assertFalse(parameterNamesList.contains(entry.getKey()));
+
+				String fileParameter = entry.getKey();
+
+				fileParameter = fileParameter.substring(
+					_portletNamespace.length(), fileParameter.length());
+
+				Assert.assertTrue(parameterNamesList.contains(fileParameter));
 			}
 
 			Assert.assertTrue(parameterNamesList.contains(parameter));

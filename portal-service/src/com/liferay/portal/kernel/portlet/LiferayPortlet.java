@@ -457,6 +457,22 @@ public class LiferayPortlet extends GenericPortlet {
 			sessionMessagesSize--;
 		}
 
+		if (SessionMessages.contains(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE)) {
+
+			sessionMessagesSize--;
+		}
+
+		if (SessionMessages.contains(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE)) {
+
+			sessionMessagesSize--;
+		}
+
 		if (sessionMessagesSize == 0) {
 			return true;
 		}

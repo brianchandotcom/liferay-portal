@@ -118,7 +118,7 @@
 		<execute function="AssertClick" locator1="MenuItem#MANAGE_TEMPLATES" value1="Manage Templates" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlTemplateName}" />
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
 		<execute function="Check" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
 		<execute function="Click" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />

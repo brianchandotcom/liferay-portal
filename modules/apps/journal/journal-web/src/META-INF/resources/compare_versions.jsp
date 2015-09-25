@@ -49,13 +49,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "compare-versions"));
 	<portlet:param name="articleId" value="<%= articleId %>" />
 </liferay-portlet:resourceURL>
 
-<liferay-ui:diff-version-comparator
-	availableLocales="<%= availableLocales %>"
-	diffHtmlResults="<%= diffHtmlResults %>"
-	diffVersionsInfo="<%= JournalUtil.getDiffVersionsInfo(groupId, articleId, sourceVersion, targetVersion) %>"
-	languageId="<%= languageId %>"
-	portletURL="<%= portletURL %>"
-	resourceURL="<%= resourceURL %>"
-	sourceVersion="<%= sourceVersion %>"
-	targetVersion="<%= targetVersion %>"
-/>
+<div class="container-fluid-1280">
+	<liferay-ui:diff-version-comparator
+		availableLocales="<%= availableLocales %>"
+		diffHtmlResults="<%= diffHtmlResults %>"
+		diffVersionsInfo="<%= JournalUtil.getDiffVersionsInfo(groupId, articleId, sourceVersion, targetVersion) %>"
+		languageId="<%= languageId %>"
+		portletURL="<%= portletURL %>"
+		resourceURL="<%= resourceURL %>"
+		sourceVersion="<%= sourceVersion %>"
+		targetVersion="<%= targetVersion %>"
+	/>
+</div>

@@ -257,7 +257,7 @@ public class UploadPortletTest extends BasePortletContainerTestCase {
 		registerMVCActionCommand(new TestUploadMVCActionCommand());
 
 		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.mockLiferayServletRequest(
+			PortletContainerTestUtil.getMultipartRequest(
 				TestUploadPortlet.TEST_UPLOAD_FILE_NAME_PARAMETER, bytes);
 
 		_addGroupAndLayoutToServletRequest(liferayServletRequest, layout);

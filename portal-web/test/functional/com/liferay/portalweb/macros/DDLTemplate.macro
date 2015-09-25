@@ -120,7 +120,7 @@
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlTemplateName}" />
 		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
 		<execute function="Check" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ALL_CHECKBOX" />
-		<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
+		<execute function="Click" locator1="Icon#DELETE" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 

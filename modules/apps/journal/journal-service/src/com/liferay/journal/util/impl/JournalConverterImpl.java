@@ -487,10 +487,10 @@ public class JournalConverterImpl implements JournalConverter {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			if (values.length > 2) {
-				jsonObject.put("groupId", values[2]);
+				jsonObject.put("groupId", GetterUtil.getLong(values[2]));
 			}
 
-			jsonObject.put("layoutId", values[0]);
+			jsonObject.put("layoutId", GetterUtil.getLong(values[0]));
 
 			if (values[1].equals("public")) {
 				jsonObject.put("privateLayout", false);

@@ -70,10 +70,9 @@ public class UploadPortletRequestTest {
 	public void setUp() throws Exception {
 		_portletNamespace = RandomTestUtil.randomString();
 
-		InputStream inputStream = getClass().getResourceAsStream(
-			_TXT_DEPENDENCY);
+		Class<? extends UploadPortletRequestTest> clazz = getClass();
 
-		_bytes = FileUtil.getBytes(inputStream);
+		_bytes = FileUtil.getBytes(clazz.getResourceAsStream(_TXT_DEPENDENCY));
 	}
 
 	@Test
@@ -170,27 +169,6 @@ public class UploadPortletRequestTest {
 	}
 
 	@Test
-	public void testCleanUpShouldNotFailFromMainConstructor() throws Exception {
-		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.getMultipartRequest(
-				_portletNamespace, _bytes);
-
-		UploadPortletRequest uploadPortletRequest =
-			new UploadPortletRequestImpl(
-				new UploadServletRequestImpl(
-					(HttpServletRequest)liferayServletRequest.getRequest()),
-				null, _portletNamespace);
-
-		uploadPortletRequest.cleanUp();
-
-		Map<String, FileItem[]> multipartParameterMap =
-			uploadPortletRequest.getMultipartParameterMap();
-
-		Assert.assertNotNull(multipartParameterMap);
-		Assert.assertEquals(0, multipartParameterMap.size());
-	}
-
-	@Test
 	public void testCleanUpShouldNotRemoveMultipartParameters()
 		throws Exception {
 
@@ -209,39 +187,13 @@ public class UploadPortletRequestTest {
 					fileParameters, new HashMap<String, List<String>>()), null,
 				_portletNamespace);
 
-		try {
-			uploadPortletRequest.cleanUp();
-		}
-		catch (NullPointerException npe) {
-
-			// the _liferayServletRequest is null!
-
-		}
+		uploadPortletRequest.cleanUp();
 
 		Map<String, FileItem[]> multipartParameterMap =
 			uploadPortletRequest.getMultipartParameterMap();
 
 		Assert.assertNotNull(multipartParameterMap);
 		Assert.assertEquals(1, multipartParameterMap.size());
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void testCleanUpShouldThrowNPEIfUsedAfterConstructor()
-		throws Exception {
-
-		LiferayServletRequest liferayServletRequest =
-			PortletContainerTestUtil.getMultipartRequest(
-				_portletNamespace, _bytes);
-
-		UploadPortletRequest uploadPortletRequest =
-			new UploadPortletRequestImpl(
-				new UploadServletRequestImpl(
-					(HttpServletRequest)liferayServletRequest.getRequest(),
-					new HashMap<String, FileItem[]>(),
-					new HashMap<String, List<String>>()), null,
-				_portletNamespace);
-
-		uploadPortletRequest.cleanUp();
 	}
 
 	@Test

@@ -222,6 +222,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		actionRequest.setAttribute(
 			WebKeys.REDIRECT, siteAdministrationURL.toString());
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	public void editGroupAssignments(

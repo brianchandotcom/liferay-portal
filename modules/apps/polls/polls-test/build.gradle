@@ -1,4 +1,6 @@
 dependencies {
+	compile project(":apps:export-import:export-import-api")
+	compile project(":apps:export-import:export-import-service")
 	compile project(":apps:polls:polls-service")
 
 	testCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.0-SNAPSHOT"

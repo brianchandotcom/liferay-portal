@@ -48,6 +48,7 @@ import com.liferay.portlet.expando.util.test.ExpandoTestUtil;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.exception.NodeChangeException;
+import com.liferay.wiki.exception.PageTitleException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
@@ -85,6 +86,30 @@ public class WikiPageLocalServiceTest {
 		_group = GroupTestUtil.addGroup();
 
 		_node = WikiTestUtil.addNode(_group.getGroupId());
+	}
+
+	@Test
+	public void testAddPageWithInvalidTitle() throws Exception {
+		char[] invalidCharacters = "\\[]|:;%<>".toCharArray();
+
+		for (char invalidCharacter : invalidCharacters) {
+			try {
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId());
+
+				WikiTestUtil.addPage(
+					TestPropsValues.getUserId(), _node.getNodeId(),
+					"ChildPage" + invalidCharacter,
+					RandomTestUtil.randomString(), true, serviceContext);
+
+				Assert.fail(
+					"WikiPage created with invalid character " +
+						invalidCharacter + " in the title");
+			}
+			catch (PageTitleException pte) {
+			}
+		}
 	}
 
 	@Test

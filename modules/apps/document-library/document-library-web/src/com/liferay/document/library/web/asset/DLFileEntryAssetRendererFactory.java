@@ -73,6 +73,7 @@ public class DLFileEntryAssetRendererFactory
 	public DLFileEntryAssetRendererFactory() {
 		setLinkable(true);
 		setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
+		setSearchable(true);
 		setSupportsClassTypes(true);
 	}
 

@@ -63,6 +63,7 @@ public class WikiPageAssetRendererFactory
 		setClassName(WikiPage.class.getName());
 		setLinkable(true);
 		setPortletId(WikiPortletKeys.WIKI);
+		setSearchable(true);
 	}
 
 	@Override

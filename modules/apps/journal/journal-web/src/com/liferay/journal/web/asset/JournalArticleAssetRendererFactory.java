@@ -75,6 +75,7 @@ public class JournalArticleAssetRendererFactory
 		setClassName(JournalArticle.class.getName());
 		setLinkable(true);
 		setPortletId(JournalPortletKeys.JOURNAL);
+		setSearchable(true);
 		setSupportsClassTypes(true);
 	}
 

@@ -57,6 +57,7 @@ public class JournalFolderAssetRendererFactory
 		setCategorizable(false);
 		setClassName(JournalFolder.class.getName());
 		setPortletId(JournalPortletKeys.JOURNAL);
+		setSearchable(true);
 	}
 
 	@Override

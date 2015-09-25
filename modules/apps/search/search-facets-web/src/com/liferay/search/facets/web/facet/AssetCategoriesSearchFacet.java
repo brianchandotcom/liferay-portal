@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.search.web.facet;
+package com.liferay.search.facets.web.facet;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
+public class AssetCategoriesSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/facets/configuration/asset_tags.jsp";
+		return "/configuration/asset_categories.jsp";
 	}
 
 	@Override
@@ -60,14 +60,14 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 		facetConfiguration.setLabel(getLabel());
 		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
-		facetConfiguration.setWeight(1.4);
+		facetConfiguration.setWeight(1.3);
 
 		return facetConfiguration;
 	}
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/facets/view/asset_tags.jsp";
+		return "/view/asset_categories.jsp";
 	}
 
 	public String getFacetClassName() {
@@ -76,7 +76,7 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getFieldName() {
-		return Field.ASSET_TAG_NAMES;
+		return Field.ASSET_CATEGORY_IDS;
 	}
 
 	@Override
@@ -102,17 +102,17 @@ public class AssetTagsSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getLabel() {
-		return "any-tag";
+		return "any-category";
 	}
 
 	@Override
 	public String getTitle() {
-		return "tag";
+		return "category";
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.search.facets.web)", unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);

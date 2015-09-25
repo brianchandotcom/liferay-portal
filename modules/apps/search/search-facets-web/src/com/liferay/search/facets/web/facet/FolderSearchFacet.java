@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.search.web.facet;
+package com.liferay.search.facets.web.facet;
 
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.facet.ModifiedFacet;
+import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.search.api.facet.BaseJSPSearchFacet;
 import com.liferay.search.api.util.SearchFacet;
 
@@ -36,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = SearchFacet.class)
-public class ModifiedSearchFacet extends BaseJSPSearchFacet {
+public class FolderSearchFacet extends BaseJSPSearchFacet {
 
 	@Override
 	public String getConfigurationJspPath() {
-		return "/facets/configuration/modified.jsp";
+		return "/configuration/folders.jsp";
 	}
 
 	@Override
@@ -51,43 +49,34 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("frequencyThreshold", 0);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (int i = 0; i < _LABELS.length; i++) {
-			JSONObject range = JSONFactoryUtil.createJSONObject();
-
-			range.put("label", _LABELS[i]);
-			range.put("range", _RANGES[i]);
-
-			jsonArray.put(range);
-		}
-
-		jsonObject.put("ranges", jsonArray);
+		jsonObject.put("frequencyThreshold", 1);
+		jsonObject.put("maxTerms", 10);
+		jsonObject.put("showAssetCount", true);
 
 		facetConfiguration.setDataJSONObject(jsonObject);
+
 		facetConfiguration.setFieldName(getFieldName());
 		facetConfiguration.setLabel(getLabel());
 		facetConfiguration.setOrder(getOrder());
 		facetConfiguration.setStatic(false);
-		facetConfiguration.setWeight(1.0);
+		facetConfiguration.setWeight(1.2);
 
 		return facetConfiguration;
 	}
 
 	@Override
 	public String getDisplayJspPath() {
-		return "/facets/view/modified.jsp";
+		return "/view/folders.jsp";
 	}
 
+	@Override
 	public String getFacetClassName() {
-		return ModifiedFacet.class.getName();
+		return MultiValueFacet.class.getName();
 	}
 
 	@Override
 	public String getFieldName() {
-		return Field.MODIFIED_DATE;
+		return Field.FOLDER_ID;
 	}
 
 	@Override
@@ -96,59 +85,34 @@ public class ModifiedSearchFacet extends BaseJSPSearchFacet {
 
 		int frequencyThreshold = ParamUtil.getInteger(
 			actionRequest, getClassName() + "frequencyThreshold", 1);
+		int maxTerms = ParamUtil.getInteger(
+			actionRequest, getClassName() + "maxTerms", 10);
+		boolean showAssetCount = ParamUtil.getBoolean(
+			actionRequest, getClassName() + "showAssetCount", true);
 
 		jsonObject.put("frequencyThreshold", frequencyThreshold);
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		String[] rangesIndexes = StringUtil.split(
-			ParamUtil.getString(
-				actionRequest, getClassName() + "rangesIndexes"));
-
-		for (String rangesIndex : rangesIndexes) {
-			JSONObject rangeJSONObject = JSONFactoryUtil.createJSONObject();
-
-			String label = ParamUtil.getString(
-				actionRequest, getClassName() + "label_" + rangesIndex);
-			String range = ParamUtil.getString(
-				actionRequest, getClassName() + "range_" + rangesIndex);
-
-			rangeJSONObject.put("label", label);
-			rangeJSONObject.put("range", range);
-
-			jsonArray.put(rangeJSONObject);
-		}
-
-		jsonObject.put("ranges", jsonArray);
+		jsonObject.put("maxTerms", maxTerms);
+		jsonObject.put("showAssetCount", showAssetCount);
 
 		return jsonObject;
 	}
 
 	@Override
 	public String getLabel() {
-		return "any-time";
+		return "any-folder";
 	}
 
 	@Override
 	public String getTitle() {
-		return "modified-date";
+		return "folder";
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
+		target = "(osgi.web.symbolicname=com.liferay.search.facets.web)", unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String[] _LABELS = new String[] {
-		"past-hour", "past-24-hours", "past-week", "past-month", "past-year"
-	};
-
-	private static final String[] _RANGES = new String[] {
-		"[past-hour TO *]", "[past-24-hours TO *]", "[past-week TO *]",
-		"[past-month TO *]", "[past-year TO *]"
-	};
 
 }

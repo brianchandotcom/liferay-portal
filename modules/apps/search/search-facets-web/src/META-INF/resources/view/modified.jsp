@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/facets/init.jsp" %>
+<%@ include file="/view/init.jsp" %>
 
 <%
 String fieldParamSelection = ParamUtil.getString(request, facet.getFieldId() + "selection", "0");

@@ -61,6 +61,7 @@ public class BookmarksEntryAssetRendererFactory
 		setClassName(BookmarksEntry.class.getName());
 		setLinkable(true);
 		setPortletId(BookmarksPortletKeys.BOOKMARKS);
+		setSearchable(true);
 	}
 
 	@Override

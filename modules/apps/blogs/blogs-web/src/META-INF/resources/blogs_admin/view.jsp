@@ -22,6 +22,7 @@ String navigation = ParamUtil.getString(request, "navigation", "entries");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
+portletURL.setParameter("navigation", navigation);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

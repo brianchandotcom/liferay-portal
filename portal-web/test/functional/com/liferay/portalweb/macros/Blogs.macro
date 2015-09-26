@@ -566,7 +566,7 @@
 	</command>
 
 	<command name="viewNoEntryCP">
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found." />
+		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No entries were found." />
 	</command>
 
 	<command name="viewNoPermissionCP">

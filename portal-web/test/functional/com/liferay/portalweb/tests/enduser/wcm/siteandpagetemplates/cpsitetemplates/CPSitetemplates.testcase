@@ -99,7 +99,7 @@
 	</command>
 
 	<command name="LocalizeDefaultSiteTemplates" priority="4">
-		<execute macro="ProductMenu#gotoSitesAdministration">
+		<execute macro="ProductMenu#gotoControlPanelSites">
 			<var name="portlet" value="Site Templates" />
 		</execute>
 
@@ -119,10 +119,10 @@
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="ProductMenu#gotoLocalizedSitesAdministration">
-			<var name="category" value="Administración" />
+		<execute macro="ProductMenu#gotoLocalizedControlPanel">
+			<var name="category" value="Sitios web" />
 			<var name="portlet" value="Plantillas de sitio web" />
-			<var name="tab" value="Sitios Web" />
+			<var name="tab" value="Panel de control" />
 		</execute>
 
 		<execute macro="SiteTemplates#viewDefaultDataLocalizedCP">

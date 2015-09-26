@@ -267,7 +267,7 @@
 		<if>
 			<equals arg1="${nullResult}" arg2="true" />
 			<then>
-				<execute function="AssertTextEquals" locator1="Message#INFO" value1="There are no vocabularies." />
+				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no vocabularies." />
 			</then>
 		</if>
 	</command>

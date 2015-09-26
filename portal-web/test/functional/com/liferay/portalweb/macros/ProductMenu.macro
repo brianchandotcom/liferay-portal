@@ -23,6 +23,18 @@
 		</execute>
 	</command>
 
+	<command name="gotoControlPanelSites" summary="Navigate to Product Menu > Control Panel > Sites > ${portlet}.">
+		<execute macro="ProductMenuHelper#gotoControlPanel" />
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Sites" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#gotoPortlet">
+			<var name="portlet" value="${portlet}" />
+		</execute>
+	</command>
+
 	<command name="gotoControlPanelUsers" summary="Navigate to Product Menu > Control Panel > Users > ${portlet}.">
 		<execute macro="ProductMenuHelper#gotoControlPanel" />
 

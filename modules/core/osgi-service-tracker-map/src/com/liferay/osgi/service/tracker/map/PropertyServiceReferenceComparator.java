@@ -14,6 +14,8 @@
 
 package com.liferay.osgi.service.tracker.map;
 
+import java.io.Serializable;
+
 import java.util.Comparator;
 
 import org.osgi.framework.ServiceReference;
@@ -22,7 +24,7 @@ import org.osgi.framework.ServiceReference;
  * @author Carlos Sierra Andrés
  */
 public class PropertyServiceReferenceComparator<T>
-	implements Comparator<ServiceReference<T>> {
+	implements Comparator<ServiceReference<T>>, Serializable {
 
 	public PropertyServiceReferenceComparator(String propertyKey) {
 		_propertyKey = propertyKey;
@@ -60,14 +62,14 @@ public class PropertyServiceReferenceComparator<T>
 			return -1;
 		}
 
-		if (!(propertyValue1 instanceof Comparable)) {
-			return -(serviceReference1.compareTo(serviceReference2));
+		if (!(propertyValue2 instanceof Comparable)) {
+			return serviceReference2.compareTo(serviceReference1);
 		}
 
-		Comparable<Object> propertyValueComparable1 =
-			(Comparable<Object>)propertyValue1;
+		Comparable<Object> propertyValueComparable2 =
+			(Comparable<Object>)propertyValue2;
 
-		return -(propertyValueComparable1.compareTo(propertyValue2));
+		return propertyValueComparable2.compareTo(propertyValue1);
 	}
 
 	private final String _propertyKey;

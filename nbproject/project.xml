@@ -265,12 +265,10 @@
 				<classpath mode="compile">lib/development/dtdparser.jar</classpath>
 				<classpath mode="compile">lib/development/dumbster.jar</classpath>
 				<classpath mode="compile">lib/development/error-prone-ant.jar</classpath>
-				<classpath mode="compile">lib/development/firebird.jar</classpath>
 				<classpath mode="compile">lib/development/gson.jar</classpath>
 				<classpath mode="compile">lib/development/hamcrest-core.jar</classpath>
 				<classpath mode="compile">lib/development/hamcrest-library.jar</classpath>
 				<classpath mode="compile">lib/development/hsql.jar</classpath>
-				<classpath mode="compile">lib/development/interbase.jar</classpath>
 				<classpath mode="compile">lib/development/j2h.jar</classpath>
 				<classpath mode="compile">lib/development/jalopy.jar</classpath>
 				<classpath mode="compile">lib/development/jargs.jar</classpath>
@@ -314,7 +312,6 @@
 				<classpath mode="compile">lib/development/powermock-reflect.jar</classpath>
 				<classpath mode="compile">lib/development/qdox.jar</classpath>
 				<classpath mode="compile">lib/development/resin.jar</classpath>
-				<classpath mode="compile">lib/development/sap.jar</classpath>
 				<classpath mode="compile">lib/development/saxpath.jar</classpath>
 				<classpath mode="compile">lib/development/script-10.jar</classpath>
 				<classpath mode="compile">lib/development/sdk-addon-api-0.2.jar</classpath>

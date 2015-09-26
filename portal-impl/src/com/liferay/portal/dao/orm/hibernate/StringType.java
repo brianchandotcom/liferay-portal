@@ -105,6 +105,10 @@ public class StringType implements CompositeUserType, Serializable {
 			SessionImplementor session)
 		throws SQLException {
 
+		if ((target instanceof String) && ((String)target).isEmpty()) {
+			target = null;
+		}
+
 		StandardBasicTypes.STRING.nullSafeSet(ps, target, index, session);
 	}
 

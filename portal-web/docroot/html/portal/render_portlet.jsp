@@ -735,17 +735,13 @@ if (group.isControlPanel()) {
 	}
 }
 
-// Portlet decorate
+// Portlet decorator
 
-boolean portletDecorateDefault = GetterUtil.getBoolean(themeDisplay.getThemeSetting("portlet-setup-show-borders-default"), PropsValues.THEME_PORTLET_DECORATE_DEFAULT);
+String portletDecoratorId = portletSetup.getValue("portletSetupPortletDecoratorId", StringPool.BLANK);
 
-boolean portletDecorate = GetterUtil.getBoolean(portletSetup.getValue("portletSetupShowBorders", String.valueOf(portletDecorateDefault)));
+Theme selTheme = layout.getTheme();
 
-Boolean portletDecorateObj = (Boolean)renderRequestImpl.getAttribute(WebKeys.PORTLET_DECORATE);
-
-if (portletDecorateObj != null) {
-	portletDecorate = portletDecorateObj.booleanValue();
-}
+PortletDecorator portletDecorator = ThemeLocalServiceUtil.getPortletDecorator(company.getCompanyId(), selTheme.getThemeId(), portletDecoratorId);
 
 // Make sure the Tiles context is reset for the next portlet
 
@@ -855,8 +851,10 @@ Boolean renderPortletBoundary = GetterUtil.getBoolean(request.getAttribute(WebKe
 		}
 	}
 
-	if (!portletDecorate) {
-		cssClasses += " portlet-borderless";
+	if (portletDecorator != null) {
+		portletDisplay.setPortletDecoratorId(portletDecorator.getPortletDecoratorId());
+
+		cssClasses += StringPool.SPACE + portletDecorator.getCssClass();
 	}
 
 	cssClasses = "portlet-boundary portlet-boundary" + HtmlUtil.escapeAttribute(PortalUtil.getPortletNamespace(rootPortletId)) + StringPool.SPACE + cssClasses + StringPool.SPACE + portlet.getCssClassWrapper() + StringPool.SPACE + HtmlUtil.escapeAttribute(customCSSClassName);
@@ -1014,7 +1012,7 @@ else {
 <aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
 	Liferay.Portlet.onLoad(
 		{
-			canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
+			canEditTitle: <%= showConfigurationIcon %>,
 			columnPos: <%= columnPos %>,
 			isStatic: '<%= staticVar %>',
 			namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',

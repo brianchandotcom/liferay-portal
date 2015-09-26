@@ -1,4 +1,5 @@
 @import "custom_responsive";
+@import "portlet_decorator";
 
 $bg-color: #F5F7F8;
 $solid-color: #47647A;
@@ -165,7 +166,7 @@ body {
 }
 
 .add-page-editor {
-	margin-top: 20px;
+	margin-top: 20px 0;
 
 	.btn {
 		padding: 3px 10px;

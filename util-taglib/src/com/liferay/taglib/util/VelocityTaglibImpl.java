@@ -978,6 +978,18 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
+	public void runtime(
+			String portletProviderClassName,
+			PortletProvider.Action portletProviderAction, String instanceId,
+			String defaultPreferences)
+		throws Exception {
+
+		RuntimeTag.doTag(
+			portletProviderClassName, portletProviderAction, instanceId, null,
+			defaultPreferences, _pageContext, _request, _response);
+	}
+
+	@Override
 	public void runtime(String portletName, String queryString)
 		throws Exception {
 

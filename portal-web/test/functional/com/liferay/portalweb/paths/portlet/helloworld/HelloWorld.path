@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>PORTLET_TITLE</td>
-	<td>//section[@id='portlet_47']//h1[@class='portlet-title']/span</td>
+	<td>//section[@id='portlet_47']//h2[contains(@class,'portlet-title')]</td>
 	<td></td>
 </tr>
 <tr>

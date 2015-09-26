@@ -38,6 +38,13 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.model.PortletDecorator fetchPortletDecorator(
+		long companyId, java.lang.String themeId, java.lang.String colorSchemeId) {
+		return _themeLocalService.fetchPortletDecorator(companyId, themeId,
+			colorSchemeId);
+	}
+
+	@Override
 	public com.liferay.portal.model.Theme fetchTheme(long companyId,
 		java.lang.String themeId) {
 		return _themeLocalService.fetchTheme(companyId, themeId);
@@ -73,6 +80,14 @@ public class ThemeLocalServiceWrapper implements ThemeLocalService,
 		long companyId, long groupId, long userId, boolean wapTheme) {
 		return _themeLocalService.getPageThemes(companyId, groupId, userId,
 			wapTheme);
+	}
+
+	@Override
+	public com.liferay.portal.model.PortletDecorator getPortletDecorator(
+		long companyId, java.lang.String themeId,
+		java.lang.String portletDecoratorId) {
+		return _themeLocalService.getPortletDecorator(companyId, themeId,
+			portletDecoratorId);
 	}
 
 	@Override

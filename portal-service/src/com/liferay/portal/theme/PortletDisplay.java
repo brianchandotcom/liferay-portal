@@ -69,6 +69,8 @@ public class PortletDisplay implements Serializable {
 		_modePrint = master.isModePrint();
 		_modeView = master.isModeView();
 		_namespace = master.getNamespace();
+		_portletDecorate = master.isPortletDecorate();
+		_portletDecoratorId = master.getPortletDecoratorId();
 		_portletName = master.getPortletName();
 		_portletSetup = master.getPortletSetup();
 		_portletToolbar = master.getPortletToolbar();
@@ -136,6 +138,8 @@ public class PortletDisplay implements Serializable {
 		slave.setModePrint(_modePrint);
 		slave.setModeView(_modeView);
 		slave.setNamespace(_namespace);
+		slave.setPortletDecorate(_portletDecorate);
+		slave.setPortletDecoratorId(_portletDecoratorId);
 		slave.setPortletName(_portletName);
 		slave.setPortletResource(_portletResource);
 		slave.setPortletSetup(_portletSetup);
@@ -219,6 +223,10 @@ public class PortletDisplay implements Serializable {
 
 	public String getNamespace() {
 		return _namespace;
+	}
+
+	public String getPortletDecoratorId() {
+		return _portletDecoratorId;
 	}
 
 	public <T> T getPortletInstanceConfiguration(Class<T> clazz)
@@ -379,6 +387,10 @@ public class PortletDisplay implements Serializable {
 
 	public boolean isModeView() {
 		return _modeView;
+	}
+
+	public boolean isPortletDecorate() {
+		return _portletDecorate;
 	}
 
 	public boolean isRestoreCurrentView() {
@@ -631,6 +643,14 @@ public class PortletDisplay implements Serializable {
 		_namespace = namespace;
 	}
 
+	public void setPortletDecorate(boolean portletDecorate) {
+		_portletDecorate = portletDecorate;
+	}
+
+	public void setPortletDecoratorId(String portletDecoratorId) {
+		_portletDecoratorId = portletDecoratorId;
+	}
+
 	public void setPortletName(String portletName) {
 		_portletName = portletName;
 	}
@@ -853,6 +873,8 @@ public class PortletDisplay implements Serializable {
 	private boolean _modePrint;
 	private boolean _modeView;
 	private String _namespace = StringPool.BLANK;
+	private boolean _portletDecorate;
+	private String _portletDecoratorId = StringPool.BLANK;
 	private String _portletName = StringPool.BLANK;
 	private String _portletResource = StringPool.BLANK;
 	private PortletPreferences _portletSetup;

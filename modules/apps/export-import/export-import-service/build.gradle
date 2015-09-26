@@ -1,4 +1,7 @@
 dependencies {
+	compile group: "com.thoughtworks.xstream", name: "xstream", transitive: false, version: "1.4.5"
+	compile group: "commons-lang", name: "commons-lang", version: "2.6"
+	compile group: "org.jodd", name: "jodd-bean", transitive: false, version: "3.6.6"
 	compile group: "org.osgi", name: "org.osgi.compendium", version: "5.0.0"
 	compile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	compile project(":apps:export-import:export-import-api")

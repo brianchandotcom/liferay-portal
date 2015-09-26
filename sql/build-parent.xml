@@ -57,7 +57,6 @@
 
 	<target name="rebuild-all">
 		<antcall target="rebuild-db2" />
-		<antcall target="rebuild-firebird" />
 		<antcall target="rebuild-hypersonic" />
 		<antcall target="rebuild-mysql" />
 		<antcall target="rebuild-oracle" />
@@ -77,16 +76,6 @@
 			<param name="executable" value="${db2.executable}" />
 			<param name="arg.line" value="${db2.arg.line}" />
 			<param name="log" value="${db2.log}" />
-		</antcall>
-	</target>
-
-	<target name="rebuild-firebird">
-		<delete file="${database.name}.gdb" failonerror="false" />
-
-		<antcall target="rebuild-database">
-			<param name="executable" value="${firebird.executable}" />
-			<param name="arg.line" value="${firebird.arg.line}" />
-			<param name="log" value="${firebird.log}" />
 		</antcall>
 	</target>
 

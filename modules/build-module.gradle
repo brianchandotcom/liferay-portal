@@ -1,6 +1,4 @@
 import com.liferay.gradle.util.FileUtil
-import com.liferay.gradle.util.OSDetector
-import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
@@ -26,7 +24,12 @@ apply plugin: "findbugs"
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
-File moduleFrameworkBaseDir = new File(liferay.liferayHome, "osgi")
+
+boolean addPortalDependencies = true
+
+if (project.path.startsWith(":core:")) {
+	addPortalDependencies = false
+}
 
 distsDirName = FileUtil.relativize(rootProject.file("../tools/sdk/dist"), buildDir)
 group = "com.liferay"
@@ -55,15 +58,16 @@ afterEvaluate {
 		}
 	}
 
-	javadoc {
-		classpath = sourceSets.main.output + sourceSets.main.compileClasspath
+	if (addPortalDependencies) {
+		javadoc {
+			classpath = sourceSets.main.output + sourceSets.main.compileClasspath
+		}
 	}
 }
 
 buildCSS {
 	dependsOn ":frontend:frontend-common-css:buildCssCommon"
 	portalCommonDirName = relativePath(new File(rootDir, "frontend/frontend-common-css/tmp/META-INF/resources"))
-	sassCompilerClassName = project.properties["sass.compiler.class.name"]
 }
 
 buildService {
@@ -113,14 +117,6 @@ configurations {
 		extendsFrom configurations.runtime
 		extendsFrom portal
 	}
-
-	whenObjectAdded {
-		Configuration configuration ->
-
-		if (configuration.name == "portalToolsThumbnailBuilder") {
-			configuration.extendsFrom portal
-		}
-	}
 }
 
 if (FileUtil.exists(project, "docroot")) {
@@ -157,7 +153,9 @@ dependencies {
 	portalEclipse group: "javax.servlet.jsp", name: "jsp-api", version: "2.1"
 	portalEclipse group: "log4j", name: "log4j", version: "1.2.17"
 
-	portalTest fileTree(dir: new File(moduleFrameworkBaseDir, "test"), include: "portal-test*.jar")
+	portalTest group: "com.liferay.portal", name: "portal-test", version: liferay.portalVersion
+	portalTest group: "com.liferay.portal", name: "portal-test-internal", version: liferay.portalVersion
+
 	serviceBuilder fileTree(dir: rootProject.file("../tools/sdk/tmp/portal-tools"), include: "*.jar")
 	sourceFormatter group: "com.liferay", name: "com.liferay.source.formatter", version: "default"
 	tldFormatter group: "com.liferay", name: "com.liferay.tld.formatter", version: "default"
@@ -175,18 +173,25 @@ eclipse {
 				}
 			}
 
-			withXml {
-				Node node = it.asNode()
+			if (addPortalDependencies) {
+				withXml {
+					Node node = it.asNode()
 
-				node.appendNode "classpathentry", [kind: "src", path: "/portal-master"]
+					node.appendNode "classpathentry", [kind: "src", path: "/portal-master"]
 
-				["portal-service", "util-bridges", "util-java", "util-taglib"].each {
-					node.appendNode "classpathentry", [kind: "lib", path: "/portal-master/${it}/${it}.jar"]
+					["portal-service", "util-bridges", "util-java", "util-taglib"].each {
+						node.appendNode "classpathentry", [kind: "lib", path: "/portal-master/${it}/${it}.jar"]
+					}
 				}
 			}
 		}
 
-		plusConfigurations += [configurations.portalEclipse]
+		if (addPortalDependencies) {
+			plusConfigurations += [configurations.portalEclipse]
+		}
+		else {
+			plusConfigurations += [configurations.testIntegrationRuntime]
+		}
 	}
 }
 
@@ -232,8 +237,10 @@ repositories {
 }
 
 sourceSets {
-	main {
-		compileClasspath += configurations.portal
+	if (addPortalDependencies) {
+		main {
+			compileClasspath += configurations.portal
+		}
 	}
 
 	test {

@@ -304,6 +304,26 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testFindGroupByRole() throws Exception {
+		Group group = GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		long roleId = RoleTestUtil.addGroupRole(group.getGroupId());
+
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+
+		groupParams.put("groupsRoles", Long.valueOf(roleId));
+		groupParams.put("site", Boolean.TRUE);
+
+		int groupSearchCount = GroupLocalServiceUtil.searchCount(
+			TestPropsValues.getCompanyId(), null, groupParams);
+
+		int roleGroupsCount = GroupLocalServiceUtil.getRoleGroupsCount(roleId);
+
+		Assert.assertEquals(roleGroupsCount, groupSearchCount);
+	}
+
+	@Test
 	public void testFindGuestGroupByCompanyName() throws Exception {
 		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 

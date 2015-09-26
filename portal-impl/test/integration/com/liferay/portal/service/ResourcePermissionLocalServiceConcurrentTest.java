@@ -185,7 +185,7 @@ public class ResourcePermissionLocalServiceConcurrentTest {
 					@ExpectedLog(
 						dbType = DB.TYPE_SYBASE,
 						expectedLog = "Attempt to insert duplicate key row",
-						expectedType = ExpectedType.PREFIX
+						expectedType = ExpectedType.CONTAINS
 					)
 				},
 				level = "ERROR", loggerClass = JDBCExceptionReporter.class

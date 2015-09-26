@@ -224,10 +224,10 @@ public class DLFileEntryIndexer
 				DDMStructureManager.STRUCTURE_INDEXER_FIELD_SEPARATOR);
 
 			DDMStructure ddmStructure = DDMStructureManagerUtil.getStructure(
-				GetterUtil.getLong(ddmStructureFieldNameParts[1]));
+				GetterUtil.getLong(ddmStructureFieldNameParts[2]));
 
 			String fieldName = StringUtil.replaceLast(
-				ddmStructureFieldNameParts[2],
+				ddmStructureFieldNameParts[3],
 				StringPool.UNDERLINE.concat(
 					LocaleUtil.toLanguageId(searchContext.getLocale())),
 				StringPool.BLANK);

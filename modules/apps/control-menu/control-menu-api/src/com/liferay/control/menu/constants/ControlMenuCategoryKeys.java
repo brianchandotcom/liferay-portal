@@ -12,15 +12,19 @@
  * details.
  */
 
-package com.liferay.product.navigation.control.menu.web.constants;
+package com.liferay.control.menu.constants;
 
 /**
- * @author Eudaldo Alonso
+ * @author Julio Camarero
  */
-public class ProductNavigationControlMenuPortletKeys {
+public interface ControlMenuCategoryKeys {
 
-	public static final String PRODUCT_NAVIGATION_CONTROL_MENU =
-		"com_liferay_product_navigation_control_menu_portlet_" +
-			"ProductNavigationControlMenuPortlet";
+	public static final String ROOT = "root";
+
+	public static final String SITES = "sites";
+
+	public static final String TOOLS = "tools";
+
+	public static final String USER = "user";
 
 }

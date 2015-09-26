@@ -217,7 +217,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		String[] ddmStructureFieldNameParts = StringUtil.split(
 			ddmStructureFieldName, DDMIndexer.DDM_FIELD_SEPARATOR);
 
-		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
+		DDMStructure structure = _ddmStructureLocalService.getStructure(
 			GetterUtil.getLong(ddmStructureFieldNameParts[2]));
 
 		String fieldName = StringUtil.replaceLast(

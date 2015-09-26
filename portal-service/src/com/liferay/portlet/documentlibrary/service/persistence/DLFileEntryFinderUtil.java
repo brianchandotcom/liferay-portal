@@ -140,6 +140,11 @@ public class DLFileEntryFinderUtil {
 			folderIds, mimeTypes, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> findAE_ByC_T(
+		long classNameId, java.lang.String treePath) {
+		return getFinder().findAE_ByC_T(classNameId, treePath);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry findByAnyImageId(
 		long imageId)
 		throws com.liferay.portlet.documentlibrary.NoSuchFileEntryException {

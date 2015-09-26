@@ -1706,27 +1706,27 @@ public class DLAppHelperLocalServiceImpl
 				DLFolderConstants.getClassName(), dlFolder.getFolderId());
 		}
 
-		// Asset
-
 		long dlFileEntryClassNameId = classNameLocalService.getClassNameId(
 			DLFileEntry.class);
 
-		List<AssetEntry> dlFileEntryAssets = dlFileEntryFinder.findAE_ByC_T(
-			dlFileEntryClassNameId, dlFolder.getTreePath());
+		List<AssetEntry> dlFileEntryAssetEntries =
+			dlFileEntryFinder.findAE_ByC_T(
+				dlFileEntryClassNameId, dlFolder.getTreePath());
 
-		for (AssetEntry dlFileEntryAsset : dlFileEntryAssets) {
+		for (AssetEntry dlFileEntryAssetEntry : dlFileEntryAssetEntries) {
 			assetEntryLocalService.updateVisible(
-				dlFileEntryAsset, !moveToTrash);
+				dlFileEntryAssetEntry, !moveToTrash);
 		}
 
 		long dlFolderClassNameId = classNameLocalService.getClassNameId(
 			DLFolder.class);
 
-		List<AssetEntry> dlFolderAssets = dlFolderFinder.findAE_ByC_T(
+		List<AssetEntry> dlFolderAssetEntries = dlFolderFinder.findAE_ByC_T(
 			dlFolderClassNameId, dlFolder.getTreePath());
 
-		for (AssetEntry dlFolderAsset : dlFolderAssets) {
-			assetEntryLocalService.updateVisible(dlFolderAsset, !moveToTrash);
+		for (AssetEntry dlFolderAssetEntry : dlFolderAssetEntries) {
+			assetEntryLocalService.updateVisible(
+				dlFolderAssetEntry, !moveToTrash);
 		}
 
 		List<DLFolder> dlFolders = dlFolderPersistence.findByG_M_T_H(

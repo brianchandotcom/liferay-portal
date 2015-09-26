@@ -5,9 +5,12 @@
  *
  * @param childElementsHTML
  * @param dir
+ * @param displayStyle
  * @param label
  * @param name
+ * @param placeholder
  * @param required
+ * @param tip
  * @param value
  * @param visible
  */
@@ -21,7 +24,23 @@
 			{/if}
 		</label>
 
-		<input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" type="text" value="{$value}">
+		<div class="input-group-container {if $tip}input-group-default{/if}">
+			{if $displayStyle == 'multiline'}
+				<textarea class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}">
+					{$value}
+				</textarea>
+			{else}
+				<input class="field form-control" dir="{$dir}" id="{$name}" name="{$name}" placeholder="{$placeholder}" type="text" value="{$value}">
+			{/if}
+
+			{if $tip}
+				<span class="input-group-addon">
+					<span class="input-group-addon-content">
+						<a class="help-icon help-icon-default icon-question icon-monospaced" data-toggle="popover" data-original-title="{$tip}" href="javascript:;" title="{$tip}"></a>
+					</span>
+				</span>
+			{/if}
+		</div>
 
 		{$childElementsHTML|noAutoescape}
 	</div>

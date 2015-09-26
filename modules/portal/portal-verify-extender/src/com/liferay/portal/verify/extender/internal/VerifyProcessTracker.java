@@ -14,136 +14,205 @@
 
 package com.liferay.portal.verify.extender.internal;
 
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.RunnableUtil;
+import com.liferay.portal.output.stream.container.OutputStreamContainer;
+import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
+import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ConcurrentSkipListMap;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
+import java.util.Set;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Miguel Pastor
  * @author Raymond Augé
+ * @author Carlos Sierra Andrés
  */
 @Component(
 	immediate = true,
 	property = {
-		"osgi.command.function=execute", "osgi.command.function=list",
-		"osgi.command.scope=verify-extender"
+		"osgi.command.function=list", "osgi.command.function=execute",
+		"osgi.command.function=executeAll", "osgi.command.function=reports",
+		"osgi.command.scope=verify"
 	},
-	service = {Object.class}
+	service = {VerifyProcessTracker.class}
 )
 public class VerifyProcessTracker {
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(verify.process.name=*)", unbind = "removedService",
-		updated = "modifiedService"
-	)
-	public void addingService(
-		VerifyProcess verifyProcess, Map<String, Object> properties) {
+	public void execute(final String verifierName) {
+		_executeVerifier(verifierName, null, "verifier-" + verifierName);
+	}
 
-		String verifyProcessName = (String)properties.get(
-			"verify.process.name");
+	public void execute(String verifierName, String outputStreamProviderName) {
+		_executeVerifier(
+			verifierName, outputStreamProviderName, "verifier-" + verifierName);
+	}
 
-		_verifyProcesses.put(verifyProcessName, verifyProcess);
+	public void executeAll() {
+		Set<String> keySet = _verifiers.keySet();
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Executing the verify process " +
-					ClassUtil.getClassName(verifyProcess.getClass()));
+		for (String verifierName : keySet) {
+			_executeVerifier(verifierName, null, "verifier-" + verifierName);
 		}
+	}
+
+	public void executeAll(String outputStreamProviderName) {
+		Set<String> keySet = _verifiers.keySet();
+
+		for (String verifierName : keySet) {
+			_executeVerifier(
+				verifierName, outputStreamProviderName,
+				"verifier-" + verifierName);
+		}
+	}
+
+	public void list() {
+		for (String key : _verifiers.keySet()) {
+			show(key);
+		}
+	}
+
+	public void show(String verifierName) {
+		VerifyProcess verifyProcess = _getVerifyProcess(verifierName);
+
+		if (verifyProcess != null) {
+			System.out.println("Registered verifier: " + verifierName);
+		}
+		else {
+			System.out.println(
+				"No verifier registered with name: " + verifierName);
+		}
+	}
+
+	public void showReports() {
+		Set<String> outputStreamProviderNames =
+			_outputStreamContainerFactoryTracker.
+				getOutputStreamContainerFactoryNames();
+
+		for (String s : outputStreamProviderNames) {
+			System.out.println(s);
+		}
+	}
+
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		try {
+			_verifiers = ServiceTrackerMapFactory.singleValueMap(
+				bundleContext, VerifyProcess.class, "verifier.name");
+
+			_verifiers.open();
+		}
+		catch (InvalidSyntaxException ise) {
+			throw new IllegalStateException(ise);
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_verifiers.close();
+	}
+
+	@Reference
+	protected void setOutputStreamTracker(
+		OutputStreamContainerFactoryTracker
+			outputStreamContainerFactoryTracker) {
+
+		_outputStreamContainerFactoryTracker =
+			outputStreamContainerFactoryTracker;
+	}
+
+	private void _executeVerifier(
+		final String verifierName, String outputStreamContainerFactoryName,
+		String outputStreamName) {
+
+		OutputStreamContainerFactory outputStreamContainerFactory = null;
+
+		if (outputStreamContainerFactoryName != null) {
+			_outputStreamContainerFactoryTracker.
+				getOutputStreamContainerFactory(
+					outputStreamContainerFactoryName);
+		}
+		else {
+			_outputStreamContainerFactoryTracker.
+				getOutputStreamContainerFactory();
+		}
+
+		OutputStreamContainer outputStreamContainer =
+			outputStreamContainerFactory.create(outputStreamName);
+
+		final OutputStream outputStream =
+			outputStreamContainer.getOutputStream();
+
+		RunnableUtil.runWithSwappedSystemOut(
+			new Runnable() {
+
+				@Override
+				public void run() {
+					_executeVerifierByName(verifierName, outputStream);
+				}
+
+			}, outputStream);
+
+		_safeCloseOutputStream(outputStream);
+	}
+
+	private void _executeVerifierByName(
+		String verifierName, OutputStream outputStream) {
+
+		PrintWriter printWriter = new PrintWriter(outputStream, true);
+
+		printWriter.println("Executing " + verifierName);
+
+		VerifyProcess verifyProcess = _getVerifyProcess(verifierName);
 
 		try {
 			verifyProcess.verify();
 		}
 		catch (VerifyException ve) {
-			_log.error(
-				"A verify exception was thrown while executing the verify " +
-					"process " +
-						ClassUtil.getClassName(verifyProcess.getClass()),
-				ve);
+			ve.printStackTrace();
 		}
 	}
 
-	public void execute(int index) throws VerifyException {
-		List<VerifyProcess> verifyProcesses = new ArrayList<>(
-			_verifyProcesses.values());
-
-		try {
-			VerifyProcess verifyProcess = verifyProcesses.get(index - 1);
-
-			verifyProcess.verify();
-		}
-		catch (IndexOutOfBoundsException iobe) {
-			System.out.println(
-				"Unable to find a verify process with index " + (index - 1));
-		}
-	}
-
-	public void execute(String verifyProcessName) throws VerifyException {
-		VerifyProcess verifyProcess = _verifyProcesses.get(verifyProcessName);
+	private VerifyProcess _getVerifyProcess(String verifierName) {
+		VerifyProcess verifyProcess = _verifiers.getService(verifierName);
 
 		if (verifyProcess == null) {
-			System.out.println(
-				"Unable to find a verify process with the name " +
-					verifyProcessName);
-
-			return;
+			throw new IllegalArgumentException(
+				"Verifier with name " + verifierName + " is not registered");
 		}
 
-		verifyProcess.verify();
+		return verifyProcess;
 	}
 
-	public void list() {
-		int i = 1;
-
-		for (Map.Entry<String, VerifyProcess> entry :
-				_verifyProcesses.entrySet()) {
-
-			System.out.println(
-				String.format(
-					"[%1$5d] Verify process \"%2$s\" is registered with the " +
-						"name \"%3$s\"",
-					i++, ClassUtil.getClassName(entry.getValue()),
-					entry.getKey()));
+	private void _safeCloseOutputStream(OutputStream outputStream) {
+		try {
+			outputStream.close();
 		}
-	}
-
-	public void modifiedService(
-		VerifyProcess verifyProcess, Map<String, Object> properties) {
-
-		removedService(verifyProcess, properties);
-
-		addingService(verifyProcess, properties);
-	}
-
-	public void removedService(
-		VerifyProcess verifyProcess, Map<String, Object> properties) {
-
-		String verifyProcessName = (String)properties.get(
-			"verify.process.name");
-
-		_verifyProcesses.remove(verifyProcessName, verifyProcess);
+		catch (IOException ioe) {
+			throw new RuntimeException(ioe);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VerifyProcessTracker.class);
 
-	private final ConcurrentMap<String, VerifyProcess> _verifyProcesses =
-		new ConcurrentSkipListMap<>();
+	private OutputStreamContainerFactoryTracker
+		_outputStreamContainerFactoryTracker;
+	private ServiceTrackerMap<String, VerifyProcess> _verifiers;
 
 }

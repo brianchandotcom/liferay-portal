@@ -36,18 +36,6 @@
 				(AssetCategory.name LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetEntryFinder.findByClassNameId">
-		<![CDATA[
-			SELECT
-				{AssetEntry.*}
-			FROM
-				AssetEntry
-			[$JOIN$]
-			WHERE
-				[$WHERE$]
-				(AssetEntry.classNameId = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByG_N">
 		<![CDATA[
 			SELECT
@@ -95,6 +83,18 @@
 				AssetEntries_AssetTags
 			WHERE
 				([$TAG_ID$])
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.asset.service.persistence.AssetEntryFinder.findByClassNameId">
+		<![CDATA[
+			SELECT
+				{AssetEntry.*}
+			FROM
+				AssetEntry
+			[$JOIN$]
+			WHERE
+				[$WHERE$]
+				(AssetEntry.classNameId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.countByG_N">

@@ -250,7 +250,7 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute macro="User#viewUserInfomationUserGroupsCP">>
+		<execute macro="User#viewUserInfomationUserGroupsCP">
 			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
 	</command>

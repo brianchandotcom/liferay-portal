@@ -46,7 +46,11 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.command.function=execute", "osgi.command.function=executeAll",
+		"osgi.command.function=execute",
+		"osgi.command.function=executeAll",
+		"osgi.command.function=list",
+		"osgi.command.function=show",
+		"osgi.command.function=showReports",
 		"osgi.command.scope=verify"
 	},
 	service = {VerifyProcessTracker.class}
@@ -80,8 +84,36 @@ public class VerifyProcessTracker {
 
 		for (String verifyProcessName : verifyProcessNames) {
 			executeVerifyProcess(
-				verifyProcessName, outputStreamContainerFactoryName,
-				"verify-" + verifyProcessName);
+					verifyProcessName, outputStreamContainerFactoryName,
+					"verify-" + verifyProcessName);
+		}
+	}
+
+	public void list() {
+		for (String key : _verifyProcesses.keySet()) {
+			show(key);
+		}
+	}
+
+	public void show(String verifyProcessName) {
+		try {
+			getVerifyProcess(verifyProcessName);
+		}
+		catch (IllegalArgumentException iae) {
+			System.out.println(
+				"No verify process found with name " + verifyProcessName);
+		}
+
+		System.out.println("Registered verify process " + verifyProcessName);
+	}
+
+	public void showReports() {
+		Set<String> outputStreamContainerFactoryNames =
+				_outputStreamContainerFactoryTracker.
+						getOutputStreamContainerFactoryNames();
+
+		for (String name : outputStreamContainerFactoryNames) {
+			System.out.println(s);
 		}
 	}
 

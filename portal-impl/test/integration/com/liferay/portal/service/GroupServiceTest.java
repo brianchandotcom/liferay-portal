@@ -315,12 +315,24 @@ public class GroupServiceTest {
 		groupParams.put("groupsRoles", Long.valueOf(roleId));
 		groupParams.put("site", Boolean.TRUE);
 
-		int groupSearchCount = GroupLocalServiceUtil.searchCount(
-			TestPropsValues.getCompanyId(), null, groupParams);
+		Assert.assertEquals(
+			1,
+			GroupLocalServiceUtil.searchCount(
+				TestPropsValues.getCompanyId(), null, groupParams));
 
-		int roleGroupsCount = GroupLocalServiceUtil.getRoleGroupsCount(roleId);
+		List<Group> groups = GroupLocalServiceUtil.search(
+			TestPropsValues.getCompanyId(), null, groupParams,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(roleGroupsCount, groupSearchCount);
+		Assert.assertEquals(1, groups.size());
+		Assert.assertEquals(group, groups.get(0));
+		Assert.assertEquals(
+			1, GroupLocalServiceUtil.getRoleGroupsCount(roleId));
+
+		groups = GroupLocalServiceUtil.getRoleGroups(roleId);
+
+		Assert.assertEquals(1, groups.size());
+		Assert.assertEquals(group, groups.get(0));
 	}
 
 	@Test

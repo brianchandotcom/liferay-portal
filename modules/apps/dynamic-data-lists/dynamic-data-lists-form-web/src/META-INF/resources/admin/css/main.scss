@@ -304,6 +304,10 @@
 		box-shadow: none;
 		margin: 0;
 		padding: 10px $side-spacing 10px $side-spacing;
+
+		label {
+			float: none;
+		}
 	}
 
 	.form-builder-field-list-add-button {

@@ -70,27 +70,7 @@ public class DDMFormFactoryHelper {
 	}
 
 	public LocalizedValue getDDMFormFieldLabel() {
-		LocalizedValue localizedValue = new LocalizedValue(_defaultLocale);
-
-		String label = _ddmFormField.label();
-
-		if (Validator.isNull(label)) {
-			return localizedValue;
-		}
-
-		if (!isLocalizableKey(label)) {
-			localizedValue.addString(_defaultLocale, label);
-
-			return localizedValue;
-		}
-
-		String key = getKey(label);
-
-		for (Locale locale : _availableLocales) {
-			localizedValue.addString(locale, getLocalizedKey(locale, key));
-		}
-
-		return localizedValue;
+		return createLocalizedValue(_ddmFormField.label());
 	}
 
 	public String getDDMFormFieldName() {
@@ -134,6 +114,24 @@ public class DDMFormFactoryHelper {
 		}
 
 		return ddmFormFieldOptions;
+	}
+
+	public LocalizedValue getDDMFormFieldPredefinedValue() {
+		LocalizedValue localizedValue = new LocalizedValue(_defaultLocale);
+
+		String predefinedValue = _ddmFormField.predefinedValue();
+
+		if (Validator.isNull(predefinedValue)) {
+			return localizedValue;
+		}
+
+		localizedValue.addString(_defaultLocale, predefinedValue);
+
+		return localizedValue;
+	}
+
+	public LocalizedValue getDDMFormFieldTip() {
+		return createLocalizedValue(_ddmFormField.tip());
 	}
 
 	public String getDDMFormFieldType() {
@@ -202,6 +200,28 @@ public class DDMFormFactoryHelper {
 
 	public boolean isDDMFormFieldRequired() {
 		return _ddmFormField.required();
+	}
+
+	protected LocalizedValue createLocalizedValue(String property) {
+		LocalizedValue localizedValue = new LocalizedValue(_defaultLocale);
+
+		if (Validator.isNull(property)) {
+			return localizedValue;
+		}
+
+		if (!isLocalizableKey(property)) {
+			localizedValue.addString(_defaultLocale, property);
+
+			return localizedValue;
+		}
+
+		String key = getKey(property);
+
+		for (Locale locale : _availableLocales) {
+			localizedValue.addString(locale, getLocalizedKey(locale, key));
+		}
+
+		return localizedValue;
 	}
 
 	protected String getKey(String value) {

@@ -132,6 +132,10 @@
 	border-width: 0;
 	box-shadow: none;
 	margin: 0;
+	
+	label {
+		float: none;
+	}
 }
 
 .lfr-ddl-field-settings-modal.form-builder-field-settings {

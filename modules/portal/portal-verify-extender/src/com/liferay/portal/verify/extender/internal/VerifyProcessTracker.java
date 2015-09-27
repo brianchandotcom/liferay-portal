@@ -46,12 +46,9 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"osgi.command.function=execute",
-		"osgi.command.function=executeAll",
-		"osgi.command.function=list",
-		"osgi.command.function=show",
-		"osgi.command.function=showReports",
-		"osgi.command.scope=verify"
+		"osgi.command.function=execute", "osgi.command.function=executeAll",
+		"osgi.command.function=list", "osgi.command.function=show",
+		"osgi.command.function=showReports", "osgi.command.scope=verify"
 	},
 	service = {VerifyProcessTracker.class}
 )
@@ -84,8 +81,8 @@ public class VerifyProcessTracker {
 
 		for (String verifyProcessName : verifyProcessNames) {
 			executeVerifyProcess(
-					verifyProcessName, outputStreamContainerFactoryName,
-					"verify-" + verifyProcessName);
+				verifyProcessName, outputStreamContainerFactoryName,
+				"verify-" + verifyProcessName);
 		}
 	}
 
@@ -102,6 +99,8 @@ public class VerifyProcessTracker {
 		catch (IllegalArgumentException iae) {
 			System.out.println(
 				"No verify process found with name " + verifyProcessName);
+
+			return;
 		}
 
 		System.out.println("Registered verify process " + verifyProcessName);
@@ -110,10 +109,10 @@ public class VerifyProcessTracker {
 	public void showReports() {
 		Set<String> outputStreamContainerFactoryNames =
 				_outputStreamContainerFactoryTracker.
-						getOutputStreamContainerFactoryNames();
+					getOutputStreamContainerFactoryNames();
 
 		for (String name : outputStreamContainerFactoryNames) {
-			System.out.println(s);
+			System.out.println(name);
 		}
 	}
 
@@ -168,10 +167,10 @@ public class VerifyProcessTracker {
 		OutputStreamContainerFactory outputStreamContainerFactory = null;
 
 		if (outputStreamContainerFactoryName != null) {
-			outputStreamContainerFactory=
+			outputStreamContainerFactory =
 					_outputStreamContainerFactoryTracker.
 				getOutputStreamContainerFactory(
-						outputStreamContainerFactoryName);
+					outputStreamContainerFactoryName);
 		}
 		else {
 			outputStreamContainerFactory =

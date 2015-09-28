@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Michael C. Han
@@ -25,7 +25,7 @@ public interface IndexerRegistry {
 
 	public <T> Indexer<T> getIndexer(String className);
 
-	public List<Indexer<?>> getIndexers();
+	public Set<Indexer<?>> getIndexers();
 
 	public <T> Indexer<T> nullSafeGetIndexer(Class<T> clazz);
 

@@ -16,15 +16,17 @@ package com.liferay.portal.servlet;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.Set;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -50,20 +52,22 @@ public class I18nServletTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		PropsValues.LOCALES = new String[] {"en_US", "es_ES"};
+		_availableLocales = LanguageUtil.getAvailableLocales();
+		_oldLocale = LocaleUtil.getDefault();
 
-		LocaleUtil.init();
-
-		LanguageUtil.init();
+		CompanyTestUtil.resetCompanyLocales(
+				PortalUtil.getDefaultCompanyId(),
+				Arrays.asList(
+					LocaleUtil.CANADA_FRENCH, LocaleUtil.SPAIN, LocaleUtil.US),
+				LocaleUtil.US
+			);
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		PropsValues.LOCALES = PropsUtil.getArray(PropsKeys.LOCALES);
-
-		LocaleUtil.init();
-
-		LanguageUtil.init();
+		CompanyTestUtil.resetCompanyLocales(
+				PortalUtil.getDefaultCompanyId(), _availableLocales,
+				_oldLocale);
 	}
 
 	@Test
@@ -159,6 +163,9 @@ public class I18nServletTest {
 
 		Assert.assertEquals(expectedI18nData, actualI18nData);
 	}
+
+	private static Set<Locale> _availableLocales;
+	private static Locale _oldLocale = null;
 
 	private final Locale _defaultLocale = LocaleUtil.US;
 	private final I18nServlet _i18nServlet = new I18nServlet();

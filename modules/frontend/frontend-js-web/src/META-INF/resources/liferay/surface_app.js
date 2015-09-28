@@ -20,9 +20,9 @@ AUI.add(
 
 				Liferay.Data.sharedResources = Liferay.Data.sharedResources.concat(newResources);
 
-				content = frag;
+				Liferay.DOMTaskRunner.runTasks(frag);
 
-				Liferay.DOMTaskRunner.runTasks(content);
+				content = frag;
 			}
 
 			return addContentFn.call(this, screenId, content);

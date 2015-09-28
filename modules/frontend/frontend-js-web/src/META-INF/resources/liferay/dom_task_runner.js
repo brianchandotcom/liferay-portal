@@ -1,53 +1,42 @@
 ;(function(Liferay) {
 	var DOMTaskRunner = {
-		_data: [],
-		_scheduled: [],
-
-		addTask: function(action, params, condition) {
+		addTask: function(task) {
 			var instance = this;
 
-			instance._scheduled.push(
-				{
-					action: action,
-					condition: condition,
-					params: params
-				}
-			);
+			instance._scheduledTasks.push(task);
 		},
 
-		addTaskState: function(owner, data) {
+		addTaskState: function(state) {
 			var instance = this;
 
-			instance._data.push(
-				{
-					data: data,
-					owner: owner
-				}
-			);
+			instance._taskStates.push(state);
 		},
 
 		reset: function() {
 			var instance = this;
 
-			instance._data = [];
-			instance._scheduled = [];
+			instance._taskStates.length = 0;
+			instance._scheduledTasks.length = 0;
 		},
 
 		runTasks: function(node) {
 			var instance = this;
 
-			for (var i = 0; i < instance._scheduled.length; i++) {
-				var action = instance._scheduled[i];
+			for (var i = 0; i < instance._scheduledTasks.length; i++) {
+				var task = instance._scheduledTasks[i];
 
-				for (var j = 0; j < instance._data.length; j++) {
-					var data = instance._data[j];
+				for (var j = 0; j < instance._taskStates.length; j++) {
+					var state = instance._taskStates[j];
 
-					if (action.condition(data, action.params, node)) {
-						action.action(data, action.params, node);
+					if (task.condition(state, task.params, node)) {
+						task.action(state, task.params, node);
 					}
 				}
 			}
-		}
+		},
+
+		_scheduledTasks: [],
+		_taskStates: []
 	};
 
 	Liferay.DOMTaskRunner = DOMTaskRunner;

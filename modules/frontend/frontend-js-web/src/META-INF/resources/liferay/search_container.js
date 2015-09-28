@@ -74,12 +74,6 @@ AUI.add(
 						instance._ids = [];
 					},
 
-					destructor: function() {
-						var instance = this;
-
-						A.Array.invoke(instance._eventHandles, 'detach');
-					},
-
 					renderUI: function() {
 						var instance = this;
 
@@ -130,51 +124,11 @@ AUI.add(
 						);
 
 						instance._eventHandles = [
-							Liferay.on(
-								'surfaceStartNavigate',
-								function() {
-									Liferay.DOMTaskRunner.addTask(
-										restore,
-										{
-											containerId: instance.get('contentBox').attr('id')
-										},
-										function(data, params, frag) {
-											if (frag.one('#' + params.containerId)) {
-												return true;
-											}
-
-											return false;
-										}
-									);
-								}
-							),
-							Liferay.on(
-								'surfaceStartNavigate',
-								function() {
-									var checkBoxes = instance.get('contentBox').all('input');
-
-									var elements = [];
-
-									checkBoxes.each(
-										function(item, index) {
-											if (item.attr('checked')) {
-												elements.push(item.val());
-											}
-										}
-									);
-
-									Liferay.DOMTaskRunner.addTaskState(
-										'SearchContainerOwner',
-										{
-											elements: elements
-										}
-									);
-								}
-							)
+							Liferay.on('surfaceStartNavigate', '_onSurfaceStartNavigate', instance)
 						];
 
 						if (instance.get('hover')) {
-							instance._eventHandles.push(instance.get('contentBox').delegate(['mouseenter', 'mouseleave'], instance._onContentHover, 'tr', instance));
+							instance._eventHandles.push(instance.get('contentBox').delegate(['mouseenter', 'mouseleave'], '_onContentHover', 'tr', instance));
 						}
 					},
 
@@ -190,6 +144,12 @@ AUI.add(
 
 							instance.updateDataStore(initialIds);
 						}
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					addRow: function(arr, id) {
@@ -326,6 +286,44 @@ AUI.add(
 						}
 					},
 
+					_addRestoreTask: function() {
+						var instance = this;
+
+						Liferay.DOMTaskRunner.addTask(
+							{
+								action: Liferay.SearchContainer.restoreTask,
+								condition: Liferay.SearchContainer.testRestoreTask,
+								params: {
+									containerId: instance.get('contentBox').attr('id'),
+									searchContainerId: instance.get('id')
+								}
+							}
+						);
+					},
+
+					_addRestoreTaskState: function() {
+						var instance = this;
+
+						var elements = A.Array.map(
+							instance.get('contentBox').all('input:checked'),
+							function(item) {
+								return {
+									name: item.attr('name'),
+									value: item.val()
+								};
+							}
+						);
+
+						Liferay.DOMTaskRunner.addTaskState(
+							{
+								data: {
+									elements: elements
+								},
+								owner: instance.get('id')
+							}
+						);
+					},
+
 					_addRow: function(event) {
 						var instance = this;
 
@@ -373,6 +371,13 @@ AUI.add(
 						}
 
 						row.toggleClass(instance.get('classNameHover'), mouseenter);
+					},
+
+					_onSurfaceStartNavigate: function(event) {
+						var instance = this;
+
+						instance._addRestoreTask();
+						instance._addRestoreTaskState();
 					}
 				},
 
@@ -384,35 +389,37 @@ AUI.add(
 					instance._cache[id] = obj;
 				},
 
+				restoreTask: function(state, params, node) {
+					var container = node.one('#' + params.containerId);
+
+					var checkBoxes = container.all('input');
+
+					var selectedElements = state.data.elements;
+
+					checkBoxes.each(
+						function(item, index) {
+							for (var i = 0; i < selectedElements.length; i++) {
+								if (item.val() === selectedElements[i].value) {
+									item.attr('checked', true);
+									selectedElements.splice(i, 1);
+									break;
+								}
+							}
+						}
+					);
+
+					for (var j = 0; j < selectedElements.length; j++) {
+						container.appendChild(A.Node.create('<input class="hide" name="' + selectedElements[j].name + '" value="' + selectedElements[j].value + '" type="checkbox" checked />'));
+					}
+				},
+
+				testRestoreTask: function(state, params, node) {
+					return state.owner === params.searchContainerId && node.one('#' + params.containerId);
+				},
+
 				_cache: {}
 			}
 		);
-
-		var restore = function(data, params, frag) {
-			var node = frag.one('#' + params.containerId);
-
-			var checkBoxes = node.all('input');
-
-			var elements = data.data.elements;
-
-			checkBoxes.each(
-				function(item, index) {
-					for (var i = 0; i < elements.length; i++) {
-						if (item.val() === elements[i]) {
-							item.attr('checked', true);
-							elements.splice(i, 1);
-							break;
-						}
-					}
-				}
-			);
-
-			var checkBoxName = checkBoxes.getAttribute('name')[0];
-
-			for (var j = 0; j < elements.length; j++) {
-				node.appendChild(A.Node.create('<input class="hide" name="' + checkBoxName + '" value="' + elements[j] + '" type="checkbox" checked />'));
-			}
-		};
 
 		Liferay.SearchContainer = SearchContainer;
 	},

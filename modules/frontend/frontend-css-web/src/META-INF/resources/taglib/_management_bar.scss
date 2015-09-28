@@ -4,8 +4,8 @@
 
 	.management-bar {
 		&.management-bar-no-collapse {
-			position: absolute;
 			left: 0;
+			position: absolute;
 			right: 0;
 			top: -100%;
 			@include transition(all 300ms ease);
@@ -23,7 +23,7 @@
 			margin-top: 10px;
 
 			select {
-				border-bottom: 0;
+				border-bottom-width: 0;
 			}
 		}
 	}

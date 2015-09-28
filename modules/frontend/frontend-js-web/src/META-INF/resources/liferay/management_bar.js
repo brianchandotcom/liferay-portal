@@ -79,28 +79,7 @@ AUI.add(
 						instance._eventHandles = [
 							instance.get('rootNode').delegate(STR_CLICK, instance._toggleBars, instance.get(STR_SELECT_ALL_CHECKBOXES_SELECTOR), instance),
 							instance.get(STR_CHECKBOX_CONTAINER).delegate(STR_CLICK, instance._toggleSelect, instance.get(STR_CHECKBOXES_SELECTOR), instance),
-							Liferay.on(
-								'surfaceStartNavigate',
-								function() {
-									Liferay.DOMTaskRunner.addTask(
-										restore,
-										{
-											checkBoxContainer: instance.get('checkBoxContainer').attr('id'),
-											checkBoxesSelector: instance.get('checkBoxesSelector'),
-											itemsCountContainerSelector: instance.get('itemsCountContainer').attr('class'),
-											secondaryBar: instance.get('secondaryBar').attr('id'),
-											selectAllCheckBoxesSelector: instance.get('selectAllCheckBoxesSelector')
-										},
-										function(data, params, frag) {
-											if (frag.one(STR_HASH + params.checkBoxContainer)) {
-												return true;
-											}
-
-											return false;
-										}
-									);
-								}
-							)
+							Liferay.on('surfaceStartNavigate', '_onSurfaceStartNavigate', instance)
 						];
 					},
 
@@ -162,6 +141,24 @@ AUI.add(
 						return selectAllCheckBoxes;
 					},
 
+					_onSurfaceStartNavigate: function(event) {
+						var instance = this;
+
+						Liferay.DOMTaskRunner.addTask(
+							{
+								action: Liferay.ManagementBar.restoreTask,
+								condition: Liferay.ManagementBar.testRestoreTask,
+								params: {
+									checkBoxContainerId: instance.get('checkBoxContainer').attr('id'),
+									checkBoxesSelector: instance.get('checkBoxesSelector'),
+									itemsCountContainerSelector: instance.get('itemsCountContainer').attr('class'),
+									secondaryBarId: instance.get('secondaryBar').attr('id'),
+									selectAllCheckBoxesSelector: instance.get('selectAllCheckBoxesSelector')
+								}
+							}
+						);
+					},
+
 					_toggleBars: function(event) {
 						var instance = this;
 
@@ -210,49 +207,53 @@ AUI.add(
 
 						instance.get('itemsCountContainer').html(itemsCount);
 					}
+				},
+
+				restoreTask: function(state, params, node) {
+					var checkBoxContainer = node.one(STR_HASH + params.checkBoxContainerId);
+
+					var checkBoxes = checkBoxContainer.all(params.checkBoxesSelector);
+
+					var totalSelectedElements = state.data.elements;
+
+					var itemsCountContainer = node.all('.' + params.itemsCountContainerSelector);
+
+					var secondaryBar = node.one(STR_HASH + params.secondaryBarId);
+
+					var selectAllCheckBoxes = node.all(params.selectAllCheckBoxesSelector);
+
+					var totalOn = 0;
+
+					checkBoxes.each(
+						function(item, index) {
+							for (var i = 0; i < totalSelectedElements.length; i++) {
+								if (item.val() === totalSelectedElements[i].value) {
+									totalOn++;
+									break;
+								}
+							}
+						}
+					);
+
+					if (totalOn === checkBoxes.size()) {
+						selectAllCheckBoxes.attr(ATTR_CHECKED, true);
+					}
+					else if (totalOn > 0) {
+						selectAllCheckBoxes.attr(ATTR_CHECKED, true);
+						selectAllCheckBoxes.addClass(STR_SELECTED_PARTIAL_SELECTOR);
+					}
+
+					if (totalSelectedElements.length > 0) {
+						itemsCountContainer.html(totalSelectedElements.length);
+						secondaryBar.toggleClass(STR_ON, true);
+					}
+				},
+
+				testRestoreTask: function(state, params, node) {
+					return node.one(STR_HASH + params.checkBoxContainerId);
 				}
 			}
 		);
-
-		var restore = function(data, params, frag) {
-			var checkBoxContainer = frag.one(STR_HASH + params.checkBoxContainer);
-
-			var checkBoxes = checkBoxContainer.all(params.checkBoxesSelector);
-
-			var elements = data.data.elements;
-
-			var itemsCountContainer = frag.all('.' + params.itemsCountContainerSelector);
-
-			var secondaryBar = frag.one(STR_HASH + params.secondaryBar);
-
-			var selectAllCheckBoxes = frag.all(params.selectAllCheckBoxesSelector);
-
-			var totalOn = 0;
-
-			checkBoxes.each(
-				function(item, index) {
-					for (var i = 0; i < elements.length; i++) {
-						if (item.val() === elements[i]) {
-							totalOn++;
-							break;
-						}
-					}
-				}
-			);
-
-			if (totalOn === checkBoxes.size()) {
-				selectAllCheckBoxes.attr(ATTR_CHECKED, true);
-			}
-			else if (totalOn > 0) {
-				selectAllCheckBoxes.attr(ATTR_CHECKED, true);
-				selectAllCheckBoxes.addClass(STR_SELECTED_PARTIAL_SELECTOR);
-			}
-
-			if (elements.length > 0) {
-				itemsCountContainer.html(elements.length);
-				secondaryBar.toggleClass(STR_ON, true);
-			}
-		};
 
 		Liferay.ManagementBar = ManagementBar;
 	},

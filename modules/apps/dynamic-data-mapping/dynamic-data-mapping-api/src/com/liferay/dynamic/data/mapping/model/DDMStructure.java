@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface DDMStructure extends DDMStructureModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DDMStructure, Long> STRUCTURE_ID_ACCESSOR = new Accessor<DDMStructure, Long>() {
+			@Override
+			public Long get(DDMStructure ddmStructure) {
+				return ddmStructure.getStructureId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DDMStructure> getTypeClass() {
+				return DDMStructure.class;
+			}
+		};
+
 	public com.liferay.dynamic.data.mapping.model.DDMForm createFullHierarchyDDMForm()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

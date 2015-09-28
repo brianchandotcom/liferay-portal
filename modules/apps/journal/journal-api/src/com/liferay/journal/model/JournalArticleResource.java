@@ -16,6 +16,7 @@ package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,4 +36,21 @@ public interface JournalArticleResource extends JournalArticleResourceModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.journal.model.impl.JournalArticleResourceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<JournalArticleResource, Long> RESOURCE_PRIM_KEY_ACCESSOR =
+		new Accessor<JournalArticleResource, Long>() {
+			@Override
+			public Long get(JournalArticleResource journalArticleResource) {
+				return journalArticleResource.getResourcePrimKey();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<JournalArticleResource> getTypeClass() {
+				return JournalArticleResource.class;
+			}
+		};
 }

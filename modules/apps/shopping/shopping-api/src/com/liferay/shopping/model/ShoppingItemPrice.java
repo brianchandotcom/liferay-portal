@@ -16,6 +16,7 @@ package com.liferay.shopping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,21 @@ public interface ShoppingItemPrice extends ShoppingItemPriceModel, PersistedMode
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.shopping.model.impl.ShoppingItemPriceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ShoppingItemPrice, Long> ITEM_PRICE_ID_ACCESSOR =
+		new Accessor<ShoppingItemPrice, Long>() {
+			@Override
+			public Long get(ShoppingItemPrice shoppingItemPrice) {
+				return shoppingItemPrice.getItemPriceId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ShoppingItemPrice> getTypeClass() {
+				return ShoppingItemPrice.class;
+			}
+		};
 }

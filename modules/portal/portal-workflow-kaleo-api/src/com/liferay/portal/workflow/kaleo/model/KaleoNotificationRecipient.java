@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,4 +36,22 @@ public interface KaleoNotificationRecipient
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoNotificationRecipientImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<KaleoNotificationRecipient, Long> KALEO_NOTIFICATION_RECIPIENT_ID_ACCESSOR =
+		new Accessor<KaleoNotificationRecipient, Long>() {
+			@Override
+			public Long get(
+				KaleoNotificationRecipient kaleoNotificationRecipient) {
+				return kaleoNotificationRecipient.getKaleoNotificationRecipientId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<KaleoNotificationRecipient> getTypeClass() {
+				return KaleoNotificationRecipient.class;
+			}
+		};
 }

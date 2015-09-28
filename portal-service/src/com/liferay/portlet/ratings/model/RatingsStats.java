@@ -16,6 +16,7 @@ package com.liferay.portlet.ratings.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface RatingsStats extends RatingsStatsModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.ratings.model.impl.RatingsStatsImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<RatingsStats, Long> STATS_ID_ACCESSOR = new Accessor<RatingsStats, Long>() {
+			@Override
+			public Long get(RatingsStats ratingsStats) {
+				return ratingsStats.getStatsId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<RatingsStats> getTypeClass() {
+				return RatingsStats.class;
+			}
+		};
 }

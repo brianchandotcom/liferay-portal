@@ -16,6 +16,7 @@ package com.liferay.portal.workflow.kaleo.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,4 +36,22 @@ public interface KaleoTaskAssignmentInstance
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskAssignmentInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<KaleoTaskAssignmentInstance, Long> KALEO_TASK_ASSIGNMENT_INSTANCE_ID_ACCESSOR =
+		new Accessor<KaleoTaskAssignmentInstance, Long>() {
+			@Override
+			public Long get(
+				KaleoTaskAssignmentInstance kaleoTaskAssignmentInstance) {
+				return kaleoTaskAssignmentInstance.getKaleoTaskAssignmentInstanceId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<KaleoTaskAssignmentInstance> getTypeClass() {
+				return KaleoTaskAssignmentInstance.class;
+			}
+		};
 }

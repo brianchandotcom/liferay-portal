@@ -16,6 +16,7 @@ package com.liferay.calendar.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PermissionedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface Calendar extends CalendarModel, PermissionedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.calendar.model.impl.CalendarImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Calendar, Long> CALENDAR_ID_ACCESSOR = new Accessor<Calendar, Long>() {
+			@Override
+			public Long get(Calendar calendar) {
+				return calendar.getCalendarId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Calendar> getTypeClass() {
+				return Calendar.class;
+			}
+		};
+
 	public com.liferay.calendar.model.CalendarResource getCalendarResource()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

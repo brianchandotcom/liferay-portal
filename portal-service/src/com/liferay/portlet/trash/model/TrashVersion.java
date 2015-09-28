@@ -16,6 +16,7 @@ package com.liferay.portlet.trash.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface TrashVersion extends TrashVersionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.trash.model.impl.TrashVersionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<TrashVersion, Long> VERSION_ID_ACCESSOR = new Accessor<TrashVersion, Long>() {
+			@Override
+			public Long get(TrashVersion trashVersion) {
+				return trashVersion.getVersionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<TrashVersion> getTypeClass() {
+				return TrashVersion.class;
+			}
+		};
+
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties();
 
 	public java.lang.String getTypeSettingsProperty(java.lang.String key);

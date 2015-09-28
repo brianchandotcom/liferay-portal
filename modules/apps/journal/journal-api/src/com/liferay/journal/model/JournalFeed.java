@@ -16,6 +16,7 @@ package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,22 @@ public interface JournalFeed extends JournalFeedModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.journal.model.impl.JournalFeedImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<JournalFeed, Long> ID_ACCESSOR = new Accessor<JournalFeed, Long>() {
+			@Override
+			public Long get(JournalFeed journalFeed) {
+				return journalFeed.getId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<JournalFeed> getTypeClass() {
+				return JournalFeed.class;
+			}
+		};
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getDDMRendererTemplateKey()}

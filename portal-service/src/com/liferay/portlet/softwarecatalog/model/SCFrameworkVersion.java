@@ -16,6 +16,7 @@ package com.liferay.portlet.softwarecatalog.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,4 +36,21 @@ public interface SCFrameworkVersion extends SCFrameworkVersionModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.softwarecatalog.model.impl.SCFrameworkVersionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<SCFrameworkVersion, Long> FRAMEWORK_VERSION_ID_ACCESSOR =
+		new Accessor<SCFrameworkVersion, Long>() {
+			@Override
+			public Long get(SCFrameworkVersion scFrameworkVersion) {
+				return scFrameworkVersion.getFrameworkVersionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<SCFrameworkVersion> getTypeClass() {
+				return SCFrameworkVersion.class;
+			}
+		};
 }

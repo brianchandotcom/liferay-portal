@@ -16,6 +16,7 @@ package com.liferay.portlet.ratings.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface RatingsEntry extends RatingsEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.ratings.model.impl.RatingsEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<RatingsEntry, Long> ENTRY_ID_ACCESSOR = new Accessor<RatingsEntry, Long>() {
+			@Override
+			public Long get(RatingsEntry ratingsEntry) {
+				return ratingsEntry.getEntryId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<RatingsEntry> getTypeClass() {
+				return RatingsEntry.class;
+			}
+		};
 }

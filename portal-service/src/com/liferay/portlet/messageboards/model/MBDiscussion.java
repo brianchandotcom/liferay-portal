@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,4 +35,20 @@ public interface MBDiscussion extends MBDiscussionModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.messageboards.model.impl.MBDiscussionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<MBDiscussion, Long> DISCUSSION_ID_ACCESSOR = new Accessor<MBDiscussion, Long>() {
+			@Override
+			public Long get(MBDiscussion mbDiscussion) {
+				return mbDiscussion.getDiscussionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<MBDiscussion> getTypeClass() {
+				return MBDiscussion.class;
+			}
+		};
 }

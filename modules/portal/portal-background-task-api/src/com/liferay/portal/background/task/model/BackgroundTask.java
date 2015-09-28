@@ -16,6 +16,7 @@ package com.liferay.portal.background.task.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,24 @@ public interface BackgroundTask extends BackgroundTaskModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.background.task.model.impl.BackgroundTaskImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<BackgroundTask, Long> BACKGROUND_TASK_ID_ACCESSOR =
+		new Accessor<BackgroundTask, Long>() {
+			@Override
+			public Long get(BackgroundTask backgroundTask) {
+				return backgroundTask.getBackgroundTaskId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<BackgroundTask> getTypeClass() {
+				return BackgroundTask.class;
+			}
+		};
+
 	public void addAttachment(long userId, java.lang.String fileName,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException;

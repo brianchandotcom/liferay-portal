@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -35,6 +36,24 @@ public interface DDMStructureVersion extends DDMStructureVersionModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.mapping.model.impl.DDMStructureVersionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<DDMStructureVersion, Long> STRUCTURE_VERSION_ID_ACCESSOR =
+		new Accessor<DDMStructureVersion, Long>() {
+			@Override
+			public Long get(DDMStructureVersion ddmStructureVersion) {
+				return ddmStructureVersion.getStructureVersionId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<DDMStructureVersion> getTypeClass() {
+				return DDMStructureVersion.class;
+			}
+		};
+
 	public com.liferay.dynamic.data.mapping.model.DDMForm getDDMForm();
 
 	public com.liferay.dynamic.data.mapping.model.DDMFormLayout getDDMFormLayout()

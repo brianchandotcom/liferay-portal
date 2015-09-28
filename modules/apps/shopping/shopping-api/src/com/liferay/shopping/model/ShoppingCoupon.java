@@ -16,6 +16,7 @@ package com.liferay.shopping.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface ShoppingCoupon extends ShoppingCouponModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.shopping.model.impl.ShoppingCouponImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ShoppingCoupon, Long> COUPON_ID_ACCESSOR = new Accessor<ShoppingCoupon, Long>() {
+			@Override
+			public Long get(ShoppingCoupon shoppingCoupon) {
+				return shoppingCoupon.getCouponId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ShoppingCoupon> getTypeClass() {
+				return ShoppingCoupon.class;
+			}
+		};
+
 	public boolean hasValidDateRange();
 
 	public boolean hasValidEndDate();

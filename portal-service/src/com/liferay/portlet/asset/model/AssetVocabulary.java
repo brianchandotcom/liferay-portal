@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -34,6 +35,23 @@ public interface AssetVocabulary extends AssetVocabularyModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.asset.model.impl.AssetVocabularyImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<AssetVocabulary, Long> VOCABULARY_ID_ACCESSOR = new Accessor<AssetVocabulary, Long>() {
+			@Override
+			public Long get(AssetVocabulary assetVocabulary) {
+				return assetVocabulary.getVocabularyId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<AssetVocabulary> getTypeClass() {
+				return AssetVocabulary.class;
+			}
+		};
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getCategories();
 
 	public int getCategoriesCount();

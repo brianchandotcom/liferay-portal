@@ -1710,7 +1710,7 @@ public class DLAppHelperLocalServiceImpl
 			DLFileEntry.class);
 
 		List<AssetEntry> dlFileEntryAssetEntries =
-			dlFileEntryFinder.findAE_ByC_T(
+			assetEntryFinder.joinDLFE_ByAssetEntry(
 				dlFileEntryClassNameId, dlFolder.getTreePath());
 
 		for (AssetEntry dlFileEntryAssetEntry : dlFileEntryAssetEntries) {
@@ -1721,8 +1721,9 @@ public class DLAppHelperLocalServiceImpl
 		long dlFolderClassNameId = classNameLocalService.getClassNameId(
 			DLFolder.class);
 
-		List<AssetEntry> dlFolderAssetEntries = dlFolderFinder.findAE_ByC_T(
-			dlFolderClassNameId, dlFolder.getTreePath());
+		List<AssetEntry> dlFolderAssetEntries =
+			assetEntryFinder.joinDLF_ByAssetEntry(
+				dlFolderClassNameId, dlFolder.getTreePath());
 
 		for (AssetEntry dlFolderAssetEntry : dlFolderAssetEntries) {
 			assetEntryLocalService.updateVisible(

@@ -12,38 +12,45 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.lar;
+package com.liferay.document.library.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMStructure;
+import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,43 +58,70 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Mate Thurzo
  */
-public class FolderStagedModelDataHandlerTest
+@RunWith(Arquillian.class)
+public class FileEntryStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Test
 	public void testCompanyScopeDependencies() throws Exception {
-		initExport();
-
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			addCompanyDependencies();
 
 		StagedModel stagedModel = addStagedModel(
 			stagingGroup, dependentStagedModelsMap);
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-
-		initImport();
-
-		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
-
-		Assert.assertNotNull(exportedStagedModel);
-
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, exportedStagedModel);
+		exportImportStagedModel(stagedModel);
 
 		validateCompanyDependenciesImport(dependentStagedModelsMap, liveGroup);
+	}
+
+	@Test
+	public void testExportImportFileExtension() throws Exception {
+		String sourceFileName = RandomTestUtil.randomString() + ".pdf";
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId(), TestPropsValues.getUserId());
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, sourceFileName,
+			ContentTypes.APPLICATION_PDF,
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			serviceContext);
+
+		exportImportStagedModel(fileEntry);
+
+		FileEntry importedFileEntry =
+			DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+				fileEntry.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(importedFileEntry.getExtension(), "pdf");
+
+		String title = RandomTestUtil.randomString() + ".awesome";
+
+		DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), StringPool.BLANK,
+			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
+			false, (byte[])null, serviceContext);
+
+		exportImportStagedModel(fileEntry);
+
+		importedFileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			fileEntry.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertEquals(importedFileEntry.getExtension(), "pdf");
 	}
 
 	protected Map<String, List<StagedModel>> addCompanyDependencies()
@@ -136,20 +170,19 @@ public class FolderStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<>();
+			new LinkedHashMap<>();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DLFileEntryMetadata.class.getName());
-
-		addDependentStagedModel(
-			dependentStagedModelsMap,
-			DDMStructureManagerUtil.getDDMStructureModelClass(), ddmStructure);
 
 		DLFileEntryType dlFileEntryType = addDLFileEntryType(
 			group.getGroupId(), ddmStructure.getStructureId());
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFileEntryType.class, dlFileEntryType);
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -201,39 +234,33 @@ public class FolderStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		folder = DLAppServiceUtil.addFolder(
-			group.getGroupId(), folder.getFolderId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, dlFileEntryType.getFileEntryTypeId());
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			folder.getFolderId(), RandomTestUtil.randomString() + ".txt",
+			ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
 			serviceContext);
+	}
 
-		DLFolder dlFolder = (DLFolder)folder.getModel();
+	@Override
+	protected StagedModel addVersion(StagedModel stagedModel) throws Exception {
+		FileEntry fileEntry = (FileEntry)stagedModel;
 
-		dlFolder.setDefaultFileEntryTypeId(
-			dlFileEntryType.getFileEntryTypeId());
-		dlFolder.setRestrictionType(
-			DLFolderConstants.RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW);
-
-		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
-
-		List<Long> dlFileEntryTypeIds = new ArrayList<>();
-
-		dlFileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
-
-		DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
-			dlFolder, dlFileEntryTypeIds, dlFileEntryType.getFileEntryTypeId(),
-			serviceContext);
-
-		return folder;
+		return DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), StringPool.BLANK,
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, false, (byte[])null,
+			ServiceContextThreadLocal.getServiceContext());
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			DLFolder dlFolder =
-				DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
-					uuid, group.getGroupId());
-
-			return new LiferayFolder(dlFolder);
+			return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+				uuid, group.getGroupId());
 		}
 		catch (Exception e) {
 			return null;
@@ -242,7 +269,17 @@ public class FolderStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return DLFolder.class;
+		return DLFileEntry.class;
+	}
+
+	@Override
+	protected boolean isCommentableStagedModel() {
+		return true;
+	}
+
+	@Override
+	protected boolean isVersionableStagedModel() {
+		return true;
 	}
 
 	protected void validateCompanyDependenciesImport(
@@ -275,7 +312,7 @@ public class FolderStagedModelDataHandlerTest
 			(DLFileEntryType)dlFileEntryTypesDependentStagedModels.get(0);
 
 		Assert.assertNull(
-			"Company DL file entry should not be imported",
+			"Company DL file entry dependency should not be imported",
 			DLFileEntryTypeLocalServiceUtil.
 				fetchDLFileEntryTypeByUuidAndGroupId(
 					dlFileEntryType.getUuid(), group.getGroupId()));
@@ -312,15 +349,15 @@ public class FolderStagedModelDataHandlerTest
 		DLFileEntryTypeLocalServiceUtil.getDLFileEntryTypeByUuidAndGroupId(
 			dlFileEntryType.getUuid(), group.getGroupId());
 
-		List<StagedModel> folderDependentStagedModels =
+		List<StagedModel> foldersDependentStagedModels =
 			dependentStagedModelsMap.get(DLFolder.class.getSimpleName());
 
-		Assert.assertEquals(1, folderDependentStagedModels.size());
+		Assert.assertEquals(1, foldersDependentStagedModels.size());
 
-		Folder parentFolder = (Folder)folderDependentStagedModels.get(0);
+		Folder folder = (Folder)foldersDependentStagedModels.get(0);
 
 		DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
-			parentFolder.getUuid(), group.getGroupId());
+			folder.getUuid(), group.getGroupId());
 	}
 
 	@Override
@@ -329,20 +366,54 @@ public class FolderStagedModelDataHandlerTest
 		throws Exception {
 
 		Assert.assertTrue(
-			stagedModel.getCreateDate() + " " +
+			String.valueOf(stagedModel.getCreateDate()) + StringPool.SPACE +
 				importedStagedModel.getCreateDate(),
 			DateUtil.equals(
 				stagedModel.getCreateDate(),
 				importedStagedModel.getCreateDate()));
+
 		Assert.assertEquals(
 			stagedModel.getUuid(), importedStagedModel.getUuid());
 
-		Folder folder = (Folder)stagedModel;
-		Folder importedFolder = (Folder)importedStagedModel;
+		FileEntry fileEntry = (FileEntry)stagedModel;
+		FileEntry importedFileEntry = (FileEntry)importedStagedModel;
 
-		Assert.assertEquals(folder.getName(), importedFolder.getName());
 		Assert.assertEquals(
-			folder.getDescription(), importedFolder.getDescription());
+			fileEntry.getFileName(), importedFileEntry.getFileName());
+		Assert.assertEquals(
+			fileEntry.getExtension(), importedFileEntry.getExtension());
+		Assert.assertEquals(
+			fileEntry.getMimeType(), importedFileEntry.getMimeType());
+		Assert.assertEquals(fileEntry.getTitle(), importedFileEntry.getTitle());
+		Assert.assertEquals(
+			fileEntry.getDescription(), importedFileEntry.getDescription());
+		Assert.assertEquals(fileEntry.getSize(), importedFileEntry.getSize());
+
+		FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+		FileVersion importedLatestFileVersion =
+			importedFileEntry.getLatestFileVersion();
+
+		Assert.assertEquals(
+			latestFileVersion.getUuid(), importedLatestFileVersion.getUuid());
+		Assert.assertEquals(
+			latestFileVersion.getFileName(),
+			importedLatestFileVersion.getFileName());
+		Assert.assertEquals(
+			latestFileVersion.getExtension(),
+			importedLatestFileVersion.getExtension());
+		Assert.assertEquals(
+			latestFileVersion.getMimeType(),
+			importedLatestFileVersion.getMimeType());
+		Assert.assertEquals(
+			latestFileVersion.getTitle(), importedLatestFileVersion.getTitle());
+		Assert.assertEquals(
+			latestFileVersion.getDescription(),
+			importedLatestFileVersion.getDescription());
+		Assert.assertEquals(
+			latestFileVersion.getSize(), importedLatestFileVersion.getSize());
+		Assert.assertEquals(
+			latestFileVersion.getStatus(),
+			importedLatestFileVersion.getStatus());
 	}
 
 }

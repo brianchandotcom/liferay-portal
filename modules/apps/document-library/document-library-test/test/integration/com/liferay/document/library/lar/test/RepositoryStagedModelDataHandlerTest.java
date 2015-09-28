@@ -12,25 +12,29 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.lar;
+package com.liferay.document.library.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Repository;
+import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,19 +43,20 @@ import java.util.Map;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Mate Thurzo
  */
-public class DLFileEntryTypeStagedModelDataHandlerTest
+@RunWith(Arquillian.class)
+public class RepositoryStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
-			TransactionalTestRule.INSTANCE);
+			new LiferayIntegrationTestRule(), TransactionalTestRule.INSTANCE);
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
@@ -61,12 +66,32 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
 			new HashMap<>();
 
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			group.getGroupId(), DLFileEntryMetadata.class.getName());
+		long classNameId = PortalUtil.getClassNameId(
+			LiferayRepository.class.getName());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder mountFolder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		_repository = RepositoryLocalServiceUtil.addRepository(
+			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+			mountFolder.getFolderId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new UnicodeProperties(), false, serviceContext);
+
+		RepositoryEntry repositoryEntry =
+			RepositoryEntryLocalServiceUtil.addRepositoryEntry(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				_repository.getRepositoryId(), RandomTestUtil.randomString(),
+				serviceContext);
 
 		addDependentStagedModel(
-			dependentStagedModelsMap,
-			DDMStructureManagerUtil.getDDMStructureModelClass(), ddmStructure);
+			dependentStagedModelsMap, RepositoryEntry.class, repositoryEntry);
 
 		return dependentStagedModelsMap;
 	}
@@ -77,29 +102,14 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		Class<?> ddmStructureClass =
-			DDMStructureManagerUtil.getDDMStructureModelClass();
-
-		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			ddmStructureClass.getSimpleName());
-
-		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
-		return DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			new long[] {ddmStructure.getStructureId()}, serviceContext);
+		return _repository;
 	}
 
 	@Override
 	protected StagedModel getStagedModel(String uuid, Group group) {
 		try {
-			return DLFileEntryTypeLocalServiceUtil.
-				getDLFileEntryTypeByUuidAndGroupId(uuid, group.getGroupId());
+			return RepositoryLocalServiceUtil.getRepositoryByUuidAndGroupId(
+				uuid, group.getGroupId());
 		}
 		catch (Exception e) {
 			return null;
@@ -108,7 +118,7 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
-		return DLFileEntryType.class;
+		return Repository.class;
 	}
 
 	@Override
@@ -117,18 +127,18 @@ public class DLFileEntryTypeStagedModelDataHandlerTest
 			Group group)
 		throws Exception {
 
-		Class<?> ddmStructureClass =
-			DDMStructureManagerUtil.getDDMStructureModelClass();
-
 		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			ddmStructureClass.getSimpleName());
+			RepositoryEntry.class.getSimpleName());
 
 		Assert.assertEquals(1, dependentStagedModels.size());
 
-		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
+		RepositoryEntry repositoryEntry =
+			(RepositoryEntry)dependentStagedModels.get(0);
 
-		DDMStructureManagerUtil.getStructureByUuidAndGroupId(
-			ddmStructure.getUuid(), group.getGroupId());
+		RepositoryEntryLocalServiceUtil.getRepositoryEntryByUuidAndGroupId(
+			repositoryEntry.getUuid(), group.getGroupId());
 	}
+
+	private Repository _repository;
 
 }

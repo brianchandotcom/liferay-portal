@@ -51,12 +51,18 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:b
 
 		String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
 		String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+		Map<String, String> orderColumns = new HashMap<String, String>();
+
+		orderColumns.put("title", "title");
+		orderColumns.put("size", "size");
+		orderColumns.put("modified-date", "modifiedDate");
 		%>
 
 		<liferay-frontend:management-bar-sort
 			orderByCol="<%= orderByCol %>"
 			orderByType="<%= orderByType %>"
-			orderColumns='<%= new String[] {"title", "size"} %>'
+			orderColumns="<%= orderColumns %>"
 			portletURL="<%= sortURL %>"
 		/>
 	</liferay-frontend:management-bar-filters>

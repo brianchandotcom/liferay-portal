@@ -17,21 +17,21 @@
 <%@ include file="/management_bar_sort/init.jsp" %>
 
 <%
-String[] orderColumns = (String[])request.getAttribute("liferay-frontend:management-bar-sort:orderColumns");
+Map<String, String> orderColumns = (Map<String, String>)request.getAttribute("liferay-frontend:management-bar-sort:orderColumns");
 String orderByCol = (String)request.getAttribute("liferay-frontend:management-bar-sort:orderByCol");
 String orderByType = (String)request.getAttribute("liferay-frontend:management-bar-sort:orderByType");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:management-bar-sort:portletURL");
 %>
 
-<c:if test="<%= ArrayUtil.isNotEmpty(orderColumns) %>">
+<c:if test="<%= !orderColumns.isEmpty() %>">
 	<li>
 		<aui:select inlineField="<%= true %>" inlineLabel="left" label="order-by" name="orderByCol">
 
 			<%
-			for (String orderColumn : orderColumns) {
+				for (String columnTitle : orderColumns.keySet()) {
 			%>
 
-				<aui:option label="<%= orderColumn %>" selected="<%= orderByCol.equals(orderColumn) %>" />
+				<aui:option label="<%= columnTitle %>" selected="<%= orderByCol.equals(orderColumns.get(columnTitle)) %>" value="<%= orderColumns.get(columnTitle) %>" />
 
 			<%
 			}

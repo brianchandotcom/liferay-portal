@@ -222,7 +222,6 @@ public class ReleaseManager {
 		catch (IOException ioe) {
 			throw new RuntimeException(ioe);
 		}
-
 	}
 
 	protected String getSchemaVersionString(String bundleSymbolicName) {

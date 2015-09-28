@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>RSS_LINK</td>
-	<td>//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher_web_portlet_AssetPublisherPortlet')]</td>
+	<td>//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]</td>
 	<td></td>
 </tr>
 <tr>

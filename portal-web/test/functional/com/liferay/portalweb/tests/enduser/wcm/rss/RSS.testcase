@@ -488,7 +488,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<var attribute="href" locator="AP#RSS_LINK" name="rssFeedUrl" />
+		<var attribute="href" locator="//div[@class='subscribe-action']/span/a[contains(@href,'asset_publisher')]" name="rssFeedUrl" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Site Page Name" />

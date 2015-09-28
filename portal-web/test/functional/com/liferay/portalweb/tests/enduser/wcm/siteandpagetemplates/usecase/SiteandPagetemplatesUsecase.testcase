@@ -252,7 +252,9 @@
 
 		<execute macro="Site#gotoManageSitesTemplatesViaAddDropdown" />
 
-		<execute macro="SiteTemplates#viewDefaultCP" />
+		<execute macro="SiteTemplates#viewDefaultCP" >
+			<var name="siteTemplateNameList" value="Intranet Site,Community Site" />
+		</execute>
 
 		<execute macro="SiteTemplates#addCP">
 			<var name="siteTemplateName" value="Site Template Name" />

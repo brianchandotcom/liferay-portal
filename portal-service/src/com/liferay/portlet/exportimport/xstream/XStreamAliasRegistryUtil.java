@@ -106,26 +106,6 @@ public class XStreamAliasRegistryUtil {
 	private final Map<Class<?>, String> _xstreamAliases =
 		new ConcurrentHashMap<>();
 
-	private class XStreamAlias {
-
-		public XStreamAlias(Class<?> clazz, String name) {
-			_class = clazz;
-			_name = name;
-		}
-
-		public Class<?> getClazz() {
-			return _class;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		private final Class<?> _class;
-		private final String _name;
-
-	}
-
 	private class XStreamAliasServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<XStreamAlias, XStreamAlias> {
 

@@ -219,7 +219,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 				inputNode: '#<portlet:namespace />permissionNavigationSearch',
 				minQueryLength: 0,
 				nodes: '.permission-navigation-item-container',
-				resultFilters: 'phraseMatch',
+				resultFilters: 'subWordMatch',
 				resultTextLocator: 'data',
 				source: getItems()
 			}

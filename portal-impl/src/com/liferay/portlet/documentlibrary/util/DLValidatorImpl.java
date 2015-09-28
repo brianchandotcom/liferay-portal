@@ -49,9 +49,9 @@ public final class DLValidatorImpl implements DLValidator {
 			name = name.replace(blacklistChar, StringPool.UNDERLINE);
 		}
 
-		name = replaceDlCharLastBlacklist(name);
+		name = replaceDLCharLastBlacklist(name);
 
-		return replaceDlNameBlacklist(name);
+		return replaceDLNameBlacklist(name);
 	}
 
 	@Override
@@ -77,13 +77,7 @@ public final class DLValidatorImpl implements DLValidator {
 			}
 		}
 
-		String nameWithoutExtension = name;
-
-		if (name.contains(StringPool.PERIOD)) {
-			int index = name.lastIndexOf(StringPool.PERIOD);
-
-			nameWithoutExtension = name.substring(0, index);
-		}
+		String nameWithoutExtension = FileUtil.stripExtension(name);
 
 		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
 			if (StringUtil.equalsIgnoreCase(
@@ -218,7 +212,7 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 	}
 
-	protected String replaceDlCharLastBlacklist(String title) {
+	protected String replaceDLCharLastBlacklist(String title) {
 		String previousTitle = null;
 
 		while (!title.equals(previousTitle)) {
@@ -244,26 +238,15 @@ public final class DLValidatorImpl implements DLValidator {
 		return title;
 	}
 
-	protected String replaceDlNameBlacklist(String title) {
-		String nameWithoutExtension = title;
-
-		String extension = StringPool.BLANK;
-
-		if (title.contains(StringPool.PERIOD)) {
-			int index = title.lastIndexOf(StringPool.PERIOD);
-
-			nameWithoutExtension = title.substring(0, index);
-
-			extension = title.substring(index);
-		}
+	protected String replaceDLNameBlacklist(String title) {
+		String extension = FileUtil.getExtension(title);
+		String nameWithoutExtension = FileUtil.stripExtension(title);
 
 		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
 			if (StringUtil.equalsIgnoreCase(
 					nameWithoutExtension, blacklistName)) {
 
-				title = nameWithoutExtension + StringPool.UNDERLINE + extension;
-
-				break;
+				return nameWithoutExtension + StringPool.UNDERLINE + extension;
 			}
 		}
 

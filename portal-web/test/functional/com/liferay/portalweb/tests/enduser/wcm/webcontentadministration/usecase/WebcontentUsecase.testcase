@@ -245,7 +245,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentRemoveGuestViewPermission" priority="4">
+	<command known-issues="LRQA-14590" name="AddWebContentRemoveGuestViewPermission" priority="4">
 		<property name="custom.properties" value="journal.article.view.permission.check.enabled=true" />
 
 		<var name="portletOption" value="Configuration" />

@@ -21,7 +21,7 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD</td>
-	<td>//a[contains(@id,'DDLPortlet_menuItem')]</td>
+	<td>//a[@title='${key_ddlDataDefinitionName}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -23,7 +23,9 @@
 	</command>
 
 	<command name="addViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
+		<var name="key_ddlDataDefinitionName" value="Add ${ddlDataDefinitionName}" />
+
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
 	</command>
 
 	<command name="deleteCP">

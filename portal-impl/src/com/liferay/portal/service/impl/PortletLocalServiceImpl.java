@@ -15,6 +15,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.PortletIdException;
+import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
@@ -1536,6 +1537,30 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			trashHandlerClasses.add(trashHandlerClassElement.getText());
 		}
+
+		Set<ApplicationType> applicationTypes = new HashSet<>();
+
+		for (Element applicationType :
+				portletElement.elements("supported-application-type")) {
+
+			try {
+				applicationTypes.add(
+					ApplicationType.parse(applicationType.getText()));
+			}
+			catch (IllegalArgumentException iae) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Application type reference unknown " +
+							"identifier " + applicationType.getText());
+				}
+			}
+		}
+
+		if (applicationTypes.isEmpty()) {
+			applicationTypes.add(ApplicationType.WIDGET);
+		}
+
+		portletModel.setApplicationTypes(applicationTypes);
 
 		portletModel.setTrashHandlerClasses(trashHandlerClasses);
 

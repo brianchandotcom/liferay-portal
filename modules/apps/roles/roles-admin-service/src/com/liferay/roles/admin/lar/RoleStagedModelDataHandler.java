@@ -15,6 +15,7 @@
 package com.liferay.roles.admin.lar;
 
 import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -217,15 +218,23 @@ public class RoleStagedModelDataHandler
 				permissionsPath);
 
 		for (Permission permission : permissions) {
-			if (ResourceBlockLocalServiceUtil.isSupported(
-					permission.getName())) {
+			try {
+				if (ResourceBlockLocalServiceUtil.isSupported(
+						permission.getName())) {
 
-				importResourceBlock(
-					portletDataContext, importedRole, permission);
+					importResourceBlock(
+						portletDataContext, importedRole, permission);
+				}
+				else {
+					importResourcePermissions(
+						portletDataContext, importedRole, permission);
+				}
 			}
-			else {
-				importResourcePermissions(
-					portletDataContext, importedRole, permission);
+			catch (NoSuchResourceActionException nsrae) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Individually scoped permissions are not imported");
+				}
 			}
 		}
 

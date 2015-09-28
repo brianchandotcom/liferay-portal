@@ -723,7 +723,7 @@
 
 		<execute function="AssertClick#assertTextClick" locator1="Button#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${dmDocumentTitle} moved to the Recycle Bin. Undo" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${dmDocumentTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="deletePGViaMG">

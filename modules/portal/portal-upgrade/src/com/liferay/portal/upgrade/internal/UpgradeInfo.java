@@ -32,6 +32,37 @@ public class UpgradeInfo {
 		_upgradeStep = upgradeStep;
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof UpgradeInfo)) {
+			return false;
+		}
+
+		UpgradeInfo upgradeInfo = (UpgradeInfo)object;
+
+		if (!_fromSchemaVersionString.equals(
+				upgradeInfo._fromSchemaVersionString)) {
+
+			return false;
+		}
+
+		if (!_toSchemaVersionString.equals(
+				upgradeInfo._toSchemaVersionString)) {
+
+			return false;
+		}
+
+		if (!_upgradeStep.equals(upgradeInfo._upgradeStep)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public String getFromSchemaVersionString() {
 		return _fromSchemaVersionString;
 	}
@@ -42,6 +73,17 @@ public class UpgradeInfo {
 
 	public UpgradeStep getUpgradeStep() {
 		return _upgradeStep;
+	}
+
+	@Override
+	public int hashCode() {
+		int hashCode = _fromSchemaVersionString.hashCode();
+
+		hashCode = 31 * hashCode + _toSchemaVersionString.hashCode();
+
+		hashCode = 31 * hashCode + _upgradeStep.hashCode();
+
+		return hashCode;
 	}
 
 	@Override

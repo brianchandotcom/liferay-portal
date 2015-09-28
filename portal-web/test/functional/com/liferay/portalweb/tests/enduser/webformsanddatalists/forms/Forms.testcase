@@ -15,6 +15,153 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="SubmitForm3x3Layout" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAdd" />
+
+		<execute macro="Form#editName" />
+
+		<execute macro="Form#editDescription" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="text" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="name" />
+			<var name="fieldValue" value="one" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#addColumn">
+			<var name="columnLineNumber" value="3" />
+		</execute>
+
+		<execute macro="Form#gotoAddField">
+			<var name="columnSize" value="10" />
+			<var name="fieldType" value="text" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="name" />
+			<var name="fieldValue" value="two" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#addColumn">
+			<var name="columnLineNumber" value="10" />
+		</execute>
+
+		<execute macro="Form#gotoAddField">
+			<var name="columnSize" value="3" />
+			<var name="fieldType" value="text" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="name" />
+			<var name="fieldValue" value="three" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#gotoAddField">
+			<var name="fieldType" value="text" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="name" />
+			<var name="fieldValue" value="four" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#addColumn">
+			<var name="columnLineNumber" value="2" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="Form#gotoAddField">
+			<var name="columnSize" value="11" />
+			<var name="fieldType" value="text" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="name" />
+			<var name="fieldValue" value="five" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#addColumn">
+			<var name="columnLineNumber" value="7" />
+			<var name="rowNumber" value="2" />
+		</execute>
+
+		<execute macro="Form#gotoAddField">
+			<var name="columnSize" value="6" />
+			<var name="fieldType" value="text" />
+		</execute>
+
+		<execute macro="FormFields#editText">
+			<var name="fieldName" value="name" />
+			<var name="fieldValue" value="six" />
+		</execute>
+
+		<execute macro="FormFields#save" />
+
+		<execute macro="Form#save" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="Form Page" />
+			<var name="portletName" value="Form" />
+		</execute>
+
+		<execute macro="FormPortletNavigator#gotoSelectForm" />
+
+		<execute macro="FormPortletConfiguration#selectForm" />
+
+		<execute macro="FormPortletConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Form Page" />
+		</execute>
+
+		<for list="one,two,three,four,five,six" param="fieldName">
+			<execute macro="FormFields#editText">
+				<var name="fieldName" value="${fieldName}" />
+				<var name="fieldValue" value="Field ${fieldName}" />
+			</execute>
+		</for>
+
+		<execute macro="FormPortlet#submit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<for list="one,two,three,four,five,six" param="fieldName">
+			<execute macro="FormsAdmin#viewFormEntry">
+				<var name="fieldName" value="${fieldName}" />
+				<var name="fieldValue" value="Field ${fieldName}" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="SubmitFormWithTextField" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Forms" />

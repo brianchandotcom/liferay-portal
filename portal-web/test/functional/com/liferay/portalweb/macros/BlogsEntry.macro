@@ -1295,7 +1295,9 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${entrySearchTerm}" />
+
 		<execute function="KeyPress" locator1="NavBar#BASIC_SEARCH_FIELD" value1="\RETURN" />
+
 		<execute function="AssertTextEquals" locator1="Message#EMPTY" value1="No entries were found." />
 		<execute function="AssertElementNotPresent" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
 	</command>

@@ -80,7 +80,7 @@ public interface ${entity.name} extends
 	</#if>
 
 	<#list entity.columnList as column>
-		<#if column.isAccessor()>
+		<#if column.isAccessor() || column.isPrimary()>
 			public static final Accessor<${entity.name}, ${serviceBuilder.getPrimitiveObj(column.type)}> ${textFormatter.format(textFormatter.format(column.name, 7), 0)}_ACCESSOR = new Accessor<${entity.name}, ${serviceBuilder.getPrimitiveObj(column.type)}>() {
 
 				@Override

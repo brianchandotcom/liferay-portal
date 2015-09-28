@@ -25,6 +25,12 @@ public interface AssetEntryFinder {
 	public int countEntries(
 		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery);
 
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByDLFileEntryC_T(
+		long classNameId, java.lang.String treePath);
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findByDLFolderC_T(
+		long classNameId, java.lang.String treePath);
+
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findEntries(
 		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery);
 }

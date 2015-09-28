@@ -619,6 +619,10 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		java.lang.String className, long classPK, boolean visible)
 		throws PortalException;
 
+	public com.liferay.portlet.asset.model.AssetEntry updateVisible(
+		com.liferay.portlet.asset.model.AssetEntry entry, boolean visible)
+		throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #validate(long, String, long,
 	long[], String[])}

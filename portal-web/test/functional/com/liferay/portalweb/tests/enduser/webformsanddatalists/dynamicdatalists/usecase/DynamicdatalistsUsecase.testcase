@@ -1850,10 +1850,9 @@
 			<var name="field" value="Text Box" />
 		</execute>
 
-		<execute macro="DynamicDataMapping#addField">
+		<execute macro="DynamicDataMapping#addFieldWithoutRename">
 			<var name="field" value="Text Box" />
 			<var name="fieldFieldLabel" value="Text Box" />
-			<var name="fieldName" value="TextBox" />
 		</execute>
 
 		<execute macro="DynamicDataMapping#viewField">

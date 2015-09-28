@@ -1,6 +1,10 @@
 @import "bourbon";
 
 .lfr-ddm-form-container {
+	.icon-angle-left {
+		font-size: inherit;
+	}
+
 	.lfr-ddm-form-field-container {
 		position: relative;
 
@@ -35,7 +39,34 @@
 		}
 	}
 
+	.lfr-ddm-form-page-description {
+		margin-bottom: 73px;
+	}
+
 	.row {
 		min-height: auto;
+	}
+
+	.lfr-ddm-form-pagination-controls {
+		padding-top: 20px;
+	}
+}
+
+.portal-popup {
+	$side-spacing: 34px;
+	padding: 0;
+
+	&.open {
+		padding: 0;
+	}
+
+	.lfr-ddm-form-page-title,
+	.lfr-ddm-form-page-description {
+		padding-left: $side-spacing;
+		padding-right: $side-spacing;
+	}
+
+	.lfr-ddm-form-page {
+		padding-bottom: $side-spacing;
 	}
 }

@@ -113,44 +113,52 @@
  */
 {template .paginated_form}
 	<div class="lfr-ddm-form-container" id="{$containerId}">
-		<div class="lfr-ddm-form-wizard">
-			<ul class="multi-step-progress-bar">
-				{foreach $page in $pages}
-					<li {if isFirst($page)}class="active"{/if}>
-						<div class="progress-bar-title">{$page.title|noAutoescape}</div>
+		<div class="lfr-ddm-form-content">
+			{if length($pages) > 1}
+				<div class="lfr-ddm-form-wizard">
+					<ul class="multi-step-progress-bar">
+						{foreach $page in $pages}
+							<li {if isFirst($page)}class="active"{/if}>
+								<div class="progress-bar-title">{$page.title|noAutoescape}</div>
 
-						<div class="divider"></div>
+								<div class="divider"></div>
 
-						<div class="progress-bar-step">{index($page) + 1}</div>
-					</li>
-				{/foreach}
-			</ul>
-		</div>
-
-		<div class="lfr-ddm-form-pages">
-			{foreach $page in $pages}
-				<div class="{if isFirst($page)}active{/if} lfr-ddm-form-page">
-					{if isNonnull($page.title)}
-						<h3>{$page.title|noAutoescape}</h3>
-					{/if}
-
-					{if isNonnull($page.description)}
-						<h4>{$page.description|noAutoescape}</h4>
-					{/if}
-
-					{call ddm.form_rows data="all"}
-						{param rows: $page.rows /}
-					{/call}
+								<div class="progress-bar-step">{index($page) + 1}</div>
+							</li>
+						{/foreach}
+					</ul>
 				</div>
-			{/foreach}
+			{/if}
+
+			<div class="lfr-ddm-form-pages">
+				{foreach $page in $pages}
+					<div class="{if isFirst($page)}active{/if} lfr-ddm-form-page">
+						{if $page.title}
+							<h3 class="lfr-ddm-form-page-title">{$page.title|noAutoescape}</h3>
+						{/if}
+
+						{if $page.description}
+							<h4 class="lfr-ddm-form-page-description">{$page.description|noAutoescape}</h4>
+						{/if}
+
+						{call ddm.form_rows data="all"}
+							{param rows: $page.rows /}
+						{/call}
+					</div>
+				{/foreach}
+			</div>
 		</div>
 
 		<div class="lfr-ddm-form-pagination-controls">
-			<button class="btn btn-primary hide lfr-ddm-form-pagination-prev" type="button">Prev</button>
+			<button class="btn btn-lg btn-primary hide lfr-ddm-form-pagination-prev" type="button">
+				<i class="icon-angle-left"></i> Prev
+			</button>
 
-			<button class="btn btn-primary{if length($pages) == 1} hide{/if} lfr-ddm-form-pagination-next pull-right" type="button">Next</button>
+			<button class="btn btn-lg btn-primary{if length($pages) == 1} hide{/if} lfr-ddm-form-pagination-next pull-right" type="button">
+				Next <i class="icon-angle-right"></i>
+			</button>
 
-			<button class="btn btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">Submit</button>
+			<button class="btn btn-lg btn-primary{if length($pages) > 1} hide{/if} lfr-ddm-form-submit pull-right" type="submit">Submit</button>
 		</div>
 	</div>
 {/template}

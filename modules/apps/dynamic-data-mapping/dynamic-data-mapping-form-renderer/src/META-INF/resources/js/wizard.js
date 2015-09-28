@@ -12,12 +12,20 @@ AUI.add(
 		var Wizard = A.Component.create(
 			{
 				ATTRS: {
+					allowNavigation: {
+						value: false
+					},
+
 					items: {
 						value: []
 					},
 
 					itemsNodeList: {
 						valueFn: '_valueItemsNodeList'
+					},
+
+					selected: {
+						value: 0
 					}
 				},
 
@@ -61,8 +69,30 @@ AUI.add(
 				prototype: {
 					CONTENT_TEMPLATE: '<ul class="multi-step-progress-bar"></ul>',
 
+					renderUI: function() {
+						var instance = this;
+
+						if (instance.get('allowNavigation')) {
+							instance.get('contentBox').addClass('liferay-ddm-form-renderer-wizard-navigation-allowed');
+						}
+					},
+
+					bindUI: function() {
+						var instance = this;
+
+						if (instance.get('allowNavigation')) {
+							this._eventHandles = [
+								instance.get('boundingBox').delegate('click', A.bind(instance._onClickItem, instance), 'li')
+							];
+						}
+
+						instance.on('selectedChange', A.bind(instance._afterSelectionChange, instance));
+					},
+
 					activate: function(index) {
 						var instance = this;
+
+						instance.clearAll();
 
 						instance._setState(index, 'active');
 					},
@@ -73,10 +103,40 @@ AUI.add(
 						instance._setState(index, '');
 					},
 
+					clearAll: function() {
+						var instance = this;
+
+						var items = instance.get('items');
+
+						items.forEach(
+							function(item, index) {
+								instance._setState(index, '');
+							}
+						);
+					},
+
 					complete: function(index) {
 						var instance = this;
 
 						instance._setState(index, 'complete');
+					},
+
+					_addItem: function(item) {
+						var instance = this;
+
+						var items = instance.get('items');
+
+						items.push(item);
+
+						instance.set('items', items);
+					},
+
+					_afterSelectionChange: function(event) {
+						var instance = this;
+
+						if (event.newVal > -1) {
+							instance.activate(event.newVal);
+						}
 					},
 
 					_getItemsNodeList: function(items) {
@@ -100,14 +160,38 @@ AUI.add(
 						);
 					},
 
+					_onClickItem: function(event) {
+						var instance = this;
+
+						var items = instance.get('contentBox').all('li');
+
+						var item = event.currentTarget;
+
+						var index = items.indexOf(item);
+
+						instance.set('selected', index);
+					},
+
+					_removeItem: function(index) {
+						var instance = this;
+
+						var items = instance.get('items');
+
+						items.splice(index, 1);
+
+						instance.set('items', items);
+					},
+
 					_setState: function(index, state) {
 						var instance = this;
 
 						var items = instance.get('items');
 
-						items[index].state = state;
+						if (items[index]) {
+							items[index].state = state;
 
-						instance.set('items', items);
+							instance.set('items', items);
+						}
 					},
 
 					_uiSetItems: function(val) {

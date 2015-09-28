@@ -662,7 +662,7 @@
 			</then>
 			<else>
 				<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS" />
-				<execute function="AssertClick" locator1="DDL#MENULIST_VIEW" value1="View" />
+				<execute function="AssertClick" locator1="DDL#MENULIST_VIEW_SPECIFIC_RECORD" value1="View" />
 			</else>
 		</if>
 

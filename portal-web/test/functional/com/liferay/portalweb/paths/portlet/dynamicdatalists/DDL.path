@@ -189,6 +189,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENULIST_VIEW_SPECIFIC_RECORD</td>
+	<td>//tr[contains(.,'${key_ddlRecordFieldData}')]//a[@role='menuitem' and contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MENULIST_SPREADSHEET_VIEW</td>
 	<td>//a[@role='menuitem' and contains(.,'Spreadsheet View')]</td>
 	<td></td>

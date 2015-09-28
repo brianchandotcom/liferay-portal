@@ -14,6 +14,8 @@
 
 package com.liferay.portal.upgrade.internal.release;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceComparator;
 import com.liferay.osgi.service.tracker.map.PropertyServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
@@ -24,7 +26,6 @@ import com.liferay.portal.kernel.dao.db.DBContext;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.RunnableUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Release;
@@ -33,6 +34,7 @@ import com.liferay.portal.output.stream.container.OutputStreamContainerFactory;
 import com.liferay.portal.output.stream.container.OutputStreamContainerFactoryTracker;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.internal.UpgradeInfo;
+import com.liferay.portal.upgrade.internal.configuration.ReleaseManagerConfiguration;
 import com.liferay.portal.upgrade.internal.graph.ReleaseGraphManager;
 
 import java.io.IOException;
@@ -147,7 +149,10 @@ public class ReleaseManager {
 		ServiceTrackerMapListener<String, UpgradeInfo, List<UpgradeInfo>>
 			serviceTrackerMapListener = null;
 
-		if (GetterUtil.getBoolean(properties.get("autoUpgrade"), true)) {
+		_releaseManagerConfiguration = Configurable.createConfigurable(
+			ReleaseManagerConfiguration.class, properties);
+
+		if (_releaseManagerConfiguration.autoUpgrade()) {
 			serviceTrackerMapListener =
 				new UpgradeInfoServiceTrackerMapListener();
 		}
@@ -235,6 +240,7 @@ public class ReleaseManager {
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
 	private ReleaseLocalService _releaseLocalService;
+	private ReleaseManagerConfiguration _releaseManagerConfiguration;
 	private ReleasePublisher _releasePublisher;
 	private ServiceTrackerMap<String, List<UpgradeInfo>> _serviceTrackerMap;
 
@@ -248,6 +254,7 @@ public class ReleaseManager {
 			UpgradeInfo service, List<UpgradeInfo> content) {
 
 			_executorService.submit(new Runnable() {
+
 				@Override
 				public void run() {
 					execute(key);

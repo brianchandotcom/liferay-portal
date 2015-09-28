@@ -6,7 +6,14 @@
 <@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
 	<#assign skipEditorLoading = paramUtil.getBoolean(request, "p_p_isolated")>
 
-	<@liferay_ui["input-editor"] contentsLanguageId="${requestedLocale}" editorName="${editorName}" initMethod="" name="${namespacedFieldName}Editor" onChangeMethod="${namespacedFieldName}OnChangeEditor" skipEditorLoading=skipEditorLoading />
+	<@liferay_ui["input-editor"]
+		contentsLanguageId="${requestedLocale}"
+		editorName="${editorName}"
+		initMethod=""
+		name="${namespacedFieldName}Editor"
+		onChangeMethod="${namespacedFieldName}OnChangeEditor"
+		skipEditorLoading=skipEditorLoading
+	/>
 
 	<@aui.input name=namespacedFieldName type="hidden" value=fieldValue>
 		<#if required>

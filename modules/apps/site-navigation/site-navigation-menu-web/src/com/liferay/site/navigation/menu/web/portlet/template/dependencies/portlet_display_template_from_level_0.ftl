@@ -16,7 +16,11 @@
 					</#if>
 
 					<#if rootNavigationItem.isInNavigation(entries) >
-						<@displayChildNavigation childLayoutLevel=(layoutLevel + 1) childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=false />
+						<@displayChildNavigation
+							childLayoutLevel=(layoutLevel + 1)
+							childNavigationItems=rootNavigationItem.getChildren()
+							includeAllChildEntries=false
+						/>
 					</#if>
 				</li>
 			</#list>

@@ -638,13 +638,20 @@
 		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
 
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
+		<var name="key_ddlRecordFieldData" value="${key_ddlRecordFieldData}" />
+
 		<if>
 			<isset var="ddlRecordFieldDataTableDisplay" />
 			<then>
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldDataTableDisplay}" />
+				<var name="key_ddlRecordFieldData" value="${ddlRecordFieldDataTableDisplay}" />
+
+				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldDataTableDisplay}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
+				<var name="key_ddlRecordFieldData" value="${key_ddlRecordFieldData}" />
+
+				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
 			</else>
 		</if>
 

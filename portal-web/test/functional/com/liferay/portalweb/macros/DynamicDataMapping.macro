@@ -27,25 +27,6 @@
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>
 
-	<command name="addFieldWithoutRename">
-		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
-
-		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
-
-		<var name="key_field" value="${field}" />
-
-		<execute function="DragAndDrop" locator1="DDMEditStructure#FIELDS_FIELD" locator2="DDMEditStructure#FORM_BUILDER" value1="${field}" />
-
-		<execute macro="DynamicDataMapping#editFieldLabelCmd">
-			<var name="field" value="${field}" />
-			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
-
-		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
-	</command>
-
 	<command name="addFieldFormTemplateSpecific">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 
@@ -95,6 +76,25 @@
 		<var name="key_field" value="${field}" />
 
 		<execute function="DragAndDrop" locator1="DDMEditStructure#FIELDS_FIELD" locator2="DDMEditStructure#FORM_BUILDER_FIELD" value1="${field}" />
+
+		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
+	</command>
+
+	<command name="addFieldWithoutRename">
+		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
+
+		<execute function="AssertClick#pauseAssertTextClickAt" locator1="DDMEditStructure#FIELDS_LINK" value1="Fields" />
+
+		<var name="key_field" value="${field}" />
+
+		<execute function="DragAndDrop" locator1="DDMEditStructure#FIELDS_FIELD" locator2="DDMEditStructure#FORM_BUILDER" value1="${field}" />
+
+		<execute macro="DynamicDataMapping#editFieldLabelCmd">
+			<var name="field" value="${field}" />
+			<var name="fieldFieldLabel" value="${fieldFieldLabel}" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_FIELD_LABEL" value1="${fieldFieldLabel}" />
 
 		<execute macro="DynamicDataMapping#selectFrameTopCmd" />
 	</command>

@@ -65,9 +65,7 @@ public class IndexerRegistryImpl implements IndexerRegistry {
 
 	@Override
 	public List<Indexer<?>> getIndexers() {
-		List<Indexer<?>> indexers = new ArrayList<>(_indexers.values());
-
-		return Collections.unmodifiableList(indexers);
+		return new ArrayList<>(_indexers.values());
 	}
 
 	@Override

@@ -69,7 +69,7 @@ public class I18nServletTest {
 	@Test
 	public void testI18nNotUseDefaultExistentLocale() throws Exception {
 		boolean originalLocaleUseDefault =
-						PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
+			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
 
 		try {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
@@ -88,7 +88,7 @@ public class I18nServletTest {
 	@Test
 	public void testI18nNotUseDefaultNonDefaultLocale() throws Exception {
 		boolean originalLocaleUseDefault =
-						PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
+			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
 
 		try {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
@@ -100,14 +100,14 @@ public class I18nServletTest {
 		}
 		finally {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE =
-							originalLocaleUseDefault;
+				originalLocaleUseDefault;
 		}
 	}
 
 	@Test
 	public void testI18nNotUseDefaultNonExistentLocale() throws Exception {
 		boolean originalLocaleUseDefault =
-						PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
+			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
 
 		try {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
@@ -118,14 +118,14 @@ public class I18nServletTest {
 		}
 		finally {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE =
-							originalLocaleUseDefault;
+				originalLocaleUseDefault;
 		}
 	}
 
 	@Test
 	public void testI18nUseDefault() throws Exception {
 		boolean originalLocaleUseDefault =
-						PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
+			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
 
 		try {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = true;
@@ -137,7 +137,7 @@ public class I18nServletTest {
 		}
 		finally {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE =
-							originalLocaleUseDefault;
+				originalLocaleUseDefault;
 		}
 	}
 
@@ -154,19 +154,15 @@ public class I18nServletTest {
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
-						new MockHttpServletRequest();
+			new MockHttpServletRequest();
 
-		StringBuilder sb = new StringBuilder(2);
-
-		sb.append(StringPool.SLASH);
-		sb.append(LocaleUtil.toLanguageId(locale));
-
-		mockHttpServletRequest.setServletPath(sb.toString());
+		mockHttpServletRequest.setServletPath(
+			StringPool.SLASH + LocaleUtil.toLanguageId(locale));
 
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
 		String[] actualI18NDataArray = _i18nServlet.getI18nData(
-						mockHttpServletRequest);
+			mockHttpServletRequest);
 
 		Assert.assertArrayEquals(expectedDataArray, actualI18NDataArray);
 	}

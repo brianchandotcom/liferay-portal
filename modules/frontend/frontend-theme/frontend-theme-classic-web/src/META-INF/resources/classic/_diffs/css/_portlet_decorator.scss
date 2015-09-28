@@ -3,14 +3,6 @@
 	border: 1px solid #DEEEEE;
 }
 
-.portlet-barebone {
-	position: relative;
-
-	.portlet-content {
-		padding: 0;
-	}
-
-	.portlet-topper {
-		z-index: 1;
-	}
+.portlet-barebone .portlet-content {
+	padding: 0;
 }

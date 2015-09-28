@@ -26,6 +26,7 @@ public interface UpgradeStepRegistrator {
 	public void register(Registry registry);
 
 	public interface Registry {
+
 		public void register(
 			String bundleSymbolicName, String from, String to,
 			Collection<UpgradeStep> upgradeSteps);

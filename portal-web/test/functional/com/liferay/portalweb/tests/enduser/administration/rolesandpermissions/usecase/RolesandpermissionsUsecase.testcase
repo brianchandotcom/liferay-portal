@@ -1102,7 +1102,7 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
-		<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="AssertElementNotPresent" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 
 		<execute macro="User#logoutPG" />
 
@@ -1116,7 +1116,7 @@
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
-		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="AssertElementPresent" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 
 		<execute macro="User#logoutPG" />
 

@@ -24,7 +24,10 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
+				var evaluator = instance.get('evaluator');
+
 				instance._eventHandlers.push(
+					evaluator.after('evaluationEnded', A.bind('_afterVisibilityEvaluationEnded', instance)),
 					instance.after('valueChanged', instance._afterValueChanged),
 					instance.after('visibleChange', instance._afterVisibleChange)
 				);
@@ -61,13 +64,17 @@ AUI.add(
 
 				instance.showLoadingFeedback();
 
-				evaluator.evaluate(
-					function(result) {
-						instance.hideFeedback();
+				evaluator.evaluate();
+			},
 
-						instance.processVisibilityEvaluation(result);
-					}
-				);
+			_afterVisibilityEvaluationEnded: function(event) {
+				var instance = this;
+
+				var result = event.result;
+
+				instance.hideFeedback();
+
+				instance.processVisibilityEvaluation(result);
 			},
 
 			_afterVisibleChange: function() {

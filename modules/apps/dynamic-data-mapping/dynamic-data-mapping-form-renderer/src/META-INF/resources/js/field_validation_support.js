@@ -31,7 +31,10 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
+				var evaluator = instance.get('evaluator');
+
 				instance._eventHandlers.push(
+					evaluator.after('evaluationEnded', A.bind('_afterValidationEvaluationEnded', instance)),
 					instance.after('blur', instance._afterBlur),
 					instance.after('parentChange', instance._afterParentChange)
 				);
@@ -108,10 +111,6 @@ AUI.add(
 
 					evaluator.evaluate(
 						function(result) {
-							instance.hideFeedback();
-
-							instance.processEvaluation(result);
-
 							if (callback) {
 								var hasErrors = instance.hasErrors();
 
@@ -141,6 +140,16 @@ AUI.add(
 				var evaluator = instance.get('evaluator');
 
 				evaluator.set('form', event.newVal);
+			},
+
+			_afterValidationEvaluationEnded: function(event) {
+				var instance = this;
+
+				var result = event.result;
+
+				instance.hideFeedback();
+
+				instance.processEvaluation(result);
 			},
 
 			_valueEvaluator: function() {

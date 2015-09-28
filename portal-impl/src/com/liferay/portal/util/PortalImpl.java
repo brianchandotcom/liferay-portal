@@ -1413,7 +1413,9 @@ public class PortalImpl implements Portal {
 
 		boolean cdnEnabled = ParamUtil.getBoolean(request, "cdn_enabled", true);
 
-		if (!cdnEnabled) {
+		String ppid = ParamUtil.getString(request, "p_p_id");
+
+		if (!cdnEnabled || ppid.equals(PortletKeys.PORTAL_SETTINGS)) {
 			return StringPool.BLANK;
 		}
 

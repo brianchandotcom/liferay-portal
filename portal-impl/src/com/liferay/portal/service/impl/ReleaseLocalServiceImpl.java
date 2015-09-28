@@ -349,14 +349,20 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 			}
 		}
 
-		if (!previousSchemaVersion.equals(release.getSchemaVersion())) {
+		String currentSchemaVersion = release.getSchemaVersion();
+
+		if (Validator.isNull(currentSchemaVersion)) {
+			currentSchemaVersion = "0.0.0";
+		}
+
+		if (!previousSchemaVersion.equals(currentSchemaVersion)) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("Unable to update release because the previous schema ");
 			sb.append("version ");
 			sb.append(previousSchemaVersion);
 			sb.append(" does not match the expected schema version ");
-			sb.append(release.getSchemaVersion());
+			sb.append(currentSchemaVersion);
 
 			throw new IllegalStateException(sb.toString());
 		}

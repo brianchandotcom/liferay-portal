@@ -129,7 +129,49 @@ AUI.add(
 							}
 						);
 
-						instance._eventHandles = [];
+						instance._eventHandles = [
+							Liferay.on(
+								'surfaceStartNavigate',
+								function() {
+									Liferay.DOMTaskRunner.addTask(
+										restore,
+										{
+											containerId: instance.get('contentBox').attr('id')
+										},
+										function(data, params, frag) {
+											if (frag.one('#' + params.containerId)) {
+												return true;
+											}
+
+											return false;
+										}
+									);
+								}
+							),
+							Liferay.on(
+								'surfaceStartNavigate',
+								function() {
+									var checkBoxes = instance.get('contentBox').all('input');
+
+									var elements = [];
+
+									checkBoxes.each(
+										function(item, index) {
+											if (item.attr('checked')) {
+												elements.push(item.val());
+											}
+										}
+									);
+
+									Liferay.DOMTaskRunner.addTaskState(
+										'SearchContainerOwner',
+										{
+											elements: elements
+										}
+									);
+								}
+							)
+						];
 
 						if (instance.get('hover')) {
 							instance._eventHandles.push(instance.get('contentBox').delegate(['mouseenter', 'mouseleave'], instance._onContentHover, 'tr', instance));
@@ -345,6 +387,32 @@ AUI.add(
 				_cache: {}
 			}
 		);
+
+		var restore = function(data, params, frag) {
+			var node = frag.one('#' + params.containerId);
+
+			var checkBoxes = node.all('input');
+
+			var elements = data.data.elements;
+
+			checkBoxes.each(
+				function(item, index) {
+					for (var i = 0; i < elements.length; i++) {
+						if (item.val() === elements[i]) {
+							item.attr('checked', true);
+							elements.splice(i, 1);
+							break;
+						}
+					}
+				}
+			);
+
+			var checkBoxName = checkBoxes.getAttribute('name')[0];
+
+			for (var j = 0; j < elements.length; j++) {
+				node.appendChild(A.Node.create('<input class="hide" name="' + checkBoxName + '" value="' + elements[j] + '" type="checkbox" checked />'));
+			}
+		};
 
 		Liferay.SearchContainer = SearchContainer;
 	},

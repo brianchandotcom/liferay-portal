@@ -20,12 +20,15 @@ import com.liferay.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderLocalService;
+import com.liferay.journal.service.persistence.JournalFolderUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
@@ -141,24 +144,33 @@ public class JournalFolderStagedModelDataHandler
 				folder.getUuid(), groupId);
 
 			if (existingFolder == null) {
+				String name = getFolderName(
+					null, groupId, parentFolderId, folder.getName(), 2);
+
 				serviceContext.setUuid(folder.getUuid());
 
 				importedFolder = _journalFolderLocalService.addFolder(
-					userId, groupId, parentFolderId, folder.getName(),
+					userId, groupId, parentFolderId, name,
 					folder.getDescription(), serviceContext);
 			}
 			else {
+				String name = getFolderName(
+					folder.getUuid(), groupId, parentFolderId, folder.getName(),
+					2);
+
 				importedFolder = _journalFolderLocalService.updateFolder(
 					userId, serviceContext.getScopeGroupId(),
-					existingFolder.getFolderId(), parentFolderId,
-					folder.getName(), folder.getDescription(), false,
-					serviceContext);
+					existingFolder.getFolderId(), parentFolderId, name,
+					folder.getDescription(), false, serviceContext);
 			}
 		}
 		else {
+			String name = getFolderName(
+				null, groupId, parentFolderId, folder.getName(), 2);
+
 			importedFolder = _journalFolderLocalService.addFolder(
-				userId, groupId, parentFolderId, folder.getName(),
-				folder.getDescription(), serviceContext);
+				userId, groupId, parentFolderId, name, folder.getDescription(),
+				serviceContext);
 		}
 
 		importFolderDDMStructures(portletDataContext, folder, importedFolder);
@@ -208,6 +220,27 @@ public class JournalFolderStagedModelDataHandler
 				portletDataContext, folder, ddmStructure,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
+	}
+
+	protected String getFolderName(
+			String uuid, long groupId, long parentFolderId, String name,
+			int count)
+		throws Exception {
+
+		JournalFolder folder = JournalFolderUtil.fetchByG_P_N(
+			groupId, parentFolderId, name);
+
+		if (folder == null) {
+			return name;
+		}
+
+		if (Validator.isNotNull(uuid) && uuid.equals(folder.getUuid())) {
+			return name;
+		}
+
+		name = StringUtil.appendParentheticalSuffix(name, count);
+
+		return getFolderName(uuid, groupId, parentFolderId, name, ++count);
 	}
 
 	protected void importFolderDDMStructures(

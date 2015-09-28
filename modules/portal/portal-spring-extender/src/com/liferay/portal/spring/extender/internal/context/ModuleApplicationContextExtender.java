@@ -259,14 +259,13 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 						try {
 							db.runSQLTemplateString(
-								getSQLTemplateString("tables.sql"), true,
-								false);
+								getSQLTemplateString("tables.sql"), true, true);
 							db.runSQLTemplateString(
 								getSQLTemplateString("sequences.sql"), true,
-								false);
+								true);
 							db.runSQLTemplateString(
 								getSQLTemplateString("indexes.sql"), true,
-								false);
+								true);
 						}
 						catch (Exception e) {
 							new UpgradeException(e);

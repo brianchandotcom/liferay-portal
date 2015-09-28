@@ -2007,8 +2007,6 @@
 	<command name="viewViewCountCP">
 		<var name="key_portletName" value="Blogs" />
 
-		<execute function="Click" locator1="Home#SITE_ADMINISTRATION_NAVIGATION" />
-
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertClick" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />

@@ -744,6 +744,10 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
 		<execute macro="BlogsEntry#viewViewCountCP">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryViewCount" value="0" />

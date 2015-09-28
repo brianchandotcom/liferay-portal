@@ -1,6 +1,14 @@
 <definition>
 	<var name="formDescription" value="Created Form Description" />
 	<var name="formName" value="Created Form Name" />
+	<var name="rowNumber" value="1" />
+
+	<command name="addColumn">
+		<var name="key_columnLineNumber" value="${columnLineNumber}" />
+		<var name="key_rowNumber" value="${rowNumber}" />
+
+		<execute function="DragAndDrop#dragAndDropToObjectNotVisible" locator1="Form#ADD_COLUMN_RIGHT" locator2="Form#ADD_COLUMN_LINE" value1="" />
+	</command>
 
 	<command name="addPage">
 		<execute function="Click" locator1="Form#PAGE_CONTROLS_ICON" />

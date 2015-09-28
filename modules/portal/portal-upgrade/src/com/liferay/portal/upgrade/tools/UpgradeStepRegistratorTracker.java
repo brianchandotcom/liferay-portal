@@ -41,7 +41,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 @Component(immediate = true)
 public class UpgradeStepRegistratorTracker {
 
-	public List<ServiceRegistration<UpgradeStep>> register(
+	public static List<ServiceRegistration<UpgradeStep>> register(
 		BundleContext bundleContext, String upgradeBundleSymbolicName,
 		String upgradeFromSchemaVersion, String upgradeToSchemaVersion,
 		Collection<UpgradeStep> upgradeSteps) {
@@ -53,7 +53,7 @@ public class UpgradeStepRegistratorTracker {
 			upgradeToSchemaVersion, upgradeSteps.toArray(upgradeStepsArray));
 	}
 
-	public List<ServiceRegistration<UpgradeStep>> register(
+	public static List<ServiceRegistration<UpgradeStep>> register(
 		BundleContext bundleContext, String upgradeBundleSymbolicName,
 		String upgradeFromSchemaVersion, String upgradeToSchemaVersion,
 		UpgradeStep ... upgradeSteps) {
@@ -74,27 +74,7 @@ public class UpgradeStepRegistratorTracker {
 		return serviceRegistrations;
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
-
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, UpgradeStepRegistrator.class,
-			new UpgradeStepRegistratorServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
-
-	protected List<UpgradeInfo> buildUpgradeInfos(
-		String upgradeFromVersion, String upgradeToVersion,
-		Collection<UpgradeStep> upgradeSteps) {
-
-		return buildUpgradeInfos(
-			upgradeFromVersion, upgradeToVersion,
-			upgradeSteps.toArray(new UpgradeStep[upgradeSteps.size()]));
-	}
-
-	protected List<UpgradeInfo> buildUpgradeInfos(
+	protected static List<UpgradeInfo> buildUpgradeInfos(
 		String upgradeFromVersion, String upgradeToVersion,
 		UpgradeStep... upgradeSteps) {
 
@@ -126,12 +106,32 @@ public class UpgradeStepRegistratorTracker {
 		return upgradeInfos;
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, UpgradeStepRegistrator.class,
+			new UpgradeStepRegistratorServiceTrackerCustomizer());
+
+		_serviceTracker.open();
+	}
+
+	protected List<UpgradeInfo> buildUpgradeInfos(
+		String upgradeFromVersion, String upgradeToVersion,
+		Collection<UpgradeStep> upgradeSteps) {
+
+		return buildUpgradeInfos(
+			upgradeFromVersion, upgradeToVersion,
+			upgradeSteps.toArray(new UpgradeStep[upgradeSteps.size()]));
+	}
+
 	@Deactivate
 	protected void deactivate() {
 		_serviceTracker.close();
 	}
 
-	private ServiceRegistration<UpgradeStep> _registerUpgradeStep(
+	private static ServiceRegistration<UpgradeStep> _registerUpgradeStep(
 		BundleContext bundleContext, String upgradeBundleSymbolicName,
 		UpgradeInfo upgradeInfo) {
 

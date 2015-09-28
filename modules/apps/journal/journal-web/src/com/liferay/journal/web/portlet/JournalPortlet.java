@@ -454,7 +454,7 @@ public class JournalPortlet extends MVCPortlet {
 
 			PortletRequestDispatcher portletRequestDispatcher =
 				portletContext.getRequestDispatcher(
-					"/html/taglib/ui/diff_version_comparator/diff_html.jsp");
+					"/compare_versions_diff_html.jsp");
 
 			portletRequestDispatcher.include(resourceRequest, resourceResponse);
 		}

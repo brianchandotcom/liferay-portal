@@ -28,17 +28,19 @@ import org.junit.Test;
 /**
  * @author Carlos Sierra Andrés
  */
-public class UpgradeUtilTest {
+public class UpgradeStepRegistratorTrackerTest {
 
 	@Test
 	public void testBuildUpgradeInfos() {
 		TestUpgradeStep testUpgradeStep = new TestUpgradeStep();
 
+		UpgradeStepRegistratorTracker upgradeStepRegistratorTracker =
+			new UpgradeStepRegistratorTracker();
+
 		List<UpgradeInfo> upgradeInfos =
-			new UpgradeStepRegistratorTracker().buildUpgradeInfos(
+			upgradeStepRegistratorTracker.buildUpgradeInfos(
 				"0.0.0", "1.0.0", testUpgradeStep, testUpgradeStep,
-				testUpgradeStep,
-			testUpgradeStep);
+				testUpgradeStep, testUpgradeStep);
 
 		Assert.assertEquals(4, upgradeInfos.size());
 
@@ -82,6 +84,7 @@ public class UpgradeUtilTest {
 		@Override
 		public void upgrade(DBProcessContext dbProcessContext)
 			throws UpgradeException {
+
 		}
 
 	}

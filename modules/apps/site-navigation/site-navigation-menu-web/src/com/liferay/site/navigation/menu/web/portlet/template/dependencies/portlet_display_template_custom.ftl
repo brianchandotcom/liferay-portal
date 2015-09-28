@@ -1,31 +1,6 @@
 <#include "${templatesPath}/NAVIGATION-MACRO-FTL" />
 
 <#if entries?? && entries?has_content && (entries?size >= rootLayoutLevel?number) >
-	<style>
-		.breadcrumb-horizontal ul {
-			padding-left: 0;
-			margin-bottom: 0;
-		}
-
-		.breadcrumb-horizontal li:last-child a {
-			color: #676767;
-		}
-
-		.breadcrumb-horizontal li:before {
-			content: "/ ";
-			padding: 0 5px;
-			color: #ccc;
-		}
-
-		.breadcrumb-horizontal li:first-child:before {
-			content: "";
-		}
-
-		.breadcrumb-horizontal li:last-child a {
-			color: #676767;
-		}
-	</style>
-
 	<#assign layoutLevel = rootLayoutLevel?number />
 
 	<#if rootLayoutType == "relative">
@@ -48,19 +23,17 @@
 		<#elseif headerType == "portlet-title">
 			<h2>${htmlUtil.escape(portletDisplay.getTitle())}</h2>
 		<#elseif headerType == "breadcrumb">
-			<div class="breadcrumb breadcrumb-horizontal">
-				<ul>
-					<#list entries as entry>
-						<li>
-							<#if entry.isBrowsable()>
-								<a href="${entry.getURL()!""}" ${entry.getTarget()}>${htmlUtil.escape(entry.getName())}</a>
-							<#else>
-								${htmlUtil.escape(entry.getName())}
-							</#if>
-						</li>
-					</#list>
-				</ul>
-			</div>
+			<ul class="breadcrumb breadcrumb-horizontal">
+				<#list entries as entry>
+					<li>
+						<#if entry.isBrowsable()>
+							<a href="${entry.getURL()!""}" ${entry.getTarget()}>${htmlUtil.escape(entry.getName())}</a>
+						<#else>
+							${htmlUtil.escape(entry.getName())}
+						</#if>
+					</li>
+				</#list>
+			</ul>
 		</#if>
 
 		<#if layoutLevel == 0>

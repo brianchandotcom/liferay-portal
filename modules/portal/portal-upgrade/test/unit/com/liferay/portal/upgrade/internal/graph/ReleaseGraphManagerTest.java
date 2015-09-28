@@ -95,7 +95,7 @@ public class ReleaseGraphManagerTest {
 		List<List<UpgradeInfo>> upgradePaths =
 			releaseGraphManager.getUpgradeInfos("0.1.0.1");
 
-		Assert.assertEquals(1, upgradePaths);
+		Assert.assertEquals(2, upgradePaths.size());
 	}
 
 	@Test
@@ -112,7 +112,7 @@ public class ReleaseGraphManagerTest {
 		List<List<UpgradeInfo>> upgradeInfos =
 			releaseGraphManager.getUpgradeInfos("0.0.0");
 
-		Assert.assertEquals(0, upgradeInfos);
+		Assert.assertEquals(0, upgradeInfos.size());
 	}
 
 	@Test

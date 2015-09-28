@@ -52,6 +52,10 @@ public class VerifyMySQL extends VerifyProcess {
 
 			verifyTableEngine(statement);
 
+			if (GetterUtil.getFloat(db.getVersionString()) < 5.6F) {
+				return;
+			}
+
 			verifyDatetimePrecision(connection.getMetaData(), statement);
 		}
 	}

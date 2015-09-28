@@ -320,11 +320,19 @@ public class PoshiRunnerGetterUtil {
 						Object returnObject = method.invoke(
 							null, (Object[])integers);
 
-							return returnObject.toString();
+						if (returnObject == null) {
+							returnObject = "";
+						}
+
+						return returnObject.toString();
 					}
 					else {
 						Object returnObject = method.invoke(
 							null, new Object[] {integers});
+
+						if (returnObject == null) {
+							returnObject = "";
+						}
 
 						return returnObject.toString();
 					}
@@ -364,6 +372,10 @@ public class PoshiRunnerGetterUtil {
 				parameterClasses.toArray(new Class[parameterClasses.size()]));
 
 			Object returnObject = method.invoke(object, (Object[])parameters);
+
+			if (returnObject == null) {
+				returnObject = "";
+			}
 
 			return returnObject.toString();
 		}

@@ -28,3 +28,15 @@
 		}
 	}
 }
+
+.checkbox-default {
+	input[type="checkbox"] {
+		&.selected-partial {
+			&:checked {
+				&:after {
+					content: "\f068";
+				}
+			}
+		}
+	}
+}

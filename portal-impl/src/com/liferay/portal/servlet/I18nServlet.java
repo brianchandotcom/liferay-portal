@@ -148,13 +148,13 @@ public class I18nServlet extends HttpServlet {
 
 		String i18nPath = StringPool.SLASH + i18nLanguageId;
 
-		Locale locale = LocaleUtil.fromLanguageId(
-			i18nLanguageId, true,
-			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE);
+		if (!PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE &&
+			!LanguageUtil.isAvailableLocale(i18nLanguageId)) {
 
-		if (locale == null) {
 			return null;
 		}
+
+		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
 
 		if (Validator.isNull(locale.getCountry())) {
 

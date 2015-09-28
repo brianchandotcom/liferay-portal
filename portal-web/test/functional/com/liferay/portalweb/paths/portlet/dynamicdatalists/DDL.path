@@ -86,8 +86,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>RECORD_TABLE_ACTIONS_1</td>
-	<td>xpath=//td[contains(@class,'entry-action last')]/div/a/i[contains(@class,'menu-arrow caret')][1]</td>
+	<td>RECORD_TABLE_ELLIPSIS_1</td>
+	<td>xpath=//td[contains(@class,'entry-action')]/div/a/span[contains(@class,'icon-ellipsis-vertical')][1]</td>
 	<td></td>
 </tr>
 <tr>

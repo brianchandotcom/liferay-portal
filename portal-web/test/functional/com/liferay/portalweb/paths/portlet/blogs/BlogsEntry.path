@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>SUBTITLE</td>
-	<td>//div[contains(@class,'entry-subtitle')]//p[contains(.,'${key_entrySubtitle}')]</td>
+	<td>//div[contains(@class,'entry-subtitle')]//h4[contains(.,'${key_entrySubtitle}')]</td>
 	<td></td>
 </tr>
 <tr>

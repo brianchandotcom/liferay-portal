@@ -154,10 +154,10 @@ public class I18nServletTest {
 
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
-		I18nServlet.I18nData actualI18NData = _i18nServlet.getI18nData(
+		I18nServlet.I18nData actualI18nData = _i18nServlet.getI18nData(
 			mockHttpServletRequest);
 
-		Assert.assertEquals(expectedI18nData, actualI18NData);
+		Assert.assertEquals(expectedI18nData, actualI18nData);
 	}
 
 	private final Locale _defaultLocale = LocaleUtil.US;

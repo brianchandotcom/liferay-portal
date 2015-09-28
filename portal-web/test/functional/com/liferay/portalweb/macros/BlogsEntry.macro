@@ -1227,6 +1227,8 @@
 		<var method="StringUtil#replace('${roleName}', ' ', '-')" name="key_roleName" />
 		<var method="StringUtil#lowerCase('${key_roleName}')" name="key_roleName" />
 
+		<execute function="Click" locator1="Blogs#PAGE_VIEW_ENTRY_OPTIONS_DROPDOWN" />
+
 		<execute function="AssertClick" locator1="Link#PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />

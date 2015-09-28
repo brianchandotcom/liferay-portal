@@ -14,6 +14,11 @@
 
 package com.liferay.control.menu.web.portlet;
 
+import com.liferay.control.menu.ControlMenuCategory;
+import com.liferay.control.menu.constants.ControlMenuCategoryKeys;
+import com.liferay.control.menu.constants.ControlMenuWebKeys;
+import com.liferay.control.menu.util.ControlMenuCategoryRegistry;
+import com.liferay.control.menu.util.ControlMenuEntryRegistry;
 import com.liferay.control.menu.web.constants.ControlMenuPortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -27,11 +32,19 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.util.SitesUtil;
 
+import java.io.IOException;
+
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -95,6 +108,25 @@ public class ControlMenuPortlet extends MVCPortlet {
 	}
 
 	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		List<ControlMenuCategory> controlMenuCategories =
+			_controlMenuCategoryRegistry.getControlMenuCategories(
+				ControlMenuCategoryKeys.ROOT,
+				PortalUtil.getHttpServletRequest(renderRequest));
+
+		renderRequest.setAttribute(
+			ControlMenuWebKeys.CONTROL_MENU_CATEGORIES, controlMenuCategories);
+		renderRequest.setAttribute(
+			ControlMenuWebKeys.CONTROL_MENU_ENTRY_REGISTRY,
+			_controlMenuEntryRegistry);
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof SystemException ||
 			super.isSessionErrorException(cause)) {
@@ -104,5 +136,22 @@ public class ControlMenuPortlet extends MVCPortlet {
 
 		return false;
 	}
+
+	@Reference(unbind = "-")
+	protected void setControlMenuCategoryRegistry(
+		ControlMenuCategoryRegistry controlMenuCategoryRegistry) {
+
+		_controlMenuCategoryRegistry = controlMenuCategoryRegistry;
+	}
+
+	@Reference(unbind = "-")
+	protected void setControlMenuEntryRegistry(
+		ControlMenuEntryRegistry controlMenuEntryRegistry) {
+
+		_controlMenuEntryRegistry = controlMenuEntryRegistry;
+	}
+
+	private ControlMenuCategoryRegistry _controlMenuCategoryRegistry;
+	private ControlMenuEntryRegistry _controlMenuEntryRegistry;
 
 }

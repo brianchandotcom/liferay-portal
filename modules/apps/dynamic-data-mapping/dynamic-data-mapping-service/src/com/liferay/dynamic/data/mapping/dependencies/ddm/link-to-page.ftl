@@ -58,7 +58,7 @@
 	level = 0
 	selected = false
 >
-	<#assign layoutJSON = escapeAttribute("{ \"layoutId\": ${layout.getLayoutId()}, \"groupId\": ${layout.getGroupId()}, \"privateLayout\": ${layout.isPrivateLayout()?string} }")>
+	<#assign layoutJSON = escapeAttribute("{\"groupId\":${layout.getGroupId()},\"layoutId\":${layout.getLayoutId()},\"privateLayout\":${layout.isPrivateLayout()?string}}")>
 
 	<@aui.option selected=selected useModelValue=false value=layoutJSON>
 		<#list 0..level as i>

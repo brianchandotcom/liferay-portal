@@ -75,9 +75,8 @@ public class I18nServletTest {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
 			Locale expectedLocale = _defaultLocale;
 
-			String[] expectedArray = getI18nDataExpectedArray(expectedLocale);
-
-			testGetI18nData(expectedLocale, expectedArray);
+			testGetI18nData(
+				expectedLocale, getExpectedI18nData(expectedLocale));
 		}
 		finally {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE =
@@ -94,9 +93,8 @@ public class I18nServletTest {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = false;
 			Locale expectedLocale = _nonDefaultLocale;
 
-			String[] expectedArray = getI18nDataExpectedArray(expectedLocale);
-
-			testGetI18nData(expectedLocale, expectedArray);
+			testGetI18nData(
+				expectedLocale, getExpectedI18nData(expectedLocale));
 		}
 		finally {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE =
@@ -131,9 +129,8 @@ public class I18nServletTest {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = true;
 			Locale expectedLocale = _defaultLocale;
 
-			String[] expectedArray = getI18nDataExpectedArray(expectedLocale);
-
-			testGetI18nData(expectedLocale, expectedArray);
+			testGetI18nData(
+				expectedLocale, getExpectedI18nData(expectedLocale));
 		}
 		finally {
 			PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE =
@@ -141,16 +138,12 @@ public class I18nServletTest {
 		}
 	}
 
-	protected String[] getI18nDataExpectedArray(Locale locale) {
-		String languageId = LocaleUtil.toLanguageId(locale);
-		String i18nPath = StringPool.SLASH + languageId;
-		String language = locale.getLanguage();
-		String path = StringPool.SLASH;
-
-		return new String[] {languageId, i18nPath, path, language};
+	protected I18nServlet.I18nData getExpectedI18nData(Locale locale) {
+		return _i18nServlet.getI18nData(locale);
 	}
 
-	protected void testGetI18nData(Locale locale, String[] expectedDataArray)
+	protected void testGetI18nData(
+			Locale locale, I18nServlet.I18nData expectedI18nData)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -161,10 +154,10 @@ public class I18nServletTest {
 
 		mockHttpServletRequest.setPathInfo(StringPool.SLASH);
 
-		String[] actualI18NDataArray = _i18nServlet.getI18nData(
+		I18nServlet.I18nData actualI18NData = _i18nServlet.getI18nData(
 			mockHttpServletRequest);
 
-		Assert.assertArrayEquals(expectedDataArray, actualI18NDataArray);
+		Assert.assertEquals(expectedI18nData, actualI18NData);
 	}
 
 	private final Locale _defaultLocale = LocaleUtil.US;

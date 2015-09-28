@@ -5811,33 +5811,10 @@ public class JournalArticleLocalServiceImpl
 
 		journalArticlePersistence.update(article);
 
-		if ((status == WorkflowConstants.STATUS_APPROVED) &&
-			(article.getExpirationDate() != null) &&
-			JournalServiceConfigurationValues.
-				JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS &&
-			!ExportImportThreadLocal.isImportInProcess()) {
+		if (JournalServiceConfigurationValues.
+				JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS) {
 
-			final List<JournalArticle> articles =
-				journalArticlePersistence.findByG_A(
-					article.getGroupId(), article.getArticleId());
-			final Date expirationDate = article.getExpirationDate();
-
-			TransactionCommitCallbackUtil.registerCallback(
-				new Callable<Void>() {
-
-					@Override
-					public Void call() throws Exception {
-						for (JournalArticle curArticle : articles) {
-							curArticle.setExpirationDate(expirationDate);
-
-							journalArticleLocalService.updateJournalArticle(
-								curArticle);
-						}
-
-						return null;
-					}
-
-				});
+			setArticlesExpirationDate(article);
 		}
 
 		if (hasModifiedLatestApprovedVersion(
@@ -7471,6 +7448,39 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.addRuntimeSubscribers(toAddress, toName);
 
 		subscriptionSender.flushNotificationsAsync();
+	}
+
+	protected void setArticlesExpirationDate(JournalArticle article) {
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
+		}
+
+		if (!article.isApproved() || (article.getExpirationDate() == null)) {
+			return;
+		}
+
+		final List<JournalArticle> articles =
+			journalArticlePersistence.findByG_A(
+				article.getGroupId(), article.getArticleId());
+
+		final Date expirationDate = article.getExpirationDate();
+
+		TransactionCommitCallbackUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					for (JournalArticle curArticle : articles) {
+						curArticle.setExpirationDate(expirationDate);
+
+						journalArticleLocalService.updateJournalArticle(
+							curArticle);
+					}
+
+					return null;
+				}
+
+			});
 	}
 
 	protected void startWorkflowInstance(

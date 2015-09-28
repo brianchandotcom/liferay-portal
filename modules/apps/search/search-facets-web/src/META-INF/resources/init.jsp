@@ -62,7 +62,7 @@ page import="com.liferay.portlet.asset.model.AssetCategory" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
 page import="com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.permission.AssetCategoryPermission" %><%@
-page import="com.liferay.search.api.util.SearchFacet" %><%@
+page import="com.liferay.search.api.facet.SearchFacet" %><%@
 page import="com.liferay.search.facets.web.facet.AssetEntriesSearchFacet" %>
 
 <%@ page import="java.util.ArrayList" %><%@

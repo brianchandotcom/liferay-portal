@@ -27,7 +27,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import java.util.Map;
 
@@ -77,11 +76,6 @@ public class MDRPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			stagingGroup.getGroupId(), ruleGroup.getRuleGroupId());
 
 		MDRTestUtil.addAction(ruleGroupInstance.getRuleGroupInstanceId());
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		return new MDRPortletDataHandler();
 	}
 
 	@Override

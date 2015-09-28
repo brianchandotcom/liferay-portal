@@ -16,7 +16,6 @@ package com.liferay.blogs.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.web.constants.BlogsPortletKeys;
-import com.liferay.blogs.web.lar.BlogsPortletDataHandler;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -25,7 +24,6 @@ import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -52,11 +50,6 @@ public class BlogsPortletDataHandlerTest
 		BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), serviceContext);
-	}
-
-	@Override
-	protected PortletDataHandler createPortletDataHandler() {
-		return new BlogsPortletDataHandler();
 	}
 
 	@Override

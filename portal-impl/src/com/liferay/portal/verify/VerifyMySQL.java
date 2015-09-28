@@ -52,7 +52,11 @@ public class VerifyMySQL extends VerifyProcess {
 
 			verifyTableEngine(statement);
 
-			verifyDatetimePrecision(db, connection.getMetaData(), statement);
+			if (GetterUtil.getFloat(db.getVersionString()) < 5.6F) {
+				return;
+			}
+
+			verifyDatetimePrecision(connection.getMetaData(), statement);
 		}
 	}
 
@@ -80,12 +84,8 @@ public class VerifyMySQL extends VerifyProcess {
 	}
 
 	protected void verifyDatetimePrecision(
-			DB db, DatabaseMetaData databaseMetaData, Statement statement)
+			DatabaseMetaData databaseMetaData, Statement statement)
 		throws Exception {
-
-		if (GetterUtil.getFloat(db.getVersionString()) < 5.6F) {
-			return;
-		}
 
 		try (ResultSet rs = databaseMetaData.getTables(
 			null, null, null, null)) {

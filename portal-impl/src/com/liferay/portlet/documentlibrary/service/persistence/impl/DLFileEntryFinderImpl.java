@@ -86,6 +86,9 @@ public class DLFileEntryFinderImpl
 	public static final String FIND_BY_G_U_F =
 		DLFileEntryFinder.class.getName() + ".findByG_U_F";
 
+	public static final String JOIN_AE_BY_DL_FILE_ENTRY =
+		DLFileEntryFinder.class.getName() + ".joinAE_ByDLFileEntry";
+
 	@Override
 	public int countByExtraSettings() {
 		Session session = null;

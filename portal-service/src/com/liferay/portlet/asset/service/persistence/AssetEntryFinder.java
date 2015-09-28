@@ -27,4 +27,10 @@ public interface AssetEntryFinder {
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> findEntries(
 		com.liferay.portlet.asset.service.persistence.AssetEntryQuery entryQuery);
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> joinDLF_ByAssetEntry(
+		long classNameId, java.lang.String treePath);
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> joinDLFE_ByAssetEntry(
+		long classNameId, java.lang.String treePath);
 }

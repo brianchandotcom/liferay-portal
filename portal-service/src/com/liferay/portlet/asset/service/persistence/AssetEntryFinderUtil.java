@@ -35,6 +35,16 @@ public class AssetEntryFinderUtil {
 		return getFinder().findEntries(entryQuery);
 	}
 
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> joinDLF_ByAssetEntry(
+		long classNameId, java.lang.String treePath) {
+		return getFinder().joinDLF_ByAssetEntry(classNameId, treePath);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetEntry> joinDLFE_ByAssetEntry(
+		long classNameId, java.lang.String treePath) {
+		return getFinder().joinDLFE_ByAssetEntry(classNameId, treePath);
+	}
+
 	public static AssetEntryFinder getFinder() {
 		if (_finder == null) {
 			_finder = (AssetEntryFinder)PortalBeanLocatorUtil.locate(AssetEntryFinder.class.getName());

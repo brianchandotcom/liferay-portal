@@ -639,6 +639,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>VIEW_ENTRIES</td>
+	<td>//li[contains(.,'${key_formName}')]//a[@role='menuitem' and contains(.,'View Entries')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>VIEW_REMOVED_ATTACHMENTS</td>
 	<td>//div[contains(@class,'open')]//a[@role='menuitem' and contains(.,'View Removed Attachments')]</td>
 	<td></td>

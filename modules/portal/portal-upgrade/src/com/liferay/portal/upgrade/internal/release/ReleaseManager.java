@@ -243,7 +243,7 @@ public class ReleaseManager {
 			<String, UpgradeInfo, List<UpgradeInfo>> {
 
 		@Override
-		public void update(
+		public void keyEmitted(
 			ServiceTrackerMap<String, List<UpgradeInfo>> map, final String key,
 			UpgradeInfo service, List<UpgradeInfo> content) {
 

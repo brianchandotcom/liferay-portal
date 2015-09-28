@@ -225,6 +225,17 @@
 		</execute>
 
 		<execute macro="FormPortlet#submit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdmin#viewFormEntry">
+			<var name="fieldName" value="Name" />
+			<var name="fieldValue" value="Text Field Value" />
+		</execute>
 	</command>
 
 	<command name="SubmitFormWithThreePages" priority="4">
@@ -382,5 +393,26 @@
 		</execute>
 
 		<execute macro="FormPortlet#submit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoViewEntries" />
+
+		<execute macro="FormsAdmin#viewFormEntry">
+			<var name="fieldName" value="TextName" />
+			<var name="fieldValue" value="Text Field Value" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewFormEntry">
+			<var name="fieldName" value="RadioName" />
+			<var name="fieldValue" value="Option 2" />
+		</execute>
+
+		<execute macro="FormsAdmin#viewFormEntry">
+			<var name="fieldName" value="CheckboxName" />
+			<var name="fieldValue" value="Yes" />
+		</execute>
 	</command>
 </definition>

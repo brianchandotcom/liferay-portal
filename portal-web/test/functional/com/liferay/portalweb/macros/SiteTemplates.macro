@@ -203,7 +203,7 @@
 
 		<execute function="AssertTextEquals" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_NAME" value1="${siteTemplateName}" />
 		<execute function="Click" locator1="SiteTemplates#SITE_TEMPLATE_TABLE_ACTIONS" />
-		<execute function="AssertClick" locator1="MenuItem#VIEW_PAGES" value1="View Pages" />
+		<execute function="AssertClick" locator1="MenuItem#VIEW_PAGES" value1="View Pages (Opens New Window)" />
 		<execute function="SelectWindow" locator1="home - ${siteTemplateName} - Liferay" />
 	</command>
 

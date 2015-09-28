@@ -2007,9 +2007,8 @@
 	</command>
 
 	<command name="viewViewCountCP">
-		<var name="key_portletName" value="Blogs" />
-
 		<var name="key_entryTitle" value="${entryTitle}" />
+		<var name="key_portletName" value="Blogs" />
 
 		<execute function="AssertClick" locator1="Blogs#ICON_VIEW_ENTRY_TITLE" value1="${entryTitle}" />
 

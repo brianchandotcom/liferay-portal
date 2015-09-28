@@ -15,6 +15,8 @@
 package com.liferay.wiki.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -69,9 +71,15 @@ public class WikiServiceUpgrade {
 		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
 		upgradeProcesses.add(new UpgradeWikiPageResource());
 
-		_releaseLocalService.updateRelease(
-			"com.liferay.wiki.service", upgradeProcesses, 1, 1, false);
+		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Upgrade process " + upgradeProcess);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WikiServiceUpgrade.class);
 
 	private ReleaseLocalService _releaseLocalService;
 	private SettingsFactory _settingsFactory;

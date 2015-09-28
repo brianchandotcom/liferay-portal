@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -356,6 +357,15 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Adds an application type.
+	 *
+	 * @param applicationType an application type
+	 */
+	public void addSupportedApplicationType(ApplicationType applicationType) {
+		_applicationTypes.add(applicationType);
+	}
+
+	/**
 	 * Creates and returns a copy of this object.
 	 *
 	 * @return a copy of this object
@@ -537,6 +547,15 @@ public class PortletImpl extends PortletBaseImpl {
 		}
 
 		return allWindowStates;
+	}
+
+	/**
+	 * Returns the supported application types of the portlet.
+	 *
+	 * @return the supported application types of the portlet
+	 */
+	public Set<ApplicationType> getApplicationTypes() {
+		return _applicationTypes;
 	}
 
 	/**
@@ -2810,6 +2829,18 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Sets the supported public render parameters of the portlet.
+	 *
+	 * @param applicationTypes the supported public render parameters of
+	 *        the portlet
+	 */
+	public void setApplicationTypes(Set<ApplicationType> applicationTypes) {
+		for (ApplicationType applicationType : applicationTypes) {
+			addSupportedApplicationType(applicationType);
+		}
+	}
+
+	/**
 	 * Sets the names of the classes that represent asset types associated with
 	 * the portlet.
 	 *
@@ -4028,6 +4059,11 @@ public class PortletImpl extends PortletBaseImpl {
 	 * <code>True</code> if the portlet can be displayed via Ajax.
 	 */
 	private boolean _ajaxable = true;
+
+	/**
+	 * The supported application types of the portlet.
+	 */
+	private final Set<ApplicationType> _applicationTypes = new HashSet<>();
 
 	/**
 	 * The names of the classes that represents asset types associated with the

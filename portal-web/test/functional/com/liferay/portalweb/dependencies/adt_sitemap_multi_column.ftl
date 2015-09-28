@@ -14,7 +14,7 @@
 
 				<#assign pages = entry.getChildren()>
 
-				<@displayPages pages = pages />
+				<@displayPages pages=pages />
 		    </@aui.column>
 		</#list>
 	</@aui.layout>
@@ -33,7 +33,7 @@
 
 					<#assign childPages = page.getChildren()>
 
-					<@displayPages pages = childPages />
+					<@displayPages pages=childPages />
 				</li>
 			</#list>
 		</ul>

@@ -27,12 +27,24 @@
 		</#if>
 	</@aui.input>
 
-	<@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />
+	<@aui.input
+		name=namespacedFieldName
+		type="hidden"
+		value=fieldRawValue
+	/>
 
 	<@aui["button-row"]>
-		<@aui.button cssClass="select-button" id="${namespacedFieldName}SelectButton" value="choose-from-document-library" />
+		<@aui.button
+			cssClass="select-button"
+			id="${namespacedFieldName}SelectButton"
+			value="choose-from-document-library"
+		/>
 
-		<@aui.button cssClass="clear-button ${(fieldRawValue?has_content)?string('', 'hide')}" id="${namespacedFieldName}ClearButton" value="clear" />
+		<@aui.button
+			cssClass="clear-button ${(fieldRawValue?has_content)?string('', 'hide')}"
+			id="${namespacedFieldName}ClearButton"
+			value="clear"
+		/>
 	</@>
 
 	${fieldStructure.children}

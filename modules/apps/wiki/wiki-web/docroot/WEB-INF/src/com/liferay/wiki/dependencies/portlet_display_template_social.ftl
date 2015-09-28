@@ -46,7 +46,10 @@
 
 	 <br />
 
-	<@getRatings cssClass="page-ratings" entry=entry />
+	<@getRatings
+		cssClass="page-ratings"
+		entry=entry
+	/>
 
 	<@getRelatedAssets />
 </div>
@@ -116,7 +119,10 @@
 						<a href="${viewPageURL}">${dateUtil.getDate(childPage.getModifiedDate(),"dd MMM yyyy - HH:mm:ss", locale)} <@liferay.language key="by" /> ${htmlUtil.escape(portalUtil.getUserName(childPage.getUserId(), childPage.getUserName()))}</a>
 					</td>
 					<td>
-						<@getRatings cssClass="child-ratings" entry=childPage />
+						<@getRatings
+							cssClass="child-ratings"
+							entry=childPage
+						/>
 					</td>
 				</tr>
 			</#list>

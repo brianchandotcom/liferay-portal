@@ -76,14 +76,22 @@
 						</#if>
 
 						<#if includeAllChildEntries || rootNavigationItem.isInNavigation(entries) >
-							<@displayChildNavigation childLayoutLevel=(layoutLevel + 1) childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=includeAllChildEntries />
+							<@displayChildNavigation
+								childLayoutLevel=(layoutLevel + 1)
+								childNavigationItems=rootNavigationItem.getChildren()
+								includeAllChildEntries=includeAllChildEntries
+							/>
 						</#if>
 					</li>
 				</#list>
 			</ul>
 
 		<#else>
-			<@displayChildNavigation childLayoutLevel=layoutLevel childNavigationItems=rootNavigationItem.getChildren() includeAllChildEntries=includeAllChildEntries />
+			<@displayChildNavigation
+				childLayoutLevel=layoutLevel
+				childNavigationItems=rootNavigationItem.getChildren()
+				includeAllChildEntries=includeAllChildEntries
+			/>
 		</#if>
 	</div>
 </#if>

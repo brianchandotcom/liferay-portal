@@ -106,13 +106,12 @@ public class UpgradeStepRegistratorTracker {
 
 		String from = upgradeFromVersion;
 
-		int upgradeStepsLength = upgradeSteps.length;
+		int length = upgradeSteps.length;
 
-		for (int i = 0; i < upgradeStepsLength - 1; i++) {
+		for (int i = 0; i < length - 1; i++) {
 			UpgradeStep upgradeStep = upgradeSteps[i];
 
-			String to =
-				upgradeToVersion + "-" + "step" + (i - upgradeStepsLength + 1);
+			String to = upgradeToVersion + "-step" + (i - length + 1);
 
 			upgradeInfos.add(new UpgradeInfo(from, to, upgradeStep));
 
@@ -120,7 +119,7 @@ public class UpgradeStepRegistratorTracker {
 		}
 
 		UpgradeInfo upgradeInfo = new UpgradeInfo(
-			from, upgradeToVersion, upgradeSteps[upgradeStepsLength - 1]);
+			from, upgradeToVersion, upgradeSteps[length - 1]);
 
 		upgradeInfos.add(upgradeInfo);
 

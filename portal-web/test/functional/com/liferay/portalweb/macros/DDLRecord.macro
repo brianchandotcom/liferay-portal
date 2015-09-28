@@ -4,7 +4,7 @@
 
 		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
-		<execute function="AssertTextEquals" locator1="DDL#HEADER_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${ddlListName}" />
 		<execute function="Click" locator1="Button#PLUS" />
 	</command>
 
@@ -336,7 +336,7 @@
 		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute function="AssertTextEquals" locator1="DDL#HEADER_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${ddlListName}" />
 	</command>
 
 	<command name="viewFieldCP">

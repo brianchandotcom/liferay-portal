@@ -205,6 +205,6 @@
 	</command>
 
 	<command name="viewViaDDLDisplayPG">
-		<execute function="AssertTextEquals" locator1="DDL#HEADER_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="${ddlListName}" />
 	</command>
 </definition>

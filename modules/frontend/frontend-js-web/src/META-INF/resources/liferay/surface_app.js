@@ -21,6 +21,8 @@ AUI.add(
 				Liferay.Data.sharedResources = Liferay.Data.sharedResources.concat(newResources);
 
 				content = frag;
+
+				Liferay.DOMTaskRunner.runTasks(content);
 			}
 
 			return addContentFn.call(this, screenId, content);
@@ -43,6 +45,8 @@ AUI.add(
 
 									Surface.sendRedirect(redirect, instance.get('title'));
 								}
+
+								Liferay.DOMTaskRunner.reset();
 
 								Liferay.fire(
 									'surfaceEndNavigate',

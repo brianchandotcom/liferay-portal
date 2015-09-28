@@ -131,7 +131,7 @@ long usedMemory = totalMemory - runtime.freeMemory();
 					<table class="table table-condensed table-hover">
 
 						<%
-						List<Indexer<?>> indexers = IndexerRegistryUtil.getIndexers();
+						List<Indexer<?>> indexers = new ArrayList<Indexer<?>>(IndexerRegistryUtil.getIndexers());
 
 						Collections.sort(indexers, new IndexerClassNameComparator(true));
 

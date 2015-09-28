@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.search.api.util.SearchFacet;
+import com.liferay.search.api.facet.SearchFacet;
 import com.liferay.search.api.util.SearchFacetTracker;
 
 import java.util.List;

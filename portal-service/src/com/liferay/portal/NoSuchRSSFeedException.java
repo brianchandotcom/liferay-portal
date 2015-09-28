@@ -19,20 +19,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RSSFeedException extends PortalException {
+public class NoSuchRSSFeedException extends PortalException {
 
-	public RSSFeedException() {
+	public NoSuchRSSFeedException() {
 	}
 
-	public RSSFeedException(String msg) {
+	public NoSuchRSSFeedException(String msg) {
 		super(msg);
 	}
 
-	public RSSFeedException(String msg, Throwable cause) {
+	public NoSuchRSSFeedException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public RSSFeedException(Throwable cause) {
+	public NoSuchRSSFeedException(Throwable cause) {
 		super(cause);
 	}
 

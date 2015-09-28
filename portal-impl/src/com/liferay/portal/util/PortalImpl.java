@@ -18,8 +18,8 @@ import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.NoSuchRSSFeedException;
 import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.RSSFeedException;
 import com.liferay.portal.comment.action.EditDiscussionStrutsAction;
 import com.liferay.portal.comment.action.GetCommentsStrutsAction;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
@@ -6711,8 +6711,8 @@ public class PortalImpl implements Portal {
 		throws IOException, ServletException {
 
 		sendError(
-			HttpServletResponse.SC_NOT_FOUND, new RSSFeedException(), request,
-			response);
+			HttpServletResponse.SC_NOT_FOUND, new NoSuchRSSFeedException(),
+			request, response);
 	}
 
 	@Override

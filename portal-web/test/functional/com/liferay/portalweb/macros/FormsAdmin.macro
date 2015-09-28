@@ -35,4 +35,11 @@
 		<execute function="AssertTextEquals" locator1="FormsAdmin#FORMS_TABLE_DESCRIPTION" value1="${formDescription}" />
 		<execute function="AssertElementPresent" locator1="FormsAdmin#FORMS_TABLE_ELLIPSIS" />
 	</command>
+
+	<command name="viewFormEntry">
+		<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_fieldValue" value="${fieldValue}" />
+
+		<execute function="AssertTextEquals" locator1="FormsAdmin#FORM_ENTRY_TABLE_ENTRY" value1="${fieldValue}" />
+	</command>
 </definition>

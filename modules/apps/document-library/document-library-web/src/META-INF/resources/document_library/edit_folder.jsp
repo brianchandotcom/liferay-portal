@@ -62,7 +62,9 @@ if (workflowEnabled) {
 	/>
 </liferay-util:buffer>
 
-<portlet:actionURL name="/document_library/edit_folder" var="editFolderURL" />
+<portlet:actionURL name="/document_library/edit_folder" var="editFolderURL">
+	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
+</portlet:actionURL>
 
 <aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value='<%= rootFolder ? "updateWorkflowDefinitions" : ((folder == null) ? Constants.ADD : Constants.UPDATE) %>' />

@@ -38,7 +38,9 @@ boolean quote = false;
 boolean splitThread = true;
 %>
 
-<portlet:actionURL name="/message_boards/split_thread" var="splitThreadURL" />
+<portlet:actionURL name="/message_boards/split_thread" var="splitThreadURL">
+	<portlet:param name="mvcRenderCommandName" value="/message_boards/split_thread" />
+</portlet:actionURL>
 
 <aui:form action="<%= splitThreadURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "splitThread();" %>'>
 	<aui:input name="messageId" type="hidden" value="<%= messageId %>" />

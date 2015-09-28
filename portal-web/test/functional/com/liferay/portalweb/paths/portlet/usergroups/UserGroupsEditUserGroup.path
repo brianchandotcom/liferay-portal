@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>PUBLIC_PAGES_SELECT</td>
-	<td>//select[@id='_127_publicLayoutSetPrototypeId']</td>
+	<td>//select[contains(@id,'publicLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 <tr>

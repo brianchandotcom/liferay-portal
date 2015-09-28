@@ -661,7 +661,7 @@
 				<execute function="AssertClick" locator1="DDL#RECORD_TABLE_GUEST_VIEW_LINK" value1="View" />
 			</then>
 			<else>
-				<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
+				<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS" />
 				<execute function="AssertClick" locator1="DDL#MENULIST_VIEW" value1="View" />
 			</else>
 		</if>

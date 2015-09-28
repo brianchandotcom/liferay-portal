@@ -420,7 +420,6 @@ public class PortletImpl extends PortletBaseImpl {
 			getPortletApp());
 
 		portlet.setId(getId());
-		portlet.setFullPageDisplayable(isFullPageDisplayable());
 		portlet.setUndeployedPortlet(isUndeployedPortlet());
 
 		return portlet;
@@ -2438,7 +2437,8 @@ public class PortletImpl extends PortletBaseImpl {
 
 	@Override
 	public boolean isFullPageDisplayable() {
-		return _fullPageDisplayable;
+		return _applicationTypes.contains(
+			ApplicationType.FULL_PAGE_APPLICATION);
 	}
 
 	/**
@@ -3092,11 +3092,6 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public void setFriendlyURLRoutes(String friendlyURLRoutes) {
 		_friendlyURLRoutes = friendlyURLRoutes;
-	}
-
-	@Override
-	public void setFullPageDisplayable(boolean fullPageDisplayable) {
-		_fullPageDisplayable = fullPageDisplayable;
 	}
 
 	/**
@@ -4183,12 +4178,6 @@ public class PortletImpl extends PortletBaseImpl {
 	 * portlet.
 	 */
 	private String _friendlyURLRoutes;
-
-	/**
-	 * <code>True</code> if the portlet can be displayed as a full page of the
-	 * view.
-	 */
-	private boolean _fullPageDisplayable;
 
 	/**
 	 * A list of CSS files that will be referenced from the page's header

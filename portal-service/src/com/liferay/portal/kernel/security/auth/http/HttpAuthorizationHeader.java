@@ -43,9 +43,6 @@ public class HttpAuthorizationHeader {
 
 	public static final String SCHEME_DIGEST = "Digest";
 
-	public HttpAuthorizationHeader() {
-	}
-
 	public HttpAuthorizationHeader(String scheme) {
 		_scheme = scheme;
 	}
@@ -70,54 +67,11 @@ public class HttpAuthorizationHeader {
 		_scheme = scheme;
 	}
 
-	public String toChallengeString() {
+	@Override
+	public String toString() {
 		StringBundler sb = new StringBundler(_authParameters.size() * 6 + 2);
 
 		sb.append(_scheme);
-		sb.append(StringPool.SPACE);
-
-		for (Map.Entry<String, String> entry : _authParameters.entrySet()) {
-			sb.append(entry.getKey());
-			sb.append(StringPool.EQUAL);
-			sb.append(StringPool.QUOTE);
-			sb.append(entry.getValue());
-			sb.append(StringPool.QUOTE);
-			sb.append(StringPool.COMMA_AND_SPACE);
-		}
-
-		sb.setIndex(sb.index() - 1);
-
-		return sb.toString();
-	}
-
-	@Override
-	public String toString() {
-		if (StringUtil.equalsIgnoreCase(_scheme, SCHEME_BASIC)) {
-			return toStringBasic();
-		}
-		else if (StringUtil.equalsIgnoreCase(_scheme, SCHEME_DIGEST)) {
-			return toStringDigest();
-		}
-
-		throw new UnsupportedOperationException("Scheme " + _scheme);
-	}
-
-	protected String toStringBasic() {
-		String userName = getAuthParameter(AUTH_PARAMETER_NAME_USERNAME);
-		String password = getAuthParameter(AUTH_PARAMETER_NAME_PASSWORD);
-
-		String userNameAndPassword = userName + StringPool.COLON + password;
-
-		String encodedUserNameAndPassword = Base64.encode(
-			userNameAndPassword.getBytes());
-
-		return SCHEME_BASIC + StringPool.SPACE + encodedUserNameAndPassword;
-	}
-
-	protected String toStringDigest() {
-		StringBundler sb = new StringBundler(_authParameters.size() * 6 + 2);
-
-		sb.append(SCHEME_DIGEST);
 		sb.append(StringPool.SPACE);
 
 		for (Map.Entry<String, String> entry : _authParameters.entrySet()) {

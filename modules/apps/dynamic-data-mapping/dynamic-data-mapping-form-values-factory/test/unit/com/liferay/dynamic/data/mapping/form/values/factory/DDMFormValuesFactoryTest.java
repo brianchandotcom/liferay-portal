@@ -680,6 +680,59 @@ public class DDMFormValuesFactoryTest extends PowerMockito {
 		assertEquals("false", actualDDMFormFieldValues.get(1), LocaleUtil.US);
 	}
 
+	@Test
+	public void testCreateWithUncheckedCheckboxAndTextFieldWithSimilarNames()
+		throws Exception {
+
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField checkboxDDMFormField = DDMFormTestUtil.createDDMFormField(
+			"foo", "Foo", "checkbox", "boolean", false, false, false);
+
+		LocalizedValue predefinedValue =
+			checkboxDDMFormField.getPredefinedValue();
+
+		predefinedValue.addString(LocaleUtil.US, "false");
+
+		ddmForm.addDDMFormField(checkboxDDMFormField);
+
+		ddmForm.addDDMFormField(
+			DDMFormTestUtil.createTextDDMFormField(
+				"fooBar", "Foo Bar", false, false, false));
+
+		DDMFormValues expectedDDMFormValues = createDDMFormValues(
+			ddmForm, createAvailableLocales(LocaleUtil.US), LocaleUtil.US);
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(
+				"amay", "foo", new UnlocalizedValue("false")));
+
+		expectedDDMFormValues.addDDMFormFieldValue(
+			createDDMFormFieldValue(
+				"wqer", "fooBar", new UnlocalizedValue("Baz")));
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addParameter("availableLanguageIds", "en_US");
+		mockHttpServletRequest.addParameter("defaultLanguageId", "en_US");
+
+		// FooBar
+
+		mockHttpServletRequest.addParameter("ddm$$fooBar$wqer$0$$en_US", "Baz");
+
+		DDMFormValues actualDDMFormValues = _ddmFormValuesFactory.create(
+			mockHttpServletRequest, ddmForm);
+
+		List<DDMFormFieldValue> actualDDMFormFieldValues =
+			actualDDMFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(2, actualDDMFormFieldValues.size());
+
+		assertEquals("false", actualDDMFormFieldValues.get(0), LocaleUtil.US);
+		assertEquals("Baz", actualDDMFormFieldValues.get(1), LocaleUtil.US);
+	}
+
 	protected void assertEquals(
 			DDMFormValues expectedDDMFormValues,
 			DDMFormValues actualDDMFormValues)

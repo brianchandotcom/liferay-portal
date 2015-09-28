@@ -100,8 +100,6 @@ public class PoshiRunner {
 
 			_runCommand();
 
-			LiferaySeleniumHelper.writePoshiWarnings();
-
 			LiferaySeleniumHelper.assertNoPoshiWarnings();
 		}
 		catch (Exception e) {
@@ -112,6 +110,8 @@ public class PoshiRunner {
 			throw new Exception(e.getMessage(), e);
 		}
 		finally {
+			LiferaySeleniumHelper.writePoshiWarnings();
+
 			LoggerUtil.createSummary();
 
 			try {

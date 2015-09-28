@@ -73,7 +73,9 @@ else {
 	title="<%= mbHomeDisplayContext.getTitle() %>"
 />
 
-<portlet:actionURL name="/message_boards/edit_category" var="editCategoryURL" />
+<portlet:actionURL name="/message_boards/edit_category" var="editCategoryURL">
+	<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />
+</portlet:actionURL>
 
 <aui:form action="<%= editCategoryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCategory();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

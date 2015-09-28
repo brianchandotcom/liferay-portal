@@ -160,6 +160,7 @@ else {
 </c:if>
 
 <portlet:actionURL name="/message_boards/edit_message" var="editMessageURL">
+	<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_message" />
 	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 </portlet:actionURL>
 

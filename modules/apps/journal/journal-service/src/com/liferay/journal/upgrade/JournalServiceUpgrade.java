@@ -94,7 +94,7 @@ public class JournalServiceUpgrade {
 		upgradeProcesses.add(new UpgradePortletSettings(_settingsFactory));
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.journal.service", upgradeProcesses, 1, 1, false);
+			"com.liferay.journal.service", upgradeProcesses, 0, 1, false);
 
 		deleteTempImages();
 	}

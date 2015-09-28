@@ -149,12 +149,6 @@ public class DLDirectoryNameAndFileNameTest {
 
 	@Test
 	public void testFixNameRandom() throws Exception {
-		for (int i = 0; i < 100; i++) {
-			String name = StringUtil.randomString(20);
-
-			Assert.assertEquals(name, DLValidatorUtil.fixName(name));
-		}
-
 		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
 			StringBuilder sb = new StringBuilder(4);
 

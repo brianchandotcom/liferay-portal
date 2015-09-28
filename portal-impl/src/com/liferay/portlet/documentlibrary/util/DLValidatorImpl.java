@@ -46,7 +46,8 @@ public final class DLValidatorImpl implements DLValidator {
 		}
 
 		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
-			name = name.replace(blacklistChar, StringPool.UNDERLINE);
+			name = StringUtil.replace(
+				name, blacklistChar, StringPool.UNDERLINE);
 		}
 
 		name = replaceDLCharLastBlacklist(name);

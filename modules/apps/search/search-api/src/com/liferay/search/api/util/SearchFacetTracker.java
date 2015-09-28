@@ -14,6 +14,8 @@
 
 package com.liferay.search.api.util;
 
+import com.liferay.search.api.facet.SearchFacet;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 

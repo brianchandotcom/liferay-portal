@@ -28,7 +28,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.search.api.facet.BaseJSPSearchFacet;
-import com.liferay.search.api.util.SearchFacet;
+import com.liferay.search.api.facet.SearchFacet;
 
 import java.util.ArrayList;
 import java.util.List;

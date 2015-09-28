@@ -142,6 +142,11 @@ public class ReleaseManager {
 			final BundleContext bundleContext, Map<String, Object> properties)
 		throws InvalidSyntaxException {
 
+		Runtime runtime = Runtime.getRuntime();
+
+		_executorService = Executors.newFixedThreadPool(
+			runtime.availableProcessors() + 1);
+
 		_logger = new Logger(bundleContext);
 
 		DB db = DBFactoryUtil.getDB();
@@ -190,12 +195,26 @@ public class ReleaseManager {
 			outputStreamContainerFactory.create(
 				"upgrade-" + bundleSymbolicName);
 
-		OutputStream outputStream = outputStreamContainer.getOutputStream();
+		final OutputStream outputStream =
+			outputStreamContainer.getOutputStream();
 
-		RunnableUtil.runWithSwappedSystemOut(
-			new UpgradeInfosRunnable(
-				bundleSymbolicName, upgradeInfos, outputStream),
-			outputStream);
+		_executorService.submit(new Runnable() {
+
+			@Override
+			public void run() {
+				RunnableUtil.runWithSwappedSystemOut(
+					new UpgradeInfosRunnable(
+						bundleSymbolicName, upgradeInfos, outputStream),
+					outputStream);
+
+				Release release = _releaseLocalService.fetchRelease(
+					bundleSymbolicName);
+
+				if (release != null) {
+					_releasePublisher.publish(release);
+				}
+			}
+		});
 
 		try {
 			outputStream.close();
@@ -204,11 +223,6 @@ public class ReleaseManager {
 			throw new RuntimeException(ioe);
 		}
 
-		Release release = _releaseLocalService.fetchRelease(bundleSymbolicName);
-
-		if (release != null) {
-			_releasePublisher.publish(release);
-		}
 	}
 
 	protected String getSchemaVersionString(String bundleSymbolicName) {
@@ -235,8 +249,7 @@ public class ReleaseManager {
 
 	private static Logger _logger;
 
-	private final ExecutorService _executorService =
-		Executors.newSingleThreadExecutor();
+	private ExecutorService _executorService;
 	private OutputStreamContainerFactoryTracker
 		_outputStreamContainerFactoryTracker;
 	private ReleaseLocalService _releaseLocalService;
@@ -253,13 +266,7 @@ public class ReleaseManager {
 			ServiceTrackerMap<String, List<UpgradeInfo>> map, final String key,
 			UpgradeInfo service, List<UpgradeInfo> content) {
 
-			_executorService.submit(new Runnable() {
-
-				@Override
-				public void run() {
-					execute(key);
-				}
-			});
+			execute(key);
 		}
 
 	}

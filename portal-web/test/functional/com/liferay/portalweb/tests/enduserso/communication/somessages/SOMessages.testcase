@@ -3383,7 +3383,7 @@
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
 		<var name="soPage" value="true" />
-		<var name="userEmailAddress" property-value="email.address.2" />
+		<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />
 		<var name="userListName" value="User01, Social01" />
@@ -3396,8 +3396,8 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" property-value="email.address.1" />
-			<var name="userPassword" property-value="email.password.1" />
+			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
+			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
@@ -3428,8 +3428,8 @@
 		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
-			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" property-value="email.password.2" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -3442,8 +3442,8 @@
 		</execute>
 
 		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" property-value="email.password.2" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -3901,9 +3901,9 @@
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
 		<var name="soPage" value="true" />
-		<var name="userEmailAddress1" property-value="email.address.2" />
-		<var name="userEmailAddress2" property-value="email.address.3" />
-		<var name="userEmailAddress3" property-value="email.address.4" />
+		<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress1" />
+		<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress2" />
+		<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress3" />
 		<var name="userFirstName1" value="Social01" />
 		<var name="userFirstName2" value="Social02" />
 		<var name="userFirstName3" value="Social03" />
@@ -3928,8 +3928,8 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" property-value="email.address.1" />
-			<var name="userPassword" property-value="email.password.1" />
+			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
+			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
@@ -3975,8 +3975,8 @@
 		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
-			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" property-value="email.password.2" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -3989,8 +3989,8 @@
 		</execute>
 
 		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" property-value="email.password.2" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -3999,8 +3999,8 @@
 		</execute>
 
 		<execute macro="Gmail#logoutAndLogin">
-			<var name="userEmailAddress" property-value="email.address.3" />
-			<var name="userPassword" property-value="email.password.3" />
+			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -4013,8 +4013,8 @@
 		</execute>
 
 		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" property-value="email.address.3" />
-			<var name="userPassword" property-value="email.password.3" />
+			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -4023,8 +4023,8 @@
 		</execute>
 
 		<execute macro="Gmail#logoutAndLogin">
-			<var name="userEmailAddress" property-value="email.address.4" />
-			<var name="userPassword" property-value="email.password.4" />
+			<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.4')" name="userPassword" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -4037,8 +4037,8 @@
 		</execute>
 
 		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" property-value="email.address.4" />
-			<var name="userPassword" property-value="email.password.4" />
+			<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.4')" name="userPassword" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">

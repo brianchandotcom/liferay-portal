@@ -4440,8 +4440,8 @@
 		<var name="messageSubject" value="Message Subject" />
 		<var name="pageName" value="Messages" />
 		<var name="soPage" value="true" />
-		<var name="userEmailAddress1" property-value="email.address.2" />
-		<var name="userEmailAddress2" property-value="email.address.3" />
+		<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress1" />
+		<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress2" />
 		<var name="userFirstName1" value="Social01" />
 		<var name="userFirstName2" value="Social02" />
 		<var name="userLastName1" value="User01" />
@@ -4460,8 +4460,8 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" property-value="email.address.1" />
-			<var name="userPassword" property-value="email.password.1" />
+			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
+			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
 		<execute macro="SOUser#addUserWithSORole">
@@ -4533,8 +4533,8 @@
 		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#login">
-			<var name="userEmailAddress" property-value="email.address.3" />
-			<var name="userPassword" property-value="email.password.3" />
+			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -4542,8 +4542,8 @@
 		<execute function="AssertTextNotPresent" value1="${userName1} sent you a message on Liferay" />
 
 		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" property-value="email.address.3" />
-			<var name="userPassword" property-value="email.password.3" />
+			<var method="TestPropsUtil#get('email.address.3')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.3')" name="userPassword" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -4570,8 +4570,8 @@
 		<execute function="Pause" locator1="30000" />
 
 		<execute macro="Gmail#logoutAndLogin">
-			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" property-value="email.password.2" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 
 		<execute macro="Gmail#gotoHtmlMode" />
@@ -4579,8 +4579,8 @@
 		<execute function="AssertTextNotPresent" value1="${userName2} sent you a message on Liferay" />
 
 		<execute macro="Gmail#tearDown">
-			<var name="userEmailAddress" property-value="email.address.2" />
-			<var name="userPassword" property-value="email.password.2" />
+			<var method="TestPropsUtil#get('email.address.2')" name="userEmailAddress" />
+			<var method="TestPropsUtil#get('email.password.2')" name="userPassword" />
 		</execute>
 	</command>
 

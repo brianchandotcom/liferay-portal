@@ -43,10 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS,
-		"search.asset.type=com.liferay.portlet.messageboards.model.MBMessage"
-	},
+	property = {"javax.portlet.name=" + MBPortletKeys.MESSAGE_BOARDS},
 	service = AssetRendererFactory.class
 )
 public class MBMessageAssetRendererFactory
@@ -58,6 +55,7 @@ public class MBMessageAssetRendererFactory
 		setCategorizable(false);
 		setLinkable(true);
 		setPortletId(MBPortletKeys.MESSAGE_BOARDS);
+		setSearchable(true);
 	}
 
 	@Override

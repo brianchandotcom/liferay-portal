@@ -40,10 +40,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
-		"search.asset.type=com.liferay.portlet.documentlibrary.model.DLFolder"
-	},
+	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY},
 	service = AssetRendererFactory.class
 )
 public class DLFolderAssetRendererFactory
@@ -54,6 +51,7 @@ public class DLFolderAssetRendererFactory
 	public DLFolderAssetRendererFactory() {
 		setCategorizable(false);
 		setPortletId(DLPortletKeys.DOCUMENT_LIBRARY);
+		setSearchable(true);
 	}
 
 	@Override

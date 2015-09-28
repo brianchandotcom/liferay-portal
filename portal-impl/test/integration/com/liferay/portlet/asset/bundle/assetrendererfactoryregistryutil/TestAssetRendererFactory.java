@@ -230,6 +230,11 @@ public class TestAssetRendererFactory
 	}
 
 	@Override
+	public boolean isSearchable() {
+		return false;
+	}
+
+	@Override
 	public boolean isSelectable() {
 		return true;
 	}

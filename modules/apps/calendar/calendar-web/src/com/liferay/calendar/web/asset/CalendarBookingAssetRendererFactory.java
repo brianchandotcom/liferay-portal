@@ -47,10 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + CalendarPortletKeys.CALENDAR,
-		"search.asset.type=com.liferay.calendar.model.CalendarBooking"
-	},
+	property = {"javax.portlet.name=" + CalendarPortletKeys.CALENDAR},
 	service = AssetRendererFactory.class
 )
 public class CalendarBookingAssetRendererFactory
@@ -62,6 +59,7 @@ public class CalendarBookingAssetRendererFactory
 		setLinkable(true);
 		setClassName(CalendarBooking.class.getName());
 		setPortletId(CalendarPortletKeys.CALENDAR);
+		setSearchable(true);
 	}
 
 	@Override

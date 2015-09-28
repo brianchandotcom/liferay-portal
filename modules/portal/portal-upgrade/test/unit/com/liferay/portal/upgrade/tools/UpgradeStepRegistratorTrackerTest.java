@@ -34,11 +34,8 @@ public class UpgradeStepRegistratorTrackerTest {
 	public void testBuildUpgradeInfos() {
 		TestUpgradeStep testUpgradeStep = new TestUpgradeStep();
 
-		UpgradeStepRegistratorTracker upgradeStepRegistratorTracker =
-			new UpgradeStepRegistratorTracker();
-
 		List<UpgradeInfo> upgradeInfos =
-			upgradeStepRegistratorTracker.buildUpgradeInfos(
+			UpgradeStepRegistratorTracker.buildUpgradeInfos(
 				"0.0.0", "1.0.0", testUpgradeStep, testUpgradeStep,
 				testUpgradeStep, testUpgradeStep);
 
@@ -58,8 +55,7 @@ public class UpgradeStepRegistratorTrackerTest {
 	@Test
 	public void testBuildUpgradeInfosWhenStepsAreEmpty() {
 		List<UpgradeInfo> upgradeInfos =
-			new UpgradeStepRegistratorTracker().buildUpgradeInfos(
-				"0.0.0", "1.0.0");
+			UpgradeStepRegistratorTracker.buildUpgradeInfos("0.0.0", "1.0.0");
 
 		Assert.assertTrue(upgradeInfos.isEmpty());
 	}
@@ -69,7 +65,7 @@ public class UpgradeStepRegistratorTrackerTest {
 		TestUpgradeStep testUpgradeStep = new TestUpgradeStep();
 
 		List<UpgradeInfo> upgradeInfos =
-			new UpgradeStepRegistratorTracker().buildUpgradeInfos(
+			UpgradeStepRegistratorTracker.buildUpgradeInfos(
 				"0.0.0", "1.0.0", testUpgradeStep);
 
 		Assert.assertEquals(1, upgradeInfos.size());
@@ -84,7 +80,6 @@ public class UpgradeStepRegistratorTrackerTest {
 		@Override
 		public void upgrade(DBProcessContext dbProcessContext)
 			throws UpgradeException {
-
 		}
 
 	}

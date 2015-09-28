@@ -169,9 +169,9 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			try (InputStream inputStream = resource.openStream()) {
 				return StringUtil.read(inputStream);
 			}
-			catch (IOException e) {
+			catch (IOException ioe) {
 				throw new UpgradeException(
-					"Unable to read SQL template " + templateName, e);
+					"Unable to read SQL template " + templateName, ioe);
 			}
 		}
 
@@ -210,24 +210,28 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 
 			String requireSchemaVersion = headers.get("Require-SchemaVersion");
 
-			if (Validator.isNull(GetterUtil.getString(requireSchemaVersion))) {
-				ServiceDependency serviceDependency =
-					_dependencyManager.createServiceDependency();
-
-				serviceDependency.setRequired(true);
-
-				serviceDependency.setService(
-					Release.class,
-					"(&(release.bundle.symbolic.name=" +
-						_bundle.getSymbolicName()+ ")(release.schema.version=" +
-							_bundle.getVersion() + "))");
-
-				_component.add(serviceDependency);
+			if (Validator.isNull(requireSchemaVersion)) {
+				_generateReleaseInfo();
 			}
 
 			_dependencyManager.add(_component);
 
 			_upgradeStepsRegistrations = _installInitialUpgrade();
+		}
+
+		private void _generateReleaseInfo() {
+			ServiceDependency serviceDependency =
+				_dependencyManager.createServiceDependency();
+
+			serviceDependency.setRequired(true);
+
+			serviceDependency.setService(
+				Release.class,
+				"(&(release.bundle.symbolic.name=" +
+					_bundle.getSymbolicName()+ ")(release.schema.version=" +
+						_bundle.getVersion() + "))");
+
+			_component.add(serviceDependency);
 		}
 
 		private List<ServiceRegistration<UpgradeStep>>
@@ -239,7 +243,7 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 				headers.get("Require-SchemaVersion"),
 				headers.get("Bundle-Version"));
 
-			return new UpgradeStepRegistratorTracker().register(
+			return UpgradeStepRegistratorTracker.register(
 				_bundleContext, _bundle.getSymbolicName(), "0.0.0",
 				upgradeToSchemaVersion, new UpgradeStep() {
 

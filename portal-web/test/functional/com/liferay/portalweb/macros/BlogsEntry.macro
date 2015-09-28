@@ -1285,7 +1285,7 @@
 
 		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${entrySearchTerm}" />
 
-		<execute function="AssertClick" locator1="Button#SEARCH" value1="Search" />
+		<execute function="KeyPress" locator1="Button#SEARCH" value1="\RETURN" />
 
 		<execute function="AssertTextEquals" locator1="Blogs#SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="Blogs#SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
@@ -1296,7 +1296,7 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="Type" locator1="CPBlogsSearch#SEARCH_FIELD" value1="${entrySearchTerm}" />
-		<execute function="AssertClick" locator1="CPBlogsSearch#SEARCH_BUTTON" value1="Search" />
+		<execute function="KeyPress" locator1="CPBlogsSearch#SEARCH_BUTTON" value1="\RETURN" />
 		<execute function="AssertTextEquals" locator1="CPBlogsSearch#INFO_MESSAGE" value1="No entries were found that matched the keywords: ${entrySearchTerm}." />
 		<execute function="AssertElementNotPresent" locator1="CPBlogsSearch#SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertElementNotPresent" locator1="CPBlogsSearch#SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />

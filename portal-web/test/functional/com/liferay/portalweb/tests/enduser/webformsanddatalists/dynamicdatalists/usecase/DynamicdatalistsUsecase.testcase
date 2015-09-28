@@ -959,7 +959,7 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="Click" locator1="DDL#LIST_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#LIST_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="DDL#MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />
@@ -992,7 +992,7 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute function="Click" locator1="DDL#LIST_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#LIST_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="DDL#MENULIST_PERMISSIONS" value1="Permissions" />
 
 		<execute function="SelectFrame" locator1="Permissions#PERMISSIONS_IFRAME" />

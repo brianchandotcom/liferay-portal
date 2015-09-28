@@ -95,6 +95,14 @@ public interface Portlet extends PortletModel, PersistedModel {
 		com.liferay.portal.kernel.scheduler.SchedulerEntry schedulerEntry);
 
 	/**
+	* Adds an application type.
+	*
+	* @param applicationType an application type
+	*/
+	public void addSupportedApplicationType(
+		com.liferay.portal.kernel.application.type.ApplicationType applicationType);
+
+	/**
 	* Checks whether this portlet is equal to the specified object.
 	*
 	* @param obj the object to compare this portlet against
@@ -148,6 +156,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	* @return a list of all window states supported by the portlet
 	*/
 	public java.util.Set<java.lang.String> getAllWindowStates();
+
+	/**
+	* Returns the supported application types of the portlet.
+	*
+	* @return the supported application types of the portlet
+	*/
+	public java.util.Set<com.liferay.portal.kernel.application.type.ApplicationType> getApplicationTypes();
 
 	/**
 	* Returns the names of the classes that represent asset types associated
@@ -1540,6 +1555,15 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public void setAjaxable(boolean ajaxable);
 
 	/**
+	* Sets the supported public render parameters of the portlet.
+	*
+	* @param applicationTypes the supported public render parameters of
+	the portlet
+	*/
+	public void setApplicationTypes(
+		java.util.Set<com.liferay.portal.kernel.application.type.ApplicationType> applicationTypes);
+
+	/**
 	* Sets the names of the classes that represent asset types associated with
 	* the portlet.
 	*
@@ -1730,8 +1754,6 @@ public interface Portlet extends PortletModel, PersistedModel {
 	URL routes of the portlet
 	*/
 	public void setFriendlyURLRoutes(java.lang.String friendlyURLRoutes);
-
-	public void setFullPageDisplayable(boolean fullPageDisplayable);
 
 	/**
 	* Sets a list of CSS files that will be referenced from the page's header

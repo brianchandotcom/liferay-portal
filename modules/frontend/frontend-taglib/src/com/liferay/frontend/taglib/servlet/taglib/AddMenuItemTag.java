@@ -17,6 +17,7 @@ package com.liferay.frontend.taglib.servlet.taglib;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,7 +31,7 @@ public class AddMenuItemTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
-	public void setAnchorData(java.lang.Object anchorData) {
+	public void setAnchorData(Map<String, Object> anchorData) {
 		_anchorData = anchorData;
 	}
 
@@ -66,7 +67,7 @@ public class AddMenuItemTag extends IncludeTag {
 		}
 	}
 
-	private java.lang.Object _anchorData;
+	private Map<String, Object> _anchorData;
 	private String _id;
 	private String _title;
 	private String _url;

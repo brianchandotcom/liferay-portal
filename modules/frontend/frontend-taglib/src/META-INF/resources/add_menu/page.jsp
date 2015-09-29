@@ -18,8 +18,6 @@
 
 <%
 List<AddMenuItem> addMenuItems = (List<AddMenuItem>)request.getAttribute("liferay-frontend:add-menu:addMenuItems");
-
-java.util.Map data;
 %>
 
 <c:choose>
@@ -33,11 +31,9 @@ java.util.Map data;
 		if (Validator.isNull(id)) {
 			id = "menuItem";
 		}
-
-		data = (java.util.Map)addMenuItem.getAnchorData();
 		%>
 
-		<a class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" <%= AUIUtil.buildData(data) %> href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(addMenuItem.getLabel()) %>">
+		<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(addMenuItem.getLabel()) %>">
 			<span class="icon-plus"></span>
 		</a>
 
@@ -66,12 +62,10 @@ java.util.Map data;
 					if (Validator.isNull(id)) {
 						id = "menuItem" + i;
 					}
-
-					data = (java.util.Map)addMenuItem.getAnchorData();
 				%>
 
 					<li>
-						<a href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" <%= AUIUtil.buildData(data) %> id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
+						<a <%= AUIUtil.buildData(addMenuItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(addMenuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(addMenuItem.getLabel()) %></a>
 					</li>
 
 				<%

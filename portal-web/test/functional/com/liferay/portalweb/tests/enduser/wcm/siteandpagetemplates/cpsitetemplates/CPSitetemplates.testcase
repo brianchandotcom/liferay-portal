@@ -178,6 +178,11 @@
 			<var name="portletName" value="User Statistics" />
 		</execute>
 
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
 		<execute macro="SiteTemplates#viewResetPageChanges">
 			<var name="columnNumberFrom" value="2" />
 			<var name="portletName" value="User Statistics" />

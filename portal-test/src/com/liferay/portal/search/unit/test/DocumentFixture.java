@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.unit.test.util;
+package com.liferay.portal.search.unit.test;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentHelper;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.unit.test.util.stats;
+package com.liferay.portal.search.unit.test.stats;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.search.unit.test.util.BaseIndexingTest;
+import com.liferay.portal.search.unit.test.BaseIndexingTest;
 
 import java.util.Map;
 import java.util.concurrent.Callable;

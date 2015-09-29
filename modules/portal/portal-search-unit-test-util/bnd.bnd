@@ -1,7 +1,0 @@
-Bundle-Name: Liferay Portal Search Unit Test Util
-Bundle-SymbolicName: com.liferay.portal.search.unit.test.util
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.portal.search.unit.test.util,\
-	com.liferay.portal.search.unit.test.util.*
-Include-Resource: classes

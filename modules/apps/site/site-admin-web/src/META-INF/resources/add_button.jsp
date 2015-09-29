@@ -61,7 +61,7 @@
 					manageSiteTemplateURL.setParameter("backURL", viewSitesURL);
 					%>
 
-					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "manage-site-template") %>' url="<%= manageSiteTemplateURL.toString() %>" />
+					<liferay-frontend:add-menu-item anchorData="<%= anchorData %>" title='<%= LanguageUtil.get(request, "manage-site-template") %>' url="<%= manageSiteTemplateURL.toString() %>" />
 				</c:if>
 			</c:otherwise>
 		</c:choose>

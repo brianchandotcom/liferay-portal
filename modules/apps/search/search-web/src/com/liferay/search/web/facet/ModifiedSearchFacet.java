@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.search.facet.ModifiedFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.search.api.facet.BaseJSPSearchFacet;
-import com.liferay.search.api.facet.SearchFacet;
+import com.liferay.search.facets.api.facet.BaseJSPSearchFacet;
+import com.liferay.search.facets.api.facet.SearchFacet;
 
 import javax.portlet.ActionRequest;
 

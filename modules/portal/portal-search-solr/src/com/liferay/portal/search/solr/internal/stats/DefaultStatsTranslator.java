@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.search.solr.stats.StatsTranslator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.FieldStatsInfo;
@@ -82,7 +83,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			Double stddev = fieldStatsInfo.getStddev();
 
 			if (stddev != null) {
-				statsResults.setStandardDeviation(stddev.doubleValue());
+				statsResults.setStandardDeviation(stddev);
 			}
 		}
 
@@ -98,7 +99,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			Double sumOfSquares = fieldStatsInfo.getSumOfSquares();
 
 			if (sumOfSquares != null) {
-				statsResults.setSumOfSquares(sumOfSquares.doubleValue());
+				statsResults.setSumOfSquares(sumOfSquares);
 			}
 		}
 
@@ -111,32 +112,46 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			return;
 		}
 
-		ArrayList<String> solrStats = new ArrayList<>(8);
+		List<String> solrStats = new ArrayList<>(8);
 
-		add("count", stats.isCount(), solrStats);
-		add("max", stats.isMax(), solrStats);
-		add("mean", stats.isMean(), solrStats);
-		add("min", stats.isMin(), solrStats);
-		add("missing", stats.isMissing(), solrStats);
-		add("stddev", stats.isStandardDeviation(), solrStats);
-		add("sum", stats.isSum(), solrStats);
-		add("sumOfSquares", stats.isSumOfSquares(), solrStats);
-
-		solrQuery.setGetFieldStatistics(
-			buildField(solrStats, stats.getField()));
-	}
-
-	protected static void add(
-		String stat, boolean enabled, ArrayList<String> solrStats) {
-
-		if (enabled) {
-			solrStats.add(stat);
+		if (stats.isCount()) {
+			solrStats.add("count");
 		}
+
+		if (stats.isMax()) {
+			solrStats.add("max");
+		}
+
+		if (stats.isMean()) {
+			solrStats.add("mean");
+		}
+
+		if (stats.isMin()) {
+			solrStats.add("min");
+		}
+
+		if (stats.isMissing()) {
+			solrStats.add("missing");
+		}
+
+		if (stats.isStandardDeviation()) {
+			solrStats.add("stddev");
+		}
+
+		if (stats.isSum()) {
+			solrStats.add("sum");
+		}
+
+		if (stats.isSumOfSquares()) {
+			solrStats.add("sumOfSquares");
+		}
+
+		String fieldStatistics = buildField(stats.getField(), solrStats);
+
+		solrQuery.setGetFieldStatistics(fieldStatistics);
 	}
 
-	protected static String buildField(
-		ArrayList<String> solrStats, String field) {
-
+	protected String buildField(String field, List<String> solrStats) {
 		if (solrStats.isEmpty()) {
 			return field;
 		}
@@ -160,7 +175,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 		return sb.toString();
 	}
 
-	protected static double toDouble(Object value) {
+	protected double toDouble(Object value) {
 		if (value instanceof Number) {
 			return ((Number)value).doubleValue();
 		}

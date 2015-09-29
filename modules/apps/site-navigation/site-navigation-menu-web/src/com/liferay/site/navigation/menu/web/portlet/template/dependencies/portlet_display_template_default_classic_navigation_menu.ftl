@@ -3,7 +3,7 @@
 
 <#assign rootNavigationItems = navItem.fromLayouts(request, themeDisplay.getLayouts(), null) />
 
-<div class="navbar-classic">
+<div class="navbar navbar-default">
 	<ul aria-label="#language ("site-pages")" class="nav navbar-nav navbar-site" role="menubar">
 		<h1 class="hide-accessible">#language ("navigation")</h1>
 
@@ -61,7 +61,7 @@
 </div>
 
 <@aui.script use="liferay-navigation-interaction" >
-	var navigation = A.all('.navbar-classic');
+	var navigation = A.all('.navbar-default');
 
 	if (navigation) {
 		navigation.plug(Liferay.NavigationInteraction);

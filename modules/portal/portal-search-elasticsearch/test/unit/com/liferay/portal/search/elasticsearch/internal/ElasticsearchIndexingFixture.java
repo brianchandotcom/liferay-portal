@@ -52,7 +52,7 @@ import com.liferay.portal.search.elasticsearch.internal.query.TermQueryTranslato
 import com.liferay.portal.search.elasticsearch.internal.query.TermRangeQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch.internal.query.WildcardQueryTranslatorImpl;
 import com.liferay.portal.search.elasticsearch.internal.stats.DefaultStatsTranslator;
-import com.liferay.portal.search.unit.test.util.IndexingFixture;
+import com.liferay.portal.search.unit.test.IndexingFixture;
 
 import java.util.HashMap;
 

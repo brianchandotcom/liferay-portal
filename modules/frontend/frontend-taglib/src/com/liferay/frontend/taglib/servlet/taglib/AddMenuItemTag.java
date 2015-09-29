@@ -30,6 +30,10 @@ public class AddMenuItemTag extends IncludeTag {
 		return EVAL_BODY_INCLUDE;
 	}
 
+	public void setAnchorData(java.lang.Object anchorData) {
+		_anchorData = anchorData;
+	}
+
 	public void setId(String id) {
 		_id = id;
 	}
@@ -55,12 +59,14 @@ public class AddMenuItemTag extends IncludeTag {
 				"liferay-frontend:add-menu:addMenuItems");
 
 		if (addMenuItems != null) {
-			AddMenuItem addMenuItem = new AddMenuItem(_id, _title, _url);
+			AddMenuItem addMenuItem = new AddMenuItem(
+				_anchorData, _id, _title, _url);
 
 			addMenuItems.add(addMenuItem);
 		}
 	}
 
+	private java.lang.Object _anchorData;
 	private String _id;
 	private String _title;
 	private String _url;

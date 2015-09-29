@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-InformationMessagesControlMenuEntry controlMenuEntry = (InformationMessagesControlMenuEntry)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_ENTRY);
+InformationMessagesControlMenuEntry informationMessagesControlMenuEntry = (InformationMessagesControlMenuEntry)request.getAttribute(ControlMenuWebKeys.CONTROL_MENU_ENTRY);
 %>
 
 <portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
@@ -41,7 +41,7 @@ data.put("panelURL", addURL);
 	/>
 
 	<liferay-util:buffer var="infoContainer">
-		<c:if test="<%= controlMenuEntry.isModifiedLayout(themeDisplay) %>">
+		<c:if test="<%= informationMessagesControlMenuEntry.isModifiedLayout(themeDisplay) %>">
 			<div class="modified-layout">
 				<i class="icon-info-sign"></i>
 
@@ -66,7 +66,7 @@ data.put("panelURL", addURL);
 			</div>
 		</c:if>
 
-		<c:if test="<%= controlMenuEntry.isLinkedLayout(themeDisplay) %>">
+		<c:if test="<%= informationMessagesControlMenuEntry.isLinkedLayout(themeDisplay) %>">
 			<div class="linked-layout">
 				<i class="icon-info-sign"></i>
 
@@ -91,7 +91,7 @@ data.put("panelURL", addURL);
 			</div>
 		</c:if>
 
-		<c:if test="<%= controlMenuEntry.isCustomizableLayout(themeDisplay) %>">
+		<c:if test="<%= informationMessagesControlMenuEntry.isCustomizableLayout(themeDisplay) %>">
 			<div class="customizable-layout">
 				<i class="icon-info-sign"></i>
 
@@ -105,7 +105,7 @@ data.put("panelURL", addURL);
 						<c:otherwise>
 							<liferay-ui:message key="this-is-the-default-page-without-your-customizations" />
 
-							<c:if test="<%= controlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
+							<c:if test="<%= informationMessagesControlMenuEntry.hasUpdateLayoutPermission(themeDisplay) %>">
 								<liferay-ui:icon-help message="customizable-admin-help" />
 							</c:if>
 						</c:otherwise>

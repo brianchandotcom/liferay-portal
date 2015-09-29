@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
-
-JournalPortletUtil.addPortletBreadcrumbEntries(folder, request, liferayPortletResponse);
+JournalPortletUtil.addPortletBreadcrumbEntries(journalDisplayContext.getFolder(), request, liferayPortletResponse);
 %>
 
 <liferay-ui:breadcrumb

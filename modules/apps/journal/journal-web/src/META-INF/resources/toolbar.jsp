@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
-
 String keywords = ParamUtil.getString(request, "keywords");
 
 boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH);

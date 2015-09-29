@@ -19,13 +19,11 @@
 <%
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
 String ddmStructureName = LanguageUtil.get(request, "basic-web-content");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
 
 ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 
@@ -84,10 +82,10 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)articleSearchContainer.g
 <%
 ArticleSearchTerms searchTerms = (ArticleSearchTerms)articleSearchContainer.getSearchTerms();
 
-if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+if (journalDisplayContext.getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 	List<Long> folderIds = new ArrayList<Long>(1);
 
-	folderIds.add(folderId);
+	folderIds.add(journalDisplayContext.getFolderId());
 
 	searchTerms.setFolderIds(folderIds);
 }
@@ -128,11 +126,11 @@ int total = 0;
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status, includeOwner);
+		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), status, includeOwner);
 
 		articleSearchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, includeOwner, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), status, includeOwner, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
@@ -161,7 +159,7 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status);
+		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), status);
 
 		articleSearchContainer.setTotal(total);
 
@@ -180,7 +178,7 @@ int total = 0;
 			folderOrderByComparator = new FolderArticleModifiedDateComparator(orderByAsc);
 		}
 
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), folderOrderByComparator);
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, themeDisplay.getUserId(), journalDisplayContext.getFolderId(), status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), folderOrderByComparator);
 		%>
 
 	</c:otherwise>

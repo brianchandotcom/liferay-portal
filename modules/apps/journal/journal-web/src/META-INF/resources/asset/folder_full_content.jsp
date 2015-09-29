@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalFolder folder = ActionUtil.getFolder(request);
+JournalFolder folder = journalDisplayContext.getFolder();
 %>
 
 <c:if test="<%= folder != null %>">

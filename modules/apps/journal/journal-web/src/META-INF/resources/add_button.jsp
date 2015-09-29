@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-JournalFolder folder = (JournalFolder)request.getAttribute("view.jsp-folder");
-
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+JournalFolder folder = journalDisplayContext.getFolder();
 
 int restrictionType = JournalFolderConstants.RESTRICTION_TYPE_INHERIT;
 
@@ -29,13 +27,13 @@ if (folder != null) {
 
 List<AddMenuItem> addMenuItems = new ArrayList<>();
 
-if (JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER)) {
+if (JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_FOLDER)) {
 	PortletURL addFolderURL = renderResponse.createRenderURL();
 
 	addFolderURL.setParameter("mvcPath", "/edit_folder.jsp");
 	addFolderURL.setParameter("redirect", currentURL);
 	addFolderURL.setParameter("groupId", String.valueOf(scopeGroupId));
-	addFolderURL.setParameter("parentFolderId", String.valueOf(folderId));
+	addFolderURL.setParameter("parentFolderId", String.valueOf(journalDisplayContext.getFolderId()));
 
 	String label = "folder";
 
@@ -46,16 +44,16 @@ if (JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, 
 	addMenuItems.add(new AddMenuItem(LanguageUtil.get(request, label), addFolderURL.toString()));
 }
 
-List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, restrictionType);
+List<DDMStructure> ddmStructures = JournalFolderServiceUtil.getDDMStructures(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), journalDisplayContext.getFolderId(), restrictionType);
 
-if (JournalFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_ARTICLE)) {
+if (JournalFolderPermission.contains(permissionChecker, scopeGroupId, journalDisplayContext.getFolderId(), ActionKeys.ADD_ARTICLE)) {
 	for (DDMStructure ddmStructure : ddmStructures) {
 		PortletURL addArticleURL = renderResponse.createRenderURL();
 
 		addArticleURL.setParameter("mvcPath", "/edit_article.jsp");
 		addArticleURL.setParameter("redirect", currentURL);
 		addArticleURL.setParameter("groupId", String.valueOf(scopeGroupId));
-		addArticleURL.setParameter("folderId", String.valueOf(folderId));
+		addArticleURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
 		addArticleURL.setParameter("ddmStructureKey", ddmStructure.getStructureKey());
 		addArticleURL.setWindowState(LiferayWindowState.MAXIMIZED);
 

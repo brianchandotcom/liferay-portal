@@ -50,13 +50,13 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 	@Test
 	public void testValidFields() throws Exception {
 		String serializedDDMForm = read(
-			"ddm-form-evaluator-form-test-data.json");
+			"ddm-form-evaluator-form-valid-fields-test-data.json");
 
 		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(
 			serializedDDMForm);
 
 		String serializedDDMFormValues = read(
-			"ddm-form-evaluator-form-values-test-data.json");
+			"ddm-form-evaluator-form-values-valid-fields-test-data.json");
 
 		DDMFormValues ddmFormValues =
 			DDMFormValuesJSONDeserializerUtil.deserialize(
@@ -72,7 +72,8 @@ public class DDMFormEvaluatorTest extends BaseDDMServiceTestCase {
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		String expectedResult = read("ddm-form-evaluator-result-data.json");
+		String expectedResult = read(
+			"ddm-form-evaluator-result-valid-fields-data.json");
 
 		String actualResult = jsonSerializer.serializeDeep(
 			ddmFormEvaluationResult);

@@ -208,6 +208,8 @@ public class DDMFormRendererHelper {
 			ddmFormField.getLabel(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextName(
 			ddmFormFieldParameterName, ddmFormFieldRenderingContext);
+		setDDMFormFieldRenderingContextRequired(
+			ddmFormField.isRequired(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextVisible(
 			ddmFormField.getVisibilityExpression(),
 			ddmFormFieldRenderingContext);
@@ -225,6 +227,8 @@ public class DDMFormRendererHelper {
 
 		setDDMFormFieldRenderingContextLabel(
 			ddmFormField.getLabel(), ddmFormFieldRenderingContext);
+		setDDMFormFieldRenderingContextRequired(
+			ddmFormField.isRequired(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextValue(
 			ddmFormFieldValue.getValue(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextVisible(
@@ -317,6 +321,13 @@ public class DDMFormRendererHelper {
 			ddmFormFieldParameterName);
 
 		ddmFormFieldRenderingContext.setName(name);
+	}
+
+	protected void setDDMFormFieldRenderingContextRequired(
+		boolean required,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		ddmFormFieldRenderingContext.setRequired(required);
 	}
 
 	protected void setDDMFormFieldRenderingContextValue(

@@ -27,6 +27,7 @@ import com.liferay.sync.engine.session.SessionManager;
 import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
+import com.liferay.sync.engine.util.MSOfficeFileUtil;
 import com.liferay.sync.engine.util.StreamUtil;
 
 import java.io.InputStream;
@@ -208,6 +209,12 @@ public class DownloadFileHandler extends BaseHandler {
 				tempFilePath, String.valueOf(syncFile.getSyncFileId()), false);
 
 			FileUtil.setModifiedTime(tempFilePath, syncFile.getModifiedTime());
+
+			if (MSOfficeFileUtil.isLegacyExcelFile(filePath)) {
+				syncFile.setLocalExtraSettingsValue(
+					"lastSavedDate",
+					MSOfficeFileUtil.getLastSavedDate(tempFilePath));
+			}
 
 			Files.move(
 				tempFilePath, filePath, StandardCopyOption.ATOMIC_MOVE,

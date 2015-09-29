@@ -27,6 +27,7 @@ import com.liferay.sync.engine.service.persistence.SyncSitePersistence;
 import com.liferay.sync.engine.service.persistence.SyncUserPersistence;
 import com.liferay.sync.engine.service.persistence.SyncWatchEventPersistence;
 import com.liferay.sync.engine.upgrade.UpgradeProcess;
+import com.liferay.sync.engine.upgrade.v3_0_10.UpgradeProcess_3_0_10;
 import com.liferay.sync.engine.upgrade.v3_0_4.UpgradeProcess_3_0_4;
 import com.liferay.sync.engine.upgrade.v3_0_5.UpgradeProcess_3_0_5;
 import com.liferay.sync.engine.upgrade.v3_0_8.UpgradeProcess_3_0_8;
@@ -90,6 +91,7 @@ public class UpgradeUtil {
 		upgradeProcesses.add(new UpgradeProcess_3_0_5());
 		upgradeProcesses.add(new UpgradeProcess_3_0_8());
 		upgradeProcesses.add(new UpgradeProcess_3_0_9());
+		upgradeProcesses.add(new UpgradeProcess_3_0_10());
 
 		for (UpgradeProcess upgradeProcess : upgradeProcesses) {
 			if (buildNumber < upgradeProcess.getThreshold()) {

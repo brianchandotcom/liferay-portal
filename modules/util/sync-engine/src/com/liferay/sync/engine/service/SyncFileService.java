@@ -23,6 +23,7 @@ import com.liferay.sync.engine.service.persistence.SyncFilePersistence;
 import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
+import com.liferay.sync.engine.util.MSOfficeFileUtil;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -111,6 +112,13 @@ public class SyncFileService {
 		syncFile.setChecksum(checksum);
 		syncFile.setDescription(description);
 		syncFile.setFilePathName(filePathName);
+
+		if (MSOfficeFileUtil.isLegacyExcelFile(Paths.get(filePathName))) {
+			syncFile.setLocalExtraSettingsValue(
+				"lastSavedDate",
+				MSOfficeFileUtil.getLastSavedDate(Paths.get(filePathName)));
+		}
+
 		syncFile.setLocalSyncTime(System.currentTimeMillis());
 		syncFile.setMimeType(mimeType);
 		syncFile.setName(name);
@@ -680,6 +688,11 @@ public class SyncFileService {
 			filePath, String.valueOf(syncFile.getSyncFileId()), true);
 
 		Path deltaFilePath = null;
+
+		if (MSOfficeFileUtil.isLegacyExcelFile(filePath)) {
+			syncFile.setLocalExtraSettingsValue(
+				"lastSavedDate", MSOfficeFileUtil.getLastSavedDate(filePath));
+		}
 
 		String name = _getName(filePath, syncFile);
 		String sourceChecksum = syncFile.getChecksum();

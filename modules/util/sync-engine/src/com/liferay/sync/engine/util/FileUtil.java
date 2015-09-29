@@ -38,6 +38,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -411,6 +412,19 @@ public class FileUtil {
 		}
 
 		try {
+			if (MSOfficeFileUtil.isLegacyExcelFile(filePath)) {
+				Date lastSavedDate = MSOfficeFileUtil.getLastSavedDate(
+					filePath);
+
+				if (lastSavedDate.getTime() ==
+						GetterUtil.getLong(
+							syncFile.getLocalExtraSettingsValue(
+								"lastSavedDate"))) {
+
+					return false;
+				}
+			}
+
 			if (syncFile.getSize() > 0) {
 				long lastModifiedTime = getLastModifiedTime(filePath);
 

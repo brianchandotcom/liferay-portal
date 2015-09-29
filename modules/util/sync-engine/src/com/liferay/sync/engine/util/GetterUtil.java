@@ -21,6 +21,8 @@ public class GetterUtil {
 
 	public static final int DEFAULT_INTEGER = 0;
 
+	public static final long DEFAULT_LONG = 0;
+
 	public static int getInteger(String value) {
 		return getInteger(value, DEFAULT_INTEGER);
 	}
@@ -31,6 +33,18 @@ public class GetterUtil {
 		}
 
 		return Integer.parseInt(value);
+	}
+
+	public static long getLong(String value) {
+		return getLong(value, DEFAULT_LONG);
+	}
+
+	public static long getLong(String value, long defaultValue) {
+		if (value == null) {
+			return defaultValue;
+		}
+
+		return Long.parseLong(value);
 	}
 
 }

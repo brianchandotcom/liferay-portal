@@ -20,10 +20,6 @@
 String browseBy = ParamUtil.getString(request, "browseBy");
 
 String keywords = ParamUtil.getString(request, "keywords");
-
-boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH);
-
-boolean search = Validator.isNotNull(keywords) || advancedSearch;
 %>
 
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
@@ -65,7 +61,7 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 
 				<div class="journal-container" id="<portlet:namespace />entriesContainer">
 					<c:choose>
-						<c:when test="<%= search %>">
+						<c:when test="<%= Validator.isNotNull(keywords) %>">
 							<liferay-util:include page="/search_resources.jsp" servletContext="<%= application %>" />
 						</c:when>
 						<c:otherwise>
@@ -78,7 +74,7 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 	</div>
 </div>
 
-<c:if test="<%= !search %>">
+<c:if test="<%= Validator.isNull(keywords) %>">
 	<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 </c:if>
 
@@ -98,7 +94,6 @@ boolean search = Validator.isNotNull(keywords) || advancedSearch;
 <aui:script use="liferay-journal-navigation">
 	var journalNavigation = new Liferay.Portlet.JournalNavigation(
 		{
-			advancedSearch: '<%= DisplayTerms.ADVANCED_SEARCH %>',
 			displayStyle: '<%= HtmlUtil.escapeJS(journalDisplayContext.getDisplayStyle()) %>',
 			move: {
 				allRowIds: '<%= RowChecker.ALL_ROW_IDS %>',

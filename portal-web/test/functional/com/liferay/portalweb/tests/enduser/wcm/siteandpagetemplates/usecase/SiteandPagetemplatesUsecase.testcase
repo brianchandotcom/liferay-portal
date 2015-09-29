@@ -93,6 +93,7 @@
 
 		<execute macro="Site#addSiteTemplateCP">
 			<var name="siteName" value="Site Name" />
+			<var name="siteTemplateName" value="Site Template Name" />
 		</execute>
 
 		<execute macro="PermissionsInline#gotoSiteTemplateCP">

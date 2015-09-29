@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -81,7 +82,7 @@ public class AddRecordSetMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), actionRequest);
 
-		return _ddmStructureService.addStructure(
+		return ddmStructureService.addStructure(
 			groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
 			PortalUtil.getClassNameId(DDLRecordSet.class), structureKey,
 			getLocalizedMap(themeDisplay.getLocale(), name),
@@ -106,7 +107,7 @@ public class AddRecordSetMVCActionCommand
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDLRecordSet.class.getName(), actionRequest);
 
-		return _ddlRecordSetService.addRecordSet(
+		return ddlRecordSetService.addRecordSet(
 			groupId, ddmStructureId, recordSetKey,
 			getLocalizedMap(themeDisplay.getLocale(), name),
 			getLocalizedMap(themeDisplay.getLocale(), description),
@@ -121,7 +122,17 @@ public class AddRecordSetMVCActionCommand
 
 		DDMStructure ddmStructure = addDDMStructure(actionRequest);
 
-		addRecordSet(actionRequest, ddmStructure.getStructureId());
+		DDLRecordSet recordSet = addRecordSet(
+			actionRequest, ddmStructure.getStructureId());
+
+		String publish = ParamUtil.getString(actionRequest, "publish", "false");
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties(true);
+
+		typeSettingsProperties.setProperty("published", publish);
+
+		ddlRecordSetService.updateRecordSet(
+			recordSet.getRecordSetId(), typeSettingsProperties.toString());
 	}
 
 	protected DDMForm getDDMForm(ActionRequest actionRequest)
@@ -131,7 +142,7 @@ public class AddRecordSetMVCActionCommand
 			String definition = ParamUtil.getString(
 				actionRequest, "definition");
 
-			return _ddmFormJSONDeserializer.deserialize(definition);
+			return ddmFormJSONDeserializer.deserialize(definition);
 		}
 		catch (PortalException pe) {
 			throw new StructureDefinitionException(pe);
@@ -144,7 +155,7 @@ public class AddRecordSetMVCActionCommand
 		try {
 			String layout = ParamUtil.getString(actionRequest, "layout");
 
-			return _ddmFormLayoutJSONDeserializer.deserialize(layout);
+			return ddmFormLayoutJSONDeserializer.deserialize(layout);
 		}
 		catch (PortalException pe) {
 			throw new StructureLayoutException(pe);
@@ -163,34 +174,33 @@ public class AddRecordSetMVCActionCommand
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
 
-		_ddlRecordSetService = ddlRecordSetService;
+		this.ddlRecordSetService = ddlRecordSetService;
 	}
 
 	@Reference(unbind = "-")
 	protected void setDDMFormJSONDeserializer(
 		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
 
-		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+		this.ddmFormJSONDeserializer = ddmFormJSONDeserializer;
 	}
 
 	@Reference(unbind = "-")
 	protected void setDDMFormLayoutJSONDeserializer(
 		DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer) {
 
-		_ddmFormLayoutJSONDeserializer = ddmFormLayoutJSONDeserializer;
+		this.ddmFormLayoutJSONDeserializer = ddmFormLayoutJSONDeserializer;
 	}
 
 	@Reference(unbind = "-")
 	protected void setDDMStructureService(
 		DDMStructureService ddmStructureService) {
 
-		_ddmStructureService = ddmStructureService;
+		this.ddmStructureService = ddmStructureService;
 	}
 
-	private volatile DDLRecordSetService _ddlRecordSetService;
-	private volatile DDMFormJSONDeserializer _ddmFormJSONDeserializer;
-	private volatile DDMFormLayoutJSONDeserializer
-		_ddmFormLayoutJSONDeserializer;
-	private volatile DDMStructureService _ddmStructureService;
+	protected DDLRecordSetService ddlRecordSetService;
+	protected DDMFormJSONDeserializer ddmFormJSONDeserializer;
+	protected DDMFormLayoutJSONDeserializer ddmFormLayoutJSONDeserializer;
+	protected DDMStructureService ddmStructureService;
 
 }

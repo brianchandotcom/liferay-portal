@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.io.IOException;
 
@@ -299,7 +300,8 @@ public class DDLFormPortlet extends MVCPortlet {
 		throws PortalException {
 
 		long recordSetId = PrefsParamUtil.getLong(
-			renderRequest.getPreferences(), renderRequest, "recordSetId");
+			PortletPreferencesFactoryUtil.getPortletSetup(renderRequest),
+			renderRequest, "recordSetId");
 
 		if (recordSetId == 0) {
 			return;

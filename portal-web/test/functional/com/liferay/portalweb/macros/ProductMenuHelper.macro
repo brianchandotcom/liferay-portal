@@ -32,6 +32,8 @@
 		<var name="key_portlet" value="${portlet}" />
 
 		<execute function="AssertClick" locator1="ProductMenu#PORTLET" value1="${portlet}" />
+
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
 	</command>
 
 	<command name="gotoSites">

@@ -104,7 +104,10 @@
 		<if>
 			<isset var="categoryName" />
 			<then>
-				<execute macro="KBArticle#selectCategoryCP" />
+				<execute macro="KBArticle#selectCategoryCP">
+					<var name="categoryName" value="${categoryName}" />
+					<var name="vocabularyName" value="${vocabularyName}" />
+				</execute>
 			</then>
 		</if>
 

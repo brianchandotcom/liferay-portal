@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "home");
-
 String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
@@ -39,7 +37,7 @@ else {
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="navigation" value="<%= navigation %>" />
+	<portlet:param name="navigation" value="<%= journalDisplayContext.getNavigation() %>" />
 	<portlet:param name="folderId" value="<%= String.valueOf(journalDisplayContext.getFolderId()) %>" />
 	<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
 </liferay-portlet:renderURL>

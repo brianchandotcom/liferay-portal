@@ -241,12 +241,6 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 		addStructureProperties(ddmFormField, fieldContext);
 
-		boolean localizable = ddmFormField.isLocalizable();
-
-		if (!localizable && !locale.equals(defaultLocale)) {
-			fieldContext.put("disabled", Boolean.TRUE.toString());
-		}
-
 		boolean checkRequired = GetterUtil.getBoolean(
 			request.getAttribute("checkRequired"), true);
 
@@ -357,13 +351,6 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 			}
 
 			fieldStructure.put("children", childrenHTML.toString());
-
-			boolean disabled = GetterUtil.getBoolean(
-				fieldStructure.get("disabled"), false);
-
-			if (disabled) {
-				readOnly = true;
-			}
 
 			sb.append(
 				processFTL(

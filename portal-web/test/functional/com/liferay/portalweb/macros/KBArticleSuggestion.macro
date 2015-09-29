@@ -1,7 +1,7 @@
 <definition>
 	<command name="addPG">
 		<execute function="AssertClick" locator1="KnowledgeBaseArticle#DO_YOU_HAVE_ANY_SUGGESTIONS" value1="Do you have any suggestions?" />
-		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT" value1="${kbSuggestionBody}" />
+		<execute function="Type" locator1="KnowledgeBaseSuggestions#CONTENT_INPUT" value1="${kbSuggestionBody}" />
 		<execute function="AssertClick" locator1="Button#SUBMIT" value1="Submit" />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Suggestion saved successfully." />
 	</command>

@@ -51,7 +51,7 @@
 					<portlet:renderURL var="viewSitesURL" />
 
 					<%
-					Map<String, String> anchorData = new HashMap<>();
+					Map<String, Object> anchorData = new HashMap<>();
 
 					anchorData.put("navigation", Boolean.TRUE.toString());
 
@@ -61,7 +61,7 @@
 					manageSiteTemplateURL.setParameter("backURL", viewSitesURL);
 					%>
 
-					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "manage-site-template") %>' url="<%= manageSiteTemplateURL.toString() %>" />
+					<liferay-frontend:add-menu-item anchorData="<%= anchorData %>" title='<%= LanguageUtil.get(request, "manage-site-template") %>' url="<%= manageSiteTemplateURL.toString() %>" />
 				</c:if>
 			</c:otherwise>
 		</c:choose>

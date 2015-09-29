@@ -1891,17 +1891,17 @@
 		<var name="role1Name" value="Administrator" />
 		<var name="role2Name" value="Reviewer Name" />
 		<var name="role3Name" value="Updater Name" />
-		<var name="user1EmailAddress" property-value="email.address.2" />
+		<var method="TestPropsUtil#get('email.address.2')" name="user1EmailAddress" />
 		<var name="user1FirstName" value="userfn" />
 		<var name="user1LastName" value="Creator" />
 		<var name="user1ScreenName" value="creator" />
-		<var name="user2EmailAddress" property-value="email.address.3" />
-		<var name="user2EmailPassword" property-value="email.password.3" />
+		<var method="TestPropsUtil#get('email.address.3')" name="user2EmailAddress" />
+		<var method="TestPropsUtil#get('email.password.3')" name="user2EmailPassword" />
 		<var name="user2FirstName" value="userfn" />
 		<var name="user2LastName" value="Reviewer" />
 		<var name="user2ScreenName" value="reviewer" />
-		<var name="user3EmailAddress" property-value="email.address.4" />
-		<var name="user3EmailPassword" property-value="email.password.4" />
+		<var method="TestPropsUtil#get('email.address.4')" name="user3EmailAddress" />
+		<var method="TestPropsUtil#get('email.password.4')" name="user3EmailPassword" />
 		<var name="user3FirstName" value="userfn" />
 		<var name="user3LastName" value="Updater" />
 		<var name="user3ScreenName" value="updater" />
@@ -1911,8 +1911,8 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" property-value="email.address.1" />
-			<var name="userPassword" property-value="email.password.1" />
+			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
+			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -7757,18 +7757,18 @@
 		<var name="role1Name" value="KaleoSubmitRole Name" />
 		<var name="role2Name" value="KaleoReviewRole Name" />
 		<var name="role3Name" value="Administrator" />
-		<var name="user1EmailAddress" property-value="email.address.2" />
-		<var name="user1EmailPassword" property-value="email.password.2" />
+		<var method="TestPropsUtil#get('email.address.2')" name="user1EmailAddress" />
+		<var method="TestPropsUtil#get('email.password.2')" name="user1EmailPassword" />
 		<var name="user1FirstName" value="userfn1" />
 		<var name="user1LastName" value="Submitter" />
 		<var name="user1ScreenName" value="kaloesubmitter" />
-		<var name="user2EmailAddress" property-value="email.address.3" />
-		<var name="user2EmailPassword" property-value="email.password.3" />
+		<var method="TestPropsUtil#get('email.address.3')" name="user2EmailAddress" />
+		<var method="TestPropsUtil#get('email.password.3')" name="user2EmailPassword" />
 		<var name="user2FirstName" value="userfn2" />
 		<var name="user2LastName" value="Updater" />
 		<var name="user2ScreenName" value="kaleoupdater" />
-		<var name="user3EmailAddress" property-value="email.address.4" />
-		<var name="user3EmailPassword" property-value="email.password.4" />
+		<var method="TestPropsUtil#get('email.address.4')" name="user3EmailAddress" />
+		<var method="TestPropsUtil#get('email.password.4')" name="user3EmailPassword" />
 		<var name="user3FirstName" value="userfn3" />
 		<var name="user3LastName" value="Administrator" />
 		<var name="user3ScreenName" value="admin" />
@@ -7778,8 +7778,8 @@
 		</execute>
 
 		<execute macro="ServerAdministration#configureMailServerSettings">
-			<var name="userName" property-value="email.address.1" />
-			<var name="userPassword" property-value="email.password.1" />
+			<var method="TestPropsUtil#get('email.address.1')" name="userName" />
+			<var method="TestPropsUtil#get('email.password.1')" name="userPassword" />
 		</execute>
 
 		<execute macro="Page#gotoCP">

@@ -112,12 +112,12 @@
 	<command name="ViewReportEmailNewConfiguration" priority="4">
 		<description message="This is a use case for LPS-51009." />
 
-		<var name="emailAddress1" property-value="email.address.1" />
-		<var name="emailAddress2" property-value="email.address.2" />
-		<var name="emailAddress4" property-value="email.address.4" />
-		<var name="emailPassword1" property-value="email.password.1" />
-		<var name="emailPassword2" property-value="email.password.2" />
-		<var name="emailPassword4" property-value="email.password.4" />
+		<var method="TestPropsUtil#get('email.address.1')" name="emailAddress1" />
+		<var method="TestPropsUtil#get('email.address.2')" name="emailAddress2" />
+		<var method="TestPropsUtil#get('email.address.4')" name="emailAddress4" />
+		<var method="TestPropsUtil#get('email.password.1')" name="emailPassword1" />
+		<var method="TestPropsUtil#get('email.password.2')" name="emailPassword2" />
+		<var method="TestPropsUtil#get('email.password.4')" name="emailPassword4" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />

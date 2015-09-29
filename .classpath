@@ -60,7 +60,6 @@
 	<classpathentry kind="lib" path="lib/development/jsonassert.jar"/>
 	<classpathentry kind="lib" path="lib/development/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/jta.jar"/>
-	<classpathentry kind="lib" path="lib/development/jtds.jar"/>
 	<classpathentry kind="lib" path="lib/development/junit.jar"/>
 	<classpathentry kind="lib" path="lib/development/jutf7.jar"/>
 	<classpathentry kind="lib" path="lib/development/jymsg.jar"/>

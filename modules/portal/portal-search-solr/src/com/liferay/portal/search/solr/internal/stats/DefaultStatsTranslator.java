@@ -42,7 +42,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			Long count = fieldStatsInfo.getCount();
 
 			if (count != null) {
-				statsResults.setCount(count.intValue());
+				statsResults.setCount(count);
 			}
 		}
 

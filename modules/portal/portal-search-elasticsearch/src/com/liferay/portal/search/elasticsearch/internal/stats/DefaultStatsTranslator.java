@@ -57,7 +57,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 			ValueCount valueCount = (ValueCount)aggregationMap.get(
 				field + "_count");
 
-			statsResults.setCount((int)valueCount.getValue());
+			statsResults.setCount(valueCount.getValue());
 		}
 
 		if (stats.isMax()) {

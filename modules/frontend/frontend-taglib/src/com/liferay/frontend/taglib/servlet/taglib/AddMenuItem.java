@@ -22,9 +22,20 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class AddMenuItem extends MenuItem {
 
+	public AddMenuItem(
+		java.lang.Object anchorData, String id, String label, String url) {
+
+		setLabel(label);
+
+		_anchorData = anchorData;
+		_id = id;
+		_url = url;
+	}
+
 	public AddMenuItem(String label, String url) {
 		setLabel(label);
 
+		_anchorData = null;
 		_id = StringPool.BLANK;
 		_url = url;
 	}
@@ -32,8 +43,13 @@ public class AddMenuItem extends MenuItem {
 	public AddMenuItem(String id, String label, String url) {
 		setLabel(label);
 
+		_anchorData = null;
 		_id = id;
 		_url = url;
+	}
+
+	public java.lang.Object getAnchorData() {
+		return _anchorData;
 	}
 
 	public String getId() {
@@ -44,6 +60,7 @@ public class AddMenuItem extends MenuItem {
 		return _url;
 	}
 
+	private final java.lang.Object _anchorData;
 	private final String _id;
 	private final String _url;
 

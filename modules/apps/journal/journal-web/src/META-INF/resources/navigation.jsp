@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
-
 String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 
 long[] groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId);
@@ -35,7 +33,7 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 		<aui:nav-item
 			href="<%= viewArticlesHomeURL %>"
 			label="folders"
-			selected='<%= (navigation.equals("home") && (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(ddmStructureKey) %>'
+			selected='<%= (navigation.equals("home") && (journalDisplayContext.getFolderId() == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) && Validator.isNull(ddmStructureKey) %>'
 		/>
 
 		<portlet:renderURL var="viewRecentArticlesURL">
@@ -96,7 +94,7 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 		<%
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("folderId", String.valueOf(folderId));
+		portletURL.setParameter("folderId", String.valueOf(journalDisplayContext.getFolderId()));
 		%>
 
 		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">

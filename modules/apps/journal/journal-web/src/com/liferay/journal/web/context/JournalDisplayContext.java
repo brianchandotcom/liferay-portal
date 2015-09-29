@@ -15,7 +15,12 @@
 package com.liferay.journal.web.context;
 
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
+import com.liferay.journal.web.portlet.action.ActionUtil;
+import com.liferay.portal.kernel.bean.BeanParamUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -60,6 +65,30 @@ public class JournalDisplayContext {
 		return _displayViews;
 	}
 
+	public JournalFolder getFolder() throws PortalException {
+		if (_folder != null) {
+			return _folder;
+		}
+
+		_folder = ActionUtil.getFolder(_request);
+
+		return _folder;
+	}
+
+	public long getFolderId() throws PortalException {
+		if (_folderId != null) {
+			return _folderId;
+		}
+
+		JournalFolder folder = getFolder();
+
+		_folderId = BeanParamUtil.getLong(
+			folder, _request, "folderId",
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		return _folderId;
+	}
+
 	protected String getDisplayStyle(
 		HttpServletRequest request, String[] displayViews) {
 
@@ -89,6 +118,8 @@ public class JournalDisplayContext {
 
 	private String _displayStyle;
 	private String[] _displayViews;
+	private JournalFolder _folder;
+	private Long _folderId;
 	private final PortletPreferences _portletPreferences;
 	private final HttpServletRequest _request;
 

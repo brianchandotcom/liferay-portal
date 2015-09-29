@@ -27,10 +27,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
@@ -39,7 +36,6 @@ import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -54,7 +50,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorThreadLocal;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.StorageEngineManagerUtil;
@@ -380,9 +375,6 @@ public class FileEntryStagedModelDataHandler
 		FileEntry importedFileEntry = null;
 
 		String titleWithExtension = DLUtil.getTitleWithExtension(fileEntry);
-		String extension = fileEntry.getExtension();
-
-		String periodAndExtension = StringPool.PERIOD.concat(extension);
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			FileEntry existingFileEntry = fetchStagedModelByUuidAndGroupId(
@@ -407,33 +399,9 @@ public class FileEntryStagedModelDataHandler
 							existingTitleFileEntry.getFileEntryId());
 					}
 					else {
-						boolean titleHasExtension = false;
-
-						if (fileEntryTitle.endsWith(periodAndExtension)) {
-							fileEntryTitle = FileUtil.stripExtension(
-								fileEntryTitle);
-
-							titleHasExtension = true;
-						}
-
-						for (int i = 1;; i++) {
-							fileEntryTitle += StringPool.SPACE + i;
-
-							titleWithExtension =
-								fileEntryTitle + periodAndExtension;
-
-							existingTitleFileEntry = FileEntryUtil.fetchByR_F_T(
+						fileEntryTitle = DLFileEntryLocalServiceUtil.getUniqueTitle(
 								portletDataContext.getScopeGroupId(), folderId,
-								titleWithExtension);
-
-							if (existingTitleFileEntry == null) {
-								if (titleHasExtension) {
-									fileEntryTitle += periodAndExtension;
-								}
-
-								break;
-							}
-						}
+								-1, fileEntryTitle, fileEntry.getExtension());
 					}
 				}
 
@@ -558,38 +526,15 @@ public class FileEntryStagedModelDataHandler
 			}
 		}
 		else {
-			try {
-				importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
-					userId, portletDataContext.getScopeGroupId(), folderId,
-					titleWithExtension, fileEntry.getMimeType(),
-					fileEntry.getTitle(), fileEntry.getDescription(), null, is,
-					fileEntry.getSize(), serviceContext);
-			}
-			catch (DuplicateFileException dfe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(dfe, dfe);
-				}
+			String fileEntryTitle = DLFileEntryLocalServiceUtil.getUniqueTitle(
+					portletDataContext.getScopeGroupId(), folderId, -1,
+					fileEntry.getTitle(), fileEntry.getExtension());
 
-				String title = fileEntry.getTitle();
-
-				String[] titleParts = title.split("\\.", 2);
-
-				title = titleParts[0] + StringUtil.randomString();
-
-				if (titleParts.length > 1) {
-					title += StringPool.PERIOD + titleParts[1];
-				}
-
-				if (!title.endsWith(periodAndExtension)) {
-					title += periodAndExtension;
-				}
-
-				importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
-					userId, portletDataContext.getScopeGroupId(), folderId,
-					title, fileEntry.getMimeType(), title,
-					fileEntry.getDescription(), null, is, fileEntry.getSize(),
-					serviceContext);
-			}
+			importedFileEntry = DLAppLocalServiceUtil.addFileEntry(
+				userId, portletDataContext.getScopeGroupId(), folderId,
+				titleWithExtension, fileEntry.getMimeType(),
+				fileEntryTitle, fileEntry.getDescription(), null, is,
+				fileEntry.getSize(), serviceContext);
 		}
 
 		if (portletDataContext.getBooleanParameter(

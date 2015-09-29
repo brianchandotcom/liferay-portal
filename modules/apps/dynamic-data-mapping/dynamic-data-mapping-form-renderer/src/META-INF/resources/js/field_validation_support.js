@@ -145,11 +145,9 @@ AUI.add(
 			_afterValidationEvaluationEnded: function(event) {
 				var instance = this;
 
-				var result = event.result;
-
 				instance.hideFeedback();
 
-				instance.processEvaluation(result);
+				instance.processEvaluation(event.result);
 			},
 
 			_valueEvaluator: function() {

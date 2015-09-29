@@ -39,11 +39,11 @@ AUI.add(
 
 				prototype: {
 					TPL_PAGES: '<div class="' + CSS_FORM_BUILDER_PAGES_CONTENT + '">' +
-						'<div class="' + CSS_FORM_BUILDER_PAGINATION + '">' +
-						'</div></div>',
+						'<div class="' + CSS_FORM_BUILDER_PAGINATION + '"></div>' +
+					'</div>',
 
 					TPL_PAGE_CONTROL_TRIGGER:
-						'<a href="javascript:;" data-position="{position}" class="' + CSS_FORM_BUILDER_CONTROLS_TRIGGER + '">' +
+						'<a class="' + CSS_FORM_BUILDER_CONTROLS_TRIGGER + '" data-position="{position}" href="javascript:;">' +
 							'<span class="icon-ellipsis-vertical icon-monospaced"></span>' +
 						'</a>',
 
@@ -69,6 +69,7 @@ AUI.add(
 						FormBuilderPagesManager.superclass._afterPagesQuantityChange.apply(instance, arguments);
 
 						instance._syncControlTriggersUI();
+
 						instance._uiSetMode(instance.get('mode'));
 
 						var popover = instance._getPopover();
@@ -143,12 +144,10 @@ AUI.add(
 						var instance = this;
 
 						var activePageNumber = instance.get('activePageNumber');
+						var pagesQuantity = instance.get('pagesQuantity');
+						var titles = instance.get('titles');
 
 						var items = [];
-
-						var pagesQuantity = instance.get('pagesQuantity');
-
-						var titles = instance.get('titles');
 
 						for (var i = 1; i <= pagesQuantity; i++) {
 							var title = titles[i - 1];
@@ -282,10 +281,9 @@ AUI.add(
 						var instance = this;
 
 						var activePageNumber = instance.get('activePageNumber');
+						var titles = instance.get('titles');
 
 						var title = event.newVal.trim();
-
-						var titles = instance.get('titles');
 
 						titles[activePageNumber - 1] = title;
 
@@ -333,6 +331,7 @@ AUI.add(
 
 						boundingBox.one('.' + CSS_FORM_BUILDER_TABVIEW).append(topControlTrigger);
 						boundingBox.one('.' + CSS_FORM_BUILDER_PAGINATION).append(leftControlTrigger);
+
 						boundingBox.delegate('click', A.bind(instance._onPageControlOptionClick, instance), '.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER);
 
 						var controlsTriggerNodeList = boundingBox.all('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER);
@@ -352,12 +351,10 @@ AUI.add(
 						var instance = this;
 
 						var builder = instance.get('builder');
+						var pageHeader = instance.get('pageHeader');
+						var pagesQuantity = instance.get('pagesQuantity');
 
 						var boundingBox = builder.get('boundingBox');
-
-						var pageHeader = instance.get('pageHeader');
-
-						var pagesQuantity = instance.get('pagesQuantity');
 
 						boundingBox.all('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER).toggle(pagesQuantity > 1);
 						pageHeader.one('.' + CSS_FORM_BUILDER_CONTROLS_TRIGGER).toggle(pagesQuantity <= 1);

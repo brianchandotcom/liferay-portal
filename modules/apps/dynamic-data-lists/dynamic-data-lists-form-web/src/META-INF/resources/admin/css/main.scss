@@ -203,11 +203,8 @@
 		top: 0;
 	}
 
+	.form-builder-header,
 	.form-builder-header-title {
-		display: none;
-	}
-
-	.form-builder-header {
 		display: none;
 	}
 
@@ -328,10 +325,8 @@
 		}
 	}
 
-	.form-builder-content {
-		.layout-builder-layout-container {
-			margin-bottom: 0;
-		}
+	.form-builder-content .layout-builder-layout-container {
+		margin-bottom: 0;
 	}
 
 	.form-builder-pages-lexicon {

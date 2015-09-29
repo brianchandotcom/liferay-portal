@@ -70,11 +70,9 @@ AUI.add(
 			_afterVisibilityEvaluationEnded: function(event) {
 				var instance = this;
 
-				var result = event.result;
-
 				instance.hideFeedback();
 
-				instance.processVisibilityEvaluation(result);
+				instance.processVisibilityEvaluation(event.result);
 			},
 
 			_afterVisibleChange: function() {

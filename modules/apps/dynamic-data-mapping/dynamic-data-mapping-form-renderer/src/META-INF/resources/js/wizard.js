@@ -165,9 +165,9 @@ AUI.add(
 
 						var items = instance.get('contentBox').all('li');
 
-						var item = event.currentTarget;
+						var currentTarget = event.currentTarget;
 
-						var index = items.indexOf(item);
+						var index = items.indexOf(currentTarget);
 
 						instance.set('selected', index);
 					},

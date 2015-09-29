@@ -124,7 +124,7 @@ AUI.add(
 						);
 
 						instance._eventHandles = [
-							Liferay.on('surfaceStartNavigate', '_onSurfaceStartNavigate', instance)
+							Liferay.on('surfaceStartNavigate', instance._onSurfaceStartNavigate, instance)
 						];
 
 						if (instance.get('hover')) {
@@ -304,13 +304,18 @@ AUI.add(
 					_addRestoreTaskState: function() {
 						var instance = this;
 
-						var elements = A.Array.map(
-							instance.get('contentBox').all('input:checked'),
-							function(item) {
-								return {
-									name: item.attr('name'),
-									value: item.val()
-								};
+						var elements = [];
+
+						var checkedCheckBoxes = instance.get('contentBox').all('input:checked');
+
+						checkedCheckBoxes.each(
+							function(item, index) {
+								elements.push(
+									{
+										name: item.attr('name'),
+										value: item.val()
+									}
+								);
 							}
 						);
 

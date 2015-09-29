@@ -361,6 +361,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @param applicationType an application type
 	 */
+	@Override
 	public void addSupportedApplicationType(ApplicationType applicationType) {
 		_applicationTypes.add(applicationType);
 	}
@@ -419,6 +420,7 @@ public class PortletImpl extends PortletBaseImpl {
 			getPublishingEvents(), getPublicRenderParameters(),
 			getPortletApp());
 
+		portlet.setApplicationTypes(getApplicationTypes());
 		portlet.setId(getId());
 		portlet.setUndeployedPortlet(isUndeployedPortlet());
 
@@ -553,6 +555,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 *
 	 * @return the supported application types of the portlet
 	 */
+	@Override
 	public Set<ApplicationType> getApplicationTypes() {
 		return _applicationTypes;
 	}
@@ -2834,6 +2837,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * @param applicationTypes the supported public render parameters of
 	 *        the portlet
 	 */
+	@Override
 	public void setApplicationTypes(Set<ApplicationType> applicationTypes) {
 		for (ApplicationType applicationType : applicationTypes) {
 			addSupportedApplicationType(applicationType);

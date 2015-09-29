@@ -798,7 +798,7 @@
 	<command name="editDisplayPagePGViaAP">
 		<var name="key_assetTitle" value="${assetTitle}" />
 
-		<execute function="Click" locator1="Icon#EDIT" />
+		<execute function="Click" locator1="APAsset#ASSET_PENCIL" />
 
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 		<execute function="AssertClick" locator1="WCEditWebContent#MENU_DISPLAY_PAGE" value1="Display Page" />
@@ -1281,7 +1281,7 @@
 
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="AP#ASSET_ABSTRACT_VIEW" value1="${webContentTitle}" />
 
-		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE" value1="${webContentTitle}" />
+		<execute function="AssertTextEquals" locator1="APAsset#ASSET_TITLE_HEADER" value1="${webContentTitle}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="APAsset#ASSET_CONTENT" value1="${webContentContent}" />
 	</command>
 

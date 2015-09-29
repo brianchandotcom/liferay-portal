@@ -24,6 +24,69 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CHECKBOX</td>
+	<td>//ul[contains(@id,'blogEntriesSearchContainer') and contains(.,'${key_entryTitle}')]//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ICON_VIEW-->
+<tr>
+	<td>ICON_VIEW_ENTRY_TITLE</td>
+	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//a/div[@class='card-dm-text-large']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_VIEW_ENTRY_OPTIONS_DROPDOWN</td>
+	<td>//div[contains(@class,'card-footer') and contains(.,'${key_entryTitle}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ICON_VIEW_ENTRY_STATUS</td>
+	<td>//div[contains(@id,'blogEntriesSearchContainer')]//li[contains(.,'${key_entryTitle}')]//div[@class='status']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LIST_VIEW-->
+<tr>
+	<td>LIST_VIEW_ENTRY_TITLE</td>
+	<td>//div[contains(@class,'list-group-item-content')]//a[contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_VIEW_ENTRY_OPTIONS_DROPDOWN</td>
+	<td>//div[contains(@class,'container') and contains(.,'${key_entryTitle}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGE_VIEW-->
+<tr>
+	<td>PAGE_VIEW_ENTRY_TITLE</td>
+	<td>//div[@class='entry-title']//h2</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_VIEW_ENTRY_CONTENT</td>
+	<td>//div[@class='entry-body']//p</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_VIEW_ENTRY_OPTIONS_DROPDOWN</td>
+	<td>//div[@class='entry-title' and contains(.,'${key_entryTitle}')]//span[contains(@class,'icon-ellipsis-vertical')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

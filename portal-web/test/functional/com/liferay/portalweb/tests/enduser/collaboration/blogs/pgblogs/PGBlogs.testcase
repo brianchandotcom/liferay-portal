@@ -336,7 +336,7 @@
 
 		<execute function="Pause" locator1="3000" />
 
-		<execute macro="Portlet#viewPG">
+		<execute macro="Portlet#viewPillTitle">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -358,7 +358,7 @@
 			<var name="entryTitle" value="${entryTitle2}" />
 		</execute>
 
-		<execute macro="Portlet#viewPG">
+		<execute macro="Portlet#viewPillTitle">
 			<var name="portletName" value="${portletName2}" />
 		</execute>
 
@@ -390,7 +390,7 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="Portlet#viewPG">
+		<execute macro="Portlet#viewPillTitle">
 			<var name="portletName" value="Blogs" />
 		</execute>
 	</command>
@@ -1671,7 +1671,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#viewPG">
+		<execute macro="Portlet#viewPillTitle">
 			<var name="portletName" value="${portletName2}" />
 		</execute>
 

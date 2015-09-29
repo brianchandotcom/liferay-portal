@@ -4,7 +4,7 @@
 
 		<execute function="AssertClick" locator1="DDL#LIST_TABLE_NAME" value1="${ddlListName}" />
 
-		<execute function="AssertTextEquals" locator1="DDL#HEADER_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${ddlListName}" />
 		<execute function="Click" locator1="Button#PLUS" />
 	</command>
 
@@ -23,7 +23,9 @@
 	</command>
 
 	<command name="addViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
+		<var name="key_ddlDataDefinitionName" value="Add ${ddlDataDefinitionName}" />
+
+		<execute function="AssertClick" locator1="DDL#TOOLBAR_ADD" value1="Add ${ddlDataDefinitionName}" />
 	</command>
 
 	<command name="deleteCP">
@@ -32,7 +34,7 @@
 		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClickNoError" locator1="DDL#MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -47,7 +49,7 @@
 	</command>
 
 	<command name="deleteViaDDLDisplayPG">
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClickNoError" locator1="DDL#MENULIST_DELETE" value1="Delete" />
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
@@ -61,12 +63,12 @@
 		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
 		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="DDL#MENULIST_EDIT" value1="Edit" />
 	</command>
 
 	<command name="editPG">
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="DDL#MENULIST_EDIT" value1="Edit" />
 	</command>
 
@@ -82,14 +84,14 @@
 		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="DDL#MENULIST_VIEW" value1="View" />
 
 		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
 	</command>
 
 	<command name="editViaRecordViewPG">
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="DDL#MENULIST_VIEW" value1="View" />
 
 		<execute function="AssertClick" locator1="Button#EDIT" value1="Edit" />
@@ -336,7 +338,7 @@
 		<execute function="AssertTextEquals" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 		<execute function="Click" locator1="DDL#LIST_TABLE_NAME_1" value1="${ddlListName}" />
 
-		<execute function="AssertTextEquals" locator1="DDL#HEADER_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="Home#SITE_ADMINISTRATION_PORTLET_TITLE" value1="${ddlListName}" />
 	</command>
 
 	<command name="viewFieldCP">
@@ -358,7 +360,7 @@
 		<var name="key_ddlRecordFieldData" value="${ddlRecordFieldData}" />
 		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 		<execute function="Click" locator1="DDL#MENULIST_VIEW" />
 
 		<if>
@@ -567,7 +569,7 @@
 			</else>
 		</if>
 
-		<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 		<execute function="Click" locator1="DDL#MENULIST_VIEW" />
 
 		<if>
@@ -610,7 +612,7 @@
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#HEADER_TITLE" value1="${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
 
-		<execute function="Click" locator1="PGDynamicdatalists#RECORD_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 
 		<execute function="AssertClick" locator1="PGDynamicdatalists#RECORD_MENULIST_VIEW" value1="View" />
 
@@ -625,7 +627,7 @@
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#HEADER_TITLE" value1="${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalists#RECORD_TABLE_COLUMN_TWO_NAME" value1="${fieldFieldLabel}" />
 
-		<execute function="Click" locator1="PGDynamicdatalists#RECORD_TABLE_ACTIONS_1" />
+		<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS_1" />
 
 		<execute function="AssertClick" locator1="PGDynamicdatalists#RECORD_MENULIST_VIEW" value1="View" />
 
@@ -633,16 +635,23 @@
 	</command>
 
 	<command name="viewViaDDLDisplayPG">
-		<execute function="AssertTextEquals" locator1="DDL#HEADER_TITLE" value1="${ddlListName}" />
+		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="${ddlListName}" />
 		<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_NAME" value1="${fieldFieldLabel}" />
+
+		<var name="key_ddlRecordFieldData" value="${key_ddlRecordFieldData}" />
+		<var name="key_fieldFieldLabel" value="${fieldFieldLabel}" />
 
 		<if>
 			<isset var="ddlRecordFieldDataTableDisplay" />
 			<then>
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldDataTableDisplay}" />
+				<var name="key_ddlRecordFieldData" value="${ddlRecordFieldDataTableDisplay}" />
+
+				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldDataTableDisplay}" />
 			</then>
 			<else>
-				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_COLUMN_ONE_RECORD_1" value1="${ddlRecordFieldData}" />
+				<var name="key_ddlRecordFieldData" value="${key_ddlRecordFieldData}" />
+
+				<execute function="AssertTextEquals" locator1="DDL#RECORD_TABLE_ENTRY" value1="${ddlRecordFieldData}" />
 			</else>
 		</if>
 
@@ -652,8 +661,8 @@
 				<execute function="AssertClick" locator1="DDL#RECORD_TABLE_GUEST_VIEW_LINK" value1="View" />
 			</then>
 			<else>
-				<execute function="Click" locator1="DDL#RECORD_TABLE_ACTIONS_1" />
-				<execute function="AssertClick" locator1="DDL#MENULIST_VIEW" value1="View" />
+				<execute function="Click" locator1="DDL#RECORD_TABLE_ELLIPSIS" />
+				<execute function="AssertClick" locator1="DDL#MENULIST_VIEW_SPECIFIC_RECORD" value1="View" />
 			</else>
 		</if>
 

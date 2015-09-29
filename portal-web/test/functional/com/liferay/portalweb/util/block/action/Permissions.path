@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>HEADER_TITLE</td>
-	<td>//h3[@class='header-title']</td>
+	<td>//h3[@class='header-title']/span</td>
 	<td></td>
 </tr>
 <tr>

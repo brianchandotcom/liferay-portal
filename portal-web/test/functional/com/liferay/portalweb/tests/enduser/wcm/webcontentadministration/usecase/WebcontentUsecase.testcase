@@ -245,7 +245,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContentRemoveGuestViewPermission" priority="4">
+	<command known-issues="LRQA-14590" name="AddWebContentRemoveGuestViewPermission" priority="4">
 		<property name="custom.properties" value="journal.article.view.permission.check.enabled=true" />
 
 		<var name="portletOption" value="Configuration" />
@@ -387,6 +387,7 @@
 
 	<command known-issues="LPS-50660" name="AddWebContentWithGlobalStructureAndEditedDefaultValues" priority="4">
 		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
 		</execute>
 
@@ -953,7 +954,9 @@
 
 		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
 
-		<execute macro="WebContent#expirePGViaWCD" />
+		<execute macro="WebContent#expirePGViaWCD">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
@@ -1049,6 +1052,10 @@
 			<execute macro="Category#addCP">
 				<var name="categoryName" value="${categoryName}" />
 				<var name="vocabularyName" value="Vocabulary Name" />
+			</execute>
+
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Categories" />
 			</execute>
 		</for>
 

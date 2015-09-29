@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Search Api
-Bundle-SymbolicName: com.liferay.search.api
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.search.api.*

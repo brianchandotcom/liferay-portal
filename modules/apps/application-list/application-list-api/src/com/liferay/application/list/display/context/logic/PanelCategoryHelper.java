@@ -18,6 +18,7 @@ import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -81,6 +82,10 @@ public class PanelCategoryHelper {
 		}
 
 		return null;
+	}
+
+	public boolean hasPanelApp(String portletId) {
+		return containsPortlet(portletId, PanelCategoryKeys.ROOT);
 	}
 
 	private boolean hasPortlet(String portletId, String panelCategoryKey) {

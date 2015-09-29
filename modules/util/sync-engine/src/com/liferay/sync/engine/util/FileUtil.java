@@ -526,9 +526,9 @@ public class FileUtil {
 				sourceFilePath, targetFilePath, StandardCopyOption.ATOMIC_MOVE,
 				StandardCopyOption.REPLACE_EXISTING);
 		}
-		catch (Exception e) {
+		catch (IOException ioe) {
 			if (!retry) {
-				throw e;
+				throw ioe;
 			}
 
 			PathCallable pathCallable = new PathCallable(sourceFilePath) {

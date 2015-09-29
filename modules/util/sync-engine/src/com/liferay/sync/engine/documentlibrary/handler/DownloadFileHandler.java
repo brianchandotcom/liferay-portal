@@ -100,7 +100,7 @@ public class DownloadFileHandler extends BaseHandler {
 
 			SyncFile syncFile = getLocalSyncFile();
 
-			if ((Boolean)getParameterValue("patch")) {
+			if ((boolean)getParameterValue("patch")) {
 				FileEventUtil.downloadFile(getSyncAccountId(), syncFile, false);
 			}
 			else {
@@ -136,7 +136,7 @@ public class DownloadFileHandler extends BaseHandler {
 		else if (exception.equals(
 					"com.liferay.portlet.documentlibrary." +
 						"NoSuchFileVersionException") &&
-				 (Boolean)getParameterValue("patch")) {
+				 (boolean)getParameterValue("patch")) {
 
 			FileEventUtil.downloadFile(getSyncAccountId(), syncFile, false);
 
@@ -162,6 +162,8 @@ public class DownloadFileHandler extends BaseHandler {
 			boolean append)
 		throws Exception {
 
+		OutputStream outputStream = null;
+
 		Watcher watcher = WatcherRegistry.getWatcher(getSyncAccountId());
 
 		List<String> downloadedFilePathNames =
@@ -173,7 +175,7 @@ public class DownloadFileHandler extends BaseHandler {
 			boolean exists = Files.exists(filePath);
 
 			if (append) {
-				OutputStream outputStream = Files.newOutputStream(
+				outputStream = Files.newOutputStream(
 					tempFilePath, StandardOpenOption.APPEND);
 
 				IOUtils.copyLarge(inputStream, outputStream);
@@ -230,6 +232,9 @@ public class DownloadFileHandler extends BaseHandler {
 
 				SyncFileService.update(syncFile);
 			}
+		}
+		finally {
+			StreamUtil.cleanUp(outputStream);
 		}
 	}
 

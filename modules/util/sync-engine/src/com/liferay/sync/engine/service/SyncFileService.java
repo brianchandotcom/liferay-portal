@@ -611,18 +611,48 @@ public class SyncFileService {
 		_syncFilePersistence.unregisterModelListener(modelListener);
 	}
 
-	public static SyncFile unsyncFolder(String filePathName) throws Exception {
-		SyncFile syncFile = SyncFileService.fetchSyncFile(filePathName);
+	public static SyncFile unsyncFolder(
+			long syncAccountId, SyncFile targetSyncFile)
+		throws Exception {
 
-		if (syncFile == null) {
-			return addSyncFile(
-				null, null, null, filePathName, null, null, 0, 0,
-				SyncFile.STATE_UNSYNCED, 0, null, false);
+		SyncFile parentSyncFile = SyncFileService.fetchSyncFile(
+			targetSyncFile.getRepositoryId(), syncAccountId,
+			targetSyncFile.getParentFolderId());
+
+		if (parentSyncFile == null) {
+			return null;
 		}
 
-		setStatuses(syncFile, SyncFile.STATE_UNSYNCED, SyncFile.UI_EVENT_NONE);
+		String filePathName = FileUtil.getFilePathName(
+			parentSyncFile.getFilePathName(),
+			FileUtil.getSanitizedFileName(targetSyncFile.getName(), null));
 
-		return syncFile;
+		SyncFile sourceSyncFile = SyncFileService.fetchSyncFile(filePathName);
+
+		if (sourceSyncFile == null) {
+			targetSyncFile.setFilePathName(filePathName);
+			targetSyncFile.setModifiedTime(0);
+			targetSyncFile.setState(SyncFile.STATE_UNSYNCED);
+			targetSyncFile.setSyncAccountId(syncAccountId);
+
+			return update(targetSyncFile);
+		}
+
+		sourceSyncFile.setModifiedTime(0);
+
+		setStatuses(
+			sourceSyncFile, SyncFile.STATE_UNSYNCED, SyncFile.UI_EVENT_NONE);
+
+		return sourceSyncFile;
+	}
+
+	public static void unsyncFolders(
+			long syncAccountId, List<SyncFile> targetSyncFiles)
+		throws Exception {
+
+		for (SyncFile targetSyncFile : targetSyncFiles) {
+			unsyncFolder(syncAccountId, targetSyncFile);
+		}
 	}
 
 	public static SyncFile update(SyncFile syncFile) {

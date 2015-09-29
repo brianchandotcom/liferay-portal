@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * @author Shinn Lok
  */
-public abstract class BaseModel {
+public class BaseModel {
 
 	public static final int UI_EVENT_NONE = 0;
 

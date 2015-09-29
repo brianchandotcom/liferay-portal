@@ -47,7 +47,7 @@ public class SyncSiteModelListener implements ModelListener<SyncSite> {
 		Set<Long> activeSyncSiteIds = SyncSiteService.getActiveSyncSiteIds(
 			syncSite.getSyncAccountId());
 
-		if ((Boolean)originalValues.get("active")) {
+		if ((boolean)originalValues.get("active")) {
 			activeSyncSiteIds.remove(syncSite.getSyncSiteId());
 		}
 		else {

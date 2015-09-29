@@ -47,7 +47,7 @@ public class UpdateFolderEvent extends BaseEvent {
 
 		SyncFileService.update(syncFile);
 
-		super.processAsynchronousRequest();
+		processAsynchronousRequest();
 	}
 
 	private static final String _URL_PATH =

@@ -576,13 +576,13 @@ public class Session {
 	private BasicHttpContext _basicHttpContext;
 	private final AtomicInteger _downloadedBytes = new AtomicInteger(0);
 	private volatile int _downloadRate;
-	private ExecutorService _executorService;
-	private HttpClient _httpClient;
-	private HttpHost _httpHost;
+	private final ExecutorService _executorService;
+	private final HttpClient _httpClient;
+	private final HttpHost _httpHost;
 	private final Set<String> _ignoredParameterKeys = new HashSet<>(
 		Arrays.asList("filePath", "syncFile", "syncSite", "uiEvent"));
 	private OAuthConsumer _oAuthConsumer;
-	private boolean _oAuthEnabled;
+	private final boolean _oAuthEnabled;
 	private String _token;
 	private ScheduledFuture<?> _trackTransferRateScheduledFuture;
 	private final AtomicInteger _uploadedBytes = new AtomicInteger(0);

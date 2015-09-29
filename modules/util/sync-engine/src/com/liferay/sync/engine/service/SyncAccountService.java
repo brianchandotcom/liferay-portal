@@ -144,6 +144,12 @@ public class SyncAccountService {
 				syncSite.setSyncAccountId(syncAccount.getSyncAccountId());
 
 				SyncSiteService.update(syncSite);
+
+				SyncFileService.addSyncFile(
+					null, null, null, syncSite.getFilePathName(), null,
+					syncSite.getName(), 0, syncSite.getGroupId(),
+					SyncFile.STATE_SYNCED, syncSite.getSyncAccountId(),
+					SyncFile.TYPE_SYSTEM, false);
 			}
 		}
 

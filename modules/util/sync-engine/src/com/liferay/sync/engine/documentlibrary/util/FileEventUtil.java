@@ -234,11 +234,10 @@ public class FileEventUtil {
 	}
 
 	public static List<SyncFile> getAllFolders(
-		long companyId, long repositoryId, long syncAccountId) {
+		long repositoryId, long syncAccountId) {
 
 		Map<String, Object> parameters = new HashMap<>();
 
-		parameters.put("companyId", companyId);
 		parameters.put("repositoryId", repositoryId);
 
 		GetAllFolderSyncDLObjectsEvent getAllFolderSyncDLObjectsEvent =
@@ -254,12 +253,10 @@ public class FileEventUtil {
 	}
 
 	public static void getUpdates(
-		long companyId, long repositoryId, long syncAccountId,
-		SyncSite syncSite) {
+		long repositoryId, long syncAccountId, SyncSite syncSite) {
 
 		Map<String, Object> parameters = new HashMap<>();
 
-		parameters.put("companyId", companyId);
 		parameters.put("repositoryId", repositoryId);
 		parameters.put("syncSite", syncSite);
 
@@ -306,8 +303,7 @@ public class FileEventUtil {
 	public static void resyncFolder(long syncAccountId, SyncFile syncFile) {
 		Map<String, Object> parameters = new HashMap<>();
 
-		parameters.put("companyId", syncFile.getCompanyId());
-		parameters.put("lastAccessTime", 0);
+		parameters.put("lastAccessTime", -1);
 		parameters.put("parentFolderId", syncFile.getTypePK());
 		parameters.put("repositoryId", syncFile.getRepositoryId());
 		parameters.put("syncFile", syncFile);

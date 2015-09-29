@@ -52,7 +52,7 @@ public class SyncAccountModelListener implements ModelListener<SyncAccount> {
 		SyncAccount syncAccount, Map<String, Object> originalValues) {
 
 		if (originalValues.containsKey("active")) {
-			if ((Boolean)originalValues.get("active")) {
+			if ((boolean)originalValues.get("active")) {
 				deactivateSyncAccount(syncAccount);
 			}
 			else {

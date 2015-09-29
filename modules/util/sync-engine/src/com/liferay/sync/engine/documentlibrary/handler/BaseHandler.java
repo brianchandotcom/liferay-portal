@@ -188,6 +188,9 @@ public class BaseHandler implements Handler<Void> {
 		return null;
 	}
 
+	public void processFinally() {
+	}
+
 	@Override
 	public void processResponse(String response) throws Exception {
 	}
@@ -237,9 +240,6 @@ public class BaseHandler implements Handler<Void> {
 
 			SyncSiteService.deleteSyncSite(syncSite.getSyncSiteId());
 		}
-	}
-
-	protected void processFinally() {
 	}
 
 	protected void retryServerConnection(int uiEvent) {

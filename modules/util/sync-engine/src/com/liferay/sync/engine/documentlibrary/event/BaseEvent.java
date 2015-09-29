@@ -161,6 +161,7 @@ public abstract class BaseEvent implements Event {
 		}
 		catch (Exception e) {
 			_handler.handleException(e);
+			_handler.processFinally();
 		}
 	}
 

@@ -16,9 +16,7 @@ package com.liferay.sync.engine.documentlibrary.event;
 
 import com.liferay.sync.engine.documentlibrary.handler.GetSyncDLObjectUpdateHandler;
 import com.liferay.sync.engine.documentlibrary.handler.Handler;
-import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
-import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
 
 import java.nio.file.Files;
@@ -68,15 +66,8 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 		if (syncSite.getRemoteSyncTime() == -1) {
 			String filePathName = syncSite.getFilePathName();
 
-			SyncFile syncFile = SyncFileService.fetchSyncFile(filePathName);
-
-			if (syncFile == null) {
+			if (!Files.exists(Paths.get(filePathName))) {
 				Files.createDirectories(Paths.get(filePathName));
-
-				SyncFileService.addSyncFile(
-					null, null, null, filePathName, null, syncSite.getName(), 0,
-					syncSite.getGroupId(), SyncFile.STATE_SYNCED,
-					syncSite.getSyncAccountId(), SyncFile.TYPE_SYSTEM, false);
 			}
 		}
 

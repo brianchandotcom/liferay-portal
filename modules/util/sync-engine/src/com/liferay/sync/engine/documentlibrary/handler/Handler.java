@@ -27,6 +27,8 @@ public interface Handler<T> extends ResponseHandler<T> {
 
 	public boolean handlePortalException(String exception) throws Exception;
 
+	public void processFinally();
+
 	public void processResponse(String response) throws Exception;
 
 }

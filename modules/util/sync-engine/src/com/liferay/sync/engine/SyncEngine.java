@@ -353,8 +353,8 @@ public class SyncEngine {
 					}
 
 					FileEventUtil.getUpdates(
-						syncSite.getCompanyId(), syncSite.getGroupId(),
-						syncAccount.getSyncAccountId(), syncSite);
+						syncSite.getGroupId(), syncAccount.getSyncAccountId(),
+						syncSite);
 				}
 
 				BatchDownloadEvent batchDownloadEvent =

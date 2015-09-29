@@ -43,7 +43,7 @@ Group group = themeDisplay.getSiteGroup();
 
 	<div class="toolbar-group-content">
 		<aui:a cssClass="site-administration-title" href="<%= group.getDisplayURL(themeDisplay) %>">
-			<%= group.getDescriptiveName(locale) %>
+			<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>
 
 			<c:if test="<%= themeDisplay.isShowStagingIcon() %>">
 				<c:choose>

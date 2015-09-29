@@ -1,6 +1,7 @@
 .portlet-asset-publisher {
 	.asset-abstract {
 		border-bottom: 1px solid #DDD;
+		overflow: hidden;
 		padding: 0.6em 0;
 
 		&:last-child {

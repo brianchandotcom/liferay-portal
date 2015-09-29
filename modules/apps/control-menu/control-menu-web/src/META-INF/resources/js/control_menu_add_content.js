@@ -100,8 +100,8 @@ AUI.add(
 										delta: instance._numItems.val(),
 										displayStyle: instance._displayStyle,
 										keywords: instance.get('inputNode').val(),
-										viewEntries: true,
-										viewPreview: false
+										viewAssetEntries: true,
+										viewAssetPreview: false
 									}
 								)
 							}

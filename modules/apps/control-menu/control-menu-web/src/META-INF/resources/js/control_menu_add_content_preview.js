@@ -116,8 +116,8 @@ AUI.add(
 							autoLoad: false,
 							data: instance.ns(
 								{
-									viewEntries: false,
-									viewPreview: true
+									viewAssetEntries: false,
+									viewAssetPreview: true
 								}
 							)
 						}

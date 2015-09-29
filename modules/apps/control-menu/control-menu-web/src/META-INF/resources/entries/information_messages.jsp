@@ -23,7 +23,7 @@ InformationMessagesControlMenuEntry informationMessagesControlMenuEntry = (Infor
 <portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="mvcPath" value="/add_panel.jsp" />
 	<portlet:param name="stateMaximized" value="<%= String.valueOf(themeDisplay.isStateMaximized()) %>" />
-	<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
+	<portlet:param name="viewAssetEntries" value="<%= Boolean.TRUE.toString() %>" />
 </portlet:renderURL>
 
 <%

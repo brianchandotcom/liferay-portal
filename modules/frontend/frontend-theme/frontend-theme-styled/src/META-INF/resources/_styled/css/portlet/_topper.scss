@@ -63,7 +63,7 @@
 			position: absolute;
 			right: 0;
 
-			@include transition(opacity 0.25s, top 0.25s);
+			@include transition(opacity 0.25s, transform 0.25s);
 
 			top: 0;
 		}
@@ -84,7 +84,7 @@
 			@include media-query(sm) {
 				opacity: 1;
 
-				@include transform(translateY(-100%));
+				@include transform(translateY(-97%));
 			}
 		}
 	}
@@ -109,14 +109,14 @@
 }
 
 .portlet-title-default {
-	@include flex(1 0 0);
+	@include flex(1 1 auto);
 	@include text-overflow;
 
 	line-height: 2;
 }
 
 .portlet-title-menu {
-	@include flex(1);
+	@include flex(0 1 auto);
 
 	> span > a {
 		display: inline-block;

@@ -724,10 +724,10 @@ public class JournalConverterUtilTest {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		if (includeGroupId) {
-			jsonObject.put("groupId", String.valueOf(layout.getGroupId()));
+			jsonObject.put("groupId", layout.getGroupId());
 		}
 
-		jsonObject.put("layoutId", String.valueOf(layout.getLayoutId()));
+		jsonObject.put("layoutId", layout.getLayoutId());
 		jsonObject.put("privateLayout", layout.isPrivateLayout());
 
 		return jsonObject.toString();

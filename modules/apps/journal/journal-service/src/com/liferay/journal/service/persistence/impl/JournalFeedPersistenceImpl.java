@@ -22,8 +22,8 @@ import com.liferay.journal.model.impl.JournalFeedImpl;
 import com.liferay.journal.model.impl.JournalFeedModelImpl;
 import com.liferay.journal.service.persistence.JournalFeedPersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -43,6 +43,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -168,7 +169,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<JournalFeed> list = (List<JournalFeed>)FinderCacheUtil.getResult(finderPath,
+		List<JournalFeed> list = (List<JournalFeed>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -247,10 +248,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -551,8 +552,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -590,10 +590,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -683,7 +683,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -737,7 +737,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				List<JournalFeed> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -750,14 +750,13 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 					if ((journalFeed.getUuid() == null) ||
 							!journalFeed.getUuid().equals(uuid) ||
 							(journalFeed.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, journalFeed);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -802,8 +801,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -845,10 +843,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -954,7 +952,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				};
 		}
 
-		List<JournalFeed> list = (List<JournalFeed>)FinderCacheUtil.getResult(finderPath,
+		List<JournalFeed> list = (List<JournalFeed>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -1038,10 +1036,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1362,8 +1360,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1405,10 +1402,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1504,7 +1501,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			finderArgs = new Object[] { groupId, start, end, orderByComparator };
 		}
 
-		List<JournalFeed> list = (List<JournalFeed>)FinderCacheUtil.getResult(finderPath,
+		List<JournalFeed> list = (List<JournalFeed>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -1569,10 +1566,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2168,8 +2165,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 		Object[] finderArgs = new Object[] { groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2193,10 +2189,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2332,7 +2328,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_G_F,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_F,
 					finderArgs, this);
 		}
 
@@ -2386,8 +2382,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				List<JournalFeed> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_F, finderArgs,
+						list);
 				}
 				else {
 					JournalFeed journalFeed = list.get(0);
@@ -2399,14 +2395,13 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 					if ((journalFeed.getGroupId() != groupId) ||
 							(journalFeed.getFeedId() == null) ||
 							!journalFeed.getFeedId().equals(feedId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_F,
 							finderArgs, journalFeed);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_F, finderArgs);
 
 				throw processException(e);
 			}
@@ -2451,8 +2446,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 		Object[] finderArgs = new Object[] { groupId, feedId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2494,10 +2488,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2525,14 +2519,14 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 */
 	@Override
 	public void cacheResult(JournalFeed journalFeed) {
-		EntityCacheUtil.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 			JournalFeedImpl.class, journalFeed.getPrimaryKey(), journalFeed);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { journalFeed.getUuid(), journalFeed.getGroupId() },
 			journalFeed);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_F,
 			new Object[] { journalFeed.getGroupId(), journalFeed.getFeedId() },
 			journalFeed);
 
@@ -2547,7 +2541,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	@Override
 	public void cacheResult(List<JournalFeed> journalFeeds) {
 		for (JournalFeed journalFeed : journalFeeds) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 						JournalFeedImpl.class, journalFeed.getPrimaryKey()) == null) {
 				cacheResult(journalFeed);
@@ -2562,43 +2556,43 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 * Clears the cache for all journal feeds.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(JournalFeedImpl.class);
+		entityCache.clearCache(JournalFeedImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the journal feed.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(JournalFeed journalFeed) {
-		EntityCacheUtil.removeResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 			JournalFeedImpl.class, journalFeed.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((JournalFeedModelImpl)journalFeed);
 	}
 
 	@Override
 	public void clearCache(List<JournalFeed> journalFeeds) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (JournalFeed journalFeed : journalFeeds) {
-			EntityCacheUtil.removeResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 				JournalFeedImpl.class, journalFeed.getPrimaryKey());
 
 			clearUniqueFindersCache((JournalFeedModelImpl)journalFeed);
@@ -2613,9 +2607,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 					journalFeedModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				journalFeedModelImpl);
 
 			args = new Object[] {
@@ -2623,9 +2617,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 					journalFeedModelImpl.getFeedId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_G_F, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_G_F, args,
 				journalFeedModelImpl);
 		}
 		else {
@@ -2636,9 +2630,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 						journalFeedModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					journalFeedModelImpl);
 			}
 
@@ -2649,9 +2643,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 						journalFeedModelImpl.getFeedId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_F, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_G_F, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_F, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_G_F, args,
 					journalFeedModelImpl);
 			}
 		}
@@ -2664,8 +2658,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				journalFeedModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((journalFeedModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -2674,8 +2668,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 					journalFeedModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
 		args = new Object[] {
@@ -2683,8 +2677,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				journalFeedModelImpl.getFeedId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_G_F, args);
 
 		if ((journalFeedModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_G_F.getColumnBitmask()) != 0) {
@@ -2693,8 +2687,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 					journalFeedModelImpl.getOriginalFeedId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_F, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_F, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_F, args);
 		}
 	}
 
@@ -2859,10 +2853,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !JournalFeedModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2872,14 +2866,14 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 						journalFeedModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { journalFeedModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -2890,8 +2884,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 						journalFeedModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -2899,8 +2893,8 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 						journalFeedModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -2910,19 +2904,19 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 						journalFeedModelImpl.getOriginalGroupId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 
 				args = new Object[] { journalFeedModelImpl.getGroupId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 			JournalFeedImpl.class, journalFeed.getPrimaryKey(), journalFeed,
 			false);
 
@@ -3015,7 +3009,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 */
 	@Override
 	public JournalFeed fetchByPrimaryKey(Serializable primaryKey) {
-		JournalFeed journalFeed = (JournalFeed)EntityCacheUtil.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+		JournalFeed journalFeed = (JournalFeed)entityCache.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 				JournalFeedImpl.class, primaryKey);
 
 		if (journalFeed == _nullJournalFeed) {
@@ -3035,12 +3029,12 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 					cacheResult(journalFeed);
 				}
 				else {
-					EntityCacheUtil.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 						JournalFeedImpl.class, primaryKey, _nullJournalFeed);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 					JournalFeedImpl.class, primaryKey);
 
 				throw processException(e);
@@ -3090,7 +3084,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			JournalFeed journalFeed = (JournalFeed)EntityCacheUtil.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+			JournalFeed journalFeed = (JournalFeed)entityCache.getResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 					JournalFeedImpl.class, primaryKey);
 
 			if (journalFeed == null) {
@@ -3142,7 +3136,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(JournalFeedModelImpl.ENTITY_CACHE_ENABLED,
 					JournalFeedImpl.class, primaryKey, _nullJournalFeed);
 			}
 		}
@@ -3212,7 +3206,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<JournalFeed> list = (List<JournalFeed>)FinderCacheUtil.getResult(finderPath,
+		List<JournalFeed> list = (List<JournalFeed>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3260,10 +3254,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3293,7 +3287,7 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -3306,11 +3300,11 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -3340,10 +3334,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(JournalFeedImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(JournalFeedImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_JOURNALFEED = "SELECT journalFeed FROM JournalFeed journalFeed";
@@ -3386,4 +3380,9 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 				return _nullJournalFeed;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

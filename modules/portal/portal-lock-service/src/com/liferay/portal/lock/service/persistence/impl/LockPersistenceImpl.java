@@ -16,8 +16,8 @@ package com.liferay.portal.lock.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -39,6 +39,7 @@ import com.liferay.portal.lock.service.persistence.LockPersistence;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -165,7 +166,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<Lock> list = (List<Lock>)FinderCacheUtil.getResult(finderPath,
+		List<Lock> list = (List<Lock>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -244,10 +245,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -543,8 +544,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -582,10 +582,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -689,7 +689,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				};
 		}
 
-		List<Lock> list = (List<Lock>)FinderCacheUtil.getResult(finderPath,
+		List<Lock> list = (List<Lock>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -773,10 +773,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1092,8 +1092,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1135,10 +1134,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1223,7 +1222,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_LTEXPIRATIONDATE;
 		finderArgs = new Object[] { expirationDate, start, end, orderByComparator };
 
-		List<Lock> list = (List<Lock>)FinderCacheUtil.getResult(finderPath,
+		List<Lock> list = (List<Lock>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -1300,10 +1299,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1602,8 +1601,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		Object[] finderArgs = new Object[] { expirationDate };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1638,10 +1636,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1732,7 +1730,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_K,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_K,
 					finderArgs, this);
 		}
 
@@ -1800,8 +1798,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				List<Lock> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_K, finderArgs,
+						list);
 				}
 				else {
 					Lock lock = list.get(0);
@@ -1814,14 +1812,13 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 							!lock.getClassName().equals(className) ||
 							(lock.getKey() == null) ||
 							!lock.getKey().equals(key)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_K,
 							finderArgs, lock);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, finderArgs);
 
 				throw processException(e);
 			}
@@ -1866,8 +1863,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 		Object[] finderArgs = new Object[] { className, key };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1923,10 +1919,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1956,10 +1952,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public void cacheResult(Lock lock) {
-		EntityCacheUtil.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockImpl.class, lock.getPrimaryKey(), lock);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_K,
 			new Object[] { lock.getClassName(), lock.getKey() }, lock);
 
 		lock.resetOriginalValues();
@@ -1973,7 +1969,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	@Override
 	public void cacheResult(List<Lock> locks) {
 		for (Lock lock : locks) {
-			if (EntityCacheUtil.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 						LockImpl.class, lock.getPrimaryKey()) == null) {
 				cacheResult(lock);
 			}
@@ -1987,43 +1983,43 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 * Clears the cache for all locks.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(LockImpl.class);
+		entityCache.clearCache(LockImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the lock.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(Lock lock) {
-		EntityCacheUtil.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockImpl.class, lock.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((LockModelImpl)lock);
 	}
 
 	@Override
 	public void clearCache(List<Lock> locks) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (Lock lock : locks) {
-			EntityCacheUtil.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 				LockImpl.class, lock.getPrimaryKey());
 
 			clearUniqueFindersCache((LockModelImpl)lock);
@@ -2037,10 +2033,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 					lockModelImpl.getClassName(), lockModelImpl.getKey()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_K, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_K, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K, args,
-				lockModelImpl);
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_K, args, lockModelImpl);
 		}
 		else {
 			if ((lockModelImpl.getColumnBitmask() &
@@ -2049,9 +2044,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 						lockModelImpl.getClassName(), lockModelImpl.getKey()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_K, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_K, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_K, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_K, args,
 					lockModelImpl);
 			}
 		}
@@ -2062,8 +2057,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 				lockModelImpl.getClassName(), lockModelImpl.getKey()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
 
 		if ((lockModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_K.getColumnBitmask()) != 0) {
@@ -2072,8 +2067,8 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 					lockModelImpl.getOriginalKey()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_K, args);
 		}
 	}
 
@@ -2213,10 +2208,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !LockModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2224,14 +2219,14 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { lockModelImpl.getOriginalUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { lockModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -2242,21 +2237,21 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 						lockModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
 						lockModelImpl.getUuid(), lockModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 			LockImpl.class, lock.getPrimaryKey(), lock, false);
 
 		clearUniqueFindersCache(lockModelImpl);
@@ -2337,7 +2332,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public Lock fetchByPrimaryKey(Serializable primaryKey) {
-		Lock lock = (Lock)EntityCacheUtil.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+		Lock lock = (Lock)entityCache.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 				LockImpl.class, primaryKey);
 
 		if (lock == _nullLock) {
@@ -2356,12 +2351,12 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 					cacheResult(lock);
 				}
 				else {
-					EntityCacheUtil.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 						LockImpl.class, primaryKey, _nullLock);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 					LockImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2411,7 +2406,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Lock lock = (Lock)EntityCacheUtil.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+			Lock lock = (Lock)entityCache.getResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 					LockImpl.class, primaryKey);
 
 			if (lock == null) {
@@ -2463,7 +2458,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(LockModelImpl.ENTITY_CACHE_ENABLED,
 					LockImpl.class, primaryKey, _nullLock);
 			}
 		}
@@ -2533,7 +2528,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<Lock> list = (List<Lock>)FinderCacheUtil.getResult(finderPath,
+		List<Lock> list = (List<Lock>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2581,10 +2576,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2614,7 +2609,7 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2627,11 +2622,11 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2661,10 +2656,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(LockImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(LockImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_LOCK = "SELECT lock FROM Lock lock";
@@ -2708,4 +2703,9 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 			return _nullLock;
 		}
 	}
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

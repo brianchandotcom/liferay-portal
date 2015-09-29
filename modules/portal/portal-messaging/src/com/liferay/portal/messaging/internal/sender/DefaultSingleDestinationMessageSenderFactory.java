@@ -14,6 +14,8 @@
 
 package com.liferay.portal.messaging.internal.sender;
 
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
@@ -121,6 +123,8 @@ public class DefaultSingleDestinationMessageSenderFactory
 
 		defaultSynchronousMessageSender.setMessageBus(_messageBus);
 		defaultSynchronousMessageSender.setTimeout(timeout);
+		defaultSynchronousMessageSender.setEntityCache(_entityCache);
+		defaultSynchronousMessageSender.setFinderCache(_finderCache);
 
 		_synchronousMessageSenders.put(
 			SynchronousMessageSender.Mode.DEFAULT,
@@ -142,6 +146,16 @@ public class DefaultSingleDestinationMessageSenderFactory
 		String mode = GetterUtil.getString(properties.get("mode"));
 
 		return SynchronousMessageSender.Mode.valueOf(mode);
+	}
+
+	@Reference(unbind = "-")
+	protected void setEntityCache(EntityCache entityCache) {
+		_entityCache = entityCache;
+	}
+
+	@Reference(unbind = "-")
+	protected void setFinderCache(FinderCache finderCache) {
+		_finderCache = finderCache;
 	}
 
 	@Reference(unbind = "-")
@@ -174,6 +188,8 @@ public class DefaultSingleDestinationMessageSenderFactory
 	private final Map<String, DefaultSingleDestinationSynchronousMessageSender>
 		_defaultSingleDestinationSynchronousMessageSenders =
 			new ConcurrentHashMap<>();
+	private EntityCache _entityCache;
+	private FinderCache _finderCache;
 	private MessageBus _messageBus;
 	private final Map<SynchronousMessageSender.Mode, SynchronousMessageSender>
 		_synchronousMessageSenders = new HashMap<>();

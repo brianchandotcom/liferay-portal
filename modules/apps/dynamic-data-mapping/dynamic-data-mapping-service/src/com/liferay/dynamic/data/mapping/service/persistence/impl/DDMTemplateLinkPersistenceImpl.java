@@ -22,8 +22,8 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkImpl;
 import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateLinkModelImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateLinkPersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -167,7 +168,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 			finderArgs = new Object[] { classNameId, start, end, orderByComparator };
 		}
 
-		List<DDMTemplateLink> list = (List<DDMTemplateLink>)FinderCacheUtil.getResult(finderPath,
+		List<DDMTemplateLink> list = (List<DDMTemplateLink>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -232,10 +233,10 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -526,8 +527,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 		Object[] finderArgs = new Object[] { classNameId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -551,10 +551,10 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -651,7 +651,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 			finderArgs = new Object[] { templateId, start, end, orderByComparator };
 		}
 
-		List<DDMTemplateLink> list = (List<DDMTemplateLink>)FinderCacheUtil.getResult(finderPath,
+		List<DDMTemplateLink> list = (List<DDMTemplateLink>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -716,10 +716,10 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1009,8 +1009,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 		Object[] finderArgs = new Object[] { templateId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1034,10 +1033,10 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1125,7 +1124,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_C,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_C,
 					finderArgs, this);
 		}
 
@@ -1165,8 +1164,8 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 				List<DDMTemplateLink> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_C, finderArgs,
+						list);
 				}
 				else {
 					DDMTemplateLink ddmTemplateLink = list.get(0);
@@ -1177,14 +1176,13 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 					if ((ddmTemplateLink.getClassNameId() != classNameId) ||
 							(ddmTemplateLink.getClassPK() != classPK)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
 							finderArgs, ddmTemplateLink);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C, finderArgs);
 
 				throw processException(e);
 			}
@@ -1229,8 +1227,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 		Object[] finderArgs = new Object[] { classNameId, classPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1258,10 +1255,10 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1287,11 +1284,11 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 	 */
 	@Override
 	public void cacheResult(DDMTemplateLink ddmTemplateLink) {
-		EntityCacheUtil.putResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateLinkImpl.class, ddmTemplateLink.getPrimaryKey(),
 			ddmTemplateLink);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_C,
 			new Object[] {
 				ddmTemplateLink.getClassNameId(), ddmTemplateLink.getClassPK()
 			}, ddmTemplateLink);
@@ -1307,7 +1304,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 	@Override
 	public void cacheResult(List<DDMTemplateLink> ddmTemplateLinks) {
 		for (DDMTemplateLink ddmTemplateLink : ddmTemplateLinks) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
 						DDMTemplateLinkImpl.class,
 						ddmTemplateLink.getPrimaryKey()) == null) {
@@ -1323,43 +1320,43 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 	 * Clears the cache for all d d m template links.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(DDMTemplateLinkImpl.class);
+		entityCache.clearCache(DDMTemplateLinkImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the d d m template link.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(DDMTemplateLink ddmTemplateLink) {
-		EntityCacheUtil.removeResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateLinkImpl.class, ddmTemplateLink.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((DDMTemplateLinkModelImpl)ddmTemplateLink);
 	}
 
 	@Override
 	public void clearCache(List<DDMTemplateLink> ddmTemplateLinks) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (DDMTemplateLink ddmTemplateLink : ddmTemplateLinks) {
-			EntityCacheUtil.removeResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
 				DDMTemplateLinkImpl.class, ddmTemplateLink.getPrimaryKey());
 
 			clearUniqueFindersCache((DDMTemplateLinkModelImpl)ddmTemplateLink);
@@ -1374,9 +1371,9 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 					ddmTemplateLinkModelImpl.getClassPK()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_C, args,
 				ddmTemplateLinkModelImpl);
 		}
 		else {
@@ -1387,9 +1384,9 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 						ddmTemplateLinkModelImpl.getClassPK()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_C, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_C, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_C, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_C, args,
 					ddmTemplateLinkModelImpl);
 			}
 		}
@@ -1402,8 +1399,8 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 				ddmTemplateLinkModelImpl.getClassPK()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
 
 		if ((ddmTemplateLinkModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_C.getColumnBitmask()) != 0) {
@@ -1412,8 +1409,8 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 					ddmTemplateLinkModelImpl.getOriginalClassPK()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_C, args);
 		}
 	}
 
@@ -1547,10 +1544,10 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !DDMTemplateLinkModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1560,16 +1557,14 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 						ddmTemplateLinkModelImpl.getOriginalClassNameId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
 					args);
 
 				args = new Object[] { ddmTemplateLinkModelImpl.getClassNameId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CLASSNAMEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CLASSNAMEID,
 					args);
 			}
 
@@ -1579,21 +1574,19 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 						ddmTemplateLinkModelImpl.getOriginalTemplateId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TEMPLATEID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_TEMPLATEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEID,
 					args);
 
 				args = new Object[] { ddmTemplateLinkModelImpl.getTemplateId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TEMPLATEID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_TEMPLATEID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
 			DDMTemplateLinkImpl.class, ddmTemplateLink.getPrimaryKey(),
 			ddmTemplateLink, false);
 
@@ -1668,7 +1661,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 	 */
 	@Override
 	public DDMTemplateLink fetchByPrimaryKey(Serializable primaryKey) {
-		DDMTemplateLink ddmTemplateLink = (DDMTemplateLink)EntityCacheUtil.getResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
+		DDMTemplateLink ddmTemplateLink = (DDMTemplateLink)entityCache.getResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
 				DDMTemplateLinkImpl.class, primaryKey);
 
 		if (ddmTemplateLink == _nullDDMTemplateLink) {
@@ -1688,13 +1681,13 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 					cacheResult(ddmTemplateLink);
 				}
 				else {
-					EntityCacheUtil.putResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
 						DDMTemplateLinkImpl.class, primaryKey,
 						_nullDDMTemplateLink);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
 					DDMTemplateLinkImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1744,7 +1737,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			DDMTemplateLink ddmTemplateLink = (DDMTemplateLink)EntityCacheUtil.getResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateLink ddmTemplateLink = (DDMTemplateLink)entityCache.getResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
 					DDMTemplateLinkImpl.class, primaryKey);
 
 			if (ddmTemplateLink == null) {
@@ -1796,7 +1789,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(DDMTemplateLinkModelImpl.ENTITY_CACHE_ENABLED,
 					DDMTemplateLinkImpl.class, primaryKey, _nullDDMTemplateLink);
 			}
 		}
@@ -1866,7 +1859,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<DDMTemplateLink> list = (List<DDMTemplateLink>)FinderCacheUtil.getResult(finderPath,
+		List<DDMTemplateLink> list = (List<DDMTemplateLink>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1914,10 +1907,10 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1947,7 +1940,7 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1960,11 +1953,11 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -1989,10 +1982,10 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(DDMTemplateLinkImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(DDMTemplateLinkImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_DDMTEMPLATELINK = "SELECT ddmTemplateLink FROM DDMTemplateLink ddmTemplateLink";
@@ -2023,4 +2016,9 @@ public class DDMTemplateLinkPersistenceImpl extends BasePersistenceImpl<DDMTempl
 				return _nullDDMTemplateLink;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

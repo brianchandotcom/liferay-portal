@@ -16,8 +16,8 @@ package com.liferay.service.access.policy.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -38,6 +38,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.service.access.policy.exception.NoSuchEntryException;
 import com.liferay.service.access.policy.model.SAPEntry;
@@ -168,7 +169,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<SAPEntry> list = (List<SAPEntry>)FinderCacheUtil.getResult(finderPath,
+		List<SAPEntry> list = (List<SAPEntry>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -247,10 +248,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -883,8 +884,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -922,10 +922,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1093,7 +1093,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 				};
 		}
 
-		List<SAPEntry> list = (List<SAPEntry>)FinderCacheUtil.getResult(finderPath,
+		List<SAPEntry> list = (List<SAPEntry>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -1177,10 +1177,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1849,8 +1849,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1892,10 +1891,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2061,7 +2060,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 			finderArgs = new Object[] { companyId, start, end, orderByComparator };
 		}
 
-		List<SAPEntry> list = (List<SAPEntry>)FinderCacheUtil.getResult(finderPath,
+		List<SAPEntry> list = (List<SAPEntry>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -2126,10 +2125,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2723,8 +2722,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 		Object[] finderArgs = new Object[] { companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -2748,10 +2746,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2886,7 +2884,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_N,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_C_N,
 					finderArgs, this);
 		}
 
@@ -2940,8 +2938,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 				List<SAPEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, finderArgs,
+						list);
 				}
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
@@ -2960,14 +2958,13 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 					if ((sapEntry.getCompanyId() != companyId) ||
 							(sapEntry.getName() == null) ||
 							!sapEntry.getName().equals(name)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
 							finderArgs, sapEntry);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, finderArgs);
 
 				throw processException(e);
 			}
@@ -3012,8 +3009,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 		Object[] finderArgs = new Object[] { companyId, name };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -3055,10 +3051,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3086,10 +3082,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 	 */
 	@Override
 	public void cacheResult(SAPEntry sapEntry) {
-		EntityCacheUtil.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SAPEntryImpl.class, sapEntry.getPrimaryKey(), sapEntry);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_C_N,
 			new Object[] { sapEntry.getCompanyId(), sapEntry.getName() },
 			sapEntry);
 
@@ -3104,8 +3100,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 	@Override
 	public void cacheResult(List<SAPEntry> sapEntries) {
 		for (SAPEntry sapEntry : sapEntries) {
-			if (EntityCacheUtil.getResult(
-						SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 						SAPEntryImpl.class, sapEntry.getPrimaryKey()) == null) {
 				cacheResult(sapEntry);
 			}
@@ -3119,43 +3114,43 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 	 * Clears the cache for all s a p entries.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(SAPEntryImpl.class);
+		entityCache.clearCache(SAPEntryImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the s a p entry.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(SAPEntry sapEntry) {
-		EntityCacheUtil.removeResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SAPEntryImpl.class, sapEntry.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((SAPEntryModelImpl)sapEntry);
 	}
 
 	@Override
 	public void clearCache(List<SAPEntry> sapEntries) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (SAPEntry sapEntry : sapEntries) {
-			EntityCacheUtil.removeResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 				SAPEntryImpl.class, sapEntry.getPrimaryKey());
 
 			clearUniqueFindersCache((SAPEntryModelImpl)sapEntry);
@@ -3170,9 +3165,9 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 					sapEntryModelImpl.getName()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
 				sapEntryModelImpl);
 		}
 		else {
@@ -3183,9 +3178,9 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 						sapEntryModelImpl.getName()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_N, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_C_N, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_N, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_C_N, args,
 					sapEntryModelImpl);
 			}
 		}
@@ -3196,8 +3191,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 				sapEntryModelImpl.getCompanyId(), sapEntryModelImpl.getName()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
 
 		if ((sapEntryModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_C_N.getColumnBitmask()) != 0) {
@@ -3206,8 +3201,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 					sapEntryModelImpl.getOriginalName()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_C_N, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_C_N, args);
 		}
 	}
 
@@ -3371,10 +3366,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !SAPEntryModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -3382,14 +3377,14 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] { sapEntryModelImpl.getOriginalUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { sapEntryModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -3400,8 +3395,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 						sapEntryModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -3409,8 +3404,8 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 						sapEntryModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -3420,21 +3415,19 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 						sapEntryModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 
 				args = new Object[] { sapEntryModelImpl.getCompanyId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_COMPANYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 			SAPEntryImpl.class, sapEntry.getPrimaryKey(), sapEntry, false);
 
 		clearUniqueFindersCache(sapEntryModelImpl);
@@ -3515,7 +3508,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 	 */
 	@Override
 	public SAPEntry fetchByPrimaryKey(Serializable primaryKey) {
-		SAPEntry sapEntry = (SAPEntry)EntityCacheUtil.getResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+		SAPEntry sapEntry = (SAPEntry)entityCache.getResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 				SAPEntryImpl.class, primaryKey);
 
 		if (sapEntry == _nullSAPEntry) {
@@ -3534,12 +3527,12 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 					cacheResult(sapEntry);
 				}
 				else {
-					EntityCacheUtil.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 						SAPEntryImpl.class, primaryKey, _nullSAPEntry);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 					SAPEntryImpl.class, primaryKey);
 
 				throw processException(e);
@@ -3589,7 +3582,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			SAPEntry sapEntry = (SAPEntry)EntityCacheUtil.getResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+			SAPEntry sapEntry = (SAPEntry)entityCache.getResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 					SAPEntryImpl.class, primaryKey);
 
 			if (sapEntry == null) {
@@ -3641,7 +3634,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(SAPEntryModelImpl.ENTITY_CACHE_ENABLED,
 					SAPEntryImpl.class, primaryKey, _nullSAPEntry);
 			}
 		}
@@ -3711,7 +3704,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<SAPEntry> list = (List<SAPEntry>)FinderCacheUtil.getResult(finderPath,
+		List<SAPEntry> list = (List<SAPEntry>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -3759,10 +3752,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -3792,7 +3785,7 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -3805,11 +3798,11 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -3839,10 +3832,10 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(SAPEntryImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(SAPEntryImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_SAPENTRY = "SELECT sapEntry FROM SAPEntry sapEntry";
@@ -3885,4 +3878,9 @@ public class SAPEntryPersistenceImpl extends BasePersistenceImpl<SAPEntry>
 				return _nullSAPEntry;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

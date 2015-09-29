@@ -22,8 +22,8 @@ import com.liferay.mobile.device.rules.model.impl.MDRActionImpl;
 import com.liferay.mobile.device.rules.model.impl.MDRActionModelImpl;
 import com.liferay.mobile.device.rules.service.persistence.MDRActionPersistence;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -41,6 +41,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
@@ -165,7 +166,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<MDRAction> list = (List<MDRAction>)FinderCacheUtil.getResult(finderPath,
+		List<MDRAction> list = (List<MDRAction>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -244,10 +245,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -548,8 +549,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -587,10 +587,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -680,7 +680,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -734,7 +734,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 				List<MDRAction> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -747,14 +747,13 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 					if ((mdrAction.getUuid() == null) ||
 							!mdrAction.getUuid().equals(uuid) ||
 							(mdrAction.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, mdrAction);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -799,8 +798,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -842,10 +840,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -950,7 +948,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 				};
 		}
 
-		List<MDRAction> list = (List<MDRAction>)FinderCacheUtil.getResult(finderPath,
+		List<MDRAction> list = (List<MDRAction>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -1034,10 +1032,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1358,8 +1356,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1401,10 +1398,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1507,7 +1504,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 				};
 		}
 
-		List<MDRAction> list = (List<MDRAction>)FinderCacheUtil.getResult(finderPath,
+		List<MDRAction> list = (List<MDRAction>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -1572,10 +1569,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1865,8 +1862,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 		Object[] finderArgs = new Object[] { ruleGroupInstanceId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1890,10 +1886,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1919,10 +1915,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public void cacheResult(MDRAction mdrAction) {
-		EntityCacheUtil.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 			MDRActionImpl.class, mdrAction.getPrimaryKey(), mdrAction);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { mdrAction.getUuid(), mdrAction.getGroupId() },
 			mdrAction);
 
@@ -1937,8 +1933,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	@Override
 	public void cacheResult(List<MDRAction> mdrActions) {
 		for (MDRAction mdrAction : mdrActions) {
-			if (EntityCacheUtil.getResult(
-						MDRActionModelImpl.ENTITY_CACHE_ENABLED,
+			if (entityCache.getResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 						MDRActionImpl.class, mdrAction.getPrimaryKey()) == null) {
 				cacheResult(mdrAction);
 			}
@@ -1952,43 +1947,43 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 * Clears the cache for all m d r actions.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(MDRActionImpl.class);
+		entityCache.clearCache(MDRActionImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the m d r action.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(MDRAction mdrAction) {
-		EntityCacheUtil.removeResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 			MDRActionImpl.class, mdrAction.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((MDRActionModelImpl)mdrAction);
 	}
 
 	@Override
 	public void clearCache(List<MDRAction> mdrActions) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (MDRAction mdrAction : mdrActions) {
-			EntityCacheUtil.removeResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 				MDRActionImpl.class, mdrAction.getPrimaryKey());
 
 			clearUniqueFindersCache((MDRActionModelImpl)mdrAction);
@@ -2003,9 +1998,9 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 					mdrActionModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				mdrActionModelImpl);
 		}
 		else {
@@ -2016,9 +2011,9 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 						mdrActionModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					mdrActionModelImpl);
 			}
 		}
@@ -2030,8 +2025,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 				mdrActionModelImpl.getUuid(), mdrActionModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((mdrActionModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -2040,8 +2035,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 					mdrActionModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 	}
 
@@ -2206,10 +2201,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !MDRActionModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2219,14 +2214,14 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 						mdrActionModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { mdrActionModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -2237,8 +2232,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 						mdrActionModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -2246,8 +2241,8 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 						mdrActionModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -2257,21 +2252,21 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 						mdrActionModelImpl.getOriginalRuleGroupInstanceId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPINSTANCEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPINSTANCEID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPINSTANCEID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPINSTANCEID,
 					args);
 
 				args = new Object[] { mdrActionModelImpl.getRuleGroupInstanceId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPINSTANCEID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_RULEGROUPINSTANCEID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPINSTANCEID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_RULEGROUPINSTANCEID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 			MDRActionImpl.class, mdrAction.getPrimaryKey(), mdrAction, false);
 
 		clearUniqueFindersCache(mdrActionModelImpl);
@@ -2357,7 +2352,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public MDRAction fetchByPrimaryKey(Serializable primaryKey) {
-		MDRAction mdrAction = (MDRAction)EntityCacheUtil.getResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
+		MDRAction mdrAction = (MDRAction)entityCache.getResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 				MDRActionImpl.class, primaryKey);
 
 		if (mdrAction == _nullMDRAction) {
@@ -2377,12 +2372,12 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 					cacheResult(mdrAction);
 				}
 				else {
-					EntityCacheUtil.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 						MDRActionImpl.class, primaryKey, _nullMDRAction);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 					MDRActionImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2432,7 +2427,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			MDRAction mdrAction = (MDRAction)EntityCacheUtil.getResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
+			MDRAction mdrAction = (MDRAction)entityCache.getResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 					MDRActionImpl.class, primaryKey);
 
 			if (mdrAction == null) {
@@ -2484,7 +2479,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(MDRActionModelImpl.ENTITY_CACHE_ENABLED,
 					MDRActionImpl.class, primaryKey, _nullMDRAction);
 			}
 		}
@@ -2554,7 +2549,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<MDRAction> list = (List<MDRAction>)FinderCacheUtil.getResult(finderPath,
+		List<MDRAction> list = (List<MDRAction>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -2602,10 +2597,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2635,7 +2630,7 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2648,11 +2643,11 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2682,10 +2677,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(MDRActionImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(MDRActionImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_MDRACTION = "SELECT mdrAction FROM MDRAction mdrAction";
@@ -2718,4 +2713,9 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 				return _nullMDRAction;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

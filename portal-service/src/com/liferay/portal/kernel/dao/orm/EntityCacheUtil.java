@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.dao.orm;
 
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ProxyFactory;
 
 import java.io.Serializable;
 
@@ -25,15 +26,15 @@ import java.io.Serializable;
 public class EntityCacheUtil {
 
 	public static void clearCache() {
-		getEntityCache().clearCache();
+		_entityCache.clearCache();
 	}
 
 	public static void clearCache(Class<?> clazz) {
-		getEntityCache().clearCache(clazz);
+		_entityCache.clearCache(clazz);
 	}
 
 	public static void clearLocalCache() {
-		getEntityCache().clearLocalCache();
+		_entityCache.clearLocalCache();
 	}
 
 	public static EntityCache getEntityCache() {
@@ -45,25 +46,24 @@ public class EntityCacheUtil {
 	public static PortalCache<Serializable, Serializable> getPortalCache(
 		Class<?> clazz) {
 
-		return getEntityCache().getPortalCache(clazz);
+		return _entityCache.getPortalCache(clazz);
 	}
 
 	public static Serializable getResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
 
-		return getEntityCache().getResult(
-			entityCacheEnabled, clazz, primaryKey);
+		return _entityCache.getResult(entityCacheEnabled, clazz, primaryKey);
 	}
 
 	public static void invalidate() {
-		getEntityCache().invalidate();
+		_entityCache.invalidate();
 	}
 
 	public static Serializable loadResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		SessionFactory sessionFactory) {
 
-		return getEntityCache().loadResult(
+		return _entityCache.loadResult(
 			entityCacheEnabled, clazz, primaryKey, sessionFactory);
 	}
 
@@ -71,34 +71,28 @@ public class EntityCacheUtil {
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		Serializable result) {
 
-		getEntityCache().putResult(
-			entityCacheEnabled, clazz, primaryKey, result);
+		_entityCache.putResult(entityCacheEnabled, clazz, primaryKey, result);
 	}
 
 	public static void putResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey,
 		Serializable result, boolean quiet) {
 
-		getEntityCache().putResult(
+		_entityCache.putResult(
 			entityCacheEnabled, clazz, primaryKey, result, quiet);
 	}
 
 	public static void removeCache(String className) {
-		getEntityCache().removeCache(className);
+		_entityCache.removeCache(className);
 	}
 
 	public static void removeResult(
 		boolean entityCacheEnabled, Class<?> clazz, Serializable primaryKey) {
 
-		getEntityCache().removeResult(entityCacheEnabled, clazz, primaryKey);
+		_entityCache.removeResult(entityCacheEnabled, clazz, primaryKey);
 	}
 
-	public void setEntityCache(EntityCache entityCache) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_entityCache = entityCache;
-	}
-
-	private static EntityCache _entityCache;
+	private static final EntityCache _entityCache =
+		ProxyFactory.newServiceTrackedInstance(EntityCache.class);
 
 }

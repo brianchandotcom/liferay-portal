@@ -16,8 +16,8 @@ package com.liferay.wiki.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.model.WikiPageResource;
@@ -166,7 +167,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<WikiPageResource> list = (List<WikiPageResource>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPageResource> list = (List<WikiPageResource>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if ((list != null) && !list.isEmpty()) {
@@ -245,10 +246,10 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -551,8 +552,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -590,10 +590,10 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -684,7 +684,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
 					finderArgs, this);
 		}
 
@@ -738,7 +738,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 				List<WikiPageResource> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 						finderArgs, list);
 				}
 				else {
@@ -751,14 +751,13 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 					if ((wikiPageResource.getUuid() == null) ||
 							!wikiPageResource.getUuid().equals(uuid) ||
 							(wikiPageResource.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 							finderArgs, wikiPageResource);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -803,8 +802,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -846,10 +844,10 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -940,7 +938,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_N_T,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_N_T,
 					finderArgs, this);
 		}
 
@@ -994,8 +992,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 				List<WikiPageResource> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T,
-						finderArgs, list);
+					finderCache.putResult(FINDER_PATH_FETCH_BY_N_T, finderArgs,
+						list);
 				}
 				else {
 					WikiPageResource wikiPageResource = list.get(0);
@@ -1007,14 +1005,13 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 					if ((wikiPageResource.getNodeId() != nodeId) ||
 							(wikiPageResource.getTitle() == null) ||
 							!wikiPageResource.getTitle().equals(title)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_N_T,
 							finderArgs, wikiPageResource);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T,
-					finderArgs);
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_N_T, finderArgs);
 
 				throw processException(e);
 			}
@@ -1059,8 +1056,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 		Object[] finderArgs = new Object[] { nodeId, title };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1102,10 +1098,10 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1133,16 +1129,16 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public void cacheResult(WikiPageResource wikiPageResource) {
-		EntityCacheUtil.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey(),
 			wikiPageResource);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
 				wikiPageResource.getUuid(), wikiPageResource.getGroupId()
 			}, wikiPageResource);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_N_T,
 			new Object[] {
 				wikiPageResource.getNodeId(), wikiPageResource.getTitle()
 			}, wikiPageResource);
@@ -1158,7 +1154,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	@Override
 	public void cacheResult(List<WikiPageResource> wikiPageResources) {
 		for (WikiPageResource wikiPageResource : wikiPageResources) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 						WikiPageResourceImpl.class,
 						wikiPageResource.getPrimaryKey()) == null) {
@@ -1174,43 +1170,43 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 * Clears the cache for all wiki page resources.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		EntityCacheUtil.clearCache(WikiPageResourceImpl.class);
+		entityCache.clearCache(WikiPageResourceImpl.class);
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the wiki page resource.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(WikiPageResource wikiPageResource) {
-		EntityCacheUtil.removeResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		clearUniqueFindersCache((WikiPageResourceModelImpl)wikiPageResource);
 	}
 
 	@Override
 	public void clearCache(List<WikiPageResource> wikiPageResources) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (WikiPageResource wikiPageResource : wikiPageResources) {
-			EntityCacheUtil.removeResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 				WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey());
 
 			clearUniqueFindersCache((WikiPageResourceModelImpl)wikiPageResource);
@@ -1225,9 +1221,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 					wikiPageResourceModelImpl.getGroupId()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				wikiPageResourceModelImpl);
 
 			args = new Object[] {
@@ -1235,9 +1231,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 					wikiPageResourceModelImpl.getTitle()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T, args,
+			finderCache.putResult(FINDER_PATH_COUNT_BY_N_T, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T, args,
+			finderCache.putResult(FINDER_PATH_FETCH_BY_N_T, args,
 				wikiPageResourceModelImpl);
 		}
 		else {
@@ -1248,9 +1244,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 						wikiPageResourceModelImpl.getGroupId()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 					wikiPageResourceModelImpl);
 			}
 
@@ -1261,9 +1257,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 						wikiPageResourceModelImpl.getTitle()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_N_T, args,
+				finderCache.putResult(FINDER_PATH_COUNT_BY_N_T, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T, args,
+				finderCache.putResult(FINDER_PATH_FETCH_BY_N_T, args,
 					wikiPageResourceModelImpl);
 			}
 		}
@@ -1276,8 +1272,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 				wikiPageResourceModelImpl.getGroupId()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 		if ((wikiPageResourceModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
@@ -1286,8 +1282,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 					wikiPageResourceModelImpl.getOriginalGroupId()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 
 		args = new Object[] {
@@ -1295,8 +1291,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 				wikiPageResourceModelImpl.getTitle()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T, args);
+		finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
+		finderCache.removeResult(FINDER_PATH_FETCH_BY_N_T, args);
 
 		if ((wikiPageResourceModelImpl.getColumnBitmask() &
 				FINDER_PATH_FETCH_BY_N_T.getColumnBitmask()) != 0) {
@@ -1305,8 +1301,8 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 					wikiPageResourceModelImpl.getOriginalTitle()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_N_T, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_N_T, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_N_T, args);
 		}
 	}
 
@@ -1450,10 +1446,10 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !WikiPageResourceModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -1463,19 +1459,19 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 						wikiPageResourceModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { wikiPageResourceModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey(),
 			wikiPageResource, false);
 
@@ -1552,7 +1548,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public WikiPageResource fetchByPrimaryKey(Serializable primaryKey) {
-		WikiPageResource wikiPageResource = (WikiPageResource)EntityCacheUtil.getResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+		WikiPageResource wikiPageResource = (WikiPageResource)entityCache.getResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 				WikiPageResourceImpl.class, primaryKey);
 
 		if (wikiPageResource == _nullWikiPageResource) {
@@ -1572,13 +1568,13 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 					cacheResult(wikiPageResource);
 				}
 				else {
-					EntityCacheUtil.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 						WikiPageResourceImpl.class, primaryKey,
 						_nullWikiPageResource);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 					WikiPageResourceImpl.class, primaryKey);
 
 				throw processException(e);
@@ -1628,7 +1624,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			WikiPageResource wikiPageResource = (WikiPageResource)EntityCacheUtil.getResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageResource wikiPageResource = (WikiPageResource)entityCache.getResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 					WikiPageResourceImpl.class, primaryKey);
 
 			if (wikiPageResource == null) {
@@ -1680,7 +1676,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				EntityCacheUtil.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 					WikiPageResourceImpl.class, primaryKey,
 					_nullWikiPageResource);
 			}
@@ -1751,7 +1747,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<WikiPageResource> list = (List<WikiPageResource>)FinderCacheUtil.getResult(finderPath,
+		List<WikiPageResource> list = (List<WikiPageResource>)finderCache.getResult(finderPath,
 				finderArgs, this);
 
 		if (list == null) {
@@ -1799,10 +1795,10 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1832,7 +1828,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -1845,11 +1841,11 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -1879,10 +1875,10 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(WikiPageResourceImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(WikiPageResourceImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	private static final String _SQL_SELECT_WIKIPAGERESOURCE = "SELECT wikiPageResource FROM WikiPageResource wikiPageResource";
@@ -1916,4 +1912,9 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 				return _nullWikiPageResource;
 			}
 		};
+
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 }

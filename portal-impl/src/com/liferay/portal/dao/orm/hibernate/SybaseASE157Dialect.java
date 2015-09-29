@@ -14,13 +14,25 @@
 
 package com.liferay.portal.dao.orm.hibernate;
 
+import java.sql.Types;
+
 import org.hibernate.LockMode;
+import org.hibernate.dialect.function.SQLFunctionTemplate;
+import org.hibernate.type.StandardBasicTypes;
 
 /**
  * @author Shuyang Zhou
  */
 public class SybaseASE157Dialect
 	extends org.hibernate.dialect.SybaseASE157Dialect {
+
+	public SybaseASE157Dialect() {
+		registerColumnType(Types.TIMESTAMP, "bigdatetime");
+		registerFunction(
+			"datetime",
+			new SQLFunctionTemplate(
+				StandardBasicTypes.TIMESTAMP, "bigdatetime"));
+	}
 
 	@Override
 	public String appendLockHint(LockMode mode, String tableName) {

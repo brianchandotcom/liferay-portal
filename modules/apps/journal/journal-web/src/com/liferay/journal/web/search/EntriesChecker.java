@@ -22,6 +22,7 @@ import com.liferay.journal.service.JournalFolderServiceUtil;
 import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.journal.web.display.context.JournalDisplayContext;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -39,7 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Sergio González
  */
-public class EntriesChecker extends RowChecker {
+public class EntriesChecker extends EmptyOnClickRowChecker {
 
 	public EntriesChecker(
 		LiferayPortletRequest liferayPortletRequest,

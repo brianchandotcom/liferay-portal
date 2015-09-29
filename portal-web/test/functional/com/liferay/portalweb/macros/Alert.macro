@@ -4,6 +4,8 @@
 	</command>
 
 	<command name="viewSuccess">
+		<execute macro-mobile="MobileNavigator#clickRemoveIcon" />
+
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 </definition>

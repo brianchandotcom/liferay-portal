@@ -14,20 +14,44 @@
 
 package com.liferay.mobile.device.rules.web.search;
 
-import com.liferay.portal.kernel.dao.search.DAOParamUtil;
+import com.liferay.portal.kernel.dao.search.DisplayTerms;
+import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.PortletRequest;
 
 /**
  * @author Edward Han
  */
-public class RuleGroupSearchTerms extends RuleGroupDisplayTerms {
+public class MDRRuleGroupDisplayTerms extends DisplayTerms {
 
-	public RuleGroupSearchTerms(PortletRequest portletRequest) {
+	public static final String GROUP_ID = "searchGroupId";
+
+	public static final String NAME = "searchName";
+
+	public MDRRuleGroupDisplayTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
-		setGroupId(DAOParamUtil.getLong(portletRequest, GROUP_ID));
-		setName(DAOParamUtil.getString(portletRequest, NAME));
+		_groupId = ParamUtil.getLong(portletRequest, GROUP_ID);
+		_name = ParamUtil.getString(portletRequest, NAME);
 	}
+
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	private long _groupId;
+	private String _name;
 
 }

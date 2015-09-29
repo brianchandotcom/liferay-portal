@@ -17,7 +17,7 @@ package com.liferay.mobile.device.rules.web.portlet.action;
 import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.exception.NoSuchActionException;
 import com.liferay.mobile.device.rules.exception.NoSuchRuleGroupException;
-import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
+import com.liferay.mobile.device.rules.rule.MDRRuleGroupProcessorUtil;
 import com.liferay.mobile.device.rules.rule.RuleHandler;
 import com.liferay.mobile.device.rules.rule.UnknownRuleHandlerException;
 import com.liferay.mobile.device.rules.service.MDRRuleServiceUtil;
@@ -101,7 +101,8 @@ public class EditRuleMVCActionCommand extends BaseMVCActionCommand {
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 		String type = ParamUtil.getString(actionRequest, "type");
 
-		RuleHandler ruleHandler = RuleGroupProcessorUtil.getRuleHandler(type);
+		RuleHandler ruleHandler = MDRRuleGroupProcessorUtil.getRuleHandler(
+			type);
 
 		if (ruleHandler == null) {
 			throw new UnknownRuleHandlerException(type);

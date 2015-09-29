@@ -26,53 +26,53 @@ import java.util.Collection;
 /**
  * @author Edward Han
  */
-public class RuleGroupProcessorUtil {
+public class MDRRuleGroupProcessorUtil {
 
 	public static MDRRuleGroupInstance evaluateRuleGroups(
 		ThemeDisplay themeDisplay) {
 
-		return getRuleGroupProcessor().evaluateRuleGroups(themeDisplay);
+		return getMDRRuleGroupProcessor().evaluateRuleGroups(themeDisplay);
 	}
 
-	public static RuleGroupProcessor getRuleGroupProcessor() {
+	public static MDRRuleGroupProcessor getMDRRuleGroupProcessor() {
 		PortalRuntimePermission.checkGetBeanProperty(
-			RuleGroupProcessorUtil.class);
+			MDRRuleGroupProcessorUtil.class);
 
 		return _instance._serviceTracker.getService();
 	}
 
 	public static RuleHandler getRuleHandler(String ruleType) {
-		return getRuleGroupProcessor().getRuleHandler(ruleType);
+		return getMDRRuleGroupProcessor().getRuleHandler(ruleType);
 	}
 
 	public static Collection<RuleHandler> getRuleHandlers() {
-		return getRuleGroupProcessor().getRuleHandlers();
+		return getMDRRuleGroupProcessor().getRuleHandlers();
 	}
 
 	public static Collection<String> getRuleHandlerTypes() {
-		return getRuleGroupProcessor().getRuleHandlerTypes();
+		return getMDRRuleGroupProcessor().getRuleHandlerTypes();
 	}
 
 	public static void registerRuleHandler(RuleHandler ruleHandler) {
-		getRuleGroupProcessor().registerRuleHandler(ruleHandler);
+		getMDRRuleGroupProcessor().registerRuleHandler(ruleHandler);
 	}
 
 	public static RuleHandler unregisterRuleHandler(String ruleType) {
-		return getRuleGroupProcessor().unregisterRuleHandler(ruleType);
+		return getMDRRuleGroupProcessor().unregisterRuleHandler(ruleType);
 	}
 
-	public RuleGroupProcessorUtil() {
+	public MDRRuleGroupProcessorUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceTracker = registry.trackServices(RuleGroupProcessor.class);
+		_serviceTracker = registry.trackServices(MDRRuleGroupProcessor.class);
 
 		_serviceTracker.open();
 	}
 
-	private static final RuleGroupProcessorUtil _instance =
-		new RuleGroupProcessorUtil();
+	private static final MDRRuleGroupProcessorUtil _instance =
+		new MDRRuleGroupProcessorUtil();
 
-	private final ServiceTracker<RuleGroupProcessor, RuleGroupProcessor>
+	private final ServiceTracker<MDRRuleGroupProcessor, MDRRuleGroupProcessor>
 		_serviceTracker;
 
 }

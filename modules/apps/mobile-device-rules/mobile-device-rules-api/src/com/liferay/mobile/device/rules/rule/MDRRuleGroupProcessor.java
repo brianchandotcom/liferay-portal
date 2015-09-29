@@ -22,7 +22,7 @@ import java.util.Collection;
 /**
  * @author Edward Han
  */
-public interface RuleGroupProcessor {
+public interface MDRRuleGroupProcessor {
 
 	public MDRRuleGroupInstance evaluateRuleGroups(ThemeDisplay themeDisplay);
 

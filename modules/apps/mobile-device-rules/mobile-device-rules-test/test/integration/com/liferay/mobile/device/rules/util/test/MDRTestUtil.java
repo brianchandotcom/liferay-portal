@@ -20,7 +20,7 @@ import com.liferay.mobile.device.rules.model.MDRAction;
 import com.liferay.mobile.device.rules.model.MDRRule;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
-import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
+import com.liferay.mobile.device.rules.rule.MDRRuleGroupProcessorUtil;
 import com.liferay.mobile.device.rules.rule.RuleHandler;
 import com.liferay.mobile.device.rules.service.MDRActionLocalServiceUtil;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalServiceUtil;
@@ -69,7 +69,7 @@ public class MDRTestUtil {
 
 	public static MDRRule addRule(long ruleGroupId) throws Exception {
 		Collection<RuleHandler> ruleHandlers =
-			RuleGroupProcessorUtil.getRuleHandlers();
+			MDRRuleGroupProcessorUtil.getRuleHandlers();
 
 		Object[] ruleHandlersArray = ruleHandlers.toArray();
 

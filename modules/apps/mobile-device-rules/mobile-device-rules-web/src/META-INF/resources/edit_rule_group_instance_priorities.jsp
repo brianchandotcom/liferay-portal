@@ -30,7 +30,7 @@ if (Validator.isNotNull(saveCallback)) {
 String className = ParamUtil.getString(request, "className");
 long classPK = ParamUtil.getLong(request, "classPK");
 
-List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new RuleGroupInstancePriorityComparator());
+List<MDRRuleGroupInstance> ruleGroupInstances = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new MDRRuleGroupInstancePriorityComparator());
 %>
 
 <liferay-ui:header

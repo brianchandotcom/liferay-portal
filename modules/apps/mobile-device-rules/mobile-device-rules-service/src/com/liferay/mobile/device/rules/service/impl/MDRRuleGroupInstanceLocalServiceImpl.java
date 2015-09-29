@@ -19,7 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.mobile.device.rules.exception.DuplicateRuleGroupInstanceException;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.base.MDRRuleGroupInstanceLocalServiceBaseImpl;
-import com.liferay.mobile.device.rules.util.comparator.RuleGroupInstancePriorityComparator;
+import com.liferay.mobile.device.rules.util.comparator.MDRRuleGroupInstancePriorityComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -77,7 +77,7 @@ public class MDRRuleGroupInstanceLocalServiceImpl
 
 		List<MDRRuleGroupInstance> ruleGroupInstances = getRuleGroupInstances(
 			className, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new RuleGroupInstancePriorityComparator());
+			new MDRRuleGroupInstancePriorityComparator());
 
 		int priority = 0;
 

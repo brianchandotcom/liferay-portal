@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Mate Thurzo
  */
-@Component(immediate = true, service = MobileDeviceRulesWebUpgrade.class)
-public class MobileDeviceRulesWebUpgrade {
+@Component(immediate = true, service = MDRWebUpgrade.class)
+public class MDRWebUpgrade {
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
 	protected void setModuleServiceLifecycle(

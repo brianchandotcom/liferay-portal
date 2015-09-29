@@ -41,7 +41,7 @@ if (ruleGroup != null) {
 	}
 }
 
-Collection<String> ruleHandlerTypes = RuleGroupProcessorUtil.getRuleHandlerTypes();
+Collection<String> ruleHandlerTypes = MDRRuleGroupProcessorUtil.getRuleHandlerTypes();
 %>
 
 <liferay-ui:header

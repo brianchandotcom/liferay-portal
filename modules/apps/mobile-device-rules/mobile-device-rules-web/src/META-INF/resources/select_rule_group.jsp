@@ -31,11 +31,11 @@ portletURL.setParameter("eventName", eventName);
 <aui:form action="<%= portletURL.toString() %>" method="post" name="selectRuleGroupFm">
 
 	<%
-	RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, portletURL);
+	MDRRuleGroupSearch MDRRuleGroupSearch = new MDRRuleGroupSearch(liferayPortletRequest, portletURL);
 	%>
 
 	<liferay-ui:search-container
-		searchContainer="<%= ruleGroupSearch %>"
+		searchContainer="<%= MDRRuleGroupSearch %>"
 	>
 		<aui:nav-bar>
 			<c:if test="<%= MDRPermission.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
@@ -46,7 +46,7 @@ portletURL.setParameter("eventName", eventName);
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				</liferay-portlet:renderURL>
 
-				<aui:nav cssClass="navbar-nav" searchContainer="<%= ruleGroupSearch %>">
+				<aui:nav cssClass="navbar-nav" searchContainer="<%= MDRRuleGroupSearch %>">
 					<aui:nav-item href="<%= addRuleGroupURL %>" iconCssClass="icon-plus" label="add-device-family" />
 				</aui:nav>
 			</c:if>
@@ -62,8 +62,8 @@ portletURL.setParameter("eventName", eventName);
 		</aui:nav-bar>
 
 		<%
-		RuleGroupDisplayTerms displayTerms = (RuleGroupDisplayTerms)searchContainer.getDisplayTerms();
-		RuleGroupSearchTerms searchTerms = (RuleGroupSearchTerms)searchContainer.getSearchTerms();
+		MDRRuleGroupDisplayTerms displayTerms = (MDRRuleGroupDisplayTerms)searchContainer.getDisplayTerms();
+		MDRRuleGroupSearchTerms searchTerms = (MDRRuleGroupSearchTerms)searchContainer.getSearchTerms();
 
 		if (displayTerms.getGroupId() == 0) {
 			displayTerms.setGroupId(groupId);

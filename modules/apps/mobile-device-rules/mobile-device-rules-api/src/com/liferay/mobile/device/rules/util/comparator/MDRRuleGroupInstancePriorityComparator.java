@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Edward Han
  */
-public class RuleGroupInstancePriorityComparator
+public class MDRRuleGroupInstancePriorityComparator
 	extends OrderByComparator<MDRRuleGroupInstance> {
 
 	public static final String ORDER_BY_ASC =
@@ -31,11 +31,11 @@ public class RuleGroupInstancePriorityComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"priority"};
 
-	public RuleGroupInstancePriorityComparator() {
+	public MDRRuleGroupInstancePriorityComparator() {
 		this(true);
 	}
 
-	public RuleGroupInstancePriorityComparator(boolean ascending) {
+	public MDRRuleGroupInstancePriorityComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

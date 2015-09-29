@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class MobileDeviceFamiliesPanelApp
+public class MDRMobileDeviceFamiliesPanelApp
 	extends BaseControlPanelEntryPanelApp {
 
 	@Override

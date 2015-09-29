@@ -4761,6 +4761,27 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
+			<not>
+				<isset property="test.assert.console.errors" />
+			</not>
+			<then>
+				<get-testcase-property property.name="test.assert.console.errors" />
+			</then>
+		</if>
+
+		<if>
+			<or>
+				<equals arg1="${test.assert.console.errors}" arg2="false" />
+				<equals arg1="${test.assert.console.errors}" arg2="true" />
+			</or>
+			<then>
+				<echo append="true" file="${test.ext.properties.file}">
+					test.assert.console.errors=${test.assert.console.errors}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${test.assert.liferay.errors}" arg2="false" />
 			<then>
 				<echo append="true" file="${test.ext.properties.file}">
@@ -6252,8 +6273,6 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="run-poshi-runner">
-		<property name="test.console.log.file.name" value="${liferay.home}/logs/liferay.${current.date}.xml" />
-
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-Plocal=${test.poshi.runner.local.release}" />

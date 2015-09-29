@@ -16,9 +16,9 @@ package com.liferay.marketplace.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.marketplace.bundle.BundleManager;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.ModuleLocalServiceUtil;
-import com.liferay.marketplace.util.BundleUtil;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -30,6 +30,8 @@ import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Ryan Park
@@ -105,7 +107,7 @@ public class AppImpl extends AppBaseImpl {
 
 		for (Module module : modules) {
 			if (Validator.isNotNull(module.getBundleSymbolicName())) {
-				if (!BundleUtil.isActive(
+				if (!_bundleManager.isActive(
 						module.getBundleSymbolicName(),
 						module.getBundleVersion())) {
 
@@ -122,10 +124,16 @@ public class AppImpl extends AppBaseImpl {
 		return true;
 	}
 
+	@Reference(unbind = "-")
+	protected void setBundleManager(BundleManager bundleManager) {
+		_bundleManager = bundleManager;
+	}
+
 	private static final String _DIR_NAME = "marketplace";
 
 	private static final String _EXTENSION = "lpkg";
 
+	private BundleManager _bundleManager;
 	private String[] _contextNames;
 
 }

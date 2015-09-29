@@ -14,15 +14,13 @@
 
 package com.liferay.marketplace.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
+import com.liferay.marketplace.bundle.BundleManager;
 import com.liferay.marketplace.exception.AppPropertiesException;
 import com.liferay.marketplace.exception.AppTitleException;
 import com.liferay.marketplace.exception.AppVersionException;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.model.Module;
 import com.liferay.marketplace.service.base.AppLocalServiceBaseImpl;
-import com.liferay.marketplace.util.BundleUtil;
 import com.liferay.marketplace.util.ContextUtil;
 import com.liferay.marketplace.util.comparator.AppTitleComparator;
 import com.liferay.portal.kernel.deploy.DeployManagerUtil;
@@ -68,11 +66,12 @@ import java.util.zip.ZipFile;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Ryan Park
  * @author Joan Kim
  */
-@ProviderType
 public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 	@Override
@@ -347,7 +346,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 							new AutoDeploymentContext();
 
 						if (fileName.endsWith(".jar")) {
-							Manifest manifest = BundleUtil.getManifest(
+							Manifest manifest = _bundleManager.getManifest(
 								pluginPackageFile);
 
 							Attributes attributes =
@@ -448,7 +447,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 			moduleLocalService.deleteModule(module.getModuleId());
 
 			if (module.isBundle()) {
-				BundleUtil.uninstallBundle(
+				_bundleManager.uninstallBundle(
 					module.getBundleSymbolicName(), module.getBundleVersion());
 
 				continue;
@@ -599,6 +598,11 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		return false;
 	}
 
+	@Reference(unbind = "-")
+	protected void setBundleManager(BundleManager bundleManager) {
+		_bundleManager = bundleManager;
+	}
+
 	protected void validate(String title, String version)
 		throws PortalException {
 
@@ -615,6 +619,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 		AppLocalServiceImpl.class);
 
 	private Map<String, String> _bundledApps;
+	private BundleManager _bundleManager;
 	private List<App> _installedApps;
 
 }

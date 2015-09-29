@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.util;
+package com.liferay.marketplace.bundle;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -40,12 +40,16 @@ import javax.management.ObjectName;
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.TabularData;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Joan Kim
+ * @author Ryan Park
  */
-public class BundleUtil {
+@Component(immediate = true, service = BundleManager.class)
+public class BundleManager {
 
-	public static List<Map<String, Object>> getInstalledBundles() {
+	public List<Map<String, Object>> getInstalledBundles() {
 		try {
 			MBeanServer mBeanServer =
 				ManagementFactory.getPlatformMBeanServer();
@@ -94,7 +98,7 @@ public class BundleUtil {
 		}
 	}
 
-	public static Manifest getManifest(File file) {
+	public Manifest getManifest(File file) {
 		InputStream inputStream = null;
 		ZipFile zipFile = null;
 
@@ -128,7 +132,7 @@ public class BundleUtil {
 		return null;
 	}
 
-	public static boolean isActive(String symbolicName, String version) {
+	public boolean isActive(String symbolicName, String version) {
 		List<Map<String, Object>> bundles = getInstalledBundles();
 
 		for (Map<String, Object> bundle : bundles) {
@@ -149,7 +153,7 @@ public class BundleUtil {
 		return false;
 	}
 
-	public static void uninstallBundle(String symbolicName, String version) {
+	public void uninstallBundle(String symbolicName, String version) {
 		try {
 			List<Map<String, Object>> bundles = getInstalledBundles();
 

@@ -8,7 +8,6 @@ dependencies {
 	compile group: "org.elasticsearch", name: "elasticsearch-analysis-smartcn", version: "2.7.0"
 	compile group: "org.elasticsearch", name: "elasticsearch-analysis-stempel", version: "2.7.0"
 
-	testCompile group: "com.liferay", name: "com.liferay.portal.search.unit.test.util", version: "1.0.0-SNAPSHOT"
 	testCompile group: "commons-io", name: "commons-io", version: "2.4"
 }
 

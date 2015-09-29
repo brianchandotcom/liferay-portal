@@ -108,6 +108,14 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	public void initialize(long companyId) {
 		super.initialize(companyId);
 
+		try {
+			_indexFactory.createIndices(
+				_elasticsearchConnectionManager.getAdminClient(), companyId);
+		}
+		catch (Exception e) {
+			throw new IllegalStateException(e);
+		}
+
 		ClusterHealthResponse clusterHealthResponse = null;
 
 		if (PortalRunMode.isTestMode()) {
@@ -125,14 +133,6 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			throw new IllegalStateException(
 				"Unable to initialize Elasticsearch cluster: " +
 					clusterHealthResponse);
-		}
-
-		try {
-			_indexFactory.createIndices(
-				_elasticsearchConnectionManager.getAdminClient(), companyId);
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(e);
 		}
 	}
 

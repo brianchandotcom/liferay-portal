@@ -77,7 +77,7 @@ AUI.add(
 						var inputGroup = container.one('.input-group-default');
 
 						if (inputGroup) {
-							inputGroup.insert(container.one('.validation-message'), 'after');
+							inputGroup.placeAfter(container.one('.validation-message'));
 						}
 					},
 
@@ -98,7 +98,7 @@ AUI.add(
 						else {
 							var inputGroupContainer = container.one('.input-group-container');
 
-							inputGroupContainer.insert(feedBack, 'after');
+							inputGroupContainer.placeAfter(feedBack);
 						}
 					},
 

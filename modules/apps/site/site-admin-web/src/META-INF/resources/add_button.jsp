@@ -51,7 +51,7 @@
 					<portlet:renderURL var="viewSitesURL" />
 
 					<%
-					Map<String, String> anchorData = new HashMap<>();
+					Map<String, Object> anchorData = new HashMap<>();
 
 					anchorData.put("navigation", Boolean.TRUE.toString());
 

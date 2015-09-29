@@ -17,13 +17,15 @@ package com.liferay.frontend.taglib.servlet.taglib;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Map;
+
 /**
  * @author Ambrín Chaudhary
  */
 public class AddMenuItem extends MenuItem {
 
 	public AddMenuItem(
-		java.lang.Object anchorData, String id, String label, String url) {
+		Map<String, Object> anchorData, String id, String label, String url) {
 
 		setLabel(label);
 
@@ -48,7 +50,7 @@ public class AddMenuItem extends MenuItem {
 		_url = url;
 	}
 
-	public java.lang.Object getAnchorData() {
+	public Map<String, Object> getAnchorData() {
 		return _anchorData;
 	}
 
@@ -60,7 +62,7 @@ public class AddMenuItem extends MenuItem {
 		return _url;
 	}
 
-	private final java.lang.Object _anchorData;
+	private final Map<String, Object> _anchorData;
 	private final String _id;
 	private final String _url;
 

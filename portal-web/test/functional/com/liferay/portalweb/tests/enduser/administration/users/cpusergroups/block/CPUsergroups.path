@@ -41,17 +41,17 @@
 <!--ADVANCED_SEARCH-->
 <tr>
 	<td>ADVANCED_SEARCH_MATCH</td>
-	<td>//select[@id='_127_andOperator']</td>
+	<td>//select[contains(@id,'andOperator')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_NAME</td>
-	<td>//input[@id='_127_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_DESCRIPTION</td>
-	<td>//input[@id='_127_description']</td>
+	<td>//input[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>

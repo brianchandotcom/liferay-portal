@@ -14,6 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationException;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
+import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormFieldEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
@@ -28,6 +32,8 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -78,6 +84,25 @@ public class DDMFormRendererHelper {
 		}
 
 		return renderedDDMFormFieldValuesMap;
+	}
+
+	protected Map<String, DDMFormFieldEvaluationResult>
+		createInitialStateDDMFormFieldEvaluationResultsMap() {
+
+		try {
+			DDMFormEvaluationResult ddmFormEvaluationResult =
+				_ddmFormEvaluator.evaluate(
+					_ddmForm, _ddmFormValues,
+					_ddmFormRenderingContext.getLocale());
+
+			return ddmFormEvaluationResult.
+				getDDMFormFieldEvaluationResultsMap();
+		}
+		catch (DDMFormEvaluationException ddmfee) {
+			_log.error("Unable to evaluate the form", ddmfee);
+		}
+
+		return new HashMap<>();
 	}
 
 	protected DDMFormFieldRenderingContext
@@ -196,6 +221,22 @@ public class DDMFormRendererHelper {
 		return sb.toString();
 	}
 
+	protected boolean isFieldVisible(String fieldName) {
+		if (_ddmFormFieldEvaluationResultsMap == null) {
+			_ddmFormFieldEvaluationResultsMap =
+				createInitialStateDDMFormFieldEvaluationResultsMap();
+		}
+
+		DDMFormFieldEvaluationResult ddmFormFieldEvaluationResult =
+			_ddmFormFieldEvaluationResultsMap.get(fieldName);
+
+		if (ddmFormFieldEvaluationResult != null) {
+			return ddmFormFieldEvaluationResult.isVisible();
+		}
+
+		return true;
+	}
+
 	protected String renderDDMFormField(
 			DDMFormField ddmFormField,
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
@@ -237,8 +278,7 @@ public class DDMFormRendererHelper {
 		setDDMFormFieldRenderingContextValue(
 			ddmFormFieldValue.getValue(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextVisible(
-			ddmFormField.getVisibilityExpression(),
-			ddmFormFieldRenderingContext);
+			ddmFormField.getName(), ddmFormFieldRenderingContext);
 
 		return renderDDMFormField(ddmFormField, ddmFormFieldRenderingContext);
 	}
@@ -297,6 +337,10 @@ public class DDMFormRendererHelper {
 		return sb.toString();
 	}
 
+	protected void setDDMFormEvaluator(DDMFormEvaluator ddmFormEvaluator) {
+		_ddmFormEvaluator = ddmFormEvaluator;
+	}
+
 	protected void setDDMFormFieldRenderingContextChildElementsHTML(
 		String childElementsHTML,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
@@ -348,15 +392,10 @@ public class DDMFormRendererHelper {
 	}
 
 	protected void setDDMFormFieldRenderingContextVisible(
-		String visibilityExpression,
+		String fieldName,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
-		boolean visible = true;
-
-		if (Validator.isNotNull(visibilityExpression)) {
-			visible = _expressionEvaluator.evaluateBooleanExpression(
-				visibilityExpression);
-		}
+		boolean visible = isFieldVisible(fieldName);
 
 		ddmFormFieldRenderingContext.setVisible(visible);
 	}
@@ -365,12 +404,6 @@ public class DDMFormRendererHelper {
 		DDMFormFieldTypeServicesTracker ddmFormFieldTypeServicesTracker) {
 
 		_ddmFormFieldTypeServicesTracker = ddmFormFieldTypeServicesTracker;
-	}
-
-	protected void setExpressionEvaluator(
-		ExpressionEvaluator expressionEvaluator) {
-
-		_expressionEvaluator = expressionEvaluator;
 	}
 
 	protected String wrapDDMFormFieldHTML(String ddmFormFieldHTML) {
@@ -384,11 +417,16 @@ public class DDMFormRendererHelper {
 		return sb.toString();
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormRendererHelper.class);
+
 	private final DDMForm _ddmForm;
+	private DDMFormEvaluator _ddmFormEvaluator;
+	private Map<String, DDMFormFieldEvaluationResult>
+		_ddmFormFieldEvaluationResultsMap;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
 	private final DDMFormRenderingContext _ddmFormRenderingContext;
 	private final DDMFormValues _ddmFormValues;
-	private ExpressionEvaluator _expressionEvaluator;
 
 }

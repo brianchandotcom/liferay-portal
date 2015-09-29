@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String backURL = ParamUtil.getString(request, "backURL");
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
@@ -41,6 +43,7 @@ JournalArticle article = ActionUtil.getArticle(request);
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", "/view_article_history.jsp");
+		portletURL.setParameter("backURL", backURL);
 		portletURL.setParameter("redirect", redirect);
 		portletURL.setParameter("referringPortletResource", referringPortletResource);
 		portletURL.setParameter("groupId", String.valueOf(article.getGroupId()));
